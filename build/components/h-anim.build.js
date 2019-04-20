@@ -1,8 +1,8 @@
 
 ({
 	baseUrl: "../../src",
-	name: "components/h-anim",
-	out: "../../dist/components/h-anim.js",
+	name: "assets/components/h-anim",
+	out: "../../dist/assets/components/h-anim.js",
 	optimize: "none",
 	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [

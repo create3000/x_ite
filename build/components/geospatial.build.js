@@ -1,8 +1,8 @@
 
 ({
 	baseUrl: "../../src",
-	name: "components/geospatial",
-	out: "../../dist/components/geospatial.js",
+	name: "assets/components/geospatial",
+	out: "../../dist/assets/components/geospatial.js",
 	optimize: "none",
 	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [

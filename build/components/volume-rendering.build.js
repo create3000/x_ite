@@ -1,8 +1,8 @@
 
 ({
 	baseUrl: "../../src",
-	name: "components/volume-rendering",
-	out: "../../dist/components/volume-rendering.js",
+	name: "assets/components/volume-rendering",
+	out: "../../dist/assets/components/volume-rendering.js",
 	optimize: "none",
 	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [

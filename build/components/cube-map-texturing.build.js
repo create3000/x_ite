@@ -1,8 +1,8 @@
 
 ({
 	baseUrl: "../../src",
-	name: "components/cube-map-texturing",
-	out: "../../dist/components/cube-map-texturing.js",
+	name: "assets/components/cube-map-texturing",
+	out: "../../dist/assets/components/cube-map-texturing.js",
 	optimize: "none",
 	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [

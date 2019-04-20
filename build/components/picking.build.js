@@ -1,8 +1,8 @@
 
 ({
 	baseUrl: "../../src",
-	name: "components/picking",
-	out: "../../dist/components/picking.js",
+	name: "assets/components/picking",
+	out: "../../dist/assets/components/picking.js",
 	optimize: "none",
 	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [

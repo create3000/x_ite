@@ -1,4 +1,4 @@
-/* X_ITE v4.5.1a-762 */
+/* X_ITE v4.5.1a-763 */
 @charset "utf-8";
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
 X3DCanvas .x_ite-private-splash-screen {
@@ -20,7 +20,7 @@ X3DCanvas .x_ite-private-spinner {
 	left: calc(50% - (134px / 2));
 	width: 138px;
 	height: 134px;
-	background: url(images/logo.128.png) no-repeat;
+	background: url(assets/images/logo.128.png) no-repeat;
 	-webkit-animation: spinner-animation-spin 32s linear infinite;
 	-moz-animation: spinner-animation-spin 32s linear infinite;
 	animation: spinner-animation-spin 32s linear infinite;
@@ -125,7 +125,7 @@ X3DCanvas .x_ite-private-notification {
 }
 X3DCanvas .x_ite-private-notification span {
 	padding: 0px 24px 0px 20px;
-	background: url(images/icon.bw.png) no-repeat 0px 3px;
+	background: url(assets/images/icon.bw.png) no-repeat 0px 3px;
 }
 X3DCanvas .x_ite-private-browser-timings {
 	display: none;
@@ -168,7 +168,7 @@ X3DCanvas .x_ite-private-browser-timings td {
 	text-align: left;
 }
 X3DCanvas .x_ite-private-browser-timings table {
-	background: url(images/Time.png) no-repeat;
+	background: url(assets/images/Time.png) no-repeat;
 }
 X3DCanvas .x_ite-private-browser-timings tr,
 X3DCanvas .x_ite-private-browser-timings th,
@@ -344,44 +344,44 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 	text-decoration: underline;
 }
 .x_ite-private-icon-viewpoint {
-	background: url("images/Viewpoint.png");
+	background: url("assets/images/Viewpoint.png");
 }
 .x_ite-private-icon-examine-viewer {
-	background: url("images/ExamineViewer.png");
+	background: url("assets/images/ExamineViewer.png");
 }
 .x_ite-private-icon-walk-viewer {
-	background: url("images/WalkViewer.png");
+	background: url("assets/images/WalkViewer.png");
 }
 .x_ite-private-icon-fly-viewer {
-	background: url("images/FlyViewer.png");
+	background: url("assets/images/FlyViewer.png");
 }
 .x_ite-private-icon-lookat-viewer {
-	background: url("images/gtk-zoom-in.png");
+	background: url("assets/images/gtk-zoom-in.png");
 }
 .x_ite-private-icon-plane-viewer {
-	background: url("images/PlaneViewer.png");
+	background: url("assets/images/PlaneViewer.png");
 }
 .x_ite-private-icon-none-viewer {
-	background: url("images/NoneViewer.png");
+	background: url("assets/images/NoneViewer.png");
 }
 .x_ite-private-icon-zoom-fit {
-	background: url("images/gtk-zoom-fit.png");
+	background: url("assets/images/gtk-zoom-fit.png");
 }
 .x_ite-private-icon-zoom-in {
-	background: url("images/gtk-zoom-in.png");
+	background: url("assets/images/gtk-zoom-in.png");
 }
 .x_ite-private-icon-primitive-quality {
-	background: url("images/PrimitiveQuality.png");
+	background: url("assets/images/PrimitiveQuality.png");
 }
 .x_ite-private-icon-texture-quality {
-	background: url("images/TextureQuality.png");
+	background: url("assets/images/TextureQuality.png");
 }
 .x_ite-private-icon-fullscreen {
-	background: url("images/gtk-fullscreen.png");
+	background: url("assets/images/gtk-fullscreen.png");
 }
 .x_ite-private-icon-leave-fullscreen {
-	background: url("images/gtk-leave-fullscreen.png");
+	background: url("assets/images/gtk-leave-fullscreen.png");
 }
 .x_ite-private-icon-help-about {
-	background: url("images/help-about.png");
+	background: url("assets/images/help-about.png");
 }

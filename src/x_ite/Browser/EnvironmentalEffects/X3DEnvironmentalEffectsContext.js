@@ -51,18 +51,10 @@ define ([
 	"x_ite/Components/Shaders/ComposedShader",
 	"x_ite/Components/Shaders/ShaderPart",
 	"x_ite/Components/Texturing/TextureProperties",
-	"text!x_ite/Browser/Shaders/WebGL1/Background.vs",
-	"text!x_ite/Browser/Shaders/WebGL1/Background.fs",
-	"text!x_ite/Browser/Shaders/WebGL2/Background.vs",
-	"text!x_ite/Browser/Shaders/WebGL2/Background.fs",
 ],
 function (ComposedShader,
           ShaderPart,
-          TextureProperties,
-          backgroundVS1,
-          backgroundFS1,
-          backgroundVS2,
-          backgroundFS2)
+          TextureProperties)
 {
 "use strict";
 	
@@ -79,7 +71,7 @@ function (ComposedShader,
 			if (this .backgroundSphereShader)
 				return this .backgroundSphereShader;
 
-			this .backgroundSphereShader = this .createShader ("BackgroundSphereShader", backgroundVS1, backgroundFS1, backgroundVS2, backgroundFS2, false);
+			this .backgroundSphereShader = this .createShader ("BackgroundSphereShader", "Background", false);
 
 			return this .backgroundSphereShader;
 		},

@@ -1,8 +1,8 @@
 
 ({
 	baseUrl: "../../src",
-	name: "components/dis",
-	out: "../../dist/components/dis.js",
+	name: "assets/components/dis",
+	out: "../../dist/assets/components/dis.js",
 	optimize: "none",
 	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [

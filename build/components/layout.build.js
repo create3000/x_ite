@@ -1,8 +1,8 @@
 
 ({
 	baseUrl: "../../src",
-	name: "components/layout",
-	out: "../../dist/components/layout.js",
+	name: "assets/components/layout",
+	out: "../../dist/assets/components/layout.js",
 	optimize: "none",
 	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [

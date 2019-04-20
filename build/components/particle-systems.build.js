@@ -1,8 +1,8 @@
 
 ({
 	baseUrl: "../../src",
-	name: "components/particle-systems",
-	out: "../../dist/components/particle-systems.js",
+	name: "assets/components/particle-systems",
+	out: "../../dist/assets/components/particle-systems.js",
 	optimize: "none",
 	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [

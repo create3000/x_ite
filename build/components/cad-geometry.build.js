@@ -1,8 +1,8 @@
 
 ({
 	baseUrl: "../../src",
-	name: "components/cad-geometry",
-	out: "../../dist/components/cad-geometry.js",
+	name: "assets/components/cad-geometry",
+	out: "../../dist/assets/components/cad-geometry.js",
 	optimize: "none",
 	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [

@@ -1,8 +1,8 @@
 
 ({
 	baseUrl: "../../src",
-	name: "components/event-utilities",
-	out: "../../dist/components/event-utilities.js",
+	name: "assets/components/event-utilities",
+	out: "../../dist/assets/components/event-utilities.js",
 	optimize: "none",
 	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [

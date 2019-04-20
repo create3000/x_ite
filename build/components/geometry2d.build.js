@@ -1,8 +1,8 @@
 
 ({
 	baseUrl: "../../src",
-	name: "components/geometry2d",
-	out: "../../dist/components/geometry2d.js",
+	name: "assets/components/geometry2d",
+	out: "../../dist/assets/components/geometry2d.js",
 	optimize: "none",
 	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [

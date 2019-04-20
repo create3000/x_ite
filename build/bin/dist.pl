@@ -59,10 +59,11 @@ sub dist {
 	close CSS;
 
 	say "Copying files";
-	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/images",   "dist/";
-	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/fonts",    "dist/";
-	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/linetype", "dist/";
-	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/hatching", "dist/";
+	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/assets/fonts",    "dist/assets/";
+	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/assets/hatching", "dist/assets/";
+	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/assets/images",   "dist/assets/";
+	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/assets/linetype", "dist/assets/";
+	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/assets/shaders",  "dist/assets/";
 	system "cp", "-v", "src/example.html",  "dist/";
 	
 	system "perl", "-pi", "-e", "s|/latest/|/alpha/|sg", "dist/example.html" if $ALPHA;

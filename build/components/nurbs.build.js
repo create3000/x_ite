@@ -1,8 +1,8 @@
 
 ({
 	baseUrl: "../../src",
-	name: "components/nurbs",
-	out: "../../dist/components/nurbs.js",
+	name: "assets/components/nurbs",
+	out: "../../dist/assets/components/nurbs.js",
 	optimize: "none",
 	mainConfigFile: "../../src/x_ite.config.js",
 	exclude: [

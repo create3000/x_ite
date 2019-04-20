@@ -19,7 +19,7 @@ X3DCanvas .x_ite-private-spinner {
 	left: calc(50% - (134px / 2));
 	width: 138px;
 	height: 134px;
-	background: url(images/logo.128.png) no-repeat;
+	background: url(assets/images/logo.128.png) no-repeat;
 	-webkit-animation: spinner-animation-spin 32s linear infinite;
 	-moz-animation: spinner-animation-spin 32s linear infinite;
 	animation: spinner-animation-spin 32s linear infinite;
