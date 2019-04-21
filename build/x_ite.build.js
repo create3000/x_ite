@@ -8,6 +8,9 @@
 	include: [
 		"../node_modules/requirejs/require.js"
 	],
+	excludeShallow: [
+		"x_ite/Browser/Shaders/ShaderSource"
+	],
 	wrap: {
 		startFile: "parts/x_ite.start.frag",
 		endFile: "parts/x_ite.end.frag"

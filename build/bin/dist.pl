@@ -6,6 +6,8 @@ use warnings;
 use v5.10.0;
 use open qw/:std :utf8/;
 
+use File::Basename qw (dirname basename);
+
 my $CWD = `pwd`;
 chomp $CWD;
 
@@ -36,6 +38,55 @@ sub check_version {
 	close $BROWSER;
 }
 
+sub shader_source {
+	my $filename = shift;
+
+	my $dirname = dirname ($filename);
+	my @lines   = `cat $filename`;
+	my $source  = "";
+	my $i       = 0;
+
+	foreach my $line (@lines)
+	{
+		if ($line =~ /^#pragma\s+X3D\s+include\s+"(.*?[^\/]+\.h)"\s*$/)
+		{
+			$source .= "#line 1\n";
+			$source .= shader_source ("$dirname/$1");
+			$source .= "\n";
+			$source .= "#line " . ($i + 1) . "\n";
+		}
+		else
+		{
+			$source .= $line;
+		}
+
+		++ $i;
+	}
+
+	return $source;
+}
+
+sub shader {
+	my $filename = shift;
+	my $dist     = shift;
+	chomp $filename;
+
+	return if -d $filename;
+
+	my $basename = basename ($filename);
+	my $source   = shader_source $filename;
+
+	open FILE, ">", "$dist/$basename";
+	print FILE $source;
+	close FILE;
+}
+
+sub shaders {
+	shader ("src/assets/shaders/webgl1/$_", "dist/assets/shaders/webgl1") foreach `ls -C1 src/assets/shaders/webgl1`;
+	shader ("src/assets/shaders/webgl2/$_", "dist/assets/shaders/webgl2") foreach `ls -C1 src/assets/shaders/webgl2`;
+}
+
+
 sub dist {
 	my $css = `cat dist/x_ite.css`;
 	open CSS, ">", "dist/x_ite.css";
@@ -52,7 +103,7 @@ sub dist {
 	print JS "/* X_ITE X3D v$VERSION-$REVISION\n * See LICENSE.txt for a detailed listing of used licences. */\n", $js_min;
 	close JS;
 
-	my $css = `cat dist/x_ite.css`;
+	$css = `cat dist/x_ite.css`;
 	open CSS, ">", "dist/x_ite.css";
 	$css =~ s/content: "X_ITE Browser";/content: "X_ITE Browser v$VERSION";/;
 	print CSS $css;
@@ -63,11 +114,12 @@ sub dist {
 	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/assets/hatching", "dist/assets/";
 	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/assets/images",   "dist/assets/";
 	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/assets/linetype", "dist/assets/";
-	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/assets/shaders",  "dist/assets/";
 	system "cp", "-v", "src/example.html",  "dist/";
 	
 	system "perl", "-pi", "-e", "s|/latest/|/alpha/|sg", "dist/example.html" if $ALPHA;
 	system "perl", "-pi", "-e", "s|/latest/|/$VERSION/|sg", "dist/example.html" unless $ALPHA;
+
+	shaders;
 }
 
 sub licenses {
@@ -103,6 +155,9 @@ sub zip {
 check_version;
 
 say "Making version '$VERSION' now.";
+
+shaders;
+exit;
 
 licenses;
 dist;

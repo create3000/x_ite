@@ -5,8 +5,8 @@ precision mediump int;
 
 varying vec3 vertex; // point on geometry
 
-#pragma X3D include "Include/Pack.h"
-#pragma X3D include "Include/ClipPlanes.h"
+#pragma X3D include "includes/Pack.h"
+#pragma X3D include "includes/ClipPlanes.h"
 
 void
 main ()

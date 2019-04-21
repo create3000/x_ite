@@ -1,6 +1,6 @@
 (function () {
 
-	var x_iteNoConfict = {
-		sprintf:  window .sprintf,
-		vsprintf: window .vsprintf,
-	};
+var x_iteNoConfict = {
+	sprintf:  window .sprintf,
+	vsprintf: window .vsprintf,
+};
