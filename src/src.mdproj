@@ -758,6 +758,7 @@
     <None Include="assets\shaders\webgl2\include\Shadow.h" />
     <None Include="assets\shaders\webgl2\include\Texture.h" />
     <None Include="assets\shaders\Types.h" />
+    <None Include="x_ite\Browser\Shaders\ShaderSource.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />

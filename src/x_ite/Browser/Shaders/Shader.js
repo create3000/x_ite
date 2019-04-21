@@ -48,112 +48,29 @@
 
 
 define ([
-	"text!assets/shaders/webgl1/include/ClipPlanes.h",
-	"text!assets/shaders/webgl1/include/Fog.h",
-	"text!assets/shaders/webgl1/include/Hatch.h",
-	"text!assets/shaders/webgl1/include/Pack.h",
-	"text!assets/shaders/webgl1/include/Perlin.h",
-	"text!assets/shaders/webgl1/include/Shadow.h",
-	"text!assets/shaders/webgl1/include/Texture.h",
-	"text!assets/shaders/webgl2/include/ClipPlanes.h",
-	"text!assets/shaders/webgl2/include/Fog.h",
-	"text!assets/shaders/webgl2/include/Hatch.h",
-	"text!assets/shaders/webgl2/include/Pack.h",
-	"text!assets/shaders/webgl2/include/Perlin.h",
-	"text!assets/shaders/webgl2/include/Shadow.h",
-	"text!assets/shaders/webgl2/include/Texture.h",
+	"x_ite/Browser/Shaders/ShaderSource",
 	"text!assets/shaders/Types.h",
 	"x_ite/Browser/Texturing/MultiTextureModeType",
 	"x_ite/Browser/Texturing/MultiTextureSourceType",
 	"x_ite/Browser/Texturing/MultiTextureFunctionType",
 	"x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType",
-	"x_ite/DEBUG",
 ],
-function (ClipPlanes1,
-          Fog1,
-          Hatch1,
-          Pack1,
-          Perlin1,
-          Shadow1,
-          Texture1,
-          ClipPlanes2,
-          Fog2,
-          Hatch2,
-          Pack2,
-          Perlin2,
-          Shadow2,
-          Texture2,
+function (ShaderSource,
           Types,
           MultiTextureModeType,
           MultiTextureSourceType,
           MultiTextureFunctionType,
-          TextureCoordinateGeneratorModeType,
-          DEBUG)
+          TextureCoordinateGeneratorModeType)
 {
 "use strict";
 
-	var include = /^#pragma\s+X3D\s+include\s+".*?([^\/]+).h"\s*$/;
-
 	var Shader =
 	{
-		getSource: function (includes, source)
-		{
-			var
-				lines = source .split ("\n"),
-				match = null;
-
-			source = "";
-
-			for (var i = 0, length = lines .length; i < length; ++ i)
-			{
-				var line = lines [i];
-
-				if (match = line .match (include))
-				{
-					source += "#line 1\n";
-					source += this .getSource (includes, includes [match [1]]);
-					source += "\n";
-					source += "#line " + (i + 1) + "\n";
-				}
-				else
-				{
-					source += line;
-					source += "\n";
-				}
-			}
-
-			return source;
-		},
 		getShaderSource: function (browser, name, source, shadow)
 		{
 			var gl = browser .getContext ();
 
-			if (gl .getVersion () <= 1)
-			{
-				var includes = {
-					ClipPlanes: ClipPlanes1,
-					Fog: Fog1,
-					Hatch: Hatch1,
-					Pack: Pack1,
-					Perlin: Perlin1,
-					Shadow: Shadow1,
-					Texture: Texture1,
-				};
-			}
-			else
-			{
-				var includes = {
-					ClipPlanes: ClipPlanes2,
-					Fog: Fog2,
-					Hatch: Hatch2,
-					Pack: Pack2,
-					Perlin: Perlin2,
-					Shadow: Shadow2,
-					Texture: Texture2,
-				};
-			}
-
-			source = this .getSource (includes, source);
+			source = ShaderSource .get (gl, source);
 
 			var
 				COMMENTS     = "\\s+|/\\*[^]*?\\*/|//.*?\\n",
