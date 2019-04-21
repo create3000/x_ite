@@ -44,24 +44,25 @@ sub shader_source {
 	my $dirname = dirname ($filename);
 	my @lines   = `cat $filename`;
 	my $source  = "";
-	my $i       = 0;
 
 	foreach my $line (@lines)
 	{
 		if ($line =~ /^#pragma\s+X3D\s+include\s+"(.*?[^\/]+\.h)"\s*$/)
 		{
-			$source .= "#line 1\n";
 			$source .= shader_source ("$dirname/$1");
-			$source .= "\n";
-			$source .= "#line " . ($i + 1) . "\n";
 		}
 		else
 		{
+			$line =~ s|^\s+||;
+
 			$source .= $line;
 		}
-
-		++ $i;
 	}
+
+	$source =~ s|//.*?\n|\n|sg;
+	$source =~ s|/\*.*?\*/||sg;
+	$source =~ s|[ \t]+| |;
+	$source =~ s|\n+|\n|sg;
 
 	return $source;
 }
