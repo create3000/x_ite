@@ -6,7 +6,7 @@ precision mediump int;
 varying vec4 color;  // color
 varying vec3 vertex; // point on geometry
 
-#pragma X3D include "includes/ClipPlanes.h"
+#pragma X3D include "include/ClipPlanes.h"
 
 void
 main ()

@@ -4,10 +4,9 @@
 precision mediump float;
 precision mediump int;
 
-uniform int x3d_GeometryType;
-
-uniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
-uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
+uniform int  x3d_GeometryType;
+uniform bool x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
+uniform bool x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
@@ -31,11 +30,11 @@ in float depth;
 
 out vec4 x3d_FragColor;
 
-#pragma X3D include "includes/Shadow.h"
-#pragma X3D include "includes/Texture.h"
-#pragma X3D include "includes/Hatch.h"
-#pragma X3D include "includes/Fog.h"
-#pragma X3D include "includes/ClipPlanes.h"
+#pragma X3D include "include/Shadow.h"
+#pragma X3D include "include/Texture.h"
+#pragma X3D include "include/Hatch.h"
+#pragma X3D include "include/Fog.h"
+#pragma X3D include "include/ClipPlanes.h"
 
 float
 getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)

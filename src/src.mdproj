@@ -745,20 +745,20 @@
     <None Include="assets\shaders\webgl2\Wireframe.vs" />
     <None Include="assets\shaders\Types.h" />
     <None Include="x_ite\Browser\Shaders\ShaderSource.js" />
-    <None Include="assets\shaders\webgl1\includes\ClipPlanes.h" />
-    <None Include="assets\shaders\webgl1\includes\Fog.h" />
-    <None Include="assets\shaders\webgl1\includes\Hatch.h" />
-    <None Include="assets\shaders\webgl1\includes\Pack.h" />
-    <None Include="assets\shaders\webgl1\includes\Perlin.h" />
-    <None Include="assets\shaders\webgl1\includes\Shadow.h" />
-    <None Include="assets\shaders\webgl1\includes\Texture.h" />
-    <None Include="assets\shaders\webgl2\includes\ClipPlanes.h" />
-    <None Include="assets\shaders\webgl2\includes\Fog.h" />
-    <None Include="assets\shaders\webgl2\includes\Hatch.h" />
-    <None Include="assets\shaders\webgl2\includes\Pack.h" />
-    <None Include="assets\shaders\webgl2\includes\Perlin.h" />
-    <None Include="assets\shaders\webgl2\includes\Shadow.h" />
-    <None Include="assets\shaders\webgl2\includes\Texture.h" />
+    <None Include="assets\shaders\webgl1\include\ClipPlanes.h" />
+    <None Include="assets\shaders\webgl1\include\Fog.h" />
+    <None Include="assets\shaders\webgl1\include\Hatch.h" />
+    <None Include="assets\shaders\webgl1\include\Pack.h" />
+    <None Include="assets\shaders\webgl1\include\Perlin.h" />
+    <None Include="assets\shaders\webgl1\include\Shadow.h" />
+    <None Include="assets\shaders\webgl1\include\Texture.h" />
+    <None Include="assets\shaders\webgl2\include\ClipPlanes.h" />
+    <None Include="assets\shaders\webgl2\include\Fog.h" />
+    <None Include="assets\shaders\webgl2\include\Hatch.h" />
+    <None Include="assets\shaders\webgl2\include\Pack.h" />
+    <None Include="assets\shaders\webgl2\include\Perlin.h" />
+    <None Include="assets\shaders\webgl2\include\Shadow.h" />
+    <None Include="assets\shaders\webgl2\include\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="standard\" />
@@ -784,7 +784,7 @@
     <Folder Include="assets\shaders\" />
     <Folder Include="assets\shaders\webgl1\" />
     <Folder Include="assets\shaders\webgl2\" />
-    <Folder Include="assets\shaders\webgl1\includes\" />
-    <Folder Include="assets\shaders\webgl2\includes\" />
+    <Folder Include="assets\shaders\webgl1\include\" />
+    <Folder Include="assets\shaders\webgl2\include\" />
   </ItemGroup>
 </Project>

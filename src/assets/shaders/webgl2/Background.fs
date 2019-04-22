@@ -9,7 +9,7 @@ in vec3 vertex; // point on geometry
 
 out vec4 x3d_FragColor;
 
-#pragma X3D include "includes/ClipPlanes.h"
+#pragma X3D include "include/ClipPlanes.h"
 
 void
 main ()

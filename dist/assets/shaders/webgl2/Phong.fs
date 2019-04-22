@@ -1,9 +1,9 @@
 #version 300 es
 precision mediump float;
 precision mediump int;
-uniform int x3d_GeometryType;
-uniform bool  x3d_Lighting;      
-uniform bool  x3d_ColorMaterial; 
+uniform int  x3d_GeometryType;
+uniform bool x3d_Lighting;      
+uniform bool x3d_ColorMaterial; 
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform bool x3d_SeparateBackColor;

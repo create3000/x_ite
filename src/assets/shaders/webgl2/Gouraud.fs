@@ -25,10 +25,10 @@ in float depth;
 
 out vec4 x3d_FragColor;
 
-#pragma X3D include "includes/Texture.h"
-#pragma X3D include "includes/Hatch.h"
-#pragma X3D include "includes/Fog.h"
-#pragma X3D include "includes/ClipPlanes.h"
+#pragma X3D include "include/Texture.h"
+#pragma X3D include "include/Hatch.h"
+#pragma X3D include "include/Fog.h"
+#pragma X3D include "include/ClipPlanes.h"
 
 void
 main ()
