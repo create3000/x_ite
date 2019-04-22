@@ -56,9 +56,9 @@ main ()
 		}
 	}
 
-	finalColor        = getHatchColor (finalColor);
-	x3d_FragColor .rgb = getFogColor (finalColor .rgb);
-	x3d_FragColor .a   = finalColor .a;
+	finalColor      = getHatchColor (finalColor);
+	finalColor .rgb = getFogColor (finalColor .rgb);
+	x3d_FragColor   = finalColor;
 
 	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 	//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html

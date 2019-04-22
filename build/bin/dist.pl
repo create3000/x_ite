@@ -87,7 +87,6 @@ sub shaders {
 	shader ("src/assets/shaders/webgl2/$_", "dist/assets/shaders/webgl2") foreach `ls -C1 src/assets/shaders/webgl2`;
 }
 
-
 sub dist {
 	my $css = `cat dist/x_ite.css`;
 	open CSS, ">", "dist/x_ite.css";

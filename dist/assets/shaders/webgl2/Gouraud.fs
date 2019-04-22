@@ -440,7 +440,7 @@ finalColor = getTextureColor (vec4 (1.0), vec4 (1.0));
 }
 }
 }
-finalColor        = getHatchColor (finalColor);
+finalColor         = getHatchColor (finalColor);
 x3d_FragColor .rgb = getFogColor (finalColor .rgb);
 x3d_FragColor .a   = finalColor .a;
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
