@@ -66,7 +66,8 @@ function (Shading,
 
 		this .addType (X3DConstants .X3DShaderNode);
 
-		this .valid = false;
+		this .valid    = false;
+		this .selected = 0;
 	}
 
 	X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -118,6 +119,23 @@ function (Shading,
 					break;
 				}
 			}	
+		},
+		select: function ()
+		{
+			++ this .selected;
+
+			if (! this .isSelected_ .getValue ())
+				this .isSelected_ = true;
+		},
+		deselect: function ()
+		{
+			++ this .selected;
+
+			if (this .selected === 0)
+			{
+				if (this .isSelected_ .getValue ())
+					this .isSelected_ = false;
+			}
 		},
 		traverse: function (type, renderObject)
 		{

@@ -229,7 +229,10 @@ function (Fields,
 			var shaderNodes = this .shaderNodes;
 
 			if (this .shaderNode)
+			{
 				this .getBrowser () .removeShader (this .shaderNode);
+				this .shaderNode .deselect ();
+			}
 
 			this .shaderNode = null;
 
@@ -245,7 +248,10 @@ function (Fields,
 			if (this .isLive () .getValue ())
 			{
 				if (this .shaderNode)
+				{
 					this .getBrowser () .addShader (this .shaderNode);
+					this .shaderNode .select ();
+				}
 			}
 
 			this .set_transparent__ ();
