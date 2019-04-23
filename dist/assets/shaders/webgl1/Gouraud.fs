@@ -446,9 +446,9 @@ finalColor = getTextureColor (vec4 (1.0), vec4 (1.0));
 }
 }
 }
-finalColor        = getHatchColor (finalColor);
-gl_FragColor .rgb = getFogColor (finalColor .rgb);
-gl_FragColor .a   = finalColor .a;
+finalColor      = getHatchColor (finalColor);
+finalColor .rgb = getFogColor (finalColor .rgb);
+gl_FragColor    = finalColor;
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 if (x3d_LogarithmicFarFactor1_2 > 0.0)
 gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;

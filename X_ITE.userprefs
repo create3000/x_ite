@@ -1,16 +1,13 @@
 ﻿<Properties StartupItem="meta/meta.mdproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="src/assets/shaders/webgl2/Gouraud.fs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="src/assets/shaders/webgl2/Phong.fs">
     <Files>
       <File FileName="package.json" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Core/X3DCoreContext.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Shaders/Shader.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Shaders/ShaderSource.js" Line="1" Column="1" />
       <File FileName="src/x_ite/Browser/Shaders/X3DShadersContext.js" Line="1" Column="1" />
-      <File FileName="src/assets/shaders/webgl1/Background.fs" Line="1" Column="1" />
-      <File FileName="dist/assets/shaders/webgl2/Gouraud.fs" Line="445" Column="31" />
-      <File FileName="src/assets/shaders/webgl2/Gouraud.fs" Line="62" Column="1" />
-      <File FileName="src/assets/shaders/webgl1/Gouraud.fs" Line="64" Column="1" />
+      <File FileName="src/assets/shaders/webgl2/Phong.fs" Line="14" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

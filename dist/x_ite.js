@@ -41062,7 +41062,8 @@ function (Shading,
 
 		this .addType (X3DConstants .X3DShaderNode);
 
-		this .valid = false;
+		this .valid    = false;
+		this .selected = 0;
 	}
 
 	X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -41114,6 +41115,23 @@ function (Shading,
 					break;
 				}
 			}	
+		},
+		select: function ()
+		{
+			++ this .selected;
+
+			if (! this .isSelected_ .getValue ())
+				this .isSelected_ = true;
+		},
+		deselect: function ()
+		{
+			++ this .selected;
+
+			if (this .selected === 0)
+			{
+				if (this .isSelected_ .getValue ())
+					this .isSelected_ = false;
+			}
 		},
 		traverse: function (type, renderObject)
 		{
@@ -59732,7 +59750,10 @@ function (Fields,
 			var shaderNodes = this .shaderNodes;
 
 			if (this .shaderNode)
+			{
 				this .getBrowser () .removeShader (this .shaderNode);
+				this .shaderNode .deselect ();
+			}
 
 			this .shaderNode = null;
 
@@ -59748,7 +59769,10 @@ function (Fields,
 			if (this .isLive () .getValue ())
 			{
 				if (this .shaderNode)
+				{
 					this .getBrowser () .addShader (this .shaderNode);
+					this .shaderNode .select ();
+				}
 			}
 
 			this .set_transparent__ ();
