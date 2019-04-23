@@ -68,14 +68,16 @@ function (Fields,
 
 	function PackagedShader (executionContext)
 	{
-		X3DShaderNode .call (this, executionContext);
-		X3DUrlObject .call (this, executionContext);
+		X3DShaderNode               .call (this, executionContext);
+		X3DUrlObject                .call (this, executionContext);
 		X3DProgrammableShaderObject .call (this, executionContext);
 
 		this .addType (X3DConstants .PackagedShader);
 	}
 
-	PackagedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),new X3DUrlObject (),new X3DProgrammableShaderObject (),
+	PackagedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype)
+		X3DUrlObject .prototype,
+		X3DProgrammableShaderObject .prototype,
 	{
 		constructor: PackagedShader,
 		fieldDefinitions: new FieldDefinitionArray ([

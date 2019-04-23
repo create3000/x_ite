@@ -68,14 +68,16 @@ function (Fields,
 
 	function ShaderProgram (executionContext)
 	{
-		X3DNode .call (this, executionContext);
-		X3DUrlObject .call (this, executionContext);
+		X3DNode                     .call (this, executionContext);
+		X3DUrlObject                .call (this, executionContext);
 		X3DProgrammableShaderObject .call (this, executionContext);
 
 		this .addType (X3DConstants .ShaderProgram);
 	}
 
-	ShaderProgram .prototype = Object .assign (Object .create (X3DNode .prototype),new X3DUrlObject (),new X3DProgrammableShaderObject (),
+	ShaderProgram .prototype = Object .assign (Object .create (X3DNode .prototype),
+		X3DUrlObject .prototype,
+		X3DProgrammableShaderObject .prototype,
 	{
 		constructor: ShaderProgram,
 		fieldDefinitions: new FieldDefinitionArray ([
