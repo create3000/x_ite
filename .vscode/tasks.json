@@ -7,9 +7,7 @@
             "label": "Make Dist",
             "type": "shell",
             "command": "make",
-            "problemMatcher": [
-                "$gcc"
-            ],
+            "problemMatcher": [],
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -34,6 +32,13 @@
             "type": "shell",
             "command": "git",
             "args": ["ls-files", "--others", "--exclude-standard"],
+            "problemMatcher": []
+        },
+        {
+            "label": "Generate Interfaces",
+            "type": "shell",
+            "command": "sh",
+            "args": ["/home/holger/Projekte/Titania/miscellaneous/glade2c++/generate.sh"],
             "problemMatcher": []
         }
     ]

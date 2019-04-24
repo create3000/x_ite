@@ -1,4 +1,3 @@
-/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/
 
 #pragma X3D include "Pack.h"
 
@@ -208,9 +207,9 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 		//tex = texture2D (x3d_ShadowMap [0], cubeToUVCompact (lightToPosition, texelSize .y));
 
 		#if defined (X3D_PCF_FILTERING) || defined (X3D_PCF_SOFT_FILTERING)
-	
+
 			vec2 offset = vec2 (-1, 1) * (texelSize .y * 42.0);
-	
+
 			float value = (
 				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xyy, texelSize .y), shadowCoord .z) +
 				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yyy, texelSize .y), shadowCoord .z) +
@@ -222,7 +221,7 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .xxx, texelSize .y), shadowCoord .z) +
 				texture2DCompare (index, cubeToUVCompact (lightToPosition + offset .yxx, texelSize .y), shadowCoord .z)
 			) * (1.0 / 9.0);
-	
+
 			return light .shadowIntensity * value;
 
 		#else // no percentage-closer filtering
@@ -230,7 +229,7 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 			float value = texture2DCompare (index, cubeToUVCompact (lightToPosition, texelSize .y), shadowCoord .z);
 
 			return light .shadowIntensity * value;
-	
+
 		#endif
 	}
 	else
@@ -239,15 +238,15 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 
 			vec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);
 			vec4 shadowCoord = light .shadowMatrix * vec4 (vertex, 1.0);
-	
+
 			shadowCoord .z   -= light .shadowBias;
 			shadowCoord .xyz /= shadowCoord .w;
-	
+
 			float dx0 = - texelSize .x;
 			float dy0 = - texelSize .y;
 			float dx1 = + texelSize .x;
 			float dy1 = + texelSize .y;
-	
+
 			float value = (
 				texture2DCompare (index, shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +
 				texture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +
@@ -259,22 +258,22 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 				texture2DCompare (index, shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +
 				texture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)
 			) * (1.0 / 9.0);
-	
+
 			return light .shadowIntensity * value;
 
 		#elif defined (X3D_PCF_SOFT_FILTERING)
 
 			vec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);
 			vec4 shadowCoord = light .shadowMatrix * vec4 (vertex, 1.0);
-	
+
 			shadowCoord .z   -= light .shadowBias;
 			shadowCoord .xyz /= shadowCoord .w;
-	
+
 			float dx0 = - texelSize.x;
 			float dy0 = - texelSize.y;
 			float dx1 = + texelSize.x;
 			float dy1 = + texelSize.y;
-			
+
 			float value = (
 				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx0, dy0), shadowCoord .z) +
 				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy0), shadowCoord .z) +
@@ -286,18 +285,18 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (0.0, dy1), shadowCoord .z) +
 				texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)
 			) * ( 1.0 / 9.0 );
-	
+
 			return light .shadowIntensity * value;
 
 		#else // no percentage-closer filtering
 
 			vec4 shadowCoord = shadowMatrix * vec4 (vertex, 1.0);
-	
+
 			shadowCoord .z   -= shadowBias;
 			shadowCoord .xyz /= shadowCoord .w;
-	
+
 			float value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);
-	
+
 			return light .shadowIntensity * value;
 
 		#endif

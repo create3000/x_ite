@@ -1,4 +1,3 @@
-/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/
 
 //https://gist.github.com/patriciogonzalezvivo/670c22f3966e662d2f83
 
@@ -15,16 +14,16 @@ perlin (vec2 p, float dim, float time)
 	vec2 posx  = pos + vec2 (1.0, 0.0);
 	vec2 posy  = pos + vec2 (0.0, 1.0);
 	vec2 posxy = pos + vec2 (1.0);
-	
+
 	float c   = rand (pos,   dim, time);
 	float cx  = rand (posx,  dim, time);
 	float cy  = rand (posy,  dim, time);
 	float cxy = rand (posxy, dim, time);
-	
+
 	vec2 d = fract (p * dim);
 
 	d = -0.5 * cos (d * M_PI) + 0.5;
-	
+
 	float ccx    = mix (c,   cx,    d.x);
 	float cycxy  = mix (cy,  cxy,   d.x);
 	float center = mix (ccx, cycxy, d.y);

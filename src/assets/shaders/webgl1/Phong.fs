@@ -1,4 +1,3 @@
-// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 #extension GL_EXT_frag_depth : enable
@@ -14,8 +13,8 @@ uniform bool x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform bool x3d_SeparateBackColor;
-uniform x3d_MaterialParameters x3d_FrontMaterial;  
-uniform x3d_MaterialParameters x3d_BackMaterial;        
+uniform x3d_MaterialParameters x3d_FrontMaterial;
+uniform x3d_MaterialParameters x3d_BackMaterial;
 
 varying float fogDepth;    // fog depth
 varying vec4  color;       // color
@@ -41,7 +40,7 @@ float
 getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)
 {
 	float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));
-	
+
 	if (spotAngle >= cutOffAngle)
 		return 0.0;
 	else if (spotAngle <= beamWidth)
@@ -142,7 +141,7 @@ getMaterialColor (const in x3d_MaterialParameters material)
 	else
 	{
 		vec4 finalColor = vec4 (1.0);
-	
+
 		if (x3d_ColorMaterial)
 		{
 			if (x3d_NumTextures > 0)

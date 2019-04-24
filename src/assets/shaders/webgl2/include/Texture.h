@@ -1,4 +1,3 @@
-/* -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-*/
 
 #pragma X3D include "Perlin.h"
 
@@ -10,7 +9,7 @@ uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
 uniform vec4 x3d_MultiTextureColor;
 uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
 
-uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];  
+uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];
 
 #ifdef X3D_MULTI_TEXTURING
 vec4
@@ -124,7 +123,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 
 		vec4 texCoord     = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
 		vec4 textureColor = vec4 (1.0);
-	
+
 		if (x3d_GeometryType == x3d_Geometry2D && ! gl_FrontFacing)
 			texCoord .s = 1.0 - texCoord .s;
 

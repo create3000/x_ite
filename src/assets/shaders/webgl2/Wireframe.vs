@@ -1,12 +1,11 @@
 #version 300 es
-// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
 
 precision mediump float;
 precision mediump int;
 
 uniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false
 uniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false
-uniform x3d_MaterialParameters x3d_FrontMaterial;  
+uniform x3d_MaterialParameters x3d_FrontMaterial;
 
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
