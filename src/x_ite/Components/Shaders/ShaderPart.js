@@ -62,7 +62,7 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           Shader,
-          X3DNode, 
+          X3DNode,
           X3DUrlObject,
           FileLoader,
           X3DConstants,
@@ -86,7 +86,7 @@ function (Fields,
 		X3DUrlObject .call (this, executionContext);
 
 		this .addType (X3DConstants .ShaderPart);
-		
+
 		this .addChildObjects ("buffer", new Fields .SFTime ());
 
 		this .valid = false;
@@ -144,7 +144,7 @@ function (Fields,
 		getShaderType: function ()
 		{
 			var type = shaderTypes [this .type_ .getValue ()];
-			
+
 			if (type)
 				return type;
 
@@ -166,9 +166,9 @@ function (Fields,
 		{
 			if (this .checkLoadState () == X3DConstants .COMPLETE_STATE || this .checkLoadState () == X3DConstants .IN_PROGRESS_STATE)
 				return;
-	
+
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-			
+
 			this .buffer_ .addEvent ();
 		},
 		set_buffer__: function ()
@@ -189,7 +189,7 @@ function (Fields,
 
 					gl .shaderSource (this .shader, Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .shadow));
 					gl .compileShader (this .shader);
-	
+
 					this .valid = gl .getShaderParameter (this .shader, gl .COMPILE_STATUS);
 
 					if (! this .valid)
@@ -204,4 +204,3 @@ function (Fields,
 
 	return ShaderPart;
 });
-

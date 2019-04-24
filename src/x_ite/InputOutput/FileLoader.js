@@ -131,12 +131,12 @@ function ($,
 				var handlers = [
 					function (scene, string, success, error)
 					{
-						// Try parse X3D XML Encoding.	
+						// Try parse X3D XML Encoding.
 						setTimeout (this .importDocument .bind (this, scene, $.parseXML (string), success, error), TIMEOUT);
 					},
 					function (scene, string, success, error)
 					{
-						// Try parse X3D JSON Encoding.	
+						// Try parse X3D JSON Encoding.
 						setTimeout (this .importJS .bind (this, scene, JSON .parse (string), success, error), TIMEOUT);
 					},
 					function (scene, string, success, error)
@@ -149,8 +149,8 @@ function ($,
 							}
 							.bind (this, scene, success, error);
 						}
-	
-						// Try parse X3D Classic Encoding.	
+
+						// Try parse X3D Classic Encoding.
 						new Parser (scene) .parseIntoScene (string, success, error);
 					},
 				];
@@ -182,17 +182,17 @@ function ($,
 				var handlers = [
 					function (scene, string)
 					{
-						// Try parse X3D XML Encoding.	
+						// Try parse X3D XML Encoding.
 						this .importDocument (scene, $.parseXML (string));
 					},
 					function (scene, string)
 					{
-						// Try parse X3D JSON Encoding.	
+						// Try parse X3D JSON Encoding.
 						this .importJS (scene, JSON.parse (string));
 					},
 					function (scene, string)
 					{
-						// Try parse X3D Classic Encoding.	
+						// Try parse X3D Classic Encoding.
 						new Parser (scene) .parseIntoScene (string);
 					},
 				];
@@ -230,9 +230,9 @@ function ($,
 					}
 					.bind (this, scene, success, error);
 				}
-	
+
 				new XMLParser (scene) .parseIntoScene (dom, success, error);
-		
+
 				//AP: add reference to dom for later access.
 				this .node .dom = dom;
 			}
@@ -428,7 +428,7 @@ function ($,
 				try
 				{
 					var result = ECMAScript .exec (URL);
-	
+
 					if (result)
 					{
 						this .callback (result [1]);
@@ -562,9 +562,9 @@ function ($,
 		error: function (exception)
 		{
 			if (this .URL .scheme === "data")
-				return;
-
-			console .warn ("Couldn't load URL '" + this .URL + "':", exception .message);
+				console .warn ("Couldn't load URL 'data':", exception .message);
+			else
+				console .warn ("Couldn't load URL '" + this .URL + "':", exception .message);
 
 			if (DEBUG)
 				console .log (exception);

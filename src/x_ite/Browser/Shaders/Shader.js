@@ -96,6 +96,10 @@ function (ShaderSource,
 			if (! match)
 				return source;
 
+			var
+				lines1 = (match [1] .match (/\n/g) || []) .length + 1,
+				lines2 = (match [1] .match (/\n/g) || []) .length + 1;
+
 			var constants = "";
 
 			constants += "#define X_ITE\n";
@@ -111,6 +115,8 @@ function (ShaderSource,
 
 			if (shadow)
 				constants += "#define X3D_SHADOWS\n";
+
+			constants += "#line " + (lines1 + 1) + "\n";
 
 			var definitions = "";
 
@@ -158,11 +164,11 @@ function (ShaderSource,
 			definitions += "#define x3d_SelectArg1                " + MultiTextureModeType .SELECTARG1                + "\n";
 			definitions += "#define x3d_SelectArg2                " + MultiTextureModeType .SELECTARG2                + "\n";
 			definitions += "#define x3d_Off                       " + MultiTextureModeType .OFF                       + "\n";
-		
+
 			definitions += "#define x3d_Diffuse  " + MultiTextureSourceType .DIFFUSE  + "\n";
 			definitions += "#define x3d_Specular " + MultiTextureSourceType .SPECULAR + "\n";
 			definitions += "#define x3d_Factor   " + MultiTextureSourceType .FACTOR   + "\n";
-		
+
 			definitions += "#define x3d_Complement     " + MultiTextureFunctionType .COMPLEMENT     + "\n";
 			definitions += "#define x3d_AlphaReplicate " + MultiTextureFunctionType .ALPHAREPLICATE + "\n";
 
@@ -206,7 +212,11 @@ function (ShaderSource,
 			types = types .replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, pf + " $1");
 			types = types .replace (/mediump\s+(int)/g, pi + " $1");
 
-			return match [1] + constants + match [2] + definitions + types + match [3];
+			types += "#line " + (lines1 + lines2 + 1) + "\n";
+
+			var source = match [1] + constants + match [2] + definitions + types + match [3];
+
+			return source;
 		},
 	};
 
