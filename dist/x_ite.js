@@ -45940,6 +45940,10 @@ function (ShaderSource,
 			if (! match)
 				return source;
 
+			var
+				lines1 = (match [1] .match (/\n/g) || []) .length + 1,
+				lines2 = (match [1] .match (/\n/g) || []) .length + 1;
+
 			var constants = "";
 
 			constants += "#define X_ITE\n";
@@ -45955,6 +45959,8 @@ function (ShaderSource,
 
 			if (shadow)
 				constants += "#define X3D_SHADOWS\n";
+
+			constants += "#line " + (lines1 + 1) + "\n";
 
 			var definitions = "";
 
@@ -46002,11 +46008,11 @@ function (ShaderSource,
 			definitions += "#define x3d_SelectArg1                " + MultiTextureModeType .SELECTARG1                + "\n";
 			definitions += "#define x3d_SelectArg2                " + MultiTextureModeType .SELECTARG2                + "\n";
 			definitions += "#define x3d_Off                       " + MultiTextureModeType .OFF                       + "\n";
-		
+
 			definitions += "#define x3d_Diffuse  " + MultiTextureSourceType .DIFFUSE  + "\n";
 			definitions += "#define x3d_Specular " + MultiTextureSourceType .SPECULAR + "\n";
 			definitions += "#define x3d_Factor   " + MultiTextureSourceType .FACTOR   + "\n";
-		
+
 			definitions += "#define x3d_Complement     " + MultiTextureFunctionType .COMPLEMENT     + "\n";
 			definitions += "#define x3d_AlphaReplicate " + MultiTextureFunctionType .ALPHAREPLICATE + "\n";
 
@@ -46050,7 +46056,11 @@ function (ShaderSource,
 			types = types .replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, pf + " $1");
 			types = types .replace (/mediump\s+(int)/g, pi + " $1");
 
-			return match [1] + constants + match [2] + definitions + types + match [3];
+			types += "#line " + (lines1 + lines2 + 1) + "\n";
+
+			var source = match [1] + constants + match [2] + definitions + types + match [3];
+
+			return source;
 		},
 	};
 
@@ -51843,12 +51853,12 @@ function ($,
 				var handlers = [
 					function (scene, string, success, error)
 					{
-						// Try parse X3D XML Encoding.	
+						// Try parse X3D XML Encoding.
 						setTimeout (this .importDocument .bind (this, scene, $.parseXML (string), success, error), TIMEOUT);
 					},
 					function (scene, string, success, error)
 					{
-						// Try parse X3D JSON Encoding.	
+						// Try parse X3D JSON Encoding.
 						setTimeout (this .importJS .bind (this, scene, JSON .parse (string), success, error), TIMEOUT);
 					},
 					function (scene, string, success, error)
@@ -51861,8 +51871,8 @@ function ($,
 							}
 							.bind (this, scene, success, error);
 						}
-	
-						// Try parse X3D Classic Encoding.	
+
+						// Try parse X3D Classic Encoding.
 						new Parser (scene) .parseIntoScene (string, success, error);
 					},
 				];
@@ -51894,17 +51904,17 @@ function ($,
 				var handlers = [
 					function (scene, string)
 					{
-						// Try parse X3D XML Encoding.	
+						// Try parse X3D XML Encoding.
 						this .importDocument (scene, $.parseXML (string));
 					},
 					function (scene, string)
 					{
-						// Try parse X3D JSON Encoding.	
+						// Try parse X3D JSON Encoding.
 						this .importJS (scene, JSON.parse (string));
 					},
 					function (scene, string)
 					{
-						// Try parse X3D Classic Encoding.	
+						// Try parse X3D Classic Encoding.
 						new Parser (scene) .parseIntoScene (string);
 					},
 				];
@@ -51942,9 +51952,9 @@ function ($,
 					}
 					.bind (this, scene, success, error);
 				}
-	
+
 				new XMLParser (scene) .parseIntoScene (dom, success, error);
-		
+
 				//AP: add reference to dom for later access.
 				this .node .dom = dom;
 			}
@@ -52140,7 +52150,7 @@ function ($,
 				try
 				{
 					var result = ECMAScript .exec (URL);
-	
+
 					if (result)
 					{
 						this .callback (result [1]);
@@ -52274,9 +52284,9 @@ function ($,
 		error: function (exception)
 		{
 			if (this .URL .scheme === "data")
-				return;
-
-			console .warn ("Couldn't load URL '" + this .URL + "':", exception .message);
+				console .warn ("Couldn't load URL 'data':", exception .message);
+			else
+				console .warn ("Couldn't load URL '" + this .URL + "':", exception .message);
 
 			if (DEBUG)
 				console .log (exception);
@@ -52388,7 +52398,7 @@ function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           Shader,
-          X3DNode, 
+          X3DNode,
           X3DUrlObject,
           FileLoader,
           X3DConstants,
@@ -52412,7 +52422,7 @@ function (Fields,
 		X3DUrlObject .call (this, executionContext);
 
 		this .addType (X3DConstants .ShaderPart);
-		
+
 		this .addChildObjects ("buffer", new Fields .SFTime ());
 
 		this .valid = false;
@@ -52470,7 +52480,7 @@ function (Fields,
 		getShaderType: function ()
 		{
 			var type = shaderTypes [this .type_ .getValue ()];
-			
+
 			if (type)
 				return type;
 
@@ -52492,9 +52502,9 @@ function (Fields,
 		{
 			if (this .checkLoadState () == X3DConstants .COMPLETE_STATE || this .checkLoadState () == X3DConstants .IN_PROGRESS_STATE)
 				return;
-	
+
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-			
+
 			this .buffer_ .addEvent ();
 		},
 		set_buffer__: function ()
@@ -52515,7 +52525,7 @@ function (Fields,
 
 					gl .shaderSource (this .shader, Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .shadow));
 					gl .compileShader (this .shader);
-	
+
 					this .valid = gl .getShaderParameter (this .shader, gl .COMPILE_STATUS);
 
 					if (! this .valid)
@@ -52530,7 +52540,6 @@ function (Fields,
 
 	return ShaderPart;
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************

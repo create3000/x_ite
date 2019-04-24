@@ -4,7 +4,7 @@ precision mediump int;
 uniform x3d_LinePropertiesParameters x3d_LineProperties;
 uniform bool  x3d_ColorMaterial;   
 uniform bool  x3d_Lighting;        
-uniform x3d_MaterialParameters x3d_FrontMaterial;  
+uniform x3d_MaterialParameters x3d_FrontMaterial;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 in float x3d_FogDepth;

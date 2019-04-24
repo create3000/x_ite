@@ -1,4 +1,3 @@
-
 precision mediump float;
 precision mediump int;
 uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];

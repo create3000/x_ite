@@ -1,4 +1,3 @@
-
 precision mediump float;
 precision mediump int;
 uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];
@@ -10,7 +9,7 @@ uniform bool x3d_ColorMaterial;
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform bool x3d_SeparateBackColor;
-uniform x3d_MaterialParameters x3d_FrontMaterial;  
+uniform x3d_MaterialParameters x3d_FrontMaterial;
 uniform x3d_MaterialParameters x3d_BackMaterial;
 attribute float x3d_FogDepth;
 attribute vec4  x3d_Color;

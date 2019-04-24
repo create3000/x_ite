@@ -7,8 +7,8 @@ uniform bool x3d_ColorMaterial;
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform bool x3d_SeparateBackColor;
-uniform x3d_MaterialParameters x3d_FrontMaterial;  
-uniform x3d_MaterialParameters x3d_BackMaterial;        
+uniform x3d_MaterialParameters x3d_FrontMaterial;
+uniform x3d_MaterialParameters x3d_BackMaterial;
 in float fogDepth;    
 in vec4  color;       
 in vec4  texCoord0;   
@@ -299,7 +299,7 @@ uniform sampler2D   x3d_Texture2D [x3d_MaxTextures];
 uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
 uniform vec4 x3d_MultiTextureColor;
 uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
-uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];  
+uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];
 #ifdef X3D_MULTI_TEXTURING
 vec4
 getTexCoord (const in int i)
