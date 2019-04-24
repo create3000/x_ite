@@ -225,6 +225,7 @@ function (Fields,
 				this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
 
 				this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
+				this .x3d_TexCoord [i]      = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
 			}
 
 			this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");
@@ -237,9 +238,6 @@ function (Fields,
 			this .x3d_Color    = gl .getAttribLocation (program, "x3d_Color");
 			this .x3d_Normal   = gl .getAttribLocation (program, "x3d_Normal");
 			this .x3d_Vertex   = gl .getAttribLocation (program, "x3d_Vertex");
-
-			for (var t = 0, length = this .x3d_MaxTextures; t < length; ++ t)
-				this .x3d_TexCoord [t] = this .getAttribLocation (gl, program, "x3d_TexCoord" + t, t ? "" : "x3d_TexCoord");
 
 			this .x3d_ParticleId          = gl .getUniformLocation (program, "x3d_Particle.id");
 			this .x3d_ParticleLife        = gl .getUniformLocation (program, "x3d_Particle.life");
