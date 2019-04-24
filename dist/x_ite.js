@@ -43837,6 +43837,9 @@ function (Fields,
 
 				this .x3d_TextureCoordinateGeneratorMode [i]      = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].mode");
 				this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
+
+				this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
+				this .x3d_TexCoord [i]      = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
 			}
 
 			this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");
@@ -43845,16 +43848,10 @@ function (Fields,
 			this .x3d_NormalMatrix      = gl .getUniformLocation (program, "x3d_NormalMatrix");
 			this .x3d_CameraSpaceMatrix = gl .getUniformLocation (program, "x3d_CameraSpaceMatrix");
 
-			for (var i = 0; i < this .x3d_MaxTextures; ++ i)
-				this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
-
 			this .x3d_FogDepth = gl .getAttribLocation (program, "x3d_FogDepth");
 			this .x3d_Color    = gl .getAttribLocation (program, "x3d_Color");
 			this .x3d_Normal   = gl .getAttribLocation (program, "x3d_Normal");
 			this .x3d_Vertex   = gl .getAttribLocation (program, "x3d_Vertex");
-
-			for (var t = 0, length = this .x3d_MaxTextures; t < length; ++ t)
-				this .x3d_TexCoord [t] = this .getAttribLocation (gl, program, "x3d_TexCoord" + t, t ? "" : "x3d_TexCoord");
 
 			this .x3d_ParticleId          = gl .getUniformLocation (program, "x3d_Particle.id");
 			this .x3d_ParticleLife        = gl .getUniformLocation (program, "x3d_Particle.life");
@@ -43937,10 +43934,10 @@ function (Fields,
 			if (depreciated)
 			{
 				location = gl .getUniformLocation (program, depreciated);
-	
+
 				if (location)
 					console .error (this .getTypeName (), this .getName (), "Using uniform location name »" + depreciated + "« is depreciated, use »" + name + "«. See http://create3000.de/x_ite/custom-shaders/.");
-	
+
 				return location;
 			}
 
@@ -43960,7 +43957,7 @@ function (Fields,
 			if (depreciated)
 			{
 				location = gl .getAttribLocation (program, depreciated);
-	
+
 				if (location >= 0)
 					console .error (this .getTypeName (), this .getName (), "Using attribute location name »" + depreciated + "« is depreciated, use »" + name + "«. See http://create3000.de/x_ite/custom-shaders/.");
 
@@ -44105,7 +44102,7 @@ function (Fields,
 				var
 					gl       = this .getBrowser () .getContext (),
 					location = field ._uniformLocation;
-	
+
 				if (location)
 				{
 					switch (field .getType ())
@@ -44141,17 +44138,17 @@ function (Fields,
 								array  = location .array,
 								pixels = field .array,
 								length = 3 + pixels .length;
-		
+
 							if (length !== array .length)
 								array = location .array = new Int32Array (length);
-		
+
 							array [0] = field .width;
 							array [1] = field .height;
 							array [2] = field .comp;
-		
+
 							for (var a = 3, p = 0, length = pixels .length; p < length; ++ p, ++ a)
 								array [a] = pixels [p];
-		
+
 							gl .uniform1iv (location, array);
 							return;
 						}
@@ -44159,7 +44156,7 @@ function (Fields,
 						case X3DConstants .SFMatrix3f:
 						{
 							location .array .set (field .getValue ());
-		
+
 							gl .uniformMatrix3fv (location, false, location .array);
 							return;
 						}
@@ -44167,27 +44164,27 @@ function (Fields,
 						case X3DConstants .SFMatrix4f:
 						{
 							location .array .set (field .getValue ());
-		
+
 							gl .uniformMatrix4fv (location, false, location .array);
 							return;
 						}
 						case X3DConstants .SFNode:
 						{
 							var texture = X3DCast (X3DConstants .X3DTextureNode, field);
-			
+
 							if (texture)
 							{
 								this .textures .set (location, { name: field .getName (), texture: texture, textureUnit: undefined } );
 								return;
 							}
-	
+
 							this .textures .delete (location);
 							return;
 						}
 						case X3DConstants .SFRotation:
 						{
 							field .getValue () .getMatrix (location .array);
-	
+
 							gl .uniformMatrix3fv (location, false, location .array);
 							return;
 						}
@@ -44220,52 +44217,52 @@ function (Fields,
 						case X3DConstants .MFInt32:
 						{
 							var array = location .array;
-	
+
 							for (var i = 0, length = field .length; i < length; ++ i)
 								array [i] = field [i];
-		
+
 							for (var length = array .length; i < length; ++ i)
 								array [i] = 0;
-		
+
 							gl .uniform1iv (location, array);
 							return;
 						}
 						case X3DConstants .MFColor:
 						{
 							var array = location .array;
-		
+
 							for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 							{
 								var color = field [i];
-		
+
 								array [k++] = color .r;
 								array [k++] = color .g;
 								array [k++] = color .b;
 							}
-		
+
 							for (var length = array .length; k < length; ++ k)
 								array [k] = 0;
-		
+
 							gl .uniform3fv (location, array);
 							return;
 						}
 						case X3DConstants .MFColorRGBA:
 						{
 							var array = location .array;
-		
+
 							for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 							{
 								var color = field [i];
-		
+
 								array [k++] = color .r;
 								array [k++] = color .g;
 								array [k++] = color .b;
 								array [k++] = color .a;
 							}
-		
+
 							for (var length = array .length; k < length; ++ k)
 								array [k] = 0;
-		
+
 							gl .uniform4fv (location, array);
 							return;
 						}
@@ -44274,13 +44271,13 @@ function (Fields,
 						case X3DConstants .MFTime:
 						{
 							var array = location .array;
-	
+
 							for (var i = 0, length = field .length; i < length; ++ i)
 								array [i] = field [i];
-		
+
 							for (var length = array .length; i < length; ++ i)
 								array [i] = 0;
-	
+
 							gl .uniform1fv (location, array);
 							return;
 						}
@@ -44289,24 +44286,24 @@ function (Fields,
 							var
 								array  = location .array,
 								length = this .getImagesLength (field);
-		
+
 							if (length !== array .length)
 								array = location .array = new Int32Array (length);
-		
+
 							for (var i = 0, a = 0, length = field .length; i < length; ++ i)
 							{
 								var
 									value  = field [i],
 									pixels = value .array;
-		
+
 								array [a ++] = value .width;
 								array [a ++] = value .height;
 								array [a ++] = value .comp;
-		
+
 								for (var p = 0, plength = pixels .length; p < plength; ++ p)
 									array [a ++] = pixels [p];
 							}
-		
+
 							gl .uniform1iv (location, array);
 							return;
 						}
@@ -44314,18 +44311,18 @@ function (Fields,
 						case X3DConstants .MFMatrix3f:
 						{
 							var array = location .array;
-		
+
 							for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 							{
 								var matrix = field [i];
-		
+
 								for (var m = 0; m < 9; ++ m)
 									array [k++] = matrix [m];
 							}
-		
+
 							for (var length = array .length; k < length; ++ k)
 								array [k] = 0;
-		
+
 							gl .uniformMatrix3fv (location, false, array);
 							return;
 						}
@@ -44333,46 +44330,46 @@ function (Fields,
 						case X3DConstants .MFMatrix4f:
 						{
 							var array = location .array;
-		
+
 							for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 							{
 								var matrix = field [i];
-		
+
 								for (var m = 0; m < 16; ++ m)
 									array [k++] = matrix [m];
 							}
-		
+
 							for (var length = array .length; k < length; ++ k)
 								array [k] = 0;
-		
+
 							gl .uniformMatrix4fv (location, false, array);
 							return;
 						}
 						case X3DConstants .MFNode:
 						{
 							var locations = location .locations;
-	
+
 							for (var i = 0, length = field .length; i < length; ++ i)
 							{
 								var texture = X3DCast (X3DConstants .X3DTextureNode, field [i]);
-				
+
 								if (texture)
 								{
 									this .textures .set (locations [i], { name: field [i] .getName (), texture: texture, textureUnit: undefined } );
 									continue;
 								}
 							}
-	
+
 							return;
 						}
 						case X3DConstants .MFRotation:
 						{
 							var array = location .array;
-	
+
 							for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 							{
 								var matrix = field [i] .getValue () .getMatrix (matrix3);
-		
+
 								array [k++] = matrix [0];
 								array [k++] = matrix [1];
 								array [k++] = matrix [2];
@@ -44383,10 +44380,10 @@ function (Fields,
 								array [k++] = matrix [7];
 								array [k++] = matrix [8];
 							}
-		
+
 							for (var length = array .length; k < length; ++ k)
 								array [k] = 0;
-		
+
 							gl .uniformMatrix3fv (location, false, array);
 							return;
 						}
@@ -44398,18 +44395,18 @@ function (Fields,
 						case X3DConstants .MFVec2f:
 						{
 							var array = location .array;
-		
+
 							for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 							{
 								var vector = field [i];
-		
+
 								array [k++] = vector .x;
 								array [k++] = vector .y;
 							}
-		
+
 							for (var length = array .length; k < length; ++ k)
 								array [k] = 0;
-	
+
 							gl .uniform2fv (location, array);
 							return;
 						}
@@ -44417,19 +44414,19 @@ function (Fields,
 						case X3DConstants .MFVec3f:
 						{
 							var array = location .array;
-		
+
 							for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 							{
 								var vector = field [i];
-		
+
 								array [k++] = vector .x;
 								array [k++] = vector .y;
 								array [k++] = vector .z;
 							}
-		
+
 							for (var length = array .length; k < length; ++ k)
 								array [k] = 0;
-		
+
 							gl .uniform3fv (location, array);
 							return;
 						}
@@ -44437,20 +44434,20 @@ function (Fields,
 						case X3DConstants .MFVec4f:
 						{
 							var array = location .array;
-		
+
 							for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 							{
 								var vector = field [i];
-		
+
 								array [k++] = vector .x;
 								array [k++] = vector .y;
 								array [k++] = vector .z;
 								array [k++] = vector .w;
 							}
-		
+
 							for (var length = array .length; k < length; ++ k)
 								array [k] = 0;
-		
+
 							gl .uniform4fv (location, array);
 							return;
 						}
@@ -44552,7 +44549,7 @@ function (Fields,
 			if (viewpoint instanceof OrthoViewpoint)
 				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, -1);
 			else
-				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));		
+				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
 		},
 		setLocalUniforms: function (gl, context)
 		{
@@ -44682,7 +44679,7 @@ function (Fields,
 				}
 
 				var textureUnit = object .textureUnit = browser .getCombinedTextureUnits () .pop ();
-	
+
 				gl .uniform1i (location, textureUnit);
 				gl .activeTexture (gl .TEXTURE0 + textureUnit);
 				gl .bindTexture (texture .getTarget (), texture .getTexture ());
@@ -44709,12 +44706,12 @@ function (Fields,
 		enableFloatAttrib: function (gl, name, buffer, components)
 		{
 			var location = gl. getAttribLocation (this .getProgram (), name);
-		
+
 			if (location === -1)
 				return;
-		
+
 			gl .enableVertexAttribArray (location);
-		
+
 			gl .bindBuffer (gl .ARRAY_BUFFER, buffer);
 			gl .vertexAttribPointer (location, components, gl .FLOAT, false, 0, 0);
 		},
@@ -44948,8 +44945,6 @@ function (Fields,
 
 	return X3DProgrammableShaderObject;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
