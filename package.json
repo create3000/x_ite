@@ -1,7 +1,7 @@
 {
 	"name": "x_ite",
 	"version": "4.5.2a",
-	"revision": "775",
+	"revision": "776",
 	"description": "X_ITE X3D Browser",
 	"main": "src/x_ite.js",
 	"repository": {
@@ -38,7 +38,7 @@
 		"ammojs": "latest",
 		"bezier-js": "latest",
 		"css-element-queries": "latest",
-		"jquery": "^3.3.1",
+		"jquery": "^3.4.0",
 		"jquery-contextmenu": "^2.7.1",
 		"jquery-mousewheel": "latest",
 		"jquery.fullscreen": "latest",
