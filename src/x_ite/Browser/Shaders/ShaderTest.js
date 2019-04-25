@@ -74,7 +74,7 @@ function (TextureBuffer,
 				0, 0, 1,
 				0, 0, 1,
 			];
-		
+
 			var vertices = [
 				 2,  2, 0, 1,
 				-2,  2, 0, 1,
@@ -91,17 +91,17 @@ function (TextureBuffer,
 					frameBuffer  = new TextureBuffer (browser, 16, 16),
 		         normalBuffer = gl .createBuffer (),
 		         vertexBuffer = gl .createBuffer ();
-		
+
 				frameBuffer .bind ();
 
 				shaderNode .enable (gl);
 				shaderNode .setShaderObjects (gl, [ ]);
-		
+
 				gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
 				gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .STATIC_DRAW);
 				gl .bindBuffer (gl .ARRAY_BUFFER, normalBuffer);
 				gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .STATIC_DRAW);
-				
+
 				// Matrices
 
 				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, new Float32Array (Camera .ortho (-1, 1, -1, 1, -1, 1, new Matrix4 ())));
@@ -109,8 +109,8 @@ function (TextureBuffer,
 				gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix,     false, new Float32Array (new Matrix3 ()));
 
 				// Set clip planes and lights to none.
-		
-				gl .uniform1i (shaderNode .x3d_FogType,                0);
+
+				gl .uniform1i (shaderNode .x3d_FogType,               0);
 				gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,  true);
 				gl .uniform1i (shaderNode .x3d_FillPropertiesHatched, false);
 				gl .uniform1i (shaderNode .x3d_ColorMaterial,         false);

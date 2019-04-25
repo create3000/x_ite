@@ -97,8 +97,8 @@ function (ShaderSource,
 				return source;
 
 			var
-				lines1 = (match [1] .match (/\n/g) || []) .length + 1,
-				lines2 = (match [1] .match (/\n/g) || []) .length + 1;
+				lines1 = (match [1] .match (/\n/g) || []) .length,
+				lines2 = (match [1] .match (/\n/g) || []) .length;
 
 			var constants = "";
 

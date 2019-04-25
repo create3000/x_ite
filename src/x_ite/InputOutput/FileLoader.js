@@ -574,7 +574,9 @@ function ($,
 			var URL = this .getReferer () .transform (new URI (sURL));
 
 			if (URL .isLocal () || URL .host === "localhost")
+			{
 				URL = this .browser .getLocation () .getRelativePath (URL);
+			}
 			else
 			{
 				if (DEBUG)
