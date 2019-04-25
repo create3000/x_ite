@@ -3,8 +3,8 @@ precision mediump float;
 precision mediump int;
 uniform x3d_LinePropertiesParameters x3d_LineProperties;
 in float fogDepth; 
-in vec4  color;    
-in vec3  vertex;   
+in vec4 color; 
+in vec3 vertex; 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 uniform float x3d_LogarithmicFarFactor1_2;
 in float depth;
@@ -33,7 +33,7 @@ getFogColor (const in vec3 color)
 {
 return mix (x3d_Fog .color, color, getFogInterpolant ());
 }
-uniform int  x3d_NumClipPlanes;
+uniform int x3d_NumClipPlanes;
 uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
 void
 clip ()
@@ -51,9 +51,9 @@ main ()
 {
 clip ();
 float lw = (x3d_LineProperties .linewidthScaleFactor + 1.0) / 2.0;
-float t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;
+float t = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * lw - lw + 1.0;
 x3d_FragColor .rgb = getFogColor (color .rgb);
-x3d_FragColor .a   = mix (color .a, 0.0, clamp (t, 0.0, 1.0));
+x3d_FragColor .a = mix (color .a, 0.0, clamp (t, 0.0, 1.0));
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 if (x3d_LogarithmicFarFactor1_2 > 0.0)
 gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;

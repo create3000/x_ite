@@ -41,7 +41,7 @@ return color .x + dot (color .gba, bitShifts);
 }
 #endif
 #endif
-uniform int  x3d_NumClipPlanes;
+uniform int x3d_NumClipPlanes;
 uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
 void
 clip ()

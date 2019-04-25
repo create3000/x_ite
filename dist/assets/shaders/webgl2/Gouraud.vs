@@ -5,7 +5,7 @@ uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];
 uniform mat3 x3d_NormalMatrix;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
-uniform bool x3d_Lighting;      
+uniform bool x3d_Lighting; 
 uniform bool x3d_ColorMaterial; 
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
@@ -13,20 +13,20 @@ uniform bool x3d_SeparateBackColor;
 uniform x3d_MaterialParameters x3d_FrontMaterial;
 uniform x3d_MaterialParameters x3d_BackMaterial;
 in float x3d_FogDepth;
-in vec4  x3d_Color;
-in vec4  x3d_TexCoord0;
-in vec4  x3d_TexCoord1;
-in vec3  x3d_Normal;
-in vec4  x3d_Vertex;
-out float fogDepth;    
-out vec4  frontColor;  
-out vec4  backColor;   
-out vec4  texCoord0;   
-out vec4  texCoord1;   
-out vec3  normal;      
-out vec3  vertex;      
-out vec3  localNormal; 
-out vec3  localVertex; 
+in vec4 x3d_Color;
+in vec4 x3d_TexCoord0;
+in vec4 x3d_TexCoord1;
+in vec3 x3d_Normal;
+in vec4 x3d_Vertex;
+out float fogDepth; 
+out vec4 frontColor; 
+out vec4 backColor; 
+out vec4 texCoord0; 
+out vec4 texCoord1; 
+out vec3 normal; 
+out vec3 vertex; 
+out vec3 localNormal; 
+out vec3 localVertex; 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 out float depth;
 #endif
@@ -46,12 +46,12 @@ const in vec3 vertex,
 const in x3d_MaterialParameters material)
 {
 vec3 V = normalize (-vertex); 
-vec3  diffuseFactor = vec3 (0.0);
-float alpha         = 1.0 - material .transparency;
+vec3 diffuseFactor = vec3 (0.0);
+float alpha = 1.0 - material .transparency;
 if (x3d_ColorMaterial)
 {
-diffuseFactor  = x3d_Color .rgb;
-alpha         *= x3d_Color .a;
+diffuseFactor = x3d_Color .rgb;
+alpha *= x3d_Color .a;
 }
 else
 diffuseFactor = material .diffuseColor;
@@ -62,24 +62,24 @@ for (int i = 0; i < x3d_MaxLights; ++ i)
 if (i == x3d_NumLights)
 break;
 x3d_LightSourceParameters light = x3d_LightSource [i];
-vec3  vL = light .location - vertex;
+vec3 vL = light .location - vertex;
 float dL = length (light .matrix * vL);
-bool  di = light .type == x3d_DirectionalLight;
+bool di = light .type == x3d_DirectionalLight;
 if (di || dL <= light .radius)
 {
 vec3 d = light .direction;
 vec3 c = light .attenuation;
-vec3 L = di ? -d : normalize (vL);      
-vec3 H = normalize (L + V);             
-float lightAngle     = dot (N, L);      
-vec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);
+vec3 L = di ? -d : normalize (vL); 
+vec3 H = normalize (L + V); 
+float lightAngle = dot (N, L); 
+vec3 diffuseTerm = diffuseFactor * clamp (lightAngle, 0.0, 1.0);
 float specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;
-vec3  specularTerm   = material .specularColor * specularFactor;
-float attenuationFactor           = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
-float spotFactor                  = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
-float attenuationSpotFactor       = attenuationFactor * spotFactor;
-vec3  ambientColor                = light .ambientIntensity * ambientTerm;
-vec3  ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);
+vec3 specularTerm = material .specularColor * specularFactor;
+float attenuationFactor = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
+float spotFactor = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
+float attenuationSpotFactor = attenuationFactor * spotFactor;
+vec3 ambientColor = light .ambientIntensity * ambientTerm;
+vec3 ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);
 finalColor += attenuationSpotFactor * (light .color * ambientDiffuseSpecularColor);
 }
 }
@@ -90,11 +90,11 @@ void
 main ()
 {
 vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
-fogDepth    = x3d_FogDepth;
-texCoord0   = x3d_TextureMatrix [0] * x3d_TexCoord0;
-texCoord1   = x3d_TextureMatrix [1] * x3d_TexCoord1;
-vertex      = position .xyz;
-normal      = normalize (x3d_NormalMatrix * x3d_Normal);
+fogDepth = x3d_FogDepth;
+texCoord0 = x3d_TextureMatrix [0] * x3d_TexCoord0;
+texCoord1 = x3d_TextureMatrix [1] * x3d_TexCoord1;
+vertex = position .xyz;
+normal = normalize (x3d_NormalMatrix * x3d_Normal);
 localNormal = x3d_Normal;
 localVertex = x3d_Vertex .xyz;
 gl_Position = x3d_ProjectionMatrix * position;

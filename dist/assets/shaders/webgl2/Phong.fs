@@ -1,22 +1,22 @@
 #version 300 es
 precision mediump float;
 precision mediump int;
-uniform int  x3d_GeometryType;
-uniform bool x3d_Lighting;      
+uniform int x3d_GeometryType;
+uniform bool x3d_Lighting; 
 uniform bool x3d_ColorMaterial; 
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform bool x3d_SeparateBackColor;
 uniform x3d_MaterialParameters x3d_FrontMaterial;
 uniform x3d_MaterialParameters x3d_BackMaterial;
-in float fogDepth;    
-in vec4  color;       
-in vec4  texCoord0;   
-in vec4  texCoord1;   
-in vec3  normal;      
-in vec3  vertex;      
-in vec3  localNormal; 
-in vec3  localVertex; 
+in float fogDepth; 
+in vec4 color; 
+in vec4 texCoord0; 
+in vec4 texCoord1; 
+in vec3 normal; 
+in vec3 vertex; 
+in vec3 localNormal; 
+in vec3 localVertex; 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 uniform float x3d_LogarithmicFarFactor1_2;
 in float depth;
@@ -128,7 +128,7 @@ absV *= scaleToCube;
 v *= scaleToCube * (1.0 - 2.0 * texelSizeY);
 vec2 planar = v .xy;
 float almostATexel = 1.5 * texelSizeY;
-float almostOne    = 1.0 - almostATexel;
+float almostOne = 1.0 - almostATexel;
 if (absV .z >= almostOne)
 {
 if (v .z > 0.0)
@@ -151,12 +151,12 @@ mat4
 getPointLightRotations (const in vec3 vector)
 {
 mat4 rotations [6];
-rotations [0] = mat4 ( 0, 0 , 1, 0,   0, 1,  0, 0,  -1,  0,  0, 0,   0, 0, 0, 1);  
-rotations [1] = mat4 ( 0, 0, -1, 0,   0, 1,  0, 0,   1,  0,  0, 0,   0, 0, 0, 1);  
-rotations [2] = mat4 (-1, 0,  0, 0,   0, 1,  0, 0,   0,  0, -1, 0,   0, 0, 0, 1);  
-rotations [3] = mat4 ( 1, 0,  0, 0,   0, 1,  0, 0,   0,  0,  1, 0,   0, 0, 0, 1);  
-rotations [4] = mat4 ( 1, 0,  0, 0,   0, 0,  1, 0,   0, -1,  0, 0,   0, 0, 0, 1);  
-rotations [5] = mat4 ( 1, 0,  0, 0,   0, 0, -1, 0,   0,  1,  0, 0,   0, 0, 0, 1);  
+rotations [0] = mat4 ( 0, 0 , 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 0, 1); 
+rotations [1] = mat4 ( 0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1); 
+rotations [2] = mat4 (-1, 0, 0, 0, 0, 1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1); 
+rotations [3] = mat4 ( 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1); 
+rotations [4] = mat4 ( 1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, 0, 1); 
+rotations [5] = mat4 ( 1, 0, 0, 0, 0, 0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 1); 
 vec3 a = abs (vector .xyz);
 if (a .x > a .y)
 {
@@ -185,10 +185,10 @@ const mat4 biasMatrix = mat4 (0.5, 0.0, 0.0, 0.0,
 0.5, 0.5, 0.5, 1.0);
 const mat4 projectionMatrix = mat4 (1.0, 0.0, 0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, -1.000025000312504, -1.0, 0, 0.0, -0.25000312503906297, 0.0);
 vec2 texelSize = vec2 (1.0) / (float (light .shadowMapSize) * vec2 (4.0, 2.0));
-vec4 shadowCoord     = light .shadowMatrix * vec4 (vertex, 1.0);
+vec4 shadowCoord = light .shadowMatrix * vec4 (vertex, 1.0);
 vec3 lightToPosition = shadowCoord .xyz;
-shadowCoord       = biasMatrix * (projectionMatrix * (getPointLightRotations (lightToPosition) * shadowCoord));
-shadowCoord .z   -= light .shadowBias;
+shadowCoord = biasMatrix * (projectionMatrix * (getPointLightRotations (lightToPosition) * shadowCoord));
+shadowCoord .z -= light .shadowBias;
 shadowCoord .xyz /= shadowCoord .w;
 #if defined (X3D_PCF_FILTERING) || defined (X3D_PCF_SOFT_FILTERING)
 vec2 offset = vec2 (-1, 1) * (texelSize .y * 42.0);
@@ -212,9 +212,9 @@ return light .shadowIntensity * value;
 else
 {
 #if defined (X3D_PCF_FILTERING)
-vec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);
+vec2 texelSize = vec2 (1.0) / vec2 (light .shadowMapSize);
 vec4 shadowCoord = light .shadowMatrix * vec4 (vertex, 1.0);
-shadowCoord .z   -= light .shadowBias;
+shadowCoord .z -= light .shadowBias;
 shadowCoord .xyz /= shadowCoord .w;
 float dx0 = - texelSize .x;
 float dy0 = - texelSize .y;
@@ -233,9 +233,9 @@ texture2DCompare (index, shadowCoord .xy + vec2 (dx1, dy1), shadowCoord .z)
 ) * (1.0 / 9.0);
 return light .shadowIntensity * value;
 #elif defined (X3D_PCF_SOFT_FILTERING)
-vec2 texelSize   = vec2 (1.0) / vec2 (light .shadowMapSize);
+vec2 texelSize = vec2 (1.0) / vec2 (light .shadowMapSize);
 vec4 shadowCoord = light .shadowMatrix * vec4 (vertex, 1.0);
-shadowCoord .z   -= light .shadowBias;
+shadowCoord .z -= light .shadowBias;
 shadowCoord .xyz /= shadowCoord .w;
 float dx0 = - texelSize.x;
 float dy0 = - texelSize.y;
@@ -255,7 +255,7 @@ texture2DShadowLerp (index, texelSize, float (shadowMapSize), shadowCoord .xy + 
 return light .shadowIntensity * value;
 #else 
 vec4 shadowCoord = shadowMatrix * vec4 (vertex, 1.0);
-shadowCoord .z   -= shadowBias;
+shadowCoord .z -= shadowBias;
 shadowCoord .xyz /= shadowCoord .w;
 float value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);
 return light .shadowIntensity * value;
@@ -271,18 +271,18 @@ float rand (vec2 co, float l, float t) { return rand (vec2 (rand (co, l), t)); }
 float
 perlin (vec2 p, float dim, float time)
 {
-vec2 pos   = floor (p * dim);
-vec2 posx  = pos + vec2 (1.0, 0.0);
-vec2 posy  = pos + vec2 (0.0, 1.0);
+vec2 pos = floor (p * dim);
+vec2 posx = pos + vec2 (1.0, 0.0);
+vec2 posy = pos + vec2 (0.0, 1.0);
 vec2 posxy = pos + vec2 (1.0);
-float c   = rand (pos,   dim, time);
-float cx  = rand (posx,  dim, time);
-float cy  = rand (posy,  dim, time);
+float c = rand (pos, dim, time);
+float cx = rand (posx, dim, time);
+float cy = rand (posy, dim, time);
 float cxy = rand (posxy, dim, time);
 vec2 d = fract (p * dim);
 d = -0.5 * cos (d * M_PI) + 0.5;
-float ccx    = mix (c,   cx,    d.x);
-float cycxy  = mix (cy,  cxy,   d.x);
+float ccx = mix (c, cx, d.x);
+float cycxy = mix (cy, cxy, d.x);
 float center = mix (ccx, cycxy, d.y);
 return center * 2.0 - 1.0;
 }
@@ -293,9 +293,9 @@ return vec3 (perlin (p.xy, 1.0, 0.0),
 perlin (p.yz, 1.0, 0.0),
 perlin (p.zx, 1.0, 0.0));
 }
-uniform int         x3d_NumTextures;
-uniform int         x3d_TextureType [x3d_MaxTextures]; 
-uniform sampler2D   x3d_Texture2D [x3d_MaxTextures];
+uniform int x3d_NumTextures;
+uniform int x3d_TextureType [x3d_MaxTextures]; 
+uniform sampler2D x3d_Texture2D [x3d_MaxTextures];
 uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
 uniform vec4 x3d_MultiTextureColor;
 uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
@@ -348,13 +348,13 @@ return vec4 (vertex, 1.0);
 }
 else if (mode == x3d_Noise)
 {
-vec3 scale       = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);
+vec3 scale = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);
 vec3 translation = vec3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);
 return vec4 (perlin (localVertex * scale + translation), 1.0);
 }
 else if (mode == x3d_NoiseEye)
 {
-vec3 scale       = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);
+vec3 scale = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);
 vec3 translation = vec3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);
 return vec4 (perlin (vertex * scale + translation), 1.0);
 }
@@ -366,7 +366,7 @@ return vec4 (refract (normalize (vertex), -normal, eta), 1.0);
 else if (mode == x3d_SphereReflectLocal)
 {
 float eta = textureCoordinateGenerator .parameter [0];
-vec3  eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2], textureCoordinateGenerator .parameter [3]);
+vec3 eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2], textureCoordinateGenerator .parameter [3]);
 return vec4 (refract (normalize (localVertex - eye), -localNormal, eta), 1.0);
 }
 return getTexCoord (i);
@@ -393,7 +393,7 @@ for (int i = 0; i < x3d_MaxTextures; ++ i)
 {
 if (i == x3d_NumTextures)
 break;
-vec4 texCoord     = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
+vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
 vec4 textureColor = vec4 (1.0);
 if (x3d_GeometryType == x3d_Geometry2D && ! gl_FrontFacing)
 texCoord .s = 1.0 - texCoord .s;
@@ -430,7 +430,7 @@ else if (function == x3d_AlphaReplicate)
 {
 arg1 .a = arg2 .a;
 }
-int mode      = multiTexture .mode;
+int mode = multiTexture .mode;
 int alphaMode = multiTexture .alphaMode;
 if (mode == x3d_Replace)
 {
@@ -595,7 +595,7 @@ return currentColor;
 vec4
 getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 {
-vec4 texCoord     = texCoord0;
+vec4 texCoord = texCoord0;
 vec4 textureColor = vec4 (1.0);
 if (x3d_TextureType [0] == x3d_TextureType2D)
 {
@@ -623,7 +623,7 @@ if (x3d_FillProperties .hatched)
 {
 vec4 hatch = texture (x3d_FillProperties .hatchStyle, gl_FragCoord .xy / 32.0);
 hatch .rgb *= x3d_FillProperties .hatchColor;
-finalColor  = mix (finalColor, hatch, hatch .a);
+finalColor = mix (finalColor, hatch, hatch .a);
 }
 return finalColor;
 }
@@ -650,7 +650,7 @@ getFogColor (const in vec3 color)
 {
 return mix (x3d_Fog .color, color, getFogInterpolant ());
 }
-uniform int  x3d_NumClipPlanes;
+uniform int x3d_NumClipPlanes;
 uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
 void
 clip ()
@@ -678,18 +678,18 @@ getMaterialColor (const in x3d_MaterialParameters material)
 {
 if (x3d_Lighting)
 {
-vec3  N  = normalize (gl_FrontFacing ? normal : -normal);
-vec3  V  = normalize (-vertex); 
+vec3 N = normalize (gl_FrontFacing ? normal : -normal);
+vec3 V = normalize (-vertex); 
 float dV = length (vertex);
-vec3  diffuseFactor = vec3 (1.0);
-float alpha         = 1.0 - material .transparency;
+vec3 diffuseFactor = vec3 (1.0);
+float alpha = 1.0 - material .transparency;
 if (x3d_ColorMaterial)
 {
 if (x3d_NumTextures > 0)
 {
 vec4 T = getTextureColor (vec4 (color .rgb, color .a * alpha), vec4 (material .specularColor, alpha));
 diffuseFactor = T .rgb;
-alpha         = T .a;
+alpha = T .a;
 }
 else
 diffuseFactor = color .rgb;
@@ -701,7 +701,7 @@ if (x3d_NumTextures > 0)
 {
 vec4 T = getTextureColor (vec4 (material .diffuseColor, alpha), vec4 (material .specularColor, alpha));
 diffuseFactor = T .rgb;
-alpha         = T .a;
+alpha = T .a;
 }
 else
 diffuseFactor = material .diffuseColor;
@@ -713,24 +713,24 @@ for (int i = 0; i < x3d_MaxLights; i ++)
 if (i == x3d_NumLights)
 break;
 x3d_LightSourceParameters light = x3d_LightSource [i];
-vec3  vL = light .location - vertex; 
+vec3 vL = light .location - vertex; 
 float dL = length (light .matrix * vL);
-bool  di = light .type == x3d_DirectionalLight;
+bool di = light .type == x3d_DirectionalLight;
 if (di || dL <= light .radius)
 {
 vec3 d = light .direction;
 vec3 c = light .attenuation;
-vec3 L = di ? -d : normalize (vL);      
-vec3 H = normalize (L + V);             
-float lightAngle     = dot (N, L);      
-vec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);
+vec3 L = di ? -d : normalize (vL); 
+vec3 H = normalize (L + V); 
+float lightAngle = dot (N, L); 
+vec3 diffuseTerm = diffuseFactor * clamp (lightAngle, 0.0, 1.0);
 float specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;
-vec3  specularTerm   = material .specularColor * specularFactor;
-float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
-float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
+vec3 specularTerm = material .specularColor * specularFactor;
+float attenuationFactor = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
+float spotFactor = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
 float attenuationSpotFactor = attenuationFactor * spotFactor;
-vec3  ambientColor          = light .color * light .ambientIntensity * ambientTerm;
-vec3  diffuseSpecularColor  = light .color * light .intensity * (diffuseTerm + specularTerm);
+vec3 ambientColor = light .color * light .ambientIntensity * ambientTerm;
+vec3 diffuseSpecularColor = light .color * light .intensity * (diffuseTerm + specularTerm);
 #ifdef X3D_SHADOWS
 if (lightAngle > 0.0)
 diffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, light));
@@ -766,8 +766,8 @@ main ()
 {
 clip ();
 bool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;
-x3d_FragColor      = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
-x3d_FragColor      = getHatchColor (x3d_FragColor);
+x3d_FragColor = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
+x3d_FragColor = getHatchColor (x3d_FragColor);
 x3d_FragColor .rgb = getFogColor (x3d_FragColor .rgb);
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 if (x3d_LogarithmicFarFactor1_2 > 0.0)

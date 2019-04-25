@@ -6,10 +6,10 @@ precision mediump int;
 uniform x3d_LinePropertiesParameters x3d_LineProperties;
 uniform ivec4 x3d_Viewport;
 varying float fogDepth; 
-varying vec4  color;    
-varying vec3  vertex;   
+varying vec4 color; 
+varying vec3 vertex; 
 #ifdef X_ITE
-varying vec3 startPosition;  
+varying vec3 startPosition; 
 varying vec3 vertexPosition; 
 #endif
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
@@ -39,7 +39,7 @@ getFogColor (const in vec3 color)
 {
 return mix (x3d_Fog .color, color, getFogInterpolant ());
 }
-uniform int  x3d_NumClipPlanes;
+uniform int x3d_NumClipPlanes;
 uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
 void
 clip ()
@@ -58,9 +58,9 @@ stipple ()
 {
 if (x3d_LineProperties .applied)
 {
-vec2  direction = (vertexPosition .xy - startPosition .xy) * vec2 (x3d_Viewport .zw) * 0.5;
-float distance  = length (direction) / 16.0;
-float color     = texture2D (x3d_LineProperties .linetype, vec2 (distance, distance)) .a;
+vec2 direction = (vertexPosition .xy - startPosition .xy) * vec2 (x3d_Viewport .zw) * 0.5;
+float distance = length (direction) / 16.0;
+float color = texture2D (x3d_LineProperties .linetype, vec2 (distance, distance)) .a;
 if (color == 0.0)
 discard;
 }
@@ -74,7 +74,7 @@ clip ();
 stipple ();
 #endif
 gl_FragColor .rgb = getFogColor (color .rgb);
-gl_FragColor .a   = color .a;
+gl_FragColor .a = color .a;
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 if (x3d_LogarithmicFarFactor1_2 > 0.0)
 gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;

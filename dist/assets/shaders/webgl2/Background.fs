@@ -1,10 +1,10 @@
 #version 300 es
 precision mediump float;
 precision mediump int;
-in vec4 color;  
+in vec4 color; 
 in vec3 vertex; 
 out vec4 x3d_FragColor;
-uniform int  x3d_NumClipPlanes;
+uniform int x3d_NumClipPlanes;
 uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
 void
 clip ()

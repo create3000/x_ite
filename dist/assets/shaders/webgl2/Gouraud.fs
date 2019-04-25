@@ -1,18 +1,18 @@
 #version 300 es
 precision mediump float;
 precision mediump int;
-uniform int  x3d_GeometryType;
-uniform bool x3d_Lighting;      
+uniform int x3d_GeometryType;
+uniform bool x3d_Lighting; 
 uniform bool x3d_ColorMaterial; 
-in float fogDepth;    
-in vec4  frontColor;  
-in vec4  backColor;   
-in vec4  texCoord0;   
-in vec4  texCoord1;   
-in vec3  normal;      
-in vec3  vertex;      
-in vec3  localNormal; 
-in vec3  localVertex; 
+in float fogDepth; 
+in vec4 frontColor; 
+in vec4 backColor; 
+in vec4 texCoord0; 
+in vec4 texCoord1; 
+in vec3 normal; 
+in vec3 vertex; 
+in vec3 localNormal; 
+in vec3 localVertex; 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 uniform float x3d_LogarithmicFarFactor1_2;
 in float depth;
@@ -25,18 +25,18 @@ float rand (vec2 co, float l, float t) { return rand (vec2 (rand (co, l), t)); }
 float
 perlin (vec2 p, float dim, float time)
 {
-vec2 pos   = floor (p * dim);
-vec2 posx  = pos + vec2 (1.0, 0.0);
-vec2 posy  = pos + vec2 (0.0, 1.0);
+vec2 pos = floor (p * dim);
+vec2 posx = pos + vec2 (1.0, 0.0);
+vec2 posy = pos + vec2 (0.0, 1.0);
 vec2 posxy = pos + vec2 (1.0);
-float c   = rand (pos,   dim, time);
-float cx  = rand (posx,  dim, time);
-float cy  = rand (posy,  dim, time);
+float c = rand (pos, dim, time);
+float cx = rand (posx, dim, time);
+float cy = rand (posy, dim, time);
 float cxy = rand (posxy, dim, time);
 vec2 d = fract (p * dim);
 d = -0.5 * cos (d * M_PI) + 0.5;
-float ccx    = mix (c,   cx,    d.x);
-float cycxy  = mix (cy,  cxy,   d.x);
+float ccx = mix (c, cx, d.x);
+float cycxy = mix (cy, cxy, d.x);
 float center = mix (ccx, cycxy, d.y);
 return center * 2.0 - 1.0;
 }
@@ -47,9 +47,9 @@ return vec3 (perlin (p.xy, 1.0, 0.0),
 perlin (p.yz, 1.0, 0.0),
 perlin (p.zx, 1.0, 0.0));
 }
-uniform int         x3d_NumTextures;
-uniform int         x3d_TextureType [x3d_MaxTextures]; 
-uniform sampler2D   x3d_Texture2D [x3d_MaxTextures];
+uniform int x3d_NumTextures;
+uniform int x3d_TextureType [x3d_MaxTextures]; 
+uniform sampler2D x3d_Texture2D [x3d_MaxTextures];
 uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
 uniform vec4 x3d_MultiTextureColor;
 uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
@@ -102,13 +102,13 @@ return vec4 (vertex, 1.0);
 }
 else if (mode == x3d_Noise)
 {
-vec3 scale       = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);
+vec3 scale = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);
 vec3 translation = vec3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);
 return vec4 (perlin (localVertex * scale + translation), 1.0);
 }
 else if (mode == x3d_NoiseEye)
 {
-vec3 scale       = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);
+vec3 scale = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);
 vec3 translation = vec3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);
 return vec4 (perlin (vertex * scale + translation), 1.0);
 }
@@ -120,7 +120,7 @@ return vec4 (refract (normalize (vertex), -normal, eta), 1.0);
 else if (mode == x3d_SphereReflectLocal)
 {
 float eta = textureCoordinateGenerator .parameter [0];
-vec3  eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2], textureCoordinateGenerator .parameter [3]);
+vec3 eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2], textureCoordinateGenerator .parameter [3]);
 return vec4 (refract (normalize (localVertex - eye), -localNormal, eta), 1.0);
 }
 return getTexCoord (i);
@@ -147,7 +147,7 @@ for (int i = 0; i < x3d_MaxTextures; ++ i)
 {
 if (i == x3d_NumTextures)
 break;
-vec4 texCoord     = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
+vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
 vec4 textureColor = vec4 (1.0);
 if (x3d_GeometryType == x3d_Geometry2D && ! gl_FrontFacing)
 texCoord .s = 1.0 - texCoord .s;
@@ -184,7 +184,7 @@ else if (function == x3d_AlphaReplicate)
 {
 arg1 .a = arg2 .a;
 }
-int mode      = multiTexture .mode;
+int mode = multiTexture .mode;
 int alphaMode = multiTexture .alphaMode;
 if (mode == x3d_Replace)
 {
@@ -349,7 +349,7 @@ return currentColor;
 vec4
 getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 {
-vec4 texCoord     = texCoord0;
+vec4 texCoord = texCoord0;
 vec4 textureColor = vec4 (1.0);
 if (x3d_TextureType [0] == x3d_TextureType2D)
 {
@@ -377,7 +377,7 @@ if (x3d_FillProperties .hatched)
 {
 vec4 hatch = texture (x3d_FillProperties .hatchStyle, gl_FragCoord .xy / 32.0);
 hatch .rgb *= x3d_FillProperties .hatchColor;
-finalColor  = mix (finalColor, hatch, hatch .a);
+finalColor = mix (finalColor, hatch, hatch .a);
 }
 return finalColor;
 }
@@ -404,7 +404,7 @@ getFogColor (const in vec3 color)
 {
 return mix (x3d_Fog .color, color, getFogInterpolant ());
 }
-uniform int  x3d_NumClipPlanes;
+uniform int x3d_NumClipPlanes;
 uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
 void
 clip ()
@@ -440,9 +440,9 @@ finalColor = getTextureColor (vec4 (1.0), vec4 (1.0));
 }
 }
 }
-finalColor      = getHatchColor (finalColor);
+finalColor = getHatchColor (finalColor);
 finalColor .rgb = getFogColor (finalColor .rgb);
-x3d_FragColor   = finalColor;
+x3d_FragColor = finalColor;
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 if (x3d_LogarithmicFarFactor1_2 > 0.0)
 gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;

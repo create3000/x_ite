@@ -23,7 +23,7 @@ sub check_version {
 	$VERSION = $1;
 
 	$ALPHA = $VERSION =~ /a$/;
-	
+
 	$REVISION = `cat package.json`;
 	$REVISION =~ /"revision":\s*"(.*?)"/;
 	$REVISION = $1 + 1;
@@ -61,7 +61,7 @@ sub shader_source {
 
 	$source =~ s|//.*?\n|\n|sg;
 	$source =~ s|/\*.*?\*/||sg;
-	$source =~ s|[ \t]+| |;
+	$source =~ s|[ \t]+| |sg;
 	$source =~ s|\n+|\n|sg;
 
 	return $source;
@@ -115,7 +115,7 @@ sub dist {
 	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/assets/images",   "dist/assets/";
 	system "rsync", "-r", "-x", "-c", "-v", "-t", "--progress", "--delete", "src/assets/linetype", "dist/assets/";
 	system "cp", "-v", "src/example.html",  "dist/";
-	
+
 	system "perl", "-pi", "-e", "s|/latest/|/alpha/|sg", "dist/example.html" if $ALPHA;
 	system "perl", "-pi", "-e", "s|/latest/|/$VERSION/|sg", "dist/example.html" unless $ALPHA;
 
