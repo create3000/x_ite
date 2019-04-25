@@ -46165,8 +46165,8 @@ function (ShaderSource,
 				return source;
 
 			var
-				lines1 = (match [1] .match (/\n/g) || []) .length + 1,
-				lines2 = (match [1] .match (/\n/g) || []) .length + 1;
+				lines1 = (match [1] .match (/\n/g) || []) .length,
+				lines2 = (match [1] .match (/\n/g) || []) .length;
 
 			var constants = "";
 
@@ -52520,7 +52520,9 @@ function ($,
 			var URL = this .getReferer () .transform (new URI (sURL));
 
 			if (URL .isLocal () || URL .host === "localhost")
+			{
 				URL = this .browser .getLocation () .getRelativePath (URL);
+			}
 			else
 			{
 				if (DEBUG)
@@ -58780,7 +58782,7 @@ function (TextureBuffer,
 				0, 0, 1,
 				0, 0, 1,
 			];
-		
+
 			var vertices = [
 				 2,  2, 0, 1,
 				-2,  2, 0, 1,
@@ -58797,17 +58799,17 @@ function (TextureBuffer,
 					frameBuffer  = new TextureBuffer (browser, 16, 16),
 		         normalBuffer = gl .createBuffer (),
 		         vertexBuffer = gl .createBuffer ();
-		
+
 				frameBuffer .bind ();
 
 				shaderNode .enable (gl);
 				shaderNode .setShaderObjects (gl, [ ]);
-		
+
 				gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
 				gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .STATIC_DRAW);
 				gl .bindBuffer (gl .ARRAY_BUFFER, normalBuffer);
 				gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (normals), gl .STATIC_DRAW);
-				
+
 				// Matrices
 
 				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, new Float32Array (Camera .ortho (-1, 1, -1, 1, -1, 1, new Matrix4 ())));
@@ -58815,8 +58817,8 @@ function (TextureBuffer,
 				gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix,     false, new Float32Array (new Matrix3 ()));
 
 				// Set clip planes and lights to none.
-		
-				gl .uniform1i (shaderNode .x3d_FogType,                0);
+
+				gl .uniform1i (shaderNode .x3d_FogType,               0);
 				gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,  true);
 				gl .uniform1i (shaderNode .x3d_FillPropertiesHatched, false);
 				gl .uniform1i (shaderNode .x3d_ColorMaterial,         false);
@@ -58988,7 +58990,7 @@ function (Shading,
 				return this .pointShader;
 
 			this .pointShader = this .createShader ("PointShader", "PointSet", false);
-	
+
 			this .pointShader .getShadowShader = this .getPointShader .bind (this);
 
 			return this .pointShader;
@@ -59020,7 +59022,7 @@ function (Shading,
 			this .gouraudShader = this .createShader ("GouraudShader", "Gouraud", false);
 
 			this .gouraudShader .getShadowShader = this .getShadowShader .bind (this);
-	
+
 			this .gouraudShader .isValid_ .addInterest ("set_gouraud_shader_valid__", this);
 
 			return this .gouraudShader;
@@ -59037,7 +59039,7 @@ function (Shading,
 			this .phongShader = this .createShader ("PhongShader", "Phong", false);
 
 			this .phongShader .getShadowShader = this .getShadowShader .bind (this);
-	
+
 			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__", this);
 
 			return this .phongShader;
@@ -59110,7 +59112,7 @@ function (Shading,
 			fragmentShader .url_ .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".fs"));
 			fragmentShader .setShadow (shadow);
 			fragmentShader .setup ();
-	
+
 			var shader = new ComposedShader (this .getPrivateScene ());
 			shader .setName (name);
 			shader .language_ = "GLSL";
@@ -59133,11 +59135,26 @@ function (Shading,
 
 			console .warn ("X_ITE: Disabling multi-texturing, as it might not work.");
 
+			this .gouraudShader .isValid_ .addInterest ("set_fallback_shader_valid__", this);
+
 			this .multiTexturing = false;
 
 			// Recompile shader.
 			this .gouraudShader .parts_ [0] .getValue () .url_ .addEvent ();
 			this .gouraudShader .parts_ [1] .getValue () .url_ .addEvent ();
+		},
+		set_fallback_shader_valid__: function (valid)
+		{
+			this .gouraudShader .isValid_ .removeInterest ("set_fallback_shader_valid__", this);
+
+			if (valid .getValue () && ShaderTest .verify (this, this .gouraudShader))
+				return;
+
+			console .warn ("X_ITE: Shaders do not work, using fallback shader.");
+
+			// Recompile shader.
+			this .gouraudShader .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/Fallback.vs") ];
+			this .gouraudShader .parts_ [1] .url = [ urls .getShaderUrl ("webgl1/Fallback.fs") ];
 		},
 		set_phong_shader_valid__: function (valid)
 		{
