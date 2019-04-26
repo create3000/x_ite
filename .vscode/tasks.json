@@ -6,7 +6,7 @@
         {
             "label": "Make Dist",
             "type": "shell",
-            "command": "make",
+            "command": "flatpak-spawn --host make",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -16,30 +16,26 @@
         {
             "label": "Make Version",
             "type": "shell",
-            "command": "make",
-            "args": ["version"],
+            "command": "flatpak-spawn --host make version",
             "problemMatcher": []
         },
         {
             "label": "Git Push GitHub",
             "type": "shell",
-            "command": "git",
-            "args": ["push", "github"],
+            "command": "flatpak-spawn --host git push github",
             "problemMatcher": []
         },
         {
             "label": "Git List Untracked Files",
             "type": "shell",
-            "command": "git",
-            "args": ["ls-files", "--others", "--exclude-standard"],
+            "command": "flatpak-spawn --host git ls-files --others --exclude-standard",
             "problemMatcher": []
         },
         {
             "label": "Generate Interfaces",
             "type": "shell",
-            "command": "sh",
-            "args": ["/home/holger/Projekte/Titania/miscellaneous/glade2c++/generate.sh"],
-            "problemMatcher": []
+            "command": "flatpak-spawn --host sh /home/holger/Projekte/Titania/miscellaneous/glade2c++/generate.sh",
+           "problemMatcher": []
         }
     ]
 }

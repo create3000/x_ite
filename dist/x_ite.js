@@ -59150,7 +59150,7 @@ function (Shading,
 			if (valid .getValue () && ShaderTest .verify (this, this .gouraudShader))
 				return;
 
-			console .warn ("X_ITE: Shaders do not work, using fallback shader.");
+			console .warn ("X_ITE: All else fails, using fallback shader.");
 
 			// Recompile shader.
 			this .gouraudShader .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/Fallback.vs") ];
