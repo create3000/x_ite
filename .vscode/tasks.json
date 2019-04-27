@@ -8,10 +8,6 @@
             "type": "shell",
             "command": "flatpak-spawn --host make",
             "problemMatcher": [],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            }
         },
         {
             "label": "Make Version",

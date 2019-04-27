@@ -60,7 +60,7 @@ sub rsync
 	#system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "$local/", "$ftp/$release/dist/";
 
 	system "lftp", "-e", "mkdir -p $ftp/$release/dist; bye", "ftp://$user\@$host";
-	system "lftp", "-e", "mirror --reverse --delete --use-cache --verbose $local $ftp/$release/dist; bye", "ftp://$user\@$host";
+	system "lftp", "-e", "mirror --reverse --delete --overwrite --use-cache --verbose $local $ftp/$release/dist; bye", "ftp://$user\@$host";
 }
 
 sub netuser
