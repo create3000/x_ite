@@ -92,7 +92,7 @@ getTextureCoordinate (const in x3d_TextureCoordinateGeneratorParameters textureC
 }
 
 vec4
-getTexture2D (in int i, in vec2 texCoord)
+getTexture2D (const in int i, const in vec2 texCoord)
 {
 	if (i == 0)
 		return texture (x3d_Texture2D [0], texCoord);
@@ -101,7 +101,7 @@ getTexture2D (in int i, in vec2 texCoord)
 }
 
 vec4
-getTextureCube (in int i, in vec3 texCoord)
+getTextureCube (const in int i, const in vec3 texCoord)
 {
 	if (i == 0)
 		return texture (x3d_CubeMapTexture [0], texCoord);
