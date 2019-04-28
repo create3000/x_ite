@@ -17,8 +17,8 @@ uniform float x3d_LogarithmicFarFactor1_2;
 varying float depth;
 #endif
 
-#pragma X3D include "include/Fog.h"
-#pragma X3D include "include/ClipPlanes.h"
+#pragma X3D include "include/Fog.glsl"
+#pragma X3D include "include/ClipPlanes.glsl"
 
 void
 main ()

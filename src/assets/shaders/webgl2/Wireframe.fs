@@ -22,8 +22,8 @@ in float depth;
 
 out vec4 x3d_FragColor;
 
-#pragma X3D include "include/Fog.h"
-#pragma X3D include "include/ClipPlanes.h"
+#pragma X3D include "include/Fog.glsl"
+#pragma X3D include "include/ClipPlanes.glsl"
 
 #ifdef X_ITE
 void

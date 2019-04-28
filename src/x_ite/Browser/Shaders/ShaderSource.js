@@ -48,20 +48,20 @@
 
 
 define ([
-	"text!assets/shaders/webgl1/include/ClipPlanes.h",
-	"text!assets/shaders/webgl1/include/Fog.h",
-	"text!assets/shaders/webgl1/include/Hatch.h",
-	"text!assets/shaders/webgl1/include/Pack.h",
-	"text!assets/shaders/webgl1/include/Perlin.h",
-	"text!assets/shaders/webgl1/include/Shadow.h",
-	"text!assets/shaders/webgl1/include/Texture.h",
-	"text!assets/shaders/webgl2/include/ClipPlanes.h",
-	"text!assets/shaders/webgl2/include/Fog.h",
-	"text!assets/shaders/webgl2/include/Hatch.h",
-	"text!assets/shaders/webgl2/include/Pack.h",
-	"text!assets/shaders/webgl2/include/Perlin.h",
-	"text!assets/shaders/webgl2/include/Shadow.h",
-	"text!assets/shaders/webgl2/include/Texture.h",
+	"text!assets/shaders/webgl1/include/ClipPlanes.glsl",
+	"text!assets/shaders/webgl1/include/Fog.glsl",
+	"text!assets/shaders/webgl1/include/Hatch.glsl",
+	"text!assets/shaders/webgl1/include/Pack.glsl",
+	"text!assets/shaders/webgl1/include/Perlin.glsl",
+	"text!assets/shaders/webgl1/include/Shadow.glsl",
+	"text!assets/shaders/webgl1/include/Texture.glsl",
+	"text!assets/shaders/webgl2/include/ClipPlanes.glsl",
+	"text!assets/shaders/webgl2/include/Fog.glsl",
+	"text!assets/shaders/webgl2/include/Hatch.glsl",
+	"text!assets/shaders/webgl2/include/Pack.glsl",
+	"text!assets/shaders/webgl2/include/Perlin.glsl",
+	"text!assets/shaders/webgl2/include/Shadow.glsl",
+	"text!assets/shaders/webgl2/include/Texture.glsl",
 ],
 function (ClipPlanes1,
           Fog1,
@@ -80,7 +80,7 @@ function (ClipPlanes1,
 {
 "use strict";
 
-	var include = /^#pragma\s+X3D\s+include\s+".*?([^\/]+)\.h"\s*$/;
+	var include = /^#pragma\s+X3D\s+include\s+".*?([^\/]+)\.glsl"\s*$/;
 
 	var ShaderSource =
 	{

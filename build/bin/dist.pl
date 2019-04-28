@@ -47,7 +47,7 @@ sub shader_source {
 
 	foreach my $line (@lines)
 	{
-		if ($line =~ /^#pragma\s+X3D\s+include\s+"(.*?[^\/]+\.h)"\s*$/)
+		if ($line =~ /^#pragma\s+X3D\s+include\s+"(.*?[^\/]+\.glsl)"\s*$/)
 		{
 			$source .= shader_source ("$dirname/$1");
 		}
