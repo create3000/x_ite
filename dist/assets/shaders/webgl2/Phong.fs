@@ -701,12 +701,12 @@ switch (x3d_TextureType [0])
 {
 case x3d_TextureType2D:
 {
-textureColor = texture2D (x3d_Texture2D [0], vec2 (texCoord));
+textureColor = texture (x3d_Texture2D [0], vec2 (texCoord));
 break;
 }
 case x3d_TextureTypeCubeMapTexture:
 {
-textureColor = textureCube (x3d_CubeMapTexture [0], vec3 (texCoord));
+textureColor = texture (x3d_CubeMapTexture [0], vec3 (texCoord));
 break;
 }
 }
