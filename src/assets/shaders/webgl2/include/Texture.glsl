@@ -443,13 +443,18 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 	if (x3d_GeometryType == x3d_Geometry2D && ! gl_FrontFacing)
 		texCoord .s = 1.0 - texCoord .s;
 
-	if (x3d_TextureType [0] == x3d_TextureType2D)
+	switch (x3d_TextureType [0])
 	{
-		textureColor = texture2D (x3d_Texture2D [0], vec2 (texCoord));
-	}
- 	else if (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)
-	{
-		textureColor = textureCube (x3d_CubeMapTexture [0], vec3 (texCoord));
+		case x3d_TextureType2D:
+		{
+			textureColor = texture2D (x3d_Texture2D [0], vec2 (texCoord));
+			break;
+		}
+		case x3d_TextureTypeCubeMapTexture:
+		{
+			textureColor = textureCube (x3d_CubeMapTexture [0], vec3 (texCoord));
+			break;
+		}
 	}
 
 	return diffuseColor * textureColor;
