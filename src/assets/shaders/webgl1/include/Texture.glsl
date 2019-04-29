@@ -273,75 +273,75 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 		{
 			currentColor .a = arg1 .a * arg2 .a;
 		}
-		else if (mode == x3d_Modulate2X)
+		else if (alphaMode == x3d_Modulate2X)
 		{
 			currentColor .a = (arg1 .a * arg2 .a) * 2.0;
 		}
-		else if (mode == x3d_Modulate4X)
+		else if (alphaMode == x3d_Modulate4X)
 		{
 			currentColor .a = (arg1 .a * arg2 .a) * 4.0;
 		}
-		else if (mode == x3d_Add)
+		else if (alphaMode == x3d_Add)
 		{
 			currentColor .a = arg1 .a + arg2 .a;
 		}
-		else if (mode == x3d_AddSigned)
+		else if (alphaMode == x3d_AddSigned)
 		{
 			currentColor .a = arg1 .a + arg2 .a - 0.5;
 		}
-		else if (mode == x3d_AddSigned2X)
+		else if (alphaMode == x3d_AddSigned2X)
 		{
 			currentColor .a = (arg1 .a + arg2 .a - 0.5) * 2.0;
 		}
-		else if (mode == x3d_AddSmooth)
+		else if (alphaMode == x3d_AddSmooth)
 		{
 			currentColor .a = arg1 .a + (1.0 - arg1 .a) * arg2 .a;
 		}
-		else if (mode == x3d_Subtract)
+		else if (alphaMode == x3d_Subtract)
 		{
 			currentColor .a = arg1 .a - arg2 .a;
 		}
-		else if (mode == x3d_BlendDiffuseAlpha)
+		else if (alphaMode == x3d_BlendDiffuseAlpha)
 		{
 			currentColor .a = arg1 .a * diffuseColor .a + arg2 .a * (1.0 - diffuseColor .a);
 		}
-		else if (mode == x3d_BlendTextureAlpha)
+		else if (alphaMode == x3d_BlendTextureAlpha)
 		{
 			currentColor .a = arg1 .a * arg1 .a + arg2 .a * (1.0 - arg1 .a);
 		}
-		else if (mode == x3d_BlendFactorAlpha)
+		else if (alphaMode == x3d_BlendFactorAlpha)
 		{
 			currentColor .a = arg1 .a * x3d_MultiTextureColor .a + arg2 .a * (1.0 - x3d_MultiTextureColor .a);
 		}
-		else if (mode == x3d_BlendCurrentAlpha)
+		else if (alphaMode == x3d_BlendCurrentAlpha)
 		{
 			currentColor .a = arg1 .a * arg2 .a + arg2 .a * (1.0 - arg2 .a);
 		}
-		else if (mode == x3d_ModulateAlphaAddColor)
+		else if (alphaMode == x3d_ModulateAlphaAddColor)
 		{
 			currentColor .a = arg1 .a + arg1 .a * arg2 .a;
 		}
-		else if (mode == x3d_ModulateInvAlphaAddColor)
+		else if (alphaMode == x3d_ModulateInvAlphaAddColor)
 		{
 			currentColor .a = (1.0 - arg1 .a) * arg2 .a + arg1 .a;
 		}
-		else if (mode == x3d_ModulateInvColorAddAlpha)
+		else if (alphaMode == x3d_ModulateInvColorAddAlpha)
 		{
 			currentColor .a = (1.0 - arg1 .a) * arg2 .a + arg1 .a;
 		}
-		else if (mode == x3d_DotProduct3)
+		else if (alphaMode == x3d_DotProduct3)
 		{
 			currentColor .a = dot (arg1 .rgb * 2.0 - 1.0, arg2 .rgb * 2.0 - 1.0);
 		}
-		else if (mode == x3d_SelectArg1)
+		else if (alphaMode == x3d_SelectArg1)
 		{
 			currentColor .a = arg1 .a;
 		}
-		else if (mode == x3d_SelectArg2)
+		else if (alphaMode == x3d_SelectArg2)
 		{
 			currentColor .a = arg2 .a;
 		}
-		else if (mode == x3d_Off)
+		else if (alphaMode == x3d_Off)
 			;
 	}
 

@@ -69,7 +69,9 @@ getMaterialColor (const in vec3 N,
 		alpha         *= x3d_Color .a;
 	}
 	else
+	{
 		diffuseFactor = material .diffuseColor;
+	}
 
 	vec3 ambientTerm = diffuseFactor * material .ambientIntensity;
 

@@ -19,13 +19,21 @@ getFogInterpolant ()
 	if (dV >= visibilityRange)
 		return 0.0;
 
-	if (x3d_Fog .type == x3d_LinearFog)
-		return (visibilityRange - dV) / visibilityRange;
-
-	if (x3d_Fog .type == x3d_ExponentialFog)
-		return exp (-dV / (visibilityRange - dV));
-
-	return 1.0;
+	switch (x3d_Fog .type)
+	{
+		case x3d_LinearFog:
+		{
+			return (visibilityRange - dV) / visibilityRange;
+		}
+		case x3d_ExponentialFog:
+		{
+			return exp (-dV / (visibilityRange - dV));
+		}
+		default:
+		{
+			return 1.0;
+		}
+	}
 }
 
 vec3

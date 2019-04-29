@@ -8,47 +8,45 @@ uniform sampler2D x3d_ShadowMap [x3d_MaxLights];
 float
 getShadowDepth (const in int index, const in vec2 shadowCoord)
 {
-	#if x3d_MaxLights > 0
-	if (index == 0)
-		return unpack (texture (x3d_ShadowMap [0], shadowCoord));
-	#endif
-
-	#if x3d_MaxLights > 1
-	if (index == 1)
-		return unpack (texture (x3d_ShadowMap [1], shadowCoord));
-	#endif
-
-	#if x3d_MaxLights > 2
-	if (index == 2)
-		return unpack (texture (x3d_ShadowMap [2], shadowCoord));
-	#endif
-
-	#if x3d_MaxLights > 3
-	if (index == 3)
-		return unpack (texture (x3d_ShadowMap [3], shadowCoord));
-	#endif
-
-	#if x3d_MaxLights > 4
-	if (index == 4)
-		return unpack (texture (x3d_ShadowMap [4], shadowCoord));
-	#endif
-
-	#if x3d_MaxLights > 5
-	if (index == 5)
-		return unpack (texture (x3d_ShadowMap [5], shadowCoord));
-	#endif
-
-	#if x3d_MaxLights > 6
-	if (index == 6)
-		return unpack (texture (x3d_ShadowMap [6], shadowCoord));
-	#endif
-
-	#if x3d_MaxLights > 7
-	if (index == 7)
-		return unpack (texture (x3d_ShadowMap [7], shadowCoord));
-	#endif
-
-	return 0.0;
+	switch (index)
+	{
+		case 0:
+		{
+			return unpack (texture (x3d_ShadowMap [0], shadowCoord));
+		}
+		case 1:
+		{
+			return unpack (texture (x3d_ShadowMap [1], shadowCoord));
+		}
+		case 2:
+		{
+			return unpack (texture (x3d_ShadowMap [2], shadowCoord));
+		}
+		case 3:
+		{
+			return unpack (texture (x3d_ShadowMap [3], shadowCoord));
+		}
+		case 4:
+		{
+			return unpack (texture (x3d_ShadowMap [4], shadowCoord));
+		}
+		case 5:
+		{
+			return unpack (texture (x3d_ShadowMap [5], shadowCoord));
+		}
+		case 6:
+		{
+			return unpack (texture (x3d_ShadowMap [6], shadowCoord));
+		}
+		case 7:
+		{
+			return unpack (texture (x3d_ShadowMap [7], shadowCoord));
+		}
+		default:
+		{
+			return 0.0;
+		}
+	}
 }
 
 float

@@ -75,7 +75,7 @@ function ($,
           DEBUG)
 {
 "use strict";
-	
+
 	var browserNumber = 0;
 
 	var extensions = [
@@ -144,7 +144,7 @@ function ($,
 		if (version >= 2 && ! gl)
 		{
 			gl = canvas .getContext ("webgl2", options);
-	
+
 			if (gl)
 				gl .getVersion = function () { return 2; };
 		}
@@ -162,19 +162,19 @@ function ($,
 			throw new Error ("Couldn't create WebGL context.");
 
 		// Feature detection:
-		
+
 		// If the aliased linewidth ranges are both 1, gl.lineWidth is probably not possible,
 		// thus we disable it completely to prevent webgl errors.
-		
+
 		var aliasedLineWidthRange = gl .getParameter (gl .ALIASED_LINE_WIDTH_RANGE);
-		
+
 		if (aliasedLineWidthRange [0] === 1 && aliasedLineWidthRange [1] === 1)
 		{
 			gl .lineWidth = Function .prototype;
 		}
-		
+
 		// Return context.
-		
+
 		return gl;
 	}
 
@@ -197,7 +197,7 @@ function ($,
 		this .splashScreen = splashScreen;
 		this .surface      = surface;
 		this .canvas       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
-		this .context      = getContext (this .canvas [0], DEBUG ? 1 : 1, element .attr ("preserveDrawingBuffer") === "true");
+		this .context      = getContext (this .canvas [0], DEBUG ? 2 : 1, element .attr ("preserveDrawingBuffer") === "true");
 		this .extensions   = { };
 
 		var gl = this .getContext ();
@@ -262,13 +262,13 @@ function ($,
 				enumerable: true,
 				configurable: false
 			});
-	
+
 			Object .defineProperty (this .getElement () .get (0), "url",
 			{
 				get: (function ()
 				{
 					var worldURL = this .getExecutionContext () .getWorldURL ();
-	
+
 					if (worldURL)
 						return new Fields .MFString (worldURL);
 					else
@@ -383,7 +383,7 @@ function ($,
 		processMutation: function (mutation)
 		{
 			var element = mutation .target;
-			
+
 			switch (mutation .type)
 			{
 				case "attributes":
@@ -422,7 +422,7 @@ function ($,
 				case "src":
 				{
 					var urlCharacters = this .getElement () .attr ("src");
-		
+
 					this .load ('"' + urlCharacters + '"');
 					break;
 				}
@@ -496,7 +496,7 @@ function ($,
 		keydown_X3DCoreContext: function (event)
 		{
 			//console .log (event .keyCode);
-	
+
 			switch (event .keyCode)
 			{
 				case 16: // Shift
@@ -596,7 +596,7 @@ function ($,
 								this .endUpdate ();
 							else
 								this .beginUpdate ();
-							
+
 							this .getNotification () .string_ = this .isLive () .getValue () ? "Begin Update" : "End Update";
 						}
 					}
@@ -648,7 +648,7 @@ function ($,
 					if (this .getShiftKey ())
 					{
 						event .preventDefault ();
-						
+
 						var viewpoint = this .getActiveViewpoint ();
 
 						if (! viewpoint)

@@ -148,7 +148,9 @@ getMaterialColor (const in x3d_MaterialParameters material)
 				finalColor = getTextureColor (color, vec4 (1.0));
 			}
 			else
+			{
 				finalColor = color;
+			}
 		}
 		else
 		{
