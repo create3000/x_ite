@@ -131,14 +131,14 @@ return vec4 (refract (normalize (localVertex - eye), -localNormal, eta), 1.0);
 return getTexCoord (i);
 }
 vec4
-getTexture2D (in int i, in vec2 texCoord)
+getTexture2D (const in int i, const in vec2 texCoord)
 {
 if (i == 0)
 return texture2D (x3d_Texture2D [0], texCoord);
 return texture2D (x3d_Texture2D [1], texCoord);
 }
 vec4
-getTextureCube (in int i, in vec3 texCoord)
+getTextureCube (const in int i, const in vec3 texCoord)
 {
 if (i == 0)
 return textureCube (x3d_CubeMapTexture [0], texCoord);
@@ -277,75 +277,75 @@ else if (alphaMode == x3d_Modulate)
 {
 currentColor .a = arg1 .a * arg2 .a;
 }
-else if (mode == x3d_Modulate2X)
+else if (alphaMode == x3d_Modulate2X)
 {
 currentColor .a = (arg1 .a * arg2 .a) * 2.0;
 }
-else if (mode == x3d_Modulate4X)
+else if (alphaMode == x3d_Modulate4X)
 {
 currentColor .a = (arg1 .a * arg2 .a) * 4.0;
 }
-else if (mode == x3d_Add)
+else if (alphaMode == x3d_Add)
 {
 currentColor .a = arg1 .a + arg2 .a;
 }
-else if (mode == x3d_AddSigned)
+else if (alphaMode == x3d_AddSigned)
 {
 currentColor .a = arg1 .a + arg2 .a - 0.5;
 }
-else if (mode == x3d_AddSigned2X)
+else if (alphaMode == x3d_AddSigned2X)
 {
 currentColor .a = (arg1 .a + arg2 .a - 0.5) * 2.0;
 }
-else if (mode == x3d_AddSmooth)
+else if (alphaMode == x3d_AddSmooth)
 {
 currentColor .a = arg1 .a + (1.0 - arg1 .a) * arg2 .a;
 }
-else if (mode == x3d_Subtract)
+else if (alphaMode == x3d_Subtract)
 {
 currentColor .a = arg1 .a - arg2 .a;
 }
-else if (mode == x3d_BlendDiffuseAlpha)
+else if (alphaMode == x3d_BlendDiffuseAlpha)
 {
 currentColor .a = arg1 .a * diffuseColor .a + arg2 .a * (1.0 - diffuseColor .a);
 }
-else if (mode == x3d_BlendTextureAlpha)
+else if (alphaMode == x3d_BlendTextureAlpha)
 {
 currentColor .a = arg1 .a * arg1 .a + arg2 .a * (1.0 - arg1 .a);
 }
-else if (mode == x3d_BlendFactorAlpha)
+else if (alphaMode == x3d_BlendFactorAlpha)
 {
 currentColor .a = arg1 .a * x3d_MultiTextureColor .a + arg2 .a * (1.0 - x3d_MultiTextureColor .a);
 }
-else if (mode == x3d_BlendCurrentAlpha)
+else if (alphaMode == x3d_BlendCurrentAlpha)
 {
 currentColor .a = arg1 .a * arg2 .a + arg2 .a * (1.0 - arg2 .a);
 }
-else if (mode == x3d_ModulateAlphaAddColor)
+else if (alphaMode == x3d_ModulateAlphaAddColor)
 {
 currentColor .a = arg1 .a + arg1 .a * arg2 .a;
 }
-else if (mode == x3d_ModulateInvAlphaAddColor)
+else if (alphaMode == x3d_ModulateInvAlphaAddColor)
 {
 currentColor .a = (1.0 - arg1 .a) * arg2 .a + arg1 .a;
 }
-else if (mode == x3d_ModulateInvColorAddAlpha)
+else if (alphaMode == x3d_ModulateInvColorAddAlpha)
 {
 currentColor .a = (1.0 - arg1 .a) * arg2 .a + arg1 .a;
 }
-else if (mode == x3d_DotProduct3)
+else if (alphaMode == x3d_DotProduct3)
 {
 currentColor .a = dot (arg1 .rgb * 2.0 - 1.0, arg2 .rgb * 2.0 - 1.0);
 }
-else if (mode == x3d_SelectArg1)
+else if (alphaMode == x3d_SelectArg1)
 {
 currentColor .a = arg1 .a;
 }
-else if (mode == x3d_SelectArg2)
+else if (alphaMode == x3d_SelectArg2)
 {
 currentColor .a = arg2 .a;
 }
-else if (mode == x3d_Off)
+else if (alphaMode == x3d_Off)
 ;
 }
 return currentColor;
@@ -356,19 +356,15 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 {
 vec4 texCoord = texCoord0;
 vec4 textureColor = vec4 (1.0);
+if (x3d_GeometryType == x3d_Geometry2D && ! gl_FrontFacing)
+texCoord .s = 1.0 - texCoord .s;
 if (x3d_TextureType [0] == x3d_TextureType2D)
 {
-if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
 textureColor = texture2D (x3d_Texture2D [0], vec2 (texCoord));
-else
-textureColor = texture2D (x3d_Texture2D [0], vec2 (1.0 - texCoord .s, texCoord .t));
 }
 else if (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)
 {
-if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
 textureColor = textureCube (x3d_CubeMapTexture [0], vec3 (texCoord));
-else
-textureColor = textureCube (x3d_CubeMapTexture [0], vec3 (1.0 - texCoord .s, texCoord .t, texCoord .z));
 }
 return diffuseColor * textureColor;
 }

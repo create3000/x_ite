@@ -53,7 +53,9 @@ diffuseFactor = x3d_Color .rgb;
 alpha *= x3d_Color .a;
 }
 else
+{
 diffuseFactor = material .diffuseColor;
+}
 vec3 ambientTerm = diffuseFactor * material .ambientIntensity;
 vec3 finalColor = vec3 (0.0);
 for (int i = 0; i < x3d_MaxLights; ++ i)

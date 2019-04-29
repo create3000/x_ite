@@ -65,39 +65,45 @@ uniform sampler2D x3d_ShadowMap [x3d_MaxLights];
 float
 getShadowDepth (const in int index, const in vec2 shadowCoord)
 {
-#if x3d_MaxLights > 0
-if (index == 0)
+switch (index)
+{
+case 0:
+{
 return unpack (texture (x3d_ShadowMap [0], shadowCoord));
-#endif
-#if x3d_MaxLights > 1
-if (index == 1)
+}
+case 1:
+{
 return unpack (texture (x3d_ShadowMap [1], shadowCoord));
-#endif
-#if x3d_MaxLights > 2
-if (index == 2)
+}
+case 2:
+{
 return unpack (texture (x3d_ShadowMap [2], shadowCoord));
-#endif
-#if x3d_MaxLights > 3
-if (index == 3)
+}
+case 3:
+{
 return unpack (texture (x3d_ShadowMap [3], shadowCoord));
-#endif
-#if x3d_MaxLights > 4
-if (index == 4)
+}
+case 4:
+{
 return unpack (texture (x3d_ShadowMap [4], shadowCoord));
-#endif
-#if x3d_MaxLights > 5
-if (index == 5)
+}
+case 5:
+{
 return unpack (texture (x3d_ShadowMap [5], shadowCoord));
-#endif
-#if x3d_MaxLights > 6
-if (index == 6)
+}
+case 6:
+{
 return unpack (texture (x3d_ShadowMap [6], shadowCoord));
-#endif
-#if x3d_MaxLights > 7
-if (index == 7)
+}
+case 7:
+{
 return unpack (texture (x3d_ShadowMap [7], shadowCoord));
-#endif
+}
+default:
+{
 return 0.0;
+}
+}
 }
 float
 texture2DCompare (const in int index, const in vec2 texCoord, const in float compare)
@@ -304,86 +310,114 @@ uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator 
 vec4
 getTexCoord (const in int i)
 {
-if (i == 0)
+switch (i)
+{
+case 0:
 {
 return texCoord0;
 }
+default:
+{
 return texCoord1;
+}
+}
 }
 vec4
 getTextureCoordinate (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int i)
 {
 int mode = textureCoordinateGenerator .mode;
-if (mode == x3d_None)
+switch (mode)
+{
+case x3d_None:
 {
 return getTexCoord (i);
 }
-else if (mode == x3d_Sphere)
+case x3d_Sphere:
 {
 return vec4 (normal .x / 2.0 + 0.5, normal .y / 2.0 + 0.5, 0.0, 1.0);
 }
-else if (mode == x3d_CameraSpaceNormal)
+case x3d_CameraSpaceNormal:
 {
 return vec4 (normal, 1.0);
 }
-else if (mode == x3d_CameraSpacePosition)
+case x3d_CameraSpacePosition:
 {
 return vec4 (vertex, 1.0);
 }
-else if (mode == x3d_CameraSpaceReflectionVector)
+case x3d_CameraSpaceReflectionVector:
 {
 return vec4 (reflect (normalize (vertex), -normal), 1.0);
 }
-else if (mode == x3d_SphereLocal)
+case x3d_SphereLocal:
 {
 return vec4 (localNormal .x / 2.0 + 0.5, localNormal .y / 2.0 + 0.5, 0.0, 1.0);
 }
-else if (mode == x3d_Coord)
+case x3d_Coord:
 {
 return vec4 (localVertex, 1.0);
 }
-else if (mode == x3d_CoordEye)
+case x3d_CoordEye:
 {
 return vec4 (vertex, 1.0);
 }
-else if (mode == x3d_Noise)
+case x3d_Noise:
 {
 vec3 scale = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);
 vec3 translation = vec3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);
 return vec4 (perlin (localVertex * scale + translation), 1.0);
 }
-else if (mode == x3d_NoiseEye)
+case x3d_NoiseEye:
 {
 vec3 scale = vec3 (textureCoordinateGenerator .parameter [0], textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2]);
 vec3 translation = vec3 (textureCoordinateGenerator .parameter [3], textureCoordinateGenerator .parameter [4], textureCoordinateGenerator .parameter [5]);
 return vec4 (perlin (vertex * scale + translation), 1.0);
 }
-else if (mode == x3d_SphereReflect)
+case x3d_SphereReflect:
 {
 float eta = textureCoordinateGenerator .parameter [0];
 return vec4 (refract (normalize (vertex), -normal, eta), 1.0);
 }
-else if (mode == x3d_SphereReflectLocal)
+case x3d_SphereReflectLocal:
 {
 float eta = textureCoordinateGenerator .parameter [0];
 vec3 eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2], textureCoordinateGenerator .parameter [3]);
 return vec4 (refract (normalize (localVertex - eye), -localNormal, eta), 1.0);
 }
+default:
+{
 return getTexCoord (i);
 }
-vec4
-getTexture2D (in int i, in vec2 texCoord)
-{
-if (i == 0)
-return texture (x3d_Texture2D [0], texCoord);
-return texture (x3d_Texture2D [1], texCoord);
+}
 }
 vec4
-getTextureCube (in int i, in vec3 texCoord)
+getTexture2D (const in int i, const in vec2 texCoord)
 {
-if (i == 0)
+switch (i)
+{
+case 0:
+{
+return texture (x3d_Texture2D [0], texCoord);
+}
+default:
+{
+return texture (x3d_Texture2D [1], texCoord);
+}
+}
+}
+vec4
+getTextureCube (const in int i, const in vec3 texCoord)
+{
+switch (i)
+{
+case 0:
+{
 return texture (x3d_CubeMapTexture [0], texCoord);
+}
+default:
+{
 return texture (x3d_CubeMapTexture [1], texCoord);
+}
+}
 }
 vec4
 getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
@@ -397,197 +431,261 @@ vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
 vec4 textureColor = vec4 (1.0);
 if (x3d_GeometryType == x3d_Geometry2D && ! gl_FrontFacing)
 texCoord .s = 1.0 - texCoord .s;
-if (x3d_TextureType [i] == x3d_TextureType2D)
+switch (x3d_TextureType [i])
+{
+case x3d_TextureType2D:
 {
 textureColor = getTexture2D (i, vec2 (texCoord));
+break;
 }
-else if (x3d_TextureType [i] == x3d_TextureTypeCubeMapTexture)
+case x3d_TextureTypeCubeMapTexture:
 {
 textureColor = getTextureCube (i, vec3 (texCoord));
+break;
+}
 }
 x3d_MultiTextureParameters multiTexture = x3d_MultiTexture [i];
 vec4 arg1 = textureColor;
 vec4 arg2 = currentColor;
 int source = multiTexture .source;
-if (source == x3d_Diffuse)
+switch (source)
+{
+case x3d_Diffuse:
 {
 arg1 = diffuseColor;
+break;
 }
-else if (source == x3d_Specular)
+case x3d_Specular:
 {
 arg1 = specularColor;
+break;
 }
-else if (source == x3d_Factor)
+case x3d_Factor:
 {
 arg1 = x3d_MultiTextureColor;
+break;
+}
 }
 int function = multiTexture .function;
-if (function == x3d_Complement)
+switch (function)
+{
+case x3d_Complement:
 {
 arg1 = 1.0 - arg1;
+break;
 }
-else if (function == x3d_AlphaReplicate)
+case x3d_AlphaReplicate:
 {
 arg1 .a = arg2 .a;
+break;
+}
 }
 int mode = multiTexture .mode;
 int alphaMode = multiTexture .alphaMode;
-if (mode == x3d_Replace)
+switch (mode)
+{
+case x3d_Replace:
 {
 currentColor .rgb = arg1 .rgb;
+break;
 }
-else if (mode == x3d_Modulate)
+case x3d_Modulate:
 {
 currentColor .rgb = arg1 .rgb * arg2 .rgb;
+break;
 }
-else if (mode == x3d_Modulate2X)
+case x3d_Modulate2X:
 {
 currentColor .rgb = (arg1 .rgb * arg2 .rgb) * 2.0;
+break;
 }
-else if (mode == x3d_Modulate4X)
+case x3d_Modulate4X:
 {
 currentColor .rgb = (arg1 .rgb * arg2 .rgb) * 4.0;
+break;
 }
-else if (mode == x3d_Add)
+case x3d_Add:
 {
 currentColor .rgb = arg1 .rgb + arg2 .rgb;
+break;
 }
-else if (mode == x3d_AddSigned)
+case x3d_AddSigned:
 {
 currentColor .rgb = arg1 .rgb + arg2 .rgb - 0.5;
+break;
 }
-else if (mode == x3d_AddSigned2X)
+case x3d_AddSigned2X:
 {
 currentColor .rgb = (arg1 .rgb + arg2 .rgb - 0.5) * 2.0;
+break;
 }
-else if (mode == x3d_AddSmooth)
+case x3d_AddSmooth:
 {
 currentColor .rgb = arg1 .rgb + (1.0 - arg1 .rgb) * arg2 .rgb;
+break;
 }
-else if (mode == x3d_Subtract)
+case x3d_Subtract:
 {
 currentColor .rgb = arg1 .rgb - arg2 .rgb;
+break;
 }
-else if (mode == x3d_BlendDiffuseAlpha)
+case x3d_BlendDiffuseAlpha:
 {
 currentColor .rgb = arg1 .rgb * diffuseColor .a + arg2 .rgb * (1.0 - diffuseColor .a);
+break;
 }
-else if (mode == x3d_BlendTextureAlpha)
+case x3d_BlendTextureAlpha:
 {
 currentColor .rgb = arg1 .rgb * arg1 .a + arg2 .rgb * (1.0 - arg1 .a);
+break;
 }
-else if (mode == x3d_BlendFactorAlpha)
+case x3d_BlendFactorAlpha:
 {
 currentColor .rgb = arg1 .rgb * x3d_MultiTextureColor .a + arg2 .rgb * (1.0 - x3d_MultiTextureColor .a);
+break;
 }
-else if (mode == x3d_BlendCurrentAlpha)
+case x3d_BlendCurrentAlpha:
 {
 currentColor .rgb = arg1 .rgb * arg2 .a + arg2 .rgb * (1.0 - arg2 .a);
+break;
 }
-else if (mode == x3d_ModulateAlphaAddColor)
+case x3d_ModulateAlphaAddColor:
 {
 currentColor .rgb = arg1 .rgb + arg1 .a * arg2 .rgb;
+break;
 }
-else if (mode == x3d_ModulateInvAlphaAddColor)
+case x3d_ModulateInvAlphaAddColor:
 {
 currentColor .rgb = (1.0 - arg1 .a) * arg2 .rgb + arg1 .rgb;
+break;
 }
-else if (mode == x3d_ModulateInvColorAddAlpha)
+case x3d_ModulateInvColorAddAlpha:
 {
 currentColor .rgb = (1.0 - arg1 .rgb) * arg2 .rgb + arg1 .a;
+break;
 }
-else if (mode == x3d_DotProduct3)
+case x3d_DotProduct3:
 {
 currentColor .rgb = vec3 (dot (arg1 .rgb * 2.0 - 1.0, arg2 .rgb * 2.0 - 1.0));
+break;
 }
-else if (mode == x3d_SelectArg1)
+case x3d_SelectArg1:
 {
 currentColor .rgb = arg1 .rgb;
+break;
 }
-else if (mode == x3d_SelectArg2)
+case x3d_SelectArg2:
 {
 currentColor .rgb = arg2 .rgb;
+break;
 }
-else if (mode == x3d_Off)
-;
-if (alphaMode == x3d_Replace)
+case x3d_Off:
+{
+break;
+}
+}
+switch (alphaMode)
+{
+case x3d_Replace:
 {
 currentColor .a = arg1 .a;
+break;
 }
-else if (alphaMode == x3d_Modulate)
+case x3d_Modulate:
 {
 currentColor .a = arg1 .a * arg2 .a;
+break;
 }
-else if (mode == x3d_Modulate2X)
+case x3d_Modulate2X:
 {
 currentColor .a = (arg1 .a * arg2 .a) * 2.0;
+break;
 }
-else if (mode == x3d_Modulate4X)
+case x3d_Modulate4X:
 {
 currentColor .a = (arg1 .a * arg2 .a) * 4.0;
+break;
 }
-else if (mode == x3d_Add)
+case x3d_Add:
 {
 currentColor .a = arg1 .a + arg2 .a;
+break;
 }
-else if (mode == x3d_AddSigned)
+case x3d_AddSigned:
 {
 currentColor .a = arg1 .a + arg2 .a - 0.5;
+break;
 }
-else if (mode == x3d_AddSigned2X)
+case x3d_AddSigned2X:
 {
 currentColor .a = (arg1 .a + arg2 .a - 0.5) * 2.0;
+break;
 }
-else if (mode == x3d_AddSmooth)
+case x3d_AddSmooth:
 {
 currentColor .a = arg1 .a + (1.0 - arg1 .a) * arg2 .a;
+break;
 }
-else if (mode == x3d_Subtract)
+case x3d_Subtract:
 {
 currentColor .a = arg1 .a - arg2 .a;
+break;
 }
-else if (mode == x3d_BlendDiffuseAlpha)
+case x3d_BlendDiffuseAlpha:
 {
 currentColor .a = arg1 .a * diffuseColor .a + arg2 .a * (1.0 - diffuseColor .a);
+break;
 }
-else if (mode == x3d_BlendTextureAlpha)
+case x3d_BlendTextureAlpha:
 {
 currentColor .a = arg1 .a * arg1 .a + arg2 .a * (1.0 - arg1 .a);
+break;
 }
-else if (mode == x3d_BlendFactorAlpha)
+case x3d_BlendFactorAlpha:
 {
 currentColor .a = arg1 .a * x3d_MultiTextureColor .a + arg2 .a * (1.0 - x3d_MultiTextureColor .a);
+break;
 }
-else if (mode == x3d_BlendCurrentAlpha)
+case x3d_BlendCurrentAlpha:
 {
 currentColor .a = arg1 .a * arg2 .a + arg2 .a * (1.0 - arg2 .a);
+break;
 }
-else if (mode == x3d_ModulateAlphaAddColor)
+case x3d_ModulateAlphaAddColor:
 {
 currentColor .a = arg1 .a + arg1 .a * arg2 .a;
+break;
 }
-else if (mode == x3d_ModulateInvAlphaAddColor)
+case x3d_ModulateInvAlphaAddColor:
 {
 currentColor .a = (1.0 - arg1 .a) * arg2 .a + arg1 .a;
+break;
 }
-else if (mode == x3d_ModulateInvColorAddAlpha)
+case x3d_ModulateInvColorAddAlpha:
 {
 currentColor .a = (1.0 - arg1 .a) * arg2 .a + arg1 .a;
+break;
 }
-else if (mode == x3d_DotProduct3)
+case x3d_DotProduct3:
 {
 currentColor .a = dot (arg1 .rgb * 2.0 - 1.0, arg2 .rgb * 2.0 - 1.0);
+break;
 }
-else if (mode == x3d_SelectArg1)
+case x3d_SelectArg1:
 {
 currentColor .a = arg1 .a;
+break;
 }
-else if (mode == x3d_SelectArg2)
+case x3d_SelectArg2:
 {
 currentColor .a = arg2 .a;
+break;
 }
-else if (mode == x3d_Off)
-;
+case x3d_Off:
+{
+break;
+}
+}
 }
 return currentColor;
 }
@@ -597,19 +695,20 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 {
 vec4 texCoord = texCoord0;
 vec4 textureColor = vec4 (1.0);
-if (x3d_TextureType [0] == x3d_TextureType2D)
+if (x3d_GeometryType == x3d_Geometry2D && ! gl_FrontFacing)
+texCoord .s = 1.0 - texCoord .s;
+switch (x3d_TextureType [0])
 {
-if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
-textureColor = texture (x3d_Texture2D [0], vec2 (texCoord));
-else
-textureColor = texture (x3d_Texture2D [0], vec2 (1.0 - texCoord .s, texCoord .t));
+case x3d_TextureType2D:
+{
+textureColor = texture2D (x3d_Texture2D [0], vec2 (texCoord));
+break;
 }
-else if (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)
+case x3d_TextureTypeCubeMapTexture:
 {
-if (x3d_GeometryType == x3d_Geometry3D || gl_FrontFacing)
-textureColor = texture (x3d_CubeMapTexture [0], vec3 (texCoord));
-else
-textureColor = texture (x3d_CubeMapTexture [0], vec3 (1.0 - texCoord .s, texCoord .t, texCoord .z));
+textureColor = textureCube (x3d_CubeMapTexture [0], vec3 (texCoord));
+break;
+}
 }
 return diffuseColor * textureColor;
 }
@@ -639,11 +738,21 @@ return 1.0;
 float dV = length (x3d_Fog .matrix * vertex);
 if (dV >= visibilityRange)
 return 0.0;
-if (x3d_Fog .type == x3d_LinearFog)
+switch (x3d_Fog .type)
+{
+case x3d_LinearFog:
+{
 return (visibilityRange - dV) / visibilityRange;
-if (x3d_Fog .type == x3d_ExponentialFog)
+}
+case x3d_ExponentialFog:
+{
 return exp (-dV / (visibilityRange - dV));
+}
+default:
+{
 return 1.0;
+}
+}
 }
 vec3
 getFogColor (const in vec3 color)
@@ -751,7 +860,9 @@ if (x3d_NumTextures > 0)
 finalColor = getTextureColor (color, vec4 (1.0));
 }
 else
+{
 finalColor = color;
+}
 }
 else
 {
