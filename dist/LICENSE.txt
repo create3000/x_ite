@@ -47,5 +47,3 @@
  ******************************************************************************/
 
 
-/* X_ITE X3D v4.5.1-770
- * See LICENSE.txt for a detailed listing of used licences. */

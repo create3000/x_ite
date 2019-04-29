@@ -157,8 +157,6 @@ check_version;
 say "Making version '$VERSION' now.";
 
 shaders;
-exit;
-
 licenses;
 dist;
 zip;
