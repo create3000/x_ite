@@ -66,7 +66,7 @@ define (function ()
 				value .separator         = separator;
 				value .leadingSeparator  = false;
 				value .trailingSeparator = false;
-				
+
 				if (value .length)
 				{
 					if (value [0] .length === 0)
@@ -82,9 +82,9 @@ define (function ()
 					{
 						value .pop ();
 						value .trailingSeparator = true;
-					}		
+					}
 				}
-				
+
 				break;
 			}
 			case 4:
@@ -93,7 +93,7 @@ define (function ()
 
 				value .separator         = arguments [1];
 				value .leadingSeparator  = arguments [2];
-				value .trailingSeparator = arguments [3];					
+				value .trailingSeparator = arguments [3];
 				break;
 			}
 		}
@@ -105,7 +105,7 @@ define (function ()
 		{
 			var value = this .value;
 
-			return new Path (value .slice (0, value .length), 
+			return new Path (value .slice (0, value .length),
 			                 value .separator,
 			                 value .leadingSeparator,
 			                 value .trailingSeparator);
@@ -124,7 +124,7 @@ define (function ()
 		},
 		get root ()
 		{
-			return new Path ([ ], 
+			return new Path ([ ],
 			                this .value .separator,
 			                true,
 			                true);
@@ -134,7 +134,7 @@ define (function ()
 			if (this .value .trailingSeparator)
 				return this .copy ();
 
-			return this .parent;	
+			return this .parent;
 		},
 		get parent ()
 		{
@@ -152,7 +152,7 @@ define (function ()
 				}
 				default:
 				{
-					return new Path (value .slice (0, value .length - 1), 
+					return new Path (value .slice (0, value .length - 1),
 				                     value .separator,
 				                     value .leadingSeparator,
 				                     true);
@@ -236,7 +236,7 @@ define (function ()
 				for (var i = 0; i < value .length; ++ i)
 				{
 					var segment = value [i];
-				
+
 					switch (segment)
 					{
 						case "":
@@ -297,7 +297,7 @@ define (function ()
 			var
 				value  = this .value,
 				string = "";
-		
+
 			if (value .leadingSeparator)
 				string += value .separator;
 
@@ -572,7 +572,7 @@ define (function ()
 			                value .port,
 			                value .path .parent,
 			                "",
-			                "");	
+			                "");
 		},
 		get filename ()
 		{
@@ -739,6 +739,9 @@ define (function ()
 		{
 			var value = this .value;
 
+			if (value .scheme === "data")
+				return new URI (value .string);
+
 			return new URI (value .local,
 			                value .absolute,
 			                value .scheme,
@@ -752,6 +755,9 @@ define (function ()
 		unescape: function ()
 		{
 			var value = this .value;
+
+			if (value .scheme === "data")
+				return new URI (value .string);
 
 			return new URI (value .local,
 			                value .absolute,
