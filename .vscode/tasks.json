@@ -26,12 +26,6 @@
             "type": "shell",
             "command": "git ls-files --others --exclude-standard",
             "problemMatcher": []
-        },
-        {
-            "label": "Generate Interfaces",
-            "type": "shell",
-            "command": "sh /home/holger/Projekte/Titania/miscellaneous/glade2c++/generate.sh",
-           "problemMatcher": []
         }
     ]
 }
