@@ -172,7 +172,7 @@ define (function ()
 
 			this .nrrd .data = data;
 
-			for (var i = this .input .length - length; i < length; ++ i)
+			for (var i = input .length - length; i < length; ++ i)
 				data [i] = input .charCodeAt (i);
 		},
 	};
