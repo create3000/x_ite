@@ -56,7 +56,7 @@ define ([
 	"x_ite/Browser/Texturing/MultiTextureFunctionType",
 ],
 function (Fields,
-          X3DAppearanceChildNode, 
+          X3DAppearanceChildNode,
           X3DConstants,
           ModeType,
           SourceType,
@@ -71,7 +71,7 @@ function (Fields,
 		"MOZ_EXT_texture_filter_anisotropic",
 		"WEBKIT_EXT_texture_filter_anisotropic",
 	];
-	
+
 	function X3DTextureNode (executionContext)
 	{
 		X3DAppearanceChildNode .call (this, executionContext);
@@ -173,5 +173,3 @@ function (Fields,
 
 	return X3DTextureNode;
 });
-
-

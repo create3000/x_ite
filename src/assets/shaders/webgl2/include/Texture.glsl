@@ -167,6 +167,8 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 		vec4 texCoord     = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
 		vec4 textureColor = vec4 (1.0);
 
+		texCoord .stp /= texCoord .q;
+
 		if (x3d_GeometryType == x3d_Geometry2D && ! gl_FrontFacing)
 			texCoord .s = 1.0 - texCoord .s;
 
@@ -174,17 +176,17 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 		{
 			case x3d_TextureType2D:
 			{
-				textureColor = getTexture2D (i, vec2 (texCoord));
+				textureColor = getTexture2D (i, texCoord .st);
 				break;
 			}
 			case x3d_TextureType3D:
 			{
-				textureColor = getTexture3D (i, vec3 (texCoord));
+				textureColor = getTexture3D (i, texCoord .stp);
 				break;
 			}
 			case x3d_TextureTypeCubeMapTexture:
 			{
-				textureColor = getTextureCube (i, vec3 (texCoord));
+				textureColor = getTextureCube (i, texCoord .stp);
 				break;
 			}
 		}
@@ -464,6 +466,8 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 	vec4 texCoord     = texCoord0;
 	vec4 textureColor = vec4 (1.0);
 
+	texCoord .stp /= texCoord .q;
+
 	if (x3d_GeometryType == x3d_Geometry2D && ! gl_FrontFacing)
 		texCoord .s = 1.0 - texCoord .s;
 
@@ -471,17 +475,17 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 	{
 		case x3d_TextureType2D:
 		{
-			textureColor = texture (x3d_Texture2D [0], vec2 (texCoord));
+			textureColor = texture (x3d_Texture2D [0], texCoord .st);
 			break;
 		}
 		case x3d_TextureType3D:
 		{
-			textureColor = texture (x3d_Texture3D [0], vec3 (texCoord));
+			textureColor = texture (x3d_Texture3D [0], texCoord .stp);
 			break;
 		}
 		case x3d_TextureTypeCubeMapTexture:
 		{
-			textureColor = texture (x3d_CubeMapTexture [0], vec3 (texCoord));
+			textureColor = texture (x3d_CubeMapTexture [0], texCoord .stp);
 			break;
 		}
 	}
