@@ -80,9 +80,9 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DTextureNode .prototype .initialize .call (this);
-			
+
 			var gl = this .getBrowser () .getContext ();
-			
+
 			this .target = gl .TEXTURE_2D;
 
 			this .repeatS_           .addInterest ("updateTextureProperties", this);
@@ -91,7 +91,7 @@ function (Fields,
 
 			gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
 			gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-		
+
 			this .set_textureProperties__ ();
 		},
 		set_textureProperties__: function ()
@@ -128,6 +128,10 @@ function (Fields,
 		{
 			return this .data;
 		},
+		clearTexture: function ()
+		{
+			this .setTexture (1, 1, false, defaultData, false);
+		},
 		setTexture: function (width, height, transparent, data, flipY)
 		{
 			try
@@ -138,12 +142,12 @@ function (Fields,
 				this .data   = data;
 
 				var gl = this .getBrowser () .getContext ();
-	
+
 				gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
 				gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
 				gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
 				gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
-	
+
 				this .setTransparent (transparent);
 				this .updateTextureProperties ();
 				this .addNodeEvent ();
@@ -151,25 +155,21 @@ function (Fields,
 			catch (error)
 			{ }
 		},
-		clearTexture: function ()
-		{
-			this .setTexture (1, 1, false, defaultData, false);
-		},
 		updateTexture: function (data, flipY)
 		{
 			try
 			{
 				this .data = data;
-	
+
 				var gl = this .getBrowser () .getContext ();
-	
+
 				gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
 				gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
 				gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
-	
+
 				if (this .texturePropertiesNode .generateMipMaps_ .getValue ())
 					gl .generateMipmap (gl .TEXTURE_2D);
-	
+
 				this .addNodeEvent ();
 			}
 			catch (error)

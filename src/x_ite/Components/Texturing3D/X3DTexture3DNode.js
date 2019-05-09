@@ -56,6 +56,8 @@ function (X3DTextureNode,
 {
 "use strict";
 
+	var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+
 	function X3DTexture3DNode (executionContext)
 	{
 		X3DTextureNode .call (this, executionContext);
@@ -66,9 +68,108 @@ function (X3DTextureNode,
 	X3DTexture3DNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
 	{
 		constructor: X3DTexture3DNode,
+		initialize: function ()
+		{
+			X3DTextureNode .prototype .initialize .call (this);
+
+			var gl = this .getBrowser () .getContext ();
+
+			if (gl .getVersion () < 2)
+				return;
+
+			this .target = gl .TEXTURE_3D;
+
+			this .repeatS_           .addInterest ("updateTextureProperties", this);
+			this .repeatT_           .addInterest ("updateTextureProperties", this);
+			this .repeatR_           .addInterest ("updateTextureProperties", this);
+			this .textureProperties_ .addInterest ("set_textureProperties__", this);
+
+			gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+			gl .texImage2D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+
+			this .set_textureProperties__ ();
+		},
+		set_textureProperties__: function ()
+		{
+			if (this .texturePropertiesNode)
+				this .texturePropertiesNode .removeInterest ("updateTextureProperties", this);
+
+			this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this .textureProperties_);
+
+			if (! this .texturePropertiesNode)
+				this .texturePropertiesNode = this .getBrowser () .getDefaultTextureProperties ();
+
+			this .texturePropertiesNode .addInterest ("updateTextureProperties", this);
+
+			this .updateTextureProperties ();
+		},
+		getTarget: function ()
+		{
+			return this .target;
+		},
+		getWidth: function ()
+		{
+			return this .width;
+		},
+		getHeight: function ()
+		{
+			return this .height;
+		},
+		getDepth: function ()
+		{
+			return this .depth;
+		},
+		getFlipY: function ()
+		{
+			return false;
+		},
+		getData: function ()
+		{
+			return this .data;
+		},
 		clearTexture: function ()
 		{
+			this .setTexture (1, 1, 1, false, defaultData, false);
+		},
+		setTexture: function (width, height, depth, transparent, data)
+		{
+			try
+			{
+				this .width  = width;
+				this .height = height;
+				this .depth  = depth;
+				this .data   = data;
 
+				var gl = this .getBrowser () .getContext ();
+
+				if (gl .getVersion () < 2)
+					return;
+
+				gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
+				gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
+				gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+				gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+
+				this .setTransparent (transparent);
+				this .updateTextureProperties ();
+				this .addNodeEvent ();
+			}
+			catch (error)
+			{ }
+		},
+		updateTextureProperties: function ()
+		{
+			var gl = this .getBrowser () .getContext ();
+
+			X3DTextureNode .prototype .updateTextureProperties .call (this,
+			                                                          gl .TEXTURE_3D,
+			                                                          this .textureProperties_ .getValue (),
+			                                                          this .texturePropertiesNode,
+			                                                          this .width,
+			                                                          this .height,
+			                                                          this .repeatS_ .getValue (),
+			                                                          this .repeatT_ .getValue (),
+			                                                          this .repeatR_ .getValue ());
 		},
 		setShaderUniformsToChannel: function (gl, shaderObject, i)
 		{
