@@ -54,22 +54,28 @@ define ([
 	"x_ite/Components/Texturing3D/X3DTexture3DNode",
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/InputOutput/FileLoader",
+	"standard/Networking/URI",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTexture3DNode, 
-          X3DUrlObject, 
-          X3DConstants)
+          X3DTexture3DNode,
+          X3DUrlObject,
+          X3DConstants,
+          FileLoader,
+          URI)
 {
 "use strict";
 
 	function ImageTexture3D (executionContext)
 	{
 		X3DTexture3DNode .call (this, executionContext);
-		X3DUrlObject .call (this, executionContext);
+		X3DUrlObject     .call (this, executionContext);
 
 		this .addType (X3DConstants .ImageTexture3D);
+
+		this .addChildObjects ("buffer", new Fields .SFTime ());
 	}
 
 	ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
@@ -96,9 +102,51 @@ function (Fields,
 		{
 			return "texture";
 		},
+		initialize: function ()
+		{
+			X3DTexture3DNode .prototype .initialize .call (this);
+			X3DUrlObject     .prototype .initialize .call (this);
+
+			this .url_    .addInterest ("set_url__",   this);
+			this .buffer_ .addInterest ("set_buffer__", this);
+
+			this .set_url__ ();
+		},
+		set_url__: function ()
+		{
+			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+
+			this .requestAsyncLoad ();
+		},
+		requestAsyncLoad: function ()
+		{
+			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
+				return;
+
+			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
+
+			this .buffer_ .addEvent ();
+		},
+		set_buffer__: function ()
+		{
+			new FileLoader (this) .loadBinaryDocument (this .url_,
+			function (data)
+			{
+				if (data === null)
+				{
+					// No URL could be loaded.
+					this .setLoadState (X3DConstants .FAILED_STATE);
+					this .clearTexture ();
+				}
+				else
+				{
+					console .log (data);
+					this .setLoadState (X3DConstants .COMPLETE_STATE);
+				}
+			}
+			.bind (this));
+		},
 	});
 
 	return ImageTexture3D;
 });
-
-

@@ -100,9 +100,11 @@ function ($,
 		this .external         = external === undefined ? this .browser .isExternal () : external;
 		this .executionContext = this .external ? node .getExecutionContext () : this .browser .currentScene;
 		this .userAgent        = this .browser .getName () + "/" + this .browser .getVersion () + " (X3D Browser; +" + this .browser .getProviderUrl () + ")";
+		this .target           = "";
 		this .url              = [ ];
 		this .URL              = new URI ();
 		this .fileReader       = new FileReader ();
+		this .text             = true;
 	}
 
 	FileLoader .prototype = Object .assign (Object .create (X3DObject .prototype),
@@ -302,9 +304,10 @@ function ($,
 		{
 			this .bindViewpoint = bindViewpoint;
 			this .foreign       = foreign;
+			this .target        = this .getTarget (parameter || defaultParameter);
 
 			if (callback)
-				return this .loadDocument (url, parameter, this .createX3DFromURLAsync .bind (this, callback));
+				return this .loadDocument (url, this .createX3DFromURLAsync .bind (this, callback));
 
 			return this .createX3DFromURLSync (url);
 		},
@@ -367,9 +370,9 @@ function ($,
 		{
 			this .script = true;
 
-			this .loadDocument (url, null, callback);
+			this .loadDocument (url, callback);
 		},
-		loadDocument: function (url, parameter, callback)
+		loadDocument: function (url, callback)
 		{
 			this .url       = url .copy ();
 			this .callback  = callback;
@@ -377,7 +380,16 @@ function ($,
 			if (url .length === 0)
 				return this .loadDocumentError (new Error ("No URL given."));
 
-			this .target = this .getTarget (parameter || defaultParameter);
+			this .loadDocumentAsync (this .url .shift ());
+		},
+		loadBinaryDocument: function (url, callback)
+		{
+			this .url       = url .copy ();
+			this .callback  = callback;
+			this .text      = false;
+
+			if (url .length === 0)
+				return this .loadDocumentError (new Error ("No URL given."));
 
 			this .loadDocumentAsync (this .url .shift ());
 		},
@@ -511,9 +523,18 @@ function ($,
 							return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
 					}
 
-					this .fileReader .onload = this .readAsArrayBuffer .bind (this, blob);
+					if (this .text)
+					{
+						this .fileReader .onload = this .readAsArrayBuffer .bind (this, blob);
 
-					this .fileReader .readAsArrayBuffer (blob);
+						this .fileReader .readAsArrayBuffer (blob);
+					}
+					else
+					{
+						this .fileReader .onload = this .readAsBinaryString .bind (this);
+
+						this .fileReader .readAsBinaryString (blob);
+					}
 				},
 				error: function (xhr, textStatus, exception)
 				{
@@ -535,6 +556,17 @@ function ($,
 			}
 		},
 		readAsText: function (blob)
+		{
+			try
+			{
+				this .callback (this .fileReader .result);
+			}
+			catch (exception)
+			{
+				this .loadDocumentError (exception);
+			}
+		},
+		readAsBinaryString: function ()
 		{
 			try
 			{

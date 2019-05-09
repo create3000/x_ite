@@ -90,7 +90,7 @@ function (TextureProperties,
 			for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
 				this .texture2DUnits [i] = this .getCombinedTextureUnits () .pop ();
 
-         var defaultData = new Uint8Array ([ 0, 255, 255, 255 ]);
+         var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
 			// Texture 2D Units
 
@@ -113,7 +113,28 @@ function (TextureProperties,
 				gl .activeTexture (gl .TEXTURE0 + this .texture2DUnits [i]);
 				gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
 			}
-		
+
+			// Texture 3D Units
+
+			if (gl .getVersion () > 1)
+			{
+				this .texture3DUnits = new Int32Array (this .getMaxTextures ());
+
+				for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
+					this .texture3DUnits [i] = this .getCombinedTextureUnits () .pop ();
+
+				this .defaultTexture3D = gl .createTexture ();
+
+				gl .bindTexture (gl .TEXTURE_3D, this .defaultTexture3D);
+				gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+
+				for (var i = 0, length = this .texture3DUnits .length; i < length; ++ i)
+				{
+					gl .activeTexture (gl .TEXTURE0 + this .texture3DUnits [i]);
+					gl .bindTexture (gl .TEXTURE_3D, this .defaultTexture3D);
+				}
+			}
+
 			// Cube Map Texture Units
 
 			this .cubeMapTextureUnits = new Int32Array (this .getMaxTextures ());
@@ -162,6 +183,10 @@ function (TextureProperties,
 		getTexture2DUnits: function ()
 		{
 			return this .texture2DUnits;
+		},
+		getTexture3DUnits: function ()
+		{
+			return this .texture3DUnits;
 		},
 		getCubeMapTextureUnits: function ()
 		{

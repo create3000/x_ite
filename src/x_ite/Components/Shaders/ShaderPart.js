@@ -175,8 +175,8 @@ function (Fields,
 		{
 			this .valid = false;
 
-			new FileLoader (this) .loadDocument (this .url_, null,
-			function (data, URL)
+			new FileLoader (this) .loadDocument (this .url_,
+			function (data)
 			{
 				if (data === null)
 				{

@@ -51,7 +51,7 @@ define ([
 	"x_ite/Components/Texturing/X3DTextureNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DTextureNode, 
+function (X3DTextureNode,
           X3DConstants)
 {
 "use strict";
@@ -66,9 +66,20 @@ function (X3DTextureNode,
 	X3DTexture3DNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
 	{
 		constructor: X3DTexture3DNode,
+		clearTexture: function ()
+		{
+
+		},
+		setShaderUniformsToChannel: function (gl, shaderObject, i)
+		{
+			if (gl .getVersion () < 2)
+				return;
+
+			gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getTexture3DUnits () [i]);
+			gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+			gl .uniform1i (shaderObject .x3d_TextureType [i], 3);
+		},
 	});
 
 	return X3DTexture3DNode;
 });
-
-
