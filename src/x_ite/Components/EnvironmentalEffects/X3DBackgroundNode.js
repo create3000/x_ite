@@ -320,13 +320,13 @@ function (X3DBindableNode,
 				                     s,  s, -s, 1, -s, -s, -s, 1,  s, -s, -s, 1,
 				                    -s,  s,  s, 1,  s,  s,  s, 1, -s, -s,  s, 1, // Front
 				                    -s, -s,  s, 1,  s,  s,  s, 1,  s, -s,  s, 1,
-				                    -s,  s, -s, 1, -s,  s,  s, 1, -s, -s,  s, 1, // Left	
+				                    -s,  s, -s, 1, -s,  s,  s, 1, -s, -s,  s, 1, // Left
 				                    -s,  s, -s, 1, -s, -s,  s, 1, -s, -s, -s, 1,
-				                    	s,  s,  s, 1,  s,  s, -s, 1,  s, -s,  s, 1, // Right		
+				                    	s,  s,  s, 1,  s,  s, -s, 1,  s, -s,  s, 1, // Right
 				                     s, -s,  s, 1,  s,  s, -s, 1,  s, -s, -s, 1,
-				                    	s,  s,  s, 1, -s,  s,  s, 1, -s,  s, -s, 1, // Top		
+				                    	s,  s,  s, 1, -s,  s,  s, 1, -s,  s, -s, 1, // Top
 				                     s,  s,  s, 1, -s,  s, -s, 1,  s,  s, -s, 1,
-				                    -s, -s,  s, 1,  s, -s,  s, 1, -s, -s, -s, 1, // Bottom	
+				                    -s, -s,  s, 1,  s, -s,  s, 1, -s, -s, -s, 1, // Bottom
 				                    -s, -s, -s, 1,  s, -s,  s, 1,  s, -s, -s, 1);
 
 				var c = this .skyColor_ [0];
@@ -341,7 +341,7 @@ function (X3DBindableNode,
 				if (this .skyColor_ .length > this .skyAngle_ .length)
 				{
 					var vAngle = [ ];
-					
+
 					for (var i = 0, length = this .skyAngle_ .length; i < length; ++ i)
 						vAngle .push (this .skyAngle_ [i]);
 
@@ -359,7 +359,7 @@ function (X3DBindableNode,
 				if (this .groundColor_ .length > this .groundAngle_ .length)
 				{
 					var vAngle = [ ];
-					
+
 					for (var i = 0, length = this .groundAngle_ .length; i < length; ++ i)
 						vAngle .push (this .groundAngle_ [i]);
 
@@ -383,7 +383,7 @@ function (X3DBindableNode,
 				phi         = 0,
 				vAngleMax   = bottom ? Math .PI / 2 : Math .PI,
 				V_DIMENSION = vAngle .length - 1;
-			
+
 			for (var v = 0; v < V_DIMENSION; ++ v)
 			{
 				var
@@ -398,11 +398,11 @@ function (X3DBindableNode,
 
 				z1 .setPolar (radius, theta1);
 				z2 .setPolar (radius, theta2);
-				
+
 				var
 					c1 = this .getColor (vAngle [v],     color, angle),
 					c2 = this .getColor (vAngle [v + 1], color, angle);
-				
+
 				for (var u = 0; u < U_DIMENSION; ++ u)
 				{
 					// p4 --- p1
@@ -412,7 +412,7 @@ function (X3DBindableNode,
 
 					// The last point is the first one.
 					var u1 = u < U_DIMENSION - 1 ? u + 1 : 0;
-			
+
 					// p1, p2
 					phi = 2 * Math .PI * (u / U_DIMENSION);
 					y1  .setPolar (-z1 .imag, phi);
@@ -422,7 +422,7 @@ function (X3DBindableNode,
 					phi = 2 * Math .PI * (u1 / U_DIMENSION);
 					y3  .setPolar (-z2 .imag, phi);
 					y4  .setPolar (-z1 .imag, phi);
-					
+
 					// Triangle 1 and 2
 
 					this .colors .push (c1 .r, c1 .g, c1 .b, alpha,
@@ -439,7 +439,7 @@ function (X3DBindableNode,
 					                    // Triangle 2
 					                    y1 .imag, z1 .real, y1 .real, 1,
 					                    y4 .imag, z1 .real, y4 .real, 1,
-					                    y3 .imag, z2 .real, y3 .real, 1);	
+					                    y3 .imag, z2 .real, y3 .real, 1);
 				}
 			}
 		},
@@ -527,27 +527,27 @@ function (X3DBindableNode,
 				{
 					if (this .hidden)
 						return;
-	
+
 					// Setup context.
-		
+
 					gl .disable (gl .DEPTH_TEST);
 					gl .depthMask (false);
 					gl .enable (gl .CULL_FACE);
 					gl .frontFace (gl .CCW);
-	
+
 					// Get background scale.
-	
+
 					var
 						viewpoint      = renderObject .getViewpoint (),
 						navigationInfo = renderObject .getNavigationInfo (),
 						farValue       = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
 
 					// Get projection matrix.
-	
-					this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());	
-	
+
+					this .projectionMatrixArray .set (renderObject .getProjectionMatrix () .get ());
+
 					// Rotate and scale background.
-	
+
 					modelViewMatrix .assign (this .modelMatrix);
 					modelViewMatrix .multRight (renderObject .getInverseCameraSpaceMatrix () .get ());
 					modelViewMatrix .get (null, rotation);
@@ -556,11 +556,11 @@ function (X3DBindableNode,
 					modelViewMatrix .scale (scale .set (farValue, farValue, farValue));
 
 					this .modelViewMatrixArray .set (modelViewMatrix);
-	
+
 					// Draw background sphere and texture cube.
-	
+
 					this .drawSphere (renderObject);
-	
+
 					if (this .textures)
 						this .drawCube (renderObject);
 				}
@@ -573,10 +573,10 @@ function (X3DBindableNode,
 		drawSphere: function (renderObject)
 		{
 			var transparency = this .transparency_ .getValue ();
-		
+
 			if (transparency >= 1)
 				return;
-	
+
 			var
 				browser    = renderObject .getBrowser (),
 				gl         = browser .getContext (),
@@ -585,34 +585,34 @@ function (X3DBindableNode,
 			if (shaderNode .getValid ())
 			{
 				shaderNode .enable (gl);
-	
+
 				// Clip planes
-	
+
 				shaderNode .setShaderObjects (gl, this .shaderObjects);
-	
+
 				// Enable vertex attribute arrays.
-	
+
 				shaderNode .enableColorAttribute  (gl, this .colorBuffer);
 				shaderNode .enableVertexAttribute (gl, this .sphereBuffer);
-	
+
 				// Uniforms
-	
+
 				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, this .projectionMatrixArray);
 				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, this .modelViewMatrixArray);
-	
+
 				// Setup context.
-		
+
 				if (transparency)
 					gl .enable (gl .BLEND);
 				else
 					gl .disable (gl .BLEND);
-	
+
 				// Draw.
-	
+
 				gl .drawArrays (gl .TRIANGLES, 0, this .sphereCount);
-	
+
 				// Disable vertex attribute arrays.
-	
+
 				shaderNode .disableColorAttribute (gl);
 				shaderNode .disable (gl);
 			}
@@ -627,42 +627,45 @@ function (X3DBindableNode,
 					browser    = renderObject .getBrowser (),
 					gl         = browser .getContext (),
 					shaderNode = browser .getGouraudShader ();
-	
+
 				if (shaderNode .getValid ())
 				{
 					shaderNode .enable (gl);
-		
+
 					// Clip planes
-		
+
 					shaderNode .setShaderObjects (gl, this .shaderObjects);
-		
+
 					// Enable vertex attribute arrays.
-		
+
 					shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-		
+
 					// Uniforms
-		
+
 					gl .uniform1i (shaderNode .x3d_FogType,                            0);
+					gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,               true);
+					gl .uniform1i (shaderNode .x3d_FillPropertiesHatched,              false);
 					gl .uniform1i (shaderNode .x3d_ColorMaterial,                      false);
 					gl .uniform1i (shaderNode .x3d_Lighting,                           false);
 					gl .uniform1i (shaderNode .x3d_NumTextures,                        1);
+					gl .uniform1i (shaderNode .x3d_TextureType [0],                    2);
 					gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-	
+
 					gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
 					gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
 					gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,   false, this .modelViewMatrixArray);
-		
+
 					// Draw.
-		
+
 					this .drawRectangle (gl, shaderNode, this .frontTexture,  this .frontBuffer);
 					this .drawRectangle (gl, shaderNode, this .backTexture,   this .backBuffer);
 					this .drawRectangle (gl, shaderNode, this .leftTexture,   this .leftBuffer);
 					this .drawRectangle (gl, shaderNode, this .rightTexture,  this .rightBuffer);
 					this .drawRectangle (gl, shaderNode, this .topTexture,    this .topBuffer);
 					this .drawRectangle (gl, shaderNode, this .bottomTexture, this .bottomBuffer);
-		
+
 					// Disable vertex attribute arrays.
-		
+
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disable (gl);
 				}
@@ -690,5 +693,3 @@ function (X3DBindableNode,
 
 	return X3DBackgroundNode;
 });
-
-

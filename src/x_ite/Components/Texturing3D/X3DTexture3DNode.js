@@ -72,11 +72,12 @@ function (X3DTextureNode,
 		},
 		setShaderUniformsToChannel: function (gl, shaderObject, i)
 		{
-			if (gl .getVersion () < 2)
-				return;
+			if (gl .getVersion () >= 2)
+			{
+				gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getTexture3DUnits () [i]);
+				gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+			}
 
-			gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getTexture3DUnits () [i]);
-			gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
 			gl .uniform1i (shaderObject .x3d_TextureType [i], 3);
 		},
 	});

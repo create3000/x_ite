@@ -116,7 +116,7 @@ function (TextureProperties,
 
 			// Texture 3D Units
 
-			if (gl .getVersion () > 1)
+			if (gl .getVersion () >= 2)
 			{
 				this .texture3DUnits = new Int32Array (this .getMaxTextures ());
 
