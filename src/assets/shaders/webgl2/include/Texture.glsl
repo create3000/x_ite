@@ -1,9 +1,12 @@
 
 #pragma X3D include "Perlin.glsl"
 
+precision mediump sampler3D;
+
 uniform int         x3d_NumTextures;
 uniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture
 uniform sampler2D   x3d_Texture2D [x3d_MaxTextures];
+uniform sampler3D   x3d_Texture3D [x3d_MaxTextures];
 uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
 
 uniform vec4 x3d_MultiTextureColor;
@@ -118,6 +121,22 @@ getTexture2D (const in int i, const in vec2 texCoord)
 }
 
 vec4
+getTexture3D (const in int i, const in vec3 texCoord)
+{
+	switch (i)
+	{
+		case 0:
+		{
+			return texture (x3d_Texture3D [0], texCoord);
+		}
+		default:
+		{
+			return texture (x3d_Texture3D [1], texCoord);
+		}
+	}
+}
+
+vec4
 getTextureCube (const in int i, const in vec3 texCoord)
 {
 	switch (i)
@@ -156,6 +175,11 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 			case x3d_TextureType2D:
 			{
 				textureColor = getTexture2D (i, vec2 (texCoord));
+				break;
+			}
+			case x3d_TextureType3D:
+			{
+				textureColor = getTexture3D (i, vec3 (texCoord));
 				break;
 			}
 			case x3d_TextureTypeCubeMapTexture:
@@ -448,6 +472,11 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 		case x3d_TextureType2D:
 		{
 			textureColor = texture (x3d_Texture2D [0], vec2 (texCoord));
+			break;
+		}
+		case x3d_TextureType3D:
+		{
+			textureColor = texture (x3d_Texture3D [0], vec3 (texCoord));
 			break;
 		}
 		case x3d_TextureTypeCubeMapTexture:

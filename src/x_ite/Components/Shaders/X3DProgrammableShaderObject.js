@@ -87,6 +87,7 @@ function (Fields,
 		this .x3d_ShadowMap                           = [ ];
 		this .x3d_TextureType                         = [ ];
 		this .x3d_Texture2D                           = [ ];
+		this .x3d_Texture3D                           = [ ];
 		this .x3d_CubeMapTexture                      = [ ];
 		this .x3d_MultiTextureMode                    = [ ];
 		this .x3d_MultiTextureAlphaMode               = [ ];
@@ -214,6 +215,7 @@ function (Fields,
 			{
 				this .x3d_TextureType [i]    = gl .getUniformLocation (program, "x3d_TextureType[" + i + "]");
 				this .x3d_Texture2D [i]      = gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]");
+				this .x3d_Texture3D [i]      = gl .getUniformLocation (program, "x3d_Texture3D[" + i + "]");
 				this .x3d_CubeMapTexture [i] = gl .getUniformLocation (program, "x3d_CubeMapTexture[" + i + "]");
 
 				this .x3d_MultiTextureMode [i]      = gl .getUniformLocation (program, "x3d_MultiTexture[" + i + "].mode");
@@ -249,6 +251,7 @@ function (Fields,
 			gl .uniform1i  (this .x3d_FillPropertiesHatchStyle, browser .getHatchStyleUnit ());
 			gl .uniform1i  (this .x3d_NumTextures,              0);
 			gl .uniform1iv (this .x3d_Texture2D [0],            browser .getTexture2DUnits ());
+			gl .uniform1iv (this .x3d_Texture3D [0],            browser .getTexture3DUnits ());
 			gl .uniform1iv (this .x3d_CubeMapTexture [0],       browser .getCubeMapTextureUnits ());
 			gl .uniform1iv (this .x3d_ShadowMap [0],            new Int32Array (this .x3d_MaxLights) .fill (browser .getShadowTextureUnit ()));
 

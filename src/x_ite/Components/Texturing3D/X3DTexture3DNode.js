@@ -50,9 +50,11 @@
 define ([
 	"x_ite/Components/Texturing/X3DTextureNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 ],
 function (X3DTextureNode,
-          X3DConstants)
+          X3DConstants,
+          X3DCast)
 {
 "use strict";
 
@@ -85,7 +87,7 @@ function (X3DTextureNode,
 			this .textureProperties_ .addInterest ("set_textureProperties__", this);
 
 			gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-			gl .texImage2D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+			gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
 			this .set_textureProperties__ ();
 		},
@@ -129,9 +131,9 @@ function (X3DTextureNode,
 		},
 		clearTexture: function ()
 		{
-			this .setTexture (1, 1, 1, false, defaultData, false);
+			this .setTexture (1, 1, 1, false, defaultData);
 		},
-		setTexture: function (width, height, depth, transparent, data)
+		setTexture: function (width, height, depth, transparent, format, data)
 		{
 			try
 			{
@@ -148,7 +150,7 @@ function (X3DTextureNode,
 				gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 				gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
 				gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-				gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, width, height, depth, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+				gl .texImage3D  (gl .TEXTURE_3D, 0, format, width, height, depth, 0, format, gl .UNSIGNED_BYTE, data);
 
 				this .setTransparent (transparent);
 				this .updateTextureProperties ();

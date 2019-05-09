@@ -54,17 +54,17 @@ define ([
 	"x_ite/Components/Texturing3D/X3DTexture3DNode",
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Texturing3D/NRRDParser",
 	"x_ite/InputOutput/FileLoader",
-	"standard/Networking/URI",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTexture3DNode,
           X3DUrlObject,
-          X3DConstants,
-          FileLoader,
-          URI)
+			 X3DConstants,
+			 NRRDParser,
+          FileLoader)
 {
 "use strict";
 
@@ -140,7 +140,11 @@ function (Fields,
 				}
 				else
 				{
-					console .log (data);
+					var
+						gl   = this .getBrowser () .getContext (),
+						nrrd = new NRRDParser () .parse (data);
+
+					this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, gl .LUMINANCE, nrrd .data);
 					this .setLoadState (X3DConstants .COMPLETE_STATE);
 				}
 			}

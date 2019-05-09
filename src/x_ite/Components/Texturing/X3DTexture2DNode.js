@@ -50,13 +50,13 @@
 define ([
 	"x_ite/Fields",
 	"x_ite/Components/Texturing/X3DTextureNode",
-	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DTextureNode,
-          X3DCast,
-          X3DConstants)
+          X3DConstants,
+          X3DCast)
 {
 "use strict";
 
