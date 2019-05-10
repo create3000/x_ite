@@ -83,10 +83,10 @@ define (function ()
 	function NRRDParser ()
 	{
 		this .fieldFunction = new Map ([
-			["type",      this .type      .bind (this)],
-			["encoding",  this .encoding  .bind (this)],
-			["dimension", this .dimension .bind (this)],
-			["sizes",     this .sizes     .bind (this)],
+			["type",      this .type],
+			["encoding",  this .encoding],
+			["dimension", this .dimension],
+			["sizes",     this .sizes],
 		]);
 	}
 
@@ -126,31 +126,67 @@ define (function ()
 				var
 					key   = this .result [1],
 					value = this .result [2],
-					fun   = this .fieldFunction .get (key);
+					fun   = this .fieldFunction .get (key .toLowerCase ());
 
 				if (fun)
-					fun (value);
+					fun .call (this, value);
 
 				while (Grammar .comment .parse (this))
 					;
 			}
 		},
-		type: function (value)
+		type: (function ()
 		{
-			this .nrrd .type = value;
-		},
-		encoding: function (value)
+			var types = new Map ([
+				["signed char",   "signed char"],
+				["int8",          "signed char"],
+				["int8_t",        "signed char"],
+				["uchar",         "unsigned char"],
+				["unsigned char", "unsigned char"],
+				["uint8",         "unsigned char"],
+				["uint8_t",       "unsigned char"],
+			]);
+
+			return function (value)
+			{
+				var type = types .get (value);
+
+				if (type === undefined)
+					throw new Error ("Unsupported NRRD type '" + type + "'.");
+
+				this .nrrd .type = type;
+			};
+		})(),
+		encoding: (function ()
 		{
-			this .nrrd .encoding = value;
-		},
+			var encodings = new Set ([
+				"raw"
+			]);
+
+			return function (value)
+			{
+				if (!encodings .has (value))
+					throw new Error ("Unsupported NRRD encoding '" + value + "'.");
+
+				this .nrrd .encoding = value;
+			};
+		})(),
 		dimension: function (value)
 		{
 			var result = value .match (/(\d+)/);
 
 			if (result)
 			{
-				this .nrrd .dimension = parseInt (result [1]);
+				var dimension = parseInt (result [1]);
+
+				if (dimension !== 3)
+					throw new Error ("Unsupported NRRD dimension '" + dimension + "', must be 3.");
+
+				this .nrrd .dimension = dimension;
+				return;
 			}
+
+			throw new Error ("Unsupported NRRD dimension, must be 3.");
 		},
 		sizes: function (value)
 		{
@@ -161,7 +197,10 @@ define (function ()
 				this .nrrd .width  = parseInt (result [1]);
 				this .nrrd .height = parseInt (result [2]);
 				this .nrrd .depth  = parseInt (result [3]);
+				return;
 			}
+
+			throw new Error ("Unsupported NRRD sizes.");
 		},
 		data: function ()
 		{
