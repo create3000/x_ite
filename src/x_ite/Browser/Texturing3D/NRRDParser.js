@@ -114,7 +114,7 @@ define (function ()
 				return;
 			}
 
-			throw new Error ("Invalid file.");
+			throw new Error ("Invalid NRRD file.");
 		},
 		fields: function ()
 		{
@@ -165,7 +165,7 @@ define (function ()
 
 			return function (value)
 			{
-				if (!encodings .has (value))
+				if (! encodings .has (value))
 					throw new Error ("Unsupported NRRD encoding '" + value + "'.");
 
 				this .nrrd .encoding = value;
