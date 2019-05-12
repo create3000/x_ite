@@ -128,10 +128,10 @@ function (Fields,
 
 				var
 					gl          = this .getBrowser () .getContext (),
-					components  = Math .max (0, image [COMPONENTS]),
-					width       = Math .max (0, image [WIDTH]),
-					height      = Math .max (0, image [HEIGHT]),
-					depth       = Math .max (0, image [DEPTH]),
+					components  = image [COMPONENTS],
+					width       = image [WIDTH],
+					height      = image [HEIGHT],
+					depth       = image [DEPTH],
 					transparent = ! (components & 1),
 					size3D      = width * height * depth;
 
