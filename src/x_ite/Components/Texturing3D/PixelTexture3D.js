@@ -57,7 +57,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTexture3DNode, 
+          X3DTexture3DNode,
           X3DConstants)
 {
 "use strict";
@@ -67,6 +67,8 @@ function (Fields,
 		X3DTexture3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .PixelTexture3D);
+
+		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 	}
 
 	PixelTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
@@ -74,10 +76,10 @@ function (Fields,
 		constructor: PixelTexture3D,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .MFInt32 (0, 0, 0, 0)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .MFInt32 (0, 0, 0, 0)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
@@ -92,9 +94,127 @@ function (Fields,
 		{
 			return "texture";
 		},
+		initialize: function ()
+		{
+			X3DTexture3DNode .prototype .initialize .call (this);
+
+			this .image_ .addInterest ("set_image__", this);
+
+			this .set_image__ ();
+		},
+		checkLoadState: function ()
+		{
+			return this .loadState_ .getValue ();
+		},
+		set_image__: (function ()
+		{
+			var
+				OFFSET     = 4,
+				COMPONENTS = 0,
+				WIDTH      = 1,
+				HEIGHT     = 2,
+				DEPTH      = 3;
+
+			return function ()
+			{
+				var image = this .image_;
+
+				if (image .length < OFFSET)
+				{
+					this .clearTexture ();
+					this .loadState_ = X3DConstants .FAILED_STATE;
+					return;
+				}
+
+				var
+					gl          = this .getBrowser () .getContext (),
+					components  = Math .max (0, image [COMPONENTS]),
+					width       = Math .max (0, image [WIDTH]),
+					height      = Math .max (0, image [HEIGHT]),
+					depth       = Math .max (0, image [DEPTH]),
+					transparent = ! (components & 1),
+					size        = width * height,
+					size3D      = width * height * depth;
+
+				switch (components)
+				{
+					case 1:
+					{
+						var
+							format = gl .LUMINANCE,
+							data   = new Uint8Array (size3D);
+
+						for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+						{
+							data [d ++] = image [i];
+						}
+
+						break;
+					}
+					case 2:
+					{
+						var
+							format = gl .LUMINANCE_ALPHA,
+							data   = new Uint8Array (size3D * 2);
+
+							for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+							{
+								var p = image [i];
+
+								data [d ++ ] = (p >>> 8) & 0xff;
+								data [d ++ ] = p & 0xff;
+							}
+
+							break;
+					}
+					case 3:
+					{
+						var
+							format = gl .RGB,
+							data   = new Uint8Array (size3D * 3);
+
+						for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+						{
+							var p = image [i];
+
+							data [d ++ ] = (p >>> 16) & 0xff;
+							data [d ++ ] = (p >>> 8)  & 0xff;
+							data [d ++ ] = p & 0xff;
+						}
+
+						break;
+					}
+					case 4:
+					{
+						var
+							format = gl .RGBA,
+							data   = new Uint8Array (size3D * 4);
+
+						for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+						{
+							var p = image [i];
+
+							data [d ++ ] = (p >>> 24) & 0xff;
+							data [d ++ ] = (p >>> 16) & 0xff;
+							data [d ++ ] = (p >>> 8)  & 0xff;
+							data [d ++ ] = p & 0xff;
+						}
+
+						break;
+					}
+					default:
+					{
+						this .clearTexture ();
+						this .loadState_ = X3DConstants .FAILED_STATE;
+						return;
+					}
+				}
+
+				this .setTexture (width, height, depth, transparent, format, data);
+				this .loadState_ = X3DConstants .COMPLETE_STATE;
+			};
+		})(),
 	});
 
 	return PixelTexture3D;
 });
-
-

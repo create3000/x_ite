@@ -317,6 +317,7 @@ var X_ITE_TESTS = [
 	{ component: "Texturing3D" },
 	{ path: "Texturing3D/ComposedTexture3D.x3d" },
 	{ path: "Texturing3D/ImageTexture3D.x3d" },
+	{ path: "Texturing3D/PixelTexture3D.x3d" },
 	{ path: "Texturing3D/backpack.nrrd" },
 	{ component: "Time" },
 	{ path: "Time/TimeProto.x3d" },
