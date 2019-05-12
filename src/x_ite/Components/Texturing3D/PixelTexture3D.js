@@ -133,7 +133,6 @@ function (Fields,
 					height      = Math .max (0, image [HEIGHT]),
 					depth       = Math .max (0, image [DEPTH]),
 					transparent = ! (components & 1),
-					size        = width * height,
 					size3D      = width * height * depth;
 
 				switch (components)
