@@ -56,7 +56,7 @@ define (function ()
 	var Grammar =
 	{
 		NRRD: new RegExp ("^NRRD(\\d+)\\n", 'gy'),
-		field: new RegExp ("(\\w+):\\s*(.*?)\\n", 'gy'),
+		field: new RegExp ("(\\w+):\\s*(.+?)\\n", 'gy'),
 		comment: new RegExp ("#[^\\n]\\n", 'gy'),
 	};
 
@@ -126,7 +126,7 @@ define (function ()
 				var
 					key   = this .result [1],
 					value = this .result [2],
-					fun   = this .fieldFunction .get (key .toLowerCase ());
+					fun   = this .fieldFunction .get (key .toLowerCase () .trim ());
 
 				if (fun)
 					fun .call (this, value);

@@ -131,7 +131,9 @@ function (X3DTextureNode,
 		},
 		clearTexture: function ()
 		{
-			this .setTexture (1, 1, 1, false, defaultData);
+			var gl = this .getBrowser () .getContext ();
+
+			this .setTexture (1, 1, 1, false, gl .RGBA, defaultData);
 		},
 		setTexture: function (width, height, depth, transparent, format, data)
 		{
