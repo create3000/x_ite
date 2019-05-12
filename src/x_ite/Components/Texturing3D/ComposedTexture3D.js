@@ -152,16 +152,20 @@ function (Fields,
 				var
 					gl           = this .getBrowser () .getContext (),
 					textureNode0 = textureNodes [0],
-					transparent  = textureNode0 .getTransparent (),
 					width        = textureNode0 .getWidth (),
 					height       = textureNode0 .getHeight (),
 					depth        = textureNodes .length,
+					transparent  = 0,
 					size         = width * height * 4,
 					data         = new Uint8Array (size * depth);
 
 				for (var i = 0, d = 0; i < depth; ++ i)
 				{
-					var tData = this .textureNodes [i] .getData ();
+					var
+						textureNode = this .textureNodes [i],
+						tData       = textureNode .getData ();
+
+					transparent += textureNode .getTransparent ();
 
 					for (var t = 0; t < size; ++ t, ++ d)
 					{
@@ -169,7 +173,7 @@ function (Fields,
 					}
 				}
 
-				this .setTexture (width, height, depth, transparent, gl .RGBA, data);
+				this .setTexture (width, height, depth, !! transparent, gl .RGBA, data);
 				this .loadState_ = X3DConstants .COMPLETE_STATE;
 			}
 		},
