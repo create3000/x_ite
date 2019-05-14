@@ -195,7 +195,7 @@ define (function ()
 		sizes: function (value)
 		{
 			var
-				num    = /\s*(\d+)/gy,
+				num    = new RegExp ("\\s*(\\d+)", 'gy'),
 				result = null,
 				sizes  = [ ];
 
@@ -208,18 +208,18 @@ define (function ()
 			{
 				case 3:
 				{
-					this .nrrd .channels = 1;
-					this .nrrd .width    = sizes [0];
-					this .nrrd .height   = sizes [1];
-					this .nrrd .depth    = sizes [2];
+					this .nrrd .components = 1;
+					this .nrrd .width      = sizes [0];
+					this .nrrd .height     = sizes [1];
+					this .nrrd .depth      = sizes [2];
 					return;
 				}
 				case 4:
 				{
-					this .nrrd .channels = sizes [0];
-					this .nrrd .width    = sizes [1];
-					this .nrrd .height   = sizes [2];
-					this .nrrd .depth    = sizes [3];
+					this .nrrd .components = sizes [0];
+					this .nrrd .width      = sizes [1];
+					this .nrrd .height     = sizes [2];
+					this .nrrd .depth      = sizes [3];
 					return;
 				}
 				default:
@@ -230,7 +230,7 @@ define (function ()
 		{
 			var
 				input  = this .input,
-				length = this .nrrd .channels * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
+				length = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
 				data   = new Uint8Array (length);
 
 			this .nrrd .data = data;
