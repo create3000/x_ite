@@ -179,34 +179,58 @@ define (function ()
 			{
 				var dimension = parseInt (result [1]);
 
-				if (dimension !== 3)
-					throw new Error ("Unsupported NRRD dimension '" + dimension + "', must be 3.");
-
-				this .nrrd .dimension = dimension;
-				return;
+				switch (dimension)
+				{
+					case 3:
+					case 4:
+						this .nrrd .dimension = dimension;
+						return;
+					default:
+						throw new Error ("Unsupported NRRD dimension '" + dimension + "', must be 3.");
+				}
 			}
 
-			throw new Error ("Unsupported NRRD dimension, must be 3.");
+			throw new Error ("Unsupported NRRD dimension, must be 3 or 4.");
 		},
 		sizes: function (value)
 		{
-			var result = value .match (/(\d+)\s+(\d+)\s+(\d+)/);
+			var
+				num    = /\s*(\d+)/gy,
+				result = null,
+				sizes  = [ ];
 
-			if (result)
+			while (result = num .exec (value))
 			{
-				this .nrrd .width  = parseInt (result [1]);
-				this .nrrd .height = parseInt (result [2]);
-				this .nrrd .depth  = parseInt (result [3]);
-				return;
+				sizes .push (parseInt (result [1]));
 			}
 
-			throw new Error ("Unsupported NRRD sizes.");
+			switch (sizes .length)
+			{
+				case 3:
+				{
+					this .nrrd .channels = 1;
+					this .nrrd .width    = parseInt (sizes [0]);
+					this .nrrd .height   = parseInt (sizes [1]);
+					this .nrrd .depth    = parseInt (sizes [2]);
+					return;
+				}
+				case 4:
+				{
+					this .nrrd .channels = parseInt (sizes [0]);
+					this .nrrd .width    = parseInt (sizes [1]);
+					this .nrrd .height   = parseInt (sizes [2]);
+					this .nrrd .depth    = parseInt (sizes [3]);
+					return;
+				}
+				default:
+					throw new Error ("Unsupported NRRD sizes.");
+			}
 		},
 		data: function ()
 		{
 			var
 				input  = this .input,
-				length = this .nrrd .width * this .nrrd .height * this .nrrd .depth,
+				length = this .nrrd .channels * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
 				data   = new Uint8Array (length);
 
 			this .nrrd .data = data;
