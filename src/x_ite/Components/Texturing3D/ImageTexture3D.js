@@ -127,6 +127,20 @@ function (Fields,
 
 			this .buffer_ .addEvent ();
 		},
+		getInternalType: function (gl, components)
+		{
+			switch (components)
+			{
+				case 1:
+					return gl .LUMINANCE;
+				case 2:
+					return gl .LUMINANCE_ALPHA;
+				case 3:
+					return gl .RGB;
+				case 4:
+					return gl .RGBA;
+			}
+		},
 		set_buffer__: function ()
 		{
 			new FileLoader (this) .loadBinaryDocument (this .url_,
@@ -141,10 +155,11 @@ function (Fields,
 				else
 				{
 					var
-						gl   = this .getBrowser () .getContext (),
-						nrrd = new NRRDParser () .parse (data);
+						gl           = this .getBrowser () .getContext (),
+						nrrd         = new NRRDParser () .parse (data),
+						internalType = this .getInternalType (gl, nrrd .components);
 
-					this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, gl .LUMINANCE, nrrd .data);
+					this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
 					this .setLoadState (X3DConstants .COMPLETE_STATE);
 				}
 			}
