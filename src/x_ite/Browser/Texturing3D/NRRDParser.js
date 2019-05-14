@@ -209,17 +209,17 @@ define (function ()
 				case 3:
 				{
 					this .nrrd .channels = 1;
-					this .nrrd .width    = parseInt (sizes [0]);
-					this .nrrd .height   = parseInt (sizes [1]);
-					this .nrrd .depth    = parseInt (sizes [2]);
+					this .nrrd .width    = sizes [0];
+					this .nrrd .height   = sizes [1];
+					this .nrrd .depth    = sizes [2];
 					return;
 				}
 				case 4:
 				{
-					this .nrrd .channels = parseInt (sizes [0]);
-					this .nrrd .width    = parseInt (sizes [1]);
-					this .nrrd .height   = parseInt (sizes [2]);
-					this .nrrd .depth    = parseInt (sizes [3]);
+					this .nrrd .channels = sizes [0];
+					this .nrrd .width    = sizes [1];
+					this .nrrd .height   = sizes [2];
+					this .nrrd .depth    = sizes [3];
 					return;
 				}
 				default:
