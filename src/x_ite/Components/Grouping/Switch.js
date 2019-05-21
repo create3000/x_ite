@@ -60,7 +60,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGroupingNode, 
+          X3DGroupingNode,
           TraverseType,
           X3DCast,
           X3DConstants,
@@ -105,12 +105,13 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DGroupingNode .prototype .initialize .call (this);
-			
+
 			this .whichChoice_ .addInterest ("set_whichChoice__", this);
-			
+			this .children_    .addInterest ("set_whichChoice__", this);
+
 			this .set_whichChoice__ ();
 		},
-		getBBox: function (bbox) 
+		getBBox: function (bbox)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
@@ -133,6 +134,7 @@ function (Fields,
 			this .child = this .getChild (this .whichChoice_ .getValue ());
 
 			this .set_cameraObjects__ ();
+			this .set_pickableObjects__ ();
 		},
 		set_cameraObjects__: function ()
 		{
@@ -165,7 +167,7 @@ function (Fields,
 						if (this .getTransformSensors () .size)
 						{
 							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
-			
+
 							this .getTransformSensors () .forEach (function (transformSensorNode)
 							{
 								transformSensorNode .collect (bbox);
@@ -177,11 +179,11 @@ function (Fields,
 							var
 								browser          = renderObject .getBrowser (),
 								pickingHierarchy = browser .getPickingHierarchy ();
-		
+
 							pickingHierarchy .push (this);
-	
+
 							child .traverse (type, renderObject);
-	
+
 							pickingHierarchy .pop ();
 						}
 					}
@@ -196,5 +198,3 @@ function (Fields,
 
 	return Switch;
 });
-
-
