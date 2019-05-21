@@ -251,9 +251,11 @@ function (Fields,
 			gl .uniform1i  (this .x3d_FillPropertiesHatchStyle, browser .getHatchStyleUnit ());
 			gl .uniform1i  (this .x3d_NumTextures,              0);
 			gl .uniform1iv (this .x3d_Texture2D [0],            browser .getTexture2DUnits ());
-			gl .uniform1iv (this .x3d_Texture3D [0],            browser .getTexture3DUnits ());
 			gl .uniform1iv (this .x3d_CubeMapTexture [0],       browser .getCubeMapTextureUnits ());
 			gl .uniform1iv (this .x3d_ShadowMap [0],            new Int32Array (this .x3d_MaxLights) .fill (browser .getShadowTextureUnit ()));
+
+			if (gl .getVersion () >= 2)
+				gl .uniform1iv (this .x3d_Texture3D [0], browser .getTexture3DUnits ());
 
 			// Return true if valid, otherwise false.
 
