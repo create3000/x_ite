@@ -107,7 +107,7 @@ function (X3DChildNode,
 			}
 
 			this .media = value;
-	
+
 			if (value)
 			{
 				var media = value [0];
@@ -118,9 +118,16 @@ function (X3DChildNode,
 				if (this .isActive_ .getValue ())
 				{
 					if (this .isPaused_ .getValue ())
+					{
 						this .set_pause ();
+					}
 					else
-						this .set_start ();
+					{
+						if (this .getLiveState ())
+							this .set_start ();
+						else
+							this .set_pause ();
+					}
 				}
 				else
 				{
@@ -224,4 +231,3 @@ function (X3DChildNode,
 
 	return X3DSoundSourceNode;
 });
-
