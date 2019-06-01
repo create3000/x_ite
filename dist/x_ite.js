@@ -1,4 +1,4 @@
-/* X_ITE v4.5.3-788 */
+/* X_ITE v4.5.4a-789 */
 
 (function () {
 
@@ -25119,7 +25119,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.5.3a";
+	return "4.5.3";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -112665,7 +112665,7 @@ function (X3DChildNode,
 			}
 
 			this .media = value;
-	
+
 			if (value)
 			{
 				var media = value [0];
@@ -112676,9 +112676,16 @@ function (X3DChildNode,
 				if (this .isActive_ .getValue ())
 				{
 					if (this .isPaused_ .getValue ())
+					{
 						this .set_pause ();
+					}
 					else
-						this .set_start ();
+					{
+						if (this .getLiveState ())
+							this .set_start ();
+						else
+							this .set_pause ();
+					}
 				}
 				else
 				{
@@ -112782,7 +112789,6 @@ function (X3DChildNode,
 
 	return X3DSoundSourceNode;
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
