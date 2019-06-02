@@ -240,6 +240,8 @@ function ($,
 			}
 			catch (exception)
 			{
+				this .node .dom = undefined;
+
 				if (error)
 					error (exception);
 				else
@@ -264,6 +266,8 @@ function ($,
 			}
 			catch (exception)
 			{
+				this .node .dom = undefined;
+
 				if (error)
 					error (exception);
 				else
