@@ -217,17 +217,13 @@ function (SFBool,
 
 					stream .string += "[\n";
 					generator .IncIndent ();
-				
-					for (var i = 0, length = array .length - 1; i < length; ++ i)
+
+					for (var i = 0, length = array .length; i < length; ++ i)
 					{
 						stream .string += generator .Indent ();
 						array [i] .toStream (stream);
 						stream .string += "\n";
 					}
-
-					stream .string += generator .Indent ();
-					array [length] .toStream (stream);
-					stream .string += "\n";
 
 					generator .DecIndent ();
 					stream .string += generator .Indent ();
@@ -267,7 +263,7 @@ function (SFBool,
 
 					stream .string += "[\n";
 					generator .IncIndent ();
-				
+
 					for (var i = 0, length = array .length - 1; i < length; ++ i)
 					{
 						stream .string += generator .Indent ();
@@ -387,7 +383,7 @@ function (SFBool,
 			}
 		},
 	});
-	
+
 	function ArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
 	{
 		function ArrayField (value)

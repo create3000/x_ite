@@ -129,13 +129,13 @@ function (X3DConstants)
 		{
 			if (this .level === 0)
 				this .newName = 0;
-		
+
 			++ this .level;
 		},
 		LeaveScope: function ()
 		{
 			-- this .level;
-		
+
 			if (this .level === 0)
 			{
 				this .nodes         .clear ();
@@ -215,27 +215,27 @@ function (X3DConstants)
 				if (this .NeedsName (baseNode))
 				{
 					var name = this .UniqueName ();
-		
+
 					names .set (name, baseNode);
 					this .namesByNode .set (baseNode, name);
 
 					return name;
 				}
-		
+
 				// The node doesn't need a name
 
 				return baseNode .getName ();
 			}
-		
+
 			// The node has a name
-		 	
+
 			var _TrailingNumbers = /(_\d+$)/;
 
 			var name      = baseNode .getName ();
 			var hasNumber = name .match (_TrailingNumbers) !== null;
-		
+
 			name = name .replace (_TrailingNumbers, "");
-		
+
 			if (name .length === 0)
 			{
 				if (this .NeedsName (baseNode))
@@ -376,7 +376,7 @@ function (X3DConstants)
 			if (this .units)
 			{
 				var executionContext = this .ExecutionContext ();
-			
+
 				if (executionContext)
 					return executionContext .toUnit (category, value);
 			}
