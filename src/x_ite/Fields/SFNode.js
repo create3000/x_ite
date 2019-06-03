@@ -166,7 +166,7 @@ function (X3DField,
 		copy: function (executionContext)
 		{
 			var value = this .getValue ();
-			
+
 			if (value)
 				return new SFNode (value .copy (executionContext));
 
@@ -260,7 +260,7 @@ function (X3DField,
 				case 3:
 				{
 					var value = this .getValue ();
-		
+
 					if (value)
 						return value .getField (name) .addFieldCallback (string, object);
 
@@ -279,10 +279,10 @@ function (X3DField,
 				case 2:
 				{
 					var value = this .getValue ();
-		
+
 					if (value)
 						return value .getField (name) .removeFieldCallback (string);
-		
+
 					throw new Error ("SFNode.removeFieldCallback: node is null.");
 				}
 			}
@@ -312,7 +312,7 @@ function (X3DField,
 			if (value)
 				return SFNodeCache .get (value);
 
-			return null;	
+			return null;
 		},
 		toStream: function (stream)
 		{
@@ -354,7 +354,7 @@ function (X3DField,
 			if (value)
 				value .toXMLStream (stream);
 			else
-				stream .string += "NULL";
+				stream .string += "<!-- NULL -->";
 		},
 		dispose: function ()
 		{
