@@ -197,14 +197,14 @@ function (X3DField,
 
 			if (current)
 			{
-				current .removeClones (this ._cloneCount);
+				current .removeCloneCount (this ._cloneCount);
 				current .removeParent (this);
 			}
 
 			if (value)
 			{
 				value .addParent (this);
-				value .addClones (this ._cloneCount);
+				value .addCloneCount (this ._cloneCount);
 
 				X3DField .prototype .set .call (this, value);
 			}
@@ -287,23 +287,23 @@ function (X3DField,
 				}
 			}
 		},
-		addClones: function (count)
+		addCloneCount: function (count)
 		{
 			var value = this .getValue ();
 
 			this ._cloneCount += count;
 
 			if (value)
-				value .addClones (count);
+				value .addCloneCount (count);
 		},
-		removeClones: function (count)
+		removeCloneCount: function (count)
 		{
 			var value = this .getValue ();
 
 			this ._cloneCount -= count;
 
 			if (value)
-				value .removeClones (count);
+				value .removeCloneCount (count);
 		},
 		valueOf: function ()
 		{

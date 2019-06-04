@@ -86,7 +86,7 @@ function (Fields,
 
 		this .addChildObjects ("rootNodes", new Fields .MFNode ());
 
-		this .rootNodes_ .addClones (1);
+		this .rootNodes_ .addCloneCount (1);
 
 		this ._uninitializedNodes   = [ ];
 		this ._uninitializedNodes2  = [ ];
@@ -114,13 +114,13 @@ function (Fields,
 				while (this ._uninitializedNodes .length)
 				{
 					var uninitializedNodes = this ._uninitializedNodes;
-	
+
 					this ._uninitializedNodes  = this ._uninitializedNodes2;
 					this ._uninitializedNodes2 = uninitializedNodes;
-		
+
 					for (var i = 0, length = uninitializedNodes .length; i < length; ++ i)
 						uninitializedNodes [i] .setup ();
-	
+
 					uninitializedNodes .length = 0;
 				}
 			}
@@ -174,23 +174,23 @@ function (Fields,
 			if (setup === false)
 			{
 				var Type = this .getBrowser () .getSupportedNode (typeName);
-	
+
 				if (! Type)
 					return null;
-	
+
 				var baseNode = new Type (this);
-	
+
 				return baseNode;
 			}
 			else
 			{
 				var Type = this .getBrowser () .getSupportedNode (typeName);
-	
+
 				if (! Type)
 					throw new Error ("Unknown node type '" + typeName + "'.");
-	
+
 				var baseNode = new Type (this);
-	
+
 				baseNode .setup ();
 
 				return SFNodeCache .add (baseNode);
@@ -297,7 +297,7 @@ function (Fields,
 					var
 						min = i,
 						max = i <<= 1;
-		
+
 					newName  = name;
 					newName += '_';
 					newName += Math .round (Algorithm .random (min, max));
@@ -305,7 +305,7 @@ function (Fields,
 				else
 					break;
 			}
-		
+
 			return newName;
 		},
 		addImportedNode: function (inlineNode, exportedName, importedName)
@@ -347,9 +347,9 @@ function (Fields,
 				if (importedNode .getInlineNode () === inlineNode && importedNode .getExportedName () === exportedName)
 				{
 					this ._importedNodes .delete (key);
-					
+
 					this ._importedNodes .set (importedName, importedNode);
-					
+
 					importedNode .setImportedName (importedName);
 					return;
 				}
@@ -409,7 +409,7 @@ function (Fields,
 		{
 			if (! (node instanceof Fields .SFNode))
 				throw new Error ("Couldn't get local name: node is NULL.");
-				
+
 			if (node .getValue () .getExecutionContext () === this)
 				return node .getValue () .getName ();
 
@@ -554,7 +554,7 @@ function (Fields,
 			}
 			catch (error)
 			{
-				throw new Error ("Bad ROUTE specification: " + error .message); 
+				throw new Error ("Bad ROUTE specification: " + error .message);
 			}
 		},
 		deleteRoute: function (route)
@@ -679,7 +679,7 @@ function (Fields,
 					try
 					{
 						importedNode .toVRMLStream (stream);
-	
+
 						stream .string += "\n";
 					}
 					catch (error)
@@ -716,7 +716,7 @@ function (Fields,
 			// Output protos
 
 			this .getProtoDeclarations () .toXMLStream (stream);
-		
+
 			// Output root nodes
 
 			var rootNodes = this .getRootNodes ();
@@ -727,7 +727,7 @@ function (Fields,
 
 				stream .string += "\n";
 			}
-		
+
 			// Output imported nodes
 
 			var importedNodes = this .getImportedNodes ();

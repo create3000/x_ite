@@ -158,35 +158,35 @@ function (SFBool,
 
 			return copy;
 		},
-		addClones: function (count)
+		addCloneCount: function (count)
 		{
 			var array = this .getValue ();
 
 			this ._cloneCount += count;
 
 			for (var i = 0, length = array .length; i < length; ++ i)
-				array [i] .addClones (count);
+				array [i] .addCloneCount (count);
 		},
-		removeClones: function (count)
+		removeCloneCount: function (count)
 		{
 			var array = this .getValue ();
 
 			this ._cloneCount += count;
 
 			for (var i = 0, length = array .length; i < length; ++ i)
-				array [i] .removeClones (count);
+				array [i] .removeCloneCount (count);
 		},
 		addChildObject: function (value)
 		{
 			X3DObjectArrayField .prototype .addChildObject .call (this, value);
 
-			value .addClones (this ._cloneCount);
+			value .addCloneCount (this ._cloneCount);
 		},
 		removeChildObject: function (value)
 		{
 			X3DObjectArrayField .prototype .removeChildObject .call (this, value);
 
-			value .removeClones (this ._cloneCount);
+			value .removeCloneCount (this ._cloneCount);
 		},
 		toStream: function (stream)
 		{
@@ -234,6 +234,16 @@ function (SFBool,
 				}
 			}
 		},
+		toVRMLString: function ()
+		{
+			this .addCloneCount (1);
+
+			var string = X3DObjectArrayField .prototype .toVRMLString .call (this);
+
+			this .removeCloneCount (1);
+
+			return string;
+		},
 		toVRMLStream: function (stream)
 		{
 			var
@@ -279,6 +289,16 @@ function (SFBool,
 					break;
 				}
 			}
+		},
+		toXMLString: function ()
+		{
+			this .addCloneCount (1);
+
+			var string = X3DObjectArrayField .prototype .toXMLString .call (this);
+
+			this .removeCloneCount (1);
+
+			return string;
 		},
 		toXMLStream: function (stream)
 		{
