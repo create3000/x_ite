@@ -1,4 +1,4 @@
-/* X_ITE v4.5.4a-790 */
+/* X_ITE v4.5.4a-791 */
 
 (function () {
 
@@ -13309,13 +13309,13 @@ function (X3DConstants)
 		{
 			if (this .level === 0)
 				this .newName = 0;
-		
+
 			++ this .level;
 		},
 		LeaveScope: function ()
 		{
 			-- this .level;
-		
+
 			if (this .level === 0)
 			{
 				this .nodes         .clear ();
@@ -13395,27 +13395,27 @@ function (X3DConstants)
 				if (this .NeedsName (baseNode))
 				{
 					var name = this .UniqueName ();
-		
+
 					names .set (name, baseNode);
 					this .namesByNode .set (baseNode, name);
 
 					return name;
 				}
-		
+
 				// The node doesn't need a name
 
 				return baseNode .getName ();
 			}
-		
+
 			// The node has a name
-		 	
+
 			var _TrailingNumbers = /(_\d+$)/;
 
 			var name      = baseNode .getName ();
 			var hasNumber = name .match (_TrailingNumbers) !== null;
-		
+
 			name = name .replace (_TrailingNumbers, "");
-		
+
 			if (name .length === 0)
 			{
 				if (this .NeedsName (baseNode))
@@ -13556,7 +13556,7 @@ function (X3DConstants)
 			if (this .units)
 			{
 				var executionContext = this .ExecutionContext ();
-			
+
 				if (executionContext)
 					return executionContext .toUnit (category, value);
 			}
@@ -13861,8 +13861,8 @@ function (X3DObject)
 		{
 			return this ._parents;
 		},
-		addClones: Function .prototype,
-		removeClones: Function .prototype,
+		addCloneCount: Function .prototype,
+		removeCloneCount: Function .prototype,
 		dispose: function ()
 		{
 			this ._parents .clear ();
@@ -22219,7 +22219,7 @@ function (X3DField,
 		copy: function (executionContext)
 		{
 			var value = this .getValue ();
-			
+
 			if (value)
 				return new SFNode (value .copy (executionContext));
 
@@ -22250,14 +22250,14 @@ function (X3DField,
 
 			if (current)
 			{
-				current .removeClones (this ._cloneCount);
+				current .removeCloneCount (this ._cloneCount);
 				current .removeParent (this);
 			}
 
 			if (value)
 			{
 				value .addParent (this);
-				value .addClones (this ._cloneCount);
+				value .addCloneCount (this ._cloneCount);
 
 				X3DField .prototype .set .call (this, value);
 			}
@@ -22313,7 +22313,7 @@ function (X3DField,
 				case 3:
 				{
 					var value = this .getValue ();
-		
+
 					if (value)
 						return value .getField (name) .addFieldCallback (string, object);
 
@@ -22332,31 +22332,31 @@ function (X3DField,
 				case 2:
 				{
 					var value = this .getValue ();
-		
+
 					if (value)
 						return value .getField (name) .removeFieldCallback (string);
-		
+
 					throw new Error ("SFNode.removeFieldCallback: node is null.");
 				}
 			}
 		},
-		addClones: function (count)
+		addCloneCount: function (count)
 		{
 			var value = this .getValue ();
 
 			this ._cloneCount += count;
 
 			if (value)
-				value .addClones (count);
+				value .addCloneCount (count);
 		},
-		removeClones: function (count)
+		removeCloneCount: function (count)
 		{
 			var value = this .getValue ();
 
 			this ._cloneCount -= count;
 
 			if (value)
-				value .removeClones (count);
+				value .removeCloneCount (count);
 		},
 		valueOf: function ()
 		{
@@ -22365,7 +22365,7 @@ function (X3DField,
 			if (value)
 				return SFNodeCache .get (value);
 
-			return null;	
+			return null;
 		},
 		toStream: function (stream)
 		{
@@ -22407,7 +22407,7 @@ function (X3DField,
 			if (value)
 				value .toXMLStream (stream);
 			else
-				stream .string += "NULL";
+				stream .string += "<!-- NULL -->";
 		},
 		dispose: function ()
 		{
@@ -24605,35 +24605,35 @@ function (SFBool,
 
 			return copy;
 		},
-		addClones: function (count)
+		addCloneCount: function (count)
 		{
 			var array = this .getValue ();
 
 			this ._cloneCount += count;
 
 			for (var i = 0, length = array .length; i < length; ++ i)
-				array [i] .addClones (count);
+				array [i] .addCloneCount (count);
 		},
-		removeClones: function (count)
+		removeCloneCount: function (count)
 		{
 			var array = this .getValue ();
 
 			this ._cloneCount += count;
 
 			for (var i = 0, length = array .length; i < length; ++ i)
-				array [i] .removeClones (count);
+				array [i] .removeCloneCount (count);
 		},
 		addChildObject: function (value)
 		{
 			X3DObjectArrayField .prototype .addChildObject .call (this, value);
 
-			value .addClones (this ._cloneCount);
+			value .addCloneCount (this ._cloneCount);
 		},
 		removeChildObject: function (value)
 		{
 			X3DObjectArrayField .prototype .removeChildObject .call (this, value);
 
-			value .removeClones (this ._cloneCount);
+			value .removeCloneCount (this ._cloneCount);
 		},
 		toStream: function (stream)
 		{
@@ -24664,17 +24664,13 @@ function (SFBool,
 
 					stream .string += "[\n";
 					generator .IncIndent ();
-				
-					for (var i = 0, length = array .length - 1; i < length; ++ i)
+
+					for (var i = 0, length = array .length; i < length; ++ i)
 					{
 						stream .string += generator .Indent ();
 						array [i] .toStream (stream);
 						stream .string += "\n";
 					}
-
-					stream .string += generator .Indent ();
-					array [length] .toStream (stream);
-					stream .string += "\n";
 
 					generator .DecIndent ();
 					stream .string += generator .Indent ();
@@ -24684,6 +24680,16 @@ function (SFBool,
 					break;
 				}
 			}
+		},
+		toVRMLString: function ()
+		{
+			this .addCloneCount (1);
+
+			var string = X3DObjectArrayField .prototype .toVRMLString .call (this);
+
+			this .removeCloneCount (1);
+
+			return string;
 		},
 		toVRMLStream: function (stream)
 		{
@@ -24714,17 +24720,13 @@ function (SFBool,
 
 					stream .string += "[\n";
 					generator .IncIndent ();
-				
-					for (var i = 0, length = array .length - 1; i < length; ++ i)
+
+					for (var i = 0, length = array .length; i < length; ++ i)
 					{
 						stream .string += generator .Indent ();
 						array [i] .toVRMLStream (stream);
 						stream .string += "\n";
 					}
-
-					stream .string += generator .Indent ();
-					array [length] .toVRMLStream (stream);
-					stream .string += "\n";
 
 					generator .DecIndent ();
 					stream .string += generator .Indent ();
@@ -24734,6 +24736,16 @@ function (SFBool,
 					break;
 				}
 			}
+		},
+		toXMLString: function ()
+		{
+			this .addCloneCount (1);
+
+			var string = X3DObjectArrayField .prototype .toXMLString .call (this);
+
+			this .removeCloneCount (1);
+
+			return string;
 		},
 		toXMLStream: function (stream)
 		{
@@ -24834,7 +24846,7 @@ function (SFBool,
 			}
 		},
 	});
-	
+
 	function ArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
 	{
 		function ArrayField (value)
@@ -25471,25 +25483,25 @@ function (X3DEventObject,
 			return function ()
 			{
 				///  Returns the live event of this node.
-	
+
 				// Change function.
-	
+
 				this .isLive = isLive;
-	
+
 				// Add isLive event.
-	
+
 				this .addChildObjects ("isLive", new Fields .SFBool (this .getLiveState ()));
-	
+
 				// Event processing is done manually and immediately, so:
 				this .isLive_ .removeParent (this);
-	
+
 				// Connect to execution context.
-	
+
 				if (this ._executionContext !== this)
 					this ._executionContext .isLive () .addInterest ("_set_live__", this);
-	
+
 				// Return field
-	
+
 				return this .isLive ();
 			};
 		})(),
@@ -25586,7 +25598,7 @@ function (X3DEventObject,
 				// First try to get a named node with the node's name.
 
 				var name = this .getName ();
-			
+
 				if (name .length)
 				{
 					var namedNode = executionContext .getNamedNodes () .get (name);
@@ -25599,30 +25611,30 @@ function (X3DEventObject,
 					if (needsName (this))
 						this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), this);
 				}
-	
+
 				// Create copy.
-	
+
 				var copy = this .create (executionContext);
-	
+
 				if (name .length)
 					executionContext .updateNamedNode (name, copy);
-	
+
 				// Default fields
-	
+
 				var predefinedFields = this .getPredefinedFields ();
-	
+
 				predefinedFields .forEach (function (sourceField)
 				{
 					try
 					{
 						var destfield = copy .getField (sourceField .getName ());
-	
+
 						destfield .setSet (sourceField .getSet ());
-	
+
 						if (sourceField .hasReferences ())
 						{
 							var references = sourceField .getReferences ();
-	
+
 							// IS relationship
 							references .forEach (function (originalReference)
 							{
@@ -25658,27 +25670,27 @@ function (X3DEventObject,
 						console .log (error .message);
 					}
 				});
-	
+
 				// User-defined fields
-	
+
 				var userDefinedFields = this .getUserDefinedFields ();
-	
+
 				userDefinedFields .forEach (function (sourceField)
 				{
 					var destfield = sourceField .copy (executionContext);
-	
+
 					copy .addUserDefinedField (sourceField .getAccessType (),
 					                           sourceField .getName (),
 					                           destfield);
-	
+
 					destfield .setSet (sourceField .getSet ());
-	
+
 					if (sourceField .hasReferences ())
 					{
 						// IS relationship
-	
+
 						var references = sourceField .getReferences ();
-	
+
 						references .forEach (function (originalReference)
 						{
 							try
@@ -25692,7 +25704,7 @@ function (X3DEventObject,
 						});
 					}
 				});
-	
+
 				executionContext .addUninitializedNode (copy);
 				return copy;
 			};
@@ -25747,7 +25759,7 @@ function (X3DEventObject,
 			this ._fields .set (name, field);
 
 			if (! this .getPrivate ())
-				field .addClones (1);
+				field .addCloneCount (1);
 
 			if (userDefined)
 			{
@@ -25756,7 +25768,7 @@ function (X3DEventObject,
 			else
 			{
 				this ._predefinedFields .set (name, field);
-	
+
 				Object .defineProperty (this, name + "_",
 				{
 					get: function () { return field; },
@@ -25774,9 +25786,9 @@ function (X3DEventObject,
 			{
 				this ._fields            .delete (name);
 				this ._userDefinedFields .delete (name);
-	
+
 				var fieldDefinitions = this .fieldDefinitions .getValue ();
-	
+
 				for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
 				{
 					if (fieldDefinitions [i] .name === name)
@@ -25787,7 +25799,7 @@ function (X3DEventObject,
 				}
 
 				if (! this .getPrivate ())
-					field .removeClones (1);
+					field .removeCloneCount (1);
 			}
 		},
 		getField: (function ()
@@ -25808,7 +25820,7 @@ function (X3DEventObject,
 				if (match)
 				{
 					field = this ._fields .get (match [1]);
-	
+
 					if (field && field .getAccessType () === X3DConstants .inputOutput)
 						return field;
 				}
@@ -25820,7 +25832,7 @@ function (X3DEventObject,
 					field = this ._fields .get (match [1]);
 
 					if (field && field .getAccessType () === X3DConstants .inputOutput)
-						return field;	
+						return field;
 				}
 
 				throw new Error ("Unkown field '" + name + "' in node class " + this .getTypeName () + ".");
@@ -25944,14 +25956,14 @@ function (X3DEventObject,
 			{
 				this ._fields .forEach (function (field)
 				{
-					field .removeClones (1);
+					field .removeCloneCount (1);
 				});
 			}
 			else
 			{
 				this ._fields .forEach (function (field)
 				{
-					field .addClones (1);
+					field .addCloneCount (1);
 				});
 			}
 		},
@@ -25959,18 +25971,18 @@ function (X3DEventObject,
 		{
 			return this ._cloneCount;
 		},
-		addClones: function (count)
+		addCloneCount: function (count)
 		{
 			if (count === 0)
 				return;
-		
+
 			this ._cloneCount += count;
 		},
-		removeClones: function (count)
+		removeCloneCount: function (count)
 		{
 			if (count === 0)
 				return;
-		
+
 			this ._cloneCount -= count;
 		},
 		traverse: function () { },
@@ -25984,7 +25996,7 @@ function (X3DEventObject,
 
 			if (generator .IsSharedNode (this))
 			{
-				stream .string += "NULL";		
+				stream .string += "NULL";
 				return;
 			}
 
@@ -26131,7 +26143,7 @@ function (X3DEventObject,
 					stream .string += field .getName ();
 					stream .string += " ";
 
-					field .toVRMLStream (stream);				
+					field .toVRMLStream (stream);
 				}
 			}
 		},
@@ -26147,7 +26159,7 @@ function (X3DEventObject,
 				stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
 				stream .string += " ";
 				stream .string += field .getName ();
-				
+
 				if (field .isInitializable ())
 				{
 					stream .string += " ";
@@ -26199,7 +26211,7 @@ function (X3DEventObject,
 						stream .string += " ";
 
 						field .toVRMLStream (stream);
-					}				
+					}
 				}
 			}
 		},
@@ -26210,7 +26222,7 @@ function (X3DEventObject,
 			if (generator .IsSharedNode (this))
 			{
 				stream .string += generator .Indent ();
-				stream .string += "<!-- NULL -->";		
+				stream .string += "<!-- NULL -->";
 				return;
 			}
 
@@ -26249,7 +26261,7 @@ function (X3DEventObject,
 					return;
 				}
 			}
-		
+
 			stream .string += generator .Indent ();
 			stream .string += "<";
 			stream .string += this .getTypeName ();
@@ -26309,7 +26321,7 @@ function (X3DEventObject,
 						var
 							initializableReference = false,
 							fieldReferences        = field .getReferences ();
-		
+
 						fieldReferences .forEach (function (fieldReference)
 						{
 							initializableReference |= fieldReference .isInitializable ();
@@ -26350,7 +26362,7 @@ function (X3DEventObject,
 
 								field .toXMLStream (stream);
 
-								stream .string += "'";			
+								stream .string += "'";
 								break;
 							}
 						}
@@ -26364,7 +26376,7 @@ function (X3DEventObject,
 
 			generator .DecIndent ();
 			generator .DecIndent ();
-	
+
 			if ((! this .hasUserDefinedFields () || userDefinedFields .size === 0) && references .length === 0 && childNodes .length === 0 && ! cdata)
 			{
 				stream .string += "/>";
@@ -26418,7 +26430,7 @@ function (X3DEventObject,
 						{
 							if (mustOutputValue && generator .ExecutionContext ())
 								references .push (field);
-		
+
 							if (! field .isInitializable () || field .isDefaultValue ())
 							{
 								stream .string += "/>\n";
@@ -26473,7 +26485,7 @@ function (X3DEventObject,
 						}
 					});
 				}
-		
+
 				if (references .length)
 				{
 					stream .string += generator .Indent ();
@@ -26481,7 +26493,7 @@ function (X3DEventObject,
 					stream .string += "\n";
 
 					generator .IncIndent ();
-		
+
 					for (var i = 0, length = references .length; i < length; ++ i)
 					{
 						var
@@ -32225,7 +32237,7 @@ function (Fields,
 
 		this .addChildObjects ("rootNodes", new Fields .MFNode ());
 
-		this .rootNodes_ .addClones (1);
+		this .rootNodes_ .addCloneCount (1);
 
 		this ._uninitializedNodes   = [ ];
 		this ._uninitializedNodes2  = [ ];
@@ -32253,13 +32265,13 @@ function (Fields,
 				while (this ._uninitializedNodes .length)
 				{
 					var uninitializedNodes = this ._uninitializedNodes;
-	
+
 					this ._uninitializedNodes  = this ._uninitializedNodes2;
 					this ._uninitializedNodes2 = uninitializedNodes;
-		
+
 					for (var i = 0, length = uninitializedNodes .length; i < length; ++ i)
 						uninitializedNodes [i] .setup ();
-	
+
 					uninitializedNodes .length = 0;
 				}
 			}
@@ -32313,23 +32325,23 @@ function (Fields,
 			if (setup === false)
 			{
 				var Type = this .getBrowser () .getSupportedNode (typeName);
-	
+
 				if (! Type)
 					return null;
-	
+
 				var baseNode = new Type (this);
-	
+
 				return baseNode;
 			}
 			else
 			{
 				var Type = this .getBrowser () .getSupportedNode (typeName);
-	
+
 				if (! Type)
 					throw new Error ("Unknown node type '" + typeName + "'.");
-	
+
 				var baseNode = new Type (this);
-	
+
 				baseNode .setup ();
 
 				return SFNodeCache .add (baseNode);
@@ -32436,7 +32448,7 @@ function (Fields,
 					var
 						min = i,
 						max = i <<= 1;
-		
+
 					newName  = name;
 					newName += '_';
 					newName += Math .round (Algorithm .random (min, max));
@@ -32444,7 +32456,7 @@ function (Fields,
 				else
 					break;
 			}
-		
+
 			return newName;
 		},
 		addImportedNode: function (inlineNode, exportedName, importedName)
@@ -32486,9 +32498,9 @@ function (Fields,
 				if (importedNode .getInlineNode () === inlineNode && importedNode .getExportedName () === exportedName)
 				{
 					this ._importedNodes .delete (key);
-					
+
 					this ._importedNodes .set (importedName, importedNode);
-					
+
 					importedNode .setImportedName (importedName);
 					return;
 				}
@@ -32548,7 +32560,7 @@ function (Fields,
 		{
 			if (! (node instanceof Fields .SFNode))
 				throw new Error ("Couldn't get local name: node is NULL.");
-				
+
 			if (node .getValue () .getExecutionContext () === this)
 				return node .getValue () .getName ();
 
@@ -32693,7 +32705,7 @@ function (Fields,
 			}
 			catch (error)
 			{
-				throw new Error ("Bad ROUTE specification: " + error .message); 
+				throw new Error ("Bad ROUTE specification: " + error .message);
 			}
 		},
 		deleteRoute: function (route)
@@ -32818,7 +32830,7 @@ function (Fields,
 					try
 					{
 						importedNode .toVRMLStream (stream);
-	
+
 						stream .string += "\n";
 					}
 					catch (error)
@@ -32855,7 +32867,7 @@ function (Fields,
 			// Output protos
 
 			this .getProtoDeclarations () .toXMLStream (stream);
-		
+
 			// Output root nodes
 
 			var rootNodes = this .getRootNodes ();
@@ -32866,7 +32878,7 @@ function (Fields,
 
 				stream .string += "\n";
 			}
-		
+
 			// Output imported nodes
 
 			var importedNodes = this .getImportedNodes ();
