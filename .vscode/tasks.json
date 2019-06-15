@@ -16,12 +16,6 @@
             "problemMatcher": []
         },
         {
-            "label": "Git Push GitHub",
-            "type": "shell",
-            "command": "git push github",
-            "problemMatcher": []
-        },
-        {
             "label": "Git List Untracked Files",
             "type": "shell",
             "command": "git ls-files --others --exclude-standard",
