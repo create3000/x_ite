@@ -321,6 +321,7 @@ var X_ITE_TESTS = [
 	{ path: "Texturing3D/Volume.x3d" },
 	{ path: "Texturing3D/backpack.nrrd" },
 	{ component: "Time" },
+	{ path: "Time/Clock.x3d" },
 	{ path: "Time/TimeProto.x3d" },
 	{ component: "VolumeRendering" },
 	{ path: "VolumeRendering/VolumeData.x3d" },

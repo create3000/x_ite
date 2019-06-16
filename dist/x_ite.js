@@ -1,4 +1,4 @@
-/* X_ITE v4.5.4-792 */
+/* X_ITE v4.5.6a-793 */
 
 (function () {
 
@@ -14620,6 +14620,10 @@ define ('standard/Math/Algorithm',[],function ()
 		{
 			return min + Math .random () * (max - min);
 		},
+		fract: function (value)
+		{
+			return value > 0 ? value - Math .floor (value) : value - Math .ceil (value);
+		},
 		clamp: function (value, min, max)
 		{
 			// http://jsperf.com/math-clamp
@@ -14655,7 +14659,7 @@ define ('standard/Math/Algorithm',[],function ()
 				// Reverse signs so we travel the short way round
 				cosom = -cosom;
 				destination .negate ();
-			}				
+			}
 
 			var
 				omega = Math .acos (cosom),
@@ -14713,7 +14717,7 @@ define ('standard/Math/Algorithm',[],function ()
 		/*
 		isInt: function(n)
 		{
-			return typeof n === 'number' && 
+			return typeof n === 'number' &&
 			       parseFloat (n) == parseInt (n, 10) && ! isNaN (n);
 		},
 		decimalPlaces: function (n)
@@ -14724,7 +14728,7 @@ define ('standard/Math/Algorithm',[],function ()
 
 			while(! Algorithm .isInt (c) && isFinite (c))
 				c = a * Math .pow (10, count ++);
-	
+
 			return count-1;
 		},
 		*/
@@ -25131,7 +25135,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.5.4a";
+	return "4.5.4";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -42095,13 +42099,15 @@ define ('x_ite/Components/Time/TimeSensor',[
 	"x_ite/Components/Core/X3DSensorNode",
 	"x_ite/Components/Time/X3DTimeDependentNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DSensorNode, 
-          X3DTimeDependentNode, 
-          X3DConstants)
+          X3DSensorNode,
+          X3DTimeDependentNode,
+			 X3DConstants,
+			 Algorithm)
 {
 "use strict";
 
@@ -42113,7 +42119,7 @@ function (Fields,
 		this .addType (X3DConstants .TimeSensor);
 
 		this .addChildObjects ("range", new Fields .MFFloat (0, 0, 1)); // current, first, last (in fractions) - play range starting at current
-		
+
 		this .cycle    = 0;
 		this .interval = 0;
 		this .fraction = 0;
@@ -42164,15 +42170,17 @@ function (Fields,
 		},
 		setRange: function (currentFraction, firstFraction, lastFraction)
 		{
-			this .fraction = currentFraction >= 1 ? 0 : currentFraction;
+			var
+				currentTime   = this .getBrowser () .getCurrentTime (),
+				startTime     = this .startTime_ .getValue (),
+				cycleInterval = this .cycleInterval_ .getValue ();
+
 			this .first    = firstFraction;
 			this .last     = lastFraction;
 			this .scale    = this .last - this .first;
-
-			var offset = (this .fraction -  this .first) * this .cycleInterval_ .getValue ();
-
-			this .interval = this .cycleInterval_ .getValue () * this .scale;
-			this .cycle    = this .getBrowser () .getCurrentTime () - offset;
+			this .interval = cycleInterval * this .scale;
+			this .fraction = Algorithm .fract ((currentFraction >= 1 ? 0 : currentFraction) + (currentTime - startTime) / this .interval);
+			this .cycle    = currentTime - (this .fraction -  this .first) * cycleInterval;
 		},
 		set_cycleInterval__: function ()
 		{
@@ -42195,16 +42203,18 @@ function (Fields,
 
 			this .fraction_changed_ = this .range_ [0];
 			this .time_             = this .getBrowser () .getCurrentTime ();
-		},			
+		},
 		set_resume: function (pauseInterval)
 		{
-			this .setRange (this .fraction, this .range_ [1], this .range_ [2]);
+			var
+				currentTime   = this .getBrowser () .getCurrentTime (),
+				startTime     = this .startTime_ .getValue ();
+
+			this .setRange (Algorithm .fract (this .fraction - (currentTime - startTime) / this .interval), this .range_ [1], this .range_ [2]);
 		},
 		set_fraction: function (time)
 		{
-			var t = (time - this .cycle) / this .interval;
-
-			this .fraction_changed_ = this .fraction = this .first + (t - Math .floor (t)) * this .scale;
+			this .fraction_changed_ = this .fraction = this .first + Algorithm .fract ((time - this .cycle) / this .interval) * this .scale;
 		},
 		set_time: function ()
 		{
@@ -42219,7 +42229,7 @@ function (Fields,
 					if (this .interval)
 					{
 						this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
-						
+
 						this .elapsedTime_ = this .getElapsedTime ();
 						this .cycleTime_   = time;
 
@@ -42245,8 +42255,6 @@ function (Fields,
 
 	return TimeSensor;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************

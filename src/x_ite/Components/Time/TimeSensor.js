@@ -54,13 +54,15 @@ define ([
 	"x_ite/Components/Core/X3DSensorNode",
 	"x_ite/Components/Time/X3DTimeDependentNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DSensorNode, 
-          X3DTimeDependentNode, 
-          X3DConstants)
+          X3DSensorNode,
+          X3DTimeDependentNode,
+			 X3DConstants,
+			 Algorithm)
 {
 "use strict";
 
@@ -72,7 +74,7 @@ function (Fields,
 		this .addType (X3DConstants .TimeSensor);
 
 		this .addChildObjects ("range", new Fields .MFFloat (0, 0, 1)); // current, first, last (in fractions) - play range starting at current
-		
+
 		this .cycle    = 0;
 		this .interval = 0;
 		this .fraction = 0;
@@ -123,15 +125,17 @@ function (Fields,
 		},
 		setRange: function (currentFraction, firstFraction, lastFraction)
 		{
-			this .fraction = currentFraction >= 1 ? 0 : currentFraction;
+			var
+				currentTime   = this .getBrowser () .getCurrentTime (),
+				startTime     = this .startTime_ .getValue (),
+				cycleInterval = this .cycleInterval_ .getValue ();
+
 			this .first    = firstFraction;
 			this .last     = lastFraction;
 			this .scale    = this .last - this .first;
-
-			var offset = (this .fraction -  this .first) * this .cycleInterval_ .getValue ();
-
-			this .interval = this .cycleInterval_ .getValue () * this .scale;
-			this .cycle    = this .getBrowser () .getCurrentTime () - offset;
+			this .interval = cycleInterval * this .scale;
+			this .fraction = Algorithm .fract ((currentFraction >= 1 ? 0 : currentFraction) + (currentTime - startTime) / this .interval);
+			this .cycle    = currentTime - (this .fraction -  this .first) * cycleInterval;
 		},
 		set_cycleInterval__: function ()
 		{
@@ -154,16 +158,18 @@ function (Fields,
 
 			this .fraction_changed_ = this .range_ [0];
 			this .time_             = this .getBrowser () .getCurrentTime ();
-		},			
+		},
 		set_resume: function (pauseInterval)
 		{
-			this .setRange (this .fraction, this .range_ [1], this .range_ [2]);
+			var
+				currentTime   = this .getBrowser () .getCurrentTime (),
+				startTime     = this .startTime_ .getValue ();
+
+			this .setRange (Algorithm .fract (this .fraction - (currentTime - startTime) / this .interval), this .range_ [1], this .range_ [2]);
 		},
 		set_fraction: function (time)
 		{
-			var t = (time - this .cycle) / this .interval;
-
-			this .fraction_changed_ = this .fraction = this .first + (t - Math .floor (t)) * this .scale;
+			this .fraction_changed_ = this .fraction = this .first + Algorithm .fract ((time - this .cycle) / this .interval) * this .scale;
 		},
 		set_time: function ()
 		{
@@ -178,7 +184,7 @@ function (Fields,
 					if (this .interval)
 					{
 						this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
-						
+
 						this .elapsedTime_ = this .getElapsedTime ();
 						this .cycleTime_   = time;
 
@@ -204,5 +210,3 @@ function (Fields,
 
 	return TimeSensor;
 });
-
-

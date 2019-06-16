@@ -69,6 +69,10 @@ define (function ()
 		{
 			return min + Math .random () * (max - min);
 		},
+		fract: function (value)
+		{
+			return value > 0 ? value - Math .floor (value) : value - Math .ceil (value);
+		},
 		clamp: function (value, min, max)
 		{
 			// http://jsperf.com/math-clamp
@@ -104,7 +108,7 @@ define (function ()
 				// Reverse signs so we travel the short way round
 				cosom = -cosom;
 				destination .negate ();
-			}				
+			}
 
 			var
 				omega = Math .acos (cosom),
@@ -162,7 +166,7 @@ define (function ()
 		/*
 		isInt: function(n)
 		{
-			return typeof n === 'number' && 
+			return typeof n === 'number' &&
 			       parseFloat (n) == parseInt (n, 10) && ! isNaN (n);
 		},
 		decimalPlaces: function (n)
@@ -173,7 +177,7 @@ define (function ()
 
 			while(! Algorithm .isInt (c) && isFinite (c))
 				c = a * Math .pow (10, count ++);
-	
+
 			return count-1;
 		},
 		*/
