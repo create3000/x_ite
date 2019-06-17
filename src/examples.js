@@ -12,6 +12,7 @@ var X_ITE_EXAMPLES = [
 	{ component: "EventUtilities", test: "IntegerSequencer" },
 	{ component: "Followers", test: "ColorChaser" },
 	{ component: "Followers", test: "ColorDamper" },
+	{ component: "Followers", test: "CoordinateChaser" },
 	{ component: "Followers", test: "ScalarChaser" },
 	{ component: "Geometry2D", test: "Arc2D" },
 	{ component: "Geometry2D", test: "ArcClose2D" },

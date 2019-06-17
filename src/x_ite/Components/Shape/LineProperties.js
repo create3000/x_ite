@@ -57,7 +57,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DAppearanceChildNode, 
+          X3DAppearanceChildNode,
           X3DConstants)
 {
 "use strict";
@@ -134,5 +134,3 @@ function (Fields,
 
 	return LineProperties;
 });
-
-
