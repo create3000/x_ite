@@ -1,4 +1,4 @@
-/* X_ITE v4.5.6a-794 */
+/* X_ITE v4.5.6a-795 */
 
 (function () {
 
@@ -67283,7 +67283,9 @@ function (X3DFollowerNode,
 					this .set_active (false);
 			}
 			catch (error)
-			{ }
+			{
+				//console .log (error);
+			}
 		},
 		updateBuffer: function ()
 		{
@@ -96949,6 +96951,7 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
 		function X3DArrayFollowerObject ()
 		{
 			this .array = this .getArray ();
+			this .zero  = this .getVector ();
 		}
 
 		X3DArrayFollowerObject .prototype =
@@ -96957,7 +96960,7 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
 			{
 				var array = [ ];
 
-				array .setValue = function (value)
+				array .assign = function (value)
 				{
 					if (Array .isArray (value))
 					{
@@ -97015,24 +97018,19 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
 					this .value_changed_ = value;
 				}
 			},
-			setDestination: function (value)
-			{
-				this .destination .setValue (value);
-			},
-			assign: function (buffer, i, value)
-			{
-				buffer [i] .setValue (value);
-			},
 			duplicate: function (value)
 			{
 				var array = this .getArray ();
 
-				array .setValue (value);
+				array .assign (value);
 
 				return array;
 			},
 			equals: function (lhs, rhs, tolerance)
 			{
+				if (lhs .length !== rhs .length)
+					return false;
+
 				var
 					a        = this .a,
 					distance = 0;
@@ -97046,10 +97044,10 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
 			{
 				var array = this .array;
 
-				array .setValue (source);
+				array .assign (source);
 
 				for (var i = 0, length = array .length; i < length; ++ i)
-					array [i] .lerp (destination [i], weight);
+					array [i] .lerp (destination [i] || this .zero, weight);
 
 				return array;
 			},
@@ -97139,16 +97137,15 @@ function (X3DArrayFollowerTemplate)
 
 		function X3DArrayChaserObject ()
 		{
+			X3DArrayFollower .call (this);
+
 			this .array = this .getArray ();
 			this .di    = this .getVector ();
 		}
 
-		Object .assign (X3DArrayChaserObject .prototype, X3DArrayFollower .prototype,
+		Object .assign (X3DArrayChaserObject .prototype,
+			X3DArrayFollower .prototype,
 		{
-			setPreviousValue: function (value)
-			{
-				this .previousValue .setValue (value);
-			},
 			step: function (value1, value2, t)
 			{
 				var
@@ -97156,19 +97153,10 @@ function (X3DArrayFollowerTemplate)
 					deltaOut = this .deltaOut,
 					di       = this .di;
 
-				deltaOut .length = output .length;
+				deltaOut .assign (value1);
 
 				for (var i = 0, length = output .length; i < length; ++ i)
-				{
-					di .assign (value1 [i]);
-
-					if (deltaOut [i])
-						deltaOut [i] .assign (di);
-					else
-						deltaOut [i] = di .copy ();
-
-					output [i] .add (di .subtract (value2 [i]) .multiply (t));
-				}
+					output [i] .add (di .assign (value1 [i] || this .zero) .subtract (value2 [i] || this .zero) .multiply (t));
 			},
 		});
 
