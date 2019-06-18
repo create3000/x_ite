@@ -664,8 +664,8 @@ function ($,
 
 						console .log (text);
 
-						this .copyToClipboard (text)
-						this .getNotification () .string_ = "Copied Viewpoint to clipboard.";
+						this .copyToClipboard (text);
+						this .getNotification () .string_ = "Copied viewpoint to clipboard.";
 					}
 
 					break;

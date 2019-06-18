@@ -1,4 +1,4 @@
-/* X_ITE v4.5.6a-796 */
+/* X_ITE v4.5.6a-797 */
 
 (function () {
 
@@ -40531,16 +40531,8 @@ function ($,
 
 						console .log (text);
 
-						navigator .clipboard .writeText (text) .then (function()
-						{
-							this .getNotification () .string_ = "Copied Viewpoint to clipboard.";
-						}
-						.bind (this),
-						function (error)
-						{
-							this .getNotification () .string_ = "Couldn't copy viewpoint.";
-						}
-						.bind (this));
+						this .copyToClipboard (text);
+						this .getNotification () .string_ = "Copied viewpoint to clipboard.";
 					}
 
 					break;
@@ -40574,6 +40566,15 @@ function ($,
 					break;
 				}
 			}
+		},
+		copyToClipboard: function (text)
+		{
+			var $temp = $("<input>");
+
+			$("body") .append($temp);
+			$temp .val (text) .select ();
+			document .execCommand ("copy");
+			$temp .remove ();
 		},
 	};
 
