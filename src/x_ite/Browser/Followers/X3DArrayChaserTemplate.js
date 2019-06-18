@@ -63,7 +63,6 @@ function (X3DArrayFollowerTemplate)
 			X3DArrayFollower .call (this);
 
 			this .array = this .getArray ();
-			this .di    = this .getVector ();
 		}
 
 		Object .assign (X3DArrayChaserObject .prototype,
@@ -73,13 +72,10 @@ function (X3DArrayFollowerTemplate)
 			{
 				var
 					output   = this .output,
-					deltaOut = this .deltaOut,
-					di       = this .di;
-
-				deltaOut .assign (value1);
+					deltaOut = this .deltaOut;
 
 				for (var i = 0, length = output .length; i < length; ++ i)
-					output [i] .add (di .assign (value1 [i] || this .zero) .subtract (value2 [i] || this .zero) .multiply (t));
+					output [i] .add (deltaOut .assign (value1 [i] || this .zero) .subtract (value2 [i] || this .zero) .multiply (t));
 			},
 		});
 

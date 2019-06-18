@@ -68,7 +68,7 @@ function (X3DFollowerNode,
 		this .stepTime      = 0;
 
 		// Auxillary variables
-		this .deltaOut = this .getArray ();
+		this .deltaOut = this .getVector ();
 	}
 
 	X3DChaserNode .prototype = Object .assign (Object .create (X3DFollowerNode .prototype),
