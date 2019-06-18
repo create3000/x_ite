@@ -56,6 +56,7 @@ define (function ()
 		function X3DArrayFollowerObject ()
 		{
 			this .array = this .getArray ();
+			this .zero  = this .getVector ();
 		}
 
 		X3DArrayFollowerObject .prototype =
@@ -64,7 +65,7 @@ define (function ()
 			{
 				var array = [ ];
 
-				array .setValue = function (value)
+				array .assign = function (value)
 				{
 					if (Array .isArray (value))
 					{
@@ -122,24 +123,19 @@ define (function ()
 					this .value_changed_ = value;
 				}
 			},
-			setDestination: function (value)
-			{
-				this .destination .setValue (value);
-			},
-			assign: function (buffer, i, value)
-			{
-				buffer [i] .setValue (value);
-			},
 			duplicate: function (value)
 			{
 				var array = this .getArray ();
 
-				array .setValue (value);
+				array .assign (value);
 
 				return array;
 			},
 			equals: function (lhs, rhs, tolerance)
 			{
+				if (lhs .length !== rhs .length)
+					return false;
+
 				var
 					a        = this .a,
 					distance = 0;
@@ -153,10 +149,10 @@ define (function ()
 			{
 				var array = this .array;
 
-				array .setValue (source);
+				array .assign (source);
 
 				for (var i = 0, length = array .length; i < length; ++ i)
-					array [i] .lerp (destination [i], weight);
+					array [i] .lerp (destination [i] || this .zero, weight);
 
 				return array;
 			},

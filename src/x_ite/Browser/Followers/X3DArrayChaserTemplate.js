@@ -60,16 +60,15 @@ function (X3DArrayFollowerTemplate)
 
 		function X3DArrayChaserObject ()
 		{
+			X3DArrayFollower .call (this);
+
 			this .array = this .getArray ();
 			this .di    = this .getVector ();
 		}
 
-		Object .assign (X3DArrayChaserObject .prototype, X3DArrayFollower .prototype,
+		Object .assign (X3DArrayChaserObject .prototype,
+			X3DArrayFollower .prototype,
 		{
-			setPreviousValue: function (value)
-			{
-				this .previousValue .setValue (value);
-			},
 			step: function (value1, value2, t)
 			{
 				var
@@ -77,19 +76,10 @@ function (X3DArrayFollowerTemplate)
 					deltaOut = this .deltaOut,
 					di       = this .di;
 
-				deltaOut .length = output .length;
+				deltaOut .assign (value1);
 
 				for (var i = 0, length = output .length; i < length; ++ i)
-				{
-					di .assign (value1 [i]);
-
-					if (deltaOut [i])
-						deltaOut [i] .assign (di);
-					else
-						deltaOut [i] = di .copy ();
-
-					output [i] .add (di .subtract (value2 [i]) .multiply (t));
-				}
+					output [i] .add (di .assign (value1 [i] || this .zero) .subtract (value2 [i] || this .zero) .multiply (t));
 			},
 		});
 

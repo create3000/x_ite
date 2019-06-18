@@ -192,7 +192,9 @@ function (X3DFollowerNode,
 					this .set_active (false);
 			}
 			catch (error)
-			{ }
+			{
+				//console .log (error);
+			}
 		},
 		updateBuffer: function ()
 		{
