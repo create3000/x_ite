@@ -1,4 +1,4 @@
-/* X_ITE v4.5.6a-795 */
+/* X_ITE v4.5.6a-796 */
 
 (function () {
 
@@ -67159,7 +67159,7 @@ function (X3DFollowerNode,
 		this .stepTime      = 0;
 
 		// Auxillary variables
-		this .deltaOut = this .getArray ();
+		this .deltaOut = this .getVector ();
 	}
 
 	X3DChaserNode .prototype = Object .assign (Object .create (X3DFollowerNode .prototype),
@@ -67284,6 +67284,8 @@ function (X3DFollowerNode,
 			}
 			catch (error)
 			{
+				// Catch error from Rotation4.slerp.
+
 				//console .log (error);
 			}
 		},
@@ -97140,7 +97142,6 @@ function (X3DArrayFollowerTemplate)
 			X3DArrayFollower .call (this);
 
 			this .array = this .getArray ();
-			this .di    = this .getVector ();
 		}
 
 		Object .assign (X3DArrayChaserObject .prototype,
@@ -97150,13 +97151,10 @@ function (X3DArrayFollowerTemplate)
 			{
 				var
 					output   = this .output,
-					deltaOut = this .deltaOut,
-					di       = this .di;
-
-				deltaOut .assign (value1);
+					deltaOut = this .deltaOut;
 
 				for (var i = 0, length = output .length; i < length; ++ i)
-					output [i] .add (di .assign (value1 [i] || this .zero) .subtract (value2 [i] || this .zero) .multiply (t));
+					output [i] .add (deltaOut .assign (value1 [i] || this .zero) .subtract (value2 [i] || this .zero) .multiply (t));
 			},
 		});
 
