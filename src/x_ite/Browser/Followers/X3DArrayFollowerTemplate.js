@@ -140,9 +140,6 @@ define (function ()
 			},
 			equals: function (lhs, rhs, tolerance)
 			{
-				if (lhs .length !== rhs .length)
-					return false;
-
 				var
 					a        = this .a,
 					distance = 0;
