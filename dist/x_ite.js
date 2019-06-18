@@ -1,4 +1,4 @@
-/* X_ITE v4.5.6a-793 */
+/* X_ITE v4.5.6a-794 */
 
 (function () {
 
@@ -60207,7 +60207,7 @@ define ('x_ite/Components/Shape/LineProperties',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DAppearanceChildNode, 
+          X3DAppearanceChildNode,
           X3DConstants)
 {
 "use strict";
@@ -60284,8 +60284,6 @@ function (Fields,
 
 	return LineProperties;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -66996,7 +66994,7 @@ define ('x_ite/Components/Followers/X3DFollowerNode',[
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DChildNode, 
+function (X3DChildNode,
           X3DConstants)
 {
 "use strict";
@@ -67022,10 +67020,6 @@ function (X3DChildNode,
 			X3DChildNode .prototype .initialize .call (this);
 
 			this .isLive () .addInterest ("set_live__", this);
-		},
-		duplicate: function (value)
-		{
-			return value .copy ();
 		},
 		getBuffer: function ()
 		{
@@ -67054,6 +67048,10 @@ function (X3DChildNode,
 		setDestination: function (value)
 		{
 			this .destination .assign (value);
+		},
+		duplicate: function (value)
+		{
+			return value .copy ();
 		},
 		assign: function (buffer, i, value)
 		{
@@ -67090,8 +67088,6 @@ function (X3DChildNode,
 
 	return X3DFollowerNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -67146,7 +67142,7 @@ define ('x_ite/Components/Followers/X3DChaserNode',[
 	"x_ite/Components/Followers/X3DFollowerNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DFollowerNode, 
+function (X3DFollowerNode,
           X3DConstants)
 {
 "use strict";
@@ -67172,7 +67168,7 @@ function (X3DFollowerNode,
 		initialize: function ()
 		{
 			X3DFollowerNode .prototype .initialize .call (this);
-		
+
 			this .set_value_       .addInterest ("set_value__",       this);
 			this .set_destination_ .addInterest ("set_destination__", this);
 			this .duration_        .addInterest ("set_duration__",    this);
@@ -67187,7 +67183,7 @@ function (X3DFollowerNode,
 
 			this .bufferEndTime = this .getBrowser () .getCurrentTime ();
 			this .previousValue = this .duplicate (initialValue);
-	
+
 			buffer [0] = this .duplicate (initialDestination);
 
 			for (var i = 1; i < numBuffers; ++ i)
@@ -67227,10 +67223,10 @@ function (X3DFollowerNode,
 				return 0;
 
 			var duration = this .duration_ .getValue ();
-		
+
 			if (t >= duration)
 				return 1;
-	
+
 			return 0.5 - 0.5 * Math .cos ((t / duration) * Math .PI);
 		},
 		set_value__: function ()
@@ -67271,18 +67267,18 @@ function (X3DFollowerNode,
 					buffer     = this .getBuffer (),
 					numBuffers = buffer .length,
 					fraction   = this .updateBuffer ();
-			
+
 				this .output = this .interpolate (this .previousValue,
 				                                  buffer [numBuffers - 1],
 				                                  this .stepResponse ((numBuffers - 1 + fraction) * this .stepTime));
-	
+
 				for (var i = numBuffers - 2; i >= 0; -- i)
 				{
 					this .step (buffer [i], buffer [i + 1], this .stepResponse ((i + fraction) * this .stepTime));
 				}
-	
+
 				this .setValue (this .output);
-		
+
 				if (this .equals (this .output, this .destination, this .getTolerance ()))
 					this .set_active (false);
 			}
@@ -67295,22 +67291,22 @@ function (X3DFollowerNode,
 				buffer     = this .getBuffer (),
 				numBuffers = buffer .length,
 				fraction   = (this .getBrowser () .getCurrentTime () - this .bufferEndTime) / this .stepTime;
-		
+
 			if (fraction >= 1)
 			{
 				var seconds = Math .floor (fraction);
 
 				fraction -= seconds;
-		
+
 				if (seconds < numBuffers)
 				{
 					this .setPreviousValue (buffer [numBuffers - seconds]);
-		
+
 					for (var i = numBuffers - 1; i >= seconds; -- i)
 					{
 						this .assign (buffer, i, buffer [i - seconds])
 					}
-		
+
 					for (var i = 0; i < seconds; ++ i)
 					{
 						try
@@ -67330,7 +67326,7 @@ function (X3DFollowerNode,
 					for (var i = 0; i < numBuffers; ++ i)
 						this .assign (buffer, i, this .destination);
 				}
-		
+
 				this .bufferEndTime += seconds * this .stepTime;
 			}
 
@@ -67340,8 +67336,6 @@ function (X3DFollowerNode,
 
 	return X3DChaserNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -67403,7 +67397,7 @@ define ('x_ite/Components/Followers/PositionChaser',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChaserNode, 
+          X3DChaserNode,
           X3DConstants,
           Vector3)
 {
@@ -67449,8 +67443,6 @@ function (Fields,
 
 	return PositionChaser;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -67512,7 +67504,7 @@ define ('x_ite/Components/Followers/OrientationChaser',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChaserNode, 
+          X3DChaserNode,
           X3DConstants,
           Rotation4)
 {
@@ -67578,8 +67570,6 @@ function (Fields,
 
 	return OrientationChaser;
 });
-
-
 
 /*!
  * jQuery Mousewheel 3.1.13
@@ -96491,7 +96481,7 @@ define ('x_ite/Components/Followers/ColorChaser',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChaserNode, 
+          X3DChaserNode,
           X3DConstants,
           Color3,
           Vector3)
@@ -96577,8 +96567,6 @@ function (Fields,
 	return ColorChaser;
 });
 
-
-
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -96633,7 +96621,7 @@ define ('x_ite/Components/Followers/X3DDamperNode',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function (X3DFollowerNode, 
+function (X3DFollowerNode,
           X3DConstants,
           Algorithm)
 {
@@ -96652,7 +96640,7 @@ function (X3DFollowerNode,
 		initialize: function ()
 		{
 			X3DFollowerNode .prototype .initialize .call (this);
-		
+
 			this .order_           .addInterest ("set_order__", this);
 			this .set_value_       .addInterest ("set_value__", this);
 			this .set_destination_ .addInterest ("set_destination__", this);
@@ -96663,10 +96651,10 @@ function (X3DFollowerNode,
 				initialDestination = this .getInitialDestination ();
 
 			buffer [0] = this .duplicate (initialDestination);
-		
+
 			for (var i = 1, length = this .getOrder () + 1; i < length; ++ i)
 				buffer [i] = this .duplicate (initialValue);
-	
+
 			if (this .equals (initialDestination, initialValue, this .getTolerance ()))
 				this .setValue (initialDestination);
 
@@ -96733,7 +96721,7 @@ function (X3DFollowerNode,
 				this .assign (buffer, i, value);
 
 			this .setValue (value);
-		
+
 			this .set_active (true);
 		},
 		set_destination__: function ()
@@ -96757,8 +96745,6 @@ function (X3DFollowerNode,
 
 	return X3DDamperNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -96821,7 +96807,7 @@ define ('x_ite/Components/Followers/ColorDamper',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DDamperNode, 
+          X3DDamperNode,
           X3DConstants,
           Color3,
           Vector3)
@@ -96905,8 +96891,6 @@ function (Fields,
 	return ColorDamper;
 });
 
-
-
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -96966,9 +96950,39 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
 		{
 			this .array = this .getArray ();
 		}
-	
+
 		X3DArrayFollowerObject .prototype =
 		{
+			getArray: function ()
+			{
+				var array = [ ];
+
+				array .setValue = function (value)
+				{
+					if (Array .isArray (value))
+					{
+						for (var i = 0, length = Math .min (this .length, value .length); i < length; ++ i)
+							this [i] .assign (value [i]);
+
+						for (var i = length, length = value .length; i < length; ++ i)
+							this [i] = value [i] .copy ();
+
+						this .length = length;
+					}
+					else
+					{
+						for (var i = 0, length = Math .min (this .length, value .length); i < length; ++ i)
+							this [i] .assign (value [i] .getValue ());
+
+						for (var i = length, length = value .length; i < length; ++ i)
+							this [i] = value [i] .getValue () .copy ();
+
+						this .length = length;
+					}
+				};
+
+				return array;
+			},
 			getValue: function ()
 			{
 				return this .set_value_;
@@ -96985,9 +96999,37 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
 			{
 				return this .initialDestination_;
 			},
+			setValue: function (value)
+			{
+				if (Array .isArray (value))
+				{
+					var value_changed = this .value_changed_;
+
+					for (var i = 0, length = value .length; i < length; ++ i)
+						value_changed [i] = value [i];
+
+					value_changed .length = length;
+				}
+				else
+				{
+					this .value_changed_ = value;
+				}
+			},
+			setDestination: function (value)
+			{
+				this .destination .setValue (value);
+			},
 			assign: function (buffer, i, value)
 			{
 				buffer [i] .setValue (value);
+			},
+			duplicate: function (value)
+			{
+				var array = this .getArray ();
+
+				array .setValue (value);
+
+				return array;
 			},
 			equals: function (lhs, rhs, tolerance)
 			{
@@ -96996,45 +97038,44 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
 					distance = 0;
 
 				for (var i = 0, length = lhs .length; i < length; ++ i)
-				  distance = Math .max (a .assign (lhs [i] .getValue ()) .subtract (rhs [i] .getValue ()) .abs ());
-	
+				  distance = Math .max (a .assign (lhs [i]) .subtract (rhs [i]) .abs ());
+
 				return distance < tolerance;
 			},
 			interpolate: function (source, destination, weight)
 			{
-				var a = this .array;
-	
-				a .length = source .length;
-	
-				for (var i = 0, length = source .length; i < length; ++ i)
-					a [i] = source [i] .getValue () .lerp (destination [i] .getValue (), weight);
-	
-				return a;
-			},
-			set_value__: function ()
-			{
-				this .getBuffer () [0] .length = this .set_value_ .length;
-	
-				Type .prototype .set_value__ .call (this);
+				var array = this .array;
+
+				array .setValue (source);
+
+				for (var i = 0, length = array .length; i < length; ++ i)
+					array [i] .lerp (destination [i], weight);
+
+				return array;
 			},
 			set_destination__: function ()
 			{
 				var
-					buffer = this .getBuffer (),
-					l      = this .set_destination_ .length;
-	
-				for (var i = 0, length = buffer .length; i < length; ++ i)
-					buffer [i] .length = l;
-				
+					buffers = this .getBuffer (),
+					l       = this .set_destination_ .length;
+
+				for (var i = 0, length = buffers .length; i < length; ++ i)
+				{
+					var buffer = buffers [i];
+
+					for (var b = buffer .length; b < l; ++ b)
+						buffer [b] = this .getVector ();
+
+					buffer .length = l;
+				}
+
 				Type .prototype .set_destination__ .call (this);
 			},
 		};
-	
+
 		return X3DArrayFollowerObject;
 	};
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -97099,6 +97140,7 @@ function (X3DArrayFollowerTemplate)
 		function X3DArrayChaserObject ()
 		{
 			this .array = this .getArray ();
+			this .di    = this .getVector ();
 		}
 
 		Object .assign (X3DArrayChaserObject .prototype, X3DArrayFollower .prototype,
@@ -97111,15 +97153,21 @@ function (X3DArrayFollowerTemplate)
 			{
 				var
 					output   = this .output,
-					deltaOut = this .deltaOut;
+					deltaOut = this .deltaOut,
+					di       = this .di;
 
 				deltaOut .length = output .length;
 
 				for (var i = 0, length = output .length; i < length; ++ i)
 				{
-					var di = deltaOut [i] = value1 [i];
+					di .assign (value1 [i]);
 
-					output [i] = output [i] .getValue () .add (di .getValue () .subtract (value2 [i] .getValue ()) .multiply (t));
+					if (deltaOut [i])
+						deltaOut [i] .assign (di);
+					else
+						deltaOut [i] = di .copy ();
+
+					output [i] .add (di .subtract (value2 [i]) .multiply (t));
 				}
 			},
 		});
@@ -97127,8 +97175,6 @@ function (X3DArrayFollowerTemplate)
 		return X3DArrayChaserObject;
 	};
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -97191,7 +97237,7 @@ define ('x_ite/Components/Followers/CoordinateChaser',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChaserNode, 
+          X3DChaserNode,
           X3DArrayChaserTemplate,
           X3DConstants,
           Vector3)
@@ -97238,16 +97284,10 @@ function (Fields,
 		{
 			return new Vector3 (0, 0, 0);
 		},
-		getArray: function ()
-		{
-			return new Fields .MFVec3f ();
-		},
 	});
 
 	return CoordinateChaser;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -97359,16 +97399,10 @@ function (Fields,
 		{
 			return new Vector3 (0, 0, 0);
 		},
-		getArray: function ()
-		{
-			return new Fields .MFVec3f ();
-		},
 	});
 
 	return CoordinateDamper;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -97430,7 +97464,7 @@ define ('x_ite/Components/Followers/OrientationDamper',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DDamperNode, 
+          X3DDamperNode,
           X3DConstants,
           Rotation4)
 {
@@ -97493,8 +97527,6 @@ function (Fields,
 	return OrientationDamper;
 });
 
-
-
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -97555,7 +97587,7 @@ define ('x_ite/Components/Followers/PositionChaser2D',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChaserNode, 
+          X3DChaserNode,
           X3DConstants,
           Vector2)
 {
@@ -97601,8 +97633,6 @@ function (Fields,
 
 	return PositionChaser2D;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -97664,7 +97694,7 @@ define ('x_ite/Components/Followers/PositionDamper',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DDamperNode, 
+          X3DDamperNode,
           X3DConstants,
           Vector3)
 {
@@ -97712,8 +97742,6 @@ function (Fields,
 
 	return PositionDamper;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -97775,7 +97803,7 @@ define ('x_ite/Components/Followers/PositionDamper2D',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DDamperNode, 
+          X3DDamperNode,
           X3DConstants,
           Vector2)
 {
@@ -97823,8 +97851,6 @@ function (Fields,
 
 	return PositionDamper2D;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -97886,7 +97912,7 @@ define ('x_ite/Components/Followers/ScalarChaser',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChaserNode, 
+          X3DChaserNode,
           X3DConstants,
           Algorithm)
 {
@@ -97961,8 +97987,6 @@ function (Fields,
 	return ScalarChaser;
 });
 
-
-
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -98023,7 +98047,7 @@ define ('x_ite/Components/Followers/ScalarDamper',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DDamperNode, 
+          X3DDamperNode,
           X3DConstants,
           Algorithm)
 {
@@ -98088,8 +98112,6 @@ function (Fields,
 	return ScalarDamper;
 });
 
-
-
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -98151,7 +98173,7 @@ define ('x_ite/Components/Followers/TexCoordChaser2D',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChaserNode, 
+          X3DChaserNode,
           X3DArrayChaserTemplate,
           X3DConstants,
           Vector2)
@@ -98198,16 +98220,10 @@ function (Fields,
 		{
 			return new Vector2 (0, 0);
 		},
-		getArray: function ()
-		{
-			return new Fields .MFVec2f ();
-		},
 	});
 
 	return TexCoordChaser2D;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -98270,7 +98286,7 @@ define ('x_ite/Components/Followers/TexCoordDamper2D',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DDamperNode, 
+          X3DDamperNode,
           X3DArrayFollowerTemplate,
           X3DConstants,
           Vector2)
@@ -98319,16 +98335,10 @@ function (Fields,
 		{
 			return new Vector2 (0, 0, 0);
 		},
-		getArray: function ()
-		{
-			return new Fields .MFVec2f ();
-		},
 	});
 
 	return TexCoordDamper2D;
 });
-
-
 
 /*******************************************************************************
  *
