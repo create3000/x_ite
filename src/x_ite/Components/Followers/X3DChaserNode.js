@@ -193,6 +193,8 @@ function (X3DFollowerNode,
 			}
 			catch (error)
 			{
+				// Catch error from Rotation4.slerp.
+
 				//console .log (error);
 			}
 		},
