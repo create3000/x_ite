@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DDamperNode, 
+          X3DDamperNode,
           X3DConstants,
           Rotation4)
 {
@@ -120,5 +120,3 @@ function (Fields,
 
 	return OrientationDamper;
 });
-
-

@@ -61,6 +61,7 @@ function (X3DArrayFollowerTemplate)
 		function X3DArrayChaserObject ()
 		{
 			this .array = this .getArray ();
+			this .di    = this .getVector ();
 		}
 
 		Object .assign (X3DArrayChaserObject .prototype, X3DArrayFollower .prototype,
@@ -73,15 +74,21 @@ function (X3DArrayFollowerTemplate)
 			{
 				var
 					output   = this .output,
-					deltaOut = this .deltaOut;
+					deltaOut = this .deltaOut,
+					di       = this .di;
 
 				deltaOut .length = output .length;
 
 				for (var i = 0, length = output .length; i < length; ++ i)
 				{
-					var di = deltaOut [i] = value1 [i];
+					di .assign (value1 [i]);
 
-					output [i] = output [i] .getValue () .add (di .getValue () .subtract (value2 [i] .getValue ()) .multiply (t));
+					if (deltaOut [i])
+						deltaOut [i] .assign (di);
+					else
+						deltaOut [i] = di .copy ();
+
+					output [i] .add (di .subtract (value2 [i]) .multiply (t));
 				}
 			},
 		});
@@ -89,5 +96,3 @@ function (X3DArrayFollowerTemplate)
 		return X3DArrayChaserObject;
 	};
 });
-
-

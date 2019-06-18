@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DDamperNode, 
+          X3DDamperNode,
           X3DConstants,
           Vector3)
 {
@@ -106,5 +106,3 @@ function (Fields,
 
 	return PositionDamper;
 });
-
-

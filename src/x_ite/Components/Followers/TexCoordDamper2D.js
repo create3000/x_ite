@@ -59,7 +59,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DDamperNode, 
+          X3DDamperNode,
           X3DArrayFollowerTemplate,
           X3DConstants,
           Vector2)
@@ -108,13 +108,7 @@ function (Fields,
 		{
 			return new Vector2 (0, 0, 0);
 		},
-		getArray: function ()
-		{
-			return new Fields .MFVec2f ();
-		},
 	});
 
 	return TexCoordDamper2D;
 });
-
-

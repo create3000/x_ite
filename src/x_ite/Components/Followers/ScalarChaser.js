@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChaserNode, 
+          X3DChaserNode,
           X3DConstants,
           Algorithm)
 {
@@ -132,5 +132,3 @@ function (Fields,
 
 	return ScalarChaser;
 });
-
-

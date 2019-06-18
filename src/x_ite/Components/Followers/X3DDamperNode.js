@@ -52,7 +52,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function (X3DFollowerNode, 
+function (X3DFollowerNode,
           X3DConstants,
           Algorithm)
 {
@@ -71,7 +71,7 @@ function (X3DFollowerNode,
 		initialize: function ()
 		{
 			X3DFollowerNode .prototype .initialize .call (this);
-		
+
 			this .order_           .addInterest ("set_order__", this);
 			this .set_value_       .addInterest ("set_value__", this);
 			this .set_destination_ .addInterest ("set_destination__", this);
@@ -82,10 +82,10 @@ function (X3DFollowerNode,
 				initialDestination = this .getInitialDestination ();
 
 			buffer [0] = this .duplicate (initialDestination);
-		
+
 			for (var i = 1, length = this .getOrder () + 1; i < length; ++ i)
 				buffer [i] = this .duplicate (initialValue);
-	
+
 			if (this .equals (initialDestination, initialValue, this .getTolerance ()))
 				this .setValue (initialDestination);
 
@@ -152,7 +152,7 @@ function (X3DFollowerNode,
 				this .assign (buffer, i, value);
 
 			this .setValue (value);
-		
+
 			this .set_active (true);
 		},
 		set_destination__: function ()
@@ -176,5 +176,3 @@ function (X3DFollowerNode,
 
 	return X3DDamperNode;
 });
-
-

@@ -59,7 +59,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DDamperNode, 
+          X3DDamperNode,
           X3DConstants,
           Color3,
           Vector3)
@@ -142,5 +142,3 @@ function (Fields,
 
 	return ColorDamper;
 });
-
-

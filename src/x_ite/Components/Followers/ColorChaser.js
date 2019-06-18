@@ -59,7 +59,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChaserNode, 
+          X3DChaserNode,
           X3DConstants,
           Color3,
           Vector3)
@@ -144,5 +144,3 @@ function (Fields,
 
 	return ColorChaser;
 });
-
-

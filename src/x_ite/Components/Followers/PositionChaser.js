@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChaserNode, 
+          X3DChaserNode,
           X3DConstants,
           Vector3)
 {
@@ -104,5 +104,3 @@ function (Fields,
 
 	return PositionChaser;
 });
-
-

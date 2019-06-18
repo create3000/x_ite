@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChaserNode, 
+          X3DChaserNode,
           X3DConstants,
           Rotation4)
 {
@@ -124,5 +124,3 @@ function (Fields,
 
 	return OrientationChaser;
 });
-
-

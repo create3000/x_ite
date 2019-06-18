@@ -57,9 +57,39 @@ define (function ()
 		{
 			this .array = this .getArray ();
 		}
-	
+
 		X3DArrayFollowerObject .prototype =
 		{
+			getArray: function ()
+			{
+				var array = [ ];
+
+				array .setValue = function (value)
+				{
+					if (Array .isArray (value))
+					{
+						for (var i = 0, length = Math .min (this .length, value .length); i < length; ++ i)
+							this [i] .assign (value [i]);
+
+						for (var i = length, length = value .length; i < length; ++ i)
+							this [i] = value [i] .copy ();
+
+						this .length = length;
+					}
+					else
+					{
+						for (var i = 0, length = Math .min (this .length, value .length); i < length; ++ i)
+							this [i] .assign (value [i] .getValue ());
+
+						for (var i = length, length = value .length; i < length; ++ i)
+							this [i] = value [i] .getValue () .copy ();
+
+						this .length = length;
+					}
+				};
+
+				return array;
+			},
 			getValue: function ()
 			{
 				return this .set_value_;
@@ -76,53 +106,83 @@ define (function ()
 			{
 				return this .initialDestination_;
 			},
+			setValue: function (value)
+			{
+				if (Array .isArray (value))
+				{
+					var value_changed = this .value_changed_;
+
+					for (var i = 0, length = value .length; i < length; ++ i)
+						value_changed [i] = value [i];
+
+					value_changed .length = length;
+				}
+				else
+				{
+					this .value_changed_ = value;
+				}
+			},
+			setDestination: function (value)
+			{
+				this .destination .setValue (value);
+			},
 			assign: function (buffer, i, value)
 			{
 				buffer [i] .setValue (value);
 			},
+			duplicate: function (value)
+			{
+				var array = this .getArray ();
+
+				array .setValue (value);
+
+				return array;
+			},
 			equals: function (lhs, rhs, tolerance)
 			{
+				if (lhs .length !== rhs .length)
+					return false;
+
 				var
 					a        = this .a,
 					distance = 0;
 
 				for (var i = 0, length = lhs .length; i < length; ++ i)
-				  distance = Math .max (a .assign (lhs [i] .getValue ()) .subtract (rhs [i] .getValue ()) .abs ());
-	
+				  distance = Math .max (a .assign (lhs [i]) .subtract (rhs [i]) .abs ());
+
 				return distance < tolerance;
 			},
 			interpolate: function (source, destination, weight)
 			{
-				var a = this .array;
-	
-				a .length = source .length;
-	
-				for (var i = 0, length = source .length; i < length; ++ i)
-					a [i] = source [i] .getValue () .lerp (destination [i] .getValue (), weight);
-	
-				return a;
-			},
-			set_value__: function ()
-			{
-				this .getBuffer () [0] .length = this .set_value_ .length;
-	
-				Type .prototype .set_value__ .call (this);
+				var array = this .array;
+
+				array .setValue (source);
+
+				for (var i = 0, length = array .length; i < length; ++ i)
+					array [i] .lerp (destination [i], weight);
+
+				return array;
 			},
 			set_destination__: function ()
 			{
 				var
-					buffer = this .getBuffer (),
-					l      = this .set_destination_ .length;
-	
-				for (var i = 0, length = buffer .length; i < length; ++ i)
-					buffer [i] .length = l;
-				
+					buffers = this .getBuffer (),
+					l       = this .set_destination_ .length;
+
+				for (var i = 0, length = buffers .length; i < length; ++ i)
+				{
+					var buffer = buffers [i];
+
+					for (var b = buffer .length; b < l; ++ b)
+						buffer [b] = this .getVector ();
+
+					buffer .length = l;
+				}
+
 				Type .prototype .set_destination__ .call (this);
 			},
 		};
-	
+
 		return X3DArrayFollowerObject;
 	};
 });
-
-

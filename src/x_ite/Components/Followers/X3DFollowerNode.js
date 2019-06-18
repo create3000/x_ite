@@ -51,7 +51,7 @@ define ([
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DChildNode, 
+function (X3DChildNode,
           X3DConstants)
 {
 "use strict";
@@ -77,10 +77,6 @@ function (X3DChildNode,
 			X3DChildNode .prototype .initialize .call (this);
 
 			this .isLive () .addInterest ("set_live__", this);
-		},
-		duplicate: function (value)
-		{
-			return value .copy ();
 		},
 		getBuffer: function ()
 		{
@@ -109,6 +105,10 @@ function (X3DChildNode,
 		setDestination: function (value)
 		{
 			this .destination .assign (value);
+		},
+		duplicate: function (value)
+		{
+			return value .copy ();
 		},
 		assign: function (buffer, i, value)
 		{
@@ -145,5 +145,3 @@ function (X3DChildNode,
 
 	return X3DFollowerNode;
 });
-
-
