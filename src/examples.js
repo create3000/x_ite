@@ -126,6 +126,7 @@ var X_ITE_EXAMPLES = [
 	{ component: "X3D", test: "LustForLife" },
 	{ component: "X3D", test: "MagicMushrooms" },
 	{ component: "X3D", test: "MilkywayAndBeyond" },
+	{ component: "X3D", test: "NYC" },
 	{ component: "X3D", test: "Pong" },
 	{ component: "X3D", test: "SecretLabyrinth" },
 	{ component: "X3D", test: "SlidingPuzzle" },
