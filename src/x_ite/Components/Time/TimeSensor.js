@@ -156,7 +156,7 @@ function (Fields,
 		{
 			this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
 
-			this .fraction_changed_ = this .range_ [0];
+			this .fraction_changed_ = this .fraction;
 			this .time_             = this .getBrowser () .getCurrentTime ();
 		},
 		set_resume: function (pauseInterval)

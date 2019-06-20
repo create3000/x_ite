@@ -255,7 +255,6 @@ function (Fields,
 				}
 
 				this .elapsedTime_ = 0;
-				this .cycleTime_   = this .getBrowser () .getCurrentTime ();
 			}
 		},
 		do_pause: function ()
