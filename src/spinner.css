@@ -43,6 +43,10 @@ X3DCanvas .x_ite-private-x_ite {
 	font-family: PT Sans, sans-serif;
 }
 
+X3DCanvas .x_ite-private-x_ite span.x_ite-private-x3d {
+	font-weight: bold;
+}
+
 X3DCanvas .x_ite-private-spinner-text {
 	color: white;
 	font-size: 11pt;

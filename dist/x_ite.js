@@ -1,4 +1,4 @@
-/* X_ITE v4.5.7a-803 */
+/* X_ITE v4.5.7a-804 */
 
 (function () {
 
@@ -40058,7 +40058,7 @@ function ($,
 		var progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen);
 		var surface      = $("<div></div>") .addClass ("x_ite-private-surface x_ite-private-surface-" + this .getId ()) .appendTo (browser);
 
-		$("<div></div>") .addClass ("x_ite-private-x_ite") .html ("X_ITE<b>X3D</b>") .appendTo (progress);
+		$("<div></div>") .addClass ("x_ite-private-x_ite") .html ("X_ITE<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
 		$("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
 		$("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress) .text ("Lade 0 Dateien");
 
