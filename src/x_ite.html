@@ -244,7 +244,7 @@ X3D (function ()
 	function loadURL ()
 	{
 		var Browser = X3D .getBrowser ("#browser");
-	
+
 		bookmarks .loadURL ($(".location-entry") .val ());
 	}
 
@@ -287,16 +287,18 @@ function (error)
 		</header>
 		<main>
 			<div>
-				<X3DCanvas id="browser" class="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false">
-					<p class="fallback">
-						Sorry,<br/>
-						it wasn't me!<br/>
-						<br/>
-						Your browser may not support all features required by X_ITE! You can use Firefox, Chrome,
-						or Microsoft Edge, because this is currently the choice of the choice. We will continuously
-						keep you informed on technical developments and as soon as X_ITE is running in other browser too.
-					</p>
-				</X3DCanvas>
+				<form action="javascript:alert('form submited')">
+					<X3DCanvas id="browser" class="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false">
+						<p class="fallback">
+							Sorry,<br/>
+							it wasn't me!<br/>
+							<br/>
+							Your browser may not support all features required by X_ITE! You can use Firefox, Chrome,
+							or Microsoft Edge, because this is currently the choice of the choice. We will continuously
+							keep you informed on technical developments and as soon as X_ITE is running in other browser too.
+						</p>
+					</X3DCanvas>
+				</form>
 				<div class="location-bar">
 					<input class="location-entry" value="http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"/>
 					<button class="location-go">Load URL</button>
