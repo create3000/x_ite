@@ -6,6 +6,8 @@ configure:
 	sudo npm install
 
 all:
+	perl build/bin/version-number.pl
+
 	perl -pi -e 's/return (?:true|false);/return false;/sg' src/x_ite/DEBUG.js
 
 	node_modules/requirejs/bin/r.js -o build/x_ite.build.js

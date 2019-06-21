@@ -29,13 +29,6 @@ sub check_version {
 	$REVISION = $1 + 1;
 
 	say "VERSION »$VERSION«";
-
-	my $BROWSER = `cat src/x_ite/Browser/VERSION.js`;
-	$BROWSER =~ s/"(.*?a?)"/"$VERSION"/;
-
-	open BROWSER, ">", "src/x_ite/Browser/VERSION.js";
-	print BROWSER $BROWSER;
-	close $BROWSER;
 }
 
 sub shader_source {
