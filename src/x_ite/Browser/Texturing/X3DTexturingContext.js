@@ -133,6 +133,10 @@ function (TextureProperties,
 					gl .activeTexture (gl .TEXTURE0 + this .texture3DUnits [i]);
 					gl .bindTexture (gl .TEXTURE_3D, this .defaultTexture3D);
 				}
+
+				// Fix for Chrome.
+				gl .activeTexture (gl .TEXTURE0);
+				gl .bindTexture (gl .TEXTURE_3D, this .defaultTexture3D);
 			}
 
 			// Cube Map Texture Units

@@ -91,7 +91,7 @@ function (Fields,
 		X3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DGeometryNode);
-			
+
 		this .addChildObjects ("transparent",  new Fields .SFBool (),
 		                       "bbox_changed", new Fields .SFTime (),
 		                       "rebuild",      new Fields .SFTime ());
@@ -311,7 +311,7 @@ function (Fields,
 			if (value)
 				this .textureCoordinateNode = value;
 			else
-				this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();			
+				this .textureCoordinateNode = this .getBrowser () .getDefaultTextureCoordinate ();
 		},
 		setNormals: function (value)
 		{
@@ -332,7 +332,7 @@ function (Fields,
 		buildTexCoords: function ()
 		{
 			var texCoords = this .texCoords;
-			
+
 			if (texCoords .length === 0)
 			{
 				var
@@ -344,7 +344,7 @@ function (Fields,
 					S         = min [Sindex],
 					T         = min [Tindex],
 					vertices  = this .vertices .getValue ();
-	
+
 				for (var i = 0, length = vertices .length; i < length; i += 4)
 				{
 					texCoords .push ((vertices [i + Sindex] - S) / Ssize,
@@ -370,14 +370,14 @@ function (Fields,
 					Xsize = size .x,
 					Ysize = size .y,
 					Zsize = size .z;
-	
+
 				texCoordParams .min .assign (bbox .center) .subtract (size .divide (2));
-	
+
 				if ((Xsize >= Ysize) && (Xsize >= Zsize))
 				{
 					// X size largest
 					texCoordParams .Ssize = Xsize; texCoordParams .Sindex = 0;
-	
+
 					if (Ysize >= Zsize)
 						texCoordParams .Tindex = 1;
 					else
@@ -387,7 +387,7 @@ function (Fields,
 				{
 					// Y size largest
 					texCoordParams .Ssize = Ysize; texCoordParams .Sindex = 1;
-	
+
 					if (Xsize >= Zsize)
 						texCoordParams .Tindex = 0;
 					else
@@ -397,13 +397,13 @@ function (Fields,
 				{
 					// Z is the largest
 					texCoordParams .Ssize = Zsize; texCoordParams .Sindex = 2;
-	
+
 					if (Xsize >= Ysize)
 						texCoordParams .Tindex = 0;
 					else
 						texCoordParams .Tindex = 1;
 				}
-	
+
 				return texCoordParams;
 			};
 		})(),
@@ -430,7 +430,7 @@ function (Fields,
 					for (var q = 0; q < length; ++ q)
 					{
 						var Q = normals [vertex [q]];
-	
+
 						if (Q .dot (m) >= cosCreaseAngle)
 							n .add (Q);
 					}
@@ -471,58 +471,58 @@ function (Fields,
 				try
 				{
 					var intersected = false;
-	
+
 					if (this .intersectsBBox (line))
 					{
 						this .transformLine   (line);                                       // Apply screen transformations from screen nodes.
 						this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
-	
+
 						var
 							texCoords  = this .multiTexCoords [0] .getValue (),
 							normals    = this .normals .getValue (),
 							vertices   = this .vertices .getValue ();
-	
+
 						for (var i = 0, length = this .vertexCount; i < length; i += 3)
 						{
 							var i4 = i * 4;
-	
+
 							v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
 							v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
 							v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
-	
+
 							if (line .intersectsTriangle (v0, v1, v2, uvt))
 							{
 								// Get barycentric coordinates.
-	
+
 								var
 									u = uvt .u,
 									v = uvt .v,
 									t = uvt .t;
-	
+
 								// Determine vectors for X3DPointingDeviceSensors.
-	
+
 								var point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
 								                         t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
 								                         t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
-	
+
 								if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
 									continue;
-	
+
 								var texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
 								                            t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
-	
+
 								var i3 = i * 3;
-	
+
 								var normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
 								                          t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
 								                          t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
-	
+
 								intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
 								intersected = true;
 							}
 						}
 					}
-	
+
 					return intersected;
 				}
 				catch (error)
@@ -548,7 +548,7 @@ function (Fields,
 					maxY   = max .y,
 					minZ   = min .z,
 					maxZ   = max .z;
-	
+
 			   // front
 				if (planes [0] .intersectsLine (line, intersection))
 				{
@@ -556,7 +556,7 @@ function (Fields,
 					    intersection .y >= minY && intersection .y <= maxY)
 						return true;
 				}
-	
+
 				// back
 				if (planes [1] .intersectsLine (line, intersection))
 				{
@@ -564,7 +564,7 @@ function (Fields,
 					    intersection .y >= minY && intersection .y <= maxY)
 						return true;
 				}
-	
+
 				// top
 				if (planes [2] .intersectsLine (line, intersection))
 				{
@@ -572,7 +572,7 @@ function (Fields,
 					    intersection .z >= minZ && intersection .z <= maxZ)
 						return true;
 				}
-	
+
 				// bottom
 				if (planes [3] .intersectsLine (line, intersection))
 				{
@@ -580,7 +580,7 @@ function (Fields,
 					    intersection .z >= minZ && intersection .z <= maxZ)
 						return true;
 				}
-	
+
 				// right
 				if (planes [4] .intersectsLine (line, intersection))
 				{
@@ -588,7 +588,7 @@ function (Fields,
 					    intersection .z >= minZ && intersection .z <= maxZ)
 						return true;
 				}
-	
+
 				return false;
 			};
 		})(),
@@ -608,38 +608,38 @@ function (Fields,
 					if (box .intersectsBox (this .bbox))
 					{
 						box .multRight (invMatrix .assign (this .getMatrix ()) .inverse ());
-	
+
 						this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
-	
+
 						var vertices = this .vertices .getValue ();
-			
+
 						for (var i = 0, length = this .vertexCount; i < length; i += 3)
 						{
 							var i4 = i * 4;
-			
+
 							v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
 							v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
 							v2 .x = vertices [i4 + 8]; v2 .y = vertices [i4 + 9]; v2 .z = vertices [i4 + 10];
-	
+
 							if (box .intersectsTriangle (v0, v1, v2))
 							{
 								if (clipPlanes .length)
 								{
 									if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v0)), clipPlanes))
 										continue;
-					
+
 									if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v1)), clipPlanes))
 										continue;
-					
+
 									if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (v2)), clipPlanes))
 										continue;
 								}
-			
+
 							   return true;
 							}
 					   }
 					}
-	
+
 				   return false;
 				}
 				catch (error)
@@ -668,18 +668,18 @@ function (Fields,
 			{
 				if (this .geometryType < 2)
 					return;
-				
+
 				var flatShading = this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
-	
+
 				if (flatShading === this .flatShading)
 					return;
-	
+
 				this .flatShading = flatShading;
-	
+
 				// Generate flat normals if needed.
-	
+
 				var gl = this .getBrowser () .getContext ();
-	
+
 				if (flatShading)
 				{
 					if (! this .flatNormals .length)
@@ -688,28 +688,28 @@ function (Fields,
 							cw          = this .frontFace === gl .CW,
 							flatNormals = this .flatNormals,
 							vertices    = this .vertices .getValue ();
-	
+
 						for (var i = 0, length = vertices .length; i < length; i += 12)
 						{
 						   Triangle3 .normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
 						                      v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
 						                      v2 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]),
 						                      normal);
-						   
+
 							if (cw)
 								normal .negate ();
-	
+
 							flatNormals .push (normal .x, normal .y, normal .z,
 							                   normal .x, normal .y, normal .z,
 							                   normal .x, normal .y, normal .z);
 						}
-	
+
 						flatNormals .shrinkToFit ();
 					}
 				}
-	
+
 				// Transfer normals.
-	
+
 				gl .bindBuffer (gl .ARRAY_BUFFER, this .normalBuffer);
 				gl .bufferData (gl .ARRAY_BUFFER, flatShading ? this .flatNormals .getValue () : this .normals .getValue (), gl .STATIC_DRAW);
 			};
@@ -739,14 +739,14 @@ function (Fields,
 				this .colors    .shrinkToFit ();
 				this .normals   .shrinkToFit ();
 				this .vertices  .shrinkToFit ();
-	
+
 				// Determine bbox.
-	
+
 				var
 					min      = this .min,
 					max      = this .max,
 					vertices = this .vertices .getValue ();
-	
+
 				if (vertices .length)
 				{
 					if (min .x === Number .POSITIVE_INFINITY)
@@ -754,28 +754,28 @@ function (Fields,
 						for (var i = 0, length = vertices .length; i < length; i += 4)
 						{
 							point .set (vertices [i], vertices [i + 1], vertices [i + 2]);
-		
+
 							min .min (point);
 							max .max (point);
 						}
 					}
-	
+
 					this .bbox .setExtents (min, max);
 				}
 				else
 				{
 					this .bbox .setExtents (min .set (0, 0, 0), max .set (0, 0, 0));
 				}
-	
+
 				this .bbox_changed_ .addEvent ();
-	
+
 				// Generate texCoord if needed.
-	
+
 				if (this .geometryType > 1)
 				{
 					for (var i = 0; i < 5; ++ i)
 						this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
-	
+
 					if (this .multiTexCoords .length === 0)
 						this .multiTexCoords .push (this .buildTexCoords ());
 
@@ -788,11 +788,11 @@ function (Fields,
 				}
 
 				// Upload normals or flat normals.
-	
+
 				this .set_shading__ (this .getBrowser () .getBrowserOptions () .Shading_);
-	
+
 				// Upload arrays.
-	
+
 				this .transfer ();
 			};
 		})(),
@@ -837,7 +837,7 @@ function (Fields,
 
 			for (var i = this .attribBuffers .length, length = this .attribs .length; i < length; ++ i)
 				this .attribBuffers .push (gl .createBuffer ());
-			
+
 			for (var i = 0, length = this .attribs .length; i < length; ++ i)
 			{
 				gl .bindBuffer (gl .ARRAY_BUFFER, this .attribBuffers [i]);
@@ -924,48 +924,48 @@ function (Fields,
 					context .fogCoords             = this .fogCoords;
 					context .colorMaterial         = this .colorMaterial;
 					context .textureCoordinateNode = this .textureCoordinateNode;
-	
+
 					shaderNode .enable (gl);
 					shaderNode .setLocalUniforms (gl, context);
 
 					// Setup vertex attributes.
-	
+
 					for (var i = 0, length = attribNodes .length; i < length; ++ i)
 						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-	
+
 					if (this .fogCoords)
 						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
-	
+
 					if (this .colorMaterial)
 						shaderNode .enableColorAttribute (gl, this .colorBuffer);
-		
+
 					shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
 					shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
 					shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
-		
+
 					// Draw depending on wireframe, solid and transparent.
-		
+
 					if (shaderNode .wireframe)
 					{
 						// Wireframes are always solid so only one drawing call is needed.
-	
+
 						for (var i = 0, length = this .vertexCount; i < length; i += 3)
 							gl .drawArrays (shaderNode .primitiveMode, i, 3);
 					}
 					else
 					{
 						var positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
-		
+
 						gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
-		
+
 						if (context .transparent && ! this .solid)
 						{
 							gl .enable (gl .CULL_FACE);
 							gl .cullFace (gl .FRONT);
-							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);		
-		
+							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+
 							gl .cullFace (gl .BACK);
-							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);		
+							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 						}
 						else
 						{
@@ -973,20 +973,20 @@ function (Fields,
 								gl .enable (gl .CULL_FACE);
 							else
 								gl .disable (gl .CULL_FACE);
-		
+
 							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 						}
 					}
-		
+
 					for (var i = 0, length = attribNodes .length; i < length; ++ i)
 						attribNodes [i] .disable (gl, shaderNode);
-		
+
 					if (this .fogCoords)
 						shaderNode .disableFogDepthAttribute (gl);
-		
+
 					if (this .colorMaterial)
 						shaderNode .disableColorAttribute (gl);
-	
+
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disableNormalAttribute   (gl);
 					shaderNode .disable                  (gl);
@@ -1030,7 +1030,7 @@ function (Fields,
 
 				gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 			}
-	
+
 			//for (var i = 0, length = attribNodes .length; i < length; ++ i)
 			//	attribNodes [i] .disable (gl, shaderNode);
 		},
@@ -1047,32 +1047,32 @@ function (Fields,
 						attribBuffers = this .attribBuffers;
 
 					// Setup shader.
-		
+
 					context .geometryType          = this .geometryType;
 					context .fogCoords             = this .fogCoords;
 					context .colorMaterial         = this .colorMaterial;
 					context .textureCoordinateNode = this .textureCoordinateNode;
-	
+
 					shaderNode .enable (gl);
 					shaderNode .setLocalUniforms (gl, context);
-		
+
 					// Setup vertex attributes.
-		
+
 					for (var i = 0, length = attribNodes .length; i < length; ++ i)
 						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-	
+
 					if (this .fogCoords)
 						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
-	
+
 					if (this .colorMaterial)
 						shaderNode .enableColorAttribute (gl, this .colorBuffer);
-		
+
 					shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
 					shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
 					shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
-		
+
 					// Draw depending on wireframe, solid and transparent.
-		
+
 					var
 						materialNode    = context .materialNode,
 						normalMatrix    = materialNode || shaderNode .getCustom (),
@@ -1080,23 +1080,23 @@ function (Fields,
 						x               = modelViewMatrix [12],
 						y               = modelViewMatrix [13],
 						z               = modelViewMatrix [14];
-		
+
 					if (shaderNode .wireframe)
 					{
 						// Wireframes are always solid so only one drawing call is needed.
-		
+
 						for (var p = 0; p < numParticles; ++ p)
 						{
 							var particle = particles [p];
-	
+
 							modelViewMatrix [12] = x;
 							modelViewMatrix [13] = y;
 							modelViewMatrix [14] = z;
-			
+
 							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-	
+
 							shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
-			
+
 							for (var i = 0, length = this .vertexCount; i < length; i += 3)
 								gl .drawArrays (shaderNode .primitiveMode, i, 3);
 						}
@@ -1104,30 +1104,30 @@ function (Fields,
 					else
 					{
 						var positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
-		
+
 						gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
-		
+
 						if (context .transparent && ! this .solid)
 						{
 							for (var p = 0; p < numParticles; ++ p)
 							{
 								var particle = particles [p];
-	
+
 								modelViewMatrix [12] = x;
 								modelViewMatrix [13] = y;
 								modelViewMatrix [14] = z;
-		
+
 								Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-		
+
 								shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
-	
+
 								gl .enable (gl .CULL_FACE);
 								gl .cullFace (gl .FRONT);
 								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-			
+
 								gl .cullFace (gl .BACK);
 								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-							}	
+							}
 						}
 						else
 						{
@@ -1135,33 +1135,33 @@ function (Fields,
 								gl .enable (gl .CULL_FACE);
 							else
 								gl .disable (gl .CULL_FACE);
-		
+
 							for (var p = 0; p < numParticles; ++ p)
 							{
 								var particle = particles [p];
-	
+
 								modelViewMatrix [12] = x;
 								modelViewMatrix [13] = y;
 								modelViewMatrix [14] = z;
-	
+
 								Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-	
+
 								shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
-	
+
 								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 							}
 						}
 					}
-		
+
 					for (var i = 0, length = attribNodes .length; i < length; ++ i)
 						attribNodes [i] .disable (gl, shaderNode);
-		
+
 					if (this .fogCoords)
 						shaderNode .disableFogDepthAttribute (gl);
-	
+
 					if (this .colorMaterial)
 						shaderNode .disableColorAttribute (gl);
-	
+
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disableNormalAttribute   (gl);
 					shaderNode .disable                  (gl);
@@ -1177,4 +1177,3 @@ function (Fields,
 
 	return X3DGeometryNode;
 });
-
