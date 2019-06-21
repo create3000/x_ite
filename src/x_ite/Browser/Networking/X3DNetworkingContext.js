@@ -158,7 +158,7 @@ function (Fields,
 			++ this .loadingTotal;
 
 			this .loadingObjects .add (object);
-			
+
 			this .setLoadCount (this .loadingObjects .size);
 			this .setCursor ("DEFAULT");
 		},
@@ -196,7 +196,7 @@ function (Fields,
 			this .loadCount_   = 0;
 			this .loadingTotal = 0;
 
-			this .loadingObjects .clear ();			   
+			this .loadingObjects .clear ();
 		},
 	};
 
