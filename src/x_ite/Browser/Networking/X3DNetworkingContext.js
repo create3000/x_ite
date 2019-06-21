@@ -135,15 +135,15 @@ function (Fields,
 			}
 			else
 			{
-				if (this .getBrowserOptions () .getSplashScreen ())
-				{
-					this .getSplashScreen () .stop (true, true) .fadeIn  (0) .fadeOut (2000);
-					this .getCanvas ()       .stop (true, true) .fadeOut (0) .fadeIn  (2000);
-				}
-				else
-				{
-					this .getCanvas () .fadeIn (0);
-				}
+				// if (this .getBrowserOptions () .getSplashScreen ())
+				// {
+				// 	this .getSplashScreen () .stop (true, true) .fadeIn  (0) .fadeOut (2000);
+				// 	this .getCanvas ()       .stop (true, true) .fadeOut (0) .fadeIn  (2000);
+				// }
+				// else
+				// {
+				// 	this .getCanvas () .fadeIn (0);
+				// }
 			}
 		},
 		getLoading: function ()

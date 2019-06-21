@@ -7,10 +7,10 @@ X3DCanvas .x_ite-private-splash-screen {
 	right: 0;
 	bottom: 0;
 	left: 0;
-	background: #3d4145;
-	background: -moz-radial-gradient(center, ellipse cover, #7b8189 0%, #3d4145 100%);
-	background: -webkit-radial-gradient(center, ellipse cover, #7b8189 0%,#3d4145 100%);
-	background: radial-gradient(ellipse at center, rgb(130,130,130) 0%,#3d4145 100%);
+	background: #1b1d21;
+	background: -moz-radial-gradient(center, ellipse cover, #2f3135 0%, #1b1d21 100%);
+	background: -webkit-radial-gradient(center, ellipse cover, #2f3135 0%,#1b1d21 100%);
+	background: radial-gradient(ellipse at center, #2f3135 0%,#1b1d21 100%);
 }
 
 X3DCanvas .x_ite-private-spinner {
@@ -30,9 +30,17 @@ X3DCanvas .x_ite-private-spinner {
 
 X3DCanvas .x_ite-private-progress {
 	position: absolute;
-	top: calc(50% - 11pt);
+	top: calc(50% - 28pt - 11pt);
 	left: calc(50% - 100px);
 	width: 200px;
+}
+
+X3DCanvas .x_ite-private-x_ite {
+	color: white;
+	font-size: 28pt;
+	text-align: center;
+	text-shadow: 1px 1px 0px black;
+	font-family: PT Sans, sans-serif;
 }
 
 X3DCanvas .x_ite-private-spinner-text {
