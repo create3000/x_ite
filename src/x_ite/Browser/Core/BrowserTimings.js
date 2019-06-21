@@ -59,7 +59,7 @@ function ($,
           _)
 {
 "use strict";
-	
+
    function f2 (n) { return Math .floor (n * 100) / 100; }
 
 	function BrowserTimings (executionContext)
@@ -100,7 +100,7 @@ function ($,
 			this .header  = $("<thead></thead>") .append ($("<tr></tr>") .append ($("<th colspan='2'></th>"))) .appendTo (this .table);
 			this .body    = $("<tbody></tbody>") .appendTo (this .table);
 			this .footer  = $("<tfoot></tfoot>") .append ($("<tr></tr>") .append ($("<td colspan='2'></td>"))) .appendTo (this .table);
-			this .button  = $("<button></button>") .click (this .set_type__ .bind (this)) .appendTo (this .footer .find ("td"));
+			this .button  = $("<button></button>") .attr ("type", "button") .click (this .set_type__ .bind (this)) .appendTo (this .footer .find ("td"));
 			this .rows    = [ ];
 
 			this .set_button__ ();
@@ -157,11 +157,11 @@ function ($,
 		update: function ()
 		{
 			var currentTime = this .getBrowser () .getCurrentTime ();
-		
+
 			if (currentTime - this .startTime > 1)
 			{
 			   this .build ();
-				
+
 				this .frames    = 0;
 				this .startTime = currentTime;
 			}
@@ -177,13 +177,13 @@ function ($,
 				fixed       = this .localeOptions,
 				rows        = this .rows,
 				r           = 0;
-			
+
 			rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Frame rate") + ":")) .append ($("<td></td>") .text (f2(this .frames / (currentTime - this .startTime)) .toLocaleString (language, fixed) + " " + _("fps")));
 			rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Speed")      + ":")) .append ($("<td></td>") .text (f2(this .getSpeed (browser .currentSpeed))         .toLocaleString (language, fixed) + " " + this .getSpeedUnit (browser .currentSpeed)));
 
 			if (this .type === "MORE")
 			{
-				var 
+				var
 					layers            = browser .getWorld () .getLayerSet () .getLayers (),
 					activeLayer       = browser .getActiveLayer (),
 					systemTime        = browser .systemTime,
