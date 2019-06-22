@@ -1792,7 +1792,7 @@ function (Fields,
 		{
 			this .renderStyleNode = X3DCast (X3DConstants .X3DVolumeRenderStyleNode, this .renderStyle_);
 
-			if (! this .renderStyleNode)
+			if (! this .renderStyleNode || this .renderStyleNode .getShader () === null)
 				this .renderStyleNode = this .getBrowser () .getDefaultVolumeStyle ();
 
 			this .getAppearance () .shaders_ [0] = this .renderStyleNode .getShader ();
