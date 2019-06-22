@@ -3,7 +3,7 @@
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
- * Copyright create3000, ScheffelstraÃe 31a, Leipzig, Germany 2011.
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
  *
@@ -48,29 +48,64 @@
 
 
 define ([
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Bits/X3DConstants",
+	"x_ite/Components/Texturing/PixelTexture",
+	"x_ite/Components/Texturing/TextureProperties",
+	"x_ite/Components/VolumeRendering/OpacityMapVolumeStyle",
 ],
-function (X3DNode,
-          X3DConstants)
+function (PixelTexture,
+          TextureProperties,
+          OpacityMapVolumeStyle)
 {
 "use strict";
 
-	function X3DVolumeRenderStyleNode (executionContext)
-	{
-		X3DNode .call (this, executionContext);
+	function X3DVolumeRenderingContext () { }
 
-		this .addType (X3DConstants .X3DVolumeRenderStyleNode);
-	}
-
-	X3DVolumeRenderStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+	X3DVolumeRenderingContext .prototype =
 	{
-		constructor: X3DVolumeRenderStyleNode,
-		getShader: function ()
+		getDefaultVolumeStyle: function ()
 		{
-			return null;
-		},
-	});
+			if (this .defaultVolumeStyle !== undefined)
+				return this .defaultVolumeStyle;
 
-	return X3DVolumeRenderStyleNode;
+			this .defaultVolumeStyle = new OpacityMapVolumeStyle (this .getPrivateScene ());
+			this .defaultVolumeStyle .setup ();
+
+			return this .defaultVolumeStyle;
+		},
+		getDefaultTransferFunction: function ()
+		{
+			if (this .defaultTransferFunction !== undefined)
+				return this .defaultTransferFunction;
+
+			this .defaultTransferFunction = new PixelTexture (this .getPrivateScene ());
+
+			var textureProperties = new TextureProperties (this .getPrivateScene ());
+
+			textureProperties .generateMipMaps_ = true;
+			textureProperties .boundaryModeS_   = "CLAMP_TO_EDGE";
+			textureProperties .boundaryModeT_   = "REPEAT";
+
+			this .defaultTransferFunction .textureProperties_ = textureProperties;
+
+			this .defaultTransferFunction .image_ .width  = 256;
+			this .defaultTransferFunction .image_ .height = 1;
+			this .defaultTransferFunction .image_ .comp   = 2;
+
+			var array = this .defaultTransferFunction .image_ .array;
+
+			for (var i = 0; i < 256; ++ i)
+				array [i] = (i << 8) | i;
+
+			textureProperties             .setup ();
+			this .defaultTransferFunction .setup ();
+
+			return this .defaultTransferFunction;
+		},
+		createOpacityMapVolumeStyleShader: function ()
+		{
+			return this .createShader ("OpacityMapVolumeStyleShader", "../volume-rendering/OpacityMapVolumeStyle", false);
+		},
+	};
+
+	return X3DVolumeRenderingContext;
 });

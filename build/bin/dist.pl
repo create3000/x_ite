@@ -76,8 +76,9 @@ sub shader {
 }
 
 sub shaders {
-	shader ("src/assets/shaders/webgl1/$_", "dist/assets/shaders/webgl1") foreach `ls -C1 src/assets/shaders/webgl1`;
-	shader ("src/assets/shaders/webgl2/$_", "dist/assets/shaders/webgl2") foreach `ls -C1 src/assets/shaders/webgl2`;
+	shader ("src/assets/shaders/webgl1/$_",           "dist/assets/shaders/webgl1")           foreach `ls -C1 src/assets/shaders/webgl1`;
+	shader ("src/assets/shaders/webgl2/$_",           "dist/assets/shaders/webgl2")           foreach `ls -C1 src/assets/shaders/webgl2`;
+	shader ("src/assets/shaders/volume-rendering/$_", "dist/assets/shaders/volume-rendering") foreach `ls -C1 src/assets/shaders/volume-rendering`;
 }
 
 sub dist {

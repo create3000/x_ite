@@ -53,12 +53,14 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/VolumeRendering/X3DVolumeDataNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DVolumeDataNode,
-          X3DConstants)
+          X3DConstants,
+          X3DCast)
 {
 "use strict";
 
@@ -67,14 +69,17 @@ function (Fields,
 		X3DVolumeDataNode .call (this, executionContext);
 
 		this .addType (X3DConstants .VolumeData);
-	}
+
+		this .renderStyleNode = null;
+		this .blendModeNode   = executionContext .createNode ("BlendMode", false)
+  }
 
 	VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
 	{
 		constructor: VolumeData,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",  new Fields .SFVec3f (1, 1, 1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",  new Fields .SFVec3f (1, 1, 1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "renderStyle", new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "voxels",      new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f (0, 0, 0)),
@@ -91,6 +96,29 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "children";
+		},
+		initialize: function ()
+		{
+			X3DVolumeDataNode .prototype .initialize .call (this);
+
+			this .renderStyle_ .addInterest ("set_renderStyle__", this);
+			this .voxels_      .addFieldInterest (this .getAppearance () .texture_);
+
+			this .blendModeNode .setup ();
+
+			this .getAppearance () .texture_   = this .voxels_;
+			this .getAppearance () .blendMode_ = this .blendModeNode;
+
+			this .set_renderStyle__ ();
+		},
+		set_renderStyle__: function ()
+		{
+			this .renderStyleNode = X3DCast (X3DConstants .X3DVolumeRenderStyleNode, this .renderStyle_);
+
+			if (! this .renderStyleNode)
+				this .renderStyleNode = this .getBrowser () .getDefaultVolumeStyle ();
+
+			this .getAppearance () .shaders_ [0] = this .renderStyleNode .getShader ();
 		},
 	});
 

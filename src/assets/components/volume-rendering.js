@@ -48,6 +48,7 @@
 
 define ([
 	"x_ite/Components",
+	"x_ite/Browser/VolumeRendering/X3DVolumeRenderingContext",
 	"x_ite/Components/VolumeRendering/BlendedVolumeStyle",
 	"x_ite/Components/VolumeRendering/BoundaryEnhancementVolumeStyle",
 	"x_ite/Components/VolumeRendering/CartoonVolumeStyle",
@@ -64,8 +65,12 @@ define ([
 	"x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
 	"x_ite/Components/VolumeRendering/X3DVolumeDataNode",
 	"x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode",
+	X3D .getComponentUrl ("cad-geometry"),
+	X3D .getComponentUrl ("texturing-3d"),
+	X3D .getComponentUrl ("x_ite"),
 ],
 function (Components,
+          X3DVolumeRenderingContext,
           BlendedVolumeStyle,
           BoundaryEnhancementVolumeStyle,
           CartoonVolumeStyle,
@@ -109,6 +114,6 @@ function (Components,
 			X3DVolumeDataNode:                  X3DVolumeDataNode,
 			X3DVolumeRenderStyleNode:           X3DVolumeRenderStyleNode,
 		},
+		browser: X3DVolumeRenderingContext,
 	});
 });
-

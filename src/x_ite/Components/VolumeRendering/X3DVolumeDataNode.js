@@ -48,13 +48,19 @@
 
 
 define ([
+	"x_ite/Fields",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Core/TextureQuality",
+	"standard/Math/Numbers/Vector3",
 ],
-function (X3DChildNode,
+function (Fields,
+          X3DChildNode,
           X3DBoundedObject,
-          X3DConstants)
+          X3DConstants,
+          TextureQuality,
+          Vector3)
 {
 "use strict";
 
@@ -64,6 +70,17 @@ function (X3DChildNode,
 		X3DBoundedObject .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DVolumeDataNode);
+
+		this .proximitySensorNode   = executionContext .createNode ("ProximitySensor", false);
+		this .transformNode         = executionContext .createNode ("Transform", false);
+		this .shapeNode             = executionContext .createNode ("Shape", false);
+		this .appearanceNode        = executionContext .createNode ("Appearance", false);
+		this .textureTransformNode  = executionContext .createNode ("TextureTransform3D", false);
+		this .geometryNode          = executionContext .createNode ("QuadSet", false);
+		this .textureCoordinateNode = executionContext .createNode ("TextureCoordinate3D", false);
+		this .coordinateNode        = executionContext .createNode ("Coordinate", false);
+
+		this .setCameraObject (true);
 	}
 
 	X3DVolumeDataNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -75,6 +92,102 @@ function (X3DChildNode,
 			X3DChildNode     .prototype .initialize .call (this);
 			X3DBoundedObject .prototype .initialize .call (this);
 		},
+		initialize: function ()
+		{
+			X3DChildNode .prototype .initialize .call (this);
+			X3DBoundedObject .prototype .initialize .call (this);
+
+			this .getBrowser () .getBrowserOptions () .TextureQuality_ .addInterest ("set_dimensions__", this);
+
+			this .dimensions_ .addInterest ("set_dimensions__", this);
+
+			this .set_dimensions__ ();
+
+			this .appearanceNode .setPrivate (true);
+
+			this .proximitySensorNode .orientation_changed_ .addFieldInterest (this .transformNode .rotation_);
+			this .proximitySensorNode .orientation_changed_ .addFieldInterest (this .textureTransformNode .rotation_);
+
+			this .proximitySensorNode .size_         = new Fields .SFVec3f (-1, -1, -1);
+			this .transformNode .children_           = new Fields .MFNode (this .shapeNode);
+			this .shapeNode .appearance_             = this .appearanceNode;
+			this .shapeNode .geometry_               = this .geometryNode;
+			this .appearanceNode .textureTransform_  = this .textureTransformNode;
+			this .textureTransformNode .translation_ = new Fields .SFVec3f (0.5, 0.5, 0.5);
+			this .textureTransformNode .center_      = new Fields .SFVec3f (-0.5, -0.5, -0.5);
+			this .geometryNode .texCoord_            = this .textureCoordinateNode;
+			this .geometryNode .coord_               = this .coordinateNode;
+
+			this .coordinateNode        .setup ();
+			this .textureCoordinateNode .setup ();
+			this .geometryNode          .setup ();
+			this .textureTransformNode  .setup ();
+			this .appearanceNode        .setup ();
+			this .shapeNode             .setup ();
+			this .transformNode         .setup ();
+			this .proximitySensorNode   .setup ();
+		},
+		getBBox: function (bbox)
+		{
+			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+				return bbox .set (this .dimensions_ .getValue (), Vector3 .Zero);
+
+			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+		},
+		getAppearance: function ()
+		{
+			return this .appearanceNode;
+		},
+		getNumPlanes: function ()
+		{
+			switch (this .getBrowser () .getBrowserOptions () .getTextureQuality ())
+			{
+				case TextureQuality .LOW:
+				{
+					return 200;
+				}
+				case TextureQuality .MEDIUM:
+				{
+					return 400;
+				}
+				case TextureQuality .HIGH:
+				{
+					return 600;
+				}
+			}
+
+			return 200;
+		},
+		set_dimensions__: function ()
+		{
+			var
+				NUM_PLANES = this .getNumPlanes (),
+				size       = this .dimensions_ .getValue () .abs (),
+				size1_2    = size / 2,
+				points     = [ ];
+
+			this .coordinateNode .point_ .length = 0;
+
+			for (var i = 0; i < NUM_PLANES; ++ i)
+			{
+				var z = i / (NUM_PLANES - 1) - 0.5;
+
+				points .push ( size1_2,  size1_2, size * z,
+				              -size1_2,  size1_2, size * z,
+				              -size1_2, -size1_2, size * z,
+				               size1_2, -size1_2, size * z);
+			}
+
+			this .coordinateNode .point_        = points;
+			this .textureCoordinateNode .point_ = points;
+
+			this .textureTransformNode .scale_ = new Fields .SFVec3f (1 / this .dimensions_ .x, 1 / this .dimensions_ .y, 1 / this .dimensions_ .z);
+		},
+		traverse: function (type, renderObject)
+		{
+			this .proximitySensorNode .traverse (type, renderObject);
+			this .transformNode       .traverse (type, renderObject);
+		}
 	});
 
 	return X3DVolumeDataNode;
