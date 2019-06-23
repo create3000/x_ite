@@ -253,6 +253,11 @@ function (Fields,
 		{
 			X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
+			var gl = this .getBrowser () .getContext ();
+
+			if (gl .getVersion () < 2)
+				return;
+
 			this .transferFunction_ .addInterest ("set_transferFunction__", this);
 
 			this .shaderNode .addUserDefinedField (X3DConstants .inputOutput, "transferFunction", new Fields .SFNode ());
@@ -385,6 +390,11 @@ function (PixelTexture,
 		},
 		createOpacityMapVolumeStyleShader: function ()
 		{
+			var gl = this .getContext ();
+
+			if (gl .getVersion () < 2)
+				return null;
+
 			return this .createShader ("OpacityMapVolumeStyleShader", "../volume-rendering/OpacityMapVolumeStyle", false);
 		},
 	};
@@ -979,14 +989,21 @@ function (Fields,
 		},
 		initialize: function ()
 		{
-			X3DChildNode .prototype .initialize .call (this);
+			X3DChildNode     .prototype .initialize .call (this);
 			X3DBoundedObject .prototype .initialize .call (this);
 
-			this .getBrowser () .getBrowserOptions () .TextureQuality_ .addInterest ("set_dimensions__", this);
+			var
+				browser = this .getBrowser (),
+				gl      = browser .getContext ();
 
-			this .dimensions_ .addInterest ("set_dimensions__", this);
+			browser .getBrowserOptions () .TextureQuality_ .addInterest ("set_dimensions__", this);
 
-			this .set_dimensions__ ();
+			if (gl .getVersion () >= 2)
+			{
+				this .dimensions_ .addInterest ("set_dimensions__", this);
+
+				this .set_dimensions__ ();
+			}
 
 			this .appearanceNode .setPrivate (true);
 
@@ -1777,6 +1794,11 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DVolumeDataNode .prototype .initialize .call (this);
+
+			var gl = this .getBrowser () .getContext ();
+
+			if (gl .getVersion () < 2)
+				return;
 
 			this .renderStyle_ .addInterest ("set_renderStyle__", this);
 			this .voxels_      .addFieldInterest (this .getAppearance () .texture_);
