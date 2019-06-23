@@ -82,8 +82,8 @@ function (Fields,
 		constructor: Disk2D,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "innerRadius", new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "outerRadius", new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "innerRadius", new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "outerRadius", new Fields .SFFloat (1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",       new Fields .SFBool ()),
 		]),
 		getTypeName: function ()
@@ -154,7 +154,7 @@ function (Fields,
 					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
 						vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
 				}
-	
+
 				this .getMin () .set (-radius, -radius, 0);
 				this .getMax () .set ( radius,  radius, 0);
 
@@ -170,7 +170,7 @@ function (Fields,
 
 				this .getMultiTexCoords () .push (options .getDiskTexCoords ());
 				this .setNormals (options .getDiskNormals ());
-	
+
 				if (radius === 1)
 				{
 					this .setVertices (options .getDiskVertices ());
@@ -214,7 +214,7 @@ function (Fields,
 				texCoordArray .push (defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
 				                     defaultTexCoords [i + 4], defaultTexCoords [i + 5], 0, 1,
 				                     defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
-										   
+
 				                     defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
 				                     defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
 				                     defaultTexCoords [i + 8] * scale + offset, defaultTexCoords [i + 9] * scale + offset, 0, 1);
@@ -225,7 +225,7 @@ function (Fields,
 				vertexArray .push (defaultVertices [i + 4] * minRadius, defaultVertices [i + 5] * minRadius, 0, 1,
 				                   defaultVertices [i + 4] * maxRadius, defaultVertices [i + 5] * maxRadius, 0, 1,
 				                   defaultVertices [i + 8] * maxRadius, defaultVertices [i + 9] * maxRadius, 0, 1,
-									    
+
 				                   defaultVertices [i + 4] * minRadius, defaultVertices [i + 5] * minRadius, 0, 1,
 				                   defaultVertices [i + 8] * maxRadius, defaultVertices [i + 9] * maxRadius, 0, 1,
 				                   defaultVertices [i + 8] * minRadius, defaultVertices [i + 9] * minRadius, 0, 1);
@@ -233,7 +233,7 @@ function (Fields,
 
 			this .getMin () .set (-maxRadius, -maxRadius, 0);
 			this .getMax () .set ( maxRadius,  maxRadius, 0);
-	
+
 			this .setGeometryType (2);
 			this .setSolid (this .solid_ .getValue ());
 		},
@@ -285,5 +285,3 @@ function (Fields,
 
 	return Disk2D;
 });
-
-

@@ -60,7 +60,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DLineGeometryNode, 
+          X3DLineGeometryNode,
           X3DConstants,
           Complex,
           Vector3,
@@ -86,8 +86,8 @@ function (Fields,
 		constructor: Arc2D,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "startAngle", new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "endAngle",   new Fields .SFFloat (1.5708)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "startAngle", new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "endAngle",   new Fields .SFFloat (1.5708)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",     new Fields .SFFloat (1)),
 		]),
 		getTypeName: function ()
@@ -116,18 +116,18 @@ function (Fields,
 			var
 				start = Algorithm .interval (this .startAngle_ .getValue (), 0, Math .PI * 2),
 				end   = Algorithm .interval (this .endAngle_   .getValue (), 0, Math .PI * 2);
-		
+
 			if (start === end)
 				return Math .PI * 2;
-		
+
 			var sweepAngle = Math .abs (end - start);
-		
+
 			if (start > end)
 				return (Math .PI * 2) - sweepAngle;
-		
+
 			if (! isNaN (sweepAngle))
 				return sweepAngle;
-			
+
 			// We must test for NAN, as NAN to int is undefined.
 			return 0;
 		},
@@ -167,13 +167,11 @@ function (Fields,
 			}
 
 			this .getMin () .set (-radius, -radius, 0);
-			this .getMax () .set ( radius,  radius, 0);	
-	
+			this .getMax () .set ( radius,  radius, 0);
+
 			this .setSolid (false);
 		},
 	});
 
 	return Arc2D;
 });
-
-

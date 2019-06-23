@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DLineGeometryNode, 
+          X3DLineGeometryNode,
           X3DConstants,
           Vector3)
 {
@@ -79,8 +79,8 @@ function (Fields,
 	{
 		constructor: Polyline2D,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "lineSegments", new Fields .MFVec2f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "lineSegments", new Fields .MFVec2f ()),
 		]),
 		getTypeName: function ()
 		{
@@ -117,5 +117,3 @@ function (Fields,
 
 	return Polyline2D;
 });
-
-
