@@ -808,7 +808,7 @@ define ('x_ite/Components/Geometry2D/Arc2D',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DLineGeometryNode, 
+          X3DLineGeometryNode,
           X3DConstants,
           Complex,
           Vector3,
@@ -834,8 +834,8 @@ function (Fields,
 		constructor: Arc2D,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "startAngle", new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "endAngle",   new Fields .SFFloat (1.5708)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "startAngle", new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "endAngle",   new Fields .SFFloat (1.5708)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",     new Fields .SFFloat (1)),
 		]),
 		getTypeName: function ()
@@ -864,18 +864,18 @@ function (Fields,
 			var
 				start = Algorithm .interval (this .startAngle_ .getValue (), 0, Math .PI * 2),
 				end   = Algorithm .interval (this .endAngle_   .getValue (), 0, Math .PI * 2);
-		
+
 			if (start === end)
 				return Math .PI * 2;
-		
+
 			var sweepAngle = Math .abs (end - start);
-		
+
 			if (start > end)
 				return (Math .PI * 2) - sweepAngle;
-		
+
 			if (! isNaN (sweepAngle))
 				return sweepAngle;
-			
+
 			// We must test for NAN, as NAN to int is undefined.
 			return 0;
 		},
@@ -915,16 +915,14 @@ function (Fields,
 			}
 
 			this .getMin () .set (-radius, -radius, 0);
-			this .getMax () .set ( radius,  radius, 0);	
-	
+			this .getMax () .set ( radius,  radius, 0);
+
 			this .setSolid (false);
 		},
 	});
 
 	return Arc2D;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -988,7 +986,7 @@ define ('x_ite/Components/Geometry2D/ArcClose2D',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGeometryNode, 
+          X3DGeometryNode,
           X3DConstants,
           Complex,
           Vector3,
@@ -1014,9 +1012,9 @@ function (Fields,
 		constructor: ArcClose2D,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "closureType", new Fields .SFString ("PIE")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "startAngle",  new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "endAngle",    new Fields .SFFloat (1.5708)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "closureType", new Fields .SFString ("PIE")),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "startAngle",  new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "endAngle",    new Fields .SFFloat (1.5708)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",      new Fields .SFFloat (1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",       new Fields .SFBool ()),
 		]),
@@ -1046,18 +1044,18 @@ function (Fields,
 			var
 				start = Algorithm .interval (this .startAngle_ .getValue (), 0, Math .PI * 2),
 				end   = Algorithm .interval (this .endAngle_   .getValue (), 0, Math .PI * 2);
-		
+
 			if (start === end)
 				return Math .PI * 2;
-		
+
 			var sweepAngle = Math .abs (end - start);
-		
+
 			if (start > end)
 				return (Math .PI * 2) - sweepAngle;
-		
+
 			if (! isNaN (sweepAngle))
 				return sweepAngle;
-			
+
 			// We must test for NAN, as NAN to int is undefined.
 			return 0;
 		},
@@ -1080,27 +1078,27 @@ function (Fields,
 					vertexArray   = this .getVertices (),
 					texCoords     = [ ],
 					points        = [ ];
-	
+
 				this .getMultiTexCoords () .push (texCoordArray);
-	
+
 				var steps_1 = steps - 1;
-	
+
 				for (var n = 0; n < steps; ++ n)
 				{
 					var
 						t     = n / steps_1,
 						theta = startAngle + (sweepAngle * t);
-	
+
 					texCoords .push (Complex .Polar (0.5, theta) .add (half));
 					points    .push (Complex .Polar (radius, theta));
 				}
-	
+
 				if (chord)
 				{
 					var
 						t0 = texCoords [0],
 						p0 = points [0];
-	
+
 					for (var i = 1; i < steps_1; ++ i)
 					{
 						var
@@ -1108,15 +1106,15 @@ function (Fields,
 							t2 = texCoords [i + 1],
 							p1 = points [i],
 							p2 = points [i + 1];
-	
+
 						texCoordArray .push (t0 .real, t0 .imag, 0, 1,
 						                     t1 .real, t1 .imag, 0, 1,
 						                     t2 .real, t2 .imag, 0, 1);
-	
+
 						normalArray .push (0, 0, 1,
 						                   0, 0, 1,
 						                   0, 0, 1);
-	
+
 						vertexArray .push (p0 .real, p0 .imag, 0, 1,
 						                   p1 .real, p1 .imag, 0, 1,
 						                   p2 .real, p2 .imag, 0, 1);
@@ -1131,22 +1129,22 @@ function (Fields,
 							t2 = texCoords [i + 1],
 							p1 = points [i],
 							p2 = points [i + 1];
-	
+
 						texCoordArray .push (0.5, 0.5, 0, 1,
 						                     t1 .real, t1 .imag, 0, 1,
 						                     t2 .real, t2 .imag, 0, 1);
-	
+
 						normalArray .push (0, 0, 1,  0, 0, 1,  0, 0, 1);
-	
+
 						vertexArray .push (0, 0, 0, 1,
 						                   p1 .real, p1 .imag, 0, 1,
 						                   p2 .real, p2 .imag, 0, 1);
 					}
 				}
-	
+
 				this .getMin () .set (-radius, -radius, 0);
-				this .getMax () .set ( radius,  radius, 0);	
-		
+				this .getMax () .set ( radius,  radius, 0);
+
 				this .setSolid (this .solid_ .getValue ());
 			};
 		})(),
@@ -1154,8 +1152,6 @@ function (Fields,
 
 	return ArcClose2D;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -1379,8 +1375,8 @@ function (Fields,
 		constructor: Disk2D,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "innerRadius", new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "outerRadius", new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "innerRadius", new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "outerRadius", new Fields .SFFloat (1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",       new Fields .SFBool ()),
 		]),
 		getTypeName: function ()
@@ -1451,7 +1447,7 @@ function (Fields,
 					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
 						vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
 				}
-	
+
 				this .getMin () .set (-radius, -radius, 0);
 				this .getMax () .set ( radius,  radius, 0);
 
@@ -1467,7 +1463,7 @@ function (Fields,
 
 				this .getMultiTexCoords () .push (options .getDiskTexCoords ());
 				this .setNormals (options .getDiskNormals ());
-	
+
 				if (radius === 1)
 				{
 					this .setVertices (options .getDiskVertices ());
@@ -1511,7 +1507,7 @@ function (Fields,
 				texCoordArray .push (defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
 				                     defaultTexCoords [i + 4], defaultTexCoords [i + 5], 0, 1,
 				                     defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
-										   
+
 				                     defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
 				                     defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
 				                     defaultTexCoords [i + 8] * scale + offset, defaultTexCoords [i + 9] * scale + offset, 0, 1);
@@ -1522,7 +1518,7 @@ function (Fields,
 				vertexArray .push (defaultVertices [i + 4] * minRadius, defaultVertices [i + 5] * minRadius, 0, 1,
 				                   defaultVertices [i + 4] * maxRadius, defaultVertices [i + 5] * maxRadius, 0, 1,
 				                   defaultVertices [i + 8] * maxRadius, defaultVertices [i + 9] * maxRadius, 0, 1,
-									    
+
 				                   defaultVertices [i + 4] * minRadius, defaultVertices [i + 5] * minRadius, 0, 1,
 				                   defaultVertices [i + 8] * maxRadius, defaultVertices [i + 9] * maxRadius, 0, 1,
 				                   defaultVertices [i + 8] * minRadius, defaultVertices [i + 9] * minRadius, 0, 1);
@@ -1530,7 +1526,7 @@ function (Fields,
 
 			this .getMin () .set (-maxRadius, -maxRadius, 0);
 			this .getMax () .set ( maxRadius,  maxRadius, 0);
-	
+
 			this .setGeometryType (2);
 			this .setSolid (this .solid_ .getValue ());
 		},
@@ -1582,8 +1578,6 @@ function (Fields,
 
 	return Disk2D;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -1645,7 +1639,7 @@ define ('x_ite/Components/Geometry2D/Polyline2D',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DLineGeometryNode, 
+          X3DLineGeometryNode,
           X3DConstants,
           Vector3)
 {
@@ -1666,8 +1660,8 @@ function (Fields,
 	{
 		constructor: Polyline2D,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "lineSegments", new Fields .MFVec2f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "lineSegments", new Fields .MFVec2f ()),
 		]),
 		getTypeName: function ()
 		{
@@ -1704,8 +1698,6 @@ function (Fields,
 
 	return Polyline2D;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
