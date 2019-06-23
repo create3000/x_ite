@@ -1674,8 +1674,8 @@ define ('x_ite/Components/Layout/ScreenFontStyle',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DFontStyleNode, 
-          ScreenText, 
+          X3DFontStyleNode,
+          ScreenText,
           X3DConstants)
 {
 "use strict";
@@ -1691,16 +1691,16 @@ function (Fields,
 	{
 		constructor: ScreenFontStyle,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "language",    new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "family",      new Fields .MFString ("SERIF")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "style",       new Fields .SFString ("PLAIN")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "pointSize",   new Fields .SFFloat (12)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "spacing",     new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "horizontal",  new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "leftToRight", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "topToBottom", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "justify",     new Fields .MFString ("BEGIN")),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "language",    new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "family",      new Fields .MFString ("SERIF")),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "style",       new Fields .SFString ("PLAIN")),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "pointSize",   new Fields .SFFloat (12)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "spacing",     new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "horizontal",  new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "leftToRight", new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "topToBottom", new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "justify",     new Fields .MFString ("BEGIN")),
 		]),
 		getTypeName: function ()
 		{
@@ -1726,8 +1726,6 @@ function (Fields,
 
 	return ScreenFontStyle;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
