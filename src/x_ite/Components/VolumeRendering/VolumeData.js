@@ -101,6 +101,11 @@ function (Fields,
 		{
 			X3DVolumeDataNode .prototype .initialize .call (this);
 
+			var gl = this .getBrowser () .getContext ();
+
+			if (gl .getVersion () < 2)
+				return;
+
 			this .renderStyle_ .addInterest ("set_renderStyle__", this);
 			this .voxels_      .addFieldInterest (this .getAppearance () .texture_);
 

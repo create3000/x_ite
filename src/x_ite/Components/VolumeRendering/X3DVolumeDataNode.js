@@ -94,14 +94,21 @@ function (Fields,
 		},
 		initialize: function ()
 		{
-			X3DChildNode .prototype .initialize .call (this);
+			X3DChildNode     .prototype .initialize .call (this);
 			X3DBoundedObject .prototype .initialize .call (this);
 
-			this .getBrowser () .getBrowserOptions () .TextureQuality_ .addInterest ("set_dimensions__", this);
+			var
+				browser = this .getBrowser (),
+				gl      = browser .getContext ();
 
-			this .dimensions_ .addInterest ("set_dimensions__", this);
+			browser .getBrowserOptions () .TextureQuality_ .addInterest ("set_dimensions__", this);
 
-			this .set_dimensions__ ();
+			if (gl .getVersion () >= 2)
+			{
+				this .dimensions_ .addInterest ("set_dimensions__", this);
+
+				this .set_dimensions__ ();
+			}
 
 			this .appearanceNode .setPrivate (true);
 

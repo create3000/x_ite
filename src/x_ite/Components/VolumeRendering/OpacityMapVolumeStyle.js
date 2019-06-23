@@ -97,6 +97,11 @@ function (Fields,
 		{
 			X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
+			var gl = this .getBrowser () .getContext ();
+
+			if (gl .getVersion () < 2)
+				return;
+
 			this .transferFunction_ .addInterest ("set_transferFunction__", this);
 
 			this .shaderNode .addUserDefinedField (X3DConstants .inputOutput, "transferFunction", new Fields .SFNode ());
