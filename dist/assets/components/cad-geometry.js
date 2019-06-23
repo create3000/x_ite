@@ -675,7 +675,7 @@ define ('x_ite/Components/CADGeometry/IndexedQuadSet',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DComposedGeometryNode, 
+          X3DComposedGeometryNode,
           X3DConstants)
 {
 "use strict";
@@ -695,11 +695,12 @@ function (Fields,
 		constructor: IndexedQuadSet,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_index",       new Fields .MFInt32 ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "index",           new Fields .MFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "index",           new Fields .MFInt32 ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
@@ -718,6 +719,12 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "geometry";
+		},
+		initialize: function ()
+		{
+			X3DComposedGeometryNode .prototype .initialize .call (this);
+
+			this .set_index_ .addFieldInterest (this .index_);
 		},
 		getTriangleIndex: function (i)
 		{
@@ -741,8 +748,6 @@ function (Fields,
 
 	return IndexedQuadSet;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
