@@ -65,9 +65,9 @@ function ($,
           Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTexture2DNode, 
-          X3DSoundSourceNode, 
-          X3DUrlObject, 
+          X3DTexture2DNode,
+          X3DSoundSourceNode,
+          X3DUrlObject,
           X3DConstants,
           urls,
           URI,
@@ -83,7 +83,7 @@ function ($,
 		X3DUrlObject       .call (this, executionContext);
 
 		this .addType (X3DConstants .MovieTexture);
-		
+
 		this .addChildObjects ("buffer", new Fields .SFTime ());
 
 		this .canvas   = $("<canvas></canvas>");
@@ -98,7 +98,6 @@ function ($,
 		constructor: MovieTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",           new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",               new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",             new Fields .SFFloat (1)),
@@ -110,7 +109,6 @@ function ($,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "stopTime",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "isPaused",          new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",          new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "cycleTime",         new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "elapsedTime",       new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "duration_changed",  new Fields .SFTime (-1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
@@ -188,7 +186,7 @@ function ($,
 
 			this .URL = new URI (this .urlStack .shift ());
 			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
-	
+
 			this .video .attr ("src", this .URL);
 		},
 		setError: function ()
@@ -265,5 +263,3 @@ function ($,
 
 	return MovieTexture;
 });
-
-
