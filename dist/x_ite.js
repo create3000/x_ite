@@ -1,4 +1,4 @@
-/* X_ITE v4.5.7a-807 */
+/* X_ITE v4.5.7a-808 */
 
 (function () {
 
@@ -112630,12 +112630,14 @@ function (SupportedNodes,
 
 
 define ('x_ite/Components/Sound/X3DSoundSourceNode',[
+	"x_ite/Fields",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Time/X3DTimeDependentNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
-function (X3DChildNode,
+function (Fields,
+          X3DChildNode,
           X3DTimeDependentNode,
           X3DConstants,
           Algorithm)
@@ -112648,6 +112650,8 @@ function (X3DChildNode,
 		X3DTimeDependentNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DSoundSourceNode);
+
+		this .addChildObjects ("enabled", new Fields .SFBool (true));
 
 		this .volume = 0;
 		this .media  = null;
@@ -112795,7 +112799,6 @@ function (X3DChildNode,
 					// The event order below is very important.
 
 					this .elapsedTime_ = this .getElapsedTime ();
-					this .cycleTime_   = this .getBrowser () .getCurrentTime ();
 				}
 				else
 				{
@@ -112879,8 +112882,8 @@ function ($,
           Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DSoundSourceNode, 
-          X3DUrlObject, 
+          X3DSoundSourceNode,
+          X3DUrlObject,
           X3DConstants,
           urls,
           URI,
@@ -112894,8 +112897,9 @@ function ($,
 		X3DUrlObject       .call (this, executionContext);
 
 		this .addType (X3DConstants .AudioClip);
-		
-		this .addChildObjects ("buffer", new Fields .SFTime ());
+
+		this .addChildObjects ("speed",  new Fields .SFFloat (1),
+		                       "buffer", new Fields .SFTime ());
 
 		this .audio    = $("<audio></audio>");
 		this .urlStack = new Fields .MFString ();
@@ -112907,10 +112911,8 @@ function ($,
 		constructor: AudioClip,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "description",      new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "url",              new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "speed",            new Fields .SFFloat (1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "pitch",            new Fields .SFFloat (1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "loop",             new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",        new Fields .SFTime ()),
@@ -112919,7 +112921,6 @@ function ($,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",         new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",         new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",         new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "cycleTime",        new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",      new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "duration_changed", new Fields .SFTime (-1)),
 		]),
@@ -112992,7 +112993,7 @@ function ($,
 
 			this .URL = new URI (this .urlStack .shift ());
 			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
-	
+
 			this .audio .attr ("src", this .URL);
 		},
 		setError: function ()
@@ -113029,8 +113030,6 @@ function ($,
 
 	return AudioClip;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -113850,9 +113849,9 @@ function ($,
           Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTexture2DNode, 
-          X3DSoundSourceNode, 
-          X3DUrlObject, 
+          X3DTexture2DNode,
+          X3DSoundSourceNode,
+          X3DUrlObject,
           X3DConstants,
           urls,
           URI,
@@ -113868,7 +113867,7 @@ function ($,
 		X3DUrlObject       .call (this, executionContext);
 
 		this .addType (X3DConstants .MovieTexture);
-		
+
 		this .addChildObjects ("buffer", new Fields .SFTime ());
 
 		this .canvas   = $("<canvas></canvas>");
@@ -113883,7 +113882,6 @@ function ($,
 		constructor: MovieTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",           new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",               new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",             new Fields .SFFloat (1)),
@@ -113895,7 +113893,6 @@ function ($,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "stopTime",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "isPaused",          new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",          new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "cycleTime",         new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "elapsedTime",       new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "duration_changed",  new Fields .SFTime (-1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
@@ -113973,7 +113970,7 @@ function ($,
 
 			this .URL = new URI (this .urlStack .shift ());
 			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
-	
+
 			this .video .attr ("src", this .URL);
 		},
 		setError: function ()
@@ -114050,8 +114047,6 @@ function ($,
 
 	return MovieTexture;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
