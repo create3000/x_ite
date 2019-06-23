@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DLineGeometryNode, 
+          X3DLineGeometryNode,
           X3DCast,
           X3DConstants)
 {
@@ -82,9 +82,11 @@ function (Fields,
 		constructor: IndexedLineSet,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_colorIndex", new Fields .MFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_coordIndex", new Fields .MFInt32 ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "colorIndex",     new Fields .MFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "coordIndex",     new Fields .MFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "colorIndex",     new Fields .MFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "coordIndex",     new Fields .MFInt32 ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",         new Fields .MFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",       new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "color",          new Fields .SFNode ()),
@@ -106,14 +108,16 @@ function (Fields,
 		{
 			X3DLineGeometryNode .prototype .initialize .call (this);
 
-			this .attrib_   .addInterest ("set_attrib__",   this);
-			this .fogCoord_ .addInterest ("set_fogCoord__", this);
-			this .color_    .addInterest ("set_color__",    this);
-			this .coord_    .addInterest ("set_coord__",    this);
+			this .set_colorIndex_ .addFieldInterest (this .colorIndex_);
+			this .set_coordIndex_ .addFieldInterest (this .coordIndex_);
+			this .attrib_         .addInterest ("set_attrib__",   this);
+			this .fogCoord_       .addInterest ("set_fogCoord__", this);
+			this .color_          .addInterest ("set_color__",    this);
+			this .coord_          .addInterest ("set_coord__",    this);
 
 			this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
 			this .setSolid (false);
-			
+
 			this .set_attrib__ ();
 			this .set_fogCoord__ ();
 			this .set_color__ ();
@@ -260,7 +264,7 @@ function (Fields,
 			for (var p = 0, pl = polylines .length; p < pl; ++ p)
 			{
 				var polyline = polylines [p];
-			
+
 				// Create two vertices for each line.
 
 				if (polyline .length > 1)
@@ -299,5 +303,3 @@ function (Fields,
 
 	return IndexedLineSet;
 });
-
-

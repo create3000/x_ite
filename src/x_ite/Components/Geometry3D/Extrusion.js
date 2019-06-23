@@ -62,7 +62,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGeometryNode, 
+          X3DGeometryNode,
           X3DConstants,
           Triangle3,
           Vector2,
@@ -87,17 +87,21 @@ function (Fields,
 	{
 		constructor: Extrusion,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "beginCap",     new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "endCap",       new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",        new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",          new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "convex",       new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "creaseAngle",  new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "crossSection", new Fields .MFVec2f (new Vector2 (1, 1), new Vector2 (1, -1), new Vector2 (-1, -1), new Vector2 (-1, 1), new Vector2 (1, 1))),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "orientation",  new Fields .MFRotation (new Rotation4 ())),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",        new Fields .MFVec2f (new Vector2 (1, 1))),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "spine",        new Fields .MFVec3f (new Vector3 (0, 0, 0), new Vector3 (0, 1, 0))),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_crossSection", new Fields .MFVec2f ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_orientation",  new Fields .MFRotation ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_scale",        new Fields .MFVec2f ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_spine",        new Fields .MFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "beginCap",         new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "endCap",           new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",            new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",              new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "convex",           new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "creaseAngle",      new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "crossSection",     new Fields .MFVec2f (new Vector2 (1, 1), new Vector2 (1, -1), new Vector2 (-1, -1), new Vector2 (-1, 1), new Vector2 (1, 1))),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "orientation",      new Fields .MFRotation (new Rotation4 ())),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "scale",            new Fields .MFVec2f (new Vector2 (1, 1))),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "spine",            new Fields .MFVec3f (new Vector3 (0, 0, 0), new Vector3 (0, 1, 0))),
 		]),
 		getTypeName: function ()
 		{
@@ -110,6 +114,15 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "geometry";
+		},
+		initialize: function ()
+		{
+			X3DGeometryNode .prototype .initialize .call (this);
+
+			this .set_crossSection_ .addFieldInterest (this .crossSection_);
+			this .set_orientation_  .addFieldInterest (this .orientation_);
+			this .set_scale_        .addFieldInterest (this .scale_);
+			this .set_spine_        .addFieldInterest (this .spine_);
 		},
 		getClosedOrientation: function ()
 		{
@@ -138,33 +151,33 @@ function (Fields,
 					scale        = this .scale_,
 					spine        = this .spine_,
 					points       = [ ];
-	
+
 				// calculate SCP rotations
-	
+
 				var rotations = this .createRotations ();
-	
+
 				// calculate vertices.
-				
+
 				for (var i = 0, length = spine .length; i < length; ++ i)
 				{
 					var matrix = rotations [i];
 
 					if (orientation .length)
 						matrix .rotate (orientation [Math .min (i, orientation .length - 1)] .getValue ());
-	
+
 					if (scale .length)
 					{
 						var s = scale [Math .min (i, scale .length - 1)] .getValue ();
 						matrix .scale (scale3 .set (s .x, 1, s .y));
 					}
-	
+
 					for (var cs = 0, csLength = crossSection .length; cs < csLength; ++ cs)
 					{
 						var vector = crossSection [cs] .getValue ();
 						points .push (matrix .multVecMatrix (new Vector3 (vector .x, 0, vector .y)));
 					}
 				}
-	
+
 				return points;
 			};
 		})(),
@@ -188,25 +201,25 @@ function (Fields,
 			return function ()
 			{
 				// calculate SCP rotations
-	
+
 				var
 					spine       = this .spine_,
 					numSpines   = spine .length,
 					firstSpine  = spine [0] .getValue (),
 					lastSpine   = spine [spine .length - 1] .getValue (),
 					closedSpine = firstSpine .equals (lastSpine) && this .getClosedOrientation ();
-	
+
 				// Extend or shrink static rotations array:
 				for (var i = rotations .length; i < numSpines; ++ i)
 					rotations [i] = new Matrix4 ();
-	
+
 				rotations .length = numSpines;
-	
+
 				// SCP axes:
 				SCPxAxis .set (0, 0, 0);
 				SCPyAxis .set (0, 0, 0);
 				SCPzAxis .set (0, 0, 0);
-	
+
 				// SCP for the first point:
 				if (closedSpine)
 				{
@@ -214,7 +227,7 @@ function (Fields,
 					for (var i = 1, length = numSpines - 2; i < length; ++ i)
 					{
 						SCPyAxis .assign (spine [i] .getValue ()) .subtract (spine [length] .getValue ()) .normalize ();
-	
+
 						if (! SCPyAxis .equals (Vector3 .Zero))
 							break;
 					}
@@ -236,7 +249,7 @@ function (Fields,
 					for (var i = 0, length = numSpines - 1; i < length; ++ i)
 					{
 						SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ()) .normalize ();
-	
+
 						if (! SCPyAxis .equals (Vector3 .Zero))
 							break;
 					}
@@ -247,20 +260,20 @@ function (Fields,
 						SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i] .getValue ())
 						         .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (spine [i] .getValue ()))
 						         .normalize ();
-	
+
 						if (! SCPzAxis .equals (Vector3 .Zero))
 							break;
 					}
 				}
-	
+
 				// The entire spine is coincident:
 				if (SCPyAxis .equals (Vector3 .Zero))
 					SCPyAxis .set (0, 1, 0);
-	
+
 				// The entire spine is collinear:
 				if (SCPzAxis .equals (Vector3 .Zero))
 					rotation .setFromToVec (Vector3 .yAxis, SCPyAxis) .multVecRot (SCPzAxis .assign (Vector3 .zAxis));
-	
+
 				// We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
 				SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
 
@@ -271,12 +284,12 @@ function (Fields,
 				                    SCPyAxis .x, SCPyAxis .y, SCPyAxis .z, 0,
 				                    SCPzAxis .x, SCPzAxis .y, SCPzAxis .z, 0,
 				                    s .x,        s .y,        s .z,        1);
-	
+
 				// For all points other than the first or last:
-	
+
 				SCPyAxisPrevious .assign (SCPyAxis);
 				SCPzAxisPrevious .assign (SCPzAxis);
-	
+
 				for (var i = 1, length = numSpines - 1; i < length; ++ i)
 				{
 					var s = spine [i] .getValue ();
@@ -289,19 +302,19 @@ function (Fields,
 					// g.
 					if (SCPzAxisPrevious .dot (SCPzAxis) < 0)
 						SCPzAxis .negate ();
-	
+
 					// The two points used in computing the Y-axis are coincident.
 					if (SCPyAxis .equals (Vector3 .Zero))
 						SCPyAxis .assign (SCPyAxisPrevious);
 					else
 						SCPyAxisPrevious .assign (SCPyAxis);
-	
+
 					// The three points used in computing the Z-axis are collinear.
 					if (SCPzAxis .equals (Vector3 .Zero))
 						SCPzAxis .assign (SCPzAxisPrevious);
 					else
 						SCPzAxisPrevious .assign (SCPzAxis);
-	
+
 					// We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
 					SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
 
@@ -310,7 +323,7 @@ function (Fields,
 					                    SCPzAxis .x, SCPzAxis .y, SCPzAxis .z, 0,
 					                    s .x,        s .y,        s .z,        1);
 				}
-	
+
 				// SCP for the last point
 				if (closedSpine)
 				{
@@ -322,35 +335,35 @@ function (Fields,
 					var s = lastSpine;
 
 					SCPyAxis .assign (s) .subtract (spine [numSpines - 2] .getValue ()) .normalize ();
-					
+
 					if (numSpines > 2)
 					{
 						SCPzAxis .assign (s) .subtract (spine [numSpines - 2] .getValue ())
 						         .cross (vector3 .assign (spine [numSpines - 3] .getValue ()) .subtract (spine [numSpines - 2] .getValue ()))
 						         .normalize ();
 					}
-	
+
 					// g.
 					if (SCPzAxisPrevious .dot (SCPzAxis) < 0)
 						SCPzAxis .negate ();
-	
+
 					// The two points used in computing the Y-axis are coincident.
 					if (SCPyAxis .equals (Vector3 .Zero))
 						SCPyAxis .assign (SCPyAxisPrevious);
-	
+
 					// The three points used in computing the Z-axis are collinear.
 					if (SCPzAxis .equals (Vector3 .Zero))
 						SCPzAxis .assign (SCPzAxisPrevious);
-	
+
 					// We do not have to normalize SCPxAxis, as SCPyAxis and SCPzAxis are orthogonal.
 					SCPxAxis .assign (SCPyAxis) .cross (SCPzAxis);
-	
+
 					rotations [numSpines - 1] .set (SCPxAxis .x, SCPxAxis .y, SCPxAxis .z, 0,
 					                                SCPyAxis .x, SCPyAxis .y, SCPyAxis .z, 0,
 					                                SCPzAxis .x, SCPzAxis .y, SCPzAxis .z, 0,
 					                                s .x,        s .y,        s .z,        1);
 				}
-	
+
 				return rotations;
 			};
 		})(),
@@ -369,66 +382,66 @@ function (Fields,
 					spine         = this .spine_,
 					numSpines     = spine .length,
 					texCoordArray = this .getTexCoords ();
-	
+
 				if (numSpines < 2 || crossSection .length < 2)
 					return;
-	
+
 				this .getMultiTexCoords () .push (texCoordArray);
-	
+
 				var crossSectionSize = crossSection .length; // This one is used only in the INDEX macro.
-	
+
 				function INDEX (n, k) { return n * crossSectionSize + k; }
-	
+
 				var
 					firstSpine  = spine [0] .getValue (),
 					lastSpine   = spine [numSpines - 1] .getValue (),
 					closedSpine = firstSpine .equals (lastSpine) && this .getClosedOrientation ();
-	
+
 				var
 					firstCrossSection  = crossSection [0] .getValue (),
 					lastCrossSection   = crossSection [crossSection .length - 1] .getValue (),
 					closedCrossSection = firstCrossSection .equals (lastCrossSection);
-	
+
 				// For caps calculation
-	
+
 				min .assign (crossSection [0] .getValue ());
 				max .assign (crossSection [0] .getValue ());
-	
+
 				for (var k = 1, length = crossSection .length; k < length; ++ k)
 				{
 					min .min (crossSection [k] .getValue ());
 					max .max (crossSection [k] .getValue ());
 				}
-	
+
 				var
 					capSize      = vector2 .assign (max) .subtract (min),
 					capMax       = Math .max (capSize .x, capSize .y),
 					numCapPoints = closedCrossSection ? crossSection .length - 1 : crossSection .length;
-	
+
 				// Create
-	
+
 				var
 					normalIndex = [ ],
 				   normals     = [ ],
 					points      = this .createPoints ();
-	
+
 				for (var p = 0, length = points .length; p < length; ++ p)
 					normalIndex [p] = [ ];
-	
+
 				// Build body.
-	
+
 				var
 					normalArray = this .getNormals (),
 					vertexArray = this .getVertices ();
-	
+
 				var
 					numCrossSection_1 = crossSection .length - 1,
 					numSpine_1        = numSpines - 1;
-	
+
 				var
 					indexLeft  = INDEX (0, 0),
 					indexRight = INDEX (0, closedCrossSection ? 0 : numCrossSection_1);
-	
+
 				for (var n = 0; n < numSpine_1; ++ n)
 				{
 					for (var k = 0; k < numCrossSection_1; ++ k)
@@ -436,7 +449,7 @@ function (Fields,
 						var
 							n1 = closedSpine && n === numSpines - 2 ? 0 : n + 1,
 							k1 = closedCrossSection && k === crossSection .length - 2 ? 0 : k + 1;
-	
+
 						// k      k+1
 						//
 						// p4 ----- p3   n+1
@@ -444,7 +457,7 @@ function (Fields,
 						//  |   /   |
 						//  | /     |
 						// p1 ----- p2   n
-	
+
 						var
 							i1 = INDEX (n,  k),
 							i2 = INDEX (n,  k1),
@@ -456,7 +469,7 @@ function (Fields,
 							p4 = points [i4],
 							l1 = p2 .distance (p3) >= 1e-7,
 							l2 = p4 .distance (p1) >= 1e-7;
-	
+
 						if (cw)
 						{
 							var
@@ -469,9 +482,9 @@ function (Fields,
 								normal1 = Triangle3 .normal (p1, p2, p3, new Vector3 (0, 0, 0)),
 								normal2 = Triangle3 .normal (p1, p3, p4, new Vector3 (0, 0, 0));
 						}
-	
+
 						// Merge points on the left and right side if spine is coincident for better normal generation.
-			
+
 						if (k == 0)
 						{
 							if (l2)
@@ -482,7 +495,7 @@ function (Fields,
 								p1 = points [i1];
 							}
 						}
-			
+
 						if (k == crossSection .length - 2)
 						{
 							if (l1)
@@ -493,11 +506,11 @@ function (Fields,
 								p3 = points [i3];
 							}
 						}
-	
+
 						// If there are coincident spine points then one length can be zero.
-	
+
 						// Triangle one
-	
+
 						if (l1)
 						{
 							// p1
@@ -507,29 +520,29 @@ function (Fields,
 							{
 								// Cone case: ((texCoord1 + texCoord4) / 2)
 								var y = (n / numSpine_1 + (n + 1) / numSpine_1) / 2;
-	
+
 								texCoordArray .push (k / numCrossSection_1, y, 0, 1);
 							}
-	
+
 							normalIndex [i1] .push (normals .length);
 							normals .push (normal1);
 							vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
-		
+
 							// p2
 							texCoordArray .push ((k + 1) / numCrossSection_1, n / numSpine_1, 0, 1);
 							normalIndex [i2] .push (normals .length);
 							normals .push (normal1);
 							vertexArray .push (p2 .x, p2 .y, p2 .z, 1);
-		
+
 							// p3
 							texCoordArray .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
 							normalIndex [i3] .push (normals .length);
 							normals .push (normal1);
 							vertexArray .push (p3 .x, p3 .y, p3 .z, 1);
 						}
-	
+
 						// Triangle two
-	
+
 						if (l2)
 						{
 							// p1
@@ -537,7 +550,7 @@ function (Fields,
 							normalIndex [i1] .push (normals .length);
 							normals .push (normal2);
 							vertexArray .push (p1 .x, p1 .y, p1 .z, 1);
-		
+
 							// p3
 							if (l1)
 								texCoordArray .push ((k + 1) / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
@@ -545,14 +558,14 @@ function (Fields,
 							{
 								// Cone case: ((texCoord3 + texCoord2) / 2)
 								var y = ((n + 1) / numSpine_1 + n / numSpine_1) / 2;
-	
+
 								texCoordArray .push ((k + 1) / numCrossSection_1, y, 0, 1);
 							}
-	
+
 							normalIndex [i3] .push (normals .length);
 							normals .push (normal2);
 							vertexArray .push (p3 .x, p3 .y, p3 .z, 1);
-		
+
 							// p4
 							texCoordArray .push (k / numCrossSection_1, (n + 1) / numSpine_1, 0, 1);
 							normalIndex [i4] .push (normals .length);
@@ -561,19 +574,19 @@ function (Fields,
 						}
 					}
 				}
-	
+
 				// Refine body normals and add them.
-	
+
 				normals = this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());
-	
+
 				for (var i = 0; i < normals .length; ++ i)
 				{
 					var normal = normals [i];
-	
+
 					normalArray .push (normal .x, normal .y, normal .z);
 				}
 				// Build caps
-	
+
 				if (capMax && crossSection .length > 2)
 				{
 					if (this .beginCap_ .getValue ())
@@ -582,77 +595,77 @@ function (Fields,
 							j         = 0, // spine
 							polygon   = [ ],
 							triangles = [ ];
-	
+
 						for (var k = 0; k < numCapPoints; ++ k)
 						{
 							var
 								index = INDEX (j, numCapPoints - 1 - k),
 								point = points [index] .copy ();
-	
+
 							point .index    = index;
 							point .texCoord = Vector2 .subtract (crossSection [numCapPoints - 1 - k] .getValue (), min) .divide (capMax);
 							polygon .push (point);
 						}
-	
+
 						if (this .convex_ .getValue ())
 							Triangle3 .triangulateConvexPolygon (polygon, triangles);
-	
+
 						else
 							Triangle3 .triangulatePolygon (polygon, triangles);
-	
+
 						if (triangles .length >= 3)
 						{
 							var normal = Triangle3 .normal (points [triangles [0] .index],
 							                                points [triangles [1] .index],
 							                                points [triangles [2] .index],
 							                                new Vector3 (0, 0, 0));
-	
+
 							if (cw)
 								normal .negate ();
-	
+
 							this .addCap (texCoordArray, normal, points, triangles);
 						}
 					}
-	
+
 					if (this .endCap_ .getValue ())
 					{
 						var
 							j         = numSpines - 1, // spine
 							polygon   = [ ],
 							triangles = [ ];
-	
+
 						for (var k = 0; k < numCapPoints; ++ k)
 						{
 							var
 								index = INDEX (j, k),
 								point = points [index] .copy ();
-	
+
 							point .index    = index;
 							point .texCoord = Vector2 .subtract (crossSection [k] .getValue (), min) .divide (capMax);
 							polygon .push (point);
 						}
-	
+
 						if (this .convex_ .getValue ())
 							Triangle3 .triangulateConvexPolygon (polygon, triangles);
-	
+
 						else
 							Triangle3 .triangulatePolygon (polygon, triangles);
-	
+
 						if (triangles .length >= 3)
 						{
 							var normal = Triangle3 .normal (points [triangles [0] .index],
 							                                points [triangles [1] .index],
 							                                points [triangles [2] .index],
 							                                new Vector3 (0, 0, 0));
-	
+
 							if (cw)
 								normal .negate ();
-	
+
 							this .addCap (texCoordArray, normal, points, triangles);
 						}
 					}
 				}
-	
+
 				this .setSolid (this .solid_ .getValue ());
 				this .setCCW (this .ccw_ .getValue ());
 			};
@@ -690,5 +703,3 @@ function (Fields,
 
 	return Extrusion;
 });
-
-

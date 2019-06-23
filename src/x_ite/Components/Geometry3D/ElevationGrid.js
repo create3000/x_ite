@@ -93,6 +93,7 @@ function (Fields,
 		constructor: ElevationGrid,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_height",      new Fields .MFFloat ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "xDimension",      new Fields .SFInt32 ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "zDimension",      new Fields .SFInt32 ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "xSpacing",        new Fields .SFFloat (1)),
@@ -107,7 +108,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "height",          new Fields .MFFloat ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "height",          new Fields .MFFloat ()),
 		]),
 		getTypeName: function ()
 		{
@@ -125,11 +126,12 @@ function (Fields,
 		{
 			X3DGeometryNode .prototype .initialize .call (this);
 
-			this .attrib_   .addInterest ("set_attrib__",   this);
-			this .fogCoord_ .addInterest ("set_fogCoord__", this);
-			this .color_    .addInterest ("set_color__",    this);
-			this .texCoord_ .addInterest ("set_texCoord__", this);
-			this .normal_   .addInterest ("set_normal__",   this);
+			this .set_height_ .addFieldInterest (this .height_);
+			this .attrib_     .addInterest ("set_attrib__",   this);
+			this .fogCoord_   .addInterest ("set_fogCoord__", this);
+			this .color_      .addInterest ("set_color__",    this);
+			this .texCoord_   .addInterest ("set_texCoord__", this);
+			this .normal_     .addInterest ("set_normal__",   this);
 
 			this .set_attrib__ ();
 			this .set_fogCoord__ ();
@@ -265,7 +267,7 @@ function (Fields,
 					c0 = coordIndex [c],
 					c1 = coordIndex [c + 1],
 					c2 = coordIndex [c + 2];
-				
+
 				normalIndex [c0] .push (normals .length);
 				normalIndex [c1] .push (normals .length + 1);
 				normalIndex [c2] .push (normals .length + 2);
@@ -284,7 +286,7 @@ function (Fields,
 		},
 		createCoordIndex: function ()
 		{
-			// p1 - p4 
+			// p1 - p4
 			//  | \ |
 			// p2 - p3
 
@@ -398,7 +400,7 @@ function (Fields,
 						else
 							colorNode .addColor (face, colorArray);
 					}
-						
+
 					if (texCoordNode)
 					{
 						texCoordNode .addTexCoord (index, multiTexCoordArray);
@@ -444,5 +446,3 @@ function (Fields,
 
 	return ElevationGrid;
 });
-
-
