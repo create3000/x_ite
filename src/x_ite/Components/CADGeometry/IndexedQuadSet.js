@@ -62,9 +62,6 @@ function (Fields,
 {
 "use strict";
 
-	// Define two triangles.
-	var indexMap = [0, 1, 2,   0, 2, 3];
-
 	function IndexedQuadSet (executionContext)
 	{
 		X3DComposedGeometryNode .call (this, executionContext);
@@ -108,12 +105,18 @@ function (Fields,
 
 			this .set_index_ .addFieldInterest (this .index_);
 		},
-		getTriangleIndex: function (i)
+		getTriangleIndex: (function ()
 		{
-			var mod = i % 6;
+			// Define two triangles.
+			var indexMap = [0, 1, 2,   0, 2, 3];
 
-			return (i - mod) / 6 * 4 + indexMap [mod];
-		},
+			return function (i)
+			{
+				var mod = i % 6;
+
+				return (i - mod) / 6 * 4 + indexMap [mod];
+			};
+		})(),
 		getPolygonIndex: function (i)
 		{
 			return this .index_ [i];
