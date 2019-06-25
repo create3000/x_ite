@@ -119,24 +119,7 @@ function (Fields,
 				this .setVolume (0);
 				this .duration_changed_ = media .duration;
 
-				if (this .isActive_ .getValue ())
-				{
-					if (this .isPaused_ .getValue ())
-					{
-						this .set_pause ();
-					}
-					else
-					{
-						if (this .getLiveState ())
-							this .set_start ();
-						else
-							this .set_pause ();
-					}
-				}
-				else
-				{
-					this .set_stop ();
-				}
+				this .set_loop__ ();
 			}
 		},
 		getMedia: function ()

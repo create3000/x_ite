@@ -233,7 +233,7 @@ function (Fields,
 		},
 		do_start: function ()
 		{
-			if (this .isActive_ .getValue ())
+			if (! this .isActive_ .getValue ())
 			{
 				this .start         = this .getBrowser () .getCurrentTime ();
 				this .pauseInterval = 0;
