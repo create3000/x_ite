@@ -1,4 +1,4 @@
-/* X_ITE v4.5.7a-812 */
+/* X_ITE v4.5.7a-813 */
 
 (function () {
 
@@ -41923,7 +41923,7 @@ function (Fields,
 		},
 		do_start: function ()
 		{
-			if (this .isActive_ .getValue ())
+			if (! this .isActive_ .getValue ())
 			{
 				this .start         = this .getBrowser () .getCurrentTime ();
 				this .pauseInterval = 0;
@@ -112730,24 +112730,7 @@ function (Fields,
 				this .setVolume (0);
 				this .duration_changed_ = media .duration;
 
-				if (this .isActive_ .getValue ())
-				{
-					if (this .isPaused_ .getValue ())
-					{
-						this .set_pause ();
-					}
-					else
-					{
-						if (this .getLiveState ())
-							this .set_start ();
-						else
-							this .set_pause ();
-					}
-				}
-				else
-				{
-					this .set_stop ();
-				}
+				this .set_loop__ ();
 			}
 		},
 		getMedia: function ()

@@ -175,10 +175,6 @@ function (Fields,
 					this .media [0] .play ();
 				}
 			}
-			else
-			{
-				this .stop ();
-			}
 		},
 		set_pause: function ()
 		{

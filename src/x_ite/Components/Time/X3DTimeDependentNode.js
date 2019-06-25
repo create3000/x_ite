@@ -233,7 +233,7 @@ function (Fields,
 		},
 		do_start: function ()
 		{
-			if (this .isActive_ .getValue ())
+			if (! this .isActive_ .getValue ())
 			{
 				this .start         = this .getBrowser () .getCurrentTime ();
 				this .pauseInterval = 0;
@@ -244,20 +244,17 @@ function (Fields,
 
 				this .set_start ();
 
-				if (this .isActive_ .getValue ())
+				if (this .isLive () .getValue ())
 				{
-					if (this .isLive () .getValue ())
-					{
-						this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
-					}
-					else
-					{
-						this .disabled = true;
-						this .real_pause ();
-					}
-
-					this .elapsedTime_ = 0;
+					this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
 				}
+				else
+				{
+					this .disabled = true;
+					this .real_pause ();
+				}
+
+				this .elapsedTime_ = 0;
 			}
 		},
 		do_pause: function ()
