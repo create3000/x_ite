@@ -321,7 +321,8 @@ function (Fields,
 
 				this .isActive_ = false;
 
-				this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
+				if (this .isLive () .getValue ())
+					this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
 			}
 		},
 		timeout: function (callback)

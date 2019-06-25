@@ -1,4 +1,4 @@
-/* X_ITE v4.5.7a-813 */
+/* X_ITE v4.5.7a-814 */
 
 (function () {
 
@@ -41934,20 +41934,17 @@ function (Fields,
 
 				this .set_start ();
 
-				if (this .isActive_ .getValue ())
+				if (this .isLive () .getValue ())
 				{
-					if (this .isLive () .getValue ())
-					{
-						this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
-					}
-					else
-					{
-						this .disabled = true;
-						this .real_pause ();
-					}
-
-					this .elapsedTime_ = 0;
+					this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
 				}
+				else
+				{
+					this .disabled = true;
+					this .real_pause ();
+				}
+
+				this .elapsedTime_ = 0;
 			}
 		},
 		do_pause: function ()
@@ -42014,7 +42011,8 @@ function (Fields,
 
 				this .isActive_ = false;
 
-				this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
+				if (this .isLive () .getValue ())
+					this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
 			}
 		},
 		timeout: function (callback)
@@ -112730,7 +112728,24 @@ function (Fields,
 				this .setVolume (0);
 				this .duration_changed_ = media .duration;
 
-				this .set_loop__ ();
+				if (this .isActive_ .getValue ())
+				{
+					if (this .isPaused_ .getValue ())
+					{
+						this .set_pause ();
+					}
+					else
+					{
+						if (this .getLiveState ())
+							this .set_start ();
+						else
+							this .set_pause ();
+					}
+				}
+				else
+				{
+					this .set_stop ();
+				}
 			}
 		},
 		getMedia: function ()
@@ -112768,10 +112783,6 @@ function (Fields,
 					this .media [0] .currentTime = 0;
 					this .media [0] .play ();
 				}
-			}
-			else
-			{
-				this .stop ();
 			}
 		},
 		set_pause: function ()
