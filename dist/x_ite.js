@@ -1,4 +1,4 @@
-/* X_ITE v4.5.7a-811 */
+/* X_ITE v4.5.7a-812 */
 
 (function () {
 
@@ -41923,7 +41923,7 @@ function (Fields,
 		},
 		do_start: function ()
 		{
-			if (! this .isActive_ .getValue ())
+			if (this .isActive_ .getValue ())
 			{
 				this .start         = this .getBrowser () .getCurrentTime ();
 				this .pauseInterval = 0;
@@ -41934,17 +41934,20 @@ function (Fields,
 
 				this .set_start ();
 
-				if (this .isLive () .getValue ())
+				if (this .isActive_ .getValue ())
 				{
-					this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
-				}
-				else
-				{
-					this .disabled = true;
-					this .real_pause ();
-				}
+					if (this .isLive () .getValue ())
+					{
+						this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
+					}
+					else
+					{
+						this .disabled = true;
+						this .real_pause ();
+					}
 
-				this .elapsedTime_ = 0;
+					this .elapsedTime_ = 0;
+				}
 			}
 		},
 		do_pause: function ()
@@ -42011,8 +42014,7 @@ function (Fields,
 
 				this .isActive_ = false;
 
-				if (this .isLive () .getValue ())
-					this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
+				this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
 			}
 		},
 		timeout: function (callback)
@@ -112783,6 +112785,10 @@ function (Fields,
 					this .media [0] .currentTime = 0;
 					this .media [0] .play ();
 				}
+			}
+			else
+			{
+				this .stop ();
 			}
 		},
 		set_pause: function ()
