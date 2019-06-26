@@ -108,15 +108,21 @@ function (Fields,
 		{
 			return this .disabled;
 		},
-		getElapsedTime: function ()
-		{
-			return this .getBrowser () .getCurrentTime () - this .start - this .pauseInterval;
-		},
 		getLiveState: function ()
 		{
 			///  Determines the live state of this node.
 
 			return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this .isEvenLive_ .getValue ());
+		},
+		getElapsedTime: function ()
+		{
+			return this .getBrowser () .getCurrentTime () - this .start - this .pauseInterval;
+		},
+		resetElapsedTime: function ()
+		{
+			this .start         = this .getBrowser () .getCurrentTime ();
+			this .pause         = this .getBrowser () .getCurrentTime ();
+			this .pauseInterval = 0;
 		},
 		set_live__: function ()
 		{
@@ -235,8 +241,7 @@ function (Fields,
 		{
 			if (! this .isActive_ .getValue ())
 			{
-				this .start         = this .getBrowser () .getCurrentTime ();
-				this .pauseInterval = 0;
+				this .resetElapsedTime ();
 
 				// The event order below is very important.
 

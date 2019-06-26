@@ -166,7 +166,6 @@ function ($,
 				this .audio .unbind ("canplaythrough");
 				this .duration_changed_ = -1;
 				this .setLoadState (X3DConstants .FAILED_STATE);
-				this .stop ();
 				return;
 			}
 

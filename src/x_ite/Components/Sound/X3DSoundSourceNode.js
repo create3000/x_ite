@@ -119,6 +119,8 @@ function (Fields,
 				this .setVolume (0);
 				this .duration_changed_ = media .duration;
 
+				this .resetElapsedTime ();
+
 				if (this .isActive_ .getValue ())
 				{
 					if (this .isPaused_ .getValue ())
@@ -228,7 +230,8 @@ function (Fields,
 		{
 			this .set_ended ();
 
-			this .elapsedTime_ = this .getElapsedTime ();
+			if (this .media)
+				this .elapsedTime_ = this .getElapsedTime ();
 		},
 	});
 

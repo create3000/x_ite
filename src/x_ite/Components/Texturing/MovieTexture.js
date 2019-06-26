@@ -178,7 +178,6 @@ function ($,
 			   this .duration_changed_ = -1;
 				this .clearTexture ();
 				this .setLoadState (X3DConstants .FAILED_STATE);
-				this .stop ();
 				return;
 			}
 
