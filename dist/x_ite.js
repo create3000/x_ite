@@ -1,4 +1,4 @@
-/* X_ITE v4.5.7a-814 */
+/* X_ITE v4.5.7a-815 */
 
 (function () {
 
@@ -41798,15 +41798,21 @@ function (Fields,
 		{
 			return this .disabled;
 		},
-		getElapsedTime: function ()
-		{
-			return this .getBrowser () .getCurrentTime () - this .start - this .pauseInterval;
-		},
 		getLiveState: function ()
 		{
 			///  Determines the live state of this node.
 
 			return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this .isEvenLive_ .getValue ());
+		},
+		getElapsedTime: function ()
+		{
+			return this .getBrowser () .getCurrentTime () - this .start - this .pauseInterval;
+		},
+		resetElapsedTime: function ()
+		{
+			this .start         = this .getBrowser () .getCurrentTime ();
+			this .pause         = this .getBrowser () .getCurrentTime ();
+			this .pauseInterval = 0;
 		},
 		set_live__: function ()
 		{
@@ -41925,8 +41931,7 @@ function (Fields,
 		{
 			if (! this .isActive_ .getValue ())
 			{
-				this .start         = this .getBrowser () .getCurrentTime ();
-				this .pauseInterval = 0;
+				this .resetElapsedTime ();
 
 				// The event order below is very important.
 
@@ -112728,6 +112733,8 @@ function (Fields,
 				this .setVolume (0);
 				this .duration_changed_ = media .duration;
 
+				this .resetElapsedTime ();
+
 				if (this .isActive_ .getValue ())
 				{
 					if (this .isPaused_ .getValue ())
@@ -112837,7 +112844,8 @@ function (Fields,
 		{
 			this .set_ended ();
 
-			this .elapsedTime_ = this .getElapsedTime ();
+			if (this .media)
+				this .elapsedTime_ = this .getElapsedTime ();
 		},
 	});
 
@@ -113012,7 +113020,6 @@ function ($,
 				this .audio .unbind ("canplaythrough");
 				this .duration_changed_ = -1;
 				this .setLoadState (X3DConstants .FAILED_STATE);
-				this .stop ();
 				return;
 			}
 
@@ -113989,7 +113996,6 @@ function ($,
 			   this .duration_changed_ = -1;
 				this .clearTexture ();
 				this .setLoadState (X3DConstants .FAILED_STATE);
-				this .stop ();
 				return;
 			}
 
