@@ -78,6 +78,8 @@ function (Fields,
 
 		this .addType (X3DConstants .LOD);
 
+		console .log (executionContext .getSpecificationVersion ());
+
 		if (executionContext .getSpecificationVersion () == "2.0")
 			this .addAlias ("level", this .children_); // VRML2
 
@@ -122,7 +124,7 @@ function (Fields,
 			this .child = this .getChild (this .level_changed_ .getValue ());
 			this .set_cameraObjects__ ();
 		},
-		getBBox: function (bbox) 
+		getBBox: function (bbox)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
@@ -168,22 +170,22 @@ function (Fields,
 				if (this .range_ .length === 0)
 				{
 					var size = this .children_ .length;
-	
+
 					if (size < 2)
 						return 0;
-	
+
 					this .frameRate = ((FRAMES - 1) * this .frameRate + browser .currentFrameRate) / FRAMES;
-	
+
 					if (size === 2)
 						return (this .frameRate > FRAME_RATE_MAX) * 1;
-	
+
 					var fraction = 1 - Algorithm .clamp ((this .frameRate - FRAME_RATE_MIN) / (FRAME_RATE_MAX - FRAME_RATE_MIN), 0, 1);
 
 					return Math .min (Math .floor (fraction * size), size - 1);
 				}
-	
+
 				var distance = this .getDistance (modelViewMatrix);
-	
+
 				return Algorithm .upperBound (this .range_, 0, this .range_ .length, distance, Algorithm .less);
 			};
 		})(),
@@ -210,7 +212,7 @@ function (Fields,
 						if (this .getTransformSensors () .size)
 						{
 							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
-			
+
 							this .getTransformSensors () .forEach (function (transformSensorNode)
 							{
 								transformSensorNode .collect (bbox);
@@ -222,7 +224,7 @@ function (Fields,
 							var
 								browser          = renderObject .getBrowser (),
 								pickingHierarchy = browser .getPickingHierarchy ();
-		
+
 							pickingHierarchy .push (this);
 
 							child .traverse (type, renderObject);
@@ -239,22 +241,22 @@ function (Fields,
 							var
 								level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
 								currentLevel = this .level_changed_ .getValue ();
-	
+
 							if (this .forceTransitions_ .getValue ())
 							{
 								if (level > currentLevel)
 									level = currentLevel + 1;
-			
+
 								else if (level < currentLevel)
 									level = currentLevel - 1;
 							}
-		
+
 							if (level !== currentLevel)
 							{
 								this .level_changed_ = level;
-						
+
 								child = this .child = this .getChild (Math .min (level, this .children_ .length - 1));
-		
+
 								this .set_cameraObjects__ ();
 							}
 						}
@@ -278,5 +280,3 @@ function (Fields,
 
 	return LOD;
 });
-
-
