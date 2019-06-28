@@ -78,8 +78,6 @@ function (Fields,
 
 		this .addType (X3DConstants .LOD);
 
-		console .log (executionContext .getSpecificationVersion ());
-
 		if (executionContext .getSpecificationVersion () == "2.0")
 			this .addAlias ("level", this .children_); // VRML2
 
