@@ -1,4 +1,4 @@
-/* X_ITE v4.5.7-816 */
+/* X_ITE v4.5.8a-817 */
 
 (function () {
 
@@ -25135,7 +25135,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.5.7";
+	return "4.5.8a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -36991,7 +36991,7 @@ function (Fields,
 		Comment:     new RegExp ('#(.*?)(?=[\\n\\r])',   'gy'),
 
 		// Header
-		Header:	    new RegExp ("^#(VRML|X3D) V(.*?) (utf8)(?: (.*?))?[\\n\\r]", 'gy'),
+		Header:	    new RegExp ("^#(VRML|X3D) V(.*?) (utf8)(?:[ \\t]+(.*?))?[\\n\\r]", 'gy'),
 
 		// Keywords
 		AS:          new RegExp ('AS',          'gy'),
@@ -37182,14 +37182,14 @@ function (Fields,
 				line     = this .getLastLine (),
 				lastLine = this .getLastLine (),
 				linePos  = line .length - rest .length + 1;
-	
+
 			if (line .length > 80)
 			{
 				line     = line .substr (linePos - 40, 80);
 				lastLine = "";
 				linePos  = 40;
 			}
-	
+
 			// Format error
 
 			var message = "\n"
@@ -37256,11 +37256,11 @@ function (Fields,
 			{
 				if (!this .xml)
 					this .lines (this .result [1]);
-				
+
 				return true;
 			}
 
-			return false;	
+			return false;
 		},
 		lines: function (string)
 		{
@@ -37317,7 +37317,7 @@ function (Fields,
 			{
 				this .statements ();
 				this .popExecutionContext ();
-	
+
 				if (this .lastIndex < this .input .length)
 					throw new Error ("Unknown statement.");
 			}
@@ -37376,7 +37376,7 @@ function (Fields,
 					var componentNameIdCharacters = this .result [1];
 
 					this .comments ();
-		
+
 					if (Grammar .Colon .parse (this))
 					{
 						if (this .componentSupportLevel ())
@@ -37385,16 +37385,16 @@ function (Fields,
 
 							return this .getBrowser () .getComponent (componentNameIdCharacters, componentSupportLevel);
 						}
-		
+
 						throw new Error ("Expected a component support level.");
 					}
-		
+
 					throw new Error ("Expected a ':' after component name.");
 				}
-		
+
 				throw new Error ("Expected a component name.");
 			}
-		
+
 			return null;
 		},
 		componentSupportLevel: function ()
@@ -37409,17 +37409,17 @@ function (Fields,
 		unitStatement: function ()
 		{
 			this .comments ();
-		
+
 			if (Grammar .UNIT .parse (this))
 			{
 				if (this .categoryNameId ())
 				{
 					var categoryNameId = this .result [1];
-		
+
 					if (this .unitNameId ())
 					{
 						var unitNameId = this .result [1];
-		
+
 						if (this .unitConversionFactor ())
 						{
 							var unitConversionFactor = this .value;
@@ -37435,16 +37435,16 @@ function (Fields,
 							   return true;
 							}
 						}
-		
+
 						throw new Error ("Expected unit conversion factor.");
 					}
-		
+
 					throw new Error ("Expected unit name identificator.");
 				}
-		
+
 				throw new Error ("Expected category name identificator after UNIT statement.");
 			}
-		
+
 			return false;
 		},
 		unitConversionFactor: function ()
@@ -37465,7 +37465,7 @@ function (Fields,
 				if (this .metakey ())
 				{
 					var metakey = this .value;
-		
+
 					if (this .metavalue ())
 					{
 						var metavalue = this .value;
@@ -37473,13 +37473,13 @@ function (Fields,
 						this .getScene () .setMetaData (metakey, metavalue);
 						return true;
 					}
-		
+
 					throw new Error ("Expected metadata value.");
 				}
-		
+
 				throw new Error ("Expected metadata key.");
 			}
-		
+
 			return false;
 		},
 		metakey: function ()
@@ -37501,11 +37501,11 @@ function (Fields,
 					var
 						localNodeNameId    = this .result [1],
 						exportedNodeNameId = "";
-		
+
 					this .comments ();
-		
+
 					var node = this .getScene () .getLocalNode (localNodeNameId);
-		
+
 					if (Grammar .AS .parse (this))
 					{
 						if (this .exportedNodeNameId ())
@@ -37515,14 +37515,14 @@ function (Fields,
 					}
 					else
 						exportedNodeNameId = localNodeNameId;
-		
+
 					this .getScene () .updateExportedNode (exportedNodeNameId, node);
 					return true;
 				}
-		
+
 				throw new Error ("No name given after EXPORT.");
 			}
-		
+
 			return false;
 		},
 		importStatement: function ()
@@ -37536,9 +37536,9 @@ function (Fields,
 					var
 						inlineNodeNameId = this .result [1],
 						namedNode        = this .getExecutionContext () .getNamedNode (inlineNodeNameId);
-		
+
 					this .comments ();
-	
+
 					if (Grammar .Period .parse (this))
 					{
 						if (this .exportedNodeNameId ())
@@ -37546,9 +37546,9 @@ function (Fields,
 							var
 								exportedNodeNameId = this .result [1],
 								nodeNameId         = exportedNodeNameId;
-	
+
 							this .comments ();
-	
+
 							if (Grammar .AS .parse (this))
 							{
 								if (this .nodeNameId ())
@@ -37557,17 +37557,17 @@ function (Fields,
 								else
 									throw new Error ("No name given after AS.");
 							}
-	
+
 							this .getExecutionContext () .updateImportedNode (namedNode, exportedNodeNameId, nodeNameId);
 							return true;
 						}
-	
+
 						throw new Error ("Expected exported node name.");
 					}
-	
+
 					throw new Error ("Expected a '.' after exported node name.");
 				}
-		
+
 				throw new Error ("No name given after IMPORT statement.");
 			}
 			return false;
@@ -37581,13 +37581,13 @@ function (Fields,
 		{
 			if (this .protoStatement ())
 				return true;
-		
+
 			if (this .routeStatement ())
 				return true;
-		
+
 			if (this .importStatement ())
 				return true;
-		
+
 			if (this .exportStatement ())
 				return true;
 
@@ -37630,10 +37630,10 @@ function (Fields,
 		{
 			if (this .proto ())
 				return true;
-		
+
 			if (this .externproto ())
 				return true;
-		
+
 			return false;
 		},
 		protoStatements: function ()
@@ -37644,25 +37644,25 @@ function (Fields,
 		proto: function ()
 		{
 			this .comments ();
-		
+
 			if (Grammar .PROTO .parse (this))
 			{
 				if (this .nodeTypeId ())
 				{
 					var nodeTypeId = this .result [1];
-		
+
 					this .comments ();
-		
+
 					if (Grammar .OpenBracket .parse (this))
 					{
 						var interfaceDeclarations = this .interfaceDeclarations ();
-		
+
 						this .comments ();
-		
+
 						if (Grammar .CloseBracket .parse (this))
 						{
 							this .comments ();
-		
+
 							if (Grammar .OpenBrace .parse (this))
 							{
 								var proto = new X3DProtoDeclaration (this .getExecutionContext ());
@@ -37675,13 +37675,13 @@ function (Fields,
 								}
 
 								this .pushExecutionContext (proto);
-		
+
 								this .protoBody ();
-		
+
 								this .popExecutionContext ();
-		
+
 								this .comments ();
-		
+
 								if (Grammar .CloseBrace .parse (this))
 								{
 									proto .setName (nodeTypeId);
@@ -37690,7 +37690,7 @@ function (Fields,
 									this .getExecutionContext () .protos .add (nodeTypeId, proto);
 									return true;
 								}
-	
+
 								throw new Error ("Expected a '}' at the end of PROTO body.");
 							}
 
@@ -37722,7 +37722,7 @@ function (Fields,
 		rootNodeStatement: function ()
 		{
 			this .comments ();
-		
+
 			if (Grammar .DEF .parse (this))
 			{
 				if (this .nodeNameId ())
@@ -37736,7 +37736,7 @@ function (Fields,
 
 					throw new Error ("Expected node type name after DEF.");
 				}
-	
+
 				throw new Error ("No name given after DEF.");
 			}
 
@@ -37765,38 +37765,38 @@ function (Fields,
 		restrictedInterfaceDeclaration: function ()
 		{
 			this .comments ();
-		
+
 			if (Grammar .inputOnly .parse (this) || Grammar .eventIn .parse (this))
 			{
 				if (this .fieldType ())
 				{
 					var fieldType = this .result [1];
-		
+
 					if (this .inputOnlyId ())
 					{
 						var
 							fieldId = this .result [1],
 							field = new (this [fieldType] .constructor) ();
-						
+
 						field .setAccessType (X3DConstants .inputOnly);
 						field .setName (fieldId);
 						return field;
 					}
-		
+
 					throw new Error ("Expected a name for field.");
 				}
 
 				this .Id ()
-		
+
 				throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
 			}
-		
+
 			if (Grammar .outputOnly .parse (this) || Grammar .eventOut .parse (this))
 			{
 				if (this .fieldType ())
 				{
 					var fieldType = this .result [1];
-		
+
 					if (this .outputOnlyId ())
 					{
 						var
@@ -37807,83 +37807,83 @@ function (Fields,
 						field .setName (fieldId);
 						return field;
 					}
-		
+
 					throw new Error ("Expected a name for field.");
 				}
-		
+
 				this .Id ()
-		
+
 				throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
 			}
-		
+
 			if (Grammar .initializeOnly .parse (this) || Grammar .field .parse (this))
 			{
 				if (this .fieldType ())
 				{
 					var fieldType = this .result [1];
-		
+
 					if (this .initializeOnlyId ())
 					{
 						var
 							fieldId = this .result [1],
 							field = new (this [fieldType] .constructor) ();
-		
+
 						if (this .fieldValue (field))
 						{
 							field .setAccessType (X3DConstants .initializeOnly);
 							field .setName (fieldId);
 							return field;
 						}
-		
+
 						throw new Error ("Couldn't read value for field '" + fieldId + "'.");
 					}
-		
+
 					throw new Error ("Expected a name for field.");
 				}
-		
+
 				this .Id ()
-		
+
 				throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
 			}
-		
+
 			return null;
 		},
 		interfaceDeclaration: function ()
 		{
 			var field = this .restrictedInterfaceDeclaration ();
-		
+
 			if (field)
 				return field;
 
 			this .comments ();
-		
+
 			if (Grammar .inputOutput .parse (this) || Grammar .exposedField .parse (this))
 			{
 				if (this .fieldType ())
 				{
 					var fieldType = this .result [1];
-		
+
 					if (this .inputOutputId ())
 					{
 						var
 							fieldId = this .result [1],
 							field   = new (this [fieldType] .constructor) ();
-		
+
 						if (this .fieldValue (field))
 						{
 							field .setAccessType (X3DConstants .inputOutput);
 							field .setName (fieldId);
 							return field;
 						}
-		
+
 						throw new Error ("Couldn't read value for field '" + fieldId + "'.");
 					}
-		
+
 					throw new Error ("Expected a name for field.");
 				}
-	
+
 				this .Id ();
-		
+
 				throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
 			}
 
@@ -37892,21 +37892,21 @@ function (Fields,
 		externproto: function ()
 		{
 			this .comments ();
-		
+
 			if (Grammar .EXTERNPROTO .parse (this))
 			{
 				if (this .nodeTypeId ())
 				{
 					var nodeTypeId = this .result [1];
-		
+
 					this .comments ();
-		
+
 					if (Grammar .OpenBracket .parse (this))
 					{
 						var externInterfaceDeclarations = this .externInterfaceDeclarations ();
-		
+
 						this .comments ();
-		
+
 						if (Grammar .CloseBracket .parse (this))
 						{
 							if (this .URLList (this .MFString))
@@ -37919,27 +37919,27 @@ function (Fields,
 
 									externproto .addUserDefinedField (field .getAccessType (), field .getName (), field);
 								}
-		
+
 								externproto .setName (nodeTypeId);
 								externproto .url_ = this .MFString;
 								externproto .setup ();
 
-								this .getExecutionContext () .externprotos .add (nodeTypeId, externproto);	
+								this .getExecutionContext () .externprotos .add (nodeTypeId, externproto);
 								return true;
 							}
-		
+
 							throw new Error ("Expected a URL list after EXTERNPROTO interface declaration '" + nodeTypeId + "'.");
 						}
-		
+
 						throw new Error ("Expected a ']' at the end of EXTERNPROTO interface declaration.");
 					}
-		
+
 					throw new Error ("Expected a '[' at the beginning of EXTERNPROTO interface declaration.");
 				}
-		
+
 				throw new Error ("Invalid EXTERNPROTO definition name.");
 			}
-		
+
 			return false;
 		},
 		externInterfaceDeclarations: function ()
@@ -37951,7 +37951,7 @@ function (Fields,
 			while (field)
 			{
 				externInterfaceDeclarations .push (field);
-				
+
 				field = this .externInterfaceDeclaration ();
 			}
 
@@ -37960,38 +37960,38 @@ function (Fields,
 		externInterfaceDeclaration: function ()
 		{
 			this .comments ();
-		
+
 			if (Grammar .inputOnly .parse (this) || Grammar .eventIn .parse (this))
 			{
 				if (this .fieldType ())
 				{
 					var fieldType = this .result [1];
-		
+
 					if (this .inputOnlyId ())
 					{
 						var
 							fieldId = this .result [1],
 							field = new (this [fieldType] .constructor) ();
-						
+
 						field .setAccessType (X3DConstants .inputOnly);
 						field .setName (fieldId);
 						return field;
 					}
-		
+
 					throw new Error ("Expected a name for field.");
 				}
 
 				this .Id ()
-		
+
 				throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
 			}
-		
+
 			if (Grammar .outputOnly .parse (this) || Grammar .eventOut .parse (this))
 			{
 				if (this .fieldType ())
 				{
 					var fieldType = this .result [1];
-		
+
 					if (this .outputOnlyId ())
 					{
 						var
@@ -38002,62 +38002,62 @@ function (Fields,
 						field .setName (fieldId);
 						return field;
 					}
-		
+
 					throw new Error ("Expected a name for field.");
 				}
-		
+
 				this .Id ()
-		
+
 				throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
 			}
-		
+
 			if (Grammar .initializeOnly .parse (this) || Grammar .field .parse (this))
 			{
 				if (this .fieldType ())
 				{
 					var fieldType = this .result [1];
-		
+
 					if (this .initializeOnlyId ())
 					{
 						var
 							fieldId = this .result [1],
 							field = new (this [fieldType] .constructor) ();
-		
+
 						field .setAccessType (X3DConstants .initializeOnly);
 						field .setName (fieldId);
 						return field;
 					}
-		
+
 					throw new Error ("Expected a name for field.");
 				}
-		
+
 				this .Id ()
-		
+
 				throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
 			}
-			
+
 			if (Grammar .inputOutput .parse (this) || Grammar .exposedField .parse (this))
 			{
 				if (this .fieldType ())
 				{
 					var fieldType = this .result [1];
-		
+
 					if (this .inputOutputId ())
 					{
 						var
 							fieldId = this .result [1],
 							field   = new (this [fieldType] .constructor) ();
-		
+
 						field .setAccessType (X3DConstants .inputOutput);
 						field .setName (fieldId);
 						return field;
 					}
-	
+
 					throw new Error ("Expected a name for field.");
 				}
-	
+
 				this .Id ()
-		
+
 				throw new Error ("Unknown event or field type: '" + this .result [1] + "'.");
 			}
 
@@ -38070,7 +38070,7 @@ function (Fields,
 		routeStatement: function ()
 		{
 			this .comments ();
-		
+
 			if (Grammar .ROUTE .parse (this))
 			{
 				if (this .nodeNameId ())
@@ -38080,15 +38080,15 @@ function (Fields,
 						fromNode   = this .getExecutionContext () .getLocalNode (fromNodeId);
 
 					this .comments ();
-		
+
 					if (Grammar .Period .parse (this))
 					{
 						if (this .outputOnlyId ())
 						{
 							var eventOutId = this .result [1];
-	
+
 							this .comments ();
-		
+
 							if (Grammar .TO .parse (this))
 							{
 								if (this .nodeNameId ())
@@ -38117,28 +38117,28 @@ function (Fields,
 												return true;
 											}
 										}
-		
+
 										throw new Error ("Bad ROUTE specification: Expected a field name.");
 									}
-		
+
 									throw new Error ("Bad ROUTE specification: Expected a '.' after node name.");
 								}
-		
+
 								throw new Error ("Bad ROUTE specification: Expected a node name.");
 							}
-		
+
 							throw new Error ("Bad ROUTE specification: Expected a 'TO'.");
 						}
-		
+
 						throw new Error ("Bad ROUTE specification: Expected a field name.");
 					}
-		
+
 					throw new Error ("Bad ROUTE specification: Expected a '.' after node name.");
 				}
-		
+
 				throw new Error ("Bad ROUTE specification: Expected a node name.");
 			}
-		
+
 			return false;
 		},
 		node: function (nodeNameId)
@@ -38170,31 +38170,31 @@ function (Fields,
 
 					this .getExecutionContext () .updateNamedNode (nodeNameId, baseNode);
 				}
-		
+
 				this .comments ();
-		
+
 				if (Grammar .OpenBrace .parse (this))
 				{
 					if (baseNode .hasUserDefinedFields ())
 						this .scriptBody (baseNode);
-		
+
 					else
 						this .nodeBody (baseNode);
-		
+
 					this .comments ();
-		
+
 					if (Grammar .CloseBrace .parse (this))
 					{
 						this .getExecutionContext () .addUninitializedNode (baseNode);
 						return baseNode;
 					}
-		
+
 					throw new Error ("Expected '}' at the end of node body.");
 				}
-		
+
 				throw new Error ("Expected '{' at the beginning of node body.");
 			}
-		
+
 			return false;
 		},
 		scriptBody: function (baseNode)
@@ -38215,19 +38215,19 @@ function (Fields,
 			if (this .Id ())
 			{
 				var accessType = this .accessTypes [this .result [1]];
-		
+
 				if (accessType)
 				{
 					if (this .fieldType ())
 					{
 						var fieldType = this .result [1];
-		
+
 						if (this .Id ())
 						{
 							var fieldId = this .result [1];
 
 							this .comments ();
-		
+
 							if (Grammar .IS .parse (this))
 							{
 								if (this .isInsideProtoDefinition ())
@@ -38235,7 +38235,7 @@ function (Fields,
 									if (this .Id ())
 									{
 										var isId = this .result [1];
-		
+
 										try
 										{
 											var reference = this .getExecutionContext () .getField (isId);
@@ -38243,12 +38243,12 @@ function (Fields,
 										catch (error)
 										{
 											this .exception ("No such event or field '" + isId + "' inside PROTO " + this .getExecutionContext () .getName () + " interface declaration.");
-											
+
 											return true;
 										}
-		
+
 										var supportedField = this [fieldType];
-		
+
 										if (supportedField .getType () === reference .getType ())
 										{
 											if (reference .isReference (accessType))
@@ -38256,7 +38256,7 @@ function (Fields,
 												try
 												{
 													var field = baseNode .getField (fieldId);
-		
+
 													if (reference .getType () === field .getType ())
 													{
 														if (accessType === field .getAccessType ())
@@ -38269,7 +38269,7 @@ function (Fields,
 														else
 														{
 															this .exception ("Field '" + fieldId + "' must have access type " + accessTypeToString (field .getAccessType ()) + ".");
-	
+
 															return true;
 														}
 													}
@@ -38280,20 +38280,20 @@ function (Fields,
 												{
 													var field = this .createUserDefinedField (baseNode, accessType, fieldId, supportedField);
 												}
-		
+
 												field .addReference (reference);
 												return true;
 											}
-		
+
 											throw new Error ("Field '" + fieldId + "' and '" + reference .getName () + "' in PROTO '" + this .getExecutionContext () .getName () + "' are incompatible as an IS mapping.");
 										}
-		
+
 										throw new Error ("Field '" + fieldId + "' and '" + reference .getName () + "' in PROTO '" + this .getExecutionContext () .getName () + "' have different types.");
 									}
-		
+
 									throw new Error ("No name give after IS statement.");
 								}
-		
+
 								throw new Error ("IS statement outside PROTO definition.");
 							}
 						}
@@ -38308,7 +38308,7 @@ function (Fields,
 //			this .lineNumber = lineNumber;
 
 			var field = this .interfaceDeclaration ();
-		
+
 			if (field)
 			{
 				try
@@ -38316,7 +38316,7 @@ function (Fields,
 					if (field .getAccessType () === X3DConstants .inputOutput)
 					{
 						var existingField = baseNode .getField (field .getName ());
-		
+
 						if (existingField .getAccessType () === X3DConstants .inputOutput)
 						{
 							if (field .getType () === existingField .getType ())
@@ -38334,7 +38334,7 @@ function (Fields,
 				baseNode .addUserDefinedField (field .getAccessType (), field .getName (), field);
 				return true;
 			}
-		
+
 			return this .nodeBodyElement (baseNode);
 		},
 		createUserDefinedField: function (baseNode, accessType, fieldId, supportedField)
@@ -38354,10 +38354,10 @@ function (Fields,
 		{
 			if (this .protoStatement ())
 				return true;
-		
+
 			if (this .routeStatement ())
 				return true;
-		
+
 			if (this .Id ())
 			{
 				var fieldId = this .result [1];
@@ -38370,9 +38370,9 @@ function (Fields,
 				{
 					throw new Error ("Unknown field '" + fieldId + "' in class '" + baseNode .getTypeName () + "'.");
 				}
-		
+
 				this .comments ();
-		
+
 				if (Grammar .IS .parse (this))
 				{
 					if (this .isInsideProtoDefinition ())
@@ -38380,7 +38380,7 @@ function (Fields,
 						if (this .Id ())
 						{
 							var isId = this .result [1];
-		
+
 							try
 							{
 								var reference = this .getExecutionContext () .getField (isId);
@@ -38388,10 +38388,10 @@ function (Fields,
 							catch (error)
 							{
 								this .exception ("No such event or field '" + isId + "' inside PROTO " + this .getExecutionContext () .getName ());
-		
+
 								return true;
 							}
-		
+
 							if (field .getType () === reference .getType ())
 							{
 								if (reference .isReference (field .getAccessType ()))
@@ -38399,19 +38399,19 @@ function (Fields,
 									field .addReference (reference);
 									return true;
 								}
-		
+
 								throw new Error ("Field '" + field .getName () + "' and '" + reference .getName () + "' in PROTO " + this .getExecutionContext () . getName () + " are incompatible as an IS mapping.");
 							}
-		
+
 							throw new Error ("Field '" + field .getName () + "' and '" + reference .getName () + "' in PROTO " + this .getExecutionContext () .getName () + " have different types.");
 						}
-		
+
 						throw new Error("No name give after IS statement.");
 					}
-		
+
 					throw new Error ("IS statement outside PROTO definition.");
 				}
-		
+
 				if (field .isInitializable ())
 				{
 					if (this .fieldValue (field))
@@ -38419,10 +38419,10 @@ function (Fields,
 
 					throw new Error ("Couldn't read value for field '" + fieldId + "'.");
 				}
-		
+
 				throw new Error ("Couldn't assign value to " + accessTypeToString (field .getAccessType ()) + " field '" + fieldId + "'.");
 			}
-		
+
 			return false;
 		},
 		profileNameId: function () { return this .Id (); },
@@ -38462,7 +38462,7 @@ function (Fields,
 		double: function ()
 		{
 			this .comments ();
-			
+
 			if (Grammar .double .parse (this))
 			{
 				this .value = parseFloat (this .result [1]);
@@ -38542,7 +38542,7 @@ function (Fields,
 			{
 				field .push (this .SFBool);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -38573,11 +38573,11 @@ function (Fields,
 			if (this .double ())
 			{
 				var r = this .value;
-				
+
 				if (this .double ())
 				{
 					var g = this .value;
-					
+
 					if (this .double ())
 					{
 						var b = this .value;
@@ -38598,7 +38598,7 @@ function (Fields,
 			{
 				field .push (this .SFColor);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -38629,11 +38629,11 @@ function (Fields,
 			if (this .double ())
 			{
 				var r = this .value;
-				
+
 				if (this .double ())
 				{
 					var g = this .value;
-					
+
 					if (this .double ())
 					{
 						var b = this .value;
@@ -38659,7 +38659,7 @@ function (Fields,
 			{
 				field .push (this .SFColorRGBA);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -38705,7 +38705,7 @@ function (Fields,
 			{
 				field .push (this .SFDouble);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -38747,7 +38747,7 @@ function (Fields,
 			{
 				field .push (this .SFFloat);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -38784,7 +38784,7 @@ function (Fields,
 				if (this .int32 ())
 				{
 					var height = this .value;
-					
+
 					if (this .int32 ())
 					{
 						var
@@ -38823,7 +38823,7 @@ function (Fields,
 			{
 				field .push (this .SFImage);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -38867,7 +38867,7 @@ function (Fields,
 			{
 				field .push (this .SFInt32);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -38892,17 +38892,17 @@ function (Fields,
 			{
 				field .push (this .SFInt32);
 			}
-		},			
+		},
 		sfmatrix3dValue: function (field)
 		{
 			if (this .double ())
 			{
 				var m00 = this .value;
-				
+
 				if (this .double ())
 				{
 					var m01 = this .value;
-					
+
 					if (this .double ())
 					{
 						var m02 = this .value;
@@ -38910,11 +38910,11 @@ function (Fields,
 							if (this .double ())
 							{
 								var m10 = this .value;
-								
+
 								if (this .double ())
 								{
 									var m11 = this .value;
-									
+
 									if (this .double ())
 									{
 										var m12 = this .value;
@@ -38922,11 +38922,11 @@ function (Fields,
 										if (this .double ())
 										{
 											var m20 = this .value;
-											
+
 											if (this .double ())
 											{
 												var m21 = this .value;
-												
+
 												if (this .double ())
 												{
 													var m22 = this .value;
@@ -38943,8 +38943,8 @@ function (Fields,
 						}
 					}
 				}
-			}								
-							
+			}
+
 			return false;
 		},
 		mfmatrix3dValue: function (field)
@@ -38955,7 +38955,7 @@ function (Fields,
 			{
 				field .push (this .SFMatrix3d);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -38993,7 +38993,7 @@ function (Fields,
 			{
 				field .push (this .SFMatrix3f);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -39024,11 +39024,11 @@ function (Fields,
 			if (this .double ())
 			{
 				var m00 = this .value;
-				
+
 				if (this .double ())
 				{
 					var m01 = this .value;
-					
+
 					if (this .double ())
 					{
 						var m02 = this .value;
@@ -39040,11 +39040,11 @@ function (Fields,
 							if (this .double ())
 							{
 								var m10 = this .value;
-								
+
 								if (this .double ())
 								{
 									var m11 = this .value;
-									
+
 									if (this .double ())
 									{
 										var m12 = this .value;
@@ -39056,11 +39056,11 @@ function (Fields,
 											if (this .double ())
 											{
 												var m20 = this .value;
-												
+
 												if (this .double ())
 												{
 													var m21 = this .value;
-													
+
 													if (this .double ())
 													{
 														var m22 = this .value;
@@ -39072,11 +39072,11 @@ function (Fields,
 															if (this .double ())
 															{
 																var m30 = this .value;
-																
+
 																if (this .double ())
 																{
 																	var m31 = this .value;
-																	
+
 																	if (this .double ())
 																	{
 																		var m32 = this .value;
@@ -39105,8 +39105,8 @@ function (Fields,
 						}
 					}
 				}
-			}								
-							
+			}
+
 			return false;
 		},
 		mfmatrix4dValue: function (field)
@@ -39117,7 +39117,7 @@ function (Fields,
 			{
 				field .push (this .SFMatrix4d);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -39155,7 +39155,7 @@ function (Fields,
 			{
 				field .push (this .SFMatrix4f);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -39203,7 +39203,7 @@ function (Fields,
 			{
 				field .push (node);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -39222,11 +39222,11 @@ function (Fields,
 		nodeStatements: function (field)
 		{
 			var node = this .nodeStatement ();
-		
+
 			while (node !== false)
 			{
 				field .push (node);
-				
+
 				node = this .nodeStatement ();
 			}
 		},
@@ -39235,11 +39235,11 @@ function (Fields,
 			if (this .double ())
 			{
 				var x = this .value;
-				
+
 				if (this .double ())
 				{
 					var y = this .value;
-					
+
 					if (this .double ())
 					{
 						var z = this .value;
@@ -39265,7 +39265,7 @@ function (Fields,
 			{
 				field .push (this .SFRotation);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -39309,7 +39309,7 @@ function (Fields,
 			{
 				field .push (this .SFString);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -39347,7 +39347,7 @@ function (Fields,
 			{
 				field .push (this .SFTime);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -39378,7 +39378,7 @@ function (Fields,
 			if (this .double ())
 			{
 				var x = this .value;
-				
+
 				if (this .double ())
 				{
 					var
@@ -39403,7 +39403,7 @@ function (Fields,
 			{
 				field .push (this .SFVec2d);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -39445,7 +39445,7 @@ function (Fields,
 			{
 				field .push (this .SFVec2f);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -39478,11 +39478,11 @@ function (Fields,
 			if (this .double ())
 			{
 				var x = this .value;
-				
+
 				if (this .double ())
 				{
 					var y = this .value;
-					
+
 					if (this .double ())
 					{
 						var
@@ -39509,7 +39509,7 @@ function (Fields,
 			{
 				field .push (this .SFVec3d);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -39551,7 +39551,7 @@ function (Fields,
 			{
 				field .push (this .SFVec3f);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -39584,11 +39584,11 @@ function (Fields,
 			if (this .double ())
 			{
 				var x = this .value;
-				
+
 				if (this .double ())
 				{
 					var y = this .value;
-					
+
 					if (this .double ())
 					{
 						var z = this .value;
@@ -39621,7 +39621,7 @@ function (Fields,
 			{
 				field .push (this .SFVec4d);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -39663,7 +39663,7 @@ function (Fields,
 			{
 				field .push (this .SFVec4f);
 				return true;
-			}			
+			}
 
 			if (Grammar .OpenBracket .parse (this))
 			{
@@ -105009,7 +105009,7 @@ function (Fields,
 			this .child = this .getChild (this .level_changed_ .getValue ());
 			this .set_cameraObjects__ ();
 		},
-		getBBox: function (bbox) 
+		getBBox: function (bbox)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
@@ -105055,22 +105055,22 @@ function (Fields,
 				if (this .range_ .length === 0)
 				{
 					var size = this .children_ .length;
-	
+
 					if (size < 2)
 						return 0;
-	
+
 					this .frameRate = ((FRAMES - 1) * this .frameRate + browser .currentFrameRate) / FRAMES;
-	
+
 					if (size === 2)
 						return (this .frameRate > FRAME_RATE_MAX) * 1;
-	
+
 					var fraction = 1 - Algorithm .clamp ((this .frameRate - FRAME_RATE_MIN) / (FRAME_RATE_MAX - FRAME_RATE_MIN), 0, 1);
 
 					return Math .min (Math .floor (fraction * size), size - 1);
 				}
-	
+
 				var distance = this .getDistance (modelViewMatrix);
-	
+
 				return Algorithm .upperBound (this .range_, 0, this .range_ .length, distance, Algorithm .less);
 			};
 		})(),
@@ -105097,7 +105097,7 @@ function (Fields,
 						if (this .getTransformSensors () .size)
 						{
 							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
-			
+
 							this .getTransformSensors () .forEach (function (transformSensorNode)
 							{
 								transformSensorNode .collect (bbox);
@@ -105109,7 +105109,7 @@ function (Fields,
 							var
 								browser          = renderObject .getBrowser (),
 								pickingHierarchy = browser .getPickingHierarchy ();
-		
+
 							pickingHierarchy .push (this);
 
 							child .traverse (type, renderObject);
@@ -105126,22 +105126,22 @@ function (Fields,
 							var
 								level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
 								currentLevel = this .level_changed_ .getValue ();
-	
+
 							if (this .forceTransitions_ .getValue ())
 							{
 								if (level > currentLevel)
 									level = currentLevel + 1;
-			
+
 								else if (level < currentLevel)
 									level = currentLevel - 1;
 							}
-		
+
 							if (level !== currentLevel)
 							{
 								this .level_changed_ = level;
-						
+
 								child = this .child = this .getChild (Math .min (level, this .children_ .length - 1));
-		
+
 								this .set_cameraObjects__ ();
 							}
 						}
@@ -105165,8 +105165,6 @@ function (Fields,
 
 	return LOD;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
