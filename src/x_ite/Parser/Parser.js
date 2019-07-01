@@ -176,7 +176,7 @@ function (Fields,
 		Comment:     new RegExp ('#(.*?)(?=[\\n\\r])',   'gy'),
 
 		// Header
-		Header:	    new RegExp ("^#(VRML|X3D) V(.*?) (utf8)(?:[ \\t]+(.*?))?[\\n\\r]", 'gy'),
+		Header:	    new RegExp ("^#(VRML|X3D) V(.*?) (utf8)(?:[ \\t]+(.*?))?[ \\t]*[\\n\\r]", 'gy'),
 
 		// Keywords
 		AS:          new RegExp ('AS',          'gy'),
