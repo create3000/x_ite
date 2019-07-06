@@ -636,7 +636,9 @@ getFogInterpolant ()
 {
 if (x3d_Fog .type == x3d_None)
 return 1.0;
-float visibilityRange = x3d_Fog .fogCoord ? fogDepth : x3d_Fog .visibilityRange;
+if (x3d_Fog .fogCoord)
+return clamp (1.0 - fogDepth, 0.0, 1.0);
+float visibilityRange = x3d_Fog .visibilityRange;
 if (visibilityRange <= 0.0)
 return 1.0;
 float dV = length (x3d_Fog .matrix * vertex);
