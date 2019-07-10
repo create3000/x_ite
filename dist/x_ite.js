@@ -1,4 +1,4 @@
-/* X_ITE v4.5.9a-820 */
+/* X_ITE v4.5.9a-821 */
 
 (function () {
 
@@ -40339,11 +40339,11 @@ function ($,
 				element             = this .getElement () .get (0),
 				browserEventHandler = element [name];
 
-			if (browserEventHandler)
-				browserEventHandler .call (element);
-
 			if (window .jQuery)
 				window .jQuery (element) .trigger (name .substr (2));
+
+			else if (browserEventHandler)
+				browserEventHandler .call (element);
 		},
 		getShiftKey: function ()
 		{
