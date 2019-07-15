@@ -1,4 +1,4 @@
-/* X_ITE v4.5.9-822 */
+/* X_ITE v4.5.10a-823 */
 
 (function () {
 
@@ -25135,7 +25135,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.5.9";
+	return "4.5.10a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -107444,16 +107444,6 @@ function (Vector3)
 {
 "use strict";
 
-	var
-		L  = new Vector3 (0, 0, 0),
-		AB = new Vector3 (0, 0, 0),
-		AC = new Vector3 (0, 0, 0),
-		BC = new Vector3 (0, 0, 0),
-		CA = new Vector3 (0, 0, 0),
-		Q1 = new Vector3 (0, 0, 0),
-		Q2 = new Vector3 (0, 0, 0),
-		Q3 = new Vector3 (0, 0, 0);
-
 	function Sphere3 (radius, center)
 	{
 		this .radius = radius;
@@ -107470,103 +107460,132 @@ function (Vector3)
 		},
 		intersectsLine: function (line, intersection1, intersection2)
 		{
-			L .assign (this .center) .subtract (line .point);
-
-			var tca = Vector3 .dot (L, line .direction);
-
-			if (tca < 0)
-				// there is no intersection
-				return false;
+			// https://github.com/Alexpux/Coin3D/blob/master/src/base/SbSphere.cpp
 
 			var
-				d2 = Vector3 .dot (L, L) - Math .pow (tca, 2),
-				r2 = Math .pow (this .radius, 2);
-
-			if (d2 > r2)
-				return false;
-
-			var thc = Math .sqrt (r2 - d2);
+				linepos = line .point,
+				linedir = line .direction;
 
 			var
-				t1 = tca - thc,
-				t2 = tca + thc;
+				scenter = this .center,
+				r       = this .radius;
 
-			intersection1 .assign (line .direction) .multiply (t1) .add (line .point);
-			intersection2 .assign (line .direction) .multiply (t2) .add (line .point);
+			var
+				b = 2 * (linepos .dot (linedir) - scenter .dot (linedir)),
+				c = (linepos .x * linepos .x + linepos .y * linepos .y + linepos .z * linepos .z) +
+			       (scenter .x * scenter .x + scenter .y * scenter .y + scenter .z * scenter .z) -
+			       2 * linepos .dot (scenter) - r * r;
+
+			var core = b * b - 4 * c;
+
+			if (core >= 0)
+			{
+				var
+					t1 = (-b + Math .sqrt (core)) / 2,
+					t2 = (-b - Math .sqrt (core)) / 2;
+
+				if (t1 > t2)
+				{
+					var tmp = t1;
+					t1 = t2;
+					t2 = tmp;
+				}
+
+				intersection1 .assign (linedir) .multiply (t1) .add (linepos);
+				intersection2 .assign (linedir) .multiply (t2) .add (linepos);
+
+				return true;
+			}
+			else
+			{
+				return false;
+			}
 
 			return true;
 		},
-		intersectsTriangle: function (A, B, C)
+		intersectsTriangle: (function ()
 		{
 			var
-				P = this .center,
-				r = this .radius;
+				AB = new Vector3 (0, 0, 0),
+				AC = new Vector3 (0, 0, 0),
+				BC = new Vector3 (0, 0, 0),
+				CA = new Vector3 (0, 0, 0),
+				Q1 = new Vector3 (0, 0, 0),
+				Q2 = new Vector3 (0, 0, 0),
+				Q3 = new Vector3 (0, 0, 0);
 
-			A .subtract (P);
-			B .subtract (P);
-			C .subtract (P);
+			return function (A, B, C)
+			{
+				var
+					P = this .center,
+					r = this .radius;
 
-			// Testing if sphere lies outside the triangle plane.
+				A .subtract (P);
+				B .subtract (P);
+				C .subtract (P);
 
-			AB .assign (B) .subtract (A);
-			AC .assign (C) .subtract (A);
+				// Testing if sphere lies outside the triangle plane.
 
-			var
-				rr   = r * r,
-				V    = AB .cross (AC),
-				d    = Vector3 .dot (A, V),
-				e    = Vector3 .dot (V, V),
-				sep1 = d * d > rr * e;
+				AB .assign (B) .subtract (A);
+				AC .assign (C) .subtract (A);
 
-			if (sep1)
-				return false;
+				var
+					rr   = r * r,
+					V    = AB .cross (AC),
+					d    = Vector3 .dot (A, V),
+					e    = Vector3 .dot (V, V),
+					sep1 = d * d > rr * e;
 
-			// Testing if sphere lies outside a triangle vertex.
-			var
-				aa   = Vector3 .dot (A, A),
-				ab   = Vector3 .dot (A, B),
-				ac   = Vector3 .dot (A, C),
-				bb   = Vector3 .dot (B, B),
-				bc   = Vector3 .dot (B, C),
-				cc   = Vector3 .dot (C, C),
-				sep2 = (aa > rr) && (ab > aa) && (ac > aa),
-				sep3 = (bb > rr) && (ab > bb) && (bc > bb),
-				sep4 = (cc > rr) && (ac > cc) && (bc > cc);
+				if (sep1)
+					return false;
 
-			if (sep2 || sep3 || sep4)
-				return false;
+				// Testing if sphere lies outside a triangle vertex.
+				var
+					aa   = Vector3 .dot (A, A),
+					ab   = Vector3 .dot (A, B),
+					ac   = Vector3 .dot (A, C),
+					bb   = Vector3 .dot (B, B),
+					bc   = Vector3 .dot (B, C),
+					cc   = Vector3 .dot (C, C),
+					sep2 = (aa > rr) && (ab > aa) && (ac > aa),
+					sep3 = (bb > rr) && (ab > bb) && (bc > bb),
+					sep4 = (cc > rr) && (ac > cc) && (bc > cc);
 
-			// Testing if sphere lies outside a triangle edge.
+				if (sep2 || sep3 || sep4)
+					return false;
 
-			AB .assign (B) .subtract (A);
-			BC .assign (C) .subtract (B);
-			CA .assign (A) .subtract (C);
+				// Testing if sphere lies outside a triangle edge.
 
-			var
-				d1   = ab - aa,
-				d2   = bc - bb,
-				d3   = ac - cc,
-				e1   = Vector3 .dot (AB, AB),
-				e2   = Vector3 .dot (BC, BC),
-				e3   = Vector3 .dot (CA, CA);
-			
-			Q1 .assign (A) .multiply (e1) .subtract (AB .multiply (d1));
-			Q2 .assign (B) .multiply (e2) .subtract (BC .multiply (d2));
-			Q3 .assign (C) .multiply (e3) .subtract (CA .multiply (d3));
+				AB .assign (B) .subtract (A);
+				BC .assign (C) .subtract (B);
+				CA .assign (A) .subtract (C);
 
-			var
-				QC   = C .multiply (e1) .subtract (Q1),
-				QA   = A .multiply (e2) .subtract (Q2),
-				QB   = B .multiply (e3) .subtract (Q3),
-				sep5 = (Vector3 .dot (Q1, Q1) > rr * e1 * e1) && (Vector3 .dot (Q1, QC) > 0),
-				sep6 = (Vector3 .dot (Q2, Q2) > rr * e2 * e2) && (Vector3 .dot (Q2, QA) > 0),
-				sep7 = (Vector3 .dot (Q3, Q3) > rr * e3 * e3) && (Vector3 .dot (Q3, QB) > 0);
+				var
+					d1   = ab - aa,
+					d2   = bc - bb,
+					d3   = ac - cc,
+					e1   = Vector3 .dot (AB, AB),
+					e2   = Vector3 .dot (BC, BC),
+					e3   = Vector3 .dot (CA, CA);
 
-			if (sep5 || sep6 || sep7)
-				return false;
+				Q1 .assign (A) .multiply (e1) .subtract (AB .multiply (d1));
+				Q2 .assign (B) .multiply (e2) .subtract (BC .multiply (d2));
+				Q3 .assign (C) .multiply (e3) .subtract (CA .multiply (d3));
 
-			return true;
-		},
+				var
+					QC   = C .multiply (e1) .subtract (Q1),
+					QA   = A .multiply (e2) .subtract (Q2),
+					QB   = B .multiply (e3) .subtract (Q3),
+					sep5 = (Vector3 .dot (Q1, Q1) > rr * e1 * e1) && (Vector3 .dot (Q1, QC) > 0),
+					sep6 = (Vector3 .dot (Q2, Q2) > rr * e2 * e2) && (Vector3 .dot (Q2, QA) > 0),
+					sep7 = (Vector3 .dot (Q3, Q3) > rr * e3 * e3) && (Vector3 .dot (Q3, QB) > 0);
+
+				if (sep5 || sep6 || sep7)
+					return false;
+
+				return true;
+			};
+		})(),
 		toString: function ()
 		{
 			return this .radius + " " + this .center .toString ();
@@ -113199,13 +113218,14 @@ define ('x_ite/Components/Sound/Sound',[
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Line3",
+	"standard/Math/Geometry/Plane3",
 	"standard/Math/Geometry/Sphere3",
 	"standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DSoundNode, 
+          X3DSoundNode,
           X3DCast,
           TraverseType,
           X3DConstants,
@@ -113213,6 +113233,7 @@ function (Fields,
           Rotation4,
           Matrix4,
           Line3,
+          Plane3,
           Sphere3,
           Algorithm)
 {
@@ -113334,17 +113355,17 @@ function (Fields,
 				{
 					if (type !== TraverseType .DISPLAY)
 						return;
-		
+
 					if (! this .sourceNode)
 						return;
-		
+
 					if (! this .sourceNode .isActive_ .getValue () || this .sourceNode .isPaused_ .getValue ())
 						return;
-		
+
 					this .setTraversed (true);
-	
+
 					var modelViewMatrix = renderObject .getModelViewMatrix () .get ();
-	
+
 					this .getEllipsoidParameter (modelViewMatrix,
 					                             Math .max (this .maxBack_  .getValue (), 0),
 					                             Math .max (this .maxFront_ .getValue (), 0),
@@ -113398,7 +113419,9 @@ function (Fields,
 				rotation        = new Rotation4 (),
 				scale           = new Vector3 (1, 1, 1),
 				sphere          = new Sphere3 (1, Vector3 .Zero),
+				normal          = new Vector3 (0, 0, 0),
 				line            = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+				locationPlane   = new Plane3 (Vector3 .Zero, Vector3 .zAxis),
 				intersection1   = new Vector3 (0, 0, 0),
 				intersection2   = new Vector3 (0, 0, 0);
 
@@ -113409,7 +113432,7 @@ function (Fields,
 				 *
 				 * The ellipsoid is transformed to a sphere for easier calculation and then the viewer position is
 				 * transformed into this coordinate system. The radius and distance can then be obtained.
-				 * 
+				 *
 				 * throws Error
 				 */
 
@@ -113417,7 +113440,7 @@ function (Fields,
 					a = (back + front) / 2,
 					e = a - back,
 					b = Math .sqrt (a * a - e * e);
-				
+
 				location .set (0, 0, e);
 				scale    .set (b, b, a);
 
@@ -113434,10 +113457,12 @@ function (Fields,
 				var viewer = invSphereMatrix .origin;
 				location .negate () .divVec (scale);
 
-				line .set (viewer, location .subtract (viewer) .normalize ());
+				normal .assign (viewer) .subtract (location);
+				line .set (viewer, normal);
 				sphere .intersectsLine (line, intersection1, intersection2);
+				locationPlane .set (location, normal);
 
-				if (viewer .distance (intersection1) < viewer .distance (intersection2))
+				if (locationPlane .getDistanceToPoint (intersection1) > 0)
 					value .intersection .assign (sphereMatrix .multVecMatrix (intersection1));
 				else
 					value .intersection .assign (sphereMatrix .multVecMatrix (intersection2));
@@ -113449,8 +113474,6 @@ function (Fields,
 
 	return Sound;
 });
-
-
 
 /*******************************************************************************
  *
