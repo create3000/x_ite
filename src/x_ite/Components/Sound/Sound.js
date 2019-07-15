@@ -59,13 +59,14 @@ define ([
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Line3",
+	"standard/Math/Geometry/Plane3",
 	"standard/Math/Geometry/Sphere3",
 	"standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DSoundNode, 
+          X3DSoundNode,
           X3DCast,
           TraverseType,
           X3DConstants,
@@ -73,6 +74,7 @@ function (Fields,
           Rotation4,
           Matrix4,
           Line3,
+          Plane3,
           Sphere3,
           Algorithm)
 {
@@ -194,17 +196,17 @@ function (Fields,
 				{
 					if (type !== TraverseType .DISPLAY)
 						return;
-		
+
 					if (! this .sourceNode)
 						return;
-		
+
 					if (! this .sourceNode .isActive_ .getValue () || this .sourceNode .isPaused_ .getValue ())
 						return;
-		
+
 					this .setTraversed (true);
-	
+
 					var modelViewMatrix = renderObject .getModelViewMatrix () .get ();
-	
+
 					this .getEllipsoidParameter (modelViewMatrix,
 					                             Math .max (this .maxBack_  .getValue (), 0),
 					                             Math .max (this .maxFront_ .getValue (), 0),
@@ -258,7 +260,9 @@ function (Fields,
 				rotation        = new Rotation4 (),
 				scale           = new Vector3 (1, 1, 1),
 				sphere          = new Sphere3 (1, Vector3 .Zero),
+				normal          = new Vector3 (0, 0, 0),
 				line            = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+				locationPlane   = new Plane3 (Vector3 .Zero, Vector3 .zAxis),
 				intersection1   = new Vector3 (0, 0, 0),
 				intersection2   = new Vector3 (0, 0, 0);
 
@@ -269,7 +273,7 @@ function (Fields,
 				 *
 				 * The ellipsoid is transformed to a sphere for easier calculation and then the viewer position is
 				 * transformed into this coordinate system. The radius and distance can then be obtained.
-				 * 
+				 *
 				 * throws Error
 				 */
 
@@ -277,7 +281,7 @@ function (Fields,
 					a = (back + front) / 2,
 					e = a - back,
 					b = Math .sqrt (a * a - e * e);
-				
+
 				location .set (0, 0, e);
 				scale    .set (b, b, a);
 
@@ -294,10 +298,12 @@ function (Fields,
 				var viewer = invSphereMatrix .origin;
 				location .negate () .divVec (scale);
 
-				line .set (viewer, location .subtract (viewer) .normalize ());
+				normal .assign (viewer) .subtract (location);
+				line .set (viewer, normal);
 				sphere .intersectsLine (line, intersection1, intersection2);
+				locationPlane .set (location, normal);
 
-				if (viewer .distance (intersection1) < viewer .distance (intersection2))
+				if (locationPlane .getDistanceToPoint (intersection1) > 0)
 					value .intersection .assign (sphereMatrix .multVecMatrix (intersection1));
 				else
 					value .intersection .assign (sphereMatrix .multVecMatrix (intersection2));
@@ -309,5 +315,3 @@ function (Fields,
 
 	return Sound;
 });
-
-
