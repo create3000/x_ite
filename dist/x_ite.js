@@ -1,4 +1,4 @@
-/* X_ITE v4.5.10a-828 */
+/* X_ITE v4.5.10a-829 */
 
 (function () {
 
@@ -113438,11 +113438,12 @@ function (Fields,
 				scale    .set (b, b, a);
 				rotation .setFromToVec (Vector3 .zAxis, this .direction_ .getValue ());
 
-				sphereMatrix .assign (modelViewMatrix);
-				sphereMatrix .translate (this .location_ .getValue ());
-				sphereMatrix .rotate (rotation);
-				sphereMatrix .translate (location);
-				sphereMatrix .scale (scale);
+				sphereMatrix
+					.assign (modelViewMatrix)
+					.translate (this .location_ .getValue ())
+					.rotate (rotation)
+					.translate (location)
+					.scale (scale);
 
 				invSphereMatrix .assign (sphereMatrix) .inverse ();
 
