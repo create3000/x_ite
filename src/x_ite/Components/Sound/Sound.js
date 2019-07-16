@@ -292,7 +292,7 @@ function (Fields,
 				var viewer = invSphereMatrix .origin;
 				location .negate () .divVec (scale);
 
-				normal .assign (location) .subtract (viewer);
+				normal .assign (location) .subtract (viewer) .normalize ();
 				line .set (viewer, normal);
 				sphere .intersectsLine (line, enterPoint, exitPoint);
 
