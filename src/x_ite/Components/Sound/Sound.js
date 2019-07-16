@@ -272,6 +272,13 @@ function (Fields,
 				 * throws Error
 				 */
 
+				if (back == 0 || front == 0)
+				{
+					sphereMatrix .multVecMatrix (value .intersection .assign (this .location_ .getValue ()));
+					value .distance = 1;
+					return;
+				}
+
 				var
 					a = (back + front) / 2,
 					e = a - back,
