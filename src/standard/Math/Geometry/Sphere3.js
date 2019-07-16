@@ -68,7 +68,7 @@ function (Vector3)
 			this .radius = radius;
 			this .center .assign (center);
 		},
-		intersectsLine: function (line, intersection1, intersection2)
+		intersectsLine: function (line, enterPoint, exitPoint)
 		{
 			// https://github.com/Alexpux/Coin3D/blob/master/src/base/SbSphere.cpp
 
@@ -101,8 +101,8 @@ function (Vector3)
 					t2 = tmp;
 				}
 
-				intersection1 .assign (linedir) .multiply (t1) .add (linepos);
-				intersection2 .assign (linedir) .multiply (t2) .add (linepos);
+				enterPoint .assign (linedir) .multiply (t1) .add (linepos);
+				exitPoint  .assign (linedir) .multiply (t2) .add (linepos);
 
 				return true;
 			}
