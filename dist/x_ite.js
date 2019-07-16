@@ -1,4 +1,4 @@
-/* X_ITE v4.5.10a-823 */
+/* X_ITE v4.5.10a-824 */
 
 (function () {
 
@@ -113218,7 +113218,6 @@ define ('x_ite/Components/Sound/Sound',[
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Line3",
-	"standard/Math/Geometry/Plane3",
 	"standard/Math/Geometry/Sphere3",
 	"standard/Math/Algorithm",
 ],
@@ -113233,7 +113232,6 @@ function (Fields,
           Rotation4,
           Matrix4,
           Line3,
-          Plane3,
           Sphere3,
           Algorithm)
 {
@@ -113391,8 +113389,6 @@ function (Fields,
 								intensity = Algorithm .clamp (this .intensity_ .getValue (), 0, 1),
 								volume    = intensity * d;
 
-							//console .log (d);
-
 							this .sourceNode .setVolume (volume);
 						}
 					}
@@ -113421,9 +113417,8 @@ function (Fields,
 				sphere          = new Sphere3 (1, Vector3 .Zero),
 				normal          = new Vector3 (0, 0, 0),
 				line            = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-				locationPlane   = new Plane3 (Vector3 .Zero, Vector3 .zAxis),
-				intersection1   = new Vector3 (0, 0, 0),
-				intersection2   = new Vector3 (0, 0, 0);
+				enterPoint      = new Vector3 (0, 0, 0),
+				exitPoint       = new Vector3 (0, 0, 0);
 
 			return function (modelViewMatrix, back, front, value)
 			{
@@ -113457,16 +113452,11 @@ function (Fields,
 				var viewer = invSphereMatrix .origin;
 				location .negate () .divVec (scale);
 
-				normal .assign (viewer) .subtract (location);
+				normal .assign (location) .subtract (viewer);
 				line .set (viewer, normal);
-				sphere .intersectsLine (line, intersection1, intersection2);
-				locationPlane .set (location, normal);
+				sphere .intersectsLine (line, enterPoint, exitPoint);
 
-				if (locationPlane .getDistanceToPoint (intersection1) > 0)
-					value .intersection .assign (sphereMatrix .multVecMatrix (intersection1));
-				else
-					value .intersection .assign (sphereMatrix .multVecMatrix (intersection2));
-
+				value .intersection .assign (sphereMatrix .multVecMatrix (enterPoint));
 				value .distance = viewer .abs ();
 			};
 		})(),
