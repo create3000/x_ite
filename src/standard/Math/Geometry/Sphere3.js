@@ -110,8 +110,6 @@ function (Vector3)
 			{
 				return false;
 			}
-
-			return true;
 		},
 		intersectsTriangle: (function ()
 		{

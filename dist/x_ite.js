@@ -1,4 +1,4 @@
-/* X_ITE v4.5.10a-824 */
+/* X_ITE v4.5.10a-825 */
 
 (function () {
 
@@ -107500,8 +107500,6 @@ function (Vector3)
 			{
 				return false;
 			}
-
-			return true;
 		},
 		intersectsTriangle: (function ()
 		{
