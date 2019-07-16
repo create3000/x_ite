@@ -1,4 +1,4 @@
-/* X_ITE v4.5.10a-829 */
+/* X_ITE v4.5.10a-830 */
 
 (function () {
 
@@ -113428,6 +113428,13 @@ function (Fields,
 				 *
 				 * throws Error
 				 */
+
+				if (back == 0 || front == 0)
+				{
+					sphereMatrix .multVecMatrix (value .intersection .assign (this .location_ .getValue ()));
+					value .distance = 1;
+					return;
+				}
 
 				var
 					a = (back + front) / 2,
