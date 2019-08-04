@@ -55,7 +55,7 @@ function ($,
           X3DBaseNode)
 {
 "use strict";
-	
+
 	function PointingDevice (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
@@ -103,7 +103,7 @@ function ($,
 			{
 				var
 					element = browser .getElement (),
-					offset  = element .offset (), 
+					offset  = element .offset (),
 					x       = event .pageX - offset .left,
 					y       = element .height () - (event .pageY - offset .top);
 
@@ -127,16 +127,16 @@ function ($,
 		mouseup: function (event)
 		{
 			event .preventDefault ();
-	
+
 			if (event .button === 0)
 			{
 				var
 					browser = this .getBrowser (),
 					element = browser .getElement (),
-					offset  = element .offset (), 
+					offset  = element .offset (),
 					x       = event .pageX - offset .left,
 					y       = element .height () - (event .pageY - offset .top);
-			
+
 				$(document) .unbind (".PointingDevice"   + this .getId ());
 				element .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
@@ -166,7 +166,7 @@ function ($,
 
 			var
 				element = browser .getElement (),
-				offset  = element .offset (), 
+				offset  = element .offset (),
 				x       = event .pageX - offset .left,
 				y       = element .height () - (event .pageY - offset .top);
 
@@ -198,8 +198,6 @@ function ($,
 		},
 		touchend: function (event)
 		{
-			var browser = this .getBrowser ();
-
 			event .button = 0;
 			this .mouseup (event);
 		},
@@ -216,7 +214,7 @@ function ($,
 					event .button = 0;
 					event .pageX  = touches [0] .pageX;
 					event .pageY  = touches [0] .pageY;
-		
+
 					this .mousemove (event);
 					break;
 				}

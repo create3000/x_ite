@@ -320,7 +320,7 @@ function (Vector3,
 				if (scale            === null) scale            = dummyScale;
 				if (scaleOrientation === null) scaleOrientation = dummyScaleOrientation;
 				if (center           === null) center           = dummyCenter;
-	
+
 				switch (arguments .length)
 				{
 					case 1:
@@ -350,11 +350,11 @@ function (Vector3,
 					case 5:
 					{
 						var m = new Matrix4 ();
-	
+
 						m .set (c .assign (center) .negate ());
 						m .multLeft (this);
 						m .translate (center);
-	
+
 						m .get (translation, rotation, scale, scaleOrientation);
 						break;
 					}
@@ -414,40 +414,40 @@ function (Vector3,
 			{
 				// (1) Get translation.
 				translation .set (this [12], this [13], this [14]);
-	
+
 				// (2) Create 3x3 matrix.
 				var a = this .submatrix;
-	
+
 				// (3) Compute det A. If negative, set sign = -1, else sign = 1
 				var det      = a .determinant ();
 				var det_sign = det < 0 ? -1 : 1;
-	
+
 				if (det === 0)
 					throw new Error ("Matrix4 .factor: determinant is 0.");
-	
+
 				// (4) B = A * !A  (here !A means A transpose)
 				b .assign (a) .transpose () .multLeft (a);
 				var e = eigendecomposition (b, eigen);
-	
+
 				// Find min / max eigenvalues and do ratio test to determine singularity.
-	
+
 				scaleOrientation .set (e .vectors [0] [0], e .vectors [0] [1], e .vectors [0] [2],
 				                       e .vectors [1] [0], e .vectors [1] [1], e .vectors [1] [2],
 				                       e .vectors [2] [0], e .vectors [2] [1], e .vectors [2] [2]);
-	
+
 				// Compute s = sqrt(evalues), with sign. Set si = s-inverse
-	
+
 				scale .x = det_sign * Math .sqrt (e .values [0]);
 				scale .y = det_sign * Math .sqrt (e .values [1]);
 				scale .z = det_sign * Math .sqrt (e .values [2]);
-	
+
 				si [0] = 1 / scale .x;
 				si [4] = 1 / scale .y;
 				si [8] = 1 / scale .z;
-	
+
 				// (5) Compute U = !R ~S R A.
 				rotation .assign (sosi .assign (scaleOrientation) .multRight (si) .transpose () .multLeft (scaleOrientation) .multRight (a));
-	
+
 				scaleOrientation .transpose ();
 				return true;
 			};
@@ -504,13 +504,13 @@ function (Vector3,
 		transpose: function ()
 		{
 			var tmp;
-			
-			tmp = this [ 1]; this [ 1] = this [ 4]; this [ 1] = tmp;
-			tmp = this [ 2]; this [ 2] = this [ 8]; this [ 2] = tmp;
-			tmp = this [ 3]; this [ 3] = this [12]; this [ 3] = tmp;
-			tmp = this [ 6]; this [ 6] = this [ 9]; this [ 6] = tmp;
-			tmp = this [ 7]; this [ 7] = this [13]; this [ 7] = tmp;
-			tmp = this [11]; this [11] = this [14]; this [11] = tmp;
+
+			tmp = this [ 1]; this [ 1] = this [ 4]; this [ 4] = tmp;
+			tmp = this [ 2]; this [ 2] = this [ 8]; this [ 8] = tmp;
+			tmp = this [ 3]; this [ 3] = this [12]; this [12] = tmp;
+			tmp = this [ 6]; this [ 6] = this [ 9]; this [ 9] = tmp;
+			tmp = this [ 7]; this [ 7] = this [13]; this [13] = tmp;
+			tmp = this [11]; this [11] = this [14]; this [14] = tmp;
 
 			return this;
 		},
@@ -662,7 +662,7 @@ function (Vector3,
 				vector .x = (x * this [0] + y * this [4] + z * this [ 8] + this [12]) * w;
 				vector .y = (x * this [1] + y * this [5] + z * this [ 9] + this [13]) * w;
 				vector .z = (x * this [2] + y * this [6] + z * this [10] + this [14]) * w;
-				
+
 				return vector;
 			}
 
@@ -695,7 +695,7 @@ function (Vector3,
 
 				return vector;
 			}
-			
+
 			var
 				x = vector .x,
 				y = vector .y,

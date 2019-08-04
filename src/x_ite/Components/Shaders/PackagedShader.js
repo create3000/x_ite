@@ -59,9 +59,9 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DShaderNode, 
-          X3DUrlObject, 
-          X3DProgrammableShaderObject, 
+          X3DShaderNode,
+          X3DUrlObject,
+          X3DProgrammableShaderObject,
           X3DConstants)
 {
 "use strict";
@@ -75,7 +75,7 @@ function (Fields,
 		this .addType (X3DConstants .PackagedShader);
 	}
 
-	PackagedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype)
+	PackagedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
 		X3DUrlObject .prototype,
 		X3DProgrammableShaderObject .prototype,
 	{
@@ -108,5 +108,3 @@ function (Fields,
 
 	return PackagedShader;
 });
-
-

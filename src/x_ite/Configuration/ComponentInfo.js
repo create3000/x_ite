@@ -75,8 +75,6 @@ function (Fields,
 		constructor: ComponentInfo,
 		toVRMLStream: function (stream)
 		{
-			var generator = Generator .Get (stream);
-
 			stream .string += "COMPONENT";
 			stream .string += " ";
 			stream .string += this .name;

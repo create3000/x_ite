@@ -64,7 +64,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DPickSensorNode, 
+          X3DPickSensorNode,
           X3DCast,
           X3DConstants,
           IntersectionType,
@@ -120,7 +120,7 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DPickSensorNode .prototype .initialize .call (this);
-			
+
 			this .pickingGeometry_ .addInterest ("set_pickingGeometry__", this);
 
 			this .set_pickingGeometry__ ();
@@ -140,7 +140,6 @@ function (Fields,
 		set_geometry__: (function ()
 		{
 			var
-				point        = new Vector3 (0, 0, 0),
 				defaultScale = new Ammo .btVector3 (1, 1, 1),
 				o            = new Ammo .btVector3 (),
 				t            = new Ammo .btTransform ();
@@ -152,7 +151,7 @@ function (Fields,
 				if (this .pickingGeometryNode)
 				{
 					var coord = this .pickingGeometryNode .getCoord ();
-	
+
 					if (coord)
 					{
 						for (var i = 0, length = coord .getSize (); i < length; ++ i)
@@ -162,7 +161,7 @@ function (Fields,
 								var
 									compoundShape = compoundShapes [i],
 									point         = coord .get1Point (i, compoundShape .point);
-	
+
 								o .setValue (point .x, point .y, point .z);
 								t .setOrigin (o);
 
@@ -175,12 +174,12 @@ function (Fields,
 									compoundShape = new Ammo .btCompoundShape (),
 									sphereShape   = new Ammo .btSphereShape (0),
 									point         = coord .get1Point (i, new Vector3 (0, 0, 0));
-	
+
 								compoundShape .point = point;
-	
+
 								o .setValue (point .x, point .y, point .z);
 								t .setOrigin (o);
-	
+
 								compoundShape .addChildShape (t, sphereShape);
 								compoundShapes .push (compoundShape);
 							}
@@ -220,25 +219,25 @@ function (Fields,
 					var
 						modelMatrices = this .getModelMatrices (),
 						targets       = this .getTargets ();
-		
+
 					switch (this .getIntersectionType ())
 					{
 						case IntersectionType .BOUNDS:
 						{
 							// Intersect bboxes.
-	
+
 							for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
 							{
 								var modelMatrix = modelMatrices [m];
 
 								pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
-				
+
 								for (var t = 0, tLength = targets .size; t < tLength; ++ t)
 								{
 									var target = targets [t];
 
 									targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
-	
+
 									if (pickingBBox .intersectsBox (targetBBox))
 									{
 										pickingCenter .assign (pickingBBox .center);
@@ -249,9 +248,9 @@ function (Fields,
 									}
 								}
 							}
-		
+
 							// Send events.
-	
+
 							var
 								pickedGeometries = this .getPickedGeometries (),
 								active           = Boolean (pickedGeometries .length);
@@ -260,16 +259,16 @@ function (Fields,
 
 							if (active !== this .isActive_ .getValue ())
 								this .isActive_ = active;
-	
+
 							if (! this .pickedGeometry_ .equals (pickedGeometries))
 								this .pickedGeometry_ = pickedGeometries;
-	
+
 							break;
 						}
 						case IntersectionType .GEOMETRY:
 						{
 							// Intersect geometry.
-	
+
 							var
 								picker         = this .picker,
 								compoundShapes = this .compoundShapes;
@@ -313,9 +312,9 @@ function (Fields,
 									}
 								}
 							}
-		
+
 							// Send events.
-	
+
 							var
 								pickedGeometries = this .getPickedGeometries (),
 								active           = Boolean (pickedGeometries .length);
@@ -324,7 +323,7 @@ function (Fields,
 
 							if (active !== this .isActive_ .getValue ())
 								this .isActive_ = active;
-	
+
 							if (! this .pickedGeometry_ .equals (pickedGeometries))
 								this .pickedGeometry_ = pickedGeometries;
 
@@ -342,7 +341,7 @@ function (Fields,
 
 							if (! this .pickedPoint_ .equals (pickedPoint))
 								this .pickedPoint_ = pickedPoint;
-	
+
 							break;
 						}
 					}
@@ -355,5 +354,3 @@ function (Fields,
 
 	return PointPickSensor;
 });
-
-

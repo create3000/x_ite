@@ -63,8 +63,8 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChildNode, 
-          OrientationInterpolator, 
+          X3DChildNode,
+          OrientationInterpolator,
           X3DConstants,
           X3DCast,
           NURBS,
@@ -79,7 +79,7 @@ function (Fields,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .NurbsOrientationInterpolator);
-			
+
 		this .addChildObjects ("rebuild", new Fields .SFTime ());
 
 	   this .interpolator  = new OrientationInterpolator (executionContext);
@@ -124,7 +124,7 @@ function (Fields,
 			this .controlPoint_ .addInterest ("set_controlPoint__", this);
 
 			this .rebuild_ .addInterest ("build", this);
-		
+
 			this .set_fraction_ .addFieldInterest (this .interpolator .set_fraction_);
 			this .interpolator .value_changed_ .addFieldInterest (this .value_changed_);
 
@@ -168,10 +168,10 @@ function (Fields,
 		{
 			if (this .order_ .getValue () < 2)
 				return;
-		
+
 			if (! this .controlPointNode)
 				return;
-		
+
 			if (this .controlPointNode .getSize () < this .order_ .getValue ())
 				return;
 
@@ -180,9 +180,9 @@ function (Fields,
 			var
 				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
 				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), this .controlPointNode);
-		
+
 			// Knots
-		
+
 			var
 				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
@@ -214,7 +214,7 @@ function (Fields,
 			{
 				var direction = new Vector3 (points [i + 3] - points [i + 0],
 				                             points [i + 4] - points [i + 1],
-				                             points [i + 5] - points [i + 2])
+				                             points [i + 5] - points [i + 2]);
 
 				interpolator .key_      .push (knots [0] + i / (length - 3 + (3 * closed)) * scale);
 				interpolator .keyValue_. push (new Rotation4 (Vector3 .zAxis, direction));
@@ -230,5 +230,3 @@ function (Fields,
 
 	return NurbsOrientationInterpolator;
 });
-
-

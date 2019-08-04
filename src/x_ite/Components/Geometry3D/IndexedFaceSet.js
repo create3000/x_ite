@@ -197,7 +197,6 @@ function (Fields,
 			{
 				var
 					polygon   = polygons [p],
-					vertices  = polygon .vertices,
 					triangles = polygon .triangles,
 					face      = polygon .face;
 

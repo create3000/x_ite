@@ -73,7 +73,7 @@ function (X3DConstants)
 		this .units                 = true;
 		this .unitCategories        = [ ];
 
-		this .names .set (null, new Map ())
+		this .names .set (null, new Map ());
 	}
 
 	Generator .prototype =

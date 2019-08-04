@@ -537,10 +537,7 @@ function (X3DBindableNode,
 
 					// Get background scale.
 
-					var
-						viewpoint      = renderObject .getViewpoint (),
-						navigationInfo = renderObject .getNavigationInfo (),
-						farValue       = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
+					var farValue = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
 
 					// Get projection matrix.
 

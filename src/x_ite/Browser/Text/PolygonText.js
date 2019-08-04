@@ -99,10 +99,10 @@ function (Fields,
 				var
 					fontStyle = this .getFontStyle (),
 					font      = fontStyle .getFont ();
-	
+
 				if (! font)
 					return;
-	
+
 				var
 					text             = this .getText (),
 					glyphs           = this .getGlyphs (),
@@ -117,15 +117,15 @@ function (Fields,
 					texCoordArray    = this .texCoordArray,
 					normalArray      = text .getNormals (),
 					vertexArray      = text .getVertices ();
-	
+
 				// Set texCoords.
-	
+
 				text .getMultiTexCoords () .push (texCoordArray);
-	
+
 				this .getBBox () .getExtents (min, max);
 				text .getMin () .assign (min);
 				text .getMax () .assign (max);
-	
+
 				if (fontStyle .horizontal_ .getValue ())
 				{
 					for (var l = 0, length = glyphs .length; l < length; ++ l)
@@ -135,31 +135,31 @@ function (Fields,
 							charSpacing  = charSpacings [l],
 							translation  = translations [l],
 							advanceWidth = 0;
-	
+
 						for (var g = 0, gl = line .length; g < gl; ++ g)
 						{
 							var
 								glyph         = line [g],
 								glyphVertices = this .getGlyphGeometry (font, glyph, primitiveQuality);
-							
+
 							for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
 							{
 								var
 									x = glyphVertices [v] .x * size + minorAlignment .x + translation .x + advanceWidth + g * charSpacing,
 									y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
-			
+
 								texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
 								normalArray   .push (0, 0, 1);
 								vertexArray   .push (x, y, 0, 1);
 							}
-			
+
 							// Calculate advanceWidth.
-			
+
 							var kerning = 0;
-			
+
 							if (g + 1 < line .length)
 								kerning = font .getKerningValue (glyph, line [g + 1]);
-			
+
 							advanceWidth += (glyph .advanceWidth + kerning) * sizeUnitsPerEm;
 						}
 					}
@@ -172,29 +172,29 @@ function (Fields,
 						first       = leftToRight ? 0 : text .string_ .length - 1,
 						last        = leftToRight ? text .string_ .length  : -1,
 						step        = leftToRight ? 1 : -1;
-	
+
 					for (var l = first, t = 0; l !== last; l += step)
 					{
 						var line = glyphs [l];
-	
+
 						var
 						   numChars = line .length,
 							firstG   = topToBottom ? 0 : numChars - 1,
 							lastG    = topToBottom ? numChars : -1,
 							stepG    = topToBottom ? 1 : -1;
-	
+
 						for (var g = firstG; g !== lastG; g += stepG, ++ t)
 						{
 							var
 								translation   = translations [t],
 								glyphVertices = this .getGlyphGeometry (font, line [g], primitiveQuality);
-	
+
 							for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
 							{
 								var
 									x = glyphVertices [v] .x * size + minorAlignment .x + translation .x,
 									y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
-				
+
 								texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
 								normalArray   .push (0, 0, 1);
 								vertexArray   .push (x, y, 0, 1);
@@ -237,7 +237,7 @@ function (Fields,
 			else
 			{
 				min .set (0, 0, 0);
-				max .set (0, 0, 0);			   
+				max .set (0, 0, 0);
 			}
 
 			var extents = glyphCache .extents = { };
@@ -270,10 +270,8 @@ function (Fields,
 			return function (glyph, vertices, primitiveQuality)
 			{
 				// Get curves for the current glyph.
-	
+
 				var
-					fontStyle  = this .getFontStyle (),
-					font       = fontStyle .getFont (),
 					dimension  = this .getBezierDimension (primitiveQuality),
 					path       = glyph .getPath (0, 0, 1),
 					commands   = path .commands,
@@ -286,7 +284,7 @@ function (Fields,
 				for (var i = 0, cl = commands .length; i < cl; ++ i)
 				{
 					var command = commands [i];
-										      
+
 					switch (command .type)
 					{
 						case "M": // Start
@@ -299,12 +297,12 @@ function (Fields,
 
 								curves .push (points);
 							}
-								
+
 							points = [ ];
 
 							if (command .type === "M")
 								points .push (new Vector3 (command .x, -command .y, 0));
-							
+
 							break;
 						}
 						case "L": // Linear
@@ -331,7 +329,7 @@ function (Fields,
 
 							for (var l = 1, ll = lut .length; l < ll; ++ l)
 								points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
-							
+
 							break;
 						}
 						default:
@@ -341,21 +339,21 @@ function (Fields,
 					x = command .x;
 					y = command .y;
 				}
-	
+
 				// Triangulate contours.
-	
+
 				curves = curves .map (function (curve)
 				{
 					Triangle3 .getPolygonNormal (curve, normal);
-	
+
 					if (normal .dot (Vector3 .zAxis) > 0)
 						return curve;
-	
+
 					return curve .reverse ();
 				});
-	
+
 				curves .push (vertices);
-	
+
 				Triangle3 .triangulatePolygon .apply (Triangle3, curves);
 			};
 		})(),

@@ -174,18 +174,15 @@ function (Fields,
 							});
 						}
 
-						if (child)
-						{
-							var
-								browser          = renderObject .getBrowser (),
-								pickingHierarchy = browser .getPickingHierarchy ();
+						var
+							browser          = renderObject .getBrowser (),
+							pickingHierarchy = browser .getPickingHierarchy ();
 
-							pickingHierarchy .push (this);
+						pickingHierarchy .push (this);
 
-							child .traverse (type, renderObject);
+						child .traverse (type, renderObject);
 
-							pickingHierarchy .pop ();
-						}
+						pickingHierarchy .pop ();
 					}
 					else
 					{

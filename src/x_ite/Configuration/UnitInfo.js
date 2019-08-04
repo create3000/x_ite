@@ -70,8 +70,6 @@ function (Generator)
 		constructor: UnitInfo,
 		toVRMLStream: function (stream)
 		{
-			var generator = Generator .Get (stream);
-
 			stream .string += "UNIT";
 			stream .string += " ";
 			stream .string += this .category;

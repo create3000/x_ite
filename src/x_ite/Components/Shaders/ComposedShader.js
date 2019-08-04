@@ -60,8 +60,8 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DShaderNode, 
-          X3DProgrammableShaderObject, 
+          X3DShaderNode,
+          X3DProgrammableShaderObject,
           LoadSensor,
           X3DCast,
           X3DConstants)
@@ -170,7 +170,7 @@ function (Fields,
 					this .removeShaderFields ();
 
 				this .program = program;
-	
+
 				for (var i = 0, length = parts .length; i < length; ++ i)
 				{
 					var partNode = X3DCast (X3DConstants .ShaderPart, parts [i]);
@@ -181,14 +181,14 @@ function (Fields,
 						gl .attachShader (program, partNode .getShader ());
 					}
 				}
-	
+
 				if (valid)
 				{
 					this .bindAttributeLocations (gl, program);
 
 					gl .linkProgram (program);
 
-					valid = valid && gl .getProgramParameter (program, gl .LINK_STATUS);
+					valid = gl .getProgramParameter (program, gl .LINK_STATUS);
 				}
 
 				if (valid)
@@ -198,7 +198,7 @@ function (Fields,
 					// Initialize uniform variables and attributes
 					if (this .getDefaultUniforms ())
 					{
-						// Setup user-defined fields. 
+						// Setup user-defined fields.
 						this .addShaderFields ();
 					}
 					else
