@@ -69,19 +69,23 @@ function (X3DField,
 	                       m10, m11, m12,
 	                       m20, m21, m22)
 		{
-			if (arguments .length)
+			switch (arguments .length)
 			{
-				if (arguments [0] instanceof Matrix3)
+				case 0:
+					return X3DField .call (this, new Matrix3 ());
+
+				case 1:
 					return X3DField .call (this, arguments [0]);
-	
-				return X3DField .call (this, new Matrix3 (m00 * 1, m01 * 1, m02 * 1,
-	                                                   m10 * 1, m11 * 1, m12 * 1,
-	                                                   m20 * 1, m21 * 1, m22 * 1));
+
+				case 9:
+					return X3DField .call (this, new Matrix3 (m00 * 1, m01 * 1, m02 * 1,
+																			m10 * 1, m11 * 1, m12 * 1,
+																			m20 * 1, m21 * 1, m22 * 1));
 			}
 
-			return X3DField .call (this, new Matrix3 ());
+			throw new Error ("Invalid arguments.");
 		}
-	
+
 		SFMatrix3 .prototype = Object .assign (Object .create (X3DField .prototype),
 			SFMatrixPrototypeTemplate (Matrix3, SFVec2),
 		{
@@ -101,11 +105,11 @@ function (X3DField,
 				scale            = scale            ? scale            .getValue () : null;
 				scaleOrientation = scaleOrientation ? scaleOrientation              : 0;
 				center           = center           ? center           .getValue () : null;
-	
+
 				this .getValue () .set (translation, rotation, scale, scaleOrientation, center);
 			},
 		});
-	
+
 		function defineProperty (i)
 		{
 			Object .defineProperty (SFMatrix3 .prototype, i,
@@ -123,7 +127,7 @@ function (X3DField,
 				configurable: false
 			});
 		}
-	
+
 		for (var i = 0; i < Matrix3 .prototype .length; ++ i)
 			defineProperty (i);
 

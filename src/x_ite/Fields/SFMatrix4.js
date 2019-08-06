@@ -69,20 +69,24 @@ function (X3DField,
 	                       m20, m21, m22, m23,
 	                       m30, m31, m32, m33)
 		{
-			if (arguments .length)
+			switch (arguments .length)
 			{
-				if (arguments [0] instanceof Matrix4)
+				case 0:
+					return X3DField .call (this, new Matrix4 ());
+
+				case 1:
 					return X3DField .call (this, arguments [0]);
-	
-				return X3DField .call (this, new Matrix4 (m00 * 1, m01 * 1, m02 * 1, m03 * 1,
-	                                                   m10 * 1, m11 * 1, m12 * 1, m13 * 1,
-	                                                   m20 * 1, m21 * 1, m22 * 1, m23 * 1,
-	                                                   m30 * 1, m31 * 1, m32 * 1, m33 * 1));
+
+				case 16:
+					return X3DField .call (this, new Matrix4 (m00 * 1, m01 * 1, m02 * 1, m03 * 1,
+																			m10 * 1, m11 * 1, m12 * 1, m13 * 1,
+																			m20 * 1, m21 * 1, m22 * 1, m23 * 1,
+																			m30 * 1, m31 * 1, m32 * 1, m33 * 1));
 			}
 
-			return X3DField .call (this, new Matrix4 ());
+			throw new Error ("Invalid arguments.");
 		}
-	
+
 		SFMatrix4 .prototype = Object .assign (Object .create (X3DField .prototype),
 			SFMatrixPrototypeTemplate (Matrix4, SFVec3),
 		{
@@ -96,7 +100,7 @@ function (X3DField,
 				return Type;
 			},
 		});
-	
+
 		function defineProperty (i)
 		{
 			Object .defineProperty (SFMatrix4 .prototype, i,
@@ -114,7 +118,7 @@ function (X3DField,
 				configurable: false
 			});
 		}
-	
+
 		for (var i = 0; i < Matrix4 .prototype .length; ++ i)
 			defineProperty (i);
 
