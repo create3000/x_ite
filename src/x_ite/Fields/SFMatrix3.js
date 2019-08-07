@@ -66,8 +66,8 @@ function (X3DField,
 	function SFMatrix3Template (TypeName, Type, SFVec2)
 	{
 		function SFMatrix3 (m00, m01, m02,
-	                       m10, m11, m12,
-	                       m20, m21, m22)
+		                    m10, m11, m12,
+		                    m20, m21, m22)
 		{
 			switch (arguments .length)
 			{
