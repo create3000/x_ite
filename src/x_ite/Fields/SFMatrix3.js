@@ -79,8 +79,8 @@ function (X3DField,
 
 				case 9:
 					return X3DField .call (this, new Matrix3 (m00 * 1, m01 * 1, m02 * 1,
-																			m10 * 1, m11 * 1, m12 * 1,
-																			m20 * 1, m21 * 1, m22 * 1));
+					                                          m10 * 1, m11 * 1, m12 * 1,
+					                                          m20 * 1, m21 * 1, m22 * 1));
 			}
 
 			throw new Error ("Invalid arguments.");
