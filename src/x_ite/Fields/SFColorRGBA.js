@@ -62,15 +62,19 @@ function (X3DField,
 
 	function SFColorRGBA (r, g, b, a)
 	{
-		if (arguments .length)
+		switch (arguments .length)
 		{
-			if (arguments [0] instanceof Color4)
+			case 0:
+				return X3DField .call (this, new Color4 ());
+
+			case 1:
 				return X3DField .call (this, arguments [0]);
-			else
+
+			case 4:
 				return X3DField .call (this, new Color4 (r * 1, g * 1, b * 1, a * 1));
 		}
 
-		return X3DField .call (this, new Color4 ());
+		throw new Error ("Invalid arguments.");
 	}
 
 	SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -109,11 +113,11 @@ function (X3DField,
 		},
 		lerp: (function ()
 		{
-			var	
+			var
 				s = [ ],
 				d = [ ],
 				r = [ ];
-     
+
 			return function (destination, t)
 			{
 				var result = new SFColorRGBA ();
@@ -121,9 +125,9 @@ function (X3DField,
 				this .getValue () .getHSVA (s),
 				destination .getValue () .getHSVA (d),
 				Color4 .lerp (s, d, t, r),
-	
+
 				result .setHSVA (r [0], r [1], r [2], r [3]);
-	
+
 				return result;
 			};
 		})(),
