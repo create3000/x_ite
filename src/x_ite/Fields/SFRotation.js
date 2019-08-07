@@ -83,6 +83,8 @@ function (SFVec3,
 			case 4:
 				return X3DField .call (this, new Rotation4 (x * 1, y * 1, z * 1, angle * 1));
 		}
+
+		throw new Error ("Invalid arguments.");
 	}
 
 	SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
