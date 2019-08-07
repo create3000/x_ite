@@ -64,17 +64,21 @@ function (X3DField,
 	{
 		function SFVec4 (x, y, z, w)
 		{
-			if (arguments .length)
+			switch (arguments .length)
 			{
-				if (arguments [0] instanceof Vector4)
+				case 0:
+					return X3DField .call (this, new Vector4 (0, 0, 0, 0));
+
+				case 1:
 					return X3DField .call (this, arguments [0]);
 
-				return X3DField .call (this, new Vector4 (x * 1, y * 1, z * 1, w * 1));
+				case 4:
+					return X3DField .call (this, new Vector4 (x * 1, y * 1, z * 1, w * 1));
 			}
 
-			return X3DField .call (this, new Vector4 (0, 0, 0, 0));
+			throw new Error ("Invalid arguments.");
 		}
-	
+
 		SFVec4 .prototype = Object .assign (Object .create (X3DField .prototype),
 			SFVecPrototypeTemplate (Vector4),
 		{
@@ -88,7 +92,7 @@ function (X3DField,
 				return Type;
 			},
 		});
-	
+
 		var x = {
 			get: function ()
 			{
@@ -102,7 +106,7 @@ function (X3DField,
 			enumerable: true,
 			configurable: false
 		};
-	
+
 		var y = {
 			get: function ()
 			{
@@ -116,7 +120,7 @@ function (X3DField,
 			enumerable: true,
 			configurable: false
 		};
-	
+
 		var z = {
 			get: function ()
 			{
@@ -130,7 +134,7 @@ function (X3DField,
 			enumerable: true,
 			configurable: false
 		};
-	
+
 		var w = {
 			get: function ()
 			{
@@ -144,17 +148,17 @@ function (X3DField,
 			enumerable: true,
 			configurable: false
 		};
-	
+
 		Object .defineProperty (SFVec4 .prototype, "x", x);
 		Object .defineProperty (SFVec4 .prototype, "y", y);
 		Object .defineProperty (SFVec4 .prototype, "z", z);
 		Object .defineProperty (SFVec4 .prototype, "w", w);
-	
+
 		x .enumerable = false;
 		y .enumerable = false;
 		z .enumerable = false;
 		w .enumerable = false;
-	
+
 		Object .defineProperty (SFVec4 .prototype, "0", x);
 		Object .defineProperty (SFVec4 .prototype, "1", y);
 		Object .defineProperty (SFVec4 .prototype, "2", z);
