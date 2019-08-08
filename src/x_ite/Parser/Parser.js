@@ -1339,7 +1339,7 @@ function (Fields,
 					baseNode = this .getExecutionContext () .createProto (nodeTypeId, false);
 
 					if (! baseNode)
-						throw new Error ("Unkown node type or proto '" + nodeTypeId + "'.");
+						throw new Error ("Unkown node type or proto '" + nodeTypeId + "', you probably have insufficient component/profile statements.");
 				}
 
 				if (nodeNameId .length)

@@ -784,7 +784,7 @@ function ($,
 				var node = this .getExecutionContext () .createNode (xmlElement .nodeName, false);
 
 				if (! node)
-					throw new Error ("Unkown node type '" + xmlElement .nodeName + "'.");
+					throw new Error ("Unkown node type '" + xmlElement .nodeName + "', you probably have insufficient component/profile statements.");
 
 				//AP: attach node to DOM xmlElement for access from DOM.
 				xmlElement .x3d = node;
