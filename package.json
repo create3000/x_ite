@@ -29,6 +29,10 @@
 		{
 			"name": "John Carlson",
 			"email": "yottzumm@gmail.com"
+		},
+		{
+			"name": "Simon Place",
+			"url": "https://github.com/splace"
 		}
 	],
 	"bugs": {
