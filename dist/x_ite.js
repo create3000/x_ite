@@ -1,4 +1,4 @@
-/* X_ITE v4.5.11-832 */
+/* X_ITE v4.5.12-833 */
 
 (function () {
 
@@ -13253,7 +13253,7 @@ function (X3DConstants)
 		this .units                 = true;
 		this .unitCategories        = [ ];
 
-		this .names .set (null, new Map ())
+		this .names .set (null, new Map ());
 	}
 
 	Generator .prototype =
@@ -15146,15 +15146,19 @@ function (Color3,
 
 	function SFColor (r, g, b)
 	{
-		if (arguments .length)
+		switch (arguments .length)
 		{
-			if (arguments [0] instanceof Color3)
+			case 0:
+				return X3DField .call (this, new Color3 ());
+
+			case 1:
 				return X3DField .call (this, arguments [0]);
-			else
+
+			case 3:
 				return X3DField .call (this, new Color3 (r * 1, g * 1, b * 1));
 		}
 
-		return X3DField .call (this, new Color3 ());
+		throw new Error ("Invalid arguments.");
 	}
 
 	SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -15198,11 +15202,11 @@ function (Color3,
 		},
 		lerp: (function ()
 		{
-			var	
+			var
 				s = [ ],
 				d = [ ],
 				r = [ ];
-     
+
 			return function (destination, t)
 			{
 				var result = new SFColor ();
@@ -15210,9 +15214,9 @@ function (Color3,
 				this .getValue () .getHSV (s),
 				destination .getValue () .getHSV (d),
 				Color3 .lerp (s, d, t, r),
-	
+
 				result .setHSV (r [0], r [1], r [2], r [3]);
-	
+
 				return result;
 			};
 		})(),
@@ -15550,15 +15554,19 @@ function (X3DField,
 
 	function SFColorRGBA (r, g, b, a)
 	{
-		if (arguments .length)
+		switch (arguments .length)
 		{
-			if (arguments [0] instanceof Color4)
+			case 0:
+				return X3DField .call (this, new Color4 ());
+
+			case 1:
 				return X3DField .call (this, arguments [0]);
-			else
+
+			case 4:
 				return X3DField .call (this, new Color4 (r * 1, g * 1, b * 1, a * 1));
 		}
 
-		return X3DField .call (this, new Color4 ());
+		throw new Error ("Invalid arguments.");
 	}
 
 	SFColorRGBA .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -15597,11 +15605,11 @@ function (X3DField,
 		},
 		lerp: (function ()
 		{
-			var	
+			var
 				s = [ ],
 				d = [ ],
 				r = [ ];
-     
+
 			return function (destination, t)
 			{
 				var result = new SFColorRGBA ();
@@ -15609,9 +15617,9 @@ function (X3DField,
 				this .getValue () .getHSVA (s),
 				destination .getValue () .getHSVA (d),
 				Color4 .lerp (s, d, t, r),
-	
+
 				result .setHSVA (r [0], r [1], r [2], r [3]);
-	
+
 				return result;
 			};
 		})(),
@@ -17043,15 +17051,19 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 	{
 		function SFVec2 (x, y)
 		{
-			if (arguments .length)
+			switch (arguments .length)
 			{
-				if (arguments [0] instanceof Vector2)
+				case 0:
+					return X3DField .call (this, new Vector2 (0, 0));
+
+				case 1:
 					return X3DField .call (this, arguments [0]);
 
-				return X3DField .call (this, new Vector2 (x * 1, y * 1));
+				case 2:
+					return X3DField .call (this, new Vector2 (x * 1, y * 1));
 			}
 
-			return X3DField .call (this, new Vector2 (0, 0));
+			throw new Error ("Invalid arguments.");
 		}
 
 		SFVec2 .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -17067,7 +17079,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 				return Type;
 			},
 		});
-	
+
 		var x = {
 			get: function ()
 			{
@@ -17081,7 +17093,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 			enumerable: true,
 			configurable: false
 		};
-	
+
 		var y = {
 			get: function ()
 			{
@@ -17095,13 +17107,13 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 			enumerable: true,
 			configurable: false
 		};
-	
+
 		Object .defineProperty (SFVec2 .prototype, "x", x);
 		Object .defineProperty (SFVec2 .prototype, "y", y);
-	
+
 		x .enumerable = false;
 		y .enumerable = false;
-	
+
 		Object .defineProperty (SFVec2 .prototype, "0", x);
 		Object .defineProperty (SFVec2 .prototype, "1", y);
 
@@ -18910,22 +18922,26 @@ function (X3DField,
 	function SFMatrix3Template (TypeName, Type, SFVec2)
 	{
 		function SFMatrix3 (m00, m01, m02,
-	                       m10, m11, m12,
-	                       m20, m21, m22)
+		                    m10, m11, m12,
+		                    m20, m21, m22)
 		{
-			if (arguments .length)
+			switch (arguments .length)
 			{
-				if (arguments [0] instanceof Matrix3)
+				case 0:
+					return X3DField .call (this, new Matrix3 ());
+
+				case 1:
 					return X3DField .call (this, arguments [0]);
-	
-				return X3DField .call (this, new Matrix3 (m00 * 1, m01 * 1, m02 * 1,
-	                                                   m10 * 1, m11 * 1, m12 * 1,
-	                                                   m20 * 1, m21 * 1, m22 * 1));
+
+				case 9:
+					return X3DField .call (this, new Matrix3 (m00 * 1, m01 * 1, m02 * 1,
+					                                          m10 * 1, m11 * 1, m12 * 1,
+					                                          m20 * 1, m21 * 1, m22 * 1));
 			}
 
-			return X3DField .call (this, new Matrix3 ());
+			throw new Error ("Invalid arguments.");
 		}
-	
+
 		SFMatrix3 .prototype = Object .assign (Object .create (X3DField .prototype),
 			SFMatrixPrototypeTemplate (Matrix3, SFVec2),
 		{
@@ -18945,11 +18961,11 @@ function (X3DField,
 				scale            = scale            ? scale            .getValue () : null;
 				scaleOrientation = scaleOrientation ? scaleOrientation              : 0;
 				center           = center           ? center           .getValue () : null;
-	
+
 				this .getValue () .set (translation, rotation, scale, scaleOrientation, center);
 			},
 		});
-	
+
 		function defineProperty (i)
 		{
 			Object .defineProperty (SFMatrix3 .prototype, i,
@@ -18967,7 +18983,7 @@ function (X3DField,
 				configurable: false
 			});
 		}
-	
+
 		for (var i = 0; i < Matrix3 .prototype .length; ++ i)
 			defineProperty (i);
 
@@ -19046,17 +19062,21 @@ function (X3DField,
 	{
 		function SFVec3 (x, y, z)
 		{
-			if (arguments .length)
+			switch (arguments .length)
 			{
-				if (arguments [0] instanceof Vector3)
+				case 0:
+					return X3DField .call (this, new Vector3 (0, 0, 0));
+
+				case 1:
 					return X3DField .call (this, arguments [0]);
 
-				return X3DField .call (this, new Vector3 (x * 1, y * 1, z * 1));
+				case 3:
+					return X3DField .call (this, new Vector3 (x * 1, y * 1, z * 1));
 			}
 
-			return X3DField .call (this, new Vector3 (0, 0, 0));
+			throw new Error ("Invalid arguments.");
 		}
-	
+
 		SFVec3 .prototype = Object .assign (Object .create (X3DField .prototype),
 			SFVecPrototypeTemplate (Vector3),
 		{
@@ -19074,7 +19094,7 @@ function (X3DField,
 				return new (this .constructor) (Vector3 .cross (this .getValue (), vector .getValue ()));
 			},
 		});
-	
+
 		var x = {
 			get: function ()
 			{
@@ -19088,7 +19108,7 @@ function (X3DField,
 			enumerable: true,
 			configurable: false
 		};
-	
+
 		var y = {
 			get: function ()
 			{
@@ -19102,7 +19122,7 @@ function (X3DField,
 			enumerable: true,
 			configurable: false
 		};
-	
+
 		var z = {
 			get: function ()
 			{
@@ -19116,15 +19136,15 @@ function (X3DField,
 			enumerable: true,
 			configurable: false
 		};
-	
+
 		Object .defineProperty (SFVec3 .prototype, "x", x);
 		Object .defineProperty (SFVec3 .prototype, "y", y);
 		Object .defineProperty (SFVec3 .prototype, "z", z);
-	
+
 		x .enumerable = false;
 		y .enumerable = false;
 		z .enumerable = false;
-	
+
 		Object .defineProperty (SFVec3 .prototype, "0", x);
 		Object .defineProperty (SFVec3 .prototype, "1", y);
 		Object .defineProperty (SFVec3 .prototype, "2", z);
@@ -21080,7 +21100,7 @@ function (Vector3,
 				if (scale            === null) scale            = dummyScale;
 				if (scaleOrientation === null) scaleOrientation = dummyScaleOrientation;
 				if (center           === null) center           = dummyCenter;
-	
+
 				switch (arguments .length)
 				{
 					case 1:
@@ -21110,11 +21130,11 @@ function (Vector3,
 					case 5:
 					{
 						var m = new Matrix4 ();
-	
+
 						m .set (c .assign (center) .negate ());
 						m .multLeft (this);
 						m .translate (center);
-	
+
 						m .get (translation, rotation, scale, scaleOrientation);
 						break;
 					}
@@ -21174,40 +21194,40 @@ function (Vector3,
 			{
 				// (1) Get translation.
 				translation .set (this [12], this [13], this [14]);
-	
+
 				// (2) Create 3x3 matrix.
 				var a = this .submatrix;
-	
+
 				// (3) Compute det A. If negative, set sign = -1, else sign = 1
 				var det      = a .determinant ();
 				var det_sign = det < 0 ? -1 : 1;
-	
+
 				if (det === 0)
 					throw new Error ("Matrix4 .factor: determinant is 0.");
-	
+
 				// (4) B = A * !A  (here !A means A transpose)
 				b .assign (a) .transpose () .multLeft (a);
 				var e = eigendecomposition (b, eigen);
-	
+
 				// Find min / max eigenvalues and do ratio test to determine singularity.
-	
+
 				scaleOrientation .set (e .vectors [0] [0], e .vectors [0] [1], e .vectors [0] [2],
 				                       e .vectors [1] [0], e .vectors [1] [1], e .vectors [1] [2],
 				                       e .vectors [2] [0], e .vectors [2] [1], e .vectors [2] [2]);
-	
+
 				// Compute s = sqrt(evalues), with sign. Set si = s-inverse
-	
+
 				scale .x = det_sign * Math .sqrt (e .values [0]);
 				scale .y = det_sign * Math .sqrt (e .values [1]);
 				scale .z = det_sign * Math .sqrt (e .values [2]);
-	
+
 				si [0] = 1 / scale .x;
 				si [4] = 1 / scale .y;
 				si [8] = 1 / scale .z;
-	
+
 				// (5) Compute U = !R ~S R A.
 				rotation .assign (sosi .assign (scaleOrientation) .multRight (si) .transpose () .multLeft (scaleOrientation) .multRight (a));
-	
+
 				scaleOrientation .transpose ();
 				return true;
 			};
@@ -21264,13 +21284,13 @@ function (Vector3,
 		transpose: function ()
 		{
 			var tmp;
-			
-			tmp = this [ 1]; this [ 1] = this [ 4]; this [ 1] = tmp;
-			tmp = this [ 2]; this [ 2] = this [ 8]; this [ 2] = tmp;
-			tmp = this [ 3]; this [ 3] = this [12]; this [ 3] = tmp;
-			tmp = this [ 6]; this [ 6] = this [ 9]; this [ 6] = tmp;
-			tmp = this [ 7]; this [ 7] = this [13]; this [ 7] = tmp;
-			tmp = this [11]; this [11] = this [14]; this [11] = tmp;
+
+			tmp = this [ 1]; this [ 1] = this [ 4]; this [ 4] = tmp;
+			tmp = this [ 2]; this [ 2] = this [ 8]; this [ 8] = tmp;
+			tmp = this [ 3]; this [ 3] = this [12]; this [12] = tmp;
+			tmp = this [ 6]; this [ 6] = this [ 9]; this [ 9] = tmp;
+			tmp = this [ 7]; this [ 7] = this [13]; this [13] = tmp;
+			tmp = this [11]; this [11] = this [14]; this [14] = tmp;
 
 			return this;
 		},
@@ -21422,7 +21442,7 @@ function (Vector3,
 				vector .x = (x * this [0] + y * this [4] + z * this [ 8] + this [12]) * w;
 				vector .y = (x * this [1] + y * this [5] + z * this [ 9] + this [13]) * w;
 				vector .z = (x * this [2] + y * this [6] + z * this [10] + this [14]) * w;
-				
+
 				return vector;
 			}
 
@@ -21455,7 +21475,7 @@ function (Vector3,
 
 				return vector;
 			}
-			
+
 			var
 				x = vector .x,
 				y = vector .y,
@@ -21902,24 +21922,28 @@ function (X3DField,
 	function SFMatrix4Template (TypeName, Type, SFVec3)
 	{
 		function SFMatrix4 (m00, m01, m02, m03,
-	                       m10, m11, m12, m13,
-	                       m20, m21, m22, m23,
-	                       m30, m31, m32, m33)
+		                    m10, m11, m12, m13,
+		                    m20, m21, m22, m23,
+		                    m30, m31, m32, m33)
 		{
-			if (arguments .length)
+			switch (arguments .length)
 			{
-				if (arguments [0] instanceof Matrix4)
+				case 0:
+					return X3DField .call (this, new Matrix4 ());
+
+				case 1:
 					return X3DField .call (this, arguments [0]);
-	
-				return X3DField .call (this, new Matrix4 (m00 * 1, m01 * 1, m02 * 1, m03 * 1,
-	                                                   m10 * 1, m11 * 1, m12 * 1, m13 * 1,
-	                                                   m20 * 1, m21 * 1, m22 * 1, m23 * 1,
-	                                                   m30 * 1, m31 * 1, m32 * 1, m33 * 1));
+
+				case 16:
+					return X3DField .call (this, new Matrix4 (m00 * 1, m01 * 1, m02 * 1, m03 * 1,
+					                                          m10 * 1, m11 * 1, m12 * 1, m13 * 1,
+					                                          m20 * 1, m21 * 1, m22 * 1, m23 * 1,
+					                                          m30 * 1, m31 * 1, m32 * 1, m33 * 1));
 			}
 
-			return X3DField .call (this, new Matrix4 ());
+			throw new Error ("Invalid arguments.");
 		}
-	
+
 		SFMatrix4 .prototype = Object .assign (Object .create (X3DField .prototype),
 			SFMatrixPrototypeTemplate (Matrix4, SFVec3),
 		{
@@ -21933,7 +21957,7 @@ function (X3DField,
 				return Type;
 			},
 		});
-	
+
 		function defineProperty (i)
 		{
 			Object .defineProperty (SFMatrix4 .prototype, i,
@@ -21951,7 +21975,7 @@ function (X3DField,
 				configurable: false
 			});
 		}
-	
+
 		for (var i = 0; i < Matrix4 .prototype .length; ++ i)
 			defineProperty (i);
 
@@ -22494,18 +22518,23 @@ function (SFVec3,
 	{
 		switch (arguments .length)
 		{
+			case 0:
+				return X3DField .call (this, new Rotation4 ());
+
 			case 1:
 				return X3DField .call (this, arguments [0]);
+
 			case 2:
 				if (arguments [1] instanceof SFVec3f)
 					return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] .getValue ()));
 
 				return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] * 1));
+
 			case 4:
 				return X3DField .call (this, new Rotation4 (x * 1, y * 1, z * 1, angle * 1));
-			default:
-				return X3DField .call (this, new Rotation4 ());
 		}
+
+		throw new Error ("Invalid arguments.");
 	}
 
 	SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -22957,17 +22986,21 @@ function (X3DField,
 	{
 		function SFVec4 (x, y, z, w)
 		{
-			if (arguments .length)
+			switch (arguments .length)
 			{
-				if (arguments [0] instanceof Vector4)
+				case 0:
+					return X3DField .call (this, new Vector4 (0, 0, 0, 0));
+
+				case 1:
 					return X3DField .call (this, arguments [0]);
 
-				return X3DField .call (this, new Vector4 (x * 1, y * 1, z * 1, w * 1));
+				case 4:
+					return X3DField .call (this, new Vector4 (x * 1, y * 1, z * 1, w * 1));
 			}
 
-			return X3DField .call (this, new Vector4 (0, 0, 0, 0));
+			throw new Error ("Invalid arguments.");
 		}
-	
+
 		SFVec4 .prototype = Object .assign (Object .create (X3DField .prototype),
 			SFVecPrototypeTemplate (Vector4),
 		{
@@ -22981,7 +23014,7 @@ function (X3DField,
 				return Type;
 			},
 		});
-	
+
 		var x = {
 			get: function ()
 			{
@@ -22995,7 +23028,7 @@ function (X3DField,
 			enumerable: true,
 			configurable: false
 		};
-	
+
 		var y = {
 			get: function ()
 			{
@@ -23009,7 +23042,7 @@ function (X3DField,
 			enumerable: true,
 			configurable: false
 		};
-	
+
 		var z = {
 			get: function ()
 			{
@@ -23023,7 +23056,7 @@ function (X3DField,
 			enumerable: true,
 			configurable: false
 		};
-	
+
 		var w = {
 			get: function ()
 			{
@@ -23037,17 +23070,17 @@ function (X3DField,
 			enumerable: true,
 			configurable: false
 		};
-	
+
 		Object .defineProperty (SFVec4 .prototype, "x", x);
 		Object .defineProperty (SFVec4 .prototype, "y", y);
 		Object .defineProperty (SFVec4 .prototype, "z", z);
 		Object .defineProperty (SFVec4 .prototype, "w", w);
-	
+
 		x .enumerable = false;
 		y .enumerable = false;
 		z .enumerable = false;
 		w .enumerable = false;
-	
+
 		Object .defineProperty (SFVec4 .prototype, "0", x);
 		Object .defineProperty (SFVec4 .prototype, "1", y);
 		Object .defineProperty (SFVec4 .prototype, "2", z);
@@ -25135,7 +25168,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.5.11";
+	return "4.5.12";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -33059,8 +33092,6 @@ function (Fields,
 		constructor: ComponentInfo,
 		toVRMLStream: function (stream)
 		{
-			var generator = Generator .Get (stream);
-
 			stream .string += "COMPONENT";
 			stream .string += " ";
 			stream .string += this .name;
@@ -33089,6 +33120,7 @@ function (Fields,
 
 	return ComponentInfo;
 });
+
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -33244,8 +33276,6 @@ function (Generator)
 		constructor: UnitInfo,
 		toVRMLStream: function (stream)
 		{
-			var generator = Generator .Get (stream);
-
 			stream .string += "UNIT";
 			stream .string += " ";
 			stream .string += this .category;
@@ -33285,6 +33315,7 @@ function (Generator)
 
 	return UnitInfo;
 });
+
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -38154,7 +38185,7 @@ function (Fields,
 					baseNode = this .getExecutionContext () .createProto (nodeTypeId, false);
 
 					if (! baseNode)
-						throw new Error ("Unkown node type or proto '" + nodeTypeId + "'.");
+						throw new Error ("Unkown node type or proto '" + nodeTypeId + "', you probably have insufficient component/profile statements.");
 				}
 
 				if (nodeNameId .length)
@@ -42926,7 +42957,7 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DBindableNode .prototype .initialize .call (this);
-		
+
 			this .timeSensor .stopTime_ = 1;
 			this .timeSensor .setup ();
 
@@ -43058,14 +43089,14 @@ function (Fields,
 					if (this .jump_ .getValue ())
 					{
 						var layers = this .getLayers ();
-	
+
 						if (! this .retainUserOffsets_ .getValue ())
 							this .resetUserOffsets ();
-		
+
 						for (var i = 0; i < layers .length; ++ i)
 						{
 							var navigationInfo = layers [i] .getNavigationInfo ();
-	
+
 							navigationInfo .transitionStart_ = true;
 
 							var
@@ -43093,7 +43124,7 @@ function (Fields,
 							{
 								for (var i = 0; i < layers .length; ++ i)
 									layers [i] .getNavigationInfo () .transitionComplete_ = true;
-	
+
 								return;
 							}
 							case "ANIMATE":
@@ -43108,35 +43139,35 @@ function (Fields,
 								break;
 							}
 						}
-						
+
 						this .timeSensor .cycleInterval_ = transitionTime;
 						this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
 						this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
 						this .timeSensor .isActive_ .addInterest ("set_active__", this);
-	
+
 						this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-	
+
 						this .positionInterpolator         .keyValue_ = new Fields .MFVec3f    (relativePosition,         this .positionOffset_);
 						this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (relativeOrientation,      this .orientationOffset_);
 						this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f    (relativeScale,            this .scaleOffset_);
 						this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (relativeScaleOrientation, this .scaleOrientationOffset_);
-	
+
 						this .positionOffset_         = relativePosition;
 						this .orientationOffset_      = relativeOrientation;
 						this .scaleOffset_            = relativeScale;
 						this .scaleOrientationOffset_ = relativeScaleOrientation;
-	
+
 						this .setInterpolators (fromViewpoint);
 					}
 					else
 					{
 						this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
-		 
+
 						this .positionOffset_         = relativePosition;
 						this .orientationOffset_      = relativeOrientation;
 						this .scaleOffset_            = relativeScale;
 						this .scaleOrientationOffset_ = relativeScaleOrientation;
-	
+
 						this .setInterpolators (fromViewpoint);
 					}
 				}
@@ -43176,13 +43207,13 @@ function (Fields,
 			{
 				if (! this .getBrowser () .getActiveLayer ())
 					return;
-	
+
 				this .getCameraSpaceMatrix () .multVecMatrix (point);
 
 				Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
 
 				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
-		
+
 				this .lookAt (point, minDistance, factor, straighten);
 			}
 			catch (error)
@@ -43198,9 +43229,9 @@ function (Fields,
 					return;
 
 				bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
-		
+
 				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
-		
+
 				this .lookAt (bbox .center, minDistance, factor, straighten);
 			}
 			catch (error)
@@ -43216,27 +43247,27 @@ function (Fields,
 			{
 				layer .getNavigationInfo () .transitionStart_ = true;
 			});
-		
+
 			this .timeSensor .cycleInterval_ = 0.2;
 			this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
 			this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
 			this .timeSensor .isActive_ .addInterest ("set_active__", this);
-	
+
 			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
 			var
 				translation = Vector3 .lerp (this .positionOffset_ .getValue (), offset, factor),
 				direction   = Vector3 .add (this .getPosition (), translation) .subtract (point),
 				rotation    = Rotation4 .multRight (this .orientationOffset_ .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
-		
+
 			if (straighten)
 				rotation = Rotation4 .inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Rotation4 .multRight (this .getOrientation (), rotation)));
-		
+
 			this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, translation);
 			this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
 			this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
 			this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
-			
+
 			this .setInterpolators (this);
 
 			this .centerOfRotationOffset_ = Vector3 .subtract (point, this .getCenterOfRotation ());
@@ -43255,18 +43286,18 @@ function (Fields,
 			this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
 			this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
 			this .timeSensor .isActive_ .addInterest ("set_active__", this);
-			
+
 			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
-		
+
 			var rotation = Rotation4 .multRight (Rotation4 .inverse (this .getOrientation ()), this .straightenHorizon (this .getUserOrientation ()));
 
 			this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, this .positionOffset_);
 			this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
 			this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
 			this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
-	
+
 			this .setInterpolators (this);
-		
+
 			this .set_bind_ = true;
 		},
 		straightenHorizon: (function ()
@@ -43274,7 +43305,6 @@ function (Fields,
 			var
 				localXAxis = new Vector3 (0, 0, 0),
 				localZAxis = new Vector3 (0, 0, 0),
-				vector     = new Vector3 (0, 0, 0),
 				rotation   = new Rotation4 (0, 0, 1, 0);
 
 			return function (orientation)
@@ -43289,7 +43319,7 @@ function (Fields,
 					return orientation;
 
 				rotation .setFromToVec (localXAxis, vector);
-	
+
 				return orientation .multRight (rotation);
 			};
 		})(),
@@ -43342,8 +43372,6 @@ function (Fields,
 
 	return X3DViewpointNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -45603,8 +45631,8 @@ define ('x_ite/Components/Shaders/ComposedShader',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DShaderNode, 
-          X3DProgrammableShaderObject, 
+          X3DShaderNode,
+          X3DProgrammableShaderObject,
           LoadSensor,
           X3DCast,
           X3DConstants)
@@ -45713,7 +45741,7 @@ function (Fields,
 					this .removeShaderFields ();
 
 				this .program = program;
-	
+
 				for (var i = 0, length = parts .length; i < length; ++ i)
 				{
 					var partNode = X3DCast (X3DConstants .ShaderPart, parts [i]);
@@ -45724,14 +45752,14 @@ function (Fields,
 						gl .attachShader (program, partNode .getShader ());
 					}
 				}
-	
+
 				if (valid)
 				{
 					this .bindAttributeLocations (gl, program);
 
 					gl .linkProgram (program);
 
-					valid = valid && gl .getProgramParameter (program, gl .LINK_STATUS);
+					valid = gl .getProgramParameter (program, gl .LINK_STATUS);
 				}
 
 				if (valid)
@@ -45741,7 +45769,7 @@ function (Fields,
 					// Initialize uniform variables and attributes
 					if (this .getDefaultUniforms ())
 					{
-						// Setup user-defined fields. 
+						// Setup user-defined fields.
 						this .addShaderFields ();
 					}
 					else
@@ -47764,7 +47792,7 @@ function ($,
 				var node = this .getExecutionContext () .createNode (xmlElement .nodeName, false);
 
 				if (! node)
-					throw new Error ("Unkown node type '" + xmlElement .nodeName + "'.");
+					throw new Error ("Unkown node type '" + xmlElement .nodeName + "', you probably have insufficient component/profile statements.");
 
 				//AP: attach node to DOM xmlElement for access from DOM.
 				xmlElement .x3d = node;
@@ -63979,7 +64007,6 @@ function (Fields,
 			{
 				var
 					polygon   = polygons [p],
-					vertices  = polygon .vertices,
 					triangles = polygon .triangles,
 					face      = polygon .face;
 
@@ -65901,7 +65928,7 @@ function ($,
           X3DBaseNode)
 {
 "use strict";
-	
+
 	function PointingDevice (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
@@ -65949,7 +65976,7 @@ function ($,
 			{
 				var
 					element = browser .getElement (),
-					offset  = element .offset (), 
+					offset  = element .offset (),
 					x       = event .pageX - offset .left,
 					y       = element .height () - (event .pageY - offset .top);
 
@@ -65973,16 +66000,16 @@ function ($,
 		mouseup: function (event)
 		{
 			event .preventDefault ();
-	
+
 			if (event .button === 0)
 			{
 				var
 					browser = this .getBrowser (),
 					element = browser .getElement (),
-					offset  = element .offset (), 
+					offset  = element .offset (),
 					x       = event .pageX - offset .left,
 					y       = element .height () - (event .pageY - offset .top);
-			
+
 				$(document) .unbind (".PointingDevice"   + this .getId ());
 				element .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 
@@ -66012,7 +66039,7 @@ function ($,
 
 			var
 				element = browser .getElement (),
-				offset  = element .offset (), 
+				offset  = element .offset (),
 				x       = event .pageX - offset .left,
 				y       = element .height () - (event .pageY - offset .top);
 
@@ -66044,8 +66071,6 @@ function ($,
 		},
 		touchend: function (event)
 		{
-			var browser = this .getBrowser ();
-
 			event .button = 0;
 			this .mouseup (event);
 		},
@@ -66062,7 +66087,7 @@ function ($,
 					event .button = 0;
 					event .pageX  = touches [0] .pageX;
 					event .pageY  = touches [0] .pageY;
-		
+
 					this .mousemove (event);
 					break;
 				}
@@ -66821,7 +66846,7 @@ function (X3DBaseNode,
           ViewVolume)
 {
 "use strict";
-	
+
 	var
 		axis     = new Vector3 (0, 0, 0),
 		distance = new Vector3 (0, 0, 0),
@@ -66900,20 +66925,15 @@ function (X3DBaseNode,
 
 			return vector .set (x, y, tbProjectToSphere (0.5, x, y));
 		},
-		lookAtPoint: (function ()
+		lookAtPoint: function (x, y, straightenHorizon)
 		{
-			var bbox = new Box3 ();
+			if (! this .touch (x, y))
+				return;
 
-			return function (x, y, straightenHorizon)
-			{
-				if (! this .touch (x, y))
-					return;
-	
-				var hit = this .getBrowser () .getNearestHit ();
+			var hit = this .getBrowser () .getNearestHit ();
 
-				this .getActiveViewpoint () .lookAtPoint (hit .intersection .point, 2 - 1.618034, straightenHorizon);
-			};
-		})(),
+			this .getActiveViewpoint () .lookAtPoint (hit .intersection .point, 2 - 1.618034, straightenHorizon);
+		},
 		lookAtBBox: (function ()
 		{
 			var bbox = new Box3 ();
@@ -66922,7 +66942,7 @@ function (X3DBaseNode,
 			{
 				if (! this .touch (x, y))
 					return;
-	
+
 				var hit = this .getBrowser () .getNearestHit ();
 
 				hit .shape .getBBox (bbox) .multRight (hit .modelViewMatrix);
@@ -66933,7 +66953,7 @@ function (X3DBaseNode,
 		touch: function (x, y)
 		{
 			this .getBrowser () .touch (x, y);
-		
+
 			return this .getBrowser () .getHits () .length;
 		},
 		dispose: function () { },
@@ -73890,7 +73910,6 @@ function (TextAlignment,
 "use strict";
 
 	var
-		glyphCache  = { },
 		bbox        = new Box2 (),
 		lineBBox    = new Box2 (),
 		min         = new Vector2 (0, 0),
@@ -73968,7 +73987,7 @@ function (TextAlignment,
 				text      = this .text,
 				fontStyle = this .fontStyle,
 				numLines  = text .string_ .length;
-			
+
 			text .lineBounds_ .length = numLines;
 			this .glyphs      .length = 0;
 
@@ -73993,7 +74012,7 @@ function (TextAlignment,
 				var
 					string   = text .string_,
 					numChars = 0;
-			
+
 				for (var i = 0, length = string .length; i < length; ++ i)
 					numChars += string [i] .length;
 
@@ -74022,7 +74041,7 @@ function (TextAlignment,
 				topToBottom = fontStyle .topToBottom_ .getValue (),
 				scale       = fontStyle .getScale (),
 				spacing     = fontStyle .spacing_ .getValue ();
-			
+
 			bbox .set ();
 
 			// Calculate bboxes.
@@ -74049,7 +74068,7 @@ function (TextAlignment,
 				var
 					charSpacing = 0,
 					length      = text .getLength (l);
-	
+
 				lineBound .set (size .x, lineNumber == 0 ? max .y - font .descender / font .unitsPerEm : spacing) .multiply (scale);
 
 				if (maxExtent)
@@ -74140,7 +74159,7 @@ function (TextAlignment,
 			                        max3 .set (max .x, max .y, 0));
 		},
 		vertical: function (text, fontStyle)
-		{		
+		{
 			var
 				font             = fontStyle .getFont (),
 				string           = text .string_,
@@ -74152,9 +74171,9 @@ function (TextAlignment,
 				spacing          = fontStyle .spacing_ .getValue (),
 				yPad             = this .yPad,
 				primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality ();
-	
+
 			bbox .set ();
-		
+
 			// Calculate bboxes.
 
 			var
@@ -74172,9 +74191,9 @@ function (TextAlignment,
 					numChars = glyphs .length;
 
 				// Calculate line bbox
-		
+
 				lineBBox .set ();
-		
+
 				var
 					firstG = topToBottom ? 0 : numChars - 1,
 					lastG  = topToBottom ? numChars : -1,
@@ -74187,11 +74206,11 @@ function (TextAlignment,
 					// Get glyph extents.
 
 					this .getGlyphExtents (font, glyph, primitiveQuality, min, max);
-		
+
 					size .assign (max) .subtract (min);
-					
+
 					// Calculate glyph translation
-					
+
 					var glyphNumber = topToBottom ? g : numChars - g - 1;
 
 					this .translations [t] .set ((spacing - size .x - min .x) / 2, -glyphNumber);
@@ -74199,18 +74218,18 @@ function (TextAlignment,
 					// Calculate center.
 
 					center .assign (min) .add (size1_2 .assign (size) .divide (2)) .add (this .translations [t]);
-		
+
 					// Add bbox.
-		
+
 					lineBBox .add (box2 .set (size, center));
 				}
-							
+
 				// Get line extents.
-		
+
 				lineBBox .getExtents (min, max);
-		
+
 				size .assign (max) .subtract (min);
-	
+
 				// Calculate charSpacing and lineBounds.
 
 				var
@@ -74225,11 +74244,11 @@ function (TextAlignment,
 				{
 					if (length)
 						length = Math .min (maxExtent, length);
-		
+
 					else
 						length = Math .min (maxExtent, size .y * scale);
 				}
-		
+
 				if (length)
 				{
 					charSpacing  = (length - lineBound .y) / (glyphs .length - 1) / scale;
@@ -74237,11 +74256,11 @@ function (TextAlignment,
 					size .y      = length / scale;
 					min .y       = max .y  - size .y;
 				}
-		
+
 				text .lineBounds_ [l] = lineBound;
-	
+
 				// Calculate line translation.
-				
+
 				switch (fontStyle .getMajorAlignment ())
 				{
 					case TextAlignment .BEGIN:
@@ -74261,11 +74280,11 @@ function (TextAlignment,
 						break;
 					}
 				}
-		
-				// Calculate glyph translation		
-		
+
+				// Calculate glyph translation
+
 				var space = 0;
-		
+
 				for (var tt = t0; tt < t; ++ tt)
 				{
 					this .translations [tt] .add (translation);
@@ -74276,7 +74295,7 @@ function (TextAlignment,
 
 					space += charSpacing;
 				}
-		
+
 				// Calculate ypad to extend line bounds.
 
 				switch (fontStyle .getMajorAlignment ())
@@ -74296,20 +74315,20 @@ function (TextAlignment,
 				// Calculate center.
 
 				center .assign (min) .add (size1_2 .assign (size) .divide (2));
-		
+
 				// Add bbox.
-					
+
 				bbox .add (box2 .set (size .multiply (scale), center .add (translation) .multiply (scale)));
 			}
 
 			// Get text extents.
-		
+
 			bbox .getExtents (min, max);
-		
+
 			size .assign (max) .subtract (min);
-			
+
 			// Extend lineBounds.
-		
+
 			switch (fontStyle .getMajorAlignment ())
 			{
 				case TextAlignment .BEGIN:
@@ -74319,7 +74338,7 @@ function (TextAlignment,
 
 					for (var i = 0, length = lineBounds .length; i < length; ++ i)
 						lineBounds [i] .y += max .y - yPad [i] * scale;
-		
+
 					break;
 				}
 				case TextAlignment .MIDDLE:
@@ -74330,15 +74349,15 @@ function (TextAlignment,
 
 					for (var i = 0, length = lineBounds .length; i < length; ++ i)
 						lineBounds [i] .y += yPad [i] * scale - min .y;
-		
+
 					break;
 				}
 			}
-	
+
 			// Calculate text position
-		
+
 			text .textBounds_ = size;
-		
+
 			switch (fontStyle .getMajorAlignment ())
 			{
 				case TextAlignment .BEGIN:
@@ -74352,7 +74371,7 @@ function (TextAlignment,
 					this .bearing .set (-min .x, min .y);
 					break;
 			}
-		
+
 			switch (fontStyle .getMinorAlignment ())
 			{
 				case TextAlignment .BEGIN:
@@ -74366,9 +74385,9 @@ function (TextAlignment,
 					this .minorAlignment .set (-min .x - size .x, 0);
 					break;
 			}
-		
+
 			// Translate bbox by minorAlignment.
-		
+
 			min .add (this .minorAlignment);
 			max .add (this .minorAlignment);
 
@@ -74562,10 +74581,10 @@ function (Fields,
 				var
 					fontStyle = this .getFontStyle (),
 					font      = fontStyle .getFont ();
-	
+
 				if (! font)
 					return;
-	
+
 				var
 					text             = this .getText (),
 					glyphs           = this .getGlyphs (),
@@ -74580,15 +74599,15 @@ function (Fields,
 					texCoordArray    = this .texCoordArray,
 					normalArray      = text .getNormals (),
 					vertexArray      = text .getVertices ();
-	
+
 				// Set texCoords.
-	
+
 				text .getMultiTexCoords () .push (texCoordArray);
-	
+
 				this .getBBox () .getExtents (min, max);
 				text .getMin () .assign (min);
 				text .getMax () .assign (max);
-	
+
 				if (fontStyle .horizontal_ .getValue ())
 				{
 					for (var l = 0, length = glyphs .length; l < length; ++ l)
@@ -74598,31 +74617,31 @@ function (Fields,
 							charSpacing  = charSpacings [l],
 							translation  = translations [l],
 							advanceWidth = 0;
-	
+
 						for (var g = 0, gl = line .length; g < gl; ++ g)
 						{
 							var
 								glyph         = line [g],
 								glyphVertices = this .getGlyphGeometry (font, glyph, primitiveQuality);
-							
+
 							for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
 							{
 								var
 									x = glyphVertices [v] .x * size + minorAlignment .x + translation .x + advanceWidth + g * charSpacing,
 									y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
-			
+
 								texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
 								normalArray   .push (0, 0, 1);
 								vertexArray   .push (x, y, 0, 1);
 							}
-			
+
 							// Calculate advanceWidth.
-			
+
 							var kerning = 0;
-			
+
 							if (g + 1 < line .length)
 								kerning = font .getKerningValue (glyph, line [g + 1]);
-			
+
 							advanceWidth += (glyph .advanceWidth + kerning) * sizeUnitsPerEm;
 						}
 					}
@@ -74635,29 +74654,29 @@ function (Fields,
 						first       = leftToRight ? 0 : text .string_ .length - 1,
 						last        = leftToRight ? text .string_ .length  : -1,
 						step        = leftToRight ? 1 : -1;
-	
+
 					for (var l = first, t = 0; l !== last; l += step)
 					{
 						var line = glyphs [l];
-	
+
 						var
 						   numChars = line .length,
 							firstG   = topToBottom ? 0 : numChars - 1,
 							lastG    = topToBottom ? numChars : -1,
 							stepG    = topToBottom ? 1 : -1;
-	
+
 						for (var g = firstG; g !== lastG; g += stepG, ++ t)
 						{
 							var
 								translation   = translations [t],
 								glyphVertices = this .getGlyphGeometry (font, line [g], primitiveQuality);
-	
+
 							for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
 							{
 								var
 									x = glyphVertices [v] .x * size + minorAlignment .x + translation .x,
 									y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
-				
+
 								texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
 								normalArray   .push (0, 0, 1);
 								vertexArray   .push (x, y, 0, 1);
@@ -74700,7 +74719,7 @@ function (Fields,
 			else
 			{
 				min .set (0, 0, 0);
-				max .set (0, 0, 0);			   
+				max .set (0, 0, 0);
 			}
 
 			var extents = glyphCache .extents = { };
@@ -74733,10 +74752,8 @@ function (Fields,
 			return function (glyph, vertices, primitiveQuality)
 			{
 				// Get curves for the current glyph.
-	
+
 				var
-					fontStyle  = this .getFontStyle (),
-					font       = fontStyle .getFont (),
 					dimension  = this .getBezierDimension (primitiveQuality),
 					path       = glyph .getPath (0, 0, 1),
 					commands   = path .commands,
@@ -74749,7 +74766,7 @@ function (Fields,
 				for (var i = 0, cl = commands .length; i < cl; ++ i)
 				{
 					var command = commands [i];
-										      
+
 					switch (command .type)
 					{
 						case "M": // Start
@@ -74762,12 +74779,12 @@ function (Fields,
 
 								curves .push (points);
 							}
-								
+
 							points = [ ];
 
 							if (command .type === "M")
 								points .push (new Vector3 (command .x, -command .y, 0));
-							
+
 							break;
 						}
 						case "L": // Linear
@@ -74794,7 +74811,7 @@ function (Fields,
 
 							for (var l = 1, ll = lut .length; l < ll; ++ l)
 								points .push (new Vector3 (lut [l] .x, lut [l] .y, 0));
-							
+
 							break;
 						}
 						default:
@@ -74804,21 +74821,21 @@ function (Fields,
 					x = command .x;
 					y = command .y;
 				}
-	
+
 				// Triangulate contours.
-	
+
 				curves = curves .map (function (curve)
 				{
 					Triangle3 .getPolygonNormal (curve, normal);
-	
+
 					if (normal .dot (Vector3 .zAxis) > 0)
 						return curve;
-	
+
 					return curve .reverse ();
 				});
-	
+
 				curves .push (vertices);
-	
+
 				Triangle3 .triangulatePolygon .apply (Triangle3, curves);
 			};
 		})(),
@@ -91448,7 +91465,7 @@ function (X3DConstants,
 "use strict";
 
 	var Fogs = ObjectCache (FogContainer);
-	
+
 	function FogContainer ()
 	{
 		this .fogMatrix = new Float32Array (9);
@@ -91485,9 +91502,7 @@ function (X3DConstants,
 			}
 			else
 			{
-				var
-					color  = fogNode .color_ .getValue (),
-					center = this .center;
+				var color  = fogNode .color_ .getValue ();
 
 				gl .uniform1i        (shaderObject .x3d_FogType,            fogNode .fogType);
 				gl .uniform3f        (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
@@ -91552,8 +91567,6 @@ function (X3DConstants,
 
 	return X3DFogObject;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -92233,10 +92246,7 @@ function (X3DBindableNode,
 
 					// Get background scale.
 
-					var
-						viewpoint      = renderObject .getViewpoint (),
-						navigationInfo = renderObject .getNavigationInfo (),
-						farValue       = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
+					var farValue = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
 
 					// Get projection matrix.
 
@@ -101078,18 +101088,15 @@ function (Fields,
 							});
 						}
 
-						if (child)
-						{
-							var
-								browser          = renderObject .getBrowser (),
-								pickingHierarchy = browser .getPickingHierarchy ();
+						var
+							browser          = renderObject .getBrowser (),
+							pickingHierarchy = browser .getPickingHierarchy ();
 
-							pickingHierarchy .push (this);
+						pickingHierarchy .push (this);
 
-							child .traverse (type, renderObject);
+						child .traverse (type, renderObject);
 
-							pickingHierarchy .pop ();
-						}
+						pickingHierarchy .pop ();
 					}
 					else
 					{
