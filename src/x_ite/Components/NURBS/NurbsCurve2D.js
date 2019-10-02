@@ -60,7 +60,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNurbsControlCurveNode, 
+          X3DNurbsControlCurveNode,
           X3DConstants,
           NURBS,
           Vector3,
@@ -137,7 +137,7 @@ function (Fields,
 
 			if (this .order_ .getValue () < 2)
 				return array;
-		
+
 			if (this .controlPoint_ .length < this .order_ .getValue ())
 				return array;
 
@@ -146,9 +146,9 @@ function (Fields,
 			var
 				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPoint_),
 				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), this .controlPoint_);
-		
+
 			// Knots
-		
+
 			var
 				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPoint_ .length, this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
@@ -205,5 +205,3 @@ function (Fields,
 
 	return NurbsCurve2D;
 });
-
-

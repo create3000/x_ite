@@ -148,6 +148,10 @@ define (function ()
 
 				// Generate faces.
 
+				var
+					uClosed = opts .closed [0],
+					vClosed = opts .closed [1];
+
 				var c = 0;
 
 				for (var i = 0; i < nu; ++ i)

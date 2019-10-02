@@ -52,6 +52,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Browser/NURBS/NURBS",
+	"standard/Math/Algorithm",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Geometry/Triangle3",
 	"nurbs",
@@ -60,6 +61,7 @@ function (X3DParametricGeometryNode,
           X3DConstants,
           X3DCast,
           NURBS,
+          Algorithm,
           Vector3,
           Triangle3,
           nurbs)
@@ -78,7 +80,7 @@ function (X3DParametricGeometryNode,
 		this .weights           = [ ];
 		this .controlPoints     = [ ];
 		this .mesh              = { };
-		this .sampleOptions     = { resolution: [ ] };
+		this .sampleOptions     = { resolution: [ ], closed: [ ] };
 		this .textUKnots        = [ ];
 		this .textVKnots        = [ ];
 		this .textWeights       = [ ];
@@ -228,6 +230,8 @@ function (X3DParametricGeometryNode,
 
 			sampleOptions .resolution [0]  = this .getUTessellation (uKnots .length);
 			sampleOptions .resolution [1]  = this .getVTessellation (vKnots .length);
+			sampleOptions .closed [0]      = uClosed;
+			sampleOptions .closed [1]      = vClosed;
 			sampleOptions .generateNormals = false;
 			sampleOptions .domain          = undefined;
 
@@ -358,7 +362,7 @@ function (X3DParametricGeometryNode,
 				pointIndex .push (i);
 			}
 
-			return this .refineNormals (normalIndex, normals, Math .PI);
+			return this .refineNormals (normalIndex, normals, Algorithm .radians (85));
 		},
 		createFaceNormals: (function ()
 		{
