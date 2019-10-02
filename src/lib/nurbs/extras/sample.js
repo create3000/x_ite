@@ -27,7 +27,7 @@ define (function ()
 	    var
 			ax = a [0], ay = a [1], az = a [2],
 			bx = b [0], by = b [1], bz = b [2];
-	
+
 		out [0] = ay * bz - az * by
 		out [1] = az * bx - ax * bz
 		out [2] = ax * by - ay * bx
@@ -89,7 +89,7 @@ define (function ()
 					for (var d = 0; d < dimension; ++ d)
 						points [ptr + d] = tmp1 [d];
 				}
-	
+
 				points .length = nbVertices;
 				break;
 			}
@@ -117,7 +117,7 @@ define (function ()
 				for (var i = 0; i < nuBound; ++ i)
 				{
 					var u = uDomain [0] + uDistance * i / nu;
-	
+
 					for (var j = 0; j < nvBound; ++ j)
 					{
 						var
@@ -125,7 +125,7 @@ define (function ()
 							ptr = (i + nuBound * j) * dimension;
 
 						surface .evaluate (tmp1, u, v);
-	
+
 						for (var d = 0; d < dimension; ++ d)
 							points [ptr + d] = tmp1 [d];
 
@@ -135,44 +135,44 @@ define (function ()
 								uDer (tmp1, u, v),
 								vDer (tmp2, u, v)
 							));
-		
+
 							normals [ptr]     = tmp1 [0];
 							normals [ptr + 1] = tmp1 [1];
 							normals [ptr + 2] = tmp1 [2];
 						}
 					}
 				}
-	
+
 				points  .length = nbVertices;
 				normals .length = nbNormals;
-				
+
 				// Generate faces.
 
 				var c = 0;
-	
+
 				for (var i = 0; i < nu; ++ i)
 				{
 		        var
 						i0 = i,
 						i1 = i + 1;
-	
+
 					if (uClosed)
 						i1 = i1 % nu;
-	
+
 	            for (var j = 0; j < nv; ++ j)
 					{
 						var j0 = j;
 						var j1 = j + 1;
-	
+
 						if (vClosed)
 							j1 = j1 % nv;
-						
+
 						// Triangle 1
 
 						faces [c ++] = i0 + nuBound * j0; // 1
 						faces [c ++] = i1 + nuBound * j0; // 2
 						faces [c ++] = i1 + nuBound * j1; // 3
-						
+
 						// Triangle 2
 
 						faces [c ++] = i0 + nuBound * j0; // 1
@@ -180,7 +180,7 @@ define (function ()
 						faces [c ++] = i0 + nuBound * j1; // 4
 					}
 				}
-		
+
 				faces .length = c;
 				break;
 			}
