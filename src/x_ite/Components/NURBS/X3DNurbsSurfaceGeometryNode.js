@@ -228,12 +228,13 @@ function (X3DParametricGeometryNode,
 
 			var sampleOptions = this .sampleOptions;
 
-			sampleOptions .resolution [0]  = this .getUTessellation (uKnots .length);
-			sampleOptions .resolution [1]  = this .getVTessellation (vKnots .length);
-			sampleOptions .closed [0]      = uClosed;
-			sampleOptions .closed [1]      = vClosed;
-			sampleOptions .generateNormals = false;
-			sampleOptions .domain          = undefined;
+			sampleOptions .resolution [0]   = this .getUTessellation (uKnots .length);
+			sampleOptions .resolution [1]   = this .getVTessellation (vKnots .length);
+			sampleOptions .closed [0]       = uClosed;
+			sampleOptions .closed [1]       = vClosed;
+			sampleOptions .generateNormals  = false;
+			sampleOptions .domain           = undefined;
+			sampleOptions .trimmingContours = this .getTrimmingContours ();
 
 			var
 				mesh        = nurbs .sample (this .mesh, surface, sampleOptions),
@@ -313,6 +314,8 @@ function (X3DParametricGeometryNode,
 					points: texControlPoints,
 				});
 
+				sampleOptions .closed [0]      = false;
+				sampleOptions .closed [1]      = false;
 				sampleOptions .generateNormals = false;
 
 				var

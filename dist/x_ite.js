@@ -1,4 +1,4 @@
-/* X_ITE v4.5.12-833 */
+/* X_ITE v4.5.14a-834 */
 
 (function () {
 
@@ -25168,7 +25168,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.5.12";
+	return "4.5.14a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -57950,7 +57950,7 @@ function (Vector3,
 					console .log ('error callback');
 					console .log ('error number: ' + errno);
 				}
-		
+
 				// Callback for when segments intersect and must be split.
 				function combineCallback (coords, data, weight)
 				{

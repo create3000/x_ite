@@ -1,5 +1,10 @@
 
-define (function ()
+define ([
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Geometry/Triangle3",
+],
+function (Vector3,
+          Triangle3)
 {
 'use strict';
 
@@ -186,6 +191,79 @@ define (function ()
 				}
 
 				faces .length = c;
+
+				/*
+				// Trimming Contours
+
+				if (DEBUG && opts .trimmingContours)
+				{
+					var holes = [ ];
+
+					var trimmingContours = opts .trimmingContours;
+
+					for (var t = 0, iLength = trimmingContours .length; t < iLength; ++ t)
+					{
+						var
+							trimmingContour = trimmingContours [t],
+							hole            = [ ];
+
+						for (var p = 0, pLength = trimmingContour .length; p < pLength; ++ p)
+						{
+							var point = trimmingContour [p];
+
+							surface .evaluate (tmp1, point .x, point .y);
+
+							for (var d = 0; d < dimension; ++ d)
+								points .push (tmp1 [d]);
+
+							var vertex = new Vector3 (tmp1 [0], tmp1 [1], tmp1 [2]);
+
+							vertex .index = c ++;
+
+							hole .push (vertex);
+						}
+
+						holes .push (hole);
+					}
+
+					var
+						curves    = [ ],
+						triangles = [ ],
+						trimmed   = [ ];
+
+					for (var v = 0, fLength = faces .length; v < fLength; v += 3)
+					{
+						curves    .length = 0;
+						triangles .length = 0;
+
+						var
+							index1 = faces [v]     * 3,
+							index2 = faces [v + 1] * 3,
+							index3 = faces [v + 2] * 3;
+
+						var
+							vertex1 = new Vector3 (points [index1], points [index1 + 1], points [index1 + 2]),
+							vertex2 = new Vector3 (points [index2], points [index2 + 1], points [index2 + 2]),
+							vertex3 = new Vector3 (points [index3], points [index3 + 1], points [index3 + 2]);
+
+						vertex1 .index = v;
+						vertex2 .index = v + 1;
+						vertex3 .index = v + 2;
+
+						curves .push ([ vertex1, vertex2, vertex3 ]);
+						curves .push .apply (curves, holes);
+						curves .push (triangles);
+
+						Triangle3 .triangulatePolygon .apply (Triangle3, curves);
+
+						for (var t = 0, tLength = triangles .length; t < tLength; ++ t)
+							trimmed .push (triangles [t] .index);
+					}
+
+					mesh .faces = trimmed;
+				}
+				*/
+
 				break;
 			}
 			default:

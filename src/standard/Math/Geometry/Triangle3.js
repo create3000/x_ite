@@ -123,7 +123,7 @@ function (Vector3,
 					console .log ('error callback');
 					console .log ('error number: ' + errno);
 				}
-		
+
 				// Callback for when segments intersect and must be split.
 				function combineCallback (coords, data, weight)
 				{
