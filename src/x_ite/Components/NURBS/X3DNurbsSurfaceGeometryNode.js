@@ -376,7 +376,7 @@ function (X3DParametricGeometryNode,
 
 			return function (faces, points)
 			{
-				var normals = [ ];
+				var normals = this .faceNormals || [ ];
 
 				for (var i = 0, length = faces .length; i < length; i += 3)
 				{
@@ -389,10 +389,14 @@ function (X3DParametricGeometryNode,
 					v2 .set (points [index2], points [index2 + 1], points [index2 + 2]);
 					v3 .set (points [index3], points [index3 + 1], points [index3 + 2]);
 
-					var normal = Triangle3 .normal (v1, v2 ,v3, new Vector3 (0, 0, 0));
+					var normal = Triangle3 .normal (v1, v2 ,v3, normals [i] || new Vector3 (0, 0, 0));
 
-					normals .push (normal, normal, normal);
+					normals [i]     = normal;
+					normals [i + 1] = normal;
+					normals [i + 2] = normal;
 				}
+
+				normals .length = length;
 
 				return normals;
 			};
