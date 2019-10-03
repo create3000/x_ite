@@ -152,13 +152,13 @@ function (Fields,
 		{
 			return NURBS .getKnots (result, closed, order, dimension, knot);
 		},
-		getWeights: function (result, closed, order, dimension, weight)
+		getWeights: function (result, dimension, weight)
 		{
-			return NURBS .getWeights (result, closed, order, dimension, weight);
+			return NURBS .getWeights (result, dimension, weight);
 		},
-		getControlPoints: function (result, closed, order, controlPointNode)
+		getControlPoints: function (result, closed, order, weights, controlPointNode)
 		{
-			return NURBS .getControlPoints (result, closed, order, controlPointNode);
+			return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
 		},
 		requestRebuild: function ()
 		{
@@ -179,15 +179,14 @@ function (Fields,
 
 			var
 				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
-				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), this .controlPointNode);
+				weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this .weight_),
+				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPointNode);
 
 			// Knots
 
 			var
 				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
-
-			var weights = this .getWeights (this .weights, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .weight_);
 
 			// Initialize NURBS tesselllator
 
@@ -197,7 +196,6 @@ function (Fields,
 				boundary: ["open"],
 				degree: [degree],
 				knots: [knots],
-				weights: weights,
 				points: controlPoints,
 				debug: false,
 			});
@@ -210,13 +208,17 @@ function (Fields,
 			interpolator .key_      .length = 0;
 			interpolator .keyValue_ .length = 0;
 
-			for (var i = 0, length = points .length - 3; i < length; i += 3)
+			for (var i = 0, length = points .length - 4; i < length; i += 4)
 			{
-				var direction = new Vector3 (points [i + 3] - points [i + 0],
-				                             points [i + 4] - points [i + 1],
-				                             points [i + 5] - points [i + 2]);
+				var
+					w1 = points [i + 3],
+					w2 = points [i + 7];
 
-				interpolator .key_      .push (knots [0] + i / (length - 3 + (3 * closed)) * scale);
+				var direction = new Vector3 (points [i + 4] / w2 - points [i + 0] / w1,
+				                             points [i + 5] / w2 - points [i + 1] / w1,
+				                             points [i + 6] / w2 - points [i + 2] / w1);
+
+				interpolator .key_      .push (knots [0] + i / (length - 4 + (4 * closed)) * scale);
 				interpolator .keyValue_. push (new Rotation4 (Vector3 .zAxis, direction));
 			}
 

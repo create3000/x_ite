@@ -121,13 +121,13 @@ function (Fields,
 		{
 			return NURBS .getKnots (result, closed, order, dimension, knot);
 		},
-		getWeights: function (result, closed, order, dimension, weight)
+		getWeights: function (result, dimension, weight)
 		{
-			return NURBS .getWeights (result, closed, order, dimension, weight);
+			return NURBS .getWeights (result, dimension, weight);
 		},
-		getControlPoints: function (result, closed, order, controlPoint)
+		getControlPoints: function (result, closed, order, weights, controlPoint)
 		{
-			return NURBS .getControlPoints2D (result, closed, order, controlPoint);
+			return NURBS .getControlPoints2D (result, closed, order, weights, controlPoint);
 		},
 		tessellate: function (type)
 		{
@@ -145,15 +145,14 @@ function (Fields,
 
 			var
 				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPoint_),
-				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), this .controlPoint_);
+				weights       = this .getWeights (this .weights, this .controlPoint_ .length, this .weight_),
+				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPoint_);
 
 			// Knots
 
 			var
 				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPoint_ .length, this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
-
-			var weights = this .getWeights (this .weights, closed, this .order_ .getValue (), this .controlPoint_ .length, this .weight_);
 
 			// Initialize NURBS tesselllator
 
@@ -163,7 +162,6 @@ function (Fields,
 				boundary: ["open"],
 				degree: [degree],
 				knots: [knots],
-				weights: weights,
 				points: controlPoints,
 				debug: false,
 			});
@@ -178,22 +176,31 @@ function (Fields,
 			{
 				case 0:
 				{
-					for (var i = 0, length = points .length; i < length; i += 2)
-						array .push (points [i], points [i + 1]);
+					for (var i = 0, length = points .length; i < length; i += 3)
+					{
+						var w = points [i + 2];
+						array .push (points [i] / w, points [i + 1] / w);
+					}
 
 					break;
 				}
 				case 1:
 				{
-					for (var i = 0, length = points .length; i < length; i += 2)
-						array .push (points [i], 0, points [i + 1]);
+					for (var i = 0, length = points .length; i < length; i += 3)
+					{
+						var w = points [i + 2];
+						array .push (points [i] / w, 0, points [i + 1] / w);
+					}
 
 					break;
 				}
 				case 2:
 				{
-					for (var i = 0, length = points .length; i < length; i += 2)
-						array .push (new Vector3 (points [i], points [i + 1], 0));
+					for (var i = 0, length = points .length; i < length; i += 3)
+					{
+						var w = points [i + 2];
+						array .push (new Vector3 (points [i] / w, points [i + 1] / w, 0));
+					}
 
 					break;
 				}

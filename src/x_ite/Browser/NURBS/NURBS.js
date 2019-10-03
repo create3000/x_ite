@@ -48,12 +48,10 @@
 
 
 define ([
-	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
 ],
-function (Vector2,
-          Vector3,
+function (Vector3,
           Vector4)
 {
 "use strict";
@@ -137,23 +135,23 @@ function (Vector2,
 			return function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
 			{
 				var haveWeights = weight .length === controlPointNode .getSize ();
-			
+
 				for (var v = 0, length = vDimension; v < length; ++ v)
 				{
 					var
 						first = v * uDimension,
 						last  = v * uDimension + uDimension - 1;
-			
+
 					// Check if first and last weights are unitary.
-			
+
 					if (haveWeights)
 					{
 						if (weight [first] !== weight [last])
 							return false;
 					}
-			
+
 					// Check if first and last point are coincident.
-			
+
 					if (! controlPointNode .get1Point (first, firstPoint) .equals (controlPointNode .get1Point (last, lastPoint)))
 						return false;
 				}
@@ -162,7 +160,7 @@ function (Vector2,
 
 				if (! this .isPeriodic (uOrder, uDimension, uKnot))
 					return false;
-			
+
 				return true;
 			};
 		})(),
@@ -175,32 +173,32 @@ function (Vector2,
 			return function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
 			{
 				var haveWeights = weight .length === controlPointNode .getSize ();
-			
+
 				for (var u = 0, size = uDimension; u < size; ++ u)
 				{
 					var
 						first = u,
 						last  = (vDimension - 1) * uDimension + u;
-			
+
 					// Check if first and last weights are unitary.
-			
+
 					if (haveWeights)
 					{
 						if (weight [first] !== weight [last])
 							return false;
 					}
-			
+
 					// Check if first and last point are coincident.
-			
+
 					if (! controlPointNode .get1Point (first, firstPoint) .equals (controlPointNode .get1Point (last, lastPoint)))
 						return false;
 				}
-			
+
 				// Check if knots are periodic.
-			
+
 				if (! this .isPeriodic (vOrder, vDimension, vKnot))
 					return false;
-	
+
 				return true;
 			};
 		})(),
@@ -248,36 +246,36 @@ function (Vector2,
 
 			// check the knot-vectors. If they are not according to standard
 			// default uniform knot vectors will be generated.
-		
+
 			var generateUniform = true;
-		
+
 			if (knots .length === dimension + order)
 			{
 				generateUniform = false;
-		
+
 				var consecutiveKnots = 0;
-		
+
 				for (var i = 1, length = knots .length; i < length; ++ i)
 				{
 					if (knots [i] == knots [i - 1])
 						++ consecutiveKnots;
 					else
 						consecutiveKnots = 0;
-		
+
 					if (consecutiveKnots > order - 1)
 						generateUniform = true;
-		
+
 					if (knots [i - 1] > knots [i])
 						generateUniform = true;
 				}
 			}
-		
+
 			if (generateUniform)
 			{
 				for (var i = 0, length = dimension + order; i < length; ++ i)
 					knots [i] = i / (length - 1);
 			}
-		
+
 			if (closed)
 			{
 				for (var i = 1, length = order - 1; i < length; ++ i)
@@ -286,80 +284,65 @@ function (Vector2,
 
 			return knots;
 		},
-		getWeights: function (result, closed, order, dimension, weight)
+		getWeights: function (result, dimension, weight)
 		{
-			if (weight .length !== dimension)
-				return undefined;
-
 			var weights = result || [ ];
-		
+
+			if (weight .length !== dimension)
+			{
+				weights .length = dimension;
+				weights .fill (1);
+				return weights;
+			}
+
 			for (var i = 0; i < dimension; ++ i)
 			{
 				weights [i] = weight [i];
 			}
-	
+
 			weights .length = dimension;
 
-			if (closed)
-			{
-				for (var i = 1, size = order - 1; i < size; ++ i)
-					weights .push (weights [i]);
-			}
-
 			return weights;
 		},
-		getUVWeights: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weight)
+		getUVWeights: function (result, uDimension, vDimension, weight)
 		{
-			if (weight .length !== uDimension * vDimension)
-				return undefined;
+			var
+				weights   = result || [ ],
+				dimension = uDimension * vDimension;
 
-			var weights = result || [ ];
-
-			for (var u = 0; u < uDimension; ++ u)
+			if (weight .length !== dimension)
 			{
-				var w = weights [u];
+				weights .length = dimension;
+				weights .fill (1);
+				return weights;
+			}
 
-				if (! w)
-					w = weights [u] = [ ];
-
-				for (var v = 0; v < vDimension; ++ v)
+			for (var u = 0, i = 0; u < uDimension; ++ u)
+			{
+				for (var v = 0; v < vDimension; ++ v, ++ i)
 				{
-					w [v] = weight [v * uDimension + u];
-				}
-
-				w .length = vDimension;
-
-				if (vClosed)
-				{
-					for (var i = 1, length = vOrder - 1; i < length; ++ i)
-						w .push (w [i]);
+					weights [i] = weight [i];
 				}
 			}
-	
-			weights .length = uDimension;
 
-			if (uClosed)
-			{
-				for (var i = 1, length = uOrder - 1; i < length; ++ i)
-					weights .push (weights [i]);
-			}
-	
+			weights .length = dimension;
+
 			return weights;
 		},
-		getControlPoints2D: function (result, closed, order, controlPoint)
+		getControlPoints2D: function (result, closed, order, weights, controlPoint)
 		{
 			var
 				controlPoints     = result || [ ],
 				controlPointArray = controlPoint .getValue (),
 				dimension         = controlPoint .length;
-		
+
 			for (var i = 0; i < dimension; ++ i)
 			{
 				var
 					i2 = i * 2,
-					p  = controlPoints [i] || new Vector2 (0, 0);
+					p  = controlPoints [i] || new Vector3 (0, 0, 0);
 
-				controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1])
+				controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1], weights [i])
 			}
 
 			controlPoints .length = dimension;
@@ -372,17 +355,19 @@ function (Vector2,
 
 			return controlPoints;
 		},
-		getControlPoints: function (result, closed, order, controlPointNode)
+		getControlPoints: function (result, closed, order, weights, controlPointNode)
 		{
 			var
 				controlPoints = result || [ ],
 				dimension     = controlPointNode .getSize ();
-		
+
 			for (var i = 0; i < dimension; ++ i)
 			{
-				controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector3 (0, 0, 0));
+				var cp = controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector4 (0, 0, 0, 0));
+
+				cp .w = weights [i];
 			}
-	
+
 			controlPoints .length = dimension;
 
 			if (closed)
@@ -393,7 +378,7 @@ function (Vector2,
 
 			return controlPoints;
 		},
-		getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+		getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
 		{
 			var controlPoints = result || [ ];
 
@@ -406,7 +391,11 @@ function (Vector2,
 
 				for (var v = 0; v < vDimension; ++ v)
 				{
-					cp [v] = controlPointNode .get1Point (v * uDimension + u, cp [v] || new Vector3 (0, 0, 0));
+					var index = v * uDimension + u;
+
+					cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector4 (0, 0, 0, 0));
+
+					cp [v] .w = weights [index];
 				}
 
 				cp .length = vDimension;
@@ -428,7 +417,7 @@ function (Vector2,
 
 			return controlPoints;
 		},
-		getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+		getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
 		{
 			var controlPoints = result || [ ];
 
@@ -441,7 +430,11 @@ function (Vector2,
 
 				for (var v = 0; v < vDimension; ++ v)
 				{
-					cp [v] = controlPointNode .get1Point (v * uDimension + u, cp [v] || new Vector4 (0, 0, 0, 0));
+					var index = v * uDimension + u;
+
+					cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector4 (0, 0, 0, 0));
+
+					cp [v] .w = weights [index];
 				}
 
 				cp .length = vDimension;

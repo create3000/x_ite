@@ -142,13 +142,13 @@ function (X3DCast,
 
 			return NURBS .getClosed (order, knot, weight, controlPointNode);
 		},
-		getWeights: function (result, closed, order, dimension, weight)
+		getWeights: function (result, dimension, weight)
 		{
-			return NURBS .getWeights (result, closed, order, dimension, weight);
+			return NURBS .getWeights (result, dimension, weight);
 		},
-		getControlPoints: function (result, closed, order, controlPointNode)
+		getControlPoints: function (result, closed, order, weights, controlPointNode)
 		{
-			return NURBS .getControlPoints (result, closed, order, controlPointNode);
+			return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
 		},
 		tessellate: function ()
 		{
@@ -190,15 +190,14 @@ function (X3DCast,
 
 			var
 				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
-				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), this .controlPointNode);
+				weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this .weight_),
+				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPointNode);
 
 			// Knots
 
 			var
 				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
-
-			var weights = this .getWeights (this .weights, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .weight_);
 
 			// Initialize NURBS tesselllator
 
@@ -208,7 +207,6 @@ function (X3DCast,
 				boundary: ["open"],
 				degree: [degree],
 				knots: [knots],
-				weights: weights,
 				points: controlPoints,
 				debug: false,
 			});
@@ -220,12 +218,15 @@ function (X3DCast,
 				points      = mesh .points,
 				vertexArray = this .getVertices ();
 
-			for (var i2= 3, length = points .length; i2 < length; i2 += 3)
+			for (var i2 = 4, length = points .length; i2 < length; i2 += 4)
 			{
-				var i1 = i2 - 3;
+				var
+					i1 = i2 - 4,
+					w1 = points [i1 + 3],
+					w2 = points [i2 + 3];
 
-				vertexArray .push (points [i1], points [i1 + 1], points [i1 + 2], 1);
-				vertexArray .push (points [i2], points [i2 + 1], points [i2 + 2], 1);
+				vertexArray .push (points [i1] / w1, points [i1 + 1] / w1, points [i1 + 2] / w1, 1);
+				vertexArray .push (points [i2] / w2, points [i2 + 1] / w2, points [i2 + 2] / w2, 1);
 			}
 		},
 	});

@@ -58,8 +58,8 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNode, 
-          X3DConstants, 
+          X3DNode,
+          X3DConstants,
           Vector4)
 {
 "use strict";
@@ -103,7 +103,7 @@ function (Fields,
 		{
 			X3DNode .prototype .initialize .call (this);
 		},
-		getControlPoints: function ()
+		getControlPoints: function (texWeights)
 		{
 			var
 				controlPointArray = this .controlPoint_ .getValue (),
@@ -119,10 +119,11 @@ function (Fields,
 				for (var v = 0, vDimension = this .vDimension_ .getValue (); v < vDimension; ++ v)
 				{
 					var
-						p = cp [v] || new Vector4 (),
-						i = (v * uDimension + u) * 2;
+						index = v * uDimension + u,
+						p     = cp [v] || new Vector4 (),
+						i     = index * 2;
 
-					cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, 1);
+					cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, texWeights [index]);
 				}
 			}
 
@@ -132,13 +133,13 @@ function (Fields,
 		{
 			if (this .uOrder_ .getValue () < 2)
 				return false;
-		
+
 			if (this .vOrder_ .getValue () < 2)
 				return false;
-		
+
 			if (this .uDimension_ .getValue () < this .uOrder_ .getValue ())
 				return false;
-		
+
 			if (this .vDimension_ .getValue () < this .vOrder_ .getValue ())
 				return false;
 
@@ -151,5 +152,3 @@ function (Fields,
 
 	return NurbsTextureCoordinate;
 });
-
-

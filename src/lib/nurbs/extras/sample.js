@@ -50,9 +50,8 @@ function (Vector3,
 		opts = opts || { };
 
 		var
-			points  = mesh .points  = mesh .points  || [ ],
-			normals = mesh .normals = mesh .normals || [ ],
-			faces   = mesh .faces   = mesh .faces   || [ ];
+			points = mesh .points = mesh .points || [ ],
+			faces  = mesh .faces  = mesh .faces  || [ ];
 
 		var dimension = surface .dimension;
 
@@ -66,8 +65,6 @@ function (Vector3,
 				res        = opts .resolution === undefined ? 31 : opts .resolution,
 				resolution = new Array (surface .splineDimension) .fill (res);
 		}
-
-		var generateNormals = dimension === 3 && (opts .generateNormals !== undefined ? opts .generateNormals : true);
 
 		switch (surface .splineDimension)
 		{
@@ -107,17 +104,14 @@ function (Vector3,
 					vClosed    = surface .boundary [1] === 'closed',
 					nuBound    = nu + ! uClosed,
 					nvBound    = nv + ! vClosed,
-					nbNormals  = nuBound * nvBound * 3 * generateNormals,
 					nbVertices = nuBound * nvBound * dimension,
-					uDer       = surface .evaluator ([1, 0]),
-					vDer       = surface .evaluator ([0, 1]),
 					domain     = opts .domain || surface .domain,
 					uDomain    = domain [0],
 					vDomain    = domain [1],
 					uDistance  = uDomain [1] - uDomain [0],
 					vDistance  = vDomain [1] - vDomain [0];
 
-				// Generate points and normals.
+				// Generate points.
 
 				for (var i = 0; i < nuBound; ++ i)
 				{
@@ -133,23 +127,10 @@ function (Vector3,
 
 						for (var d = 0; d < dimension; ++ d)
 							points [ptr + d] = tmp1 [d];
-
-						if (generateNormals)
-						{
-							normalize (tmp1, cross (tmp1,
-								uDer (tmp1, u, v),
-								vDer (tmp2, u, v)
-							));
-
-							normals [ptr]     = tmp1 [0];
-							normals [ptr + 1] = tmp1 [1];
-							normals [ptr + 2] = tmp1 [2];
-						}
 					}
 				}
 
-				points  .length = nbVertices;
-				normals .length = nbNormals;
+				points .length = nbVertices;
 
 				// Generate faces.
 
