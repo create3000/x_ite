@@ -208,18 +208,33 @@ function (Fields,
 			interpolator .key_      .length = 0;
 			interpolator .keyValue_ .length = 0;
 
-			for (var i = 0, length = points .length - 4; i < length; i += 4)
+			if (weights)
 			{
-				var
-					w1 = points [i + 3],
-					w2 = points [i + 7];
+				for (var i = 0, length = points .length - 4; i < length; i += 4)
+				{
+					var
+						w1 = points [i + 3],
+						w2 = points [i + 7];
 
-				var direction = new Vector3 (points [i + 4] / w2 - points [i + 0] / w1,
-				                             points [i + 5] / w2 - points [i + 1] / w1,
-				                             points [i + 6] / w2 - points [i + 2] / w1);
+					var direction = new Vector3 (points [i + 4] / w2 - points [i + 0] / w1,
+														points [i + 5] / w2 - points [i + 1] / w1,
+														points [i + 6] / w2 - points [i + 2] / w1);
 
-				interpolator .key_      .push (knots [0] + i / (length - 4 + (4 * closed)) * scale);
-				interpolator .keyValue_. push (new Rotation4 (Vector3 .zAxis, direction));
+					interpolator .key_      .push (knots [0] + i / (length - 4 + (4 * closed)) * scale);
+					interpolator .keyValue_. push (new Rotation4 (Vector3 .zAxis, direction));
+				}
+			}
+			else
+			{
+				for (var i = 0, length = points .length - 3; i < length; i += 3)
+				{
+					var direction = new Vector3 (points [i + 3] - points [i + 0],
+					                             points [i + 4] - points [i + 1],
+					                             points [i + 5] - points [i + 2]);
+
+					interpolator .key_      .push (knots [0] + i / (length - 3 + (3 * closed)) * scale);
+					interpolator .keyValue_. push (new Rotation4 (Vector3 .zAxis, direction));
+				}
 			}
 
 			if (closed)
