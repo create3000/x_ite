@@ -172,37 +172,73 @@ function (Fields,
 				mesh   = nurbs .sample (this .mesh, surface, this .sampleOptions),
 				points = mesh .points;
 
-			switch (type)
+			if (weights)
 			{
-				case 0:
+				switch (type)
 				{
-					for (var i = 0, length = points .length; i < length; i += 3)
+					case 0:
 					{
-						var w = points [i + 2];
-						array .push (points [i] / w, points [i + 1] / w);
-					}
+						for (var i = 0, length = points .length; i < length; i += 3)
+						{
+							var w = points [i + 2];
+							array .push (points [i] / w, points [i + 1] / w);
+						}
 
-					break;
+						break;
+					}
+					case 1:
+					{
+						for (var i = 0, length = points .length; i < length; i += 3)
+						{
+							var w = points [i + 2];
+							array .push (points [i] / w, 0, points [i + 1] / w);
+						}
+
+						break;
+					}
+					case 2:
+					{
+						for (var i = 0, length = points .length; i < length; i += 3)
+						{
+							var w = points [i + 2];
+							array .push (new Vector3 (points [i] / w, points [i + 1] / w, 0));
+						}
+
+						break;
+					}
 				}
-				case 1:
+			}
+			else
+			{
+				switch (type)
 				{
-					for (var i = 0, length = points .length; i < length; i += 3)
+					case 0:
 					{
-						var w = points [i + 2];
-						array .push (points [i] / w, 0, points [i + 1] / w);
-					}
+						for (var i = 0, length = points .length; i < length; i += 2)
+						{
+							array .push (points [i], points [i + 1]);
+						}
 
-					break;
-				}
-				case 2:
-				{
-					for (var i = 0, length = points .length; i < length; i += 3)
+						break;
+					}
+					case 1:
 					{
-						var w = points [i + 2];
-						array .push (new Vector3 (points [i] / w, points [i + 1] / w, 0));
-					}
+						for (var i = 0, length = points .length; i < length; i += 2)
+						{
+							array .push (points [i], 0, points [i + 1]);
+						}
 
-					break;
+						break;
+					}
+					case 2:
+					{
+						for (var i = 0, length = points .length; i < length; i += 2)
+						{
+							array .push (new Vector3 (points [i], points [i + 1], 0));
+						}
+
+						break;
+					}
 				}
 			}
 
