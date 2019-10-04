@@ -218,28 +218,15 @@ function (X3DCast,
 				points      = mesh .points,
 				vertexArray = this .getVertices ();
 
-			if (weights)
+			for (var i2 = 4, length = points .length; i2 < length; i2 += 4)
 			{
-				for (var i2 = 4, length = points .length; i2 < length; i2 += 4)
-				{
-					var
-						i1 = i2 - 4,
-						w1 = points [i1 + 3],
-						w2 = points [i2 + 3];
+				var
+					i1 = i2 - 4,
+					w1 = points [i1 + 3],
+					w2 = points [i2 + 3];
 
-					vertexArray .push (points [i1] / w1, points [i1 + 1] / w1, points [i1 + 2] / w1, 1);
-					vertexArray .push (points [i2] / w2, points [i2 + 1] / w2, points [i2 + 2] / w2, 1);
-				}
-			}
-			else
-			{
-				for (var i2 = 3, length = points .length; i2 < length; i2 += 3)
-				{
-					var i1 = i2 - 3;
-
-					vertexArray .push (points [i1], points [i1 + 1], points [i1 + 2], 1);
-					vertexArray .push (points [i2], points [i2 + 1], points [i2 + 2], 1);
-				}
+				vertexArray .push (points [i1] / w1, points [i1 + 1] / w1, points [i1 + 2] / w1, 1);
+				vertexArray .push (points [i2] / w2, points [i2 + 1] / w2, points [i2 + 2] / w2, 1);
 			}
 		},
 	});

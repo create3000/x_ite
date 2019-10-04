@@ -204,23 +204,12 @@ function (Fields,
 			interpolator .key_      .length = 0;
 			interpolator .keyValue_ .length = 0;
 
-			if (weights)
+			for (var i = 0, length = points .length; i < length; i += 4)
 			{
-				for (var i = 0, length = points .length; i < length; i += 4)
-				{
-					var w = points [i + 3];
+				var w = points [i + 3];
 
-					interpolator .key_      .push (knots [0] + i / (length - 4) * scale);
-					interpolator .keyValue_. push (new Fields .SFVec3f (points [i] / w, points [i + 1] / w, points [i + 2] / w));
-				}
-			}
-			else
-			{
-				for (var i = 0, length = points .length; i < length; i += 3)
-				{
-					interpolator .key_      .push (knots [0] + i / (length - 3) * scale);
-					interpolator .keyValue_. push (new Fields .SFVec3f (points [i], points [i + 1], points [i + 2]));
-				}
+				interpolator .key_      .push (knots [0] + i / (length - 4) * scale);
+				interpolator .keyValue_. push (new Fields .SFVec3f (points [i] / w, points [i + 1] / w, points [i + 2] / w));
 			}
 		},
 	});
