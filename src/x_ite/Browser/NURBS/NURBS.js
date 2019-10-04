@@ -309,7 +309,7 @@ function (Vector2,
 			if (weight .length !== dimension)
 				return undefined;
 
-			var weights   = result || [ ];
+			var weights = result || [ ];
 
 			for (var u = 0, i = 0; u < uDimension; ++ u)
 			{
