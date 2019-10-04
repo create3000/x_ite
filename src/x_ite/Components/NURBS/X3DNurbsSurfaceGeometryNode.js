@@ -160,9 +160,9 @@ function (X3DParametricGeometryNode,
 		{
 			return NURBS .getUVWeights (result, uDimension, vDimension, weight);
 		},
-		getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, texCoordNode)
+		getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode)
 		{
-			return NURBS .getTexControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, texCoordNode);
+			return NURBS .getTexControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode);
 		},
 		getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
 		{
@@ -248,7 +248,7 @@ function (X3DParametricGeometryNode,
 				vertexArray .push (points [index] / w, points [index + 1] / w, points [index + 2] / w, 1);
 			}
 
-			this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue (), weights, surface .domain);
+			this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue (), surface .domain);
 			this .buildNormals (faces, points);
 			this .setSolid (this .solid_ .getValue ());
 			this .setCCW (true);
@@ -267,7 +267,7 @@ function (X3DParametricGeometryNode,
 				return result;
 			}
 
-			return function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, weights, domain)
+			return function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, domain)
 			{
 				var sampleOptions = this .sampleOptions;
 
@@ -280,7 +280,7 @@ function (X3DParametricGeometryNode,
 						texVDegree       = vOrder - 1,
 						texUKnots        = uKnots,
 						texVKnots        = vKnots,
-						texControlPoints = this .getTexControlPoints (this .texControlPoints, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, this .texCoordNode);
+						texControlPoints = this .getTexControlPoints (this .texControlPoints, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, this .texCoordNode);
 				}
 				else if (this .nurbsTexCoordNode && this .nurbsTexCoordNode .isValid ())
 				{

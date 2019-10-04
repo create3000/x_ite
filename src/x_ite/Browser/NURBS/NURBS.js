@@ -417,7 +417,7 @@ function (Vector3,
 
 			return controlPoints;
 		},
-		getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
+		getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
 		{
 			var controlPoints = result || [ ];
 
@@ -433,8 +433,6 @@ function (Vector3,
 					var index = v * uDimension + u;
 
 					cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector4 (0, 0, 0, 0));
-
-					cp [v] .w = weights [index];
 				}
 
 				cp .length = vDimension;
