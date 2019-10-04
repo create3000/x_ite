@@ -342,7 +342,7 @@ function (Vector3,
 					i2 = i * 2,
 					p  = controlPoints [i] || new Vector3 (0, 0, 0);
 
-				controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1], weights [i])
+				controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1], weights [i]);
 			}
 
 			controlPoints .length = dimension;
