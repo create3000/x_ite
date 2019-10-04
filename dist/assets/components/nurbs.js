@@ -532,10 +532,12 @@ function (Fields,
 
 
 define ('x_ite/Browser/NURBS/NURBS',[
+	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
 ],
-function (Vector3,
+function (Vector2,
+          Vector3,
           Vector4)
 {
 "use strict";
@@ -770,14 +772,10 @@ function (Vector3,
 		},
 		getWeights: function (result, dimension, weight)
 		{
-			var weights = result || [ ];
-
 			if (weight .length !== dimension)
-			{
-				weights .length = dimension;
-				weights .fill (1);
-				return weights;
-			}
+				return undefined;
+
+			var weights = result || [ ];
 
 			for (var i = 0; i < dimension; ++ i)
 			{
@@ -790,16 +788,12 @@ function (Vector3,
 		},
 		getUVWeights: function (result, uDimension, vDimension, weight)
 		{
-			var
-				weights   = result || [ ],
-				dimension = uDimension * vDimension;
+			var dimension = uDimension * vDimension;
 
 			if (weight .length !== dimension)
-			{
-				weights .length = dimension;
-				weights .fill (1);
-				return weights;
-			}
+				return undefined;
+
+			var weights   = result || [ ];
 
 			for (var u = 0, i = 0; u < uDimension; ++ u)
 			{
@@ -818,15 +812,35 @@ function (Vector3,
 			var
 				controlPoints     = result || [ ],
 				controlPointArray = controlPoint .getValue (),
-				dimension         = controlPoint .length;
+				dimension         = controlPoint .length,
+				haveWeights       = Boolean (weights);
 
-			for (var i = 0; i < dimension; ++ i)
+			if (haveWeights !== controlPoints .haveWeights)
+				controlPoints .length = 0;
+
+			controlPoints .haveWeights = haveWeights;
+
+			if (haveWeights)
 			{
-				var
-					i2 = i * 2,
-					p  = controlPoints [i] || new Vector3 (0, 0, 0);
+				for (var i = 0; i < dimension; ++ i)
+				{
+					var
+						i2 = i * 2,
+						p  = controlPoints [i] || new Vector3 (0, 0, 0);
 
-				controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1], weights [i])
+					controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1], weights [i]);
+				}
+			}
+			else
+			{
+				for (var i = 0; i < dimension; ++ i)
+				{
+					var
+						i2 = i * 2,
+						p  = controlPoints [i] || new Vector2 (0, 0, 0);
+
+					controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1]);
+				}
 			}
 
 			controlPoints .length = dimension;
@@ -843,13 +857,29 @@ function (Vector3,
 		{
 			var
 				controlPoints = result || [ ],
-				dimension     = controlPointNode .getSize ();
+				dimension     = controlPointNode .getSize (),
+				haveWeights   = Boolean (weights);
 
-			for (var i = 0; i < dimension; ++ i)
+			if (haveWeights !== controlPoints .haveWeights)
+				controlPoints .length = 0;
+
+			controlPoints .haveWeights = haveWeights;
+
+			if (haveWeights)
 			{
-				var cp = controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector4 (0, 0, 0, 0));
+				for (var i = 0; i < dimension; ++ i)
+				{
+					var cp = controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector4 (0, 0, 0, 0));
 
-				cp .w = weights [i];
+					cp .w = weights [i];
+				}
+			}
+			else
+			{
+				for (var i = 0; i < dimension; ++ i)
+				{
+					controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector3 (0, 0, 0));
+				}
 			}
 
 			controlPoints .length = dimension;
@@ -864,7 +894,14 @@ function (Vector3,
 		},
 		getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
 		{
-			var controlPoints = result || [ ];
+			var
+				controlPoints = result || [ ],
+				haveWeights   = Boolean (weights);
+
+			if (haveWeights !== controlPoints .haveWeights)
+				controlPoints .length = 0;
+
+			controlPoints .haveWeights = haveWeights;
 
 			for (var u = 0; u < uDimension; ++ u)
 			{
@@ -873,13 +910,25 @@ function (Vector3,
 				if (! cp)
 					cp = controlPoints [u] = [ ];
 
-				for (var v = 0; v < vDimension; ++ v)
+				if (haveWeights)
 				{
-					var index = v * uDimension + u;
+					for (var v = 0; v < vDimension; ++ v)
+					{
+						var index = v * uDimension + u;
 
-					cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector4 (0, 0, 0, 0));
+						cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector4 (0, 0, 0, 0));
 
-					cp [v] .w = weights [index];
+						cp [v] .w = weights [index];
+					}
+				}
+				else
+				{
+					for (var v = 0; v < vDimension; ++ v)
+					{
+						var index = v * uDimension + u;
+
+						cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector3 (0, 0, 0));
+					}
 				}
 
 				cp .length = vDimension;
@@ -2931,15 +2980,28 @@ function (X3DCast,
 				points      = mesh .points,
 				vertexArray = this .getVertices ();
 
-			for (var i2 = 4, length = points .length; i2 < length; i2 += 4)
+			if (weights)
 			{
-				var
-					i1 = i2 - 4,
-					w1 = points [i1 + 3],
-					w2 = points [i2 + 3];
+				for (var i2 = 4, length = points .length; i2 < length; i2 += 4)
+				{
+					var
+						i1 = i2 - 4,
+						w1 = points [i1 + 3],
+						w2 = points [i2 + 3];
 
-				vertexArray .push (points [i1] / w1, points [i1 + 1] / w1, points [i1 + 2] / w1, 1);
-				vertexArray .push (points [i2] / w2, points [i2 + 1] / w2, points [i2 + 2] / w2, 1);
+					vertexArray .push (points [i1] / w1, points [i1 + 1] / w1, points [i1 + 2] / w1, 1);
+					vertexArray .push (points [i2] / w2, points [i2 + 1] / w2, points [i2 + 2] / w2, 1);
+				}
+			}
+			else
+			{
+				for (var i2 = 3, length = points .length; i2 < length; i2 += 3)
+				{
+					var i1 = i2 - 3;
+
+					vertexArray .push (points [i1], points [i1 + 1], points [i1 + 2], 1);
+					vertexArray .push (points [i2], points [i2 + 1], points [i2 + 2], 1);
+				}
 			}
 		},
 	});
@@ -3121,37 +3183,73 @@ function (Fields,
 				mesh   = nurbs .sample (this .mesh, surface, this .sampleOptions),
 				points = mesh .points;
 
-			switch (type)
+			if (weights)
 			{
-				case 0:
+				switch (type)
 				{
-					for (var i = 0, length = points .length; i < length; i += 3)
+					case 0:
 					{
-						var w = points [i + 2];
-						array .push (points [i] / w, points [i + 1] / w);
-					}
+						for (var i = 0, length = points .length; i < length; i += 3)
+						{
+							var w = points [i + 2];
+							array .push (points [i] / w, points [i + 1] / w);
+						}
 
-					break;
+						break;
+					}
+					case 1:
+					{
+						for (var i = 0, length = points .length; i < length; i += 3)
+						{
+							var w = points [i + 2];
+							array .push (points [i] / w, 0, points [i + 1] / w);
+						}
+
+						break;
+					}
+					case 2:
+					{
+						for (var i = 0, length = points .length; i < length; i += 3)
+						{
+							var w = points [i + 2];
+							array .push (new Vector3 (points [i] / w, points [i + 1] / w, 0));
+						}
+
+						break;
+					}
 				}
-				case 1:
+			}
+			else
+			{
+				switch (type)
 				{
-					for (var i = 0, length = points .length; i < length; i += 3)
+					case 0:
 					{
-						var w = points [i + 2];
-						array .push (points [i] / w, 0, points [i + 1] / w);
-					}
+						for (var i = 0, length = points .length; i < length; i += 2)
+						{
+							array .push (points [i], points [i + 1]);
+						}
 
-					break;
-				}
-				case 2:
-				{
-					for (var i = 0, length = points .length; i < length; i += 3)
+						break;
+					}
+					case 1:
 					{
-						var w = points [i + 2];
-						array .push (new Vector3 (points [i] / w, points [i + 1] / w, 0));
-					}
+						for (var i = 0, length = points .length; i < length; i += 2)
+						{
+							array .push (points [i], 0, points [i + 1]);
+						}
 
-					break;
+						break;
+					}
+					case 2:
+					{
+						for (var i = 0, length = points .length; i < length; i += 2)
+						{
+							array .push (new Vector3 (points [i], points [i + 1], 0));
+						}
+
+						break;
+					}
 				}
 			}
 
@@ -3372,18 +3470,33 @@ function (Fields,
 			interpolator .key_      .length = 0;
 			interpolator .keyValue_ .length = 0;
 
-			for (var i = 0, length = points .length - 4; i < length; i += 4)
+			if (weights)
 			{
-				var
-					w1 = points [i + 3],
-					w2 = points [i + 7];
+				for (var i = 0, length = points .length - 4; i < length; i += 4)
+				{
+					var
+						w1 = points [i + 3],
+						w2 = points [i + 7];
 
-				var direction = new Vector3 (points [i + 4] / w2 - points [i + 0] / w1,
-				                             points [i + 5] / w2 - points [i + 1] / w1,
-				                             points [i + 6] / w2 - points [i + 2] / w1);
+					var direction = new Vector3 (points [i + 4] / w2 - points [i + 0] / w1,
+														points [i + 5] / w2 - points [i + 1] / w1,
+														points [i + 6] / w2 - points [i + 2] / w1);
 
-				interpolator .key_      .push (knots [0] + i / (length - 4 + (4 * closed)) * scale);
-				interpolator .keyValue_. push (new Rotation4 (Vector3 .zAxis, direction));
+					interpolator .key_      .push (knots [0] + i / (length - 4 + (4 * closed)) * scale);
+					interpolator .keyValue_. push (new Rotation4 (Vector3 .zAxis, direction));
+				}
+			}
+			else
+			{
+				for (var i = 0, length = points .length - 3; i < length; i += 3)
+				{
+					var direction = new Vector3 (points [i + 3] - points [i + 0],
+					                             points [i + 4] - points [i + 1],
+					                             points [i + 5] - points [i + 2]);
+
+					interpolator .key_      .push (knots [0] + i / (length - 3 + (3 * closed)) * scale);
+					interpolator .keyValue_. push (new Rotation4 (Vector3 .zAxis, direction));
+				}
 			}
 
 			if (closed)
@@ -3638,17 +3751,29 @@ function (X3DParametricGeometryNode,
 				points      = mesh .points,
 				vertexArray = this .getVertices ();
 
-			for (var i = 0, length = faces .length; i < length; ++ i)
+			if (weights)
 			{
-				var
-					index = faces [i] * 4,
-					w     = points [index + 3];
+				for (var i = 0, length = faces .length; i < length; ++ i)
+				{
+					var
+						index = faces [i] * 4,
+						w     = points [index + 3];
 
-				vertexArray .push (points [index] / w, points [index + 1] / w, points [index + 2] / w, 1);
+					vertexArray .push (points [index] / w, points [index + 1] / w, points [index + 2] / w, 1);
+				}
+			}
+			else
+			{
+				for (var i = 0, length = faces .length; i < length; ++ i)
+				{
+					var index = faces [i] * 3;
+
+					vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
+				}
 			}
 
 			this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue (), surface .domain);
-			this .buildNormals (faces, points);
+			this .buildNormals (faces, points, weights);
 			this .setSolid (this .solid_ .getValue ());
 			this .setCCW (true);
 		},
@@ -3730,10 +3855,10 @@ function (X3DParametricGeometryNode,
 				this .getMultiTexCoords () .push (this .getTexCoords ());
 			};
 		})(),
-		buildNormals: function (faces, points)
+		buildNormals: function (faces, points, weights)
 		{
 			var
-				normals     = this .createNormals (faces, points),
+				normals     = this .createNormals (faces, points, weights),
 				normalArray = this .getNormals ();
 
 			for (var i = 0, length = normals .length; i < length; ++ i)
@@ -3743,9 +3868,9 @@ function (X3DParametricGeometryNode,
 				normalArray .push (normal .x, normal .y, normal .z);
 			}
 		},
-		createNormals: function (faces, points)
+		createNormals: function (faces, points, weights)
 		{
-			var normals = this .createFaceNormals (faces, points);
+			var normals = this .createFaceNormals (faces, points, weights);
 
 			var normalIndex = [ ];
 
@@ -3770,29 +3895,52 @@ function (X3DParametricGeometryNode,
 				v2 = new Vector3 (0, 0, 0),
 				v3 = new Vector3 (0, 0, 0);
 
-			return function (faces, points)
+			return function (faces, points, weights)
 			{
 				var normals = this .faceNormals || [ ];
 
-				for (var i = 0, length = faces .length; i < length; i += 3)
+				if (weights)
 				{
-					var
-						index1 = faces [i]     * 4,
-						index2 = faces [i + 1] * 4,
-						index3 = faces [i + 2] * 4,
-						w1     = points [index1 + 3],
-						w2     = points [index2 + 3],
-						w3     = points [index3 + 3];
+					for (var i = 0, length = faces .length; i < length; i += 3)
+					{
+						var
+							index1 = faces [i]     * 4,
+							index2 = faces [i + 1] * 4,
+							index3 = faces [i + 2] * 4,
+							w1     = points [index1 + 3],
+							w2     = points [index2 + 3],
+							w3     = points [index3 + 3];
 
-					v1 .set (points [index1] / w1, points [index1 + 1] / w1, points [index1 + 2] / w1);
-					v2 .set (points [index2] / w2, points [index2 + 1] / w2, points [index2 + 2] / w2);
-					v3 .set (points [index3] / w3, points [index3 + 1] / w3, points [index3 + 2] / w3);
+						v1 .set (points [index1] / w1, points [index1 + 1] / w1, points [index1 + 2] / w1);
+						v2 .set (points [index2] / w2, points [index2 + 1] / w2, points [index2 + 2] / w2);
+						v3 .set (points [index3] / w3, points [index3 + 1] / w3, points [index3 + 2] / w3);
 
-					var normal = Triangle3 .normal (v1, v2 ,v3, normals [i] || new Vector3 (0, 0, 0));
+						var normal = Triangle3 .normal (v1, v2 ,v3, normals [i] || new Vector3 (0, 0, 0));
 
-					normals [i]     = normal;
-					normals [i + 1] = normal;
-					normals [i + 2] = normal;
+						normals [i]     = normal;
+						normals [i + 1] = normal;
+						normals [i + 2] = normal;
+					}
+				}
+				else
+				{
+					for (var i = 0, length = faces .length; i < length; i += 3)
+					{
+						var
+							index1 = faces [i]     * 3,
+							index2 = faces [i + 1] * 3,
+							index3 = faces [i + 2] * 3;
+
+						v1 .set (points [index1], points [index1 + 1], points [index1 + 2]);
+						v2 .set (points [index2], points [index2 + 1], points [index2 + 2]);
+						v3 .set (points [index3], points [index3 + 1], points [index3 + 2]);
+
+						var normal = Triangle3 .normal (v1, v2 ,v3, normals [i] || new Vector3 (0, 0, 0));
+
+						normals [i]     = normal;
+						normals [i + 1] = normal;
+						normals [i + 2] = normal;
+					}
 				}
 
 				normals .length = length;
@@ -4121,12 +4269,23 @@ function (Fields,
 			interpolator .key_      .length = 0;
 			interpolator .keyValue_ .length = 0;
 
-			for (var i = 0, length = points .length; i < length; i += 4)
+			if (weights)
 			{
-				var w = points [i + 3];
+				for (var i = 0, length = points .length; i < length; i += 4)
+				{
+					var w = points [i + 3];
 
-				interpolator .key_      .push (knots [0] + i / (length - 4) * scale);
-				interpolator .keyValue_. push (new Fields .SFVec3f (points [i] / w, points [i + 1] / w, points [i + 2] / w));
+					interpolator .key_      .push (knots [0] + i / (length - 4) * scale);
+					interpolator .keyValue_. push (new Fields .SFVec3f (points [i] / w, points [i + 1] / w, points [i + 2] / w));
+				}
+			}
+			else
+			{
+				for (var i = 0, length = points .length; i < length; i += 3)
+				{
+					interpolator .key_      .push (knots [0] + i / (length - 3) * scale);
+					interpolator .keyValue_. push (new Fields .SFVec3f (points [i], points [i + 1], points [i + 2]));
+				}
 			}
 		},
 	});
@@ -5078,7 +5237,7 @@ function (Fields,
 						p     = cp [v] || new Vector4 (),
 						i     = index * 2;
 
-					cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, texWeights [index]);
+					cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, texWeights ? texWeights [index] : 1);
 				}
 			}
 
