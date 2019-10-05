@@ -61,9 +61,9 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGroupingNode, 
-          X3DTransformNode, 
-          TraverseType, 
+          X3DGroupingNode,
+          X3DTransformNode,
+          TraverseType,
           X3DConstants,
           X3DCast,
           Matrix4)
@@ -161,7 +161,10 @@ function (Fields,
 			function traverse (type, renderObject)
 			{
 				if (type === TraverseType .CAMERA)
+				{
 					this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
+					renderObject .getJoints () .push (this);
+				}
 
 				base .call (this, type, renderObject);
 			}
@@ -181,7 +184,10 @@ function (Fields,
 			function traverse (type, renderObject)
 			{
 				if (type === TraverseType .CAMERA)
+				{
 					this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+					renderObject .getJoints () .push (this);
+				}
 
 				base .call (this, type, renderObject);
 			}
@@ -198,5 +204,3 @@ function (Fields,
 
 	return HAnimJoint;
 });
-
-

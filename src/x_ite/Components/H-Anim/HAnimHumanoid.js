@@ -64,11 +64,11 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChildNode, 
-          Group, 
-          Transform, 
-          X3DBoundedObject, 
-          TraverseType, 
+          X3DChildNode,
+          Group,
+          Transform,
+          X3DBoundedObject,
+          TraverseType,
           X3DConstants,
           X3DCast,
           Matrix4,
@@ -238,6 +238,8 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
+			renderObject .getJoints () .length = 0;
+
 			this .transformNode .traverse (type, renderObject);
 			this .skinning (type, renderObject);
 		},
@@ -256,12 +258,12 @@ function (Fields,
 				{
 					if (type !== TraverseType .CAMERA)
 						return;
-	
+
 					if (! this .skinCoordNode)
 						return;
-	
+
 					var
-						jointNodes     = this .jointNodes,
+						jointNodes     = this .jointNodes .length ? this .jointNodes : renderObject .getJoints (),
 						skinNormalNode = this .skinNormalNode,
 						skinCoordNode  = this .skinCoordNode,
 						restNormalNode = this .restNormalNode,
@@ -355,5 +357,3 @@ function (Fields,
 
 	return HAnimHumanoid;
 });
-
-
