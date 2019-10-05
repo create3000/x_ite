@@ -172,11 +172,11 @@ define ('x_ite/Components/H-Anim/HAnimHumanoid',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChildNode, 
-          Group, 
-          Transform, 
-          X3DBoundedObject, 
-          TraverseType, 
+          X3DChildNode,
+          Group,
+          Transform,
+          X3DBoundedObject,
+          TraverseType,
           X3DConstants,
           X3DCast,
           Matrix4,
@@ -346,6 +346,8 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
+			renderObject .getJoints () .length = 0;
+
 			this .transformNode .traverse (type, renderObject);
 			this .skinning (type, renderObject);
 		},
@@ -364,12 +366,12 @@ function (Fields,
 				{
 					if (type !== TraverseType .CAMERA)
 						return;
-	
+
 					if (! this .skinCoordNode)
 						return;
-	
+
 					var
-						jointNodes     = this .jointNodes,
+						jointNodes     = this .jointNodes .length ? this .jointNodes : renderObject .getJoints (),
 						skinNormalNode = this .skinNormalNode,
 						skinCoordNode  = this .skinCoordNode,
 						restNormalNode = this .restNormalNode,
@@ -464,8 +466,6 @@ function (Fields,
 	return HAnimHumanoid;
 });
 
-
-
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -529,9 +529,9 @@ define ('x_ite/Components/H-Anim/HAnimJoint',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGroupingNode, 
-          X3DTransformNode, 
-          TraverseType, 
+          X3DGroupingNode,
+          X3DTransformNode,
+          TraverseType,
           X3DConstants,
           X3DCast,
           Matrix4)
@@ -629,7 +629,10 @@ function (Fields,
 			function traverse (type, renderObject)
 			{
 				if (type === TraverseType .CAMERA)
+				{
 					this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
+					renderObject .getJoints () .push (this);
+				}
 
 				base .call (this, type, renderObject);
 			}
@@ -649,7 +652,10 @@ function (Fields,
 			function traverse (type, renderObject)
 			{
 				if (type === TraverseType .CAMERA)
+				{
 					this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
+					renderObject .getJoints () .push (this);
+				}
 
 				base .call (this, type, renderObject);
 			}
@@ -666,8 +672,6 @@ function (Fields,
 
 	return HAnimJoint;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
