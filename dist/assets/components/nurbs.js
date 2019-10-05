@@ -2189,7 +2189,6 @@ function (Vector3,
 					uClosed    = surface .boundary [0] === 'closed',
 					nuBound    = nu + ! uClosed,
 					nbVertices = nuBound * dimension,
-					uDer       = surface .evaluator ([1, 0]),
 					domain     = opts .domain || surface .domain,
 					uDomain    = domain [0],
 					uDistance  = uDomain [1] - uDomain [0];
@@ -2290,7 +2289,7 @@ function (Vector3,
 				/*
 				// Trimming Contours
 
-				if (DEBUG && opts .trimmingContours)
+				if (opts .trimmingContours)
 				{
 					var holes = [ ];
 
