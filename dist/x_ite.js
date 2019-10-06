@@ -1,4 +1,4 @@
-/* X_ITE v4.5.15-838 */
+/* X_ITE v4.5.16-839 */
 
 (function () {
 
@@ -25168,7 +25168,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.5.15";
+	return "4.5.16";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -89691,7 +89691,6 @@ function ($,
 		this .lights                   = [ ];
 		this .shadow                   = [ false ];
 		this .localFogs                = [ ];
-		this .joints                   = [ ];
 		this .layouts                  = [ ];
 		this .generatedCubeMapTextures = [ ];
 		this .shaders                  = new Set ();
@@ -89800,10 +89799,6 @@ function ($,
 			this .localFog = this .localFogs [this .localFogs .length - 1];
 
 			return localFog;
-		},
-		getJoints: function ()
-		{
-			return this .joints;
 		},
 		getLayouts: function ()
 		{

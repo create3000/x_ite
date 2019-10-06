@@ -346,8 +346,6 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
-			renderObject .getJoints () .length = 0;
-
 			this .transformNode .traverse (type, renderObject);
 			this .skinning (type, renderObject);
 		},
@@ -371,7 +369,7 @@ function (Fields,
 						return;
 
 					var
-						jointNodes     = this .jointNodes .length ? this .jointNodes : renderObject .getJoints (),
+						jointNodes     = this .jointNodes,
 						skinNormalNode = this .skinNormalNode,
 						skinCoordNode  = this .skinCoordNode,
 						restNormalNode = this .restNormalNode,
@@ -629,10 +627,7 @@ function (Fields,
 			function traverse (type, renderObject)
 			{
 				if (type === TraverseType .CAMERA)
-				{
 					this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
-					renderObject .getJoints () .push (this);
-				}
 
 				base .call (this, type, renderObject);
 			}
@@ -652,10 +647,7 @@ function (Fields,
 			function traverse (type, renderObject)
 			{
 				if (type === TraverseType .CAMERA)
-				{
 					this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-					renderObject .getJoints () .push (this);
-				}
 
 				base .call (this, type, renderObject);
 			}
