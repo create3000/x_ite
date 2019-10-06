@@ -96,7 +96,6 @@ function ($,
 		this .lights                   = [ ];
 		this .shadow                   = [ false ];
 		this .localFogs                = [ ];
-		this .joints                   = [ ];
 		this .layouts                  = [ ];
 		this .generatedCubeMapTextures = [ ];
 		this .shaders                  = new Set ();
@@ -205,10 +204,6 @@ function ($,
 			this .localFog = this .localFogs [this .localFogs .length - 1];
 
 			return localFog;
-		},
-		getJoints: function ()
-		{
-			return this .joints;
 		},
 		getLayouts: function ()
 		{

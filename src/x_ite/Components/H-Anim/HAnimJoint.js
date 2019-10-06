@@ -161,10 +161,7 @@ function (Fields,
 			function traverse (type, renderObject)
 			{
 				if (type === TraverseType .CAMERA)
-				{
 					this .modelMatrix .assign (this .getMatrix ()) .multRight (renderObject .getModelViewMatrix () .get ());
-					renderObject .getJoints () .push (this);
-				}
 
 				base .call (this, type, renderObject);
 			}
@@ -184,10 +181,7 @@ function (Fields,
 			function traverse (type, renderObject)
 			{
 				if (type === TraverseType .CAMERA)
-				{
 					this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-					renderObject .getJoints () .push (this);
-				}
 
 				base .call (this, type, renderObject);
 			}
