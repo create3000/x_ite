@@ -333,9 +333,10 @@ function (Vector2,
 				Vector            = haveWeights ? Vector3 : Vector2;
 
 			if (controlPoints .haveWeights !== haveWeights)
-				controlPoints .length = 0;
-
-			controlPoints .haveWeights = haveWeights;
+			{
+				controlPoints .haveWeights = haveWeights;
+				controlPoints .length      = 0;
+			}
 
 			for (var i = 0; i < dimension; ++ i)
 			{
@@ -365,9 +366,10 @@ function (Vector2,
 				Vector        = haveWeights ? Vector4 : Vector3;
 
 			if (controlPoints .haveWeights !== haveWeights)
-				controlPoints .length = 0;
-
-			controlPoints .haveWeights = haveWeights;
+			{
+				controlPoints .haveWeights = haveWeights;
+				controlPoints .length      = 0;
+			}
 
 			for (var i = 0; i < dimension; ++ i)
 			{
@@ -395,9 +397,10 @@ function (Vector2,
 				Vector        = haveWeights ? Vector4 : Vector3;
 
 			if (controlPoints .haveWeights !== haveWeights)
-				controlPoints .length = 0;
-
-			controlPoints .haveWeights = haveWeights;
+			{
+				controlPoints .haveWeights = haveWeights;
+				controlPoints .length      = 0;
+			}
 
 			for (var u = 0; u < uDimension; ++ u)
 			{
