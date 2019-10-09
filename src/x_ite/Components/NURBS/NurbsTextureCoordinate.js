@@ -70,7 +70,7 @@ function (Fields,
 
 		this .addType (X3DConstants .NurbsTextureCoordinate);
 
-		this .constrolPoints = [ ];
+		this .controlPoints = [ ];
 	}
 
 	NurbsTextureCoordinate .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -107,14 +107,14 @@ function (Fields,
 		{
 			var
 				controlPointArray = this .controlPoint_ .getValue (),
-				constrolPoints    = this .constrolPoints;
+				controlPoints     = this .controlPoints;
 
 			for (var u = 0, uDimension = this .uDimension_ .getValue (); u < uDimension; ++ u)
 			{
-				var cp = constrolPoints [u];
+				var cp = controlPoints [u];
 
 				if (! cp)
-					cp = constrolPoints [u] = [ ];
+					cp = controlPoints [u] = [ ];
 
 				for (var v = 0, vDimension = this .vDimension_ .getValue (); v < vDimension; ++ v)
 				{
@@ -123,11 +123,11 @@ function (Fields,
 						p     = cp [v] || new Vector4 (),
 						i     = index * 2;
 
-					cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, texWeights [index]);
+					cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, texWeights ? texWeights [index] : 1);
 				}
 			}
 
-			return constrolPoints;
+			return controlPoints;
 		},
 		isValid: function ()
 		{

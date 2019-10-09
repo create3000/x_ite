@@ -288,14 +288,10 @@ function (Vector2,
 		},
 		getWeights: function (result, dimension, weight)
 		{
-			var weights = result || [ ];
-
 			if (weight .length !== dimension)
-			{
-				weights .length = dimension;
-				weights .fill (1);
-				return weights;
-			}
+				return undefined;
+
+			var weights = result || [ ];
 
 			for (var i = 0; i < dimension; ++ i)
 			{
@@ -308,16 +304,12 @@ function (Vector2,
 		},
 		getUVWeights: function (result, uDimension, vDimension, weight)
 		{
-			var
-				weights   = result || [ ],
-				dimension = uDimension * vDimension;
+			var dimension = uDimension * vDimension;
 
 			if (weight .length !== dimension)
-			{
-				weights .length = dimension;
-				weights .fill (1);
-				return weights;
-			}
+				return undefined;
+
+			var weights = result || [ ];
 
 			for (var u = 0, i = 0; u < uDimension; ++ u)
 			{
@@ -336,15 +328,22 @@ function (Vector2,
 			var
 				controlPoints     = result || [ ],
 				controlPointArray = controlPoint .getValue (),
-				dimension         = controlPoint .length;
+				dimension         = controlPoint .length,
+				haveWeights       = Boolean (weights),
+				Vector            = haveWeights ? Vector3 : Vector2;
+
+			if (controlPoints .haveWeights !== haveWeights)
+				controlPoints .length = 0;
+
+			controlPoints .haveWeights = haveWeights;
 
 			for (var i = 0; i < dimension; ++ i)
 			{
 				var
 					i2 = i * 2,
-					p  = controlPoints [i] || new Vector3 (0, 0, 0);
+					p  = controlPoints [i] || new Vector (0, 0, 0);
 
-				controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1], weights [i]);
+				controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1], haveWeights ? weights [i] : 0);
 			}
 
 			controlPoints .length = dimension;
@@ -361,13 +360,21 @@ function (Vector2,
 		{
 			var
 				controlPoints = result || [ ],
-				dimension     = controlPointNode .getSize ();
+				dimension     = controlPointNode .getSize (),
+				haveWeights   = Boolean (weights),
+				Vector        = haveWeights ? Vector4 : Vector3;
+
+			if (controlPoints .haveWeights !== haveWeights)
+				controlPoints .length = 0;
+
+			controlPoints .haveWeights = haveWeights;
 
 			for (var i = 0; i < dimension; ++ i)
 			{
-				var cp = controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector4 (0, 0, 0, 0));
+				var cp = controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector (0, 0, 0, 0));
 
-				cp .w = weights [i];
+				if (haveWeights)
+					cp .w = weights [i];
 			}
 
 			controlPoints .length = dimension;
@@ -382,7 +389,15 @@ function (Vector2,
 		},
 		getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
 		{
-			var controlPoints = result || [ ];
+			var
+				controlPoints = result || [ ],
+				haveWeights   = Boolean (weights),
+				Vector        = haveWeights ? Vector4 : Vector3;
+
+			if (controlPoints .haveWeights !== haveWeights)
+				controlPoints .length = 0;
+
+			controlPoints .haveWeights = haveWeights;
 
 			for (var u = 0; u < uDimension; ++ u)
 			{
@@ -395,9 +410,10 @@ function (Vector2,
 				{
 					var index = v * uDimension + u;
 
-					cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector4 (0, 0, 0, 0));
+					cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector (0, 0, 0, 0));
 
-					cp [v] .w = weights [index];
+					if (haveWeights)
+						cp [v] .w = weights [index];
 				}
 
 				cp .length = vDimension;

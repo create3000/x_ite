@@ -231,6 +231,7 @@ function (X3DParametricGeometryNode,
 			sampleOptions .closed [0]       = uClosed;
 			sampleOptions .closed [1]       = vClosed;
 			sampleOptions .domain           = undefined;
+			sampleOptions .haveWeights      = Boolean (weights);
 			sampleOptions .trimmingContours = this .getTrimmingContours ();
 
 			var
@@ -239,15 +240,11 @@ function (X3DParametricGeometryNode,
 				points      = mesh .points,
 				vertexArray = this .getVertices ();
 
-			// Apply weights and add vertices.
-
 			for (var i = 0, length = faces .length; i < length; ++ i)
 			{
-				var
-					index = faces [i] * 4,
-					w     = points [index + 3];
+				var index = faces [i] * 3;
 
-				vertexArray .push (points [index] /= w, points [index + 1] /= w, points [index + 2] /= w, 1);
+				vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
 			}
 
 			this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue (), surface .domain);
@@ -272,8 +269,6 @@ function (X3DParametricGeometryNode,
 			return function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, domain)
 			{
 				var sampleOptions = this .sampleOptions;
-
-				delete sampleOptions .domain;
 
 				if (this .texCoordNode && this .texCoordNode .getSize () === uDimension * vDimension)
 				{
@@ -314,8 +309,9 @@ function (X3DParametricGeometryNode,
 					points: texControlPoints,
 				});
 
-				sampleOptions .closed [0] = false;
-				sampleOptions .closed [1] = false;
+				sampleOptions .closed [0]  = false;
+				sampleOptions .closed [1]  = false;
+				sampleOptions .haveWeights = false;
 
 				var
 					texMesh       = nurbs .sample (this .texMesh, texSurface, sampleOptions),
@@ -380,9 +376,9 @@ function (X3DParametricGeometryNode,
 				for (var i = 0, length = faces .length; i < length; i += 3)
 				{
 					var
-						index1 = faces [i]     * 4,
-						index2 = faces [i + 1] * 4,
-						index3 = faces [i + 2] * 4;
+						index1 = faces [i]     * 3,
+						index2 = faces [i + 1] * 3,
+						index3 = faces [i + 2] * 3;
 
 					v1 .set (points [index1], points [index1 + 1], points [index1 + 2]);
 					v2 .set (points [index2], points [index2 + 1], points [index2 + 2]);

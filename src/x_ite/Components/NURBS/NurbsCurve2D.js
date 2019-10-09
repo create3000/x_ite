@@ -167,6 +167,7 @@ function (Fields,
 			});
 
 			this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
+			this .sampleOptions .haveWeights    = Boolean (weights);
 
 			var
 				mesh   = nurbs .sample (this .mesh, surface, this .sampleOptions),
@@ -176,30 +177,27 @@ function (Fields,
 			{
 				case 0:
 				{
-					for (var i = 0, length = points .length; i < length; i += 3)
+					for (var i = 0, length = points .length; i < length; i += 2)
 					{
-						var w = points [i + 2];
-						array .push (points [i] / w, points [i + 1] / w);
+						array .push (points [i], points [i + 1]);
 					}
 
 					break;
 				}
 				case 1:
 				{
-					for (var i = 0, length = points .length; i < length; i += 3)
+					for (var i = 0, length = points .length; i < length; i += 2)
 					{
-						var w = points [i + 2];
-						array .push (points [i] / w, 0, points [i + 1] / w);
+						array .push (points [i], 0, points [i + 1]);
 					}
 
 					break;
 				}
 				case 2:
 				{
-					for (var i = 0, length = points .length; i < length; i += 3)
+					for (var i = 0, length = points .length; i < length; i += 2)
 					{
-						var w = points [i + 2];
-						array .push (new Vector3 (points [i] / w, points [i + 1] / w, 0));
+						array .push (new Vector3 (points [i], points [i + 1], 0));
 					}
 
 					break;

@@ -8,41 +8,7 @@ function (Vector3,
 {
 'use strict';
 
-	function normalize (out, a)
-	{
-		var
-			x = a [0],
-			y = a [1],
-			z = a [2];
-
-		var l = Math .sqrt (x * x + y * y + z * z);
-
-		if (l > 0)
-		{
-			out [0] = a [0] / l;
-			out [1] = a [1] / l;
-			out [2] = a [2] / l;
-		}
-
-		return out
-	}
-
-	function cross (out, a, b)
-	{
-	    var
-			ax = a [0], ay = a [1], az = a [2],
-			bx = b [0], by = b [1], bz = b [2];
-
-		out [0] = ay * bz - az * by
-		out [1] = az * bx - ax * bz
-		out [2] = ax * by - ay * bx
-
-		return out
-	}
-
-	var
-		tmp1 = [ ],
-		tmp2 = [ ];
+	var tmp1 = [ ];
 
 	return function (mesh, surface, opts)
 	{
@@ -50,10 +16,11 @@ function (Vector3,
 		opts = opts || { };
 
 		var
-			points = mesh .points = mesh .points || [ ],
-			faces  = mesh .faces  = mesh .faces  || [ ];
+			points      = mesh .points = mesh .points || [ ],
+			faces       = mesh .faces  = mesh .faces  || [ ],
+			haveWeights = opts .haveWeights;
 
-		var dimension = surface .dimension;
+		var dimension = surface .dimension - haveWeights;
 
 		if (Array .isArray (opts .resolution))
 		{
@@ -87,8 +54,18 @@ function (Vector3,
 
 					surface .evaluate (tmp1, u);
 
-					for (var d = 0; d < dimension; ++ d)
-						points [ptr + d] = tmp1 [d];
+					if (haveWeights)
+					{
+						var w = tmp1 [dimension];
+
+						for (var d = 0; d < dimension; ++ d)
+							points [ptr + d] = tmp1 [d] / w;
+					}
+					else
+					{
+						for (var d = 0; d < dimension; ++ d)
+							points [ptr + d] = tmp1 [d];
+					}
 				}
 
 				points .length = nbVertices;
@@ -124,8 +101,18 @@ function (Vector3,
 
 						surface .evaluate (tmp1, u, v);
 
-						for (var d = 0; d < dimension; ++ d)
-							points [ptr + d] = tmp1 [d];
+						if (haveWeights)
+						{
+							var w = tmp1 [dimension];
+
+							for (var d = 0; d < dimension; ++ d)
+								points [ptr + d] = tmp1 [d] / w;
+						}
+						else
+						{
+							for (var d = 0; d < dimension; ++ d)
+								points [ptr + d] = tmp1 [d];
+						}
 					}
 				}
 
