@@ -188,7 +188,7 @@ function (Fields,
 				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
 
-			// Initialize NURBS tesselllator
+			// Initialize NURBS tessellator
 
 			var degree = this .order_ .getValue () - 1;
 

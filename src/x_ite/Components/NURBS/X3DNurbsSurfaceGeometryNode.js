@@ -210,7 +210,7 @@ function (X3DParametricGeometryNode,
 				uScale = uKnots [uKnots .length - 1] - uKnots [0],
 				vScale = vKnots [vKnots .length - 1] - vKnots [0];
 
-			// Initialize NURBS tesselllator
+			// Initialize NURBS tessellator
 
 			var
 				uDegree = this .uOrder_ .getValue () - 1,
