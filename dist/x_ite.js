@@ -1,4 +1,4 @@
-/* X_ITE v4.5.16-839 */
+/* X_ITE v4.5.17a-840 */
 
 (function () {
 
@@ -19215,7 +19215,7 @@ function (Algorithm)
 "use strict";
 
 	function Vector4 (x, y, z, w)
-	{		
+	{
 		this .x = x;
 		this .y = y;
 		this .z = z;
@@ -19257,6 +19257,12 @@ function (Algorithm)
 			       this .y === vector .y &&
 			       this .z === vector .z &&
 			       this .w === vector .w;
+		},
+		getReal: function (vector)
+		{
+			vector .x = this .x / this .w;
+			vector .y = this .y / this .w;
+			vector .z = this .z / this .w;
 		},
 		negate: function ()
 		{
@@ -25168,7 +25174,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.5.16";
+	return "4.5.17a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-

@@ -772,14 +772,10 @@ function (Vector2,
 		},
 		getWeights: function (result, dimension, weight)
 		{
-			var weights = result || [ ];
-
 			if (weight .length !== dimension)
-			{
-				weights .length = dimension;
-				weights .fill (1);
-				return weights;
-			}
+				return undefined;
+
+			var weights = result || [ ];
 
 			for (var i = 0; i < dimension; ++ i)
 			{
@@ -792,16 +788,12 @@ function (Vector2,
 		},
 		getUVWeights: function (result, uDimension, vDimension, weight)
 		{
-			var
-				weights   = result || [ ],
-				dimension = uDimension * vDimension;
+			var dimension = uDimension * vDimension;
 
 			if (weight .length !== dimension)
-			{
-				weights .length = dimension;
-				weights .fill (1);
-				return weights;
-			}
+				return undefined;
+
+			var weights = result || [ ];
 
 			for (var u = 0, i = 0; u < uDimension; ++ u)
 			{
@@ -820,15 +812,23 @@ function (Vector2,
 			var
 				controlPoints     = result || [ ],
 				controlPointArray = controlPoint .getValue (),
-				dimension         = controlPoint .length;
+				dimension         = controlPoint .length,
+				haveWeights       = Boolean (weights),
+				Vector            = haveWeights ? Vector3 : Vector2;
+
+			if (controlPoints .haveWeights !== haveWeights)
+			{
+				controlPoints .haveWeights = haveWeights;
+				controlPoints .length      = 0;
+			}
 
 			for (var i = 0; i < dimension; ++ i)
 			{
 				var
 					i2 = i * 2,
-					p  = controlPoints [i] || new Vector3 (0, 0, 0);
+					p  = controlPoints [i] || new Vector (0, 0, 0);
 
-				controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1], weights [i]);
+				controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1], haveWeights ? weights [i] : 0);
 			}
 
 			controlPoints .length = dimension;
@@ -845,13 +845,22 @@ function (Vector2,
 		{
 			var
 				controlPoints = result || [ ],
-				dimension     = controlPointNode .getSize ();
+				dimension     = controlPointNode .getSize (),
+				haveWeights   = Boolean (weights),
+				Vector        = haveWeights ? Vector4 : Vector3;
+
+			if (controlPoints .haveWeights !== haveWeights)
+			{
+				controlPoints .haveWeights = haveWeights;
+				controlPoints .length      = 0;
+			}
 
 			for (var i = 0; i < dimension; ++ i)
 			{
-				var cp = controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector4 (0, 0, 0, 0));
+				var cp = controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector (0, 0, 0, 0));
 
-				cp .w = weights [i];
+				if (haveWeights)
+					cp .w = weights [i];
 			}
 
 			controlPoints .length = dimension;
@@ -866,7 +875,16 @@ function (Vector2,
 		},
 		getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
 		{
-			var controlPoints = result || [ ];
+			var
+				controlPoints = result || [ ],
+				haveWeights   = Boolean (weights),
+				Vector        = haveWeights ? Vector4 : Vector3;
+
+			if (controlPoints .haveWeights !== haveWeights)
+			{
+				controlPoints .haveWeights = haveWeights;
+				controlPoints .length      = 0;
+			}
 
 			for (var u = 0; u < uDimension; ++ u)
 			{
@@ -879,9 +897,10 @@ function (Vector2,
 				{
 					var index = v * uDimension + u;
 
-					cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector4 (0, 0, 0, 0));
+					cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector (0, 0, 0, 0));
 
-					cp [v] .w = weights [index];
+					if (haveWeights)
+						cp [v] .w = weights [index];
 				}
 
 				cp .length = vDimension;
@@ -2122,41 +2141,7 @@ function (Vector3,
 {
 'use strict';
 
-	function normalize (out, a)
-	{
-		var
-			x = a [0],
-			y = a [1],
-			z = a [2];
-
-		var l = Math .sqrt (x * x + y * y + z * z);
-
-		if (l > 0)
-		{
-			out [0] = a [0] / l;
-			out [1] = a [1] / l;
-			out [2] = a [2] / l;
-		}
-
-		return out
-	}
-
-	function cross (out, a, b)
-	{
-	    var
-			ax = a [0], ay = a [1], az = a [2],
-			bx = b [0], by = b [1], bz = b [2];
-
-		out [0] = ay * bz - az * by
-		out [1] = az * bx - ax * bz
-		out [2] = ax * by - ay * bx
-
-		return out
-	}
-
-	var
-		tmp1 = [ ],
-		tmp2 = [ ];
+	var tmp1 = [ ];
 
 	return function (mesh, surface, opts)
 	{
@@ -2164,10 +2149,11 @@ function (Vector3,
 		opts = opts || { };
 
 		var
-			points = mesh .points = mesh .points || [ ],
-			faces  = mesh .faces  = mesh .faces  || [ ];
+			points      = mesh .points = mesh .points || [ ],
+			faces       = mesh .faces  = mesh .faces  || [ ],
+			haveWeights = opts .haveWeights;
 
-		var dimension = surface .dimension;
+		var dimension = surface .dimension - haveWeights;
 
 		if (Array .isArray (opts .resolution))
 		{
@@ -2201,8 +2187,18 @@ function (Vector3,
 
 					surface .evaluate (tmp1, u);
 
-					for (var d = 0; d < dimension; ++ d)
-						points [ptr + d] = tmp1 [d];
+					if (haveWeights)
+					{
+						var w = tmp1 [dimension];
+
+						for (var d = 0; d < dimension; ++ d)
+							points [ptr + d] = tmp1 [d] / w;
+					}
+					else
+					{
+						for (var d = 0; d < dimension; ++ d)
+							points [ptr + d] = tmp1 [d];
+					}
 				}
 
 				points .length = nbVertices;
@@ -2238,8 +2234,18 @@ function (Vector3,
 
 						surface .evaluate (tmp1, u, v);
 
-						for (var d = 0; d < dimension; ++ d)
-							points [ptr + d] = tmp1 [d];
+						if (haveWeights)
+						{
+							var w = tmp1 [dimension];
+
+							for (var d = 0; d < dimension; ++ d)
+								points [ptr + d] = tmp1 [d] / w;
+						}
+						else
+						{
+							for (var d = 0; d < dimension; ++ d)
+								points [ptr + d] = tmp1 [d];
+						}
 					}
 				}
 
@@ -2913,7 +2919,7 @@ function (X3DCast,
 				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
 
-			// Initialize NURBS tesselllator
+			// Initialize NURBS tessellator
 
 			var degree = this .order_ .getValue () - 1;
 
@@ -2926,21 +2932,19 @@ function (X3DCast,
 			});
 
 			this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
+			this .sampleOptions .haveWeights    = Boolean (weights);
 
 			var
 				mesh        = nurbs .sample (this .mesh, surface, this .sampleOptions),
 				points      = mesh .points,
 				vertexArray = this .getVertices ();
 
-			for (var i2 = 4, length = points .length; i2 < length; i2 += 4)
+			for (var i2 = 3, length = points .length; i2 < length; i2 += 3)
 			{
-				var
-					i1 = i2 - 4,
-					w1 = points [i1 + 3],
-					w2 = points [i2 + 3];
+				var i1 = i2 - 3;
 
-				vertexArray .push (points [i1] / w1, points [i1 + 1] / w1, points [i1 + 2] / w1, 1);
-				vertexArray .push (points [i2] / w2, points [i2 + 1] / w2, points [i2 + 2] / w2, 1);
+				vertexArray .push (points [i1], points [i1 + 1], points [i1 + 2], 1);
+				vertexArray .push (points [i2], points [i2 + 1], points [i2 + 2], 1);
 			}
 		},
 	});
@@ -3104,7 +3108,7 @@ function (Fields,
 				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPoint_ .length, this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
 
-			// Initialize NURBS tesselllator
+			// Initialize NURBS tessellator
 
 			var degree = this .order_ .getValue () - 1;
 
@@ -3117,6 +3121,7 @@ function (Fields,
 			});
 
 			this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
+			this .sampleOptions .haveWeights    = Boolean (weights);
 
 			var
 				mesh   = nurbs .sample (this .mesh, surface, this .sampleOptions),
@@ -3126,30 +3131,27 @@ function (Fields,
 			{
 				case 0:
 				{
-					for (var i = 0, length = points .length; i < length; i += 3)
+					for (var i = 0, length = points .length; i < length; i += 2)
 					{
-						var w = points [i + 2];
-						array .push (points [i] / w, points [i + 1] / w);
+						array .push (points [i], points [i + 1]);
 					}
 
 					break;
 				}
 				case 1:
 				{
-					for (var i = 0, length = points .length; i < length; i += 3)
+					for (var i = 0, length = points .length; i < length; i += 2)
 					{
-						var w = points [i + 2];
-						array .push (points [i] / w, 0, points [i + 1] / w);
+						array .push (points [i], 0, points [i + 1]);
 					}
 
 					break;
 				}
 				case 2:
 				{
-					for (var i = 0, length = points .length; i < length; i += 3)
+					for (var i = 0, length = points .length; i < length; i += 2)
 					{
-						var w = points [i + 2];
-						array .push (new Vector3 (points [i] / w, points [i + 1] / w, 0));
+						array .push (new Vector3 (points [i], points [i + 1], 0));
 					}
 
 					break;
@@ -3353,7 +3355,7 @@ function (Fields,
 				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
 
-			// Initialize NURBS tesselllator
+			// Initialize NURBS tessellator
 
 			var degree = this .order_ .getValue () - 1;
 
@@ -3365,6 +3367,8 @@ function (Fields,
 				debug: false,
 			});
 
+			this .sampleOptions .haveWeights = Boolean (weights);
+
 			var
 				mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
 				points       = mesh .points,
@@ -3373,17 +3377,13 @@ function (Fields,
 			interpolator .key_      .length = 0;
 			interpolator .keyValue_ .length = 0;
 
-			for (var i = 0, length = points .length - 4; i < length; i += 4)
+			for (var i = 0, length = points .length - 3; i < length; i += 3)
 			{
-				var
-					w1 = points [i + 3],
-					w2 = points [i + 7];
+				var direction = new Vector3 (points [i + 3] - points [i + 0],
+				                             points [i + 4] - points [i + 1],
+				                             points [i + 5] - points [i + 2]);
 
-				var direction = new Vector3 (points [i + 4] / w2 - points [i + 0] / w1,
-													points [i + 5] / w2 - points [i + 1] / w1,
-													points [i + 6] / w2 - points [i + 2] / w1);
-
-				interpolator .key_      .push (knots [0] + i / (length - 4 + (4 * closed)) * scale);
+				interpolator .key_      .push (knots [0] + i / (length - 3 + (3 * closed)) * scale);
 				interpolator .keyValue_. push (new Rotation4 (Vector3 .zAxis, direction));
 			}
 
@@ -3610,7 +3610,7 @@ function (X3DParametricGeometryNode,
 				uScale = uKnots [uKnots .length - 1] - uKnots [0],
 				vScale = vKnots [vKnots .length - 1] - vKnots [0];
 
-			// Initialize NURBS tesselllator
+			// Initialize NURBS tessellator
 
 			var
 				uDegree = this .uOrder_ .getValue () - 1,
@@ -3631,6 +3631,7 @@ function (X3DParametricGeometryNode,
 			sampleOptions .closed [0]       = uClosed;
 			sampleOptions .closed [1]       = vClosed;
 			sampleOptions .domain           = undefined;
+			sampleOptions .haveWeights      = Boolean (weights);
 			sampleOptions .trimmingContours = this .getTrimmingContours ();
 
 			var
@@ -3641,11 +3642,9 @@ function (X3DParametricGeometryNode,
 
 			for (var i = 0, length = faces .length; i < length; ++ i)
 			{
-				var
-					index = faces [i] * 4,
-					w     = points [index + 3];
+				var index = faces [i] * 3;
 
-				vertexArray .push (points [index] / w, points [index + 1] / w, points [index + 2] / w, 1);
+				vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
 			}
 
 			this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue (), surface .domain);
@@ -3670,8 +3669,6 @@ function (X3DParametricGeometryNode,
 			return function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, domain)
 			{
 				var sampleOptions = this .sampleOptions;
-
-				delete sampleOptions .domain;
 
 				if (this .texCoordNode && this .texCoordNode .getSize () === uDimension * vDimension)
 				{
@@ -3712,8 +3709,9 @@ function (X3DParametricGeometryNode,
 					points: texControlPoints,
 				});
 
-				sampleOptions .closed [0] = false;
-				sampleOptions .closed [1] = false;
+				sampleOptions .closed [0]  = false;
+				sampleOptions .closed [1]  = false;
+				sampleOptions .haveWeights = false;
 
 				var
 					texMesh       = nurbs .sample (this .texMesh, texSurface, sampleOptions),
@@ -3778,16 +3776,13 @@ function (X3DParametricGeometryNode,
 				for (var i = 0, length = faces .length; i < length; i += 3)
 				{
 					var
-						index1 = faces [i]     * 4,
-						index2 = faces [i + 1] * 4,
-						index3 = faces [i + 2] * 4,
-						w1     = points [index1 + 3],
-						w2     = points [index2 + 3],
-						w3     = points [index3 + 3];
+						index1 = faces [i]     * 3,
+						index2 = faces [i + 1] * 3,
+						index3 = faces [i + 2] * 3;
 
-					v1 .set (points [index1] / w1, points [index1 + 1] / w1, points [index1 + 2] / w1);
-					v2 .set (points [index2] / w2, points [index2 + 1] / w2, points [index2 + 2] / w2);
-					v3 .set (points [index3] / w3, points [index3 + 1] / w3, points [index3 + 2] / w3);
+					v1 .set (points [index1], points [index1 + 1], points [index1 + 2]);
+					v2 .set (points [index2], points [index2 + 1], points [index2 + 2]);
+					v3 .set (points [index3], points [index3 + 1], points [index3 + 2]);
 
 					var normal = Triangle3 .normal (v1, v2 ,v3, normals [i] || new Vector3 (0, 0, 0));
 
@@ -4102,7 +4097,7 @@ function (Fields,
 				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
 				scale = knots [knots .length - 1] - knots [0];
 
-			// Initialize NURBS tesselllator
+			// Initialize NURBS tessellator
 
 			var degree = this .order_ .getValue () - 1;
 
@@ -4114,6 +4109,8 @@ function (Fields,
 				debug: false,
 			});
 
+			this .sampleOptions .haveWeights = Boolean (weights);
+
 			var
 				mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
 				points       = mesh .points,
@@ -4122,12 +4119,10 @@ function (Fields,
 			interpolator .key_      .length = 0;
 			interpolator .keyValue_ .length = 0;
 
-			for (var i = 0, length = points .length; i < length; i += 4)
+			for (var i = 0, length = points .length; i < length; i += 3)
 			{
-				var w = points [i + 3];
-
-				interpolator .key_      .push (knots [0] + i / (length - 4) * scale);
-				interpolator .keyValue_. push (new Fields .SFVec3f (points [i] / w, points [i + 1] / w, points [i + 2] / w));
+				interpolator .key_      .push (knots [0] + i / (length - 3) * scale);
+				interpolator .keyValue_. push (new Fields .SFVec3f (points [i], points [i + 1], points [i + 2]));
 			}
 		},
 	});
@@ -5026,7 +5021,7 @@ function (Fields,
 
 		this .addType (X3DConstants .NurbsTextureCoordinate);
 
-		this .constrolPoints = [ ];
+		this .controlPoints = [ ];
 	}
 
 	NurbsTextureCoordinate .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -5063,14 +5058,14 @@ function (Fields,
 		{
 			var
 				controlPointArray = this .controlPoint_ .getValue (),
-				constrolPoints    = this .constrolPoints;
+				controlPoints     = this .controlPoints;
 
 			for (var u = 0, uDimension = this .uDimension_ .getValue (); u < uDimension; ++ u)
 			{
-				var cp = constrolPoints [u];
+				var cp = controlPoints [u];
 
 				if (! cp)
-					cp = constrolPoints [u] = [ ];
+					cp = controlPoints [u] = [ ];
 
 				for (var v = 0, vDimension = this .vDimension_ .getValue (); v < vDimension; ++ v)
 				{
@@ -5079,11 +5074,11 @@ function (Fields,
 						p     = cp [v] || new Vector4 (),
 						i     = index * 2;
 
-					cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, texWeights [index]);
+					cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, texWeights ? texWeights [index] : 1);
 				}
 			}
 
-			return constrolPoints;
+			return controlPoints;
 		},
 		isValid: function ()
 		{
