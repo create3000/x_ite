@@ -101,15 +101,6 @@ function (PixelTexture,
 
 			return this .defaultTransferFunction;
 		},
-		createOpacityMapVolumeStyleShader: function ()
-		{
-			var gl = this .getContext ();
-
-			if (gl .getVersion () < 2)
-				return null;
-
-			return this .createShader ("OpacityMapVolumeStyleShader", "../volume-rendering/OpacityMapVolumeStyle", false);
-		},
 	};
 
 	return X3DVolumeRenderingContext;

@@ -65,6 +65,11 @@ function (X3DTextureNode,
 		X3DTextureNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DTexture3DNode);
+
+		this .width  = 0;
+		this .height = 0;
+		this .depth  = 0;
+		this .data   = null;
 	}
 
 	X3DTexture3DNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),

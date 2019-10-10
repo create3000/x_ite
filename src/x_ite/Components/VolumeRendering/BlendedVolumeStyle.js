@@ -53,12 +53,14 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposableVolumeRenderStyleNode,
-          X3DConstants)
+          X3DConstants,
+          X3DCast)
 {
 "use strict";
 
@@ -73,13 +75,16 @@ function (Fields,
 	{
 		constructor: BlendedVolumeStyle,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant1", new Fields .SFFloat (0.5)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant2", new Fields .SFFloat (0.5)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "weightFunction1", new Fields .SFString ("CONSTANT")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "renderStyle",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "voxels",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                 new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant1",         new Fields .SFFloat (0.5)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant2",         new Fields .SFFloat (0.5)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "weightFunction1",         new Fields .SFString ("CONSTANT")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "weightFunction2",         new Fields .SFString ("CONSTANT")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "weightTransferFunction1", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "weightTransferFunction2", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "renderStyle",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "voxels",                  new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -92,6 +97,212 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "renderStyle";
+		},
+		initialize: function ()
+		{
+			X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
+
+			var gl = this .getBrowser () .getContext ();
+
+			if (gl .getVersion () < 2)
+				return;
+
+			this .weightTransferFunction1_ .addInterest ("set_weightTransferFunction1__", this);
+			this .weightTransferFunction2_ .addInterest ("set_weightTransferFunction2__", this);
+			this .renderStyle_             .addInterest ("set_renderStyle__",             this);
+			this .voxels_                  .addInterest ("set_voxels__",                  this);
+
+			this .set_weightTransferFunction1__ ();
+			this .set_weightTransferFunction2__ ();
+			this .set_renderStyle__ ();
+			this .set_voxels__ ();
+		},
+		set_weightTransferFunction1__: function ()
+		{
+			this .weightTransferFunction1Node = X3DCast (X3DConstants .X3DTexture2DNode, this .weightTransferFunction1_);
+		},
+		set_weightTransferFunction2__: function ()
+		{
+			this .weightTransferFunction2Node = X3DCast (X3DConstants .X3DTexture2DNode, this .weightTransferFunction2_);
+		},
+		set_renderStyle__: function ()
+		{
+			this .renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this .renderStyle_);
+
+			if (! this .renderStyleNode)
+				this .renderStyleNode = this .getBrowser () .getDefaultVolumeStyle ();
+		},
+		set_voxels__: function ()
+		{
+			if (this .voxelsNode)
+				this .voxelsNode .removeInterest ("set_textureSize__", this);
+
+			this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .voxels_);
+
+			if (this .voxelsNode)
+			{
+				this .voxelsNode .addInterest ("set_textureSize__", this);
+
+				this .set_textureSize__ ();
+			}
+		},
+		set_textureSize__: function ()
+		{
+			var textureSize = this .textureSize;
+
+			if (textureSize)
+			{
+				textureSize .x = this .voxelsNode .getWidth ();
+				textureSize .y = this .voxelsNode .getHeight ();
+				textureSize .z = this .voxelsNode .getDepth ();
+			}
+		},
+		addShaderFields: function (shaderNode)
+		{
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant1_" + this .getId (), new Fields .SFFloat (this .weightConstant1_ .getValue ()));
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant2_" + this .getId (), new Fields .SFFloat (this .weightConstant2_ .getValue ()));
+
+			if (this .weightTransferFunction1Node)
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightTransferFunction1_" + this .getId (), new Fields .SFNode (this .weightTransferFunction1Node));
+
+			if (this .weightTransferFunction2Node)
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightTransferFunction2_" + this .getId (), new Fields .SFNode (this .weightTransferFunction2Node));
+
+			if (this .voxelsNode)
+			{
+				this .textureSize = new Fields .SFVec3f ();
+
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "voxels_"      + this .getId (), new Fields .SFNode (this .voxelsNode));
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "textureSize_" + this .getId (), this .textureSize);
+			}
+
+			this .renderStyleNode .addShaderFields (shaderNode);
+		},
+		getUniformsText: function ()
+		{
+			var string = "";
+
+			string += "uniform float     weightConstant1_"         + this .getId () + ";\n";
+			string += "uniform float     weightConstant2_"         + this .getId () + ";\n";
+			string += "uniform sampler2D weightTransferFunction1_" + this .getId () + ";\n";
+			string += "uniform sampler2D weightTransferFunction2_" + this .getId () + ";\n";
+			string += "uniform sampler3D voxels_"                  + this .getId () + ";\n";
+			string += "uniform vec3      textureSize_"             + this .getId () + ";\n";
+
+			var uniformsText = this .renderStyleNode .getUniformsText ();
+
+			uniformsText = uniformsText .replace (/x3d_Texture3D \[0\]/g, "voxels_"      + this .getId ());
+			uniformsText = uniformsText .replace (/x3d_TextureSize/g,     "textureSize_" + this .getId ());
+
+			string += "\n";
+			string += uniformsText;
+
+			return string;
+		},
+		getFunctionsText: function ()
+		{
+			if (! this .voxelsNode)
+				return "";
+
+			var string = "";
+
+			string += "	vec4 blendColor_" + this .getId () + " = texture (voxels_" + this .getId () + ", texCoord);";
+
+			var functionsText = this .renderStyleNode .getFunctionsText () .replace (/textureColor/g, "blendColor_" + this .getId ());
+
+			string += "\n";
+			string += functionsText;
+			string += "\n";
+
+			switch (this .weightFunction1_ .getValue ())
+			{
+				default: // CONSTANT
+				{
+					string += "	float w1_" + this .getId () + " = weightConstant1_" + this .getId () + ";\n";
+					break;
+				}
+				case "ALPHA1":
+				{
+					string += "	float w1_" + this .getId () + " = textureColor .a;\n";
+					break;
+				}
+				case "ALPHA2":
+				{
+					string += "	float w1_" + this .getId () + " = blendColor_ " + this .getId () + " .a;\n";
+					break;
+				}
+				case "ONE_MINUS_ALPHA1":
+				{
+					string += "	float w1_" + this .getId () + " = 1.0 - textureColor .a;\n";
+					break;
+				}
+				case "ONE_MINUS_ALPHA2":
+				{
+					string += "	float w1_" + this .getId () + " = 1.0 - blendColor_ " + this .getId () + " .a;\n";
+					break;
+				}
+				case "TABLE":
+				{
+					if (this .weightTransferFunction1Node)
+					{
+						string += "	float w1_" + this .getId () + " = texture (weightTransferFunction1_" + this .getId () + ", vec2 (textureColor .a, blendColor_" + this .getId () + " .a)) .r;\n";
+					}
+					else
+					{
+						// Use default CONSTANT value.
+						string += "	float w1_" + this .getId () + " = weightConstant1_" + this .getId () + ";\n";
+					}
+
+					break;
+				}
+			}
+
+			switch (this .weightFunction2_ .getValue ())
+			{
+				default: // CONSTANT
+				{
+					string += "	float w2_" + this .getId () + " = weightConstant2_" + this .getId () + ";\n";
+					break;
+				}
+				case "ALPHA1":
+				{
+					string += "	float w2_" + this .getId () + " = textureColor .a;\n";
+					break;
+				}
+				case "ALPHA2":
+				{
+					string += "	float w2_" + this .getId () + " = blendColor_ " + this .getId () + " .a;\n";
+					break;
+				}
+				case "ONE_MINUS_ALPHA1":
+				{
+					string += "	float w2_" + this .getId () + " = 1.0 - textureColor .a;\n";
+					break;
+				}
+				case "ONE_MINUS_ALPHA2":
+				{
+					string += "	float w2_" + this .getId () + " = 1.0 - blendColor_ " + this .getId () + " .a;\n";
+					break;
+				}
+				case "TABLE":
+				{
+					if (this .weightTransferFunction2Node)
+					{
+						string += "	float w2_" + this .getId () + " = texture (weightTransferFunction2_" + this .getId () + ", vec2 (textureColor .a, blendColor_" + this .getId () + " .a)) .r;\n";
+					}
+					else
+					{
+						// Use default CONSTANT value.
+						string += "	float w2_" + this .getId () + " = weightConstant2_" + this .getId () + ";\n";
+					}
+
+					break;
+				}
+			}
+
+			string += "	textureColor = clamp (textureColor * w1_" + this .getId () + " + blendColor_" + this .getId () + " * w2_" + this .getId () + ", 0.0, 1.0);\n";
+
+			return string;
 		},
 	});
 

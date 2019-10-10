@@ -4,9 +4,14 @@ precision mediump float;
 precision mediump int;
 precision mediump sampler3D;
 
+uniform int x3d_NumLights;
+uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
+
 uniform int       x3d_NumTextures;
 uniform sampler3D x3d_Texture3D [1];
-uniform sampler2D transferFunction;
+uniform vec3      x3d_TextureSize;
+
+// VOLUME_STYLES_UNIFORMS
 
 in vec3 vertex;
 in vec4 texCoord;
@@ -30,8 +35,11 @@ getTextureColor (in vec3 texCoord)
 	if (texCoord .p < 0.0 || texCoord .p > 1.0)
 		discard;
 
-	vec4 voxelColor   = texture (x3d_Texture3D [0], texCoord);
-	vec4 textureColor = texture (transferFunction, voxelColor .ra);
+	vec4 textureColor = texture (x3d_Texture3D [0], texCoord);
+
+	// Apply volume styles.
+
+// VOLUME_STYLES_FUNCTIONS
 
 	return textureColor;
 }

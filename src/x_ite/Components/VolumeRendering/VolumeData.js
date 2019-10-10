@@ -52,15 +52,23 @@ define ([
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/VolumeRendering/X3DVolumeDataNode",
+	"x_ite/Components/Shaders/ComposedShader",
+	"x_ite/Components/Shaders/ShaderPart",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
+	"text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
+	"text!x_ite/Browser/VolumeRendering/VolumeStyle.fs",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DVolumeDataNode,
+          ComposedShader,
+          ShaderPart,
           X3DConstants,
-          X3DCast)
+          X3DCast,
+          vs,
+          fs)
 {
 "use strict";
 
@@ -115,15 +123,74 @@ function (Fields,
 			this .getAppearance () .blendMode_ = this .blendModeNode;
 
 			this .set_renderStyle__ ();
+			this .set_voxels__ ();
 		},
 		set_renderStyle__: function ()
 		{
 			this .renderStyleNode = X3DCast (X3DConstants .X3DVolumeRenderStyleNode, this .renderStyle_);
 
-			if (! this .renderStyleNode || this .renderStyleNode .getShader () === null)
+			if (! this .renderStyleNode)
 				this .renderStyleNode = this .getBrowser () .getDefaultVolumeStyle ();
 
-			this .getAppearance () .shaders_ [0] = this .renderStyleNode .getShader ();
+			this .getAppearance () .shaders_ [0] = this .createShader ();
+		},
+		set_voxels__: function ()
+		{
+			if (this .voxelsNode)
+				this .voxelsNode .removeInterest ("set_textureSize__", this);
+
+			this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .voxels_);
+
+			if (this .voxelsNode)
+			{
+				this .voxelsNode .addInterest ("set_textureSize__", this);
+
+				this .set_textureSize__ ();
+			}
+		},
+		set_textureSize__: function ()
+		{
+			var
+				shaderNode  = this .getAppearance () .shaders_ [0] .getValue (),
+				textureSize = shaderNode .getField ("x3d_TextureSize");
+
+			textureSize .x = this .voxelsNode .getWidth ();
+			textureSize .y = this .voxelsNode .getHeight ();
+			textureSize .z = this .voxelsNode .getDepth ();
+		},
+		createShader: function ()
+		{
+			console .log ("Creating VolumeData Shader ...");
+
+			fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  this .renderStyleNode .getUniformsText ());
+			fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, this .renderStyleNode .getFunctionsText ());
+
+			this .getBrowser () .print (fs);
+
+			var vertexShader = new ShaderPart (this .getExecutionContext ());
+			vertexShader .setName ("VolumeDataVertexShader");
+			vertexShader .url_ .push ("data:x-shader/x-vertex," + vs);
+			vertexShader .setup ();
+
+			var fragmentShader = new ShaderPart (this .getExecutionContext ());
+			fragmentShader .setName ("VolumeDataFragmentShader");
+			fragmentShader .type_ = "FRAGMENT";
+			fragmentShader .url_ .push ("data:x-shader/x-fragment," + fs);
+			fragmentShader .setup ();
+
+			var shaderNode = new ComposedShader (this .getExecutionContext ());
+			shaderNode .setName ("VolumeDataShader");
+			shaderNode .language_ = "GLSL";
+			shaderNode .parts_ .push (vertexShader);
+			shaderNode .parts_ .push (fragmentShader);
+
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", new Fields .SFVec3f ());
+
+			this .renderStyleNode .addShaderFields (shaderNode);
+
+			shaderNode .setup ();
+
+			return shaderNode;
 		},
 	});
 

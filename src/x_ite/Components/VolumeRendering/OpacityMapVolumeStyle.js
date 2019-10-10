@@ -69,8 +69,6 @@ function (Fields,
 		X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
 		this .addType (X3DConstants .OpacityMapVolumeStyle);
-
-		this .shaderNode = this .getBrowser () .createOpacityMapVolumeStyleShader ();
 	}
 
 	OpacityMapVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
@@ -104,25 +102,29 @@ function (Fields,
 
 			this .transferFunction_ .addInterest ("set_transferFunction__", this);
 
-			this .shaderNode .addUserDefinedField (X3DConstants .inputOutput, "transferFunction", new Fields .SFNode ());
-
 			this .set_transferFunction__ ();
-		},
-		getShader: function ()
-		{
-			return this .shaderNode;
 		},
 		set_transferFunction__: function ()
 		{
-			var transferFunctionNode = X3DCast (X3DConstants .X3DTexture2DNode, this .transferFunction_);
+			this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture2DNode, this .transferFunction_);
 
 			//if (! transferFunctionNode)
 			//	transferFunctionNode = X3DCast (X3DConstants .X3DTexture3DNode, this .transferFunction_);
 
-			if (! transferFunctionNode)
-				transferFunctionNode = this .getBrowser () .getDefaultTransferFunction ();
-
-			this .shaderNode .getField ("transferFunction") .setValue (transferFunctionNode);
+			if (! this .transferFunctionNode)
+				this .transferFunctionNode = this .getBrowser () .getDefaultTransferFunction ();
+		},
+		addShaderFields: function (shaderNode)
+		{
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "transferFunction_" + this .getId (), new Fields .SFNode (this .transferFunctionNode));
+		},
+		getUniformsText: function ()
+		{
+			return "uniform sampler2D transferFunction_" + this .getId () + ";\n";
+		},
+		getFunctionsText: function ()
+		{
+			return "	textureColor = texture (transferFunction_" + this .getId () + ", textureColor .ra);\n";
 		},
 	});
 
