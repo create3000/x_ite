@@ -127,12 +127,18 @@ function (Fields,
 		},
 		set_renderStyle__: function ()
 		{
+			if (this .renderStyleNode)
+				this .renderStyleNode .removeInterest ("set_createShader__", this);
+
 			this .renderStyleNode = X3DCast (X3DConstants .X3DVolumeRenderStyleNode, this .renderStyle_);
 
 			if (! this .renderStyleNode)
 				this .renderStyleNode = this .getBrowser () .getDefaultVolumeStyle ();
 
-			this .getAppearance () .shaders_ [0] = this .createShader ();
+			if (this .renderStyleNode)
+				this .renderStyleNode .addInterest ("set_createShader__", this);
+
+			this .set_createShader__ ();
 		},
 		set_voxels__: function ()
 		{
@@ -150,13 +156,18 @@ function (Fields,
 		},
 		set_textureSize__: function ()
 		{
-			var
-				shaderNode  = this .getAppearance () .shaders_ [0] .getValue (),
-				textureSize = shaderNode .getField ("x3d_TextureSize");
+			var textureSize = this .textureSize;
 
-			textureSize .x = this .voxelsNode .getWidth ();
-			textureSize .y = this .voxelsNode .getHeight ();
-			textureSize .z = this .voxelsNode .getDepth ();
+			if (textureSize)
+			{
+				textureSize .x = this .voxelsNode .getWidth ();
+				textureSize .y = this .voxelsNode .getHeight ();
+				textureSize .z = this .voxelsNode .getDepth ();
+			}
+		},
+		set_createShader__: function ()
+		{
+			this .getAppearance () .shaders_ [0] = this .createShader ();
 		},
 		createShader: function ()
 		{
@@ -184,8 +195,12 @@ function (Fields,
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
 
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", new Fields .SFVec3f ());
+			if (this .voxelsNode)
+				this .textureSize = new Fields .SFVec3f (this .voxelsNode .getWidth (), this .voxelsNode .getHeight (), this .voxelsNode .getDepth ());
+			else
+				this .textureSize = new Fields .SFVec3f ();
 
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", this .textureSize);
 			this .renderStyleNode .addShaderFields (shaderNode);
 
 			shaderNode .setup ();

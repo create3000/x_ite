@@ -127,10 +127,16 @@ function (Fields,
 		},
 		set_renderStyle__: function ()
 		{
+			if (this .renderStyleNode)
+				this .renderStyleNode .removeInterest ("addNodeEvent", this);
+
 			this .renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this .renderStyle_);
 
 			if (! this .renderStyleNode)
 				this .renderStyleNode = this .getBrowser () .getDefaultVolumeStyle ();
+
+			if (this .renderStyleNode)
+				this .renderStyleNode .addInterest ("addNodeEvent", this);
 		},
 		set_voxels__: function ()
 		{
@@ -170,7 +176,10 @@ function (Fields,
 
 			if (this .voxelsNode)
 			{
-				this .textureSize = new Fields .SFVec3f ();
+				if (this .voxelsNode)
+					this .textureSize = new Fields .SFVec3f (this .voxelsNode .getWidth (), this .voxelsNode .getHeight (), this .voxelsNode .getDepth ());
+				else
+					this .textureSize = new Fields .SFVec3f ();
 
 				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "voxels_"      + this .getId (), new Fields .SFNode (this .voxelsNode));
 				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "textureSize_" + this .getId (), this .textureSize);
@@ -182,6 +191,9 @@ function (Fields,
 		{
 			var string = "";
 
+			string += "\n";
+			string += "// BlendedVolumeStyle\n";
+			string += "\n";
 			string += "uniform float     weightConstant1_"         + this .getId () + ";\n";
 			string += "uniform float     weightConstant2_"         + this .getId () + ";\n";
 			string += "uniform sampler2D weightTransferFunction1_" + this .getId () + ";\n";
@@ -206,12 +218,18 @@ function (Fields,
 
 			var string = "";
 
+			string += "\n";
+			string += "	// BlendedVolumeStyle\n";
+			string += "\n";
+
 			string += "	vec4 blendColor_" + this .getId () + " = texture (voxels_" + this .getId () + ", texCoord);";
 
 			var functionsText = this .renderStyleNode .getFunctionsText () .replace (/textureColor/g, "blendColor_" + this .getId ());
 
 			string += "\n";
 			string += functionsText;
+			string += "\n";
+			string += "	// BlendedVolumeStyle\n";
 			string += "\n";
 
 			switch (this .weightFunction1_ .getValue ())
