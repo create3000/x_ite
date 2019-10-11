@@ -112,8 +112,8 @@ function (Fields,
 		},
 		addShaderFields: function (shaderNode)
 		{
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "coolColor_" + this .getId (), new Fields .SFColorRGBA (this .coolColor_ .getValue ()));
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "warmColor_" + this .getId (), new Fields .SFColorRGBA (this .warmColor_ .getValue ()));
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "coolColor_" + this .getId (), this .coolColor_ .copy ());
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "warmColor_" + this .getId (), this .warmColor_ .copy ());
 
 			if (this .surfaceNormalsNode)
 				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));

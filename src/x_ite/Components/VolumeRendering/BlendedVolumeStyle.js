@@ -165,8 +165,8 @@ function (Fields,
 		},
 		addShaderFields: function (shaderNode)
 		{
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant1_" + this .getId (), new Fields .SFFloat (this .weightConstant1_ .getValue ()));
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant2_" + this .getId (), new Fields .SFFloat (this .weightConstant2_ .getValue ()));
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant1_" + this .getId (), this .weightConstant1_ .copy ());
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant2_" + this .getId (), this .weightConstant2_ .copy ());
 
 			if (this .weightTransferFunction1Node)
 				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightTransferFunction1_" + this .getId (), new Fields .SFNode (this .weightTransferFunction1Node));
