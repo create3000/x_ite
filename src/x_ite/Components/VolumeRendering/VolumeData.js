@@ -196,11 +196,16 @@ function (Fields,
 			shaderNode .parts_ .push (fragmentShader);
 
 			if (this .voxelsNode)
+			{
 				this .textureSize = new Fields .SFVec3f (this .voxelsNode .getWidth (), this .voxelsNode .getHeight (), this .voxelsNode .getDepth ());
-			else
-				this .textureSize = new Fields .SFVec3f ();
 
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", this .textureSize);
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", this .textureSize);
+			}
+			else
+			{
+				this .textureSize = null;
+			}
+
 			this .renderStyleNode .addShaderFields (shaderNode);
 
 			shaderNode .setup ();

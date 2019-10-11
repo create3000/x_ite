@@ -176,13 +176,14 @@ function (Fields,
 
 			if (this .voxelsNode)
 			{
-				if (this .voxelsNode)
-					this .textureSize = new Fields .SFVec3f (this .voxelsNode .getWidth (), this .voxelsNode .getHeight (), this .voxelsNode .getDepth ());
-				else
-					this .textureSize = new Fields .SFVec3f ();
+				this .textureSize = new Fields .SFVec3f (this .voxelsNode .getWidth (), this .voxelsNode .getHeight (), this .voxelsNode .getDepth ());
 
 				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "voxels_"      + this .getId (), new Fields .SFNode (this .voxelsNode));
 				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "textureSize_" + this .getId (), this .textureSize);
+			}
+			else
+			{
+				this .textureSize = null;
 			}
 
 			this .renderStyleNode .addShaderFields (shaderNode);
