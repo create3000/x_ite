@@ -190,17 +190,25 @@ function (Fields,
 		},
 		getUniformsText: function ()
 		{
+			if (! this .voxelsNode)
+				return "";
+
 			var string = "";
 
 			string += "\n";
 			string += "// BlendedVolumeStyle\n";
 			string += "\n";
-			string += "uniform float     weightConstant1_"         + this .getId () + ";\n";
-			string += "uniform float     weightConstant2_"         + this .getId () + ";\n";
-			string += "uniform sampler2D weightTransferFunction1_" + this .getId () + ";\n";
-			string += "uniform sampler2D weightTransferFunction2_" + this .getId () + ";\n";
-			string += "uniform sampler3D voxels_"                  + this .getId () + ";\n";
-			string += "uniform vec3      textureSize_"             + this .getId () + ";\n";
+			string += "uniform float     weightConstant1_" + this .getId () + ";\n";
+			string += "uniform float     weightConstant2_" + this .getId () + ";\n";
+
+			if (this .weightTransferFunction1Node)
+				string += "uniform sampler2D weightTransferFunction1_" + this .getId () + ";\n";
+
+			if (this .weightTransferFunction2Node)
+				string += "uniform sampler2D weightTransferFunction2_" + this .getId () + ";\n";
+
+			string += "uniform sampler3D voxels_"      + this .getId () + ";\n";
+			string += "uniform vec3      textureSize_" + this .getId () + ";\n";
 
 			var uniformsText = this .renderStyleNode .getUniformsText ();
 
@@ -225,7 +233,9 @@ function (Fields,
 
 			string += "	vec4 blendColor_" + this .getId () + " = texture (voxels_" + this .getId () + ", texCoord);";
 
-			var functionsText = this .renderStyleNode .getFunctionsText () .replace (/textureColor/g, "blendColor_" + this .getId ());
+			var functionsText = this .renderStyleNode .getFunctionsText ();
+
+			functionsText = functionsText .replace (/textureColor/g, "blendColor_" + this .getId ());
 
 			string += "\n";
 			string += functionsText;

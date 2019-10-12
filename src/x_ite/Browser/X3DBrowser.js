@@ -273,7 +273,7 @@ function ($,
 
 			if (! (scene instanceof X3DScene))
 				scene = this .createScene ();
-			
+
 			// bindWorld
 			this .description = "";
 
@@ -281,7 +281,7 @@ function ($,
 			this .setBrowserLoading (true);
 			this .loadCount_ .addInterest ("set_loadCount__", this);
 			this .prepareEvents () .removeInterest ("bind", this);
-	
+
 			for (var id in scene .getLoadingObjects ())
 				this .addLoadCount (scene .getLoadingObjects () [id]);
 
@@ -379,7 +379,7 @@ function ($,
 					}
 
 					scene .setup ();
-				   
+
 					// Wait until scene is completely loaded, scene .loadCount_ must be 0.
 					field .setValue (scene .rootNodes);
 				}
@@ -400,7 +400,7 @@ function ($,
 			{
 				scene .setExecutionContext (currentScene);
 				currentScene .isLive () .addInterest ("setLive", scene);
-						
+
 				if (currentScene .isLive () .getValue ())
 					scene .setLive (true);
 			}
@@ -469,7 +469,7 @@ function ($,
 		},
 		addBrowserListener: function (callback, object)
 		{
-			// The string describes the name of the callback function to be called within the current ECMAScript context. 
+			// The string describes the name of the callback function to be called within the current ECMAScript context.
 		},
 		removeBrowserListener: function (callback)
 		{
@@ -516,7 +516,7 @@ function ($,
 					{
 						scene .setExecutionContext (currentScene);
 						currentScene .isLive () .addInterest ("setLive", scene);
-								
+
 						if (currentScene .isLive () .getValue ())
 							scene .setLive (true);
 					}
@@ -537,7 +537,7 @@ function ($,
 				{
 					scene .setExecutionContext (currentScene);
 					currentScene .isLive () .addInterest ("setLive", scene);
-							
+
 					if (currentScene .isLive () .getValue ())
 						scene .setLive (true);
 				}
@@ -564,7 +564,7 @@ function ($,
 					{
 						scene .setExecutionContext (currentScene);
 						currentScene .isLive () .addInterest ("setLive", scene);
-								
+
 						if (currentScene .isLive () .getValue ())
 							scene .setLive (true);
 					}
@@ -585,7 +585,7 @@ function ($,
 				{
 					scene .setExecutionContext (currentScene);
 					currentScene .isLive () .addInterest ("setLive", scene);
-							
+
 					if (currentScene .isLive () .getValue ())
 						scene .setLive (true);
 				}
@@ -613,7 +613,7 @@ function ($,
 		{
 			if (! layer)
 				layer = this .getActiveLayer ();
-		
+
 			if (layer)
 			{
 				var viewpoints = layer .getUserViewpoints ();
@@ -626,7 +626,7 @@ function ($,
 		{
 			if (! layer)
 				layer = this .getActiveLayer ();
-		
+
 			if (layer)
 			{
 				var viewpoints = layer .getUserViewpoints ();
@@ -660,7 +660,7 @@ function ($,
 		{
 			if (! layer)
 				layer = this .getActiveLayer ();
-		
+
 			if (layer)
 			{
 				var viewpoints = layer .getUserViewpoints ();
@@ -694,7 +694,7 @@ function ($,
 		{
 			if (! layer)
 				layer = this .getActiveLayer ();
-		
+
 			if (layer)
 			{
 				var viewpoints = layer .getUserViewpoints ();
@@ -818,6 +818,26 @@ function ($,
 		get: function ()
 		{
 			return this .getScriptStack () [this .getScriptStack () .length - 1] .getExecutionContext ();
+		},
+		enumerable: true,
+		configurable: false
+	});
+
+	Object .defineProperty (X3DBrowser .prototype, "supportedProfiles",
+	{
+		get: function ()
+		{
+			return SupportedProfiles;
+		},
+		enumerable: true,
+		configurable: false
+	});
+
+	Object .defineProperty (X3DBrowser .prototype, "supportedComponents",
+	{
+		get: function ()
+		{
+			return SupportedComponents;
 		},
 		enumerable: true,
 		configurable: false
