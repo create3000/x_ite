@@ -1,4 +1,4 @@
-/* X_ITE v4.5.17a-840 */
+/* X_ITE v4.5.17a-841 */
 
 (function () {
 
@@ -90964,7 +90964,7 @@ function (X3DBaseNode)
 			if (this .array .length > 1)
 			{
 				var
-					enableInlineBindables = false,
+					enableInlineBindables = this .getBrowser () .getBrowserOption ("EnableInlineViewpoints"),
 					masterScene           = this .getMasterScene ();
 
 				if (name && name .length)
@@ -90997,7 +90997,7 @@ function (X3DBaseNode)
 				}
 
 				// Return first viewpoint in scene.
-	
+
 				for (var i = 1, length = this .array .length; i < length; ++ i)
 				{
 					var node = this .array [i];
@@ -91030,7 +91030,7 @@ function (X3DBaseNode)
 					if (this .collected .indexOf (node) < 0)
 					{
 						if (node .isBound_ .getValue ())
-							node .set_bind_ = false;							
+							node .set_bind_ = false;
 					}
 				}
 
@@ -93478,7 +93478,7 @@ function (SFNode,
 	function World (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
-		
+
 		this .addChildObjects ("activeLayer", new SFNode (this .layer0));
 
 		this .layerSet        = new LayerSet (executionContext);
@@ -93512,7 +93512,6 @@ function (SFNode,
 			this .layer0 .setup ();
 
 			this .set_activeLayer__ ();
-			this .bind ();
 		},
 		getLayerSet: function ()
 		{
@@ -116552,15 +116551,19 @@ function ($,
 
 			if (! (scene instanceof X3DScene))
 				scene = this .createScene ();
-			
+
 			// bindWorld
 			this .description = "";
 
 			this .getBrowserOptions () .configure ();
+
+			if (scene .getSpecificationVersion () == "2.0")
+				this .setBrowserOption ("EnableInlineViewpoints", false);
+
 			this .setBrowserLoading (true);
 			this .loadCount_ .addInterest ("set_loadCount__", this);
 			this .prepareEvents () .removeInterest ("bind", this);
-	
+
 			for (var id in scene .getLoadingObjects ())
 				this .addLoadCount (scene .getLoadingObjects () [id]);
 
@@ -116568,6 +116571,9 @@ function ($,
 
 			// Scene.setup is done in World.inititalize.
 			this .setExecutionContext (scene);
+
+			if (! this .getBrowserOption ("EnableInlineViewpoints"))
+				this .getWorld () .bind ();
 		},
 		set_loadCount__: function (loadCount)
 		{
@@ -116582,6 +116588,9 @@ function ($,
 		bind: function ()
 		{
 			this .prepareEvents () .removeInterest ("bind", this);
+
+			if (this .getBrowserOption ("EnableInlineViewpoints"))
+				this .getWorld () .bind ();
 
 			this .setBrowserLoading (false);
 
@@ -116658,7 +116667,7 @@ function ($,
 					}
 
 					scene .setup ();
-				   
+
 					// Wait until scene is completely loaded, scene .loadCount_ must be 0.
 					field .setValue (scene .rootNodes);
 				}
@@ -116679,7 +116688,7 @@ function ($,
 			{
 				scene .setExecutionContext (currentScene);
 				currentScene .isLive () .addInterest ("setLive", scene);
-						
+
 				if (currentScene .isLive () .getValue ())
 					scene .setLive (true);
 			}
@@ -116748,7 +116757,7 @@ function ($,
 		},
 		addBrowserListener: function (callback, object)
 		{
-			// The string describes the name of the callback function to be called within the current ECMAScript context. 
+			// The string describes the name of the callback function to be called within the current ECMAScript context.
 		},
 		removeBrowserListener: function (callback)
 		{
@@ -116795,7 +116804,7 @@ function ($,
 					{
 						scene .setExecutionContext (currentScene);
 						currentScene .isLive () .addInterest ("setLive", scene);
-								
+
 						if (currentScene .isLive () .getValue ())
 							scene .setLive (true);
 					}
@@ -116816,7 +116825,7 @@ function ($,
 				{
 					scene .setExecutionContext (currentScene);
 					currentScene .isLive () .addInterest ("setLive", scene);
-							
+
 					if (currentScene .isLive () .getValue ())
 						scene .setLive (true);
 				}
@@ -116843,7 +116852,7 @@ function ($,
 					{
 						scene .setExecutionContext (currentScene);
 						currentScene .isLive () .addInterest ("setLive", scene);
-								
+
 						if (currentScene .isLive () .getValue ())
 							scene .setLive (true);
 					}
@@ -116864,7 +116873,7 @@ function ($,
 				{
 					scene .setExecutionContext (currentScene);
 					currentScene .isLive () .addInterest ("setLive", scene);
-							
+
 					if (currentScene .isLive () .getValue ())
 						scene .setLive (true);
 				}
@@ -116892,7 +116901,7 @@ function ($,
 		{
 			if (! layer)
 				layer = this .getActiveLayer ();
-		
+
 			if (layer)
 			{
 				var viewpoints = layer .getUserViewpoints ();
@@ -116905,7 +116914,7 @@ function ($,
 		{
 			if (! layer)
 				layer = this .getActiveLayer ();
-		
+
 			if (layer)
 			{
 				var viewpoints = layer .getUserViewpoints ();
@@ -116939,7 +116948,7 @@ function ($,
 		{
 			if (! layer)
 				layer = this .getActiveLayer ();
-		
+
 			if (layer)
 			{
 				var viewpoints = layer .getUserViewpoints ();
@@ -116973,7 +116982,7 @@ function ($,
 		{
 			if (! layer)
 				layer = this .getActiveLayer ();
-		
+
 			if (layer)
 			{
 				var viewpoints = layer .getUserViewpoints ();
@@ -117097,6 +117106,26 @@ function ($,
 		get: function ()
 		{
 			return this .getScriptStack () [this .getScriptStack () .length - 1] .getExecutionContext ();
+		},
+		enumerable: true,
+		configurable: false
+	});
+
+	Object .defineProperty (X3DBrowser .prototype, "supportedProfiles",
+	{
+		get: function ()
+		{
+			return SupportedProfiles;
+		},
+		enumerable: true,
+		configurable: false
+	});
+
+	Object .defineProperty (X3DBrowser .prototype, "supportedComponents",
+	{
+		get: function ()
+		{
+			return SupportedComponents;
 		},
 		enumerable: true,
 		configurable: false

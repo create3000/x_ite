@@ -72,9 +72,15 @@ function (X3DNode,
 	X3DVolumeRenderStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DVolumeRenderStyleNode,
-		getShader: function ()
+		addShaderFields: function (shaderNode)
+		{ },
+		getUniformsText: function ()
 		{
-			return null;
+			return "";
+		},
+		getFunctionsText: function ()
+		{
+			return "";
 		},
 	});
 
@@ -225,8 +231,6 @@ function (Fields,
 		X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
 		this .addType (X3DConstants .OpacityMapVolumeStyle);
-
-		this .shaderNode = this .getBrowser () .createOpacityMapVolumeStyleShader ();
 	}
 
 	OpacityMapVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
@@ -260,25 +264,29 @@ function (Fields,
 
 			this .transferFunction_ .addInterest ("set_transferFunction__", this);
 
-			this .shaderNode .addUserDefinedField (X3DConstants .inputOutput, "transferFunction", new Fields .SFNode ());
-
 			this .set_transferFunction__ ();
-		},
-		getShader: function ()
-		{
-			return this .shaderNode;
 		},
 		set_transferFunction__: function ()
 		{
-			var transferFunctionNode = X3DCast (X3DConstants .X3DTexture2DNode, this .transferFunction_);
+			this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture2DNode, this .transferFunction_);
 
 			//if (! transferFunctionNode)
 			//	transferFunctionNode = X3DCast (X3DConstants .X3DTexture3DNode, this .transferFunction_);
 
-			if (! transferFunctionNode)
-				transferFunctionNode = this .getBrowser () .getDefaultTransferFunction ();
-
-			this .shaderNode .getField ("transferFunction") .setValue (transferFunctionNode);
+			if (! this .transferFunctionNode)
+				this .transferFunctionNode = this .getBrowser () .getDefaultTransferFunction ();
+		},
+		addShaderFields: function (shaderNode)
+		{
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "transferFunction_" + this .getId (), new Fields .SFNode (this .transferFunctionNode));
+		},
+		getUniformsText: function ()
+		{
+			return "uniform sampler2D transferFunction_" + this .getId () + ";\n";
+		},
+		getFunctionsText: function ()
+		{
+			return "	textureColor = texture (transferFunction_" + this .getId () + ", textureColor .ra);\n";
 		},
 	});
 
@@ -388,15 +396,6 @@ function (PixelTexture,
 
 			return this .defaultTransferFunction;
 		},
-		createOpacityMapVolumeStyleShader: function ()
-		{
-			var gl = this .getContext ();
-
-			if (gl .getVersion () < 2)
-				return null;
-
-			return this .createShader ("OpacityMapVolumeStyleShader", "../volume-rendering/OpacityMapVolumeStyle", false);
-		},
 	};
 
 	return X3DVolumeRenderingContext;
@@ -457,12 +456,14 @@ define ('x_ite/Components/VolumeRendering/BlendedVolumeStyle',[
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposableVolumeRenderStyleNode,
-          X3DConstants)
+          X3DConstants,
+          X3DCast)
 {
 "use strict";
 
@@ -477,13 +478,16 @@ function (Fields,
 	{
 		constructor: BlendedVolumeStyle,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant1", new Fields .SFFloat (0.5)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant2", new Fields .SFFloat (0.5)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "weightFunction1", new Fields .SFString ("CONSTANT")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "renderStyle",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "voxels",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                 new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant1",         new Fields .SFFloat (0.5)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant2",         new Fields .SFFloat (0.5)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "weightFunction1",         new Fields .SFString ("CONSTANT")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "weightFunction2",         new Fields .SFString ("CONSTANT")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "weightTransferFunction1", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "weightTransferFunction2", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "renderStyle",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "voxels",                  new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -496,6 +500,241 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "renderStyle";
+		},
+		initialize: function ()
+		{
+			X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
+
+			var gl = this .getBrowser () .getContext ();
+
+			if (gl .getVersion () < 2)
+				return;
+
+			this .weightTransferFunction1_ .addInterest ("set_weightTransferFunction1__", this);
+			this .weightTransferFunction2_ .addInterest ("set_weightTransferFunction2__", this);
+			this .renderStyle_             .addInterest ("set_renderStyle__",             this);
+			this .voxels_                  .addInterest ("set_voxels__",                  this);
+
+			this .set_weightTransferFunction1__ ();
+			this .set_weightTransferFunction2__ ();
+			this .set_renderStyle__ ();
+			this .set_voxels__ ();
+		},
+		set_weightTransferFunction1__: function ()
+		{
+			this .weightTransferFunction1Node = X3DCast (X3DConstants .X3DTexture2DNode, this .weightTransferFunction1_);
+		},
+		set_weightTransferFunction2__: function ()
+		{
+			this .weightTransferFunction2Node = X3DCast (X3DConstants .X3DTexture2DNode, this .weightTransferFunction2_);
+		},
+		set_renderStyle__: function ()
+		{
+			if (this .renderStyleNode)
+				this .renderStyleNode .removeInterest ("addNodeEvent", this);
+
+			this .renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this .renderStyle_);
+
+			if (! this .renderStyleNode)
+				this .renderStyleNode = this .getBrowser () .getDefaultVolumeStyle ();
+
+			if (this .renderStyleNode)
+				this .renderStyleNode .addInterest ("addNodeEvent", this);
+		},
+		set_voxels__: function ()
+		{
+			if (this .voxelsNode)
+				this .voxelsNode .removeInterest ("set_textureSize__", this);
+
+			this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .voxels_);
+
+			if (this .voxelsNode)
+			{
+				this .voxelsNode .addInterest ("set_textureSize__", this);
+
+				this .set_textureSize__ ();
+			}
+		},
+		set_textureSize__: function ()
+		{
+			var textureSize = this .textureSize;
+
+			if (textureSize)
+			{
+				textureSize .x = this .voxelsNode .getWidth ();
+				textureSize .y = this .voxelsNode .getHeight ();
+				textureSize .z = this .voxelsNode .getDepth ();
+			}
+		},
+		addShaderFields: function (shaderNode)
+		{
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant1_" + this .getId (), this .weightConstant1_ .copy ());
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant2_" + this .getId (), this .weightConstant2_ .copy ());
+
+			if (this .weightTransferFunction1Node)
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightTransferFunction1_" + this .getId (), new Fields .SFNode (this .weightTransferFunction1Node));
+
+			if (this .weightTransferFunction2Node)
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightTransferFunction2_" + this .getId (), new Fields .SFNode (this .weightTransferFunction2Node));
+
+			if (this .voxelsNode)
+			{
+				this .textureSize = new Fields .SFVec3f (this .voxelsNode .getWidth (), this .voxelsNode .getHeight (), this .voxelsNode .getDepth ());
+
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "voxels_"      + this .getId (), new Fields .SFNode (this .voxelsNode));
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "textureSize_" + this .getId (), this .textureSize);
+			}
+			else
+			{
+				this .textureSize = null;
+			}
+
+			this .renderStyleNode .addShaderFields (shaderNode);
+		},
+		getUniformsText: function ()
+		{
+			if (! this .voxelsNode)
+				return "";
+
+			var string = "";
+
+			string += "\n";
+			string += "// BlendedVolumeStyle\n";
+			string += "\n";
+			string += "uniform float     weightConstant1_" + this .getId () + ";\n";
+			string += "uniform float     weightConstant2_" + this .getId () + ";\n";
+
+			if (this .weightTransferFunction1Node)
+				string += "uniform sampler2D weightTransferFunction1_" + this .getId () + ";\n";
+
+			if (this .weightTransferFunction2Node)
+				string += "uniform sampler2D weightTransferFunction2_" + this .getId () + ";\n";
+
+			string += "uniform sampler3D voxels_"      + this .getId () + ";\n";
+			string += "uniform vec3      textureSize_" + this .getId () + ";\n";
+
+			var uniformsText = this .renderStyleNode .getUniformsText ();
+
+			uniformsText = uniformsText .replace (/x3d_Texture3D \[0\]/g, "voxels_"      + this .getId ());
+			uniformsText = uniformsText .replace (/x3d_TextureSize/g,     "textureSize_" + this .getId ());
+
+			string += "\n";
+			string += uniformsText;
+
+			return string;
+		},
+		getFunctionsText: function ()
+		{
+			if (! this .voxelsNode)
+				return "";
+
+			var string = "";
+
+			string += "\n";
+			string += "	// BlendedVolumeStyle\n";
+			string += "\n";
+
+			string += "	vec4 blendColor_" + this .getId () + " = texture (voxels_" + this .getId () + ", texCoord);";
+
+			var functionsText = this .renderStyleNode .getFunctionsText ();
+
+			functionsText = functionsText .replace (/textureColor/g, "blendColor_" + this .getId ());
+
+			string += "\n";
+			string += functionsText;
+			string += "\n";
+			string += "	// BlendedVolumeStyle\n";
+			string += "\n";
+
+			switch (this .weightFunction1_ .getValue ())
+			{
+				default: // CONSTANT
+				{
+					string += "	float w1_" + this .getId () + " = weightConstant1_" + this .getId () + ";\n";
+					break;
+				}
+				case "ALPHA1":
+				{
+					string += "	float w1_" + this .getId () + " = textureColor .a;\n";
+					break;
+				}
+				case "ALPHA2":
+				{
+					string += "	float w1_" + this .getId () + " = blendColor_ " + this .getId () + " .a;\n";
+					break;
+				}
+				case "ONE_MINUS_ALPHA1":
+				{
+					string += "	float w1_" + this .getId () + " = 1.0 - textureColor .a;\n";
+					break;
+				}
+				case "ONE_MINUS_ALPHA2":
+				{
+					string += "	float w1_" + this .getId () + " = 1.0 - blendColor_ " + this .getId () + " .a;\n";
+					break;
+				}
+				case "TABLE":
+				{
+					if (this .weightTransferFunction1Node)
+					{
+						string += "	float w1_" + this .getId () + " = texture (weightTransferFunction1_" + this .getId () + ", vec2 (textureColor .a, blendColor_" + this .getId () + " .a)) .r;\n";
+					}
+					else
+					{
+						// Use default CONSTANT value.
+						string += "	float w1_" + this .getId () + " = weightConstant1_" + this .getId () + ";\n";
+					}
+
+					break;
+				}
+			}
+
+			switch (this .weightFunction2_ .getValue ())
+			{
+				default: // CONSTANT
+				{
+					string += "	float w2_" + this .getId () + " = weightConstant2_" + this .getId () + ";\n";
+					break;
+				}
+				case "ALPHA1":
+				{
+					string += "	float w2_" + this .getId () + " = textureColor .a;\n";
+					break;
+				}
+				case "ALPHA2":
+				{
+					string += "	float w2_" + this .getId () + " = blendColor_ " + this .getId () + " .a;\n";
+					break;
+				}
+				case "ONE_MINUS_ALPHA1":
+				{
+					string += "	float w2_" + this .getId () + " = 1.0 - textureColor .a;\n";
+					break;
+				}
+				case "ONE_MINUS_ALPHA2":
+				{
+					string += "	float w2_" + this .getId () + " = 1.0 - blendColor_ " + this .getId () + " .a;\n";
+					break;
+				}
+				case "TABLE":
+				{
+					if (this .weightTransferFunction2Node)
+					{
+						string += "	float w2_" + this .getId () + " = texture (weightTransferFunction2_" + this .getId () + ", vec2 (textureColor .a, blendColor_" + this .getId () + " .a)) .r;\n";
+					}
+					else
+					{
+						// Use default CONSTANT value.
+						string += "	float w2_" + this .getId () + " = weightConstant2_" + this .getId () + ";\n";
+					}
+
+					break;
+				}
+			}
+
+			string += "	textureColor = clamp (textureColor * w1_" + this .getId () + " + blendColor_" + this .getId () + " * w2_" + this .getId () + ", 0.0, 1.0);\n";
+
+			return string;
 		},
 	});
 
@@ -1649,12 +1888,14 @@ define ('x_ite/Components/VolumeRendering/ToneMappedVolumeStyle',[
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposableVolumeRenderStyleNode,
-          X3DConstants)
+          X3DConstants,
+          X3DCast)
 {
 "use strict";
 
@@ -1687,10 +1928,121 @@ function (Fields,
 		{
 			return "renderStyle";
 		},
+		initialize: function ()
+		{
+			X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
+
+			var gl = this .getBrowser () .getContext ();
+
+			if (gl .getVersion () < 2)
+				return;
+
+			this .surfaceNormals_ .addInterest ("set_surfaceNormals__", this);
+
+			this .set_surfaceNormals__ ();
+		},
+		set_surfaceNormals__: function ()
+		{
+			this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .surfaceNormals_);
+		},
+		addShaderFields: function (shaderNode)
+		{
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "coolColor_" + this .getId (), this .coolColor_ .copy ());
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "warmColor_" + this .getId (), this .warmColor_ .copy ());
+
+			if (this .surfaceNormalsNode)
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));
+		},
+		getUniformsText: function ()
+		{
+			var string = "";
+
+			string += "\n";
+			string += "// ToneMappedVolumeStyle\n";
+			string += "\n";
+			string += "uniform vec4 coolColor_" + this .getId () + ";\n";
+			string += "uniform vec4 warmColor_" + this .getId () + ";\n";
+
+			if (this .surfaceNormalsNode)
+			{
+				string += "uniform sampler3D surfaceNormals_" + this .getId () + ";\n";
+
+				string += "\n";
+				string += "vec4\n"
+				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
+				string += "{\n";
+				string += "	vec4 n = texture (surfaceNormals_" + this .getId () + ", texCoord) * 2.0 - 1.0\n";
+				string += "	return vec4 (normalize (n .xyz), length (n .xyz));\n";
+				string += "}\n";
+			}
+			else
+			{
+				string += "\n";
+				string += "vec4\n"
+				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
+				string += "{\n";
+				string += "	vec4 offset = vec4 (1.0 / x3d_TextureSize .x, 1.0 / x3d_TextureSize .y, 1.0 / x3d_TextureSize .z, 0.0);\n";
+				string += "	float v0 = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
+				string += "	float v1 = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
+				string += "	float v2 = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
+				string += "	float v3 = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
+				string += "	float v4 = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
+				string += "	float v5 = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
+				string += "	vec3 n = vec3 (v0 - v1, v2 - v3, v4 - v5) * 0.5;\n";
+				string += "	return vec4 (normalize (n), length (n));\n";
+	  			string += "}\n";
+			}
+
+			string += "\n";
+			string += "vec4\n";
+			string += "toneMapped_" + this .getId () + " (in vec4 surfaceNormal, in vec3 lightDir, in vec4 coolColor, in vec4 warmColor)\n"
+			string += "{\n"
+			string += "	float colorFactor = (1.0 + dot (lightDir, surfaceNormal .xyz)) * 0.5;\n"
+			string += "	return mix (warmColor, coolColor, colorFactor);\n"
+			string += "}\n";
+
+			return string;
+		},
+		getFunctionsText: function ()
+		{
+			var string = "";
+
+			string += "\n";
+			string += "	// ToneMappedVolumeStyle\n";
+			string += "\n";
+			string += "	{\n";
+
+			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+			string += "		vec4 toneColor = vec4 (0.0);\n";
+			string += "\n";
+			string += "		for (int i = 0; i < x3d_MaxLights; ++ i)\n";
+			string += "		{\n";
+			string += "			if (i == x3d_NumLights)\n";
+			string += "				break;\n";
+			string += "\n";
+			string += "			x3d_LightSourceParameters light = x3d_LightSource [i];\n";
+			string += "\n";
+			string += "			vec3 L = light .type == x3d_DirectionalLight ? -light .direction : light .location - vertex;\n";
+			string += "			toneColor += toneMapped_" + this .getId () + " (surfaceNormal, L, coolColor_" + this .getId () + ", warmColor_" + this .getId () + ");\n";
+			string += "		}\n";
+			string += "\n";
+			string += "		textureColor .rgb = toneColor .rgb;\n"
+			string += "		textureColor .a  *= toneColor .a;\n"
+
+			string += "	}\n";
+
+			return string;
+		},
 	});
 
 	return ToneMappedVolumeStyle;
 });
+
+
+define('text/text!x_ite/Browser/VolumeRendering/VolumeStyle.vs',[],function () { return '#version 300 es\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\nuniform mat4 x3d_TextureMatrix [1];\n\nin vec4 x3d_Vertex;\nin vec4 x3d_TexCoord0;\n\nout vec3 vertex;\nout vec4 texCoord;\n\nvoid\nmain ()\n{\n\tvec4 position = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tvertex   = position .xyz;\n\ttexCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;\n\n\tgl_Position = x3d_ProjectionMatrix * position;\n}\n';});
+
+
+define('text/text!x_ite/Browser/VolumeRendering/VolumeStyle.fs',[],function () { return '#version 300 es\n\nprecision mediump float;\nprecision mediump int;\nprecision mediump sampler3D;\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nuniform int       x3d_NumTextures;\nuniform sampler3D x3d_Texture3D [1];\nuniform vec3      x3d_TextureSize;\n\n// VOLUME_STYLES_UNIFORMS\n\nin vec3 vertex;\nin vec4 texCoord;\n\nout vec4 x3d_FragColor;\n\n#pragma X3D include "../webgl2/include/ClipPlanes.glsl"\n\nvec4\ngetTextureColor (in vec3 texCoord)\n{\n\tif (x3d_NumTextures == 0)\n\t\tdiscard;\n\n\tif (texCoord .s < 0.0 || texCoord .s > 1.0)\n\t\tdiscard;\n\n\tif (texCoord .t < 0.0 || texCoord .t > 1.0)\n\t\tdiscard;\n\n\tif (texCoord .p < 0.0 || texCoord .p > 1.0)\n\t\tdiscard;\n\n\tvec4 textureColor = texture (x3d_Texture3D [0], texCoord);\n\n\t// Apply volume styles.\n\n// VOLUME_STYLES_FUNCTIONS\n\n\treturn textureColor;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tx3d_FragColor = getTextureColor (texCoord .stp / texCoord .q);\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -1746,15 +2098,23 @@ define ('x_ite/Components/VolumeRendering/VolumeData',[
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/VolumeRendering/X3DVolumeDataNode",
+	"x_ite/Components/Shaders/ComposedShader",
+	"x_ite/Components/Shaders/ShaderPart",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
+	"text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
+	"text!x_ite/Browser/VolumeRendering/VolumeStyle.fs",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DVolumeDataNode,
+          ComposedShader,
+          ShaderPart,
           X3DConstants,
-          X3DCast)
+          X3DCast,
+          vs,
+          fs)
 {
 "use strict";
 
@@ -1809,15 +2169,94 @@ function (Fields,
 			this .getAppearance () .blendMode_ = this .blendModeNode;
 
 			this .set_renderStyle__ ();
+			this .set_voxels__ ();
 		},
 		set_renderStyle__: function ()
 		{
+			if (this .renderStyleNode)
+				this .renderStyleNode .removeInterest ("set_createShader__", this);
+
 			this .renderStyleNode = X3DCast (X3DConstants .X3DVolumeRenderStyleNode, this .renderStyle_);
 
-			if (! this .renderStyleNode || this .renderStyleNode .getShader () === null)
+			if (! this .renderStyleNode)
 				this .renderStyleNode = this .getBrowser () .getDefaultVolumeStyle ();
 
-			this .getAppearance () .shaders_ [0] = this .renderStyleNode .getShader ();
+			if (this .renderStyleNode)
+				this .renderStyleNode .addInterest ("set_createShader__", this);
+
+			this .set_createShader__ ();
+		},
+		set_voxels__: function ()
+		{
+			if (this .voxelsNode)
+				this .voxelsNode .removeInterest ("set_textureSize__", this);
+
+			this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .voxels_);
+
+			if (this .voxelsNode)
+			{
+				this .voxelsNode .addInterest ("set_textureSize__", this);
+
+				this .set_textureSize__ ();
+			}
+		},
+		set_textureSize__: function ()
+		{
+			var textureSize = this .textureSize;
+
+			if (textureSize)
+			{
+				textureSize .x = this .voxelsNode .getWidth ();
+				textureSize .y = this .voxelsNode .getHeight ();
+				textureSize .z = this .voxelsNode .getDepth ();
+			}
+		},
+		set_createShader__: function ()
+		{
+			this .getAppearance () .shaders_ [0] = this .createShader ();
+		},
+		createShader: function ()
+		{
+			console .log ("Creating VolumeData Shader ...");
+
+			fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  this .renderStyleNode .getUniformsText ());
+			fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, this .renderStyleNode .getFunctionsText ());
+
+			this .getBrowser () .print (fs);
+
+			var vertexShader = new ShaderPart (this .getExecutionContext ());
+			vertexShader .setName ("VolumeDataVertexShader");
+			vertexShader .url_ .push ("data:x-shader/x-vertex," + vs);
+			vertexShader .setup ();
+
+			var fragmentShader = new ShaderPart (this .getExecutionContext ());
+			fragmentShader .setName ("VolumeDataFragmentShader");
+			fragmentShader .type_ = "FRAGMENT";
+			fragmentShader .url_ .push ("data:x-shader/x-fragment," + fs);
+			fragmentShader .setup ();
+
+			var shaderNode = new ComposedShader (this .getExecutionContext ());
+			shaderNode .setName ("VolumeDataShader");
+			shaderNode .language_ = "GLSL";
+			shaderNode .parts_ .push (vertexShader);
+			shaderNode .parts_ .push (fragmentShader);
+
+			if (this .voxelsNode)
+			{
+				this .textureSize = new Fields .SFVec3f (this .voxelsNode .getWidth (), this .voxelsNode .getHeight (), this .voxelsNode .getDepth ());
+
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", this .textureSize);
+			}
+			else
+			{
+				this .textureSize = null;
+			}
+
+			this .renderStyleNode .addShaderFields (shaderNode);
+
+			shaderNode .setup ();
+
+			return shaderNode;
 		},
 	});
 
