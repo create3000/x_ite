@@ -278,6 +278,10 @@ function ($,
 			this .description = "";
 
 			this .getBrowserOptions () .configure ();
+
+			if (scene .getSpecificationVersion () == "2.0")
+				this .setBrowserOption ("EnableInlineViewpoints", false);
+
 			this .setBrowserLoading (true);
 			this .loadCount_ .addInterest ("set_loadCount__", this);
 			this .prepareEvents () .removeInterest ("bind", this);

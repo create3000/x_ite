@@ -101,7 +101,7 @@ function (X3DBaseNode)
 			if (this .array .length > 1)
 			{
 				var
-					enableInlineBindables = false,
+					enableInlineBindables = this .getBrowser () .getBrowserOption ("EnableInlineViewpoints"),
 					masterScene           = this .getMasterScene ();
 
 				if (name && name .length)
@@ -134,7 +134,7 @@ function (X3DBaseNode)
 				}
 
 				// Return first viewpoint in scene.
-	
+
 				for (var i = 1, length = this .array .length; i < length; ++ i)
 				{
 					var node = this .array [i];
@@ -167,7 +167,7 @@ function (X3DBaseNode)
 					if (this .collected .indexOf (node) < 0)
 					{
 						if (node .isBound_ .getValue ())
-							node .set_bind_ = false;							
+							node .set_bind_ = false;
 					}
 				}
 
