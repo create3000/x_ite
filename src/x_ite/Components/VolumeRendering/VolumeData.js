@@ -79,7 +79,7 @@ function (Fields,
 		this .addType (X3DConstants .VolumeData);
 
 		this .renderStyleNode = null;
-		this .blendModeNode   = executionContext .createNode ("BlendMode", false)
+		this .blendModeNode   = executionContext .createNode ("BlendMode", false);
   }
 
 	VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
