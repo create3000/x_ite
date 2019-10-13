@@ -293,6 +293,9 @@ function ($,
 
 			// Scene.setup is done in World.inititalize.
 			this .setExecutionContext (scene);
+
+			if (! this .getBrowserOption ("EnableInlineViewpoints"))
+				this .getWorld () .bind ();
 		},
 		set_loadCount__: function (loadCount)
 		{
@@ -307,6 +310,9 @@ function ($,
 		bind: function ()
 		{
 			this .prepareEvents () .removeInterest ("bind", this);
+
+			if (this .getBrowserOption ("EnableInlineViewpoints"))
+				this .getWorld () .bind ();
 
 			this .setBrowserLoading (false);
 

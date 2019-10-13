@@ -67,7 +67,7 @@ function (SFNode,
 	function World (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
-		
+
 		this .addChildObjects ("activeLayer", new SFNode (this .layer0));
 
 		this .layerSet        = new LayerSet (executionContext);
@@ -101,7 +101,6 @@ function (SFNode,
 			this .layer0 .setup ();
 
 			this .set_activeLayer__ ();
-			this .bind ();
 		},
 		getLayerSet: function ()
 		{
