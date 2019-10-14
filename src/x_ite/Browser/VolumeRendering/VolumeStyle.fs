@@ -11,6 +11,8 @@ uniform int       x3d_NumTextures;
 uniform sampler3D x3d_Texture3D [1];
 uniform vec3      x3d_TextureSize;
 
+#define M_PI 3.14159265359
+
 // VOLUME_STYLES_UNIFORMS
 
 in vec3 vertex;
