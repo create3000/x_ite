@@ -101,7 +101,7 @@ function (X3DBaseNode)
 			if (this .array .length > 1)
 			{
 				var
-					enableInlineBindables = this .getBrowser () .getBrowserOption ("EnableInlineViewpoints"),
+					enableInlineBindables = false,
 					masterScene           = this .getMasterScene ();
 
 				if (name && name .length)
