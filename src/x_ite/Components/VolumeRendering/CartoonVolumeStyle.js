@@ -140,7 +140,7 @@ function (Fields,
 				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
 				string += "{\n";
 				string += "	vec4 n = texture (surfaceNormals_" + this .getId () + ", texCoord) * 2.0 - 1.0\n";
-				string += "	return vec4 (normalize (n .xyz), length (n .xyz));\n";
+				string += "	return vec4 (normalize (x3d_NormalMatrix * n .xyz), length (n .xyz));\n";
 				string += "}\n";
 			}
 			else
@@ -157,7 +157,7 @@ function (Fields,
 				string += "	float v4 = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
 				string += "	float v5 = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
 				string += "	vec3 n = vec3 (v0 - v1, v2 - v3, v4 - v5) * 0.5;\n";
-				string += "	return vec4 (normalize (n), length (n));\n";
+				string += "	return vec4 (normalize (x3d_NormalMatrix * n), length (n));\n";
 	  			string += "}\n";
 			}
 
@@ -285,9 +285,9 @@ function (Fields,
 
 			string += "\n";
 			string += "vec4\n";
-			string += "getCartoonStyle_" + this .getId () + " (in vec4 orthogonalColor, in vec4 parallelColor, in float colorSteps, in vec4 surfaceNormal, vec3 lightDir)\n";
+			string += "getCartoonStyle_" + this .getId () + " (in vec4 orthogonalColor, in vec4 parallelColor, in int colorSteps, in vec4 surfaceNormal, vec3 lightDir)\n";
 			string += "{\n";
-			string += "	float step     = M_PI / 2.0 / colorSteps;\n";
+			string += "	float step     = M_PI / 2.0 / clamp (float (colorSteps), 1.0, 64.0);\n";
 			string += "	float cosTheta = dot (surfaceNormal .xyz, lightDir);\n";
 			string += "\n";
 			string += "	if (cosTheta < 0.0)\n";
@@ -320,7 +320,7 @@ function (Fields,
 			string += "			x3d_LightSourceParameters light = x3d_LightSource [i];\n";
 			string += "\n";
 			string += "			vec3 L = light .type == x3d_DirectionalLight ? -light .direction : light .location - vertex;\n";
-			string += "			cartoonColor += getCartoonStyle_" + this .getId () + " (orthogonalColor_" + this .getId () + ", parallelColor_" + this .getId () + ", clamp (float (colorSteps_" + this .getId () + "), 1.0, 64.0), surfaceNormal, L);\n";
+			string += "			cartoonColor += getCartoonStyle_" + this .getId () + " (orthogonalColor_" + this .getId () + ", parallelColor_" + this .getId () + ", colorSteps_" + this .getId () + ", surfaceNormal, L);\n";
 			string += "		}\n";
 			string += "\n";
 			string += "		textureColor = cartoonColor;\n"

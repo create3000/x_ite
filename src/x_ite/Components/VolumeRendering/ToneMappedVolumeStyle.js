@@ -137,7 +137,7 @@ function (Fields,
 				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
 				string += "{\n";
 				string += "	vec4 n = texture (surfaceNormals_" + this .getId () + ", texCoord) * 2.0 - 1.0\n";
-				string += "	return vec4 (normalize (n .xyz), length (n .xyz));\n";
+				string += "	return vec4 (normalize (x3d_NormalMatrix * n .xyz), length (n .xyz));\n";
 				string += "}\n";
 			}
 			else
@@ -154,7 +154,7 @@ function (Fields,
 				string += "	float v4 = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
 				string += "	float v5 = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
 				string += "	vec3 n = vec3 (v0 - v1, v2 - v3, v4 - v5) * 0.5;\n";
-				string += "	return vec4 (normalize (n), length (n));\n";
+				string += "	return vec4 (normalize (x3d_NormalMatrix * n), length (n));\n";
 	  			string += "}\n";
 			}
 
