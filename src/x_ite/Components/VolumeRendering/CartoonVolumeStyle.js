@@ -281,6 +281,18 @@ function (Fields,
 			string += "	return vec4 (h, s, v, mix (a .a, b .a, t));\n";
 			string += "}\n";
 
+			string += "\n";
+			string += "vec4
+			string += "getCartoonStyle" + this .getId () + " (in vec4 orthogonalColor, in vec4 parallelColor, in int colorSteps, in vec4 surfaceNormal, vec3 lightDir)\n";
+			string += "{\n";
+			string += "	float steps     = clamp (float (colorSteps), 1.0, 64.0);\n";
+			string += "	float rangeSize = M_PI / 2.0 / steps;\n";
+			string += "	float cosTheta  = abs (dot (surfNormal .xyz, lightDir));\n";
+			string += "	float t         = clamp (floor (cosTheta / rangeSize), 0.0, steps) * rangeSize;\n";
+			string += "\n";
+			string += "	return hsva2rgba (mix_hsva (rgba2hsva (orthogonalColor), rgba2hsva (parallelColor), t));\n";
+			string += "}\n";
+
 			return string;
 		},
 		getFunctionsText: function ()
@@ -292,9 +304,8 @@ function (Fields,
 			string += "\n";
 			string += "	{\n";
 
-			/*
 			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
-			string += "		vec4 toneColor = vec4 (0.0);\n";
+			string += "		vec4 cartoonColor = vec4 (0.0);\n";
 			string += "\n";
 			string += "		for (int i = 0; i < x3d_MaxLights; ++ i)\n";
 			string += "		{\n";
@@ -304,12 +315,10 @@ function (Fields,
 			string += "			x3d_LightSourceParameters light = x3d_LightSource [i];\n";
 			string += "\n";
 			string += "			vec3 L = light .type == x3d_DirectionalLight ? -light .direction : light .location - vertex;\n";
-			string += "			toneColor += toneMapped_" + this .getId () + " (surfaceNormal, L, coolColor_" + this .getId () + ", warmColor_" + this .getId () + ");\n";
+			string += "			cartoonColor += getCartoonStyle" + this .getId () + " (orthogonalColor_" + this .getId () + ", parallelColor_" + this .getId () + ", colorSteps_" + this .getId () + ", surfaceNormal, L);\n";
 			string += "		}\n";
 			string += "\n";
-			string += "		textureColor .rgb = toneColor .rgb;\n"
-			string += "		textureColor .a  *= toneColor .a;\n"
-			*/
+			string += "		textureColor = cartoonColor;\n"
 
 			string += "	}\n";
 
