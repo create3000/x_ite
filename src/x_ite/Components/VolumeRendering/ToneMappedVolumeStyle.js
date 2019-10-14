@@ -178,7 +178,7 @@ function (Fields,
 			string += "	{\n";
 
 			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
-			string += "		vec4 toneColor = vec4 (0.0);\n";
+			string += "		vec4 toneColor     = vec4 (0.0);\n";
 			string += "\n";
 			string += "		for (int i = 0; i < x3d_MaxLights; ++ i)\n";
 			string += "		{\n";

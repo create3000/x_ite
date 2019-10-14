@@ -122,8 +122,8 @@ function (Fields,
 			this .getAppearance () .texture_   = this .voxels_;
 			this .getAppearance () .blendMode_ = this .blendModeNode;
 
-			this .set_renderStyle__ ();
 			this .set_voxels__ ();
+			this .set_renderStyle__ ();
 		},
 		set_renderStyle__: function ()
 		{
