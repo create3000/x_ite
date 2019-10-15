@@ -167,9 +167,9 @@ function (Fields,
 		},
 		set_createShader__: function ()
 		{
-			this .getAppearance () .shaders_ [0] = this .createShader ();
+			this .getAppearance () .shaders_ [0] = this .createShader (vs, fs);
 		},
-		createShader: function ()
+		createShader: function (vs, fs)
 		{
 			console .log ("Creating VolumeData Shader ...");
 
