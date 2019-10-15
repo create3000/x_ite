@@ -375,6 +375,7 @@ function (Fields,
 				}
 			}
 
+			string += "\n";
 			string += "	textureColor = clamp (textureColor * w1_" + this .getId () + " + blendColor_" + this .getId () + " * w2_" + this .getId () + ", 0.0, 1.0);\n";
 
 			return string;
