@@ -54,13 +54,15 @@ define ([
 	"x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
+	"x_ite/DEBUG",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposableVolumeRenderStyleNode,
           X3DConstants,
-          X3DCast)
+          X3DCast,
+          DEBUG)
 {
 "use strict";
 
@@ -193,7 +195,8 @@ function (Fields,
 				}
 				catch (error)
 				{
-					console .log (error);
+					if (DEBUG)
+						console .log (error);
 				}
 			}
 			.bind (this));

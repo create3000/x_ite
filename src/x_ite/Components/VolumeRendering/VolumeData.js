@@ -58,6 +58,7 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
 	"text!x_ite/Browser/VolumeRendering/VolumeStyle.fs",
+	"x_ite/DEBUG",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -68,7 +69,8 @@ function (Fields,
           X3DConstants,
           X3DCast,
           vs,
-          fs)
+          fs,
+          DEBUG)
 {
 "use strict";
 
@@ -169,7 +171,8 @@ function (Fields,
 			}
 			catch (error)
 			{
-				console .log (error .message);
+				if (DEBUG)
+					console .log (error .message);
 			}
 		},
 		set_createShader__: function ()
