@@ -112,6 +112,9 @@ function (Fields,
 		},
 		addShaderFields: function (shaderNode)
 		{
+			if (! this .enabled_ .getValue ())
+				return;
+
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "coolColor_" + this .getId (), this .coolColor_ .copy ());
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "warmColor_" + this .getId (), this .warmColor_ .copy ());
 
@@ -120,6 +123,9 @@ function (Fields,
 		},
 		getUniformsText: function ()
 		{
+			if (! this .enabled_ .getValue ())
+				return "";
+
 			var string = "";
 
 			string += "\n";
@@ -170,6 +176,9 @@ function (Fields,
 		},
 		getFunctionsText: function ()
 		{
+			if (! this .enabled_ .getValue ())
+				return "";
+
 			var string = "";
 
 			string += "\n";

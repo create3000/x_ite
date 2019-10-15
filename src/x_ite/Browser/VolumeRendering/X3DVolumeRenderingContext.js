@@ -72,6 +72,16 @@ function (PixelTexture,
 
 			return this .defaultVolumeStyle;
 		},
+		getDefaultBlendedVolumeStyle: function ()
+		{
+			if (this .defaultBlendedVolumeStyle !== undefined)
+				return this .defaultBlendedVolumeStyle;
+
+			this .defaultBlendedVolumeStyle = new OpacityMapVolumeStyle (this .getPrivateScene ());
+			this .defaultBlendedVolumeStyle .setup ();
+
+			return this .defaultBlendedVolumeStyle;
+		},
 		getDefaultTransferFunction: function ()
 		{
 			if (this .defaultTransferFunction !== undefined)

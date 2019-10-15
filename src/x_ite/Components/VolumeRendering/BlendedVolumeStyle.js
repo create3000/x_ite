@@ -203,6 +203,9 @@ function (Fields,
 		},
 		addShaderFields: function (shaderNode)
 		{
+			if (! this .enabled_ .getValue ())
+				return;
+
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant1_" + this .getId (), this .weightConstant1_ .copy ());
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant2_" + this .getId (), this .weightConstant2_ .copy ());
 
@@ -224,11 +227,16 @@ function (Fields,
 				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "textureSize_" + this .getId (), new Fields .SFVec3f ());
 			}
 
+			this .getBrowser () .getDefaultBlendedVolumeStyle () .addShaderFields (shaderNode);
+
 			if (this .renderStyleNode)
 				this .renderStyleNode .addShaderFields (shaderNode);
 		},
 		getUniformsText: function ()
 		{
+			if (! this .enabled_ .getValue ())
+				return "";
+
 			if (! this .voxelsNode)
 				return "";
 
@@ -249,21 +257,24 @@ function (Fields,
 			string += "uniform sampler3D voxels_"      + this .getId () + ";\n";
 			string += "uniform vec3      textureSize_" + this .getId () + ";\n";
 
+			var uniformsText = this .getBrowser () .getDefaultBlendedVolumeStyle () .getUniformsText ();
+
 			if (this .renderStyleNode)
-			{
-				var uniformsText = this .renderStyleNode .getUniformsText ();
+				uniformsText += this .renderStyleNode .getUniformsText ();
 
-				uniformsText = uniformsText .replace (/x3d_Texture3D \[0\]/g, "voxels_"      + this .getId ());
-				uniformsText = uniformsText .replace (/x3d_TextureSize/g,     "textureSize_" + this .getId ());
+			uniformsText = uniformsText .replace (/x3d_Texture3D \[0\]/g, "voxels_"      + this .getId ());
+			uniformsText = uniformsText .replace (/x3d_TextureSize/g,     "textureSize_" + this .getId ());
 
-				string += "\n";
-				string += uniformsText;
-			}
+			string += "\n";
+			string += uniformsText;
 
 			return string;
 		},
 		getFunctionsText: function ()
 		{
+			if (! this .enabled_ .getValue ())
+				return "";
+
 			if (! this .voxelsNode)
 				return "";
 
@@ -275,15 +286,15 @@ function (Fields,
 
 			string += "	vec4 blendColor_" + this .getId () + " = texture (voxels_" + this .getId () + ", texCoord);";
 
+			var functionsText = this .getBrowser () .getDefaultBlendedVolumeStyle () .getFunctionsText ();
+
 			if (this .renderStyleNode)
-			{
-				var functionsText = this .renderStyleNode .getFunctionsText ();
+				functionsText += this .renderStyleNode .getFunctionsText ();
 
-				functionsText = functionsText .replace (/textureColor/g, "blendColor_" + this .getId ());
+			functionsText = functionsText .replace (/textureColor/g, "blendColor_" + this .getId ());
 
-				string += "\n";
-				string += functionsText;
-			}
+			string += "\n";
+			string += functionsText;
 
 			string += "\n";
 			string += "	// BlendedVolumeStyle\n";

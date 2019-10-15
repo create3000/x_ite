@@ -112,6 +112,9 @@ function (Fields,
 		},
 		addShaderFields: function (shaderNode)
 		{
+			if (! this .enabled_ .getValue ())
+				return;
+
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "edgeColor_"         + this .getId (), this .edgeColor_         .copy ());
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "gradientThreshold_" + this .getId (), this .gradientThreshold_ .copy ());
 
@@ -120,6 +123,9 @@ function (Fields,
 		},
 		getUniformsText: function ()
 		{
+			if (! this .enabled_ .getValue ())
+				return "";
+
 			var string = "";
 
 			string += "\n";
@@ -177,6 +183,9 @@ function (Fields,
 		},
 		getFunctionsText: function ()
 		{
+			if (! this .enabled_ .getValue ())
+				return "";
+
 			var string = "";
 
 			string += "\n";

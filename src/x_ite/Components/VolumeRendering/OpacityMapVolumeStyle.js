@@ -116,10 +116,16 @@ function (Fields,
 		},
 		addShaderFields: function (shaderNode)
 		{
+			if (! this .enabled_ .getValue ())
+				return;
+
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "transferFunction_" + this .getId (), new Fields .SFNode (this .transferFunctionNode));
 		},
 		getUniformsText: function ()
 		{
+			if (! this .enabled_ .getValue ())
+				return "";
+
 			var string = "";
 
 			string += "\n";
@@ -132,6 +138,9 @@ function (Fields,
 		},
 		getFunctionsText: function ()
 		{
+			if (! this .enabled_ .getValue ())
+				return "";
+
 			var string = "";
 
 			string += "\n";

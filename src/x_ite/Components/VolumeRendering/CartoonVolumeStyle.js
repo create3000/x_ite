@@ -113,6 +113,9 @@ function (Fields,
 		},
 		addShaderFields: function (shaderNode)
 		{
+			if (! this .enabled_ .getValue ())
+				return;
+
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "colorSteps_"      + this .getId (), this .colorSteps_      .copy ());
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "orthogonalColor_" + this .getId (), this .orthogonalColor_ .copy ());
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "parallelColor_"   + this .getId (), this .parallelColor_   .copy ());
@@ -122,6 +125,9 @@ function (Fields,
 		},
 		getUniformsText: function ()
 		{
+			if (! this .enabled_ .getValue ())
+				return "";
+
 			var string = "";
 
 			string += "\n";
@@ -306,6 +312,9 @@ function (Fields,
 		},
 		getFunctionsText: function ()
 		{
+			if (! this .enabled_ .getValue ())
+				return "";
+
 			var string = "";
 
 			string += "\n";
