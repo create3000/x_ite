@@ -11,6 +11,7 @@ uniform int       x3d_NumTextures;
 uniform sampler3D x3d_Texture3D [1];
 uniform vec3      x3d_TextureSize;
 
+uniform mat4 x3d_TextureMatrix [1];
 uniform mat3 x3d_NormalMatrix;
 
 #define M_PI 3.14159265359
