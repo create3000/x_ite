@@ -177,7 +177,7 @@ function (Fields,
 		},
 		set_createShader__: function ()
 		{
-			this .getAppearance () .shaders_ [0] = this .createShader (vs, fs);
+			this .setShader (this .createShader (vs, fs));
 		},
 		createShader: function (vs, fs)
 		{

@@ -145,6 +145,10 @@ function (Fields,
 		{
 			return this .appearanceNode;
 		},
+		setShader: function (shaderNode)
+		{
+			this .getAppearance () .shaders_ [0] = shaderNode;
+		},
 		getShader: function ()
 		{
 			var node = this .appearanceNode .shaders_ [0];
