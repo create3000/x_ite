@@ -145,6 +145,15 @@ function (Fields,
 		{
 			return this .appearanceNode;
 		},
+		getShader: function ()
+		{
+			var node = this .appearanceNode .shaders_ [0];
+
+			if (node)
+				return node .getValue ();
+
+			return null;
+		},
 		getNumPlanes: function ()
 		{
 			switch (this .getBrowser () .getBrowserOptions () .getTextureQuality ())

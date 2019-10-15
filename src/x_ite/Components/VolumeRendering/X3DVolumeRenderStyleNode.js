@@ -61,6 +61,8 @@ function (X3DNode,
 		X3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DVolumeRenderStyleNode);
+
+		this .volumeDataNodes = new Set ();
 	}
 
 	X3DVolumeRenderStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -75,6 +77,18 @@ function (X3DNode,
 		getFunctionsText: function ()
 		{
 			return "";
+		},
+		getVolumeData: function ()
+		{
+			return this .volumeDataNodes;
+		},
+		addVolumeData: function (volumeDataNode)
+		{
+			this .volumeDataNodes .add (volumeDataNode);
+		},
+		removeVolumeData: function (volumeDataNode)
+		{
+			this .volumeDataNodes .delete (volumeDataNode);
 		},
 	});
 

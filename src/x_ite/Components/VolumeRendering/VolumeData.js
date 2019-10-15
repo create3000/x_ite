@@ -128,12 +128,18 @@ function (Fields,
 		set_renderStyle__: function ()
 		{
 			if (this .renderStyleNode)
+			{
 				this .renderStyleNode .removeInterest ("set_createShader__", this);
+				this .renderStyleNode .removeVolumeData (this);
+			}
 
 			this .renderStyleNode = X3DCast (X3DConstants .X3DVolumeRenderStyleNode, this .renderStyle_);
 
 			if (this .renderStyleNode)
+			{
 				this .renderStyleNode .addInterest ("set_createShader__", this);
+				this .renderStyleNode .addVolumeData (this);
+			}
 
 			this .set_createShader__ ();
 		},
@@ -153,13 +159,17 @@ function (Fields,
 		},
 		set_textureSize__: function ()
 		{
-			var textureSize = this .textureSize;
-
-			if (textureSize)
+			try
 			{
+				var textureSize = this .getShader () .getField ("x3d_TextureSize");
+
 				textureSize .x = this .voxelsNode .getWidth ();
 				textureSize .y = this .voxelsNode .getHeight ();
 				textureSize .z = this .voxelsNode .getDepth ();
+			}
+			catch (error)
+			{
+				console .log (error .message);
 			}
 		},
 		set_createShader__: function ()
@@ -205,13 +215,13 @@ function (Fields,
 
 			if (this .voxelsNode)
 			{
-				this .textureSize = new Fields .SFVec3f (this .voxelsNode .getWidth (), this .voxelsNode .getHeight (), this .voxelsNode .getDepth ());
+				var textureSize = new Fields .SFVec3f (this .voxelsNode .getWidth (), this .voxelsNode .getHeight (), this .voxelsNode .getDepth ());
 
-				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", this .textureSize);
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", textureSize);
 			}
 			else
 			{
-				this .textureSize = null;
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", new Fields .SFVec3f ());
 			}
 
 			opacityMapVolumeStyle .addShaderFields (shaderNode);
