@@ -153,21 +153,24 @@ function (Fields,
 				string += "	float v3 = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
 				string += "	float v4 = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
 				string += "	float v5 = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
-				string += "	vec3 n = vec3 (v0 - v1, v2 - v3, v4 - v5) * 0.5;\n";
+				string += "	vec3 n = vec3 (v0 - v1, v2 - v3, v4 - v5);\n";
 				string += "	return vec4 (normalize (x3d_NormalMatrix * n), length (n));\n";
 	  			string += "}\n";
 			}
 
 			string += "\n";
 			string += "vec4\n";
-			string += "getEdgeEnhacementStyle_" + this .getId () + " (in vec4 originalColor, in vec4 edgeColor, in float gradientThreshold, in vec4 surfaceNormal, in vec3 lightDir, in vec3 vertex)\n"
+			string += "getEdgeEnhacementStyle_" + this .getId () + " (in vec4 originalColor, in vec4 edgeColor, in float gradientThreshold, in vec4 surfaceNormal, in vec3 vertex)\n"
 			string += "{\n"
-			string += "	float angle = abs (dot (lightDir, vertex));\n";
-			string += "\n";
-			string += "	if (angle > cos (gradientThreshold))\n";
-			string += "		return vec4 (mix (edgeColor .rgb, originalColor.rgb, angle), originalColor .a);\n";
-			string += "	else\n";
+			string += "	if (surfaceNormal .w == 0.0)\n";
 			string += "		return originalColor;\n";
+			string += "\n";
+			string += "	float angle = abs (dot (surfaceNormal .xyz, normalize (vertex)));\n";
+			string += "\n";
+			string += "	if (angle >= cos (gradientThreshold))\n";
+			string += "		return originalColor;\n";
+			string += "	else\n";
+			string += "		return vec4 (mix (edgeColor .rgb, originalColor.rgb, angle), originalColor .a);\n";
 			string += "}\n";
 
 			return string;
@@ -182,18 +185,7 @@ function (Fields,
 			string += "	{\n";
 
 			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
-			string += "		vec4 edgeColor     = vec4 (0.0);\n";
-			string += "\n";
-			string += "		for (int i = 0; i < x3d_MaxLights; ++ i)\n";
-			string += "		{\n";
-			string += "			if (i == x3d_NumLights)\n";
-			string += "				break;\n";
-			string += "\n";
-			string += "			x3d_LightSourceParameters light = x3d_LightSource [i];\n";
-			string += "\n";
-			string += "			vec3 L = light .type == x3d_DirectionalLight ? -light .direction : normalize (light .location - vertex);\n";
-			string += "			edgeColor += getEdgeEnhacementStyle_" + this .getId () + " (textureColor, edgeColor_" + this .getId () + ", gradientThreshold_" + this .getId () + ", surfaceNormal, L, vertex);\n";
-			string += "		}\n";
+			string += "		vec4 edgeColor     = getEdgeEnhacementStyle_" + this .getId () + " (textureColor, edgeColor_" + this .getId () + ", gradientThreshold_" + this .getId () + ", surfaceNormal, vertex);\n";
 			string += "\n";
 			string += "		textureColor = edgeColor;\n"
 

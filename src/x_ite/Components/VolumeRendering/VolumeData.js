@@ -132,9 +132,6 @@ function (Fields,
 
 			this .renderStyleNode = X3DCast (X3DConstants .X3DVolumeRenderStyleNode, this .renderStyle_);
 
-			if (! this .renderStyleNode)
-				this .renderStyleNode = this .getBrowser () .getDefaultVolumeStyle ();
-
 			if (this .renderStyleNode)
 				this .renderStyleNode .addInterest ("set_createShader__", this);
 
@@ -173,8 +170,19 @@ function (Fields,
 		{
 			console .log ("Creating VolumeData Shader ...");
 
-			fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  this .renderStyleNode .getUniformsText ());
-			fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, this .renderStyleNode .getFunctionsText ());
+			var
+				opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
+				volumeStyleUniforms   = opacityMapVolumeStyle .getUniformsText (),
+				volumeStyleFunctions  = opacityMapVolumeStyle .getFunctionsText ();
+
+			if (this .renderStyleNode)
+			{
+				volumeStyleUniforms  += this .renderStyleNode .getUniformsText (),
+				volumeStyleFunctions += this .renderStyleNode .getFunctionsText ();
+			}
+
+			fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  volumeStyleUniforms);
+			fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, volumeStyleFunctions);
 
 			this .getBrowser () .print (fs);
 
@@ -206,7 +214,10 @@ function (Fields,
 				this .textureSize = null;
 			}
 
-			this .renderStyleNode .addShaderFields (shaderNode);
+			opacityMapVolumeStyle .addShaderFields (shaderNode);
+
+			if (this .renderStyleNode)
+				this .renderStyleNode .addShaderFields (shaderNode);
 
 			shaderNode .setup ();
 

@@ -156,14 +156,14 @@ function (Fields,
 				string += "	float v3 = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
 				string += "	float v4 = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
 				string += "	float v5 = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
-				string += "	vec3 n = vec3 (v0 - v1, v2 - v3, v4 - v5) * 0.5;\n";
+				string += "	vec3 n = vec3 (v0 - v1, v2 - v3, v4 - v5);\n";
 				string += "	return vec4 (normalize (x3d_NormalMatrix * n), length (n));\n";
 	  			string += "}\n";
 			}
 
 			string += "\n";
-			string += "vec4\n";
-			string += "rgba2hsva_" + this .getId () + " (in vec4 color)\n";
+			string += "vec3\n";
+			string += "rgb2hsv_" + this .getId () + " (in vec3 color)\n";
 			string += "{\n";
 			string += "	float h = 0.0;\n";
 			string += "	float s = 0.0;\n";
@@ -193,17 +193,16 @@ function (Fields,
 			string += "	else\n";
 			string += "		s = h = 0.0;         // s = 0, h is undefined\n";
 			string += "\n";
-			string += "	return vec4 (h, s, v, color .a);\n";
+			string += "	return vec3 (h, s, v);\n";
 			string += "}\n";
 
 			string += "\n";
-			string += "vec4\n";
-			string += "hsva2rgba_" + this .getId () + " (in vec4 hsva)\n";
+			string += "vec3\n";
+			string += "hsv2rgb_" + this .getId () + " (in vec3 hsv)\n";
 			string += "{\n";
-			string += "	float h = hsva [0];\n";
-			string += "	float s = clamp (hsva [1], 0.0, 1.0);\n";
-			string += "	float v = clamp (hsva [2], 0.0, 1.0);\n";
-			string += "	float a = hsva [3];\n";
+			string += "	float h = hsv [0];\n";
+			string += "	float s = clamp (hsv [1], 0.0, 1.0);\n";
+			string += "	float v = clamp (hsv [2], 0.0, 1.0);\n";
 			string += "\n";
 			string += "	// H is given on [0, 2 * Pi]. S and V are given on [0, 1].\n";
 			string += "	// RGB are each returned on [0, 1].\n";
@@ -211,7 +210,7 @@ function (Fields,
 			string += "	if (s == 0.0)\n";
 			string += "	{\n";
 			string += "		// achromatic (grey)\n";
-			string += "		return vec4 (v, v, v, a);\n";
+			string += "		return vec3 (v, v, v);\n";
 			string += "	}\n";
 			string += "	else\n";
 			string += "	{\n";
@@ -225,21 +224,21 @@ function (Fields,
 			string += "\n";
 			string += "		switch (int (i) % 6)\n";
 			string += "		{\n";
-			string += "			case 0:  return vec4 (v, t, p, a);\n";
-			string += "			case 1:  return vec4 (q, v, p, a);\n";
-			string += "			case 2:  return vec4 (p, v, t, a);\n";
-			string += "			case 3:  return vec4 (p, q, v, a);\n";
-			string += "			case 4:  return vec4 (t, p, v, a);\n";
-			string += "			default: return vec4 (v, p, q, a);\n";
+			string += "			case 0:  return vec3 (v, t, p);\n";
+			string += "			case 1:  return vec3 (q, v, p);\n";
+			string += "			case 2:  return vec3 (p, v, t);\n";
+			string += "			case 3:  return vec3 (p, q, v);\n";
+			string += "			case 4:  return vec3 (t, p, v);\n";
+			string += "			default: return vec3 (v, p, q);\n";
 			string += "		}\n";
 			string += "	}\n";
 			string += "\n";
-			string += "	return vec4 (0.0);\n";
+			string += "	return vec3 (0.0);\n";
 			string += "}\n";
 
 			string += "\n";
-			string += "vec4\n";
-			string += "mix_hsva_" + this .getId () + " (in vec4 a, in vec4 b, in float t)\n";
+			string += "vec3\n";
+			string += "mix_hsv_" + this .getId () + " (in vec3 a, in vec3 b, in float t)\n";
 			string += "{\n";
 			string += "	// Linearely interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.\n";
 			string += "	// Source and destination color must be in HSV space.\n";
@@ -265,7 +264,7 @@ function (Fields,
 			string += "		float h = ha + t * (hb - ha);\n";
 			string += "		float s = sa + t * (sb - sa);\n";
 			string += "		float v = va + t * (vb - va);\n";
-			string += "		return vec4 (h, s, v, mix (a .a, b .a, t));\n";
+			string += "		return vec3 (h, s, v);\n";
 			string += "	}\n";
 			string += "\n";
 			string += "	float PI2  = M_PI * 2.0;\n";
@@ -280,22 +279,27 @@ function (Fields,
 			string += "\n";
 			string += "	float s = sa + t * (sb - sa);\n";
 			string += "	float v = va + t * (vb - va);\n";
-			string += "	return vec4 (h, s, v, mix (a .a, b .a, t));\n";
+			string += "	return vec3 (h, s, v);\n";
 			string += "}\n";
 
 			string += "\n";
 			string += "vec4\n";
-			string += "getCartoonStyle_" + this .getId () + " (in vec4 orthogonalColor, in vec4 parallelColor, in int colorSteps, in vec4 surfaceNormal, vec3 lightDir)\n";
+			string += "getCartoonStyle_" + this .getId () + " (in vec4 originalColor, in vec4 orthogonalColor, in vec4 parallelColor, in int colorSteps, in vec4 surfaceNormal, vec3 vertex)\n";
 			string += "{\n";
+			string += "	if (surfaceNormal .w == 0.0)\n";
+			string += "		return vec4 (0.0);\n";
+			string += "\n";
 			string += "	float step     = M_PI / 2.0 / clamp (float (colorSteps), 1.0, 64.0);\n";
-			string += "	float cosTheta = dot (surfaceNormal .xyz, lightDir);\n";
+			string += "	float cosTheta = dot (surfaceNormal .xyz, normalize (vertex));\n";
 			string += "\n";
 			string += "	if (cosTheta < 0.0)\n";
 			string += "		return vec4 (0.0);\n";
 			string += "\n";
-			string += "	float t = cos (round (acos (cosTheta) / step) * step);\n";
+			string += "	float t             = cos (round (acos (min (cosTheta, 1.0)) / step) * step);\n";
+			string += "	vec3  orthogonalHSV = rgb2hsv_" + this .getId () + " (orthogonalColor .rgb);\n";
+			string += "	vec3  parallelHSV   = rgb2hsv_" + this .getId () + " (parallelColor .rgb);\n";
 			string += "\n";
-			string += "	return hsva2rgba_" + this .getId () + " (mix_hsva_" + this .getId () + " (rgba2hsva_" + this .getId () + " (orthogonalColor), rgba2hsva_" + this .getId () + " (parallelColor), t));\n";
+			string += "	return vec4 (hsv2rgb_" + this .getId () + " (mix_hsv_" + this .getId () + " (orthogonalHSV, parallelHSV, t)), originalColor .a);\n";
 			string += "}\n";
 
 			return string;
@@ -310,18 +314,7 @@ function (Fields,
 			string += "	{\n";
 
 			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
-			string += "		vec4 cartoonColor  = vec4 (0.0);\n";
-			string += "\n";
-			string += "		for (int i = 0; i < x3d_MaxLights; ++ i)\n";
-			string += "		{\n";
-			string += "			if (i == x3d_NumLights)\n";
-			string += "				break;\n";
-			string += "\n";
-			string += "			x3d_LightSourceParameters light = x3d_LightSource [i];\n";
-			string += "\n";
-			string += "			vec3 L = light .type == x3d_DirectionalLight ? -light .direction : normalize (light .location - vertex);\n";
-			string += "			cartoonColor += getCartoonStyle_" + this .getId () + " (orthogonalColor_" + this .getId () + ", parallelColor_" + this .getId () + ", colorSteps_" + this .getId () + ", surfaceNormal, L);\n";
-			string += "		}\n";
+			string += "		vec4 cartoonColor  = getCartoonStyle_" + this .getId () + " (textureColor, orthogonalColor_" + this .getId () + ", parallelColor_" + this .getId () + ", colorSteps_" + this .getId () + ", surfaceNormal, vertex);\n";
 			string += "\n";
 			string += "		textureColor = cartoonColor;\n"
 

@@ -74,7 +74,7 @@ var Bookmarks = (function ()
 						component = bookmark .component,
 						test      = bookmark .test,
 						path      = bookmark .path;
-	
+
 					if (test)
 					{
 						var element = $('<span/>')
@@ -115,6 +115,14 @@ var Bookmarks = (function ()
 					this .element .append (element);
 				}
 			}
+
+			this .element .scrollLeft (this .browser .getLocalStorage () ["Bookmarks.scrollLeft"] || 0);
+
+			$(window) .on ("unload", function ()
+			{
+				this .browser .getLocalStorage () ["Bookmarks.scrollLeft"] = this .element .scrollLeft ();
+			}
+			.bind (this));
 		},
 		restore: function (first)
 		{
