@@ -129,6 +129,7 @@ function (Fields,
 				}
 				case "AVERAGE":
 				{
+					string += "		float projectionColor = 0.0;\n";
 					break;
 				}
 			}
@@ -181,6 +182,7 @@ function (Fields,
 				}
 				case "AVERAGE":
 				{
+					string += "			projectionColor += intensity;\n";
 					break;
 				}
 			}
@@ -188,6 +190,10 @@ function (Fields,
 			string += "			ray += step;\n";
 			string += "		}\n";
 			string += "\n";
+
+			if (this .type_ .getValue () === "AVERAGE")
+				string += "		projectionColor /= 64.0;\n";
+
 			string += "		textureColor .rgb = vec3 (projectionColor);\n"
 
 			string += "	}\n";
