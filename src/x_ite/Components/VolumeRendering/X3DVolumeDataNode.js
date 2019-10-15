@@ -151,7 +151,7 @@ function (Fields,
 		{
 			this .getAppearance () .shaders_ [0] = shaderNode;
 
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_InvTextureMatrix" , new Fields .SFMatrix3f ());
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureNormalMatrix" , new Fields .SFMatrix3f ());
 			shaderNode .setup ();
 
 			this .set_textureTransform__ ();
@@ -216,7 +216,7 @@ function (Fields,
 
 			if (shaderNode)
 			{
-				var invTextureMatrix = shaderNode .getField ("x3d_InvTextureMatrix");
+				var invTextureMatrix = shaderNode .getField ("x3d_TextureNormalMatrix");
 
 				invTextureMatrix .setValue (this .textureTransformNode .getMatrix () .submatrix .inverse () .transpose ());
 			}
