@@ -134,8 +134,7 @@ function (Fields,
 				}
 			}
 
-			string += "		const int samples = 64;\n";
-			string += "\n";
+			string += "		const int samples     = 64;\n";
 			string += "		vec3  step            = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0)) / float (samples);\n";
 			string += "		vec3  ray             = texCoord - step * float (samples) * 0.5;\n";
 			string += "		bool  first           = false;\n";
