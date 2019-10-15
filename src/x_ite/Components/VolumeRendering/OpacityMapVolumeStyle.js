@@ -120,11 +120,27 @@ function (Fields,
 		},
 		getUniformsText: function ()
 		{
-			return "uniform sampler2D transferFunction_" + this .getId () + ";\n";
+			var string = "";
+
+			string += "\n";
+			string += "// OpacityMapVolumeStyle\n";
+			string += "\n";
+
+			string += "uniform sampler2D transferFunction_" + this .getId () + ";\n";
+
+			return string;
 		},
 		getFunctionsText: function ()
 		{
-			return "	textureColor = texture (transferFunction_" + this .getId () + ", textureColor .ra);\n";
+			var string = "";
+
+			string += "\n";
+			string += "	// OpacityMapVolumeStyle\n";
+			string += "\n";
+
+			string += "	textureColor = texture (transferFunction_" + this .getId () + ", textureColor .ra);\n";
+
+			return string;
 		},
 	});
 

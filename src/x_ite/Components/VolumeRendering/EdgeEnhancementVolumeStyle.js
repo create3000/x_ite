@@ -177,7 +177,7 @@ function (Fields,
 			var string = "";
 
 			string += "\n";
-			string += "	// ToneMappedVolumeStyle\n";
+			string += "	// EdgeEnhancementVolumeStyle\n";
 			string += "\n";
 			string += "	{\n";
 
