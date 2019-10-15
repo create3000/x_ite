@@ -232,8 +232,6 @@ function (Fields,
 			if (this .renderStyleNode)
 				this .renderStyleNode .addShaderFields (shaderNode);
 
-			shaderNode .setup ();
-
 			return shaderNode;
 		},
 	});

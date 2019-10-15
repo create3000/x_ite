@@ -134,7 +134,7 @@ function (Fields,
 				}
 			}
 
-			string += "		vec3  step            = vec3 (0.0, 0.0, 1.0) / 64.0;\n";
+			string += "		vec3  step            = normalize (x3d_InvTextureMatrix * vec3 (0.0, 0.0, 1.0)) / 64.0;\n";
 			string += "		vec3  ray             = texCoord - step * 32.0;\n";
 			string += "		bool  first           = false;\n";
 			string += "\n";
