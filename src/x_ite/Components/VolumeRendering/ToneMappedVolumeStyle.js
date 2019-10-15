@@ -187,7 +187,7 @@ function (Fields,
 			string += "\n";
 			string += "			x3d_LightSourceParameters light = x3d_LightSource [i];\n";
 			string += "\n";
-			string += "			vec3 L = light .type == x3d_DirectionalLight ? -light .direction : light .location - vertex;\n";
+			string += "			vec3 L = light .type == x3d_DirectionalLight ? -light .direction : normalize (light .location - vertex);\n";
 			string += "			toneColor += getToneMappedStyle_" + this .getId () + " (coolColor_" + this .getId () + ", warmColor_" + this .getId () + ", surfaceNormal, L);\n";
 			string += "		}\n";
 			string += "\n";

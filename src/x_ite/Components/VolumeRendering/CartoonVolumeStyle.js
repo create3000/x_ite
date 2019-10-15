@@ -319,7 +319,7 @@ function (Fields,
 			string += "\n";
 			string += "			x3d_LightSourceParameters light = x3d_LightSource [i];\n";
 			string += "\n";
-			string += "			vec3 L = light .type == x3d_DirectionalLight ? -light .direction : light .location - vertex;\n";
+			string += "			vec3 L = light .type == x3d_DirectionalLight ? -light .direction : normalize (light .location - vertex);\n";
 			string += "			cartoonColor += getCartoonStyle_" + this .getId () + " (orthogonalColor_" + this .getId () + ", parallelColor_" + this .getId () + ", colorSteps_" + this .getId () + ", surfaceNormal, L);\n";
 			string += "		}\n";
 			string += "\n";

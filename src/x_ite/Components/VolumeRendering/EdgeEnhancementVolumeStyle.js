@@ -53,12 +53,14 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposableVolumeRenderStyleNode,
-          X3DConstants)
+          X3DConstants,
+          X3DCast)
 {
 "use strict";
 
@@ -73,10 +75,10 @@ function (Fields,
 	{
 		constructor: EdgeEnhancementVolumeStyle,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "edgeColor",         new Fields .SFColorRGBA (0, 0, 0, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "gradientThreshold", new Fields .SFFloat (0.4)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",           new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "edgeColor",         new Fields .SFColorRGBA (0, 0, 0, 1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "gradientThreshold", new Fields .SFFloat (0.4)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceNormals",    new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
@@ -90,6 +92,114 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "renderStyle";
+		},
+		initialize: function ()
+		{
+			X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
+
+			var gl = this .getBrowser () .getContext ();
+
+			if (gl .getVersion () < 2)
+				return;
+
+			this .surfaceNormals_ .addInterest ("set_surfaceNormals__", this);
+
+			this .set_surfaceNormals__ ();
+		},
+		set_surfaceNormals__: function ()
+		{
+			this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .surfaceNormals_);
+		},
+		addShaderFields: function (shaderNode)
+		{
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "edgeColor_"         + this .getId (), this .edgeColor_         .copy ());
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "gradientThreshold_" + this .getId (), this .gradientThreshold_ .copy ());
+
+			if (this .surfaceNormalsNode)
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));
+		},
+		getUniformsText: function ()
+		{
+			var string = "";
+
+			string += "\n";
+			string += "// EdgeEnhancementVolumeStyle\n";
+			string += "\n";
+			string += "uniform vec4  edgeColor_" + this .getId () + ";\n";
+			string += "uniform float gradientThreshold_" + this .getId () + ";\n";
+
+			if (this .surfaceNormalsNode)
+			{
+				string += "uniform sampler3D surfaceNormals_" + this .getId () + ";\n";
+
+				string += "\n";
+				string += "vec4\n"
+				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
+				string += "{\n";
+				string += "	vec4 n = texture (surfaceNormals_" + this .getId () + ", texCoord) * 2.0 - 1.0\n";
+				string += "	return vec4 (normalize (x3d_NormalMatrix * n .xyz), length (n .xyz));\n";
+				string += "}\n";
+			}
+			else
+			{
+				string += "\n";
+				string += "vec4\n"
+				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
+				string += "{\n";
+				string += "	vec4 offset = vec4 (1.0 / x3d_TextureSize .x, 1.0 / x3d_TextureSize .y, 1.0 / x3d_TextureSize .z, 0.0);\n";
+				string += "	float v0 = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
+				string += "	float v1 = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
+				string += "	float v2 = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
+				string += "	float v3 = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
+				string += "	float v4 = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
+				string += "	float v5 = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
+				string += "	vec3 n = vec3 (v0 - v1, v2 - v3, v4 - v5) * 0.5;\n";
+				string += "	return vec4 (normalize (x3d_NormalMatrix * n), length (n));\n";
+	  			string += "}\n";
+			}
+
+			string += "\n";
+			string += "vec4\n";
+			string += "getEdgeEnhacementStyle_" + this .getId () + " (in vec4 originalColor, in vec4 edgeColor, in float gradientThreshold, in vec4 surfaceNormal, in vec3 lightDir, in vec3 vertex)\n"
+			string += "{\n"
+			string += "	float angle = abs (dot (lightDir, vertex));\n";
+			string += "\n";
+			string += "	if (angle > cos (gradientThreshold))\n";
+			string += "		return vec4 (mix (edgeColor .rgb, originalColor.rgb, angle), originalColor .a);\n";
+			string += "	else\n";
+			string += "		return originalColor;\n";
+			string += "}\n";
+
+			return string;
+		},
+		getFunctionsText: function ()
+		{
+			var string = "";
+
+			string += "\n";
+			string += "	// ToneMappedVolumeStyle\n";
+			string += "\n";
+			string += "	{\n";
+
+			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+			string += "		vec4 edgeColor     = vec4 (0.0);\n";
+			string += "\n";
+			string += "		for (int i = 0; i < x3d_MaxLights; ++ i)\n";
+			string += "		{\n";
+			string += "			if (i == x3d_NumLights)\n";
+			string += "				break;\n";
+			string += "\n";
+			string += "			x3d_LightSourceParameters light = x3d_LightSource [i];\n";
+			string += "\n";
+			string += "			vec3 L = light .type == x3d_DirectionalLight ? -light .direction : normalize (light .location - vertex);\n";
+			string += "			edgeColor += getEdgeEnhacementStyle_" + this .getId () + " (textureColor, edgeColor_" + this .getId () + ", gradientThreshold_" + this .getId () + ", surfaceNormal, L, vertex);\n";
+			string += "		}\n";
+			string += "\n";
+			string += "		textureColor = edgeColor;\n"
+
+			string += "	}\n";
+
+			return string;
 		},
 	});
 
