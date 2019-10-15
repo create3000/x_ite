@@ -134,11 +134,13 @@ function (Fields,
 				}
 			}
 
-			string += "		vec3  step            = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0)) / 64.0;\n";
-			string += "		vec3  ray             = texCoord - step * 32.0;\n";
+			string += "		const int samples = 64;\n";
+			string += "\n";
+			string += "		vec3  step            = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0)) / float (samples);\n";
+			string += "		vec3  ray             = texCoord - step * float (samples) * 0.5;\n";
 			string += "		bool  first           = false;\n";
 			string += "\n";
-			string += "		for (int i = 0; i < 64; ++ i)\n";
+			string += "		for (int i = 0; i < samples; ++ i)\n";
 			string += "		{\n";
 			string += "			float intensity = texture (x3d_Texture3D [0], ray) .r;\n";
 			string += "\n";
@@ -192,7 +194,7 @@ function (Fields,
 			string += "\n";
 
 			if (this .type_ .getValue () === "AVERAGE")
-				string += "		projectionColor /= 64.0;\n";
+				string += "		projectionColor /= float (samples);\n";
 
 			string += "		textureColor .rgb = vec3 (projectionColor);\n"
 
