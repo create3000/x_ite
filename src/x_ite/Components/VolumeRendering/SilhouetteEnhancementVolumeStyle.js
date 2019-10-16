@@ -53,12 +53,14 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DComposableVolumeRenderStyleNode,
-          X3DConstants)
+          X3DConstants,
+          X3DCast)
 {
 "use strict";
 
@@ -73,10 +75,10 @@ function (Fields,
 	{
 		constructor: SilhouetteEnhancementVolumeStyle,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                   new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                  new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "silhouetteBoundaryOpacity", new Fields .SFFloat (0)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                   new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "silhouetteRetainedOpacity", new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "silhouetteBoundaryOpacity", new Fields .SFFloat (0)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "silhouetteSharpness",       new Fields .SFFloat (0.5)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceNormals",            new Fields .SFNode ()),
 		]),
@@ -91,6 +93,114 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "renderStyle";
+		},
+		initialize: function ()
+		{
+			X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
+
+			var gl = this .getBrowser () .getContext ();
+
+			if (gl .getVersion () < 2)
+				return;
+
+			this .surfaceNormals_ .addInterest ("set_surfaceNormals__", this);
+
+			this .set_surfaceNormals__ ();
+		},
+		set_surfaceNormals__: function ()
+		{
+			this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .surfaceNormals_);
+		},
+		addShaderFields: function (shaderNode)
+		{
+			if (! this .enabled_ .getValue ())
+				return;
+
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "silhouetteRetainedOpacity_" + this .getId (), this .silhouetteRetainedOpacity_ .copy ());
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "silhouetteBoundaryOpacity_" + this .getId (), this .silhouetteBoundaryOpacity_ .copy ());
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "silhouetteSharpness_"       + this .getId (), this .silhouetteSharpness_       .copy ());
+
+			if (this .surfaceNormalsNode)
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));
+		},
+		getUniformsText: function ()
+		{
+			if (! this .enabled_ .getValue ())
+				return "";
+
+			var string = "";
+
+			string += "\n";
+			string += "// SilhouetteEnhancementVolumeStyle\n";
+			string += "\n";
+			string += "uniform float silhouetteRetainedOpacity_" + this .getId () + ";\n";
+			string += "uniform float silhouetteBoundaryOpacity_" + this .getId () + ";\n";
+			string += "uniform float silhouetteSharpness_" + this .getId () + ";\n";
+
+			if (this .surfaceNormalsNode)
+			{
+				string += "uniform sampler3D surfaceNormals_" + this .getId () + ";\n";
+
+				string += "\n";
+				string += "vec4\n"
+				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
+				string += "{\n";
+				string += "	vec4 n = texture (surfaceNormals_" + this .getId () + ", texCoord) * 2.0 - 1.0\n";
+				string += "\n";
+				string += "	return vec4 (normalize (x3d_TextureNormalMatrix * n .xyz), length (n .xyz));\n";
+				string += "}\n";
+			}
+			else
+			{
+				string += "\n";
+				string += "vec4\n"
+				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
+				string += "{\n";
+				string += "	vec4  offset = vec4 (1.0 / x3d_TextureSize .x, 1.0 / x3d_TextureSize .y, 1.0 / x3d_TextureSize .z, 0.0);\n";
+				string += "	float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
+				string += "	float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
+				string += "	float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
+				string += "	float i3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
+				string += "	float i4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
+				string += "	float i5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
+				string += "	vec3  n      = vec3 (i1 - i0, i3 - i2, i5 - i4);\n";
+				string += "\n";
+				string += "	return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
+				string += "}\n";
+			}
+
+			return string;
+		},
+		getFunctionsText: function ()
+		{
+			if (! this .enabled_ .getValue ())
+				return "";
+
+			var string = "";
+
+			string += "\n";
+			string += "	// SilhouetteEnhancementVolumeStyle\n";
+			string += "\n";
+			string += "	{\n";
+
+			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+			string += "\n";
+			string += "		if (surfaceNormal .w == 0.0)\n"
+			string += "		{\n";
+			string += "			textureColor = vec4 (0.0);\n"
+			string += "		}\n";
+			string += "		else\n";
+			string += "		{\n";
+			string += "			float silhouetteRetainedOpacity = silhouetteRetainedOpacity_" + this .getId () + ";\n";
+			string += "			float silhouetteBoundaryOpacity = silhouetteBoundaryOpacity_" + this .getId () + ";\n";
+			string += "			float silhouetteSharpness       = silhouetteSharpness_" + this .getId () + ";\n";
+			string += "\n";
+			string += "			textureColor .a *= silhouetteRetainedOpacity + pow (silhouetteBoundaryOpacity * (1.0 - dot (surfaceNormal .xyz, normalize (vertex))), silhouetteSharpness);\n"
+			string += "		}\n";
+
+			string += "	}\n";
+
+			return string;
 		},
 	});
 
