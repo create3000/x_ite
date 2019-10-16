@@ -291,9 +291,7 @@ function (Fields,
 			if (this .renderStyleNode)
 				functionsText += this .renderStyleNode .getFunctionsText ();
 
-			functionsText = functionsText .replace (/textureColor/g,        "blendColor_"  + this .getId ());
-			functionsText = functionsText .replace (/x3d_Texture3D \[0\]/g, "voxels_"      + this .getId ());
-			functionsText = functionsText .replace (/x3d_TextureSize/g,     "textureSize_" + this .getId ());
+			functionsText = functionsText .replace (/textureColor/g, "blendColor_" + this .getId ());
 
 			string += "\n";
 			string += functionsText;
