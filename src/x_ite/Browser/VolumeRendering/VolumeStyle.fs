@@ -12,7 +12,6 @@ uniform sampler3D x3d_Texture3D [1];
 uniform vec3      x3d_TextureSize;
 
 uniform mat3 x3d_TextureNormalMatrix;
-uniform mat3 x3d_NormalMatrix;
 
 const float M_PI = 3.14159265359;
 

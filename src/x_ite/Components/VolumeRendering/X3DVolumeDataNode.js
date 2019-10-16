@@ -112,11 +112,6 @@ function (Fields,
 
 			this .appearanceNode .setPrivate (true);
 
-			this .proximitySensorNode .orientation_changed_ .addFieldInterest (this .transformNode .rotation_);
-			this .proximitySensorNode .orientation_changed_ .addFieldInterest (this .textureTransformNode .rotation_);
-
-			this .textureTransformNode .addInterest ("set_textureTransform__", this);
-
 			this .proximitySensorNode .size_         = new Fields .SFVec3f (-1, -1, -1);
 			this .transformNode .children_           = new Fields .MFNode (this .shapeNode);
 			this .shapeNode .appearance_             = this .appearanceNode;
@@ -135,6 +130,11 @@ function (Fields,
 			this .shapeNode             .setup ();
 			this .transformNode         .setup ();
 			this .proximitySensorNode   .setup ();
+
+			this .proximitySensorNode .orientation_changed_ .addFieldInterest (this .transformNode .rotation_);
+			this .proximitySensorNode .orientation_changed_ .addFieldInterest (this .textureTransformNode .rotation_);
+
+			this .textureTransformNode .addInterest ("set_textureTransform__", this);
 		},
 		getBBox: function (bbox)
 		{

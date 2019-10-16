@@ -57,7 +57,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureTransformNode, 
+          X3DTextureTransformNode,
           X3DConstants)
 {
 "use strict";
@@ -88,6 +88,14 @@ function (Fields,
 		{
 			return "textureTransform";
 		},
+		ininitialize: function ()
+		{
+			X3DTextureTransformNode .prototype .ininitialize .call (this);
+
+			this .addInterest ("eventsProcessed", this);
+
+			this .eventsProcessed ();
+		},
 		eventsProcessed: function ()
 		{
 			var matrix4 = this .getMatrix ();
@@ -100,5 +108,3 @@ function (Fields,
 
 	return TextureTransformMatrix3D;
 });
-
-
