@@ -146,6 +146,7 @@ function (Fields,
 				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
 				string += "{\n";
 				string += "	vec4 n = texture (surfaceNormals_" + this .getId () + ", texCoord) * 2.0 - 1.0\n";
+				string += "\n";
 				string += "	return vec4 (normalize (x3d_NormalMatrix * n .xyz), length (n .xyz));\n";
 				string += "}\n";
 			}
@@ -155,16 +156,17 @@ function (Fields,
 				string += "vec4\n"
 				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
 				string += "{\n";
-				string += "	vec4 offset = vec4 (1.0 / x3d_TextureSize .x, 1.0 / x3d_TextureSize .y, 1.0 / x3d_TextureSize .z, 0.0);\n";
-				string += "	float v0 = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
-				string += "	float v1 = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
-				string += "	float v2 = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
-				string += "	float v3 = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
-				string += "	float v4 = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
-				string += "	float v5 = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
-				string += "	vec3 n = vec3 (v0 - v1, v2 - v3, v4 - v5);\n";
+				string += "	vec4  offset = vec4 (1.0 / x3d_TextureSize .x, 1.0 / x3d_TextureSize .y, 1.0 / x3d_TextureSize .z, 0.0);\n";
+				string += "	float v0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
+				string += "	float v1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
+				string += "	float v2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
+				string += "	float v3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
+				string += "	float v4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
+				string += "	float v5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
+				string += "	vec3  n      = vec3 (v0 - v1, v2 - v3, v4 - v5);\n";
+				string += "\n";
 				string += "	return vec4 (normalize (x3d_NormalMatrix * n), length (n));\n";
-	  			string += "}\n";
+				string += "}\n";
 			}
 
 			string += "\n";
