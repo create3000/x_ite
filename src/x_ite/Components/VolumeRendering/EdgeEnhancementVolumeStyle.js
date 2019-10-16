@@ -160,7 +160,7 @@ function (Fields,
 				string += "	float i3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
 				string += "	float i4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
 				string += "	float i5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
-				string += "	vec3  n      = vec3 (i0 - i1, i2 - i3, i4 - i5);\n";
+				string += "	vec3  n      = vec3 (i1 - i0, i3 - i2, i5 - i4);\n";
 				string += "\n";
 				string += "	return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
 				string += "}\n";
