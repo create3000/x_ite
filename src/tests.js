@@ -329,6 +329,7 @@ var X_ITE_TESTS = [
 	{ path: "Time/TimeProto.x3d" },
 	{ component: "VolumeRendering" },
 	{ path: "VolumeRendering/BlendedBodyInternals.x3d" },
+	{ path: "VolumeRendering/BoundaryEnhancementVentricles.x3d" },
 	{ path: "VolumeRendering/CartoonBackpack.x3d" },
 	{ path: "VolumeRendering/EdgeBrain.x3d" },
 	{ path: "VolumeRendering/ProjectionAverageVentricles.x3d" },
