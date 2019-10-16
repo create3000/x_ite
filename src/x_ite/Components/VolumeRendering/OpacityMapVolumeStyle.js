@@ -135,7 +135,7 @@ function (Fields,
 			string += "uniform sampler2D transferFunction_" + this .getId () + ";\n";
 
 			string += "vec4\n";
-			string += "getOpacityMapStyle (in vec4 originalColor)\n";
+			string += "getOpacityMapStyle_" + this .getId () + " (in vec4 originalColor)\n";
 			string += "{\n";
 			string += "	return texture (transferFunction_" + this .getId () + ", originalColor .ra);\n";
 			string += "}\n";
@@ -153,7 +153,7 @@ function (Fields,
 			string += "	// OpacityMapVolumeStyle\n";
 			string += "\n";
 
-			string += "	textureColor = getOpacityMapStyle (textureColor);\n";
+			string += "	textureColor = getOpacityMapStyle_" + this .getId () + " (textureColor);\n";
 
 			return string;
 		},

@@ -15,11 +15,11 @@ uniform mat3 x3d_TextureNormalMatrix;
 
 const float M_PI = 3.14159265359;
 
-// VOLUME_STYLES_UNIFORMS
-
 in float fogDepth;
 in vec3  vertex;
 in vec4  texCoord;
+
+// VOLUME_STYLES_UNIFORMS
 
 out vec4 x3d_FragColor;
 
