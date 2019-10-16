@@ -17,12 +17,14 @@ const float M_PI = 3.14159265359;
 
 // VOLUME_STYLES_UNIFORMS
 
-in vec3 vertex;
-in vec4 texCoord;
+in float fogDepth;
+in vec3  vertex;
+in vec4  texCoord;
 
 out vec4 x3d_FragColor;
 
-#pragma X3D include "../webgl2/include/ClipPlanes.glsl"
+#pragma X3D include "include/ClipPlanes.glsl"
+#pragma X3D include "include/Fog.glsl"
 
 vec4
 getTextureColor (in vec3 texCoord)
