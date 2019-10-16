@@ -134,6 +134,7 @@ function (Fields,
 
 			string += "uniform sampler2D transferFunction_" + this .getId () + ";\n";
 
+			string += "\n";
 			string += "vec4\n";
 			string += "getOpacityMapStyle_" + this .getId () + " (in vec4 originalColor)\n";
 			string += "{\n";

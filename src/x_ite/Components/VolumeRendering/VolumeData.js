@@ -131,7 +131,7 @@ function (Fields,
 		{
 			if (this .renderStyleNode)
 			{
-				this .renderStyleNode .removeInterest ("set_createShader__", this);
+				this .renderStyleNode .removeInterest ("update", this);
 				this .renderStyleNode .removeVolumeData (this);
 			}
 
@@ -139,11 +139,11 @@ function (Fields,
 
 			if (this .renderStyleNode)
 			{
-				this .renderStyleNode .addInterest ("set_createShader__", this);
+				this .renderStyleNode .addInterest ("update", this);
 				this .renderStyleNode .addVolumeData (this);
 			}
 
-			this .set_createShader__ ();
+			this .update ();
 		},
 		set_voxels__: function ()
 		{
@@ -175,7 +175,7 @@ function (Fields,
 					console .log (error .message);
 			}
 		},
-		set_createShader__: function ()
+		update: function ()
 		{
 			this .setShader (this .createShader (vs, fs));
 		},

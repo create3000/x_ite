@@ -336,6 +336,7 @@ var X_ITE_TESTS = [
 	{ path: "VolumeRendering/ProjectionAverageVentricles.x3d" },
 	{ path: "VolumeRendering/ProjectionMaxVentricles.x3d" },
 	{ path: "VolumeRendering/ProjectionMinVentricles.x3d" },
+	{ path: "VolumeRendering/SegmentedVentricles.x3d" },
 	{ path: "VolumeRendering/ShadedBrain.x3d" },
 	{ path: "VolumeRendering/SilhouetteSkull.x3d" },
 	{ path: "VolumeRendering/VolumeData.x3d" },
