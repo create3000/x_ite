@@ -297,13 +297,14 @@ function (Fields,
 			string += "	if (surfaceNormal .w == 0.0)\n";
 			string += "		return vec4 (0.0);\n";
 			string += "\n";
-			string += "	float step     = M_PI / 2.0 / clamp (float (colorSteps), 1.0, 64.0);\n";
-			string += "	float cosTheta = dot (surfaceNormal .xyz, normalize (vertex));\n";
+			string += "	float steps    = clamp (float (colorSteps), 1.0, 64.0);\n";
+			string += "	float step     = M_PI / 2.0 / steps;\n";
+			string += "	float cosTheta = min (dot (surfaceNormal .xyz, normalize (vertex)), 1.0);\n";
 			string += "\n";
 			string += "	if (cosTheta < 0.0)\n";
 			string += "		return vec4 (0.0);\n";
 			string += "\n";
-			string += "	float t             = cos (round (acos (min (cosTheta, 1.0)) / step) * step);\n";
+			string += "	float t             = cos (min (floor (acos (cosTheta) / step) * (steps > 1.0 ? steps / (steps - 1.0) : 1.0), steps) * step);\n";
 			string += "	vec3  orthogonalHSV = rgb2hsv_" + this .getId () + " (orthogonalColor .rgb);\n";
 			string += "	vec3  parallelHSV   = rgb2hsv_" + this .getId () + " (parallelColor .rgb);\n";
 			string += "\n";
