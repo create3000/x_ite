@@ -116,11 +116,15 @@ function (Fields,
 
 			string += "\n";
 			string += "float\n";
-			string += "getBoundaryEnhancementStyle_" + this .getId () + " (in float originalAlpha, in float retainedOpacity, in float boundaryOpacity, in float opacityFactor, in vec3 texCoord)\n";
+			string += "getBoundaryEnhancementStyle_" + this .getId () + " (in float originalAlpha, in vec3 texCoord)\n";
 			string += "{\n";
 			string += "	float f0 = texture (x3d_Texture3D [0], texCoord) .r;\n";
 			string += "	float f1 = texture (x3d_Texture3D [0], texCoord + vec3 (0.0, 0.0, 1.0 / x3d_TextureSize .z)) .r;\n";
 			string += "	float f  = abs (f0 - f1);\n";
+			string += "\n";
+			string += "	float retainedOpacity = retainedOpacity_" + this .getId () + ";\n";
+			string += "	float boundaryOpacity = boundaryOpacity_" + this .getId () + ";\n";
+			string += "	float opacityFactor   = opacityFactor_" + this .getId () + ";\n";
 			string += "\n";
 			string += "	return originalAlpha * (retainedOpacity + pow (boundaryOpacity * f, opacityFactor));\n";
 			string += "}\n";
@@ -137,7 +141,7 @@ function (Fields,
 			string += "\n";
 			string += "	// BoundaryEnhancementVolumeStyle\n";
 			string += "\n";
-			string += "	textureColor .a = getBoundaryEnhancementStyle_" + this .getId () + " (textureColor .a, retainedOpacity_" + this .getId () + ", boundaryOpacity_" + this .getId () + ", opacityFactor_" + this .getId () + ", texCoord);\n";
+			string += "	textureColor .a = getBoundaryEnhancementStyle_" + this .getId () + " (textureColor .a, texCoord);\n";
 
 			return string;
 		},
