@@ -119,14 +119,6 @@ function (Fields,
 			this .set_renderStyle__ ();
 			this .set_voxels__ ();
 		},
-		set_weightTransferFunction1__: function ()
-		{
-			this .weightTransferFunction1Node = X3DCast (X3DConstants .X3DTexture2DNode, this .weightTransferFunction1_);
-		},
-		set_weightTransferFunction2__: function ()
-		{
-			this .weightTransferFunction2Node = X3DCast (X3DConstants .X3DTexture2DNode, this .weightTransferFunction2_);
-		},
 		addVolumeData: function (volumeDataNode)
 		{
 			X3DComposableVolumeRenderStyleNode .prototype .addVolumeData .call (this, volumeDataNode);
@@ -140,6 +132,14 @@ function (Fields,
 
 			if (this .renderStyleNode)
 				this .renderStyleNode .removeVolumeData (volumeDataNode);
+		},
+		set_weightTransferFunction1__: function ()
+		{
+			this .weightTransferFunction1Node = X3DCast (X3DConstants .X3DTexture2DNode, this .weightTransferFunction1_);
+		},
+		set_weightTransferFunction2__: function ()
+		{
+			this .weightTransferFunction2Node = X3DCast (X3DConstants .X3DTexture2DNode, this .weightTransferFunction2_);
 		},
 		set_renderStyle__: function ()
 		{

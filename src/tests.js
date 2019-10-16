@@ -331,6 +331,7 @@ var X_ITE_TESTS = [
 	{ path: "VolumeRendering/BlendedBodyInternals.x3d" },
 	{ path: "VolumeRendering/BoundaryEnhancementVentricles.x3d" },
 	{ path: "VolumeRendering/CartoonBackpack.x3d" },
+	{ path: "VolumeRendering/ComposedBackpack.x3d" },
 	{ path: "VolumeRendering/EdgeBrain.x3d" },
 	{ path: "VolumeRendering/ProjectionAverageVentricles.x3d" },
 	{ path: "VolumeRendering/ProjectionMaxVentricles.x3d" },
