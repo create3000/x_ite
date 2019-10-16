@@ -73,11 +73,11 @@ function (Fields,
 	{
 		constructor: BoundaryEnhancementVolumeStyle,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "boundaryOpacity", new Fields .SFFloat (0.9)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "opacityFactor",   new Fields .SFFloat (2)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "retainedOpacity", new Fields .SFFloat (0.2)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "boundaryOpacity", new Fields .SFFloat (0.9)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "opacityFactor",   new Fields .SFFloat (2)),
 		]),
 		getTypeName: function ()
 		{
@@ -90,6 +90,58 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "renderStyle";
+		},
+		addShaderFields: function (shaderNode)
+		{
+			if (! this .enabled_ .getValue ())
+				return;
+
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "retainedOpacity_" + this .getId (), this .retainedOpacity_ .copy ());
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "boundaryOpacity_" + this .getId (), this .boundaryOpacity_ .copy ());
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "opacityFactor_"   + this .getId (), this .opacityFactor_   .copy ());
+		},
+		getUniformsText: function ()
+		{
+			if (! this .enabled_ .getValue ())
+				return "";
+
+			var string = "";
+
+			string += "\n";
+			string += "// BoundaryEnhancementVolumeStyle\n";
+			string += "\n";
+			string += "uniform float retainedOpacity_" + this .getId () + ";\n";
+			string += "uniform float boundaryOpacity_" + this .getId () + ";\n";
+			string += "uniform float opacityFactor_" + this .getId () + ";\n";
+
+			return string;
+		},
+		getFunctionsText: function ()
+		{
+			if (! this .enabled_ .getValue ())
+				return "";
+
+			var string = "";
+
+			string += "\n";
+			string += "	// BoundaryEnhancementVolumeStyle\n";
+			string += "\n";
+			string += "	{\n";
+
+			string += "		float f0 = texture (x3d_Texture3D [0], texCoord) .r;\n";
+			string += "		float f1 = texture (x3d_Texture3D [0], texCoord + vec3 (0.0, 0.0, 1.0 / x3d_TextureSize .z)) .r;\n";
+			string += "		float f  = abs (f0 - f1);\n";
+			string += "\n";
+			string += "		float retainedOpacity = retainedOpacity_" + this .getId () + ";\n";
+			string += "		float boundaryOpacity = boundaryOpacity_" + this .getId () + ";\n";
+			string += "		float opacityFactor   = opacityFactor_" + this .getId () + ";\n";
+			string += "		float boundaryAlpha   = textureColor .a * (retainedOpacity + pow (boundaryOpacity * f, opacityFactor));\n";
+			string += "\n";
+			string += "		textureColor .a = boundaryAlpha;\n"
+
+			string += "	}\n";
+
+			return string;
 		},
 	});
 
