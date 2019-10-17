@@ -307,22 +307,22 @@ function (Fields,
 					string += "	float w1_" + this .getId () + " = weightConstant1_" + this .getId () + ";\n";
 					break;
 				}
-				case "ALPHA1":
+				case "ALPHA0":
 				{
 					string += "	float w1_" + this .getId () + " = textureColor .a;\n";
 					break;
 				}
-				case "ALPHA2":
+				case "ALPHA1":
 				{
 					string += "	float w1_" + this .getId () + " = blendColor_ " + this .getId () + " .a;\n";
 					break;
 				}
-				case "ONE_MINUS_ALPHA1":
+				case "ONE_MINUS_ALPHA0":
 				{
 					string += "	float w1_" + this .getId () + " = 1.0 - textureColor .a;\n";
 					break;
 				}
-				case "ONE_MINUS_ALPHA2":
+				case "ONE_MINUS_ALPHA1":
 				{
 					string += "	float w1_" + this .getId () + " = 1.0 - blendColor_ " + this .getId () + " .a;\n";
 					break;
@@ -350,22 +350,22 @@ function (Fields,
 					string += "	float w2_" + this .getId () + " = weightConstant2_" + this .getId () + ";\n";
 					break;
 				}
-				case "ALPHA1":
+				case "ALPHA0":
 				{
 					string += "	float w2_" + this .getId () + " = textureColor .a;\n";
 					break;
 				}
-				case "ALPHA2":
+				case "ALPHA1":
 				{
 					string += "	float w2_" + this .getId () + " = blendColor_ " + this .getId () + " .a;\n";
 					break;
 				}
-				case "ONE_MINUS_ALPHA1":
+				case "ONE_MINUS_ALPHA0":
 				{
 					string += "	float w2_" + this .getId () + " = 1.0 - textureColor .a;\n";
 					break;
 				}
-				case "ONE_MINUS_ALPHA2":
+				case "ONE_MINUS_ALPHA1":
 				{
 					string += "	float w2_" + this .getId () + " = 1.0 - blendColor_ " + this .getId () + " .a;\n";
 					break;
