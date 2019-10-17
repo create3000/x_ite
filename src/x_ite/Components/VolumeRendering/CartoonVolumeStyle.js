@@ -298,7 +298,7 @@ function (Fields,
 			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "		vec4 cartoonColor  = getCartoonStyle_" + this .getId () + " (textureColor, orthogonalColor_" + this .getId () + ", parallelColor_" + this .getId () + ", colorSteps_" + this .getId () + ", surfaceNormal, vertex);\n";
 			string += "\n";
-			string += "		textureColor = cartoonColor;\n"
+			string += "		textureColor = cartoonColor;\n";
 
 			string += "	}\n";
 
