@@ -117,6 +117,7 @@ function (Fields,
 				return;
 
 			this .renderStyle_ .addInterest ("set_renderStyle__", this);
+			this .voxels_      .addInterest ("set_voxels__",      this);
 			this .voxels_      .addFieldInterest (this .getAppearance () .texture_);
 
 			this .blendModeNode .setup ();
