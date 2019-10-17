@@ -139,7 +139,7 @@ function (Fields,
 				string += "uniform sampler3D surfaceNormals_" + this .getId () + ";\n";
 
 				string += "\n";
-				string += "vec4\n"
+				string += "vec4\n";
 				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
 				string += "{\n";
 				string += "	vec4 n = texture (surfaceNormals_" + this .getId () + ", texCoord) * 2.0 - 1.0\n";
@@ -150,7 +150,7 @@ function (Fields,
 			else
 			{
 				string += "\n";
-				string += "vec4\n"
+				string += "vec4\n";
 				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
 				string += "{\n";
 				string += "	vec4  offset = vec4 (1.0 / x3d_TextureSize .x, 1.0 / x3d_TextureSize .y, 1.0 / x3d_TextureSize .z, 0.0);\n";
@@ -168,10 +168,10 @@ function (Fields,
 
 			string += "\n";
 			string += "vec3\n";
-			string += "getToneMappedStyle_" + this .getId () + " (in vec4 coolColor, in vec4 warmColor, in vec4 surfaceNormal, in vec3 lightDir)\n"
-			string += "{\n"
-			string += "	float colorFactor = (1.0 + dot (lightDir, surfaceNormal .xyz)) * 0.5;\n"
-			string += "	return mix (warmColor .rgb, coolColor .rgb, colorFactor);\n"
+			string += "getToneMappedStyle_" + this .getId () + " (in vec4 coolColor, in vec4 warmColor, in vec4 surfaceNormal, in vec3 lightDir)\n";
+			string += "{\n";
+			string += "	float colorFactor = (1.0 + dot (lightDir, surfaceNormal .xyz)) * 0.5;\n";
+			string += "	return mix (warmColor .rgb, coolColor .rgb, colorFactor);\n";
 			string += "}\n";
 
 			return string;
@@ -191,9 +191,9 @@ function (Fields,
 			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "		vec3 toneColor     = vec3 (0.0);\n";
 			string += "\n";
-			string += "		if (surfaceNormal .w < 0.1)\n"
+			string += "		if (surfaceNormal .w < 0.1)\n";
 			string += "		{\n";
-			string += "			textureColor = vec4 (0.0);\n"
+			string += "			textureColor = vec4 (0.0);\n";
 			string += "		}\n";
 			string += "		else\n";
 			string += "		{\n";
@@ -208,7 +208,7 @@ function (Fields,
 			string += "				toneColor += getToneMappedStyle_" + this .getId () + " (coolColor_" + this .getId () + ", warmColor_" + this .getId () + ", surfaceNormal, L);\n";
 			string += "			}\n";
 			string += "\n";
-			string += "			textureColor .rgb = toneColor;\n"
+			string += "			textureColor .rgb = toneColor;\n";
 			string += "		}\n";
 
 			string += "	}\n";
