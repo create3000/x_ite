@@ -90,6 +90,44 @@ function (X3DNode,
 		{
 			this .volumeDataNodes .delete (volumeDataNode);
 		},
+		getNormalText: function (surfaceNormalsNode)
+		{
+			var string = "";
+
+			if (surfaceNormalsNode)
+			{
+				string += "uniform sampler3D surfaceNormals_" + this .getId () + ";\n";
+
+				string += "\n";
+				string += "vec4\n";
+				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
+				string += "{\n";
+				string += "	vec4 n = texture (surfaceNormals_" + this .getId () + ", texCoord) * 2.0 - 1.0\n";
+				string += "\n";
+				string += "	return vec4 (normalize (x3d_TextureNormalMatrix * n .xyz), length (n .xyz));\n";
+				string += "}\n";
+			}
+			else
+			{
+				string += "\n";
+				string += "vec4\n";
+				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
+				string += "{\n";
+				string += "	vec4  offset = vec4 (1.0 / x3d_TextureSize .x, 1.0 / x3d_TextureSize .y, 1.0 / x3d_TextureSize .z, 0.0);\n";
+				string += "	float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
+				string += "	float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
+				string += "	float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
+				string += "	float i3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
+				string += "	float i4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
+				string += "	float i5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
+				string += "	vec3  n      = vec3 (i1 - i0, i3 - i2, i5 - i4);\n";
+				string += "\n";
+				string += "	return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
+				string += "}\n";
+			}
+
+			return string;
+		},
 	});
 
 	return X3DVolumeRenderStyleNode;
