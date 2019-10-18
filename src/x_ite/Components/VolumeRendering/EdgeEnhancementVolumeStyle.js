@@ -138,8 +138,8 @@ function (Fields,
 
 			string += "\n";
 			string += "vec4\n";
-			string += "getEdgeEnhacementStyle_" + this .getId () + " (in vec4 originalColor, in vec4 edgeColor, in float gradientThreshold, in vec4 surfaceNormal, in vec3 vertex)\n"
-			string += "{\n"
+			string += "getEdgeEnhacementStyle_" + this .getId () + " (in vec4 originalColor, in vec4 edgeColor, in float gradientThreshold, in vec4 surfaceNormal, in vec3 vertex)\n";
+			string += "{\n";
 			string += "	if (surfaceNormal .w < 0.1)\n";
 			string += "		return originalColor;\n";
 			string += "\n";
@@ -168,7 +168,7 @@ function (Fields,
 			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "		vec4 edgeColor     = getEdgeEnhacementStyle_" + this .getId () + " (textureColor, edgeColor_" + this .getId () + ", gradientThreshold_" + this .getId () + ", surfaceNormal, vertex);\n";
 			string += "\n";
-			string += "		textureColor = edgeColor;\n"
+			string += "		textureColor = edgeColor;\n";
 
 			string += "	}\n";
 
