@@ -140,14 +140,14 @@ function (Fields,
 			string += this .getNormalText (this .surfaceNormalsNode);
 
 			string += "\n";
-			string += "float\n"
+			string += "float\n";
 			string += "getSilhouetteEnhancementStyle_" + this .getId () + " (in float originalAlpha, in vec3 texCoord)\n";
 			string += "{\n";
 			string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "\n";
-			string += "	if (surfaceNormal .w < 0.1)\n"
+			string += "	if (surfaceNormal .w < 0.1)\n";
 			string += "	{\n";
-			string += "		return 0.0;\n"
+			string += "		return 0.0;\n";
 			string += "	}\n";
 			string += "	else\n";
 			string += "	{\n";
@@ -155,7 +155,7 @@ function (Fields,
 			string += "		float silhouetteBoundaryOpacity = silhouetteBoundaryOpacity_" + this .getId () + ";\n";
 			string += "		float silhouetteSharpness       = silhouetteSharpness_" + this .getId () + ";\n";
 			string += "\n";
-			string += "		return originalAlpha * silhouetteRetainedOpacity + pow (silhouetteBoundaryOpacity * (1.0 - dot (surfaceNormal .xyz, normalize (vertex))), silhouetteSharpness);\n"
+			string += "		return originalAlpha * silhouetteRetainedOpacity + pow (silhouetteBoundaryOpacity * (1.0 - dot (surfaceNormal .xyz, normalize (vertex))), silhouetteSharpness);\n";
 			string += "	}\n";
 			string += "}\n";
 
