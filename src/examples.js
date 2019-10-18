@@ -110,6 +110,8 @@ var X_ITE_EXAMPLES = [
 	{ component: "Texturing", test: "MultiTexture" },
 	{ component: "Texturing", test: "PixelTexture" },
 	{ component: "Time", test: "TimeSensor" },
+	{ component: "VolumeRendering", test: "EdgeEnhancementVolumeStyle" },
+	{ component: "VolumeRendering", test: "VolumeData" },
 	{ component: "X3D", test: "Appartment" },
 	{ component: "X3D", test: "Approach" },
 	{ component: "X3D", test: "Arcadia" },

@@ -76,6 +76,8 @@ function ($,
 {
 "use strict";
 
+	var WEBGL_LATEST_VERSION = 2;
+
 	var browserNumber = 0;
 
 	var extensions = [
@@ -198,7 +200,7 @@ function ($,
 		this .splashScreen = splashScreen;
 		this .surface      = surface;
 		this .canvas       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
-		this .context      = getContext (this .canvas [0], DEBUG ? 2 : 1, element .attr ("preserveDrawingBuffer") === "true");
+		this .context      = getContext (this .canvas [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
 		this .extensions   = { };
 
 		var gl = this .getContext ();

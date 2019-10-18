@@ -1,4 +1,4 @@
-/* X_ITE v4.5.17a-842 */
+/* X_ITE v4.5.17a-843 */
 
 (function () {
 
@@ -39980,6 +39980,8 @@ function ($,
 {
 "use strict";
 
+	var WEBGL_LATEST_VERSION = 2;
+
 	var browserNumber = 0;
 
 	var extensions = [
@@ -40102,7 +40104,7 @@ function ($,
 		this .splashScreen = splashScreen;
 		this .surface      = surface;
 		this .canvas       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
-		this .context      = getContext (this .canvas [0], DEBUG ? 2 : 1, element .attr ("preserveDrawingBuffer") === "true");
+		this .context      = getContext (this .canvas [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
 		this .extensions   = { };
 
 		var gl = this .getContext ();
@@ -90964,7 +90966,7 @@ function (X3DBaseNode)
 			if (this .array .length > 1)
 			{
 				var
-					enableInlineBindables = this .getBrowser () .getBrowserOption ("EnableInlineViewpoints"),
+					enableInlineBindables = false,
 					masterScene           = this .getMasterScene ();
 
 				if (name && name .length)
@@ -116556,10 +116558,6 @@ function ($,
 			this .description = "";
 
 			this .getBrowserOptions () .configure ();
-
-			if (scene .getSpecificationVersion () == "2.0")
-				this .setBrowserOption ("EnableInlineViewpoints", false);
-
 			this .setBrowserLoading (true);
 			this .loadCount_ .addInterest ("set_loadCount__", this);
 			this .prepareEvents () .removeInterest ("bind", this);
@@ -116572,8 +116570,7 @@ function ($,
 			// Scene.setup is done in World.inititalize.
 			this .setExecutionContext (scene);
 
-			if (! this .getBrowserOption ("EnableInlineViewpoints"))
-				this .getWorld () .bind ();
+			this .getWorld () .bind ();
 		},
 		set_loadCount__: function (loadCount)
 		{
@@ -116588,9 +116585,6 @@ function ($,
 		bind: function ()
 		{
 			this .prepareEvents () .removeInterest ("bind", this);
-
-			if (this .getBrowserOption ("EnableInlineViewpoints"))
-				this .getWorld () .bind ();
 
 			this .setBrowserLoading (false);
 
