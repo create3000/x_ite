@@ -192,9 +192,9 @@ function (Fields,
 			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "		vec4 shadedColor   = vec4 (0.0);\n";
 			string += "\n";
-			string += "		if (surfaceNormal .w < 0.1)\n"
+			string += "		if (surfaceNormal .w < 0.1)\n";
 			string += "		{\n";
-			string += "			textureColor = vec4 (0.0);\n"
+			string += "			textureColor = vec4 (0.0);\n";
 			string += "		}\n";
 			string += "		else\n";
 			string += "		{\n";
@@ -271,7 +271,7 @@ function (Fields,
 			}
 
 			string += "\n";
-			string += "			textureColor = shadedColor;\n"
+			string += "			textureColor = shadedColor;\n";
 			string += "		}\n";
 
 			string += "	}\n";
