@@ -212,7 +212,7 @@ function (Fields,
 			if (this .type_ .getValue () === "AVERAGE")
 				string += "		projectionColor /= float (samples);\n";
 
-			string += "		textureColor .rgb = vec3 (projectionColor);\n"
+			string += "		textureColor .rgb = vec3 (projectionColor);\n";
 
 			string += "	}\n";
 
