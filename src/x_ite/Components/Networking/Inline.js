@@ -79,8 +79,8 @@ function (Fields,
 		X3DBoundedObject .call (this, executionContext);
 
 		this .addType (X3DConstants .Inline);
-		
-		this .addChildObjects ("buffer", new Fields .SFTime ());
+
+		this .addChildObjects ("buffer", new Fields .MFString ());
 
 		this .scene = this .getBrowser () .getDefaultScene ();
 		this .group = new Group (executionContext);
@@ -148,7 +148,7 @@ function (Fields,
 			if (this .load_ .getValue ())
 			{
 				this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-	
+
 				this .requestAsyncLoad ();
 			}
 			else
@@ -188,11 +188,11 @@ function (Fields,
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
 			// buffer prevents double load of the scene if load and url field are set at the same time.
-			this .buffer_ .addEvent ();
+			this .buffer_ = this .url_;
 		},
 		set_buffer__: function ()
 		{
-			new FileLoader (this) .createX3DFromURL (this .url_, null, this .setInternalSceneAsync .bind (this));
+			new FileLoader (this) .createX3DFromURL (this .buffer_, null, this .setInternalSceneAsync .bind (this));
 		},
 		requestUnload: function ()
 		{
@@ -270,4 +270,3 @@ function (Fields,
 
 	return Inline;
 });
-

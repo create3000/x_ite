@@ -2543,7 +2543,7 @@ function (Fields,
 				styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
 				styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
 
-			if (segmentEnabled1 && this .segmentIdentifiersNode)
+			if (this .segmentIdentifiersNode)
 			{
 				styleUniforms  += "\n";
 				styleUniforms  += "uniform sampler3D segmentIdentifiers;\n";
@@ -2569,6 +2569,10 @@ function (Fields,
 					styleFunctions += this .renderStyleNodes [0] .getFunctionsText ();
 				}
 			}
+			else
+			{
+				styleFunctions += "	return vec4 (0.0);\n";
+			}
 
 			styleFunctions += "	}\n";
 			styleFunctions += "	else\n";
@@ -2581,6 +2585,10 @@ function (Fields,
 					styleUniforms  += this .renderStyleNodes [1] .getUniformsText (),
 					styleFunctions += this .renderStyleNodes [1] .getFunctionsText ();
 				}
+			}
+			else
+			{
+				styleFunctions += "	return vec4 (0.0);\n";
 			}
 
 			styleFunctions += "	}\n";
@@ -2619,6 +2627,9 @@ function (Fields,
 				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", new Fields .SFVec3f ());
 			}
 
+			if (this .segmentIdentifiersNode)
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "segmentIdentifiers", new Fields .SFNode (this .segmentIdentifiersNode));
+
 			opacityMapVolumeStyle .addShaderFields (shaderNode);
 
 			if (segmentEnabled0)
@@ -2629,9 +2640,6 @@ function (Fields,
 
 			if (segmentEnabled1)
 			{
-				if (this .segmentIdentifiersNode)
-					shaderNode .addUserDefinedField (X3DConstants .inputOutput, "segmentIdentifiers", new Fields .SFNode (this .segmentIdentifiersNode));
-
 				if (this .renderStyleNodes .length > 1)
 					this .renderStyleNodes [1] .addShaderFields (shaderNode);
 			}
