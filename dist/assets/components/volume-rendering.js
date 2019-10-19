@@ -2600,18 +2600,18 @@ function (Fields,
 				this .getBrowser () .print (fs);
 
 			var vertexShader = new ShaderPart (this .getExecutionContext ());
-			vertexShader .setName ("VolumeDataVertexShader");
+			vertexShader .setName ("SegmentedVolumeDataVertexShader");
 			vertexShader .url_ .push ("data:x-shader/x-vertex," + vs);
 			vertexShader .setup ();
 
 			var fragmentShader = new ShaderPart (this .getExecutionContext ());
-			fragmentShader .setName ("VolumeDataFragmentShader");
+			fragmentShader .setName ("SegmentedVolumeDataFragmentShader");
 			fragmentShader .type_ = "FRAGMENT";
 			fragmentShader .url_ .push ("data:x-shader/x-fragment," + fs);
 			fragmentShader .setup ();
 
 			var shaderNode = new ComposedShader (this .getExecutionContext ());
-			shaderNode .setName ("VolumeDataShader");
+			shaderNode .setName ("SegmentedVolumeDataShader");
 			shaderNode .language_ = "GLSL";
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
