@@ -265,7 +265,7 @@ function (Fields,
 
 			if (this .surfaceValues_ .length === 1)
 			{
-				var contourStepSize = this .contourStepSize_ .getValue ();
+				var contourStepSize = Math .abs (this .contourStepSize_ .getValue ());
 
 				if (contourStepSize === 0)
 				{
