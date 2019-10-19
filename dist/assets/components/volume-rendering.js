@@ -1311,7 +1311,7 @@ function (Fields,
 			string += "vec4\n";
 			string += "getCartoonStyle_" + this .getId () + " (in vec4 originalColor, in vec4 orthogonalColor, in vec4 parallelColor, in int colorSteps, in vec4 surfaceNormal, vec3 vertex)\n";
 			string += "{\n";
-			string += "	if (surfaceNormal .w < 0.1)\n";
+			string += "	if (surfaceNormal .w < surfaceTolerance)\n";
 			string += "		return vec4 (0.0);\n";
 			string += "\n";
 			string += "	float steps    = clamp (float (colorSteps), 1.0, 64.0);\n";
@@ -1711,7 +1711,7 @@ function (Fields,
 			string += "vec4\n";
 			string += "getEdgeEnhacementStyle_" + this .getId () + " (in vec4 originalColor, in vec4 edgeColor, in float gradientThreshold, in vec4 surfaceNormal, in vec3 vertex)\n";
 			string += "{\n";
-			string += "	if (surfaceNormal .w < 0.1)\n";
+			string += "	if (surfaceNormal .w < surfaceTolerance)\n";
 			string += "		return originalColor;\n";
 			string += "\n";
 			string += "	float angle = abs (dot (surfaceNormal .xyz, normalize (vertex)));\n";
@@ -1983,6 +1983,12 @@ function (Fields,
 	return X3DVolumeDataNode;
 });
 
+
+define('text!x_ite/Browser/VolumeRendering/VolumeStyle.vs',[],function () { return '#version 300 es\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\nuniform mat4 x3d_TextureMatrix [1];\n\nin float x3d_FogDepth;\nin vec4  x3d_TexCoord0;\nin vec4  x3d_Vertex;\n\nout float fogDepth;\nout vec3 vertex;\nout vec4 texCoord;\n\nvoid\nmain ()\n{\n\tvec4 position = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tfogDepth = x3d_FogDepth;\n\tvertex   = position .xyz;\n\ttexCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;\n\n\tgl_Position = x3d_ProjectionMatrix * position;\n}\n';});
+
+
+define('text!x_ite/Browser/VolumeRendering/VolumeStyle.fs',[],function () { return '#version 300 es\n\nprecision mediump float;\nprecision mediump int;\nprecision mediump sampler3D;\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nuniform int       x3d_NumTextures;\nuniform sampler3D x3d_Texture3D [1];\nuniform vec3      x3d_TextureSize;\n\nuniform mat3 x3d_TextureNormalMatrix;\n\nconst float M_PI = 3.14159265359;\n\nin float fogDepth;\nin vec3  vertex;\nin vec4  texCoord;\n\n// VOLUME_STYLES_UNIFORMS\n\nout vec4 x3d_FragColor;\n\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\n\nuniform x3d_FogParameters x3d_Fog;\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .fogCoord)\n\t\treturn clamp (1.0 - fogDepth, 0.0, 1.0);\n\n\tfloat visibilityRange = x3d_Fog .visibilityRange;\n\n\tif (visibilityRange <= 0.0)\n\t\treturn 1.0;\n\n\tfloat dV = length (x3d_Fog .matrix * vertex);\n\n\tif (dV >= visibilityRange)\n\t\treturn 0.0;\n\n\tswitch (x3d_Fog .type)\n\t{\n\t\tcase x3d_LinearFog:\n\t\t{\n\t\t\treturn (visibilityRange - dV) / visibilityRange;\n\t\t}\n\t\tcase x3d_ExponentialFog:\n\t\t{\n\t\t\treturn exp (-dV / (visibilityRange - dV));\n\t\t}\n\t\tdefault:\n\t\t{\n\t\t\treturn 1.0;\n\t\t}\n\t}\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvec4\ngetTextureColor (in vec3 texCoord)\n{\n\tif (x3d_NumTextures == 0)\n\t\tdiscard;\n\n\tif (texCoord .s < 0.0 || texCoord .s > 1.0)\n\t\tdiscard;\n\n\tif (texCoord .t < 0.0 || texCoord .t > 1.0)\n\t\tdiscard;\n\n\tif (texCoord .p < 0.0 || texCoord .p > 1.0)\n\t\tdiscard;\n\n\tvec4 textureColor = texture (x3d_Texture3D [0], texCoord);\n\n\t// Apply volume styles.\n\n// VOLUME_STYLES_FUNCTIONS\n\n\treturn textureColor;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tx3d_FragColor = getTextureColor (texCoord .stp / texCoord .q);\n}\n';});
+
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -2037,13 +2043,25 @@ define ('x_ite/Components/VolumeRendering/IsoSurfaceVolumeData',[
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/VolumeRendering/X3DVolumeDataNode",
+	"x_ite/Components/Shaders/ComposedShader",
+	"x_ite/Components/Shaders/ShaderPart",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
+	"text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
+	"text!x_ite/Browser/VolumeRendering/VolumeStyle.fs",
+	"x_ite/DEBUG",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DVolumeDataNode,
-          X3DConstants)
+          ComposedShader,
+          ShaderPart,
+          X3DConstants,
+          X3DCast,
+          vs,
+          fs,
+          DEBUG)
 {
 "use strict";
 
@@ -2052,19 +2070,22 @@ function (Fields,
 		X3DVolumeDataNode .call (this, executionContext);
 
 		this .addType (X3DConstants .IsoSurfaceVolumeData);
+
+		this .renderStyleNodes = [ ];
+		this .blendModeNode    = executionContext .createNode ("BlendMode", false);
 	}
 
 	IsoSurfaceVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
 	{
 		constructor: IsoSurfaceVolumeData,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "contourStepSize",  new Fields .SFFloat (0)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",       new Fields .SFVec3f (1, 1, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "gradients",        new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "renderStyle",      new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceTolerance", new Fields .SFFloat (0)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",       new Fields .SFVec3f (1, 1, 1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceValues",    new Fields .MFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "contourStepSize",  new Fields .SFFloat (0)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceTolerance", new Fields .SFFloat (0)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "gradients",        new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "renderStyle",      new Fields .MFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "voxels",           new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f (0, 0, 0)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
@@ -2080,6 +2101,250 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "children";
+		},
+		initialize: function ()
+		{
+			X3DVolumeDataNode .prototype .initialize .call (this);
+
+			var gl = this .getBrowser () .getContext ();
+
+			if (gl .getVersion () < 2)
+				return;
+
+			this .renderStyle_        .addInterest ("set_renderStyle__", this);
+			this .voxels_             .addFieldInterest (this .getAppearance () .texture_);
+
+			this .surfaceValues_      .addInterest ("update", this);
+			this .contourStepSize_    .addInterest ("update", this);
+			this .surfaceTolerance_   .addInterest ("update", this);
+			this .renderStyle_        .addInterest ("update", this);
+
+			this .blendModeNode .setup ();
+
+			this .getAppearance () .texture_   = this .voxels_;
+			this .getAppearance () .blendMode_ = this .blendModeNode;
+
+			this .set_renderStyle__ ();
+			this .set_voxels__ ();
+
+			this .update ();
+		},
+		set_renderStyle__: function ()
+		{
+			var renderStyleNodes = this .renderStyleNodes;
+
+			for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
+			{
+				var renderStyleNode = renderStyleNodes [i];
+
+				renderStyleNode .removeInterest ("update", this);
+				renderStyleNode .removeVolumeData (this);
+			}
+
+			renderStyleNodes .length = 0;
+
+			for (var i = 0, length = this .renderStyle_ .length; i < length; ++ i)
+			{
+				var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this .renderStyle_ [i]);
+
+				if (renderStyleNode)
+					renderStyleNodes .push (renderStyleNode);
+			}
+
+			for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
+			{
+				var renderStyleNode = renderStyleNodes [i];
+
+				renderStyleNode .addInterest ("update", this);
+				renderStyleNode .addVolumeData (this);
+			}
+		},
+		set_voxels__: function ()
+		{
+			if (this .voxelsNode)
+				this .voxelsNode .removeInterest ("set_textureSize__", this);
+
+			this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .voxels_);
+
+			if (this .voxelsNode)
+			{
+				this .voxelsNode .addInterest ("set_textureSize__", this);
+
+				this .set_textureSize__ ();
+			}
+		},
+		set_textureSize__: function ()
+		{
+			try
+			{
+				var textureSize = this .getShader () .getField ("x3d_TextureSize");
+
+				textureSize .x = this .voxelsNode .getWidth ();
+				textureSize .y = this .voxelsNode .getHeight ();
+				textureSize .z = this .voxelsNode .getDepth ();
+			}
+			catch (error)
+			{
+				if (DEBUG)
+					console .log (error .message);
+			}
+		},
+		update: function ()
+		{
+			this .setShader (this .createShader (vs, fs));
+		},
+		createShader: function (vs, fs)
+		{
+			if (DEBUG)
+				console .log ("Creating VolumeData Shader ...");
+
+			var
+				opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
+				styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
+				styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
+
+			styleUniforms  += "\n";
+			styleUniforms  += "uniform float surfaceValues [" + this .surfaceValues_ .length + "];\n";
+			styleUniforms  += "uniform float surfaceTolerance;\n";
+
+			for (var i = 0, length = this .renderStyleNodes .length; i < length; ++ i)
+				styleUniforms  += this .renderStyleNodes [i] .getUniformsText ();
+
+			styleFunctions += "\n";
+			styleFunctions += "	// IsoSurfaceVolumeData\n";
+			styleFunctions += "\n";
+			styleFunctions += "	float intensity = textureColor .r;\n";
+			styleFunctions += "\n";
+
+			if (this .surfaceValues_ .length === 1)
+			{
+				var contourStepSize = this .contourStepSize_ .getValue ();
+
+				if (contourStepSize === 0)
+				{
+					styleFunctions += "	if (intensity > surfaceValues [0])\n";
+					styleFunctions += "	{\n";
+					styleFunctions += "		textureColor = vec4 (vec3 (surfaceValues [0]), 1.0);\n";
+
+					if (this .renderStyleNodes .length)
+					{
+						styleFunctions += this .renderStyleNodes [0] .getFunctionsText ();
+					}
+
+					styleFunctions += "	}\n";
+					styleFunctions += "	else\n";
+					styleFunctions += "	{\n";
+					styleFunctions += "		textureColor = vec4 (0.0);\n";
+					styleFunctions += "	}\n";
+					styleFunctions += "\n";
+				}
+				else
+				{
+					var surfaceValues = [ ];
+
+					for (var v = this .surfaceValues_ [0] - contourStepSize; v > 0; v -= contourStepSize)
+						surfaceValues .unshift (v);
+
+					surfaceValues .push (this .surfaceValues_ [0]);
+
+					for (var v = this .surfaceValues_ [0] + contourStepSize; v <= 1; v += contourStepSize)
+						surfaceValues .push (v);
+
+					styleFunctions += "	if (false)\n";
+					styleFunctions += "	{ }\n";
+
+					for (var i = 0, length = surfaceValues .length; i < length; ++ i)
+					{
+						styleFunctions += "	else if (intensity > " + surfaceValues [i] + ")\n";
+						styleFunctions += "	{\n";
+						styleFunctions += "		textureColor = vec4 (vec3 (" + surfaceValues [i] + "), 1.0);\n";
+
+						if (this .renderStyleNodes .length)
+						{
+							styleFunctions += this .renderStyleNodes [0] .getFunctionsText ();
+						}
+
+						styleFunctions += "	}\n";
+					}
+
+					styleFunctions += "	else\n";
+					styleFunctions += "	{\n";
+					styleFunctions += "		textureColor = vec4 (0.0);\n";
+					styleFunctions += "	}\n";
+					styleFunctions += "\n";
+				}
+			}
+			else
+			{
+				styleFunctions += "	if (false)\n";
+				styleFunctions += "	{ }\n";
+
+				for (var i = 0, length = this .surfaceValues_ .length; i < length; ++ i)
+				{
+					styleFunctions += "	else if (intensity > surfaceValues [" + i + "])\n";
+					styleFunctions += "	{\n";
+					styleFunctions += "		textureColor = vec4 (vec3 (surfaceValues [" + i + "]), 1.0);\n";
+
+					if (this .renderStyleNodes .length)
+					{
+						var r = Math .min (i, this .renderStyleNodes .length - 1);
+
+						styleFunctions += this .renderStyleNodes [r] .getFunctionsText ();
+					}
+
+					styleFunctions += "	}\n";
+				}
+
+				styleFunctions += "	else\n";
+				styleFunctions += "	{\n";
+				styleFunctions += "		textureColor = vec4 (0.0);\n";
+				styleFunctions += "	}\n";
+				styleFunctions += "\n";
+			}
+
+			fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
+			fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
+
+			if (DEBUG)
+				this .getBrowser () .print (fs);
+
+			var vertexShader = new ShaderPart (this .getExecutionContext ());
+			vertexShader .setName ("VolumeDataVertexShader");
+			vertexShader .url_ .push ("data:x-shader/x-vertex," + vs);
+			vertexShader .setup ();
+
+			var fragmentShader = new ShaderPart (this .getExecutionContext ());
+			fragmentShader .setName ("VolumeDataFragmentShader");
+			fragmentShader .type_ = "FRAGMENT";
+			fragmentShader .url_ .push ("data:x-shader/x-fragment," + fs);
+			fragmentShader .setup ();
+
+			var shaderNode = new ComposedShader (this .getExecutionContext ());
+			shaderNode .setName ("VolumeDataShader");
+			shaderNode .language_ = "GLSL";
+			shaderNode .parts_ .push (vertexShader);
+			shaderNode .parts_ .push (fragmentShader);
+
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceValues",    this .surfaceValues_    .copy ());
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", this .surfaceTolerance_ .copy ());
+
+			if (this .voxelsNode)
+			{
+				var textureSize = new Fields .SFVec3f (this .voxelsNode .getWidth (), this .voxelsNode .getHeight (), this .voxelsNode .getDepth ());
+
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", textureSize);
+			}
+			else
+			{
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", new Fields .SFVec3f ());
+			}
+
+			opacityMapVolumeStyle .addShaderFields (shaderNode);
+
+			for (var i = 0, length = this .renderStyleNodes .length; i < length; ++ i)
+				this .renderStyleNodes [i] .addShaderFields (shaderNode);
+
+			return shaderNode;
 		},
 	});
 
@@ -2311,12 +2576,6 @@ function (Fields,
 	return ProjectionVolumeStyle;
 });
 
-
-define('text!x_ite/Browser/VolumeRendering/VolumeStyle.vs',[],function () { return '#version 300 es\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\nuniform mat4 x3d_TextureMatrix [1];\n\nin float x3d_FogDepth;\nin vec4  x3d_TexCoord0;\nin vec4  x3d_Vertex;\n\nout float fogDepth;\nout vec3 vertex;\nout vec4 texCoord;\n\nvoid\nmain ()\n{\n\tvec4 position = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tfogDepth = x3d_FogDepth;\n\tvertex   = position .xyz;\n\ttexCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;\n\n\tgl_Position = x3d_ProjectionMatrix * position;\n}\n';});
-
-
-define('text!x_ite/Browser/VolumeRendering/VolumeStyle.fs',[],function () { return '#version 300 es\n\nprecision mediump float;\nprecision mediump int;\nprecision mediump sampler3D;\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nuniform int       x3d_NumTextures;\nuniform sampler3D x3d_Texture3D [1];\nuniform vec3      x3d_TextureSize;\n\nuniform mat3 x3d_TextureNormalMatrix;\n\nconst float M_PI = 3.14159265359;\n\nin float fogDepth;\nin vec3  vertex;\nin vec4  texCoord;\n\n// VOLUME_STYLES_UNIFORMS\n\nout vec4 x3d_FragColor;\n\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\n\nuniform x3d_FogParameters x3d_Fog;\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .fogCoord)\n\t\treturn clamp (1.0 - fogDepth, 0.0, 1.0);\n\n\tfloat visibilityRange = x3d_Fog .visibilityRange;\n\n\tif (visibilityRange <= 0.0)\n\t\treturn 1.0;\n\n\tfloat dV = length (x3d_Fog .matrix * vertex);\n\n\tif (dV >= visibilityRange)\n\t\treturn 0.0;\n\n\tswitch (x3d_Fog .type)\n\t{\n\t\tcase x3d_LinearFog:\n\t\t{\n\t\t\treturn (visibilityRange - dV) / visibilityRange;\n\t\t}\n\t\tcase x3d_ExponentialFog:\n\t\t{\n\t\t\treturn exp (-dV / (visibilityRange - dV));\n\t\t}\n\t\tdefault:\n\t\t{\n\t\t\treturn 1.0;\n\t\t}\n\t}\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvec4\ngetTextureColor (in vec3 texCoord)\n{\n\tif (x3d_NumTextures == 0)\n\t\tdiscard;\n\n\tif (texCoord .s < 0.0 || texCoord .s > 1.0)\n\t\tdiscard;\n\n\tif (texCoord .t < 0.0 || texCoord .t > 1.0)\n\t\tdiscard;\n\n\tif (texCoord .p < 0.0 || texCoord .p > 1.0)\n\t\tdiscard;\n\n\tvec4 textureColor = texture (x3d_Texture3D [0], texCoord);\n\n\t// Apply volume styles.\n\n// VOLUME_STYLES_FUNCTIONS\n\n\treturn textureColor;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tx3d_FragColor = getTextureColor (texCoord .stp / texCoord .q);\n}\n';});
-
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -2373,7 +2632,6 @@ define ('x_ite/Components/VolumeRendering/SegmentedVolumeData',[
 	"x_ite/Components/VolumeRendering/X3DVolumeDataNode",
 	"x_ite/Components/Shaders/ComposedShader",
 	"x_ite/Components/Shaders/ShaderPart",
-	"x_ite/Components/VolumeRendering/OpacityMapVolumeStyle",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
 	"text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
@@ -2386,7 +2644,6 @@ function (Fields,
           X3DVolumeDataNode,
           ComposedShader,
           ShaderPart,
-          OpacityMapVolumeStyle,
           X3DConstants,
           X3DCast,
           vs,
@@ -2444,9 +2701,9 @@ function (Fields,
 			this .renderStyle_        .addInterest ("set_renderStyle__",        this);
 			this .voxels_             .addFieldInterest (this .getAppearance () .texture_);
 
-			this .segmentEnabled_     .addInterest ("update",                   this);
-			this .segmentIdentifiers_ .addInterest ("update",                   this);
-			this .renderStyle_        .addInterest ("update",                   this);
+			this .segmentEnabled_     .addInterest ("update", this);
+			this .segmentIdentifiers_ .addInterest ("update", this);
+			this .renderStyle_        .addInterest ("update", this);
 
 			this .blendModeNode .setup ();
 
@@ -2543,6 +2800,9 @@ function (Fields,
 				styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
 				styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
 
+			styleUniforms  += "\n";
+			styleUniforms  += "uniform float surfaceTolerance;\n";
+
 			if (this .segmentIdentifiersNode)
 			{
 				styleUniforms  += "\n";
@@ -2615,6 +2875,8 @@ function (Fields,
 			shaderNode .language_ = "GLSL";
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
+
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", new Fields .SFFloat (0.1));
 
 			if (this .voxelsNode)
 			{
@@ -2845,7 +3107,7 @@ function (Fields,
 			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "		vec4 shadedColor   = vec4 (0.0);\n";
 			string += "\n";
-			string += "		if (surfaceNormal .w < 0.1)\n";
+			string += "		if (surfaceNormal .w < surfaceTolerance)\n";
 			string += "		{\n";
 			string += "			textureColor = vec4 (0.0);\n";
 			string += "		}\n";
@@ -3083,7 +3345,7 @@ function (Fields,
 			string += "{\n";
 			string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "\n";
-			string += "	if (surfaceNormal .w < 0.1)\n";
+			string += "	if (surfaceNormal .w < surfaceTolerance)\n";
 			string += "	{\n";
 			string += "		return 0.0;\n";
 			string += "	}\n";
@@ -3281,7 +3543,7 @@ function (Fields,
 			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "		vec3 toneColor     = vec3 (0.0);\n";
 			string += "\n";
-			string += "		if (surfaceNormal .w < 0.1)\n";
+			string += "		if (surfaceNormal .w < surfaceTolerance)\n";
 			string += "		{\n";
 			string += "			textureColor = vec4 (0.0);\n";
 			string += "		}\n";
@@ -3432,7 +3694,7 @@ function (Fields,
 			this .voxels_      .addInterest ("set_voxels__",      this);
 			this .voxels_      .addFieldInterest (this .getAppearance () .texture_);
 
-			this .renderStyle_ .addInterest ("update",            this);
+			this .renderStyle_ .addInterest ("update", this);
 
 			this .blendModeNode .setup ();
 
@@ -3504,6 +3766,9 @@ function (Fields,
 				styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
 				styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
 
+			styleUniforms  += "\n";
+			styleUniforms  += "uniform float surfaceTolerance;\n";
+
 			if (this .renderStyleNode)
 			{
 				styleUniforms  += this .renderStyleNode .getUniformsText (),
@@ -3532,6 +3797,8 @@ function (Fields,
 			shaderNode .language_ = "GLSL";
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
+
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", new Fields .SFFloat (0.1));
 
 			if (this .voxelsNode)
 			{
