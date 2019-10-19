@@ -294,7 +294,7 @@ function (Fields,
 
 					surfaceValues .push (this .surfaceValues_ [0]);
 
-					for (var v = this .surfaceValues_ [0] + contourStepSize; v <= 1; v += contourStepSize)
+					for (var v = this .surfaceValues_ [0] + contourStepSize; v < 1; v += contourStepSize)
 						surfaceValues .push (v);
 
 					styleFunctions += "	if (false)\n";
