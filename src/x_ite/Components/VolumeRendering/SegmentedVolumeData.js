@@ -308,6 +308,9 @@ function (Fields,
 
 			if (segmentEnabled1)
 			{
+				if (this .segmentIdentifiersNode)
+					shaderNode .addUserDefinedField (X3DConstants .inputOutput, "segmentIdentifiers", new Fields .SFNode (this .segmentIdentifiersNode));
+
 				if (this .renderStyleNodes .length > 1)
 					this .renderStyleNodes [1] .addShaderFields (shaderNode);
 			}
