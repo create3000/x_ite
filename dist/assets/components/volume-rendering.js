@@ -2256,7 +2256,7 @@ function (Fields,
 
 			if (this .surfaceValues_ .length === 1)
 			{
-				var contourStepSize = this .contourStepSize_ .getValue ();
+				var contourStepSize = Math .abs (this .contourStepSize_ .getValue ());
 
 				if (contourStepSize === 0)
 				{
@@ -2272,7 +2272,7 @@ function (Fields,
 					styleFunctions += "	}\n";
 					styleFunctions += "	else\n";
 					styleFunctions += "	{\n";
-					styleFunctions += "		textureColor = vec4 (0.0);\n";
+					styleFunctions += "		discard;\n";
 					styleFunctions += "	}\n";
 					styleFunctions += "\n";
 				}
@@ -2307,7 +2307,7 @@ function (Fields,
 
 					styleFunctions += "	else\n";
 					styleFunctions += "	{\n";
-					styleFunctions += "		textureColor = vec4 (0.0);\n";
+					styleFunctions += "		discard;\n";
 					styleFunctions += "	}\n";
 					styleFunctions += "\n";
 				}
