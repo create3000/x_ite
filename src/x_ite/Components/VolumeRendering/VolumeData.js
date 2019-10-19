@@ -120,7 +120,7 @@ function (Fields,
 			this .voxels_      .addInterest ("set_voxels__",      this);
 			this .voxels_      .addFieldInterest (this .getAppearance () .texture_);
 
-			this .renderStyle_ .addInterest ("update",            this);
+			this .renderStyle_ .addInterest ("update", this);
 
 			this .blendModeNode .setup ();
 
@@ -192,6 +192,9 @@ function (Fields,
 				styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
 				styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
 
+			styleUniforms  += "\n";
+			styleUniforms  += "uniform float surfaceTolerance;\n";
+
 			if (this .renderStyleNode)
 			{
 				styleUniforms  += this .renderStyleNode .getUniformsText (),
@@ -220,6 +223,8 @@ function (Fields,
 			shaderNode .language_ = "GLSL";
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
+
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", new Fields .SFFloat (0.1));
 
 			if (this .voxelsNode)
 			{

@@ -333,6 +333,7 @@ var X_ITE_TESTS = [
 	{ path: "VolumeRendering/CartoonBackpack.x3d" },
 	{ path: "VolumeRendering/ComposedBackpack.x3d" },
 	{ path: "VolumeRendering/EdgeBrain.x3d" },
+	{ path: "VolumeRendering/IsoSurfaceSkull.x3d" },
 	{ path: "VolumeRendering/ProjectionAverageVentricles.x3d" },
 	{ path: "VolumeRendering/ProjectionMaxVentricles.x3d" },
 	{ path: "VolumeRendering/ProjectionMinVentricles.x3d" },

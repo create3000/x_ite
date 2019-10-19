@@ -54,7 +54,6 @@ define ([
 	"x_ite/Components/VolumeRendering/X3DVolumeDataNode",
 	"x_ite/Components/Shaders/ComposedShader",
 	"x_ite/Components/Shaders/ShaderPart",
-	"x_ite/Components/VolumeRendering/OpacityMapVolumeStyle",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
 	"text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
@@ -67,7 +66,6 @@ function (Fields,
           X3DVolumeDataNode,
           ComposedShader,
           ShaderPart,
-          OpacityMapVolumeStyle,
           X3DConstants,
           X3DCast,
           vs,
@@ -125,9 +123,9 @@ function (Fields,
 			this .renderStyle_        .addInterest ("set_renderStyle__",        this);
 			this .voxels_             .addFieldInterest (this .getAppearance () .texture_);
 
-			this .segmentEnabled_     .addInterest ("update",                   this);
-			this .segmentIdentifiers_ .addInterest ("update",                   this);
-			this .renderStyle_        .addInterest ("update",                   this);
+			this .segmentEnabled_     .addInterest ("update", this);
+			this .segmentIdentifiers_ .addInterest ("update", this);
+			this .renderStyle_        .addInterest ("update", this);
 
 			this .blendModeNode .setup ();
 
@@ -224,6 +222,9 @@ function (Fields,
 				styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
 				styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
 
+			styleUniforms  += "\n";
+			styleUniforms  += "uniform float surfaceTolerance;\n";
+
 			if (this .segmentIdentifiersNode)
 			{
 				styleUniforms  += "\n";
@@ -296,6 +297,8 @@ function (Fields,
 			shaderNode .language_ = "GLSL";
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
+
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", new Fields .SFFloat (0.1));
 
 			if (this .voxelsNode)
 			{
