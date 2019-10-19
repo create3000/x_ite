@@ -287,41 +287,38 @@ function (Fields,
 				}
 				else
 				{
-					if (contourStepSize)
+					var surfaceValues = [ ];
+
+					for (var v = this .surfaceValues_ [0] - contourStepSize; v > 0; v -= contourStepSize)
+						surfaceValues .unshift (v);
+
+					surfaceValues .push (this .surfaceValues_ [0]);
+
+					for (var v = this .surfaceValues_ [0] + contourStepSize; v < 1; v += contourStepSize)
+						surfaceValues .push (v);
+
+					styleFunctions += "	if (false)\n";
+					styleFunctions += "	{ }\n";
+
+					for (var i = surfaceValues_ .length - 1; i >= 0; -- i)
 					{
-						var surfaceValues = [ ];
+						styleFunctions += "	else if (intensity > " + surfaceValues [i] + ")\n";
+						styleFunctions += "	{\n";
+						styleFunctions += "		textureColor = vec4 (vec3 (" + surfaceValues [i] + "), 1.0);\n";
 
-						for (var v = this .surfaceValues_ [0] - contourStepSize; v > 0; v -= contourStepSize)
-							surfaceValues .unshift (v);
-
-						surfaceValues .push (this .surfaceValues_ [0]);
-
-						for (var v = this .surfaceValues_ [0] + contourStepSize; v < 1; v += contourStepSize)
-							surfaceValues .push (v);
-
-						styleFunctions += "	if (false)\n";
-						styleFunctions += "	{ }\n";
-
-						for (var i = surfaceValues_ .length - 1; i >= 0; -- i)
+						if (this .renderStyleNodes .length)
 						{
-							styleFunctions += "	else if (intensity > " + surfaceValues [i] + ")\n";
-							styleFunctions += "	{\n";
-							styleFunctions += "		textureColor = vec4 (vec3 (" + surfaceValues [i] + "), 1.0);\n";
-
-							if (this .renderStyleNodes .length)
-							{
-								styleFunctions += this .renderStyleNodes [0] .getFunctionsText ();
-							}
-
-							styleFunctions += "	}\n";
+							styleFunctions += this .renderStyleNodes [0] .getFunctionsText ();
 						}
 
-						styleFunctions += "	else\n";
-						styleFunctions += "	{\n";
-						styleFunctions += "		discard;\n";
 						styleFunctions += "	}\n";
-						styleFunctions += "\n";
 					}
+
+					styleFunctions += "	else\n";
+					styleFunctions += "	{\n";
+					styleFunctions += "		discard;\n";
+					styleFunctions += "	}\n";
+					styleFunctions += "\n";
 				}
 			}
 			else
