@@ -2440,6 +2440,8 @@ function (Fields,
 			if (gl .getVersion () < 2)
 				return;
 
+			this .segmentEnabled_     .addInterest ("update",                   this);
+			this .segmentIdentifiers_ .addInterest ("update",                   this);
 			this .segmentIdentifiers_ .addInterest ("set_segmentIdentifiers__", this);
 			this .renderStyle_        .addInterest ("set_renderStyle__",        this);
 			this .voxels_             .addFieldInterest (this .getAppearance () .texture_);
@@ -2451,6 +2453,7 @@ function (Fields,
 
 			this .set_voxels__ ();
 			this .set_segmentIdentifiers__ ();
+			this .set_renderStyle__ ();
 		},
 		getSegmentEnabled: function (index)
 		{
@@ -2459,9 +2462,6 @@ function (Fields,
 		set_segmentIdentifiers__: function ()
 		{
 			this .segmentIdentifiersNode = X3DCast (X3DConstants .X3DTexture3DNode, this .segmentIdentifiers_);
-
-			this .set_segmentSize__ ();
-			this .set_renderStyle__ ();
 		},
 		set_renderStyle__: function ()
 		{
@@ -2491,15 +2491,6 @@ function (Fields,
 
 				renderStyleNode .addInterest ("update", this);
 				renderStyleNode .addVolumeData (this);
-			}
-
-			for (var i = renderStyleNodes .length, length = this .segmentIdentifiersNode ? 2 : 1; i < length; ++ i)
-			{
-				var renderStyleNode = new OpacityMapVolumeStyle (this .getExecutionContext ());
-
-				renderStyleNode .setup ();
-
-				renderStyleNodes .push (renderStyleNode);
 			}
 
 			this .update ();
@@ -2534,25 +2525,6 @@ function (Fields,
 					console .log (error .message);
 			}
 		},
-		set_segmentSize__: function ()
-		{
-			try
-			{
-				if (! this .segmentIdentifiersNode)
-					return;
-
-				var segmentSize = this .getShader () .getField ("segmentSize");
-
-				segmentSize .x = this .segmentIdentifiersNode .getWidth ();
-				segmentSize .y = this .segmentIdentifiersNode .getHeight ();
-				segmentSize .z = this .segmentIdentifiersNode .getDepth ();
-			}
-			catch (error)
-			{
-				if (DEBUG)
-					console .log (error .message);
-			}
-		},
 		update: function ()
 		{
 			this .setShader (this .createShader (vs, fs));
@@ -2563,48 +2535,53 @@ function (Fields,
 				console .log ("Creating SegmentedVolumeData Shader ...");
 
 			var
-				segmentIdentifiersNode = this .getSegmentEnabled (1) ? this .segmentIdentifiersNode : null,
-				renderStyleNodes       = this .renderStyleNodes;
+				segmentEnabled0       = this .getSegmentEnabled (0),
+				segmentEnabled1       = this .getSegmentEnabled (1),
+				opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
+				styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
+				styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
 
-			var
-				voxelsEnabled  = this .getSegmentEnabled (0),
-				voxelsStyle    = renderStyleNodes [0],
-				styleUniforms  = "",
-				styleFunctions = "";
-
-			if (voxelsEnabled)
+			if (segmentEnabled1 && this .segmentIdentifiersNode)
 			{
-				styleUniforms  = voxelsStyle .getUniformsText (),
-				styleFunctions = voxelsStyle .getFunctionsText ();
-			}
-
-			if (segmentIdentifiersNode)
-			{
-				var su = renderStyleNodes [1] .getUniformsText ();
-
-				su = su .replace (/x3d_Texture3D \[0\]/g, "segmentIdentifiers");
-				su = su .replace (/x3d_TextureSize/g,     "segmentSize");
-
 				styleUniforms  += "\n";
 				styleUniforms  += "uniform sampler3D segmentIdentifiers;\n";
-				styleUniforms  += "uniform vec3      segmentSize;\n";
 				styleFunctions += "\n";
-				styleUniforms  += su;
-			}
 
-			if (segmentIdentifiersNode)
+				styleFunctions += "\n";
+				styleFunctions += "	float segment = texture (segmentIdentifiers, texCoord) .r;\n";
+			}
+			else
 			{
-				var sf = renderStyleNodes [1] .getFunctionsText ();
-
-				sf = sf .replace (/textureColor/g, "segmentColor");
-
-				styleFunctions += "\n";
-				styleFunctions += "	vec4 segmentColor = texture (segmentIdentifiers, texCoord);\n";
-				styleFunctions += "\n";
-				styleFunctions += sf;
-				styleFunctions += "\n";
-				styleFunctions += "	textureColor .rgb += segmentColor .rgb;\n";
+				styleFunctions += "	float segment = 0.0;\n";
 			}
+
+			styleFunctions += "\n";
+			styleFunctions += "	if (segment == 0.0)\n";
+			styleFunctions += "	{\n";
+
+			if (segmentEnabled0)
+			{
+				if (this .renderStyleNodes .length > 0)
+				{
+					styleUniforms  += this .renderStyleNodes [0] .getUniformsText (),
+					styleFunctions += this .renderStyleNodes [0] .getFunctionsText ();
+				}
+			}
+
+			styleFunctions += "	}\n";
+			styleFunctions += "	else\n";
+			styleFunctions += "	{\n";
+
+			if (segmentEnabled1)
+			{
+				if (this .renderStyleNodes .length > 1)
+				{
+					styleUniforms  += this .renderStyleNodes [1] .getUniformsText (),
+					styleFunctions += this .renderStyleNodes [1] .getFunctionsText ();
+				}
+			}
+
+			styleFunctions += "	}\n";
 
 			fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
 			fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
@@ -2640,17 +2617,21 @@ function (Fields,
 				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "x3d_TextureSize", new Fields .SFVec3f ());
 			}
 
-			if (voxelsEnabled)
-				renderStyleNodes [0] .addShaderFields (shaderNode);
+			opacityMapVolumeStyle .addShaderFields (shaderNode);
 
-			if (segmentIdentifiersNode)
+			if (segmentEnabled0)
 			{
-				var segmentSize = new Fields .SFVec3f (segmentIdentifiersNode .getWidth (), segmentIdentifiersNode .getHeight (), segmentIdentifiersNode .getDepth ());
+				if (this .renderStyleNodes .length > 0)
+					this .renderStyleNodes [0] .addShaderFields (shaderNode);
+			}
 
-				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "segmentIdentifiers", new Fields .SFNode (segmentIdentifiersNode));
-				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "segmentSize", segmentSize);
+			if (segmentEnabled1)
+			{
+				if (this .segmentIdentifiersNode)
+					shaderNode .addUserDefinedField (X3DConstants .inputOutput, "segmentIdentifiers", new Fields .SFNode (this .segmentIdentifiersNode));
 
-				renderStyleNodes [1] .addShaderFields (shaderNode);
+				if (this .renderStyleNodes .length > 1)
+					this .renderStyleNodes [1] .addShaderFields (shaderNode);
 			}
 
 			return shaderNode;
