@@ -234,7 +234,7 @@ function (Fields,
 				styleUniforms += "\n";
 				styleUniforms += "uniform sampler3D gradients;\n";
 
-				styleFunctions += "	if (length (texture (gradients, texCoord) .rgb) < 0.1)\n";
+				styleFunctions += "	if (length (texture (gradients, texCoord) .xyz * 2.0 - 1.0) < 0.1)\n";
 				styleFunctions += "		return vec4 (0.0);";
 			}
 
