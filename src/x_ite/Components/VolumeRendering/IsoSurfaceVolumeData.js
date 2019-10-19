@@ -279,7 +279,7 @@ function (Fields,
 					styleFunctions += "	if (false)\n";
 					styleFunctions += "	{ }\n";
 
-					for (var i = 0, length = surfaceValues .length; i < length; ++ i)
+					for (var i = surfaceValues_ .length - 1; i >= 0; -- i)
 					{
 						styleFunctions += "	else if (intensity > " + surfaceValues [i] + ")\n";
 						styleFunctions += "	{\n";
@@ -305,7 +305,7 @@ function (Fields,
 				styleFunctions += "	if (false)\n";
 				styleFunctions += "	{ }\n";
 
-				for (var i = 0, length = this .surfaceValues_ .length; i < length; ++ i)
+				for (var i = this .surfaceValues_ .length - 1; i >= 0; -- i)
 				{
 					styleFunctions += "	else if (intensity > surfaceValues [" + i + "])\n";
 					styleFunctions += "	{\n";
