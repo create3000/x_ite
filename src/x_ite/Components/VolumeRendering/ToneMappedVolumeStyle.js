@@ -161,7 +161,7 @@ function (Fields,
 			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "		vec3 toneColor     = vec3 (0.0);\n";
 			string += "\n";
-			string += "		if (surfaceNormal .w < surfaceTolerance)\n";
+			string += "		if (surfaceNormal .w < 0.1)\n";
 			string += "		{\n";
 			string += "			textureColor = vec4 (0.0);\n";
 			string += "		}\n";

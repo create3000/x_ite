@@ -222,9 +222,6 @@ function (Fields,
 				styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
 				styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
 
-			styleUniforms  += "\n";
-			styleUniforms  += "uniform float surfaceTolerance;\n";
-
 			if (this .segmentIdentifiersNode)
 			{
 				styleUniforms  += "\n";
@@ -297,8 +294,6 @@ function (Fields,
 			shaderNode .language_ = "GLSL";
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
-
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", new Fields .SFFloat (0.1));
 
 			if (this .voxelsNode)
 			{

@@ -264,7 +264,7 @@ function (Fields,
 			string += "vec4\n";
 			string += "getCartoonStyle_" + this .getId () + " (in vec4 originalColor, in vec4 orthogonalColor, in vec4 parallelColor, in int colorSteps, in vec4 surfaceNormal, vec3 vertex)\n";
 			string += "{\n";
-			string += "	if (surfaceNormal .w < surfaceTolerance)\n";
+			string += "	if (surfaceNormal .w < 0.1)\n";
 			string += "		return vec4 (0.0);\n";
 			string += "\n";
 			string += "	float steps    = clamp (float (colorSteps), 1.0, 64.0);\n";

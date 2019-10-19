@@ -120,6 +120,7 @@ function (Fields,
 			if (gl .getVersion () < 2)
 				return;
 
+			this .gradients_          .addInterest ("set_gradients__", this);
 			this .renderStyle_        .addInterest ("set_renderStyle__", this);
 			this .voxels_             .addFieldInterest (this .getAppearance () .texture_);
 
@@ -133,10 +134,15 @@ function (Fields,
 			this .getAppearance () .texture_   = this .voxels_;
 			this .getAppearance () .blendMode_ = this .blendModeNode;
 
+			this .set_gradients__ ();
 			this .set_renderStyle__ ();
 			this .set_voxels__ ();
 
 			this .update ();
+		},
+		set_gradients__: function ()
+		{
+			this .gradientsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .gradients_);
 		},
 		set_renderStyle__: function ()
 		{
@@ -221,6 +227,17 @@ function (Fields,
 
 			styleFunctions += "\n";
 			styleFunctions += "	// IsoSurfaceVolumeData\n";
+			styleFunctions += "\n";
+
+			if (this .gradientsNode)
+			{
+				styleUniforms += "\n";
+				styleUniforms += "uniform sampler3D gradients;\n";
+
+				styleFunctions += "	if (length (texture (gradients, texCoord) .rgb) < 0.1)\n";
+				styleFunctions += "		return vec4 (0.0);";
+			}
+
 			styleFunctions += "\n";
 			styleFunctions += "	float intensity = textureColor .r;\n";
 			styleFunctions += "\n";
@@ -336,6 +353,9 @@ function (Fields,
 
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceValues",    this .surfaceValues_    .copy ());
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", this .surfaceTolerance_ .copy ());
+
+			if (this .gradientsNode)
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "grandients", new Fields .SFNode (this .gradientsNode));
 
 			if (this .voxelsNode)
 			{
