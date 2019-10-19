@@ -122,6 +122,7 @@ function (Fields,
 				return;
 
 			this .segmentEnabled_     .addInterest ("update",                   this);
+			this .segmentIdentifiers_ .addInterest ("update",                   this);
 			this .segmentIdentifiers_ .addInterest ("set_segmentIdentifiers__", this);
 			this .renderStyle_        .addInterest ("set_renderStyle__",        this);
 			this .voxels_             .addFieldInterest (this .getAppearance () .texture_);
@@ -133,6 +134,7 @@ function (Fields,
 
 			this .set_voxels__ ();
 			this .set_segmentIdentifiers__ ();
+			this .set_renderStyle__ ();
 		},
 		getSegmentEnabled: function (index)
 		{
@@ -141,8 +143,6 @@ function (Fields,
 		set_segmentIdentifiers__: function ()
 		{
 			this .segmentIdentifiersNode = X3DCast (X3DConstants .X3DTexture3DNode, this .segmentIdentifiers_);
-
-			this .set_renderStyle__ ();
 		},
 		set_renderStyle__: function ()
 		{
