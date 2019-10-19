@@ -121,20 +121,24 @@ function (Fields,
 			if (gl .getVersion () < 2)
 				return;
 
-			this .segmentEnabled_     .addInterest ("update",                   this);
-			this .segmentIdentifiers_ .addInterest ("update",                   this);
 			this .segmentIdentifiers_ .addInterest ("set_segmentIdentifiers__", this);
 			this .renderStyle_        .addInterest ("set_renderStyle__",        this);
 			this .voxels_             .addFieldInterest (this .getAppearance () .texture_);
+
+			this .segmentEnabled_     .addInterest ("update",                   this);
+			this .segmentIdentifiers_ .addInterest ("update",                   this);
+			this .renderStyle_        .addInterest ("update",                   this);
 
 			this .blendModeNode .setup ();
 
 			this .getAppearance () .texture_   = this .voxels_;
 			this .getAppearance () .blendMode_ = this .blendModeNode;
 
-			this .set_voxels__ ();
 			this .set_segmentIdentifiers__ ();
 			this .set_renderStyle__ ();
+			this .set_voxels__ ();
+
+			this .update ();
 		},
 		getSegmentEnabled: function (index)
 		{
@@ -173,8 +177,6 @@ function (Fields,
 				renderStyleNode .addInterest ("update", this);
 				renderStyleNode .addVolumeData (this);
 			}
-
-			this .update ();
 		},
 		set_voxels__: function ()
 		{
