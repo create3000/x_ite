@@ -242,7 +242,7 @@ function ($,
           RouteArray,
           X3DRoute,
           evaluate,
-          X3DScriptNode, 
+          X3DScriptNode,
           FileLoader,
           X3DConstants,
           SFNodeCache)
@@ -250,8 +250,8 @@ function ($,
 	function Script (executionContext)
 	{
 		X3DScriptNode .call (this, executionContext);
-		
-		this .addChildObjects ("buffer", new Fields .SFTime ());
+
+		this .addChildObjects ("buffer", new Fields .MFString ());
 
 		this .addType (X3DConstants .Script);
 	}
@@ -321,11 +321,11 @@ function ($,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
-			this .buffer_ .addEvent ();
+			this .buffer_ = this .url_;
 		},
 		set_buffer__: function ()
 		{
-			new FileLoader (this) .loadScript (this .url_,
+			new FileLoader (this) .loadScript (this .buffer_,
 			function (data)
 			{
 				if (data === null)
@@ -702,7 +702,6 @@ function ($,
 
 	return Script;
 });
-
 
 /*******************************************************************************
  *

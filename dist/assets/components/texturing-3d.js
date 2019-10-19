@@ -707,7 +707,7 @@ function (Fields,
 
 		this .addType (X3DConstants .ImageTexture3D);
 
-		this .addChildObjects ("buffer", new Fields .SFTime ());
+		this .addChildObjects ("buffer", new Fields .MFString ());
 	}
 
 	ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
@@ -757,7 +757,7 @@ function (Fields,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
-			this .buffer_ .addEvent ();
+			this .buffer_ = this .url_;
 		},
 		getInternalType: function (gl, components)
 		{
@@ -775,7 +775,7 @@ function (Fields,
 		},
 		set_buffer__: function ()
 		{
-			new FileLoader (this) .loadBinaryDocument (this .url_,
+			new FileLoader (this) .loadBinaryDocument (this .buffer_,
 			function (data)
 			{
 				if (data === null)

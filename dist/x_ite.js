@@ -1,4 +1,4 @@
-/* X_ITE v4.6.0a-847 */
+/* X_ITE v4.6.0a-848 */
 
 (function () {
 
@@ -52760,7 +52760,7 @@ function (Fields,
 
 		this .addType (X3DConstants .ShaderPart);
 
-		this .addChildObjects ("buffer", new Fields .SFTime ());
+		this .addChildObjects ("buffer", new Fields .MFString ());
 
 		this .valid = false;
 	}
@@ -52842,13 +52842,13 @@ function (Fields,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
-			this .buffer_ .addEvent ();
+			this .buffer_ = this .url_;
 		},
 		set_buffer__: function ()
 		{
 			this .valid = false;
 
-			new FileLoader (this) .loadDocument (this .url_,
+			new FileLoader (this) .loadDocument (this .buffer_,
 			function (data)
 			{
 				if (data === null)
@@ -60932,8 +60932,8 @@ function ($,
           Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTexture2DNode, 
-          X3DUrlObject, 
+          X3DTexture2DNode,
+          X3DUrlObject,
           X3DConstants,
           urls,
           URI,
@@ -60948,8 +60948,8 @@ function ($,
 		X3DUrlObject     .call (this, executionContext);
 
 		this .addType (X3DConstants .ImageTexture);
-		
-		this .addChildObjects ("buffer", new Fields .SFTime ());
+
+		this .addChildObjects ("buffer", new Fields .MFString ());
 
 		this .urlStack = new Fields .MFString ();
 	}
@@ -61009,11 +61009,11 @@ function ($,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
-			this .buffer_ .addEvent ();
+			this .buffer_ = this .url_;
 		},
 		set_buffer__: function ()
 		{
-			this .urlStack .setValue (this .url_);
+			this .urlStack .setValue (this .buffer_);
 			this .loadNext ();
 		},
 		loadNext: function ()
@@ -61136,7 +61136,6 @@ function ($,
 });
 
 // https://github.com/toji/texture-tester/blob/master/js/webgl-texture-util.js
-
 ;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -112962,7 +112961,7 @@ function ($,
 		this .addType (X3DConstants .AudioClip);
 
 		this .addChildObjects ("speed",  new Fields .SFFloat (1),
-		                       "buffer", new Fields .SFTime ());
+		                       "buffer", new Fields .MFString ());
 
 		this .audio    = $("<audio></audio>");
 		this .urlStack = new Fields .MFString ();
@@ -113032,12 +113031,12 @@ function ($,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
-			this .buffer_ .addEvent ();
+			this .buffer_ = this .url_;
 		},
 		set_buffer__: function ()
 		{
 			this .setMedia (null);
-			this .urlStack .setValue (this .url_);
+			this .urlStack .setValue (this .buffer_);
 			this .audio .bind ("canplaythrough", this .setAudio .bind (this));
 			this .loadNext ();
 		},
@@ -113931,7 +113930,7 @@ function ($,
 
 		this .addType (X3DConstants .MovieTexture);
 
-		this .addChildObjects ("buffer", new Fields .SFTime ());
+		this .addChildObjects ("buffer", new Fields .MFString ());
 
 		this .canvas   = $("<canvas></canvas>");
 		this .video    = $("<video></video>");
@@ -114008,12 +114007,12 @@ function ($,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
-			this .buffer_ .addEvent ();
+			this .buffer_ = this .url_;
 		},
 		set_buffer__: function ()
 		{
 			this .setMedia (null);
-			this .urlStack .setValue (this .url_);
+			this .urlStack .setValue (this .buffer_);
 			this .video .bind ("canplaythrough", this .setVideo .bind (this));
 			this .loadNext ();
 		},
