@@ -84,7 +84,7 @@ function ($,
 
 		this .addType (X3DConstants .MovieTexture);
 
-		this .addChildObjects ("buffer", new Fields .SFTime ());
+		this .addChildObjects ("buffer", new Fields .MFString ());
 
 		this .canvas   = $("<canvas></canvas>");
 		this .video    = $("<video></video>");
@@ -161,12 +161,12 @@ function ($,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
-			this .buffer_ .addEvent ();
+			this .buffer_ = this .url_;
 		},
 		set_buffer__: function ()
 		{
 			this .setMedia (null);
-			this .urlStack .setValue (this .url_);
+			this .urlStack .setValue (this .buffer_);
 			this .video .bind ("canplaythrough", this .setVideo .bind (this));
 			this .loadNext ();
 		},

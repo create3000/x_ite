@@ -80,7 +80,7 @@ function ($,
 		this .addType (X3DConstants .AudioClip);
 
 		this .addChildObjects ("speed",  new Fields .SFFloat (1),
-		                       "buffer", new Fields .SFTime ());
+		                       "buffer", new Fields .MFString ());
 
 		this .audio    = $("<audio></audio>");
 		this .urlStack = new Fields .MFString ();
@@ -150,12 +150,12 @@ function ($,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
-			this .buffer_ .addEvent ();
+			this .buffer_ = this .url_;
 		},
 		set_buffer__: function ()
 		{
 			this .setMedia (null);
-			this .urlStack .setValue (this .url_);
+			this .urlStack .setValue (this .buffer_);
 			this .audio .bind ("canplaythrough", this .setAudio .bind (this));
 			this .loadNext ();
 		},

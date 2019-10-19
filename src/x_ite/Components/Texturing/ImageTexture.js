@@ -64,8 +64,8 @@ function ($,
           Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTexture2DNode, 
-          X3DUrlObject, 
+          X3DTexture2DNode,
+          X3DUrlObject,
           X3DConstants,
           urls,
           URI,
@@ -80,8 +80,8 @@ function ($,
 		X3DUrlObject     .call (this, executionContext);
 
 		this .addType (X3DConstants .ImageTexture);
-		
-		this .addChildObjects ("buffer", new Fields .SFTime ());
+
+		this .addChildObjects ("buffer", new Fields .MFString ());
 
 		this .urlStack = new Fields .MFString ();
 	}
@@ -141,11 +141,11 @@ function ($,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
-			this .buffer_ .addEvent ();
+			this .buffer_ = this .url_;
 		},
 		set_buffer__: function ()
 		{
-			this .urlStack .setValue (this .url_);
+			this .urlStack .setValue (this .buffer_);
 			this .loadNext ();
 		},
 		loadNext: function ()
@@ -268,4 +268,3 @@ function ($,
 });
 
 // https://github.com/toji/texture-tester/blob/master/js/webgl-texture-util.js
-

@@ -87,7 +87,7 @@ function (Fields,
 
 		this .addType (X3DConstants .ShaderPart);
 
-		this .addChildObjects ("buffer", new Fields .SFTime ());
+		this .addChildObjects ("buffer", new Fields .MFString ());
 
 		this .valid = false;
 	}
@@ -169,13 +169,13 @@ function (Fields,
 
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
-			this .buffer_ .addEvent ();
+			this .buffer_ = this .url_;
 		},
 		set_buffer__: function ()
 		{
 			this .valid = false;
 
-			new FileLoader (this) .loadDocument (this .url_,
+			new FileLoader (this) .loadDocument (this .buffer_,
 			function (data)
 			{
 				if (data === null)
