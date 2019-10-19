@@ -222,22 +222,6 @@ function (Fields,
 			styleUniforms  += "uniform float surfaceValues [" + this .surfaceValues_ .length + "];\n";
 			styleUniforms  += "uniform float surfaceTolerance;\n";
 
-			styleUniforms += "\n";
-			styleUniforms += "vec4\n";
-			styleUniforms += "getNormal (in vec3 texCoord)\n";
-			styleUniforms += "{\n";
-			styleUniforms += "	vec4  offset = vec4 (1.0 / x3d_TextureSize .x, 1.0 / x3d_TextureSize .y, 1.0 / x3d_TextureSize .z, 0.0);\n";
-			styleUniforms += "	float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
-			styleUniforms += "	float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
-			styleUniforms += "	float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
-			styleUniforms += "	float i3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
-			styleUniforms += "	float i4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
-			styleUniforms += "	float i5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
-			styleUniforms += "	vec3  n      = vec3 (i1 - i0, i3 - i2, i5 - i4);\n";
-			styleUniforms += "\n";
-			styleUniforms += "	return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
-			styleUniforms += "}\n";
-
 			for (var i = 0, length = this .renderStyleNodes .length; i < length; ++ i)
 				styleUniforms  += this .renderStyleNodes [i] .getUniformsText ();
 
@@ -255,6 +239,22 @@ function (Fields,
 			}
 			else
 			{
+				styleUniforms += "\n";
+				styleUniforms += "vec4\n";
+				styleUniforms += "getNormal (in vec3 texCoord)\n";
+				styleUniforms += "{\n";
+				styleUniforms += "	vec4  offset = vec4 (1.0 / x3d_TextureSize .x, 1.0 / x3d_TextureSize .y, 1.0 / x3d_TextureSize .z, 0.0);\n";
+				styleUniforms += "	float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
+				styleUniforms += "	float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
+				styleUniforms += "	float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
+				styleUniforms += "	float i3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
+				styleUniforms += "	float i4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
+				styleUniforms += "	float i5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
+				styleUniforms += "	vec3  n      = vec3 (i1 - i0, i3 - i2, i5 - i4);\n";
+				styleUniforms += "\n";
+				styleUniforms += "	return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
+				styleUniforms += "}\n";
+
 				styleFunctions += "	if (getNormal (texCoord) .w < surfaceTolerance)\n";
 				styleFunctions += "		discard;\n";
 			}
