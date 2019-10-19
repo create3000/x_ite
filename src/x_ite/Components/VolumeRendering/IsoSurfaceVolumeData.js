@@ -219,6 +219,7 @@ function (Fields,
 				styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
 
 			styleUniforms  += "\n";
+			styleUniforms  += "uniform float normalTolerance;\n";
 			styleUniforms  += "uniform float surfaceValues [" + this .surfaceValues_ .length + "];\n";
 			styleUniforms  += "uniform float surfaceTolerance;\n";
 
@@ -372,6 +373,7 @@ function (Fields,
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
 
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "normalTolerance", new Fields .SFFloat (0.1));
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceValues",    this .surfaceValues_    .copy ());
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", this .surfaceTolerance_ .copy ());
 

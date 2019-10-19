@@ -140,7 +140,7 @@ function (Fields,
 			string += "vec4\n";
 			string += "getEdgeEnhacementStyle_" + this .getId () + " (in vec4 originalColor, in vec4 edgeColor, in float gradientThreshold, in vec4 surfaceNormal, in vec3 vertex)\n";
 			string += "{\n";
-			string += "	if (surfaceNormal .w < 0.1)\n";
+			string += "	if (surfaceNormal .w < normalTolerance)\n";
 			string += "		return originalColor;\n";
 			string += "\n";
 			string += "	float angle = abs (dot (surfaceNormal .xyz, normalize (vertex)));\n";
