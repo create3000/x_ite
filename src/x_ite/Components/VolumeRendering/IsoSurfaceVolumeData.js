@@ -91,8 +91,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",       new Fields .SFVec3f (1, 1, 1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceValues",    new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceTolerance", new Fields .SFFloat (0)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "contourStepSize",  new Fields .SFFloat (0)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceTolerance", new Fields .SFFloat (0)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "gradients",        new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "renderStyle",      new Fields .MFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "voxels",           new Fields .SFNode ()),
@@ -124,8 +124,8 @@ function (Fields,
 			this .voxels_             .addFieldInterest (this .getAppearance () .texture_);
 
 			this .surfaceValues_      .addInterest ("update", this);
-			this .surfaceTolerance_   .addInterest ("update", this);
 			this .contourStepSize_    .addInterest ("update", this);
+			this .surfaceTolerance_   .addInterest ("update", this);
 			this .renderStyle_        .addInterest ("update", this);
 
 			this .blendModeNode .setup ();
@@ -262,7 +262,7 @@ function (Fields,
 					styleFunctions += "	if (false)\n";
 					styleFunctions += "	{ }\n";
 
-					for (var i = 0, length = surfaceValues; i < length; ++ i)
+					for (var i = 0, length = surfaceValues .length; i < length; ++ i)
 					{
 						styleFunctions += "	else if (intensity > " + surfaceValues [i] + ")\n";
 						styleFunctions += "	{\n";
