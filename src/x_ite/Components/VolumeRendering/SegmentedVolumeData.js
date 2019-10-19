@@ -233,7 +233,7 @@ function (Fields,
 			}
 			else
 			{
-				styleFunctions += "	float segment = 1.0;\n";
+				styleFunctions += "	float segment = 0.0;\n";
 			}
 
 			styleFunctions += "\n";
