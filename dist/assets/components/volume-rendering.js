@@ -1311,7 +1311,7 @@ function (Fields,
 			string += "vec4\n";
 			string += "getCartoonStyle_" + this .getId () + " (in vec4 originalColor, in vec4 orthogonalColor, in vec4 parallelColor, in int colorSteps, in vec4 surfaceNormal, vec3 vertex)\n";
 			string += "{\n";
-			string += "	if (surfaceNormal .w < surfaceTolerance)\n";
+			string += "	if (surfaceNormal .w < 0.1)\n";
 			string += "		return vec4 (0.0);\n";
 			string += "\n";
 			string += "	float steps    = clamp (float (colorSteps), 1.0, 64.0);\n";
@@ -1711,7 +1711,7 @@ function (Fields,
 			string += "vec4\n";
 			string += "getEdgeEnhacementStyle_" + this .getId () + " (in vec4 originalColor, in vec4 edgeColor, in float gradientThreshold, in vec4 surfaceNormal, in vec3 vertex)\n";
 			string += "{\n";
-			string += "	if (surfaceNormal .w < surfaceTolerance)\n";
+			string += "	if (surfaceNormal .w < 0.1)\n";
 			string += "		return originalColor;\n";
 			string += "\n";
 			string += "	float angle = abs (dot (surfaceNormal .xyz, normalize (vertex)));\n";
@@ -2111,6 +2111,7 @@ function (Fields,
 			if (gl .getVersion () < 2)
 				return;
 
+			this .gradients_          .addInterest ("set_gradients__", this);
 			this .renderStyle_        .addInterest ("set_renderStyle__", this);
 			this .voxels_             .addFieldInterest (this .getAppearance () .texture_);
 
@@ -2124,10 +2125,15 @@ function (Fields,
 			this .getAppearance () .texture_   = this .voxels_;
 			this .getAppearance () .blendMode_ = this .blendModeNode;
 
+			this .set_gradients__ ();
 			this .set_renderStyle__ ();
 			this .set_voxels__ ();
 
 			this .update ();
+		},
+		set_gradients__: function ()
+		{
+			this .gradientsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .gradients_);
 		},
 		set_renderStyle__: function ()
 		{
@@ -2213,6 +2219,17 @@ function (Fields,
 			styleFunctions += "\n";
 			styleFunctions += "	// IsoSurfaceVolumeData\n";
 			styleFunctions += "\n";
+
+			if (this .gradientsNode)
+			{
+				styleUniforms += "\n";
+				styleUniforms += "uniform sampler3D gradients;\n";
+
+				styleFunctions += "	if (length (texture (gradients, texCoord) .rgb) < 0.1)\n";
+				styleFunctions += "		return vec4 (0.0);";
+			}
+
+			styleFunctions += "\n";
 			styleFunctions += "	float intensity = textureColor .r;\n";
 			styleFunctions += "\n";
 
@@ -2253,7 +2270,7 @@ function (Fields,
 					styleFunctions += "	if (false)\n";
 					styleFunctions += "	{ }\n";
 
-					for (var i = 0, length = surfaceValues .length; i < length; ++ i)
+					for (var i = surfaceValues_ .length - 1; i >= 0; -- i)
 					{
 						styleFunctions += "	else if (intensity > " + surfaceValues [i] + ")\n";
 						styleFunctions += "	{\n";
@@ -2279,7 +2296,7 @@ function (Fields,
 				styleFunctions += "	if (false)\n";
 				styleFunctions += "	{ }\n";
 
-				for (var i = 0, length = this .surfaceValues_ .length; i < length; ++ i)
+				for (var i = this .surfaceValues_ .length - 1; i >= 0; -- i)
 				{
 					styleFunctions += "	else if (intensity > surfaceValues [" + i + "])\n";
 					styleFunctions += "	{\n";
@@ -2327,6 +2344,9 @@ function (Fields,
 
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceValues",    this .surfaceValues_    .copy ());
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", this .surfaceTolerance_ .copy ());
+
+			if (this .gradientsNode)
+				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "grandients", new Fields .SFNode (this .gradientsNode));
 
 			if (this .voxelsNode)
 			{
@@ -2800,9 +2820,6 @@ function (Fields,
 				styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
 				styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
 
-			styleUniforms  += "\n";
-			styleUniforms  += "uniform float surfaceTolerance;\n";
-
 			if (this .segmentIdentifiersNode)
 			{
 				styleUniforms  += "\n";
@@ -2875,8 +2892,6 @@ function (Fields,
 			shaderNode .language_ = "GLSL";
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
-
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", new Fields .SFFloat (0.1));
 
 			if (this .voxelsNode)
 			{
@@ -3107,7 +3122,7 @@ function (Fields,
 			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "		vec4 shadedColor   = vec4 (0.0);\n";
 			string += "\n";
-			string += "		if (surfaceNormal .w < surfaceTolerance)\n";
+			string += "		if (surfaceNormal .w < 0.1)\n";
 			string += "		{\n";
 			string += "			textureColor = vec4 (0.0);\n";
 			string += "		}\n";
@@ -3345,7 +3360,7 @@ function (Fields,
 			string += "{\n";
 			string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "\n";
-			string += "	if (surfaceNormal .w < surfaceTolerance)\n";
+			string += "	if (surfaceNormal .w < 0.1)\n";
 			string += "	{\n";
 			string += "		return 0.0;\n";
 			string += "	}\n";
@@ -3543,7 +3558,7 @@ function (Fields,
 			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "		vec3 toneColor     = vec3 (0.0);\n";
 			string += "\n";
-			string += "		if (surfaceNormal .w < surfaceTolerance)\n";
+			string += "		if (surfaceNormal .w < 0.1)\n";
 			string += "		{\n";
 			string += "			textureColor = vec4 (0.0);\n";
 			string += "		}\n";
@@ -3766,9 +3781,6 @@ function (Fields,
 				styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
 				styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
 
-			styleUniforms  += "\n";
-			styleUniforms  += "uniform float surfaceTolerance;\n";
-
 			if (this .renderStyleNode)
 			{
 				styleUniforms  += this .renderStyleNode .getUniformsText (),
@@ -3797,8 +3809,6 @@ function (Fields,
 			shaderNode .language_ = "GLSL";
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
-
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", new Fields .SFFloat (0.1));
 
 			if (this .voxelsNode)
 			{
