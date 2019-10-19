@@ -2081,8 +2081,8 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "dimensions",       new Fields .SFVec3f (1, 1, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceValues",    new Fields .MFFloat ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "contourStepSize",  new Fields .SFFloat (0)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceValues",    new Fields .MFFloat ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "surfaceTolerance", new Fields .SFFloat (0)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "gradients",        new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "renderStyle",      new Fields .MFNode ()),
@@ -2115,8 +2115,8 @@ function (Fields,
 			this .renderStyle_        .addInterest ("set_renderStyle__", this);
 			this .voxels_             .addFieldInterest (this .getAppearance () .texture_);
 
-			this .surfaceValues_      .addInterest ("update", this);
 			this .contourStepSize_    .addInterest ("update", this);
+			this .surfaceValues_      .addInterest ("update", this);
 			this .surfaceTolerance_   .addInterest ("update", this);
 			this .renderStyle_        .addInterest ("update", this);
 
@@ -2225,8 +2225,29 @@ function (Fields,
 				styleUniforms += "\n";
 				styleUniforms += "uniform sampler3D gradients;\n";
 
-				styleFunctions += "	if (length (texture (gradients, texCoord) .rgb) < 0.1)\n";
-				styleFunctions += "		return vec4 (0.0);";
+				styleFunctions += "	if (length (texture (gradients, texCoord) .xyz * 2.0 - 1.0) < surfaceTolerance)\n";
+				styleFunctions += "		discard;\n";
+			}
+			else
+			{
+				styleUniforms += "\n";
+				styleUniforms += "vec4\n";
+				styleUniforms += "getNormal (in vec3 texCoord)\n";
+				styleUniforms += "{\n";
+				styleUniforms += "	vec4  offset = vec4 (1.0 / x3d_TextureSize .x, 1.0 / x3d_TextureSize .y, 1.0 / x3d_TextureSize .z, 0.0);\n";
+				styleUniforms += "	float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
+				styleUniforms += "	float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
+				styleUniforms += "	float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
+				styleUniforms += "	float i3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
+				styleUniforms += "	float i4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
+				styleUniforms += "	float i5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
+				styleUniforms += "	vec3  n      = vec3 (i1 - i0, i3 - i2, i5 - i4);\n";
+				styleUniforms += "\n";
+				styleUniforms += "	return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
+				styleUniforms += "}\n";
+
+				styleFunctions += "	if (getNormal (texCoord) .w < surfaceTolerance)\n";
+				styleFunctions += "		discard;\n";
 			}
 
 			styleFunctions += "\n";
@@ -2264,7 +2285,7 @@ function (Fields,
 
 					surfaceValues .push (this .surfaceValues_ [0]);
 
-					for (var v = this .surfaceValues_ [0] + contourStepSize; v <= 1; v += contourStepSize)
+					for (var v = this .surfaceValues_ [0] + contourStepSize; v < 1; v += contourStepSize)
 						surfaceValues .push (v);
 
 					styleFunctions += "	if (false)\n";
