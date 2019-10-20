@@ -2375,7 +2375,7 @@ function (Fields,
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
 
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "normalTolerance", new Fields .SFFloat (0.1));
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "normalTolerance", new Fields .SFFloat (0.001));
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceValues",    this .surfaceValues_    .copy ());
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", this .surfaceTolerance_ .copy ());
 
@@ -2933,7 +2933,7 @@ function (Fields,
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
 
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "normalTolerance", new Fields .SFFloat (0.1));
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "normalTolerance", new Fields .SFFloat (0.001));
 
 			if (this .voxelsNode)
 			{
@@ -3846,7 +3846,7 @@ function (Fields,
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
 
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "normalTolerance", new Fields .SFFloat (0.1));
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "normalTolerance", new Fields .SFFloat (0.001));
 
 			if (this .voxelsNode)
 			{
