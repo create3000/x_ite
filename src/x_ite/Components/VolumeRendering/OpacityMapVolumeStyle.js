@@ -153,7 +153,6 @@ function (Fields,
 			string += "\n";
 			string += "	// OpacityMapVolumeStyle\n";
 			string += "\n";
-
 			string += "	textureColor = getOpacityMapStyle_" + this .getId () + " (textureColor);\n";
 
 			return string;
