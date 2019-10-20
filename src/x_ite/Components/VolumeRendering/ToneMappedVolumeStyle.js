@@ -137,11 +137,32 @@ function (Fields,
 			string += this .getNormalText (this .surfaceNormalsNode);
 
 			string += "\n";
-			string += "vec3\n";
-			string += "getToneMappedStyle_" + this .getId () + " (in vec4 coolColor, in vec4 warmColor, in vec4 surfaceNormal, in vec3 lightDir)\n";
+			string += "vec4\n";
+			string += "getToneMappedStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
 			string += "{\n";
-			string += "	float colorFactor = (1.0 + dot (lightDir, surfaceNormal .xyz)) * 0.5;\n";
-			string += "	return mix (warmColor .rgb, coolColor .rgb, colorFactor);\n";
+			string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+			string += "\n";
+			string += "	if (surfaceNormal .w < normalTolerance)\n";
+			string += "		return vec4 (0.0);\n";
+			string += "\n";
+			string += "	vec3 toneColor = vec3 (0.0);\n";
+			string += "	vec3 coolColor = coolColor_" + this .getId () + " .rgb;\n";
+			string += "	vec3 warmColor = warmColor_" + this .getId () + " .rgb;\n";
+			string += "\n";
+			string += "	for (int i = 0; i < x3d_MaxLights; ++ i)\n";
+			string += "	{\n";
+			string += "		if (i == x3d_NumLights)\n";
+			string += "			break;\n";
+			string += "\n";
+			string += "		x3d_LightSourceParameters light = x3d_LightSource [i];\n";
+			string += "\n";
+			string += "		vec3  L           = light .type == x3d_DirectionalLight ? -light .direction : normalize (light .location - vertex);\n";
+			string += "		float colorFactor = (1.0 + dot (L, surfaceNormal .xyz)) * 0.5;\n";
+			string += "\n";
+			string += "		toneColor += mix (warmColor .rgb, coolColor .rgb, colorFactor);\n";
+			string += "	}\n";
+			string += "\n";
+			string += "	return vec4 (toneColor, originalColor .a);\n";
 			string += "}\n";
 
 			return string;
@@ -156,32 +177,7 @@ function (Fields,
 			string += "\n";
 			string += "	// ToneMappedVolumeStyle\n";
 			string += "\n";
-			string += "	{\n";
-
-			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
-			string += "		vec3 toneColor     = vec3 (0.0);\n";
-			string += "\n";
-			string += "		if (surfaceNormal .w < normalTolerance)\n";
-			string += "		{\n";
-			string += "			textureColor = vec4 (0.0);\n";
-			string += "		}\n";
-			string += "		else\n";
-			string += "		{\n";
-			string += "			for (int i = 0; i < x3d_MaxLights; ++ i)\n";
-			string += "			{\n";
-			string += "				if (i == x3d_NumLights)\n";
-			string += "					break;\n";
-			string += "\n";
-			string += "				x3d_LightSourceParameters light = x3d_LightSource [i];\n";
-			string += "				vec3 L = light .type == x3d_DirectionalLight ? -light .direction : normalize (light .location - vertex);\n";
-			string += "\n";
-			string += "				toneColor += getToneMappedStyle_" + this .getId () + " (coolColor_" + this .getId () + ", warmColor_" + this .getId () + ", surfaceNormal, L);\n";
-			string += "			}\n";
-			string += "\n";
-			string += "			textureColor .rgb = toneColor;\n";
-			string += "		}\n";
-
-			string += "	}\n";
+			string += "	textureColor = getToneMappedStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
 			return string;
 		},
