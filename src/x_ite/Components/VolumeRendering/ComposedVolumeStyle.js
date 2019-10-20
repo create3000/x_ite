@@ -183,12 +183,24 @@ function (Fields,
 			if (! this .enabled_ .getValue ())
 				return "";
 
-			var renderStyleNodes = this .renderStyleNodes;
-
-			var string = "";
+			var
+				renderStyleNodes = this .renderStyleNodes,
+				string           = "";
 
 			for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
 				string += renderStyleNodes [i] .getUniformsText ();
+
+			string += "\n";
+			string += "vec4\n";
+			string += "getComposedStyle_" + this .getId () + " (in vec4 textureColor, in vec3 texCoord)\n";
+			string += "{\n";
+
+			for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
+				string += renderStyleNodes [i] .getFunctionsText ();
+
+			string += "\n";
+			string += "	return textureColor;\n";
+			string += "}\n";
 
 			return string;
 		},
@@ -197,12 +209,12 @@ function (Fields,
 			if (! this .enabled_ .getValue ())
 				return "";
 
-			var renderStyleNodes = this .renderStyleNodes;
-
 			var string = "";
 
-			for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
-				string += renderStyleNodes [i] .getFunctionsText ();
+			string += "\n";
+			string += "	// ComposedVolumeStyle\n";
+			string += "\n";
+			string += "	textureColor = getComposedStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
 			return string;
 		}
