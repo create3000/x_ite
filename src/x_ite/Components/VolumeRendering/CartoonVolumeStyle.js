@@ -262,10 +262,16 @@ function (Fields,
 
 			string += "\n";
 			string += "vec4\n";
-			string += "getCartoonStyle_" + this .getId () + " (in vec4 originalColor, in vec4 orthogonalColor, in vec4 parallelColor, in int colorSteps, in vec4 surfaceNormal, vec3 vertex)\n";
+			string += "getCartoonStyle_" + this .getId () + " (in vec4 originalColor, vec3 texCoord)\n";
 			string += "{\n";
+			string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+			string += "\n";
 			string += "	if (surfaceNormal .w < normalTolerance)\n";
 			string += "		return vec4 (0.0);\n";
+			string += "\n";
+			string += "	vec4 orthogonalColor = orthogonalColor_" + this .getId () + ";\n";
+			string += "	vec4 parallelColor   = parallelColor_" + this .getId () + ";\n";
+			string += "	int  colorSteps      = colorSteps_" + this .getId () + ";\n";
 			string += "\n";
 			string += "	float steps    = clamp (float (colorSteps), 1.0, 64.0);\n";
 			string += "	float step     = M_PI / 2.0 / steps;\n";
@@ -293,14 +299,7 @@ function (Fields,
 			string += "\n";
 			string += "	// CartoonVolumeStyle\n";
 			string += "\n";
-			string += "	{\n";
-
-			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
-			string += "		vec4 cartoonColor  = getCartoonStyle_" + this .getId () + " (textureColor, orthogonalColor_" + this .getId () + ", parallelColor_" + this .getId () + ", colorSteps_" + this .getId () + ", surfaceNormal, vertex);\n";
-			string += "\n";
-			string += "		textureColor = cartoonColor;\n";
-
-			string += "	}\n";
+			string += "	textureColor = getCartoonStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
 			return string;
 		},
