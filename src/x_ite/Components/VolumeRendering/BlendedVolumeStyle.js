@@ -268,21 +268,10 @@ function (Fields,
 			string += "\n";
 			string += uniformsText;
 
-			return string;
-		},
-		getFunctionsText: function ()
-		{
-			if (! this .enabled_ .getValue ())
-				return "";
-
-			if (! this .voxelsNode)
-				return "";
-
-			var string = "";
-
 			string += "\n";
-			string += "	// BlendedVolumeStyle\n";
-			string += "\n";
+			string += "vec4\n";
+			string += "getBlendedStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
+			string += "{\n";
 
 			string += "	vec4 blendColor_" + this .getId () + " = texture (voxels_" + this .getId () + ", texCoord);";
 
@@ -296,10 +285,6 @@ function (Fields,
 			string += "\n";
 			string += functionsText;
 
-			string += "\n";
-			string += "	// BlendedVolumeStyle\n";
-			string += "\n";
-
 			switch (this .weightFunction1_ .getValue ())
 			{
 				default: // CONSTANT
@@ -309,7 +294,7 @@ function (Fields,
 				}
 				case "ALPHA0":
 				{
-					string += "	float w1_" + this .getId () + " = textureColor .a;\n";
+					string += "	float w1_" + this .getId () + " = originalColor .a;\n";
 					break;
 				}
 				case "ALPHA1":
@@ -319,7 +304,7 @@ function (Fields,
 				}
 				case "ONE_MINUS_ALPHA0":
 				{
-					string += "	float w1_" + this .getId () + " = 1.0 - textureColor .a;\n";
+					string += "	float w1_" + this .getId () + " = 1.0 - originalColor .a;\n";
 					break;
 				}
 				case "ONE_MINUS_ALPHA1":
@@ -331,7 +316,7 @@ function (Fields,
 				{
 					if (this .weightTransferFunction1Node)
 					{
-						string += "	float w1_" + this .getId () + " = texture (weightTransferFunction1_" + this .getId () + ", vec2 (textureColor .a, blendColor_" + this .getId () + " .a)) .r;\n";
+						string += "	float w1_" + this .getId () + " = texture (weightTransferFunction1_" + this .getId () + ", vec2 (originalColor .a, blendColor_" + this .getId () + " .a)) .r;\n";
 					}
 					else
 					{
@@ -352,7 +337,7 @@ function (Fields,
 				}
 				case "ALPHA0":
 				{
-					string += "	float w2_" + this .getId () + " = textureColor .a;\n";
+					string += "	float w2_" + this .getId () + " = originalColor .a;\n";
 					break;
 				}
 				case "ALPHA1":
@@ -362,7 +347,7 @@ function (Fields,
 				}
 				case "ONE_MINUS_ALPHA0":
 				{
-					string += "	float w2_" + this .getId () + " = 1.0 - textureColor .a;\n";
+					string += "	float w2_" + this .getId () + " = 1.0 - originalColor .a;\n";
 					break;
 				}
 				case "ONE_MINUS_ALPHA1":
@@ -374,7 +359,7 @@ function (Fields,
 				{
 					if (this .weightTransferFunction2Node)
 					{
-						string += "	float w2_" + this .getId () + " = texture (weightTransferFunction2_" + this .getId () + ", vec2 (textureColor .a, blendColor_" + this .getId () + " .a)) .r;\n";
+						string += "	float w2_" + this .getId () + " = texture (weightTransferFunction2_" + this .getId () + ", vec2 (originalColor .a, blendColor_" + this .getId () + " .a)) .r;\n";
 					}
 					else
 					{
@@ -387,7 +372,25 @@ function (Fields,
 			}
 
 			string += "\n";
-			string += "	textureColor = clamp (textureColor * w1_" + this .getId () + " + blendColor_" + this .getId () + " * w2_" + this .getId () + ", 0.0, 1.0);\n";
+			string += "	return clamp (originalColor * w1_" + this .getId () + " + blendColor_" + this .getId () + " * w2_" + this .getId () + ", 0.0, 1.0);\n";
+			string += "}\n";
+
+			return string;
+		},
+		getFunctionsText: function ()
+		{
+			if (! this .enabled_ .getValue ())
+				return "";
+
+			if (! this .voxelsNode)
+				return "";
+
+			var string = "";
+
+			string += "\n";
+			string += "	// BlendedVolumeStyle\n";
+			string += "\n";
+			string += "	textureColor = getBlendedStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
 			return string;
 		},
