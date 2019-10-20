@@ -1311,7 +1311,7 @@ function (Fields,
 			string += "vec4\n";
 			string += "getCartoonStyle_" + this .getId () + " (in vec4 originalColor, in vec4 orthogonalColor, in vec4 parallelColor, in int colorSteps, in vec4 surfaceNormal, vec3 vertex)\n";
 			string += "{\n";
-			string += "	if (surfaceNormal .w < 0.1)\n";
+			string += "	if (surfaceNormal .w < normalTolerance)\n";
 			string += "		return vec4 (0.0);\n";
 			string += "\n";
 			string += "	float steps    = clamp (float (colorSteps), 1.0, 64.0);\n";
@@ -1711,7 +1711,7 @@ function (Fields,
 			string += "vec4\n";
 			string += "getEdgeEnhacementStyle_" + this .getId () + " (in vec4 originalColor, in vec4 edgeColor, in float gradientThreshold, in vec4 surfaceNormal, in vec3 vertex)\n";
 			string += "{\n";
-			string += "	if (surfaceNormal .w < 0.1)\n";
+			string += "	if (surfaceNormal .w < normalTolerance)\n";
 			string += "		return originalColor;\n";
 			string += "\n";
 			string += "	float angle = abs (dot (surfaceNormal .xyz, normalize (vertex)));\n";
@@ -2210,6 +2210,7 @@ function (Fields,
 				styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
 
 			styleUniforms  += "\n";
+			styleUniforms  += "uniform float normalTolerance;\n";
 			styleUniforms  += "uniform float surfaceValues [" + this .surfaceValues_ .length + "];\n";
 			styleUniforms  += "uniform float surfaceTolerance;\n";
 
@@ -2363,6 +2364,7 @@ function (Fields,
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
 
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "normalTolerance", new Fields .SFFloat (0.1));
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceValues",    this .surfaceValues_    .copy ());
 			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", this .surfaceTolerance_ .copy ());
 
@@ -2841,6 +2843,9 @@ function (Fields,
 				styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
 				styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
 
+			styleUniforms  += "\n";
+			styleUniforms  += "uniform float normalTolerance;\n";
+
 			if (this .segmentIdentifiersNode)
 			{
 				styleUniforms  += "\n";
@@ -2913,6 +2918,8 @@ function (Fields,
 			shaderNode .language_ = "GLSL";
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
+
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "normalTolerance", new Fields .SFFloat (0.1));
 
 			if (this .voxelsNode)
 			{
@@ -3143,7 +3150,7 @@ function (Fields,
 			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "		vec4 shadedColor   = vec4 (0.0);\n";
 			string += "\n";
-			string += "		if (surfaceNormal .w < 0.1)\n";
+			string += "		if (surfaceNormal .w < normalTolerance)\n";
 			string += "		{\n";
 			string += "			textureColor = vec4 (0.0);\n";
 			string += "		}\n";
@@ -3381,7 +3388,7 @@ function (Fields,
 			string += "{\n";
 			string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "\n";
-			string += "	if (surfaceNormal .w < 0.1)\n";
+			string += "	if (surfaceNormal .w < normalTolerance)\n";
 			string += "	{\n";
 			string += "		return 0.0;\n";
 			string += "	}\n";
@@ -3579,7 +3586,7 @@ function (Fields,
 			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "		vec3 toneColor     = vec3 (0.0);\n";
 			string += "\n";
-			string += "		if (surfaceNormal .w < 0.1)\n";
+			string += "		if (surfaceNormal .w < normalTolerance)\n";
 			string += "		{\n";
 			string += "			textureColor = vec4 (0.0);\n";
 			string += "		}\n";
@@ -3802,6 +3809,9 @@ function (Fields,
 				styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
 				styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
 
+			styleUniforms  += "\n";
+			styleUniforms  += "uniform float normalTolerance;\n";
+
 			if (this .renderStyleNode)
 			{
 				styleUniforms  += this .renderStyleNode .getUniformsText (),
@@ -3830,6 +3840,8 @@ function (Fields,
 			shaderNode .language_ = "GLSL";
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
+
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "normalTolerance", new Fields .SFFloat (0.1));
 
 			if (this .voxelsNode)
 			{
