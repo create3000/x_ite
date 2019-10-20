@@ -140,19 +140,19 @@ function (Fields,
 			string += this .getNormalText (this .surfaceNormalsNode);
 
 			string += "\n";
-			string += "float\n";
-			string += "getSilhouetteEnhancementStyle_" + this .getId () + " (in float originalAlpha, in vec3 texCoord)\n";
+			string += "vec4\n";
+			string += "getSilhouetteEnhancementStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
 			string += "{\n";
 			string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "\n";
-			string += "	if (surfaceNormal .w < normalTolerance)\n";
-			string += "		return 0.0;\n";
+			string += "	if (surfaceNormal .w == 0.0)\n";
+			string += "		return vec4 (0.0);\n";
 			string += "	\n";
 			string += "	float silhouetteRetainedOpacity = silhouetteRetainedOpacity_" + this .getId () + ";\n";
 			string += "	float silhouetteBoundaryOpacity = silhouetteBoundaryOpacity_" + this .getId () + ";\n";
 			string += "	float silhouetteSharpness       = silhouetteSharpness_" + this .getId () + ";\n";
 			string += "\n";
-			string += "	return originalAlpha * (silhouetteRetainedOpacity + silhouetteBoundaryOpacity * pow (1.0 - abs (dot (surfaceNormal .xyz, normalize (vertex))), silhouetteSharpness));\n";
+			string += "	return vec4 (originalColor .rgb, originalColor .a * (silhouetteRetainedOpacity + silhouetteBoundaryOpacity * pow (1.0 - abs (dot (surfaceNormal .xyz, normalize (vertex))), silhouetteSharpness)));\n";
 			string += "}\n";
 
 			return string;
@@ -167,7 +167,7 @@ function (Fields,
 			string += "\n";
 			string += "	// SilhouetteEnhancementVolumeStyle\n";
 			string += "\n";
-			string += "	textureColor .a = getSilhouetteEnhancementStyle_" + this .getId () + " (textureColor .a, texCoord);\n";
+			string += "	textureColor = getSilhouetteEnhancementStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
 			return string;
 		},

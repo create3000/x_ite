@@ -181,7 +181,7 @@ function (Fields,
 			string += "{\n";
 			string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "\n";
-			string += "	if (surfaceNormal .w < normalTolerance)\n";
+			string += "	if (surfaceNormal .w == 0.0)\n";
 			string += "		return vec4 (0.0);\n";
 			string += "\n";
 			string += "	vec4 shadedColor   = vec4 (0.0);\n";
