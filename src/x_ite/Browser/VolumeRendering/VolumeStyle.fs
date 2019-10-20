@@ -19,27 +19,6 @@ in float fogDepth;
 in vec3  vertex;
 in vec4  texCoord;
 
-// VOLUME_STYLES_UNIFORMS
-
-out vec4 x3d_FragColor;
-
-
-uniform int  x3d_NumClipPlanes;
-uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
-
-void
-clip ()
-{
-	for (int i = 0; i < x3d_MaxClipPlanes; ++ i)
-	{
-		if (i == x3d_NumClipPlanes)
-			break;
-
-		if (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)
-			discard;
-	}
-}
-
 
 uniform x3d_FogParameters x3d_Fog;
 
@@ -85,6 +64,27 @@ vec3
 getFogColor (const in vec3 color)
 {
 	return mix (x3d_Fog .color, color, getFogInterpolant ());
+}
+
+// VOLUME_STYLES_UNIFORMS
+
+out vec4 x3d_FragColor;
+
+
+uniform int  x3d_NumClipPlanes;
+uniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];
+
+void
+clip ()
+{
+	for (int i = 0; i < x3d_MaxClipPlanes; ++ i)
+	{
+		if (i == x3d_NumClipPlanes)
+			break;
+
+		if (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)
+			discard;
+	}
 }
 
 vec4
