@@ -367,7 +367,6 @@ function (Fields,
 			string += "\n";
 			string += "	// OpacityMapVolumeStyle\n";
 			string += "\n";
-
 			string += "	textureColor = getOpacityMapStyle_" + this .getId () + " (textureColor);\n";
 
 			return string;
@@ -765,21 +764,10 @@ function (Fields,
 			string += "\n";
 			string += uniformsText;
 
-			return string;
-		},
-		getFunctionsText: function ()
-		{
-			if (! this .enabled_ .getValue ())
-				return "";
-
-			if (! this .voxelsNode)
-				return "";
-
-			var string = "";
-
 			string += "\n";
-			string += "	// BlendedVolumeStyle\n";
-			string += "\n";
+			string += "vec4\n";
+			string += "getBlendedStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
+			string += "{\n";
 
 			string += "	vec4 blendColor_" + this .getId () + " = texture (voxels_" + this .getId () + ", texCoord);";
 
@@ -793,10 +781,6 @@ function (Fields,
 			string += "\n";
 			string += functionsText;
 
-			string += "\n";
-			string += "	// BlendedVolumeStyle\n";
-			string += "\n";
-
 			switch (this .weightFunction1_ .getValue ())
 			{
 				default: // CONSTANT
@@ -806,7 +790,7 @@ function (Fields,
 				}
 				case "ALPHA0":
 				{
-					string += "	float w1_" + this .getId () + " = textureColor .a;\n";
+					string += "	float w1_" + this .getId () + " = originalColor .a;\n";
 					break;
 				}
 				case "ALPHA1":
@@ -816,7 +800,7 @@ function (Fields,
 				}
 				case "ONE_MINUS_ALPHA0":
 				{
-					string += "	float w1_" + this .getId () + " = 1.0 - textureColor .a;\n";
+					string += "	float w1_" + this .getId () + " = 1.0 - originalColor .a;\n";
 					break;
 				}
 				case "ONE_MINUS_ALPHA1":
@@ -828,7 +812,7 @@ function (Fields,
 				{
 					if (this .weightTransferFunction1Node)
 					{
-						string += "	float w1_" + this .getId () + " = texture (weightTransferFunction1_" + this .getId () + ", vec2 (textureColor .a, blendColor_" + this .getId () + " .a)) .r;\n";
+						string += "	float w1_" + this .getId () + " = texture (weightTransferFunction1_" + this .getId () + ", vec2 (originalColor .a, blendColor_" + this .getId () + " .a)) .r;\n";
 					}
 					else
 					{
@@ -849,7 +833,7 @@ function (Fields,
 				}
 				case "ALPHA0":
 				{
-					string += "	float w2_" + this .getId () + " = textureColor .a;\n";
+					string += "	float w2_" + this .getId () + " = originalColor .a;\n";
 					break;
 				}
 				case "ALPHA1":
@@ -859,7 +843,7 @@ function (Fields,
 				}
 				case "ONE_MINUS_ALPHA0":
 				{
-					string += "	float w2_" + this .getId () + " = 1.0 - textureColor .a;\n";
+					string += "	float w2_" + this .getId () + " = 1.0 - originalColor .a;\n";
 					break;
 				}
 				case "ONE_MINUS_ALPHA1":
@@ -871,7 +855,7 @@ function (Fields,
 				{
 					if (this .weightTransferFunction2Node)
 					{
-						string += "	float w2_" + this .getId () + " = texture (weightTransferFunction2_" + this .getId () + ", vec2 (textureColor .a, blendColor_" + this .getId () + " .a)) .r;\n";
+						string += "	float w2_" + this .getId () + " = texture (weightTransferFunction2_" + this .getId () + ", vec2 (originalColor .a, blendColor_" + this .getId () + " .a)) .r;\n";
 					}
 					else
 					{
@@ -884,7 +868,25 @@ function (Fields,
 			}
 
 			string += "\n";
-			string += "	textureColor = clamp (textureColor * w1_" + this .getId () + " + blendColor_" + this .getId () + " * w2_" + this .getId () + ", 0.0, 1.0);\n";
+			string += "	return clamp (originalColor * w1_" + this .getId () + " + blendColor_" + this .getId () + " * w2_" + this .getId () + ", 0.0, 1.0);\n";
+			string += "}\n";
+
+			return string;
+		},
+		getFunctionsText: function ()
+		{
+			if (! this .enabled_ .getValue ())
+				return "";
+
+			if (! this .voxelsNode)
+				return "";
+
+			var string = "";
+
+			string += "\n";
+			string += "	// BlendedVolumeStyle\n";
+			string += "\n";
+			string += "	textureColor = getBlendedStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
 			return string;
 		},
@@ -1309,10 +1311,16 @@ function (Fields,
 
 			string += "\n";
 			string += "vec4\n";
-			string += "getCartoonStyle_" + this .getId () + " (in vec4 originalColor, in vec4 orthogonalColor, in vec4 parallelColor, in int colorSteps, in vec4 surfaceNormal, vec3 vertex)\n";
+			string += "getCartoonStyle_" + this .getId () + " (in vec4 originalColor, vec3 texCoord)\n";
 			string += "{\n";
+			string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+			string += "\n";
 			string += "	if (surfaceNormal .w < normalTolerance)\n";
 			string += "		return vec4 (0.0);\n";
+			string += "\n";
+			string += "	vec4 orthogonalColor = orthogonalColor_" + this .getId () + ";\n";
+			string += "	vec4 parallelColor   = parallelColor_" + this .getId () + ";\n";
+			string += "	int  colorSteps      = colorSteps_" + this .getId () + ";\n";
 			string += "\n";
 			string += "	float steps    = clamp (float (colorSteps), 1.0, 64.0);\n";
 			string += "	float step     = M_PI / 2.0 / steps;\n";
@@ -1340,14 +1348,7 @@ function (Fields,
 			string += "\n";
 			string += "	// CartoonVolumeStyle\n";
 			string += "\n";
-			string += "	{\n";
-
-			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
-			string += "		vec4 cartoonColor  = getCartoonStyle_" + this .getId () + " (textureColor, orthogonalColor_" + this .getId () + ", parallelColor_" + this .getId () + ", colorSteps_" + this .getId () + ", surfaceNormal, vertex);\n";
-			string += "\n";
-			string += "		textureColor = cartoonColor;\n";
-
-			string += "	}\n";
+			string += "	textureColor = getCartoonStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
 			return string;
 		},
@@ -1541,12 +1542,24 @@ function (Fields,
 			if (! this .enabled_ .getValue ())
 				return "";
 
-			var renderStyleNodes = this .renderStyleNodes;
-
-			var string = "";
+			var
+				renderStyleNodes = this .renderStyleNodes,
+				string           = "";
 
 			for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
 				string += renderStyleNodes [i] .getUniformsText ();
+
+			string += "\n";
+			string += "vec4\n";
+			string += "getComposedStyle_" + this .getId () + " (in vec4 textureColor, in vec3 texCoord)\n";
+			string += "{\n";
+
+			for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
+				string += renderStyleNodes [i] .getFunctionsText ();
+
+			string += "\n";
+			string += "	return textureColor;\n";
+			string += "}\n";
 
 			return string;
 		},
@@ -1555,12 +1568,12 @@ function (Fields,
 			if (! this .enabled_ .getValue ())
 				return "";
 
-			var renderStyleNodes = this .renderStyleNodes;
-
 			var string = "";
 
-			for (var i = 0, length = renderStyleNodes .length; i < length; ++ i)
-				string += renderStyleNodes [i] .getFunctionsText ();
+			string += "\n";
+			string += "	// ComposedVolumeStyle\n";
+			string += "\n";
+			string += "	textureColor = getComposedStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
 			return string;
 		}
@@ -1709,10 +1722,15 @@ function (Fields,
 
 			string += "\n";
 			string += "vec4\n";
-			string += "getEdgeEnhacementStyle_" + this .getId () + " (in vec4 originalColor, in vec4 edgeColor, in float gradientThreshold, in vec4 surfaceNormal, in vec3 vertex)\n";
+			string += "getEdgeEnhacementStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
 			string += "{\n";
+			string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+			string += "\n";
 			string += "	if (surfaceNormal .w < normalTolerance)\n";
-			string += "		return originalColor;\n";
+			string += "		return vec4 (0.0);\n";
+			string += "\n";
+			string += "	vec4  edgeColor         = edgeColor_" + this .getId () + ";\n";
+			string += "	float gradientThreshold = gradientThreshold_" + this .getId () + ";\n";
 			string += "\n";
 			string += "	float angle = abs (dot (surfaceNormal .xyz, normalize (vertex)));\n";
 			string += "\n";
@@ -1734,14 +1752,7 @@ function (Fields,
 			string += "\n";
 			string += "	// EdgeEnhancementVolumeStyle\n";
 			string += "\n";
-			string += "	{\n";
-
-			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
-			string += "		vec4 edgeColor     = getEdgeEnhacementStyle_" + this .getId () + " (textureColor, edgeColor_" + this .getId () + ", gradientThreshold_" + this .getId () + ", surfaceNormal, vertex);\n";
-			string += "\n";
-			string += "		textureColor = edgeColor;\n";
-
-			string += "	}\n";
+			string += "	textureColor = getEdgeEnhacementStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
 			return string;
 		},
@@ -1987,7 +1998,7 @@ function (Fields,
 define('text!x_ite/Browser/VolumeRendering/VolumeStyle.vs',[],function () { return '#version 300 es\n\nprecision mediump float;\nprecision mediump int;\n\nuniform mat4 x3d_ProjectionMatrix;\nuniform mat4 x3d_ModelViewMatrix;\nuniform mat4 x3d_TextureMatrix [1];\n\nin float x3d_FogDepth;\nin vec4  x3d_TexCoord0;\nin vec4  x3d_Vertex;\n\nout float fogDepth;\nout vec3 vertex;\nout vec4 texCoord;\n\nvoid\nmain ()\n{\n\tvec4 position = x3d_ModelViewMatrix * x3d_Vertex;\n\n\tfogDepth = x3d_FogDepth;\n\tvertex   = position .xyz;\n\ttexCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;\n\n\tgl_Position = x3d_ProjectionMatrix * position;\n}\n';});
 
 
-define('text!x_ite/Browser/VolumeRendering/VolumeStyle.fs',[],function () { return '#version 300 es\n\nprecision mediump float;\nprecision mediump int;\nprecision mediump sampler3D;\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nuniform int       x3d_NumTextures;\nuniform sampler3D x3d_Texture3D [1];\nuniform vec3      x3d_TextureSize;\n\nuniform mat3 x3d_TextureNormalMatrix;\n\nconst float M_PI = 3.14159265359;\n\nin float fogDepth;\nin vec3  vertex;\nin vec4  texCoord;\n\n// VOLUME_STYLES_UNIFORMS\n\nout vec4 x3d_FragColor;\n\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\n\nuniform x3d_FogParameters x3d_Fog;\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .fogCoord)\n\t\treturn clamp (1.0 - fogDepth, 0.0, 1.0);\n\n\tfloat visibilityRange = x3d_Fog .visibilityRange;\n\n\tif (visibilityRange <= 0.0)\n\t\treturn 1.0;\n\n\tfloat dV = length (x3d_Fog .matrix * vertex);\n\n\tif (dV >= visibilityRange)\n\t\treturn 0.0;\n\n\tswitch (x3d_Fog .type)\n\t{\n\t\tcase x3d_LinearFog:\n\t\t{\n\t\t\treturn (visibilityRange - dV) / visibilityRange;\n\t\t}\n\t\tcase x3d_ExponentialFog:\n\t\t{\n\t\t\treturn exp (-dV / (visibilityRange - dV));\n\t\t}\n\t\tdefault:\n\t\t{\n\t\t\treturn 1.0;\n\t\t}\n\t}\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\nvec4\ngetTextureColor (in vec3 texCoord)\n{\n\tif (x3d_NumTextures == 0)\n\t\tdiscard;\n\n\tif (texCoord .s < 0.0 || texCoord .s > 1.0)\n\t\tdiscard;\n\n\tif (texCoord .t < 0.0 || texCoord .t > 1.0)\n\t\tdiscard;\n\n\tif (texCoord .p < 0.0 || texCoord .p > 1.0)\n\t\tdiscard;\n\n\tvec4 textureColor = texture (x3d_Texture3D [0], texCoord);\n\n\t// Apply volume styles.\n\n// VOLUME_STYLES_FUNCTIONS\n\n\treturn textureColor;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tx3d_FragColor = getTextureColor (texCoord .stp / texCoord .q);\n}\n';});
+define('text!x_ite/Browser/VolumeRendering/VolumeStyle.fs',[],function () { return '#version 300 es\n\nprecision mediump float;\nprecision mediump int;\nprecision mediump sampler3D;\n\nuniform int x3d_NumLights;\nuniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nuniform int       x3d_NumTextures;\nuniform sampler3D x3d_Texture3D [1];\nuniform vec3      x3d_TextureSize;\n\nuniform mat3 x3d_TextureNormalMatrix;\n\nconst float M_PI = 3.14159265359;\n\nin float fogDepth;\nin vec3  vertex;\nin vec4  texCoord;\n\n\nuniform x3d_FogParameters x3d_Fog;\n\nfloat\ngetFogInterpolant ()\n{\n\t// Returns 0.0 for fog color and 1.0 for material color.\n\n\tif (x3d_Fog .type == x3d_None)\n\t\treturn 1.0;\n\n\tif (x3d_Fog .fogCoord)\n\t\treturn clamp (1.0 - fogDepth, 0.0, 1.0);\n\n\tfloat visibilityRange = x3d_Fog .visibilityRange;\n\n\tif (visibilityRange <= 0.0)\n\t\treturn 1.0;\n\n\tfloat dV = length (x3d_Fog .matrix * vertex);\n\n\tif (dV >= visibilityRange)\n\t\treturn 0.0;\n\n\tswitch (x3d_Fog .type)\n\t{\n\t\tcase x3d_LinearFog:\n\t\t{\n\t\t\treturn (visibilityRange - dV) / visibilityRange;\n\t\t}\n\t\tcase x3d_ExponentialFog:\n\t\t{\n\t\t\treturn exp (-dV / (visibilityRange - dV));\n\t\t}\n\t\tdefault:\n\t\t{\n\t\t\treturn 1.0;\n\t\t}\n\t}\n}\n\nvec3\ngetFogColor (const in vec3 color)\n{\n\treturn mix (x3d_Fog .color, color, getFogInterpolant ());\n}\n\n// VOLUME_STYLES_UNIFORMS\n\nout vec4 x3d_FragColor;\n\n\nuniform int  x3d_NumClipPlanes;\nuniform vec4 x3d_ClipPlane [x3d_MaxClipPlanes];\n\nvoid\nclip ()\n{\n\tfor (int i = 0; i < x3d_MaxClipPlanes; ++ i)\n\t{\n\t\tif (i == x3d_NumClipPlanes)\n\t\t\tbreak;\n\n\t\tif (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)\n\t\t\tdiscard;\n\t}\n}\n\nvec4\ngetTextureColor (in vec3 texCoord)\n{\n\tif (x3d_NumTextures == 0)\n\t\tdiscard;\n\n\tif (texCoord .s < 0.0 || texCoord .s > 1.0)\n\t\tdiscard;\n\n\tif (texCoord .t < 0.0 || texCoord .t > 1.0)\n\t\tdiscard;\n\n\tif (texCoord .p < 0.0 || texCoord .p > 1.0)\n\t\tdiscard;\n\n\tvec4 textureColor = texture (x3d_Texture3D [0], texCoord);\n\n\t// Apply volume styles.\n\n// VOLUME_STYLES_FUNCTIONS\n\n\treturn textureColor;\n}\n\nvoid\nmain ()\n{\n\tclip ();\n\n\tx3d_FragColor = getTextureColor (texCoord .stp / texCoord .q);\n}\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -2505,6 +2516,102 @@ function (Fields,
 			string += "\n";
 			string += "uniform float intensityThreshold_" + this .getId () + ";\n";
 
+			string += "\n";
+			string += "vec4\n";
+			string += "getProjectionStyle_" + this .getId () + "(in vec4 originalColor, in vec3 texCoord)\n";
+			string += "{\n";
+			switch (this .type_ .getValue ())
+			{
+				default:
+				case "MAX":
+				{
+					string += "	float projectionColor = 0.0;\n";
+					break;
+				}
+				case "MIN":
+				{
+					string += "	float projectionColor = 1.0;\n";
+					break;
+				}
+				case "AVERAGE":
+				{
+					string += "	float projectionColor = 0.0;\n";
+					break;
+				}
+			}
+
+			string += "	const int samples     = 32;\n";
+			string += "	vec3  step            = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0)) / float (samples);\n";
+			string += "	vec3  ray             = texCoord - step * float (samples) * 0.5;\n";
+			string += "	bool  first           = false;\n";
+			string += "\n";
+			string += "	for (int i = 0; i < samples; ++ i, ray += step)\n";
+			string += "	{\n";
+			string += "		if (ray .s < 0.0 || ray .s > 1.0)\n";
+			string += "			continue;\n";
+			string += "\n";
+			string += "		if (ray .t < 0.0 || ray .t > 1.0)\n";
+			string += "			continue;\n";
+			string += "\n";
+			string += "		if (ray .p < 0.0 || ray .p > 1.0)\n";
+			string += "			continue;\n";
+			string += "\n";
+			string += "		float intensity = texture (x3d_Texture3D [0], ray) .r;\n";
+			string += "\n";
+
+			switch (this .type_ .getValue ())
+			{
+				default:
+				case "MAX":
+				{
+					string += "		if (intensity < intensityThreshold_" + this .getId () + ")\n";
+					string += "			continue;\n";
+					string += "\n";
+					string += "		if (intensityThreshold_" + this .getId () + " > 0.0 && first)\n";
+					string += "			break;\n";
+					string += "\n";
+					string += "		if (intensity <= projectionColor)\n";
+					string += "		{\n";
+					string += "			first = true;\n";
+					string += "			continue;\n";
+					string += "		}\n";
+					string += "\n";
+					string += "		projectionColor = intensity;\n";
+					break;
+				}
+				case "MIN":
+				{
+					string += "		if (intensity < intensityThreshold_" + this .getId () + ")\n";
+					string += "			continue;\n";
+					string += "\n";
+					string += "		if (intensityThreshold_" + this .getId () + " > 0.0 && first)\n";
+					string += "			break;\n";
+					string += "\n";
+					string += "		if (intensity >= projectionColor)\n";
+					string += "		{\n";
+					string += "			first = true;\n";
+					string += "			continue;\n";
+					string += "		}\n";
+					string += "\n";
+					string += "		projectionColor = intensity;\n";
+					break;
+				}
+				case "AVERAGE":
+				{
+					string += "		projectionColor += intensity;\n";
+					break;
+				}
+			}
+
+			string += "	}\n";
+			string += "\n";
+
+			if (this .type_ .getValue () === "AVERAGE")
+				string += "	projectionColor /= float (samples);\n";
+
+			string += "	return vec4 (vec3 (projectionColor), originalColor .a);\n";
+			string += "}\n";
+
 			return string;
 		},
 		getFunctionsText: function ()
@@ -2517,100 +2624,7 @@ function (Fields,
 			string += "\n";
 			string += "	// ProjectionVolumeStyle\n";
 			string += "\n";
-			string += "	{\n";
-
-			switch (this .type_ .getValue ())
-			{
-				default:
-				case "MAX":
-				{
-					string += "		float projectionColor = 0.0;\n";
-					break;
-				}
-				case "MIN":
-				{
-					string += "		float projectionColor = 1.0;\n";
-					break;
-				}
-				case "AVERAGE":
-				{
-					string += "		float projectionColor = 0.0;\n";
-					break;
-				}
-			}
-
-			string += "		const int samples     = 32;\n";
-			string += "		vec3  step            = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0)) / float (samples);\n";
-			string += "		vec3  ray             = texCoord - step * float (samples) * 0.5;\n";
-			string += "		bool  first           = false;\n";
-			string += "\n";
-			string += "		for (int i = 0; i < samples; ++ i, ray += step)\n";
-			string += "		{\n";
-			string += "			if (ray .s < 0.0 || ray .s > 1.0)\n";
-			string += "				continue;\n";
-			string += "\n";
-			string += "			if (ray .t < 0.0 || ray .t > 1.0)\n";
-			string += "				continue;\n";
-			string += "\n";
-			string += "			if (ray .p < 0.0 || ray .p > 1.0)\n";
-			string += "				continue;\n";
-			string += "\n";
-			string += "			float intensity = texture (x3d_Texture3D [0], ray) .r;\n";
-			string += "\n";
-
-			switch (this .type_ .getValue ())
-			{
-				default:
-				case "MAX":
-				{
-					string += "			if (intensity < intensityThreshold_" + this .getId () + ")\n";
-					string += "				continue;\n";
-					string += "\n";
-					string += "			if (intensityThreshold_" + this .getId () + " > 0.0 && first)\n";
-					string += "				break;\n";
-					string += "\n";
-					string += "			if (intensity <= projectionColor)\n";
-					string += "			{\n";
-					string += "				first = true;\n";
-					string += "				continue;\n";
-					string += "			}\n";
-					string += "\n";
-					string += "			projectionColor = intensity;\n";
-					break;
-				}
-				case "MIN":
-				{
-					string += "			if (intensity < intensityThreshold_" + this .getId () + ")\n";
-					string += "				continue;\n";
-					string += "\n";
-					string += "			if (intensityThreshold_" + this .getId () + " > 0.0 && first)\n";
-					string += "				break;\n";
-					string += "\n";
-					string += "			if (intensity >= projectionColor)\n";
-					string += "			{\n";
-					string += "				first = true;\n";
-					string += "				continue;\n";
-					string += "			}\n";
-					string += "\n";
-					string += "			projectionColor = intensity;\n";
-					break;
-				}
-				case "AVERAGE":
-				{
-					string += "			projectionColor += intensity;\n";
-					break;
-				}
-			}
-
-			string += "		}\n";
-			string += "\n";
-
-			if (this .type_ .getValue () === "AVERAGE")
-				string += "		projectionColor /= float (samples);\n";
-
-			string += "		textureColor .rgb = vec3 (projectionColor);\n";
-
-			string += "	}\n";
+			string += "	textureColor = getProjectionStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
 			return string;
 		},
@@ -3133,6 +3147,92 @@ function (Fields,
 			string += "	return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);\n";
 			string += "}\n";
 
+			string += "\n";
+			string += "vec4\n";
+			string += "getShadedStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
+			string += "{\n";
+			string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+			string += "\n";
+			string += "	if (surfaceNormal .w < normalTolerance)\n";
+			string += "		return vec4 (0.0);\n";
+			string += "\n";
+			string += "	vec4 shadedColor   = vec4 (0.0);\n";
+
+			if (this .lighting_ .getValue ())
+			{
+				if (this .materialNode)
+				{
+					string += "	vec3 diffuseFactor = diffuseColor_" + this .getId () + ";\n";
+					string += "	vec3 ambientTerm   = diffuseFactor * ambientIntensity_" + this .getId () + ";\n";
+					string += "\n";
+					string += "	shadedColor .a = originalColor .a * (1.0 - transparency_" + this .getId () + ");\n";
+				}
+				else
+				{
+					string += "	vec3 diffuseFactor = originalColor .rgb;\n";
+					string += "	vec3 ambientTerm   = vec3 (0.0);\n";
+					string += "\n";
+					string += "	shadedColor .a = originalColor .a;\n";
+				}
+
+				string += "\n";
+				string += "	vec3  N  = surfaceNormal .xyz;\n";
+				string += "	vec3  V  = normalize (-vertex); // normalized vector from point on geometry to viewer's position\n";
+				string += "	float dV = length (vertex);\n";
+				string += "\n";
+				string += "	for (int i = 0; i < x3d_MaxLights; ++ i)\n";
+				string += "	{\n";
+				string += "		if (i == x3d_NumLights)\n";
+				string += "			break;\n";
+				string += "\n";
+				string += "		x3d_LightSourceParameters light = x3d_LightSource [i];\n";
+				string += "\n";
+				string += "		vec3  vL = light .location - vertex; // Light to fragment\n";
+				string += "		float dL = length (light .matrix * vL);\n";
+				string += "		bool  di = light .type == x3d_DirectionalLight;\n";
+				string += "\n";
+				string += "		if (di || dL <= light .radius)\n";
+				string += "		{\n";
+				string += "			vec3 d = light .direction;\n";
+				string += "			vec3 c = light .attenuation;\n";
+				string += "			vec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n";
+				string += "			vec3 H = normalize (L + V);             // Specular term\n";
+				string += "\n";
+				string += "			float lightAngle     = dot (N, L);      // Angle between normal and light ray.\n";
+				string += "			vec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n";
+				string += "			float specularFactor = shininess_" + this .getId () + " > 0.0 ? pow (max (dot (N, H), 0.0), shininess_" + this .getId () + " * 128.0) : 1.0;\n";
+				string += "			vec3  specularTerm   = light .intensity * specularColor_" + this .getId () + " * specularFactor;\n";
+				string += "\n";
+				string += "			float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n";
+				string += "			float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor_" + this .getId () + " (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n";
+				string += "			float attenuationSpotFactor = attenuationFactor * spotFactor;\n";
+				string += "			vec3  ambientColor          = light .ambientIntensity * ambientTerm;\n";
+				string += "			vec3  diffuseColor          = light .intensity * diffuseTerm * max (dot (N, L), 0.0);\n";
+				string += "\n";
+				string += "			shadedColor .rgb += attenuationSpotFactor * light .color * (ambientColor + diffuseColor + specularTerm);\n";
+				string += "		}\n";
+				string += "\n";
+				string += "		shadedColor .rgb += emissiveColor_" + this .getId () + ";\n";
+				string += "		shadedColor .rgb  = getFogColor (shadedColor .rgb);\n";
+				string += "	}\n";
+			}
+			else
+			{
+				if (this .materialNode)
+				{
+					string += "	shadedColor .rgb = diffuseColor_" + this .getId () + ";\n";
+					string += "	shadedColor .a   = originalColor .a * (1.0 - transparency_" + this .getId () + ");\n";
+				}
+				else
+				{
+					string += "	shadedColor = originalColor;\n";
+				}
+			}
+
+			string += "\n";
+			string += "	return shadedColor;\n";
+			string += "}\n";
+
 			return string;
 		},
 		getFunctionsText: function ()
@@ -3145,94 +3245,7 @@ function (Fields,
 			string += "\n";
 			string += "	// ShadedVolumeStyle\n";
 			string += "\n";
-			string += "	{\n";
-
-			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
-			string += "		vec4 shadedColor   = vec4 (0.0);\n";
-			string += "\n";
-			string += "		if (surfaceNormal .w < normalTolerance)\n";
-			string += "		{\n";
-			string += "			textureColor = vec4 (0.0);\n";
-			string += "		}\n";
-			string += "		else\n";
-			string += "		{\n";
-
-			if (this .lighting_ .getValue ())
-			{
-				if (this .materialNode)
-				{
-					string += "			vec3 diffuseFactor = diffuseColor_" + this .getId () + ";\n";
-					string += "			vec3 ambientTerm   = diffuseFactor * ambientIntensity_" + this .getId () + ";\n";
-					string += "\n";
-					string += "			shadedColor .a = textureColor .a * (1.0 - transparency_" + this .getId () + ");\n";
-				}
-				else
-				{
-					string += "			vec3 diffuseFactor = textureColor .rgb;\n";
-					string += "			vec3 ambientTerm   = vec3 (0.0);\n";
-					string += "\n";
-					string += "			shadedColor .a = textureColor .a;\n";
-				}
-
-				string += "\n";
-				string += "			vec3  N  = surfaceNormal .xyz;\n";
-				string += "			vec3  V  = normalize (-vertex); // normalized vector from point on geometry to viewer's position\n";
-				string += "			float dV = length (vertex);\n";
-				string += "\n";
-				string += "			for (int i = 0; i < x3d_MaxLights; ++ i)\n";
-				string += "			{\n";
-				string += "				if (i == x3d_NumLights)\n";
-				string += "					break;\n";
-				string += "\n";
-				string += "				x3d_LightSourceParameters light = x3d_LightSource [i];\n";
-				string += "\n";
-				string += "				vec3  vL = light .location - vertex; // Light to fragment\n";
-				string += "				float dL = length (light .matrix * vL);\n";
-				string += "				bool  di = light .type == x3d_DirectionalLight;\n";
-				string += "\n";
-				string += "				if (di || dL <= light .radius)\n";
-				string += "				{\n";
-				string += "					vec3 d = light .direction;\n";
-				string += "					vec3 c = light .attenuation;\n";
-				string += "					vec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.\n";
-				string += "					vec3 H = normalize (L + V);             // Specular term\n";
-				string += "\n";
-				string += "					float lightAngle     = dot (N, L);      // Angle between normal and light ray.\n";
-				string += "					vec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);\n";
-				string += "					float specularFactor = shininess_" + this .getId () + " > 0.0 ? pow (max (dot (N, H), 0.0), shininess_" + this .getId () + " * 128.0) : 1.0;\n";
-				string += "					vec3  specularTerm   = light .intensity * specularColor_" + this .getId () + " * specularFactor;\n";
-				string += "\n";
-				string += "					float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);\n";
-				string += "					float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor_" + this .getId () + " (light .cutOffAngle, light .beamWidth, L, d) : 1.0;\n";
-				string += "					float attenuationSpotFactor = attenuationFactor * spotFactor;\n";
-				string += "					vec3  ambientColor          = light .ambientIntensity * ambientTerm;\n";
-				string += "					vec3  diffuseColor          = light .intensity * diffuseTerm * max (dot (N, L), 0.0);\n";
-				string += "\n";
-				string += "					shadedColor .rgb += attenuationSpotFactor * light .color * (ambientColor + diffuseColor + specularTerm);\n";
-				string += "				}\n";
-				string += "\n";
-				string += "				shadedColor .rgb += emissiveColor_" + this .getId () + ";\n";
-				string += "				shadedColor .rgb  = getFogColor (shadedColor .rgb);\n";
-				string += "			}\n";
-			}
-			else
-			{
-				if (this .materialNode)
-				{
-					string += "			shadedColor .rgb = diffuseColor_" + this .getId () + ";\n";
-					string += "			shadedColor .a   = textureColor .a * (1.0 - transparency_" + this .getId () + ");\n";
-				}
-				else
-				{
-					string += "			shadedColor = textureColor;\n";
-				}
-			}
-
-			string += "\n";
-			string += "			textureColor = shadedColor;\n";
-			string += "		}\n";
-
-			string += "	}\n";
+			string += "	textureColor = getShadedStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
 			return string;
 		},
@@ -3389,17 +3402,13 @@ function (Fields,
 			string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
 			string += "\n";
 			string += "	if (surfaceNormal .w < normalTolerance)\n";
-			string += "	{\n";
 			string += "		return 0.0;\n";
-			string += "	}\n";
-			string += "	else\n";
-			string += "	{\n";
-			string += "		float silhouetteRetainedOpacity = silhouetteRetainedOpacity_" + this .getId () + ";\n";
-			string += "		float silhouetteBoundaryOpacity = silhouetteBoundaryOpacity_" + this .getId () + ";\n";
-			string += "		float silhouetteSharpness       = silhouetteSharpness_" + this .getId () + ";\n";
+			string += "	\n";
+			string += "	float silhouetteRetainedOpacity = silhouetteRetainedOpacity_" + this .getId () + ";\n";
+			string += "	float silhouetteBoundaryOpacity = silhouetteBoundaryOpacity_" + this .getId () + ";\n";
+			string += "	float silhouetteSharpness       = silhouetteSharpness_" + this .getId () + ";\n";
 			string += "\n";
-			string += "		return originalAlpha * silhouetteRetainedOpacity + pow (silhouetteBoundaryOpacity * (1.0 - dot (surfaceNormal .xyz, normalize (vertex))), silhouetteSharpness);\n";
-			string += "	}\n";
+			string += "	return originalAlpha * silhouetteRetainedOpacity + pow (silhouetteBoundaryOpacity * (1.0 - dot (surfaceNormal .xyz, normalize (vertex))), silhouetteSharpness);\n";
 			string += "}\n";
 
 			return string;
@@ -3562,11 +3571,32 @@ function (Fields,
 			string += this .getNormalText (this .surfaceNormalsNode);
 
 			string += "\n";
-			string += "vec3\n";
-			string += "getToneMappedStyle_" + this .getId () + " (in vec4 coolColor, in vec4 warmColor, in vec4 surfaceNormal, in vec3 lightDir)\n";
+			string += "vec4\n";
+			string += "getToneMappedStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
 			string += "{\n";
-			string += "	float colorFactor = (1.0 + dot (lightDir, surfaceNormal .xyz)) * 0.5;\n";
-			string += "	return mix (warmColor .rgb, coolColor .rgb, colorFactor);\n";
+			string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+			string += "\n";
+			string += "	if (surfaceNormal .w < normalTolerance)\n";
+			string += "		return vec4 (0.0);\n";
+			string += "\n";
+			string += "	vec3 toneColor = vec3 (0.0);\n";
+			string += "	vec3 coolColor = coolColor_" + this .getId () + " .rgb;\n";
+			string += "	vec3 warmColor = warmColor_" + this .getId () + " .rgb;\n";
+			string += "\n";
+			string += "	for (int i = 0; i < x3d_MaxLights; ++ i)\n";
+			string += "	{\n";
+			string += "		if (i == x3d_NumLights)\n";
+			string += "			break;\n";
+			string += "\n";
+			string += "		x3d_LightSourceParameters light = x3d_LightSource [i];\n";
+			string += "\n";
+			string += "		vec3  L           = light .type == x3d_DirectionalLight ? -light .direction : normalize (light .location - vertex);\n";
+			string += "		float colorFactor = (1.0 + dot (L, surfaceNormal .xyz)) * 0.5;\n";
+			string += "\n";
+			string += "		toneColor += mix (warmColor .rgb, coolColor .rgb, colorFactor);\n";
+			string += "	}\n";
+			string += "\n";
+			string += "	return vec4 (toneColor, originalColor .a);\n";
 			string += "}\n";
 
 			return string;
@@ -3581,32 +3611,7 @@ function (Fields,
 			string += "\n";
 			string += "	// ToneMappedVolumeStyle\n";
 			string += "\n";
-			string += "	{\n";
-
-			string += "		vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
-			string += "		vec3 toneColor     = vec3 (0.0);\n";
-			string += "\n";
-			string += "		if (surfaceNormal .w < normalTolerance)\n";
-			string += "		{\n";
-			string += "			textureColor = vec4 (0.0);\n";
-			string += "		}\n";
-			string += "		else\n";
-			string += "		{\n";
-			string += "			for (int i = 0; i < x3d_MaxLights; ++ i)\n";
-			string += "			{\n";
-			string += "				if (i == x3d_NumLights)\n";
-			string += "					break;\n";
-			string += "\n";
-			string += "				x3d_LightSourceParameters light = x3d_LightSource [i];\n";
-			string += "				vec3 L = light .type == x3d_DirectionalLight ? -light .direction : normalize (light .location - vertex);\n";
-			string += "\n";
-			string += "				toneColor += getToneMappedStyle_" + this .getId () + " (coolColor_" + this .getId () + ", warmColor_" + this .getId () + ", surfaceNormal, L);\n";
-			string += "			}\n";
-			string += "\n";
-			string += "			textureColor .rgb = toneColor;\n";
-			string += "		}\n";
-
-			string += "	}\n";
+			string += "	textureColor = getToneMappedStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
 			return string;
 		},
