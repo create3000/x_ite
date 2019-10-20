@@ -3408,7 +3408,7 @@ function (Fields,
 			string += "	float silhouetteBoundaryOpacity = silhouetteBoundaryOpacity_" + this .getId () + ";\n";
 			string += "	float silhouetteSharpness       = silhouetteSharpness_" + this .getId () + ";\n";
 			string += "\n";
-			string += "	return originalAlpha * silhouetteRetainedOpacity + pow (silhouetteBoundaryOpacity * (1.0 - dot (surfaceNormal .xyz, normalize (vertex))), silhouetteSharpness);\n";
+			string += "	return originalAlpha * (silhouetteRetainedOpacity + silhouetteBoundaryOpacity * pow (1.0 - abs (dot (surfaceNormal .xyz, normalize (vertex))), silhouetteSharpness));\n";
 			string += "}\n";
 
 			return string;
