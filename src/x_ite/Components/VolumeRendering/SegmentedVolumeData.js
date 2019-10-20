@@ -298,7 +298,7 @@ function (Fields,
 			shaderNode .parts_ .push (vertexShader);
 			shaderNode .parts_ .push (fragmentShader);
 
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "normalTolerance", new Fields .SFFloat (0.1));
+			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "normalTolerance", new Fields .SFFloat (0.001));
 
 			if (this .voxelsNode)
 			{
