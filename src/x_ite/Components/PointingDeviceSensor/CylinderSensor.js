@@ -64,7 +64,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DDragSensorNode, 
+          X3DDragSensorNode,
           X3DConstants,
           Vector3,
           Rotation4,
@@ -223,9 +223,14 @@ function (Fields,
 
 					this .fromVector  = this .cylinder .axis .getPerpendicularVector (trackPoint) .negate ();
 					this .startOffset = new Rotation4 (yAxis, this .offset_ .getValue ());
-	
+
 					this .trackPoint_changed_ = trackPoint;
 					this .rotation_changed_   = this .startOffset;
+
+					// For min/max angle.
+
+					this .angle       = this .getAngle (this .startOffset);
+					this .startVector = this .rotation_changed_ .getValue () .multVecRot (this .axisRotation_ .getValue () .multVecRot (new Vector3 (0, 0, 1)));
 				}
 				else
 				{
@@ -277,20 +282,32 @@ function (Fields,
 				rotation .multLeft (this .startOffset);
 
 				if (this .minAngle_ .getValue () > this .maxAngle_ .getValue ())
+				{
 					this .rotation_changed_ = rotation;
-
+				}
 				else
 				{
 					var
-						angle = Algorithm .interval (this .getAngle (rotation),    -Math .PI, Math .PI),
-						min   = Algorithm .interval (this .minAngle_ .getValue (), -Math .PI, Math .PI),
-						max   = Algorithm .interval (this .maxAngle_ .getValue (), -Math .PI, Math .PI);
+						endVector     = rotation .multVecRot (this .axisRotation_ .getValue () .multVecRot (new Vector3 (0, 0, 1))),
+						deltaRotation = new Rotation4 (this .startVector, endVector),
+						axis          = this .axisRotation_ .getValue () .multVecRot (new Vector3 (0, 1, 0)),
+						sign          = axis .dot (deltaRotation .getAxis ()) > 0 ? 1 : -1,
+						min           = this .minAngle_ .getValue (),
+						max           = this .maxAngle_ .getValue ();
 
-					if (angle < min)
+					this .angle += sign * deltaRotation .angle;
+
+					this .startVector .assign (endVector);
+
+					//console .log (this .angle, min, max);
+
+					if (this .angle < min)
 						rotation .setAxisAngle (this .cylinder .axis .direction, min);
-					else if (angle > max)
+					else if (this .angle > max)
 						rotation .setAxisAngle (this .cylinder .axis .direction, max);
-			
+					else
+						rotation .setAxisAngle (this .cylinder .axis .direction, this .angle);
+
 					if (! this .rotation_changed_ .getValue () .equals (rotation))
 						this .rotation_changed_ = rotation;
 				}
@@ -307,5 +324,3 @@ function (Fields,
 
 	return CylinderSensor;
 });
-
-

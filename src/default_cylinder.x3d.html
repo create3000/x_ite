@@ -1,0 +1,155 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+   <head>
+      <title>default_cylinder.x3d (X3dToX3dom.xslt X_ITE)</title>
+      <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge"/>
+      <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+      <meta name="generator"
+            content="http://www.web3d.org/x3d/stylesheets/X3dToX3dom.xslt"/>
+      <!-- X_ITE developer site: http://create3000.de/x_ite -->
+
+	<!-- X_ITE START -->
+	<link rel="stylesheet" type="text/css" href="x_ite.css"/>
+	<script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
+	<script type="text/javascript" src="x_ite.config.js"></script>
+	<script type="text/javascript" src="x_ite.js"></script>
+	<!-- X_ITE END -->
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<style type="text/css">
+         @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
+         html, body {
+         margin: 0px;
+         padding: 0px;
+         border: 0px;
+         height: 100%;
+         }
+         body {
+         font-family: PT Sans, sans;
+         line-height: 1.3;
+         color: white;
+         background: #313131;
+         }
+         h1, h2 {
+         margin-top: 0px;
+         }
+         a {
+         text-decoration: none;
+         color: #ffe32d;
+         outline: 0;
+         }
+         a:hover {
+         text-decoration: underline;
+         }
+         a:before {
+         display: inline-block;
+         width: 0;
+         height: 0;
+         border-style: solid;
+         border-width: 3px 0 3px 5px;
+         border-color: transparent transparent transparent #ffe32d;
+         }
+         #main {
+         background: #414141;
+         width: 768px;
+         min-height: 100%;
+         border-right: 80px solid #313131;
+         outline: 40px solid #414141;
+         }
+         .frame {
+         }
+         .browser {
+         box-shadow: 0px 2px 12px 1px rgba(0, 0, 0, 0.95);
+         }
+         X3DCanvas {
+         /* Format 16:9 */
+         width: 100%;
+         height: 432px;
+         }
+         .references {
+         padding: 5px;
+         background: black;
+         }
+         .references p {
+         margin: 0;
+         }
+         .x_ite-console {
+         margin-bottom: 0px;
+         }
+         .maximize {
+         background: none;
+         border: none;
+         }
+</style>
+      <script type="text/javascript">
+         var fullscreen = false;
+
+         function toggleFullscreen ()
+         {
+           fullscreen = !fullscreen;
+
+           if (fullscreen)
+           {
+             jQuery (".frame")
+               .css ("position", "fixed")
+               .css ("top", "0px")
+               .css ("left", "0px")
+               .css ("bottom", "0px")
+               .css ("right", "0px")
+               .css ("background", "#313131");
+
+             jQuery (".maximize") .attr ("title", "Minimize Frame");
+
+             jQuery (".browser") .css ("height", "100%");
+             jQuery ("X3DCanvas") .css ("height", "90%");
+           }
+           else
+           {
+             jQuery (".frame")
+               .css ("position", "inherit")
+               .css ("background", "none");
+
+             jQuery (".maximize") .attr ("title", "Maximize Frame");
+
+             jQuery (".browser") .css ("height", "initial");
+             jQuery ("X3DCanvas") .css ("height", "432px");
+           }
+         }
+</script>
+   </head>
+   <body id="htmlBody">
+      <div id="main" style="margin-left: 40px;">
+         <h2>default_cylinder.x3d</h2>
+         <div class="frame">
+            <div class="browser">
+               <span class="webfont">Test default CylinderSensor properties. A default CylinderSensor is assigned to an IndexedFaceSet geometry. The rotation_changed fields from the CylinderSensor are routed to the transform node for the same geometry. As a result, moving the geometry should result in, when moved from the side, a "cylinderlike" rotation when viewed from the front, back or side. The geometry should keep its orientation after each "drag" motion of the pointing device.</span>
+               <div class="references">
+                  <p>
+                     <a href="default_cylinder.x3d">Original X3D scene</a>
+                  </p>
+               </div>
+<X3DCanvas url='"default_cylinder.x3d"'>
+	<p><b>Display error: X3D model not shown.</b></p>
+	<p>Your HTML browser does not appear to support all features required by the
+	<a href="http://create3000.de/x_ite" target="_blank">X_ITE</a> X3D player!</p>
+</X3DCanvas>
+<div class="references" style="text-align: right;">
+                  <p>
+                     <button title="Maximize Frame"
+                             class="maximize"
+                             onclick="toggleFullscreen ();">
+                        <img alt="Maximize Frame"
+                             src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAALCAYAAACprHcmAAAACXBIWXMAAC4jAAAuIwF4pT92AAAAB3RJTUUH4QQNFQk1i7oCawAAALhJREFUGJWV0TFKA2EQBeBn1iqptBJvEFsVjxR0LyB4txQSRCzEeAexsLCJydr4WWQWwjbGBwPzv3nDP/Mm+EBXscAhggb3xW/wGaxt8Y2rEvZxWTx0wWqn4R3HJTzCW/FrbEZJnpKcJ3lJcpLkOlvMkpwmeU1ykeSxny0Yox2M0WLS73CA7ItRkqbycZJ2UL9JMqm8CeaY4rmWuatvb+u9xBnm/3Ij+PrD527X5178g4fBBRfFQ/cL8YlBv40R0JoAAAAASUVORK5CYII="/>
+                     </button>
+                     <a href="http://create3000.de/x_ite" target="_blank">X_ITE X3D Player</a>
+                  </p>
+               </div>
+            </div>
+         </div>
+         <div>
+            <p class="x_ite-console"/>
+         </div>
+      </div>
+   </body>
+</html>
