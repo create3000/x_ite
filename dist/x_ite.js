@@ -1,4 +1,4 @@
-/* X_ITE v4.6.3a-859 */
+/* X_ITE v4.6.3a-860 */
 
 (function () {
 
@@ -107002,7 +107002,7 @@ function (Fields,
 
 					// For min/max angle.
 
-					this .angle       = this .getAngle (this .startOffset);
+					this .angle       = this .offset_ .getValue ();
 					this .startVector = this .rotation_changed_ .getValue () .multVecRot (this .axisRotation_ .getValue () .multVecRot (new Vector3 (0, 0, 1)));
 				}
 				else
