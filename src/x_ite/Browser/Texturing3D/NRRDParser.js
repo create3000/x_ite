@@ -312,8 +312,8 @@ define (function ()
 		float2byte: (function ()
 		{
 			var
-				bytes = new Uint8Array (4),
-				float = new Float32Array (bytes .buffer);
+				bytes  = new Uint8Array (4),
+				number = new Float32Array (bytes .buffer);
 
 			return function (b0, b1, b2, b3)
 			{
@@ -322,14 +322,14 @@ define (function ()
 				bytes [2] = b2;
 				bytes [3] = b3;
 
-				return float [0] * 255;
+				return number [0] * 255;
 			};
 		})(),
 		double2byte: (function ()
 		{
 			var
 				bytes  = new Uint8Array (8),
-				double = new Float64Array (bytes .buffer);
+				number = new Float64Array (bytes .buffer);
 
 			return function (b0, b1, b2, b3, b4, b5, b6, b7)
 			{
@@ -342,7 +342,7 @@ define (function ()
 				bytes [6] = b6;
 				bytes [7] = b7;
 
-				return double [0] * 255;
+				return number [0] * 255;
 			};
 		})(),
 	};
