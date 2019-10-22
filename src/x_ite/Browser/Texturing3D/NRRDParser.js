@@ -138,13 +138,32 @@ define (function ()
 		type: (function ()
 		{
 			var types = new Map ([
-				["signed char",   "signed char"],
-				["int8",          "signed char"],
-				["int8_t",        "signed char"],
-				["uchar",         "unsigned char"],
-				["unsigned char", "unsigned char"],
-				["uint8",         "unsigned char"],
-				["uint8_t",       "unsigned char"],
+				["signed char",        ["signed char", 1]],
+				["int8",               ["signed char", 1]],
+				["int8_t",             ["signed char", 1]],
+				["uchar",              ["unsigned char", 1]],
+				["unsigned char",      ["unsigned char", 1]],
+				["uint8",              ["unsigned char", 1]],
+				["uint8_t",            ["unsigned char", 1]],
+				["short",              ["signed short", 2]],
+				["short int",          ["signed short", 2]],
+				["signed short",       ["signed short", 2]],
+				["signed short int",   ["signed short", 2]],
+				["int16",              ["signed short", 2]],
+				["int16_t",            ["signed short", 2]],
+				["ushort",             ["unsigned short", 2]],
+				["unsigned short",     ["unsigned short", 2]],
+				["unsigned short int", ["unsigned short", 2]],
+				["uint16",             ["unsigned short", 2]],
+				["uint16_t",           ["unsigned short", 2]],
+				["int",                ["signed int", 4]],
+				["signed int",         ["signed int", 4]],
+				["int32",              ["signed int", 4]],
+				["int32_t",            ["signed int", 4]],
+				["uint",               ["unsigned int", 4]],
+				["unsigned int",       ["unsigned int", 4]],
+				["uint32",             ["unsigned int", 4]],
+				["uint32_t",           ["unsigned int", 4]],
 			]);
 
 			return function (value)
@@ -154,7 +173,8 @@ define (function ()
 				if (type === undefined)
 					throw new Error ("Unsupported NRRD type '" + type + "'.");
 
-				this .nrrd .type = type;
+				this .byteType = type [0];
+				this .bytes    = type [1];
 			};
 		})(),
 		encoding: (function ()
@@ -230,13 +250,38 @@ define (function ()
 		{
 			var
 				input  = this .input,
-				length = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
+				length = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth * this .bytes,
 				data   = new Uint8Array (length);
 
 			this .nrrd .data = data;
 
-			for (var i = input .length - length, d = 0; i < length; ++ i, ++ d)
-				data [d] = input .charCodeAt (i);
+			switch (this .byteType)
+			{
+				case "signed char":
+				case "unsigned char":
+				{
+					for (var i = input .length - length, d = 0; i < length; ++ i, ++ d)
+						data [d] = input .charCodeAt (i);
+
+					return;
+				}
+				case "signed short":
+				case "unsigned short":
+				{
+					for (var i = input .length - length, d = 0; i < length; i += 2, ++ d)
+						data [d] = (input .charCodeAt (i) << 8 | input .charCodeAt (i + 1)) / 256;
+
+					return;
+				}
+				case "signed int":
+				case "unsigned int":
+				{
+					for (var i = input .length - length, d = 0; i < length; i += 4, ++ d)
+						data [d] = (input .charCodeAt (i) << 24 | input .charCodeAt (i + 1) << 16 | input .charCodeAt (i + 2) << 8 | input .charCodeAt (i + 3)) / 16777216;
+
+					return;
+				}
+			}
 		},
 	};
 
