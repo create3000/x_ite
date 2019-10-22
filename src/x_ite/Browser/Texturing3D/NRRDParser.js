@@ -171,7 +171,7 @@ define (function ()
 				var type = types .get (value);
 
 				if (type === undefined)
-					throw new Error ("Unsupported NRRD type '" + type + "'.");
+					throw new Error ("Unsupported NRRD type '" + value + "'.");
 
 				this .byteType = type [0];
 				this .bytes    = type [1];
