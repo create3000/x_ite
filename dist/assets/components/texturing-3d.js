@@ -551,6 +551,8 @@ define ('x_ite/Browser/Texturing3D/NRRDParser',[],function ()
 				["unsigned int",       ["unsigned int", 4]],
 				["uint32",             ["unsigned int", 4]],
 				["uint32_t",           ["unsigned int", 4]],
+				["float",              ["float", 4]],
+				["double",             ["double", 8]],
 			]);
 
 			return function (value)
@@ -668,8 +670,68 @@ define ('x_ite/Browser/Texturing3D/NRRDParser',[],function ()
 
 					return;
 				}
+				case "float":
+				{
+					for (var i = input .length - length, d = 0; i < length; i += 4, ++ d)
+						data [d] = this .float2byte (input .charCodeAt (i),
+						                             input .charCodeAt (i + 1),
+						                             input .charCodeAt (i + 2),
+						                             input .charCodeAt (i + 3));
+
+					return;
+				}
+				case "double":
+				{
+					for (var i = input .length - length, d = 0; i < length; i += 8, ++ d)
+						data [d] = this .double2byte (input .charCodeAt (i),
+																input .charCodeAt (i + 1),
+																input .charCodeAt (i + 2),
+																input .charCodeAt (i + 3),
+																input .charCodeAt (i + 4),
+																input .charCodeAt (i + 5),
+																input .charCodeAt (i + 6),
+																input .charCodeAt (i + 7));
+
+					return;
+				}
 			}
 		},
+		float2byte: (function ()
+		{
+			var
+				bytes  = new Uint8Array (4),
+				number = new Float32Array (bytes .buffer);
+
+			return function (b0, b1, b2, b3)
+			{
+				bytes [0] = b0;
+				bytes [1] = b1;
+				bytes [2] = b2;
+				bytes [3] = b3;
+
+				return number [0] * 255;
+			};
+		})(),
+		double2byte: (function ()
+		{
+			var
+				bytes  = new Uint8Array (8),
+				number = new Float64Array (bytes .buffer);
+
+			return function (b0, b1, b2, b3, b4, b5, b6, b7)
+			{
+				bytes [0] = b0;
+				bytes [1] = b1;
+				bytes [2] = b2;
+				bytes [3] = b3;
+				bytes [4] = b4;
+				bytes [5] = b5;
+				bytes [6] = b6;
+				bytes [7] = b7;
+
+				return number [0] * 255;
+			};
+		})(),
 	};
 
 	return NRRDParser;
