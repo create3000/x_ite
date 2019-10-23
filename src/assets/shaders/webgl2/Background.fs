@@ -1,7 +1,12 @@
 #version 300 es
 
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+precision highp int;
+#else
 precision mediump float;
 precision mediump int;
+#endif
 
 in vec4 color;  // color
 in vec3 vertex; // point on geometry

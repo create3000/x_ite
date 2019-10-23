@@ -1,7 +1,12 @@
 #version 300 es
 
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+precision highp int;
+#else
 precision mediump float;
 precision mediump int;
+#endif
 
 uniform int  x3d_GeometryType;
 uniform bool x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false

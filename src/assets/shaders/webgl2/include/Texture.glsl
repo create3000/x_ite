@@ -1,7 +1,11 @@
 
 #pragma X3D include "Perlin.glsl"
 
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp sampler3D;
+#else
 precision mediump sampler3D;
+#endif
 
 uniform int         x3d_NumTextures;
 uniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture

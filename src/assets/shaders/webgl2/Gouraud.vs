@@ -1,7 +1,12 @@
 #version 300 es
 
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+precision highp int;
+#else
 precision mediump float;
 precision mediump int;
+#endif
 
 uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];
 uniform mat3 x3d_NormalMatrix;
