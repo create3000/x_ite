@@ -1,6 +1,11 @@
 #version 300 es
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+precision highp int;
+#else
 precision mediump float;
 precision mediump int;
+#endif
 uniform int x3d_GeometryType;
 uniform bool x3d_Lighting; 
 uniform bool x3d_ColorMaterial; 
@@ -299,7 +304,11 @@ return vec3 (perlin (p.xy, 1.0, 0.0),
 perlin (p.yz, 1.0, 0.0),
 perlin (p.zx, 1.0, 0.0));
 }
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp sampler3D;
+#else
 precision mediump sampler3D;
+#endif
 uniform int x3d_NumTextures;
 uniform int x3d_TextureType [x3d_MaxTextures]; 
 uniform sampler2D x3d_Texture2D [x3d_MaxTextures];
