@@ -537,7 +537,8 @@ function (X3DBindableNode,
 
 					// Get background scale.
 
-					var farValue = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.8;
+					// Workaround set far value factor to 0.2 instead of 0.8 to fix tablet rendering.
+					var farValue = -ViewVolume .unProjectPointMatrix (0, 0, 1, invProjectionMatrix .assign (renderObject .getProjectionMatrix () .get ()) .inverse (), viewport, farVector) .z * 0.2;
 
 					// Get projection matrix.
 
