@@ -210,9 +210,11 @@ function (Fields,
 					// this .printProgramInfo ();
 				}
 				else
+				{
 					console .warn ("Couldn't initialize " + this .getTypeName () + " '" + this .getName () + "': " + gl .getProgramInfoLog (program));
+				}
 
-				this .setValid (!! valid);
+				this .setValid (Boolean (valid));
 			}
 			else
 			{

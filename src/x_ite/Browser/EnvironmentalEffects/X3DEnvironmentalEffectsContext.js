@@ -57,7 +57,7 @@ function (ComposedShader,
           TextureProperties)
 {
 "use strict";
-	
+
 	function X3DEnvironmentalEffectsContext ()
 	{
 		this .localFogs = [ ];
