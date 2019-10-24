@@ -344,7 +344,7 @@ function (Fields,
 
 				styleFunctions += "	else\n";
 				styleFunctions += "	{\n";
-				styleFunctions += "		textureColor = vec4 (0.0);\n";
+				styleFunctions += "		discard;\n";
 				styleFunctions += "	}\n";
 				styleFunctions += "\n";
 			}
