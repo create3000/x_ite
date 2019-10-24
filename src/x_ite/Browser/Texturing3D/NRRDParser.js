@@ -216,12 +216,14 @@ function (pako)
 
 				switch (dimension)
 				{
+					case 1:
+					case 2:
 					case 3:
 					case 4:
 						this .nrrd .dimension = dimension;
 						return;
 					default:
-						throw new Error ("Unsupported NRRD dimension '" + dimension + "', must be 3.");
+						throw new Error ("Unsupported NRRD dimension '" + dimension + "', must be 1, 2, 3, or 4.");
 				}
 			}
 
