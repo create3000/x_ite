@@ -227,15 +227,15 @@ function (Fields,
 				styleFunctions += "\n";
 
 				styleFunctions += "\n";
-				styleFunctions += "	float segment = texture (segmentIdentifiers, texCoord) .r;\n";
+				styleFunctions += "	int segment = int (texture (segmentIdentifiers, texCoord) .r * 255.0);\n";
 			}
 			else
 			{
-				styleFunctions += "	float segment = 0.0;\n";
+				styleFunctions += "	int segment = 0;\n";
 			}
 
 			styleFunctions += "\n";
-			styleFunctions += "	if (segment == 0.0)\n";
+			styleFunctions += "	if (segment == 0)\n";
 			styleFunctions += "	{\n";
 
 			if (this .getSegmentEnabled (0))
@@ -255,7 +255,7 @@ function (Fields,
 
 			for (var i = 1, length = this .renderStyleNodes .length; i < length; ++ i)
 			{
-				styleFunctions += "	else if (segment == " + i + ".0 / 255.0)\n";
+				styleFunctions += "	else if (segment == " + i + ")\n";
 				styleFunctions += "	{\n";
 
 				if (this .getSegmentEnabled (i))
