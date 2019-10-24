@@ -595,24 +595,26 @@ function (pako)
 		})(),
 		dimension: function (value)
 		{
-			var result = value .match (/(\d+)/);
+			var
+				result    = value .match (/(\d+)/),
+				dimension = 0;
 
 			if (result)
 			{
-				var dimension = parseInt (result [1]);
+				dimension = parseInt (result [1]);
 
 				switch (dimension)
 				{
+					case 1:
+					case 2:
 					case 3:
 					case 4:
 						this .nrrd .dimension = dimension;
 						return;
-					default:
-						throw new Error ("Unsupported NRRD dimension '" + dimension + "', must be 3.");
 				}
 			}
 
-			throw new Error ("Unsupported NRRD dimension, must be 3 or 4.");
+			throw new Error ("Unsupported NRRD dimension '" + dimension + "', must be 1, 2, 3, or 4.");
 		},
 		sizes: function (value)
 		{

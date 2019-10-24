@@ -208,11 +208,13 @@ function (pako)
 		})(),
 		dimension: function (value)
 		{
-			var result = value .match (/(\d+)/);
+			var
+				result    = value .match (/(\d+)/),
+				dimension = 0;
 
 			if (result)
 			{
-				var dimension = parseInt (result [1]);
+				dimension = parseInt (result [1]);
 
 				switch (dimension)
 				{
