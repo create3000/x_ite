@@ -191,6 +191,7 @@ function (pako)
 				["txt",   "ascii"],
 				["text",  "ascii"],
 				["raw",   "raw"],
+				["hex",   "hex"],
 				["gz",    "gzip"],
 				["gzip",  "gzip"],
 			]);
@@ -272,6 +273,11 @@ function (pako)
 				case "raw":
 				{
 					this .raw ();
+					break;
+				}
+				case "hex":
+				{
+					this .hex ();
 					break;
 				}
 				case "gzip":
@@ -399,6 +405,19 @@ function (pako)
 					return;
 				}
 			}
+		},
+		hex: function ()
+		{
+			Grammar .data .parse (this);
+
+			var raw = this .result [1] .replace (/\s+/, "") .match (/([0-9a-f]{2})/ig) .map (function (value)
+			{
+				return parseInt (value, 16);
+			});
+
+			this .input = String .fromCharCode .apply (String, raw);
+
+			this .raw ();
 		},
 		gzip: function ()
 		{
