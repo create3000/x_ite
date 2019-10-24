@@ -434,7 +434,10 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Browser/Texturing3D/NRRDParser',[],function ()
+define ('x_ite/Browser/Texturing3D/NRRDParser',[
+	"pako_inflate",
+],
+function (pako)
 {
 "use strict";
 
@@ -445,6 +448,7 @@ define ('x_ite/Browser/Texturing3D/NRRDParser',[],function ()
 		NRRD: new RegExp ("^NRRD(\\d+)\\n", 'gy'),
 		field: new RegExp ("(\\w+):\\s*(.+?)\\n", 'gy'),
 		comment: new RegExp ("#[^\\n]\\n", 'gy'),
+		newLine: new RegExp ("\n", 'gy'),
 		data: new RegExp ("([^]*)$", 'gy'),
 	};
 
@@ -569,17 +573,23 @@ define ('x_ite/Browser/Texturing3D/NRRDParser',[],function ()
 		})(),
 		encoding: (function ()
 		{
-			var encodings = new Set ([
-				"ascii",
-				"raw",
+			var encodings = new Map ([
+				["ascii", "ascii"],
+				["txt",   "ascii"],
+				["text",  "ascii"],
+				["raw",   "raw"],
+				["gz",    "gzip"],
+				["gzip",  "gzip"],
 			]);
 
 			return function (value)
 			{
-				if (! encodings .has (value))
+				var encoding = encodings .get (value);
+
+				if (encoding === undefined)
 					throw new Error ("Unsupported NRRD encoding '" + value + "'.");
 
-				this .encoding = value;
+				this .encoding = encoding;
 			};
 		})(),
 		dimension: function (value)
@@ -649,6 +659,11 @@ define ('x_ite/Browser/Texturing3D/NRRDParser',[],function ()
 				case "raw":
 				{
 					this .raw ();
+					break;
+				}
+				case "gzip":
+				{
+					this .gzip ();
 					break;
 				}
 			}
@@ -725,7 +740,7 @@ define ('x_ite/Browser/Texturing3D/NRRDParser',[],function ()
 				case "signed char":
 				case "unsigned char":
 				{
-					for (var i = input .length - length, d = 0; i < length; ++ i, ++ d)
+					for (var i = input .length - length, d = 0; i < input .length; ++ i, ++ d)
 						data [d] = input .charCodeAt (i);
 
 					return;
@@ -733,7 +748,7 @@ define ('x_ite/Browser/Texturing3D/NRRDParser',[],function ()
 				case "signed short":
 				case "unsigned short":
 				{
-					for (var i = input .length - length, d = 0; i < length; i += 2, ++ d)
+					for (var i = input .length - length, d = 0; i < input .length; i += 2, ++ d)
 						data [d] = (input .charCodeAt (i) << 8 | input .charCodeAt (i + 1)) / 256;
 
 					return;
@@ -741,14 +756,14 @@ define ('x_ite/Browser/Texturing3D/NRRDParser',[],function ()
 				case "signed int":
 				case "unsigned int":
 				{
-					for (var i = input .length - length, d = 0; i < length; i += 4, ++ d)
+					for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
 						data [d] = (input .charCodeAt (i) << 24 | input .charCodeAt (i + 1) << 16 | input .charCodeAt (i + 2) << 8 | input .charCodeAt (i + 3)) / 16777216;
 
 					return;
 				}
 				case "float":
 				{
-					for (var i = input .length - length, d = 0; i < length; i += 4, ++ d)
+					for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
 						data [d] = this .float2byte (input .charCodeAt (i),
 						                             input .charCodeAt (i + 1),
 						                             input .charCodeAt (i + 2),
@@ -758,7 +773,7 @@ define ('x_ite/Browser/Texturing3D/NRRDParser',[],function ()
 				}
 				case "double":
 				{
-					for (var i = input .length - length, d = 0; i < length; i += 8, ++ d)
+					for (var i = input .length - length, d = 0; i < input .length; i += 8, ++ d)
 						data [d] = this .double2byte (input .charCodeAt (i),
 																input .charCodeAt (i + 1),
 																input .charCodeAt (i + 2),
@@ -771,6 +786,19 @@ define ('x_ite/Browser/Texturing3D/NRRDParser',[],function ()
 					return;
 				}
 			}
+		},
+		gzip: function ()
+		{
+			if (! Grammar .newLine .parse (this))
+				throw new Error ("Invalid NRRD data.");
+
+			Grammar .data .parse (this);
+
+			var raw = pako .ungzip (this .result [1], { to: "raw" });
+
+			this .input = String .fromCharCode .apply (String, raw);
+
+			this .raw ();
 		},
 		float2byte: (function ()
 		{
