@@ -235,41 +235,29 @@ function (Fields,
 			}
 
 			styleFunctions += "\n";
-			styleFunctions += "	if (segment == 0)\n";
+			styleFunctions += "	switch (segment)\n";
 			styleFunctions += "	{\n";
 
-			if (this .getSegmentEnabled (0))
+			for (var i = 0, length = this .renderStyleNodes .length; i < length; ++ i)
 			{
-				if (this .renderStyleNodes .length > 0)
-				{
-					styleUniforms  += this .renderStyleNodes [0] .getUniformsText (),
-					styleFunctions += this .renderStyleNodes [0] .getFunctionsText ();
-				}
-			}
-			else
-			{
-				styleFunctions += "	return vec4 (0.0);\n";
-			}
-
-			styleFunctions += "	}\n";
-
-			for (var i = 1, length = this .renderStyleNodes .length; i < length; ++ i)
-			{
-				styleFunctions += "	else if (segment == " + i + ")\n";
-				styleFunctions += "	{\n";
+				styleFunctions += "		case " + i + ":\n";
+				styleFunctions += "		{\n";
 
 				if (this .getSegmentEnabled (i))
 				{
 					styleUniforms  += this .renderStyleNodes [i] .getUniformsText (),
 					styleFunctions += this .renderStyleNodes [i] .getFunctionsText ();
+					styleFunctions += "			break;\n";
 				}
 				else
 				{
-					styleFunctions += "	return vec4 (0.0);\n";
+					styleFunctions += "			return vec4 (0.0);\n";
 				}
 
-				styleFunctions += "	}\n";
+				styleFunctions += "		}\n";
 			}
+
+			styleFunctions += "	}\n";
 
 			fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
 			fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
