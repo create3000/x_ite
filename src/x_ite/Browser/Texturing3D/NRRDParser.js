@@ -47,7 +47,10 @@
  ******************************************************************************/
 
 
-define (function ()
+define ([
+	"pako_inflate",
+],
+function (pako)
 {
 "use strict";
 
@@ -58,6 +61,7 @@ define (function ()
 		NRRD: new RegExp ("^NRRD(\\d+)\\n", 'gy'),
 		field: new RegExp ("(\\w+):\\s*(.+?)\\n", 'gy'),
 		comment: new RegExp ("#[^\\n]\\n", 'gy'),
+		newLine: new RegExp ("\n", 'gy'),
 		data: new RegExp ("([^]*)$", 'gy'),
 	};
 
@@ -182,17 +186,23 @@ define (function ()
 		})(),
 		encoding: (function ()
 		{
-			var encodings = new Set ([
-				"ascii",
-				"raw",
+			var encodings = new Map ([
+				["ascii", "ascii"],
+				["txt",   "ascii"],
+				["text",  "ascii"],
+				["raw",   "raw"],
+				["gz",    "gzip"],
+				["gzip",  "gzip"],
 			]);
 
 			return function (value)
 			{
-				if (! encodings .has (value))
+				var encoding = encodings .get (value);
+
+				if (encoding === undefined)
 					throw new Error ("Unsupported NRRD encoding '" + value + "'.");
 
-				this .encoding = value;
+				this .encoding = encoding;
 			};
 		})(),
 		dimension: function (value)
@@ -262,6 +272,11 @@ define (function ()
 				case "raw":
 				{
 					this .raw ();
+					break;
+				}
+				case "gzip":
+				{
+					this .gzip ();
 					break;
 				}
 			}
@@ -384,6 +399,19 @@ define (function ()
 					return;
 				}
 			}
+		},
+		gzip: function ()
+		{
+			if (! Grammar .newLine .parse (this))
+				throw new Error ("Invalid NRRD data.");
+
+			Grammar .data .parse (this);
+
+			var raw = pako .ungzip (this .result [1], { to: "raw" });
+
+			this .input = String .fromCharCode .apply (String, raw);
+
+			this .raw ();
 		},
 		float2byte: (function ()
 		{
