@@ -168,48 +168,46 @@ function (Fields,
 			{
 				try
 				{
-					if (! this .viewpointNode)
-						return;
-
 					if (this .inside && this .getTraversed ())
 					{
-					   var modelMatrix = this .modelMatrix;
-
-						centerOfRotationMatrix .assign (this .viewpointNode .getModelMatrix ());
-						centerOfRotationMatrix .translate (this .viewpointNode .getUserCenterOfRotation ());
-						centerOfRotationMatrix .multRight (invModelMatrix .assign (modelMatrix) .inverse ());
-
-						modelMatrix .multRight (this .viewpointNode .getInverseCameraSpaceMatrix ());
-						modelMatrix .get (null, orientation);
-						modelMatrix .inverse ();
-
-						position .set (modelMatrix [12], modelMatrix [13], modelMatrix [14]);
-
-						orientation .inverse ();
-
-						centerOfRotation .set (centerOfRotationMatrix [12], centerOfRotationMatrix [13], centerOfRotationMatrix [14]);
-
-						if (this .isActive_ .getValue ())
+						if (this .viewpointNode)
 						{
-							if (! this .position_changed_ .getValue () .equals (position))
-								this .position_changed_ = position;
+							var modelMatrix = this .modelMatrix;
 
-							if (! this .orientation_changed_ .getValue () .equals (orientation))
-								this .orientation_changed_ = orientation;
+							centerOfRotationMatrix .assign (this .viewpointNode .getModelMatrix ());
+							centerOfRotationMatrix .translate (this .viewpointNode .getUserCenterOfRotation ());
+							centerOfRotationMatrix .multRight (invModelMatrix .assign (modelMatrix) .inverse ());
 
-							if (! this .centerOfRotation_changed_ .getValue () .equals (centerOfRotation))
+							modelMatrix .multRight (this .viewpointNode .getInverseCameraSpaceMatrix ());
+							modelMatrix .get (null, orientation);
+							modelMatrix .inverse ();
+
+							position .set (modelMatrix [12], modelMatrix [13], modelMatrix [14]);
+
+							orientation .inverse ();
+
+							centerOfRotation .set (centerOfRotationMatrix [12], centerOfRotationMatrix [13], centerOfRotationMatrix [14]);
+
+							if (this .isActive_ .getValue ())
+							{
+								if (! this .position_changed_ .getValue () .equals (position))
+									this .position_changed_ = position;
+
+								if (! this .orientation_changed_ .getValue () .equals (orientation))
+									this .orientation_changed_ = orientation;
+
+								if (! this .centerOfRotation_changed_ .getValue () .equals (centerOfRotation))
+									this .centerOfRotation_changed_ = centerOfRotation;
+							}
+							else
+							{
+								this .isActive_                 = true;
+								this .enterTime_                = this .getBrowser () .getCurrentTime ();
+								this .position_changed_         = position;
+								this .orientation_changed_      = orientation;
 								this .centerOfRotation_changed_ = centerOfRotation;
+							}
 						}
-						else
-						{
-							this .isActive_                 = true;
-							this .enterTime_                = this .getBrowser () .getCurrentTime ();
-							this .position_changed_         = position;
-							this .orientation_changed_      = orientation;
-							this .centerOfRotation_changed_ = centerOfRotation;
-						}
-
-						this .inside = false;
 					}
 					else
 					{
@@ -219,13 +217,14 @@ function (Fields,
 							this .exitTime_ = this .getBrowser () .getCurrentTime ();
 						}
 					}
-
-					this .viewpointNode = null;
 				}
 				catch (error)
 				{
 					//console .log (error .message);
 				}
+
+				this .inside        = false;
+				this .viewpointNode = null;
 
 				this .setTraversed (false);
 			};
