@@ -58,6 +58,7 @@ define (function ()
 		NRRD: new RegExp ("^NRRD(\\d+)\\n", 'gy'),
 		field: new RegExp ("(\\w+):\\s*(.+?)\\n", 'gy'),
 		comment: new RegExp ("#[^\\n]\\n", 'gy'),
+		data: new RegExp ("([^]*)$", 'gy'),
 	};
 
 	function parse (parser)
@@ -182,7 +183,8 @@ define (function ()
 		encoding: (function ()
 		{
 			var encodings = new Set ([
-				"raw"
+				"ascii",
+				"raw",
 			]);
 
 			return function (value)
@@ -190,7 +192,7 @@ define (function ()
 				if (! encodings .has (value))
 					throw new Error ("Unsupported NRRD encoding '" + value + "'.");
 
-				this .nrrd .encoding = value;
+				this .encoding = value;
 			};
 		})(),
 		dimension: function (value)
@@ -250,10 +252,86 @@ define (function ()
 		},
 		data: function ()
 		{
+			switch (this .encoding)
+			{
+				case "ascii":
+				{
+					this .ascii ();
+					break;
+				}
+				case "raw":
+				{
+					this .raw ();
+					break;
+				}
+			}
+		},
+		ascii: function ()
+		{
 			var
-				input  = this .input,
-				length = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth * this .bytes,
-				data   = new Uint8Array (length);
+				dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
+				data       = new Uint8Array (dataLength);
+
+			this .nrrd .data = data;
+
+			if (! Grammar .data .parse (this))
+				return;
+
+			var numbers = this .result [1] .trim () .split (/\s+/);
+
+console .log (numbers);
+
+			switch (this .byteType)
+			{
+				case "signed char":
+				case "unsigned char":
+				{
+					numbers .forEach (function (value, i)
+					{
+						data [i] = parseInt (value);
+					});
+
+					return;
+				}
+				case "signed short":
+				case "unsigned short":
+				{
+					numbers .forEach (function (value, i)
+					{
+						data [i] = parseInt (value) / 256;
+					});
+
+					return;
+				}
+				case "signed int":
+				case "unsigned int":
+				{
+					numbers .forEach (function (value, i)
+					{
+						data [i] = parseInt (value) / 16777216;
+					});
+
+					return;
+				}
+				case "float":
+				case "double":
+				{
+					numbers .forEach (function (value, i)
+					{
+						data [i] = parseFloat (value) * 255;
+					});
+
+					return;
+				}
+			}
+		},
+		raw: function ()
+		{
+			var
+				input      = this .input,
+				dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
+				length     = dataLength * this .bytes,
+				data       = new Uint8Array (dataLength);
 
 			this .nrrd .data = data;
 
