@@ -216,8 +216,6 @@ function (Fields,
 				console .log ("Creating SegmentedVolumeData Shader ...");
 
 			var
-				segmentEnabled0       = this .getSegmentEnabled (0),
-				segmentEnabled1       = this .getSegmentEnabled (1),
 				opacityMapVolumeStyle = this .getBrowser () .getDefaultVolumeStyle (),
 				styleUniforms         = opacityMapVolumeStyle .getUniformsText (),
 				styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
@@ -240,7 +238,7 @@ function (Fields,
 			styleFunctions += "	if (segment == 0.0)\n";
 			styleFunctions += "	{\n";
 
-			if (segmentEnabled0)
+			if (this .getSegmentEnabled (0))
 			{
 				if (this .renderStyleNodes .length > 0)
 				{
@@ -254,23 +252,24 @@ function (Fields,
 			}
 
 			styleFunctions += "	}\n";
-			styleFunctions += "	else\n";
-			styleFunctions += "	{\n";
 
-			if (segmentEnabled1)
+			for (var i = 1, length = this .renderStyleNodes .length; i < length; ++ i)
 			{
-				if (this .renderStyleNodes .length > 1)
+				styleFunctions += "	else if (segment == " + i + ".0 / 255.0)\n";
+				styleFunctions += "	{\n";
+
+				if (this .getSegmentEnabled (i))
 				{
-					styleUniforms  += this .renderStyleNodes [1] .getUniformsText (),
-					styleFunctions += this .renderStyleNodes [1] .getFunctionsText ();
+					styleUniforms  += this .renderStyleNodes [i] .getUniformsText (),
+					styleFunctions += this .renderStyleNodes [i] .getFunctionsText ();
 				}
-			}
-			else
-			{
-				styleFunctions += "	return vec4 (0.0);\n";
-			}
+				else
+				{
+					styleFunctions += "	return vec4 (0.0);\n";
+				}
 
-			styleFunctions += "	}\n";
+				styleFunctions += "	}\n";
+			}
 
 			fs = fs .replace (/\/\/ VOLUME_STYLES_UNIFORMS\n/,  styleUniforms);
 			fs = fs .replace (/\/\/ VOLUME_STYLES_FUNCTIONS\n/, styleFunctions);
@@ -311,16 +310,10 @@ function (Fields,
 
 			opacityMapVolumeStyle .addShaderFields (shaderNode);
 
-			if (segmentEnabled0)
+			for (var i = 0, length = this .renderStyleNodes .length; i < length; ++ i)
 			{
-				if (this .renderStyleNodes .length > 0)
-					this .renderStyleNodes [0] .addShaderFields (shaderNode);
-			}
-
-			if (segmentEnabled1)
-			{
-				if (this .renderStyleNodes .length > 1)
-					this .renderStyleNodes [1] .addShaderFields (shaderNode);
+				if (this .getSegmentEnabled (i))
+					this .renderStyleNodes [i] .addShaderFields (shaderNode);
 			}
 
 			return shaderNode;
