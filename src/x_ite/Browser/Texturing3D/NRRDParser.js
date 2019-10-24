@@ -410,7 +410,7 @@ function (pako)
 		{
 			Grammar .data .parse (this);
 
-			var raw = this .result [1] .replace (/\s+/, "") .match (/([0-9a-f]{2})/ig) .map (function (value)
+			var raw = this .result [1] .match (/([0-9a-f]{2})/ig) .map (function (value)
 			{
 				return parseInt (value, 16);
 			});
