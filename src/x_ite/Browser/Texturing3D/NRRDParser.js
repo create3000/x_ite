@@ -222,12 +222,10 @@ function (pako)
 					case 4:
 						this .nrrd .dimension = dimension;
 						return;
-					default:
-						throw new Error ("Unsupported NRRD dimension '" + dimension + "', must be 1, 2, 3, or 4.");
 				}
 			}
 
-			throw new Error ("Unsupported NRRD dimension, must be 3 or 4.");
+			throw new Error ("Unsupported NRRD dimension '" + dimension + "', must be 1, 2, 3, or 4.");
 		},
 		sizes: function (value)
 		{
