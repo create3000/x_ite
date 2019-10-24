@@ -666,8 +666,6 @@ define ('x_ite/Browser/Texturing3D/NRRDParser',[],function ()
 
 			var numbers = this .result [1] .trim () .split (/\s+/);
 
-console .log (numbers);
-
 			switch (this .byteType)
 			{
 				case "signed char":
