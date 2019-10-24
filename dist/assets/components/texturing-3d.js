@@ -628,6 +628,22 @@ function (pako)
 
 			switch (sizes .length)
 			{
+				case 1:
+				{
+					this .nrrd .components = 1;
+					this .nrrd .width      = sizes [0];
+					this .nrrd .height     = 1;
+					this .nrrd .depth      = 1;
+					return;
+				}
+				case 2:
+				{
+					this .nrrd .components = 1;
+					this .nrrd .width      = sizes [0];
+					this .nrrd .height     = sizes [1];
+					this .nrrd .depth      = 1;
+					return;
+				}
 				case 3:
 				{
 					this .nrrd .components = 1;
