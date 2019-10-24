@@ -125,8 +125,8 @@ define (function ()
 			{
 				var
 					key   = this .result [1],
-					value = this .result [2],
-					fun   = this .fieldFunction .get (key .toLowerCase () .trim ());
+					value = this .result [2] .trim () .toLowerCase (),
+					fun   = this .fieldFunction .get (key .toLowerCase ());
 
 				if (fun)
 					fun .call (this, value);
