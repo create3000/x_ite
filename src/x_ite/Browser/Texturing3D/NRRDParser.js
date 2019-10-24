@@ -338,7 +338,7 @@ define (function ()
 				case "signed char":
 				case "unsigned char":
 				{
-					for (var i = input .length - length, d = 0; i < length; ++ i, ++ d)
+					for (var i = input .length - length, d = 0; i < input .length; ++ i, ++ d)
 						data [d] = input .charCodeAt (i);
 
 					return;
@@ -346,7 +346,7 @@ define (function ()
 				case "signed short":
 				case "unsigned short":
 				{
-					for (var i = input .length - length, d = 0; i < length; i += 2, ++ d)
+					for (var i = input .length - length, d = 0; i < input .length; i += 2, ++ d)
 						data [d] = (input .charCodeAt (i) << 8 | input .charCodeAt (i + 1)) / 256;
 
 					return;
@@ -354,14 +354,14 @@ define (function ()
 				case "signed int":
 				case "unsigned int":
 				{
-					for (var i = input .length - length, d = 0; i < length; i += 4, ++ d)
+					for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
 						data [d] = (input .charCodeAt (i) << 24 | input .charCodeAt (i + 1) << 16 | input .charCodeAt (i + 2) << 8 | input .charCodeAt (i + 3)) / 16777216;
 
 					return;
 				}
 				case "float":
 				{
-					for (var i = input .length - length, d = 0; i < length; i += 4, ++ d)
+					for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
 						data [d] = this .float2byte (input .charCodeAt (i),
 						                             input .charCodeAt (i + 1),
 						                             input .charCodeAt (i + 2),
@@ -371,7 +371,7 @@ define (function ()
 				}
 				case "double":
 				{
-					for (var i = input .length - length, d = 0; i < length; i += 8, ++ d)
+					for (var i = input .length - length, d = 0; i < input .length; i += 8, ++ d)
 						data [d] = this .double2byte (input .charCodeAt (i),
 																input .charCodeAt (i + 1),
 																input .charCodeAt (i + 2),
