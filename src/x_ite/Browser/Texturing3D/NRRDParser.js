@@ -587,9 +587,9 @@ function (pako)
 		endianess: function ()
 		{
 			var
-				buffer = new ArrayBuffer(4),
-				int    = new Uint32Array(buffer),
-				bytes  = new Uint8Array(buffer);
+				buffer = new ArrayBuffer (4),
+				int    = new Uint32Array (buffer),
+				bytes  = new Uint8Array (buffer);
 
 			int [0] = 0x01020304;
 
