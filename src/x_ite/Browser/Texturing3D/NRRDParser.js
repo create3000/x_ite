@@ -581,7 +581,6 @@ function (pako)
 			}
 			catch (error)
 			{
-				console .log (error);
 				throw new Error ("Invalid NRRD data.");
 			}
 		},
