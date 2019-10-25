@@ -94,6 +94,8 @@ function (pako)
 			["sizes",     this .getSizes],
 			["endian",    this .getEndian],
 		]);
+
+		this .endian = this .endianess ();
 	}
 
 	NRRDParser .prototype =
@@ -283,7 +285,13 @@ function (pako)
 		},
 		getEndian: function (value)
 		{
-			this .endian = value;
+			if (value === 'little' || value === 'big')
+			{
+				this .endian = value;
+				return;
+			}
+
+			throw new Error ("Unsupported NRRD endian, must be 'little' or 'big'.");
 		},
 		getData: function ()
 		{
@@ -390,40 +398,60 @@ function (pako)
 				case "signed short":
 				case "unsigned short":
 				{
+					if (this .endianess () === this .endian)
+						var e0 = 0, e1 = 1;
+					else
+						var e0 = 1, e1 = 0;
+
 					for (var i = input .length - length, d = 0; i < input .length; i += 2, ++ d)
-						data [d] = (input .charCodeAt (i) << 8 | input .charCodeAt (i + 1)) / 256;
+						data [d] = (input .charCodeAt (i + e0) << 8 | input .charCodeAt (i + e1)) / 256;
 
 					return;
 				}
 				case "signed int":
 				case "unsigned int":
 				{
+					if (this .endianess () === this .endian)
+						var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
+					else
+						var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
+
 					for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
-						data [d] = (input .charCodeAt (i) << 24 | input .charCodeAt (i + 1) << 16 | input .charCodeAt (i + 2) << 8 | input .charCodeAt (i + 3)) / 16777216;
+						data [d] = (input .charCodeAt (i + e0) << 24 | input .charCodeAt (i + e1) << 16 | input .charCodeAt (i + e2) << 8 | input .charCodeAt (i + e3)) / 16777216;
 
 					return;
 				}
 				case "float":
 				{
+					if (this .endianess () === this .endian)
+						var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
+					else
+						var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
+
 					for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
-						data [d] = this .float2byte (input .charCodeAt (i),
-						                             input .charCodeAt (i + 1),
-						                             input .charCodeAt (i + 2),
-						                             input .charCodeAt (i + 3));
+						data [d] = this .float2byte (input .charCodeAt (i + e0),
+						                             input .charCodeAt (i + e1),
+						                             input .charCodeAt (i + e2),
+						                             input .charCodeAt (i + e3));
 
 					return;
 				}
 				case "double":
 				{
+					if (this .endianess () === this .endian)
+						var e0 = 0, e1 = 1, e2 = 2, e3 = 3, e4 = 4, e5 = 5, e6 = 6, e7 = 7;
+					else
+						var e0 = 7, e1 = 6, e2 = 5, e3 = 4, e4 = 3, e5 = 2, e6 = 1, e7 = 0;
+
 					for (var i = input .length - length, d = 0; i < input .length; i += 8, ++ d)
-						data [d] = this .double2byte (input .charCodeAt (i),
-																input .charCodeAt (i + 1),
-																input .charCodeAt (i + 2),
-																input .charCodeAt (i + 3),
-																input .charCodeAt (i + 4),
-																input .charCodeAt (i + 5),
-																input .charCodeAt (i + 6),
-																input .charCodeAt (i + 7));
+						data [d] = this .double2byte (input .charCodeAt (i + e0),
+																input .charCodeAt (i + e1),
+																input .charCodeAt (i + e2),
+																input .charCodeAt (i + e3),
+																input .charCodeAt (i + e4),
+																input .charCodeAt (i + e5),
+																input .charCodeAt (i + e6),
+																input .charCodeAt (i + e7));
 
 					return;
 				}
@@ -451,40 +479,60 @@ function (pako)
 				case "signed short":
 				case "unsigned short":
 				{
+					if (this .endianess () === this .endian)
+						var e0 = 0, e1 = 1;
+					else
+						var e0 = 1, e1 = 0;
+
 					for (var i = input .length - length, d = 0; i < input .length; i += 2, ++ d)
-						data [d] = (input [i] << 8 | input [i + 1]) / 256;
+						data [d] = (input [i + e0] << 8 | input [i + e1]) / 256;
 
 					return;
 				}
 				case "signed int":
 				case "unsigned int":
 				{
+					if (this .endianess () === this .endian)
+						var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
+					else
+						var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
+
 					for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
-						data [d] = (input [i] << 24 | input [i + 1] << 16 | input [i + 2] << 8 | input [i + 3]) / 16777216;
+						data [d] = (input [i + e0] << 24 | input [i + e1] << 16 | input [i + e2] << 8 | input [i + e3]) / 16777216;
 
 					return;
 				}
 				case "float":
 				{
+					if (this .endianess () === this .endian)
+						var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
+					else
+						var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
+
 					for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
-						data [d] = this .float2byte (input [i + 0],
-						                             input [i + 1],
-						                             input [i + 2],
-						                             input [i + 3]);
+						data [d] = this .float2byte (input [i + e0],
+						                             input [i + e1],
+						                             input [i + e2],
+						                             input [i + e3]);
 
 					return;
 				}
 				case "double":
 				{
+					if (this .endianess () === this .endian)
+						var e0 = 0, e1 = 1, e2 = 2, e3 = 3, e4 = 4, e5 = 5, e6 = 6, e7 = 7;
+					else
+						var e0 = 7, e1 = 6, e2 = 5, e3 = 4, e4 = 3, e5 = 2, e6 = 1, e7 = 0;
+
 					for (var i = input .length - length, d = 0; i < input .length; i += 8, ++ d)
-						data [d] = this .double2byte (input [i],
-																input [i + 1],
-																input [i + 2],
-																input [i + 3],
-																input [i + 4],
-																input [i + 5],
-																input [i + 6],
-																input [i + 7]);
+						data [d] = this .double2byte (input [i + e0],
+																input [i + e1],
+																input [i + e2],
+																input [i + e3],
+																input [i + e4],
+																input [i + e5],
+																input [i + e6],
+																input [i + e7]);
 
 					return;
 				}
@@ -525,8 +573,26 @@ function (pako)
 			}
 			catch (error)
 			{
+				console .log (error);
 				throw new Error ("Invalid NRRD data.");
 			}
+		},
+		endianess: function ()
+		{
+			var
+				buffer = new ArrayBuffer(4),
+				int    = new Uint32Array(buffer),
+				bytes  = new Uint8Array(buffer);
+
+			int [0] = 0x01020304;
+
+			if (bytes [0] == 1 && bytes [1] == 2 && bytes [2] == 3 && bytes [3] == 4)
+				return 'big';
+
+			if (bytes [0] == 4 && bytes [1] == 3 && bytes [2] == 2 && bytes [3] == 1)
+				return 'little';
+
+			return this .endian;
 		},
 		float2byte: (function ()
 		{
