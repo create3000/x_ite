@@ -813,29 +813,45 @@ function (pako)
 		},
 		hex: function ()
 		{
-			Grammar .data .parse (this);
-
-			var raw = this .result [1] .match (/([0-9a-fA-F]{2})/g) .map (function (value)
+			if (Grammar .data .parse (this))
 			{
-				return parseInt (value, 16);
-			});
+				var match = this .result [1] .match (/([0-9a-fA-F]{2})/g);
 
-			this .input = String .fromCharCode .apply (String, raw);
+				if (match)
+				{
+					var raw = match .map (function (value)
+					{
+						return parseInt (value, 16);
+					});
 
-			this .raw ();
+					this .input = String .fromCharCode .apply (String, raw);
+
+					this .raw ();
+					return;
+				}
+			}
+
+			throw new Error ("Invalid NRRD data.");
 		},
 		gzip: function ()
 		{
-			if (! Grammar .newLine .parse (this))
+			try
+			{
+				if (! Grammar .newLine .parse (this))
+					throw new Error ("Invalid NRRD data.");
+
+				Grammar .data .parse (this);
+
+				var raw = pako .ungzip (this .result [1], { to: "raw" });
+
+				this .input = String .fromCharCode .apply (String, raw);
+
+				this .raw ();
+			}
+			catch (error)
+			{
 				throw new Error ("Invalid NRRD data.");
-
-			Grammar .data .parse (this);
-
-			var raw = pako .ungzip (this .result [1], { to: "raw" });
-
-			this .input = String .fromCharCode .apply (String, raw);
-
-			this .raw ();
+			}
 		},
 		float2byte: (function ()
 		{
