@@ -95,7 +95,7 @@ function (pako)
 			["endian",    this .getEndian],
 		]);
 
-		this .endian = this .endianess ();
+		this .endian = this .getEndianess ();
 	}
 
 	NRRDParser .prototype =
@@ -406,7 +406,7 @@ function (pako)
 				case "signed short":
 				case "unsigned short":
 				{
-					if (this .endianess () === this .endian)
+					if (this .getEndianess () === this .endian)
 						var e0 = 0, e1 = 1;
 					else
 						var e0 = 1, e1 = 0;
@@ -419,7 +419,7 @@ function (pako)
 				case "signed int":
 				case "unsigned int":
 				{
-					if (this .endianess () === this .endian)
+					if (this .getEndianess () === this .endian)
 						var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
 					else
 						var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
@@ -431,7 +431,7 @@ function (pako)
 				}
 				case "float":
 				{
-					if (this .endianess () === this .endian)
+					if (this .getEndianess () === this .endian)
 						var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
 					else
 						var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
@@ -446,7 +446,7 @@ function (pako)
 				}
 				case "double":
 				{
-					if (this .endianess () === this .endian)
+					if (this .getEndianess () === this .endian)
 						var e0 = 0, e1 = 1, e2 = 2, e3 = 3, e4 = 4, e5 = 5, e6 = 6, e7 = 7;
 					else
 						var e0 = 7, e1 = 6, e2 = 5, e3 = 4, e4 = 3, e5 = 2, e6 = 1, e7 = 0;
@@ -487,7 +487,7 @@ function (pako)
 				case "signed short":
 				case "unsigned short":
 				{
-					if (this .endianess () === this .endian)
+					if (this .getEndianess () === this .endian)
 						var e0 = 0, e1 = 1;
 					else
 						var e0 = 1, e1 = 0;
@@ -500,7 +500,7 @@ function (pako)
 				case "signed int":
 				case "unsigned int":
 				{
-					if (this .endianess () === this .endian)
+					if (this .getEndianess () === this .endian)
 						var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
 					else
 						var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
@@ -512,7 +512,7 @@ function (pako)
 				}
 				case "float":
 				{
-					if (this .endianess () === this .endian)
+					if (this .getEndianess () === this .endian)
 						var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
 					else
 						var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
@@ -527,7 +527,7 @@ function (pako)
 				}
 				case "double":
 				{
-					if (this .endianess () === this .endian)
+					if (this .getEndianess () === this .endian)
 						var e0 = 0, e1 = 1, e2 = 2, e3 = 3, e4 = 4, e5 = 5, e6 = 6, e7 = 7;
 					else
 						var e0 = 7, e1 = 6, e2 = 5, e3 = 4, e4 = 3, e5 = 2, e6 = 1, e7 = 0;
@@ -584,7 +584,7 @@ function (pako)
 				throw new Error ("Invalid NRRD data.");
 			}
 		},
-		endianess: function ()
+		getEndianess: function ()
 		{
 			var
 				buffer = new ArrayBuffer (4),
