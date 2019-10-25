@@ -52,18 +52,20 @@ define ([
 	"x_ite/Base/X3DChildObject",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Base/Events",
+	"standard/Utility/MapUtilities",
 ],
 function ($,
 	       X3DChildObject,
 	       X3DConstants,
-	       Events)
+			 Events,
+			 MapUtilities)
 {
 "use strict";
 
 	function X3DField (value)
 	{
 		X3DChildObject .call (this);
-	
+
 		this ._value = value;
 
 		return this;
@@ -318,54 +320,59 @@ function ($,
 				});
 			}
 		},
-		processEvent: function (event)
+		processEvent: (function ()
 		{
-			if (event .has (this .getId ()))
-				return;
+			var fieldCallbacks = new Map ();
 
-			event .add (this .getId ());
-
-			this .setTainted (false);
-
-			var field = event .field;
-
-			if (field !== this)
-				this .set (field .getValue (), field .length);
-
-			// Process interests
-
-			this .processInterests ();
-
-			// Process routes
-
-			var first = true;
-
-			this ._fieldInterests .forEach (function (fieldInterest)
+			return function (event)
 			{
-				if (first)
+				if (event .has (this .getId ()))
+					return;
+
+				event .add (this .getId ());
+
+				this .setTainted (false);
+
+				var field = event .field;
+
+				if (field !== this)
+					this .set (field .getValue (), field .length);
+
+				// Process interests
+
+				this .processInterests ();
+
+				// Process routes
+
+				var first = true;
+
+				this ._fieldInterests .forEach (function (fieldInterest)
 				{
-					first = false;
-					fieldInterest .addEventObject (this, event);
-				}
-				else
-					fieldInterest .addEventObject (this, Events .copy (event));
-			},
-			this);
-
-			if (first)
-			   Events .push (event);
-
-			// Process field callbacks
-
-			if (this ._fieldCallbacks .size)
-			{
-				this ._fieldCallbacks .forEach (function (fieldCallback)
-				{
-					fieldCallback (this .valueOf ());
+					if (first)
+					{
+						first = false;
+						fieldInterest .addEventObject (this, event);
+					}
+					else
+						fieldInterest .addEventObject (this, Events .copy (event));
 				},
 				this);
-			}
-		},
+
+				if (first)
+					Events .push (event);
+
+				// Process field callbacks
+
+				if (this ._fieldCallbacks .size)
+				{
+					MapUtilities .assign (fieldCallbacks, this ._fieldCallbacks) .forEach (function (fieldCallback)
+					{
+						fieldCallback (this .valueOf ());
+					},
+					this);
+				}
+			};
+		})(),
 		valueOf: function ()
 		{
 			return this;

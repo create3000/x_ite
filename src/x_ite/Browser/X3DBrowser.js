@@ -64,6 +64,7 @@ define ([
 	"x_ite/Parser/XMLParser",
 	"x_ite/Parser/JSONParser",
 	"x_ite/Bits/X3DConstants",
+	"standard/Utility/MapUtilities",
 	"locale/gettext",
 ],
 function ($,
@@ -82,6 +83,7 @@ function ($,
           XMLParser,
           JSONParser,
           X3DConstants,
+          MapUtilities,
           _)
 {
 "use strict";
@@ -489,16 +491,21 @@ function ($,
 		{
 			return this .browserCallbacks;
 		},
-		callBrowserCallbacks: function (browserEvent)
+		callBrowserCallbacks: (function ()
 		{
-			if (this .browserCallbacks .size)
+			var browserCallbacks = new Map ();
+
+			return function (browserEvent)
 			{
-				this .browserCallbacks .forEach (function (browserCallback)
+				if (this .browserCallbacks .size)
 				{
-					browserCallback (browserEvent);
-				});
-			}
-		},
+					MapUtilities .assign (browserCallbacks, this .browserCallbacks) .forEach (function (browserCallback)
+					{
+						browserCallback (browserEvent);
+					});
+				}
+			};
+		})(),
 		importDocument: function (dom, success, error)
 		{
 			if (! dom)
