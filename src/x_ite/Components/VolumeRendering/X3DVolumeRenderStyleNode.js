@@ -102,9 +102,9 @@ function (X3DNode,
 				string += "vec4\n";
 				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
 				string += "{\n";
-				string += "	vec4 n = texture (surfaceNormals_" + this .getId () + ", texCoord) * 2.0 - 1.0\n";
+				string += "	vec3 n = texture (surfaceNormals_" + this .getId () + ", texCoord) .xyz * 2.0 - 1.0;\n";
 				string += "\n";
-				string += "	return vec4 (normalize (x3d_TextureNormalMatrix * n .xyz), length (n .xyz));\n";
+				string += "	return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
 				string += "}\n";
 			}
 			else
@@ -113,7 +113,7 @@ function (X3DNode,
 				string += "vec4\n";
 				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
 				string += "{\n";
-				string += "	vec4  offset = vec4 (1.0 / x3d_TextureSize .x, 1.0 / x3d_TextureSize .y, 1.0 / x3d_TextureSize .z, 0.0);\n";
+				string += "	vec4  offset = vec4 (1.0 / x3d_TextureSize, 0.0);\n";
 				string += "	float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
 				string += "	float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
 				string += "	float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";

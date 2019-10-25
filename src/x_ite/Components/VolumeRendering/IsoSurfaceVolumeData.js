@@ -243,7 +243,7 @@ function (Fields,
 				styleUniforms += "vec4\n";
 				styleUniforms += "getNormal (in vec3 texCoord)\n";
 				styleUniforms += "{\n";
-				styleUniforms += "	vec4  offset = vec4 (1.0 / x3d_TextureSize .x, 1.0 / x3d_TextureSize .y, 1.0 / x3d_TextureSize .z, 0.0);\n";
+				styleUniforms += "	vec4  offset = vec4 (1.0 / x3d_TextureSize, 0.0);\n";
 				styleUniforms += "	float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
 				styleUniforms += "	float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
 				styleUniforms += "	float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
