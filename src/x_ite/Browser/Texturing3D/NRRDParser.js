@@ -88,11 +88,11 @@ function (pako)
 	function NRRDParser ()
 	{
 		this .fieldFunction = new Map ([
-			["type",      this .type],
-			["encoding",  this .encoding],
-			["dimension", this .dimension],
-			["sizes",     this .sizes],
-			["endian",    this .endian],
+			["type",      this .getType],
+			["encoding",  this .getEncoding],
+			["dimension", this .getDimension],
+			["sizes",     this .getSizes],
+			["endian",    this .getEndian],
 		]);
 	}
 
@@ -101,9 +101,9 @@ function (pako)
 		parse: function (input)
 		{
 			this .setInput (input);
-			this .NRRD ();
-			this .fields ();
-			this .data ();
+			this .getNRRD ();
+			this .getFields ();
+			this .getData ();
 			return this .nrrd;
 		},
 		setInput: function (value)
@@ -111,8 +111,9 @@ function (pako)
 			this .input     = value;
 			this .lastIndex = 0;
 			this .nrrd      = { };
+			this .endian    = "little";
 		},
-		NRRD: function ()
+		getNRRD: function ()
 		{
 			if (Grammar .NRRD .parse (this))
 			{
@@ -122,7 +123,7 @@ function (pako)
 
 			throw new Error ("Invalid NRRD file.");
 		},
-		fields: function ()
+		getFields: function ()
 		{
 			while (Grammar .comment .parse (this))
 				;
@@ -141,7 +142,7 @@ function (pako)
 					;
 			}
 		},
-		type: (function ()
+		getType: (function ()
 		{
 			var types = new Map ([
 				["signed char",        ["signed char", 1]],
@@ -185,7 +186,7 @@ function (pako)
 				this .bytes    = type [1];
 			};
 		})(),
-		encoding: (function ()
+		getEncoding: (function ()
 		{
 			var encodings = new Map ([
 				["ascii", "ascii"],
@@ -204,10 +205,10 @@ function (pako)
 				if (encoding === undefined)
 					throw new Error ("Unsupported NRRD encoding '" + value + "'.");
 
-				this .nrrd .encoding = encoding;
+				this .encoding = encoding;
 			};
 		})(),
-		dimension: function (value)
+		getDimension: function (value)
 		{
 			var
 				result    = value .match (/(\d+)/),
@@ -223,14 +224,14 @@ function (pako)
 					case 2:
 					case 3:
 					case 4:
-						this .nrrd .dimension = dimension;
+						this .dimension = dimension;
 						return;
 				}
 			}
 
 			throw new Error ("Unsupported NRRD dimension '" + dimension + "', must be 1, 2, 3, or 4.");
 		},
-		sizes: function (value)
+		getSizes: function (value)
 		{
 			var
 				num    = new RegExp ("\\s*(\\d+)", 'gy'),
@@ -280,13 +281,13 @@ function (pako)
 					throw new Error ("Unsupported NRRD sizes.");
 			}
 		},
-		endian: function (value)
+		getEndian: function (value)
 		{
-			this .nrrd .endian = value;
+			this .endian = value;
 		},
-		data: function ()
+		getData: function ()
 		{
-			switch (this .nrrd .encoding)
+			switch (this .encoding)
 			{
 				case "ascii":
 				{
@@ -540,7 +541,7 @@ function (pako)
 				bytes [2] = b2;
 				bytes [3] = b3;
 
-				return number [0] * 255;
+				return number [0] / 256;
 			};
 		})(),
 		double2byte: (function ()
@@ -560,7 +561,7 @@ function (pako)
 				bytes [6] = b6;
 				bytes [7] = b7;
 
-				return number [0] * 255;
+				return number [0] / 16777216;
 			};
 		})(),
 	};
