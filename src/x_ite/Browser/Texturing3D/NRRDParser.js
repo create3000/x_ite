@@ -365,11 +365,19 @@ function (pako)
 					return;
 				}
 				case "float":
+				{
+					numbers .forEach (function (value, i)
+					{
+						data [i] = parseFloat (value) / 256;
+					});
+
+					return;
+				}
 				case "double":
 				{
 					numbers .forEach (function (value, i)
 					{
-						data [i] = parseFloat (value) * 255;
+						data [i] = parseFloat (value) / 16777216;
 					});
 
 					return;
