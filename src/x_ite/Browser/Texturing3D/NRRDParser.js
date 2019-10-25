@@ -59,8 +59,8 @@ function (pako)
 	var Grammar =
 	{
 		NRRD: new RegExp ("^NRRD(\\d+)\\n", 'gy'),
-		field: new RegExp ("(\\w+):\\s*(.+?)\\n", 'gy'),
-		comment: new RegExp ("#[^\\n]\\n", 'gy'),
+		field: new RegExp ("([\\w\\s]+):\\s*(.+?)\\n", 'gy'),
+		comment: new RegExp ("#[^\\n]*\\n", 'gy'),
 		newLine: new RegExp ("\n", 'gy'),
 		data: new RegExp ("([^]*)$", 'gy'),
 	};
@@ -92,6 +92,7 @@ function (pako)
 			["encoding",  this .encoding],
 			["dimension", this .dimension],
 			["sizes",     this .sizes],
+			["endian",    this .endian],
 		]);
 	}
 
@@ -129,9 +130,9 @@ function (pako)
 			while (Grammar .field .parse (this))
 			{
 				var
-					key   = this .result [1],
+					key   = this .result [1] .toLowerCase (),
 					value = this .result [2] .trim () .toLowerCase (),
-					fun   = this .fieldFunction .get (key .toLowerCase ());
+					fun   = this .fieldFunction .get (key);
 
 				if (fun)
 					fun .call (this, value);
@@ -203,7 +204,7 @@ function (pako)
 				if (encoding === undefined)
 					throw new Error ("Unsupported NRRD encoding '" + value + "'.");
 
-				this .encoding = encoding;
+				this .nrrd .encoding = encoding;
 			};
 		})(),
 		dimension: function (value)
@@ -279,9 +280,13 @@ function (pako)
 					throw new Error ("Unsupported NRRD sizes.");
 			}
 		},
+		endian: function (value)
+		{
+			this .nrrd .endian = value;
+		},
 		data: function ()
 		{
-			switch (this .encoding)
+			switch (this .nrrd .encoding)
 			{
 				case "ascii":
 				{
@@ -290,7 +295,7 @@ function (pako)
 				}
 				case "raw":
 				{
-					this .raw ();
+					this .rawString (this .input);
 					break;
 				}
 				case "hex":
@@ -362,10 +367,9 @@ function (pako)
 				}
 			}
 		},
-		raw: function ()
+		rawString: function (input)
 		{
 			var
-				input      = this .input,
 				dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
 				length     = dataLength * this .bytes,
 				data       = new Uint8Array (dataLength);
@@ -424,6 +428,67 @@ function (pako)
 				}
 			}
 		},
+		rawArray: function (input)
+		{
+			var
+				dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
+				length     = dataLength * this .bytes,
+				data       = new Uint8Array (dataLength);
+
+			this .nrrd .data = data;
+
+			switch (this .byteType)
+			{
+				case "signed char":
+				case "unsigned char":
+				{
+					for (var i = input .length - length, d = 0; i < input .length; ++ i, ++ d)
+						data [d] = input [i];
+
+					return;
+				}
+				case "signed short":
+				case "unsigned short":
+				{
+					for (var i = input .length - length, d = 0; i < input .length; i += 2, ++ d)
+						data [d] = (input [i] << 8 | input [i + 1]) / 256;
+
+					return;
+				}
+				case "signed int":
+				case "unsigned int":
+				{
+					for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
+						data [d] = (input [i] << 24 | input [i + 1] << 16 | input [i + 2] << 8 | input [i + 3]) / 16777216;
+
+					return;
+				}
+				case "float":
+				{
+					for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
+						data [d] = this .float2byte (input [i + 0],
+						                             input [i + 1],
+						                             input [i + 2],
+						                             input [i + 3]);
+
+					return;
+				}
+				case "double":
+				{
+					for (var i = input .length - length, d = 0; i < input .length; i += 8, ++ d)
+						data [d] = this .double2byte (input [i],
+																input [i + 1],
+																input [i + 2],
+																input [i + 3],
+																input [i + 4],
+																input [i + 5],
+																input [i + 6],
+																input [i + 7]);
+
+					return;
+				}
+			}
+		},
 		hex: function ()
 		{
 			if (Grammar .data .parse (this))
@@ -437,9 +502,7 @@ function (pako)
 						return parseInt (value, 16);
 					});
 
-					this .input = String .fromCharCode .apply (String, raw);
-
-					this .raw ();
+					this .rawArray (raw);
 					return;
 				}
 			}
@@ -457,9 +520,7 @@ function (pako)
 
 				var raw = pako .ungzip (this .result [1], { to: "raw" });
 
-				this .input = String .fromCharCode .apply (String, raw);
-
-				this .raw ();
+				this .rawArray (raw);
 			}
 			catch (error)
 			{
