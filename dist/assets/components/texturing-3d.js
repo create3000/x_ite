@@ -799,7 +799,8 @@ function (pako)
 						var e0 = 1, e1 = 0;
 
 					for (var i = input .length - length, d = 0; i < input .length; i += 2, ++ d)
-						data [d] = (input .charCodeAt (i + e0) << 8 | input .charCodeAt (i + e1)) / 256;
+						data [d] = this .short2byte (input .charCodeAt (i + e0),
+						                             input .charCodeAt (i + e1));
 
 					return;
 				}
@@ -812,7 +813,10 @@ function (pako)
 						var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
 
 					for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
-						data [d] = (input .charCodeAt (i + e0) << 24 | input .charCodeAt (i + e1) << 16 | input .charCodeAt (i + e2) << 8 | input .charCodeAt (i + e3)) / 16777216;
+						data [d] = this .int2byte (input .charCodeAt (i + e0),
+						                           input .charCodeAt (i + e1),
+						                           input .charCodeAt (i + e2),
+						                           input .charCodeAt (i + e3));
 
 					return;
 				}
@@ -879,8 +883,9 @@ function (pako)
 					else
 						var e0 = 1, e1 = 0;
 
-					for (var i = input .length - length, d = 0; i < input .length; i += 2, ++ d)
-						data [d] = (input [i + e0] << 8 | input [i + e1]) / 256;
+						for (var i = input .length - length, d = 0; i < input .length; i += 2, ++ d)
+							data [d] = this .short2byte (input [i + e0],
+							                             input [i + e1]);
 
 					return;
 				}
@@ -893,7 +898,10 @@ function (pako)
 						var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
 
 					for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
-						data [d] = (input [i + e0] << 24 | input [i + e1] << 16 | input [i + e2] << 8 | input [i + e3]) / 16777216;
+						data [d] = this .int2byte (input [i + e0],
+						                           input [i + e1],
+						                           input [i + e2],
+						                           input [i + e3]);
 
 					return;
 				}
@@ -988,6 +996,36 @@ function (pako)
 
 			return this .endian;
 		},
+		short2byte: (function ()
+		{
+			var
+				bytes  = new Uint8Array (2),
+				number = new Uint16Array (bytes .buffer);
+
+			return function (b0, b1)
+			{
+				bytes [0] = b0;
+				bytes [1] = b1;
+
+				return number [0] / 256;
+			};
+		})(),
+		int2byte: (function ()
+		{
+			var
+				bytes  = new Uint8Array (4),
+				number = new Uint32Array (bytes .buffer);
+
+			return function (b0, b1, b2, b3)
+			{
+				bytes [0] = b0;
+				bytes [1] = b1;
+				bytes [2] = b2;
+				bytes [3] = b3;
+
+				return number [0] / 16777216;
+			};
+		})(),
 		float2byte: (function ()
 		{
 			var
