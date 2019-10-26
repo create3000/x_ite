@@ -155,12 +155,16 @@ function (Fields,
 				else
 				{
 					var
-						gl           = this .getBrowser () .getContext (),
-						nrrd         = new NRRDParser () .parse (data),
-						internalType = this .getInternalType (gl, nrrd .components);
+						gl   = this .getBrowser () .getContext (),
+						nrrd = new NRRDParser () .parse (data);
 
-					this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
-					this .setLoadState (X3DConstants .COMPLETE_STATE);
+					if (nrrd .nrrd)
+					{
+						var internalType = this .getInternalType (gl, nrrd .components);
+
+						this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
+						this .setLoadState (X3DConstants .COMPLETE_STATE);
+					}
 				}
 			}
 			.bind (this));

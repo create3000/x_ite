@@ -103,9 +103,13 @@ function (pako)
 		parse: function (input)
 		{
 			this .setInput (input);
-			this .getNRRD ();
-			this .getFields ();
-			this .getData ();
+
+			if (this .getNRRD ())
+			{
+				this .getFields ();
+				this .getData ();
+			}
+
 			return this .nrrd;
 		},
 		setInput: function (value)
@@ -119,11 +123,13 @@ function (pako)
 		{
 			if (Grammar .NRRD .parse (this))
 			{
+				this .nrrd .nrrd    = true;
 				this .nrrd .version = parseInt (this .result [1]);
-				return;
+				return true;
 			}
 
-			throw new Error ("Invalid NRRD file.");
+			this .nrrd .nrrd = false;
+			return false;
 		},
 		getFields: function ()
 		{
@@ -607,7 +613,7 @@ function (pako)
 			if (bytes [0] == 4 && bytes [1] == 3 && bytes [2] == 2 && bytes [3] == 1)
 				return 'little';
 
-			return this .endian;
+			throw new Error ("NRRD: unkown system endianess,");
 		},
 		short2byte: (function ()
 		{
