@@ -58,9 +58,8 @@ getMaterialColor (const in x3d_MaterialParameters material)
 {
 	if (x3d_Lighting)
 	{
-		vec3  N  = normalize (gl_FrontFacing ? normal : -normal);
-		vec3  V  = normalize (-vertex); // normalized vector from point on geometry to viewer's position
-		float dV = length (vertex);
+		vec3 N = normalize (gl_FrontFacing ? normal : -normal);
+		vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position
 
 		// Calculate diffuseFactor & alpha
 

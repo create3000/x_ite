@@ -204,9 +204,8 @@ function (Fields,
 				}
 
 				string += "\n";
-				string += "	vec3  N  = surfaceNormal .xyz;\n";
-				string += "	vec3  V  = normalize (-vertex); // normalized vector from point on geometry to viewer's position\n";
-				string += "	float dV = length (vertex);\n";
+				string += "	vec3 N = surfaceNormal .xyz;\n";
+				string += "	vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position\n";
 				string += "\n";
 				string += "	for (int i = 0; i < x3d_MaxLights; ++ i)\n";
 				string += "	{\n";
