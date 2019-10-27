@@ -1229,16 +1229,17 @@ function (Fields,
 				}
 				else
 				{
-					var
-						gl   = this .getBrowser () .getContext (),
-						nrrd = new NRRDParser () .parse (data);
+					var nrrd = new NRRDParser () .parse (data);
 
 					if (nrrd .nrrd)
 					{
-						var internalType = this .getInternalType (gl, nrrd .components);
+						var
+							gl           = this .getBrowser () .getContext (),
+							internalType = this .getInternalType (gl, nrrd .components);
 
 						this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
 						this .setLoadState (X3DConstants .COMPLETE_STATE);
+						return;
 					}
 
 					throw new Error ("ImageTexture3D: no appropriate file type handler found.");
