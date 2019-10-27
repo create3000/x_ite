@@ -103,7 +103,7 @@ getMaterialColor (const in vec3 N,
 			vec3 H = normalize (L + V);             // Specular term
 
 			float lightAngle     = max (dot (N, L), 0.0);      // Angle between normal and light ray.
-			vec3  diffuseTerm    = diffuseFactor * clamp (lightAngle, 0.0, 1.0);
+			vec3  diffuseTerm    = diffuseFactor * lightAngle;
 			float specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;
 			vec3  specularTerm   = material .specularColor * specularFactor;
 
