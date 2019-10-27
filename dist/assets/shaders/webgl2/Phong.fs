@@ -829,7 +829,6 @@ if (x3d_Lighting)
 {
 vec3 N = normalize (gl_FrontFacing ? normal : -normal);
 vec3 V = normalize (-vertex); 
-float dV = length (vertex);
 vec3 diffuseFactor = vec3 (1.0);
 float alpha = 1.0 - material .transparency;
 if (x3d_ColorMaterial)
@@ -871,20 +870,20 @@ vec3 d = light .direction;
 vec3 c = light .attenuation;
 vec3 L = di ? -d : normalize (vL); 
 vec3 H = normalize (L + V); 
-float lightAngle = dot (N, L); 
+float lightAngle = max (dot (N, L), 0.0); 
 vec3 diffuseTerm = diffuseFactor * clamp (lightAngle, 0.0, 1.0);
 float specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;
 vec3 specularTerm = material .specularColor * specularFactor;
 float attenuationFactor = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
 float spotFactor = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
 float attenuationSpotFactor = attenuationFactor * spotFactor;
-vec3 ambientColor = light .color * light .ambientIntensity * ambientTerm;
-vec3 diffuseSpecularColor = light .color * light .intensity * (diffuseTerm + specularTerm);
+vec3 ambientColor = light .ambientIntensity * ambientTerm;
+vec3 diffuseSpecularColor = light .intensity * (diffuseTerm + specularTerm);
 #ifdef X3D_SHADOWS
 if (lightAngle > 0.0)
 diffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, light));
 #endif
-finalColor += attenuationSpotFactor * (ambientColor + diffuseSpecularColor);
+finalColor += attenuationSpotFactor * light .color * (ambientColor + diffuseSpecularColor);
 }
 }
 finalColor += material .emissiveColor;

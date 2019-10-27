@@ -78,7 +78,7 @@ vec3 d = light .direction;
 vec3 c = light .attenuation;
 vec3 L = di ? -d : normalize (vL); 
 vec3 H = normalize (L + V); 
-float lightAngle = dot (N, L); 
+float lightAngle = max (dot (N, L), 0.0); 
 vec3 diffuseTerm = diffuseFactor * clamp (lightAngle, 0.0, 1.0);
 float specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;
 vec3 specularTerm = material .specularColor * specularFactor;
@@ -86,8 +86,8 @@ float attenuationFactor = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL
 float spotFactor = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
 float attenuationSpotFactor = attenuationFactor * spotFactor;
 vec3 ambientColor = light .ambientIntensity * ambientTerm;
-vec3 ambientDiffuseSpecularColor = ambientColor + light .intensity * (diffuseTerm + specularTerm);
-finalColor += attenuationSpotFactor * (light .color * ambientDiffuseSpecularColor);
+vec3 diffuseSpecularColor = light .intensity * (diffuseTerm + specularTerm);
+finalColor += attenuationSpotFactor * light .color * (ambientColor + diffuseSpecularColor);
 }
 }
 finalColor += material .emissiveColor;
