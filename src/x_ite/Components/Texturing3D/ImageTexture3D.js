@@ -62,8 +62,8 @@ function (Fields,
           FieldDefinitionArray,
           X3DTexture3DNode,
           X3DUrlObject,
-			 X3DConstants,
-			 NRRDParser,
+          X3DConstants,
+          NRRDParser,
           FileLoader)
 {
 "use strict";
@@ -165,6 +165,8 @@ function (Fields,
 						this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
 						this .setLoadState (X3DConstants .COMPLETE_STATE);
 					}
+
+					throw new Error ("ImageTexture3D: no appropriate file type handler found.");
 				}
 			}
 			.bind (this));
