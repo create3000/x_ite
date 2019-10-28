@@ -180,6 +180,45 @@ function (dicomParser)
 					this .dicom .data = data;
 					break;
 				}
+				case "RGB":
+				{
+					switch (this .bitsAllocated)
+					{
+						case 8:
+						{
+							var data = new Uint8Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length);
+
+							break;
+						}
+						case 16:
+						{
+							var
+								data16 = new Uint16Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length / 2),
+								data   = new Uint8Array (data16 .length),
+								factor = this .getPixelFactor (data16);
+
+							for (var i = 0, length = data16 .length; i < length; ++ i)
+								data [i] = data16 [i] * factor;
+
+							break;
+						}
+						case 32:
+						{
+							var
+								data16 = new Uint32Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length / 4),
+								data   = new Uint8Array (data16 .length),
+								factor = this .getPixelFactor (data16);
+
+							for (var i = 0, length = data16 .length; i < length; ++ i)
+								data [i] = data16 [i] * factor;
+
+							break;
+						}
+					}
+
+					this .dicom .data = data;
+					break;
+				}
 				default:
 					throw new Error ("DICOM: unsupported image type '" + this .type + "'.");
 			}
