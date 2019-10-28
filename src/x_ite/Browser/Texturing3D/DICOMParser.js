@@ -97,8 +97,7 @@ function (dicomParser)
 		getType: function ()
 		{
 			this .type = this .dataSet .string ("x00280004");
-
-			console .log (this .type);
+			//console .log (this .type);
 		},
 		getComponents: function ()
 		{
@@ -128,11 +127,12 @@ function (dicomParser)
 		getPlanarConfiguration: function ()
 		{
 			this .planarConfiguration = this .dataSet .uint16 ("x00280006") || 0;
+			//console .log (this .planarConfiguration);
 		},
 		getTansferSyntax: function ()
 		{
 			this .transferSyntax = this .dataSet .string ("x00020010");
-			console .log (this .transferSyntax);
+			//console .log (this .transferSyntax);
 		},
 		getPixelData: function ()
 		{
@@ -143,7 +143,7 @@ function (dicomParser)
 				dataLength   = pixelElement .length,
 				frameLength  = dicom .width * dicom .height * dicom .components,
 				byteLength   = frameLength * dicom .depth,
-				bytes        = new Uint8Array (byteLength);
+				bytes        = new Uint32Array (byteLength);
 
 			(pixelElement .fragments || [{ position: pixelElement .dataOffset, length: dataLength }]) .forEach (function (fragment, i)
 			{
@@ -182,34 +182,28 @@ function (dicomParser)
 						{
 							case 8:
 							{
-								var
-									data   = new Uint8Array (fragmentArray .buffer, fragmentOffset, fragmentLength),
-									values = this .getPixelOffsetAndFactor (data);
+								var data = new Uint8Array (fragmentArray .buffer, fragmentOffset, fragmentLength);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = (data [i] - values .offset) * values .factor;
+									bytes [b ++] = data [i];
 
 								break;
 							}
 							case 16:
 							{
-								var
-									data   = new Uint16Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 2),
-									values = this .getPixelOffsetAndFactor (data);
+								var data = new Uint16Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 2);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = (data [i] - values .offset) * values .factor;
+									bytes [b ++] = data [i];
 
 								break;
 							}
 							case 32:
 							{
-								var
-									data   = new Uint32Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 4),
-									values = this .getPixelOffsetAndFactor (data);
+								var data = new Uint32Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 4);
 
 								for (var i = 0, length = data32 .length; i < length; ++ i)
-									bytes [b ++] = (data [i] - values .offset) * values .factor;
+									bytes [b ++] = data [i];
 
 								break;
 							}
@@ -223,34 +217,28 @@ function (dicomParser)
 						{
 							case 8:
 							{
-								var
-									data   = new Uint8Array (fragmentArray .buffer, fragmentOffset, fragmentLength),
-									values = this .getPixelFactor (data);
+								var data = new Uint8Array (fragmentArray .buffer, fragmentOffset, fragmentLength);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = (data [i] - values .offset) * values .factor;
+									bytes [b ++] = data [i];
 
 								break;
 							}
 							case 16:
 							{
-								var
-									data   = new Uint16Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 2),
-									values = this .getPixelFactor (data);
+								var data = new Uint16Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 2);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = (data [i] - values .offset) * values .factor;
+									bytes [b ++] = data [i];
 
 								break;
 							}
 							case 32:
 							{
-								var
-									data   = new Uint32Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 4),
-									values = this .getPixelFactor (data);
+								var data = new Uint32Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 4);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = (data [i] - values .offset) * values .factor;
+									bytes [b ++] = data [i];
 
 								break;
 							}
@@ -264,8 +252,14 @@ function (dicomParser)
 			}
 			.bind (this));
 
-			if (bytes .length !== byteLength)
-				throw new Error ("DICOM: insufficient image data in file.");
+			// Scale pixel in the range [0, 255].
+
+			var values = this .getPixelOffsetAndFactor (bytes);
+
+			for (var i = 0, length = bytes .length; i < length; ++ i)
+				bytes [i] = (bytes [i] - values .offset) * values .factor;
+
+			// Invert MONOCHROME1 pixels.
 
 			if (this .type == "MONOCHROME1")
 			{
@@ -273,7 +267,9 @@ function (dicomParser)
 					bytes [i] = 255 - bytes [i];
 			}
 
-			dicom .data = bytes;
+			// Set Uint8Array.
+
+			dicom .data = new Uint8Array (bytes);
 		},
 		getPixelOffsetAndFactor: function (data)
 		{
