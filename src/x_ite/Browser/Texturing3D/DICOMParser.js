@@ -289,6 +289,7 @@ function (dicomParser)
 		},
 		rle: function (buffer, offset, length)
 		{
+			// http://dicom.nema.org/dicom/2013/output/chtml/part05/sect_G.5.html
 			// http://dicom.nema.org/MEDICAL/dicom/2017b/output/chtml/part05/sect_G.3.2.html
 
 			var
