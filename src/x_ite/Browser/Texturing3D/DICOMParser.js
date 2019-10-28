@@ -338,13 +338,26 @@ function (dicomParser)
 
 			return new Uint8Array (output);
 		},
-		ulong: function (array, i)
+		ulong: (function ()
 		{
-			var index = i * 4;
+			var
+				buffer = new ArrayBuffer (4),
+				bytes  = new Uint8Array (buffer),
+				number = new Uint32Array (buffer);
 
-			// Assume system little endian.
-			return array [index + 3] << 24 | array [index + 2] << 16 | array [index + 1] << 8 | array [index];
-		},
+			return function (array, i)
+			{
+				// Assume system endianess little.
+				var index = i * 4;
+
+				bytes [0] = array [index + 0];
+				bytes [1] = array [index + 1];
+				bytes [2] = array [index + 2];
+				bytes [3] = array [index + 3];
+
+				return number [0];
+			};
+		})(),
 	};
 
 	return DicomParser;
