@@ -134,124 +134,139 @@ function (dicomParser)
 		{
 			var
 				pixelElement = this .dataSet .elements .x7fe00010,
-				dataArray    = this .dataSet .byteArray,
 				dataOffset   = pixelElement .dataOffset,
 				dataLength   = pixelElement .length,
-				byteLength   = this .dicom .width * this .dicom .height * this .dicom .depth * this .dicom .components;
+				byteLength   = this .dicom .width * this .dicom .height * this .dicom .depth * this .dicom .components,
+				bytes        = new Uint8Array (byteLength),
+				b            = 0;
 
-			switch (this .transferSyntax)
+			(pixelElement .fragments || [{ offset: dataOffset, length: dataLength }]) .forEach (function (fragment, i)
 			{
-				case "1.2.840.10008.1.2.5":
-				{
-					// RLE
-					//throw new Error ("DICOM: RLE endocing is not supported.");
+				//console .log (fragment .offset, fragment .length);
 
-					dataArray  = this .rle (new Int8Array (dataArray .buffer, dataOffset, dataLength));
-					dataOffset = 0;
-					dataLength = dataArray .length;
-					break;
-				}
-				case "1.2.840.10008.1.2.4.51":
+				var
+					dataArray  = this .dataSet .byteArray,
+					dataOffset = fragment .offset,
+					dataLength = fragment .length;
+
+				switch (this .transferSyntax)
 				{
-					// JPEG
-					throw new Error ("DICOM: JPEG endocing is not supported.");
-					break;
+					case "1.2.840.10008.1.2.5":
+					{
+						// RLE
+						//throw new Error ("DICOM: RLE endocing is not supported.");
+
+						dataArray  = this .rle (new Int8Array (dataArray .buffer, dataOffset, dataLength));
+						dataOffset = 0;
+						dataLength = dataArray .length;
+						break;
+					}
+					case "1.2.840.10008.1.2.4.51":
+					{
+						// JPEG
+						throw new Error ("DICOM: JPEG endocing is not supported.");
+						break;
+					}
+				}
+
+				switch (this .type)
+				{
+					case "MONOCHROME1":
+					case "MONOCHROME2":
+					{
+						switch (this .bitsAllocated)
+						{
+							case 8:
+							{
+								var data = new Uint8Array (dataArray .buffer, dataOffset, dataLength);
+
+								for (var i = 0, length = data .length; i < length; ++ i)
+									bytes [b ++] = data [i];
+
+								break;
+							}
+							case 16:
+							{
+								var
+									data   = new Uint16Array (dataArray .buffer, dataOffset, dataLength / 2),
+									factor = this .getPixelFactor (data);
+
+								for (var i = 0, length = data .length; i < length; ++ i)
+									bytes [b ++] = data [i] * factor;
+
+								break;
+							}
+							case 32:
+							{
+								var
+									data   = new Uint32Array (dataArray .buffer, dataOffset, dataLength / 4),
+									factor = this .getPixelFactor (data);
+
+								for (var i = 0, length = data32 .length; i < length; ++ i)
+									bytes [b ++] = data [i] * factor;
+
+								break;
+							}
+						}
+
+						break;
+					}
+					case "RGB":
+					{
+						switch (this .bitsAllocated)
+						{
+							case 8:
+							{
+								var data = new Uint8Array (dataArray .buffer, dataOffset, dataLength);
+
+								for (var i = 0, length = data .length; i < length; ++ i)
+									bytes [b ++] = data [i];
+
+								break;
+							}
+							case 16:
+							{
+								var
+									data   = new Uint16Array (dataArray .buffer, dataOffset, dataLength / 2),
+									factor = this .getPixelFactor (data);
+
+								for (var i = 0, length = data .length; i < length; ++ i)
+									bytes [b ++] = data [i] * factor;
+
+								break;
+							}
+							case 32:
+							{
+								var
+									data   = new Uint32Array (dataArray .buffer, dataOffset, dataLength / 4),
+									factor = this .getPixelFactor (data);
+
+								for (var i = 0, length = data .length; i < length; ++ i)
+									bytes [b ++] = data [i] * factor;
+
+								break;
+							}
+						}
+
+						this .dicom .data = bytes;
+						break;
+					}
+					default:
+						throw new Error ("DICOM: unsupported image type '" + this .type + "'.");
 				}
 			}
+			.bind (this));
 
-			switch (this .type)
-			{
-				case "MONOCHROME1":
-				case "MONOCHROME2":
-				{
-					switch (this .bitsAllocated)
-					{
-						case 8:
-						{
-							var data = new Uint8Array (dataArray .buffer, dataOffset, dataLength);
-
-							break;
-						}
-						case 16:
-						{
-							var
-								data16 = new Uint16Array (dataArray .buffer, dataOffset, dataLength / 2),
-								data   = new Uint8Array (byteLength),
-								factor = this .getPixelFactor (data16);
-
-							for (var i = 0, length = data16 .length; i < length; ++ i)
-								data [i] = data16 [i] * factor;
-
-							break;
-						}
-						case 32:
-						{
-							var
-								data16 = new Uint32Array (dataArray .buffer, dataOffset, dataLength / 4),
-								data   = new Uint8Array (byteLength),
-								factor = this .getPixelFactor (data16);
-
-							for (var i = 0, length = data16 .length; i < length; ++ i)
-								data [i] = data16 [i] * factor;
-
-							break;
-						}
-					}
-
-					if (this .type == "MONOCHROME1")
-					{
-						for (var i = 0, length = data .length; i < length; ++ i)
-							data [i] = 255 - data [i];
-					}
-
-					this .dicom .data = data;
-					break;
-				}
-				case "RGB":
-				{
-					switch (this .bitsAllocated)
-					{
-						case 8:
-						{
-							var data = new Uint8Array (dataArray .buffer, dataOffset, dataLength);
-
-							break;
-						}
-						case 16:
-						{
-							var
-								data16 = new Uint16Array (dataArray .buffer, dataOffset, dataLength / 2),
-								data   = new Uint8Array (byteLength),
-								factor = this .getPixelFactor (data16);
-
-							for (var i = 0, length = data16 .length; i < length; ++ i)
-								data [i] = data16 [i] * factor;
-
-							break;
-						}
-						case 32:
-						{
-							var
-								data16 = new Uint32Array (dataArray .buffer, dataOffset, dataLength / 4),
-								data   = new Uint8Array (byteLength),
-								factor = this .getPixelFactor (data16);
-
-							for (var i = 0, length = data16 .length; i < length; ++ i)
-								data [i] = data16 [i] * factor;
-
-							break;
-						}
-					}
-
-					this .dicom .data = data;
-					break;
-				}
-				default:
-					throw new Error ("DICOM: unsupported image type '" + this .type + "'.");
-			}
-
-			if (this .dicom .data .length !== byteLength)
+			if (bytes .length !== byteLength)
 				throw new Error ("DICOM: insufficient image data in file.");
+
+			if (this .type == "MONOCHROME1")
+			{
+				for (var i = 0, length = bytes .length; i < length; ++ i)
+					bytes [i] = 255 - bytes [i];
+			}
+
+			this .dicom .data = bytes;
 		},
 		getPixelFactor: function (data)
 		{
