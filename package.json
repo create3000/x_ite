@@ -60,5 +60,7 @@
 		"build": "make",
 		"-prebuild:js": "npm run lint"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"dicom-parser": "^1.8.3"
+	}
 }

@@ -60,6 +60,11 @@ require .config ({
 			"name": "ammojs",
 			"location": "../node_modules/ammojs",
 			"main": "ammo.js"
+		},
+		{
+			"name": "dicom-parser",
+			"location": "../node_modules/dicom-parser",
+			"main": "dist/dicomParser.js"
 		}
 	],
 	"shim": { },

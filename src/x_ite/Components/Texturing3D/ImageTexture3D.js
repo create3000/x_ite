@@ -55,6 +55,7 @@ define ([
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Texturing3D/NRRDParser",
+	"x_ite/Browser/Texturing3D/DICOMParser",
 	"x_ite/InputOutput/FileLoader",
 ],
 function (Fields,
@@ -64,6 +65,7 @@ function (Fields,
           X3DUrlObject,
           X3DConstants,
           NRRDParser,
+          DICOMParser,
           FileLoader)
 {
 "use strict";
@@ -163,6 +165,19 @@ function (Fields,
 							internalType = this .getInternalType (gl, nrrd .components);
 
 						this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
+						this .setLoadState (X3DConstants .COMPLETE_STATE);
+						return;
+					}
+
+					var dicom = new DICOMParser () .parse (data);
+
+					if (dicom .dicom)
+					{
+						var
+							gl           = this .getBrowser () .getContext (),
+							internalType = this .getInternalType (gl, dicom .components);
+
+						this .setTexture (dicom .width, dicom .height, dicom .depth, false, internalType, dicom .data);
 						this .setLoadState (X3DConstants .COMPLETE_STATE);
 						return;
 					}
