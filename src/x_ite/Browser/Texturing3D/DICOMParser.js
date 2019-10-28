@@ -65,12 +65,12 @@ function (dicomParser)
 		{
 			try
 			{
-				var byteArray = new Uint8Array (input .length);
+				var inputArray = new Uint8Array (input .length);
 
 				for (var i = 0, length = input .length; i < length; ++ i)
-					byteArray [i] = input .charCodeAt (i);
+					inputArray [i] = input .charCodeAt (i);
 
-				this .dataSet = dicomParser .parseDicom (byteArray);
+				this .dataSet = dicomParser .parseDicom (inputArray);
 				this .dicom .dicom = true;
 			}
 			catch (error)
@@ -134,16 +134,21 @@ function (dicomParser)
 		{
 			var
 				pixelElement = this .dataSet .elements .x7fe00010,
-				byteArray    = this .dataSet .byteArray,
+				dataArray    = this .dataSet .byteArray,
 				dataOffset   = pixelElement .dataOffset,
-				dataLength   = pixelElement .length;
+				dataLength   = pixelElement .length,
+				byteLength   = this .dicom .width * this .dicom .height * this .dicom .depth * this .dicom .components;
 
 			switch (this .transferSyntax)
 			{
 				case "1.2.840.10008.1.2.5":
 				{
 					// RLE
-					throw new Error ("DICOM: RLE endocing is not supported.");
+					//throw new Error ("DICOM: RLE endocing is not supported.");
+
+					dataArray  = this .rle (new Int8Array (dataArray .buffer, dataOffset, dataLength));
+					dataOffset = 0;
+					dataLength = dataArray .length;
 					break;
 				}
 				case "1.2.840.10008.1.2.4.51":
@@ -163,15 +168,15 @@ function (dicomParser)
 					{
 						case 8:
 						{
-							var data = new Uint8Array (byteArray .buffer, dataOffset, dataLength);
+							var data = new Uint8Array (dataArray .buffer, dataOffset, dataLength);
 
 							break;
 						}
 						case 16:
 						{
 							var
-								data16 = new Uint16Array (byteArray .buffer, dataOffset, dataLength / 2),
-								data   = new Uint8Array (data16 .length),
+								data16 = new Uint16Array (dataArray .buffer, dataOffset, dataLength / 2),
+								data   = new Uint8Array (byteLength),
 								factor = this .getPixelFactor (data16);
 
 							for (var i = 0, length = data16 .length; i < length; ++ i)
@@ -182,8 +187,8 @@ function (dicomParser)
 						case 32:
 						{
 							var
-								data16 = new Uint32Array (byteArray .buffer, dataOffset, dataLength / 4),
-								data   = new Uint8Array (data16 .length),
+								data16 = new Uint32Array (dataArray .buffer, dataOffset, dataLength / 4),
+								data   = new Uint8Array (byteLength),
 								factor = this .getPixelFactor (data16);
 
 							for (var i = 0, length = data16 .length; i < length; ++ i)
@@ -208,15 +213,15 @@ function (dicomParser)
 					{
 						case 8:
 						{
-							var data = new Uint8Array (byteArray .buffer, dataOffset, dataLength);
+							var data = new Uint8Array (dataArray .buffer, dataOffset, dataLength);
 
 							break;
 						}
 						case 16:
 						{
 							var
-								data16 = new Uint16Array (byteArray .buffer, dataOffset, dataLength / 2),
-								data   = new Uint8Array (data16 .length),
+								data16 = new Uint16Array (dataArray .buffer, dataOffset, dataLength / 2),
+								data   = new Uint8Array (byteLength),
 								factor = this .getPixelFactor (data16);
 
 							for (var i = 0, length = data16 .length; i < length; ++ i)
@@ -227,8 +232,8 @@ function (dicomParser)
 						case 32:
 						{
 							var
-								data16 = new Uint32Array (byteArray .buffer, dataOffset, dataLength / 4),
-								data   = new Uint8Array (data16 .length),
+								data16 = new Uint32Array (dataArray .buffer, dataOffset, dataLength / 4),
+								data   = new Uint8Array (byteLength),
 								factor = this .getPixelFactor (data16);
 
 							for (var i = 0, length = data16 .length; i < length; ++ i)
@@ -244,6 +249,9 @@ function (dicomParser)
 				default:
 					throw new Error ("DICOM: unsupported image type '" + this .type + "'.");
 			}
+
+			if (this .dicom .data .length !== byteLength)
+				throw new Error ("DICOM: insufficient image data in file.");
 		},
 		getPixelFactor: function (data)
 		{
@@ -253,7 +261,42 @@ function (dicomParser)
 				max = Math .max (max, data [i]);
 
 			return 1 / max * 255;
-		}
+		},
+		rle: function (input)
+		{
+			// http://dicom.nema.org/MEDICAL/dicom/2017b/output/chtml/part05/sect_G.3.2.html
+
+			console .log (input .length);
+
+			var
+				output = [ ],
+				i      = 0;
+
+			while (i < input .length)
+			{
+				// Read the next source byte into n.
+				var n = input [i ++];
+
+				if (n >= 0 && n <= 127)
+				{
+					// Output the next n+1 bytes literally.
+					for (var l = i + n + 1; i < l; ++ i)
+						output .push (input [i]);
+				}
+				else if (n <= -1 && n >= -127)
+				{
+					// Output the next byte -n+1 times.
+					var b = input [i ++];
+
+					for (var k = 0, l = -n + 1; k < l; ++ k)
+						output .push (b);
+				}
+			}
+
+			console .log (output .length);
+
+			return new Uint8Array (output);
+		},
 	};
 
 	return DicomParser;
