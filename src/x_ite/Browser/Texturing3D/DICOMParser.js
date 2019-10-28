@@ -182,32 +182,34 @@ function (dicomParser)
 						{
 							case 8:
 							{
-								var data = new Uint8Array (fragmentArray .buffer, fragmentOffset, fragmentLength);
+								var
+									data = new Uint8Array (fragmentArray .buffer, fragmentOffset, fragmentLength),
+									poaf = this .getPixelOffsetAndFactor (data);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = data [i];
+									bytes [b ++] = (data [i] - poaf .offset) * poaf .factor;
 
 								break;
 							}
 							case 16:
 							{
 								var
-									data   = new Uint16Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 2),
-									factor = this .getPixelFactor (data);
+									data = new Uint16Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 2),
+									poaf = this .getPixelOffsetAndFactor (data);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = data [i] * factor;
+									bytes [b ++] = (data [i] - poaf .offset) * poaf .factor;
 
 								break;
 							}
 							case 32:
 							{
 								var
-									data   = new Uint32Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 4),
-									factor = this .getPixelFactor (data);
+									data = new Uint32Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 4),
+									poaf = this .getPixelOffsetAndFactor (data);
 
 								for (var i = 0, length = data32 .length; i < length; ++ i)
-									bytes [b ++] = data [i] * factor;
+									bytes [b ++] = (data [i] - poaf .offset) * poaf .factor;
 
 								break;
 							}
@@ -271,21 +273,19 @@ function (dicomParser)
 
 			dicom .data = bytes;
 		},
-		getPixelFactor: function (data)
+		getPixelOffsetAndFactor: function (data)
 		{
-			var max = 0;
+			var
+				min = Number .POSITIVE_INFINITY,
+				max = Number .NEGATIVE_INFINITY;
 
 			for (var i = 0, length = data .length; i < length; ++ i)
+			{
+				min = Math .min (min, data [i]);
 				max = Math .max (max, data [i]);
+			}
 
-			return 1 / max * 255;
-		},
-		ulong: function (array, i)
-		{
-			var index = i * 4;
-
-			// Assume system little endian.
-			return array [index + 3] << 24 | array [index + 2] << 16 | array [index + 1] << 8 | array [index];
+			return { offset: min, factor: 1 / (max - min) * 255 };
 		},
 		rle: function (buffer, offset, length)
 		{
@@ -337,6 +337,13 @@ function (dicomParser)
 			}
 
 			return new Uint8Array (output);
+		},
+		ulong: function (array, i)
+		{
+			var index = i * 4;
+
+			// Assume system little endian.
+			return array [index + 3] << 24 | array [index + 2] << 16 | array [index + 1] << 8 | array [index];
 		},
 	};
 
