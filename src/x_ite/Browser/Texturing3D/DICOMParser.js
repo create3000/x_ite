@@ -252,12 +252,12 @@ function (dicomParser)
 			}
 			.bind (this));
 
-			// Scale pixel in the range [0, 255].
+			// Normalize pixels in the range [0, 255].
 
-			var values = this .getPixelOffsetAndFactor (bytes);
+			var normalize = this .getPixelOffsetAndFactor (bytes);
 
 			for (var i = 0, length = bytes .length; i < length; ++ i)
-				bytes [i] = (bytes [i] - values .offset) * values .factor;
+				bytes [i] = (bytes [i] - normalize .offset) * normalize .factor;
 
 			// Invert MONOCHROME1 pixels.
 
@@ -303,7 +303,7 @@ function (dicomParser)
 
 			var
 				segmentsLength = segments .length - 1,
-				output         = [ ];
+				output         = new Uint8Array (outputLength);
 
 			for (var s = 0; s < segmentsLength; ++ s)
 			{
@@ -340,9 +340,7 @@ function (dicomParser)
 				}
 			}
 
-			output .length = outputLength;
-
-			return new Uint8Array (output);
+			return output;
 		},
 		ulong: (function ()
 		{
