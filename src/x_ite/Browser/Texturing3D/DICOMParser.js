@@ -86,6 +86,7 @@ function (dicomParser)
 			this .getHeight ();
 			this .getDepth ();
 			this .getBitsAllocated ();
+			this .getTansferSyntax ();
 			this .getPixelData ();
 
 			console .log (this .dicom);
@@ -94,11 +95,7 @@ function (dicomParser)
 		},
 		getType: function ()
 		{
-			var
-				typeElement = this .dataSet .elements .x00280004,
-				type        = new Uint8Array (this .dataSet .byteArray .buffer, typeElement .dataOffset, typeElement .length);
-
-			this .type = String .fromCharCode .apply (String, type) .trim ();
+			this .type = this .dataSet .string ("x00280004");
 
 			console .log (this .type);
 		},
@@ -128,9 +125,34 @@ function (dicomParser)
 			this .bitsAllocated = this .dataSet .uint16 ("x00280100");
 			console .log (this .bitsAllocated);
 		},
+		getTansferSyntax: function ()
+		{
+			this .transferSyntax = this .dataSet .string ("x00020010");
+			console .log (this .transferSyntax);
+		},
 		getPixelData: function ()
 		{
-			var pixelElement = this .dataSet .elements .x7fe00010;
+			var
+				pixelElement = this .dataSet .elements .x7fe00010,
+				byteArray    = this .dataSet .byteArray,
+				dataOffset   = pixelElement .dataOffset,
+				dataLength   = pixelElement .length;
+
+			switch (this .transferSyntax)
+			{
+				case "1.2.840.10008.1.2.5":
+				{
+					// RLE
+					throw new Error ("DICOM: RLE endocing is not supported.");
+					break;
+				}
+				case "1.2.840.10008.1.2.4.51":
+				{
+					// JPEG
+					throw new Error ("DICOM: JPEG endocing is not supported.");
+					break;
+				}
+			}
 
 			switch (this .type)
 			{
@@ -141,14 +163,14 @@ function (dicomParser)
 					{
 						case 8:
 						{
-							var data = new Uint8Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length);
+							var data = new Uint8Array (byteArray .buffer, dataOffset, dataLength);
 
 							break;
 						}
 						case 16:
 						{
 							var
-								data16 = new Uint16Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length / 2),
+								data16 = new Uint16Array (byteArray .buffer, dataOffset, dataLength / 2),
 								data   = new Uint8Array (data16 .length),
 								factor = this .getPixelFactor (data16);
 
@@ -160,7 +182,7 @@ function (dicomParser)
 						case 32:
 						{
 							var
-								data16 = new Uint32Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length / 4),
+								data16 = new Uint32Array (byteArray .buffer, dataOffset, dataLength / 4),
 								data   = new Uint8Array (data16 .length),
 								factor = this .getPixelFactor (data16);
 
@@ -186,14 +208,14 @@ function (dicomParser)
 					{
 						case 8:
 						{
-							var data = new Uint8Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length);
+							var data = new Uint8Array (byteArray .buffer, dataOffset, dataLength);
 
 							break;
 						}
 						case 16:
 						{
 							var
-								data16 = new Uint16Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length / 2),
+								data16 = new Uint16Array (byteArray .buffer, dataOffset, dataLength / 2),
 								data   = new Uint8Array (data16 .length),
 								factor = this .getPixelFactor (data16);
 
@@ -205,7 +227,7 @@ function (dicomParser)
 						case 32:
 						{
 							var
-								data16 = new Uint32Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length / 4),
+								data16 = new Uint32Array (byteArray .buffer, dataOffset, dataLength / 4),
 								data   = new Uint8Array (data16 .length),
 								factor = this .getPixelFactor (data16);
 
