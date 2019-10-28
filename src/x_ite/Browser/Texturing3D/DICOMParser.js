@@ -303,15 +303,18 @@ function (dicomParser)
 
 			segments .push (length);
 
-			var output  = [ ];
+			var
+				segmentsLength = segments .length - 1,
+				output         = [ ];
 
-			for (var s = 0, ls = segments .length - 1; s < ls; ++ s)
+			for (var s = 0; s < segmentsLength; ++ s)
 			{
 				var
 					offset1 = segments [s],
 					offset2 = segments [s + 1],
 					input   = new Int8Array (buffer, offset + offset1, offset2 - offset1),
-					i       = 0;
+					i       = 0,
+					o       = 0;
 
 				while (i < input .length)
 				{
@@ -321,21 +324,25 @@ function (dicomParser)
 					if (n >= 0 && n <= 127)
 					{
 						// Output the next n+1 bytes literally.
-						for (var l = i + n + 1; i < l; ++ i)
-							output .push (input [i]);
+						for (var l = i + n + 1; i < l; ++ i, ++ o)
+						{
+							output [o * segmentsLength + s] = input [i];
+						}
 					}
 					else if (n <= -1 && n >= -127)
 					{
 						// Output the next byte -n+1 times.
 						var b = input [i ++];
 
-						for (var k = 0, l = -n + 1; k < l; ++ k)
-							output .push (b);
+						for (var k = 0, l = -n + 1; k < l; ++ k, ++ o)
+						{
+							output [o * segmentsLength + s] = b;
+						}
 					}
 				}
-
-				output .length = (s + 1) * frameLength;
 			}
+
+			output .length = segmentsLength * frameLength;
 
 			return new Uint8Array (output);
 		},
