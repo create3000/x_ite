@@ -86,6 +86,7 @@ function (dicomParser)
 			this .getHeight ();
 			this .getDepth ();
 			this .getBitsAllocated ();
+			this .getPlanarConfiguration ();
 			this .getTansferSyntax ();
 			this .getPixelData ();
 
@@ -124,6 +125,10 @@ function (dicomParser)
 		{
 			this .bitsAllocated = this .dataSet .uint16 ("x00280100");
 		},
+		getPlanarConfiguration: function ()
+		{
+			this .planarConfiguration = this .dataSet .uint16 ("x00280006") || 0;
+		},
 		getTansferSyntax: function ()
 		{
 			this .transferSyntax = this .dataSet .string ("x00020010");
@@ -134,15 +139,16 @@ function (dicomParser)
 			var
 				dicom        = this .dicom,
 				pixelElement = this .dataSet .elements .x7fe00010,
+				dataArray    = this .dataSet .byteArray,
 				dataLength   = pixelElement .length,
-				byteLength   = dicom .width * dicom .height * dicom .depth * dicom .components,
-				bytes        = new Uint8Array (byteLength),
-				b            = 0;
+				frameLength  = dicom .width * dicom .height * dicom .components,
+				byteLength   = frameLength * dicom .depth,
+				bytes        = new Uint8Array (byteLength);
 
 			(pixelElement .fragments || [{ position: pixelElement .dataOffset, length: dataLength }]) .forEach (function (fragment, i)
 			{
 				var
-					fragmentArray  = this .dataSet .byteArray,
+					fragmentArray  = dataArray,
 					fragmentOffset = fragment .position,
 					fragmentLength = fragment .length;
 
@@ -152,9 +158,7 @@ function (dicomParser)
 					{
 						// RLE
 
-						var outputLength = dicom .width * dicom .height * dicom .components * (this .bitsAllocated / 8);
-
-						fragmentArray  = this .rle (new Int8Array (fragmentArray .buffer, fragmentOffset, fragmentLength), outputLength);
+						fragmentArray  = this .rle (fragmentArray .buffer, fragmentOffset, fragmentLength);
 						fragmentOffset = 0;
 						fragmentLength = fragmentArray .length;
 						break;
@@ -166,6 +170,8 @@ function (dicomParser)
 						break;
 					}
 				}
+
+				var b = i * frameLength;
 
 				switch (this .type)
 				{
@@ -274,38 +280,61 @@ function (dicomParser)
 
 			return 1 / max * 255;
 		},
-		rle: function (input, outputLength)
+		ulong: function (array, i)
+		{
+			var index = i * 4;
+
+			// Assume system little endian.
+			return array [index + 3] << 24 | array [index + 2] << 16 | array [index + 1] << 8 | array [index];
+		},
+		rle: function (buffer, offset, length)
 		{
 			// http://dicom.nema.org/MEDICAL/dicom/2017b/output/chtml/part05/sect_G.3.2.html
 
 			var
-				output = [ ],
-				i      = 0;
+				header   = new Uint8Array (buffer, offset, 64),
+				segments = [ ];
 
-			while (i < input .length)
+			for (var i = 1, li = this .ulong (header, 0) + 1; i < li; ++ i)
 			{
-				// Read the next source byte into n.
-				var n = input [i ++];
-
-				if (n >= 0 && n <= 127)
-				{
-					// Output the next n+1 bytes literally.
-					for (var l = i + n + 1; i < l; ++ i)
-						output .push (input [i]);
-				}
-				else if (n <= -1 && n >= -127)
-				{
-					// Output the next byte -n+1 times.
-					var b = input [i ++];
-
-					for (var k = 0, l = -n + 1; k < l; ++ k)
-						output .push (b);
-				}
+				segments .push (this .ulong (header, i));
 			}
 
-			console .log (input .length, output .length, outputLength);
+			segments .push (length);
 
-			output .length = outputLength;
+			var output  = [ ];
+
+			for (var s = 0, ls = segments .length - 1; s < ls; ++ s)
+			{
+				var
+					offset1 = segments [s],
+					offset2 = segments [s + 1],
+					input   = new Int8Array (buffer, offset + offset1, offset2 - offset1),
+					i       = 0;
+
+				while (i < input .length)
+				{
+					// Read the next source byte into n.
+					var n = input [i ++];
+
+					if (n >= 0 && n <= 127)
+					{
+						// Output the next n+1 bytes literally.
+						for (var l = i + n + 1; i < l; ++ i)
+							output .push (input [i]);
+					}
+					else if (n <= -1 && n >= -127)
+					{
+						// Output the next byte -n+1 times.
+						var b = input [i ++];
+
+						for (var k = 0, l = -n + 1; k < l; ++ k)
+							output .push (b);
+					}
+				}
+
+				console .log (input .length, output .length);
+			}
 
 			return new Uint8Array (output);
 		},
