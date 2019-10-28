@@ -53,7 +53,8 @@
 		"requirejs": "^2.3.6",
 		"requirejs-text": "latest",
 		"sprintf-js": "latest",
-		"uglify-js-es6": "latest"
+		"uglify-js-es6": "latest",
+		"dicom-parser": "latest"
 	},
 	"scripts": {
 		"lint": "jshint **",
