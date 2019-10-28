@@ -154,9 +154,10 @@ function (dicomParser)
 					case "1.2.840.10008.1.2.5":
 					{
 						// RLE
-						//throw new Error ("DICOM: RLE endocing is not supported.");
 
-						dataArray  = this .rle (new Int8Array (dataArray .buffer, dataOffset, dataLength));
+						var outputLength = this .dicom .width * this .dicom .height * this .dicom .components * (this .bitsAllocated / 8);
+
+						dataArray  = this .rle (new Int8Array (dataArray .buffer, dataOffset, dataLength), outputLength);
 						dataOffset = 0;
 						dataLength = dataArray .length;
 						break;
@@ -277,11 +278,9 @@ function (dicomParser)
 
 			return 1 / max * 255;
 		},
-		rle: function (input)
+		rle: function (input, outputLength)
 		{
 			// http://dicom.nema.org/MEDICAL/dicom/2017b/output/chtml/part05/sect_G.3.2.html
-
-			console .log (input .length);
 
 			var
 				output = [ ],
@@ -308,7 +307,9 @@ function (dicomParser)
 				}
 			}
 
-			console .log (output .length);
+			console .log (input .length, output .length, outputLength);
+
+			output .length = outputLength;
 
 			return new Uint8Array (output);
 		},
