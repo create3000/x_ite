@@ -158,7 +158,41 @@ function (dicomParser)
 			{
 				case "MONOCHROME1":
 				{
-					var data = new Uint8Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length);
+					switch (this .bitsAllocated)
+					{
+						case 8:
+						{
+							var data = new Uint8Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length);
+							break;
+						}
+						case 16:
+						{
+							var
+								data16 = new Uint16Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length / 2),
+								data   = new Uint8Array (data16 .length),
+								factor = this .getPixelFactor (data16);
+
+							for (var i = 0, length = data16 .length; i < length; ++ i)
+								data [i] = data16 [i] * factor;
+
+							break;
+						}
+						case 32:
+						{
+							var
+								data16 = new Uint32Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length / 4),
+								data   = new Uint8Array (data16 .length),
+								factor = this .getPixelFactor (data16);
+
+							for (var i = 0, length = data16 .length; i < length; ++ i)
+								data [i] = data16 [i] * factor;
+
+							break;
+						}
+					}
+
+					for (var i = 0, length = data .length; i < length; ++ i)
+						data [i] = 255 - data [i];
 
 					this .dicom .data = data;
 					break;
@@ -174,11 +208,25 @@ function (dicomParser)
 						}
 						case 16:
 						{
-							var data16 = new Uint16Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length / 2);
-							var data   = new Uint8Array (data16 .length);
+							var
+								data16 = new Uint16Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length / 2),
+								data   = new Uint8Array (data16 .length),
+								factor = this .getPixelFactor (data16);
 
 							for (var i = 0, length = data16 .length; i < length; ++ i)
-								data [i] = data16 [i];
+								data [i] = data16 [i] * factor;
+
+							break;
+						}
+						case 32:
+						{
+							var
+								data16 = new Uint32Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length / 4),
+								data   = new Uint8Array (data16 .length),
+								factor = this .getPixelFactor (data16);
+
+							for (var i = 0, length = data16 .length; i < length; ++ i)
+								data [i] = data16 [i] * factor;
 
 							break;
 						}
@@ -191,6 +239,15 @@ function (dicomParser)
 					throw new Error ("DICOM: unsupported image type '" + this .type + "'.");
 			}
 		},
+		getPixelFactor: function (data)
+		{
+			var max = 0;
+
+			for (var i = 0, length = data .length; i < length; ++ i)
+				max = Math .max (max, data [i]);
+
+			return 1 / max * 255;
+		}
 	};
 
 	return DicomParser;
