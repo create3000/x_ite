@@ -481,8 +481,6 @@ function (pako)
 			["sizes",     this .getSizes],
 			["endian",    this .getEndian],
 		]);
-
-		this .endian = this .getEndianess ();
 	}
 
 	NRRDParser .prototype =
@@ -512,6 +510,7 @@ function (pako)
 			{
 				this .nrrd .nrrd    = true;
 				this .nrrd .version = parseInt (this .result [1]);
+				this .endian        = this .getEndianess ();
 				return true;
 			}
 
