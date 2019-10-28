@@ -104,50 +104,28 @@ function (dicomParser)
 		},
 		getComponents: function ()
 		{
-			var
-				componentsElement = this .dataSet .elements .x00280002,
-				components        = new Uint16Array (this .dataSet .byteArray .buffer, componentsElement .dataOffset, componentsElement .length);
-
-			this .dicom .components = components [0];
+			this .dicom .components = this .dataSet .uint16 ("x00280002");
 		},
 		getWidth: function ()
 		{
-			var
-				widthElement = this .dataSet .elements .x00280011,
-				width        = new Uint16Array (this .dataSet .byteArray .buffer, widthElement .dataOffset, widthElement .length);
-
-			this .dicom .width = width [0];
+			this .dicom .width = this .dataSet .uint16 ("x00280011");
 		},
 		getHeight: function ()
 		{
-			var
-				heightElement = this .dataSet .elements .x00280010,
-				height        = new Uint16Array (this .dataSet .byteArray .buffer, heightElement .dataOffset, heightElement .length);
-
-			this .dicom .height = height [0];
+			this .dicom .height = this .dataSet .uint16 ("x00280010");
 		},
 		getDepth: function ()
 		{
-			var depthElement = this .dataSet .elements .x00280008;
-
-			if (depthElement)
+			if (this .dataSet .elements .x00280008)
 			{
-				var depth = new Uint16Array (this .dataSet .byteArray .buffer, depthElement .dataOffset, depthElement .length);
-
-				this .dicom .depth = depth [0];
+				this .dicom .depth = this .dataSet .intString ("x00280008");
 			}
 			else
-			{
 				this .dicom .depth = 1;
-			}
 		},
 		getBitsAllocated: function ()
 		{
-			var
-				bitsElement = this .dataSet .elements .x00280100,
-				bits        = new Uint16Array (this .dataSet .byteArray .buffer, bitsElement .dataOffset, bitsElement .length);
-
-			this .bitsAllocated = bits [0];
+			this .bitsAllocated = this .dataSet .uint16 ("x00280100");
 			console .log (this .bitsAllocated);
 		},
 		getPixelData: function ()
@@ -157,12 +135,14 @@ function (dicomParser)
 			switch (this .type)
 			{
 				case "MONOCHROME1":
+				case "MONOCHROME2":
 				{
 					switch (this .bitsAllocated)
 					{
 						case 8:
 						{
 							var data = new Uint8Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length);
+
 							break;
 						}
 						case 16:
@@ -191,45 +171,10 @@ function (dicomParser)
 						}
 					}
 
-					for (var i = 0, length = data .length; i < length; ++ i)
-						data [i] = 255 - data [i];
-
-					this .dicom .data = data;
-					break;
-				}
-				case "MONOCHROME2":
-				{
-					switch (this .bitsAllocated)
+					if (this .type == "MONOCHROME1")
 					{
-						case 8:
-						{
-							var data = new Uint8Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length);
-							break;
-						}
-						case 16:
-						{
-							var
-								data16 = new Uint16Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length / 2),
-								data   = new Uint8Array (data16 .length),
-								factor = this .getPixelFactor (data16);
-
-							for (var i = 0, length = data16 .length; i < length; ++ i)
-								data [i] = data16 [i] * factor;
-
-							break;
-						}
-						case 32:
-						{
-							var
-								data16 = new Uint32Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length / 4),
-								data   = new Uint8Array (data16 .length),
-								factor = this .getPixelFactor (data16);
-
-							for (var i = 0, length = data16 .length; i < length; ++ i)
-								data [i] = data16 [i] * factor;
-
-							break;
-						}
+						for (var i = 0, length = data .length; i < length; ++ i)
+							data [i] = 255 - data [i];
 					}
 
 					this .dicom .data = data;
