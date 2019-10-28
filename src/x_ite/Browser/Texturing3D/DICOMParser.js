@@ -123,7 +123,6 @@ function (dicomParser)
 		getBitsAllocated: function ()
 		{
 			this .bitsAllocated = this .dataSet .uint16 ("x00280100");
-			console .log (this .bitsAllocated);
 		},
 		getTansferSyntax: function ()
 		{
@@ -140,24 +139,12 @@ function (dicomParser)
 				bytes        = new Uint8Array (byteLength),
 				b            = 0;
 
-			(pixelElement .fragments || [{ offset: 0, length: dataLength }]) .forEach (function (fragment, i)
+			(pixelElement .fragments || [{ position: pixelElement .dataOffset, length: dataLength }]) .forEach (function (fragment, i)
 			{
-				//console .log (fragment .offset, fragment .length);
-
-				if (pixelElement .encapsulatedPixelData)
-				{
-					var
-						dataArray  = dicomParser .readEncapsulatedPixelDataFromFragments (this .dataSet, pixelElement, i),
-						dataOffset = 0,
-						dataLength = dataArray .length;
-				}
-				else
-				{
-					var
-						dataArray  = this .dataSet .byteArray,
-						dataOffset = pixelElement .dataOffset + fragment .offset,
-						dataLength = fragment .length;
-				}
+				var
+					fragmentArray  = this .dataSet .byteArray,
+					fragmentOffset = fragment .position,
+					fragmentLength = fragment .length;
 
 				switch (this .transferSyntax)
 				{
@@ -167,9 +154,9 @@ function (dicomParser)
 
 						var outputLength = dicom .width * dicom .height * dicom .components * (this .bitsAllocated / 8);
 
-						dataArray  = this .rle (new Int8Array (dataArray .buffer, dataOffset, dataLength), outputLength);
-						dataOffset = 0;
-						dataLength = dataArray .length;
+						fragmentArray  = this .rle (new Int8Array (fragmentArray .buffer, fragmentOffset, fragmentLength), outputLength);
+						fragmentOffset = 0;
+						fragmentLength = fragmentArray .length;
 						break;
 					}
 					case "1.2.840.10008.1.2.4.51":
@@ -189,7 +176,7 @@ function (dicomParser)
 						{
 							case 8:
 							{
-								var data = new Uint8Array (dataArray .buffer, dataOffset, dataLength);
+								var data = new Uint8Array (fragmentArray .buffer, fragmentOffset, fragmentLength);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
 									bytes [b ++] = data [i];
@@ -199,7 +186,7 @@ function (dicomParser)
 							case 16:
 							{
 								var
-									data   = new Uint16Array (dataArray .buffer, dataOffset, dataLength / 2),
+									data   = new Uint16Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 2),
 									factor = this .getPixelFactor (data);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
@@ -210,7 +197,7 @@ function (dicomParser)
 							case 32:
 							{
 								var
-									data   = new Uint32Array (dataArray .buffer, dataOffset, dataLength / 4),
+									data   = new Uint32Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 4),
 									factor = this .getPixelFactor (data);
 
 								for (var i = 0, length = data32 .length; i < length; ++ i)
@@ -228,7 +215,7 @@ function (dicomParser)
 						{
 							case 8:
 							{
-								var data = new Uint8Array (dataArray .buffer, dataOffset, dataLength);
+								var data = new Uint8Array (fragmentArray .buffer, fragmentOffset, fragmentLength);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
 									bytes [b ++] = data [i];
@@ -238,7 +225,7 @@ function (dicomParser)
 							case 16:
 							{
 								var
-									data   = new Uint16Array (dataArray .buffer, dataOffset, dataLength / 2),
+									data   = new Uint16Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 2),
 									factor = this .getPixelFactor (data);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
@@ -249,7 +236,7 @@ function (dicomParser)
 							case 32:
 							{
 								var
-									data   = new Uint32Array (dataArray .buffer, dataOffset, dataLength / 4),
+									data   = new Uint32Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 4),
 									factor = this .getPixelFactor (data);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
