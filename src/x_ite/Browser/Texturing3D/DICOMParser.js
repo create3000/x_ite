@@ -183,33 +183,33 @@ function (dicomParser)
 							case 8:
 							{
 								var
-									data = new Uint8Array (fragmentArray .buffer, fragmentOffset, fragmentLength),
-									poaf = this .getPixelOffsetAndFactor (data);
+									data   = new Uint8Array (fragmentArray .buffer, fragmentOffset, fragmentLength),
+									values = this .getPixelOffsetAndFactor (data);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = (data [i] - poaf .offset) * poaf .factor;
+									bytes [b ++] = (data [i] - values .offset) * values .factor;
 
 								break;
 							}
 							case 16:
 							{
 								var
-									data = new Uint16Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 2),
-									poaf = this .getPixelOffsetAndFactor (data);
+									data   = new Uint16Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 2),
+									values = this .getPixelOffsetAndFactor (data);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = (data [i] - poaf .offset) * poaf .factor;
+									bytes [b ++] = (data [i] - values .offset) * values .factor;
 
 								break;
 							}
 							case 32:
 							{
 								var
-									data = new Uint32Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 4),
-									poaf = this .getPixelOffsetAndFactor (data);
+									data   = new Uint32Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 4),
+									values = this .getPixelOffsetAndFactor (data);
 
 								for (var i = 0, length = data32 .length; i < length; ++ i)
-									bytes [b ++] = (data [i] - poaf .offset) * poaf .factor;
+									bytes [b ++] = (data [i] - values .offset) * values .factor;
 
 								break;
 							}
@@ -223,10 +223,12 @@ function (dicomParser)
 						{
 							case 8:
 							{
-								var data = new Uint8Array (fragmentArray .buffer, fragmentOffset, fragmentLength);
+								var
+									data   = new Uint8Array (fragmentArray .buffer, fragmentOffset, fragmentLength),
+									values = this .getPixelFactor (data);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = data [i];
+									bytes [b ++] = (data [i] - values .offset) * values .factor;
 
 								break;
 							}
@@ -234,10 +236,10 @@ function (dicomParser)
 							{
 								var
 									data   = new Uint16Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 2),
-									factor = this .getPixelFactor (data);
+									values = this .getPixelFactor (data);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = data [i] * factor;
+									bytes [b ++] = (data [i] - values .offset) * values .factor;
 
 								break;
 							}
@@ -245,10 +247,10 @@ function (dicomParser)
 							{
 								var
 									data   = new Uint32Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 4),
-									factor = this .getPixelFactor (data);
+									values = this .getPixelFactor (data);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = data [i] * factor;
+									bytes [b ++] = (data [i] - values .offset) * values .factor;
 
 								break;
 							}
@@ -296,7 +298,7 @@ function (dicomParser)
 				header   = new Uint8Array (buffer, offset, 64),
 				segments = [ ];
 
-			for (var i = 1, li = this .ulong (header, 0) + 1; i < li; ++ i)
+			for (var i = 1, headerLength = this .ulong (header, 0) + 1; i < headerLength; ++ i)
 			{
 				segments .push (this .ulong (header, i));
 			}
