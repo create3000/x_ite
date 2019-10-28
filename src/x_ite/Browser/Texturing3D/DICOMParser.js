@@ -133,21 +133,31 @@ function (dicomParser)
 		getPixelData: function ()
 		{
 			var
+				dicom        = this .dicom,
 				pixelElement = this .dataSet .elements .x7fe00010,
-				dataOffset   = pixelElement .dataOffset,
 				dataLength   = pixelElement .length,
-				byteLength   = this .dicom .width * this .dicom .height * this .dicom .depth * this .dicom .components,
+				byteLength   = dicom .width * dicom .height * dicom .depth * dicom .components,
 				bytes        = new Uint8Array (byteLength),
 				b            = 0;
 
-			(pixelElement .fragments || [{ offset: dataOffset, length: dataLength }]) .forEach (function (fragment, i)
+			(pixelElement .fragments || [{ offset: 0, length: dataLength }]) .forEach (function (fragment, i)
 			{
 				//console .log (fragment .offset, fragment .length);
 
-				var
-					dataArray  = this .dataSet .byteArray,
-					dataOffset = fragment .offset,
-					dataLength = fragment .length;
+				if (pixelElement .encapsulatedPixelData)
+				{
+					var
+						dataArray  = dicomParser .readEncapsulatedPixelDataFromFragments (this .dataSet, pixelElement, i),
+						dataOffset = 0,
+						dataLength = dataArray .length;
+				}
+				else
+				{
+					var
+						dataArray  = this .dataSet .byteArray,
+						dataOffset = pixelElement .dataOffset + fragment .offset,
+						dataLength = fragment .length;
+				}
 
 				switch (this .transferSyntax)
 				{
@@ -155,7 +165,7 @@ function (dicomParser)
 					{
 						// RLE
 
-						var outputLength = this .dicom .width * this .dicom .height * this .dicom .components * (this .bitsAllocated / 8);
+						var outputLength = dicom .width * dicom .height * dicom .components * (this .bitsAllocated / 8);
 
 						dataArray  = this .rle (new Int8Array (dataArray .buffer, dataOffset, dataLength), outputLength);
 						dataOffset = 0;
@@ -249,7 +259,6 @@ function (dicomParser)
 							}
 						}
 
-						this .dicom .data = bytes;
 						break;
 					}
 					default:
@@ -267,7 +276,7 @@ function (dicomParser)
 					bytes [i] = 255 - bytes [i];
 			}
 
-			this .dicom .data = bytes;
+			dicom .data = bytes;
 		},
 		getPixelFactor: function (data)
 		{
