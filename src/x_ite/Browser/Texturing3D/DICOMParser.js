@@ -158,7 +158,7 @@ function (dicomParser)
 					{
 						// RLE
 
-						fragmentArray  = this .rle (fragmentArray .buffer, fragmentOffset, fragmentLength, frameLength * (this .bitsAllocated / 8));
+						fragmentArray  = this .rleDecode (fragmentArray .buffer, fragmentOffset, fragmentLength, frameLength * (this .bitsAllocated / 8));
 						fragmentOffset = 0;
 						fragmentLength = fragmentArray .length;
 						break;
@@ -285,7 +285,7 @@ function (dicomParser)
 
 			return { offset: min, factor: 1 / (max - min) * 255 };
 		},
-		rle: function (buffer, offset, length, outputLength)
+		rleDecode: function (buffer, offset, length, outputLength)
 		{
 			// http://dicom.nema.org/dicom/2013/output/chtml/part05/sect_G.5.html
 			// http://dicom.nema.org/MEDICAL/dicom/2017b/output/chtml/part05/sect_G.3.2.html

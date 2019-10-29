@@ -268,6 +268,17 @@ X3D (function ()
 	$(".location-go") .click (loadURL);
 	$(".print-xml") .click (toXMLString);
 	$(".print-vrml") .click (toVRMLString);
+
+	// Restore location entry.
+
+	var defaultLocaton = "http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d";
+
+	$(".location-entry") .val (Browser .getLocalStorage () ["Bookmarks.location"] || defaultLocaton)
+
+	$(window) .on ("unload", function ()
+	{
+		Browser .getLocalStorage () ["Bookmarks.location"] = $(".location-entry") .val ();
+	});
 },
 function (error)
 {
