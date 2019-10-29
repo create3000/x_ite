@@ -42,6 +42,7 @@
 		"ammojs": "latest",
 		"bezier-js": "^2.4.4",
 		"css-element-queries": "^1.2.1",
+		"dicom-parser": "^1.8.3",
 		"jquery": "^3.4.1",
 		"jquery-contextmenu": "^2.9.0",
 		"jquery-mousewheel": "latest",
@@ -53,15 +54,12 @@
 		"requirejs": "^2.3.6",
 		"requirejs-text": "latest",
 		"sprintf-js": "latest",
-		"uglify-js-es6": "latest",
-		"dicom-parser": "latest"
+		"uglify-js-es6": "latest"
 	},
 	"scripts": {
 		"lint": "jshint **",
 		"build": "make",
 		"-prebuild:js": "npm run lint"
 	},
-	"dependencies": {
-		"dicom-parser": "^1.8.3"
-	}
+	"dependencies": {}
 }
