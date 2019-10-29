@@ -168,7 +168,7 @@ function (dicomParser)
 					{
 						// RLE Lossless
 
-						fragmentArray  = this .rleDecode (fragmentArray .buffer, fragmentOffset, fragmentLength, frameLength * this .bytesAllocated);
+						fragmentArray  = this .decodeRLE (fragmentArray .buffer, fragmentOffset, fragmentLength, frameLength * this .bytesAllocated);
 						fragmentOffset = 0;
 						fragmentLength = fragmentArray .length;
 						break;
@@ -199,6 +199,7 @@ function (dicomParser)
 					case "1.2.840.10008.1.2.4.93":
 					{
 						// JPEG
+						console .log (this .decodeJPEG (fragmentArray, this .bytesAllocated, false));
 						throw new Error ("DICOM: JPEG encoding is not supported.");
 						break;
 					}
@@ -322,18 +323,18 @@ function (dicomParser)
 
 			return { offset: min, factor: 1 / (max - min) * 255 };
 		},
-		rleDecode: function (buffer, offset, length, outputLength)
+		decodeRLE: function (buffer, offset, length, outputLength)
 		{
 			// http://dicom.nema.org/dicom/2013/output/chtml/part05/sect_G.5.html
 			// http://dicom.nema.org/MEDICAL/dicom/2017b/output/chtml/part05/sect_G.3.2.html
 
 			var
-				header   = new Uint8Array (buffer, offset, 64),
+				header   = new DataView (buffer, offset, 64),
 				segments = [ ];
 
-			for (var i = 1, headerLength = this .ulong (header, 0) + 1; i < headerLength; ++ i)
+			for (var i = 1, headerLength = header .getUint32 (0, true) + 1; i < headerLength; ++ i)
 			{
-				segments .push (this .ulong (header, i));
+				segments .push (header .getUint32 (i * 4, true));
 			}
 
 			segments .push (length);
@@ -379,26 +380,6 @@ function (dicomParser)
 
 			return output;
 		},
-		ulong: (function ()
-		{
-			var
-				buffer = new ArrayBuffer (4),
-				bytes  = new Uint8Array (buffer),
-				number = new Uint32Array (buffer);
-
-			return function (array, i)
-			{
-				// Assume system endianess little.
-				var index = i * 4;
-
-				bytes [0] = array [index + 0];
-				bytes [1] = array [index + 1];
-				bytes [2] = array [index + 2];
-				bytes [3] = array [index + 3];
-
-				return number [0];
-			};
-		})(),
 	};
 
 	return DicomParser;
