@@ -122,7 +122,8 @@ function (dicomParser)
 		},
 		getBitsAllocated: function ()
 		{
-			this .bitsAllocated = this .dataSet .uint16 ("x00280100");
+			this .bitsAllocated  = this .dataSet .uint16 ("x00280100");
+			this .bytesAllocated = this .bitsAllocated / 8;
 		},
 		getPlanarConfiguration: function ()
 		{
@@ -152,22 +153,58 @@ function (dicomParser)
 					fragmentOffset = fragment .position,
 					fragmentLength = fragment .length;
 
+				// https://www.dicomlibrary.com/dicom/transfer-syntax/
+
 				switch (this .transferSyntax)
 				{
+					case "1.2.840.10008.1.2":      // Implicit VR Endian: Default Transfer Syntax for DICOM
+					case "1.2.840.10008.1.2.1":    // Explicit VR Little Endian
+					case "1.2.840.10008.1.2.1.99": // Deflated Explicit VR Little Endian
+					case "1.2.840.10008.1.2.2":    // Explicit VR Big Endian
+					{
+						break;
+					}
 					case "1.2.840.10008.1.2.5":
 					{
-						// RLE
+						// RLE Lossless
 
-						fragmentArray  = this .rleDecode (fragmentArray .buffer, fragmentOffset, fragmentLength, frameLength * (this .bitsAllocated / 8));
+						fragmentArray  = this .rleDecode (fragmentArray .buffer, fragmentOffset, fragmentLength, frameLength * this .bytesAllocated);
 						fragmentOffset = 0;
 						fragmentLength = fragmentArray .length;
 						break;
 					}
+					case "1.2.840.10008.1.2.4.50":
 					case "1.2.840.10008.1.2.4.51":
+					case "1.2.840.10008.1.2.4.52":
+					case "1.2.840.10008.1.2.4.53":
+					case "1.2.840.10008.1.2.4.54":
+					case "1.2.840.10008.1.2.4.55":
+					case "1.2.840.10008.1.2.4.56":
+					case "1.2.840.10008.1.2.4.57":
+					case "1.2.840.10008.1.2.4.58":
+					case "1.2.840.10008.1.2.4.59":
+					case "1.2.840.10008.1.2.4.60":
+					case "1.2.840.10008.1.2.4.61":
+					case "1.2.840.10008.1.2.4.62":
+					case "1.2.840.10008.1.2.4.63":
+					case "1.2.840.10008.1.2.4.64":
+					case "1.2.840.10008.1.2.4.65":
+					case "1.2.840.10008.1.2.4.66":
+					case "1.2.840.10008.1.2.4.70":
+					case "1.2.840.10008.1.2.4.80":
+					case "1.2.840.10008.1.2.4.81":
+					case "1.2.840.10008.1.2.4.90":
+					case "1.2.840.10008.1.2.4.91":
+					case "1.2.840.10008.1.2.4.92":
+					case "1.2.840.10008.1.2.4.93":
 					{
 						// JPEG
-						throw new Error ("DICOM: JPEG endocing is not supported.");
+						throw new Error ("DICOM: JPEG encoding is not supported.");
 						break;
+					}
+					default:
+					{
+						throw new Error ("DICOM: unsupported transfer syntax '" + this .transferSyntax + "'.");
 					}
 				}
 
