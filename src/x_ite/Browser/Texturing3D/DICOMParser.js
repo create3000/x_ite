@@ -199,7 +199,6 @@ function (dicomParser)
 					case "1.2.840.10008.1.2.4.93":
 					{
 						// JPEG
-						console .log (this .decodeJPEG (fragmentArray, this .bytesAllocated, false));
 						throw new Error ("DICOM: JPEG encoding is not supported.");
 						break;
 					}
