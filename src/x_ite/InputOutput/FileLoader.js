@@ -574,7 +574,7 @@ function ($,
 		{
 			try
 			{
-				this .callback (this .fileReader .result, this .URL);
+				this .callback (this .fileReader .result);
 			}
 			catch (exception)
 			{
