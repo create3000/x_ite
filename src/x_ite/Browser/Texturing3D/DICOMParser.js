@@ -90,11 +90,12 @@ function (dicomParser,
 			this .getHeight ();
 			this .getDepth ();
 			this .getBitsAllocated ();
+			this .getPixelRepresentation ();
 			this .getPlanarConfiguration ();
 			this .getTansferSyntax ();
 			this .getPixelData ();
 
-			console .log (this .dicom);
+			console .log (this);
 
 			return this .dicom;
 		},
@@ -128,6 +129,10 @@ function (dicomParser,
 		getBitsAllocated: function ()
 		{
 			this .bitsAllocated  = this .dataSet .uint16 ("x00280100");
+		},
+		getPixelRepresentation: function ()
+		{
+			this .pixelRepresentation = this .dataSet .uint16 ("x00280103");
 		},
 		getPlanarConfiguration: function ()
 		{
