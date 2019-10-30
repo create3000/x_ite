@@ -166,11 +166,7 @@ function (dicomParser,
 				{
 					var array = dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i, basicOffsetTable);
 
-					fragments .push ({
-						array: array,
-						position: 0,
-						length: array .length,
-					});
+					fragments .push ({ array: array, position: 0, length: array .length });
 				}
 			}
 			else
@@ -179,20 +175,12 @@ function (dicomParser,
 				{
 					pixelElement .fragments .forEach (function (fragment)
 					{
-						fragments .push ({
-							array: dataArray,
-							position: fragment .position,
-							length: fragment .length,
-						});
+						fragments .push ({ array: dataArray, position: fragment .position, length: fragment .length });
 					});
 				}
 				else
 				{
-					fragments .push ({
-						array: dataArray,
-						position: dataOffset,
-						length: dataLength,
-					});
+					fragments .push ({ array: dataArray, position: dataOffset, length: dataLength });
 				}
 			}
 
