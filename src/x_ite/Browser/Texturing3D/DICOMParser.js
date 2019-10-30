@@ -141,7 +141,7 @@ function (dicomParser,
 		{
 			var
 				dicom        = this .dicom,
-				pixelElement = this .dataSet .elements .x7fe00010 || dataSet .elements .x7fe00008,
+				pixelElement = this .dataSet .elements .x7fe00010 || this .dataSet .elements .x7fe00008, // pixel or float pixel
 				imageLength  = dicom .width * dicom .height * dicom .components,
 				byteLength   = imageLength * dicom .depth,
 				bytes        = new Uint32Array (byteLength),
