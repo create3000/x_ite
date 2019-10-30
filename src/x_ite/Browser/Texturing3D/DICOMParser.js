@@ -434,16 +434,16 @@ function (dicomParser,
 
 			jpeg .colorTransform = false;
 
-			if (this .bitsAllocated === 8)
-				return jpeg .getData (this .dicom .width, this .dicom .height);
+			var data = jpeg .getData (this .dicom .width, this .dicom .height);
 
-			if (this .bitsAllocated === 16)
-				return new Uint8Array (jpeg .getData16 (this .dicom .width, this .dicom .height) .buffer);
+			this .bitsAllocated = 8;
+
+			return data;
 		 },
 		 decodeJPEGLossless: function (pixelData)
 		 {
 			var
-				decoder = new jpegLossless .lossless .Decoder(),
+				decoder = new jpegLossless .lossless .Decoder (),
 				buffer  = decoder .decompress (pixelData);
 
 			return new Uint8Array (buffer);
