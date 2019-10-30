@@ -138,51 +138,15 @@ function (dicomParser,
 			this .transferSyntax = this .dataSet .string ("x00020010");
 			//console .log (this .transferSyntax);
 		},
-		getBasicOffsetTable: function (pixelElement)
-		{
-			if (pixelElement .basicOffsetTable .length)
-				return pixelElement .basicOffsetTable;
-
-			return dicomParser .createJPEGBasicOffsetTable (this .dataSet, pixelElement);
-		},
 		getPixelData: function ()
 		{
 			var
 				dicom        = this .dicom,
 				pixelElement = this .dataSet .elements .x7fe00010 || dataSet .elements .x7fe00008,
-				dataArray    = this .dataSet .byteArray,
-				dataOffset   = pixelElement .dataOffset,
-				dataLength   = pixelElement .length,
 				frameLength  = dicom .width * dicom .height * dicom .components,
 				byteLength   = frameLength * dicom .depth,
 				bytes        = new Uint32Array (byteLength),
-				fragments    = [ ];
-
-			if (pixelElement .encapsulatedPixelData && dicom .depth !== pixelElement .fragments .length)
-			{
-				var basicOffsetTable = this .getBasicOffsetTable (pixelElement);
-
-				for (var i = 0, length = dicom .depth; i < length; ++ i)
-				{
-					var array = dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i, basicOffsetTable);
-
-					fragments .push ({ array: array, position: 0, length: array .length });
-				}
-			}
-			else
-			{
-				if (pixelElement .fragments)
-				{
-					pixelElement .fragments .forEach (function (fragment)
-					{
-						fragments .push ({ array: dataArray, position: fragment .position, length: fragment .length });
-					});
-				}
-				else
-				{
-					fragments .push ({ array: dataArray, position: dataOffset, length: dataLength });
-				}
-			}
+				fragments    = this .getFragments (pixelElement);
 
 			fragments .forEach (function (fragment, i)
 			{
@@ -244,6 +208,7 @@ function (dicomParser,
 					case "1.2.840.10008.1.2.4.93":
 					{
 						// JPEG
+						console .log (this .transferSyntax);
 						throw new Error ("DICOM: JPEG encoding is not supported.");
 					}
 					default:
@@ -351,6 +316,46 @@ function (dicomParser,
 			// Set Uint8Array.
 
 			dicom .data = new Uint8Array (bytes);
+		},
+		getFragments: function (pixelElement)
+		{
+			var fragments = [ ];
+
+			if (pixelElement .encapsulatedPixelData && this .dicom .depth !== pixelElement .fragments .length)
+			{
+				var basicOffsetTable = this .getBasicOffsetTable (pixelElement);
+
+				for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+				{
+					var array = dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i, basicOffsetTable);
+
+					fragments .push ({ array: array, position: array .byteOffset, length: array .length });
+				}
+			}
+			else
+			{
+				if (pixelElement .fragments)
+				{
+					pixelElement .fragments .forEach (function (fragment)
+					{
+						fragments .push ({ array: this .dataSet .byteArray, position: fragment .position, length: fragment .length });
+					}
+					.bind (this));
+				}
+				else
+				{
+					fragments .push ({ array: this .dataSet .byteArray, position: pixelElement .dataOffset, length: pixelElement .length });
+				}
+			}
+
+			return fragments;
+		},
+		getBasicOffsetTable: function (pixelElement)
+		{
+			if (pixelElement .basicOffsetTable .length)
+				return pixelElement .basicOffsetTable;
+
+			return dicomParser .createJPEGBasicOffsetTable (this .dataSet, pixelElement);
 		},
 		getPixelOffsetAndFactor: function (data)
 		{
