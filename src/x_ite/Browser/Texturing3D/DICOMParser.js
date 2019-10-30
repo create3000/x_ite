@@ -49,7 +49,7 @@
 
 define ([
 	"dicom-parser",
-	"jpeg",
+	"lib/jpeg/jpeg",
 	"jpegLossless",
 ],
 function (dicomParser,
@@ -178,7 +178,6 @@ function (dicomParser,
 					case "1.2.840.10008.1.2.4.70": // JPEG Lossless, Nonhierarchical (Processes 14 [Selection 1])
 					{
 						frame = this .decodeJPEGLossless (frame);
-
 						break;
 					}
 					case "1.2.840.10008.1.2.2": // Explicit VR Big Endian (retired)
