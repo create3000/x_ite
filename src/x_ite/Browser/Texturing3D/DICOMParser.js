@@ -170,8 +170,6 @@ function (dicomParser,
 					case "1.2.840.10008.1.2.4.51": // JPEG Baseline lossy process 2 & 4 (12 bit)
 					{
 						frame = this .decodeJPEGBaseline (frame);
-
-						this .bitsAllocated = 8;
 						break;
 					}
 					case "1.2.840.10008.1.2.4.57": // JPEG Lossless, Nonhierarchical (Processes 14)
@@ -436,7 +434,11 @@ function (dicomParser,
 
 			jpeg .colorTransform = false;
 
-			return jpeg .getData (this .dicom .width, this .dicom .height);
+			if (this .bitsAllocated === 8)
+				return jpeg .getData (this .dicom .width, this .dicom .height);
+
+			if (this .bitsAllocated === 16)
+				return new Uint8Array (jpeg .getData16 (this .dicom .width, this .dicom .height) .buffer);
 		 },
 		 decodeJPEGLossless: function (pixelData)
 		 {
