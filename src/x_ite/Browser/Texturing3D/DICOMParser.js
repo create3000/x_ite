@@ -207,36 +207,37 @@ function (dicomParser,
 
 				switch (this .transferSyntax)
 				{
-					case "1.2.840.10008.1.2":      // Implicit VR Endian: Default Transfer Syntax for DICOM
+					case "1.2.840.10008.1.2":      // Implicit VR Little Endian
 					case "1.2.840.10008.1.2.1":    // Explicit VR Little Endian
 					case "1.2.840.10008.1.2.1.99": // Deflated Explicit VR Little Endian
-					case "1.2.840.10008.1.2.2":    // Explicit VR Big Endian
 					{
 						break;
 					}
-					case "1.2.840.10008.1.2.5":
+					case "1.2.840.10008.1.2.2": // Explicit VR Big Endian (retired)
 					{
-						// RLE Lossless
-
+						throw new Error ("DICOM: Explicit VR Big Endian is not supported.");
+					}
+					case "1.2.840.10008.1.2.5": // RLE Lossless
+					{
 						fragmentArray  = this .decodeRLE (fragmentArray .buffer, fragmentOffset, fragmentLength, frameLength * this .bytesAllocated);
 						fragmentOffset = 0;
 						fragmentLength = fragmentArray .length;
 						break;
 					}
-					case "1.2.840.10008.1.2.4.51":
+					case "1.2.840.10008.1.2.4.50": // JPEG Baseline lossy process 1 (8 bit)
+					case "1.2.840.10008.1.2.4.51": // JPEG Baseline lossy process 2 & 4 (12 bit)
 					{
 						fragmentArray  = this .decodeJPEGBaseline (fragmentArray);
 						fragmentOffset = 0;
 						fragmentLength = fragmentArray .length;
 						break;
 					}
-					case "1.2.840.10008.1.2.4.50":
 					case "1.2.840.10008.1.2.4.52":
 					case "1.2.840.10008.1.2.4.53":
 					case "1.2.840.10008.1.2.4.54":
 					case "1.2.840.10008.1.2.4.55":
 					case "1.2.840.10008.1.2.4.56":
-					case "1.2.840.10008.1.2.4.57":
+					case "1.2.840.10008.1.2.4.57": // JPEG Lossless, Nonhierarchical (Processes 14)
 					case "1.2.840.10008.1.2.4.58":
 					case "1.2.840.10008.1.2.4.59":
 					case "1.2.840.10008.1.2.4.60":
@@ -246,17 +247,16 @@ function (dicomParser,
 					case "1.2.840.10008.1.2.4.64":
 					case "1.2.840.10008.1.2.4.65":
 					case "1.2.840.10008.1.2.4.66":
-					case "1.2.840.10008.1.2.4.70":
-					case "1.2.840.10008.1.2.4.80":
-					case "1.2.840.10008.1.2.4.81":
-					case "1.2.840.10008.1.2.4.90":
-					case "1.2.840.10008.1.2.4.91":
+					case "1.2.840.10008.1.2.4.70": // JPEG Lossless, Nonhierarchical (Processes 14 [Selection 1])
+					case "1.2.840.10008.1.2.4.80": // JPEG-LS Lossless Image Compression
+					case "1.2.840.10008.1.2.4.81": // JPEG-LS Lossy (Near-Lossless) Image Compression
+					case "1.2.840.10008.1.2.4.90": // JPEG 2000 Lossless
+					case "1.2.840.10008.1.2.4.91": // JPEG 2000 Lossy
 					case "1.2.840.10008.1.2.4.92":
 					case "1.2.840.10008.1.2.4.93":
 					{
 						// JPEG
 						throw new Error ("DICOM: JPEG encoding is not supported.");
-						break;
 					}
 					default:
 					{
