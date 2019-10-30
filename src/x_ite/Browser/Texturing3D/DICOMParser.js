@@ -242,7 +242,7 @@ function (dicomParser,
 							}
 							case 32:
 							{
-								var data = new Uint32Array (frame .buffer, frame .byteOffset, frame .length / 4);
+								var data = new Float32Array (frame .buffer, frame .byteOffset, frame .length / 4);
 
 								for (var i = 0, length = data32 .length; i < length; ++ i)
 									bytes [b ++] = data [i];
@@ -277,7 +277,7 @@ function (dicomParser,
 							}
 							case 32:
 							{
-								var data = new Uint32Array (frame .buffer, frame .byteOffset, frame .length / 4);
+								var data = new Float32Array (frame .buffer, frame .byteOffset, frame .length / 4);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
 									bytes [b ++] = data [i];
@@ -303,7 +303,7 @@ function (dicomParser,
 
 			// Invert MONOCHROME1 pixels.
 
-			if (this .photometricInterpretation == "MONOCHROME1")
+			if (this .photometricInterpretation === "MONOCHROME1")
 			{
 				for (var i = 0, length = bytes .length; i < length; ++ i)
 					bytes [i] = 255 - bytes [i];
@@ -432,7 +432,7 @@ function (dicomParser,
 
 			jpeg .parse (pixelData);
 
-			jpeg .colorTransform = false;
+			jpeg .colorTransform = true; // default is true
 
 			var data = jpeg .getData (this .dicom .width, this .dicom .height);
 
