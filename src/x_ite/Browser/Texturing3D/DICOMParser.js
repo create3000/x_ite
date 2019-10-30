@@ -174,6 +174,7 @@ function (dicomParser,
 						this .bitsAllocated = 8;
 						break;
 					}
+					case "1.2.840.10008.1.2.4.57": // JPEG Lossless, Nonhierarchical (Processes 14)
 					case "1.2.840.10008.1.2.4.70": // JPEG Lossless, Nonhierarchical (Processes 14 [Selection 1])
 					{
 						frame = this .decodeJPEGLossless (frame);
@@ -189,7 +190,6 @@ function (dicomParser,
 					case "1.2.840.10008.1.2.4.54":
 					case "1.2.840.10008.1.2.4.55":
 					case "1.2.840.10008.1.2.4.56":
-					case "1.2.840.10008.1.2.4.57": // JPEG Lossless, Nonhierarchical (Processes 14)
 					case "1.2.840.10008.1.2.4.58":
 					case "1.2.840.10008.1.2.4.59":
 					case "1.2.840.10008.1.2.4.60":
