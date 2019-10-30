@@ -149,11 +149,6 @@ function (dicomParser,
 
 			frames .forEach (function (frame, f)
 			{
-				var
-					frameArray  = frame .array,
-					frameOffset = frame .position,
-					frameLength = frame .length;
-
 				// https://www.dicomlibrary.com/dicom/transfer-syntax/
 
 				switch (this .transferSyntax)
@@ -166,17 +161,13 @@ function (dicomParser,
 					}
 					case "1.2.840.10008.1.2.5": // RLE Lossless
 					{
-						frameArray  = this .decodeRLE (frameArray .buffer, frameOffset, frameLength, imageLength * this .bitsAllocated / 8);
-						frameOffset = 0;
-						frameLength = frameArray .length;
+						frame = this .decodeRLE (frame .buffer, frame .byteOffset, frame .length, imageLength * this .bitsAllocated / 8);
 						break;
 					}
 					case "1.2.840.10008.1.2.4.50": // JPEG Baseline lossy process 1 (8 bit)
 					case "1.2.840.10008.1.2.4.51": // JPEG Baseline lossy process 2 & 4 (12 bit)
 					{
-						frameArray  = this .decodeJPEGBaseline (frameArray);
-						frameOffset = 0;
-						frameLength = frameArray .length;
+						frame = this .decodeJPEGBaseline (frame);
 
 						this .bitsAllocated = 8;
 						break;
@@ -229,7 +220,7 @@ function (dicomParser,
 						{
 							case 8:
 							{
-								var data = new Uint8Array (frameArray .buffer, frameOffset, frameLength);
+								var data = frame;
 
 								for (var i = 0, length = data .length; i < length; ++ i)
 									bytes [b ++] = data [i];
@@ -238,7 +229,7 @@ function (dicomParser,
 							}
 							case 16:
 							{
-								var data = new Uint16Array (frameArray .buffer, frameOffset, frameLength / 2);
+								var data = new Uint16Array (frame .buffer, frame .byteOffset, frame .length / 2);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
 									bytes [b ++] = data [i];
@@ -247,7 +238,7 @@ function (dicomParser,
 							}
 							case 32:
 							{
-								var data = new Uint32Array (frameArray .buffer, frameOffset, frameLength / 4);
+								var data = new Uint32Array (frame .buffer, frame .byteOffset, frame .length / 4);
 
 								for (var i = 0, length = data32 .length; i < length; ++ i)
 									bytes [b ++] = data [i];
@@ -264,7 +255,7 @@ function (dicomParser,
 						{
 							case 8:
 							{
-								var data = new Uint8Array (frameArray .buffer, frameOffset, frameLength);
+								var data = frame;
 
 								for (var i = 0, length = data .length; i < length; ++ i)
 									bytes [b ++] = data [i];
@@ -273,7 +264,7 @@ function (dicomParser,
 							}
 							case 16:
 							{
-								var data = new Uint16Array (frameArray .buffer, frameOffset, frameLength / 2);
+								var data = new Uint16Array (frame .buffer, frame .byteOffset, frame .length / 2);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
 									bytes [b ++] = data [i];
@@ -282,7 +273,7 @@ function (dicomParser,
 							}
 							case 32:
 							{
-								var data = new Uint32Array (frameArray .buffer, frameOffset, frameLength / 4);
+								var data = new Uint32Array (frame .buffer, frame .byteOffset, frame .length / 4);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
 									bytes [b ++] = data [i];
@@ -327,31 +318,19 @@ function (dicomParser,
 				if (pixelElement .basicOffsetTable .length)
 				{
 					for (var i = 0, length = this .dicom .depth; i < length; ++ i)
-					{
-						var array = dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i);
-
-						frames .push ({ array: array, position: array .byteOffset, length: array .length });
-					}
+						frames .push (dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i));
 				}
 				else if (this .dicom .depth !== pixelElement .fragments .length)
 				{
 					var basicOffsetTable = dicomParser .createJPEGBasicOffsetTable (this .dataSet, pixelElement);
 
 					for (var i = 0, length = this .dicom .depth; i < length; ++ i)
-					{
-						var array = dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i, basicOffsetTable);
-
-						frames .push ({ array: array, position: array .byteOffset, length: array .length });
-					}
+						frames .push (dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i, basicOffsetTable));
 				}
 				else
 				{
 					for (var i = 0, length = this .dicom .depth; i < length; ++ i)
-					{
-						var array = dicomParser .readEncapsulatedPixelDataFromFragments (this .dataSet, pixelElement, i);
-
-						frames .push ({ array: array, position: array .byteOffset, length: array .length });
-					}
+						frames .push (dicomParser .readEncapsulatedPixelDataFromFragments (this .dataSet, pixelElement, i));
 				}
 			}
 			else
@@ -360,13 +339,13 @@ function (dicomParser,
 				{
 					pixelElement .fragments .forEach (function (fragment)
 					{
-						frames .push ({ array: this .dataSet .byteArray, position: fragment .position, length: fragment .length });
+						frames .push (new Uint8Array (this .dataSet .byteArray .buffer, fragment .position, fragment .length));
 					}
 					.bind (this));
 				}
 				else
 				{
-					frames .push ({ array: this .dataSet .byteArray, position: pixelElement .dataOffset, length: pixelElement .length });
+					frames .push (new Uint8Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length));
 				}
 			}
 
