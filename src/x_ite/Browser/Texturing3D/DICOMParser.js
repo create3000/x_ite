@@ -49,8 +49,10 @@
 
 define ([
 	"dicom-parser",
+	"lib/jpeg/jpeg",
 ],
-function (dicomParser)
+function (dicomParser,
+          jpeg)
 {
 "use strict";
 
@@ -70,7 +72,7 @@ function (dicomParser)
 				for (var i = 0, length = input .length; i < length; ++ i)
 					inputArray [i] = input .charCodeAt (i);
 
-				this .dataSet = dicomParser .parseDicom (inputArray);
+				this .dataSet      = dicomParser .parseDicom (inputArray);
 				this .dicom .dicom = true;
 			}
 			catch (error)
@@ -80,7 +82,7 @@ function (dicomParser)
 				return this .dicom;
 			}
 
-			this .getType ();
+			this .getPhotometricInterpretation ();
 			this .getComponents ();
 			this .getWidth ();
 			this .getHeight ();
@@ -94,10 +96,11 @@ function (dicomParser)
 
 			return this .dicom;
 		},
-		getType: function ()
+		getPhotometricInterpretation: function ()
 		{
-			this .type = this .dataSet .string ("x00280004");
-			//console .log (this .type);
+			// https://dicom.innolitics.com/ciods/ct-image/image-pixel/00280004
+			this .photometricInterpretation = this .dataSet .string ("x00280004");
+			//console .log (this .photometricInterpretation);
 		},
 		getComponents: function ()
 		{
@@ -135,21 +138,68 @@ function (dicomParser)
 			this .transferSyntax = this .dataSet .string ("x00020010");
 			//console .log (this .transferSyntax);
 		},
+		getBasicOffsetTable: function (pixelElement)
+		{
+			if (pixelElement .basicOffsetTable .length)
+				return pixelElement .basicOffsetTable;
+
+			return dicomParser .createJPEGBasicOffsetTable (this .dataSet, pixelElement);
+		},
 		getPixelData: function ()
 		{
 			var
 				dicom        = this .dicom,
-				pixelElement = this .dataSet .elements .x7fe00010,
+				pixelElement = this .dataSet .elements .x7fe00010 || dataSet .elements .x7fe00008,
 				dataArray    = this .dataSet .byteArray,
+				dataOffset   = pixelElement .dataOffset,
 				dataLength   = pixelElement .length,
 				frameLength  = dicom .width * dicom .height * dicom .components,
 				byteLength   = frameLength * dicom .depth,
-				bytes        = new Uint32Array (byteLength);
+				bytes        = new Uint32Array (byteLength),
+				fragments    = [ ];
 
-			(pixelElement .fragments || [{ position: pixelElement .dataOffset, length: dataLength }]) .forEach (function (fragment, i)
+			if (pixelElement .encapsulatedPixelData && dicom .depth !== pixelElement .fragments .length)
+			{
+				var basicOffsetTable = this .getBasicOffsetTable (pixelElement);
+
+				for (var i = 0, length = dicom .depth; i < length; ++ i)
+				{
+					var array = dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i, basicOffsetTable);
+
+					fragments .push ({
+						array: array,
+						position: 0,
+						length: array .length,
+					});
+				}
+			}
+			else
+			{
+				if (pixelElement .fragments)
+				{
+					pixelElement .fragments .forEach (function (fragment)
+					{
+						fragments .push ({
+							array: dataArray,
+							position: fragment .position,
+							length: fragment .length,
+						});
+					});
+				}
+				else
+				{
+					fragments .push ({
+						array: dataArray,
+						position: dataOffset,
+						length: dataLength,
+					});
+				}
+			}
+
+			fragments .forEach (function (fragment, i)
 			{
 				var
-					fragmentArray  = dataArray,
+					fragmentArray  = fragment .array,
 					fragmentOffset = fragment .position,
 					fragmentLength = fragment .length;
 
@@ -173,8 +223,14 @@ function (dicomParser)
 						fragmentLength = fragmentArray .length;
 						break;
 					}
-					case "1.2.840.10008.1.2.4.50":
 					case "1.2.840.10008.1.2.4.51":
+					{
+						fragmentArray  = this .decodeJPEGBaseline (fragmentArray);
+						fragmentOffset = 0;
+						fragmentLength = fragmentArray .length;
+						break;
+					}
+					case "1.2.840.10008.1.2.4.50":
 					case "1.2.840.10008.1.2.4.52":
 					case "1.2.840.10008.1.2.4.53":
 					case "1.2.840.10008.1.2.4.54":
@@ -210,7 +266,7 @@ function (dicomParser)
 
 				var b = i * frameLength;
 
-				switch (this .type)
+				switch (this .photometricInterpretation)
 				{
 					case "MONOCHROME1":
 					case "MONOCHROME2":
@@ -284,7 +340,7 @@ function (dicomParser)
 						break;
 					}
 					default:
-						throw new Error ("DICOM: unsupported image type '" + this .type + "'.");
+						throw new Error ("DICOM: unsupported image type '" + this .photometricInterpretation + "'.");
 				}
 			}
 			.bind (this));
@@ -298,7 +354,7 @@ function (dicomParser)
 
 			// Invert MONOCHROME1 pixels.
 
-			if (this .type == "MONOCHROME1")
+			if (this .photometricInterpretation == "MONOCHROME1")
 			{
 				for (var i = 0, length = bytes .length; i < length; ++ i)
 					bytes [i] = 255 - bytes [i];
@@ -379,7 +435,23 @@ function (dicomParser)
 
 			return output;
 		},
+		decodeJPEGBaseline: function (pixelData)
+		{
+			var jpeg = new JpegImage ();
+
+			jpeg .parse (pixelData);
+
+			jpeg .colorTransform = false;
+
+			if (this .bitsAllocated === 8)
+			  return jpeg .getData (this .dicom .width, this .dicom .height);
+
+			else if (this .bitsAllocated === 16)
+				return new Uint8Array (jpeg .getData16 (this .dicom .width, this .dicom .height) .buffer);
+		 },
 	};
+
+	// ftp://medical.nema.org/medical/dicom/DataSets/WG04/
 
 	return DicomParser;
 });
