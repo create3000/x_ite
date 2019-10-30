@@ -2,8 +2,8 @@
 
 	var
 		define  = X3D .define,
-		require = X3D .require;
-
+		require = X3D .require,
+		module  = { };
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *

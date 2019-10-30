@@ -46,6 +46,8 @@
  *
  ******************************************************************************/
 
+var module = { };
+
 require .config ({
 	"waitSeconds": 0,
 });
@@ -55,7 +57,7 @@ var getScriptURL = (function ()
 	var
 		scripts = document .getElementsByTagName ('script'),
 		src     = scripts [scripts .length - 1] .src;
-	
+
 	return function ()
 	{
 		return src;
@@ -133,7 +135,7 @@ var getScriptURL = (function ()
 		Object .assign (X_ITE, X3D);
 
 		// Initialize all X3DCanvas tags.
-		X3D (); 
+		X3D ();
 
 		for (var i = 0; i < callbacks .length; ++ i)
 		   X3D (callbacks [i], fallbacks [i]);

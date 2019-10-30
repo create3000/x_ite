@@ -49,7 +49,7 @@
 
 define ([
 	"dicom-parser",
-	"lib/jpeg/jpeg",
+	"jpeg",
 ],
 function (dicomParser,
           jpeg)
@@ -126,7 +126,6 @@ function (dicomParser,
 		getBitsAllocated: function ()
 		{
 			this .bitsAllocated  = this .dataSet .uint16 ("x00280100");
-			this .bytesAllocated = this .bitsAllocated / 8;
 		},
 		getPlanarConfiguration: function ()
 		{
@@ -165,13 +164,9 @@ function (dicomParser,
 					{
 						break;
 					}
-					case "1.2.840.10008.1.2.2": // Explicit VR Big Endian (retired)
-					{
-						throw new Error ("DICOM: Explicit VR Big Endian is not supported.");
-					}
 					case "1.2.840.10008.1.2.5": // RLE Lossless
 					{
-						fragmentArray  = this .decodeRLE (fragmentArray .buffer, fragmentOffset, fragmentLength, frameLength * this .bytesAllocated);
+						fragmentArray  = this .decodeRLE (fragmentArray .buffer, fragmentOffset, fragmentLength, frameLength * this .bitsAllocated / 8);
 						fragmentOffset = 0;
 						fragmentLength = fragmentArray .length;
 						break;
@@ -182,7 +177,13 @@ function (dicomParser,
 						fragmentArray  = this .decodeJPEGBaseline (fragmentArray);
 						fragmentOffset = 0;
 						fragmentLength = fragmentArray .length;
+
+						this .bitsAllocated = 8;
 						break;
+					}
+					case "1.2.840.10008.1.2.2": // Explicit VR Big Endian (retired)
+					{
+						throw new Error ("DICOM: Explicit VR Big Endian is not supported.");
 					}
 					case "1.2.840.10008.1.2.4.52":
 					case "1.2.840.10008.1.2.4.53":
@@ -209,7 +210,7 @@ function (dicomParser,
 					{
 						// JPEG
 						console .log (this .transferSyntax);
-						throw new Error ("DICOM: JPEG encoding is not supported.");
+						throw new Error ("DICOM: this JPEG encoding is not supported.");
 					}
 					default:
 					{
@@ -436,11 +437,7 @@ function (dicomParser,
 
 			jpeg .colorTransform = false;
 
-			if (this .bitsAllocated === 8)
-			  return jpeg .getData (this .dicom .width, this .dicom .height);
-
-			else if (this .bitsAllocated === 16)
-				return new Uint8Array (jpeg .getData16 (this .dicom .width, this .dicom .height) .buffer);
+			return jpeg .getData (this .dicom .width, this .dicom .height);
 		 },
 	};
 

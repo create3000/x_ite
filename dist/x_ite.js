@@ -1,4 +1,4 @@
-/* X_ITE v4.6.4a-894 */
+/* X_ITE v4.6.4a-895 */
 
 (function () {
 
@@ -6,6 +6,8 @@ var x_iteNoConfict = {
 	sprintf:  window .sprintf,
 	vsprintf: window .vsprintf,
 };
+
+var module = { };
 /** vim: et:ts=4:sw=4:sts=4
  * @license RequireJS 2.3.6 Copyright jQuery Foundation and other contributors.
  * Released under MIT license, https://github.com/requirejs/requirejs/blob/master/LICENSE
@@ -52690,7 +52692,7 @@ function ($,
 		{
 			try
 			{
-				this .callback (this .fileReader .result);
+				this .callback (this .fileReader .result, this .URL);
 			}
 			catch (exception)
 			{
@@ -117616,6 +117618,8 @@ function ($,
  *
  ******************************************************************************/
 
+var module = { };
+
 require .config ({
 	"waitSeconds": 0,
 });
@@ -117625,7 +117629,7 @@ var getScriptURL = (function ()
 	var
 		scripts = document .getElementsByTagName ('script'),
 		src     = scripts [scripts .length - 1] .src;
-	
+
 	return function ()
 	{
 		return src;
@@ -117703,7 +117707,7 @@ var getScriptURL = (function ()
 		Object .assign (X_ITE, X3D);
 
 		// Initialize all X3DCanvas tags.
-		X3D (); 
+		X3D ();
 
 		for (var i = 0; i < callbacks .length; ++ i)
 		   X3D (callbacks [i], fallbacks [i]);
@@ -117711,6 +117715,7 @@ var getScriptURL = (function ()
 	fallback);
 
 }) ();
+
 define("x_ite", function(){});
 
 

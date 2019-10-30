@@ -65,6 +65,11 @@ require .config ({
 			"name": "dicom-parser",
 			"location": "../node_modules/dicom-parser",
 			"main": "dist/dicomParser.js"
+		},
+		{
+			"name": "jpeg",
+			"location": "../node_modules/jpeg-js",
+			"main": "lib/decoder.js"
 		}
 	],
 	"shim": { },
