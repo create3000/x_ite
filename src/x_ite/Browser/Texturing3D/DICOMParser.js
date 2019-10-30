@@ -147,7 +147,7 @@ function (dicomParser,
 				bytes        = new Uint32Array (byteLength),
 				frames       = this .getFrames (pixelElement);
 
-			frames .forEach (function (frame, i)
+			frames .forEach (function (frame, f)
 			{
 				var
 					frameArray  = frame .array,
@@ -218,7 +218,7 @@ function (dicomParser,
 					}
 				}
 
-				var b = i * imageLength;
+				var b = f * imageLength;
 
 				switch (this .photometricInterpretation)
 				{
