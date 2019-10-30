@@ -50,9 +50,11 @@
 define ([
 	"dicom-parser",
 	"jpeg",
+	"jpegLossless",
 ],
 function (dicomParser,
-          jpeg)
+			 jpeg,
+			 jpegLossless)
 {
 "use strict";
 
@@ -172,6 +174,12 @@ function (dicomParser,
 						this .bitsAllocated = 8;
 						break;
 					}
+					case "1.2.840.10008.1.2.4.70": // JPEG Lossless, Nonhierarchical (Processes 14 [Selection 1])
+					{
+						frame = this .decodeJPEGLossless (frame);
+
+						break;
+					}
 					case "1.2.840.10008.1.2.2": // Explicit VR Big Endian (retired)
 					{
 						throw new Error ("DICOM: Explicit VR Big Endian is not supported.");
@@ -191,7 +199,6 @@ function (dicomParser,
 					case "1.2.840.10008.1.2.4.64":
 					case "1.2.840.10008.1.2.4.65":
 					case "1.2.840.10008.1.2.4.66":
-					case "1.2.840.10008.1.2.4.70": // JPEG Lossless, Nonhierarchical (Processes 14 [Selection 1])
 					case "1.2.840.10008.1.2.4.80": // JPEG-LS Lossless Image Compression
 					case "1.2.840.10008.1.2.4.81": // JPEG-LS Lossy (Near-Lossless) Image Compression
 					case "1.2.840.10008.1.2.4.90": // JPEG 2000 Lossless
@@ -432,7 +439,15 @@ function (dicomParser,
 
 			return jpeg .getData (this .dicom .width, this .dicom .height);
 		 },
-	};
+		 decodeJPEGLossless: function (pixelData)
+		 {
+			var
+				decoder = new jpegLossless .lossless .Decoder(),
+				buffer  = decoder .decompress (pixelData);
+
+			return new Uint8Array (buffer);
+		  },
+	 };
 
 	// ftp://medical.nema.org/medical/dicom/DataSets/WG04/
 

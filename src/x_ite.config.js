@@ -70,6 +70,11 @@ require .config ({
 			"name": "jpeg",
 			"location": "../node_modules/jpeg-js",
 			"main": "lib/decoder.js"
+		},
+		{
+			"name": "jpegLossless",
+			"location": "../node_modules/jpeg-lossless-decoder-js",
+			"main": "release/current/lossless.js"
 		}
 	],
 	"shim": { },
