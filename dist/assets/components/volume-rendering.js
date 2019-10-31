@@ -322,8 +322,8 @@ function (Fields,
 		{
 			this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture2DNode, this .transferFunction_);
 
-			//if (! transferFunctionNode)
-			//	transferFunctionNode = X3DCast (X3DConstants .X3DTexture3DNode, this .transferFunction_);
+			if (! this .transferFunctionNode)
+				this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture3DNode, this .transferFunction_);
 
 			if (! this .transferFunctionNode)
 				this .transferFunctionNode = this .getBrowser () .getDefaultTransferFunction ();
@@ -346,14 +346,28 @@ function (Fields,
 			string += "// OpacityMapVolumeStyle\n";
 			string += "\n";
 
-			string += "uniform sampler2D transferFunction_" + this .getId () + ";\n";
+			if (this .transferFunctionNode .getType () .indexOf (X3DConstants .X3DTexture2DNode) !== -1)
+			{
+				string += "uniform sampler2D transferFunction_" + this .getId () + ";\n";
 
-			string += "\n";
-			string += "vec4\n";
-			string += "getOpacityMapStyle_" + this .getId () + " (in vec4 originalColor)\n";
-			string += "{\n";
-			string += "	return texture (transferFunction_" + this .getId () + ", originalColor .ra);\n";
-			string += "}\n";
+				string += "\n";
+				string += "vec4\n";
+				string += "getOpacityMapStyle_" + this .getId () + " (in vec4 originalColor)\n";
+				string += "{\n";
+				string += "	return texture (transferFunction_" + this .getId () + ", originalColor .rg / originalColor .a);\n";
+				string += "}\n";
+			}
+			else
+			{
+				string += "uniform sampler3D transferFunction_" + this .getId () + ";\n";
+
+				string += "\n";
+				string += "vec4\n";
+				string += "getOpacityMapStyle_" + this .getId () + " (in vec4 originalColor)\n";
+				string += "{\n";
+				string += "	return texture (transferFunction_" + this .getId () + ", originalColor .rgb / originalColor .a);\n";
+				string += "}\n";
+			}
 
 			return string;
 		},
