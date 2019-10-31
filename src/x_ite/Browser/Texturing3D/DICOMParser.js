@@ -51,10 +51,12 @@ define ([
 	"dicom-parser",
 	"lib/jpeg/jpeg",
 	"jpegLossless",
+	"lib/jpeg/jpx",
 ],
 function (dicomParser,
-			 jpeg,
-			 jpegLossless)
+          jpeg,
+          jpegLossless,
+          OpenJPEG)
 {
 "use strict";
 
@@ -183,6 +185,12 @@ function (dicomParser,
 						frame = this .decodeJPEGLossless (frame);
 						break;
 					}
+					case "1.2.840.10008.1.2.4.90": // JPEG 2000 Lossless
+					case "1.2.840.10008.1.2.4.91": // JPEG 2000 Lossy
+					{
+						frame = this .decodeJPEG2000 (frame);
+						break;
+					}
 					case "1.2.840.10008.1.2.2": // Explicit VR Big Endian (retired)
 					{
 						throw new Error ("DICOM: Explicit VR Big Endian is not supported.");
@@ -203,8 +211,6 @@ function (dicomParser,
 					case "1.2.840.10008.1.2.4.66":
 					case "1.2.840.10008.1.2.4.80": // JPEG-LS Lossless Image Compression
 					case "1.2.840.10008.1.2.4.81": // JPEG-LS Lossy (Near-Lossless) Image Compression
-					case "1.2.840.10008.1.2.4.90": // JPEG 2000 Lossless
-					case "1.2.840.10008.1.2.4.91": // JPEG 2000 Lossy
 					case "1.2.840.10008.1.2.4.92":
 					case "1.2.840.10008.1.2.4.93":
 					{
@@ -419,6 +425,19 @@ function (dicomParser,
 				buffer  = decoder .decompress (pixelData);
 
 			return new Uint8Array (buffer);
+		},
+		decodeJPEG2000: function (pixelData)
+		{
+				var jpxImage = new JpxImage ();
+
+				jpxImage .parse (pixelData);
+
+				var tileCount = jpxImage .tiles.length;
+
+				if (tileCount !== 1)
+					throw new Error(`DICOM: JPEG2000 decoder returned a tileCount of " + tileCount + ", when 1 is expected.`);
+
+				return new Uint8Array (jpxImage .tiles [0] .items .buffer);
 		  },
 	 };
 
