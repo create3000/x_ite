@@ -75,6 +75,11 @@ require .config ({
 			"name": "jpegLossless",
 			"location": "../node_modules/jpeg-lossless-decoder-js",
 			"main": "release/current/lossless.js"
+		},
+		{
+			"name": "OpenJPEG",
+			"location": "../node_modules/OpenJPEG.js",
+			"main": "build/openJPEG-FixedMemory-browser.js"
 		}
 	],
 	"shim": { },

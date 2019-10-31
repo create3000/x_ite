@@ -51,16 +51,19 @@ define ([
 	"dicom-parser",
 	"lib/jpeg/jpeg",
 	"jpegLossless",
-	"lib/jpeg/jpx",
+	"OpenJPEG",
 	"x_ite/DEBUG",
 ],
 function (dicomParser,
           jpeg,
           jpegLossless,
-          OpenJPEG,
+          jpx,
+          openJPEG,
           DEBUG)
 {
 "use strict";
+
+	var openJPEG = OpenJPEG ();
 
 	function DicomParser ()
 	{
@@ -247,25 +250,44 @@ function (dicomParser,
 				{
 					case "MONOCHROME1":
 					case "MONOCHROME2":
-					case "RGB":
 					{
-						var normalize = this .getPixelOffsetAndFactor (frame);
+						break;
+					}
+					case "RGB":
+					case "YBR_RCT":
+					case "YBR_ICT":
+					{
+						if (this .planarConfiguration === 1)
+							frame = this .convertRGBColorByPlane (frame);
 
-						for (var i = 0, length = frame .length; i < length; ++ i, ++ b)
-							bytes [b] = (frame [i] - normalize .offset) * normalize .factor;
-
-						// Invert MONOCHROME1 pixels.
-
-						if (this .photometricInterpretation === "MONOCHROME1")
-						{
-							for (var i = 0, length = bytes .length; i < length; ++ i)
-								bytes [i] = 255 - bytes [i];
-						}
+						break;
+					}
+					case "YBR_RCT":
+					{
+						if (this .planarConfiguration === 0)
+							frame = this .convertYBRFullByPixel (frame);
+						else
+							frame = this .convertYBRFullByPlane (frame);
 
 						break;
 					}
 					default:
+					{
 						throw new Error ("DICOM: unsupported image type '" + this .photometricInterpretation + "'.");
+					}
+				}
+
+				var normalize = this .getPixelOffsetAndFactor (frame);
+
+				for (var i = 0, length = frame .length; i < length; ++ i, ++ b)
+					bytes [b] = (frame [i] - normalize .offset) * normalize .factor;
+
+				// Invert MONOCHROME1 pixels.
+
+				if (this .photometricInterpretation === "MONOCHROME1")
+				{
+					for (var i = 0, length = bytes .length; i < length; ++ i)
+						bytes [i] = 255 - bytes [i];
 				}
 			},
 			this);
@@ -705,16 +727,178 @@ function (dicomParser,
 		},
 		decodeJPEG2000: function (pixelData)
 		{
-			var jpxImage = new JpxImage ();
+			var
+				bytesPerPixel = this .bitsAllocated <= 8 ? 1 : 2,
+				signed        = this .pixelRepresentation === 1,
+				image         = this .decodeOpenJPEG (pixelData, bytesPerPixel, signed);
 
-			jpxImage .parse (pixelData);
+			if (image .nbChannels > 1)
+				this .photometricInterpretation = "RGB";
 
-			var tileCount = jpxImage .tiles.length;
+			return new Uint8Array (image .pixelData .buffer);
+		},
+		decodeOpenJPEG: function  (data, bytesPerPixel, signed)
+		{
+			const dataPtr = openJPEG._malloc(data.length);
 
-			if (tileCount !== 1)
-				throw new Error("DICOM: JPEG2000 decoder returned a tileCount of " + tileCount + ", when 1 is expected.");
+			openJPEG.writeArrayToMemory(data, dataPtr);
 
-			return new Uint8Array (jpxImage .tiles [0] .items .buffer);
+			// create param outpout
+			const imagePtrPtr = openJPEG._malloc(4);
+			const imageSizePtr = openJPEG._malloc(4);
+			const imageSizeXPtr = openJPEG._malloc(4);
+			const imageSizeYPtr = openJPEG._malloc(4);
+			const imageSizeCompPtr = openJPEG._malloc(4);
+
+			const t0 = new Date().getTime();
+			const ret = openJPEG.ccall('jp2_decode', 'number', ['number', 'number', 'number', 'number', 'number', 'number', 'number'],
+			  [dataPtr, data.length, imagePtrPtr, imageSizePtr, imageSizeXPtr, imageSizeYPtr, imageSizeCompPtr]);
+			// add num vomp..etc
+
+			if (ret !== 0) {
+				console.log('[opj_decode] decoding failed!');
+				openJPEG._free(dataPtr);
+				openJPEG._free(openJPEG.getValue(imagePtrPtr, '*'));
+				openJPEG._free(imageSizeXPtr);
+				openJPEG._free(imageSizeYPtr);
+				openJPEG._free(imageSizePtr);
+				openJPEG._free(imageSizeCompPtr);
+
+				return;
+			}
+
+			const imagePtr = openJPEG.getValue(imagePtrPtr, '*');
+
+			const image = {
+				length: openJPEG.getValue(imageSizePtr, 'i32'),
+				sx: openJPEG.getValue(imageSizeXPtr, 'i32'),
+				sy: openJPEG.getValue(imageSizeYPtr, 'i32'),
+				nbChannels: openJPEG.getValue(imageSizeCompPtr, 'i32'), // hard coded for now
+				perf_timetodecode: undefined,
+				pixelData: undefined
+			};
+
+			// Copy the data from the EMSCRIPTEN heap into the correct type array
+			const length = image.sx * image.sy * image.nbChannels;
+			const src32 = new Int32Array(openJPEG.HEAP32.buffer, imagePtr, length);
+
+			if (bytesPerPixel === 1) {
+				if (Uint8Array.from) {
+					image.pixelData = Uint8Array.from(src32);
+				} else {
+					image.pixelData = new Uint8Array(length);
+					for (let i = 0; i < length; i++) {
+						image.pixelData[i] = src32[i];
+					}
+				}
+			} else if (signed) {
+				if (Int16Array.from) {
+					image.pixelData = Int16Array.from(src32);
+				} else {
+					image.pixelData = new Int16Array(length);
+					for (let i = 0; i < length; i++) {
+						image.pixelData[i] = src32[i];
+					}
+				}
+			} else if (Uint16Array.from) {
+				image.pixelData = Uint16Array.from(src32);
+			} else {
+				image.pixelData = new Uint16Array(length);
+				for (let i = 0; i < length; i++) {
+					image.pixelData[i] = src32[i];
+				}
+			}
+
+			const t1 = new Date().getTime();
+
+			image.perf_timetodecode = t1 - t0;
+
+			// free
+			openJPEG._free(dataPtr);
+			openJPEG._free(imagePtrPtr);
+			openJPEG._free(imagePtr);
+			openJPEG._free(imageSizePtr);
+			openJPEG._free(imageSizeXPtr);
+			openJPEG._free(imageSizeYPtr);
+			openJPEG._free(imageSizeCompPtr);
+
+			return image;
+		 },
+		convertRGBColorByPlane: function (pixelData)
+		{
+			if (pixelData .length % 3 !== 0)
+				throw new Error ("DICOM: convertRGBColorByPlane: RGB buffer length must be divisble by 3.");
+
+			var
+				numPixels = pixelData .length / 3,
+				rgbIndex  = 0,
+				rIndex    = 0,
+				gIndex    = numPixels,
+				bIndex    = numPixels * 2,
+				out       = new (pixelData .constructor) (pixelData .length);
+
+			for (var i = 0; i < numPixels; ++ i)
+			{
+			  out [rgbIndex ++] = pixelData [rIndex ++]; // red
+			  out [rgbIndex ++] = pixelData [gIndex ++]; // green
+			  out [rgbIndex ++] = pixelData [bIndex ++]; // blue
+			}
+
+			return out;
+		 },
+		 convertYBRFullByPixel: function (pixelData)
+		 {
+			if (pixelData .length % 3 !== 0)
+				throw new Error ("DICOM: convertYBRFullByPixel: YBR buffer length must be divisble by 3.");
+
+			console .log (pixelData);
+
+			var
+				numPixels = pixelData .length / 3,
+				ybrIndex  = 0,
+				rgbIndex  = 0,
+				out       = new (pixelData .constructor) (pixelData .length);
+
+			for (var i = 0; i < numPixels; ++ i)
+			{
+				var
+					y  = pixelData [ybrIndex ++],
+					cb = pixelData [ybrIndex ++],
+					cr = pixelData [ybrIndex ++];
+
+				out [rgbIndex ++] = y + 1.40200 * (cr - 128);                        // red
+				out [rgbIndex ++] = y - 0.34414 * (cb - 128) - 0.71414 * (cr - 128); // green
+				out [rgbIndex ++] = y + 1.77200 * (cb - 128);                        // blue
+			}
+
+			return out;
+		 },
+		 convertYBRFullByPlane: function (pixelData)
+		 {
+			if (pixelData .length % 3 !== 0)
+				throw new Error ("DICOM: convertYBRFullByPlane: YBR buffer length must be divisble by 3.");
+
+			var
+				numPixels = pixelData .length / 3,
+				rgbIndex  = 0,
+				yIndex    = 0,
+				cbIndex   = numPixels,
+				crIndex   = numPixels * 2,
+				out       = new (pixelData .constructor) (pixelData .length);
+
+			for (var i = 0; i < numPixels; ++ i)
+			{
+				var
+					y  = pixelData [yIndex ++],
+					cb = pixelData [cbIndex ++],
+					cr = pixelData [crIndex ++];
+
+			  out [rgbIndex++] = y + 1.40200 * (cr - 128);                        // red
+			  out [rgbIndex++] = y - 0.34414 * (cb - 128) - 0.71414 * (cr - 128); // green
+			  out [rgbIndex++] = y + 1.77200 * (cb - 128);                        // blue
+			}
+
+			return out;
 		},
 	 };
 

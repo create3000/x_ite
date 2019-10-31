@@ -39,6 +39,7 @@
 		"url": "https://github.com/create3000/x_ite/issues"
 	},
 	"devDependencies": {
+		"OpenJPEG.js": "^0.10.2",
 		"ammojs": "0.0.2",
 		"bezier-js": "^2.4.4",
 		"css-element-queries": "^1.2.1",
