@@ -258,7 +258,7 @@ function (dicomParser,
 									data      = new Float32Array (frame .buffer, frame .byteOffset, frame .length / 4),
 									normalize = this .getPixelOffsetAndFactor (data);
 
-								for (var i = 0, length = data32 .length; i < length; ++ i)
+								for (var i = 0, length = data .length; i < length; ++ i)
 									bytes [b ++] = (data [i] - normalize .offset) * normalize .factor;
 
 								break;
