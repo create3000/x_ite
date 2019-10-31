@@ -428,17 +428,17 @@ function (dicomParser,
 		},
 		decodeJPEG2000: function (pixelData)
 		{
-				var jpxImage = new JpxImage ();
+			var jpxImage = new JpxImage ();
 
-				jpxImage .parse (pixelData);
+			jpxImage .parse (pixelData);
 
-				var tileCount = jpxImage .tiles.length;
+			var tileCount = jpxImage .tiles.length;
 
-				if (tileCount !== 1)
-					throw new Error(`DICOM: JPEG2000 decoder returned a tileCount of " + tileCount + ", when 1 is expected.`);
+			if (tileCount !== 1)
+				throw new Error(`DICOM: JPEG2000 decoder returned a tileCount of " + tileCount + ", when 1 is expected.`);
 
-				return new Uint8Array (jpxImage .tiles [0] .items .buffer);
-		  },
+			return new Uint8Array (jpxImage .tiles [0] .items .buffer);
+		},
 	 };
 
 	// ftp://medical.nema.org/medical/dicom/DataSets/WG04/
