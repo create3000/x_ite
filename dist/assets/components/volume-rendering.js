@@ -354,7 +354,7 @@ function (Fields,
 				string += "vec4\n";
 				string += "getOpacityMapStyle_" + this .getId () + " (in vec4 originalColor)\n";
 				string += "{\n";
-				string += "	return texture (transferFunction_" + this .getId () + ", originalColor .rg / originalColor .a);\n";
+				string += "	return texture (transferFunction_" + this .getId () + ", originalColor .rg);\n";
 				string += "}\n";
 			}
 			else
@@ -365,7 +365,7 @@ function (Fields,
 				string += "vec4\n";
 				string += "getOpacityMapStyle_" + this .getId () + " (in vec4 originalColor)\n";
 				string += "{\n";
-				string += "	return texture (transferFunction_" + this .getId () + ", originalColor .rgb / originalColor .a);\n";
+				string += "	return texture (transferFunction_" + this .getId () + ", originalColor .rgb);\n";
 				string += "}\n";
 			}
 
