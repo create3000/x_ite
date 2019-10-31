@@ -109,7 +109,6 @@ function (dicomParser,
 		{
 			// https://dicom.innolitics.com/ciods/ct-image/image-pixel/00280004
 			this .photometricInterpretation = this .dataSet .string ("x00280004");
-			//console .log (this .photometricInterpretation);
 		},
 		getComponents: function ()
 		{
@@ -318,8 +317,6 @@ function (dicomParser,
 		},
 		getTypedArray: function (frame)
 		{
-			console .log (this);
-			console .log (frame .byteOffset);
 			switch (this .bitsAllocated)
 			{
 				case 8:
