@@ -428,12 +428,13 @@ function (dicomParser,
 		},
 		decodeRLE8: function  (pixelData)
 		{
-			const frameData = pixelData;
-			const frameSize = this .dicom .width * this .dicom .height;
-			const outFrame  = new ArrayBuffer (frameSize * this .dicom .components);
-			const header    = new DataView (frameData .buffer, frameData .byteOffset);
-			const data      = new Int8Array(frameData .buffer, frameData .byteOffset);
-			const out       = new Int8Array (outFrame);
+			const frameData  = pixelData;
+			const frameSize  = this .dicom .width * this .dicom .height;
+			const components = this .dicom .components;
+			const outFrame   = new ArrayBuffer (frameSize * this .dicom .components);
+			const header     = new DataView (frameData .buffer, frameData .byteOffset);
+			const data       = new Int8Array(frameData .buffer, frameData .byteOffset);
+			const out        = new Int8Array (outFrame);
 
 			let   outIndex    = 0;
 			const numSegments = header .getInt32 (0, true);
@@ -460,7 +461,7 @@ function (dicomParser,
 						for (let i = 0; i < n + 1 && outIndex < endOfSegment; ++ i)
 						{
 							out [outIndex] = data [inIndex ++];
-							outIndex += this .dicom .components;
+							outIndex += components;
 						}
 					}
 					else if (n <= -1 && n >= -127)
@@ -471,7 +472,7 @@ function (dicomParser,
 						for (let j = 0; j < -n + 1 && outIndex < endOfSegment; ++ j)
 						{
 							out [outIndex] = value;
-							outIndex += this .dicom .components;
+							outIndex += components;
 						}
 				 	}
 				}
