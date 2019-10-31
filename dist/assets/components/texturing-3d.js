@@ -24775,8 +24775,8 @@ function (dicomParser,
 					default:
 						throw new Error ("DICOM: unsupported image type '" + this .photometricInterpretation + "'.");
 				}
-			}
-			.bind (this));
+			},
+			this);
 
 			// Set Uint8Array.
 
@@ -24786,7 +24786,20 @@ function (dicomParser,
 		{
 			var frames = [ ];
 
-			if (pixelElement .encapsulatedPixelData)
+			if (this .bitsAllocated === 1)
+			{
+				var pixelsPerFrame = this .dicom .width * this .dicom .height * this .dicom .components;
+
+				for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+				{
+					var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame / 8;
+
+					frames .push (this .unpackBinaryFrame (this .dataSet .byteArray, frameOffset, pixelsPerFrame));
+				}
+
+				this .bitsAllocated = 8;
+			}
+			else if (pixelElement .encapsulatedPixelData)
 			{
 				if (pixelElement .basicOffsetTable .length)
 				{
@@ -24813,8 +24826,8 @@ function (dicomParser,
 					pixelElement .fragments .forEach (function (fragment)
 					{
 						frames .push (new Uint8Array (this .dataSet .byteArray .buffer, fragment .position, fragment .length));
-					}
-					.bind (this));
+					},
+					this);
 				}
 				else
 				{
@@ -24849,6 +24862,33 @@ function (dicomParser,
 			}
 
 			return { offset: min, factor: 1 / (max - min) * 255 };
+		},
+		unpackBinaryFrame: function (byteArray, frameOffset, pixelsPerFrame)
+		{
+			function isBitSet (byte, bitPos)
+			{
+				return byte & (1 << bitPos);
+			}
+
+			// Create a new pixel array given the image size
+			var pixelData = new Uint8Array (pixelsPerFrame);
+
+			for (var i = 0; i < pixelsPerFrame; ++ i)
+			{
+				// Compute byte position
+				var bytePos = Math .floor (i / 8);
+
+				// Get the current byte
+				var byte = byteArray [bytePos + frameOffset];
+
+				// Bit position (0-7) within byte
+				var bitPos = (i % 8);
+
+				// Check whether bit at bitpos is set
+				pixelData [i] = isBitSet (byte, bitPos) ? 1 : 0;
+			}
+
+			return pixelData;
 		},
 		decodeLittleEndian: function (pixelData)
 		{
@@ -25022,7 +25062,7 @@ function (dicomParser,
 						for (let i = 0; i < n + 1 && outIndex < endOfSegment; ++ i)
 						{
 							out [outIndex] = data [inIndex ++];
-							outIndex ++;
+							++ outIndex;
 						}
 					}
 					else if (n <= -1 && n >= -127)
@@ -25033,7 +25073,7 @@ function (dicomParser,
 						for (let j = 0; j < -n + 1 && outIndex < endOfSegment; ++ j)
 						{
 							out [outIndex] = value;
-							outIndex ++;
+							++ outIndex;
 						}
 				 	}
 				}
@@ -25072,7 +25112,7 @@ function (dicomParser,
 						for (let i = 0; i < n + 1 && outIndex < frameSize; ++ i)
 						{
 							out[(outIndex * 2) + highByte] = data[inIndex++];
-							outIndex++;
+							++ outIndex;
 						}
 					}
 					else if (n <= -1 && n >= -127)
@@ -25082,7 +25122,7 @@ function (dicomParser,
 						for (let j = 0; j < -n + 1 && outIndex < frameSize; ++ j)
 						{
 							out [(outIndex * 2) + highByte] = value;
-							outIndex++;
+							++ outIndex;
 						}
 					}
 				}

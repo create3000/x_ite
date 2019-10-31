@@ -278,7 +278,20 @@ function (dicomParser,
 		{
 			var frames = [ ];
 
-			if (pixelElement .encapsulatedPixelData)
+			if (this .bitsAllocated === 1)
+			{
+				var pixelsPerFrame = this .dicom .width * this .dicom .height * this .dicom .components;
+
+				for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+				{
+					var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame / 8;
+
+					frames .push (this .unpackBinaryFrame (this .dataSet .byteArray, frameOffset, pixelsPerFrame));
+				}
+
+				this .bitsAllocated = 8;
+			}
+			else if (pixelElement .encapsulatedPixelData)
 			{
 				if (pixelElement .basicOffsetTable .length)
 				{
@@ -312,21 +325,6 @@ function (dicomParser,
 				{
 					frames .push (new Uint8Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length));
 				}
-			}
-
-			if (this .bitsAllocated === 1)
-			{
-				var pixelsPerFrame = this .dicom .width * this .dicom .height * this .dicom .components;
-
-				frames = frames .map (function (frame, i)
-				{
-					var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame / 8;
-
-					return this .unpackBinaryFrame (this .dataSet .byteArray, frameOffset, pixelsPerFrame);
-				},
-				this);
-
-				this .bitsAllocated = 8;
 			}
 
 			return frames;
@@ -556,7 +554,7 @@ function (dicomParser,
 						for (let i = 0; i < n + 1 && outIndex < endOfSegment; ++ i)
 						{
 							out [outIndex] = data [inIndex ++];
-							outIndex ++;
+							++ outIndex;
 						}
 					}
 					else if (n <= -1 && n >= -127)
@@ -567,7 +565,7 @@ function (dicomParser,
 						for (let j = 0; j < -n + 1 && outIndex < endOfSegment; ++ j)
 						{
 							out [outIndex] = value;
-							outIndex ++;
+							++ outIndex;
 						}
 				 	}
 				}
@@ -606,7 +604,7 @@ function (dicomParser,
 						for (let i = 0; i < n + 1 && outIndex < frameSize; ++ i)
 						{
 							out[(outIndex * 2) + highByte] = data[inIndex++];
-							outIndex++;
+							++ outIndex;
 						}
 					}
 					else if (n <= -1 && n >= -127)
@@ -616,7 +614,7 @@ function (dicomParser,
 						for (let j = 0; j < -n + 1 && outIndex < frameSize; ++ j)
 						{
 							out [(outIndex * 2) + highByte] = value;
-							outIndex++;
+							++ outIndex;
 						}
 					}
 				}
