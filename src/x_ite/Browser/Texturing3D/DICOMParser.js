@@ -435,7 +435,7 @@ function (dicomParser,
 			var tileCount = jpxImage .tiles.length;
 
 			if (tileCount !== 1)
-				throw new Error(`DICOM: JPEG2000 decoder returned a tileCount of " + tileCount + ", when 1 is expected.`);
+				throw new Error("DICOM: JPEG2000 decoder returned a tileCount of " + tileCount + ", when 1 is expected.");
 
 			return new Uint8Array (jpxImage .tiles [0] .items .buffer);
 		},
