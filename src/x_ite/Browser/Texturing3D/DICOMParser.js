@@ -92,6 +92,7 @@ function (dicomParser,
 			this .getHeight ();
 			this .getDepth ();
 			this .getBitsAllocated ();
+			this .getBitsStored ();
 			this .getPixelRepresentation ();
 			this .getPlanarConfiguration ();
 			this .getTansferSyntax ();
@@ -133,9 +134,13 @@ function (dicomParser,
 		{
 			this .bitsAllocated  = this .dataSet .uint16 ("x00280100");
 		},
+		getBitsStored: function ()
+		{
+			this .bitsStored  = this .dataSet .uint16 ("x00280101");
+		},
 		getPixelRepresentation: function ()
 		{
-			this .pixelRepresentation = this .dataSet .uint16 ("x00280103");
+			this .pixelRepresentation = this .dataSet .uint16 ("x00280103") || 0;
 		},
 		getPlanarConfiguration: function ()
 		{
@@ -216,13 +221,22 @@ function (dicomParser,
 					case "1.2.840.10008.1.2.4.93":
 					{
 						// JPEG
-						console .log (this .transferSyntax);
-						throw new Error ("DICOM: this JPEG encoding is not supported.");
+						throw new Error ("DICOM: this JPEG encoding (" + this .transferSyntax + ") is not supported.");
 					}
 					default:
 					{
 						throw new Error ("DICOM: unsupported transfer syntax '" + this .transferSyntax + "'.");
 					}
+				}
+
+				frame = this .getTypedArray (frame);
+
+				if (this .pixelRepresentation === 1 && this .bitsStored !== undefined)
+				{
+					var shift = 32 - this .bitsStored;
+
+					for (let i = 0, length = frame .length; i < length; ++ i)
+						frame [i] = frame [i] << shift >> shift;
 				}
 
 				var b = f * imageLength;
@@ -233,44 +247,10 @@ function (dicomParser,
 					case "MONOCHROME2":
 					case "RGB":
 					{
-						switch (this .bitsAllocated)
-						{
-							case 8:
-							{
-								var
-									type      = this .pixelRepresentation ? Int8Array : Uint8Array,
-									data      = new type (frame .buffer, frame .byteOffset, frame .length),
-									normalize = this .getPixelOffsetAndFactor (data);
+						var normalize = this .getPixelOffsetAndFactor (frame);
 
-								for (var i = 0, length = data .length; i < length; ++ i, ++ b)
-									bytes [b] = (data [i] - normalize .offset) * normalize .factor;
-
-								break;
-							}
-							case 16:
-							{
-								var
-									type      = this .pixelRepresentation ? Int16Array : Uint16Array,
-									data      = new type (frame .buffer, frame .byteOffset, frame .length / 2),
-									normalize = this .getPixelOffsetAndFactor (data);
-
-								for (var i = 0, length = data .length; i < length; ++ i, ++ b)
-									bytes [b] = (data [i] - normalize .offset) * normalize .factor;
-
-								break;
-							}
-							case 32:
-							{
-								var
-									data      = new Float32Array (frame .buffer, frame .byteOffset, frame .length / 4),
-									normalize = this .getPixelOffsetAndFactor (data);
-
-								for (var i = 0, length = data .length; i < length; ++ i, ++ b)
-									bytes [b] = (data [i] - normalize .offset) * normalize .factor;
-
-								break;
-							}
-						}
+						for (var i = 0, length = frame .length; i < length; ++ i, ++ b)
+							bytes [b] = (frame [i] - normalize .offset) * normalize .factor;
 
 						// Invert MONOCHROME1 pixels.
 
@@ -333,6 +313,18 @@ function (dicomParser,
 			}
 
 			return frames;
+		},
+		getTypedArray: function (frame)
+		{
+			switch (this .bitsAllocated)
+			{
+				case 8:
+					return new (this .pixelRepresentation ? Int8Array : Uint8Array) (frame .buffer, frame .byteOffset, frame .length);
+				case 16:
+					return new (this .pixelRepresentation ? Int16Array : Uint16Array) (frame .buffer, frame .byteOffset, frame .length / 2);
+				case 32:
+					return new Float32Array (frame .buffer, frame .byteOffset, frame .length / 4);
+			}
 		},
 		getPixelOffsetAndFactor: function (data)
 		{
