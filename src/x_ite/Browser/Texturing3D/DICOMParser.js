@@ -151,7 +151,7 @@ function (dicomParser,
 				pixelElement = this .dataSet .elements .x7fe00010 || this .dataSet .elements .x7fe00008, // pixel or float pixel
 				imageLength  = dicom .width * dicom .height * dicom .components,
 				byteLength   = imageLength * dicom .depth,
-				bytes        = new Uint32Array (byteLength),
+				bytes        = new Uint8Array (byteLength),
 				frames       = this .getFrames (pixelElement);
 
 			frames .forEach (function (frame, f)
@@ -224,68 +224,42 @@ function (dicomParser,
 				{
 					case "MONOCHROME1":
 					case "MONOCHROME2":
-					{
-						switch (this .bitsAllocated)
-						{
-							case 8:
-							{
-								var data = frame;
-
-								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = data [i];
-
-								break;
-							}
-							case 16:
-							{
-								var data = new Uint16Array (frame .buffer, frame .byteOffset, frame .length / 2);
-
-								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = data [i];
-
-								break;
-							}
-							case 32:
-							{
-								var data = new Float32Array (frame .buffer, frame .byteOffset, frame .length / 4);
-
-								for (var i = 0, length = data32 .length; i < length; ++ i)
-									bytes [b ++] = data [i];
-
-								break;
-							}
-						}
-
-						break;
-					}
 					case "RGB":
 					{
 						switch (this .bitsAllocated)
 						{
 							case 8:
 							{
-								var data = frame;
+								var
+									type      = this .pixelRepresentation ? Int8Array : Uint8Array,
+									data      = new type (frame .buffer, frame .byteOffset, frame .length),
+									normalize = this .getPixelOffsetAndFactor (data);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = data [i];
+									bytes [b ++] = (data [i] - normalize .offset) * normalize .factor;
 
 								break;
 							}
 							case 16:
 							{
-								var data = new Uint16Array (frame .buffer, frame .byteOffset, frame .length / 2);
+								var
+									type      = this .pixelRepresentation ? Int16Array : Uint16Array,
+									data      = new type (frame .buffer, frame .byteOffset, frame .length / 2),
+									normalize = this .getPixelOffsetAndFactor (data);
 
 								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = data [i];
+									bytes [b ++] = (data [i] - normalize .offset) * normalize .factor;
 
 								break;
 							}
 							case 32:
 							{
-								var data = new Float32Array (frame .buffer, frame .byteOffset, frame .length / 4);
+								var
+									data      = new Float32Array (frame .buffer, frame .byteOffset, frame .length / 4),
+									normalize = this .getPixelOffsetAndFactor (data);
 
-								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = data [i];
+								for (var i = 0, length = data32 .length; i < length; ++ i)
+									bytes [b ++] = (data [i] - normalize .offset) * normalize .factor;
 
 								break;
 							}
@@ -299,13 +273,6 @@ function (dicomParser,
 			}
 			.bind (this));
 
-			// Normalize pixels in the range [0, 255].
-
-			var normalize = this .getPixelOffsetAndFactor (bytes);
-
-			for (var i = 0, length = bytes .length; i < length; ++ i)
-				bytes [i] = (bytes [i] - normalize .offset) * normalize .factor;
-
 			// Invert MONOCHROME1 pixels.
 
 			if (this .photometricInterpretation === "MONOCHROME1")
@@ -316,7 +283,7 @@ function (dicomParser,
 
 			// Set Uint8Array.
 
-			dicom .data = new Uint8Array (bytes);
+			dicom .data = bytes;
 		},
 		getFrames: function (pixelElement)
 		{
