@@ -256,13 +256,14 @@ function (dicomParser,
 					case "RGB":
 					case "YBR_RCT":
 					case "YBR_ICT":
+					case "YBR_FULL_422":
 					{
 						if (this .planarConfiguration === 1)
 							frame = this .convertRGBColorByPlane (frame);
 
 						break;
 					}
-					case "YBR_RCT":
+					case "YBR_FULL":
 					{
 						if (this .planarConfiguration === 0)
 							frame = this .convertYBRFullByPixel (frame);
@@ -271,6 +272,11 @@ function (dicomParser,
 
 						break;
 					}
+					// case "PALETTE COLOR":
+					// {
+					// 	frame = this .convertPaletteColor (frame);
+					// 	break;
+					// }
 					default:
 					{
 						throw new Error ("DICOM: unsupported image type '" + this .photometricInterpretation + "'.");
@@ -896,6 +902,44 @@ function (dicomParser,
 			  out [rgbIndex++] = y + 1.40200 * (cr - 128);                        // red
 			  out [rgbIndex++] = y - 0.34414 * (cb - 128) - 0.71414 * (cr - 128); // green
 			  out [rgbIndex++] = y + 1.77200 * (cb - 128);                        // blue
+			}
+
+			return out;
+		},
+		convertPaletteColor: function (pixelData)
+		{
+			const numPixels = this .dicom .width * this .dicom .height;
+			const rData     = LUT .redPaletteColorLookupTableData;
+			const gData     = LUT .greenPaletteColorLookupTableData;
+			const bData     = LUT .bluePaletteColorLookupTableData;
+			const len       = LUT .redPaletteColorLookupTableData .length;
+
+			let palIndex = 0;
+			let rgbIndex = 0;
+
+			const start = LUT .redPaletteColorLookupTableDescriptor [1];
+			const shift = LUT .redPaletteColorLookupTableDescriptor [2] === 8 ? 0 : 8;
+
+			const rDataCleaned = convertLUTto8Bit (rData, shift);
+			const gDataCleaned = convertLUTto8Bit (gData, shift);
+			const bDataCleaned = convertLUTto8Bit (bData, shift);
+
+			let out = new (pixelData .constructor) (pixelData .length);
+
+			for (let i = 0; i < numPixels; ++ i)
+			{
+				let value = pixelData[palIndex++];
+
+				if (value < start)
+					value = 0;
+				else if (value > start + len - 1)
+					value = len - 1;
+				else
+					value -= start;
+
+				out [rgbIndex++] = rDataCleaned [value];
+				out [rgbIndex++] = gDataCleaned [value];
+				out [rgbIndex++] = bDataCleaned [value];
 			}
 
 			return out;
