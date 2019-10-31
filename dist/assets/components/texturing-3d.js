@@ -24617,6 +24617,7 @@ function (dicomParser,
 		},
 		getComponents: function ()
 		{
+			// https://dicom.innolitics.com/ciods/ct-image/image-pixel/00280002
 			this .dicom .components = this .dataSet .uint16 ("x00280002");
 		},
 		getWidth: function ()
@@ -24678,7 +24679,7 @@ function (dicomParser,
 					}
 					case "1.2.840.10008.1.2.5": // RLE Lossless
 					{
-						frame = this .decodeRLE (frame .buffer, frame .byteOffset, frame .length, imageLength * this .bitsAllocated / 8);
+						frame = this .decodeRLE (frame);
 						break;
 					}
 					case "1.2.840.10008.1.2.4.50": // JPEG Baseline lossy process 1 (8 bit)
@@ -24855,6 +24856,177 @@ function (dicomParser,
 
 			return { offset: min, factor: 1 / (max - min) * 255 };
 		},
+		decodeRLE: function  (pixelData)
+		{
+			if (this .bitsAllocated === 8)
+			{
+				if (this .planarConfiguration)
+					 return this .decodeRLE8Planar (pixelData);
+
+				return this .decodeRLE8 (pixelData);
+			}
+
+			if (this .bitsAllocated === 16)
+				return this .decodeRLE16 (pixelData);
+
+			throw new Error ("DICOM: unsupported pixel format for RLE.");
+		},
+		decodeRLE8: function  (pixelData)
+		{
+			const frameData = pixelData;
+			const frameSize = this .dicom .width * this .dicom .height;
+			const outFrame  = new ArrayBuffer (frameSize * this .dicom .components);
+			const header    = new DataView (frameData .buffer, frameData .byteOffset);
+			const data      = new Int8Array(frameData .buffer, frameData .byteOffset);
+			const out       = new Int8Array (outFrame);
+
+			let   outIndex    = 0;
+			const numSegments = header .getInt32 (0, true);
+
+			for (let s = 0; s < numSegments; ++ s)
+			{
+				outIndex = s;
+
+				let inIndex  = header .getInt32 ((s + 1) * 4, true);
+				let maxIndex = header .getInt32 ((s + 2) * 4, true);
+
+				if (maxIndex === 0)
+					maxIndex = frameData.length;
+
+				const endOfSegment = frameSize * numSegments;
+
+				while (inIndex < maxIndex)
+				{
+					const n = data [inIndex ++];
+
+					if (n >= 0 && n <= 127)
+					{
+						// copy n bytes
+						for (let i = 0; i < n + 1 && outIndex < endOfSegment; ++ i)
+						{
+							out [outIndex] = data [inIndex ++];
+							outIndex += this .dicom .components;
+						}
+					}
+					else if (n <= -1 && n >= -127)
+					{
+						const value = data [inIndex ++];
+
+						// run of n bytes
+						for (let j = 0; j < -n + 1 && outIndex < endOfSegment; ++ j)
+						{
+							out [outIndex] = value;
+							outIndex += this .dicom .components;
+						}
+				 	}
+				}
+			}
+
+			return out;
+		},
+		decodeRLE8Planar: function  (pixelData)
+		{
+			const frameData = pixelData;
+			const frameSize = this .dicom .width * this .dicom .height;
+			const outFrame  = new ArrayBuffer (frameSize * this .dicom .components);
+			const header    = new DataView (frameData .buffer, frameData .byteOffset);
+			const data      = new Int8Array (frameData .buffer, frameData .byteOffset);
+			const out       = new Int8Array (outFrame);
+
+			let   outIndex    = 0;
+			const numSegments = header .getInt32 (0, true);
+
+			for (let s = 0; s < numSegments; ++ s)
+			{
+				outIndex = s * frameSize;
+
+				let inIndex  = header .getInt32 ((s + 1) * 4, true);
+				let maxIndex = header .getInt32 ((s + 2) * 4, true);
+
+				if (maxIndex === 0)
+					maxIndex = frameData .length;
+
+				const endOfSegment = frameSize * numSegments;
+
+				while (inIndex < maxIndex)
+				{
+					const n = data [inIndex ++];
+
+					if (n >= 0 && n <= 127)
+					{
+						// copy n bytes
+						for (let i = 0; i < n + 1 && outIndex < endOfSegment; ++ i)
+						{
+							out [outIndex] = data [inIndex ++];
+							outIndex ++;
+						}
+					}
+					else if (n <= -1 && n >= -127)
+					{
+						const value = data[inIndex++];
+
+						// run of n bytes
+						for (let j = 0; j < -n + 1 && outIndex < endOfSegment; ++ j)
+						{
+							out [outIndex] = value;
+							outIndex ++;
+						}
+				 	}
+				}
+			}
+
+			return out;
+		},
+		decodeRLE16: function  (pixelData)
+		{
+			const frameData = pixelData;
+			const frameSize = this .dicom .width * this .dicom .height;
+			const outFrame  = new ArrayBuffer (frameSize * this .dicom .components * 2);
+			const header    = new DataView (frameData.buffer, frameData.byteOffset);
+			const data      = new Int8Array (frameData.buffer, frameData.byteOffset);
+			const out       = new Int8Array (outFrame);
+
+			const numSegments = header .getInt32 (0, true);
+
+			for (let s = 0; s < numSegments; ++ s)
+			{
+				let   outIndex = 0;
+				const highByte = (s === 0 ? 1 : 0);
+
+			  	let inIndex  = header .getInt32 ((s + 1) * 4, true);
+			  	let maxIndex = header .getInt32 ((s + 2) * 4, true);
+
+				if (maxIndex === 0)
+					maxIndex = frameData.length;
+
+				while (inIndex < maxIndex)
+				{
+					const n = data [inIndex ++];
+
+					if (n >= 0 && n <= 127)
+					{
+						for (let i = 0; i < n + 1 && outIndex < frameSize; ++ i)
+						{
+							out[(outIndex * 2) + highByte] = data[inIndex++];
+							outIndex++;
+						}
+					}
+					else if (n <= -1 && n >= -127)
+					{
+						const value = data [inIndex ++];
+
+						for (let j = 0; j < -n + 1 && outIndex < frameSize; ++ j)
+						{
+							out [(outIndex * 2) + highByte] = value;
+							outIndex++;
+						}
+					}
+				}
+			}
+
+			return out;
+		},
+		/*
 		decodeRLE: function (buffer, offset, length, outputLength)
 		{
 			// http://dicom.nema.org/dicom/2013/output/chtml/part05/sect_G.5.html
@@ -24912,6 +25084,7 @@ function (dicomParser,
 
 			return output;
 		},
+		*/
 		decodeJPEGBaseline: function (pixelData)
 		{
 			var jpeg = new JpegImage ();
