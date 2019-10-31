@@ -235,8 +235,8 @@ function (dicomParser,
 									data      = new type (frame .buffer, frame .byteOffset, frame .length),
 									normalize = this .getPixelOffsetAndFactor (data);
 
-								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = (data [i] - normalize .offset) * normalize .factor;
+								for (var i = 0, length = data .length; i < length; ++ i, ++ b)
+									bytes [b] = (data [i] - normalize .offset) * normalize .factor;
 
 								break;
 							}
@@ -247,8 +247,8 @@ function (dicomParser,
 									data      = new type (frame .buffer, frame .byteOffset, frame .length / 2),
 									normalize = this .getPixelOffsetAndFactor (data);
 
-								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = (data [i] - normalize .offset) * normalize .factor;
+								for (var i = 0, length = data .length; i < length; ++ i, ++ b)
+									bytes [b] = (data [i] - normalize .offset) * normalize .factor;
 
 								break;
 							}
@@ -258,11 +258,19 @@ function (dicomParser,
 									data      = new Float32Array (frame .buffer, frame .byteOffset, frame .length / 4),
 									normalize = this .getPixelOffsetAndFactor (data);
 
-								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = (data [i] - normalize .offset) * normalize .factor;
+								for (var i = 0, length = data .length; i < length; ++ i, ++ b)
+									bytes [b] = (data [i] - normalize .offset) * normalize .factor;
 
 								break;
 							}
+						}
+
+						// Invert MONOCHROME1 pixels.
+
+						if (this .photometricInterpretation === "MONOCHROME1")
+						{
+							for (var i = 0, length = bytes .length; i < length; ++ i)
+								bytes [i] = 255 - bytes [i];
 						}
 
 						break;
@@ -272,14 +280,6 @@ function (dicomParser,
 				}
 			}
 			.bind (this));
-
-			// Invert MONOCHROME1 pixels.
-
-			if (this .photometricInterpretation === "MONOCHROME1")
-			{
-				for (var i = 0, length = bytes .length; i < length; ++ i)
-					bytes [i] = 255 - bytes [i];
-			}
 
 			// Set Uint8Array.
 
