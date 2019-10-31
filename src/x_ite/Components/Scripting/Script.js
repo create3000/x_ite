@@ -443,7 +443,7 @@ function ($,
 
 			// Call initialize function.
 
-			if (this .context .initialize)
+			if ($.isFunction (this .context .initialize))
 			{
 				var browser = this .getBrowser ();
 
@@ -460,6 +460,9 @@ function ($,
 
 				browser .getScriptStack () .pop ();
 			}
+
+			if ($.isFunction (this .context .shutdown))
+				$(window) .on ("unload", this .shutdown__ .bind (this));
 
 			// Call outstanding events.
 
