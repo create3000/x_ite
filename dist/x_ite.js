@@ -1,4 +1,4 @@
-/* X_ITE v4.6.4a-895 */
+/* X_ITE v4.6.4a-896 */
 
 (function () {
 
@@ -52692,7 +52692,7 @@ function ($,
 		{
 			try
 			{
-				this .callback (this .fileReader .result, this .URL);
+				this .callback (this .fileReader .result);
 			}
 			catch (exception)
 			{

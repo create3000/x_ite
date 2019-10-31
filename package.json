@@ -1,7 +1,7 @@
 {
 	"name": "x_ite",
 	"version": "4.6.4a",
-	"revision": "895",
+	"revision": "896",
 	"description": "X_ITE X3D Browser",
 	"main": "src/x_ite.js",
 	"repository": {
@@ -63,5 +63,7 @@
 		"build": "make",
 		"-prebuild:js": "npm run lint"
 	},
-	"dependencies": {}
+	"dependencies": {
+		"cornerstone-wado-image-loader": "^3.0.6"
+	}
 }

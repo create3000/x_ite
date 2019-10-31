@@ -19262,23 +19262,25 @@ exports.default = '1.8.2';
 //# sourceMappingURL=dicomParser.js.map;
 define("dicom-parser/dist/dicomParser", function(){});
 
-/* -*- tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
-/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
+// jshint ignore: start
+
+/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- /
+ /* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
 /*
-   Copyright 2011 notmasteryet
+ Copyright 2011 notmasteryet
 
-   Licensed under the Apache License, Version 2.0 (the "License");
-   you may not use this file except in compliance with the License.
-   You may obtain a copy of the License at
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
 
-       http://www.apache.org/licenses/LICENSE-2.0
+ http://www.apache.org/licenses/LICENSE-2.0
 
-   Unless required by applicable law or agreed to in writing, software
-   distributed under the License is distributed on an "AS IS" BASIS,
-   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-   See the License for the specific language governing permissions and
-   limitations under the License.
-*/
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+ */
 
 // - The JPEG specification can be found in the ITU CCITT Recommendation T.81
 //   (www.w3.org/Graphics/JPEG/itu-t81.pdf)
@@ -19288,17 +19290,18 @@ define("dicom-parser/dist/dicomParser", function(){});
 //   in PostScript Level 2, Technical Note #5116
 //   (partners.adobe.com/public/developer/en/ps/sdk/5116.DCT_Filter.pdf)
 
+var ColorSpace = {Unkown: 0, Grayscale: 1, AdobeRGB: 2, RGB: 3, CYMK: 4};
 var JpegImage = (function jpegImage() {
   "use strict";
   var dctZigZag = new Int32Array([
-     0,
-     1,  8,
-    16,  9,  2,
-     3, 10, 17, 24,
+    0,
+    1, 8,
+    16, 9, 2,
+    3, 10, 17, 24,
     32, 25, 18, 11, 4,
-     5, 12, 19, 26, 33, 40,
-    48, 41, 34, 27, 20, 13,  6,
-     7, 14, 21, 28, 35, 42, 49, 56,
+    5, 12, 19, 26, 33, 40,
+    48, 41, 34, 27, 20, 13, 6,
+    7, 14, 21, 28, 35, 42, 49, 56,
     57, 50, 43, 36, 29, 22, 15,
     23, 30, 37, 44, 51, 58,
     59, 52, 45, 38, 31,
@@ -19308,14 +19311,14 @@ var JpegImage = (function jpegImage() {
     63
   ]);
 
-  var dctCos1  =  4017   // cos(pi/16)
-  var dctSin1  =   799   // sin(pi/16)
-  var dctCos3  =  3406   // cos(3*pi/16)
-  var dctSin3  =  2276   // sin(3*pi/16)
-  var dctCos6  =  1567   // cos(6*pi/16)
-  var dctSin6  =  3784   // sin(6*pi/16)
-  var dctSqrt2 =  5793   // sqrt(2)
-  var dctSqrt1d2 = 2896  // sqrt(2) / 2
+  var dctCos1 = 4017;   // cos(pi/16)
+  var dctSin1 = 799;   // sin(pi/16)
+  var dctCos3 = 3406;   // cos(3*pi/16)
+  var dctSin3 = 2276;   // sin(3*pi/16)
+  var dctCos6 = 1567;   // cos(6*pi/16)
+  var dctSin6 = 3784;   // sin(6*pi/16)
+  var dctSqrt2 = 5793;   // sqrt(2)
+  var dctSqrt1d2 = 2896;  // sqrt(2) / 2
 
   function constructor() {
   }
@@ -19352,6 +19355,10 @@ var JpegImage = (function jpegImage() {
     return code[0].children;
   }
 
+  function getBlockBufferOffset(component, row, col) {
+    return 64 * ((component.blocksPerLine + 1) * row + col);
+  }
+
   function decodeScan(data, offset,
                       frame, components, resetInterval,
                       spectralStart, spectralEnd,
@@ -19364,6 +19371,7 @@ var JpegImage = (function jpegImage() {
     var maxH = frame.maxH, maxV = frame.maxV;
 
     var startOffset = offset, bitsData = 0, bitsCount = 0;
+
     function readBit() {
       if (bitsCount > 0) {
         bitsCount--;
@@ -19373,44 +19381,50 @@ var JpegImage = (function jpegImage() {
       if (bitsData == 0xFF) {
         var nextByte = data[offset++];
         if (nextByte) {
-          throw new Error("unexpected marker: " + ((bitsData << 8) | nextByte).toString(16));
+          throw "unexpected marker: " + ((bitsData << 8) | nextByte).toString(16);
         }
         // unstuff 0
       }
       bitsCount = 7;
       return bitsData >>> 7;
     }
+
     function decodeHuffman(tree) {
-      var node = tree, bit;
+      var node = tree;
+      var bit;
       while ((bit = readBit()) !== null) {
         node = node[bit];
         if (typeof node === 'number')
           return node;
         if (typeof node !== 'object')
-          throw new Error("invalid huffman sequence");
+          throw "invalid huffman sequence";
       }
       return null;
     }
+
     function receive(length) {
       var n = 0;
       while (length > 0) {
         var bit = readBit();
-        if (bit === null) return;
+        if (bit === null)
+          return;
         n = (n << 1) | bit;
         length--;
       }
       return n;
     }
+
     function receiveAndExtend(length) {
       var n = receive(length);
       if (n >= 1 << (length - 1))
         return n;
       return n + (-1 << length) + 1;
     }
-    function decodeBaseline(component, zz) {
+
+    function decodeBaseline(component, offset) {
       var t = decodeHuffman(component.huffmanTableDC);
       var diff = t === 0 ? 0 : receiveAndExtend(t);
-      zz[0]= (component.pred += diff);
+      component.blockData[offset] = (component.pred += diff);
       var k = 1;
       while (k < 64) {
         var rs = decodeHuffman(component.huffmanTableAC);
@@ -19423,20 +19437,23 @@ var JpegImage = (function jpegImage() {
         }
         k += r;
         var z = dctZigZag[k];
-        zz[z] = receiveAndExtend(s);
+        component.blockData[offset + z] = receiveAndExtend(s);
         k++;
       }
     }
-    function decodeDCFirst(component, zz) {
+
+    function decodeDCFirst(component, offset) {
       var t = decodeHuffman(component.huffmanTableDC);
       var diff = t === 0 ? 0 : (receiveAndExtend(t) << successive);
-      zz[0] = (component.pred += diff);
+      component.blockData[offset] = (component.pred += diff);
     }
-    function decodeDCSuccessive(component, zz) {
-      zz[0] |= readBit() << successive;
+
+    function decodeDCSuccessive(component, offset) {
+      component.blockData[offset] |= readBit() << successive;
     }
+
     var eobrun = 0;
-    function decodeACFirst(component, zz) {
+    function decodeACFirst(component, offset) {
       if (eobrun > 0) {
         eobrun--;
         return;
@@ -19455,57 +19472,59 @@ var JpegImage = (function jpegImage() {
         }
         k += r;
         var z = dctZigZag[k];
-        zz[z] = receiveAndExtend(s) * (1 << successive);
+        component.blockData[offset + z] = receiveAndExtend(s) * (1 << successive);
         k++;
       }
     }
+
     var successiveACState = 0, successiveACNextValue;
-    function decodeACSuccessive(component, zz) {
+    function decodeACSuccessive(component, offset) {
       var k = spectralStart, e = spectralEnd, r = 0;
       while (k <= e) {
         var z = dctZigZag[k];
-        var direction = zz[z] < 0 ? -1 : 1;
         switch (successiveACState) {
-        case 0: // initial state
-          var rs = decodeHuffman(component.huffmanTableAC);
-          var s = rs & 15, r = rs >> 4;
-          if (s === 0) {
-            if (r < 15) {
-              eobrun = receive(r) + (1 << r);
-              successiveACState = 4;
+          case 0: // initial state
+            var rs = decodeHuffman(component.huffmanTableAC);
+            var s = rs & 15;
+            r = rs >> 4;
+            if (s === 0) {
+              if (r < 15) {
+                eobrun = receive(r) + (1 << r);
+                successiveACState = 4;
+              } else {
+                r = 16;
+                successiveACState = 1;
+              }
             } else {
-              r = 16;
-              successiveACState = 1;
+              if (s !== 1)
+                throw "invalid ACn encoding";
+              successiveACNextValue = receiveAndExtend(s);
+              successiveACState = r ? 2 : 3;
             }
-          } else {
-            if (s !== 1)
-              throw new Error("invalid ACn encoding");
-            successiveACNextValue = receiveAndExtend(s);
-            successiveACState = r ? 2 : 3;
-          }
-          continue;
-        case 1: // skipping r zero items
-        case 2:
-          if (zz[z])
-            zz[z] += (readBit() << successive) * direction;
-          else {
-            r--;
-            if (r === 0)
-              successiveACState = successiveACState == 2 ? 3 : 0;
-          }
-          break;
-        case 3: // set value for a zero item
-          if (zz[z])
-            zz[z] += (readBit() << successive) * direction;
-          else {
-            zz[z] = successiveACNextValue << successive;
-            successiveACState = 0;
-          }
-          break;
-        case 4: // eob
-          if (zz[z])
-            zz[z] += (readBit() << successive) * direction;
-          break;
+            continue;
+          case 1: // skipping r zero items
+          case 2:
+            if (component.blockData[offset + z]) {
+              component.blockData[offset + z] += (readBit() << successive);
+            } else {
+              r--;
+              if (r === 0)
+                successiveACState = successiveACState == 2 ? 3 : 0;
+            }
+            break;
+          case 3: // set value for a zero item
+            if (component.blockData[offset + z]) {
+              component.blockData[offset + z] += (readBit() << successive);
+            } else {
+              component.blockData[offset + z] = successiveACNextValue << successive;
+              successiveACState = 0;
+            }
+            break;
+          case 4: // eob
+            if (component.blockData[offset + z]) {
+              component.blockData[offset + z] += (readBit() << successive);
+            }
+            break;
         }
         k++;
       }
@@ -19515,17 +19534,21 @@ var JpegImage = (function jpegImage() {
           successiveACState = 0;
       }
     }
+
     function decodeMcu(component, decode, mcu, row, col) {
       var mcuRow = (mcu / mcusPerLine) | 0;
       var mcuCol = mcu % mcusPerLine;
       var blockRow = mcuRow * component.v + row;
       var blockCol = mcuCol * component.h + col;
-      decode(component, component.blocks[blockRow][blockCol]);
+      var offset = getBlockBufferOffset(component, blockRow, blockCol);
+      decode(component, offset);
     }
+
     function decodeBlock(component, decode, mcu) {
       var blockRow = (mcu / component.blocksPerLine) | 0;
       var blockCol = mcu % component.blocksPerLine;
-      decode(component, component.blocks[blockRow][blockCol]);
+      var offset = getBlockBufferOffset(component, blockRow, blockCol);
+      decode(component, offset);
     }
 
     var componentsLength = components.length;
@@ -19547,13 +19570,16 @@ var JpegImage = (function jpegImage() {
     } else {
       mcuExpected = mcusPerLine * frame.mcusPerColumn;
     }
-    if (!resetInterval) resetInterval = mcuExpected;
+    if (!resetInterval) {
+      resetInterval = mcuExpected;
+    }
 
     var h, v;
     while (mcu < mcuExpected) {
       // reset interval stuff
-      for (i = 0; i < componentsLength; i++)
+      for (i = 0; i < componentsLength; i++) {
         components[i].pred = 0;
+      }
       eobrun = 0;
 
       if (componentsLength == 1) {
@@ -19575,27 +19601,188 @@ var JpegImage = (function jpegImage() {
             }
           }
           mcu++;
-
-          // If we've reached our expected MCU's, stop decoding
-          if (mcu === mcuExpected) break;
         }
       }
 
       // find marker
       bitsCount = 0;
       marker = (data[offset] << 8) | data[offset + 1];
-      if (marker < 0xFF00) {
-        throw new Error("marker was not found");
+      if (marker <= 0xFF00) {
+        throw "marker was not found";
       }
 
       if (marker >= 0xFFD0 && marker <= 0xFFD7) { // RSTx
         offset += 2;
-      }
-      else
+      } else {
         break;
+      }
     }
 
     return offset - startOffset;
+  }
+
+  // A port of poppler's IDCT method which in turn is taken from:
+  //   Christoph Loeffler, Adriaan Ligtenberg, George S. Moschytz,
+  //   "Practical Fast 1-D DCT Algorithms with 11 Multiplications",
+  //   IEEE Intl. Conf. on Acoustics, Speech & Signal Processing, 1989,
+  //   988-991.
+  function quantizeAndInverse(component, blockBufferOffset, p) {
+    var qt = component.quantizationTable;
+    var v0, v1, v2, v3, v4, v5, v6, v7, t;
+    var i;
+
+    // dequant
+    for (i = 0; i < 64; i++) {
+      p[i] = component.blockData[blockBufferOffset + i] * qt[i];
+    }
+
+    // inverse DCT on rows
+    for (i = 0; i < 8; ++i) {
+      var row = 8 * i;
+
+      // check for all-zero AC coefficients
+      if (p[1 + row] === 0 && p[2 + row] === 0 && p[3 + row] === 0 &&
+        p[4 + row] === 0 && p[5 + row] === 0 && p[6 + row] === 0 &&
+        p[7 + row] === 0) {
+        t = (dctSqrt2 * p[0 + row] + 512) >> 10;
+        p[0 + row] = t;
+        p[1 + row] = t;
+        p[2 + row] = t;
+        p[3 + row] = t;
+        p[4 + row] = t;
+        p[5 + row] = t;
+        p[6 + row] = t;
+        p[7 + row] = t;
+        continue;
+      }
+
+      // stage 4
+      v0 = (dctSqrt2 * p[0 + row] + 128) >> 8;
+      v1 = (dctSqrt2 * p[4 + row] + 128) >> 8;
+      v2 = p[2 + row];
+      v3 = p[6 + row];
+      v4 = (dctSqrt1d2 * (p[1 + row] - p[7 + row]) + 128) >> 8;
+      v7 = (dctSqrt1d2 * (p[1 + row] + p[7 + row]) + 128) >> 8;
+      v5 = p[3 + row] << 4;
+      v6 = p[5 + row] << 4;
+
+      // stage 3
+      t = (v0 - v1 + 1) >> 1;
+      v0 = (v0 + v1 + 1) >> 1;
+      v1 = t;
+      t = (v2 * dctSin6 + v3 * dctCos6 + 128) >> 8;
+      v2 = (v2 * dctCos6 - v3 * dctSin6 + 128) >> 8;
+      v3 = t;
+      t = (v4 - v6 + 1) >> 1;
+      v4 = (v4 + v6 + 1) >> 1;
+      v6 = t;
+      t = (v7 + v5 + 1) >> 1;
+      v5 = (v7 - v5 + 1) >> 1;
+      v7 = t;
+
+      // stage 2
+      t = (v0 - v3 + 1) >> 1;
+      v0 = (v0 + v3 + 1) >> 1;
+      v3 = t;
+      t = (v1 - v2 + 1) >> 1;
+      v1 = (v1 + v2 + 1) >> 1;
+      v2 = t;
+      t = (v4 * dctSin3 + v7 * dctCos3 + 2048) >> 12;
+      v4 = (v4 * dctCos3 - v7 * dctSin3 + 2048) >> 12;
+      v7 = t;
+      t = (v5 * dctSin1 + v6 * dctCos1 + 2048) >> 12;
+      v5 = (v5 * dctCos1 - v6 * dctSin1 + 2048) >> 12;
+      v6 = t;
+
+      // stage 1
+      p[0 + row] = v0 + v7;
+      p[7 + row] = v0 - v7;
+      p[1 + row] = v1 + v6;
+      p[6 + row] = v1 - v6;
+      p[2 + row] = v2 + v5;
+      p[5 + row] = v2 - v5;
+      p[3 + row] = v3 + v4;
+      p[4 + row] = v3 - v4;
+    }
+
+    // inverse DCT on columns
+    for (i = 0; i < 8; ++i) {
+      var col = i;
+
+      // check for all-zero AC coefficients
+      if (p[1 * 8 + col] === 0 && p[2 * 8 + col] === 0 && p[3 * 8 + col] === 0 &&
+        p[4 * 8 + col] === 0 && p[5 * 8 + col] === 0 && p[6 * 8 + col] === 0 &&
+        p[7 * 8 + col] === 0) {
+        t = (dctSqrt2 * p[i + 0] + 8192) >> 14;
+        p[0 * 8 + col] = t;
+        p[1 * 8 + col] = t;
+        p[2 * 8 + col] = t;
+        p[3 * 8 + col] = t;
+        p[4 * 8 + col] = t;
+        p[5 * 8 + col] = t;
+        p[6 * 8 + col] = t;
+        p[7 * 8 + col] = t;
+        continue;
+      }
+
+      // stage 4
+      v0 = (dctSqrt2 * p[0 * 8 + col] + 2048) >> 12;
+      v1 = (dctSqrt2 * p[4 * 8 + col] + 2048) >> 12;
+      v2 = p[2 * 8 + col];
+      v3 = p[6 * 8 + col];
+      v4 = (dctSqrt1d2 * (p[1 * 8 + col] - p[7 * 8 + col]) + 2048) >> 12;
+      v7 = (dctSqrt1d2 * (p[1 * 8 + col] + p[7 * 8 + col]) + 2048) >> 12;
+      v5 = p[3 * 8 + col];
+      v6 = p[5 * 8 + col];
+
+      // stage 3
+      t = (v0 - v1 + 1) >> 1;
+      v0 = (v0 + v1 + 1) >> 1;
+      v1 = t;
+      t = (v2 * dctSin6 + v3 * dctCos6 + 2048) >> 12;
+      v2 = (v2 * dctCos6 - v3 * dctSin6 + 2048) >> 12;
+      v3 = t;
+      t = (v4 - v6 + 1) >> 1;
+      v4 = (v4 + v6 + 1) >> 1;
+      v6 = t;
+      t = (v7 + v5 + 1) >> 1;
+      v5 = (v7 - v5 + 1) >> 1;
+      v7 = t;
+
+      // stage 2
+      t = (v0 - v3 + 1) >> 1;
+      v0 = (v0 + v3 + 1) >> 1;
+      v3 = t;
+      t = (v1 - v2 + 1) >> 1;
+      v1 = (v1 + v2 + 1) >> 1;
+      v2 = t;
+      t = (v4 * dctSin3 + v7 * dctCos3 + 2048) >> 12;
+      v4 = (v4 * dctCos3 - v7 * dctSin3 + 2048) >> 12;
+      v7 = t;
+      t = (v5 * dctSin1 + v6 * dctCos1 + 2048) >> 12;
+      v5 = (v5 * dctCos1 - v6 * dctSin1 + 2048) >> 12;
+      v6 = t;
+
+      // stage 1
+      p[0 * 8 + col] = v0 + v7;
+      p[7 * 8 + col] = v0 - v7;
+      p[1 * 8 + col] = v1 + v6;
+      p[6 * 8 + col] = v1 - v6;
+      p[2 * 8 + col] = v2 + v5;
+      p[5 * 8 + col] = v2 - v5;
+      p[3 * 8 + col] = v3 + v4;
+      p[4 * 8 + col] = v3 - v4;
+    }
+
+    // convert to 8-bit integers
+    for (i = 0; i < 64; ++i) {
+      var index = blockBufferOffset + i;
+      var q = p[i];
+      q = (q <= -2056 / component.bitConversion) ? 0 :
+        (q >= 2024 / component.bitConversion) ? 255 / component.bitConversion :
+        (q + 2056 / component.bitConversion) >> 4;
+      component.blockData[index] = q;
+    }
   }
 
   function buildComponentData(frame, component) {
@@ -19603,270 +19790,100 @@ var JpegImage = (function jpegImage() {
     var blocksPerLine = component.blocksPerLine;
     var blocksPerColumn = component.blocksPerColumn;
     var samplesPerLine = blocksPerLine << 3;
-    var R = new Int32Array(64), r = new Uint8Array(64);
+    var computationBuffer = new Int32Array(64);
 
-    // A port of poppler's IDCT method which in turn is taken from:
-    //   Christoph Loeffler, Adriaan Ligtenberg, George S. Moschytz,
-    //   "Practical Fast 1-D DCT Algorithms with 11 Multiplications",
-    //   IEEE Intl. Conf. on Acoustics, Speech & Signal Processing, 1989,
-    //   988-991.
-    function quantizeAndInverse(zz, dataOut, dataIn) {
-      var qt = component.quantizationTable;
-      var v0, v1, v2, v3, v4, v5, v6, v7, t;
-      var p = dataIn;
-      var i;
-
-      // dequant
-      for (i = 0; i < 64; i++)
-        p[i] = zz[i] * qt[i];
-
-      // inverse DCT on rows
-      for (i = 0; i < 8; ++i) {
-        var row = 8 * i;
-
-        // check for all-zero AC coefficients
-        if (p[1 + row] == 0 && p[2 + row] == 0 && p[3 + row] == 0 &&
-            p[4 + row] == 0 && p[5 + row] == 0 && p[6 + row] == 0 &&
-            p[7 + row] == 0) {
-          t = (dctSqrt2 * p[0 + row] + 512) >> 10;
-          p[0 + row] = t;
-          p[1 + row] = t;
-          p[2 + row] = t;
-          p[3 + row] = t;
-          p[4 + row] = t;
-          p[5 + row] = t;
-          p[6 + row] = t;
-          p[7 + row] = t;
-          continue;
-        }
-
-        // stage 4
-        v0 = (dctSqrt2 * p[0 + row] + 128) >> 8;
-        v1 = (dctSqrt2 * p[4 + row] + 128) >> 8;
-        v2 = p[2 + row];
-        v3 = p[6 + row];
-        v4 = (dctSqrt1d2 * (p[1 + row] - p[7 + row]) + 128) >> 8;
-        v7 = (dctSqrt1d2 * (p[1 + row] + p[7 + row]) + 128) >> 8;
-        v5 = p[3 + row] << 4;
-        v6 = p[5 + row] << 4;
-
-        // stage 3
-        t = (v0 - v1+ 1) >> 1;
-        v0 = (v0 + v1 + 1) >> 1;
-        v1 = t;
-        t = (v2 * dctSin6 + v3 * dctCos6 + 128) >> 8;
-        v2 = (v2 * dctCos6 - v3 * dctSin6 + 128) >> 8;
-        v3 = t;
-        t = (v4 - v6 + 1) >> 1;
-        v4 = (v4 + v6 + 1) >> 1;
-        v6 = t;
-        t = (v7 + v5 + 1) >> 1;
-        v5 = (v7 - v5 + 1) >> 1;
-        v7 = t;
-
-        // stage 2
-        t = (v0 - v3 + 1) >> 1;
-        v0 = (v0 + v3 + 1) >> 1;
-        v3 = t;
-        t = (v1 - v2 + 1) >> 1;
-        v1 = (v1 + v2 + 1) >> 1;
-        v2 = t;
-        t = (v4 * dctSin3 + v7 * dctCos3 + 2048) >> 12;
-        v4 = (v4 * dctCos3 - v7 * dctSin3 + 2048) >> 12;
-        v7 = t;
-        t = (v5 * dctSin1 + v6 * dctCos1 + 2048) >> 12;
-        v5 = (v5 * dctCos1 - v6 * dctSin1 + 2048) >> 12;
-        v6 = t;
-
-        // stage 1
-        p[0 + row] = v0 + v7;
-        p[7 + row] = v0 - v7;
-        p[1 + row] = v1 + v6;
-        p[6 + row] = v1 - v6;
-        p[2 + row] = v2 + v5;
-        p[5 + row] = v2 - v5;
-        p[3 + row] = v3 + v4;
-        p[4 + row] = v3 - v4;
-      }
-
-      // inverse DCT on columns
-      for (i = 0; i < 8; ++i) {
-        var col = i;
-
-        // check for all-zero AC coefficients
-        if (p[1*8 + col] == 0 && p[2*8 + col] == 0 && p[3*8 + col] == 0 &&
-            p[4*8 + col] == 0 && p[5*8 + col] == 0 && p[6*8 + col] == 0 &&
-            p[7*8 + col] == 0) {
-          t = (dctSqrt2 * dataIn[i+0] + 8192) >> 14;
-          p[0*8 + col] = t;
-          p[1*8 + col] = t;
-          p[2*8 + col] = t;
-          p[3*8 + col] = t;
-          p[4*8 + col] = t;
-          p[5*8 + col] = t;
-          p[6*8 + col] = t;
-          p[7*8 + col] = t;
-          continue;
-        }
-
-        // stage 4
-        v0 = (dctSqrt2 * p[0*8 + col] + 2048) >> 12;
-        v1 = (dctSqrt2 * p[4*8 + col] + 2048) >> 12;
-        v2 = p[2*8 + col];
-        v3 = p[6*8 + col];
-        v4 = (dctSqrt1d2 * (p[1*8 + col] - p[7*8 + col]) + 2048) >> 12;
-        v7 = (dctSqrt1d2 * (p[1*8 + col] + p[7*8 + col]) + 2048) >> 12;
-        v5 = p[3*8 + col];
-        v6 = p[5*8 + col];
-
-        // stage 3
-        t = (v0 - v1 + 1) >> 1;
-        v0 = (v0 + v1 + 1) >> 1;
-        v1 = t;
-        t = (v2 * dctSin6 + v3 * dctCos6 + 2048) >> 12;
-        v2 = (v2 * dctCos6 - v3 * dctSin6 + 2048) >> 12;
-        v3 = t;
-        t = (v4 - v6 + 1) >> 1;
-        v4 = (v4 + v6 + 1) >> 1;
-        v6 = t;
-        t = (v7 + v5 + 1) >> 1;
-        v5 = (v7 - v5 + 1) >> 1;
-        v7 = t;
-
-        // stage 2
-        t = (v0 - v3 + 1) >> 1;
-        v0 = (v0 + v3 + 1) >> 1;
-        v3 = t;
-        t = (v1 - v2 + 1) >> 1;
-        v1 = (v1 + v2 + 1) >> 1;
-        v2 = t;
-        t = (v4 * dctSin3 + v7 * dctCos3 + 2048) >> 12;
-        v4 = (v4 * dctCos3 - v7 * dctSin3 + 2048) >> 12;
-        v7 = t;
-        t = (v5 * dctSin1 + v6 * dctCos1 + 2048) >> 12;
-        v5 = (v5 * dctCos1 - v6 * dctSin1 + 2048) >> 12;
-        v6 = t;
-
-        // stage 1
-        p[0*8 + col] = v0 + v7;
-        p[7*8 + col] = v0 - v7;
-        p[1*8 + col] = v1 + v6;
-        p[6*8 + col] = v1 - v6;
-        p[2*8 + col] = v2 + v5;
-        p[5*8 + col] = v2 - v5;
-        p[3*8 + col] = v3 + v4;
-        p[4*8 + col] = v3 - v4;
-      }
-
-      // convert to 8-bit integers
-      for (i = 0; i < 64; ++i) {
-        var sample = 128 + ((p[i] + 8) >> 4);
-        dataOut[i] = sample < 0 ? 0 : sample > 0xFF ? 0xFF : sample;
-      }
-    }
-
-    var i, j;
+    var i, j, ll = 0;
     for (var blockRow = 0; blockRow < blocksPerColumn; blockRow++) {
-      var scanLine = blockRow << 3;
-      for (i = 0; i < 8; i++)
-        lines.push(new Uint8Array(samplesPerLine));
       for (var blockCol = 0; blockCol < blocksPerLine; blockCol++) {
-        quantizeAndInverse(component.blocks[blockRow][blockCol], r, R);
-
-        var offset = 0, sample = blockCol << 3;
-        for (j = 0; j < 8; j++) {
-          var line = lines[scanLine + j];
-          for (i = 0; i < 8; i++)
-            line[sample + i] = r[offset++];
-        }
+        var offset = getBlockBufferOffset(component, blockRow, blockCol);
+        quantizeAndInverse(component, offset, computationBuffer);
       }
     }
-    return lines;
+    return component.blockData;
   }
 
-  function clampTo8bit(a) {
-    return a < 0 ? 0 : a > 255 ? 255 : a;
+  function clampToUint8(a) {
+    return a <= 0 ? 0 : a >= 255 ? 255 : a | 0;
   }
 
   constructor.prototype = {
     load: function load(path) {
-      var xhr = new XMLHttpRequest();
-      xhr.open("GET", path, true);
-      xhr.responseType = "arraybuffer";
-      xhr.onload = (function() {
-        // TODO catch parse error
-        var data = new Uint8Array(xhr.response || xhr.mozResponseArrayBuffer);
+      var handleData = (function (data) {
         this.parse(data);
         if (this.onload)
           this.onload();
       }).bind(this);
-      xhr.send(null);
+
+      if (path.indexOf("data:") > -1) {
+        var offset = path.indexOf("base64,") + 7;
+        var data = atob(path.substring(offset));
+        var arr = new Uint8Array(data.length);
+        for (var i = data.length - 1; i >= 0; i--) {
+          arr[i] = data.charCodeAt(i);
+        }
+        handleData(data);
+      } else {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", path, true);
+        xhr.responseType = "arraybuffer";
+        xhr.onload = (function () {
+          // TODO catch parse error
+          var data = new Uint8Array(xhr.response);
+          handleData(data);
+        }).bind(this);
+        xhr.send(null);
+      }
     },
     parse: function parse(data) {
-      var offset = 0, length = data.length;
+
       function readUint16() {
         var value = (data[offset] << 8) | data[offset + 1];
         offset += 2;
         return value;
       }
+
       function readDataBlock() {
         var length = readUint16();
         var array = data.subarray(offset, offset + length - 2);
         offset += array.length;
         return array;
       }
+
       function prepareComponents(frame) {
-        var maxH = 0, maxV = 0;
-        var component, componentId;
-        for (componentId in frame.components) {
-          if (frame.components.hasOwnProperty(componentId)) {
-            component = frame.components[componentId];
-            if (maxH < component.h) maxH = component.h;
-            if (maxV < component.v) maxV = component.v;
-          }
+        var mcusPerLine = Math.ceil(frame.samplesPerLine / 8 / frame.maxH);
+        var mcusPerColumn = Math.ceil(frame.scanLines / 8 / frame.maxV);
+        for (var i = 0; i < frame.components.length; i++) {
+          component = frame.components[i];
+          var blocksPerLine = Math.ceil(Math.ceil(frame.samplesPerLine / 8) * component.h / frame.maxH);
+          var blocksPerColumn = Math.ceil(Math.ceil(frame.scanLines / 8) * component.v / frame.maxV);
+          var blocksPerLineForMcu = mcusPerLine * component.h;
+          var blocksPerColumnForMcu = mcusPerColumn * component.v;
+
+          var blocksBufferSize = 64 * blocksPerColumnForMcu * (blocksPerLineForMcu + 1);
+          component.blockData = new Int16Array(blocksBufferSize);
+          component.blocksPerLine = blocksPerLine;
+          component.blocksPerColumn = blocksPerColumn;
         }
-        var mcusPerLine = Math.ceil(frame.samplesPerLine / 8 / maxH);
-        var mcusPerColumn = Math.ceil(frame.scanLines / 8 / maxV);
-        for (componentId in frame.components) {
-          if (frame.components.hasOwnProperty(componentId)) {
-            component = frame.components[componentId];
-            var blocksPerLine = Math.ceil(Math.ceil(frame.samplesPerLine / 8) * component.h / maxH);
-            var blocksPerColumn = Math.ceil(Math.ceil(frame.scanLines  / 8) * component.v / maxV);
-            var blocksPerLineForMcu = mcusPerLine * component.h;
-            var blocksPerColumnForMcu = mcusPerColumn * component.v;
-            var blocks = [];
-            for (var i = 0; i < blocksPerColumnForMcu; i++) {
-              var row = [];
-              for (var j = 0; j < blocksPerLineForMcu; j++)
-                row.push(new Int32Array(64));
-              blocks.push(row);
-            }
-            component.blocksPerLine = blocksPerLine;
-            component.blocksPerColumn = blocksPerColumn;
-            component.blocks = blocks;
-          }
-        }
-        frame.maxH = maxH;
-        frame.maxV = maxV;
         frame.mcusPerLine = mcusPerLine;
         frame.mcusPerColumn = mcusPerColumn;
       }
+
+      var offset = 0, length = data.length;
       var jfif = null;
       var adobe = null;
       var pixels = null;
       var frame, resetInterval;
-      var quantizationTables = [], frames = [];
+      var quantizationTables = [];
       var huffmanTablesAC = [], huffmanTablesDC = [];
       var fileMarker = readUint16();
       if (fileMarker != 0xFFD8) { // SOI (Start of Image)
-        throw new Error("SOI not found");
+        throw "SOI not found";
       }
 
       fileMarker = readUint16();
       while (fileMarker != 0xFFD9) { // EOI (End of image)
         var i, j, l;
-        switch(fileMarker) {
-          case 0xFF00: break;
+        switch (fileMarker) {
           case 0xFFE0: // APP0 (Application Specific)
           case 0xFFE1: // APP1
           case 0xFFE2: // APP2
@@ -19890,7 +19907,7 @@ var JpegImage = (function jpegImage() {
               if (appData[0] === 0x4A && appData[1] === 0x46 && appData[2] === 0x49 &&
                 appData[3] === 0x46 && appData[4] === 0) { // 'JFIF\x00'
                 jfif = {
-                  version: { major: appData[5], minor: appData[6] },
+                  version: {major: appData[5], minor: appData[6]},
                   densityUnits: appData[7],
                   xDensity: (appData[8] << 8) | appData[9],
                   yDensity: (appData[10] << 8) | appData[11],
@@ -19927,11 +19944,11 @@ var JpegImage = (function jpegImage() {
                 }
               } else if ((quantizationTableSpec >> 4) === 1) { //16 bit
                 for (j = 0; j < 64; j++) {
-                  var z = dctZigZag[j];
-                  tableData[z] = readUint16();
+                  var zz = dctZigZag[j];
+                  tableData[zz] = readUint16();
                 }
               } else
-                throw new Error("DQT: invalid table spec");
+                throw "DQT: invalid table spec";
               quantizationTables[quantizationTableSpec & 15] = tableData;
             }
             break;
@@ -19939,6 +19956,9 @@ var JpegImage = (function jpegImage() {
           case 0xFFC0: // SOF0 (Start of Frame, Baseline DCT)
           case 0xFFC1: // SOF1 (Start of Frame, Extended DCT)
           case 0xFFC2: // SOF2 (Start of Frame, Progressive DCT)
+            if (frame) {
+              throw "Only single frame JPEGs supported";
+            }
             readUint16(); // skip data length
             frame = {};
             frame.extended = (fileMarker === 0xFFC1);
@@ -19946,30 +19966,37 @@ var JpegImage = (function jpegImage() {
             frame.precision = data[offset++];
             frame.scanLines = readUint16();
             frame.samplesPerLine = readUint16();
-            frame.components = {};
-            frame.componentsOrder = [];
+            frame.components = [];
+            frame.componentIds = {};
             var componentsCount = data[offset++], componentId;
             var maxH = 0, maxV = 0;
             for (i = 0; i < componentsCount; i++) {
               componentId = data[offset];
               var h = data[offset + 1] >> 4;
               var v = data[offset + 1] & 15;
+              if (maxH < h)
+                maxH = h;
+              if (maxV < v)
+                maxV = v;
               var qId = data[offset + 2];
-              frame.componentsOrder.push(componentId);
-              frame.components[componentId] = {
+              l = frame.components.push({
                 h: h,
                 v: v,
-                quantizationIdx: qId
-              };
+                quantizationTable: quantizationTables[qId],
+                quantizationTableId: qId,
+                bitConversion: 255 / ((1 << frame.precision) - 1)
+              });
+              frame.componentIds[componentId] = l - 1;
               offset += 3;
             }
+            frame.maxH = maxH;
+            frame.maxV = maxV;
             prepareComponents(frame);
-            frames.push(frame);
             break;
 
           case 0xFFC4: // DHT (Define Huffman Tables)
             var huffmanLength = readUint16();
-            for (i = 2; i < huffmanLength;) {
+            for (i = 2; i < huffmanLength; ) {
               var huffmanTableSpec = data[offset++];
               var codeLengths = new Uint8Array(16);
               var codeLengthSum = 0;
@@ -19996,7 +20023,8 @@ var JpegImage = (function jpegImage() {
             var selectorsCount = data[offset++];
             var components = [], component;
             for (i = 0; i < selectorsCount; i++) {
-              component = frame.components[data[offset++]];
+              var componentIndex = frame.componentIds[data[offset++]];
+              component = frame.components[componentIndex];
               var tableSpec = data[offset++];
               component.huffmanTableDC = huffmanTablesDC[tableSpec >> 4];
               component.huffmanTableAC = huffmanTablesAC[tableSpec & 15];
@@ -20011,35 +20039,22 @@ var JpegImage = (function jpegImage() {
               successiveApproximation >> 4, successiveApproximation & 15);
             offset += processed;
             break;
-
           case 0xFFFF: // Fill bytes
             if (data[offset] !== 0xFF) { // Avoid skipping a valid marker.
               offset--;
             }
             break;
-
           default:
             if (data[offset - 3] == 0xFF &&
-                data[offset - 2] >= 0xC0 && data[offset - 2] <= 0xFE) {
+              data[offset - 2] >= 0xC0 && data[offset - 2] <= 0xFE) {
               // could be incorrect encoding -- last 0xFF byte of the previous
               // block was eaten by the encoder
               offset -= 3;
               break;
             }
-            throw new Error("unknown JPEG marker " + fileMarker.toString(16));
+            throw "unknown JPEG marker " + fileMarker.toString(16);
         }
         fileMarker = readUint16();
-      }
-      if (frames.length != 1)
-        throw new Error("only single frame JPEGs supported");
-
-      // set each frame's components quantization table
-      for (var i = 0; i < frames.length; i++) {
-        var cp = frames[i].components;
-        for (var j in cp) {
-          cp[j].quantizationTable = quantizationTables[cp[j].quantizationIdx];
-          delete cp[j].quantizationIdx;
-        }
       }
 
       this.width = frame.samplesPerLine;
@@ -20047,53 +20062,163 @@ var JpegImage = (function jpegImage() {
       this.jfif = jfif;
       this.adobe = adobe;
       this.components = [];
-      for (var i = 0; i < frame.componentsOrder.length; i++) {
-        var component = frame.components[frame.componentsOrder[i]];
+      switch (frame.components.length)
+      {
+        case 1:
+          this.colorspace = ColorSpace.Grayscale;
+          break;
+        case 3:
+          if (this.adobe)
+            this.colorspace = ColorSpace.AdobeRGB;
+          else
+            this.colorspace = ColorSpace.RGB;
+          break;
+        case 4:
+          this.colorspace = ColorSpace.CYMK;
+          break;
+        default:
+          this.colorspace = ColorSpace.Unknown;
+      }
+      for (var i = 0; i < frame.components.length; i++) {
+        var component = frame.components[i];
+        if (!component.quantizationTable && component.quantizationTableId !== null)
+          component.quantizationTable = quantizationTables[component.quantizationTableId];
         this.components.push({
-          lines: buildComponentData(frame, component),
+          output: buildComponentData(frame, component),
           scaleX: component.h / frame.maxH,
-          scaleY: component.v / frame.maxV
+          scaleY: component.v / frame.maxV,
+          blocksPerLine: component.blocksPerLine,
+          blocksPerColumn: component.blocksPerColumn,
+          bitConversion: component.bitConversion
         });
       }
+    },
+    getData16: function getData16(width, height) {
+      if (this.components.length !== 1)
+        throw 'Unsupported color mode';
+      var scaleX = this.width / width, scaleY = this.height / height;
+
+      var component, componentScaleX, componentScaleY;
+      var x, y, i;
+      var offset = 0;
+      var numComponents = this.components.length;
+      var dataLength = width * height * numComponents;
+      var data = new Uint16Array(dataLength);
+      var componentLine;
+
+      // lineData is reused for all components. Assume first component is
+      // the biggest
+      var lineData = new Uint16Array((this.components[0].blocksPerLine << 3) *
+      this.components[0].blocksPerColumn * 8);
+
+      // First construct image data ...
+      for (i = 0; i < numComponents; i++) {
+        component = this.components[i];
+        var blocksPerLine = component.blocksPerLine;
+        var blocksPerColumn = component.blocksPerColumn;
+        var samplesPerLine = blocksPerLine << 3;
+
+        var j, k, ll = 0;
+        var lineOffset = 0;
+        for (var blockRow = 0; blockRow < blocksPerColumn; blockRow++) {
+          var scanLine = blockRow << 3;
+          for (var blockCol = 0; blockCol < blocksPerLine; blockCol++) {
+            var bufferOffset = getBlockBufferOffset(component, blockRow, blockCol);
+            var offset = 0, sample = blockCol << 3;
+            for (j = 0; j < 8; j++) {
+              var lineOffset = (scanLine + j) * samplesPerLine;
+              for (k = 0; k < 8; k++) {
+                lineData[lineOffset + sample + k] =
+                  component.output[bufferOffset + offset++];
+              }
+            }
+          }
+        }
+
+        componentScaleX = component.scaleX * scaleX;
+        componentScaleY = component.scaleY * scaleY;
+        offset = i;
+
+        var cx, cy;
+        var index;
+        for (y = 0; y < height; y++) {
+          for (x = 0; x < width; x++) {
+            cy = 0 | (y * componentScaleY);
+            cx = 0 | (x * componentScaleX);
+            index = cy * samplesPerLine + cx;
+            data[offset] = lineData[index];
+            offset += numComponents;
+          }
+        }
+      }
+      return data;
     },
     getData: function getData(width, height) {
       var scaleX = this.width / width, scaleY = this.height / height;
 
-      var component1, component2, component3, component4;
-      var component1Line, component2Line, component3Line, component4Line;
-      var x, y;
+      var component, componentScaleX, componentScaleY;
+      var x, y, i;
       var offset = 0;
       var Y, Cb, Cr, K, C, M, Ye, R, G, B;
       var colorTransform;
-      var dataLength = width * height * this.components.length;
+      var numComponents = this.components.length;
+      var dataLength = width * height * numComponents;
       var data = new Uint8Array(dataLength);
-      switch (this.components.length) {
-        case 1:
-          component1 = this.components[0];
-          for (y = 0; y < height; y++) {
-            component1Line = component1.lines[0 | (y * component1.scaleY * scaleY)];
-            for (x = 0; x < width; x++) {
-              Y = component1Line[0 | (x * component1.scaleX * scaleX)];
+      var componentLine;
 
-              data[offset++] = Y;
+      // lineData is reused for all components. Assume first component is
+      // the biggest
+      var lineData = new Uint8Array((this.components[0].blocksPerLine << 3) *
+      this.components[0].blocksPerColumn * 8);
+
+      // First construct image data ...
+      for (i = 0; i < numComponents; i++) {
+        component = this.components[i];
+        var blocksPerLine = component.blocksPerLine;
+        var blocksPerColumn = component.blocksPerColumn;
+        var samplesPerLine = blocksPerLine << 3;
+
+        var j, k, ll = 0;
+        var lineOffset = 0;
+        for (var blockRow = 0; blockRow < blocksPerColumn; blockRow++) {
+          var scanLine = blockRow << 3;
+          for (var blockCol = 0; blockCol < blocksPerLine; blockCol++) {
+            var bufferOffset = getBlockBufferOffset(component, blockRow, blockCol);
+            var offset = 0, sample = blockCol << 3;
+            for (j = 0; j < 8; j++) {
+              var lineOffset = (scanLine + j) * samplesPerLine;
+              for (k = 0; k < 8; k++) {
+                lineData[lineOffset + sample + k] =
+                  component.output[bufferOffset + offset++] * component.bitConversion;
+              }
             }
           }
-          break;
+        }
+
+        componentScaleX = component.scaleX * scaleX;
+        componentScaleY = component.scaleY * scaleY;
+        offset = i;
+
+        var cx, cy;
+        var index;
+        for (y = 0; y < height; y++) {
+          for (x = 0; x < width; x++) {
+            cy = 0 | (y * componentScaleY);
+            cx = 0 | (x * componentScaleX);
+            index = cy * samplesPerLine + cx;
+            data[offset] = lineData[index];
+            offset += numComponents;
+          }
+        }
+      }
+
+      // ... then transform colors, if necessary
+      switch (numComponents) {
+        case 1:
         case 2:
-          // PDF might compress two component data in custom colorspace
-          component1 = this.components[0];
-          component2 = this.components[1];
-          for (y = 0; y < height; y++) {
-            component1Line = component1.lines[0 | (y * component1.scaleY * scaleY)];
-            component2Line = component2.lines[0 | (y * component2.scaleY * scaleY)];
-            for (x = 0; x < width; x++) {
-              Y = component1Line[0 | (x * component1.scaleX * scaleX)];
-              data[offset++] = Y;
-              Y = component2Line[0 | (x * component2.scaleX * scaleX)];
-              data[offset++] = Y;
-            }
-          }
           break;
+        // no color conversion for one or two compoenents
+
         case 3:
           // The default transform for three components is true
           colorTransform = true;
@@ -20103,37 +20228,25 @@ var JpegImage = (function jpegImage() {
           else if (typeof this.colorTransform !== 'undefined')
             colorTransform = !!this.colorTransform;
 
-          component1 = this.components[0];
-          component2 = this.components[1];
-          component3 = this.components[2];
-          for (y = 0; y < height; y++) {
-            component1Line = component1.lines[0 | (y * component1.scaleY * scaleY)];
-            component2Line = component2.lines[0 | (y * component2.scaleY * scaleY)];
-            component3Line = component3.lines[0 | (y * component3.scaleY * scaleY)];
-            for (x = 0; x < width; x++) {
-              if (!colorTransform) {
-                R = component1Line[0 | (x * component1.scaleX * scaleX)];
-                G = component2Line[0 | (x * component2.scaleX * scaleX)];
-                B = component3Line[0 | (x * component3.scaleX * scaleX)];
-              } else {
-                Y = component1Line[0 | (x * component1.scaleX * scaleX)];
-                Cb = component2Line[0 | (x * component2.scaleX * scaleX)];
-                Cr = component3Line[0 | (x * component3.scaleX * scaleX)];
+          if (colorTransform) {
+            for (i = 0; i < dataLength; i += numComponents) {
+              Y = data[i    ];
+              Cb = data[i + 1];
+              Cr = data[i + 2];
 
-                R = clampTo8bit(Y + 1.402 * (Cr - 128));
-                G = clampTo8bit(Y - 0.3441363 * (Cb - 128) - 0.71413636 * (Cr - 128));
-                B = clampTo8bit(Y + 1.772 * (Cb - 128));
-              }
+              R = clampToUint8(Y - 179.456 + 1.402 * Cr);
+              G = clampToUint8(Y + 135.459 - 0.344 * Cb - 0.714 * Cr);
+              B = clampToUint8(Y - 226.816 + 1.772 * Cb);
 
-              data[offset++] = R;
-              data[offset++] = G;
-              data[offset++] = B;
+              data[i    ] = R;
+              data[i + 1] = G;
+              data[i + 2] = B;
             }
           }
           break;
         case 4:
           if (!this.adobe)
-            throw new Error('Unsupported color mode (4 components)');
+            throw 'Unsupported color mode (4 components)';
           // The default transform for four components is false
           colorTransform = false;
           // The adobe transform marker overrides any previous setting
@@ -20142,148 +20255,4256 @@ var JpegImage = (function jpegImage() {
           else if (typeof this.colorTransform !== 'undefined')
             colorTransform = !!this.colorTransform;
 
-          component1 = this.components[0];
-          component2 = this.components[1];
-          component3 = this.components[2];
-          component4 = this.components[3];
-          for (y = 0; y < height; y++) {
-            component1Line = component1.lines[0 | (y * component1.scaleY * scaleY)];
-            component2Line = component2.lines[0 | (y * component2.scaleY * scaleY)];
-            component3Line = component3.lines[0 | (y * component3.scaleY * scaleY)];
-            component4Line = component4.lines[0 | (y * component4.scaleY * scaleY)];
-            for (x = 0; x < width; x++) {
-              if (!colorTransform) {
-                C = component1Line[0 | (x * component1.scaleX * scaleX)];
-                M = component2Line[0 | (x * component2.scaleX * scaleX)];
-                Ye = component3Line[0 | (x * component3.scaleX * scaleX)];
-                K = component4Line[0 | (x * component4.scaleX * scaleX)];
-              } else {
-                Y = component1Line[0 | (x * component1.scaleX * scaleX)];
-                Cb = component2Line[0 | (x * component2.scaleX * scaleX)];
-                Cr = component3Line[0 | (x * component3.scaleX * scaleX)];
-                K = component4Line[0 | (x * component4.scaleX * scaleX)];
+          if (colorTransform) {
+            for (i = 0; i < dataLength; i += numComponents) {
+              Y = data[i];
+              Cb = data[i + 1];
+              Cr = data[i + 2];
 
-                C = 255 - clampTo8bit(Y + 1.402 * (Cr - 128));
-                M = 255 - clampTo8bit(Y - 0.3441363 * (Cb - 128) - 0.71413636 * (Cr - 128));
-                Ye = 255 - clampTo8bit(Y + 1.772 * (Cb - 128));
-              }
-              data[offset++] = 255-C;
-              data[offset++] = 255-M;
-              data[offset++] = 255-Ye;
-              data[offset++] = 255-K;
+              C = clampToUint8(434.456 - Y - 1.402 * Cr);
+              M = clampToUint8(119.541 - Y + 0.344 * Cb + 0.714 * Cr);
+              Y = clampToUint8(481.816 - Y - 1.772 * Cb);
+
+              data[i    ] = C;
+              data[i + 1] = M;
+              data[i + 2] = Y;
+              // K is unchanged
             }
           }
           break;
         default:
-          throw new Error('Unsupported color mode');
+          throw 'Unsupported color mode';
       }
       return data;
-    },
-    copyToImageData: function copyToImageData(imageData) {
-      var width = imageData.width, height = imageData.height;
-      var imageDataArray = imageData.data;
-      var data = this.getData(width, height);
-      var i = 0, j = 0, x, y;
-      var Y, K, C, M, R, G, B;
-      switch (this.components.length) {
-        case 1:
-          for (y = 0; y < height; y++) {
-            for (x = 0; x < width; x++) {
-              Y = data[i++];
-
-              imageDataArray[j++] = Y;
-              imageDataArray[j++] = Y;
-              imageDataArray[j++] = Y;
-              imageDataArray[j++] = 255;
-            }
-          }
-          break;
-        case 3:
-          for (y = 0; y < height; y++) {
-            for (x = 0; x < width; x++) {
-              R = data[i++];
-              G = data[i++];
-              B = data[i++];
-
-              imageDataArray[j++] = R;
-              imageDataArray[j++] = G;
-              imageDataArray[j++] = B;
-              imageDataArray[j++] = 255;
-            }
-          }
-          break;
-        case 4:
-          for (y = 0; y < height; y++) {
-            for (x = 0; x < width; x++) {
-              C = data[i++];
-              M = data[i++];
-              Y = data[i++];
-              K = data[i++];
-
-              R = 255 - clampTo8bit(C * (1 - K / 255) + K);
-              G = 255 - clampTo8bit(M * (1 - K / 255) + K);
-              B = 255 - clampTo8bit(Y * (1 - K / 255) + K);
-
-              imageDataArray[j++] = R;
-              imageDataArray[j++] = G;
-              imageDataArray[j++] = B;
-              imageDataArray[j++] = 255;
-            }
-          }
-          break;
-        default:
-          throw new Error('Unsupported color mode');
-      }
     }
   };
 
   return constructor;
 })();
-module.exports = decode;
 
-function decode(jpegData, opts) {
-  var defaultOpts = {
-    useTArray: false,
-    colorTransform: true
-  };
-  if (opts) {
-    if (typeof opts === 'object') {
-      opts = {
-        useTArray: (typeof opts.useTArray === 'undefined' ?
-                    defaultOpts.useTArray : opts.useTArray),
-        colorTransform: (typeof opts.colorTransform === 'undefined' ?
-                         defaultOpts.colorTransform : opts.colorTransform)
-      };
+define("lib/jpeg/jpeg", function(){});
+
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('jpegLossless/release/current/lossless',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.jpeg = f()}})(function(){var define,module,exports;return (function(){function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s}return e})()({1:[function(require,module,exports){
+/*
+ * Copyright (C) 2015 Michael Martinez
+ * Changes: Added support for selection values 2-7, fixed minor bugs &
+ * warnings, split into multiple class files, and general clean up.
+ *
+ * 08-25-2015: Helmut Dersch agreed to a license change from LGPL to MIT.
+ */
+
+/*
+ * Copyright (C) Helmut Dersch
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+/*jslint browser: true, node: true */
+/*global require, module */
+
+
+
+/*** Imports ***/
+var jpeg = jpeg || {};
+jpeg.lossless = jpeg.lossless || {};
+
+
+/*** Constructor ***/
+jpeg.lossless.ComponentSpec = jpeg.lossless.ComponentSpec || function () {
+    this.hSamp = 0; // Horizontal sampling factor
+    this.quantTableSel = 0; // Quantization table destination selector
+    this.vSamp = 0; // Vertical
+};
+
+
+/*** Exports ***/
+
+var moduleType = typeof module;
+if ((moduleType !== 'undefined') && module.exports) {
+    module.exports = jpeg.lossless.ComponentSpec;
+}
+
+},{}],2:[function(require,module,exports){
+/*
+ * Copyright (C) 2015 Michael Martinez
+ * Changes: Added support for selection values 2-7, fixed minor bugs &
+ * warnings, split into multiple class files, and general clean up.
+ *
+ * 08-25-2015: Helmut Dersch agreed to a license change from LGPL to MIT.
+ */
+
+/*
+ * Copyright (C) Helmut Dersch
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+/*jslint browser: true, node: true */
+/*global require, module */
+
+
+
+/*** Imports ***/
+var jpeg = jpeg || {};
+jpeg.lossless = jpeg.lossless || {};
+
+
+/*** Constructor ***/
+jpeg.lossless.DataStream = jpeg.lossless.DataStream || function (data, offset, length) {
+    if (offset === undefined && length === undefined) { // Old api
+        this.buffer = new Uint8Array(data);
     } else {
-      // backwards compatiblity, before 0.3.5, we only had the useTArray param
-      opts = defaultOpts;
-      opts.useTArray = true;
+        this.buffer = new Uint8Array(data, offset, length);
     }
-  } else {
-    opts = defaultOpts;
+    this.index = 0;
+};
+
+
+
+jpeg.lossless.DataStream.prototype.get16 = function () {
+    // var value = this.buffer.getUint16(this.index, false);
+    var value = (this.buffer[this.index] << 8) + this.buffer[this.index + 1]; // DataView is big-endian by default
+    this.index += 2;
+    return value;
+};
+
+
+
+jpeg.lossless.DataStream.prototype.get8 = function () {
+    // var value = this.buffer.getUint8(this.index);
+    var value = this.buffer[this.index];
+    this.index += 1;
+    return value;
+};
+
+
+/*** Exports ***/
+
+var moduleType = typeof module;
+if ((moduleType !== 'undefined') && module.exports) {
+    module.exports = jpeg.lossless.DataStream;
+}
+
+},{}],3:[function(require,module,exports){
+/*
+ * Copyright (C) 2015 Michael Martinez
+ * Changes: Added support for selection values 2-7, fixed minor bugs &
+ * warnings, split into multiple class files, and general clean up.
+ *
+ * 08-25-2015: Helmut Dersch agreed to a license change from LGPL to MIT.
+ */
+
+/*
+ * Copyright (C) Helmut Dersch
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+/*jslint browser: true, node: true */
+/*global require, module */
+
+
+
+/*** Imports ***/
+var jpeg = jpeg || {};
+jpeg.lossless = jpeg.lossless || {};
+jpeg.lossless.DataStream = jpeg.lossless.DataStream || ((typeof require !== 'undefined') ? require('./data-stream.js') : null);
+jpeg.lossless.HuffmanTable = jpeg.lossless.HuffmanTable || ((typeof require !== 'undefined') ? require('./huffman-table.js') : null);
+jpeg.lossless.QuantizationTable = jpeg.lossless.QuantizationTable || ((typeof require !== 'undefined') ? require('./quantization-table.js') : null);
+jpeg.lossless.ScanHeader = jpeg.lossless.ScanHeader || ((typeof require !== 'undefined') ? require('./scan-header.js') : null);
+jpeg.lossless.FrameHeader = jpeg.lossless.FrameHeader || ((typeof require !== 'undefined') ? require('./frame-header.js') : null);
+jpeg.lossless.Utils = jpeg.lossless.Utils || ((typeof require !== 'undefined') ? require('./utils.js') : null);
+
+
+/*** Constructor ***/
+
+/**
+ * The Decoder constructor.
+ * @property {number} xDim - size of x dimension
+ * @property {number} yDim - size of y dimension
+ * @property {number} numComp - number of components
+ * @property {number} numBytes - number of bytes per component
+ * @type {Function}
+ */
+jpeg.lossless.Decoder = jpeg.lossless.Decoder || function (buffer, numBytes) {
+    this.buffer = buffer;
+    this.frame = new jpeg.lossless.FrameHeader();
+    this.huffTable = new jpeg.lossless.HuffmanTable();
+    this.quantTable = new jpeg.lossless.QuantizationTable();
+    this.scan = new jpeg.lossless.ScanHeader();
+    this.DU = jpeg.lossless.Utils.createArray(10, 4, 64); // at most 10 data units in a MCU, at most 4 data units in one component
+    this.HuffTab = jpeg.lossless.Utils.createArray(4, 2, 50 * 256);
+    this.IDCT_Source = [];
+    this.nBlock = []; // number of blocks in the i-th Comp in a scan
+    this.acTab = jpeg.lossless.Utils.createArray(10, 1); // ac HuffTab for the i-th Comp in a scan
+    this.dcTab = jpeg.lossless.Utils.createArray(10, 1); // dc HuffTab for the i-th Comp in a scan
+    this.qTab = jpeg.lossless.Utils.createArray(10, 1); // quantization table for the i-th Comp in a scan
+    this.marker = 0;
+    this.markerIndex = 0;
+    this.numComp = 0;
+    this.restartInterval = 0;
+    this.selection = 0;
+    this.xDim = 0;
+    this.yDim = 0;
+    this.xLoc = 0;
+    this.yLoc = 0;
+    this.numBytes = 0;
+    this.outputData = null;
+    this.restarting = false;
+    this.mask = 0;
+
+    if (typeof numBytes !== "undefined") {
+        this.numBytes = numBytes;
+    }
+};
+
+
+/*** Static Pseudo-constants ***/
+
+jpeg.lossless.Decoder.IDCT_P = [0, 5, 40, 16, 45, 2, 7, 42, 21, 56, 8, 61, 18, 47, 1, 4, 41, 23, 58, 13, 32, 24, 37, 10, 63, 17, 44, 3, 6, 43, 20,
+    57, 15, 34, 29, 48, 53, 26, 39, 9, 60, 19, 46, 22, 59, 12, 33, 31, 50, 55, 25, 36, 11, 62, 14, 35, 28, 49, 52, 27, 38, 30, 51, 54];
+jpeg.lossless.Decoder.TABLE = [0, 1, 5, 6, 14, 15, 27, 28, 2, 4, 7, 13, 16, 26, 29, 42, 3, 8, 12, 17, 25, 30, 41, 43, 9, 11, 18, 24, 31, 40, 44, 53,
+    10, 19, 23, 32, 39, 45, 52, 54, 20, 22, 33, 38, 46, 51, 55, 60, 21, 34, 37, 47, 50, 56, 59, 61, 35, 36, 48, 49, 57, 58, 62, 63];
+jpeg.lossless.Decoder.MAX_HUFFMAN_SUBTREE = 50;
+jpeg.lossless.Decoder.MSB = 0x80000000;
+jpeg.lossless.Decoder.RESTART_MARKER_BEGIN = 0xFFD0;
+jpeg.lossless.Decoder.RESTART_MARKER_END = 0xFFD7;
+
+/*** Prototype Methods ***/
+
+/**
+ * Returns decompressed data.
+ * @param {ArrayBuffer} buffer
+ * @param {number} [offset]
+ * @param {number} [length]
+ * @returns {ArrayBufer}
+ */
+jpeg.lossless.Decoder.prototype.decompress = function (buffer, offset, length) {
+    return this.decode(buffer, offset, length).buffer;
+};
+
+
+
+jpeg.lossless.Decoder.prototype.decode = function (buffer, offset, length, numBytes) {
+    /*jslint bitwise: true */
+
+    var current, scanNum = 0, pred = [], i, compN, temp = [], index = [], mcuNum;
+
+    if (typeof buffer !== "undefined") {
+        this.buffer = buffer;
+    }
+
+    if (typeof numBytes !== "undefined") {
+        this.numBytes = numBytes;
+    }
+
+    this.stream = new jpeg.lossless.DataStream(this.buffer, offset, length);
+    this.buffer = null;
+
+    this.xLoc = 0;
+    this.yLoc = 0;
+    current = this.stream.get16();
+
+    if (current !== 0xFFD8) { // SOI
+        throw new Error("Not a JPEG file");
+    }
+
+    current = this.stream.get16();
+
+    while ((((current >> 4) !== 0x0FFC) || (current === 0xFFC4))) { // SOF 0~15
+        switch (current) {
+            case 0xFFC4: // DHT
+                this.huffTable.read(this.stream, this.HuffTab);
+                break;
+            case 0xFFCC: // DAC
+                throw new Error("Program doesn't support arithmetic coding. (format throw new IOException)");
+            case 0xFFDB:
+                this.quantTable.read(this.stream, jpeg.lossless.Decoder.TABLE);
+                break;
+            case 0xFFDD:
+                this.restartInterval = this.readNumber();
+                break;
+            case 0xFFE0:
+            case 0xFFE1:
+            case 0xFFE2:
+            case 0xFFE3:
+            case 0xFFE4:
+            case 0xFFE5:
+            case 0xFFE6:
+            case 0xFFE7:
+            case 0xFFE8:
+            case 0xFFE9:
+            case 0xFFEA:
+            case 0xFFEB:
+            case 0xFFEC:
+            case 0xFFED:
+            case 0xFFEE:
+            case 0xFFEF:
+                this.readApp();
+                break;
+            case 0xFFFE:
+                this.readComment();
+                break;
+            default:
+                if ((current >> 8) !== 0xFF) {
+                    throw new Error("ERROR: format throw new IOException! (decode)");
+                }
+        }
+
+        current = this.stream.get16();
+    }
+
+    if ((current < 0xFFC0) || (current > 0xFFC7)) {
+        throw new Error("ERROR: could not handle arithmetic code!");
+    }
+
+    this.frame.read(this.stream);
+    current = this.stream.get16();
+
+    do {
+        while (current !== 0x0FFDA) { // SOS
+            switch (current) {
+                case 0xFFC4: // DHT
+                    this.huffTable.read(this.stream, this.HuffTab);
+                    break;
+                case 0xFFCC: // DAC
+                    throw new Error("Program doesn't support arithmetic coding. (format throw new IOException)");
+                case 0xFFDB:
+                    this.quantTable.read(this.stream, jpeg.lossless.Decoder.TABLE);
+                    break;
+                case 0xFFDD:
+                    this.restartInterval = this.readNumber();
+                    break;
+                case 0xFFE0:
+                case 0xFFE1:
+                case 0xFFE2:
+                case 0xFFE3:
+                case 0xFFE4:
+                case 0xFFE5:
+                case 0xFFE6:
+                case 0xFFE7:
+                case 0xFFE8:
+                case 0xFFE9:
+                case 0xFFEA:
+                case 0xFFEB:
+                case 0xFFEC:
+                case 0xFFED:
+                case 0xFFEE:
+                case 0xFFEF:
+                    this.readApp();
+                    break;
+                case 0xFFFE:
+                    this.readComment();
+                    break;
+                default:
+                    if ((current >> 8) !== 0xFF) {
+                        throw new Error("ERROR: format throw new IOException! (Parser.decode)");
+                    }
+            }
+
+            current = this.stream.get16();
+        }
+
+        this.precision = this.frame.precision;
+        this.components = this.frame.components;
+
+        if (!this.numBytes) {
+            this.numBytes = parseInt(Math.ceil(this.precision / 8));
+        }
+
+        if (this.numBytes == 1) {
+            this.mask = 0xFF;
+        } else {
+            this.mask = 0xFFFF;
+        }
+
+        this.scan.read(this.stream);
+        this.numComp = this.scan.numComp;
+        this.selection = this.scan.selection;
+
+        if (this.numBytes === 1) {
+            if (this.numComp === 3) {
+                this.getter = this.getValueRGB;
+                this.setter = this.setValueRGB;
+                this.output = this.outputRGB;
+            } else {
+                this.getter = this.getValue8;
+                this.setter = this.setValue8;
+                this.output = this.outputSingle;
+            }
+        } else {
+            this.getter = this.getValue16;
+            this.setter = this.setValue16;
+            this.output = this.outputSingle;
+        }
+
+        switch (this.selection) {
+            case 2:
+                this.selector = this.select2;
+                break;
+            case 3:
+                this.selector = this.select3;
+                break;
+            case 4:
+                this.selector = this.select4;
+                break;
+            case 5:
+                this.selector = this.select5;
+                break;
+            case 6:
+                this.selector = this.select6;
+                break;
+            case 7:
+                this.selector = this.select7;
+                break;
+            default:
+                this.selector = this.select1;
+                break;
+        }
+
+        this.scanComps = this.scan.components;
+        this.quantTables = this.quantTable.quantTables;
+
+        for (i = 0; i < this.numComp; i+=1) {
+            compN = this.scanComps[i].scanCompSel;
+            this.qTab[i] = this.quantTables[this.components[compN].quantTableSel];
+            this.nBlock[i] = this.components[compN].vSamp * this.components[compN].hSamp;
+            this.dcTab[i] = this.HuffTab[this.scanComps[i].dcTabSel][0];
+            this.acTab[i] = this.HuffTab[this.scanComps[i].acTabSel][1];
+        }
+
+        this.xDim = this.frame.dimX;
+        this.yDim = this.frame.dimY;
+        if (this.numBytes == 1) {
+            this.outputData = new Uint8Array(new ArrayBuffer(this.xDim * this.yDim * this.numBytes * this.numComp));
+        } else {
+            this.outputData = new Uint16Array(new ArrayBuffer(this.xDim * this.yDim * this.numBytes * this.numComp));
+        }
+
+        scanNum+=1;
+
+        while (true) { // Decode one scan
+            temp[0] = 0;
+            index[0] = 0;
+
+            for (i = 0; i < 10; i+=1) {
+                pred[i] = (1 << (this.precision - 1));
+            }
+
+            if (this.restartInterval === 0) {
+                current = this.decodeUnit(pred, temp, index);
+
+                while ((current === 0) && ((this.xLoc < this.xDim) && (this.yLoc < this.yDim))) {
+                    this.output(pred);
+                    current = this.decodeUnit(pred, temp, index);
+                }
+
+                break; //current=MARKER
+            }
+
+            for (mcuNum = 0; mcuNum < this.restartInterval; mcuNum+=1) {
+                this.restarting = (mcuNum == 0);
+                current = this.decodeUnit(pred, temp, index);
+                this.output(pred);
+
+                if (current !== 0) {
+                    break;
+                }
+            }
+
+            if (current === 0) {
+                if (this.markerIndex !== 0) {
+                    current = (0xFF00 | this.marker);
+                    this.markerIndex = 0;
+                } else {
+                    current = this.stream.get16();
+                }
+            }
+
+            if (!((current >= jpeg.lossless.Decoder.RESTART_MARKER_BEGIN) &&
+                (current <= jpeg.lossless.Decoder.RESTART_MARKER_END))) {
+                break; //current=MARKER
+            }
+        }
+
+        if ((current === 0xFFDC) && (scanNum === 1)) { //DNL
+            this.readNumber();
+            current = this.stream.get16();
+        }
+    } while ((current !== 0xFFD9) && ((this.xLoc < this.xDim) && (this.yLoc < this.yDim)) && (scanNum === 0));
+
+    return this.outputData;
+};
+
+
+
+jpeg.lossless.Decoder.prototype.decodeUnit = function (prev, temp, index) {
+    if (this.numComp == 1) {
+        return this.decodeSingle(prev, temp, index);
+    } else if (this.numComp == 3) {
+        return this.decodeRGB(prev, temp, index);
+    } else {
+        return -1;
+    }
+};
+
+
+
+jpeg.lossless.Decoder.prototype.select1 = function (compOffset) {
+    return this.getPreviousX(compOffset);
+};
+
+
+
+jpeg.lossless.Decoder.prototype.select2 = function (compOffset) {
+    return this.getPreviousY(compOffset);
+};
+
+
+
+jpeg.lossless.Decoder.prototype.select3 = function (compOffset) {
+    return this.getPreviousXY(compOffset);
+};
+
+
+
+jpeg.lossless.Decoder.prototype.select4 = function (compOffset) {
+    return (this.getPreviousX(compOffset) + this.getPreviousY(compOffset)) - this.getPreviousXY(compOffset);
+};
+
+
+
+jpeg.lossless.Decoder.prototype.select5 = function (compOffset) {
+    return this.getPreviousX(compOffset) + ((this.getPreviousY(compOffset) - this.getPreviousXY(compOffset)) >> 1);
+};
+
+
+
+jpeg.lossless.Decoder.prototype.select6 = function (compOffset) {
+    return this.getPreviousY(compOffset) + ((this.getPreviousX(compOffset) - this.getPreviousXY(compOffset)) >> 1);
+};
+
+
+
+jpeg.lossless.Decoder.prototype.select7 = function (compOffset) {
+    return ((this.getPreviousX(compOffset) + this.getPreviousY(compOffset)) / 2);
+};
+
+
+
+jpeg.lossless.Decoder.prototype.decodeRGB = function (prev, temp, index) {
+    /*jslint bitwise: true */
+
+    var value, actab, dctab, qtab, ctrC, i, k, j;
+
+    prev[0] = this.selector(0);
+    prev[1] = this.selector(1);
+    prev[2] = this.selector(2);
+
+    for (ctrC = 0; ctrC < this.numComp; ctrC+=1) {
+        qtab = this.qTab[ctrC];
+        actab = this.acTab[ctrC];
+        dctab = this.dcTab[ctrC];
+        for (i = 0; i < this.nBlock[ctrC]; i+=1) {
+            for (k = 0; k < this.IDCT_Source.length; k+=1) {
+                this.IDCT_Source[k] = 0;
+            }
+
+            value = this.getHuffmanValue(dctab, temp, index);
+
+            if (value >= 0xFF00) {
+                return value;
+            }
+
+            prev[ctrC] = this.IDCT_Source[0] = prev[ctrC] + this.getn(index, value, temp, index);
+            this.IDCT_Source[0] *= qtab[0];
+
+            for (j = 1; j < 64; j+=1) {
+                value = this.getHuffmanValue(actab, temp, index);
+
+                if (value >= 0xFF00) {
+                    return value;
+                }
+
+                j += (value >> 4);
+
+                if ((value & 0x0F) === 0) {
+                    if ((value >> 4) === 0) {
+                        break;
+                    }
+                } else {
+                    this.IDCT_Source[jpeg.lossless.Decoder.IDCT_P[j]] = this.getn(index, value & 0x0F, temp, index) * qtab[j];
+                }
+            }
+        }
+    }
+
+    return 0;
+};
+
+
+
+jpeg.lossless.Decoder.prototype.decodeSingle = function (prev, temp, index) {
+    /*jslint bitwise: true */
+
+    var value, i, n, nRestart;
+
+    if (this.restarting) {
+        this.restarting = false;
+        prev[0] = (1 << (this.frame.precision - 1));
+    } else {
+        prev[0] = this.selector();
+    }
+
+    for (i = 0; i < this.nBlock[0]; i+=1) {
+        value = this.getHuffmanValue(this.dcTab[0], temp, index);
+        if (value >= 0xFF00) {
+            return value;
+        }
+
+        n = this.getn(prev, value, temp, index);
+        nRestart = (n >> 8);
+
+        if ((nRestart >= jpeg.lossless.Decoder.RESTART_MARKER_BEGIN) && (nRestart <= jpeg.lossless.Decoder.RESTART_MARKER_END)) {
+            return nRestart;
+        }
+
+        prev[0] += n;
+    }
+
+    return 0;
+};
+
+
+
+//	Huffman table for fast search: (HuffTab) 8-bit Look up table 2-layer search architecture, 1st-layer represent 256 node (8 bits) if codeword-length > 8
+//	bits, then the entry of 1st-layer = (# of 2nd-layer table) | MSB and it is stored in the 2nd-layer Size of tables in each layer are 256.
+//	HuffTab[*][*][0-256] is always the only 1st-layer table.
+//
+//	An entry can be: (1) (# of 2nd-layer table) | MSB , for code length > 8 in 1st-layer (2) (Code length) << 8 | HuffVal
+//
+//	HuffmanValue(table   HuffTab[x][y] (ex) HuffmanValue(HuffTab[1][0],...)
+//	                ):
+//	    return: Huffman Value of table
+//	            0xFF?? if it receives a MARKER
+//	    Parameter:  table   HuffTab[x][y] (ex) HuffmanValue(HuffTab[1][0],...)
+//	                temp    temp storage for remainded bits
+//	                index   index to bit of temp
+//	                in      FILE pointer
+//	    Effect:
+//	        temp  store new remainded bits
+//	        index change to new index
+//	        in    change to new position
+//	    NOTE:
+//	      Initial by   temp=0; index=0;
+//	    NOTE: (explain temp and index)
+//	      temp: is always in the form at calling time or returning time
+//	       |  byte 4  |  byte 3  |  byte 2  |  byte 1  |
+//	       |     0    |     0    | 00000000 | 00000??? |  if not a MARKER
+//	                                               ^index=3 (from 0 to 15)
+//	                                               321
+//	    NOTE (marker and marker_index):
+//	      If get a MARKER from 'in', marker=the low-byte of the MARKER
+//	        and marker_index=9
+//	      If marker_index=9 then index is always > 8, or HuffmanValue()
+//	        will not be called
+jpeg.lossless.Decoder.prototype.getHuffmanValue = function (table, temp, index) {
+    /*jslint bitwise: true */
+
+    var code, input, mask;
+    mask = 0xFFFF;
+
+    if (index[0] < 8) {
+        temp[0] <<= 8;
+        input = this.stream.get8();
+        if (input === 0xFF) {
+            this.marker = this.stream.get8();
+            if (this.marker !== 0) {
+                this.markerIndex = 9;
+            }
+        }
+        temp[0] |= input;
+    } else {
+        index[0] -= 8;
+    }
+
+    code = table[temp[0] >> index[0]];
+
+    if ((code & jpeg.lossless.Decoder.MSB) !== 0) {
+        if (this.markerIndex !== 0) {
+            this.markerIndex = 0;
+            return 0xFF00 | this.marker;
+        }
+
+        temp[0] &= (mask >> (16 - index[0]));
+        temp[0] <<= 8;
+        input = this.stream.get8();
+
+        if (input === 0xFF) {
+            this.marker = this.stream.get8();
+            if (this.marker !== 0) {
+                this.markerIndex = 9;
+            }
+        }
+
+        temp[0] |= input;
+        code = table[((code & 0xFF) * 256) + (temp[0] >> index[0])];
+        index[0] += 8;
+    }
+
+    index[0] += 8 - (code >> 8);
+
+    if (index[0] < 0) {
+        throw new Error("index=" + index[0] + " temp=" + temp[0] + " code=" + code + " in HuffmanValue()");
+    }
+
+    if (index[0] < this.markerIndex) {
+        this.markerIndex = 0;
+        return 0xFF00 | this.marker;
+    }
+
+    temp[0] &= (mask >> (16 - index[0]));
+    return code & 0xFF;
+};
+
+
+
+jpeg.lossless.Decoder.prototype.getn = function (PRED, n, temp, index) {
+    /*jslint bitwise: true */
+
+    var result, one, n_one, mask, input;
+    one = 1;
+    n_one = -1;
+    mask = 0xFFFF;
+
+    if (n === 0) {
+        return 0;
+    }
+
+    if (n === 16) {
+        if (PRED[0] >= 0) {
+            return -32768;
+        } else {
+            return 32768;
+        }
+    }
+
+    index[0] -= n;
+
+    if (index[0] >= 0) {
+        if ((index[0] < this.markerIndex) && !this.isLastPixel()) { // this was corrupting the last pixel in some cases
+            this.markerIndex = 0;
+            return (0xFF00 | this.marker) << 8;
+        }
+
+        result = temp[0] >> index[0];
+        temp[0] &= (mask >> (16 - index[0]));
+    } else {
+        temp[0] <<= 8;
+        input = this.stream.get8();
+
+        if (input === 0xFF) {
+            this.marker = this.stream.get8();
+            if (this.marker !== 0) {
+                this.markerIndex = 9;
+            }
+        }
+
+        temp[0] |= input;
+        index[0] += 8;
+
+        if (index[0] < 0) {
+            if (this.markerIndex !== 0) {
+                this.markerIndex = 0;
+                return (0xFF00 | this.marker) << 8;
+            }
+
+            temp[0] <<= 8;
+            input = this.stream.get8();
+
+            if (input === 0xFF) {
+                this.marker = this.stream.get8();
+                if (this.marker !== 0) {
+                    this.markerIndex = 9;
+                }
+            }
+
+            temp[0] |= input;
+            index[0] += 8;
+        }
+
+        if (index[0] < 0) {
+            throw new Error("index=" + index[0] + " in getn()");
+        }
+
+        if (index[0] < this.markerIndex) {
+            this.markerIndex = 0;
+            return (0xFF00 | this.marker) << 8;
+        }
+
+        result = temp[0] >> index[0];
+        temp[0] &= (mask >> (16 - index[0]));
+    }
+
+    if (result < (one << (n - 1))) {
+        result += (n_one << n) + 1;
+    }
+
+    return result;
+};
+
+
+
+jpeg.lossless.Decoder.prototype.getPreviousX = function (compOffset) {
+    /*jslint bitwise: true */
+
+    if (this.xLoc > 0) {
+        return this.getter((((this.yLoc * this.xDim) + this.xLoc) - 1), compOffset);
+    } else if (this.yLoc > 0) {
+        return this.getPreviousY(compOffset);
+    } else {
+        return (1 << (this.frame.precision - 1));
+    }
+};
+
+
+
+jpeg.lossless.Decoder.prototype.getPreviousXY = function (compOffset) {
+    /*jslint bitwise: true */
+
+    if ((this.xLoc > 0) && (this.yLoc > 0)) {
+        return this.getter(((((this.yLoc - 1) * this.xDim) + this.xLoc) - 1), compOffset);
+    } else {
+        return this.getPreviousY(compOffset);
+    }
+};
+
+
+
+jpeg.lossless.Decoder.prototype.getPreviousY = function (compOffset) {
+    /*jslint bitwise: true */
+
+    if (this.yLoc > 0) {
+        return this.getter((((this.yLoc - 1) * this.xDim) + this.xLoc), compOffset);
+    } else {
+        return this.getPreviousX(compOffset);
+    }
+};
+
+
+
+jpeg.lossless.Decoder.prototype.isLastPixel = function () {
+    return (this.xLoc === (this.xDim - 1)) && (this.yLoc === (this.yDim - 1));
+};
+
+
+
+jpeg.lossless.Decoder.prototype.outputSingle = function (PRED) {
+    if ((this.xLoc < this.xDim) && (this.yLoc < this.yDim)) {
+        this.setter((((this.yLoc * this.xDim) + this.xLoc)), this.mask & PRED[0]);
+
+        this.xLoc+=1;
+
+        if (this.xLoc >= this.xDim) {
+            this.yLoc+=1;
+            this.xLoc = 0;
+        }
+    }
+};
+
+
+
+jpeg.lossless.Decoder.prototype.outputRGB = function (PRED) {
+    var offset = ((this.yLoc * this.xDim) + this.xLoc);
+
+    if ((this.xLoc < this.xDim) && (this.yLoc < this.yDim)) {
+        this.setter(offset, PRED[0], 0);
+        this.setter(offset, PRED[1], 1);
+        this.setter(offset, PRED[2], 2);
+
+        this.xLoc+=1;
+
+        if (this.xLoc >= this.xDim) {
+            this.yLoc+=1;
+            this.xLoc = 0;
+        }
+    }
+};
+
+jpeg.lossless.Decoder.prototype.setValue8 = function (index, val) {
+    this.outputData[index] = val; 
+};
+
+jpeg.lossless.Decoder.prototype.getValue8 = function (index) {
+    return this.outputData[index]; // mask should not be necessary because outputData is either Int8Array or Int16Array
+};
+
+var littleEndian = (function() {
+    var buffer = new ArrayBuffer(2);
+    new DataView(buffer).setInt16(0, 256, true /* littleEndian */);
+    // Int16Array uses the platform's endianness.
+    return new Int16Array(buffer)[0] === 256;
+})();
+
+if (littleEndian) {
+    // just reading from an array is fine then. Int16Array will use platform endianness.
+    jpeg.lossless.Decoder.prototype.setValue16 = jpeg.lossless.Decoder.prototype.setValue8; 
+    jpeg.lossless.Decoder.prototype.getValue16 = jpeg.lossless.Decoder.prototype.getValue8;
+} 
+else {
+    // If platform is big-endian, we will need to convert to little-endian 
+    jpeg.lossless.Decoder.prototype.setValue16 = function (index, val) {
+        this.outputData[index] = ((val & 0xFF) << 8) | ((val >> 8) & 0xFF); 
+    };
+
+    jpeg.lossless.Decoder.prototype.getValue16 = function (index) {
+        var val = this.outputData[index];
+        return ((val & 0xFF) << 8) | ((val >> 8) & 0xFF);
+    };
+}
+
+jpeg.lossless.Decoder.prototype.setValueRGB = function (index, val, compOffset) {
+    // this.outputData.setUint8(index * 3 + compOffset, val);
+    this.outputData[index * 3 + compOffset] = val;
+};
+
+jpeg.lossless.Decoder.prototype.getValueRGB = function (index, compOffset) {
+    // return this.outputData.getUint8(index * 3 + compOffset);
+    return this.outputData[index * 3 + compOffset];
+};
+
+
+
+jpeg.lossless.Decoder.prototype.readApp = function() {
+    var count = 0, length = this.stream.get16();
+    count += 2;
+
+    while (count < length) {
+        this.stream.get8();
+        count+=1;
+    }
+
+    return length;
+};
+
+
+
+jpeg.lossless.Decoder.prototype.readComment = function () {
+    var sb = "", count = 0, length;
+
+    length = this.stream.get16();
+    count += 2;
+
+    while (count < length) {
+        sb += this.stream.get8();
+        count+=1;
+    }
+
+    return sb;
+};
+
+
+
+jpeg.lossless.Decoder.prototype.readNumber = function() {
+    var Ld = this.stream.get16();
+
+    if (Ld !== 4) {
+        throw new Error("ERROR: Define number format throw new IOException [Ld!=4]");
+    }
+
+    return this.stream.get16();
+};
+
+
+
+/*** Exports ***/
+
+var moduleType = typeof module;
+if ((moduleType !== 'undefined') && module.exports) {
+    module.exports = jpeg.lossless.Decoder;
+}
+
+},{"./data-stream.js":2,"./frame-header.js":4,"./huffman-table.js":5,"./quantization-table.js":7,"./scan-header.js":9,"./utils.js":10}],4:[function(require,module,exports){
+/*
+ * Copyright (C) 2015 Michael Martinez
+ * Changes: Added support for selection values 2-7, fixed minor bugs &
+ * warnings, split into multiple class files, and general clean up.
+ *
+ * 08-25-2015: Helmut Dersch agreed to a license change from LGPL to MIT.
+ */
+
+/*
+ * Copyright (C) Helmut Dersch
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+/*jslint browser: true, node: true */
+/*global require, module */
+
+
+
+/*** Imports ***/
+var jpeg = jpeg || {};
+jpeg.lossless = jpeg.lossless || {};
+jpeg.lossless.ComponentSpec = jpeg.lossless.ComponentSpec || ((typeof require !== 'undefined') ? require('./component-spec.js') : null);
+jpeg.lossless.DataStream = jpeg.lossless.DataStream || ((typeof require !== 'undefined') ? require('./data-stream.js') : null);
+
+
+/*** Constructor ***/
+jpeg.lossless.FrameHeader = jpeg.lossless.FrameHeader || function () {
+    this.components = []; // Components
+    this.dimX = 0; // Number of samples per line
+    this.dimY = 0; // Number of lines
+    this.numComp = 0; // Number of component in the frame
+    this.precision = 0; // Sample Precision (from the original image)
+};
+
+
+
+/*** Prototype Methods ***/
+
+jpeg.lossless.FrameHeader.prototype.read = function (data) {
+    /*jslint bitwise: true */
+
+    var count = 0, length, i, c, temp;
+
+    length = data.get16();
+    count += 2;
+
+    this.precision = data.get8();
+    count+=1;
+
+    this.dimY = data.get16();
+    count += 2;
+
+    this.dimX = data.get16();
+    count += 2;
+
+    this.numComp = data.get8();
+    count+=1;
+    for (i = 1; i <= this.numComp; i+=1) {
+        if (count > length) {
+            throw new Error("ERROR: frame format error");
+        }
+
+        c = data.get8();
+        count+=1;
+
+        if (count >= length) {
+            throw new Error("ERROR: frame format error [c>=Lf]");
+        }
+
+        temp = data.get8();
+        count+=1;
+
+        if (!this.components[c]) {
+            this.components[c] = new jpeg.lossless.ComponentSpec();
+        }
+
+        this.components[c].hSamp = temp >> 4;
+        this.components[c].vSamp = temp & 0x0F;
+        this.components[c].quantTableSel = data.get8();
+        count+=1;
+    }
+
+    if (count !== length) {
+        throw new Error("ERROR: frame format error [Lf!=count]");
+    }
+
+    return 1;
+};
+
+
+/*** Exports ***/
+
+var moduleType = typeof module;
+if ((moduleType !== 'undefined') && module.exports) {
+    module.exports = jpeg.lossless.FrameHeader;
+}
+
+},{"./component-spec.js":1,"./data-stream.js":2}],5:[function(require,module,exports){
+/*
+ * Copyright (C) 2015 Michael Martinez
+ * Changes: Added support for selection values 2-7, fixed minor bugs &
+ * warnings, split into multiple class files, and general clean up.
+ *
+ * 08-25-2015: Helmut Dersch agreed to a license change from LGPL to MIT.
+ */
+
+/*
+ * Copyright (C) Helmut Dersch
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+/*jslint browser: true, node: true */
+/*global require, module */
+
+
+
+/*** Imports ***/
+var jpeg = jpeg || {};
+jpeg.lossless = jpeg.lossless || {};
+jpeg.lossless.DataStream = jpeg.lossless.DataStream || ((typeof require !== 'undefined') ? require('./data-stream.js') : null);
+jpeg.lossless.Utils = jpeg.lossless.Utils || ((typeof require !== 'undefined') ? require('./utils.js') : null);
+
+
+/*** Constructor ***/
+jpeg.lossless.HuffmanTable = jpeg.lossless.HuffmanTable || function () {
+    this.l = jpeg.lossless.Utils.createArray(4, 2, 16);
+    this.th = [];
+    this.v = jpeg.lossless.Utils.createArray(4, 2, 16, 200);
+    this.tc = jpeg.lossless.Utils.createArray(4, 2);
+
+    this.tc[0][0] = 0;
+    this.tc[1][0] = 0;
+    this.tc[2][0] = 0;
+    this.tc[3][0] = 0;
+    this.tc[0][1] = 0;
+    this.tc[1][1] = 0;
+    this.tc[2][1] = 0;
+    this.tc[3][1] = 0;
+    this.th[0] = 0;
+    this.th[1] = 0;
+    this.th[2] = 0;
+    this.th[3] = 0;
+};
+
+
+
+/*** Static Pseudo-constants ***/
+
+jpeg.lossless.HuffmanTable.MSB = 0x80000000;
+
+
+/*** Prototype Methods ***/
+
+jpeg.lossless.HuffmanTable.prototype.read = function(data, HuffTab) {
+    /*jslint bitwise: true */
+
+    var count = 0, length, temp, t, c, i, j;
+
+    length = data.get16();
+    count += 2;
+
+    while (count < length) {
+        temp = data.get8();
+        count+=1;
+        t = temp & 0x0F;
+        if (t > 3) {
+            throw new Error("ERROR: Huffman table ID > 3");
+        }
+
+        c = temp >> 4;
+        if (c > 2) {
+            throw new Error("ERROR: Huffman table [Table class > 2 ]");
+        }
+
+        this.th[t] = 1;
+        this.tc[t][c] = 1;
+
+        for (i = 0; i < 16; i+=1) {
+            this.l[t][c][i] = data.get8();
+            count+=1;
+        }
+
+        for (i = 0; i < 16; i+=1) {
+            for (j = 0; j < this.l[t][c][i]; j+=1) {
+                if (count > length) {
+                    throw new Error("ERROR: Huffman table format error [count>Lh]");
+                }
+
+                this.v[t][c][i][j] = data.get8();
+                count+=1;
+            }
+        }
+    }
+
+    if (count !== length) {
+        throw new Error("ERROR: Huffman table format error [count!=Lf]");
+    }
+
+    for (i = 0; i < 4; i+=1) {
+        for (j = 0; j < 2; j+=1) {
+            if (this.tc[i][j] !== 0) {
+                this.buildHuffTable(HuffTab[i][j], this.l[i][j], this.v[i][j]);
+            }
+        }
+    }
+
+    return 1;
+};
+
+
+
+//	Build_HuffTab()
+//	Parameter:  t       table ID
+//	            c       table class ( 0 for DC, 1 for AC )
+//	            L[i]    # of codewords which length is i
+//	            V[i][j] Huffman Value (length=i)
+//	Effect:
+//	    build up HuffTab[t][c] using L and V.
+jpeg.lossless.HuffmanTable.prototype.buildHuffTable = function(tab, L, V) {
+    /*jslint bitwise: true */
+
+    var currentTable, temp, k, i, j, n;
+    temp = 256;
+    k = 0;
+
+    for (i = 0; i < 8; i+=1) { // i+1 is Code length
+        for (j = 0; j < L[i]; j+=1) {
+            for (n = 0; n < (temp >> (i + 1)); n+=1) {
+                tab[k] = V[i][j] | ((i + 1) << 8);
+                k+=1;
+            }
+        }
+    }
+
+    for (i = 1; k < 256; i+=1, k+=1) {
+        tab[k] = i | jpeg.lossless.HuffmanTable.MSB;
+    }
+
+    currentTable = 1;
+    k = 0;
+
+    for (i = 8; i < 16; i+=1) { // i+1 is Code length
+        for (j = 0; j < L[i]; j+=1) {
+            for (n = 0; n < (temp >> (i - 7)); n+=1) {
+                tab[(currentTable * 256) + k] = V[i][j] | ((i + 1) << 8);
+                k+=1;
+            }
+
+            if (k >= 256) {
+                if (k > 256) {
+                    throw new Error("ERROR: Huffman table error(1)!");
+                }
+
+                k = 0;
+                currentTable+=1;
+            }
+        }
+    }
+};
+
+
+/*** Exports ***/
+
+var moduleType = typeof module;
+if ((moduleType !== 'undefined') && module.exports) {
+    module.exports = jpeg.lossless.HuffmanTable;
+}
+
+},{"./data-stream.js":2,"./utils.js":10}],6:[function(require,module,exports){
+/*jslint browser: true, node: true */
+/*global require, module */
+
+
+
+/*** Imports ****/
+
+/**
+ * jpeg
+  * @type {*|{}}
+ */
+var jpeg = jpeg || {};
+
+/**
+ * jpeg.lossless
+ * @type {*|{}}
+ */
+jpeg.lossless = jpeg.lossless || {};
+
+
+jpeg.lossless.ComponentSpec = jpeg.lossless.ComponentSpec || ((typeof require !== 'undefined') ? require('./component-spec.js') : null);
+jpeg.lossless.DataStream = jpeg.lossless.DataStream || ((typeof require !== 'undefined') ? require('./data-stream.js') : null);
+jpeg.lossless.Decoder = jpeg.lossless.Decoder || ((typeof require !== 'undefined') ? require('./decoder.js') : null);
+jpeg.lossless.FrameHeader = jpeg.lossless.FrameHeader || ((typeof require !== 'undefined') ? require('./frame-header.js') : null);
+jpeg.lossless.HuffmanTable = jpeg.lossless.HuffmanTable || ((typeof require !== 'undefined') ? require('./huffman-table.js') : null);
+jpeg.lossless.QuantizationTable = jpeg.lossless.QuantizationTable || ((typeof require !== 'undefined') ? require('./quantization-table.js') : null);
+jpeg.lossless.ScanComponent = jpeg.lossless.ScanComponent || ((typeof require !== 'undefined') ? require('./scan-component.js') : null);
+jpeg.lossless.ScanHeader = jpeg.lossless.ScanHeader || ((typeof require !== 'undefined') ? require('./scan-header.js') : null);
+jpeg.lossless.Utils = jpeg.lossless.Utils || ((typeof require !== 'undefined') ? require('./utils.js') : null);
+
+
+/*** Exports ***/
+var moduleType = typeof module;
+if ((moduleType !== 'undefined') && module.exports) {
+    module.exports = jpeg;
+}
+
+},{"./component-spec.js":1,"./data-stream.js":2,"./decoder.js":3,"./frame-header.js":4,"./huffman-table.js":5,"./quantization-table.js":7,"./scan-component.js":8,"./scan-header.js":9,"./utils.js":10}],7:[function(require,module,exports){
+/*
+ * Copyright (C) 2015 Michael Martinez
+ * Changes: Added support for selection values 2-7, fixed minor bugs &
+ * warnings, split into multiple class files, and general clean up.
+ *
+ * 08-25-2015: Helmut Dersch agreed to a license change from LGPL to MIT.
+ */
+
+/*
+ * Copyright (C) Helmut Dersch
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+/*jslint browser: true, node: true */
+/*global require, module */
+
+
+
+/*** Imports ***/
+var jpeg = jpeg || {};
+jpeg.lossless = jpeg.lossless || {};
+jpeg.lossless.DataStream = jpeg.lossless.DataStream || ((typeof require !== 'undefined') ? require('./data-stream.js') : null);
+jpeg.lossless.Utils = jpeg.lossless.Utils || ((typeof require !== 'undefined') ? require('./utils.js') : null);
+
+
+/*** Constructor ***/
+jpeg.lossless.QuantizationTable = jpeg.lossless.QuantizationTable || function () {
+    this.precision = []; // Quantization precision 8 or 16
+    this.tq = []; // 1: this table is presented
+    this.quantTables = jpeg.lossless.Utils.createArray(4, 64); // Tables
+
+    this.tq[0] = 0;
+    this.tq[1] = 0;
+    this.tq[2] = 0;
+    this.tq[3] = 0;
+};
+
+
+
+/*** Static Methods ***/
+
+jpeg.lossless.QuantizationTable.enhanceQuantizationTable = function(qtab, table) {
+    /*jslint bitwise: true */
+
+    var i;
+
+    for (i = 0; i < 8; i+=1) {
+        qtab[table[(0 * 8) + i]] *= 90;
+        qtab[table[(4 * 8) + i]] *= 90;
+        qtab[table[(2 * 8) + i]] *= 118;
+        qtab[table[(6 * 8) + i]] *= 49;
+        qtab[table[(5 * 8) + i]] *= 71;
+        qtab[table[(1 * 8) + i]] *= 126;
+        qtab[table[(7 * 8) + i]] *= 25;
+        qtab[table[(3 * 8) + i]] *= 106;
+    }
+
+    for (i = 0; i < 8; i+=1) {
+        qtab[table[0 + (8 * i)]] *= 90;
+        qtab[table[4 + (8 * i)]] *= 90;
+        qtab[table[2 + (8 * i)]] *= 118;
+        qtab[table[6 + (8 * i)]] *= 49;
+        qtab[table[5 + (8 * i)]] *= 71;
+        qtab[table[1 + (8 * i)]] *= 126;
+        qtab[table[7 + (8 * i)]] *= 25;
+        qtab[table[3 + (8 * i)]] *= 106;
+    }
+
+    for (i = 0; i < 64; i+=1) {
+        qtab[i] >>= 6;
+    }
+};
+
+
+/*** Prototype Methods ***/
+
+jpeg.lossless.QuantizationTable.prototype.read = function (data, table) {
+    /*jslint bitwise: true */
+
+    var count = 0, length, temp, t, i;
+
+    length = data.get16();
+    count += 2;
+
+    while (count < length) {
+        temp = data.get8();
+        count+=1;
+        t = temp & 0x0F;
+
+        if (t > 3) {
+            throw new Error("ERROR: Quantization table ID > 3");
+        }
+
+        this.precision[t] = temp >> 4;
+
+        if (this.precision[t] === 0) {
+            this.precision[t] = 8;
+        } else if (this.precision[t] === 1) {
+            this.precision[t] = 16;
+        } else {
+            throw new Error("ERROR: Quantization table precision error");
+        }
+
+        this.tq[t] = 1;
+
+        if (this.precision[t] === 8) {
+            for (i = 0; i < 64; i+=1) {
+                if (count > length) {
+                    throw new Error("ERROR: Quantization table format error");
+                }
+
+                this.quantTables[t][i] = data.get8();
+                count+=1;
+            }
+
+            jpeg.lossless.QuantizationTable.enhanceQuantizationTable(this.quantTables[t], table);
+        } else {
+            for (i = 0; i < 64; i+=1) {
+                if (count > length) {
+                    throw new Error("ERROR: Quantization table format error");
+                }
+
+                this.quantTables[t][i] = data.get16();
+                count += 2;
+            }
+
+            jpeg.lossless.QuantizationTable.enhanceQuantizationTable(this.quantTables[t], table);
+        }
+    }
+
+    if (count !== length) {
+        throw new Error("ERROR: Quantization table error [count!=Lq]");
+    }
+
+    return 1;
+};
+
+
+
+/*** Exports ***/
+
+var moduleType = typeof module;
+if ((moduleType !== 'undefined') && module.exports) {
+    module.exports = jpeg.lossless.QuantizationTable;
+}
+
+},{"./data-stream.js":2,"./utils.js":10}],8:[function(require,module,exports){
+/*
+ * Copyright (C) 2015 Michael Martinez
+ * Changes: Added support for selection values 2-7, fixed minor bugs &
+ * warnings, split into multiple class files, and general clean up.
+ *
+ * 08-25-2015: Helmut Dersch agreed to a license change from LGPL to MIT.
+ */
+
+/*
+ * Copyright (C) Helmut Dersch
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+/*jslint browser: true, node: true */
+/*global require, module */
+
+
+
+/*** Imports ***/
+var jpeg = jpeg || {};
+jpeg.lossless = jpeg.lossless || {};
+
+
+/*** Constructor ***/
+jpeg.lossless.ScanComponent = jpeg.lossless.ScanComponent || function () {
+    this.acTabSel = 0; // AC table selector
+    this.dcTabSel = 0; // DC table selector
+    this.scanCompSel = 0; // Scan component selector
+};
+
+
+
+/*** Exports ***/
+
+var moduleType = typeof module;
+if ((moduleType !== 'undefined') && module.exports) {
+    module.exports = jpeg.lossless.ScanComponent;
+}
+
+},{}],9:[function(require,module,exports){
+/*
+ * Copyright (C) 2015 Michael Martinez
+ * Changes: Added support for selection values 2-7, fixed minor bugs &
+ * warnings, split into multiple class files, and general clean up.
+ *
+ * 08-25-2015: Helmut Dersch agreed to a license change from LGPL to MIT.
+ */
+
+/*
+ * Copyright (C) Helmut Dersch
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+/*jslint browser: true, node: true */
+/*global require, module */
+
+
+
+/*** Imports ***/
+var jpeg = jpeg || {};
+jpeg.lossless = jpeg.lossless || {};
+jpeg.lossless.DataStream = jpeg.lossless.DataStream || ((typeof require !== 'undefined') ? require('./data-stream.js') : null);
+jpeg.lossless.ScanComponent = jpeg.lossless.ScanComponent || ((typeof require !== 'undefined') ? require('./scan-component.js') : null);
+
+
+/*** Constructor ***/
+jpeg.lossless.ScanHeader = jpeg.lossless.ScanHeader || function () {
+    this.ah = 0;
+    this.al = 0;
+    this.numComp = 0; // Number of components in the scan
+    this.selection = 0; // Start of spectral or predictor selection
+    this.spectralEnd = 0; // End of spectral selection
+    this.components = [];
+};
+
+
+/*** Prototype Methods ***/
+
+jpeg.lossless.ScanHeader.prototype.read = function(data) {
+    /*jslint bitwise: true */
+
+    var count = 0, length, i, temp;
+
+    length = data.get16();
+    count += 2;
+
+    this.numComp = data.get8();
+    count+=1;
+
+    for (i = 0; i < this.numComp; i+=1) {
+        this.components[i] = new jpeg.lossless.ScanComponent();
+
+        if (count > length) {
+            throw new Error("ERROR: scan header format error");
+        }
+
+        this.components[i].scanCompSel = data.get8();
+        count+=1;
+
+        temp = data.get8();
+        count+=1;
+
+        this.components[i].dcTabSel = (temp >> 4);
+        this.components[i].acTabSel = (temp & 0x0F);
+    }
+
+    this.selection = data.get8();
+    count+=1;
+
+    this.spectralEnd = data.get8();
+    count+=1;
+
+    temp = data.get8();
+    this.ah = (temp >> 4);
+    this.al = (temp & 0x0F);
+    count+=1;
+
+    if (count !== length) {
+        throw new Error("ERROR: scan header format error [count!=Ns]");
+    }
+
+    return 1;
+};
+
+
+
+/*** Exports ***/
+
+var moduleType = typeof module;
+if ((moduleType !== 'undefined') && module.exports) {
+    module.exports = jpeg.lossless.ScanHeader;
+}
+
+},{"./data-stream.js":2,"./scan-component.js":8}],10:[function(require,module,exports){
+/*
+ * Copyright (C) 2015 Michael Martinez
+ * Changes: Added support for selection values 2-7, fixed minor bugs &
+ * warnings, split into multiple class files, and general clean up.
+ *
+ * 08-25-2015: Helmut Dersch agreed to a license change from LGPL to MIT.
+ */
+
+/*
+ * Copyright (C) Helmut Dersch
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+/*jslint browser: true, node: true */
+/*global require, module */
+
+
+
+/*** Imports ***/
+var jpeg = jpeg || {};
+jpeg.lossless = jpeg.lossless || {};
+
+
+/*** Constructor ***/
+jpeg.lossless.Utils = jpeg.lossless.Utils || {};
+
+
+/*** Static methods ***/
+
+// http://stackoverflow.com/questions/966225/how-can-i-create-a-two-dimensional-array-in-javascript
+jpeg.lossless.Utils.createArray = function (length) {
+    var arr = new Array(length || 0),
+        i = length;
+
+    if (arguments.length > 1) {
+        var args = Array.prototype.slice.call(arguments, 1);
+        while(i--) arr[length-1 - i] = jpeg.lossless.Utils.createArray.apply(this, args);
+    }
+
+    return arr;
+};
+
+
+// http://stackoverflow.com/questions/18638900/javascript-crc32
+jpeg.lossless.Utils.makeCRCTable = function(){
+    var c;
+    var crcTable = [];
+    for(var n =0; n < 256; n++){
+        c = n;
+        for(var k =0; k < 8; k++){
+            c = ((c&1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1));
+        }
+        crcTable[n] = c;
+    }
+    return crcTable;
+};
+
+jpeg.lossless.Utils.crc32 = function(dataView) {
+    var uint8view = new Uint8Array(dataView.buffer);
+    var crcTable = jpeg.lossless.Utils.crcTable || (jpeg.lossless.Utils.crcTable = jpeg.lossless.Utils.makeCRCTable());
+    var crc = 0 ^ (-1);
+
+    for (var i = 0; i < uint8view.length; i++ ) {
+        crc = (crc >>> 8) ^ crcTable[(crc ^ uint8view[i]) & 0xFF];
+    }
+
+    return (crc ^ (-1)) >>> 0;
+};
+
+
+/*** Exports ***/
+
+var moduleType = typeof module;
+if ((moduleType !== 'undefined') && module.exports) {
+    module.exports = jpeg.lossless.Utils;
+}
+
+},{}]},{},[6])(6)
+});
+
+define('jpegLossless', ['jpegLossless/release/current/lossless'], function (main) { return main; });
+
+/* -*- Mode: Java; tab-width: 2; indent-tabs-mode: nil; c-basic-offset: 2 -*- */
+/* vim: set shiftwidth=2 tabstop=2 autoindent cindent expandtab: */
+/* Copyright 2012 Mozilla Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/* globals ArithmeticDecoder, globalScope, log2, readUint16, readUint32,
+           info, warn */
+
+var JpxImage = (function JpxImageClosure() {
+'use strict';
+
+var PDFJS = {};
+
+PDFJS.VERBOSITY_LEVELS = {
+  errors: 0,
+  warnings: 1,
+  infos: 5
+};
+
+function log2(x) {
+  var n = 1, i = 0;
+  while (x > n) {
+    n <<= 1;
+    i++;
+  }
+  return i;
+}
+
+// A notice for devs. These are good for things that are helpful to devs, such
+// as warning that Workers were disabled, which is important to devs but not
+// end users.
+function info(msg) {
+  if (PDFJS.verbosity >= PDFJS.VERBOSITY_LEVELS.infos) {
+    console.log('Info: ' + msg);
+  }
+}
+
+// Non-fatal warnings.
+function warn(msg) {
+  if (PDFJS.verbosity >= PDFJS.VERBOSITY_LEVELS.warnings) {
+    console.log('Warning: ' + msg);
+  }
+}
+
+
+function readUint16(data, offset) {
+  return (data[offset] << 8) | data[offset + 1];
+}
+
+function readUint32(data, offset) {
+  return ((data[offset] << 24) | (data[offset + 1] << 16) |
+         (data[offset + 2] << 8) | data[offset + 3]) >>> 0;
+}
+
+
+/* This class implements the QM Coder decoding as defined in
+ *   JPEG 2000 Part I Final Committee Draft Version 1.0
+ *   Annex C.3 Arithmetic decoding procedure
+ * available at http://www.jpeg.org/public/fcd15444-1.pdf
+ *
+ * The arithmetic decoder is used in conjunction with context models to decode
+ * JPEG2000 and JBIG2 streams.
+ */
+var ArithmeticDecoder = (function ArithmeticDecoderClosure() {
+  // Table C-2
+  var QeTable = [
+    {qe: 0x5601, nmps: 1, nlps: 1, switchFlag: 1},
+    {qe: 0x3401, nmps: 2, nlps: 6, switchFlag: 0},
+    {qe: 0x1801, nmps: 3, nlps: 9, switchFlag: 0},
+    {qe: 0x0AC1, nmps: 4, nlps: 12, switchFlag: 0},
+    {qe: 0x0521, nmps: 5, nlps: 29, switchFlag: 0},
+    {qe: 0x0221, nmps: 38, nlps: 33, switchFlag: 0},
+    {qe: 0x5601, nmps: 7, nlps: 6, switchFlag: 1},
+    {qe: 0x5401, nmps: 8, nlps: 14, switchFlag: 0},
+    {qe: 0x4801, nmps: 9, nlps: 14, switchFlag: 0},
+    {qe: 0x3801, nmps: 10, nlps: 14, switchFlag: 0},
+    {qe: 0x3001, nmps: 11, nlps: 17, switchFlag: 0},
+    {qe: 0x2401, nmps: 12, nlps: 18, switchFlag: 0},
+    {qe: 0x1C01, nmps: 13, nlps: 20, switchFlag: 0},
+    {qe: 0x1601, nmps: 29, nlps: 21, switchFlag: 0},
+    {qe: 0x5601, nmps: 15, nlps: 14, switchFlag: 1},
+    {qe: 0x5401, nmps: 16, nlps: 14, switchFlag: 0},
+    {qe: 0x5101, nmps: 17, nlps: 15, switchFlag: 0},
+    {qe: 0x4801, nmps: 18, nlps: 16, switchFlag: 0},
+    {qe: 0x3801, nmps: 19, nlps: 17, switchFlag: 0},
+    {qe: 0x3401, nmps: 20, nlps: 18, switchFlag: 0},
+    {qe: 0x3001, nmps: 21, nlps: 19, switchFlag: 0},
+    {qe: 0x2801, nmps: 22, nlps: 19, switchFlag: 0},
+    {qe: 0x2401, nmps: 23, nlps: 20, switchFlag: 0},
+    {qe: 0x2201, nmps: 24, nlps: 21, switchFlag: 0},
+    {qe: 0x1C01, nmps: 25, nlps: 22, switchFlag: 0},
+    {qe: 0x1801, nmps: 26, nlps: 23, switchFlag: 0},
+    {qe: 0x1601, nmps: 27, nlps: 24, switchFlag: 0},
+    {qe: 0x1401, nmps: 28, nlps: 25, switchFlag: 0},
+    {qe: 0x1201, nmps: 29, nlps: 26, switchFlag: 0},
+    {qe: 0x1101, nmps: 30, nlps: 27, switchFlag: 0},
+    {qe: 0x0AC1, nmps: 31, nlps: 28, switchFlag: 0},
+    {qe: 0x09C1, nmps: 32, nlps: 29, switchFlag: 0},
+    {qe: 0x08A1, nmps: 33, nlps: 30, switchFlag: 0},
+    {qe: 0x0521, nmps: 34, nlps: 31, switchFlag: 0},
+    {qe: 0x0441, nmps: 35, nlps: 32, switchFlag: 0},
+    {qe: 0x02A1, nmps: 36, nlps: 33, switchFlag: 0},
+    {qe: 0x0221, nmps: 37, nlps: 34, switchFlag: 0},
+    {qe: 0x0141, nmps: 38, nlps: 35, switchFlag: 0},
+    {qe: 0x0111, nmps: 39, nlps: 36, switchFlag: 0},
+    {qe: 0x0085, nmps: 40, nlps: 37, switchFlag: 0},
+    {qe: 0x0049, nmps: 41, nlps: 38, switchFlag: 0},
+    {qe: 0x0025, nmps: 42, nlps: 39, switchFlag: 0},
+    {qe: 0x0015, nmps: 43, nlps: 40, switchFlag: 0},
+    {qe: 0x0009, nmps: 44, nlps: 41, switchFlag: 0},
+    {qe: 0x0005, nmps: 45, nlps: 42, switchFlag: 0},
+    {qe: 0x0001, nmps: 45, nlps: 43, switchFlag: 0},
+    {qe: 0x5601, nmps: 46, nlps: 46, switchFlag: 0}
+  ];
+
+  // C.3.5 Initialisation of the decoder (INITDEC)
+  function ArithmeticDecoder(data, start, end) {
+    this.data = data;
+    this.bp = start;
+    this.dataEnd = end;
+
+    this.chigh = data[start];
+    this.clow = 0;
+
+    this.byteIn();
+
+    this.chigh = ((this.chigh << 7) & 0xFFFF) | ((this.clow >> 9) & 0x7F);
+    this.clow = (this.clow << 7) & 0xFFFF;
+    this.ct -= 7;
+    this.a = 0x8000;
   }
 
-  var arr = new Uint8Array(jpegData);
-  var decoder = new JpegImage();
-  decoder.parse(arr);
-  decoder.colorTransform = opts.colorTransform;
+  ArithmeticDecoder.prototype = {
+    // C.3.4 Compressed data input (BYTEIN)
+    byteIn: function ArithmeticDecoder_byteIn() {
+      var data = this.data;
+      var bp = this.bp;
+      if (data[bp] === 0xFF) {
+        var b1 = data[bp + 1];
+        if (b1 > 0x8F) {
+          this.clow += 0xFF00;
+          this.ct = 8;
+        } else {
+          bp++;
+          this.clow += (data[bp] << 9);
+          this.ct = 7;
+          this.bp = bp;
+        }
+      } else {
+        bp++;
+        this.clow += bp < this.dataEnd ? (data[bp] << 8) : 0xFF00;
+        this.ct = 8;
+        this.bp = bp;
+      }
+      if (this.clow > 0xFFFF) {
+        this.chigh += (this.clow >> 16);
+        this.clow &= 0xFFFF;
+      }
+    },
+    // C.3.2 Decoding a decision (DECODE)
+    readBit: function ArithmeticDecoder_readBit(contexts, pos) {
+      // contexts are packed into 1 byte:
+      // highest 7 bits carry cx.index, lowest bit carries cx.mps
+      var cx_index = contexts[pos] >> 1, cx_mps = contexts[pos] & 1;
+      var qeTableIcx = QeTable[cx_index];
+      var qeIcx = qeTableIcx.qe;
+      var d;
+      var a = this.a - qeIcx;
 
-  var image = {
-    width: decoder.width,
-    height: decoder.height,
-    data: opts.useTArray ?
-      new Uint8Array(decoder.width * decoder.height * 4) :
-      new Buffer(decoder.width * decoder.height * 4)
+      if (this.chigh < qeIcx) {
+        // exchangeLps
+        if (a < qeIcx) {
+          a = qeIcx;
+          d = cx_mps;
+          cx_index = qeTableIcx.nmps;
+        } else {
+          a = qeIcx;
+          d = 1 ^ cx_mps;
+          if (qeTableIcx.switchFlag === 1) {
+            cx_mps = d;
+          }
+          cx_index = qeTableIcx.nlps;
+        }
+      } else {
+        this.chigh -= qeIcx;
+        if ((a & 0x8000) !== 0) {
+          this.a = a;
+          return cx_mps;
+        }
+        // exchangeMps
+        if (a < qeIcx) {
+          d = 1 ^ cx_mps;
+          if (qeTableIcx.switchFlag === 1) {
+            cx_mps = d;
+          }
+          cx_index = qeTableIcx.nlps;
+        } else {
+          d = cx_mps;
+          cx_index = qeTableIcx.nmps;
+        }
+      }
+      // C.3.3 renormD;
+      do {
+        if (this.ct === 0) {
+          this.byteIn();
+        }
+
+        a <<= 1;
+        this.chigh = ((this.chigh << 1) & 0xFFFF) | ((this.clow >> 15) & 1);
+        this.clow = (this.clow << 1) & 0xFFFF;
+        this.ct--;
+      } while ((a & 0x8000) === 0);
+      this.a = a;
+
+      contexts[pos] = cx_index << 1 | cx_mps;
+      return d;
+    }
   };
 
-  decoder.copyToImageData(image);
+  return ArithmeticDecoder;
+})();
 
-  return image;
-}
-;
-define('jpeg', ['jpeg/lib/decoder'], function (main) { return main; });
 
-define("jpeg/lib/decoder", function(){});
+
+
+
+
+
+
+
+
+
+
+  // Table E.1
+  var SubbandsGainLog2 = {
+    'LL': 0,
+    'LH': 1,
+    'HL': 1,
+    'HH': 2
+  };
+  function JpxImage() {
+    this.failOnCorruptedImage = true;
+  }
+  JpxImage.prototype = {
+    parse: function JpxImage_parse(data) {
+
+      var head = readUint16(data, 0);
+      // No box header, immediate start of codestream (SOC)
+      if (head === 0xFF4F) {
+        this.parseCodestream(data, 0, data.length);
+        return;
+      }
+
+      var position = 0, length = data.length;
+      while (position < length) {
+        var headerSize = 8;
+        var lbox = readUint32(data, position);
+        var tbox = readUint32(data, position + 4);
+        position += headerSize;
+        if (lbox === 1) {
+          // XLBox: read UInt64 according to spec.
+          // JavaScript's int precision of 53 bit should be sufficient here.
+          lbox = readUint32(data, position) * 4294967296 +
+                 readUint32(data, position + 4);
+          position += 8;
+          headerSize += 8;
+        }
+        if (lbox === 0) {
+          lbox = length - position + headerSize;
+        }
+        if (lbox < headerSize) {
+          throw new Error('JPX Error: Invalid box field size');
+        }
+        var dataLength = lbox - headerSize;
+        var jumpDataLength = true;
+        switch (tbox) {
+          case 0x6A703268: // 'jp2h'
+            jumpDataLength = false; // parsing child boxes
+            break;
+          case 0x636F6C72: // 'colr'
+            // Colorspaces are not used, the CS from the PDF is used.
+            var method = data[position];
+            var precedence = data[position + 1];
+            var approximation = data[position + 2];
+            if (method === 1) {
+              // enumerated colorspace
+              var colorspace = readUint32(data, position + 3);
+              switch (colorspace) {
+                case 16: // this indicates a sRGB colorspace
+                case 17: // this indicates a grayscale colorspace
+                case 18: // this indicates a YUV colorspace
+                  break;
+                default:
+                  warn('Unknown colorspace ' + colorspace);
+                  break;
+              }
+            } else if (method === 2) {
+              info('ICC profile not supported');
+            }
+            break;
+          case 0x6A703263: // 'jp2c'
+            this.parseCodestream(data, position, position + dataLength);
+            break;
+          case 0x6A502020: // 'jP\024\024'
+            if (0x0d0a870a !== readUint32(data, position)) {
+              warn('Invalid JP2 signature');
+            }
+            break;
+          // The following header types are valid but currently not used:
+          case 0x6A501A1A: // 'jP\032\032'
+          case 0x66747970: // 'ftyp'
+          case 0x72726571: // 'rreq'
+          case 0x72657320: // 'res '
+          case 0x69686472: // 'ihdr'
+            break;
+          default:
+            var headerType = String.fromCharCode((tbox >> 24) & 0xFF,
+                                                 (tbox >> 16) & 0xFF,
+                                                 (tbox >> 8) & 0xFF,
+                                                 tbox & 0xFF);
+            warn('Unsupported header type ' + tbox + ' (' + headerType + ')');
+            break;
+        }
+        if (jumpDataLength) {
+          position += dataLength;
+        }
+      }
+    },
+    parseImageProperties: function JpxImage_parseImageProperties(stream) {
+      var newByte = stream.getByte();
+      while (newByte >= 0) {
+        var oldByte = newByte;
+        newByte = stream.getByte();
+        var code = (oldByte << 8) | newByte;
+        // Image and tile size (SIZ)
+        if (code === 0xFF51) {
+          stream.skip(4);
+          var Xsiz = stream.getInt32() >>> 0; // Byte 4
+          var Ysiz = stream.getInt32() >>> 0; // Byte 8
+          var XOsiz = stream.getInt32() >>> 0; // Byte 12
+          var YOsiz = stream.getInt32() >>> 0; // Byte 16
+          stream.skip(16);
+          var Csiz = stream.getUint16(); // Byte 36
+          this.width = Xsiz - XOsiz;
+          this.height = Ysiz - YOsiz;
+          this.componentsCount = Csiz;
+          // Results are always returned as Uint8Arrays
+          this.bitsPerComponent = 8;
+          return;
+        }
+      }
+      throw new Error('JPX Error: No size marker found in JPX stream');
+    },
+    parseCodestream: function JpxImage_parseCodestream(data, start, end) {
+      var context = {};
+      try {
+        var doNotRecover = false;
+        var position = start;
+        while (position + 1 < end) {
+          var code = readUint16(data, position);
+          position += 2;
+
+          var length = 0, j, sqcd, spqcds, spqcdSize, scalarExpounded, tile;
+          switch (code) {
+            case 0xFF4F: // Start of codestream (SOC)
+              context.mainHeader = true;
+              break;
+            case 0xFFD9: // End of codestream (EOC)
+              break;
+            case 0xFF51: // Image and tile size (SIZ)
+              length = readUint16(data, position);
+              var siz = {};
+              siz.Xsiz = readUint32(data, position + 4);
+              siz.Ysiz = readUint32(data, position + 8);
+              siz.XOsiz = readUint32(data, position + 12);
+              siz.YOsiz = readUint32(data, position + 16);
+              siz.XTsiz = readUint32(data, position + 20);
+              siz.YTsiz = readUint32(data, position + 24);
+              siz.XTOsiz = readUint32(data, position + 28);
+              siz.YTOsiz = readUint32(data, position + 32);
+              var componentsCount = readUint16(data, position + 36);
+              siz.Csiz = componentsCount;
+              var components = [];
+              j = position + 38;
+              for (var i = 0; i < componentsCount; i++) {
+                var component = {
+                  precision: (data[j] & 0x7F) + 1,
+                  isSigned: !!(data[j] & 0x80),
+                  XRsiz: data[j + 1],
+                  YRsiz: data[j + 1]
+                };
+                calculateComponentDimensions(component, siz);
+                components.push(component);
+              }
+              context.SIZ = siz;
+              context.components = components;
+              calculateTileGrids(context, components);
+              context.QCC = [];
+              context.COC = [];
+              break;
+            case 0xFF5C: // Quantization default (QCD)
+              length = readUint16(data, position);
+              var qcd = {};
+              j = position + 2;
+              sqcd = data[j++];
+              switch (sqcd & 0x1F) {
+                case 0:
+                  spqcdSize = 8;
+                  scalarExpounded = true;
+                  break;
+                case 1:
+                  spqcdSize = 16;
+                  scalarExpounded = false;
+                  break;
+                case 2:
+                  spqcdSize = 16;
+                  scalarExpounded = true;
+                  break;
+                default:
+                  throw new Error('JPX Error: Invalid SQcd value ' + sqcd);
+              }
+              qcd.noQuantization = (spqcdSize === 8);
+              qcd.scalarExpounded = scalarExpounded;
+              qcd.guardBits = sqcd >> 5;
+              spqcds = [];
+              while (j < length + position) {
+                var spqcd = {};
+                if (spqcdSize === 8) {
+                  spqcd.epsilon = data[j++] >> 3;
+                  spqcd.mu = 0;
+                } else {
+                  spqcd.epsilon = data[j] >> 3;
+                  spqcd.mu = ((data[j] & 0x7) << 8) | data[j + 1];
+                  j += 2;
+                }
+                spqcds.push(spqcd);
+              }
+              qcd.SPqcds = spqcds;
+              if (context.mainHeader) {
+                context.QCD = qcd;
+              } else {
+                context.currentTile.QCD = qcd;
+                context.currentTile.QCC = [];
+              }
+              break;
+            case 0xFF5D: // Quantization component (QCC)
+              length = readUint16(data, position);
+              var qcc = {};
+              j = position + 2;
+              var cqcc;
+              if (context.SIZ.Csiz < 257) {
+                cqcc = data[j++];
+              } else {
+                cqcc = readUint16(data, j);
+                j += 2;
+              }
+              sqcd = data[j++];
+              switch (sqcd & 0x1F) {
+                case 0:
+                  spqcdSize = 8;
+                  scalarExpounded = true;
+                  break;
+                case 1:
+                  spqcdSize = 16;
+                  scalarExpounded = false;
+                  break;
+                case 2:
+                  spqcdSize = 16;
+                  scalarExpounded = true;
+                  break;
+                default:
+                  throw new Error('JPX Error: Invalid SQcd value ' + sqcd);
+              }
+              qcc.noQuantization = (spqcdSize === 8);
+              qcc.scalarExpounded = scalarExpounded;
+              qcc.guardBits = sqcd >> 5;
+              spqcds = [];
+              while (j < (length + position)) {
+                spqcd = {};
+                if (spqcdSize === 8) {
+                  spqcd.epsilon = data[j++] >> 3;
+                  spqcd.mu = 0;
+                } else {
+                  spqcd.epsilon = data[j] >> 3;
+                  spqcd.mu = ((data[j] & 0x7) << 8) | data[j + 1];
+                  j += 2;
+                }
+                spqcds.push(spqcd);
+              }
+              qcc.SPqcds = spqcds;
+              if (context.mainHeader) {
+                context.QCC[cqcc] = qcc;
+              } else {
+                context.currentTile.QCC[cqcc] = qcc;
+              }
+              break;
+            case 0xFF52: // Coding style default (COD)
+              length = readUint16(data, position);
+              var cod = {};
+              j = position + 2;
+              var scod = data[j++];
+              cod.entropyCoderWithCustomPrecincts = !!(scod & 1);
+              cod.sopMarkerUsed = !!(scod & 2);
+              cod.ephMarkerUsed = !!(scod & 4);
+              cod.progressionOrder = data[j++];
+              cod.layersCount = readUint16(data, j);
+              j += 2;
+              cod.multipleComponentTransform = data[j++];
+
+              cod.decompositionLevelsCount = data[j++];
+              cod.xcb = (data[j++] & 0xF) + 2;
+              cod.ycb = (data[j++] & 0xF) + 2;
+              var blockStyle = data[j++];
+              cod.selectiveArithmeticCodingBypass = !!(blockStyle & 1);
+              cod.resetContextProbabilities = !!(blockStyle & 2);
+              cod.terminationOnEachCodingPass = !!(blockStyle & 4);
+              cod.verticalyStripe = !!(blockStyle & 8);
+              cod.predictableTermination = !!(blockStyle & 16);
+              cod.segmentationSymbolUsed = !!(blockStyle & 32);
+              cod.reversibleTransformation = data[j++];
+              if (cod.entropyCoderWithCustomPrecincts) {
+                var precinctsSizes = [];
+                while (j < length + position) {
+                  var precinctsSize = data[j++];
+                  precinctsSizes.push({
+                    PPx: precinctsSize & 0xF,
+                    PPy: precinctsSize >> 4
+                  });
+                }
+                cod.precinctsSizes = precinctsSizes;
+              }
+              var unsupported = [];
+              if (cod.selectiveArithmeticCodingBypass) {
+                unsupported.push('selectiveArithmeticCodingBypass');
+              }
+              if (cod.resetContextProbabilities) {
+                unsupported.push('resetContextProbabilities');
+              }
+              if (cod.terminationOnEachCodingPass) {
+                unsupported.push('terminationOnEachCodingPass');
+              }
+              if (cod.verticalyStripe) {
+                unsupported.push('verticalyStripe');
+              }
+              if (cod.predictableTermination) {
+                unsupported.push('predictableTermination');
+              }
+              if (unsupported.length > 0) {
+                doNotRecover = true;
+                throw new Error('JPX Error: Unsupported COD options (' +
+                                unsupported.join(', ') + ')');
+              }
+              if (context.mainHeader) {
+                context.COD = cod;
+              } else {
+                context.currentTile.COD = cod;
+                context.currentTile.COC = [];
+              }
+              break;
+            case 0xFF90: // Start of tile-part (SOT)
+              length = readUint16(data, position);
+              tile = {};
+              tile.index = readUint16(data, position + 2);
+              tile.length = readUint32(data, position + 4);
+              tile.dataEnd = tile.length + position - 2;
+              tile.partIndex = data[position + 8];
+              tile.partsCount = data[position + 9];
+
+              context.mainHeader = false;
+              if (tile.partIndex === 0) {
+                // reset component specific settings
+                tile.COD = context.COD;
+                tile.COC = context.COC.slice(0); // clone of the global COC
+                tile.QCD = context.QCD;
+                tile.QCC = context.QCC.slice(0); // clone of the global COC
+              }
+              context.currentTile = tile;
+              break;
+            case 0xFF93: // Start of data (SOD)
+              tile = context.currentTile;
+              if (tile.partIndex === 0) {
+                initializeTile(context, tile.index);
+                buildPackets(context);
+              }
+
+              // moving to the end of the data
+              length = tile.dataEnd - position;
+              parseTilePackets(context, data, position, length);
+              break;
+            case 0xFF55: // Tile-part lengths, main header (TLM)
+            case 0xFF57: // Packet length, main header (PLM)
+            case 0xFF58: // Packet length, tile-part header (PLT)
+            case 0xFF64: // Comment (COM)
+            case 0xFF53: // Coding style component (COC)
+              length = readUint16(data, position);
+              // skipping content
+              break;
+            default:
+              throw new Error('JPX Error: Unknown codestream code: ' +
+                              code.toString(16));
+          }
+          position += length;
+        }
+      } catch (e) {
+        if (doNotRecover || this.failOnCorruptedImage) {
+          throw e;
+        } else {
+          warn('Trying to recover from ' + e.message);
+        }
+      }
+      this.tiles = transformComponents(context);
+      this.width = context.SIZ.Xsiz - context.SIZ.XOsiz;
+      this.height = context.SIZ.Ysiz - context.SIZ.YOsiz;
+      this.componentsCount = context.SIZ.Csiz;
+    }
+  };
+  function calculateComponentDimensions(component, siz) {
+    // Section B.2 Component mapping
+    component.x0 = Math.ceil(siz.XOsiz / component.XRsiz);
+    component.x1 = Math.ceil(siz.Xsiz / component.XRsiz);
+    component.y0 = Math.ceil(siz.YOsiz / component.YRsiz);
+    component.y1 = Math.ceil(siz.Ysiz / component.YRsiz);
+    component.width = component.x1 - component.x0;
+    component.height = component.y1 - component.y0;
+  }
+  function calculateTileGrids(context, components) {
+    var siz = context.SIZ;
+    // Section B.3 Division into tile and tile-components
+    var tile, tiles = [];
+    var numXtiles = Math.ceil((siz.Xsiz - siz.XTOsiz) / siz.XTsiz);
+    var numYtiles = Math.ceil((siz.Ysiz - siz.YTOsiz) / siz.YTsiz);
+    for (var q = 0; q < numYtiles; q++) {
+      for (var p = 0; p < numXtiles; p++) {
+        tile = {};
+        tile.tx0 = Math.max(siz.XTOsiz + p * siz.XTsiz, siz.XOsiz);
+        tile.ty0 = Math.max(siz.YTOsiz + q * siz.YTsiz, siz.YOsiz);
+        tile.tx1 = Math.min(siz.XTOsiz + (p + 1) * siz.XTsiz, siz.Xsiz);
+        tile.ty1 = Math.min(siz.YTOsiz + (q + 1) * siz.YTsiz, siz.Ysiz);
+        tile.width = tile.tx1 - tile.tx0;
+        tile.height = tile.ty1 - tile.ty0;
+        tile.components = [];
+        tiles.push(tile);
+      }
+    }
+    context.tiles = tiles;
+
+    var componentsCount = siz.Csiz;
+    for (var i = 0, ii = componentsCount; i < ii; i++) {
+      var component = components[i];
+      for (var j = 0, jj = tiles.length; j < jj; j++) {
+        var tileComponent = {};
+        tile = tiles[j];
+        tileComponent.tcx0 = Math.ceil(tile.tx0 / component.XRsiz);
+        tileComponent.tcy0 = Math.ceil(tile.ty0 / component.YRsiz);
+        tileComponent.tcx1 = Math.ceil(tile.tx1 / component.XRsiz);
+        tileComponent.tcy1 = Math.ceil(tile.ty1 / component.YRsiz);
+        tileComponent.width = tileComponent.tcx1 - tileComponent.tcx0;
+        tileComponent.height = tileComponent.tcy1 - tileComponent.tcy0;
+        tile.components[i] = tileComponent;
+      }
+    }
+  }
+  function getBlocksDimensions(context, component, r) {
+    var codOrCoc = component.codingStyleParameters;
+    var result = {};
+    if (!codOrCoc.entropyCoderWithCustomPrecincts) {
+      result.PPx = 15;
+      result.PPy = 15;
+    } else {
+      result.PPx = codOrCoc.precinctsSizes[r].PPx;
+      result.PPy = codOrCoc.precinctsSizes[r].PPy;
+    }
+    // calculate codeblock size as described in section B.7
+    result.xcb_ = (r > 0 ? Math.min(codOrCoc.xcb, result.PPx - 1) :
+                   Math.min(codOrCoc.xcb, result.PPx));
+    result.ycb_ = (r > 0 ? Math.min(codOrCoc.ycb, result.PPy - 1) :
+                   Math.min(codOrCoc.ycb, result.PPy));
+    return result;
+  }
+  function buildPrecincts(context, resolution, dimensions) {
+    // Section B.6 Division resolution to precincts
+    var precinctWidth = 1 << dimensions.PPx;
+    var precinctHeight = 1 << dimensions.PPy;
+    // Jasper introduces codeblock groups for mapping each subband codeblocks
+    // to precincts. Precinct partition divides a resolution according to width
+    // and height parameters. The subband that belongs to the resolution level
+    // has a different size than the level, unless it is the zero resolution.
+
+    // From Jasper documentation: jpeg2000.pdf, section K: Tier-2 coding:
+    // The precinct partitioning for a particular subband is derived from a
+    // partitioning of its parent LL band (i.e., the LL band at the next higher
+    // resolution level)... The LL band associated with each resolution level is
+    // divided into precincts... Each of the resulting precinct regions is then
+    // mapped into its child subbands (if any) at the next lower resolution
+    // level. This is accomplished by using the coordinate transformation
+    // (u, v) = (ceil(x/2), ceil(y/2)) where (x, y) and (u, v) are the
+    // coordinates of a point in the LL band and child subband, respectively.
+    var isZeroRes = resolution.resLevel === 0;
+    var precinctWidthInSubband = 1 << (dimensions.PPx + (isZeroRes ? 0 : -1));
+    var precinctHeightInSubband = 1 << (dimensions.PPy + (isZeroRes ? 0 : -1));
+    var numprecinctswide = (resolution.trx1 > resolution.trx0 ?
+      Math.ceil(resolution.trx1 / precinctWidth) -
+      Math.floor(resolution.trx0 / precinctWidth) : 0);
+    var numprecinctshigh = (resolution.try1 > resolution.try0 ?
+      Math.ceil(resolution.try1 / precinctHeight) -
+      Math.floor(resolution.try0 / precinctHeight) : 0);
+    var numprecincts = numprecinctswide * numprecinctshigh;
+
+    resolution.precinctParameters = {
+      precinctWidth: precinctWidth,
+      precinctHeight: precinctHeight,
+      numprecinctswide: numprecinctswide,
+      numprecinctshigh: numprecinctshigh,
+      numprecincts: numprecincts,
+      precinctWidthInSubband: precinctWidthInSubband,
+      precinctHeightInSubband: precinctHeightInSubband
+    };
+  }
+  function buildCodeblocks(context, subband, dimensions) {
+    // Section B.7 Division sub-band into code-blocks
+    var xcb_ = dimensions.xcb_;
+    var ycb_ = dimensions.ycb_;
+    var codeblockWidth = 1 << xcb_;
+    var codeblockHeight = 1 << ycb_;
+    var cbx0 = subband.tbx0 >> xcb_;
+    var cby0 = subband.tby0 >> ycb_;
+    var cbx1 = (subband.tbx1 + codeblockWidth - 1) >> xcb_;
+    var cby1 = (subband.tby1 + codeblockHeight - 1) >> ycb_;
+    var precinctParameters = subband.resolution.precinctParameters;
+    var codeblocks = [];
+    var precincts = [];
+    var i, j, codeblock, precinctNumber;
+    for (j = cby0; j < cby1; j++) {
+      for (i = cbx0; i < cbx1; i++) {
+        codeblock = {
+          cbx: i,
+          cby: j,
+          tbx0: codeblockWidth * i,
+          tby0: codeblockHeight * j,
+          tbx1: codeblockWidth * (i + 1),
+          tby1: codeblockHeight * (j + 1)
+        };
+
+        codeblock.tbx0_ = Math.max(subband.tbx0, codeblock.tbx0);
+        codeblock.tby0_ = Math.max(subband.tby0, codeblock.tby0);
+        codeblock.tbx1_ = Math.min(subband.tbx1, codeblock.tbx1);
+        codeblock.tby1_ = Math.min(subband.tby1, codeblock.tby1);
+
+        // Calculate precinct number for this codeblock, codeblock position
+        // should be relative to its subband, use actual dimension and position
+        // See comment about codeblock group width and height
+        var pi = Math.floor((codeblock.tbx0_ - subband.tbx0) /
+          precinctParameters.precinctWidthInSubband);
+        var pj = Math.floor((codeblock.tby0_ - subband.tby0) /
+          precinctParameters.precinctHeightInSubband);
+        precinctNumber = pi + (pj * precinctParameters.numprecinctswide);
+
+        codeblock.precinctNumber = precinctNumber;
+        codeblock.subbandType = subband.type;
+        codeblock.Lblock = 3;
+
+        if (codeblock.tbx1_ <= codeblock.tbx0_ ||
+            codeblock.tby1_ <= codeblock.tby0_) {
+          continue;
+        }
+        codeblocks.push(codeblock);
+        // building precinct for the sub-band
+        var precinct = precincts[precinctNumber];
+        if (precinct !== undefined) {
+          if (i < precinct.cbxMin) {
+            precinct.cbxMin = i;
+          } else if (i > precinct.cbxMax) {
+            precinct.cbxMax = i;
+          }
+          if (j < precinct.cbyMin) {
+            precinct.cbxMin = j;
+          } else if (j > precinct.cbyMax) {
+            precinct.cbyMax = j;
+          }
+        } else {
+          precincts[precinctNumber] = precinct = {
+            cbxMin: i,
+            cbyMin: j,
+            cbxMax: i,
+            cbyMax: j
+          };
+        }
+        codeblock.precinct = precinct;
+      }
+    }
+    subband.codeblockParameters = {
+      codeblockWidth: xcb_,
+      codeblockHeight: ycb_,
+      numcodeblockwide: cbx1 - cbx0 + 1,
+      numcodeblockhigh: cby1 - cby0 + 1
+    };
+    subband.codeblocks = codeblocks;
+    subband.precincts = precincts;
+  }
+  function createPacket(resolution, precinctNumber, layerNumber) {
+    var precinctCodeblocks = [];
+    // Section B.10.8 Order of info in packet
+    var subbands = resolution.subbands;
+    // sub-bands already ordered in 'LL', 'HL', 'LH', and 'HH' sequence
+    for (var i = 0, ii = subbands.length; i < ii; i++) {
+      var subband = subbands[i];
+      var codeblocks = subband.codeblocks;
+      for (var j = 0, jj = codeblocks.length; j < jj; j++) {
+        var codeblock = codeblocks[j];
+        if (codeblock.precinctNumber !== precinctNumber) {
+          continue;
+        }
+        precinctCodeblocks.push(codeblock);
+      }
+    }
+    return {
+      layerNumber: layerNumber,
+      codeblocks: precinctCodeblocks
+    };
+  }
+  function LayerResolutionComponentPositionIterator(context) {
+    var siz = context.SIZ;
+    var tileIndex = context.currentTile.index;
+    var tile = context.tiles[tileIndex];
+    var layersCount = tile.codingStyleDefaultParameters.layersCount;
+    var componentsCount = siz.Csiz;
+    var maxDecompositionLevelsCount = 0;
+    for (var q = 0; q < componentsCount; q++) {
+      maxDecompositionLevelsCount = Math.max(maxDecompositionLevelsCount,
+        tile.components[q].codingStyleParameters.decompositionLevelsCount);
+    }
+
+    var l = 0, r = 0, i = 0, k = 0;
+
+    this.nextPacket = function JpxImage_nextPacket() {
+      // Section B.12.1.1 Layer-resolution-component-position
+      for (; l < layersCount; l++) {
+        for (; r <= maxDecompositionLevelsCount; r++) {
+          for (; i < componentsCount; i++) {
+            var component = tile.components[i];
+            if (r > component.codingStyleParameters.decompositionLevelsCount) {
+              continue;
+            }
+
+            var resolution = component.resolutions[r];
+            var numprecincts = resolution.precinctParameters.numprecincts;
+            for (; k < numprecincts;) {
+              var packet = createPacket(resolution, k, l);
+              k++;
+              return packet;
+            }
+            k = 0;
+          }
+          i = 0;
+        }
+        r = 0;
+      }
+    };
+  }
+  function ResolutionLayerComponentPositionIterator(context) {
+    var siz = context.SIZ;
+    var tileIndex = context.currentTile.index;
+    var tile = context.tiles[tileIndex];
+    var layersCount = tile.codingStyleDefaultParameters.layersCount;
+    var componentsCount = siz.Csiz;
+    var maxDecompositionLevelsCount = 0;
+    for (var q = 0; q < componentsCount; q++) {
+      maxDecompositionLevelsCount = Math.max(maxDecompositionLevelsCount,
+        tile.components[q].codingStyleParameters.decompositionLevelsCount);
+    }
+
+    var r = 0, l = 0, i = 0, k = 0;
+
+    this.nextPacket = function JpxImage_nextPacket() {
+      // Section B.12.1.2 Resolution-layer-component-position
+      for (; r <= maxDecompositionLevelsCount; r++) {
+        for (; l < layersCount; l++) {
+          for (; i < componentsCount; i++) {
+            var component = tile.components[i];
+            if (r > component.codingStyleParameters.decompositionLevelsCount) {
+              continue;
+            }
+
+            var resolution = component.resolutions[r];
+            var numprecincts = resolution.precinctParameters.numprecincts;
+            for (; k < numprecincts;) {
+              var packet = createPacket(resolution, k, l);
+              k++;
+              return packet;
+            }
+            k = 0;
+          }
+          i = 0;
+        }
+        l = 0;
+      }
+    };
+  }
+  function ResolutionPositionComponentLayerIterator(context) {
+    var siz = context.SIZ;
+    var tileIndex = context.currentTile.index;
+    var tile = context.tiles[tileIndex];
+    var layersCount = tile.codingStyleDefaultParameters.layersCount;
+    var componentsCount = siz.Csiz;
+    var l, r, c, p;
+    var maxDecompositionLevelsCount = 0;
+    for (c = 0; c < componentsCount; c++) {
+      var component = tile.components[c];
+      maxDecompositionLevelsCount = Math.max(maxDecompositionLevelsCount,
+        component.codingStyleParameters.decompositionLevelsCount);
+    }
+    var maxNumPrecinctsInLevel = new Int32Array(
+      maxDecompositionLevelsCount + 1);
+    for (r = 0; r <= maxDecompositionLevelsCount; ++r) {
+      var maxNumPrecincts = 0;
+      for (c = 0; c < componentsCount; ++c) {
+        var resolutions = tile.components[c].resolutions;
+        if (r < resolutions.length) {
+          maxNumPrecincts = Math.max(maxNumPrecincts,
+            resolutions[r].precinctParameters.numprecincts);
+        }
+      }
+      maxNumPrecinctsInLevel[r] = maxNumPrecincts;
+    }
+    l = 0;
+    r = 0;
+    c = 0;
+    p = 0;
+
+    this.nextPacket = function JpxImage_nextPacket() {
+      // Section B.12.1.3 Resolution-position-component-layer
+      for (; r <= maxDecompositionLevelsCount; r++) {
+        for (; p < maxNumPrecinctsInLevel[r]; p++) {
+          for (; c < componentsCount; c++) {
+            var component = tile.components[c];
+            if (r > component.codingStyleParameters.decompositionLevelsCount) {
+              continue;
+            }
+            var resolution = component.resolutions[r];
+            var numprecincts = resolution.precinctParameters.numprecincts;
+            if (p >= numprecincts) {
+              continue;
+            }
+            for (; l < layersCount;) {
+              var packet = createPacket(resolution, p, l);
+              l++;
+              return packet;
+            }
+            l = 0;
+          }
+          c = 0;
+        }
+        p = 0;
+      }
+    };
+  }
+  function PositionComponentResolutionLayerIterator(context) {
+    var siz = context.SIZ;
+    var tileIndex = context.currentTile.index;
+    var tile = context.tiles[tileIndex];
+    var layersCount = tile.codingStyleDefaultParameters.layersCount;
+    var componentsCount = siz.Csiz;
+    var precinctsSizes = getPrecinctSizesInImageScale(tile);
+    var precinctsIterationSizes = precinctsSizes;
+    var l = 0, r = 0, c = 0, px = 0, py = 0;
+
+    this.nextPacket = function JpxImage_nextPacket() {
+      // Section B.12.1.4 Position-component-resolution-layer
+      for (; py < precinctsIterationSizes.maxNumHigh; py++) {
+        for (; px < precinctsIterationSizes.maxNumWide; px++) {
+          for (; c < componentsCount; c++) {
+            var component = tile.components[c];
+            var decompositionLevelsCount =
+              component.codingStyleParameters.decompositionLevelsCount;
+            for (; r <= decompositionLevelsCount; r++) {
+              var resolution = component.resolutions[r];
+              var sizeInImageScale =
+                precinctsSizes.components[c].resolutions[r];
+              var k = getPrecinctIndexIfExist(
+                px,
+                py,
+                sizeInImageScale,
+                precinctsIterationSizes,
+                resolution);
+              if (k === null) {
+                continue;
+              }
+              for (; l < layersCount;) {
+                var packet = createPacket(resolution, k, l);
+                l++;
+                return packet;
+              }
+              l = 0;
+            }
+            r = 0;
+          }
+          c = 0;
+        }
+        px = 0;
+      }
+    };
+  }
+  function ComponentPositionResolutionLayerIterator(context) {
+    var siz = context.SIZ;
+    var tileIndex = context.currentTile.index;
+    var tile = context.tiles[tileIndex];
+    var layersCount = tile.codingStyleDefaultParameters.layersCount;
+    var componentsCount = siz.Csiz;
+    var precinctsSizes = getPrecinctSizesInImageScale(tile);
+    var l = 0, r = 0, c = 0, px = 0, py = 0;
+
+    this.nextPacket = function JpxImage_nextPacket() {
+      // Section B.12.1.5 Component-position-resolution-layer
+      for (; c < componentsCount; ++c) {
+        var component = tile.components[c];
+        var precinctsIterationSizes = precinctsSizes.components[c];
+        var decompositionLevelsCount =
+          component.codingStyleParameters.decompositionLevelsCount;
+        for (; py < precinctsIterationSizes.maxNumHigh; py++) {
+          for (; px < precinctsIterationSizes.maxNumWide; px++) {
+            for (; r <= decompositionLevelsCount; r++) {
+              var resolution = component.resolutions[r];
+              var sizeInImageScale = precinctsIterationSizes.resolutions[r];
+              var k = getPrecinctIndexIfExist(
+                px,
+                py,
+                sizeInImageScale,
+                precinctsIterationSizes,
+                resolution);
+              if (k === null) {
+                continue;
+              }
+              for (; l < layersCount;) {
+                var packet = createPacket(resolution, k, l);
+                l++;
+                return packet;
+              }
+              l = 0;
+            }
+            r = 0;
+          }
+          px = 0;
+        }
+        py = 0;
+      }
+    };
+  }
+  function getPrecinctIndexIfExist(
+    pxIndex, pyIndex, sizeInImageScale, precinctIterationSizes, resolution) {
+    var posX = pxIndex * precinctIterationSizes.minWidth;
+    var posY = pyIndex * precinctIterationSizes.minHeight;
+    if (posX % sizeInImageScale.width !== 0 ||
+        posY % sizeInImageScale.height !== 0) {
+      return null;
+    }
+    var startPrecinctRowIndex =
+      (posY / sizeInImageScale.width) *
+      resolution.precinctParameters.numprecinctswide;
+    return (posX / sizeInImageScale.height) + startPrecinctRowIndex;
+  }
+  function getPrecinctSizesInImageScale(tile) {
+    var componentsCount = tile.components.length;
+    var minWidth = Number.MAX_VALUE;
+    var minHeight = Number.MAX_VALUE;
+    var maxNumWide = 0;
+    var maxNumHigh = 0;
+    var sizePerComponent = new Array(componentsCount);
+    for (var c = 0; c < componentsCount; c++) {
+      var component = tile.components[c];
+      var decompositionLevelsCount =
+        component.codingStyleParameters.decompositionLevelsCount;
+      var sizePerResolution = new Array(decompositionLevelsCount + 1);
+      var minWidthCurrentComponent = Number.MAX_VALUE;
+      var minHeightCurrentComponent = Number.MAX_VALUE;
+      var maxNumWideCurrentComponent = 0;
+      var maxNumHighCurrentComponent = 0;
+      var scale = 1;
+      for (var r = decompositionLevelsCount; r >= 0; --r) {
+        var resolution = component.resolutions[r];
+        var widthCurrentResolution =
+          scale * resolution.precinctParameters.precinctWidth;
+        var heightCurrentResolution =
+          scale * resolution.precinctParameters.precinctHeight;
+        minWidthCurrentComponent = Math.min(
+          minWidthCurrentComponent,
+          widthCurrentResolution);
+        minHeightCurrentComponent = Math.min(
+          minHeightCurrentComponent,
+          heightCurrentResolution);
+        maxNumWideCurrentComponent = Math.max(maxNumWideCurrentComponent,
+          resolution.precinctParameters.numprecinctswide);
+        maxNumHighCurrentComponent = Math.max(maxNumHighCurrentComponent,
+          resolution.precinctParameters.numprecinctshigh);
+        sizePerResolution[r] = {
+          width: widthCurrentResolution,
+          height: heightCurrentResolution
+        };
+        scale <<= 1;
+      }
+      minWidth = Math.min(minWidth, minWidthCurrentComponent);
+      minHeight = Math.min(minHeight, minHeightCurrentComponent);
+      maxNumWide = Math.max(maxNumWide, maxNumWideCurrentComponent);
+      maxNumHigh = Math.max(maxNumHigh, maxNumHighCurrentComponent);
+      sizePerComponent[c] = {
+        resolutions: sizePerResolution,
+        minWidth: minWidthCurrentComponent,
+        minHeight: minHeightCurrentComponent,
+        maxNumWide: maxNumWideCurrentComponent,
+        maxNumHigh: maxNumHighCurrentComponent
+      };
+    }
+    return {
+      components: sizePerComponent,
+      minWidth: minWidth,
+      minHeight: minHeight,
+      maxNumWide: maxNumWide,
+      maxNumHigh: maxNumHigh
+    };
+  }
+  function buildPackets(context) {
+    var siz = context.SIZ;
+    var tileIndex = context.currentTile.index;
+    var tile = context.tiles[tileIndex];
+    var componentsCount = siz.Csiz;
+    // Creating resolutions and sub-bands for each component
+    for (var c = 0; c < componentsCount; c++) {
+      var component = tile.components[c];
+      var decompositionLevelsCount =
+        component.codingStyleParameters.decompositionLevelsCount;
+      // Section B.5 Resolution levels and sub-bands
+      var resolutions = [];
+      var subbands = [];
+      for (var r = 0; r <= decompositionLevelsCount; r++) {
+        var blocksDimensions = getBlocksDimensions(context, component, r);
+        var resolution = {};
+        var scale = 1 << (decompositionLevelsCount - r);
+        resolution.trx0 = Math.ceil(component.tcx0 / scale);
+        resolution.try0 = Math.ceil(component.tcy0 / scale);
+        resolution.trx1 = Math.ceil(component.tcx1 / scale);
+        resolution.try1 = Math.ceil(component.tcy1 / scale);
+        resolution.resLevel = r;
+        buildPrecincts(context, resolution, blocksDimensions);
+        resolutions.push(resolution);
+
+        var subband;
+        if (r === 0) {
+          // one sub-band (LL) with last decomposition
+          subband = {};
+          subband.type = 'LL';
+          subband.tbx0 = Math.ceil(component.tcx0 / scale);
+          subband.tby0 = Math.ceil(component.tcy0 / scale);
+          subband.tbx1 = Math.ceil(component.tcx1 / scale);
+          subband.tby1 = Math.ceil(component.tcy1 / scale);
+          subband.resolution = resolution;
+          buildCodeblocks(context, subband, blocksDimensions);
+          subbands.push(subband);
+          resolution.subbands = [subband];
+        } else {
+          var bscale = 1 << (decompositionLevelsCount - r + 1);
+          var resolutionSubbands = [];
+          // three sub-bands (HL, LH and HH) with rest of decompositions
+          subband = {};
+          subband.type = 'HL';
+          subband.tbx0 = Math.ceil(component.tcx0 / bscale - 0.5);
+          subband.tby0 = Math.ceil(component.tcy0 / bscale);
+          subband.tbx1 = Math.ceil(component.tcx1 / bscale - 0.5);
+          subband.tby1 = Math.ceil(component.tcy1 / bscale);
+          subband.resolution = resolution;
+          buildCodeblocks(context, subband, blocksDimensions);
+          subbands.push(subband);
+          resolutionSubbands.push(subband);
+
+          subband = {};
+          subband.type = 'LH';
+          subband.tbx0 = Math.ceil(component.tcx0 / bscale);
+          subband.tby0 = Math.ceil(component.tcy0 / bscale - 0.5);
+          subband.tbx1 = Math.ceil(component.tcx1 / bscale);
+          subband.tby1 = Math.ceil(component.tcy1 / bscale - 0.5);
+          subband.resolution = resolution;
+          buildCodeblocks(context, subband, blocksDimensions);
+          subbands.push(subband);
+          resolutionSubbands.push(subband);
+
+          subband = {};
+          subband.type = 'HH';
+          subband.tbx0 = Math.ceil(component.tcx0 / bscale - 0.5);
+          subband.tby0 = Math.ceil(component.tcy0 / bscale - 0.5);
+          subband.tbx1 = Math.ceil(component.tcx1 / bscale - 0.5);
+          subband.tby1 = Math.ceil(component.tcy1 / bscale - 0.5);
+          subband.resolution = resolution;
+          buildCodeblocks(context, subband, blocksDimensions);
+          subbands.push(subband);
+          resolutionSubbands.push(subband);
+
+          resolution.subbands = resolutionSubbands;
+        }
+      }
+      component.resolutions = resolutions;
+      component.subbands = subbands;
+    }
+    // Generate the packets sequence
+    var progressionOrder = tile.codingStyleDefaultParameters.progressionOrder;
+    switch (progressionOrder) {
+      case 0:
+        tile.packetsIterator =
+          new LayerResolutionComponentPositionIterator(context);
+        break;
+      case 1:
+        tile.packetsIterator =
+          new ResolutionLayerComponentPositionIterator(context);
+        break;
+      case 2:
+        tile.packetsIterator =
+          new ResolutionPositionComponentLayerIterator(context);
+        break;
+      case 3:
+        tile.packetsIterator =
+          new PositionComponentResolutionLayerIterator(context);
+        break;
+      case 4:
+        tile.packetsIterator =
+          new ComponentPositionResolutionLayerIterator(context);
+        break;
+      default:
+        throw new Error('JPX Error: Unsupported progression order ' +
+                        progressionOrder);
+    }
+  }
+  function parseTilePackets(context, data, offset, dataLength) {
+    var position = 0;
+    var buffer, bufferSize = 0, skipNextBit = false;
+    function readBits(count) {
+      while (bufferSize < count) {
+        var b = data[offset + position];
+        position++;
+        if (skipNextBit) {
+          buffer = (buffer << 7) | b;
+          bufferSize += 7;
+          skipNextBit = false;
+        } else {
+          buffer = (buffer << 8) | b;
+          bufferSize += 8;
+        }
+        if (b === 0xFF) {
+          skipNextBit = true;
+        }
+      }
+      bufferSize -= count;
+      return (buffer >>> bufferSize) & ((1 << count) - 1);
+    }
+    function skipMarkerIfEqual(value) {
+      if (data[offset + position - 1] === 0xFF &&
+          data[offset + position] === value) {
+        skipBytes(1);
+        return true;
+      } else if (data[offset + position] === 0xFF &&
+                 data[offset + position + 1] === value) {
+        skipBytes(2);
+        return true;
+      }
+      return false;
+    }
+    function skipBytes(count) {
+      position += count;
+    }
+    function alignToByte() {
+      bufferSize = 0;
+      if (skipNextBit) {
+        position++;
+        skipNextBit = false;
+      }
+    }
+    function readCodingpasses() {
+      if (readBits(1) === 0) {
+        return 1;
+      }
+      if (readBits(1) === 0) {
+        return 2;
+      }
+      var value = readBits(2);
+      if (value < 3) {
+        return value + 3;
+      }
+      value = readBits(5);
+      if (value < 31) {
+        return value + 6;
+      }
+      value = readBits(7);
+      return value + 37;
+    }
+    var tileIndex = context.currentTile.index;
+    var tile = context.tiles[tileIndex];
+    var sopMarkerUsed = context.COD.sopMarkerUsed;
+    var ephMarkerUsed = context.COD.ephMarkerUsed;
+    var packetsIterator = tile.packetsIterator;
+    while (position < dataLength) {
+      alignToByte();
+      if (sopMarkerUsed && skipMarkerIfEqual(0x91)) {
+        // Skip also marker segment length and packet sequence ID
+        skipBytes(4);
+      }
+      var packet = packetsIterator.nextPacket();
+      if (packet===undefined) {
+        //No more packets. Stream is truncated.
+        return;
+      }
+      if (!readBits(1)) {
+        continue;
+      }
+      var layerNumber = packet.layerNumber;
+      var queue = [], codeblock;
+      for (var i = 0, ii = packet.codeblocks.length; i < ii; i++) {
+        codeblock = packet.codeblocks[i];
+        var precinct = codeblock.precinct;
+        var codeblockColumn = codeblock.cbx - precinct.cbxMin;
+        var codeblockRow = codeblock.cby - precinct.cbyMin;
+        var codeblockIncluded = false;
+        var firstTimeInclusion = false;
+        var valueReady;
+        if (codeblock['included'] !== undefined) {
+          codeblockIncluded = !!readBits(1);
+        } else {
+          // reading inclusion tree
+          precinct = codeblock.precinct;
+          var inclusionTree, zeroBitPlanesTree;
+          if (precinct['inclusionTree'] !== undefined) {
+            inclusionTree = precinct.inclusionTree;
+          } else {
+            // building inclusion and zero bit-planes trees
+            var width = precinct.cbxMax - precinct.cbxMin + 1;
+            var height = precinct.cbyMax - precinct.cbyMin + 1;
+            inclusionTree = new InclusionTree(width, height, layerNumber);
+            zeroBitPlanesTree = new TagTree(width, height);
+            precinct.inclusionTree = inclusionTree;
+            precinct.zeroBitPlanesTree = zeroBitPlanesTree;
+            for (var l=0; l < layerNumber; l++) {
+              if (readBits(1) !== 0) {
+                throw new Error('JPX Error: Invalid tag tree');
+              }
+            }
+          }
+
+          if (inclusionTree.reset(codeblockColumn, codeblockRow, layerNumber)) {
+            while (true) {
+              if (readBits(1)) {
+                valueReady = !inclusionTree.nextLevel();
+                if (valueReady) {
+                  codeblock.included = true;
+                  codeblockIncluded = firstTimeInclusion = true;
+                  break;
+                }
+              } else {
+                inclusionTree.incrementValue(layerNumber);
+                break;
+              }
+            }
+          }
+        }
+        if (!codeblockIncluded) {
+          continue;
+        }
+        if (firstTimeInclusion) {
+          zeroBitPlanesTree = precinct.zeroBitPlanesTree;
+          zeroBitPlanesTree.reset(codeblockColumn, codeblockRow);
+          while (true) {
+            if (readBits(1)) {
+              valueReady = !zeroBitPlanesTree.nextLevel();
+              if (valueReady) {
+                break;
+              }
+            } else {
+              zeroBitPlanesTree.incrementValue();
+            }
+          }
+          codeblock.zeroBitPlanes = zeroBitPlanesTree.value;
+        }
+        var codingpasses = readCodingpasses();
+        while (readBits(1)) {
+          codeblock.Lblock++;
+        }
+        var codingpassesLog2 = log2(codingpasses);
+        // rounding down log2
+        var bits = ((codingpasses < (1 << codingpassesLog2)) ?
+          codingpassesLog2 - 1 : codingpassesLog2) + codeblock.Lblock;
+        var codedDataLength = readBits(bits);
+        queue.push({
+          codeblock: codeblock,
+          codingpasses: codingpasses,
+          dataLength: codedDataLength
+        });
+      }
+      alignToByte();
+      if (ephMarkerUsed) {
+        skipMarkerIfEqual(0x92);
+      }
+      while (queue.length > 0) {
+        var packetItem = queue.shift();
+        codeblock = packetItem.codeblock;
+        if (codeblock['data'] === undefined) {
+          codeblock.data = [];
+        }
+        codeblock.data.push({
+          data: data,
+          start: offset + position,
+          end: offset + position + packetItem.dataLength,
+          codingpasses: packetItem.codingpasses
+        });
+        position += packetItem.dataLength;
+      }
+    }
+    return position;
+  }
+  function copyCoefficients(coefficients, levelWidth, levelHeight, subband,
+                            delta, mb, reversible, segmentationSymbolUsed) {
+    var x0 = subband.tbx0;
+    var y0 = subband.tby0;
+    var width = subband.tbx1 - subband.tbx0;
+    var codeblocks = subband.codeblocks;
+    var right = subband.type.charAt(0) === 'H' ? 1 : 0;
+    var bottom = subband.type.charAt(1) === 'H' ? levelWidth : 0;
+
+    for (var i = 0, ii = codeblocks.length; i < ii; ++i) {
+      var codeblock = codeblocks[i];
+      var blockWidth = codeblock.tbx1_ - codeblock.tbx0_;
+      var blockHeight = codeblock.tby1_ - codeblock.tby0_;
+      if (blockWidth === 0 || blockHeight === 0) {
+        continue;
+      }
+      if (codeblock['data'] === undefined) {
+        continue;
+      }
+
+      var bitModel, currentCodingpassType;
+      bitModel = new BitModel(blockWidth, blockHeight, codeblock.subbandType,
+                              codeblock.zeroBitPlanes, mb);
+      currentCodingpassType = 2; // first bit plane starts from cleanup
+
+      // collect data
+      var data = codeblock.data, totalLength = 0, codingpasses = 0;
+      var j, jj, dataItem;
+      for (j = 0, jj = data.length; j < jj; j++) {
+        dataItem = data[j];
+        totalLength += dataItem.end - dataItem.start;
+        codingpasses += dataItem.codingpasses;
+      }
+      var encodedData = new Int16Array(totalLength);
+      var position = 0;
+      for (j = 0, jj = data.length; j < jj; j++) {
+        dataItem = data[j];
+        var chunk = dataItem.data.subarray(dataItem.start, dataItem.end);
+        encodedData.set(chunk, position);
+        position += chunk.length;
+      }
+      // decoding the item
+      var decoder = new ArithmeticDecoder(encodedData, 0, totalLength);
+      bitModel.setDecoder(decoder);
+
+      for (j = 0; j < codingpasses; j++) {
+        switch (currentCodingpassType) {
+          case 0:
+            bitModel.runSignificancePropogationPass();
+            break;
+          case 1:
+            bitModel.runMagnitudeRefinementPass();
+            break;
+          case 2:
+            bitModel.runCleanupPass();
+            if (segmentationSymbolUsed) {
+              bitModel.checkSegmentationSymbol();
+            }
+            break;
+        }
+        currentCodingpassType = (currentCodingpassType + 1) % 3;
+      }
+
+      var offset = (codeblock.tbx0_ - x0) + (codeblock.tby0_ - y0) * width;
+      var sign = bitModel.coefficentsSign;
+      var magnitude = bitModel.coefficentsMagnitude;
+      var bitsDecoded = bitModel.bitsDecoded;
+      var magnitudeCorrection = reversible ? 0 : 0.5;
+      var k, n, nb;
+      position = 0;
+      // Do the interleaving of Section F.3.3 here, so we do not need
+      // to copy later. LL level is not interleaved, just copied.
+      var interleave = (subband.type !== 'LL');
+      for (j = 0; j < blockHeight; j++) {
+        var row = (offset / width) | 0; // row in the non-interleaved subband
+        var levelOffset = 2 * row * (levelWidth - width) + right + bottom;
+        for (k = 0; k < blockWidth; k++) {
+          n = magnitude[position];
+          if (n !== 0) {
+            n = (n + magnitudeCorrection) * delta;
+            if (sign[position] !== 0) {
+              n = -n;
+            }
+            nb = bitsDecoded[position];
+            var pos = interleave ? (levelOffset + (offset << 1)) : offset;
+            if (reversible && (nb >= mb)) {
+              coefficients[pos] = n;
+            } else {
+              coefficients[pos] = n * (1 << (mb - nb));
+            }
+          }
+          offset++;
+          position++;
+        }
+        offset += width - blockWidth;
+      }
+    }
+  }
+  function transformTile(context, tile, c) {
+    var component = tile.components[c];
+    var codingStyleParameters = component.codingStyleParameters;
+    var quantizationParameters = component.quantizationParameters;
+    var decompositionLevelsCount =
+      codingStyleParameters.decompositionLevelsCount;
+    var spqcds = quantizationParameters.SPqcds;
+    var scalarExpounded = quantizationParameters.scalarExpounded;
+    var guardBits = quantizationParameters.guardBits;
+    var segmentationSymbolUsed = codingStyleParameters.segmentationSymbolUsed;
+    var precision = context.components[c].precision;
+
+    var reversible = codingStyleParameters.reversibleTransformation;
+    var transform = (reversible ? new ReversibleTransform() :
+                                  new IrreversibleTransform());
+
+    var subbandCoefficients = [];
+    var b = 0;
+    for (var i = 0; i <= decompositionLevelsCount; i++) {
+      var resolution = component.resolutions[i];
+
+      var width = resolution.trx1 - resolution.trx0;
+      var height = resolution.try1 - resolution.try0;
+      // Allocate space for the whole sublevel.
+      var coefficients = new Float32Array(width * height);
+
+      for (var j = 0, jj = resolution.subbands.length; j < jj; j++) {
+        var mu, epsilon;
+        if (!scalarExpounded) {
+          // formula E-5
+          mu = spqcds[0].mu;
+          epsilon = spqcds[0].epsilon + (i > 0 ? 1 - i : 0);
+        } else {
+          mu = spqcds[b].mu;
+          epsilon = spqcds[b].epsilon;
+          b++;
+        }
+
+        var subband = resolution.subbands[j];
+        var gainLog2 = SubbandsGainLog2[subband.type];
+
+        // calulate quantization coefficient (Section E.1.1.1)
+        var delta = (reversible ? 1 :
+          Math.pow(2, precision + gainLog2 - epsilon) * (1 + mu / 2048));
+        var mb = (guardBits + epsilon - 1);
+
+        // In the first resolution level, copyCoefficients will fill the
+        // whole array with coefficients. In the succeding passes,
+        // copyCoefficients will consecutively fill in the values that belong
+        // to the interleaved positions of the HL, LH, and HH coefficients.
+        // The LL coefficients will then be interleaved in Transform.iterate().
+        copyCoefficients(coefficients, width, height, subband, delta, mb,
+                         reversible, segmentationSymbolUsed);
+      }
+      subbandCoefficients.push({
+        width: width,
+        height: height,
+        items: coefficients
+      });
+    }
+
+    var result = transform.calculate(subbandCoefficients,
+                                     component.tcx0, component.tcy0);
+    return {
+      left: component.tcx0,
+      top: component.tcy0,
+      width: result.width,
+      height: result.height,
+      items: result.items
+    };
+  }
+  function transformComponents(context) {
+    var siz = context.SIZ;
+    var components = context.components;
+    var componentsCount = siz.Csiz;
+    var resultImages = [];
+    for (var i = 0, ii = context.tiles.length; i < ii; i++) {
+      var tile = context.tiles[i];
+      var transformedTiles = [];
+      var c;
+      for (c = 0; c < componentsCount; c++) {
+        transformedTiles[c] = transformTile(context, tile, c);
+      }
+      var tile0 = transformedTiles[0];
+      var out = new Int16Array(tile0.items.length * componentsCount);
+      var result = {
+        left: tile0.left,
+        top: tile0.top,
+        width: tile0.width,
+        height: tile0.height,
+        items: out
+      };
+
+      // Section G.2.2 Inverse multi component transform
+      var shift, offset, max, min, maxK;
+      var pos = 0, j, jj, y0, y1, y2, r, g, b, k, val;
+      if (tile.codingStyleDefaultParameters.multipleComponentTransform) {
+        var fourComponents = componentsCount === 4;
+        var y0items = transformedTiles[0].items;
+        var y1items = transformedTiles[1].items;
+        var y2items = transformedTiles[2].items;
+        var y3items = fourComponents ? transformedTiles[3].items : null;
+
+        // HACK: The multiple component transform formulas below assume that
+        // all components have the same precision. With this in mind, we
+        // compute shift and offset only once.
+        shift = components[0].precision - 8;
+        offset = (128 << shift) + 0.5;
+        max = 255 * (1 << shift);
+        maxK = max * 0.5;
+        min = -maxK;
+
+        var component0 = tile.components[0];
+        var alpha01 = componentsCount - 3;
+        jj = y0items.length;
+        if (!component0.codingStyleParameters.reversibleTransformation) {
+          // inverse irreversible multiple component transform
+          for (j = 0; j < jj; j++, pos += alpha01) {
+            y0 = y0items[j] + offset;
+            y1 = y1items[j];
+            y2 = y2items[j];
+            r = y0 + 1.402 * y2;
+            g = y0 - 0.34413 * y1 - 0.71414 * y2;
+            b = y0 + 1.772 * y1;
+            out[pos++] = r <= 0 ? 0 : r >= max ? 255 : r >> shift;
+            out[pos++] = g <= 0 ? 0 : g >= max ? 255 : g >> shift;
+            out[pos++] = b <= 0 ? 0 : b >= max ? 255 : b >> shift;
+          }
+        } else {
+          // inverse reversible multiple component transform
+          for (j = 0; j < jj; j++, pos += alpha01) {
+            y0 = y0items[j] + offset;
+            y1 = y1items[j];
+            y2 = y2items[j];
+            g = y0 - ((y2 + y1) >> 2);
+            r = g + y2;
+            b = g + y1;
+            out[pos++] = r <= 0 ? 0 : r >= max ? 255 : r >> shift;
+            out[pos++] = g <= 0 ? 0 : g >= max ? 255 : g >> shift;
+            out[pos++] = b <= 0 ? 0 : b >= max ? 255 : b >> shift;
+          }
+        }
+        if (fourComponents) {
+          for (j = 0, pos = 3; j < jj; j++, pos += 4) {
+            k = y3items[j];
+            out[pos] = k <= min ? 0 : k >= maxK ? 255 : (k + offset) >> shift;
+          }
+        }
+      } else { // no multi-component transform
+        for (c = 0; c < componentsCount; c++) {
+          if (components[c].precision === 8){
+            var items = transformedTiles[c].items;
+            shift = components[c].precision - 8;
+            offset = (128 << shift) + 0.5;
+            max = (127.5 * (1 << shift));
+            min = -max;
+            for (pos = c, j = 0, jj = items.length; j < jj; j++) {
+              val = items[j];
+              out[pos] = val <= min ? 0 :
+                         val >= max ? 255 : (val + offset) >> shift;
+              pos += componentsCount;
+            }
+          }else{
+            var isSigned = components[c].isSigned;
+            var items = transformedTiles[c].items;
+
+            if(isSigned){
+              shift = 0;
+              offset = 0;
+            }else{
+              shift = components[c].precision - 8;
+              offset = (128 << shift) + 0.5;
+            }
+
+            for (pos = c, j = 0, jj = items.length; j < jj; j++) {
+              val = items[j];
+              out[pos] = (val + offset);
+              pos += componentsCount;
+            }
+          }
+        }
+      }
+      resultImages.push(result);
+    }
+    return resultImages;
+  }
+  function initializeTile(context, tileIndex) {
+    var siz = context.SIZ;
+    var componentsCount = siz.Csiz;
+    var tile = context.tiles[tileIndex];
+    for (var c = 0; c < componentsCount; c++) {
+      var component = tile.components[c];
+      var qcdOrQcc = (context.currentTile.QCC[c] !== undefined ?
+        context.currentTile.QCC[c] : context.currentTile.QCD);
+      component.quantizationParameters = qcdOrQcc;
+      var codOrCoc = (context.currentTile.COC[c] !== undefined  ?
+        context.currentTile.COC[c] : context.currentTile.COD);
+      component.codingStyleParameters = codOrCoc;
+    }
+    tile.codingStyleDefaultParameters = context.currentTile.COD;
+  }
+
+  // Section B.10.2 Tag trees
+  var TagTree = (function TagTreeClosure() {
+    function TagTree(width, height) {
+      var levelsLength = log2(Math.max(width, height)) + 1;
+      this.levels = [];
+      for (var i = 0; i < levelsLength; i++) {
+        var level = {
+          width: width,
+          height: height,
+          items: []
+        };
+        this.levels.push(level);
+        width = Math.ceil(width / 2);
+        height = Math.ceil(height / 2);
+      }
+    }
+    TagTree.prototype = {
+      reset: function TagTree_reset(i, j) {
+        var currentLevel = 0, value = 0, level;
+        while (currentLevel < this.levels.length) {
+          level = this.levels[currentLevel];
+          var index = i + j * level.width;
+          if (level.items[index] !== undefined) {
+            value = level.items[index];
+            break;
+          }
+          level.index = index;
+          i >>= 1;
+          j >>= 1;
+          currentLevel++;
+        }
+        currentLevel--;
+        level = this.levels[currentLevel];
+        level.items[level.index] = value;
+        this.currentLevel = currentLevel;
+        delete this.value;
+      },
+      incrementValue: function TagTree_incrementValue() {
+        var level = this.levels[this.currentLevel];
+        level.items[level.index]++;
+      },
+      nextLevel: function TagTree_nextLevel() {
+        var currentLevel = this.currentLevel;
+        var level = this.levels[currentLevel];
+        var value = level.items[level.index];
+        currentLevel--;
+        if (currentLevel < 0) {
+          this.value = value;
+          return false;
+        }
+
+        this.currentLevel = currentLevel;
+        level = this.levels[currentLevel];
+        level.items[level.index] = value;
+        return true;
+      }
+    };
+    return TagTree;
+  })();
+
+  var InclusionTree = (function InclusionTreeClosure() {
+    function InclusionTree(width, height,  defaultValue) {
+      var levelsLength = log2(Math.max(width, height)) + 1;
+      this.levels = [];
+      for (var i = 0; i < levelsLength; i++) {
+        var items = new Int16Array(width * height);
+        for (var j = 0, jj = items.length; j < jj; j++) {
+          items[j] = defaultValue;
+        }
+
+        var level = {
+          width: width,
+          height: height,
+          items: items
+        };
+        this.levels.push(level);
+
+        width = Math.ceil(width / 2);
+        height = Math.ceil(height / 2);
+      }
+    }
+    InclusionTree.prototype = {
+      reset: function InclusionTree_reset(i, j, stopValue) {
+        var currentLevel = 0;
+        while (currentLevel < this.levels.length) {
+          var level = this.levels[currentLevel];
+          var index = i + j * level.width;
+          level.index = index;
+          var value = level.items[index];
+
+          if (value === 0xFF) {
+            break;
+          }
+
+          if (value > stopValue) {
+            this.currentLevel = currentLevel;
+            // already know about this one, propagating the value to top levels
+            this.propagateValues();
+            return false;
+          }
+
+          i >>= 1;
+          j >>= 1;
+          currentLevel++;
+        }
+        this.currentLevel = currentLevel - 1;
+        return true;
+      },
+      incrementValue: function InclusionTree_incrementValue(stopValue) {
+        var level = this.levels[this.currentLevel];
+        level.items[level.index] = stopValue + 1;
+        this.propagateValues();
+      },
+      propagateValues: function InclusionTree_propagateValues() {
+        var levelIndex = this.currentLevel;
+        var level = this.levels[levelIndex];
+        var currentValue = level.items[level.index];
+        while (--levelIndex >= 0) {
+          level = this.levels[levelIndex];
+          level.items[level.index] = currentValue;
+        }
+      },
+      nextLevel: function InclusionTree_nextLevel() {
+        var currentLevel = this.currentLevel;
+        var level = this.levels[currentLevel];
+        var value = level.items[level.index];
+        level.items[level.index] = 0xFF;
+        currentLevel--;
+        if (currentLevel < 0) {
+          return false;
+        }
+
+        this.currentLevel = currentLevel;
+        level = this.levels[currentLevel];
+        level.items[level.index] = value;
+        return true;
+      }
+    };
+    return InclusionTree;
+  })();
+
+  // Section D. Coefficient bit modeling
+  var BitModel = (function BitModelClosure() {
+    var UNIFORM_CONTEXT = 17;
+    var RUNLENGTH_CONTEXT = 18;
+    // Table D-1
+    // The index is binary presentation: 0dddvvhh, ddd - sum of Di (0..4),
+    // vv - sum of Vi (0..2), and hh - sum of Hi (0..2)
+    var LLAndLHContextsLabel = new Uint8Array([
+      0, 5, 8, 0, 3, 7, 8, 0, 4, 7, 8, 0, 0, 0, 0, 0, 1, 6, 8, 0, 3, 7, 8, 0, 4,
+      7, 8, 0, 0, 0, 0, 0, 2, 6, 8, 0, 3, 7, 8, 0, 4, 7, 8, 0, 0, 0, 0, 0, 2, 6,
+      8, 0, 3, 7, 8, 0, 4, 7, 8, 0, 0, 0, 0, 0, 2, 6, 8, 0, 3, 7, 8, 0, 4, 7, 8
+    ]);
+    var HLContextLabel = new Uint8Array([
+      0, 3, 4, 0, 5, 7, 7, 0, 8, 8, 8, 0, 0, 0, 0, 0, 1, 3, 4, 0, 6, 7, 7, 0, 8,
+      8, 8, 0, 0, 0, 0, 0, 2, 3, 4, 0, 6, 7, 7, 0, 8, 8, 8, 0, 0, 0, 0, 0, 2, 3,
+      4, 0, 6, 7, 7, 0, 8, 8, 8, 0, 0, 0, 0, 0, 2, 3, 4, 0, 6, 7, 7, 0, 8, 8, 8
+    ]);
+    var HHContextLabel = new Uint8Array([
+      0, 1, 2, 0, 1, 2, 2, 0, 2, 2, 2, 0, 0, 0, 0, 0, 3, 4, 5, 0, 4, 5, 5, 0, 5,
+      5, 5, 0, 0, 0, 0, 0, 6, 7, 7, 0, 7, 7, 7, 0, 7, 7, 7, 0, 0, 0, 0, 0, 8, 8,
+      8, 0, 8, 8, 8, 0, 8, 8, 8, 0, 0, 0, 0, 0, 8, 8, 8, 0, 8, 8, 8, 0, 8, 8, 8
+    ]);
+
+    function BitModel(width, height, subband, zeroBitPlanes, mb) {
+      this.width = width;
+      this.height = height;
+
+      this.contextLabelTable = (subband === 'HH' ? HHContextLabel :
+        (subband === 'HL' ? HLContextLabel : LLAndLHContextsLabel));
+
+      var coefficientCount = width * height;
+
+      // coefficients outside the encoding region treated as insignificant
+      // add border state cells for significanceState
+      this.neighborsSignificance = new Uint8Array(coefficientCount);
+      this.coefficentsSign = new Uint8Array(coefficientCount);
+      this.coefficentsMagnitude = mb > 14 ? new Uint32Array(coefficientCount) :
+                                  mb > 6 ? new Uint16Array(coefficientCount) :
+                                  new Uint8Array(coefficientCount);
+      this.processingFlags = new Uint8Array(coefficientCount);
+
+      var bitsDecoded = new Uint8Array(coefficientCount);
+      if (zeroBitPlanes !== 0) {
+        for (var i = 0; i < coefficientCount; i++) {
+          bitsDecoded[i] = zeroBitPlanes;
+        }
+      }
+      this.bitsDecoded = bitsDecoded;
+
+      this.reset();
+    }
+
+    BitModel.prototype = {
+      setDecoder: function BitModel_setDecoder(decoder) {
+        this.decoder = decoder;
+      },
+      reset: function BitModel_reset() {
+        // We have 17 contexts that are accessed via context labels,
+        // plus the uniform and runlength context.
+        this.contexts = new Int8Array(19);
+
+        // Contexts are packed into 1 byte:
+        // highest 7 bits carry the index, lowest bit carries mps
+        this.contexts[0] = (4 << 1) | 0;
+        this.contexts[UNIFORM_CONTEXT] = (46 << 1) | 0;
+        this.contexts[RUNLENGTH_CONTEXT] = (3 << 1) | 0;
+      },
+      setNeighborsSignificance:
+        function BitModel_setNeighborsSignificance(row, column, index) {
+        var neighborsSignificance = this.neighborsSignificance;
+        var width = this.width, height = this.height;
+        var left = (column > 0);
+        var right = (column + 1 < width);
+        var i;
+
+        if (row > 0) {
+          i = index - width;
+          if (left) {
+            neighborsSignificance[i - 1] += 0x10;
+          }
+          if (right) {
+            neighborsSignificance[i + 1] += 0x10;
+          }
+          neighborsSignificance[i] += 0x04;
+        }
+
+        if (row + 1 < height) {
+          i = index + width;
+          if (left) {
+            neighborsSignificance[i - 1] += 0x10;
+          }
+          if (right) {
+            neighborsSignificance[i + 1] += 0x10;
+          }
+          neighborsSignificance[i] += 0x04;
+        }
+
+        if (left) {
+          neighborsSignificance[index - 1] += 0x01;
+        }
+        if (right) {
+          neighborsSignificance[index + 1] += 0x01;
+        }
+        neighborsSignificance[index] |= 0x80;
+      },
+      runSignificancePropogationPass:
+        function BitModel_runSignificancePropogationPass() {
+        var decoder = this.decoder;
+        var width = this.width, height = this.height;
+        var coefficentsMagnitude = this.coefficentsMagnitude;
+        var coefficentsSign = this.coefficentsSign;
+        var neighborsSignificance = this.neighborsSignificance;
+        var processingFlags = this.processingFlags;
+        var contexts = this.contexts;
+        var labels = this.contextLabelTable;
+        var bitsDecoded = this.bitsDecoded;
+        var processedInverseMask = ~1;
+        var processedMask = 1;
+        var firstMagnitudeBitMask = 2;
+
+        for (var i0 = 0; i0 < height; i0 += 4) {
+          for (var j = 0; j < width; j++) {
+            var index = i0 * width + j;
+            for (var i1 = 0; i1 < 4; i1++, index += width) {
+              var i = i0 + i1;
+              if (i >= height) {
+                break;
+              }
+              // clear processed flag first
+              processingFlags[index] &= processedInverseMask;
+
+              if (coefficentsMagnitude[index] ||
+                  !neighborsSignificance[index]) {
+                continue;
+              }
+
+              var contextLabel = labels[neighborsSignificance[index]];
+              var decision = decoder.readBit(contexts, contextLabel);
+              if (decision) {
+                var sign = this.decodeSignBit(i, j, index);
+                coefficentsSign[index] = sign;
+                coefficentsMagnitude[index] = 1;
+                this.setNeighborsSignificance(i, j, index);
+                processingFlags[index] |= firstMagnitudeBitMask;
+              }
+              bitsDecoded[index]++;
+              processingFlags[index] |= processedMask;
+            }
+          }
+        }
+      },
+      decodeSignBit: function BitModel_decodeSignBit(row, column, index) {
+        var width = this.width, height = this.height;
+        var coefficentsMagnitude = this.coefficentsMagnitude;
+        var coefficentsSign = this.coefficentsSign;
+        var contribution, sign0, sign1, significance1;
+        var contextLabel, decoded;
+
+        // calculate horizontal contribution
+        significance1 = (column > 0 && coefficentsMagnitude[index - 1] !== 0);
+        if (column + 1 < width && coefficentsMagnitude[index + 1] !== 0) {
+          sign1 = coefficentsSign[index + 1];
+          if (significance1) {
+            sign0 = coefficentsSign[index - 1];
+            contribution = 1 - sign1 - sign0;
+          } else {
+            contribution = 1 - sign1 - sign1;
+          }
+        } else if (significance1) {
+          sign0 = coefficentsSign[index - 1];
+          contribution = 1 - sign0 - sign0;
+        } else {
+          contribution = 0;
+        }
+        var horizontalContribution = 3 * contribution;
+
+        // calculate vertical contribution and combine with the horizontal
+        significance1 = (row > 0 && coefficentsMagnitude[index - width] !== 0);
+        if (row + 1 < height && coefficentsMagnitude[index + width] !== 0) {
+          sign1 = coefficentsSign[index + width];
+          if (significance1) {
+            sign0 = coefficentsSign[index - width];
+            contribution = 1 - sign1 - sign0 + horizontalContribution;
+          } else {
+            contribution = 1 - sign1 - sign1 + horizontalContribution;
+          }
+        } else if (significance1) {
+          sign0 = coefficentsSign[index - width];
+          contribution = 1 - sign0 - sign0 + horizontalContribution;
+        } else {
+          contribution = horizontalContribution;
+        }
+
+        if (contribution >= 0) {
+          contextLabel = 9 + contribution;
+          decoded = this.decoder.readBit(this.contexts, contextLabel);
+        } else {
+          contextLabel = 9 - contribution;
+          decoded = this.decoder.readBit(this.contexts, contextLabel) ^ 1;
+        }
+        return decoded;
+      },
+      runMagnitudeRefinementPass:
+        function BitModel_runMagnitudeRefinementPass() {
+        var decoder = this.decoder;
+        var width = this.width, height = this.height;
+        var coefficentsMagnitude = this.coefficentsMagnitude;
+        var neighborsSignificance = this.neighborsSignificance;
+        var contexts = this.contexts;
+        var bitsDecoded = this.bitsDecoded;
+        var processingFlags = this.processingFlags;
+        var processedMask = 1;
+        var firstMagnitudeBitMask = 2;
+        var length = width * height;
+        var width4 = width * 4;
+
+        for (var index0 = 0, indexNext; index0 < length; index0 = indexNext) {
+          indexNext = Math.min(length, index0 + width4);
+          for (var j = 0; j < width; j++) {
+            for (var index = index0 + j; index < indexNext; index += width) {
+
+              // significant but not those that have just become
+              if (!coefficentsMagnitude[index] ||
+                (processingFlags[index] & processedMask) !== 0) {
+                continue;
+              }
+
+              var contextLabel = 16;
+              if ((processingFlags[index] & firstMagnitudeBitMask) !== 0) {
+                processingFlags[index] ^= firstMagnitudeBitMask;
+                // first refinement
+               var significance = neighborsSignificance[index] & 127;
+               contextLabel = significance === 0 ? 15 : 14;
+              }
+
+              var bit = decoder.readBit(contexts, contextLabel);
+              coefficentsMagnitude[index] =
+                (coefficentsMagnitude[index] << 1) | bit;
+              bitsDecoded[index]++;
+              processingFlags[index] |= processedMask;
+            }
+          }
+        }
+      },
+      runCleanupPass: function BitModel_runCleanupPass() {
+        var decoder = this.decoder;
+        var width = this.width, height = this.height;
+        var neighborsSignificance = this.neighborsSignificance;
+        var coefficentsMagnitude = this.coefficentsMagnitude;
+        var coefficentsSign = this.coefficentsSign;
+        var contexts = this.contexts;
+        var labels = this.contextLabelTable;
+        var bitsDecoded = this.bitsDecoded;
+        var processingFlags = this.processingFlags;
+        var processedMask = 1;
+        var firstMagnitudeBitMask = 2;
+        var oneRowDown = width;
+        var twoRowsDown = width * 2;
+        var threeRowsDown = width * 3;
+        var iNext;
+        for (var i0 = 0; i0 < height; i0 = iNext) {
+          iNext = Math.min(i0 + 4, height);
+          var indexBase = i0 * width;
+          var checkAllEmpty = i0 + 3 < height;
+          for (var j = 0; j < width; j++) {
+            var index0 = indexBase + j;
+            // using the property: labels[neighborsSignificance[index]] === 0
+            // when neighborsSignificance[index] === 0
+            var allEmpty = (checkAllEmpty &&
+              processingFlags[index0] === 0 &&
+              processingFlags[index0 + oneRowDown] === 0 &&
+              processingFlags[index0 + twoRowsDown] === 0 &&
+              processingFlags[index0 + threeRowsDown] === 0 &&
+              neighborsSignificance[index0] === 0 &&
+              neighborsSignificance[index0 + oneRowDown] === 0 &&
+              neighborsSignificance[index0 + twoRowsDown] === 0 &&
+              neighborsSignificance[index0 + threeRowsDown] === 0);
+            var i1 = 0, index = index0;
+            var i = i0, sign;
+            if (allEmpty) {
+              var hasSignificantCoefficent =
+                decoder.readBit(contexts, RUNLENGTH_CONTEXT);
+              if (!hasSignificantCoefficent) {
+                bitsDecoded[index0]++;
+                bitsDecoded[index0 + oneRowDown]++;
+                bitsDecoded[index0 + twoRowsDown]++;
+                bitsDecoded[index0 + threeRowsDown]++;
+                continue; // next column
+              }
+              i1 = (decoder.readBit(contexts, UNIFORM_CONTEXT) << 1) |
+                    decoder.readBit(contexts, UNIFORM_CONTEXT);
+              if (i1 !== 0) {
+                i = i0 + i1;
+                index += i1 * width;
+              }
+
+              sign = this.decodeSignBit(i, j, index);
+              coefficentsSign[index] = sign;
+              coefficentsMagnitude[index] = 1;
+              this.setNeighborsSignificance(i, j, index);
+              processingFlags[index] |= firstMagnitudeBitMask;
+
+              index = index0;
+              for (var i2 = i0; i2 <= i; i2++, index += width) {
+                bitsDecoded[index]++;
+              }
+
+              i1++;
+            }
+            for (i = i0 + i1; i < iNext; i++, index += width) {
+              if (coefficentsMagnitude[index] ||
+                (processingFlags[index] & processedMask) !== 0) {
+                continue;
+              }
+
+              var contextLabel = labels[neighborsSignificance[index]];
+              var decision = decoder.readBit(contexts, contextLabel);
+              if (decision === 1) {
+                sign = this.decodeSignBit(i, j, index);
+                coefficentsSign[index] = sign;
+                coefficentsMagnitude[index] = 1;
+                this.setNeighborsSignificance(i, j, index);
+                processingFlags[index] |= firstMagnitudeBitMask;
+              }
+              bitsDecoded[index]++;
+            }
+          }
+        }
+      },
+      checkSegmentationSymbol: function BitModel_checkSegmentationSymbol() {
+        var decoder = this.decoder;
+        var contexts = this.contexts;
+        var symbol = (decoder.readBit(contexts, UNIFORM_CONTEXT) << 3) |
+                     (decoder.readBit(contexts, UNIFORM_CONTEXT) << 2) |
+                     (decoder.readBit(contexts, UNIFORM_CONTEXT) << 1) |
+                      decoder.readBit(contexts, UNIFORM_CONTEXT);
+        if (symbol !== 0xA) {
+          throw new Error('JPX Error: Invalid segmentation symbol');
+        }
+      }
+    };
+
+    return BitModel;
+  })();
+
+  // Section F, Discrete wavelet transformation
+  var Transform = (function TransformClosure() {
+    function Transform() {}
+
+    Transform.prototype.calculate =
+      function transformCalculate(subbands, u0, v0) {
+      var ll = subbands[0];
+      for (var i = 1, ii = subbands.length; i < ii; i++) {
+        ll = this.iterate(ll, subbands[i], u0, v0);
+      }
+      return ll;
+    };
+    Transform.prototype.extend = function extend(buffer, offset, size) {
+      // Section F.3.7 extending... using max extension of 4
+      var i1 = offset - 1, j1 = offset + 1;
+      var i2 = offset + size - 2, j2 = offset + size;
+      buffer[i1--] = buffer[j1++];
+      buffer[j2++] = buffer[i2--];
+      buffer[i1--] = buffer[j1++];
+      buffer[j2++] = buffer[i2--];
+      buffer[i1--] = buffer[j1++];
+      buffer[j2++] = buffer[i2--];
+      buffer[i1] = buffer[j1];
+      buffer[j2] = buffer[i2];
+    };
+    Transform.prototype.iterate = function Transform_iterate(ll, hl_lh_hh,
+                                                             u0, v0) {
+      var llWidth = ll.width, llHeight = ll.height, llItems = ll.items;
+      var width = hl_lh_hh.width;
+      var height = hl_lh_hh.height;
+      var items = hl_lh_hh.items;
+      var i, j, k, l, u, v;
+
+      // Interleave LL according to Section F.3.3
+      for (k = 0, i = 0; i < llHeight; i++) {
+        l = i * 2 * width;
+        for (j = 0; j < llWidth; j++, k++, l += 2) {
+          items[l] = llItems[k];
+        }
+      }
+      // The LL band is not needed anymore.
+      llItems = ll.items = null;
+
+      var bufferPadding = 4;
+      var rowBuffer = new Float32Array(width + 2 * bufferPadding);
+
+      // Section F.3.4 HOR_SR
+      if (width === 1) {
+        // if width = 1, when u0 even keep items as is, when odd divide by 2
+        if ((u0 & 1) !== 0) {
+          for (v = 0, k = 0; v < height; v++, k += width) {
+            items[k] *= 0.5;
+          }
+        }
+      } else {
+        for (v = 0, k = 0; v < height; v++, k += width) {
+          rowBuffer.set(items.subarray(k, k + width), bufferPadding);
+
+          this.extend(rowBuffer, bufferPadding, width);
+          this.filter(rowBuffer, bufferPadding, width);
+
+          items.set(
+            rowBuffer.subarray(bufferPadding, bufferPadding + width),
+            k);
+        }
+      }
+
+      // Accesses to the items array can take long, because it may not fit into
+      // CPU cache and has to be fetched from main memory. Since subsequent
+      // accesses to the items array are not local when reading columns, we
+      // have a cache miss every time. To reduce cache misses, get up to
+      // 'numBuffers' items at a time and store them into the individual
+      // buffers. The colBuffers should be small enough to fit into CPU cache.
+      var numBuffers = 16;
+      var colBuffers = [];
+      for (i = 0; i < numBuffers; i++) {
+        colBuffers.push(new Float32Array(height + 2 * bufferPadding));
+      }
+      var b, currentBuffer = 0;
+      ll = bufferPadding + height;
+
+      // Section F.3.5 VER_SR
+      if (height === 1) {
+          // if height = 1, when v0 even keep items as is, when odd divide by 2
+        if ((v0 & 1) !== 0) {
+          for (u = 0; u < width; u++) {
+            items[u] *= 0.5;
+          }
+        }
+      } else {
+        for (u = 0; u < width; u++) {
+          // if we ran out of buffers, copy several image columns at once
+          if (currentBuffer === 0) {
+            numBuffers = Math.min(width - u, numBuffers);
+            for (k = u, l = bufferPadding; l < ll; k += width, l++) {
+              for (b = 0; b < numBuffers; b++) {
+                colBuffers[b][l] = items[k + b];
+              }
+            }
+            currentBuffer = numBuffers;
+          }
+
+          currentBuffer--;
+          var buffer = colBuffers[currentBuffer];
+          this.extend(buffer, bufferPadding, height);
+          this.filter(buffer, bufferPadding, height);
+
+          // If this is last buffer in this group of buffers, flush all buffers.
+          if (currentBuffer === 0) {
+            k = u - numBuffers + 1;
+            for (l = bufferPadding; l < ll; k += width, l++) {
+              for (b = 0; b < numBuffers; b++) {
+                items[k + b] = colBuffers[b][l];
+              }
+            }
+          }
+        }
+      }
+
+      return {
+        width: width,
+        height: height,
+        items: items
+      };
+    };
+    return Transform;
+  })();
+
+  // Section 3.8.2 Irreversible 9-7 filter
+  var IrreversibleTransform = (function IrreversibleTransformClosure() {
+    function IrreversibleTransform() {
+      Transform.call(this);
+    }
+
+    IrreversibleTransform.prototype = Object.create(Transform.prototype);
+    IrreversibleTransform.prototype.filter =
+      function irreversibleTransformFilter(x, offset, length) {
+      var len = length >> 1;
+      offset = offset | 0;
+      var j, n, current, next;
+
+      var alpha = -1.586134342059924;
+      var beta = -0.052980118572961;
+      var gamma = 0.882911075530934;
+      var delta = 0.443506852043971;
+      var K = 1.230174104914001;
+      var K_ = 1 / K;
+
+      // step 1 is combined with step 3
+
+      // step 2
+      j = offset - 3;
+      for (n = len + 4; n--; j += 2) {
+        x[j] *= K_;
+      }
+
+      // step 1 & 3
+      j = offset - 2;
+      current = delta * x[j -1];
+      for (n = len + 3; n--; j += 2) {
+        next = delta * x[j + 1];
+        x[j] = K * x[j] - current - next;
+        if (n--) {
+          j += 2;
+          current = delta * x[j + 1];
+          x[j] = K * x[j] - current - next;
+        } else {
+          break;
+        }
+      }
+
+      // step 4
+      j = offset - 1;
+      current = gamma * x[j - 1];
+      for (n = len + 2; n--; j += 2) {
+        next = gamma * x[j + 1];
+        x[j] -= current + next;
+        if (n--) {
+          j += 2;
+          current = gamma * x[j + 1];
+          x[j] -= current + next;
+        } else {
+          break;
+        }
+      }
+
+      // step 5
+      j = offset;
+      current = beta * x[j - 1];
+      for (n = len + 1; n--; j += 2) {
+        next = beta * x[j + 1];
+        x[j] -= current + next;
+        if (n--) {
+          j += 2;
+          current = beta * x[j + 1];
+          x[j] -= current + next;
+        } else {
+          break;
+        }
+      }
+
+      // step 6
+      if (len !== 0) {
+        j = offset + 1;
+        current = alpha * x[j - 1];
+        for (n = len; n--; j += 2) {
+          next = alpha * x[j + 1];
+          x[j] -= current + next;
+          if (n--) {
+            j += 2;
+            current = alpha * x[j + 1];
+            x[j] -= current + next;
+          } else {
+            break;
+          }
+        }
+      }
+    };
+
+    return IrreversibleTransform;
+  })();
+
+  // Section 3.8.1 Reversible 5-3 filter
+  var ReversibleTransform = (function ReversibleTransformClosure() {
+    function ReversibleTransform() {
+      Transform.call(this);
+    }
+
+    ReversibleTransform.prototype = Object.create(Transform.prototype);
+    ReversibleTransform.prototype.filter =
+      function reversibleTransformFilter(x, offset, length) {
+      var len = length >> 1;
+      offset = offset | 0;
+      var j, n;
+
+      for (j = offset, n = len + 1; n--; j += 2) {
+        x[j] -= (x[j - 1] + x[j + 1] + 2) >> 2;
+      }
+
+      for (j = offset + 1, n = len; n--; j += 2) {
+        x[j] += (x[j - 1] + x[j + 1]) >> 1;
+      }
+    };
+
+    return ReversibleTransform;
+  })();
+
+  return JpxImage;
+})();
+
+define("lib/jpeg/jpx", function(){});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -20336,10 +24557,14 @@ define("jpeg/lib/decoder", function(){});
 
 define ('x_ite/Browser/Texturing3D/DICOMParser',[
 	"dicom-parser",
-	"jpeg",
+	"lib/jpeg/jpeg",
+	"jpegLossless",
+	"lib/jpeg/jpx",
 ],
 function (dicomParser,
-          jpeg)
+          jpeg,
+          jpegLossless,
+          OpenJPEG)
 {
 "use strict";
 
@@ -20375,11 +24600,12 @@ function (dicomParser,
 			this .getHeight ();
 			this .getDepth ();
 			this .getBitsAllocated ();
+			this .getPixelRepresentation ();
 			this .getPlanarConfiguration ();
 			this .getTansferSyntax ();
 			this .getPixelData ();
 
-			console .log (this .dicom);
+			console .log (this);
 
 			return this .dicom;
 		},
@@ -20414,6 +24640,10 @@ function (dicomParser,
 		{
 			this .bitsAllocated  = this .dataSet .uint16 ("x00280100");
 		},
+		getPixelRepresentation: function ()
+		{
+			this .pixelRepresentation = this .dataSet .uint16 ("x00280103");
+		},
 		getPlanarConfiguration: function ()
 		{
 			this .planarConfiguration = this .dataSet .uint16 ("x00280006") || 0;
@@ -20428,19 +24658,14 @@ function (dicomParser,
 		{
 			var
 				dicom        = this .dicom,
-				pixelElement = this .dataSet .elements .x7fe00010 || dataSet .elements .x7fe00008,
-				frameLength  = dicom .width * dicom .height * dicom .components,
-				byteLength   = frameLength * dicom .depth,
-				bytes        = new Uint32Array (byteLength),
-				fragments    = this .getFragments (pixelElement);
+				pixelElement = this .dataSet .elements .x7fe00010 || this .dataSet .elements .x7fe00008, // pixel or float pixel
+				imageLength  = dicom .width * dicom .height * dicom .components,
+				byteLength   = imageLength * dicom .depth,
+				bytes        = new Uint8Array (byteLength),
+				frames       = this .getFrames (pixelElement);
 
-			fragments .forEach (function (fragment, i)
+			frames .forEach (function (frame, f)
 			{
-				var
-					fragmentArray  = fragment .array,
-					fragmentOffset = fragment .position,
-					fragmentLength = fragment .length;
-
 				// https://www.dicomlibrary.com/dicom/transfer-syntax/
 
 				switch (this .transferSyntax)
@@ -20453,19 +24678,25 @@ function (dicomParser,
 					}
 					case "1.2.840.10008.1.2.5": // RLE Lossless
 					{
-						fragmentArray  = this .decodeRLE (fragmentArray .buffer, fragmentOffset, fragmentLength, frameLength * this .bitsAllocated / 8);
-						fragmentOffset = 0;
-						fragmentLength = fragmentArray .length;
+						frame = this .decodeRLE (frame .buffer, frame .byteOffset, frame .length, imageLength * this .bitsAllocated / 8);
 						break;
 					}
 					case "1.2.840.10008.1.2.4.50": // JPEG Baseline lossy process 1 (8 bit)
 					case "1.2.840.10008.1.2.4.51": // JPEG Baseline lossy process 2 & 4 (12 bit)
 					{
-						fragmentArray  = this .decodeJPEGBaseline (fragmentArray);
-						fragmentOffset = 0;
-						fragmentLength = fragmentArray .length;
-
-						this .bitsAllocated = 8;
+						frame = this .decodeJPEGBaseline (frame);
+						break;
+					}
+					case "1.2.840.10008.1.2.4.57": // JPEG Lossless, Nonhierarchical (Processes 14)
+					case "1.2.840.10008.1.2.4.70": // JPEG Lossless, Nonhierarchical (Processes 14 [Selection 1])
+					{
+						frame = this .decodeJPEGLossless (frame);
+						break;
+					}
+					case "1.2.840.10008.1.2.4.90": // JPEG 2000 Lossless
+					case "1.2.840.10008.1.2.4.91": // JPEG 2000 Lossy
+					{
+						frame = this .decodeJPEG2000 (frame);
 						break;
 					}
 					case "1.2.840.10008.1.2.2": // Explicit VR Big Endian (retired)
@@ -20477,7 +24708,6 @@ function (dicomParser,
 					case "1.2.840.10008.1.2.4.54":
 					case "1.2.840.10008.1.2.4.55":
 					case "1.2.840.10008.1.2.4.56":
-					case "1.2.840.10008.1.2.4.57": // JPEG Lossless, Nonhierarchical (Processes 14)
 					case "1.2.840.10008.1.2.4.58":
 					case "1.2.840.10008.1.2.4.59":
 					case "1.2.840.10008.1.2.4.60":
@@ -20487,11 +24717,8 @@ function (dicomParser,
 					case "1.2.840.10008.1.2.4.64":
 					case "1.2.840.10008.1.2.4.65":
 					case "1.2.840.10008.1.2.4.66":
-					case "1.2.840.10008.1.2.4.70": // JPEG Lossless, Nonhierarchical (Processes 14 [Selection 1])
 					case "1.2.840.10008.1.2.4.80": // JPEG-LS Lossless Image Compression
 					case "1.2.840.10008.1.2.4.81": // JPEG-LS Lossy (Near-Lossless) Image Compression
-					case "1.2.840.10008.1.2.4.90": // JPEG 2000 Lossless
-					case "1.2.840.10008.1.2.4.91": // JPEG 2000 Lossy
 					case "1.2.840.10008.1.2.4.92":
 					case "1.2.840.10008.1.2.4.93":
 					{
@@ -20505,77 +24732,59 @@ function (dicomParser,
 					}
 				}
 
-				var b = i * frameLength;
+				var b = f * imageLength;
 
 				switch (this .photometricInterpretation)
 				{
 					case "MONOCHROME1":
 					case "MONOCHROME2":
-					{
-						switch (this .bitsAllocated)
-						{
-							case 8:
-							{
-								var data = new Uint8Array (fragmentArray .buffer, fragmentOffset, fragmentLength);
-
-								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = data [i];
-
-								break;
-							}
-							case 16:
-							{
-								var data = new Uint16Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 2);
-
-								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = data [i];
-
-								break;
-							}
-							case 32:
-							{
-								var data = new Uint32Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 4);
-
-								for (var i = 0, length = data32 .length; i < length; ++ i)
-									bytes [b ++] = data [i];
-
-								break;
-							}
-						}
-
-						break;
-					}
 					case "RGB":
 					{
 						switch (this .bitsAllocated)
 						{
 							case 8:
 							{
-								var data = new Uint8Array (fragmentArray .buffer, fragmentOffset, fragmentLength);
+								var
+									type      = this .pixelRepresentation ? Int8Array : Uint8Array,
+									data      = new type (frame .buffer, frame .byteOffset, frame .length),
+									normalize = this .getPixelOffsetAndFactor (data);
 
-								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = data [i];
+								for (var i = 0, length = data .length; i < length; ++ i, ++ b)
+									bytes [b] = (data [i] - normalize .offset) * normalize .factor;
 
 								break;
 							}
 							case 16:
 							{
-								var data = new Uint16Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 2);
+								var
+									type      = this .pixelRepresentation ? Int16Array : Uint16Array,
+									data      = new type (frame .buffer, frame .byteOffset, frame .length / 2),
+									normalize = this .getPixelOffsetAndFactor (data);
 
-								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = data [i];
+								for (var i = 0, length = data .length; i < length; ++ i, ++ b)
+									bytes [b] = (data [i] - normalize .offset) * normalize .factor;
 
 								break;
 							}
 							case 32:
 							{
-								var data = new Uint32Array (fragmentArray .buffer, fragmentOffset, fragmentLength / 4);
+								var
+									data      = new Float32Array (frame .buffer, frame .byteOffset, frame .length / 4),
+									normalize = this .getPixelOffsetAndFactor (data);
 
-								for (var i = 0, length = data .length; i < length; ++ i)
-									bytes [b ++] = data [i];
+								for (var i = 0, length = data .length; i < length; ++ i, ++ b)
+									bytes [b] = (data [i] - normalize .offset) * normalize .factor;
 
 								break;
 							}
+						}
+
+						// Invert MONOCHROME1 pixels.
+
+						if (this .photometricInterpretation === "MONOCHROME1")
+						{
+							for (var i = 0, length = bytes .length; i < length; ++ i)
+								bytes [i] = 255 - bytes [i];
 						}
 
 						break;
@@ -20586,38 +24795,32 @@ function (dicomParser,
 			}
 			.bind (this));
 
-			// Normalize pixels in the range [0, 255].
-
-			var normalize = this .getPixelOffsetAndFactor (bytes);
-
-			for (var i = 0, length = bytes .length; i < length; ++ i)
-				bytes [i] = (bytes [i] - normalize .offset) * normalize .factor;
-
-			// Invert MONOCHROME1 pixels.
-
-			if (this .photometricInterpretation == "MONOCHROME1")
-			{
-				for (var i = 0, length = bytes .length; i < length; ++ i)
-					bytes [i] = 255 - bytes [i];
-			}
-
 			// Set Uint8Array.
 
-			dicom .data = new Uint8Array (bytes);
+			dicom .data = bytes;
 		},
-		getFragments: function (pixelElement)
+		getFrames: function (pixelElement)
 		{
-			var fragments = [ ];
+			var frames = [ ];
 
-			if (pixelElement .encapsulatedPixelData && this .dicom .depth !== pixelElement .fragments .length)
+			if (pixelElement .encapsulatedPixelData)
 			{
-				var basicOffsetTable = this .getBasicOffsetTable (pixelElement);
-
-				for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+				if (pixelElement .basicOffsetTable .length)
 				{
-					var array = dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i, basicOffsetTable);
+					for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+						frames .push (dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i));
+				}
+				else if (this .dicom .depth !== pixelElement .fragments .length)
+				{
+					var basicOffsetTable = dicomParser .createJPEGBasicOffsetTable (this .dataSet, pixelElement);
 
-					fragments .push ({ array: array, position: array .byteOffset, length: array .length });
+					for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+						frames .push (dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i, basicOffsetTable));
+				}
+				else
+				{
+					for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+						frames .push (dicomParser .readEncapsulatedPixelDataFromFragments (this .dataSet, pixelElement, i));
 				}
 			}
 			else
@@ -20626,24 +24829,17 @@ function (dicomParser,
 				{
 					pixelElement .fragments .forEach (function (fragment)
 					{
-						fragments .push ({ array: this .dataSet .byteArray, position: fragment .position, length: fragment .length });
+						frames .push (new Uint8Array (this .dataSet .byteArray .buffer, fragment .position, fragment .length));
 					}
 					.bind (this));
 				}
 				else
 				{
-					fragments .push ({ array: this .dataSet .byteArray, position: pixelElement .dataOffset, length: pixelElement .length });
+					frames .push (new Uint8Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length));
 				}
 			}
 
-			return fragments;
-		},
-		getBasicOffsetTable: function (pixelElement)
-		{
-			if (pixelElement .basicOffsetTable .length)
-				return pixelElement .basicOffsetTable;
-
-			return dicomParser .createJPEGBasicOffsetTable (this .dataSet, pixelElement);
+			return frames;
 		},
 		getPixelOffsetAndFactor: function (data)
 		{
@@ -20722,11 +24918,36 @@ function (dicomParser,
 
 			jpeg .parse (pixelData);
 
-			jpeg .colorTransform = false;
+			jpeg .colorTransform = true; // default is true
 
-			return jpeg .getData (this .dicom .width, this .dicom .height);
+			var data = jpeg .getData (this .dicom .width, this .dicom .height);
+
+			this .bitsAllocated = 8;
+
+			return data;
 		 },
-	};
+		 decodeJPEGLossless: function (pixelData)
+		 {
+			var
+				decoder = new jpegLossless .lossless .Decoder (),
+				buffer  = decoder .decompress (pixelData);
+
+			return new Uint8Array (buffer);
+		},
+		decodeJPEG2000: function (pixelData)
+		{
+			var jpxImage = new JpxImage ();
+
+			jpxImage .parse (pixelData);
+
+			var tileCount = jpxImage .tiles.length;
+
+			if (tileCount !== 1)
+				throw new Error("DICOM: JPEG2000 decoder returned a tileCount of " + tileCount + ", when 1 is expected.");
+
+			return new Uint8Array (jpxImage .tiles [0] .items .buffer);
+		},
+	 };
 
 	// ftp://medical.nema.org/medical/dicom/DataSets/WG04/
 
