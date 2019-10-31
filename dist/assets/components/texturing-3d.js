@@ -24560,11 +24560,13 @@ define ('x_ite/Browser/Texturing3D/DICOMParser',[
 	"lib/jpeg/jpeg",
 	"jpegLossless",
 	"lib/jpeg/jpx",
+	"x_ite/DEBUG",
 ],
 function (dicomParser,
           jpeg,
           jpegLossless,
-          OpenJPEG)
+          OpenJPEG,
+          DEBUG)
 {
 "use strict";
 
@@ -24606,7 +24608,8 @@ function (dicomParser,
 			this .getTansferSyntax ();
 			this .getPixelData ();
 
-			console .log (this);
+			if (DEBUG)
+				console .log (this);
 
 			return this .dicom;
 		},
