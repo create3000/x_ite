@@ -24653,12 +24653,10 @@ function (dicomParser,
 		getPlanarConfiguration: function ()
 		{
 			this .planarConfiguration = this .dataSet .uint16 ("x00280006") || 0;
-			//console .log (this .planarConfiguration);
 		},
 		getTansferSyntax: function ()
 		{
 			this .transferSyntax = this .dataSet .string ("x00020010");
-			//console .log (this .transferSyntax);
 		},
 		getPixelData: function ()
 		{
@@ -24680,6 +24678,7 @@ function (dicomParser,
 					case "1.2.840.10008.1.2.1":    // Explicit VR Little Endian
 					case "1.2.840.10008.1.2.1.99": // Deflated Explicit VR Little Endian
 					{
+						frame = this .decodeLittleEndian (frame);
 						break;
 					}
 					case "1.2.840.10008.1.2.5": // RLE Lossless
@@ -24743,7 +24742,7 @@ function (dicomParser,
 				{
 					var shift = 32 - this .bitsStored;
 
-					for (let i = 0, length = frame .length; i < length; ++ i)
+					for (var i = 0, length = frame .length; i < length; ++ i)
 						frame [i] = frame [i] << shift >> shift;
 				}
 
@@ -24824,6 +24823,8 @@ function (dicomParser,
 		},
 		getTypedArray: function (frame)
 		{
+			console .log (this);
+			console .log (frame .byteOffset);
 			switch (this .bitsAllocated)
 			{
 				case 8:
@@ -24847,6 +24848,43 @@ function (dicomParser,
 			}
 
 			return { offset: min, factor: 1 / (max - min) * 255 };
+		},
+		decodeLittleEndian: function (pixelData)
+		{
+			var
+				buffer = pixelData .buffer,
+				offset = pixelData.byteOffset,
+				length = pixelData.length;
+
+			if (this .bitsAllocated === 1 || this .bitsAllocated === 8)
+			{
+				return pixelData;
+			}
+			else if (this .bitsAllocated === 16)
+			{
+			  // if pixel data is not aligned on even boundary, shift it so we can create the 16 bit array
+			  // buffers on it
+
+			  if (offset % 2)
+			  {
+					buffer = buffer .slice (offset);
+					offset = 0;
+				}
+
+				return new Uint8Array (buffer, offset, length);
+
+			}
+			else if (this .bitsAllocated === 32)
+			{
+				// if pixel data is not aligned on even boundary, shift it
+				if (offset % 2)
+				{
+					buffer = buffer .slice (offset);
+					offset = 0;
+			  	}
+
+				return new Uint8Array (buffer, offset, length);
+			}
 		},
 		decodeRLE: function  (pixelData)
 		{
