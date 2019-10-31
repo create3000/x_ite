@@ -24683,6 +24683,11 @@ function (dicomParser,
 						frame = this .decodeLittleEndian (frame);
 						break;
 					}
+					case "1.2.840.10008.1.2.2": // Explicit VR Big Endian (retired)
+					{
+						frame = this .decodeBigEndian (frame);
+						break;
+					}
 					case "1.2.840.10008.1.2.5": // RLE Lossless
 					{
 						frame = this .decodeRLE (frame);
@@ -24705,10 +24710,6 @@ function (dicomParser,
 					{
 						frame = this .decodeJPEG2000 (frame);
 						break;
-					}
-					case "1.2.840.10008.1.2.2": // Explicit VR Big Endian (retired)
-					{
-						throw new Error ("DICOM: Explicit VR Big Endian is not supported.");
 					}
 					case "1.2.840.10008.1.2.4.52":
 					case "1.2.840.10008.1.2.4.53":
@@ -24856,11 +24857,7 @@ function (dicomParser,
 				offset = pixelData.byteOffset,
 				length = pixelData.length;
 
-			if (this .bitsAllocated === 1 || this .bitsAllocated === 8)
-			{
-				return pixelData;
-			}
-			else if (this .bitsAllocated === 16)
+			if (this .bitsAllocated === 16)
 			{
 			  // if pixel data is not aligned on even boundary, shift it so we can create the 16 bit array
 			  // buffers on it
@@ -24885,6 +24882,42 @@ function (dicomParser,
 
 				return new Uint8Array (buffer, offset, length);
 			}
+
+			return pixelData;
+		},
+		decodeBigEndian: function (pixelData)
+		{
+			function swap16 (value)
+			{
+				return ((value & 0xFF) << 8) | ((value >> 8) & 0xFF);
+			}
+
+			if (this .bitsAllocated === 16)
+			{
+				var
+					buffer = pixelData .buffer,
+					offset = pixelData .byteOffset,
+					length = pixelData .length;
+
+				// if pixel data is not aligned on even boundary, shift it so we can create the 16 bit array
+				// buffers on it
+
+				if (offset % 2)
+				{
+					buffer = buffer .slice (offset);
+					offset = 0;
+				}
+
+				pixelData = new Uint16Array (buffer, offset, length / 2);
+
+				// Do the byte swap
+				for (var i = 0, l = pixelData .length; i < l; ++ i)
+					pixelData [i] = swap16 (pixelData [i]);
+
+				return new Uint8Array (buffer, offset, length);
+			}
+
+			return pixelData;
 		},
 		decodeRLE: function  (pixelData)
 		{
