@@ -22476,34 +22476,16 @@ function (dicomParser,
 						break;
 					}
 					case 8:
-					{
-						for (var i = 0, length = this .dicom .depth; i < length; ++ i)
-						{
-							var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame;
-
-							frames .push (new Uint8Array (this .dataSet .byteArray .buffer, frameOffset, pixelsPerFrame));
-						}
-
-						break;
-					}
 					case 16:
-					{
-						for (var i = 0, length = this .dicom .depth; i < length; ++ i)
-						{
-							var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame * 2;
-
-							frames .push (new Uint8Array (this .dataSet .byteArray .buffer, frameOffset, pixelsPerFrame * 2));
-						}
-
-						break;
-					}
 					case 32:
 					{
+						var bytesAllocated = this .bitsAllocated / 8;
+
 						for (var i = 0, length = this .dicom .depth; i < length; ++ i)
 						{
-							var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame * 4;
+							var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame * bytesAllocated;
 
-							frames .push (new Uint8Array (this .dataSet .byteArray .buffer, frameOffset, pixelsPerFrame * 4));
+							frames .push (new Uint8Array (this .dataSet .byteArray .buffer, frameOffset, pixelsPerFrame * bytesAllocated));
 						}
 
 						break;
