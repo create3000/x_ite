@@ -39,6 +39,7 @@
 		"url": "https://github.com/create3000/x_ite/issues"
 	},
 	"devDependencies": {
+		"CharLS.js": "^2.0.1",
 		"OpenJPEG.js": "^0.10.2",
 		"ammojs": "0.0.2",
 		"bezier-js": "^2.4.4",
@@ -65,7 +66,6 @@
 		"-prebuild:js": "npm run lint"
 	},
 	"dependencies": {
-		"CharLS.js": "^2.0.1",
 		"cornerstone-wado-image-loader": "^3.0.6"
 	}
 }
