@@ -389,7 +389,9 @@ function (dicomParser,
 				max = Math .max (max, data [i]);
 			}
 
-			return { offset: min, factor: 1 / (max - min) * 255 };
+			var diverence = max - min;
+
+			return { offset: min, factor: diverence ? 1 / diverence * 255 : 0 };
 		},
 		unpackBinaryFrame: function (byteArray, frameOffset, pixelsPerFrame)
 		{
