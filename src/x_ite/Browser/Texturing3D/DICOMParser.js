@@ -347,17 +347,6 @@ function (dicomParser,
 						frames .push (dicomParser .readEncapsulatedPixelDataFromFragments (this .dataSet, pixelElement, i));
 				}
 			}
-			else if (this .bitsAllocated === 32)
-			{
-				var pixelsPerFrame = this .dicom .width * this .dicom .height * this .dicom .components;
-
-				for (var i = 0, length = this .dicom .depth; i < length; ++ i)
-				{
-					var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame * 4;
-
-					frames .push (new Uint8Array (this .dataSet .byteArray .buffer, frameOffset, pixelsPerFrame * 4));
-				}
-			}
 			else
 			{
 				if (pixelElement .fragments)
