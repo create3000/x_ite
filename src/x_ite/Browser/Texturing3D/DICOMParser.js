@@ -970,11 +970,16 @@ function (dicomParser,
 		{
 			function convertLUTto8Bit (lut, shift)
 			{
-				const numEntries = lut.length;
+				if (lut .cleaned)
+					return lut .cleaned;
+
+				const numEntries = lut .length;
 				const cleanedLUT = new Uint8ClampedArray (numEntries);
 
 				for (let i = 0; i < numEntries; ++i)
 					cleanedLUT [i] = lut [i] >> shift;
+
+				lut .cleaned = cleanedLUT;
 
 				return cleanedLUT;
 			}
@@ -1038,9 +1043,9 @@ function (dicomParser,
 			// See http://dicom.nema.org/MEDICAL/DICOM/current/output/chtml/part03/sect_C.7.6.3.html#sect_C.7.6.3.1.5
 			if (imagePixelModule .redPaletteColorLookupTableDescriptor [0] === 0)
 			{
-				imagePixelModule.redPaletteColorLookupTableDescriptor   [0] = 65536;
-				imagePixelModule.greenPaletteColorLookupTableDescriptor [0] = 65536;
-				imagePixelModule.bluePaletteColorLookupTableDescriptor  [0] = 65536;
+				imagePixelModule .redPaletteColorLookupTableDescriptor   [0] = 65536;
+				imagePixelModule .greenPaletteColorLookupTableDescriptor [0] = 65536;
+				imagePixelModule .bluePaletteColorLookupTableDescriptor  [0] = 65536;
 			}
 
 			// The third Palette Color Lookup Table Descriptor value specifies the number of bits for each entry in the Lookup Table Data.
@@ -1051,21 +1056,21 @@ function (dicomParser,
 			// Note: Some implementations have encoded 8 bit entries with 16 bits allocated, padding the high bits;
 			// this can be detected by comparing the number of entries specified in the LUT Descriptor with the actual value length of the LUT Data entry.
 			// The value length in bytes should equal the number of entries if bits allocated is 8, and be twice as long if bits allocated is 16.
-			const numLutEntries = imagePixelModule .redPaletteColorLookupTableDescriptor [0];
-			const lutData = dataSet .elements .x00281201;
+			const numLutEntries    = imagePixelModule .redPaletteColorLookupTableDescriptor [0];
+			const lutData          = dataSet .elements .x00281201;
 			const lutBitsAllocated = lutData .length === numLutEntries ? 8 : 16;
 
 			// If the descriptors do not appear to have the correct values, correct them
 			if (imagePixelModule.redPaletteColorLookupTableDescriptor [2] !== lutBitsAllocated)
 			{
-				imagePixelModule.redPaletteColorLookupTableDescriptor   [2] = lutBitsAllocated;
-				imagePixelModule.greenPaletteColorLookupTableDescriptor [2] = lutBitsAllocated;
-				imagePixelModule.bluePaletteColorLookupTableDescriptor  [2] = lutBitsAllocated;
+				imagePixelModule .redPaletteColorLookupTableDescriptor   [2] = lutBitsAllocated;
+				imagePixelModule .greenPaletteColorLookupTableDescriptor [2] = lutBitsAllocated;
+				imagePixelModule .bluePaletteColorLookupTableDescriptor  [2] = lutBitsAllocated;
 			}
 
-			imagePixelModule.redPaletteColorLookupTableData   = this .getLutData (dataSet, 'x00281201', imagePixelModule .redPaletteColorLookupTableDescriptor);
-			imagePixelModule.greenPaletteColorLookupTableData = this .getLutData (dataSet, 'x00281202', imagePixelModule .greenPaletteColorLookupTableDescriptor);
-			imagePixelModule.bluePaletteColorLookupTableData  = this .getLutData (dataSet, 'x00281203', imagePixelModule .bluePaletteColorLookupTableDescriptor);
+			imagePixelModule .redPaletteColorLookupTableData   = this .getLutData (dataSet, 'x00281201', imagePixelModule .redPaletteColorLookupTableDescriptor);
+			imagePixelModule .greenPaletteColorLookupTableData = this .getLutData (dataSet, 'x00281202', imagePixelModule .greenPaletteColorLookupTableDescriptor);
+			imagePixelModule .bluePaletteColorLookupTableData  = this .getLutData (dataSet, 'x00281203', imagePixelModule .bluePaletteColorLookupTableDescriptor);
 		},
 		getLutDescriptor: function  (dataSet, tag)
 		{

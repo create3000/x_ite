@@ -22277,7 +22277,8 @@ function (dicomParser,
 			var
 				dicom        = this .dicom,
 				pixelElement = this .dataSet .elements .x7fe00010 || this .dataSet .elements .x7fe00008, // pixel or float pixel
-				imageLength  = dicom .width * dicom .height * dicom .components,
+				components   = this .photometricInterpretation === "PALETTE COLOR" ? 3 : this .dicom .components,
+				imageLength  = dicom .width * dicom .height * components,
 				byteLength   = imageLength * dicom .depth,
 				bytes        = new Uint8Array (byteLength),
 				frames       = this .getFrames (pixelElement);
@@ -22399,18 +22400,18 @@ function (dicomParser,
 
 						break;
 					}
-					// case "PALETTE COLOR":
-					// {
-					// 	frame = this .convertPaletteColor (frame);
-					// 	break;
-					// }
+					case "PALETTE COLOR":
+					{
+						frame = this .convertPaletteColor (frame);
+						break;
+					}
 					default:
 					{
 						throw new Error ("DICOM: unsupported image type '" + this .photometricInterpretation + "'.");
 					}
 				}
 
-				// Normalize pixel data in the range [0, 255], and assign to image block;
+				// Normalize frame pixel data in the range [0, 255], and assign to image block;
 
 				var
 					normalize = this .getNormalizeOffsetAndFactor (frame),
@@ -22431,7 +22432,8 @@ function (dicomParser,
 
 			// Set Uint8Array.
 
-			dicom .data = bytes;
+			dicom .components = components;
+			dicom .data       = bytes;
 		},
 		getFrames: function (pixelElement)
 		{
@@ -22794,65 +22796,6 @@ function (dicomParser,
 
 			return out;
 		},
-		/*
-		decodeRLE: function (buffer, offset, length, outputLength)
-		{
-			// http://dicom.nema.org/dicom/2013/output/chtml/part05/sect_G.5.html
-			// http://dicom.nema.org/MEDICAL/dicom/2017b/output/chtml/part05/sect_G.3.2.html
-
-			var
-				header   = new DataView (buffer, offset, 64),
-				segments = [ ];
-
-			for (var i = 1, headerLength = header .getUint32 (0, true) + 1; i < headerLength; ++ i)
-			{
-				segments .push (header .getUint32 (i * 4, true));
-			}
-
-			segments .push (length);
-
-			var
-				segmentsLength = segments .length - 1,
-				output         = new Uint8Array (outputLength);
-
-			for (var s = 0; s < segmentsLength; ++ s)
-			{
-				var
-					offset1 = segments [s],
-					offset2 = segments [s + 1],
-					input   = new Int8Array (buffer, offset + offset1, offset2 - offset1),
-					i       = 0,
-					o       = 0;
-
-				while (i < input .length)
-				{
-					// Read the next source byte into n.
-					var n = input [i ++];
-
-					if (n >= 0 && n <= 127)
-					{
-						// Output the next n+1 bytes literally.
-						for (var l = i + n + 1; i < l; ++ i, ++ o)
-						{
-							output [o * segmentsLength + s] = input [i];
-						}
-					}
-					else if (n <= -1 && n >= -127)
-					{
-						// Output the next byte -n+1 times.
-						var b = input [i ++];
-
-						for (var k = 0, l = -n + 1; k < l; ++ k, ++ o)
-						{
-							output [o * segmentsLength + s] = b;
-						}
-					}
-				}
-			}
-
-			return output;
-		},
-		*/
 		decodeJPEGBaseline: function (pixelData)
 		{
 			var jpeg = new JpegImage ();
@@ -23135,6 +23078,23 @@ function (dicomParser,
 		},
 		convertPaletteColor: function (pixelData)
 		{
+			function convertLUTto8Bit (lut, shift)
+			{
+				if (lut .cleaned)
+					return lut .cleaned;
+
+				const numEntries = lut .length;
+				const cleanedLUT = new Uint8ClampedArray (numEntries);
+
+				for (let i = 0; i < numEntries; ++i)
+					cleanedLUT [i] = lut [i] >> shift;
+
+				lut .cleaned = cleanedLUT;
+
+				return cleanedLUT;
+			}
+
+			const LUT       = this .getLUT ();
 			const numPixels = this .dicom .width * this .dicom .height;
 			const rData     = LUT .redPaletteColorLookupTableData;
 			const gData     = LUT .greenPaletteColorLookupTableData;
@@ -23151,11 +23111,11 @@ function (dicomParser,
 			const gDataCleaned = convertLUTto8Bit (gData, shift);
 			const bDataCleaned = convertLUTto8Bit (bData, shift);
 
-			let out = new (pixelData .constructor) (pixelData .length);
+			let out = new Uint8Array (pixelData .length * 3);
 
 			for (let i = 0; i < numPixels; ++ i)
 			{
-				let value = pixelData[palIndex++];
+				let value = pixelData [palIndex++];
 
 				if (value < start)
 					value = 0;
@@ -23171,7 +23131,81 @@ function (dicomParser,
 
 			return out;
 		},
-	 };
+		getLUT: function ()
+		{
+			if (this .LUT)
+				 return this .LUT;
+
+			this .LUT = { };
+
+			this .populatePaletteColorLut (this .dataSet, this .LUT);
+
+			return this .LUT;
+		},
+		populatePaletteColorLut: function (dataSet, imagePixelModule)
+		{
+			imagePixelModule .redPaletteColorLookupTableDescriptor   = this .getLutDescriptor (dataSet, 'x00281101');
+			imagePixelModule .greenPaletteColorLookupTableDescriptor = this .getLutDescriptor (dataSet, 'x00281102');
+			imagePixelModule .bluePaletteColorLookupTableDescriptor  = this .getLutDescriptor (dataSet, 'x00281103');
+
+			// The first Palette Color Lookup Table Descriptor value is the number of entries in the lookup table.
+			// When the number of table entries is equal to 2ˆ16 then this value shall be 0.
+			// See http://dicom.nema.org/MEDICAL/DICOM/current/output/chtml/part03/sect_C.7.6.3.html#sect_C.7.6.3.1.5
+			if (imagePixelModule .redPaletteColorLookupTableDescriptor [0] === 0)
+			{
+				imagePixelModule .redPaletteColorLookupTableDescriptor   [0] = 65536;
+				imagePixelModule .greenPaletteColorLookupTableDescriptor [0] = 65536;
+				imagePixelModule .bluePaletteColorLookupTableDescriptor  [0] = 65536;
+			}
+
+			// The third Palette Color Lookup Table Descriptor value specifies the number of bits for each entry in the Lookup Table Data.
+			// It shall take the value of 8 or 16.
+			// The LUT Data shall be stored in a format equivalent to 8 bits allocated when the number of bits for each entry is 8, and 16 bits allocated when the number of bits for each entry is 16, where in both cases the high bit is equal to bits allocated-1.
+			// The third value shall be identical for each of the Red, Green and Blue Palette Color Lookup Table Descriptors.
+			//
+			// Note: Some implementations have encoded 8 bit entries with 16 bits allocated, padding the high bits;
+			// this can be detected by comparing the number of entries specified in the LUT Descriptor with the actual value length of the LUT Data entry.
+			// The value length in bytes should equal the number of entries if bits allocated is 8, and be twice as long if bits allocated is 16.
+			const numLutEntries    = imagePixelModule .redPaletteColorLookupTableDescriptor [0];
+			const lutData          = dataSet .elements .x00281201;
+			const lutBitsAllocated = lutData .length === numLutEntries ? 8 : 16;
+
+			// If the descriptors do not appear to have the correct values, correct them
+			if (imagePixelModule.redPaletteColorLookupTableDescriptor [2] !== lutBitsAllocated)
+			{
+				imagePixelModule .redPaletteColorLookupTableDescriptor   [2] = lutBitsAllocated;
+				imagePixelModule .greenPaletteColorLookupTableDescriptor [2] = lutBitsAllocated;
+				imagePixelModule .bluePaletteColorLookupTableDescriptor  [2] = lutBitsAllocated;
+			}
+
+			imagePixelModule .redPaletteColorLookupTableData   = this .getLutData (dataSet, 'x00281201', imagePixelModule .redPaletteColorLookupTableDescriptor);
+			imagePixelModule .greenPaletteColorLookupTableData = this .getLutData (dataSet, 'x00281202', imagePixelModule .greenPaletteColorLookupTableDescriptor);
+			imagePixelModule .bluePaletteColorLookupTableData  = this .getLutData (dataSet, 'x00281203', imagePixelModule .bluePaletteColorLookupTableDescriptor);
+		},
+		getLutDescriptor: function  (dataSet, tag)
+		{
+			if (! dataSet .elements [tag] || dataSet .elements [tag] .length !== 6)
+				return;
+
+			return [dataSet .uint16 (tag, 0), dataSet .uint16 (tag, 1), dataSet .uint16 (tag, 2)];
+		},
+		getLutData: function  (lutDataSet, tag, lutDescriptor)
+		{
+			const lut     = [];
+			const lutData = lutDataSet .elements [tag];
+
+			for (let i = 0; i < lutDescriptor [0]; ++ i)
+			{
+				// Output range is always unsigned
+				if (lutDescriptor [2] === 16)
+					lut [i] = lutDataSet .uint16 (tag, i);
+				else
+					lut [i] = lutDataSet .byteArray [i + lutData .dataOffset];
+			}
+
+			return lut;
+		},
+	};
 
 	// ftp://medical.nema.org/medical/dicom/DataSets/WG04/
 
