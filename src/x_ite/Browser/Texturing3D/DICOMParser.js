@@ -741,9 +741,6 @@ function (dicomParser,
 		},
 		decodeJPEGLS: function (pixelData)
 		{
-			if (! charLS)
-				charLS = CharLS ();
-
 			var image = this .jpegLSDecode (pixelData, this .pixelRepresentation === 1);
 
 			// throw error if not success or too much data
