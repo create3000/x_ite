@@ -22459,30 +22459,55 @@ function (dicomParser,
 			}
 			else
 			{
-				if (this .bitsAllocated === 1)
+				var pixelsPerFrame = this .dicom .width * this .dicom .height * this .dicom .components;
+
+				switch (this .bitsAllocated)
 				{
-					var pixelsPerFrame = this .dicom .width * this .dicom .height * this .dicom .components;
-
-					for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+					case 1:
 					{
-						var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame / 8;
+						for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+						{
+							var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame / 8;
 
-						frames .push (this .unpackBinaryFrame (this .dataSet .byteArray, frameOffset, pixelsPerFrame));
+							frames .push (this .unpackBinaryFrame (this .dataSet .byteArray, frameOffset, pixelsPerFrame));
+						}
+
+						this .bitsAllocated = 8;
+						break;
 					}
-
-					this .bitsAllocated = 8;
-				}
-				else if (pixelElement .fragments)
-				{
-					pixelElement .fragments .forEach (function (fragment)
+					case 8:
 					{
-						frames .push (new Uint8Array (this .dataSet .byteArray .buffer, fragment .position, fragment .length));
-					},
-					this);
-				}
-				else
-				{
-					frames .push (new Uint8Array (this .dataSet .byteArray .buffer, pixelElement .dataOffset, pixelElement .length));
+						for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+						{
+							var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame;
+
+							frames .push (new Uint8Array (this .dataSet .byteArray .buffer, frameOffset, pixelsPerFrame));
+						}
+
+						break;
+					}
+					case 16:
+					{
+						for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+						{
+							var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame * 2;
+
+							frames .push (new Uint8Array (this .dataSet .byteArray .buffer, frameOffset, pixelsPerFrame * 2));
+						}
+
+						break;
+					}
+					case 32:
+					{
+						for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+						{
+							var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame * 4;
+
+							frames .push (new Uint8Array (this .dataSet .byteArray .buffer, frameOffset, pixelsPerFrame * 4));
+						}
+
+						break;
+					}
 				}
 			}
 
