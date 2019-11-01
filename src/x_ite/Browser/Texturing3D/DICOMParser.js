@@ -347,6 +347,17 @@ function (dicomParser,
 						frames .push (dicomParser .readEncapsulatedPixelDataFromFragments (this .dataSet, pixelElement, i));
 				}
 			}
+			else if (this .bitsAllocated === 32)
+			{
+				var pixelsPerFrame = this .dicom .width * this .dicom .height * this .dicom .components;
+
+				for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+				{
+					var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame * 4;
+
+					frames .push (new Uint8Array (this .dataSet .byteArray .buffer, frameOffset, pixelsPerFrame * 4));
+				}
+			}
 			else
 			{
 				if (pixelElement .fragments)
@@ -422,8 +433,8 @@ function (dicomParser,
 		{
 			var
 				buffer = pixelData .buffer,
-				offset = pixelData.byteOffset,
-				length = pixelData.length;
+				offset = pixelData .byteOffset,
+				length = pixelData .length;
 
 			if (this .bitsAllocated === 16)
 			{
@@ -442,11 +453,11 @@ function (dicomParser,
 			else if (this .bitsAllocated === 32)
 			{
 				// if pixel data is not aligned on even boundary, shift it
-				if (offset % 2)
+				if (offset % 4)
 				{
 					buffer = buffer .slice (offset);
 					offset = 0;
-			  	}
+				}
 
 				return new Uint8Array (buffer, offset, length);
 			}
