@@ -291,7 +291,9 @@ function (dicomParser,
 					}
 				}
 
-				var normalize = this .getPixelOffsetAndFactor (frame);
+				// Normalize pixel data in the range [0, 255];
+
+				var normalize = this .getNormalizeOffsetAndFactor (frame);
 
 				for (var i = 0, length = frame .length; i < length; ++ i, ++ b)
 					bytes [b] = (frame [i] - normalize .offset) * normalize .factor;
@@ -377,7 +379,7 @@ function (dicomParser,
 					return new Float32Array (frame .buffer, frame .byteOffset, frame .length / 4);
 			}
 		},
-		getPixelOffsetAndFactor: function (data)
+		getNormalizeOffsetAndFactor: function (data)
 		{
 			var
 				min = Number .POSITIVE_INFINITY,
