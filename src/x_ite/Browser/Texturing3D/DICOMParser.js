@@ -398,6 +398,8 @@ function (dicomParser,
 
 						break;
 					}
+					default:
+						throw new Error ("DICOM: unsupported pixel format.");
 				}
 			}
 
@@ -413,6 +415,8 @@ function (dicomParser,
 					return new (this .pixelRepresentation ? Int16Array : Uint16Array) (frame .buffer, frame .byteOffset, frame .length / 2);
 				case 32:
 					return new Float32Array (frame .buffer, frame .byteOffset, frame .length / 4);
+				default:
+					throw new Error ("DICOM: unsupported pixel format.");
 			}
 		},
 		getNormalizeOffsetAndFactor: function (data)
