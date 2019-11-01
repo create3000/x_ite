@@ -22168,7 +22168,6 @@ define ('x_ite/Browser/Texturing3D/DICOMParser',[
 function (dicomParser,
           jpeg,
           jpegLossless,
-			 jpx,
 			 charLS,
           openJPEG,
           DEBUG)
@@ -22438,20 +22437,7 @@ function (dicomParser,
 		{
 			var frames = [ ];
 
-			if (this .bitsAllocated === 1)
-			{
-				var pixelsPerFrame = this .dicom .width * this .dicom .height * this .dicom .components;
-
-				for (var i = 0, length = this .dicom .depth; i < length; ++ i)
-				{
-					var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame / 8;
-
-					frames .push (this .unpackBinaryFrame (this .dataSet .byteArray, frameOffset, pixelsPerFrame));
-				}
-
-				this .bitsAllocated = 8;
-			}
-			else if (pixelElement .encapsulatedPixelData)
+			if (pixelElement .encapsulatedPixelData)
 			{
 				if (pixelElement .basicOffsetTable .length)
 				{
@@ -22473,7 +22459,20 @@ function (dicomParser,
 			}
 			else
 			{
-				if (pixelElement .fragments)
+				if (this .bitsAllocated === 1)
+				{
+					var pixelsPerFrame = this .dicom .width * this .dicom .height * this .dicom .components;
+
+					for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+					{
+						var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame / 8;
+
+						frames .push (this .unpackBinaryFrame (this .dataSet .byteArray, frameOffset, pixelsPerFrame));
+					}
+
+					this .bitsAllocated = 8;
+				}
+				else if (pixelElement .fragments)
 				{
 					pixelElement .fragments .forEach (function (fragment)
 					{
