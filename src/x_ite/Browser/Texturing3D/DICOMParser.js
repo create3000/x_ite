@@ -301,7 +301,7 @@ function (dicomParser,
 					}
 				}
 
-				// Normalize pixel data in the range [0, 255], and assign to image block;
+				// Normalize frame pixel data in the range [0, 255], and assign to image block;
 
 				var
 					normalize = this .getNormalizeOffsetAndFactor (frame),
@@ -686,65 +686,6 @@ function (dicomParser,
 
 			return out;
 		},
-		/*
-		decodeRLE: function (buffer, offset, length, outputLength)
-		{
-			// http://dicom.nema.org/dicom/2013/output/chtml/part05/sect_G.5.html
-			// http://dicom.nema.org/MEDICAL/dicom/2017b/output/chtml/part05/sect_G.3.2.html
-
-			var
-				header   = new DataView (buffer, offset, 64),
-				segments = [ ];
-
-			for (var i = 1, headerLength = header .getUint32 (0, true) + 1; i < headerLength; ++ i)
-			{
-				segments .push (header .getUint32 (i * 4, true));
-			}
-
-			segments .push (length);
-
-			var
-				segmentsLength = segments .length - 1,
-				output         = new Uint8Array (outputLength);
-
-			for (var s = 0; s < segmentsLength; ++ s)
-			{
-				var
-					offset1 = segments [s],
-					offset2 = segments [s + 1],
-					input   = new Int8Array (buffer, offset + offset1, offset2 - offset1),
-					i       = 0,
-					o       = 0;
-
-				while (i < input .length)
-				{
-					// Read the next source byte into n.
-					var n = input [i ++];
-
-					if (n >= 0 && n <= 127)
-					{
-						// Output the next n+1 bytes literally.
-						for (var l = i + n + 1; i < l; ++ i, ++ o)
-						{
-							output [o * segmentsLength + s] = input [i];
-						}
-					}
-					else if (n <= -1 && n >= -127)
-					{
-						// Output the next byte -n+1 times.
-						var b = input [i ++];
-
-						for (var k = 0, l = -n + 1; k < l; ++ k, ++ o)
-						{
-							output [o * segmentsLength + s] = b;
-						}
-					}
-				}
-			}
-
-			return output;
-		},
-		*/
 		decodeJPEGBaseline: function (pixelData)
 		{
 			var jpeg = new JpegImage ();
@@ -1088,18 +1029,18 @@ function (dicomParser,
 		},
 		populatePaletteColorLut: function (dataSet, imagePixelModule)
 		{
-			imagePixelModule .redPaletteColorLookupTableDescriptor   = this .getLutDescriptor(dataSet, 'x00281101');
-			imagePixelModule .greenPaletteColorLookupTableDescriptor = this .getLutDescriptor(dataSet, 'x00281102');
-			imagePixelModule .bluePaletteColorLookupTableDescriptor  = this .getLutDescriptor(dataSet, 'x00281103');
+			imagePixelModule .redPaletteColorLookupTableDescriptor   = this .getLutDescriptor (dataSet, 'x00281101');
+			imagePixelModule .greenPaletteColorLookupTableDescriptor = this .getLutDescriptor (dataSet, 'x00281102');
+			imagePixelModule .bluePaletteColorLookupTableDescriptor  = this .getLutDescriptor (dataSet, 'x00281103');
 
 			// The first Palette Color Lookup Table Descriptor value is the number of entries in the lookup table.
 			// When the number of table entries is equal to 2ˆ16 then this value shall be 0.
 			// See http://dicom.nema.org/MEDICAL/DICOM/current/output/chtml/part03/sect_C.7.6.3.html#sect_C.7.6.3.1.5
 			if (imagePixelModule .redPaletteColorLookupTableDescriptor [0] === 0)
 			{
-				imagePixelModule.redPaletteColorLookupTableDescriptor [0]   = 65536;
+				imagePixelModule.redPaletteColorLookupTableDescriptor   [0] = 65536;
 				imagePixelModule.greenPaletteColorLookupTableDescriptor [0] = 65536;
-				imagePixelModule.bluePaletteColorLookupTableDescriptor [0]  = 65536;
+				imagePixelModule.bluePaletteColorLookupTableDescriptor  [0] = 65536;
 			}
 
 			// The third Palette Color Lookup Table Descriptor value specifies the number of bits for each entry in the Lookup Table Data.
@@ -1117,9 +1058,9 @@ function (dicomParser,
 			// If the descriptors do not appear to have the correct values, correct them
 			if (imagePixelModule.redPaletteColorLookupTableDescriptor [2] !== lutBitsAllocated)
 			{
-				imagePixelModule.redPaletteColorLookupTableDescriptor [2] = lutBitsAllocated;
+				imagePixelModule.redPaletteColorLookupTableDescriptor   [2] = lutBitsAllocated;
 				imagePixelModule.greenPaletteColorLookupTableDescriptor [2] = lutBitsAllocated;
-				imagePixelModule.bluePaletteColorLookupTableDescriptor [2] = lutBitsAllocated;
+				imagePixelModule.bluePaletteColorLookupTableDescriptor  [2] = lutBitsAllocated;
 			}
 
 			imagePixelModule.redPaletteColorLookupTableData   = this .getLutData (dataSet, 'x00281201', imagePixelModule .redPaletteColorLookupTableDescriptor);
