@@ -22281,6 +22281,8 @@ function (dicomParser,
 
 			frames .forEach (function (frame, f)
 			{
+				// Handle transfer syntax.
+
 				// https://www.dicomlibrary.com/dicom/transfer-syntax/
 
 				switch (this .transferSyntax)
@@ -22352,7 +22354,11 @@ function (dicomParser,
 					}
 				}
 
+				// Convert to stored type array (int, uint, float, 8/16 bit).
+
 				frame = this .getTypedArray (frame);
+
+				// Handle bits stored.
 
 				if (this .pixelRepresentation === 1 && this .bitsStored !== undefined)
 				{
@@ -22362,7 +22368,7 @@ function (dicomParser,
 						frame [i] = frame [i] << shift >> shift;
 				}
 
-				var b = f * imageLength;
+				// Handle photometric interpretation.
 
 				switch (this .photometricInterpretation)
 				{
@@ -22401,20 +22407,24 @@ function (dicomParser,
 					}
 				}
 
-				var normalize = this .getPixelOffsetAndFactor (frame);
+				// Normalize pixel data in the range [0, 255], and assign to image block;
+
+				var
+					normalize = this .getNormalizeOffsetAndFactor (frame),
+					b         = f * imageLength;
 
 				for (var i = 0, length = frame .length; i < length; ++ i, ++ b)
 					bytes [b] = (frame [i] - normalize .offset) * normalize .factor;
-
-				// Invert MONOCHROME1 pixels.
-
-				if (this .photometricInterpretation === "MONOCHROME1")
-				{
-					for (var i = 0, length = bytes .length; i < length; ++ i)
-						bytes [i] = 255 - bytes [i];
-				}
 			},
 			this);
+
+			// Invert MONOCHROME1 pixels.
+
+			if (this .photometricInterpretation === "MONOCHROME1")
+			{
+				for (var i = 0, length = bytes .length; i < length; ++ i)
+					bytes [i] = 255 - bytes [i];
+			}
 
 			// Set Uint8Array.
 
@@ -22487,7 +22497,7 @@ function (dicomParser,
 					return new Float32Array (frame .buffer, frame .byteOffset, frame .length / 4);
 			}
 		},
-		getPixelOffsetAndFactor: function (data)
+		getNormalizeOffsetAndFactor: function (data)
 		{
 			var
 				min = Number .POSITIVE_INFINITY,
