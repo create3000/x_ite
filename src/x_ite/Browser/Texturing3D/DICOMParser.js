@@ -305,16 +305,16 @@ function (dicomParser,
 
 				for (var i = 0, length = frame .length; i < length; ++ i, ++ b)
 					bytes [b] = (frame [i] - normalize .offset) * normalize .factor;
-
-				// Invert MONOCHROME1 pixels.
-
-				if (this .photometricInterpretation === "MONOCHROME1")
-				{
-					for (var i = 0, length = bytes .length; i < length; ++ i)
-						bytes [i] = 255 - bytes [i];
-				}
 			},
 			this);
+
+			// Invert MONOCHROME1 pixels.
+
+			if (this .photometricInterpretation === "MONOCHROME1")
+			{
+				for (var i = 0, length = bytes .length; i < length; ++ i)
+					bytes [i] = 255 - bytes [i];
+			}
 
 			// Set Uint8Array.
 
