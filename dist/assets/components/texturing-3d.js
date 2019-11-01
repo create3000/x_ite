@@ -22175,9 +22175,13 @@ function (dicomParser,
 {
 "use strict";
 
+	// Global instances of JPEG libraries.
+
 	var
-		charLS   = CharLS (),
-		openJPEG = OpenJPEG ();
+		charLS   = undefined,
+		openJPEG = undefined;
+
+	// DicomParser
 
 	function DicomParser ()
 	{
@@ -22873,6 +22877,9 @@ function (dicomParser,
 		},
 		jpegLSDecode: function (data, isSigned)
 		{
+			// Init global instance.
+			charLS = charLS || CharLS ();
+
 			// prepare input parameters
 			const dataPtr = charLS._malloc(data.length);
 
@@ -22952,6 +22959,9 @@ function (dicomParser,
 		},
 		decodeOpenJPEG: function  (data, bytesPerPixel, signed)
 		{
+			// Init global instance.
+			openJPEG = openJPEG || OpenJPEG ();
+
 			const dataPtr = openJPEG._malloc(data.length);
 
 			openJPEG.writeArrayToMemory(data, dataPtr);
