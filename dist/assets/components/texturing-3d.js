@@ -23299,8 +23299,10 @@ function (Fields,
 
 			this .buffer_ = this .url_;
 		},
-		getInternalType: function (gl, components)
+		getInternalType: function (components)
 		{
+			var gl = this .getBrowser () .getContext ();
+
 			switch (components)
 			{
 				case 1:
@@ -23330,9 +23332,7 @@ function (Fields,
 
 					if (nrrd .nrrd)
 					{
-						var
-							gl           = this .getBrowser () .getContext (),
-							internalType = this .getInternalType (gl, nrrd .components);
+						var internalType = this .getInternalType (nrrd .components);
 
 						this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
 						this .setLoadState (X3DConstants .COMPLETE_STATE);
@@ -23343,9 +23343,7 @@ function (Fields,
 
 					if (dicom .dicom)
 					{
-						var
-							gl           = this .getBrowser () .getContext (),
-							internalType = this .getInternalType (gl, dicom .components);
+						var internalType = this .getInternalType (dicom .components);
 
 						this .setTexture (dicom .width, dicom .height, dicom .depth, false, internalType, dicom .data);
 						this .setLoadState (X3DConstants .COMPLETE_STATE);
