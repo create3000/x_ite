@@ -65,6 +65,7 @@
 		"-prebuild:js": "npm run lint"
 	},
 	"dependencies": {
+		"CharLS.js": "^2.0.1",
 		"cornerstone-wado-image-loader": "^3.0.6"
 	}
 }

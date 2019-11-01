@@ -77,6 +77,11 @@ require .config ({
 			"main": "release/current/lossless.js"
 		},
 		{
+			"name": "CharLS",
+			"location": "../node_modules/CharLS.js",
+			"main": "build/charLS-FixedMemory-browser.js"
+		},
+		{
 			"name": "OpenJPEG",
 			"location": "../node_modules/OpenJPEG.js",
 			"main": "build/openJPEG-FixedMemory-browser.js"

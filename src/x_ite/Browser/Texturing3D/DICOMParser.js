@@ -51,19 +51,23 @@ define ([
 	"dicom-parser",
 	"lib/jpeg/jpeg",
 	"jpegLossless",
+	"CharLS",
 	"OpenJPEG",
 	"x_ite/DEBUG",
 ],
 function (dicomParser,
           jpeg,
           jpegLossless,
-          jpx,
+			 jpx,
+			 charLS,
           openJPEG,
           DEBUG)
 {
 "use strict";
 
-	var openJPEG = OpenJPEG ();
+	var
+		charLS   = CharLS (),
+		openJPEG = OpenJPEG ();
 
 	function DicomParser ()
 	{
@@ -200,6 +204,12 @@ function (dicomParser,
 						frame = this .decodeJPEGLossless (frame);
 						break;
 					}
+					case "1.2.840.10008.1.2.4.80": // JPEG-LS Lossless Image Compression
+					case "1.2.840.10008.1.2.4.81": // JPEG-LS Lossy (Near-Lossless) Image Compression
+					{
+						frame = this .decodeJPEGLS (frame);
+						break;
+					}
 					case "1.2.840.10008.1.2.4.90": // JPEG 2000 Lossless
 					case "1.2.840.10008.1.2.4.91": // JPEG 2000 Lossy
 					{
@@ -220,8 +230,6 @@ function (dicomParser,
 					case "1.2.840.10008.1.2.4.64":
 					case "1.2.840.10008.1.2.4.65":
 					case "1.2.840.10008.1.2.4.66":
-					case "1.2.840.10008.1.2.4.80": // JPEG-LS Lossless Image Compression
-					case "1.2.840.10008.1.2.4.81": // JPEG-LS Lossy (Near-Lossless) Image Compression
 					case "1.2.840.10008.1.2.4.92":
 					case "1.2.840.10008.1.2.4.93":
 					{
@@ -730,6 +738,86 @@ function (dicomParser,
 				buffer  = decoder .decompress (pixelData);
 
 			return new Uint8Array (buffer);
+		},
+		decodeJPEGLS: function (pixelData)
+		{
+			if (! charLS)
+				charLS = CharLS ();
+
+			var image = this .jpegLSDecode (pixelData, this .pixelRepresentation === 1);
+
+			// throw error if not success or too much data
+			if (image .result !== 0 && image .result !== 6)
+				throw new Error (`DICOM: JPEG-LS decoder failed to decode frame (error code ${image.result}).`);
+
+			return new Uint8Array (image .pixelData .buffer);
+		},
+		jpegLSDecode: function (data, isSigned)
+		{
+			// prepare input parameters
+			const dataPtr = charLS._malloc(data.length);
+
+			charLS.writeArrayToMemory(data, dataPtr);
+
+			// prepare output parameters
+			const imagePtrPtr = charLS._malloc(4);
+			const imageSizePtr = charLS._malloc(4);
+			const widthPtr = charLS._malloc(4);
+			const heightPtr = charLS._malloc(4);
+			const bitsPerSamplePtr = charLS._malloc(4);
+			const stridePtr = charLS._malloc(4);
+			const allowedLossyErrorPtr = charLS._malloc(4);
+			const componentsPtr = charLS._malloc(4);
+			const interleaveModePtr = charLS._malloc(4);
+
+			// Decode the image
+			const result = charLS.ccall(
+				'jpegls_decode',
+				'number',
+				['number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number'],
+				[dataPtr, data.length, imagePtrPtr, imageSizePtr, widthPtr, heightPtr, bitsPerSamplePtr, stridePtr, componentsPtr, allowedLossyErrorPtr, interleaveModePtr]
+			);
+
+			// Extract result values into object
+			const image = {
+				result,
+				width: charLS.getValue(widthPtr, 'i32'),
+				height: charLS.getValue(heightPtr, 'i32'),
+				bitsPerSample: charLS.getValue(bitsPerSamplePtr, 'i32'),
+				stride: charLS.getValue(stridePtr, 'i32'),
+				components: charLS.getValue(componentsPtr, 'i32'),
+				allowedLossyError: charLS.getValue(allowedLossyErrorPtr, 'i32'),
+				interleaveMode: charLS.getValue(interleaveModePtr, 'i32'),
+				pixelData: undefined
+			};
+
+			// Copy image from emscripten heap into appropriate array buffer type
+			const imagePtr = charLS.getValue(imagePtrPtr, '*');
+
+			if (image.bitsPerSample <= 8) {
+				image.pixelData = new Uint8Array(image.width * image.height * image.components);
+				image.pixelData.set(new Uint8Array(charLS.HEAP8.buffer, imagePtr, image.pixelData.length));
+			} else if (isSigned) {
+				image.pixelData = new Int16Array(image.width * image.height * image.components);
+				image.pixelData.set(new Int16Array(charLS.HEAP16.buffer, imagePtr, image.pixelData.length));
+			} else {
+				image.pixelData = new Uint16Array(image.width * image.height * image.components);
+				image.pixelData.set(new Uint16Array(charLS.HEAP16.buffer, imagePtr, image.pixelData.length));
+			}
+
+			// free memory and return image object
+			charLS._free(dataPtr);
+			charLS._free(imagePtr);
+			charLS._free(imagePtrPtr);
+			charLS._free(imageSizePtr);
+			charLS._free(widthPtr);
+			charLS._free(heightPtr);
+			charLS._free(bitsPerSamplePtr);
+			charLS._free(stridePtr);
+			charLS._free(componentsPtr);
+			charLS._free(interleaveModePtr);
+
+			return image;
 		},
 		decodeJPEG2000: function (pixelData)
 		{
