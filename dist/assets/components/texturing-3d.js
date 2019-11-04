@@ -365,7 +365,7 @@ function (Fields,
 				for (var i = 0, d = 0; i < depth; ++ i)
 				{
 					var
-						textureNode = this .textureNodes [depth - 1 - i],
+						textureNode = this .textureNodes [i],
 						tData       = textureNode .getData ();
 
 					transparent += textureNode .getTransparent ();
@@ -22417,7 +22417,7 @@ function (dicomParser,
 
 				var
 					normalize = this .getNormalizeOffsetAndFactor (frame),
-					b         = (dicom .depth - 1 - f) * imageLength;
+					b         = f * imageLength;
 
 				for (var i = 0, length = frame .length; i < length; ++ i, ++ b)
 					bytes [b] = (frame [i] - normalize .offset) * normalize .factor;

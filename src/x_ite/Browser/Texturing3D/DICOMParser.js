@@ -307,7 +307,7 @@ function (dicomParser,
 
 				var
 					normalize = this .getNormalizeOffsetAndFactor (frame),
-					b         = (dicom .depth - 1 - f) * imageLength;
+					b         = f * imageLength;
 
 				for (var i = 0, length = frame .length; i < length; ++ i, ++ b)
 					bytes [b] = (frame [i] - normalize .offset) * normalize .factor;

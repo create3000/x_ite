@@ -162,7 +162,7 @@ function (Fields,
 				for (var i = 0, d = 0; i < depth; ++ i)
 				{
 					var
-						textureNode = this .textureNodes [depth - 1 - i],
+						textureNode = this .textureNodes [i],
 						tData       = textureNode .getData ();
 
 					transparent += textureNode .getTransparent ();
