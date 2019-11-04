@@ -303,7 +303,7 @@ function (dicomParser,
 
 				// Normalize frame pixel data in the range [0, 255], and assign to image block;
 
-				frame = this .flip (frame, components);
+				frame = this .flipImage (frame, components);
 
 				var
 					normalize = this .getNormalizeOffsetAndFactor (frame),
@@ -405,7 +405,7 @@ function (dicomParser,
 					throw new Error ("DICOM: unsupported pixel format.");
 			}
 		},
-		flip: function (frame, components)
+		flipImage: function (frame, components)
 		{
 			var
 				width  = this .dicom .width,
