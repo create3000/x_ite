@@ -365,7 +365,7 @@ function (Fields,
 				for (var i = 0, d = 0; i < depth; ++ i)
 				{
 					var
-						textureNode = this .textureNodes [i],
+						textureNode = this .textureNodes [depth - 1 - i],
 						tData       = textureNode .getData ();
 
 					transparent += textureNode .getTransparent ();
@@ -22413,9 +22413,11 @@ function (dicomParser,
 
 				// Normalize frame pixel data in the range [0, 255], and assign to image block;
 
+				frame = this .flip (frame, components);
+
 				var
 					normalize = this .getNormalizeOffsetAndFactor (frame),
-					b         = f * imageLength;
+					b         = (dicom .depth - 1 - f) * imageLength;
 
 				for (var i = 0, length = frame .length; i < length; ++ i, ++ b)
 					bytes [b] = (frame [i] - normalize .offset) * normalize .factor;
@@ -22512,6 +22514,32 @@ function (dicomParser,
 				default:
 					throw new Error ("DICOM: unsupported pixel format.");
 			}
+		},
+		flip: function (frame, components)
+		{
+			var
+				width  = this .dicom .width,
+				height = this .dicom .height,
+				out    = new (frame .constructor) (frame .length);
+
+			for (var y = 0; y < height; ++ y)
+			{
+				var
+					rowI = (height - 1 - y) * width,
+					rowO = y * width;
+
+				for (var x = 0; x < width; ++ x)
+				{
+					var
+						i = components * (rowI + x),
+						o = components * (rowO + x);
+
+					for (var c = 0; c < components; ++ c)
+						out [o + c] = frame [i + c];
+				}
+			}
+
+			return out;
 		},
 		getNormalizeOffsetAndFactor: function (data)
 		{
