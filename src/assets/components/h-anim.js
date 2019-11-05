@@ -51,6 +51,7 @@ define ([
 	"x_ite/Components/H-Anim/HAnimDisplacer",
 	"x_ite/Components/H-Anim/HAnimHumanoid",
 	"x_ite/Components/H-Anim/HAnimJoint",
+	"x_ite/Components/H-Anim/HAnimMotion",
 	"x_ite/Components/H-Anim/HAnimSegment",
 	"x_ite/Components/H-Anim/HAnimSite",
 ],
@@ -58,6 +59,7 @@ function (Components,
           HAnimDisplacer,
           HAnimHumanoid,
           HAnimJoint,
+          HAnimMotion,
           HAnimSegment,
           HAnimSite)
 {
@@ -70,6 +72,7 @@ function (Components,
 			HAnimDisplacer: HAnimDisplacer,
 			HAnimHumanoid:  HAnimHumanoid,
 			HAnimJoint:     HAnimJoint,
+			HAnimMotion:    HAnimMotion,
 			HAnimSegment:   HAnimSegment,
 			HAnimSite:      HAnimSite,
 		},
@@ -78,4 +81,3 @@ function (Components,
 		},
 	});
 });
-

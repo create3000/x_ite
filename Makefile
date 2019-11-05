@@ -15,6 +15,7 @@ all:
 	node_modules/uglify-js-es6/bin/uglifyjs --mangle --compress -- dist/x_ite.js > dist/x_ite.min.js
 	node_modules/requirejs/bin/r.js -o cssIn=src/x_ite.css out=dist/x_ite.css
 
+	$(call generate_component,annotation,--compress)
 	$(call generate_component,cad-geometry,--compress)
 	$(call generate_component,cube-map-texturing,--compress)
 	$(call generate_component,dis,--compress)
@@ -27,6 +28,7 @@ all:
 	$(call generate_component,nurbs,--compress)
 	$(call generate_component,particle-systems,--compress)
 	$(call generate_component,picking,--compress)
+	$(call generate_component,projective-texture-mapping,--compress)
 	$(call generate_component,rigid-body-physics)
 	$(call generate_component,scripting,--compress)
 	$(call generate_component,texturing-3d,--compress)

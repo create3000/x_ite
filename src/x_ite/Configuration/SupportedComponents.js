@@ -60,6 +60,14 @@ function (ComponentInfoArray,
 
 	SupportedComponents .addBaseComponent (
 	{
+		title:      "Annotation",
+		name:       "Annotation",
+		level:       2,
+		providerUrl: urls .getProviderUrl ("annotation"),
+	});
+
+	SupportedComponents .addBaseComponent (
+	{
 		title:      "Computer-Aided Design (CAD) model geometry",
 		name:       "CADGeometry",
 		level:       2,
@@ -248,6 +256,14 @@ function (ComponentInfoArray,
 		name:       "PointingDeviceSensor",
 		level:       1,
 		providerUrl: urls .getProviderUrl (),
+	});
+
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Projective Texture Mapping",
+		name:       "ProjectiveTextureMapping",
+		level:       2,
+		providerUrl: urls .getProviderUrl ("projective-texture-mapping"),
 	});
 
 	SupportedComponents .addBaseComponent (

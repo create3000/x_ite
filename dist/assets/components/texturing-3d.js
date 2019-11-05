@@ -22525,8 +22525,8 @@ function (dicomParser,
 			for (var y = 0; y < height; ++ y)
 			{
 				var
-					inputRow  = components * (height - 1 - y) * width,
-					outputRow = components * y * width;
+					inputRow  = components * width * (height - 1 - y),
+					outputRow = components * width * y;
 
 				for (var x = 0, w = components * width; x < w; ++ x)
 				{

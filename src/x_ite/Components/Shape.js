@@ -52,6 +52,7 @@ define ([
 	"x_ite/Components/Shape/FillProperties",
 	"x_ite/Components/Shape/LineProperties",
 	"x_ite/Components/Shape/Material",
+	"x_ite/Components/Shape/PointProperties",
 	"x_ite/Components/Shape/Shape",
 	"x_ite/Components/Shape/TwoSidedMaterial",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
@@ -64,6 +65,7 @@ function (SupportedNodes,
           FillProperties,
           LineProperties,
           Material,
+          PointProperties,
           Shape,
           TwoSidedMaterial,
           X3DAppearanceChildNode,
@@ -79,6 +81,7 @@ function (SupportedNodes,
 		FillProperties:   FillProperties,
 		LineProperties:   LineProperties,
 		Material:         Material,
+		PointProperties:  PointProperties,
 		Shape:            Shape,
 		TwoSidedMaterial: TwoSidedMaterial,
 	};
@@ -90,11 +93,10 @@ function (SupportedNodes,
 		X3DMaterialNode:        X3DMaterialNode,
 		X3DShapeNode:           X3DShapeNode,
 	};
-	
+
 	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
+		SupportedNodes .addType (typeName, Types [typeName]);
 
 	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
