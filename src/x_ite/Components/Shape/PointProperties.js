@@ -90,7 +90,7 @@ function (Fields,
 		},
 		getContainerField: function ()
 		{
-			return "lineProperties";
+			return "pointProperties";
 		},
 		initialize: function ()
 		{
