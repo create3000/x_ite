@@ -164,7 +164,7 @@ function (Fields,
 
 			if (this .fillPropertiesNode)
 				this .fillPropertiesNode .transparent_ .addInterest ("set_transparent__", this);
-			
+
 			this .set_transparent__ ();
 		},
 		set_material__: function ()
@@ -176,7 +176,7 @@ function (Fields,
 
 			if (this .materialNode)
 				this .materialNode .transparent_ .addInterest ("set_transparent__", this);
-			
+
 			this .set_transparent__ ();
 		},
 		set_texture__: function ()
@@ -194,7 +194,7 @@ function (Fields,
 		set_textureTransform__: function ()
 		{
 			this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this .textureTransform_);
-			
+
 			if (this .textureTransformNode)
 				return;
 
@@ -208,13 +208,13 @@ function (Fields,
 
 			for (var i = 0, length = shaderNodes .length; i < length; ++ i)
 				shaderNodes [i] .isValid_ .removeInterest ("set_shader__", this);
-		
+
 			shaderNodes .length = 0;
-		
+
 			for (var i = 0, length = shaders .length; i < length; ++ i)
 			{
 				var shaderNode = X3DCast (X3DConstants .X3DShaderNode, shaders [i]);
-		
+
 				if (shaderNode)
 				{
 					shaderNodes .push (shaderNode);
@@ -281,12 +281,23 @@ function (Fields,
 			if (this .shaderNode)
 				this .shaderNode .traverse (type, renderObject);
 		},
-		enable: function (gl, context)
+		enable: function (gl, context, geometryType)
 		{
 			var browser = context .browser;
 
-			context .linePropertiesNode   = this .linePropertiesNode;
-			context .fillPropertiesNode   = this .fillPropertiesNode;
+			switch (geometryType)
+			{
+				case 0:
+					context .stylePropertiesNode = this .linePropertiesNode; // pointProperiesNode.
+					break;
+				case 1:
+					context .stylePropertiesNode = this .linePropertiesNode;
+					break;
+				default:
+					context .stylePropertiesNode = this .fillPropertiesNode;
+					break;
+			}
+
 			context .materialNode         = this .materialNode;
 			context .textureNode          = this .textureNode;
 			context .textureTransformNode = this .textureTransformNode;
@@ -310,5 +321,3 @@ function (Fields,
 
 	return Appearance;
 });
-
-

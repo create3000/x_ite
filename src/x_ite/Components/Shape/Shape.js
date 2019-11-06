@@ -64,7 +64,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DShapeNode, 
+          X3DShapeNode,
           TraverseType,
           X3DConstants,
           Algorithm,
@@ -164,7 +164,7 @@ function (Fields,
 					break;
 				}
 			}
-	
+
 			this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
 		},
 		pointer: (function ()
@@ -184,43 +184,43 @@ function (Fields,
 				try
 				{
 					var geometry = this .getGeometry ();
-	
+
 					if (geometry .getGeometryType () < 2)
 						return;
-	
+
 					var browser = renderObject .getBrowser ();
 
 					modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
 					invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
 					hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
-	
+
 					if (geometry .intersectsLine (hitRay, renderObject .getShaderObjects (), modelViewMatrix, intersections))
 					{
 						// Finally we have intersections and must now find the closest hit in front of the camera.
-	
+
 						// Transform hitPoints to absolute space.
 						for (var i = 0; i < intersections .length; ++ i)
 							modelViewMatrix .multVecMatrix (intersections [i] .point);
-	
+
 						intersectionSorter .sort (0, intersections .length);
-	
+
 						// Find first point that is not greater than near plane;
 						var index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
 						function (lhs, rhs)
 						{
 						   return lhs .point .z > rhs;
 						});
-	
+
 						// Are there intersections before the camera?
 						if (index !== intersections .length)
 						{
 							// Transform hitNormal to absolute space.
 							invModelViewMatrix .multMatrixDir (intersections [index] .normal) .normalize ();
-	
+
 							browser .addHit (intersections [index], renderObject .getLayer (), this, modelViewMatrix .multRight (renderObject .getCameraSpaceMatrix () .get ()));
 						}
-	
+
 						intersections .length = 0;
 					}
 				}
@@ -268,13 +268,13 @@ function (Fields,
 		},
 		display: function (gl, context)
 		{
-			this .getAppearance () .enable  (gl, context);
-			this .getGeometry ()   .display (gl, context);
+			var geometryNode = this .getGeometry ();
+
+			this .getAppearance () .enable  (gl, context, geometryNode .getGeometryType ());
+			geometryNode .display (gl, context);
 			this .getAppearance () .disable (gl, context);
 		},
 	});
 
 	return Shape;
 });
-
-

@@ -945,8 +945,7 @@ function (Fields,
 		setLocalUniforms: function (gl, context)
 		{
 			var
-				linePropertiesNode    = context .linePropertiesNode,
-				fillPropertiesNode    = context .fillPropertiesNode,
+				stylePropertiesNode   = context .stylePropertiesNode,
 				materialNode          = context .materialNode,
 				textureNode           = context .textureNode,
 				textureTransformNode  = context .textureTransformNode,
@@ -976,10 +975,7 @@ function (Fields,
 			context .fogNode .setShaderUniforms (gl, this);
 			gl .uniform1i (this .x3d_FogCoord, context .fogCoords);
 
-			if (context .geometryType < 2)
-				linePropertiesNode .setShaderUniforms (gl, this);
-			else
-				fillPropertiesNode .setShaderUniforms (gl, this);
+			stylePropertiesNode .setShaderUniforms (gl, this);
 
 			// Material
 
