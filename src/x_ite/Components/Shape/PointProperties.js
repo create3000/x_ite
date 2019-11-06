@@ -67,6 +67,8 @@ function (Fields,
 		X3DAppearanceChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .PointProperties);
+
+		this .pointSizeAttenuation = new Float32Array (3);
 	}
 
 	PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -95,6 +97,62 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DAppearanceChildNode .prototype .initialize .call (this);
+
+			this .pointSizeScaleFactor_ .addInterest ("set_pointSizeScaleFactor__", this);
+			this .pointSizeMinValue_    .addInterest ("set_pointSizeMinValue__",    this);
+			this .pointSizeMaxValue_    .addInterest ("set_pointSizeMaxValue__",    this);
+			this .pointSizeAttenuation_ .addInterest ("set_pointSizeAttenuation__", this);
+			this .colorMode_            .addInterest ("set_colorMode__", this);
+
+			this .set_pointSizeScaleFactor__ ();
+			this .set_pointSizeMinValue__ ();
+			this .set_pointSizeMaxValue__ ();
+			this .set_pointSizeAttenuation__ ();
+			this .set_colorMode__ ();
+		},
+		set_pointSizeScaleFactor__: function ()
+		{
+			this .pointSizeScaleFactor = Math .max (1, this .pointSizeScaleFactor_ .getValue ());
+		},
+		set_pointSizeMinValue__: function ()
+		{
+			this .pointSizeMinValue = Math .max (0, this .pointSizeMinValue_ .getValue ());
+		},
+		set_pointSizeMaxValue__: function ()
+		{
+			this .pointSizeMaxValue = Math .max (0, this .spointSizeMaxValue_ .getValue ());
+		},
+		set_pointSizeAttenuation_: function ()
+		{
+			this .pointSizeAttenuation [0] = Math .max (0, this .pointSizeAttenuation_ [0]);
+			this .pointSizeAttenuation [1] = Math .max (0, this .pointSizeAttenuation_ [1]);
+			this .pointSizeAttenuation [2] = Math .max (0, this .pointSizeAttenuation_ [2]);
+		},
+		set_colorMode__: (function ()
+		{
+			var colorModes = new Map ([
+				["POINT_COLOR",             0],
+				["TEXTURE_COLOR",           1],
+				["TEXTURE_AND_POINT_COLOR", 2],
+			]);
+
+			return function ()
+			{
+				var colorMode = colorModes .get (this .colorMode_ .getValue ());
+
+				if (colorMode !== undefined)
+					this .colorMode = colorMode;
+				else
+					this .colorMode = colorModes .get ("TEXTURE_AND_POINT_COLOR");
+			};
+		})(),
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			gl .uniform1f  (shaderObject .x3d_PointSizeScaleFactor, this .pointSizeScaleFactorse);
+			gl .uniform1f  (shaderObject .x3d_PointSizeMinValue,    this .pointSizeMinValue);
+			gl .uniform1f  (shaderObject .x3d_PointSizeMaxValue,    this .pointSizeMaxValue);
+			gl .uniform1fv (shaderObject .x3d_PointSizeAttenuation, this .pointSizeAttenuation);
+			gl .uniform1i  (shaderObject .x3d_ColorMode,            this .colorMode);
 		},
 	});
 
