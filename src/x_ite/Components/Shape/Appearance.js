@@ -70,6 +70,7 @@ function (Fields,
 
 		this .addType (X3DConstants .Appearance);
 
+		this .pointPropertiesNode  = null;
 		this .linePropertiesNode   = null;
 		this .fillPropertiesNode   = null;
 		this .materialNode         = null;
@@ -85,6 +86,7 @@ function (Fields,
 		constructor: Appearance,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "pointProperties",  new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "lineProperties",   new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "fillProperties",   new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "material",         new Fields .SFNode ()),
@@ -111,6 +113,7 @@ function (Fields,
 
 			this .isLive () .addInterest ("set_live__", this);
 
+			this .pointProperties_  .addInterest ("set_pointProperties__",  this);
 			this .lineProperties_   .addInterest ("set_lineProperties__",   this);
 			this .fillProperties_   .addInterest ("set_fillProperties__",   this);
 			this .material_         .addInterest ("set_material__",         this);
@@ -120,6 +123,7 @@ function (Fields,
 			this .blendMode_        .addInterest ("set_blendMode__",        this);
 
 			this .set_live__ ();
+			this .set_pointProperties__ ();
 			this .set_lineProperties__ ();
 			this .set_fillProperties__ ();
 			this .set_material__ ();
@@ -144,6 +148,13 @@ function (Fields,
 				if (this .shaderNode)
 					this .getBrowser () .removeShader (this .shaderNode);
 			}
+		},
+		set_pointProperties__: function ()
+		{
+			this .pointPropertiesNode = X3DCast (X3DConstants .PointProperties, this .pointProperties_);
+
+			if (! this .pointPropertiesNode)
+				this .pointPropertiesNode = this .getBrowser () .getDefaultPointProperties ();
 		},
 		set_lineProperties__: function ()
 		{
@@ -288,7 +299,7 @@ function (Fields,
 			switch (geometryType)
 			{
 				case 0:
-					context .stylePropertiesNode = this .linePropertiesNode; // pointProperiesNode.
+					context .stylePropertiesNode = this .pointPropertiesNode;
 					break;
 				case 1:
 					context .stylePropertiesNode = this .linePropertiesNode;

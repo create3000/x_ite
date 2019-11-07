@@ -102,7 +102,7 @@ function (Fields,
 			this .pointSizeMinValue_    .addInterest ("set_pointSizeMinValue__",    this);
 			this .pointSizeMaxValue_    .addInterest ("set_pointSizeMaxValue__",    this);
 			this .pointSizeAttenuation_ .addInterest ("set_pointSizeAttenuation__", this);
-			this .colorMode_            .addInterest ("set_colorMode__", this);
+			this .colorMode_            .addInterest ("set_colorMode__",            this);
 
 			this .set_pointSizeScaleFactor__ ();
 			this .set_pointSizeMinValue__ ();
@@ -120,13 +120,15 @@ function (Fields,
 		},
 		set_pointSizeMaxValue__: function ()
 		{
-			this .pointSizeMaxValue = Math .max (0, this .spointSizeMaxValue_ .getValue ());
+			this .pointSizeMaxValue = Math .max (0, this .pointSizeMaxValue_ .getValue ());
 		},
-		set_pointSizeAttenuation_: function ()
+		set_pointSizeAttenuation__: function ()
 		{
-			this .pointSizeAttenuation [0] = Math .max (0, this .pointSizeAttenuation_ [0]);
-			this .pointSizeAttenuation [1] = Math .max (0, this .pointSizeAttenuation_ [1]);
-			this .pointSizeAttenuation [2] = Math .max (0, this .pointSizeAttenuation_ [2]);
+			var length = this .pointSizeAttenuation_ .length;
+
+			this .pointSizeAttenuation [0] = length > 0 ? Math .max (0, this .pointSizeAttenuation_ [0]) : 1;
+			this .pointSizeAttenuation [1] = length > 1 ? Math .max (0, this .pointSizeAttenuation_ [1]) : 0;
+			this .pointSizeAttenuation [2] = length > 2 ? Math .max (0, this .pointSizeAttenuation_ [2]) : 0;
 		},
 		set_colorMode__: (function ()
 		{
@@ -148,11 +150,11 @@ function (Fields,
 		})(),
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			gl .uniform1f  (shaderObject .x3d_PointSizeScaleFactor, this .pointSizeScaleFactorse);
-			gl .uniform1f  (shaderObject .x3d_PointSizeMinValue,    this .pointSizeMinValue);
-			gl .uniform1f  (shaderObject .x3d_PointSizeMaxValue,    this .pointSizeMaxValue);
-			gl .uniform1fv (shaderObject .x3d_PointSizeAttenuation, this .pointSizeAttenuation);
-			gl .uniform1i  (shaderObject .x3d_ColorMode,            this .colorMode);
+			gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeScaleFactor, this .pointSizeScaleFactor);
+			gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMinValue,    this .pointSizeMinValue);
+			gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMaxValue,    this .pointSizeMaxValue);
+			gl .uniform3fv (shaderObject .x3d_PointPropertiesPointSizeAttenuation, this .pointSizeAttenuation);
+			gl .uniform1i  (shaderObject .x3d_PointPropertiesColorMode,            this .colorMode);
 		},
 	});
 

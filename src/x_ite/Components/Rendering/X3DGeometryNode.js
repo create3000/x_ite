@@ -201,7 +201,6 @@ function (Fields,
 		},
 		setGeometryType: function (value)
 		{
-			console .log (value);
 			this .geometryType = value;
 		},
 		getGeometryType: function ()

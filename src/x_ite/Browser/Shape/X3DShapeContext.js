@@ -49,6 +49,7 @@
 
 define ([
 	"x_ite/Components/Shape/Appearance",
+	"x_ite/Components/Shape/PointProperties",
 	"x_ite/Components/Shape/LineProperties",
 	"x_ite/Components/Shape/FillProperties",
 	"x_ite/Components/Texturing/ImageTexture",
@@ -56,6 +57,7 @@ define ([
 	"x_ite/Browser/Networking/urls",
 ],
 function (Appearance,
+          PointProperties,
           LineProperties,
           FillProperties,
           ImageTexture,
@@ -78,18 +80,29 @@ function (Appearance,
 		{
 			if (this .defaultAppearance)
 				return this .defaultAppearance;
-			
+
 			this .defaultAppearance = new Appearance (this .getPrivateScene ());
 
 			this .defaultAppearance .setup ();
 
 			return this .defaultAppearance;
 		},
+		getDefaultPointProperties: function ()
+		{
+			if (this .defaultPointProperties)
+				return this .defaultPointProperties;
+
+			this .defaultPointProperties = new PointProperties (this .getPrivateScene ());
+
+			this .defaultPointProperties .setup ();
+
+			return this .defaultPointProperties;
+		},
 		getDefaultLineProperties: function ()
 		{
 			if (this .defaultLineProperties)
 				return this .defaultLineProperties;
-			
+
 			this .defaultLineProperties = new LineProperties (this .getPrivateScene ());
 
 			this .defaultLineProperties .applied_ = false;
@@ -101,7 +114,7 @@ function (Appearance,
 		{
 			if (this .defaultFillProperties)
 				return this .defaultFillProperties;
-			
+
 			this .defaultFillProperties = new FillProperties (this .getPrivateScene ());
 
 			this .defaultFillProperties .hatched_ = false;
@@ -149,7 +162,7 @@ function (Appearance,
 		{
 			if (this .lineFillTextureProperties)
 				return this .lineFillTextureProperties;
-			
+
 			this .lineFillTextureProperties = new TextureProperties (this .getPrivateScene ());
 
 			this .lineFillTextureProperties .setup ();
