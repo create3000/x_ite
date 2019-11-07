@@ -58,19 +58,26 @@ define ('x_ite/Components/Annotation/AnnotationLayer',[
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Layering/X3DLayerNode",
+	"x_ite/Components/Navigation/Viewpoint",
+	"x_ite/Components/Grouping/Group",
 	"x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLayerNode,
+          Viewpoint,
+          Group,
           X3DConstants)
 {
 "use strict";
 
 	function AnnotationLayer (executionContext)
 	{
-		X3DLayerNode .call (this, executionContext);
+		X3DLayerNode .call (this,
+		                    executionContext,
+		                    new Viewpoint (executionContext),
+		                    new Group (executionContext));
 
 		this .addType (X3DConstants .AnnotationLayer);
 	}

@@ -44160,6 +44160,12 @@ function (Fields,
 			this .x3d_FogMatrix          = this .getUniformLocation (gl, program, "x3d_Fog.matrix",          "x3d_FogMatrix");
 			this .x3d_FogCoord           = this .getUniformLocation (gl, program, "x3d_Fog.fogCoord",        "x3d_FogCoord");
 
+			this .x3d_PointPropertiesPointSizeScaleFactor = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeScaleFactor");
+			this .x3d_PointPropertiesPointSizeMinValue    = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeMinValue");
+			this .x3d_PointPropertiesPointSizeMaxValue    = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeMaxValue");
+			this .x3d_PointPropertiesPointSizeAttenuation = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeAttenuation");
+			this .x3d_PointPropertiesColorMode            = gl .getUniformLocation (program, "x3d_PointProperties.colorMode");
+
 			this .x3d_LinePropertiesApplied              = gl .getUniformLocation (program, "x3d_LineProperties.applied");
 			this .x3d_LinePropertiesLinewidthScaleFactor = this .getUniformLocation (gl, program, "x3d_LineProperties.linewidthScaleFactor", "x3d_LinewidthScaleFactor");
 			this .x3d_LinePropertiesLinetype             = gl .getUniformLocation (program, "x3d_LineProperties.linetype");
@@ -44948,8 +44954,7 @@ function (Fields,
 		setLocalUniforms: function (gl, context)
 		{
 			var
-				linePropertiesNode    = context .linePropertiesNode,
-				fillPropertiesNode    = context .fillPropertiesNode,
+				stylePropertiesNode   = context .stylePropertiesNode,
 				materialNode          = context .materialNode,
 				textureNode           = context .textureNode,
 				textureTransformNode  = context .textureTransformNode,
@@ -44979,10 +44984,7 @@ function (Fields,
 			context .fogNode .setShaderUniforms (gl, this);
 			gl .uniform1i (this .x3d_FogCoord, context .fogCoords);
 
-			if (context .geometryType < 2)
-				linePropertiesNode .setShaderUniforms (gl, this);
-			else
-				fillPropertiesNode .setShaderUniforms (gl, this);
+			stylePropertiesNode .setShaderUniforms (gl, this);
 
 			// Material
 
@@ -45949,7 +45951,7 @@ function (Fields,
 
 
 
-define('text!assets/shaders/Types.h',[],function () { return '// -*- Mode: C++; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-\n\nstruct x3d_FogParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float visibilityRange;\n\tmediump mat3  matrix;\n\tbool          fogCoord;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float intensity;\n\tmediump float ambientIntensity;\n\tmediump vec3  attenuation;\n\tmediump vec3  location;\n\tmediump vec3  direction;\n\tmediump float radius;\n\tmediump float beamWidth;\n\tmediump float cutOffAngle;\n\tmediump mat3  matrix;\n\t#ifdef X3D_SHADOWS\n\tmediump vec3  shadowColor;\n\tmediump float shadowIntensity;\n\tmediump float shadowBias;\n\tmediump mat4  shadowMatrix;\n\tmediump int   shadowMapSize;\n\t#endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_LinePropertiesParameters  \n{   \n\tbool          applied;\n\tmediump float linewidthScaleFactor;\n\tsampler2D     linetype;\n};\n\n//uniform x3d_LinePropertiesParameters x3d_LineProperties;\n\nstruct x3d_FillPropertiesParameters  \n{   \n\tbool         filled;\n\tbool         hatched;\n\tmediump vec3 hatchColor;\n\tsampler2D    hatchStyle;\n};\n\n//uniform x3d_FillPropertiesParameters x3d_FillProperties;\n\nstruct x3d_MaterialParameters  \n{   \n\tmediump float ambientIntensity;\n\tmediump vec3  diffuseColor;\n\tmediump vec3  specularColor;\n\tmediump vec3  emissiveColor;\n\tmediump float shininess;\n\tmediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_FrontMaterial;\n//uniform x3d_MaterialParameters x3d_BackMaterial;\n\nstruct x3d_MultiTextureParameters  \n{   \n\tmediump int mode;\n\tmediump int alphaMode;\n\tmediump int source;\n\tmediump int function;\n};\n\n//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];\n\nstruct x3d_TextureCoordinateGeneratorParameters  \n{   \n\tmediump int   mode;\n\tmediump float parameter [6];\n};\n\n//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];\n\nstruct x3d_ParticleParameters  \n{   \n\tmediump int   id;\n\tmediump int   life;\n\tmediump float elapsedTime;\n};\n\n//uniform x3d_ParticleParameters x3d_Particle;\n';});
+define('text!assets/shaders/Types.h',[],function () { return '\nstruct x3d_FogParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float visibilityRange;\n\tmediump mat3  matrix;\n\tbool          fogCoord;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float intensity;\n\tmediump float ambientIntensity;\n\tmediump vec3  attenuation;\n\tmediump vec3  location;\n\tmediump vec3  direction;\n\tmediump float radius;\n\tmediump float beamWidth;\n\tmediump float cutOffAngle;\n\tmediump mat3  matrix;\n\t#ifdef X3D_SHADOWS\n\tmediump vec3  shadowColor;\n\tmediump float shadowIntensity;\n\tmediump float shadowBias;\n\tmediump mat4  shadowMatrix;\n\tmediump int   shadowMapSize;\n\t#endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_PointPropertiesParameters\n{\n\tmediump float pointSizeScaleFactor;\n\tmediump float pointSizeMinValue;\n\tmediump float pointSizeMaxValue;\n\tmediump vec3  pointSizeAttenuation;\n\tmediump int   colorMode;\n};\n\n//uniform x3d_PointPropertiesParameters x3d_PointProperties;\n\nstruct x3d_LinePropertiesParameters\n{\n\tbool          applied;\n\tmediump float linewidthScaleFactor;\n\tsampler2D     linetype;\n};\n\n//uniform x3d_LinePropertiesParameters x3d_LineProperties;\n\nstruct x3d_FillPropertiesParameters\n{\n\tbool         filled;\n\tbool         hatched;\n\tmediump vec3 hatchColor;\n\tsampler2D    hatchStyle;\n};\n\n//uniform x3d_FillPropertiesParameters x3d_FillProperties;\n\nstruct x3d_MaterialParameters\n{\n\tmediump float ambientIntensity;\n\tmediump vec3  diffuseColor;\n\tmediump vec3  specularColor;\n\tmediump vec3  emissiveColor;\n\tmediump float shininess;\n\tmediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_FrontMaterial;\n//uniform x3d_MaterialParameters x3d_BackMaterial;\n\nstruct x3d_MultiTextureParameters\n{\n\tmediump int mode;\n\tmediump int alphaMode;\n\tmediump int source;\n\tmediump int function;\n};\n\n//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];\n\nstruct x3d_TextureCoordinateGeneratorParameters\n{\n\tmediump int   mode;\n\tmediump float parameter [6];\n};\n\n//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];\n\nstruct x3d_ParticleParameters\n{\n\tmediump int   id;\n\tmediump int   life;\n\tmediump float elapsedTime;\n};\n\n//uniform x3d_ParticleParameters x3d_Particle;\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -60089,6 +60091,7 @@ function (Fields,
 
 		this .addType (X3DConstants .Appearance);
 
+		this .pointPropertiesNode  = null;
 		this .linePropertiesNode   = null;
 		this .fillPropertiesNode   = null;
 		this .materialNode         = null;
@@ -60104,6 +60107,7 @@ function (Fields,
 		constructor: Appearance,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "pointProperties",  new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "lineProperties",   new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "fillProperties",   new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "material",         new Fields .SFNode ()),
@@ -60130,6 +60134,7 @@ function (Fields,
 
 			this .isLive () .addInterest ("set_live__", this);
 
+			this .pointProperties_  .addInterest ("set_pointProperties__",  this);
 			this .lineProperties_   .addInterest ("set_lineProperties__",   this);
 			this .fillProperties_   .addInterest ("set_fillProperties__",   this);
 			this .material_         .addInterest ("set_material__",         this);
@@ -60139,6 +60144,7 @@ function (Fields,
 			this .blendMode_        .addInterest ("set_blendMode__",        this);
 
 			this .set_live__ ();
+			this .set_pointProperties__ ();
 			this .set_lineProperties__ ();
 			this .set_fillProperties__ ();
 			this .set_material__ ();
@@ -60164,6 +60170,13 @@ function (Fields,
 					this .getBrowser () .removeShader (this .shaderNode);
 			}
 		},
+		set_pointProperties__: function ()
+		{
+			this .pointPropertiesNode = X3DCast (X3DConstants .PointProperties, this .pointProperties_);
+
+			if (! this .pointPropertiesNode)
+				this .pointPropertiesNode = this .getBrowser () .getDefaultPointProperties ();
+		},
 		set_lineProperties__: function ()
 		{
 			this .linePropertiesNode = X3DCast (X3DConstants .LineProperties, this .lineProperties_);
@@ -60183,7 +60196,7 @@ function (Fields,
 
 			if (this .fillPropertiesNode)
 				this .fillPropertiesNode .transparent_ .addInterest ("set_transparent__", this);
-			
+
 			this .set_transparent__ ();
 		},
 		set_material__: function ()
@@ -60195,7 +60208,7 @@ function (Fields,
 
 			if (this .materialNode)
 				this .materialNode .transparent_ .addInterest ("set_transparent__", this);
-			
+
 			this .set_transparent__ ();
 		},
 		set_texture__: function ()
@@ -60213,7 +60226,7 @@ function (Fields,
 		set_textureTransform__: function ()
 		{
 			this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this .textureTransform_);
-			
+
 			if (this .textureTransformNode)
 				return;
 
@@ -60227,13 +60240,13 @@ function (Fields,
 
 			for (var i = 0, length = shaderNodes .length; i < length; ++ i)
 				shaderNodes [i] .isValid_ .removeInterest ("set_shader__", this);
-		
+
 			shaderNodes .length = 0;
-		
+
 			for (var i = 0, length = shaders .length; i < length; ++ i)
 			{
 				var shaderNode = X3DCast (X3DConstants .X3DShaderNode, shaders [i]);
-		
+
 				if (shaderNode)
 				{
 					shaderNodes .push (shaderNode);
@@ -60300,12 +60313,23 @@ function (Fields,
 			if (this .shaderNode)
 				this .shaderNode .traverse (type, renderObject);
 		},
-		enable: function (gl, context)
+		enable: function (gl, context, geometryType)
 		{
 			var browser = context .browser;
 
-			context .linePropertiesNode   = this .linePropertiesNode;
-			context .fillPropertiesNode   = this .fillPropertiesNode;
+			switch (geometryType)
+			{
+				case 0:
+					context .stylePropertiesNode = this .pointPropertiesNode;
+					break;
+				case 1:
+					context .stylePropertiesNode = this .linePropertiesNode;
+					break;
+				default:
+					context .stylePropertiesNode = this .fillPropertiesNode;
+					break;
+			}
+
 			context .materialNode         = this .materialNode;
 			context .textureNode          = this .textureNode;
 			context .textureTransformNode = this .textureTransformNode;
@@ -60330,7 +60354,168 @@ function (Fields,
 	return Appearance;
 });
 
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
 
+
+define ('x_ite/Components/Shape/PointProperties',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Shape/X3DAppearanceChildNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DAppearanceChildNode,
+          X3DConstants)
+{
+"use strict";
+
+	function PointProperties (executionContext)
+	{
+		X3DAppearanceChildNode .call (this, executionContext);
+
+		this .addType (X3DConstants .PointProperties);
+
+		this .pointSizeAttenuation = new Float32Array (3);
+	}
+
+	PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+	{
+		constructor: PointProperties,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeScaleFactor", new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMinValue",    new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMaxValue",    new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeAttenuation", new Fields .MFFloat (1, 0, 0)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "colorMode",            new Fields .SFString ("TEXTURE_AND_POINT_COLOR")),
+		]),
+		getTypeName: function ()
+		{
+			return "PointProperties";
+		},
+		getComponentName: function ()
+		{
+			return "Shape";
+		},
+		getContainerField: function ()
+		{
+			return "pointProperties";
+		},
+		initialize: function ()
+		{
+			X3DAppearanceChildNode .prototype .initialize .call (this);
+
+			this .pointSizeScaleFactor_ .addInterest ("set_pointSizeScaleFactor__", this);
+			this .pointSizeMinValue_    .addInterest ("set_pointSizeMinValue__",    this);
+			this .pointSizeMaxValue_    .addInterest ("set_pointSizeMaxValue__",    this);
+			this .pointSizeAttenuation_ .addInterest ("set_pointSizeAttenuation__", this);
+			this .colorMode_            .addInterest ("set_colorMode__",            this);
+
+			this .set_pointSizeScaleFactor__ ();
+			this .set_pointSizeMinValue__ ();
+			this .set_pointSizeMaxValue__ ();
+			this .set_pointSizeAttenuation__ ();
+			this .set_colorMode__ ();
+		},
+		set_pointSizeScaleFactor__: function ()
+		{
+			this .pointSizeScaleFactor = Math .max (1, this .pointSizeScaleFactor_ .getValue ());
+		},
+		set_pointSizeMinValue__: function ()
+		{
+			this .pointSizeMinValue = Math .max (0, this .pointSizeMinValue_ .getValue ());
+		},
+		set_pointSizeMaxValue__: function ()
+		{
+			this .pointSizeMaxValue = Math .max (0, this .pointSizeMaxValue_ .getValue ());
+		},
+		set_pointSizeAttenuation__: function ()
+		{
+			var length = this .pointSizeAttenuation_ .length;
+
+			this .pointSizeAttenuation [0] = length > 0 ? Math .max (0, this .pointSizeAttenuation_ [0]) : 1;
+			this .pointSizeAttenuation [1] = length > 1 ? Math .max (0, this .pointSizeAttenuation_ [1]) : 0;
+			this .pointSizeAttenuation [2] = length > 2 ? Math .max (0, this .pointSizeAttenuation_ [2]) : 0;
+		},
+		set_colorMode__: (function ()
+		{
+			var colorModes = new Map ([
+				["POINT_COLOR",             0],
+				["TEXTURE_COLOR",           1],
+				["TEXTURE_AND_POINT_COLOR", 2],
+			]);
+
+			return function ()
+			{
+				var colorMode = colorModes .get (this .colorMode_ .getValue ());
+
+				if (colorMode !== undefined)
+					this .colorMode = colorMode;
+				else
+					this .colorMode = colorModes .get ("TEXTURE_AND_POINT_COLOR");
+			};
+		})(),
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeScaleFactor, this .pointSizeScaleFactor);
+			gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMinValue,    this .pointSizeMinValue);
+			gl .uniform1f  (shaderObject .x3d_PointPropertiesPointSizeMaxValue,    this .pointSizeMaxValue);
+			gl .uniform3fv (shaderObject .x3d_PointPropertiesPointSizeAttenuation, this .pointSizeAttenuation);
+			gl .uniform1i  (shaderObject .x3d_PointPropertiesColorMode,            this .colorMode);
+		},
+	});
+
+	return PointProperties;
+});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -61550,6 +61735,7 @@ function (Fields,
 
 define ('x_ite/Browser/Shape/X3DShapeContext',[
 	"x_ite/Components/Shape/Appearance",
+	"x_ite/Components/Shape/PointProperties",
 	"x_ite/Components/Shape/LineProperties",
 	"x_ite/Components/Shape/FillProperties",
 	"x_ite/Components/Texturing/ImageTexture",
@@ -61557,6 +61743,7 @@ define ('x_ite/Browser/Shape/X3DShapeContext',[
 	"x_ite/Browser/Networking/urls",
 ],
 function (Appearance,
+          PointProperties,
           LineProperties,
           FillProperties,
           ImageTexture,
@@ -61579,18 +61766,29 @@ function (Appearance,
 		{
 			if (this .defaultAppearance)
 				return this .defaultAppearance;
-			
+
 			this .defaultAppearance = new Appearance (this .getPrivateScene ());
 
 			this .defaultAppearance .setup ();
 
 			return this .defaultAppearance;
 		},
+		getDefaultPointProperties: function ()
+		{
+			if (this .defaultPointProperties)
+				return this .defaultPointProperties;
+
+			this .defaultPointProperties = new PointProperties (this .getPrivateScene ());
+
+			this .defaultPointProperties .setup ();
+
+			return this .defaultPointProperties;
+		},
 		getDefaultLineProperties: function ()
 		{
 			if (this .defaultLineProperties)
 				return this .defaultLineProperties;
-			
+
 			this .defaultLineProperties = new LineProperties (this .getPrivateScene ());
 
 			this .defaultLineProperties .applied_ = false;
@@ -61602,7 +61800,7 @@ function (Appearance,
 		{
 			if (this .defaultFillProperties)
 				return this .defaultFillProperties;
-			
+
 			this .defaultFillProperties = new FillProperties (this .getPrivateScene ());
 
 			this .defaultFillProperties .hatched_ = false;
@@ -61650,7 +61848,7 @@ function (Appearance,
 		{
 			if (this .lineFillTextureProperties)
 				return this .lineFillTextureProperties;
-			
+
 			this .lineFillTextureProperties = new TextureProperties (this .getPrivateScene ());
 
 			this .lineFillTextureProperties .setup ();
@@ -111876,109 +112074,6 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Components/Shape/PointProperties',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Shape/X3DAppearanceChildNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DAppearanceChildNode,
-          X3DConstants)
-{
-"use strict";
-
-	function PointProperties (executionContext)
-	{
-		X3DAppearanceChildNode .call (this, executionContext);
-
-		this .addType (X3DConstants .PointProperties);
-	}
-
-	PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
-	{
-		constructor: PointProperties,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeScaleFactor", new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMinValue",    new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMaxValue",    new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeAttenuation", new Fields .MFFloat (1, 0, 0)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "colorMode",            new Fields .SFString ("TEXTURE_AND_POINT_COLOR")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "PointProperties";
-		},
-		getComponentName: function ()
-		{
-			return "Shape";
-		},
-		getContainerField: function ()
-		{
-			return "lineProperties";
-		},
-		initialize: function ()
-		{
-			X3DAppearanceChildNode .prototype .initialize .call (this);
-		},
-	});
-
-	return PointProperties;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Components/Shape/X3DShapeNode',[
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
@@ -112295,7 +112390,7 @@ define ('x_ite/Components/Shape/Shape',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DShapeNode, 
+          X3DShapeNode,
           TraverseType,
           X3DConstants,
           Algorithm,
@@ -112395,7 +112490,7 @@ function (Fields,
 					break;
 				}
 			}
-	
+
 			this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
 		},
 		pointer: (function ()
@@ -112415,43 +112510,43 @@ function (Fields,
 				try
 				{
 					var geometry = this .getGeometry ();
-	
+
 					if (geometry .getGeometryType () < 2)
 						return;
-	
+
 					var browser = renderObject .getBrowser ();
 
 					modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
 					invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
 					hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
-	
+
 					if (geometry .intersectsLine (hitRay, renderObject .getShaderObjects (), modelViewMatrix, intersections))
 					{
 						// Finally we have intersections and must now find the closest hit in front of the camera.
-	
+
 						// Transform hitPoints to absolute space.
 						for (var i = 0; i < intersections .length; ++ i)
 							modelViewMatrix .multVecMatrix (intersections [i] .point);
-	
+
 						intersectionSorter .sort (0, intersections .length);
-	
+
 						// Find first point that is not greater than near plane;
 						var index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
 						function (lhs, rhs)
 						{
 						   return lhs .point .z > rhs;
 						});
-	
+
 						// Are there intersections before the camera?
 						if (index !== intersections .length)
 						{
 							// Transform hitNormal to absolute space.
 							invModelViewMatrix .multMatrixDir (intersections [index] .normal) .normalize ();
-	
+
 							browser .addHit (intersections [index], renderObject .getLayer (), this, modelViewMatrix .multRight (renderObject .getCameraSpaceMatrix () .get ()));
 						}
-	
+
 						intersections .length = 0;
 					}
 				}
@@ -112499,16 +112594,16 @@ function (Fields,
 		},
 		display: function (gl, context)
 		{
-			this .getAppearance () .enable  (gl, context);
-			this .getGeometry ()   .display (gl, context);
+			var geometryNode = this .getGeometry ();
+
+			this .getAppearance () .enable  (gl, context, geometryNode .getGeometryType ());
+			geometryNode .display (gl, context);
 			this .getAppearance () .disable (gl, context);
 		},
 	});
 
 	return Shape;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
