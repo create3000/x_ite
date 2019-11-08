@@ -99,9 +99,19 @@ function (Fields,
 		{
 			return "layers";
 		},
+		initialize: function ()
+		{
+			X3DLayerNode .prototype .initialize .call (this);
+
+			this .addChildren_    .addFieldInterest (this .getGroup () .addChildren_);
+			this .removeChildren_ .addFieldInterest (this .getGroup () .removeChildren_);
+			this .children_       .addFieldInterest (this .getGroup () .children_);
+
+			this .getGroup () .children_ = this .children_;
+			this .getGroup () .setPrivate (true);
+			this .getGroup () .setup ();
+		},
 	});
 
 	return Layer;
 });
-
-

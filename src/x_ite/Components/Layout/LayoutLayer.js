@@ -102,15 +102,19 @@ function (Fields,
 		},
 		initialize: function ()
 		{
-			this .layout_ .addFieldInterest (this .getGroup () .layout_);
+			X3DLayerNode .prototype .initialize .call (this);
+
+			this .layout_         .addFieldInterest (this .getGroup () .layout_);
+			this .addChildren_    .addFieldInterest (this .getGroup () .addChildren_);
+			this .removeChildren_ .addFieldInterest (this .getGroup () .removeChildren_);
+			this .children_       .addFieldInterest (this .getGroup () .children_);
 
 			this .getGroup () .layout_ = this .layout_;
-
-			X3DLayerNode .prototype .initialize .call (this);
+			this .getGroup () .children_ = this .children_;
+			this .getGroup () .setPrivate (true);
+			this .getGroup () .setup ();
 		},
 	});
 
 	return LayoutLayer;
 });
-
-

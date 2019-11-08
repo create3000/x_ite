@@ -125,10 +125,6 @@ function (X3DNode,
 			X3DNode         .prototype .initialize .call (this);
 			X3DRenderObject .prototype .initialize .call (this);
 
-			this .groupNode .children_ = this .children_;
-			this .groupNode .setPrivate (true);
-			this .groupNode .setup ();
-
 			this .defaultNavigationInfo .setup ();
 			this .defaultBackground     .setup ();
 			this .defaultFog            .setup ();
@@ -138,16 +134,13 @@ function (X3DNode,
 			this .fogStack            .setup ();
 			this .navigationInfoStack .setup ();
 			this .viewpointStack      .setup ();
-	
+
 			this .backgrounds     .setup ();
 			this .fogs            .setup ();
 			this .navigationInfos .setup ();
 			this .viewpoints      .setup ();
 
 			this .viewport_       .addInterest ("set_viewport__", this);
-			this .addChildren_    .addFieldInterest (this .groupNode .addChildren_);
-			this .removeChildren_ .addFieldInterest (this .groupNode .removeChildren_);
-			this .children_       .addFieldInterest (this .groupNode .children_);
 
 			this .set_viewport__ ();
 		},
@@ -335,7 +328,7 @@ function (X3DNode,
 		camera: function (type, renderObject)
 		{
 			this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
-	
+
 			this .currentViewport .push (this);
 			this .groupNode .traverse (type, renderObject);
 			this .currentViewport .pop (this);
@@ -352,7 +345,7 @@ function (X3DNode,
 		picking: function (type, renderObject)
 		{
 			this .getModelViewMatrix () .pushMatrix (Matrix4 .Identity);
-	
+
 			this .currentViewport .push (this);
 			this .groupNode .traverse (type, renderObject);
 			this .currentViewport .pop (this);
@@ -377,7 +370,7 @@ function (X3DNode,
 
 			this .getProjectionMatrix () .pushMatrix (projectionMatrix);
 			this .getModelViewMatrix  () .pushMatrix (this .getInverseCameraSpaceMatrix () .get ());
-	
+
 			// Render
 			this .currentViewport .push (this);
 			renderObject .render (type, this .groupNode .traverse, this .groupNode);
@@ -402,5 +395,3 @@ function (X3DNode,
 
 	return X3DLayerNode;
 });
-
-
