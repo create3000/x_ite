@@ -46,15 +46,15 @@ getPointColor ()
 
 		vec4 textureColor = getTextureColor (vec4 (1.0), vec4 (1.0));
 
-		if (x3d_PointProperties .colorMode == 0)
+		if (x3d_PointProperties .colorMode == x3d_PointColor)
 		{
 			finalColor .a *= textureColor .a;
 		}
-		else if (x3d_PointProperties .colorMode == 1)
+		else if (x3d_PointProperties .colorMode == x3d_TextureColor)
 		{
 			finalColor = textureColor;
 		}
-		else
+		else // x3d_TextureAndPointColor
 		{
 			finalColor .rgb += textureColor .rgb;
 			finalColor .a   *= textureColor .a;
