@@ -109,8 +109,9 @@ function (Fields,
 			this .removeChildren_ .addFieldInterest (this .getGroup () .removeChildren_);
 			this .children_       .addFieldInterest (this .getGroup () .children_);
 
-			this .getGroup () .layout_ = this .layout_;
+			this .getGroup () .layout_   = this .layout_;
 			this .getGroup () .children_ = this .children_;
+
 			this .getGroup () .setPrivate (true);
 			this .getGroup () .setup ();
 		},
