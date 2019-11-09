@@ -558,13 +558,13 @@ texCoord1 = texCoord;
 vec4 textureColor = getTextureColor (vec4 (1.0), vec4 (1.0));
 switch (x3d_PointProperties .colorMode)
 {
-case 0:
+case x3d_PointColor:
 finalColor .a *= textureColor .a;
 break;
-case 1:
+case x3d_TextureColor:
 finalColor = textureColor;
 break;
-case 2:
+case x3d_TextureAndPointColor:
 finalColor .rgb += textureColor .rgb;
 finalColor .a *= textureColor .a;
 break;

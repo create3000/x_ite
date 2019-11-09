@@ -418,15 +418,15 @@ vec4 texCoord = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
 texCoord0 = texCoord;
 texCoord1 = texCoord;
 vec4 textureColor = getTextureColor (vec4 (1.0), vec4 (1.0));
-if (x3d_PointProperties .colorMode == 0)
+if (x3d_PointProperties .colorMode == x3d_PointColor)
 {
 finalColor .a *= textureColor .a;
 }
-else if (x3d_PointProperties .colorMode == 1)
+else if (x3d_PointProperties .colorMode == x3d_TextureColor)
 {
 finalColor = textureColor;
 }
-else
+else 
 {
 finalColor .rgb += textureColor .rgb;
 finalColor .a *= textureColor .a;
