@@ -95,7 +95,7 @@ function (Fields,
 		},
 		getContainerField: function ()
 		{
-			return "xxxxxxxx";
+			return "children";
 		},
 		initialize: function ()
 		{
