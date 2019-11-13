@@ -515,6 +515,10 @@ function (X3DBaseNode,
 		{
 			return this .renderObject .getLights () [this .lightIndex ++];
 		},
+		getTextureProjectorContainer: function ()
+		{
+			return this .renderObject .getTextureProjectors () [this .textureProjectorIndex ++];
+		},
 		render: function (type, callback, group)
 		{
 			switch (type)
@@ -531,7 +535,8 @@ function (X3DBaseNode,
 				}
 				case TraverseType .DISPLAY:
 				{
-					this .lightIndex = 0;
+					this .lightIndex            = 0;
+					this .textureProjectorIndex = 0;
 
 					X3DRenderObject .prototype .render .call (this, type, callback, group);
 

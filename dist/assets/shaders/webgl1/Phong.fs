@@ -298,6 +298,9 @@ uniform int x3d_NumTextures;
 uniform int x3d_TextureType [x3d_MaxTextures]; 
 uniform sampler2D x3d_Texture2D [x3d_MaxTextures];
 uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
+uniform int x3d_NumProjectiveTextures;
+uniform sampler2D x3d_ProjectiveTexture [x3d_MaxTextures];
+uniform mat4 x3d_ProjectiveTextureMatrix [x3d_MaxTextures];
 uniform vec4 x3d_MultiTextureColor;
 uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
 uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];
@@ -597,6 +600,32 @@ else if (alphaMode == x3d_Off)
 }
 return currentColor;
 }
+vec4
+getProjectiveTexture (const in int i, const in vec2 texCoord)
+{
+if (i == 0)
+return texture2D (x3d_ProjectiveTexture [0], texCoord);
+return texture2D (x3d_ProjectiveTexture [1], texCoord);
+}
+vec4
+getProjectiveTextureColor (in vec4 currentColor)
+{
+for (int i = 0; i < x3d_MaxTextures; ++ i)
+{
+if (i == x3d_NumProjectiveTextures)
+break;
+vec4 texCoord = x3d_ProjectiveTextureMatrix [i] * vec4 (vertex, 1.0);
+texCoord .stp /= texCoord .q;
+if (texCoord .s < 0.0 || texCoord .s > 1.0)
+continue;
+if (texCoord .t < 0.0 || texCoord .t > 1.0)
+continue;
+if (texCoord .p < 0.0 || texCoord .p > 1.0)
+continue;
+currentColor *= getProjectiveTexture (i, texCoord .st);
+}
+return currentColor;
+}
 #else
 vec4
 getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
@@ -615,6 +644,11 @@ else if (x3d_TextureType [0] == x3d_TextureTypeCubeMapTexture)
 textureColor = textureCube (x3d_CubeMapTexture [0], texCoord .stp);
 }
 return diffuseColor * textureColor;
+}
+vec4
+getProjectiveTextureColor (in vec4 currentColor)
+{
+return currentColor;
 }
 #endif
 uniform x3d_FillPropertiesParameters x3d_FillProperties;
@@ -711,6 +745,9 @@ alpha = T .a;
 else
 diffuseFactor = material .diffuseColor;
 }
+vec4 P = getProjectiveTextureColor (vec4 (1.0));
+diffuseFactor *= P .rgb;
+alpha *= P .a;
 vec3 ambientTerm = diffuseFactor * material .ambientIntensity;
 vec3 finalColor = vec3 (0.0);
 for (int i = 0; i < x3d_MaxLights; i ++)

@@ -78,6 +78,7 @@ var X_ITE_EXAMPLES = [
 	{ component: "Picking", test: "PrimitivePickSensor" },
 	{ component: "PointingDeviceSensor", test: "CylinderSensor" },
 	{ component: "PointingDeviceSensor", test: "PlaneSensor" },
+	{ component: "ProjectiveTextureMapping", test: "TextureProjectorPerspective" },
 	{ component: "Rendering", test: "ClipPlane" },
 	{ component: "Rendering", test: "Color" },
 	{ component: "Rendering", test: "ColorRGBA" },

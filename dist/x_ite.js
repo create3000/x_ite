@@ -1,4 +1,4 @@
-/* X_ITE v4.6.7-930 */
+/* X_ITE v4.6.8a-931 */
 
 (function () {
 
@@ -25263,7 +25263,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.6.7";
+	return "4.6.8a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -44100,13 +44100,18 @@ function (Fields,
 		this .x3d_TextureCoordinateGeneratorParameter = [ ];
 		this .x3d_TexCoord                            = [ ];
 		this .x3d_TextureMatrix                       = [ ];
+		this .x3d_ProjectiveTexture                   = [ ];
+		this .x3d_ProjectiveTextureMatrix             = [ ];
 
-		this .numClipPlanes   = 0;
-		this .fogNode         = null;
-		this .numGlobalLights = 0;
-		this .numLights       = 0;
-		this .lightNodes      = [ ];
-		this .textures        = new Map ();
+		this .numClipPlanes               = 0;
+		this .fogNode                     = null;
+		this .numGlobalLights             = 0;
+		this .numLights                   = 0;
+		this .lightNodes                  = [ ];
+		this .numGlobalProjectiveTextures = 0;
+		this .numProjectiveTextures       = 0;
+		this .projectiveTextureNodes      = [ ];
+		this .textures                    = new Map ();
 	}
 
 	X3DProgrammableShaderObject .prototype =
@@ -44217,8 +44222,9 @@ function (Fields,
 			this .x3d_BackShininess        = this .getUniformLocation (gl, program, "x3d_BackMaterial.shininess",        "x3d_BackShininess");
 			this .x3d_BackTransparency     = this .getUniformLocation (gl, program, "x3d_BackMaterial.transparency",     "x3d_BackTransparency");
 
-			this .x3d_NumTextures       = gl .getUniformLocation (program, "x3d_NumTextures");
-			this .x3d_MultiTextureColor = gl .getUniformLocation (program, "x3d_MultiTextureColor");
+			this .x3d_NumTextures           = gl .getUniformLocation (program, "x3d_NumTextures");
+			this .x3d_NumProjectiveTextures = gl .getUniformLocation (program, "x3d_NumProjectiveTextures");
+			this .x3d_MultiTextureColor     = gl .getUniformLocation (program, "x3d_MultiTextureColor");
 
 			for (var i = 0; i < this .x3d_MaxTextures; ++ i)
 			{
@@ -44237,6 +44243,9 @@ function (Fields,
 
 				this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
 				this .x3d_TexCoord [i]      = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
+
+				this .x3d_ProjectiveTexture [i]       = gl .getUniformLocation (program, "x3d_ProjectiveTexture[" + i + "]");
+				this .x3d_ProjectiveTextureMatrix [i] = gl .getUniformLocation (program, "x3d_ProjectiveTextureMatrix[" + i + "]");
 			}
 
 			this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");
@@ -44261,6 +44270,7 @@ function (Fields,
 			gl .uniform1i  (this .x3d_NumTextures,              0);
 			gl .uniform1iv (this .x3d_Texture2D [0],            browser .getTexture2DUnits ());
 			gl .uniform1iv (this .x3d_CubeMapTexture [0],       browser .getCubeMapTextureUnits ());
+			gl .uniform1iv (this .x3d_ProjectiveTexture [0],    browser .getProjectiveTextureUnits ());
 			gl .uniform1iv (this .x3d_ShadowMap [0],            new Int32Array (this .x3d_MaxLights) .fill (browser .getShadowTextureUnit ()));
 
 			if (gl .getVersion () >= 2)
@@ -44898,6 +44908,15 @@ function (Fields,
 
 			return false;
 		},
+		hasTextureProjector: function (i, textureProjectorNode)
+		{
+			if (this .projectiveTextureNodes [i] === textureProjectorNode)
+				return true;
+
+			this .projectiveTextureNodes [i] = textureProjectorNode;
+
+			return false;
+		},
 		setShaderObjects: function (gl, shaderObjects)
 		{
 			// Clip planes and local lights
@@ -44916,7 +44935,7 @@ function (Fields,
 		},
 		setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
-			var globalLights = renderObject .getGlobalLights ();
+			var globalObjects = renderObject .getGlobalObjects ();
 
 			// Set viewport
 
@@ -44931,14 +44950,18 @@ function (Fields,
 
 			this .fogNode = null;
 
-			// Set global lights
+			// Set global lights and global texture projectors
 
-			this .numGlobalLights    = globalLights .length;
-			this .numLights          = 0;
-			this .lightNodes .length = 0;
+			this .numLights                      = 0;
+			this .lightNodes .length             = 0;
+			this .numProjectiveTextures          = 0;
+			this .projectiveTextureNodes .length = 0;
 
-			for (var i = 0, length = globalLights .length; i < length; ++ i)
-				globalLights [i] .setShaderUniforms (gl, this);
+			for (var i = 0, length = globalObjects .length; i < length; ++ i)
+				globalObjects [i] .setShaderUniforms (gl, this);
+
+			this .numGlobalLights             = this .numLights;
+			this .numGlobalProjectiveTextures = this .numProjectiveTextures;
 
 			// Logarithmic depth buffer support.
 
@@ -44968,16 +44991,18 @@ function (Fields,
 
 			// Clip planes and local lights
 
-			this .numClipPlanes = 0;
-			this .numLights     = this .numGlobalLights;
+			this .numClipPlanes         = 0;
+			this .numLights             = this .numGlobalLights;
+			this .numProjectiveTextures = this .numGlobalProjectiveTextures;
 
 			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
 
 			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
 				shaderObjects [i] .setShaderUniforms (gl, this);
 
-			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
-			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
+			gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
+			gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
+			gl .uniform1i (this .x3d_NumProjectiveTextures, Math .min (this .numProjectiveTextures, this .x3d_MaxTextures));
 
 			// Fog, there is always one
 
@@ -59039,6 +59064,7 @@ function (TextureBuffer,
 				gl .uniform1i (shaderNode .x3d_Lighting,              true);
 				gl .uniform1i (shaderNode .x3d_NumLights,             0);
 				gl .uniform1i (shaderNode .x3d_NumTextures,           0);
+				gl .uniform1i (shaderNode .x3d_NumProjectiveTextures, 0);
 
 				gl .uniform1i (shaderNode .x3d_SeparateBackColor, false);
 				gl .uniform1f (shaderNode .x3d_AmbientIntensity,  0);
@@ -59813,7 +59839,7 @@ function ($,
 	{
 		this .addChildObjects ("viewport", new Fields .MFInt32 (0, 0, 300, 150));
 
-		this .clipPlanes = [ ]; // Clip planes dumpster
+		this .shaderObjects = [ ]; // shader objects dumpster
 	}
 
 	X3DRenderingContext .prototype =
@@ -59894,9 +59920,9 @@ function ($,
 		{
 			return this .viewport_;
 		},
-		getClipPlanes: function ()
+		getShaderObjects: function ()
 		{
-			return this .clipPlanes;
+			return this .shaderObjects;
 		},
 		reshape: function ()
 		{
@@ -71103,12 +71129,6 @@ function (X3DChildNode,
 {
 "use strict";
 
-	// Transforms normalized coords from range (-1, 1) to (0, 1).
-	var biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
-		                           0.0, 0.5, 0.0, 0.0,
-		                           0.0, 0.0, 0.5, 0.0,
-		                           0.5, 0.5, 0.5, 1.0);
-
 	function X3DLightNode (executionContext)
 	{
 		X3DChildNode .call (this, executionContext);
@@ -71155,10 +71175,19 @@ function (X3DChildNode,
 		{
 			return Math .min (this .shadowMapSize_ .getValue (), this .getBrowser () .getMaxTextureSize ());
 		},
-		getBiasMatrix: function ()
+		getBiasMatrix: (function ()
 		{
-			return biasMatrix;
-		},
+			// Transforms normalized coords from range (-1, 1) to (0, 1).
+			var biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
+			                              0.0, 0.5, 0.0, 0.0,
+			                              0.0, 0.0, 0.5, 0.0,
+			                              0.5, 0.5, 0.5, 1.0);
+
+			return function ()
+			{
+				return biasMatrix;
+			};
+		})(),
 		push: function (renderObject, group)
 		{
 			if (this .on_ .getValue ())
@@ -71174,8 +71203,8 @@ function (X3DChildNode,
 						                     renderObject .getLayer () .getGroup (),
 						                     renderObject .getModelViewMatrix () .get ());
 
-						renderObject .getGlobalLights () .push (lightContainer);
-						renderObject .getLights ()       .push (lightContainer);
+						renderObject .getGlobalObjects () .push (lightContainer);
+						renderObject .getLights ()        .push (lightContainer);
 					}
 					else
 					{
@@ -71191,18 +71220,18 @@ function (X3DChildNode,
 				else
 				{
 					var lightContainer = renderObject .getLightContainer ();
-		
+
 					if (this .global_ .getValue ())
 					{
 						lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
 
-						renderObject .getGlobalLights () .push (lightContainer);
-						renderObject .getLights ()       .push (lightContainer);
+						renderObject .getGlobalObjects () .push (lightContainer);
+						renderObject .getLights ()        .push (lightContainer);
 					}
 					else
 					{
 						lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
-	
+
 						renderObject .getShaderObjects () .push (lightContainer);
 						renderObject .getLights ()        .push (lightContainer);
 					}
@@ -71219,7 +71248,7 @@ function (X3DChildNode,
 				   return;
 
 				if (renderObject .isIndependent ())
-					renderObject .getBrowser () .getLocalLights () .push (renderObject .getShaderObjects () .pop ());
+					renderObject .getBrowser () .getShaderObjects () .push (renderObject .getShaderObjects () .pop ());
 				else
 					renderObject .getShaderObjects () .pop ();
 
@@ -71230,8 +71259,6 @@ function (X3DChildNode,
 
 	return X3DLightNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -71420,8 +71447,8 @@ define ('x_ite/Components/Grouping/X3DGroupingNode',[
 	"standard/Math/Geometry/Box3",
 ],
 function (Fields,
-          X3DChildNode, 
-          X3DBoundedObject, 
+          X3DChildNode,
+          X3DBoundedObject,
           TraverseType,
           X3DConstants,
           Box3)
@@ -71450,7 +71477,7 @@ function (Fields,
 		X3DBoundedObject .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DGroupingNode);
-	               
+
 		this .hidden                    = false;
 		this .allowedTypes              = new Set ();
 		this .pointingDeviceSensorNodes = [ ];
@@ -71462,6 +71489,7 @@ function (Fields,
 		this .clipPlaneNodes            = [ ];
 		this .localFogNodes             = [ ];
 		this .lightNodes                = [ ];
+		this .textureProjectorNodes     = [ ];
 		this .displayNodes              = [ ];
 		this .childNodes                = [ ];
 	}
@@ -71519,7 +71547,7 @@ function (Fields,
 		getChild: function (index)
 		{
 			// Used in LOD and Switch.
-			
+
 			try
 			{
 				if (index >= 0 && index < this .children_ .length)
@@ -71637,6 +71665,11 @@ function (Fields,
 									this .localFogNodes .push (innerNode);
 									break;
 								}
+								case X3DConstants .X3DTextureProjectorNode:
+								{
+									this .textureProjectorNodes .push (innerNode);
+									break;
+								}
 								case X3DConstants .X3DLightNode:
 								{
 									this .lightNodes .push (innerNode);
@@ -71645,7 +71678,7 @@ function (Fields,
 								case X3DConstants .X3DBindableNode:
 								{
 									this .maybeCameraObjects .push (innerNode);
-									break;				
+									break;
 								}
 								case X3DConstants .TransformSensor:
 								case X3DConstants .X3DPickSensorNode:
@@ -71741,6 +71774,15 @@ function (Fields,
 
 									break;
 								}
+								case X3DConstants .X3DTextureProjectorNode:
+								{
+									var index = this .textureProjectorNodes .indexOf (innerNode);
+
+									if (index >= 0)
+										this .textureProjectorNodes .splice (index, 1);
+
+									break;
+								}
 								case X3DConstants .X3DLightNode:
 								{
 									var index = this .lightNodes .indexOf (innerNode);
@@ -71757,7 +71799,7 @@ function (Fields,
 									if (index >= 0)
 										this .maybeCameraObjects .splice (index, 1);
 
-									break;				
+									break;
 								}
 								case X3DConstants .TransformSensor:
 								case X3DConstants .X3DPickSensorNode:
@@ -71842,6 +71884,7 @@ function (Fields,
 			this .clipPlaneNodes            .length = 0;
 			this .localFogNodes             .length = 0;
 			this .lightNodes                .length = 0;
+			this .textureProjectorNodes     .length = 0;
 			this .maybePickableSensorNodes  .length = 0;
 			this .childNodes                .length = 0;
 		},
@@ -71895,10 +71938,11 @@ function (Fields,
 		set_display_nodes: function ()
 		{
 			var
-				clipPlaneNodes = this .clipPlaneNodes,
-				localFogNodes  = this .localFogNodes,
-				lightNodes     = this .lightNodes,
-				displayNodes   = this .displayNodes;
+				clipPlaneNodes        = this .clipPlaneNodes,
+				localFogNodes         = this .localFogNodes,
+				lightNodes            = this .lightNodes,
+				textureProjectorNodes = this .textureProjectorNodes,
+				displayNodes          = this .displayNodes;
 
 			displayNodes .length = 0;
 
@@ -71910,6 +71954,9 @@ function (Fields,
 
 			for (var i = 0, length = lightNodes .length; i < length; ++ i)
 				displayNodes .push (lightNodes [i]);
+
+			for (var i = 0, length = textureProjectorNodes .length; i < length; ++ i)
+				displayNodes .push (textureProjectorNodes [i]);
 		},
 		traverse: (function ()
 		{
@@ -71925,38 +71972,38 @@ function (Fields,
 							pointingDeviceSensorNodes = this .pointingDeviceSensorNodes,
 							clipPlaneNodes            = this .clipPlaneNodes,
 							childNodes                = this .childNodes;
-	
+
 						if (pointingDeviceSensorNodes .length)
 						{
 							var sensors = { };
-							
+
 							renderObject .getBrowser () .getSensors () .push (sensors);
-						
+
 							for (var i = 0, length = pointingDeviceSensorNodes .length; i < length; ++ i)
 								pointingDeviceSensorNodes [i] .push (renderObject, sensors);
 						}
-	
+
 						for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
 							clipPlaneNodes [i] .push (renderObject);
-	
+
 						for (var i = 0, length = childNodes .length; i < length; ++ i)
 							childNodes [i] .traverse (type, renderObject);
-	
+
 						for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
 							clipPlaneNodes [i] .pop (renderObject);
-	
+
 						if (pointingDeviceSensorNodes .length)
 							renderObject .getBrowser () .getSensors () .pop ();
-	
+
 						return;
 					}
 					case TraverseType .CAMERA:
 					{
 						var cameraObjects = this .cameraObjects;
-	
+
 						for (var i = 0, length = cameraObjects .length; i < length; ++ i)
 							cameraObjects [i] .traverse (type, renderObject);
-	
+
 						return;
 					}
 					case TraverseType .PICKING:
@@ -71964,7 +72011,7 @@ function (Fields,
 						if (this .getTransformSensors () .size)
 						{
 							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
-	
+
 							this .getTransformSensors () .forEach (function (transformSensorNode)
 							{
 								transformSensorNode .collect (bbox);
@@ -71986,14 +72033,14 @@ function (Fields,
 						if (pickableStack [pickableStack .length - 1])
 						{
 							var childNodes = this .childNodes;
-	
+
 							for (var i = 0, length = childNodes .length; i < length; ++ i)
 								childNodes [i] .traverse (type, renderObject);
 						}
 						else
 						{
 							var pickableObjects = this .pickableObjects;
-		
+
 							for (var i = 0, length = pickableObjects .length; i < length; ++ i)
 								pickableObjects [i] .traverse (type, renderObject);
 						}
@@ -72003,20 +72050,20 @@ function (Fields,
 					}
 					case TraverseType .COLLISION:
 					case TraverseType .DEPTH:
-					{					
+					{
 						var
 							clipPlaneNodes = this .clipPlaneNodes,
 							childNodes     = this .childNodes;
-	
+
 						for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
 							clipPlaneNodes [i] .push (renderObject);
-	
+
 						for (var i = 0, length = childNodes .length; i < length; ++ i)
 							childNodes [i] .traverse (type, renderObject);
-	
+
 						for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
 							clipPlaneNodes [i] .pop (renderObject);
-						
+
 						return;
 					}
 					case TraverseType .DISPLAY:
@@ -72025,16 +72072,16 @@ function (Fields,
 						var
 							displayNodes = this .displayNodes,
 							childNodes   = this .childNodes;
-	
+
 						for (var i = 0, length = displayNodes .length; i < length; ++ i)
 							displayNodes [i] .push (renderObject, this);
-	
+
 						for (var i = 0, length = childNodes .length; i < length; ++ i)
 							childNodes [i] .traverse (type, renderObject);
-	
+
 						for (var i = displayNodes .length - 1; i >= 0; -- i)
 							displayNodes [i] .pop (renderObject);
-	
+
 						return;
 					}
 				}
@@ -72044,8 +72091,6 @@ function (Fields,
 
 	return X3DGroupingNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -73201,20 +73246,14 @@ function (Viewport)
 
 
 define ('x_ite/Browser/EnvironmentalEffects/X3DEnvironmentalEffectsContext',[
-	"x_ite/Components/Shaders/ComposedShader",
-	"x_ite/Components/Shaders/ShaderPart",
 	"x_ite/Components/Texturing/TextureProperties",
 ],
-function (ComposedShader,
-          ShaderPart,
-          TextureProperties)
+function (TextureProperties)
 {
 "use strict";
 
 	function X3DEnvironmentalEffectsContext ()
-	{
-		this .localFogs = [ ];
-	}
+	{ }
 
 	X3DEnvironmentalEffectsContext .prototype =
 	{
@@ -73243,10 +73282,6 @@ function (ComposedShader,
 			this .backgroundTextureProperties .setup ();
 
 			return this .backgroundTextureProperties;
-		},
-		getLocalFogs: function ()
-		{
-			return this .localFogs;
 		},
 	};
 
@@ -73308,10 +73343,9 @@ define ('x_ite/Browser/Lighting/X3DLightingContext',[
 function (TextureBuffer)
 {
 "use strict";
-	
+
 	function X3DLightingContext ()
 	{
-		this .localLights   = [ ]; // Local light dumpster
 		this .shadowBuffers = [ ]; // Shadow buffer cache
 	}
 
@@ -73323,16 +73357,12 @@ function (TextureBuffer)
 		{
 			return 8;
 		},
-		getLocalLights: function ()
-		{
-			return this .localLights;
-		},
 		popShadowBuffer: function (shadowMapSize)
 		{
 			try
 			{
 				var shadowBuffers = this .shadowBuffers [shadowMapSize];
-	
+
 				if (shadowBuffers)
 				{
 					if (shadowBuffers .length)
@@ -73340,7 +73370,7 @@ function (TextureBuffer)
 				}
 				else
 					this .shadowBuffers [shadowMapSize] = [ ];
-	
+
 				return new TextureBuffer (this, shadowMapSize, shadowMapSize);
 			}
 			catch (error)
@@ -89676,10 +89706,14 @@ function (TextureProperties,
 			this .linetypeUnit      = this .getCombinedTextureUnits () .pop ();
 			this .hatchStyleUnit    = this .getCombinedTextureUnits () .pop ();
 
-			this .texture2DUnits = new Int32Array (this .getMaxTextures ());
+			this .texture2DUnits         = new Int32Array (this .getMaxTextures ());
+			this .projectiveTextureUnits = new Int32Array (this .getMaxTextures ());
 
 			for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
-				this .texture2DUnits [i] = this .getCombinedTextureUnits () .pop ();
+			{
+				this .texture2DUnits [i]         = this .getCombinedTextureUnits () .pop ();
+				this .projectiveTextureUnits [i] = this .getCombinedTextureUnits () .pop ();
+			}
 
          var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
@@ -89702,6 +89736,12 @@ function (TextureProperties,
 			for (var i = 0, length = this .texture2DUnits .length; i < length; ++ i)
 			{
 				gl .activeTexture (gl .TEXTURE0 + this .texture2DUnits [i]);
+				gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+			}
+
+			for (var i = 0, length = this .projectiveTextureUnits .length; i < length; ++ i)
+			{
+				gl .activeTexture (gl .TEXTURE0 + this .projectiveTextureUnits [i]);
 				gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
 			}
 
@@ -89786,6 +89826,10 @@ function (TextureProperties,
 		getCubeMapTextureUnits: function ()
 		{
 			return this .cubeMapTextureUnits;
+		},
+		getProjectiveTextureUnits: function ()
+		{
+			return this .projectiveTextureUnits;
 		},
 		getShadowTextureUnit: function ()
 		{
@@ -90037,12 +90081,13 @@ function ($,
 		this .projectionMatrix         = new MatrixStack (Matrix4);
 		this .modelViewMatrix          = new MatrixStack (Matrix4);
 		this .viewVolumes              = [ ];
+		this .globalObjects            = [ ];
 		this .shaderObjects            = [ ];
-		this .globalLights             = [ ];
 		this .lights                   = [ ];
 		this .shadow                   = [ false ];
 		this .localFogs                = [ ];
 		this .layouts                  = [ ];
+		this .textureProjectors        = [ ];
 		this .generatedCubeMapTextures = [ ];
 		this .shaders                  = new Set ();
 		this .collisions               = [ ];
@@ -90103,13 +90148,13 @@ function ($,
 		{
 			return this .viewVolumes [this .viewVolumes .length - 1];
 		},
+		getGlobalObjects: function ()
+		{
+			return this .globalObjects;
+		},
 		getShaderObjects: function ()
 		{
 			return this .shaderObjects;
-		},
-		getGlobalLights: function ()
-		{
-			return this .globalLights;
 		},
 		getLights: function ()
 		{
@@ -90158,6 +90203,10 @@ function ($,
 		getParentLayout: function ()
 		{
 			return this .layouts .length ? this .layouts [this .layouts .length - 1] : null;
+		},
+		getTextureProjectors: function ()
+		{
+			return this .textureProjectors;
 		},
 		getGeneratedCubeMapTextures: function ()
 		{
@@ -90854,6 +90903,7 @@ function ($,
 					viewport                 = this .getViewVolume () .getViewport (),
 					shaders                  = this .shaders,
 					lights                   = this .lights,
+					textureProjectors        = this .textureProjectors,
 					generatedCubeMapTextures = this .generatedCubeMapTextures;
 
 
@@ -90877,12 +90927,15 @@ function ($,
 				// DRAW
 
 
-				// Set shadow matrix for all lights.
+				// Set up shadow matrix for all lights, and matrix for all projective textures.
 
 				browser .getHeadlight () .setGlobalVariables (this);
 
 				for (var i = 0, length = lights .length; i < length; ++ i)
 					lights [i] .setGlobalVariables (this);
+
+				for (var i = 0, length = textureProjectors .length; i < length; ++ i)
+					textureProjectors [i] .setGlobalVariables (this);
 
 				// Configure viewport and background
 
@@ -90974,43 +91027,26 @@ function ($,
 
 				if (this .isIndependent ())
 				{
-					// Recycle clip planes.
+					// Recycle clip planes, local fogs, local lights, and local projective textures.
 
-					var clipPlanes = this .getBrowser () .getClipPlanes ();
+					var shaderObjects = browser .getShaderObjects ();
 
-					for (var i = 0, length = clipPlanes .length; i < length; ++ i)
-					   clipPlanes [i] .dispose ();
+					for (var i = 0, length = shaderObjects .length; i < length; ++ i)
+						shaderObjects [i] .dispose ();
 
-					clipPlanes .length = 0;
+					shaderObjects .length = 0;
 
-					// Recycle global lights.
+					// Recycle global lights and global projective textures.
 
-					var lights = this .globalLights;
+					var globalObjects = this .globalObjects;
 
-					for (var i = 0, length = lights .length; i < length; ++ i)
-					   lights [i] .dispose ();
-
-					// Recycle local lights.
-
-					var lights = this .getBrowser () .getLocalLights ();
-
-					for (var i = 0, length = lights .length; i < length; ++ i)
-					   lights [i] .dispose ();
-
-					lights .length = 0;
-
-					// Recycle local fogs.
-
-					var fogs = this .getBrowser () .getLocalFogs ();
-
-					for (var i = 0, length = fogs .length; i < length; ++ i)
-					   fogs [i] .dispose ();
-
-					fogs .length = 0;
+					for (var i = 0, length = globalObjects .length; i < length; ++ i)
+						globalObjects [i] .dispose ();
 				}
 
-				this .globalLights .length = 0;
-				this .lights       .length = 0;
+				this .globalObjects     .length = 0;
+				this .lights            .length = 0;
+				this .textureProjectors .length = 0;
 			};
 		})(),
 	};
@@ -91472,7 +91508,7 @@ function (Fields,
 		X3DBindableNode .call (this, executionContext);
 
 		this .addType (X3DConstants .NavigationInfo);
-				
+
 		this .addChildObjects ("transitionStart",  new Fields .SFBool (),
 		                       "transitionActive", new Fields .SFBool (),
 		                       "availableViewers", new Fields .MFString (),
@@ -91602,7 +91638,7 @@ function (Fields,
 			for (var i = 0; i < this .type_ .length; ++ i)
 			{
 			   var string = this .type_ [i];
-			
+
 				switch (string)
 				{
 					case "EXAMINE":
@@ -91742,7 +91778,7 @@ function (Fields,
 				return;
 
 			if (this .headlight_ .getValue ())
-				renderObject .getGlobalLights () .push (renderObject .getBrowser () .getHeadlight ());
+				renderObject .getGlobalObjects () .push (renderObject .getBrowser () .getHeadlight ());
 		},
 		traverse: function (type, renderObject)
 		{
@@ -91752,8 +91788,6 @@ function (Fields,
 
 	return NavigationInfo;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -95500,8 +95534,8 @@ define ('x_ite/Components/EnvironmentalEffects/LocalFog',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChildNode, 
-          X3DFogObject, 
+          X3DChildNode,
+          X3DFogObject,
           X3DConstants)
 {
 "use strict";
@@ -95556,14 +95590,12 @@ function (Fields,
 		pop: function (renderObject)
 		{
 			if (this .enabled_ .getValue ())
-				renderObject .getBrowser () .getLocalFogs () .push (renderObject .popLocalFog ());
+				renderObject .getBrowser () .getShaderObjects () .push (renderObject .popLocalFog ());
 		},
 	});
 
 	return LocalFog;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -108364,7 +108396,7 @@ define ('x_ite/Components/Rendering/ClipPlane',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChildNode, 
+          X3DChildNode,
           X3DConstants,
           Vector3,
           Vector4,
@@ -108392,7 +108424,7 @@ function (Fields,
 			var
 				plane      = this .plane,
 				localPlane = clipPlane .plane;
-	
+
 			try
 			{
 				plane .normal .assign (localPlane);
@@ -108479,14 +108511,12 @@ function (Fields,
 		pop: function (renderObject)
 		{
 			if (this .enabled)
-				renderObject .getBrowser () .getClipPlanes () .push (renderObject .getShaderObjects () .pop ());
+				renderObject .getBrowser () .getShaderObjects () .push (renderObject .getShaderObjects () .pop ());
 		},
 	});
 
 	return ClipPlane;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
