@@ -937,7 +937,7 @@ function ($,
 				// DRAW
 
 
-				// Set up shadow matrix for all lights.
+				// Set up shadow matrix for all lights, and matrix for all projective textures.
 
 				browser .getHeadlight () .setGlobalVariables (this);
 
