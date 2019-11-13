@@ -58,8 +58,8 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChildNode, 
-          X3DFogObject, 
+          X3DChildNode,
+          X3DFogObject,
           X3DConstants)
 {
 "use strict";
@@ -114,11 +114,9 @@ function (Fields,
 		pop: function (renderObject)
 		{
 			if (this .enabled_ .getValue ())
-				renderObject .getBrowser () .getLocalFogs () .push (renderObject .popLocalFog ());
+				renderObject .getBrowser () .getShaderObjects () .push (renderObject .popLocalFog ());
 		},
 	});
 
 	return LocalFog;
 });
-
-

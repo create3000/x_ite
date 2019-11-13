@@ -61,7 +61,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChildNode, 
+          X3DChildNode,
           X3DConstants,
           Vector3,
           Vector4,
@@ -89,7 +89,7 @@ function (Fields,
 			var
 				plane      = this .plane,
 				localPlane = clipPlane .plane;
-	
+
 			try
 			{
 				plane .normal .assign (localPlane);
@@ -176,11 +176,9 @@ function (Fields,
 		pop: function (renderObject)
 		{
 			if (this .enabled)
-				renderObject .getBrowser () .getClipPlanes () .push (renderObject .getShaderObjects () .pop ());
+				renderObject .getBrowser () .getShaderObjects () .push (renderObject .getShaderObjects () .pop ());
 		},
 	});
 
 	return ClipPlane;
 });
-
-

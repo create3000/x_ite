@@ -53,14 +53,128 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/ProjectiveTextureMapping/X3DTextureProjectorNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Geometry/Camera",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Rotation4",
+	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Utility/MatrixStack",
+	"standard/Utility/ObjectCache",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTextureProjectorNode,
-          X3DConstants)
+          X3DConstants,
+          Camera,
+          Vector3,
+          Rotation4,
+          Matrix4,
+          MatrixStack,
+          ObjectCache)
 {
 "use strict";
+
+	var TextureProjectorParallelCache = ObjectCache (TextureProjectorParallelContainer);
+
+	function TextureProjectorParallelContainer ()
+	{
+		this .projectionMatrix                = new Matrix4 ();
+		this .modelViewMatrix                 = new MatrixStack (Matrix4);
+		this .modelMatrix                     = new Matrix4 ();
+		this .invTextureSpaceMatrix           = new Matrix4 ();
+		this .invTextureSpaceProjectionMatrix = new Matrix4 ();
+		this .direction                       = new Vector3 (0, 0, 0);
+		this .rotation                        = new Rotation4 ();
+		this .projectiveTextureMatrix         = new Matrix4 ();
+		this .projectiveTextureMatrixArray    = new Float32Array (16);
+	}
+
+	TextureProjectorParallelContainer .prototype =
+	{
+		constructor: TextureProjectorParallelContainer,
+		set: function (browser, textureProjectorNode, modelViewMatrix)
+		{
+			this .browser              = browser;
+			this .textureProjectorNode = textureProjectorNode;
+
+			this .modelViewMatrix .pushMatrix (modelViewMatrix);
+		},
+		getModelViewMatrix: function ()
+		{
+			return this .modelViewMatrix;
+		},
+		setGlobalVariables: function (renderObject)
+		{
+			var
+				textureProjectorNode  = this .textureProjectorNode,
+				cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
+				modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+				invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (textureProjectorNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+
+			invTextureSpaceMatrix .translate (textureProjectorNode .getLocation ());
+			invTextureSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (textureProjectorNode .getDirection ()) .negate ()));
+			invTextureSpaceMatrix .inverse ();
+
+			var
+				width        = textureProjectorNode .getTexture () .getWidth (),
+				height       = textureProjectorNode .getTexture () .getHeight (),
+				aspect       = width / height,
+				minimumX     = textureProjectorNode .getMinimumX (),
+				maximumX     = textureProjectorNode .getMaximumX (),
+				minimumY     = textureProjectorNode .getMinimumY (),
+				maximumY     = textureProjectorNode .getMaximumY (),
+				sizeX        = textureProjectorNode .getSizeX (),
+				sizeY        = textureProjectorNode .getSizeY (),
+				nearDistance = textureProjectorNode .getNearDistance (),
+				farDistance  = textureProjectorNode .getFarDistance ();
+
+			if (aspect > sizeX / sizeY)
+			{
+				var
+					center  = (minimumX + maximumX) / 2,
+					size1_2 = (sizeY * aspect) / 2;
+
+				Camera .ortho (center - size1_2, center + size1_2, minimumY, maximumY, nearDistance, farDistance, this .projectionMatrix);
+			}
+			else
+			{
+				var
+					center  = (minimumY + maximumY) / 2,
+					size1_2 = (sizeX / aspect) / 2;
+
+				Camera .ortho (minimumX, maximumX, center - size1_2, center + size1_2, nearDistance, farDistance, this .projectionMatrix);
+			}
+
+			if (! textureProjectorNode .getGlobal ())
+				invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
+
+			this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (textureProjectorNode .getBiasMatrix ());
+
+			this .projectiveTextureMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invTextureSpaceProjectionMatrix);
+			this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
+		},
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			var i = shaderObject .numProjectiveTextures ++;
+
+			if (shaderObject .hasTextureProjector (i, this))
+				return;
+
+			var
+				textureProjectorNode = this .textureProjectorNode,
+				texture              = textureProjectorNode .getTexture ();
+
+			gl .activeTexture (gl .TEXTURE0 + this .browser .getProjectiveTextureUnits () [i]);
+			gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
+			gl .activeTexture (gl .TEXTURE0);
+
+			gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
+		},
+		dispose: function ()
+		{
+			TextureProjectorParallelCache .push (this);
+		},
+	};
 
 	function TextureProjectorParallel (executionContext)
 	{
@@ -100,6 +214,50 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DTextureProjectorNode .prototype .initialize .call (this);
+
+			this .fieldOfView_ .addInterest ("set_fieldOfView___", this);
+
+			this .set_fieldOfView___ ();
+		},
+		getMinimumX: function ()
+		{
+			return this .minimumX;
+		},
+		getMinimumY: function ()
+		{
+			return this .minimumY;
+		},
+		getMaximumX: function ()
+		{
+			return this .maximumX;
+		},
+		getMaximumY: function ()
+		{
+			return this .maximumY;
+		},
+		getSizeX: function ()
+		{
+			return this .sizeX;
+		},
+		getSizeY: function ()
+		{
+			return this .sizeY;
+		},
+		getTextureProjectors: function ()
+		{
+			return TextureProjectorParallelCache;
+		},
+		set_fieldOfView___: function ()
+		{
+			var length = this .fieldOfView_ .length;
+
+			this .minimumX = (length > 0 ? this .fieldOfView_ [0] : -1);
+			this .minimumY = (length > 1 ? this .fieldOfView_ [1] : -1);
+			this .maximumX = (length > 2 ? this .fieldOfView_ [2] :  1);
+			this .maximumY = (length > 3 ? this .fieldOfView_ [3] :  1);
+
+			this .sizeX = this .maximumX - this .minimumX;
+			this .sizeY = this .maximumY - this .minimumY;
 		},
 	});
 

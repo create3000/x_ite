@@ -53,14 +53,103 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/ProjectiveTextureMapping/X3DTextureProjectorNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Geometry/Camera",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Rotation4",
+	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Utility/MatrixStack",
+	"standard/Utility/ObjectCache",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DTextureProjectorNode,
-          X3DConstants)
+          X3DConstants,
+          Camera,
+          Vector3,
+          Rotation4,
+          Matrix4,
+          MatrixStack,
+          ObjectCache)
 {
 "use strict";
+
+	var TextureProjectorPerspectiveCache = ObjectCache (TextureProjectorPerspectiveContainer);
+
+	function TextureProjectorPerspectiveContainer ()
+	{
+		this .projectionMatrix                = new Matrix4 ();
+		this .modelViewMatrix                 = new MatrixStack (Matrix4);
+		this .modelMatrix                     = new Matrix4 ();
+		this .invTextureSpaceMatrix           = new Matrix4 ();
+		this .invTextureSpaceProjectionMatrix = new Matrix4 ();
+		this .direction                       = new Vector3 (0, 0, 0);
+		this .rotation                        = new Rotation4 ();
+		this .projectiveTextureMatrix         = new Matrix4 ();
+		this .projectiveTextureMatrixArray    = new Float32Array (16);
+	}
+
+	TextureProjectorPerspectiveContainer .prototype =
+	{
+		constructor: TextureProjectorPerspectiveContainer,
+		set: function (browser, textureProjectorNode, modelViewMatrix)
+		{
+			this .browser              = browser;
+			this .textureProjectorNode = textureProjectorNode;
+
+			this .modelViewMatrix .pushMatrix (modelViewMatrix);
+		},
+		getModelViewMatrix: function ()
+		{
+			return this .modelViewMatrix;
+		},
+		setGlobalVariables: function (renderObject)
+		{
+			var
+				textureProjectorNode  = this .textureProjectorNode,
+				cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
+				modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+				invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (textureProjectorNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
+
+			invTextureSpaceMatrix .translate (textureProjectorNode .getLocation ());
+			invTextureSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (textureProjectorNode .getDirection ()) .negate ()));
+			invTextureSpaceMatrix .inverse ();
+
+			var
+				width            = textureProjectorNode .getTexture () .getWidth (),
+				height           = textureProjectorNode .getTexture () .getHeight (),
+				projectionMatrix = Camera .perspective (textureProjectorNode .getFieldOfView () * 2, textureProjectorNode .getNearDistance (), textureProjectorNode .getFarDistance (), width, height, this .projectionMatrix);
+
+			if (! textureProjectorNode .getGlobal ())
+				invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
+
+			this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (projectionMatrix) .multRight (textureProjectorNode .getBiasMatrix ());
+
+			this .projectiveTextureMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invTextureSpaceProjectionMatrix);
+			this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
+		},
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			var i = shaderObject .numProjectiveTextures ++;
+
+			if (shaderObject .hasTextureProjector (i, this))
+				return;
+
+			var
+				textureProjectorNode = this .textureProjectorNode,
+				texture              = textureProjectorNode .getTexture ();
+
+			gl .activeTexture (gl .TEXTURE0 + this .browser .getProjectiveTextureUnits () [i]);
+			gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
+			gl .activeTexture (gl .TEXTURE0);
+
+			gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
+		},
+		dispose: function ()
+		{
+			TextureProjectorPerspectiveCache .push (this);
+		},
+	};
 
 	function TextureProjectorPerspective (executionContext)
 	{
@@ -101,6 +190,14 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DTextureProjectorNode .prototype .initialize .call (this);
+		},
+		getFieldOfView: function ()
+		{
+			return this .fieldOfView_ .getValue ();
+		},
+		getTextureProjectors: function ()
+		{
+			return TextureProjectorPerspectiveCache;
 		},
 	});
 

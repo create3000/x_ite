@@ -48,20 +48,14 @@
 
 
 define ([
-	"x_ite/Components/Shaders/ComposedShader",
-	"x_ite/Components/Shaders/ShaderPart",
 	"x_ite/Components/Texturing/TextureProperties",
 ],
-function (ComposedShader,
-          ShaderPart,
-          TextureProperties)
+function (TextureProperties)
 {
 "use strict";
 
 	function X3DEnvironmentalEffectsContext ()
-	{
-		this .localFogs = [ ];
-	}
+	{ }
 
 	X3DEnvironmentalEffectsContext .prototype =
 	{
@@ -90,10 +84,6 @@ function (ComposedShader,
 			this .backgroundTextureProperties .setup ();
 
 			return this .backgroundTextureProperties;
-		},
-		getLocalFogs: function ()
-		{
-			return this .localFogs;
 		},
 	};
 

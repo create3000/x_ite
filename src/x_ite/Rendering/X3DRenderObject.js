@@ -97,6 +97,8 @@ function ($,
 		this .shadow                   = [ false ];
 		this .localFogs                = [ ];
 		this .layouts                  = [ ];
+		this .globalTextureProjectors  = [ ];
+		this .textureProjectors        = [ ];
 		this .generatedCubeMapTextures = [ ];
 		this .shaders                  = new Set ();
 		this .collisions               = [ ];
@@ -212,6 +214,14 @@ function ($,
 		getParentLayout: function ()
 		{
 			return this .layouts .length ? this .layouts [this .layouts .length - 1] : null;
+		},
+		getGlobalTextureProjectors: function ()
+		{
+			return this .globalTextureProjectors;
+		},
+		getTextureProjectors: function ()
+		{
+			return this .textureProjectors;
 		},
 		getGeneratedCubeMapTextures: function ()
 		{
@@ -908,6 +918,7 @@ function ($,
 					viewport                 = this .getViewVolume () .getViewport (),
 					shaders                  = this .shaders,
 					lights                   = this .lights,
+					textureProjectors        = this .textureProjectors,
 					generatedCubeMapTextures = this .generatedCubeMapTextures;
 
 
@@ -931,12 +942,15 @@ function ($,
 				// DRAW
 
 
-				// Set shadow matrix for all lights.
+				// Set up shadow matrix for all lights.
 
 				browser .getHeadlight () .setGlobalVariables (this);
 
 				for (var i = 0, length = lights .length; i < length; ++ i)
 					lights [i] .setGlobalVariables (this);
+
+				for (var i = 0, length = textureProjectors .length; i < length; ++ i)
+					textureProjectors [i] .setGlobalVariables (this);
 
 				// Configure viewport and background
 
@@ -1030,12 +1044,12 @@ function ($,
 				{
 					// Recycle clip planes.
 
-					var clipPlanes = this .getBrowser () .getClipPlanes ();
+					var shaderObjects = browser .getShaderObjects ();
 
-					for (var i = 0, length = clipPlanes .length; i < length; ++ i)
-					   clipPlanes [i] .dispose ();
+					for (var i = 0, length = shaderObjects .length; i < length; ++ i)
+						shaderObjects [i] .dispose ();
 
-					clipPlanes .length = 0;
+					shaderObjects .length = 0;
 
 					// Recycle global lights.
 
@@ -1044,27 +1058,19 @@ function ($,
 					for (var i = 0, length = lights .length; i < length; ++ i)
 					   lights [i] .dispose ();
 
-					// Recycle local lights.
+					// Recycle global texture projectors.
 
-					var lights = this .getBrowser () .getLocalLights ();
+					var textureProjectors = this .globalTextureProjectors;
 
-					for (var i = 0, length = lights .length; i < length; ++ i)
-					   lights [i] .dispose ();
-
-					lights .length = 0;
-
-					// Recycle local fogs.
-
-					var fogs = this .getBrowser () .getLocalFogs ();
-
-					for (var i = 0, length = fogs .length; i < length; ++ i)
-					   fogs [i] .dispose ();
-
-					fogs .length = 0;
+					for (var i = 0, length = textureProjectors .length; i < length; ++ i)
+						textureProjectors [i] .dispose ();
 				}
 
 				this .globalLights .length = 0;
 				this .lights       .length = 0;
+
+				this .globalTextureProjectors .length = 0;
+				this .textureProjectors       .length = 0;
 			};
 		})(),
 	};

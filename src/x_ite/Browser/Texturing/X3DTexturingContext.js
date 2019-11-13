@@ -85,10 +85,14 @@ function (TextureProperties,
 			this .linetypeUnit      = this .getCombinedTextureUnits () .pop ();
 			this .hatchStyleUnit    = this .getCombinedTextureUnits () .pop ();
 
-			this .texture2DUnits = new Int32Array (this .getMaxTextures ());
+			this .texture2DUnits         = new Int32Array (this .getMaxTextures ());
+			this .projectiveTextureUnits = new Int32Array (this .getMaxTextures ());
 
 			for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
-				this .texture2DUnits [i] = this .getCombinedTextureUnits () .pop ();
+			{
+				this .texture2DUnits [i]         = this .getCombinedTextureUnits () .pop ();
+				this .projectiveTextureUnits [i] = this .getCombinedTextureUnits () .pop ();
+			}
 
          var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
@@ -111,6 +115,12 @@ function (TextureProperties,
 			for (var i = 0, length = this .texture2DUnits .length; i < length; ++ i)
 			{
 				gl .activeTexture (gl .TEXTURE0 + this .texture2DUnits [i]);
+				gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+			}
+
+			for (var i = 0, length = this .projectiveTextureUnits .length; i < length; ++ i)
+			{
+				gl .activeTexture (gl .TEXTURE0 + this .projectiveTextureUnits [i]);
 				gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
 			}
 
@@ -195,6 +205,10 @@ function (TextureProperties,
 		getCubeMapTextureUnits: function ()
 		{
 			return this .cubeMapTextureUnits;
+		},
+		getProjectiveTextureUnits: function ()
+		{
+			return this .projectiveTextureUnits;
 		},
 		getShadowTextureUnit: function ()
 		{

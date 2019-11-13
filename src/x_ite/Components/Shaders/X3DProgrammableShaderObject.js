@@ -97,13 +97,18 @@ function (Fields,
 		this .x3d_TextureCoordinateGeneratorParameter = [ ];
 		this .x3d_TexCoord                            = [ ];
 		this .x3d_TextureMatrix                       = [ ];
+		this .x3d_ProjectiveTexture                   = [ ];
+		this .x3d_ProjectiveTextureMatrix             = [ ];
 
-		this .numClipPlanes   = 0;
-		this .fogNode         = null;
-		this .numGlobalLights = 0;
-		this .numLights       = 0;
-		this .lightNodes      = [ ];
-		this .textures        = new Map ();
+		this .numClipPlanes               = 0;
+		this .fogNode                     = null;
+		this .numGlobalLights             = 0;
+		this .numLights                   = 0;
+		this .lightNodes                  = [ ];
+		this .numGlobalProjectiveTextures = 0;
+		this .numProjectiveTextures       = 0;
+		this .textureProjectorNodes       = [ ];
+		this .textures                    = new Map ();
 	}
 
 	X3DProgrammableShaderObject .prototype =
@@ -214,8 +219,9 @@ function (Fields,
 			this .x3d_BackShininess        = this .getUniformLocation (gl, program, "x3d_BackMaterial.shininess",        "x3d_BackShininess");
 			this .x3d_BackTransparency     = this .getUniformLocation (gl, program, "x3d_BackMaterial.transparency",     "x3d_BackTransparency");
 
-			this .x3d_NumTextures       = gl .getUniformLocation (program, "x3d_NumTextures");
-			this .x3d_MultiTextureColor = gl .getUniformLocation (program, "x3d_MultiTextureColor");
+			this .x3d_NumTextures           = gl .getUniformLocation (program, "x3d_NumTextures");
+			this .x3d_NumProjectiveTextures = gl .getUniformLocation (program, "x3d_NumProjectiveTextures");
+			this .x3d_MultiTextureColor     = gl .getUniformLocation (program, "x3d_MultiTextureColor");
 
 			for (var i = 0; i < this .x3d_MaxTextures; ++ i)
 			{
@@ -234,6 +240,9 @@ function (Fields,
 
 				this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
 				this .x3d_TexCoord [i]      = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
+
+				this .x3d_ProjectiveTexture [i]       = gl .getUniformLocation (program, "x3d_ProjectiveTexture[" + i + "]");
+				this .x3d_ProjectiveTextureMatrix [i] = gl .getUniformLocation (program, "x3d_ProjectiveTextureMatrix[" + i + "]");
 			}
 
 			this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");
@@ -258,6 +267,7 @@ function (Fields,
 			gl .uniform1i  (this .x3d_NumTextures,              0);
 			gl .uniform1iv (this .x3d_Texture2D [0],            browser .getTexture2DUnits ());
 			gl .uniform1iv (this .x3d_CubeMapTexture [0],       browser .getCubeMapTextureUnits ());
+			gl .uniform1iv (this .x3d_ProjectiveTexture [0],    browser .getProjectiveTextureUnits ());
 			gl .uniform1iv (this .x3d_ShadowMap [0],            new Int32Array (this .x3d_MaxLights) .fill (browser .getShadowTextureUnit ()));
 
 			if (gl .getVersion () >= 2)
@@ -895,6 +905,15 @@ function (Fields,
 
 			return false;
 		},
+		hasTextureProjector: function (i, textureProjectorNode)
+		{
+			if (this .textureProjectorNodes [i] === textureProjectorNode)
+				return true;
+
+			this .textureProjectorNodes [i] = textureProjectorNode;
+
+			return false;
+		},
 		setShaderObjects: function (gl, shaderObjects)
 		{
 			// Clip planes and local lights
@@ -913,7 +932,9 @@ function (Fields,
 		},
 		setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
-			var globalLights = renderObject .getGlobalLights ();
+			var
+				globalLights            = renderObject .getGlobalLights (),
+				globalTextureProjectors = renderObject .getGlobalTextureProjectors ();
 
 			// Set viewport
 
@@ -936,6 +957,15 @@ function (Fields,
 
 			for (var i = 0, length = globalLights .length; i < length; ++ i)
 				globalLights [i] .setShaderUniforms (gl, this);
+
+			// Set global texture projectors
+
+			this .numGlobalProjectiveTextures   = globalTextureProjectors .length;
+			this .numProjectiveTextures         = 0;
+			this .textureProjectorNodes .length = 0;
+
+			for (var i = 0, length = globalTextureProjectors .length; i < length; ++ i)
+				globalTextureProjectors [i] .setShaderUniforms (gl, this);
 
 			// Logarithmic depth buffer support.
 
@@ -965,16 +995,18 @@ function (Fields,
 
 			// Clip planes and local lights
 
-			this .numClipPlanes = 0;
-			this .numLights     = this .numGlobalLights;
+			this .numClipPlanes         = 0;
+			this .numLights             = this .numGlobalLights;
+			this .numProjectiveTextures = this .numGlobalProjectiveTextures;
 
 			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
 
 			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
 				shaderObjects [i] .setShaderUniforms (gl, this);
 
-			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
-			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
+			gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
+			gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
+			gl .uniform1i (this .x3d_NumProjectiveTextures, Math .min (this .numProjectiveTextures, this .x3d_MaxTextures));
 
 			// Fog, there is always one
 

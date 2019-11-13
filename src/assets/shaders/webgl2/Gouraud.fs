@@ -60,6 +60,7 @@ main ()
 		}
 	}
 
+	finalColor      = getProjectiveTextureColor (finalColor);
 	finalColor      = getHatchColor (finalColor);
 	finalColor .rgb = getFogColor (finalColor .rgb);
 	x3d_FragColor   = finalColor;

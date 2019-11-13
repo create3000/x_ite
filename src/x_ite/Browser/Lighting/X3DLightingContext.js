@@ -53,10 +53,9 @@ define ([
 function (TextureBuffer)
 {
 "use strict";
-	
+
 	function X3DLightingContext ()
 	{
-		this .localLights   = [ ]; // Local light dumpster
 		this .shadowBuffers = [ ]; // Shadow buffer cache
 	}
 
@@ -68,16 +67,12 @@ function (TextureBuffer)
 		{
 			return 8;
 		},
-		getLocalLights: function ()
-		{
-			return this .localLights;
-		},
 		popShadowBuffer: function (shadowMapSize)
 		{
 			try
 			{
 				var shadowBuffers = this .shadowBuffers [shadowMapSize];
-	
+
 				if (shadowBuffers)
 				{
 					if (shadowBuffers .length)
@@ -85,7 +80,7 @@ function (TextureBuffer)
 				}
 				else
 					this .shadowBuffers [shadowMapSize] = [ ];
-	
+
 				return new TextureBuffer (this, shadowMapSize, shadowMapSize);
 			}
 			catch (error)

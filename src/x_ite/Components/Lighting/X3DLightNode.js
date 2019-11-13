@@ -62,12 +62,6 @@ function (X3DChildNode,
 {
 "use strict";
 
-	// Transforms normalized coords from range (-1, 1) to (0, 1).
-	var biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
-		                           0.0, 0.5, 0.0, 0.0,
-		                           0.0, 0.0, 0.5, 0.0,
-		                           0.5, 0.5, 0.5, 1.0);
-
 	function X3DLightNode (executionContext)
 	{
 		X3DChildNode .call (this, executionContext);
@@ -114,10 +108,19 @@ function (X3DChildNode,
 		{
 			return Math .min (this .shadowMapSize_ .getValue (), this .getBrowser () .getMaxTextureSize ());
 		},
-		getBiasMatrix: function ()
+		getBiasMatrix: (function ()
 		{
-			return biasMatrix;
-		},
+			// Transforms normalized coords from range (-1, 1) to (0, 1).
+			var biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
+			                              0.0, 0.5, 0.0, 0.0,
+			                              0.0, 0.0, 0.5, 0.0,
+			                              0.5, 0.5, 0.5, 1.0);
+
+			return function ()
+			{
+				return biasMatrix;
+			};
+		})(),
 		push: function (renderObject, group)
 		{
 			if (this .on_ .getValue ())
@@ -150,7 +153,7 @@ function (X3DChildNode,
 				else
 				{
 					var lightContainer = renderObject .getLightContainer ();
-		
+
 					if (this .global_ .getValue ())
 					{
 						lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
@@ -161,7 +164,7 @@ function (X3DChildNode,
 					else
 					{
 						lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
-	
+
 						renderObject .getShaderObjects () .push (lightContainer);
 						renderObject .getLights ()        .push (lightContainer);
 					}
@@ -178,7 +181,7 @@ function (X3DChildNode,
 				   return;
 
 				if (renderObject .isIndependent ())
-					renderObject .getBrowser () .getLocalLights () .push (renderObject .getShaderObjects () .pop ());
+					renderObject .getBrowser () .getShaderObjects () .push (renderObject .getShaderObjects () .pop ());
 				else
 					renderObject .getShaderObjects () .pop ();
 
@@ -189,5 +192,3 @@ function (X3DChildNode,
 
 	return X3DLightNode;
 });
-
-

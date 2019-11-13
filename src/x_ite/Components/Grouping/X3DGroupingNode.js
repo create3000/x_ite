@@ -56,8 +56,8 @@ define ([
 	"standard/Math/Geometry/Box3",
 ],
 function (Fields,
-          X3DChildNode, 
-          X3DBoundedObject, 
+          X3DChildNode,
+          X3DBoundedObject,
           TraverseType,
           X3DConstants,
           Box3)
@@ -86,7 +86,7 @@ function (Fields,
 		X3DBoundedObject .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DGroupingNode);
-	               
+
 		this .hidden                    = false;
 		this .allowedTypes              = new Set ();
 		this .pointingDeviceSensorNodes = [ ];
@@ -98,6 +98,7 @@ function (Fields,
 		this .clipPlaneNodes            = [ ];
 		this .localFogNodes             = [ ];
 		this .lightNodes                = [ ];
+		this .textureProjectorNodes     = [ ];
 		this .displayNodes              = [ ];
 		this .childNodes                = [ ];
 	}
@@ -155,7 +156,7 @@ function (Fields,
 		getChild: function (index)
 		{
 			// Used in LOD and Switch.
-			
+
 			try
 			{
 				if (index >= 0 && index < this .children_ .length)
@@ -273,6 +274,11 @@ function (Fields,
 									this .localFogNodes .push (innerNode);
 									break;
 								}
+								case X3DConstants .X3DTextureProjectorNode:
+								{
+									this .textureProjectorNodes .push (innerNode);
+									break;
+								}
 								case X3DConstants .X3DLightNode:
 								{
 									this .lightNodes .push (innerNode);
@@ -281,7 +287,7 @@ function (Fields,
 								case X3DConstants .X3DBindableNode:
 								{
 									this .maybeCameraObjects .push (innerNode);
-									break;				
+									break;
 								}
 								case X3DConstants .TransformSensor:
 								case X3DConstants .X3DPickSensorNode:
@@ -377,6 +383,15 @@ function (Fields,
 
 									break;
 								}
+								case X3DConstants .X3DTextureProjectorNode:
+								{
+									var index = this .textureProjectorNodes .indexOf (innerNode);
+
+									if (index >= 0)
+										this .textureProjectorNodes .splice (index, 1);
+
+									break;
+								}
 								case X3DConstants .X3DLightNode:
 								{
 									var index = this .lightNodes .indexOf (innerNode);
@@ -393,7 +408,7 @@ function (Fields,
 									if (index >= 0)
 										this .maybeCameraObjects .splice (index, 1);
 
-									break;				
+									break;
 								}
 								case X3DConstants .TransformSensor:
 								case X3DConstants .X3DPickSensorNode:
@@ -478,6 +493,7 @@ function (Fields,
 			this .clipPlaneNodes            .length = 0;
 			this .localFogNodes             .length = 0;
 			this .lightNodes                .length = 0;
+			this .textureProjectorNodes     .length = 0;
 			this .maybePickableSensorNodes  .length = 0;
 			this .childNodes                .length = 0;
 		},
@@ -531,10 +547,11 @@ function (Fields,
 		set_display_nodes: function ()
 		{
 			var
-				clipPlaneNodes = this .clipPlaneNodes,
-				localFogNodes  = this .localFogNodes,
-				lightNodes     = this .lightNodes,
-				displayNodes   = this .displayNodes;
+				clipPlaneNodes        = this .clipPlaneNodes,
+				localFogNodes         = this .localFogNodes,
+				lightNodes            = this .lightNodes,
+				textureProjectorNodes = this .textureProjectorNodes,
+				displayNodes          = this .displayNodes;
 
 			displayNodes .length = 0;
 
@@ -546,6 +563,9 @@ function (Fields,
 
 			for (var i = 0, length = lightNodes .length; i < length; ++ i)
 				displayNodes .push (lightNodes [i]);
+
+			for (var i = 0, length = textureProjectorNodes .length; i < length; ++ i)
+				displayNodes .push (textureProjectorNodes [i]);
 		},
 		traverse: (function ()
 		{
@@ -561,38 +581,38 @@ function (Fields,
 							pointingDeviceSensorNodes = this .pointingDeviceSensorNodes,
 							clipPlaneNodes            = this .clipPlaneNodes,
 							childNodes                = this .childNodes;
-	
+
 						if (pointingDeviceSensorNodes .length)
 						{
 							var sensors = { };
-							
+
 							renderObject .getBrowser () .getSensors () .push (sensors);
-						
+
 							for (var i = 0, length = pointingDeviceSensorNodes .length; i < length; ++ i)
 								pointingDeviceSensorNodes [i] .push (renderObject, sensors);
 						}
-	
+
 						for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
 							clipPlaneNodes [i] .push (renderObject);
-	
+
 						for (var i = 0, length = childNodes .length; i < length; ++ i)
 							childNodes [i] .traverse (type, renderObject);
-	
+
 						for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
 							clipPlaneNodes [i] .pop (renderObject);
-	
+
 						if (pointingDeviceSensorNodes .length)
 							renderObject .getBrowser () .getSensors () .pop ();
-	
+
 						return;
 					}
 					case TraverseType .CAMERA:
 					{
 						var cameraObjects = this .cameraObjects;
-	
+
 						for (var i = 0, length = cameraObjects .length; i < length; ++ i)
 							cameraObjects [i] .traverse (type, renderObject);
-	
+
 						return;
 					}
 					case TraverseType .PICKING:
@@ -600,7 +620,7 @@ function (Fields,
 						if (this .getTransformSensors () .size)
 						{
 							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
-	
+
 							this .getTransformSensors () .forEach (function (transformSensorNode)
 							{
 								transformSensorNode .collect (bbox);
@@ -622,14 +642,14 @@ function (Fields,
 						if (pickableStack [pickableStack .length - 1])
 						{
 							var childNodes = this .childNodes;
-	
+
 							for (var i = 0, length = childNodes .length; i < length; ++ i)
 								childNodes [i] .traverse (type, renderObject);
 						}
 						else
 						{
 							var pickableObjects = this .pickableObjects;
-		
+
 							for (var i = 0, length = pickableObjects .length; i < length; ++ i)
 								pickableObjects [i] .traverse (type, renderObject);
 						}
@@ -639,20 +659,20 @@ function (Fields,
 					}
 					case TraverseType .COLLISION:
 					case TraverseType .DEPTH:
-					{					
+					{
 						var
 							clipPlaneNodes = this .clipPlaneNodes,
 							childNodes     = this .childNodes;
-	
+
 						for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
 							clipPlaneNodes [i] .push (renderObject);
-	
+
 						for (var i = 0, length = childNodes .length; i < length; ++ i)
 							childNodes [i] .traverse (type, renderObject);
-	
+
 						for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
 							clipPlaneNodes [i] .pop (renderObject);
-						
+
 						return;
 					}
 					case TraverseType .DISPLAY:
@@ -661,16 +681,16 @@ function (Fields,
 						var
 							displayNodes = this .displayNodes,
 							childNodes   = this .childNodes;
-	
+
 						for (var i = 0, length = displayNodes .length; i < length; ++ i)
 							displayNodes [i] .push (renderObject, this);
-	
+
 						for (var i = 0, length = childNodes .length; i < length; ++ i)
 							childNodes [i] .traverse (type, renderObject);
-	
+
 						for (var i = displayNodes .length - 1; i >= 0; -- i)
 							displayNodes [i] .pop (renderObject);
-	
+
 						return;
 					}
 				}
@@ -680,5 +700,3 @@ function (Fields,
 
 	return X3DGroupingNode;
 });
-
-

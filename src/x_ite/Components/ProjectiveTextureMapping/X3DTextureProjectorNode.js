@@ -50,9 +50,13 @@
 define ([
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
+	"standard/Math/Numbers/Matrix4",
 ],
 function (X3DChildNode,
-          X3DConstants)
+          X3DConstants,
+          X3DCast,
+          Matrix4)
 {
 "use strict";
 
@@ -69,6 +73,108 @@ function (X3DChildNode,
 		initialize: function ()
 		{
 			X3DChildNode .prototype .initialize .call (this);
+
+			this .texture_ .addInterest ("set_texture__", this);
+
+			this .set_texture__ ();
+		},
+		getGlobal: function ()
+		{
+			return this .global_ .getValue ();
+		},
+		getLocation: function ()
+		{
+			return this .location_ .getValue ();
+		},
+		getDirection: function ()
+		{
+			return this .direction_ .getValue ();
+		},
+		getNearDistance: function ()
+		{
+			return this .nearDistance_ .getValue ();
+		},
+		getFarDistance: function ()
+		{
+			return this .farDistance_ .getValue ();
+		},
+		getTexture: function ()
+		{
+			return this .textureNode;
+		},
+		getBiasMatrix: (function ()
+		{
+			// Transforms normalized coords from range (-1, 1) to (0, 1).
+			var biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
+			                              0.0, 0.5, 0.0, 0.0,
+			                              0.0, 0.0, 0.5, 0.0,
+			                              0.5, 0.5, 0.5, 1.0);
+
+			return function ()
+			{
+				return biasMatrix;
+			};
+		})(),
+		set_texture__: function ()
+		{
+			this .textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this .texture_);
+		},
+		push: function (renderObject)
+		{
+			if (this .on_ .getValue () && this .textureNode)
+			{
+				if (renderObject .isIndependent ())
+				{
+					var textureProjectorContainer = this .getTextureProjectors () .pop ();
+
+					textureProjectorContainer .set (renderObject .getBrowser (),
+					                                this,
+					                                renderObject .getModelViewMatrix () .get ());
+
+					if (this .global_ .getValue ())
+					{
+						renderObject .getGlobalTextureProjectors () .push (textureProjectorContainer);
+						renderObject .getTextureProjectors ()       .push (textureProjectorContainer);
+					}
+					else
+					{
+						renderObject .getShaderObjects ()     .push (textureProjectorContainer);
+						renderObject .getTextureProjectors () .push (textureProjectorContainer);
+					}
+				}
+				else
+				{
+					var textureProjectorContainer = renderObject .getTextureProjectorContainer ();
+
+					if (this .global_ .getValue ())
+					{
+						textureProjectorContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
+
+						renderObject .getGlobalTextureProjectors () .push (textureProjectorContainer);
+						renderObject .getTextureProjectors ()       .push (textureProjectorContainer);
+					}
+					else
+					{
+						textureProjectorContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
+
+						renderObject .getShaderObjects ()     .push (textureProjectorContainer);
+						renderObject .getTextureProjectors () .push (textureProjectorContainer);
+					}
+				}
+			}
+		},
+		pop: function (renderObject)
+		{
+			if (this .on_ .getValue () && this .textureNode)
+			{
+				if (this .global_ .getValue ())
+				   return;
+
+				if (renderObject .isIndependent ())
+					renderObject .getBrowser () .getShaderObjects () .push (renderObject .getShaderObjects () .pop ());
+				else
+					renderObject .getShaderObjects () .pop ();
+			}
 		},
 	});
 
