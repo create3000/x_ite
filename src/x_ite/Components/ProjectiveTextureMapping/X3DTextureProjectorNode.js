@@ -117,7 +117,22 @@ function (X3DChildNode,
 		})(),
 		set_texture__: function ()
 		{
+			if (this .textureNode)
+				this .textureNode .removeInterest ("set_aspectRatio__", this);
+
 			this .textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this .texture_);
+
+			if (this .textureNode)
+				this .textureNode .addInterest ("set_aspectRatio__", this);
+
+			this .set_aspectRatio__ ();
+		},
+		set_aspectRatio__: function ()
+		{
+			if (this .textureNode)
+				this .aspectRatio_ = this .textureNode .getWidth () / this .textureNode .getHeight ();
+			else
+				this .aspectRatio_ = 0;
 		},
 		push: function (renderObject)
 		{

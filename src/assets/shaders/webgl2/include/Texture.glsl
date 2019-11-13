@@ -500,6 +500,9 @@ getProjectiveTextureColor (in vec4 currentColor)
 		if (texCoord .t < 0.0 || texCoord .t > 1.0)
 			continue;
 
+		if (texCoord .p < 0.0 || texCoord .p > 1.0)
+			continue;
+
 		currentColor *= getProjectiveTexture (i, texCoord .st);
 	}
 

@@ -118,12 +118,16 @@ function (Fields,
 			var
 				width            = textureProjectorNode .getTexture () .getWidth (),
 				height           = textureProjectorNode .getTexture () .getHeight (),
-				projectionMatrix = Camera .perspective (textureProjectorNode .getFieldOfView () * 2, textureProjectorNode .getNearDistance (), textureProjectorNode .getFarDistance (), width, height, this .projectionMatrix);
+				nearDistance     = textureProjectorNode .getNearDistance (),
+				farDistance      = textureProjectorNode .getFarDistance (),
+				fieldOfView      = textureProjectorNode .getFieldOfView ();
+
+			Camera .perspective (fieldOfView, nearDistance, farDistance, width, height, this .projectionMatrix);
 
 			if (! textureProjectorNode .getGlobal ())
 				invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
 
-			this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (projectionMatrix) .multRight (textureProjectorNode .getBiasMatrix ());
+			this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (textureProjectorNode .getBiasMatrix ());
 
 			this .projectiveTextureMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invTextureSpaceProjectionMatrix);
 			this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
@@ -193,7 +197,9 @@ function (Fields,
 		},
 		getFieldOfView: function ()
 		{
-			return this .fieldOfView_ .getValue ();
+			var fov = this .fieldOfView_ .getValue ();
+
+			return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
 		},
 		getTextureProjectors: function ()
 		{
