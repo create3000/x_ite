@@ -107,7 +107,7 @@ function (Fields,
 		this .lightNodes                  = [ ];
 		this .numGlobalProjectiveTextures = 0;
 		this .numProjectiveTextures       = 0;
-		this .textureProjectorNodes       = [ ];
+		this .projectiveTextureNodes      = [ ];
 		this .textures                    = new Map ();
 	}
 
@@ -907,10 +907,10 @@ function (Fields,
 		},
 		hasTextureProjector: function (i, textureProjectorNode)
 		{
-			if (this .textureProjectorNodes [i] === textureProjectorNode)
+			if (this .projectiveTextureNodes [i] === textureProjectorNode)
 				return true;
 
-			this .textureProjectorNodes [i] = textureProjectorNode;
+			this .projectiveTextureNodes [i] = textureProjectorNode;
 
 			return false;
 		},
@@ -932,9 +932,7 @@ function (Fields,
 		},
 		setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
-			var
-				globalLights            = renderObject .getGlobalLights (),
-				globalTextureProjectors = renderObject .getGlobalTextureProjectors ();
+			var globalObjects = renderObject .getGlobalObjects ();
 
 			// Set viewport
 
@@ -949,23 +947,18 @@ function (Fields,
 
 			this .fogNode = null;
 
-			// Set global lights
+			// Set global lights and global texture projectors
 
-			this .numGlobalLights    = globalLights .length;
-			this .numLights          = 0;
-			this .lightNodes .length = 0;
+			this .numLights                      = 0;
+			this .lightNodes .length             = 0;
+			this .numProjectiveTextures          = 0;
+			this .projectiveTextureNodes .length = 0;
 
-			for (var i = 0, length = globalLights .length; i < length; ++ i)
-				globalLights [i] .setShaderUniforms (gl, this);
+			for (var i = 0, length = globalObjects .length; i < length; ++ i)
+				globalObjects [i] .setShaderUniforms (gl, this);
 
-			// Set global texture projectors
-
-			this .numGlobalProjectiveTextures   = globalTextureProjectors .length;
-			this .numProjectiveTextures         = 0;
-			this .textureProjectorNodes .length = 0;
-
-			for (var i = 0, length = globalTextureProjectors .length; i < length; ++ i)
-				globalTextureProjectors [i] .setShaderUniforms (gl, this);
+			this .numGlobalLights             = this .numLights;
+			this .numGlobalProjectiveTextures = this .numProjectiveTextures;
 
 			// Logarithmic depth buffer support.
 

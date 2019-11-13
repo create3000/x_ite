@@ -76,7 +76,7 @@ function (Fields,
 		X3DBindableNode .call (this, executionContext);
 
 		this .addType (X3DConstants .NavigationInfo);
-				
+
 		this .addChildObjects ("transitionStart",  new Fields .SFBool (),
 		                       "transitionActive", new Fields .SFBool (),
 		                       "availableViewers", new Fields .MFString (),
@@ -206,7 +206,7 @@ function (Fields,
 			for (var i = 0; i < this .type_ .length; ++ i)
 			{
 			   var string = this .type_ [i];
-			
+
 				switch (string)
 				{
 					case "EXAMINE":
@@ -346,7 +346,7 @@ function (Fields,
 				return;
 
 			if (this .headlight_ .getValue ())
-				renderObject .getGlobalLights () .push (renderObject .getBrowser () .getHeadlight ());
+				renderObject .getGlobalObjects () .push (renderObject .getBrowser () .getHeadlight ());
 		},
 		traverse: function (type, renderObject)
 		{
@@ -356,5 +356,3 @@ function (Fields,
 
 	return NavigationInfo;
 });
-
-

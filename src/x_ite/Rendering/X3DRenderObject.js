@@ -91,13 +91,12 @@ function ($,
 		this .projectionMatrix         = new MatrixStack (Matrix4);
 		this .modelViewMatrix          = new MatrixStack (Matrix4);
 		this .viewVolumes              = [ ];
+		this .globalObjects            = [ ];
 		this .shaderObjects            = [ ];
-		this .globalLights             = [ ];
 		this .lights                   = [ ];
 		this .shadow                   = [ false ];
 		this .localFogs                = [ ];
 		this .layouts                  = [ ];
-		this .globalTextureProjectors  = [ ];
 		this .textureProjectors        = [ ];
 		this .generatedCubeMapTextures = [ ];
 		this .shaders                  = new Set ();
@@ -159,13 +158,13 @@ function ($,
 		{
 			return this .viewVolumes [this .viewVolumes .length - 1];
 		},
+		getGlobalObjects: function ()
+		{
+			return this .globalObjects;
+		},
 		getShaderObjects: function ()
 		{
 			return this .shaderObjects;
-		},
-		getGlobalLights: function ()
-		{
-			return this .globalLights;
 		},
 		getLights: function ()
 		{
@@ -214,10 +213,6 @@ function ($,
 		getParentLayout: function ()
 		{
 			return this .layouts .length ? this .layouts [this .layouts .length - 1] : null;
-		},
-		getGlobalTextureProjectors: function ()
-		{
-			return this .globalTextureProjectors;
 		},
 		getTextureProjectors: function ()
 		{
@@ -1042,7 +1037,7 @@ function ($,
 
 				if (this .isIndependent ())
 				{
-					// Recycle clip planes.
+					// Recycle clip planes, local fogs, local lights, and local projective textures.
 
 					var shaderObjects = browser .getShaderObjects ();
 
@@ -1051,26 +1046,17 @@ function ($,
 
 					shaderObjects .length = 0;
 
-					// Recycle global lights.
+					// Recycle global lights and texture projectors.
 
-					var lights = this .globalLights;
+					var globalObjects = this .globalObjects;
 
-					for (var i = 0, length = lights .length; i < length; ++ i)
-					   lights [i] .dispose ();
-
-					// Recycle global texture projectors.
-
-					var textureProjectors = this .globalTextureProjectors;
-
-					for (var i = 0, length = textureProjectors .length; i < length; ++ i)
-						textureProjectors [i] .dispose ();
+					for (var i = 0, length = globalObjects .length; i < length; ++ i)
+						globalObjects [i] .dispose ();
 				}
 
-				this .globalLights .length = 0;
-				this .lights       .length = 0;
-
-				this .globalTextureProjectors .length = 0;
-				this .textureProjectors       .length = 0;
+				this .globalObjects     .length = 0;
+				this .lights            .length = 0;
+				this .textureProjectors .length = 0;
 			};
 		})(),
 	};

@@ -136,8 +136,8 @@ function (X3DChildNode,
 						                     renderObject .getLayer () .getGroup (),
 						                     renderObject .getModelViewMatrix () .get ());
 
-						renderObject .getGlobalLights () .push (lightContainer);
-						renderObject .getLights ()       .push (lightContainer);
+						renderObject .getGlobalObjects () .push (lightContainer);
+						renderObject .getLights ()        .push (lightContainer);
 					}
 					else
 					{
@@ -158,8 +158,8 @@ function (X3DChildNode,
 					{
 						lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
 
-						renderObject .getGlobalLights () .push (lightContainer);
-						renderObject .getLights ()       .push (lightContainer);
+						renderObject .getGlobalObjects () .push (lightContainer);
+						renderObject .getLights ()        .push (lightContainer);
 					}
 					else
 					{

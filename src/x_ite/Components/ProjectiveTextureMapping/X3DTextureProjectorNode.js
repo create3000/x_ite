@@ -175,8 +175,8 @@ function (X3DChildNode,
 
 					if (this .global_ .getValue ())
 					{
-						renderObject .getGlobalTextureProjectors () .push (textureProjectorContainer);
-						renderObject .getTextureProjectors ()       .push (textureProjectorContainer);
+						renderObject .getGlobalObjects ()     .push (textureProjectorContainer);
+						renderObject .getTextureProjectors () .push (textureProjectorContainer);
 					}
 					else
 					{
@@ -192,8 +192,8 @@ function (X3DChildNode,
 					{
 						textureProjectorContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
 
-						renderObject .getGlobalTextureProjectors () .push (textureProjectorContainer);
-						renderObject .getTextureProjectors ()       .push (textureProjectorContainer);
+						renderObject .getGlobalObjects ()     .push (textureProjectorContainer);
+						renderObject .getTextureProjectors () .push (textureProjectorContainer);
 					}
 					else
 					{
