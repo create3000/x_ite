@@ -111,8 +111,11 @@ function (Fields,
 				modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
 				invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (textureProjectorNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
+			this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (textureProjectorNode .getDirection ()) .negate ());
+			textureProjectorNode .straightenHorizon (this .rotation);
+
 			invTextureSpaceMatrix .translate (textureProjectorNode .getLocation ());
-			invTextureSpaceMatrix .rotate (this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (textureProjectorNode .getDirection ()) .negate ()));
+			invTextureSpaceMatrix .rotate (this .rotation);
 			invTextureSpaceMatrix .inverse ();
 
 			var

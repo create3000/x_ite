@@ -51,11 +51,15 @@ define ([
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 ],
 function (X3DChildNode,
           X3DConstants,
           X3DCast,
+          Vector3,
+          Rotation4,
           Matrix4)
 {
 "use strict";
@@ -134,6 +138,29 @@ function (X3DChildNode,
 			else
 				this .aspectRatio_ = 0;
 		},
+		straightenHorizon: (function ()
+		{
+			var
+				localXAxis = new Vector3 (0, 0, 0),
+				localZAxis = new Vector3 (0, 0, 0),
+				rotation   = new Rotation4 (0, 0, 1, 0);
+
+			return function (orientation)
+			{
+				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
+				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
+
+				var vector = localZAxis .cross (this .upVector_ .getValue ());
+
+				// If viewer looks along the up vector.
+				if (vector .equals (Vector3 .Zero))
+					return orientation;
+
+				rotation .setFromToVec (localXAxis, vector);
+
+				return orientation .multRight (rotation);
+			};
+		})(),
 		push: function (renderObject)
 		{
 			if (this .on_ .getValue () && this .textureNode)
