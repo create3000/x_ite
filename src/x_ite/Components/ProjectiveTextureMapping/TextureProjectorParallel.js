@@ -105,56 +105,63 @@ function (Fields,
 		},
 		setGlobalVariables: function (renderObject)
 		{
-			var
-				textureProjectorNode  = this .textureProjectorNode,
-				cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
-				modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
-				invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (textureProjectorNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
-
-			this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (textureProjectorNode .getDirection ()) .negate ());
-			textureProjectorNode .straightenHorizon (this .rotation);
-
-			invTextureSpaceMatrix .translate (textureProjectorNode .getLocation ());
-			invTextureSpaceMatrix .rotate (this .rotation);
-			invTextureSpaceMatrix .inverse ();
-
-			var
-				width        = textureProjectorNode .getTexture () .getWidth (),
-				height       = textureProjectorNode .getTexture () .getHeight (),
-				aspect       = width / height,
-				minimumX     = textureProjectorNode .getMinimumX (),
-				maximumX     = textureProjectorNode .getMaximumX (),
-				minimumY     = textureProjectorNode .getMinimumY (),
-				maximumY     = textureProjectorNode .getMaximumY (),
-				sizeX        = textureProjectorNode .getSizeX (),
-				sizeY        = textureProjectorNode .getSizeY (),
-				nearDistance = textureProjectorNode .getNearDistance (),
-				farDistance  = textureProjectorNode .getFarDistance ();
-
-			if (aspect > sizeX / sizeY)
+			try
 			{
 				var
-					center  = (minimumX + maximumX) / 2,
-					size1_2 = (sizeY * aspect) / 2;
+					textureProjectorNode  = this .textureProjectorNode,
+					cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
+					modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+					invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (textureProjectorNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
-				Camera .ortho (center - size1_2, center + size1_2, minimumY, maximumY, nearDistance, farDistance, this .projectionMatrix);
-			}
-			else
-			{
+				this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (textureProjectorNode .getDirection ()) .negate ());
+				textureProjectorNode .straightenHorizon (this .rotation);
+
+				invTextureSpaceMatrix .translate (textureProjectorNode .getLocation ());
+				invTextureSpaceMatrix .rotate (this .rotation);
+				invTextureSpaceMatrix .inverse ();
+
 				var
-					center  = (minimumY + maximumY) / 2,
-					size1_2 = (sizeX / aspect) / 2;
+					width        = textureProjectorNode .getTexture () .getWidth (),
+					height       = textureProjectorNode .getTexture () .getHeight (),
+					aspect       = width / height,
+					minimumX     = textureProjectorNode .getMinimumX (),
+					maximumX     = textureProjectorNode .getMaximumX (),
+					minimumY     = textureProjectorNode .getMinimumY (),
+					maximumY     = textureProjectorNode .getMaximumY (),
+					sizeX        = textureProjectorNode .getSizeX (),
+					sizeY        = textureProjectorNode .getSizeY (),
+					nearDistance = textureProjectorNode .getNearDistance (),
+					farDistance  = textureProjectorNode .getFarDistance ();
 
-				Camera .ortho (minimumX, maximumX, center - size1_2, center + size1_2, nearDistance, farDistance, this .projectionMatrix);
+				if (aspect > sizeX / sizeY)
+				{
+					var
+						center  = (minimumX + maximumX) / 2,
+						size1_2 = (sizeY * aspect) / 2;
+
+					Camera .ortho (center - size1_2, center + size1_2, minimumY, maximumY, nearDistance, farDistance, this .projectionMatrix);
+				}
+				else
+				{
+					var
+						center  = (minimumY + maximumY) / 2,
+						size1_2 = (sizeX / aspect) / 2;
+
+					Camera .ortho (minimumX, maximumX, center - size1_2, center + size1_2, nearDistance, farDistance, this .projectionMatrix);
+				}
+
+				if (! textureProjectorNode .getGlobal ())
+					invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
+
+				this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (textureProjectorNode .getBiasMatrix ());
+
+				this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
+				this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 			}
-
-			if (! textureProjectorNode .getGlobal ())
-				invTextureSpaceMatrix .multLeft (modelMatrix .inverse ());
-
-			this .invTextureSpaceProjectionMatrix .assign (invTextureSpaceMatrix) .multRight (this .projectionMatrix) .multRight (textureProjectorNode .getBiasMatrix ());
-
-			this .projectiveTextureMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invTextureSpaceProjectionMatrix);
-			this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
+			catch (error)
+			{
+				console .log (error);
+			}
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
@@ -196,8 +203,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "global",       new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "location",     new Fields .SFVec3f (0, 0, 1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "direction",    new Fields .SFVec3f (0, 0, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView" , new Fields .MFFloat (-1, -1, 1, 1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "upVector",     new Fields .SFVec3f (0, 0, 1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView" , new Fields .MFFloat (-1, -1, 1, 1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "nearDistance", new Fields .SFFloat (1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "farDistance",  new Fields .SFFloat (10)),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "aspectRatio",  new Fields .SFFloat ()),

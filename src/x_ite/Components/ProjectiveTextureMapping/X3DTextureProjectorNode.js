@@ -119,25 +119,6 @@ function (X3DChildNode,
 				return biasMatrix;
 			};
 		})(),
-		set_texture__: function ()
-		{
-			if (this .textureNode)
-				this .textureNode .removeInterest ("set_aspectRatio__", this);
-
-			this .textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this .texture_);
-
-			if (this .textureNode)
-				this .textureNode .addInterest ("set_aspectRatio__", this);
-
-			this .set_aspectRatio__ ();
-		},
-		set_aspectRatio__: function ()
-		{
-			if (this .textureNode)
-				this .aspectRatio_ = this .textureNode .getWidth () / this .textureNode .getHeight ();
-			else
-				this .aspectRatio_ = 0;
-		},
 		straightenHorizon: (function ()
 		{
 			var
@@ -161,6 +142,25 @@ function (X3DChildNode,
 				return orientation .multRight (rotation);
 			};
 		})(),
+		set_texture__: function ()
+		{
+			if (this .textureNode)
+				this .textureNode .removeInterest ("set_aspectRatio__", this);
+
+			this .textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this .texture_);
+
+			if (this .textureNode)
+				this .textureNode .addInterest ("set_aspectRatio__", this);
+
+			this .set_aspectRatio__ ();
+		},
+		set_aspectRatio__: function ()
+		{
+			if (this .textureNode)
+				this .aspectRatio_ = this .textureNode .getWidth () / this .textureNode .getHeight ();
+			else
+				this .aspectRatio_ = 0;
+		},
 		push: function (renderObject)
 		{
 			if (this .on_ .getValue () && this .textureNode)
