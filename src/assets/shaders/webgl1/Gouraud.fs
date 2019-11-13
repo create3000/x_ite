@@ -57,6 +57,7 @@ main ()
 		}
 	}
 
+	finalColor      = getProjectiveTextureColor (finalColor);
 	finalColor      = getHatchColor (finalColor);
 	finalColor .rgb = getFogColor (finalColor .rgb);
 	gl_FragColor    = finalColor;

@@ -93,6 +93,11 @@ getMaterialColor (const in x3d_MaterialParameters material)
 				diffuseFactor = material .diffuseColor;
 		}
 
+		vec4 P = getProjectiveTextureColor (vec4 (1.0));
+
+		diffuseFactor *= P .rgb;
+		alpha         *= P .a;
+
 		vec3 ambientTerm = diffuseFactor * material .ambientIntensity;
 
 		// Apply light sources
