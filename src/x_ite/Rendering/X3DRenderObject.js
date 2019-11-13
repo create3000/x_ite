@@ -1046,7 +1046,7 @@ function ($,
 
 					shaderObjects .length = 0;
 
-					// Recycle global lights and texture projectors.
+					// Recycle global lights and global projective textures.
 
 					var globalObjects = this .globalObjects;
 
