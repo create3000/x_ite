@@ -75,6 +75,10 @@ function (X3DChildNode,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DTextureProjectorNode);
+
+		this .location_    .setUnit ("length");
+		this .farDistance_ .setUnit ("length");
+		this .location_    .setUnit ("length");
 	}
 
 	X3DTextureProjectorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -407,6 +411,8 @@ function (Fields,
 		X3DTextureProjectorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TextureProjectorPerspective);
+
+		this .fieldOfView_ .setUnit ("angle");
 	}
 
 	TextureProjectorPerspective .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
@@ -656,6 +662,8 @@ function (Fields,
 		X3DTextureProjectorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TextureProjectorParallel);
+
+		this .fieldOfView_ .setUnit ("length");
 	}
 
 	TextureProjectorParallel .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
