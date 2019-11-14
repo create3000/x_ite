@@ -1,4 +1,4 @@
-/* X_ITE v4.6.8a-931 */
+/* X_ITE v4.6.8a-932 */
 
 (function () {
 
@@ -44102,6 +44102,7 @@ function (Fields,
 		this .x3d_TextureMatrix                       = [ ];
 		this .x3d_ProjectiveTexture                   = [ ];
 		this .x3d_ProjectiveTextureMatrix             = [ ];
+		this .x3d_ProjectiveTextureLocation           = [ ];
 
 		this .numClipPlanes               = 0;
 		this .fogNode                     = null;
@@ -44244,8 +44245,9 @@ function (Fields,
 				this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
 				this .x3d_TexCoord [i]      = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
 
-				this .x3d_ProjectiveTexture [i]       = gl .getUniformLocation (program, "x3d_ProjectiveTexture[" + i + "]");
-				this .x3d_ProjectiveTextureMatrix [i] = gl .getUniformLocation (program, "x3d_ProjectiveTextureMatrix[" + i + "]");
+				this .x3d_ProjectiveTexture [i]         = gl .getUniformLocation (program, "x3d_ProjectiveTexture[" + i + "]");
+				this .x3d_ProjectiveTextureMatrix [i]   = gl .getUniformLocation (program, "x3d_ProjectiveTextureMatrix[" + i + "]");
+				this .x3d_ProjectiveTextureLocation [i] = gl .getUniformLocation (program, "x3d_ProjectiveTextureLocation[" + i + "]");
 			}
 
 			this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");

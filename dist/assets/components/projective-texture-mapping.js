@@ -314,6 +314,8 @@ function (Fields,
 		this .modelMatrix                     = new Matrix4 ();
 		this .invTextureSpaceMatrix           = new Matrix4 ();
 		this .invTextureSpaceProjectionMatrix = new Matrix4 ();
+		this .location                        = new Vector3 (0, 0, 0);
+		this .locationArray                   = new Float32Array (3);
 		this .direction                       = new Vector3 (0, 0, 0);
 		this .rotation                        = new Rotation4 ();
 		this .projectiveTextureMatrix         = new Matrix4 ();
@@ -367,6 +369,9 @@ function (Fields,
 
 				this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
 				this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
+
+				this .modelViewMatrix .get () .multVecMatrix (this .location .assign (textureProjectorNode .location_ .getValue ()));
+				this .locationArray .set (this .location);
 			}
 			catch (error)
 			{
@@ -389,6 +394,7 @@ function (Fields,
 			gl .activeTexture (gl .TEXTURE0);
 
 			gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
+			gl .uniform3fv (shaderObject .x3d_ProjectiveTextureLocation [i], this .locationArray);
 		},
 		dispose: function ()
 		{
@@ -535,6 +541,8 @@ function (Fields,
 		this .modelViewMatrix                 = new MatrixStack (Matrix4);
 		this .modelMatrix                     = new Matrix4 ();
 		this .invTextureSpaceMatrix           = new Matrix4 ();
+		this .location                        = new Vector3 (0, 0, 0);
+		this .locationArray                   = new Float32Array (3);
 		this .invTextureSpaceProjectionMatrix = new Matrix4 ();
 		this .direction                       = new Vector3 (0, 0, 0);
 		this .rotation                        = new Rotation4 ();
@@ -610,6 +618,9 @@ function (Fields,
 
 				this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
 				this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
+
+				this .modelViewMatrix .get () .multVecMatrix (this .location .assign (textureProjectorNode .location_ .getValue ()));
+				this .locationArray .set (this .location);
 			}
 			catch (error)
 			{
@@ -632,6 +643,7 @@ function (Fields,
 			gl .activeTexture (gl .TEXTURE0);
 
 			gl .uniformMatrix4fv (shaderObject .x3d_ProjectiveTextureMatrix [i], false, this .projectiveTextureMatrixArray);
+			gl .uniform3fv (shaderObject .x3d_ProjectiveTextureLocation [i], this .locationArray);
 		},
 		dispose: function ()
 		{

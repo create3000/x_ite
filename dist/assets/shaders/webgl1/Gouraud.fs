@@ -55,6 +55,7 @@ uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
 uniform int x3d_NumProjectiveTextures;
 uniform sampler2D x3d_ProjectiveTexture [x3d_MaxTextures];
 uniform mat4 x3d_ProjectiveTextureMatrix [x3d_MaxTextures];
+uniform vec3 x3d_ProjectiveTextureLocation [x3d_MaxTextures];
 uniform vec4 x3d_MultiTextureColor;
 uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
 uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];
@@ -364,6 +365,9 @@ return texture2D (x3d_ProjectiveTexture [1], texCoord);
 vec4
 getProjectiveTextureColor (in vec4 currentColor)
 {
+if (x3d_NumProjectiveTextures > 0)
+{
+vec3 N = gl_FrontFacing ? normal : -normal;
 for (int i = 0; i < x3d_MaxTextures; ++ i)
 {
 if (i == x3d_NumProjectiveTextures)
@@ -376,7 +380,11 @@ if (texCoord .t < 0.0 || texCoord .t > 1.0)
 continue;
 if (texCoord .p < 0.0 || texCoord .p > 1.0)
 continue;
+vec3 p = x3d_ProjectiveTextureLocation [i] - vertex;
+if (dot (N, p) < 0.0)
+continue;
 currentColor *= getProjectiveTexture (i, texCoord .st);
+}
 }
 return currentColor;
 }
