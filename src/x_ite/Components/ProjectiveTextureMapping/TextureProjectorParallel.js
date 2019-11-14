@@ -197,6 +197,8 @@ function (Fields,
 		X3DTextureProjectorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TextureProjectorParallel);
+
+		this .fieldOfView_ .setUnit ("length");
 	}
 
 	TextureProjectorParallel .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),

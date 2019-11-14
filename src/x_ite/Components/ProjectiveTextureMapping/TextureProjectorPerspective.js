@@ -176,6 +176,8 @@ function (Fields,
 		X3DTextureProjectorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TextureProjectorPerspective);
+
+		this .fieldOfView_ .setUnit ("angle");
 	}
 
 	TextureProjectorPerspective .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
