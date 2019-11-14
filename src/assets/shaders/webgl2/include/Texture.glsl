@@ -508,8 +508,7 @@ getProjectiveTextureColor (in vec4 currentColor)
 			if (texCoord .p < 0.0 || texCoord .p > 1.0)
 				continue;
 
-			// No normalize, we only need the sign of the dot product.
-			vec3 p = x3d_ProjectiveTextureLocation [i] - vertex;
+			vec3 p = normalize (x3d_ProjectiveTextureLocation [i] - vertex);
 
 			if (dot (N, p) < 0.0)
 				continue;
