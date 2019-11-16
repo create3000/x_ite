@@ -218,6 +218,8 @@ var X_ITE_TESTS = [
 	{ path: "ProjectiveTextureMapping/Local.x3d" },
 	{ path: "ProjectiveTextureMapping/Parallel.x3d" },
 	{ path: "ProjectiveTextureMapping/Perspective.x3d" },
+	{ path: "ProjectiveTextureMapping/apple.png" },
+	{ path: "ProjectiveTextureMapping/apple.x3d" },
 	{ component: "Rendering" },
 	{ path: "Rendering/ClipPlane.x3d" },
 	{ path: "Rendering/IndexedLineSet.x3d" },
