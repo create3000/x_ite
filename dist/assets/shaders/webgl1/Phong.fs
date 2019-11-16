@@ -626,7 +626,7 @@ if (texCoord .t < 0.0 || texCoord .t > 1.0)
 continue;
 if (texCoord .p < 0.0 || texCoord .p > 1.0)
 continue;
-vec3 p = normalize (x3d_ProjectiveTextureLocation [i] - vertex);
+vec3 p = x3d_ProjectiveTextureLocation [i] - vertex;
 if (dot (N, p) < 0.0)
 continue;
 currentColor *= getProjectiveTexture (i, texCoord .st);
