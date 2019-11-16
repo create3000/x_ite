@@ -132,26 +132,23 @@ function (X3DChildNode,
 		straightenHorizon: (function ()
 		{
 			var
-				localXAxis  = new Vector3 (0, 0, 0),
-				localXAxisN = new Vector3 (0, 0, 0),
-				localZAxis  = new Vector3 (0, 0, 0),
-				rotation    = new Rotation4 (0, 0, 1, 0);
+				localXAxis = new Vector3 (0, 0, 0),
+				localZAxis = new Vector3 (0, 0, 0),
+				upVector   = new Vector3 (0, 0, 0),
+				rotation   = new Rotation4 (0, 0, 1, 0);
 
 			return function (orientation)
 			{
 				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
 				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
 
-				var vector = localZAxis .cross (this .upVector_ .getValue ());
+				var vector = localZAxis .cross (upVector .assign (this .upVector_ .getValue ()) .normalize ());
 
 				// If viewer looks along the up vector.
 				if (vector .equals (Vector3 .Zero))
 					return orientation;
 
-				if (vector .equals (localXAxis))
-					return orientation;
-
-				if (vector .equals (localXAxisN .assign (localXAxis) .negate ()))
+				if (Math .abs (vector .dot (localXAxis)) >= 1)
 					return orientation;
 
 				rotation .setFromToVec (localXAxis, vector);

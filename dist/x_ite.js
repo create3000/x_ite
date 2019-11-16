@@ -1,4 +1,4 @@
-/* X_ITE v4.6.8a-935 */
+/* X_ITE v4.6.8a-936 */
 
 (function () {
 
@@ -43407,7 +43407,6 @@ function (Fields,
 		{
 			var
 				localXAxis  = new Vector3 (0, 0, 0),
-				localXAxisN = new Vector3 (0, 0, 0),
 				localZAxis  = new Vector3 (0, 0, 0),
 				rotation    = new Rotation4 (0, 0, 1, 0);
 
@@ -43422,10 +43421,7 @@ function (Fields,
 				if (vector .equals (Vector3 .Zero))
 					return orientation;
 
-				if (vector .equals (localXAxis))
-					return orientation;
-
-				if (vector .equals (localXAxisN .assign (localXAxis) .negate ()))
+				if (Math .abs (vector .dot (localXAxis)) >= 1)
 					return orientation;
 
 				rotation .setFromToVec (localXAxis, vector);
