@@ -1,4 +1,4 @@
-/* X_ITE v4.6.8a-934 */
+/* X_ITE v4.6.8a-935 */
 
 (function () {
 
@@ -43406,9 +43406,10 @@ function (Fields,
 		straightenHorizon: (function ()
 		{
 			var
-				localXAxis = new Vector3 (0, 0, 0),
-				localZAxis = new Vector3 (0, 0, 0),
-				rotation   = new Rotation4 (0, 0, 1, 0);
+				localXAxis  = new Vector3 (0, 0, 0),
+				localXAxisN = new Vector3 (0, 0, 0),
+				localZAxis  = new Vector3 (0, 0, 0),
+				rotation    = new Rotation4 (0, 0, 1, 0);
 
 			return function (orientation)
 			{
@@ -43419,6 +43420,12 @@ function (Fields,
 
 				// If viewer looks along the up vector.
 				if (vector .equals (Vector3 .Zero))
+					return orientation;
+
+				if (vector .equals (localXAxis))
+					return orientation;
+
+				if (vector .equals (localXAxisN .assign (localXAxis) .negate ()))
 					return orientation;
 
 				rotation .setFromToVec (localXAxis, vector);
