@@ -60,7 +60,7 @@ function ($,
           _)
 {
 "use strict";
-	
+
 	$("head") .append ('<style>.x_ite-private-menu-title:before { content: "' + _("X_ITE Browser") + '" }</style>');
 
 	function ContextMenu (executionContext)
@@ -93,7 +93,7 @@ function ($,
 				return;
 
 			$.contextMenu ({
-				selector: ".x_ite-private-surface-" + browser .getId (), 
+				selector: ".x_ite-private-surface-" + browser .getId (),
 				build: this .build .bind (this),
 			});
 		},
@@ -160,7 +160,7 @@ function ($,
 								if (straightenHorizon)
 								{
 									browser .getNotification () .string_ = _("Straighten Horizon") + ": " + _("on");
-									
+
 									var activeViewpoint = browser .getActiveViewpoint ();
 
 									if (activeViewpoint)
@@ -428,7 +428,7 @@ function ($,
 					callback: function (viewer)
 					{
 						$("body > ul.context-menu-list") .fadeOut (500);
-						
+
 						browser .viewer_ = viewer;
 						browser .getNotification () .string_ = _(this .getViewerName (viewer));
 						browser .getElement () .focus ();
