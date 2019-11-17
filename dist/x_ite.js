@@ -1,4 +1,4 @@
-/* X_ITE v4.6.8a-940 */
+/* X_ITE v4.6.8a-941 */
 
 (function () {
 
@@ -116850,7 +116850,7 @@ function ($,
 			             "      Depth size: " + this .getDepthSize () + " bits\n" +
 			             "      Color depth: " + this .getColorDepth () + " bits\n" +
 			             "      Max clip planes: " + this .getMaxClipPlanes () + "\n" +
-			             "      Max lights: " + this .getMaxLights () + "\n" +
+			             "      Max global lights: " + this .getMaxLights () + "\n" +
 			             "      Max textures: " + this .getMaxTextures () + "\n" +
 			             "      Texture units: " + this .getMaxCombinedTextureUnits () + "\n" +
 			             "      Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixel\n" +
