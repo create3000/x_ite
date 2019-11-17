@@ -1,4 +1,4 @@
-/* X_ITE v4.6.8a-941 */
+/* X_ITE v4.6.8a-942 */
 
 (function () {
 
@@ -73350,6 +73350,11 @@ function (TextureBuffer)
 
 	function X3DLightingContext ()
 	{
+		var
+			gl                    = this .getContext (),
+			maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS);
+
+		this .maxLights     = maxVertexTextureUnits > 16 ? 8 : 4;
 		this .shadowBuffers = [ ]; // Shadow buffer cache
 	}
 
@@ -73359,7 +73364,7 @@ function (TextureBuffer)
 		{ },
 		getMaxLights: function ()
 		{
-			return 4;
+			return this .maxLights;
 		},
 		popShadowBuffer: function (shadowMapSize)
 		{
