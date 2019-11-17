@@ -470,7 +470,7 @@ function (Fields,
 				var vector = localZAxis .cross (this .getUpVector ());
 
 				// If viewer looks along the up vector.
-				if (vector .equals (Vector3 .Zero))
+				if (Math .abs (localZAxis .dot (this .getUpVector ())) >= 1)
 					return orientation;
 
 				if (Math .abs (vector .dot (localXAxis)) >= 1)
