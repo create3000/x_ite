@@ -2,7 +2,7 @@
 	"name": "x_ite",
 	"version": "4.6.8a",
 	"revision": "937",
-	"description": "X_ITE X3D Browser",
+	"description": "X_ITE X3D Browser, a framework for integrating and manipulating X3D and VRML scenes in HTML5.",
 	"main": "src/x_ite.js",
 	"repository": {
 		"type": "git",
