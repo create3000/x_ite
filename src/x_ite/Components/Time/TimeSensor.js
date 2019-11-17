@@ -134,7 +134,7 @@ function (Fields,
 			this .last     = lastFraction;
 			this .scale    = this .last - this .first;
 			this .interval = cycleInterval * this .scale;
-			this .fraction = Algorithm .fract ((currentFraction >= 1 ? 0 : currentFraction) + (currentTime - startTime) / this .interval);
+			this .fraction = Algorithm .fract ((currentFraction >= 1 ? 0 : currentFraction) + (this .interval ? (currentTime - startTime) / this .interval : 0));
 			this .cycle    = currentTime - (this .fraction -  this .first) * cycleInterval;
 		},
 		set_cycleInterval__: function ()

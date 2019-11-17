@@ -158,7 +158,7 @@ function (X3DBaseNode)
 				return;
 
 			var top = this .top ();
-			
+
 			if (node === top)
 			{
 				if (node .isBound_ .getValue ())
