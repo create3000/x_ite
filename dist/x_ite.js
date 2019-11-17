@@ -1,4 +1,4 @@
-/* X_ITE v4.6.8a-936 */
+/* X_ITE v4.6.8a-937 */
 
 (function () {
 
@@ -43415,10 +43415,11 @@ function (Fields,
 				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
 				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
 
-				var vector = localZAxis .cross (this .getUpVector ());
+				var upVector = this .getUpVector ();
+				var vector   = localZAxis .cross (upVector);
 
 				// If viewer looks along the up vector.
-				if (vector .equals (Vector3 .Zero))
+				if (Math .abs (localZAxis .dot (upVector)) >= 1)
 					return orientation;
 
 				if (Math .abs (vector .dot (localXAxis)) >= 1)
