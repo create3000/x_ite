@@ -10,38 +10,54 @@ getShadowDepth (const in int index, const in vec2 shadowCoord)
 {
 	switch (index)
 	{
+		#if x3d_MaxLights > 0
 		case 0:
 		{
 			return unpack (texture (x3d_ShadowMap [0], shadowCoord));
 		}
+		#endif
+		#if x3d_MaxLights > 1
 		case 1:
 		{
 			return unpack (texture (x3d_ShadowMap [1], shadowCoord));
 		}
+		#endif
+		#if x3d_MaxLights > 2
 		case 2:
 		{
 			return unpack (texture (x3d_ShadowMap [2], shadowCoord));
 		}
+		#endif
+		#if x3d_MaxLights > 3
 		case 3:
 		{
 			return unpack (texture (x3d_ShadowMap [3], shadowCoord));
 		}
+		#endif
+		#if x3d_MaxLights > 4
 		case 4:
 		{
 			return unpack (texture (x3d_ShadowMap [4], shadowCoord));
 		}
+		#endif
+		#if x3d_MaxLights > 5
 		case 5:
 		{
 			return unpack (texture (x3d_ShadowMap [5], shadowCoord));
 		}
+		#endif
+		#if x3d_MaxLights > 6
 		case 6:
 		{
 			return unpack (texture (x3d_ShadowMap [6], shadowCoord));
 		}
+		#endif
+		#if x3d_MaxLights > 7
 		case 7:
 		{
 			return unpack (texture (x3d_ShadowMap [7], shadowCoord));
 		}
+		#endif
 		default:
 		{
 			return 0.0;

@@ -65,7 +65,7 @@ function (TextureBuffer)
 		{ },
 		getMaxLights: function ()
 		{
-			return 8;
+			return 4;
 		},
 		popShadowBuffer: function (shadowMapSize)
 		{
