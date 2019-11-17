@@ -1,4 +1,4 @@
-/* X_ITE v4.6.8a-938 */
+/* X_ITE v4.6.8a-939 */
 
 (function () {
 
@@ -41688,7 +41688,7 @@ define ('x_ite/Components/Core/X3DBindableNode',[
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DChildNode, 
+function (X3DChildNode,
           X3DConstants)
 {
 "use strict";
@@ -41728,7 +41728,7 @@ function (X3DChildNode,
 				this .layers = this .getLayers ();
 
 				// Bind
-		
+
 				for (var i = 0; i < this .layers .length; ++ i)
 					this .bindToLayer (this .layers [i]);
 			}
@@ -41744,8 +41744,6 @@ function (X3DChildNode,
 
 	return X3DBindableNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -42319,7 +42317,7 @@ function (Fields,
 			this .last     = lastFraction;
 			this .scale    = this .last - this .first;
 			this .interval = cycleInterval * this .scale;
-			this .fraction = Algorithm .fract ((currentFraction >= 1 ? 0 : currentFraction) + (currentTime - startTime) / this .interval);
+			this .fraction = Algorithm .fract ((currentFraction >= 1 ? 0 : currentFraction) + (this .interval ? (currentTime - startTime) / this .interval : 0));
 			this .cycle    = currentTime - (this .fraction -  this .first) * cycleInterval;
 		},
 		set_cycleInterval__: function ()
@@ -91220,7 +91218,7 @@ function (X3DBaseNode)
 				return;
 
 			var top = this .top ();
-			
+
 			if (node === top)
 			{
 				if (node .isBound_ .getValue ())
@@ -91248,6 +91246,7 @@ function (X3DBaseNode)
 
 	return BindableStack;
 });
+
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
