@@ -1,4 +1,4 @@
-/* X_ITE v4.6.8a-943 */
+/* X_ITE v4.6.8a-944 */
 
 (function () {
 
@@ -44274,8 +44274,10 @@ function (Fields,
 			gl .uniform1i  (this .x3d_NumTextures,              0);
 			gl .uniform1iv (this .x3d_Texture2D [0],            browser .getTexture2DUnits ());
 			gl .uniform1iv (this .x3d_CubeMapTexture [0],       browser .getCubeMapTextureUnits ());
-			gl .uniform1iv (this .x3d_ProjectiveTexture [0],    browser .getProjectiveTextureUnits ());
 			gl .uniform1iv (this .x3d_ShadowMap [0],            new Int32Array (this .x3d_MaxLights) .fill (browser .getShadowTextureUnit ()));
+
+			if (browser .getProjectiveTextureMapping ())
+				gl .uniform1iv (this .x3d_ProjectiveTexture [0], browser .getProjectiveTextureUnits ());
 
 			if (gl .getVersion () >= 2)
 				gl .uniform1iv (this .x3d_Texture3D [0], browser .getTexture3DUnits ());
@@ -89733,9 +89735,12 @@ function (TextureProperties,
 			this .projectiveTextureUnits = new Int32Array (this .getMaxTextures ());
 
 			for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
+				this .texture2DUnits [i] = this .getCombinedTextureUnits () .pop ();
+
+			if (this .getProjectiveTextureMapping ())
 			{
-				this .texture2DUnits [i]         = this .getCombinedTextureUnits () .pop ();
-				this .projectiveTextureUnits [i] = this .getCombinedTextureUnits () .pop ();
+				for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
+					this .projectiveTextureUnits [i] = this .getCombinedTextureUnits () .pop ();
 			}
 
          var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);

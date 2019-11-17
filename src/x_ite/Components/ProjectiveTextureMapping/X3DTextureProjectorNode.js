@@ -82,6 +82,12 @@ function (X3DChildNode,
 		{
 			X3DChildNode .prototype .initialize .call (this);
 
+			if (! this .getBrowser () .getProjectiveTextureMapping ())
+			{
+				this .push = Function .prototype;
+				this .pop  = Function .prototype;
+			}
+
 			this .texture_ .addInterest ("set_texture__", this);
 
 			this .set_texture__ ();

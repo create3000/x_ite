@@ -94,9 +94,12 @@ function (TextureProperties,
 			this .projectiveTextureUnits = new Int32Array (this .getMaxTextures ());
 
 			for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
+				this .texture2DUnits [i] = this .getCombinedTextureUnits () .pop ();
+
+			if (this .getProjectiveTextureMapping ())
 			{
-				this .texture2DUnits [i]         = this .getCombinedTextureUnits () .pop ();
-				this .projectiveTextureUnits [i] = this .getCombinedTextureUnits () .pop ();
+				for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
+					this .projectiveTextureUnits [i] = this .getCombinedTextureUnits () .pop ();
 			}
 
          var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
