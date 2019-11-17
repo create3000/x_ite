@@ -1,4 +1,4 @@
-/* X_ITE v4.6.8a-942 */
+/* X_ITE v4.6.8a-943 */
 
 (function () {
 
@@ -46384,6 +46384,9 @@ function (ShaderSource,
 			if (browser .getMultiTexturing ())
 				constants += "#define X3D_MULTI_TEXTURING\n";
 
+			if (browser .getProjectiveTextureMapping ())
+				constants += "#define X3D_PROJECTIVE_TEXTURE_MAPPING\n";
+
 			if (shadow)
 				constants += "#define X3D_SHADOWS\n";
 
@@ -73354,7 +73357,13 @@ function (TextureBuffer)
 			gl                    = this .getContext (),
 			maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS);
 
-		this .maxLights     = maxVertexTextureUnits > 16 ? 8 : 4;
+		if (maxVertexTextureUnits > 16)
+			this .maxLights = 8;
+		else if (maxVertexTextureUnits > 8)
+			this .maxLights = 4;
+		else if (maxVertexTextureUnits > 4)
+			this .maxLights = 2;
+
 		this .shadowBuffers = [ ]; // Shadow buffer cache
 	}
 
@@ -89690,7 +89699,12 @@ function (TextureProperties,
 
 	function X3DTexturingContext ()
 	{
-		this .combinedTextureUnits = [ ];
+		var
+			gl                    = this .getContext (),
+			maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS);
+
+		this .projectiveTextureMapping = maxVertexTextureUnits > 8;
+		this .combinedTextureUnits     = [ ];
 	}
 
 	X3DTexturingContext .prototype =
@@ -89855,6 +89869,10 @@ function (TextureProperties,
 		getTextureMemory: function ()
 		{
 			return this .textureMemory;
+		},
+		getProjectiveTextureMapping: function ()
+		{
+			return this .projectiveTextureMapping;
 		},
 		getDefaultTextureProperties: function ()
 		{

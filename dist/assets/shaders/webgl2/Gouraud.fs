@@ -62,14 +62,16 @@ uniform int x3d_TextureType [x3d_MaxTextures];
 uniform sampler2D x3d_Texture2D [x3d_MaxTextures];
 uniform sampler3D x3d_Texture3D [x3d_MaxTextures];
 uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
+#ifdef X3D_MULTI_TEXTURING
+#ifdef X3D_PROJECTIVE_TEXTURE_MAPPING
 uniform int x3d_NumProjectiveTextures;
 uniform sampler2D x3d_ProjectiveTexture [x3d_MaxTextures];
 uniform mat4 x3d_ProjectiveTextureMatrix [x3d_MaxTextures];
 uniform vec3 x3d_ProjectiveTextureLocation [x3d_MaxTextures];
+#endif
 uniform vec4 x3d_MultiTextureColor;
 uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
 uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];
-#ifdef X3D_MULTI_TEXTURING
 vec4
 getTexCoord (const in int i)
 {
@@ -473,6 +475,7 @@ break;
 }
 return currentColor;
 }
+#ifdef X3D_PROJECTIVE_TEXTURE_MAPPING
 vec4
 getProjectiveTexture (const in int i, const in vec2 texCoord)
 {
@@ -514,6 +517,13 @@ currentColor *= getProjectiveTexture (i, texCoord .st);
 }
 return currentColor;
 }
+#else
+vec4
+getProjectiveTextureColor (in vec4 currentColor)
+{
+return currentColor;
+}
+#endif
 #else
 vec4
 getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)

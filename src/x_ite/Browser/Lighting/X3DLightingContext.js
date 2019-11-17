@@ -60,7 +60,13 @@ function (TextureBuffer)
 			gl                    = this .getContext (),
 			maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS);
 
-		this .maxLights     = maxVertexTextureUnits > 16 ? 8 : 4;
+		if (maxVertexTextureUnits > 16)
+			this .maxLights = 8;
+		else if (maxVertexTextureUnits > 8)
+			this .maxLights = 4;
+		else if (maxVertexTextureUnits > 4)
+			this .maxLights = 2;
+
 		this .shadowBuffers = [ ]; // Shadow buffer cache
 	}
 

@@ -60,7 +60,12 @@ function (TextureProperties,
 
 	function X3DTexturingContext ()
 	{
-		this .combinedTextureUnits = [ ];
+		var
+			gl                    = this .getContext (),
+			maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS);
+
+		this .projectiveTextureMapping = maxVertexTextureUnits > 8;
+		this .combinedTextureUnits     = [ ];
 	}
 
 	X3DTexturingContext .prototype =
@@ -225,6 +230,10 @@ function (TextureProperties,
 		getTextureMemory: function ()
 		{
 			return this .textureMemory;
+		},
+		getProjectiveTextureMapping: function ()
+		{
+			return this .projectiveTextureMapping;
 		},
 		getDefaultTextureProperties: function ()
 		{

@@ -113,6 +113,9 @@ function (ShaderSource,
 			if (browser .getMultiTexturing ())
 				constants += "#define X3D_MULTI_TEXTURING\n";
 
+			if (browser .getProjectiveTextureMapping ())
+				constants += "#define X3D_PROJECTIVE_TEXTURE_MAPPING\n";
+
 			if (shadow)
 				constants += "#define X3D_SHADOWS\n";
 
