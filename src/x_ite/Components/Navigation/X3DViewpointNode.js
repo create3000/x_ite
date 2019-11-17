@@ -467,10 +467,11 @@ function (Fields,
 				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
 				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
 
-				var vector = localZAxis .cross (this .getUpVector ());
+				var upVector = this .getUpVector ();
+				var vector   = localZAxis .cross (upVector);
 
 				// If viewer looks along the up vector.
-				if (Math .abs (localZAxis .dot (this .getUpVector ())) >= 1)
+				if (Math .abs (localZAxis .dot (upVector)) >= 1)
 					return orientation;
 
 				if (Math .abs (vector .dot (localXAxis)) >= 1)
