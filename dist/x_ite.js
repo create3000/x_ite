@@ -1,4 +1,4 @@
-/* X_ITE v4.6.8a-944 */
+/* X_ITE v4.6.8a-945 */
 
 (function () {
 
@@ -46390,7 +46390,10 @@ function (ShaderSource,
 				constants += "#define X3D_PROJECTIVE_TEXTURE_MAPPING\n";
 
 			if (shadow)
+			{
 				constants += "#define X3D_SHADOWS\n";
+				constants += "#define X3D_PCF_FILTERING\n";
+			}
 
 			constants += "#line " + (lines1 + 1) + "\n";
 
@@ -46413,7 +46416,6 @@ function (ShaderSource,
 			definitions += "#define x3d_DirectionalLight  1\n";
 			definitions += "#define x3d_PointLight        2\n";
 			definitions += "#define x3d_SpotLight         3\n";
-			definitions += "#define X3D_PCF_FILTERING\n";
 
 			definitions += "#define x3d_MaxTextures                " + browser .getMaxTextures () + "\n";
 			definitions += "#define x3d_TextureType2D              2\n";
