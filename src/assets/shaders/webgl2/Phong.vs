@@ -54,12 +54,18 @@ main ()
 
 	fogDepth    = x3d_FogDepth;
 	color       = x3d_Color;
-	texCoord0   = x3d_TextureMatrix [0] * x3d_TexCoord0;
-	texCoord1   = x3d_TextureMatrix [1] * x3d_TexCoord1;
 	normal      = x3d_NormalMatrix * x3d_Normal;
 	vertex      = position .xyz;
 	localNormal = x3d_Normal;
 	localVertex = x3d_Vertex .xyz;
+
+	#if x3d_MaxTextures > 0
+	texCoord0 = x3d_TextureMatrix [0] * x3d_TexCoord0;
+	#endif
+
+	#if x3d_MaxTextures > 1
+	texCoord1 = x3d_TextureMatrix [1] * x3d_TexCoord1;
+	#endif
 
 	gl_Position = x3d_ProjectionMatrix * position;
 
