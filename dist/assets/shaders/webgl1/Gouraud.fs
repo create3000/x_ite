@@ -150,7 +150,6 @@ return texture2D (x3d_Texture2D [0], texCoord);
 if (i == 1)
 return texture2D (x3d_Texture2D [1], texCoord);
 #endif
-return texture2D (x3d_Texture2D [x3d_MaxTextures - 1], texCoord);
 }
 vec4
 getTextureCube (const in int i, const in vec3 texCoord)
@@ -163,7 +162,6 @@ return textureCube (x3d_CubeMapTexture [0], texCoord);
 if (i == 1)
 return textureCube (x3d_CubeMapTexture [1], texCoord);
 #endif
-return textureCube (x3d_CubeMapTexture [x3d_MaxTextures - 1], texCoord);
 }
 vec4
 getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
@@ -384,7 +382,6 @@ return texture2D (x3d_ProjectiveTexture [0], texCoord);
 if (i == 1)
 return texture2D (x3d_ProjectiveTexture [1], texCoord);
 #endif
-return texture2D (x3d_ProjectiveTexture [x3d_MaxTextures - 1], texCoord);
 }
 vec4
 getProjectiveTextureColor (in vec4 currentColor)

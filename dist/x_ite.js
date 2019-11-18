@@ -1,4 +1,4 @@
-/* X_ITE v4.6.8a-947 */
+/* X_ITE v4.6.8a-948 */
 
 (function () {
 
@@ -89862,10 +89862,6 @@ function (TextureProperties,
 		getMultiTexturing: function ()
 		{
 			return this .multiTexturing;
-		},
-		setMultiTexturing: function (value)
-		{
-			this .multiTexturing = value;
 		},
 		getProjectiveTextureMapping: function ()
 		{

@@ -179,10 +179,6 @@ case 1:
 return texture (x3d_Texture2D [1], texCoord);
 }
 #endif
-default:
-{
-return texture (x3d_Texture2D [x3d_MaxTextures - 1], texCoord);
-}
 }
 }
 vec4
@@ -202,10 +198,6 @@ case 1:
 return texture (x3d_Texture3D [1], texCoord);
 }
 #endif
-default:
-{
-return texture (x3d_Texture3D [x3d_MaxTextures - 1], texCoord);
-}
 }
 }
 vec4
@@ -225,10 +217,6 @@ case 1:
 return texture (x3d_CubeMapTexture [1], texCoord);
 }
 #endif
-default:
-{
-return texture (x3d_CubeMapTexture [x3d_MaxTextures - 1], texCoord);
-}
 }
 }
 vec4
@@ -513,14 +501,18 @@ getProjectiveTexture (const in int i, const in vec2 texCoord)
 {
 switch (i)
 {
+#if x3d_MaxTextures > 0
 case 0:
 {
 return texture (x3d_ProjectiveTexture [0], texCoord);
 }
-default:
+#endif
+#if x3d_MaxTextures > 1
+case 1:
 {
 return texture (x3d_ProjectiveTexture [1], texCoord);
 }
+#endif
 }
 }
 vec4
