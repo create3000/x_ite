@@ -114,8 +114,6 @@ getTexture2D (const in int i, const in vec2 texCoord)
 	if (i == 1)
 		return texture2D (x3d_Texture2D [1], texCoord);
 	#endif
-
-	return texture2D (x3d_Texture2D [x3d_MaxTextures - 1], texCoord);
 }
 
 vec4
@@ -130,8 +128,6 @@ getTextureCube (const in int i, const in vec3 texCoord)
 	if (i == 1)
 		return textureCube (x3d_CubeMapTexture [1], texCoord);
 	#endif
-
-	return textureCube (x3d_CubeMapTexture [x3d_MaxTextures - 1], texCoord);
 }
 
 vec4
@@ -384,8 +380,6 @@ getProjectiveTexture (const in int i, const in vec2 texCoord)
 	if (i == 1)
 		return texture2D (x3d_ProjectiveTexture [1], texCoord);
 	#endif
-
-	return texture2D (x3d_ProjectiveTexture [x3d_MaxTextures - 1], texCoord);
 }
 
 vec4

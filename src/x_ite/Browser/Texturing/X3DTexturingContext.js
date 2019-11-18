@@ -240,10 +240,6 @@ function (TextureProperties,
 		{
 			return this .multiTexturing;
 		},
-		setMultiTexturing: function (value)
-		{
-			this .multiTexturing = value;
-		},
 		getProjectiveTextureMapping: function ()
 		{
 			return this .projectiveTextureMapping;
