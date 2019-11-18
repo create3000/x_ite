@@ -64,6 +64,8 @@ function (TextureProperties,
 			gl                    = this .getContext (),
 			maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS);
 
+		this .maxTextures              = maxVertexTextureUnits > 8 ? 2 : 1;
+		this .multiTexturing           = maxVertexTextureUnits > 8;
 		this .projectiveTextureMapping = maxVertexTextureUnits > 8;
 		this .combinedTextureUnits     = [ ];
 	}
@@ -184,7 +186,7 @@ function (TextureProperties,
 		},
 		getMaxTextures: function ()
 		{
-			return 2;
+			return this .maxTextures;
 		},
 		getMinTextureSize: function ()
 		{
@@ -233,6 +235,14 @@ function (TextureProperties,
 		getTextureMemory: function ()
 		{
 			return this .textureMemory;
+		},
+		getMultiTexturing: function ()
+		{
+			return this .multiTexturing;
+		},
+		setMultiTexturing: function (value)
+		{
+			this .multiTexturing = value;
 		},
 		getProjectiveTextureMapping: function ()
 		{

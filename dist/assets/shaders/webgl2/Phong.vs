@@ -13,18 +13,26 @@ uniform mat4 x3d_ModelViewMatrix;
 uniform bool x3d_Lighting; 
 in float x3d_FogDepth;
 in vec4 x3d_Color;
-in vec4 x3d_TexCoord0;
-in vec4 x3d_TexCoord1;
 in vec3 x3d_Normal;
 in vec4 x3d_Vertex;
+#if x3d_MaxTextures > 0
+in vec4 x3d_TexCoord0;
+#endif
+#if x3d_MaxTextures > 1
+in vec4 x3d_TexCoord1;
+#endif
 out float fogDepth; 
 out vec4 color; 
-out vec4 texCoord0; 
-out vec4 texCoord1; 
 out vec3 normal; 
 out vec3 vertex; 
 out vec3 localNormal; 
 out vec3 localVertex; 
+#if x3d_MaxTextures > 0
+out vec4 texCoord0; 
+#endif
+#if x3d_MaxTextures > 1
+out vec4 texCoord1; 
+#endif
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 out float depth;
 #endif

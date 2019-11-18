@@ -185,9 +185,11 @@ function (Fields,
 				}
 				else
 				{
-					var gl = this .getBrowser () .getContext ();
+					var
+						gl     = this .getBrowser () .getContext (),
+						source = Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .shadow);
 
-					gl .shaderSource (this .shader, Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .shadow));
+					gl .shaderSource (this .shader, source);
 					gl .compileShader (this .shader);
 
 					this .valid = gl .getShaderParameter (this .shader, gl .COMPILE_STATUS);

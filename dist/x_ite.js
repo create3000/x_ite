@@ -1,4 +1,4 @@
-/* X_ITE v4.6.8a-945 */
+/* X_ITE v4.6.8a-946 */
 
 (function () {
 
@@ -52997,9 +52997,11 @@ function (Fields,
 				}
 				else
 				{
-					var gl = this .getBrowser () .getContext ();
+					var
+						gl     = this .getBrowser () .getContext (),
+						source = Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .shadow);
 
-					gl .shaderSource (this .shader, Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .shadow));
+					gl .shaderSource (this .shader, source);
 					gl .compileShader (this .shader);
 
 					this .valid = gl .getShaderParameter (this .shader, gl .COMPILE_STATUS);
@@ -59181,8 +59183,7 @@ function (Shading,
 
 	function X3DShadersContext ()
 	{
-		this .multiTexturing = true;
-		this .shaders        = new Set ();
+		this .shaders = new Set ();
 	}
 
 	X3DShadersContext .prototype =
@@ -59206,10 +59207,6 @@ function (Shading,
 		getMaxVertexAttribs: function ()
 		{
 			return this .getContext () .getParameter (this .getContext () .MAX_VERTEX_ATTRIBS);
-		},
-		getMultiTexturing: function ()
-		{
-			return this .multiTexturing;
 		},
 		addShader: function (shader)
 		{
@@ -59384,24 +59381,7 @@ function (Shading,
 			if (valid .getValue () && ShaderTest .verify (this, this .gouraudShader))
 				return;
 
-			console .warn ("X_ITE: Disabling multi-texturing, as it might not work.");
-
-			this .gouraudShader .isValid_ .addInterest ("set_fallback_shader_valid__", this);
-
-			this .multiTexturing = false;
-
-			// Recompile shader.
-			this .gouraudShader .parts_ [0] .getValue () .url_ .addEvent ();
-			this .gouraudShader .parts_ [1] .getValue () .url_ .addEvent ();
-		},
-		set_fallback_shader_valid__: function (valid)
-		{
-			this .gouraudShader .isValid_ .removeInterest ("set_fallback_shader_valid__", this);
-
-			if (valid .getValue () && ShaderTest .verify (this, this .gouraudShader))
-				return;
-
-			console .warn ("X_ITE: All else fails, using fallback shader.");
+			console .warn ("X_ITE: All else fails, using fallback VRML shader.");
 
 			// Recompile shader.
 			this .gouraudShader .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/Fallback.vs") ];
@@ -73365,7 +73345,7 @@ function (TextureBuffer)
 			this .maxLights = 8;
 		else if (maxVertexTextureUnits > 8)
 			this .maxLights = 4;
-		else if (maxVertexTextureUnits > 4)
+		else
 			this .maxLights = 2;
 
 		this .shadowBuffers = [ ]; // Shadow buffer cache
@@ -89707,6 +89687,8 @@ function (TextureProperties,
 			gl                    = this .getContext (),
 			maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS);
 
+		this .maxTextures              = maxVertexTextureUnits > 8 ? 2 : 1;
+		this .multiTexturing           = maxVertexTextureUnits > 8;
 		this .projectiveTextureMapping = maxVertexTextureUnits > 8;
 		this .combinedTextureUnits     = [ ];
 	}
@@ -89827,7 +89809,7 @@ function (TextureProperties,
 		},
 		getMaxTextures: function ()
 		{
-			return 2;
+			return this .maxTextures;
 		},
 		getMinTextureSize: function ()
 		{
@@ -89876,6 +89858,14 @@ function (TextureProperties,
 		getTextureMemory: function ()
 		{
 			return this .textureMemory;
+		},
+		getMultiTexturing: function ()
+		{
+			return this .multiTexturing;
+		},
+		setMultiTexturing: function (value)
+		{
+			this .multiTexturing = value;
 		},
 		getProjectiveTextureMapping: function ()
 		{

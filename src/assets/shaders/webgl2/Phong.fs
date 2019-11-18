@@ -20,12 +20,18 @@ uniform x3d_MaterialParameters x3d_BackMaterial;
 
 in float fogDepth;    // fog depth
 in vec4  color;       // color
-in vec4  texCoord0;   // texCoord0
-in vec4  texCoord1;   // texCoord1
 in vec3  normal;      // normal vector at this point on geometry
 in vec3  vertex;      // point on geometry
 in vec3  localNormal; // normal vector at this point on geometry in local coordinates
 in vec3  localVertex; // point on geometry in local coordinates
+
+#if x3d_MaxTextures > 0
+in vec4 texCoord0;
+#endif
+
+#if x3d_MaxTextures > 1
+in vec4 texCoord1;
+#endif
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 uniform float x3d_LogarithmicFarFactor1_2;

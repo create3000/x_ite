@@ -14,12 +14,18 @@ uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwis
 varying float fogDepth;    // fog depth
 varying vec4  frontColor;  // color
 varying vec4  backColor;   // color
-varying vec4  texCoord0;   // texCoord0
-varying vec4  texCoord1;   // texCoord1
 varying vec3  normal;      // normal vector at this point on geometry
 varying vec3  vertex;      // point on geometry
 varying vec3  localNormal; // normal vector at this point on geometry in local coordinates
 varying vec3  localVertex; // point on geometry in local coordinates
+
+#if x3d_MaxTextures > 0
+varying vec4 texCoord0; // texCoord0
+#endif
+
+#if x3d_MaxTextures > 1
+varying vec4 texCoord1; // texCoord1
+#endif
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 uniform float x3d_LogarithmicFarFactor1_2;

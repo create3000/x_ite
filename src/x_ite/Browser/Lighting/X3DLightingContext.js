@@ -64,7 +64,7 @@ function (TextureBuffer)
 			this .maxLights = 8;
 		else if (maxVertexTextureUnits > 8)
 			this .maxLights = 4;
-		else if (maxVertexTextureUnits > 4)
+		else
 			this .maxLights = 2;
 
 		this .shadowBuffers = [ ]; // Shadow buffer cache

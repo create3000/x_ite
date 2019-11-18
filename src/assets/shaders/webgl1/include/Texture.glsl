@@ -1,12 +1,12 @@
 
-#pragma X3D include "Perlin.glsl"
-
 uniform int         x3d_NumTextures;
 uniform int         x3d_TextureType [x3d_MaxTextures]; // x3d_None, x3d_TextureType2D or x3d_TextureTypeCubeMapTexture
 uniform sampler2D   x3d_Texture2D [x3d_MaxTextures];
 uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
 
 #ifdef X3D_MULTI_TEXTURING
+
+#pragma X3D include "Perlin.glsl"
 
 #ifdef X3D_PROJECTIVE_TEXTURE_MAPPING
 uniform int       x3d_NumProjectiveTextures;
@@ -19,19 +19,19 @@ uniform vec4 x3d_MultiTextureColor;
 uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];
 
 uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];
+
 vec4
 getTexCoord (const in int i)
 {
+	#if x3d_MaxTextures > 0
 	if (i == 0)
-	{
 		return texCoord0;
-	}
-	else if (i == 1)
-	{
-		return texCoord1;
-	}
+	#endif
 
-	return texCoord1;
+	#if x3d_MaxTextures > 1
+	if (i == 1)
+		return texCoord1;
+	#endif
 }
 
 vec4
@@ -105,19 +105,33 @@ getTextureCoordinate (const in x3d_TextureCoordinateGeneratorParameters textureC
 vec4
 getTexture2D (const in int i, const in vec2 texCoord)
 {
+	#if x3d_MaxTextures > 0
 	if (i == 0)
 		return texture2D (x3d_Texture2D [0], texCoord);
+	#endif
 
-	return texture2D (x3d_Texture2D [1], texCoord);
+	#if x3d_MaxTextures > 1
+	if (i == 1)
+		return texture2D (x3d_Texture2D [1], texCoord);
+	#endif
+
+	return texture2D (x3d_Texture2D [x3d_MaxTextures - 1], texCoord);
 }
 
 vec4
 getTextureCube (const in int i, const in vec3 texCoord)
 {
+	#if x3d_MaxTextures > 0
 	if (i == 0)
 		return textureCube (x3d_CubeMapTexture [0], texCoord);
+	#endif
 
-	return textureCube (x3d_CubeMapTexture [1], texCoord);
+	#if x3d_MaxTextures > 1
+	if (i == 1)
+		return textureCube (x3d_CubeMapTexture [1], texCoord);
+	#endif
+
+	return textureCube (x3d_CubeMapTexture [x3d_MaxTextures - 1], texCoord);
 }
 
 vec4
@@ -361,10 +375,17 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 vec4
 getProjectiveTexture (const in int i, const in vec2 texCoord)
 {
+	#if x3d_MaxTextures > 0
 	if (i == 0)
 		return texture2D (x3d_ProjectiveTexture [0], texCoord);
+	#endif
 
-	return texture2D (x3d_ProjectiveTexture [1], texCoord);
+	#if x3d_MaxTextures > 1
+	if (i == 1)
+		return texture2D (x3d_ProjectiveTexture [1], texCoord);
+	#endif
+
+	return texture2D (x3d_ProjectiveTexture [x3d_MaxTextures - 1], texCoord);
 }
 
 vec4

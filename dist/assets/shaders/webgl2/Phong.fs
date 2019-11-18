@@ -16,12 +16,16 @@ uniform x3d_MaterialParameters x3d_FrontMaterial;
 uniform x3d_MaterialParameters x3d_BackMaterial;
 in float fogDepth; 
 in vec4 color; 
-in vec4 texCoord0; 
-in vec4 texCoord1; 
 in vec3 normal; 
 in vec3 vertex; 
 in vec3 localNormal; 
 in vec3 localVertex; 
+#if x3d_MaxTextures > 0
+in vec4 texCoord0;
+#endif
+#if x3d_MaxTextures > 1
+in vec4 texCoord1;
+#endif
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 uniform float x3d_LogarithmicFarFactor1_2;
 in float depth;
@@ -291,6 +295,17 @@ return light .shadowIntensity * value;
 return 0.0;
 }
 #endif
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp sampler3D;
+#else
+precision mediump sampler3D;
+#endif
+uniform int x3d_NumTextures;
+uniform int x3d_TextureType [x3d_MaxTextures]; 
+uniform sampler2D x3d_Texture2D [x3d_MaxTextures];
+uniform sampler3D x3d_Texture3D [x3d_MaxTextures];
+uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
+#ifdef X3D_MULTI_TEXTURING
 #define M_PI 3.14159265358979323846
 float rand (vec2 co) { return fract (sin (dot (co.xy, vec2 (12.9898,78.233))) * 43758.5453); }
 float rand (vec2 co, float l) { return rand (vec2 (rand (co), l)); }
@@ -320,17 +335,6 @@ return vec3 (perlin (p.xy, 1.0, 0.0),
 perlin (p.yz, 1.0, 0.0),
 perlin (p.zx, 1.0, 0.0));
 }
-#ifdef GL_FRAGMENT_PRECISION_HIGH
-precision highp sampler3D;
-#else
-precision mediump sampler3D;
-#endif
-uniform int x3d_NumTextures;
-uniform int x3d_TextureType [x3d_MaxTextures]; 
-uniform sampler2D x3d_Texture2D [x3d_MaxTextures];
-uniform sampler3D x3d_Texture3D [x3d_MaxTextures];
-uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
-#ifdef X3D_MULTI_TEXTURING
 #ifdef X3D_PROJECTIVE_TEXTURE_MAPPING
 uniform int x3d_NumProjectiveTextures;
 uniform sampler2D x3d_ProjectiveTexture [x3d_MaxTextures];
@@ -345,14 +349,18 @@ getTexCoord (const in int i)
 {
 switch (i)
 {
+#if x3d_MaxTextures > 0
 case 0:
 {
 return texCoord0;
 }
-default:
+#endif
+#if x3d_MaxTextures > 1
+case 1:
 {
 return texCoord1;
 }
+#endif
 }
 }
 vec4
@@ -427,13 +435,21 @@ getTexture2D (const in int i, const in vec2 texCoord)
 {
 switch (i)
 {
+#if x3d_MaxTextures > 0
 case 0:
 {
 return texture (x3d_Texture2D [0], texCoord);
 }
-default:
+#endif
+#if x3d_MaxTextures > 1
+case 1:
 {
 return texture (x3d_Texture2D [1], texCoord);
+}
+#endif
+default:
+{
+return texture (x3d_Texture2D [x3d_MaxTextures - 1], texCoord);
 }
 }
 }
@@ -442,13 +458,21 @@ getTexture3D (const in int i, const in vec3 texCoord)
 {
 switch (i)
 {
+#if x3d_MaxTextures > 0
 case 0:
 {
 return texture (x3d_Texture3D [0], texCoord);
 }
-default:
+#endif
+#if x3d_MaxTextures > 1
+case 1:
 {
 return texture (x3d_Texture3D [1], texCoord);
+}
+#endif
+default:
+{
+return texture (x3d_Texture3D [x3d_MaxTextures - 1], texCoord);
 }
 }
 }
@@ -457,13 +481,21 @@ getTextureCube (const in int i, const in vec3 texCoord)
 {
 switch (i)
 {
+#if x3d_MaxTextures > 0
 case 0:
 {
 return texture (x3d_CubeMapTexture [0], texCoord);
 }
-default:
+#endif
+#if x3d_MaxTextures > 1
+case 1:
 {
 return texture (x3d_CubeMapTexture [1], texCoord);
+}
+#endif
+default:
+{
+return texture (x3d_CubeMapTexture [x3d_MaxTextures - 1], texCoord);
 }
 }
 }

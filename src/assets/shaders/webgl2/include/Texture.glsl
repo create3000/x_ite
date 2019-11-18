@@ -1,6 +1,4 @@
 
-#pragma X3D include "Perlin.glsl"
-
 #ifdef GL_FRAGMENT_PRECISION_HIGH
 precision highp sampler3D;
 #else
@@ -14,6 +12,8 @@ uniform sampler3D   x3d_Texture3D [x3d_MaxTextures];
 uniform samplerCube x3d_CubeMapTexture [x3d_MaxTextures];
 
 #ifdef X3D_MULTI_TEXTURING
+
+#pragma X3D include "Perlin.glsl"
 
 #ifdef X3D_PROJECTIVE_TEXTURE_MAPPING
 uniform int       x3d_NumProjectiveTextures;
@@ -32,14 +32,18 @@ getTexCoord (const in int i)
 {
 	switch (i)
 	{
+		#if x3d_MaxTextures > 0
 		case 0:
 		{
 			return texCoord0;
 		}
-		default:
+		#endif
+		#if x3d_MaxTextures > 1
+		case 1:
 		{
 			return texCoord1;
 		}
+		#endif
 	}
 }
 
@@ -121,13 +125,21 @@ getTexture2D (const in int i, const in vec2 texCoord)
 {
 	switch (i)
 	{
+		#if x3d_MaxTextures > 0
 		case 0:
 		{
 			return texture (x3d_Texture2D [0], texCoord);
 		}
-		default:
+		#endif
+		#if x3d_MaxTextures > 1
+		case 1:
 		{
 			return texture (x3d_Texture2D [1], texCoord);
+		}
+		#endif
+		default:
+		{
+			return texture (x3d_Texture2D [x3d_MaxTextures - 1], texCoord);
 		}
 	}
 }
@@ -137,13 +149,21 @@ getTexture3D (const in int i, const in vec3 texCoord)
 {
 	switch (i)
 	{
+		#if x3d_MaxTextures > 0
 		case 0:
 		{
 			return texture (x3d_Texture3D [0], texCoord);
 		}
-		default:
+		#endif
+		#if x3d_MaxTextures > 1
+		case 1:
 		{
 			return texture (x3d_Texture3D [1], texCoord);
+		}
+		#endif
+		default:
+		{
+			return texture (x3d_Texture3D [x3d_MaxTextures - 1], texCoord);
 		}
 	}
 }
@@ -153,13 +173,21 @@ getTextureCube (const in int i, const in vec3 texCoord)
 {
 	switch (i)
 	{
+		#if x3d_MaxTextures > 0
 		case 0:
 		{
 			return texture (x3d_CubeMapTexture [0], texCoord);
 		}
-		default:
+		#endif
+		#if x3d_MaxTextures > 1
+		case 1:
 		{
 			return texture (x3d_CubeMapTexture [1], texCoord);
+		}
+		#endif
+		default:
+		{
+			return texture (x3d_CubeMapTexture [x3d_MaxTextures - 1], texCoord);
 		}
 	}
 }

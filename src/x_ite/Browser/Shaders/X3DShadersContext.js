@@ -64,8 +64,7 @@ function (Shading,
 
 	function X3DShadersContext ()
 	{
-		this .multiTexturing = true;
-		this .shaders        = new Set ();
+		this .shaders = new Set ();
 	}
 
 	X3DShadersContext .prototype =
@@ -89,10 +88,6 @@ function (Shading,
 		getMaxVertexAttribs: function ()
 		{
 			return this .getContext () .getParameter (this .getContext () .MAX_VERTEX_ATTRIBS);
-		},
-		getMultiTexturing: function ()
-		{
-			return this .multiTexturing;
 		},
 		addShader: function (shader)
 		{
@@ -267,24 +262,7 @@ function (Shading,
 			if (valid .getValue () && ShaderTest .verify (this, this .gouraudShader))
 				return;
 
-			console .warn ("X_ITE: Disabling multi-texturing, as it might not work.");
-
-			this .gouraudShader .isValid_ .addInterest ("set_fallback_shader_valid__", this);
-
-			this .multiTexturing = false;
-
-			// Recompile shader.
-			this .gouraudShader .parts_ [0] .getValue () .url_ .addEvent ();
-			this .gouraudShader .parts_ [1] .getValue () .url_ .addEvent ();
-		},
-		set_fallback_shader_valid__: function (valid)
-		{
-			this .gouraudShader .isValid_ .removeInterest ("set_fallback_shader_valid__", this);
-
-			if (valid .getValue () && ShaderTest .verify (this, this .gouraudShader))
-				return;
-
-			console .warn ("X_ITE: All else fails, using fallback shader.");
+			console .warn ("X_ITE: All else fails, using fallback VRML shader.");
 
 			// Recompile shader.
 			this .gouraudShader .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/Fallback.vs") ];
