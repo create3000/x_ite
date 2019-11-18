@@ -95,11 +95,11 @@ function (Fields,
 		this .x3d_MultiTextureFunction                = [ ];
 		this .x3d_TextureCoordinateGeneratorMode      = [ ];
 		this .x3d_TextureCoordinateGeneratorParameter = [ ];
-		this .x3d_TexCoord                            = [ ];
-		this .x3d_TextureMatrix                       = [ ];
 		this .x3d_ProjectiveTexture                   = [ ];
 		this .x3d_ProjectiveTextureMatrix             = [ ];
 		this .x3d_ProjectiveTextureLocation           = [ ];
+		this .x3d_TexCoord                            = [ ];
+		this .x3d_TextureMatrix                       = [ ];
 
 		this .numClipPlanes               = 0;
 		this .fogNode                     = null;
@@ -239,12 +239,12 @@ function (Fields,
 				this .x3d_TextureCoordinateGeneratorMode [i]      = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].mode");
 				this .x3d_TextureCoordinateGeneratorParameter [i] = gl .getUniformLocation (program, "x3d_TextureCoordinateGenerator[" + i + "].parameter");
 
-				this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
-				this .x3d_TexCoord [i]      = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
-
 				this .x3d_ProjectiveTexture [i]         = gl .getUniformLocation (program, "x3d_ProjectiveTexture[" + i + "]");
 				this .x3d_ProjectiveTextureMatrix [i]   = gl .getUniformLocation (program, "x3d_ProjectiveTextureMatrix[" + i + "]");
 				this .x3d_ProjectiveTextureLocation [i] = gl .getUniformLocation (program, "x3d_ProjectiveTextureLocation[" + i + "]");
+
+				this .x3d_TextureMatrix [i] = gl .getUniformLocation (program, "x3d_TextureMatrix[" + i + "]");
+				this .x3d_TexCoord [i]      = this .getAttribLocation (gl, program, "x3d_TexCoord" + i, i ? "" : "x3d_TexCoord");
 			}
 
 			this .x3d_Viewport          = gl .getUniformLocation (program, "x3d_Viewport");
