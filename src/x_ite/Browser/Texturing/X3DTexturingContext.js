@@ -74,7 +74,7 @@ function (TextureProperties,
 	{
 		initialize: function ()
 		{
-			var gl = this .getBrowser () .getContext ();
+			var gl = this .getContext ();
 
 			this .maxTextureSize          = gl .getParameter (gl .MAX_TEXTURE_SIZE);
 			this .maxCombinedTextureUnits = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
