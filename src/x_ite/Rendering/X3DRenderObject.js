@@ -1054,9 +1054,15 @@ function ($,
 						globalObjects [i] .dispose ();
 				}
 
-				this .globalObjects     .length = 0;
-				this .lights            .length = 0;
-				this .textureProjectors .length = 0;
+				// Reset containers.
+
+				shaders .clear ();
+
+				this .globalObjects .length = 0;
+
+				lights                   .length = 0;
+				textureProjectors        .length = 0;
+				generatedCubeMapTextures .length = 0;
 			};
 		})(),
 	};
