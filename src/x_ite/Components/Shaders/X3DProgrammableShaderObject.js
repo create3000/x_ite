@@ -918,7 +918,7 @@ function (Fields,
 
 			return false;
 		},
-		setShaderObjects: function (gl, shaderObjects)
+		setLocalObjects: function (gl, localObjects)
 		{
 			// Clip planes and local lights
 
@@ -928,8 +928,8 @@ function (Fields,
 
 			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
 
-			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
-				shaderObjects [i] .setShaderUniforms (gl, this);
+			for (var i = 0, length = localObjects .length; i < length; ++ i)
+				localObjects [i] .setShaderUniforms (gl, this);
 
 			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
 			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
@@ -984,7 +984,7 @@ function (Fields,
 				textureTransformNode  = context .textureTransformNode,
 				textureCoordinateNode = context .textureCoordinateNode,
 				modelViewMatrix       = context .modelViewMatrix,
-				shaderObjects         = context .shaderObjects;
+				localObjects          = context .localObjects;
 
 			// Geometry type
 
@@ -998,8 +998,8 @@ function (Fields,
 
 			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
 
-			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
-				shaderObjects [i] .setShaderUniforms (gl, this);
+			for (var i = 0, length = localObjects .length; i < length; ++ i)
+				localObjects [i] .setShaderUniforms (gl, this);
 
 			gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
 			gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));

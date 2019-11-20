@@ -95,7 +95,7 @@ function (TextureBuffer,
 				frameBuffer .bind ();
 
 				shaderNode .enable (gl);
-				shaderNode .setShaderObjects (gl, [ ]);
+				shaderNode .setLocalObjects (gl, [ ]);
 
 				gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
 				gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .STATIC_DRAW);

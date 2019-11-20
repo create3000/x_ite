@@ -160,7 +160,7 @@ function (X3DBindableNode,
 		this .projectionMatrixArray = new Float32Array (16);
 		this .modelMatrix           = new Matrix4 ();
 		this .modelViewMatrixArray  = new Float32Array (16);
-		this .shaderObjects         = [ ];
+		this .localObjects          = [ ];
 		this .colors                = [ ];
 		this .sphere                = [ ];
 		this .textures              = 0;
@@ -501,8 +501,8 @@ function (X3DBindableNode,
 				case TraverseType .DISPLAY:
 				{
 					var
-						sourceObjects = renderObject .getShaderObjects (),
-						destObjects   = this .shaderObjects;
+						sourceObjects = renderObject .getLocalObjects (),
+						destObjects   = this .localObjects;
 
 					for (var i = 0, length = sourceObjects .length; i < length; ++ i)
 						destObjects [i] = sourceObjects [i];
@@ -585,7 +585,7 @@ function (X3DBindableNode,
 
 				// Clip planes
 
-				shaderNode .setShaderObjects (gl, this .shaderObjects);
+				shaderNode .setLocalObjects (gl, this .localObjects);
 
 				// Enable vertex attribute arrays.
 
@@ -631,7 +631,7 @@ function (X3DBindableNode,
 
 					// Clip planes
 
-					shaderNode .setShaderObjects (gl, this .shaderObjects);
+					shaderNode .setLocalObjects (gl, this .localObjects);
 
 					// Enable vertex attribute arrays.
 

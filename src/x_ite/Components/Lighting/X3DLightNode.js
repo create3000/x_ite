@@ -146,8 +146,8 @@ function (X3DChildNode,
 						                     group,
 						                     renderObject .getModelViewMatrix () .get ());
 
-						renderObject .getShaderObjects () .push (lightContainer);
-						renderObject .getLights ()        .push (lightContainer);
+						renderObject .getLocalObjects () .push (lightContainer);
+						renderObject .getLights ()       .push (lightContainer);
 					}
 				}
 				else
@@ -165,8 +165,8 @@ function (X3DChildNode,
 					{
 						lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
 
-						renderObject .getShaderObjects () .push (lightContainer);
-						renderObject .getLights ()        .push (lightContainer);
+						renderObject .getLocalObjects () .push (lightContainer);
+						renderObject .getLights ()       .push (lightContainer);
 					}
 				}
 
@@ -181,9 +181,9 @@ function (X3DChildNode,
 				   return;
 
 				if (renderObject .isIndependent ())
-					renderObject .getBrowser () .getShaderObjects () .push (renderObject .getShaderObjects () .pop ());
+					renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
 				else
-					renderObject .getShaderObjects () .pop ();
+					renderObject .getLocalObjects () .pop ();
 
 				renderObject .popShadow ();
 			}

@@ -170,13 +170,13 @@ function (Fields,
 
 				clipPlaneContainer .set (this, renderObject .getModelViewMatrix () .get ());
 
-				renderObject .getShaderObjects () .push (clipPlaneContainer);
+				renderObject .getLocalObjects () .push (clipPlaneContainer);
 			}
 		},
 		pop: function (renderObject)
 		{
 			if (this .enabled)
-				renderObject .getBrowser () .getShaderObjects () .push (renderObject .getShaderObjects () .pop ());
+				renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
 		},
 	});
 

@@ -202,7 +202,7 @@ function (X3DChildNode,
 				}
 				else
 				{
-					renderObject .getShaderObjects ()     .push (textureProjectorContainer);
+					renderObject .getLocalObjects ()      .push (textureProjectorContainer);
 					renderObject .getTextureProjectors () .push (textureProjectorContainer);
 				}
 			}
@@ -221,7 +221,7 @@ function (X3DChildNode,
 				{
 					textureProjectorContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
 
-					renderObject .getShaderObjects ()     .push (textureProjectorContainer);
+					renderObject .getLocalObjects ()      .push (textureProjectorContainer);
 					renderObject .getTextureProjectors () .push (textureProjectorContainer);
 				}
 			}
@@ -233,9 +233,9 @@ function (X3DChildNode,
 				return;
 
 			if (renderObject .isIndependent ())
-				renderObject .getBrowser () .getShaderObjects () .push (renderObject .getShaderObjects () .pop ());
+				renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
 			else
-				renderObject .getShaderObjects () .pop ();
+				renderObject .getLocalObjects () .pop ();
 		},
 	});
 

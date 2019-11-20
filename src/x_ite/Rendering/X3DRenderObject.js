@@ -92,7 +92,7 @@ function ($,
 		this .modelViewMatrix          = new MatrixStack (Matrix4);
 		this .viewVolumes              = [ ];
 		this .globalObjects            = [ ];
-		this .shaderObjects            = [ ];
+		this .localObjects             = [ ];
 		this .lights                   = [ ];
 		this .shadow                   = [ false ];
 		this .localFogs                = [ ];
@@ -162,9 +162,9 @@ function ($,
 		{
 			return this .globalObjects;
 		},
-		getShaderObjects: function ()
+		getLocalObjects: function ()
 		{
-			return this .shaderObjects;
+			return this .localObjects;
 		},
 		getLights: function ()
 		{
@@ -486,7 +486,7 @@ function ($,
 					// Clip planes
 
 					var
-						sourceClipPlanes      = this .shaderObjects,
+						sourceClipPlanes      = this .localObjects,
 						destinationClipPlanes = context .clipPlanes;
 
 					for (var i = 0, length = sourceClipPlanes .length; i < length; ++ i)
@@ -533,7 +533,7 @@ function ($,
 					// Clip planes
 
 					var
-						sourceClipPlanes      = this .shaderObjects,
+						sourceClipPlanes      = this .localObjects,
 						destinationClipPlanes = context .clipPlanes;
 
 					for (var i = 0, length = sourceClipPlanes .length; i < length; ++ i)
@@ -599,8 +599,8 @@ function ($,
 					// Clip planes and local lights
 
 					var
-						sourceShaderObjects      = this .shaderObjects,
-						destinationShaderObjects = context .shaderObjects;
+						sourceShaderObjects      = this .localObjects,
+						destinationShaderObjects = context .localObjects;
 
 					for (var i = 0, length = sourceShaderObjects .length; i < length; ++ i)
 						destinationShaderObjects [i] = sourceShaderObjects [i];
@@ -624,7 +624,7 @@ function ($,
 				colorMaterial: false,
 				modelViewMatrix: new Float32Array (16),
 				scissor: new Vector4 (0, 0, 0, 0),
-				shaderObjects: [ ],
+				localObjects: [ ],
 				linePropertiesNode: null,
 				materialNode: null,
 				textureNode: null,
@@ -883,7 +883,7 @@ function ($,
 
 						// Clip planes
 
-						shaderNode .setShaderObjects (gl, context .clipPlanes);
+						shaderNode .setLocalObjects (gl, context .clipPlanes);
 
 						// modelViewMatrix
 
@@ -1039,12 +1039,12 @@ function ($,
 				{
 					// Recycle clip planes, local fogs, local lights, and local projective textures.
 
-					var shaderObjects = browser .getShaderObjects ();
+					var localObjects = browser .getLocalObjects ();
 
-					for (var i = 0, length = shaderObjects .length; i < length; ++ i)
-						shaderObjects [i] .dispose ();
+					for (var i = 0, length = localObjects .length; i < length; ++ i)
+						localObjects [i] .dispose ();
 
-					shaderObjects .length = 0;
+					localObjects .length = 0;
 
 					// Recycle global lights and global projective textures.
 
