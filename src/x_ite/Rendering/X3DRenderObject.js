@@ -1030,11 +1030,6 @@ function ($,
 
 				gl .activeTexture (gl .TEXTURE0);
 
-				// Reset GeneratedCubeMapTextures.
-
-				generatedCubeMapTextures .length = 0;
-				shaders .clear ();
-
 				if (this .isIndependent ())
 				{
 					// Recycle clip planes, local fogs, local lights, and local projective textures.
