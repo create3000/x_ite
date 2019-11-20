@@ -192,8 +192,8 @@ function (X3DChildNode,
 				var textureProjectorContainer = this .getTextureProjectors () .pop ();
 
 				textureProjectorContainer .set (renderObject .getBrowser (),
-															this,
-															renderObject .getModelViewMatrix () .get ());
+				                                this,
+				                                renderObject .getModelViewMatrix () .get ());
 
 				if (this .global_ .getValue ())
 				{
