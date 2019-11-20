@@ -988,7 +988,7 @@ function ($,
 
 				var opaqueShapes = this .opaqueShapes;
 
-				for (var i = 0; i < this .numOpaqueShapes; ++ i)
+				for (var i = 0, length = this .numOpaqueShapes; i < length; ++ i)
 				{
 					var
 						context = opaqueShapes [i],
@@ -1011,7 +1011,7 @@ function ($,
 
 				this .transparencySorter .sort (0, this .numTransparentShapes);
 
-				for (var i = 0; i < this .numTransparentShapes; ++ i)
+				for (var i = 0, length = this .numTransparentShapes; i < length; ++ i)
 				{
 					var
 						context = transparentShapes [i],
