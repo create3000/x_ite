@@ -986,10 +986,12 @@ function ($,
 				gl .depthMask (true);
 				gl .disable (gl .BLEND);
 
+				var opaqueShapes = this .opaqueShapes;
+
 				for (var i = 0; i < this .numOpaqueShapes; ++ i)
 				{
 					var
-						context = this .opaqueShapes [i],
+						context = opaqueShapes [i],
 						scissor = context .scissor;
 
 					gl .scissor (scissor .x,
@@ -1005,12 +1007,14 @@ function ($,
 				gl .depthMask (false);
 				gl .enable (gl .BLEND);
 
+				var transparentShapes = this .transparentShapes;
+
 				this .transparencySorter .sort (0, this .numTransparentShapes);
 
 				for (var i = 0; i < this .numTransparentShapes; ++ i)
 				{
 					var
-						context = this .transparentShapes [i],
+						context = transparentShapes [i],
 						scissor = context .scissor;
 
 					gl .scissor (scissor .x,
