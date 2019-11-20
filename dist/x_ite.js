@@ -1,4 +1,4 @@
-/* X_ITE v4.6.8-952 */
+/* X_ITE v4.6.8-953 */
 
 (function () {
 
@@ -44927,17 +44927,20 @@ function (Fields,
 		{
 			// Clip planes and local lights
 
-			this .numClipPlanes      = 0;
-			this .numLights          = 0;
-			this .lightNodes .length = 0;
+			this .numClipPlanes                  = 0;
+			this .numLights                      = 0;
+			this .lightNodes .length             = 0;
+			this .numProjectiveTextures          = 0;
+			this .projectiveTextureNodes .length = 0;
 
 			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
 
 			for (var i = 0, length = localObjects .length; i < length; ++ i)
 				localObjects [i] .setShaderUniforms (gl, this);
 
-			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
-			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
+			gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
+			gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
+			gl .uniform1i (this .x3d_NumProjectiveTextures, Math .min (this .numProjectiveTextures, this .x3d_MaxTextures));
 		},
 		setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
