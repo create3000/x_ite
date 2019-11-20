@@ -1,4 +1,4 @@
-/* X_ITE v4.6.8-951 */
+/* X_ITE v4.6.8-952 */
 
 (function () {
 
@@ -44923,7 +44923,7 @@ function (Fields,
 
 			return false;
 		},
-		setShaderObjects: function (gl, shaderObjects)
+		setLocalObjects: function (gl, localObjects)
 		{
 			// Clip planes and local lights
 
@@ -44933,8 +44933,8 @@ function (Fields,
 
 			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
 
-			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
-				shaderObjects [i] .setShaderUniforms (gl, this);
+			for (var i = 0, length = localObjects .length; i < length; ++ i)
+				localObjects [i] .setShaderUniforms (gl, this);
 
 			gl .uniform1i (this .x3d_NumClipPlanes, Math .min (this .numClipPlanes, this .x3d_MaxClipPlanes));
 			gl .uniform1i (this .x3d_NumLights,     Math .min (this .numLights,     this .x3d_MaxLights));
@@ -44989,7 +44989,7 @@ function (Fields,
 				textureTransformNode  = context .textureTransformNode,
 				textureCoordinateNode = context .textureCoordinateNode,
 				modelViewMatrix       = context .modelViewMatrix,
-				shaderObjects         = context .shaderObjects;
+				localObjects          = context .localObjects;
 
 			// Geometry type
 
@@ -45003,8 +45003,8 @@ function (Fields,
 
 			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
 
-			for (var i = 0, length = shaderObjects .length; i < length; ++ i)
-				shaderObjects [i] .setShaderUniforms (gl, this);
+			for (var i = 0, length = localObjects .length; i < length; ++ i)
+				localObjects [i] .setShaderUniforms (gl, this);
 
 			gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
 			gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
@@ -59055,7 +59055,7 @@ function (TextureBuffer,
 				frameBuffer .bind ();
 
 				shaderNode .enable (gl);
-				shaderNode .setShaderObjects (gl, [ ]);
+				shaderNode .setLocalObjects (gl, [ ]);
 
 				gl .bindBuffer (gl .ARRAY_BUFFER, vertexBuffer);
 				gl .bufferData (gl .ARRAY_BUFFER, new Float32Array (vertices), gl .STATIC_DRAW);
@@ -59830,7 +59830,7 @@ function ($,
 	{
 		this .addChildObjects ("viewport", new Fields .MFInt32 (0, 0, 300, 150));
 
-		this .shaderObjects = [ ]; // shader objects dumpster
+		this .localObjects = [ ]; // shader objects dumpster
 	}
 
 	X3DRenderingContext .prototype =
@@ -59911,9 +59911,9 @@ function ($,
 		{
 			return this .viewport_;
 		},
-		getShaderObjects: function ()
+		getLocalObjects: function ()
 		{
-			return this .shaderObjects;
+			return this .localObjects;
 		},
 		reshape: function ()
 		{
@@ -71204,8 +71204,8 @@ function (X3DChildNode,
 						                     group,
 						                     renderObject .getModelViewMatrix () .get ());
 
-						renderObject .getShaderObjects () .push (lightContainer);
-						renderObject .getLights ()        .push (lightContainer);
+						renderObject .getLocalObjects () .push (lightContainer);
+						renderObject .getLights ()       .push (lightContainer);
 					}
 				}
 				else
@@ -71223,8 +71223,8 @@ function (X3DChildNode,
 					{
 						lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
 
-						renderObject .getShaderObjects () .push (lightContainer);
-						renderObject .getLights ()        .push (lightContainer);
+						renderObject .getLocalObjects () .push (lightContainer);
+						renderObject .getLights ()       .push (lightContainer);
 					}
 				}
 
@@ -71239,9 +71239,9 @@ function (X3DChildNode,
 				   return;
 
 				if (renderObject .isIndependent ())
-					renderObject .getBrowser () .getShaderObjects () .push (renderObject .getShaderObjects () .pop ());
+					renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
 				else
-					renderObject .getShaderObjects () .pop ();
+					renderObject .getLocalObjects () .pop ();
 
 				renderObject .popShadow ();
 			}
@@ -90102,7 +90102,7 @@ function ($,
 		this .modelViewMatrix          = new MatrixStack (Matrix4);
 		this .viewVolumes              = [ ];
 		this .globalObjects            = [ ];
-		this .shaderObjects            = [ ];
+		this .localObjects             = [ ];
 		this .lights                   = [ ];
 		this .shadow                   = [ false ];
 		this .localFogs                = [ ];
@@ -90172,9 +90172,9 @@ function ($,
 		{
 			return this .globalObjects;
 		},
-		getShaderObjects: function ()
+		getLocalObjects: function ()
 		{
-			return this .shaderObjects;
+			return this .localObjects;
 		},
 		getLights: function ()
 		{
@@ -90496,7 +90496,7 @@ function ($,
 					// Clip planes
 
 					var
-						sourceClipPlanes      = this .shaderObjects,
+						sourceClipPlanes      = this .localObjects,
 						destinationClipPlanes = context .clipPlanes;
 
 					for (var i = 0, length = sourceClipPlanes .length; i < length; ++ i)
@@ -90543,7 +90543,7 @@ function ($,
 					// Clip planes
 
 					var
-						sourceClipPlanes      = this .shaderObjects,
+						sourceClipPlanes      = this .localObjects,
 						destinationClipPlanes = context .clipPlanes;
 
 					for (var i = 0, length = sourceClipPlanes .length; i < length; ++ i)
@@ -90609,8 +90609,8 @@ function ($,
 					// Clip planes and local lights
 
 					var
-						sourceShaderObjects      = this .shaderObjects,
-						destinationShaderObjects = context .shaderObjects;
+						sourceShaderObjects      = this .localObjects,
+						destinationShaderObjects = context .localObjects;
 
 					for (var i = 0, length = sourceShaderObjects .length; i < length; ++ i)
 						destinationShaderObjects [i] = sourceShaderObjects [i];
@@ -90634,7 +90634,7 @@ function ($,
 				colorMaterial: false,
 				modelViewMatrix: new Float32Array (16),
 				scissor: new Vector4 (0, 0, 0, 0),
-				shaderObjects: [ ],
+				localObjects: [ ],
 				linePropertiesNode: null,
 				materialNode: null,
 				textureNode: null,
@@ -90893,7 +90893,7 @@ function ($,
 
 						// Clip planes
 
-						shaderNode .setShaderObjects (gl, context .clipPlanes);
+						shaderNode .setLocalObjects (gl, context .clipPlanes);
 
 						// modelViewMatrix
 
@@ -91040,21 +91040,16 @@ function ($,
 
 				gl .activeTexture (gl .TEXTURE0);
 
-				// Reset GeneratedCubeMapTextures.
-
-				generatedCubeMapTextures .length = 0;
-				shaders .clear ();
-
 				if (this .isIndependent ())
 				{
 					// Recycle clip planes, local fogs, local lights, and local projective textures.
 
-					var shaderObjects = browser .getShaderObjects ();
+					var localObjects = browser .getLocalObjects ();
 
-					for (var i = 0, length = shaderObjects .length; i < length; ++ i)
-						shaderObjects [i] .dispose ();
+					for (var i = 0, length = localObjects .length; i < length; ++ i)
+						localObjects [i] .dispose ();
 
-					shaderObjects .length = 0;
+					localObjects .length = 0;
 
 					// Recycle global lights and global projective textures.
 
@@ -91064,9 +91059,15 @@ function ($,
 						globalObjects [i] .dispose ();
 				}
 
-				this .globalObjects     .length = 0;
-				this .lights            .length = 0;
-				this .textureProjectors .length = 0;
+				// Reset containers.
+
+				shaders .clear ();
+
+				this .globalObjects .length = 0;
+
+				lights                   .length = 0;
+				textureProjectors        .length = 0;
+				generatedCubeMapTextures .length = 0;
 			};
 		})(),
 	};
@@ -92275,7 +92276,7 @@ function (X3DBindableNode,
 		this .projectionMatrixArray = new Float32Array (16);
 		this .modelMatrix           = new Matrix4 ();
 		this .modelViewMatrixArray  = new Float32Array (16);
-		this .shaderObjects         = [ ];
+		this .localObjects          = [ ];
 		this .colors                = [ ];
 		this .sphere                = [ ];
 		this .textures              = 0;
@@ -92616,8 +92617,8 @@ function (X3DBindableNode,
 				case TraverseType .DISPLAY:
 				{
 					var
-						sourceObjects = renderObject .getShaderObjects (),
-						destObjects   = this .shaderObjects;
+						sourceObjects = renderObject .getLocalObjects (),
+						destObjects   = this .localObjects;
 
 					for (var i = 0, length = sourceObjects .length; i < length; ++ i)
 						destObjects [i] = sourceObjects [i];
@@ -92700,7 +92701,7 @@ function (X3DBindableNode,
 
 				// Clip planes
 
-				shaderNode .setShaderObjects (gl, this .shaderObjects);
+				shaderNode .setLocalObjects (gl, this .localObjects);
 
 				// Enable vertex attribute arrays.
 
@@ -92746,7 +92747,7 @@ function (X3DBindableNode,
 
 					// Clip planes
 
-					shaderNode .setShaderObjects (gl, this .shaderObjects);
+					shaderNode .setLocalObjects (gl, this .localObjects);
 
 					// Enable vertex attribute arrays.
 
@@ -95611,7 +95612,7 @@ function (Fields,
 		pop: function (renderObject)
 		{
 			if (this .enabled_ .getValue ())
-				renderObject .getBrowser () .getShaderObjects () .push (renderObject .popLocalFog ());
+				renderObject .getBrowser () .getLocalObjects () .push (renderObject .popLocalFog ());
 		},
 	});
 
@@ -108526,13 +108527,13 @@ function (Fields,
 
 				clipPlaneContainer .set (this, renderObject .getModelViewMatrix () .get ());
 
-				renderObject .getShaderObjects () .push (clipPlaneContainer);
+				renderObject .getLocalObjects () .push (clipPlaneContainer);
 			}
 		},
 		pop: function (renderObject)
 		{
 			if (this .enabled)
-				renderObject .getBrowser () .getShaderObjects () .push (renderObject .getShaderObjects () .pop ());
+				renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
 		},
 	});
 
@@ -112577,7 +112578,7 @@ function (Fields,
 
 					hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
 
-					if (geometry .intersectsLine (hitRay, renderObject .getShaderObjects (), modelViewMatrix, intersections))
+					if (geometry .intersectsLine (hitRay, renderObject .getLocalObjects (), modelViewMatrix, intersections))
 					{
 						// Finally we have intersections and must now find the closest hit in front of the camera.
 
