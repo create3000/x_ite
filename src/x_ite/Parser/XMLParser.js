@@ -1079,10 +1079,10 @@ function ($,
 		},
 		attributeToCamelCase: function (name)
 		{
-			if (name !== name .toLowerCase())
-				return name ;
+			if (name !== name .toLowerCase ())
+				return name;
 
-			return HTMLSupport .attributeLowerCaseToCamelCase [name] ;
+			return HTMLSupport .attributeLowerCaseToCamelCase [name];
 		},
 	});
 
