@@ -1079,9 +1079,6 @@ function ($,
 		},
 		attributeToCamelCase: function (name)
 		{
-			if (name !== name .toLowerCase ())
-				return name;
-
 			return HTMLSupport .attributeLowerCaseToCamelCase .get (name);
 		},
 	});

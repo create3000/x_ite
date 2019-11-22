@@ -85,7 +85,10 @@ function (X3DConstants,
 					accessType      = fieldDefinition .accessType;
 
 				if (accessType & X3DConstants .initializeOnly)
+				{
+					HTMLSupport .attributeLowerCaseToCamelCase .set (name,                 name);
 					HTMLSupport .attributeLowerCaseToCamelCase .set (name .toLowerCase (), name);
+				}
 			}
 		},
 		addAbstractType: function (typeName, Type)
