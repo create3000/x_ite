@@ -40,6 +40,10 @@ define (function ()
 	{
 		attributeLowerCaseToCamelCase:
 		{
+			"pointsizeminvalue" : "pointSizeMinValue",
+			"pointsizemaxvalue" : "pointSizeMaxValue",
+			"pointsizescalefactor" : "pointSizeScaleFactor",
+			"pointsizeattenuation" : "pointSizeAttenuation",
 			"accesstype" : "accessType",
 			"actionkeypress" : "actionKeyPress",
 			"actionkeyrelease" : "actionKeyRelease",
