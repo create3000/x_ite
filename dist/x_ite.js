@@ -1,4 +1,4 @@
-/* X_ITE v4.6.9a-960 */
+/* X_ITE v4.6.9a-961 */
 
 (function () {
 
@@ -47648,9 +47648,6 @@ function ($,
 		},
 		attributeToCamelCase: function (name)
 		{
-			if (name !== name .toLowerCase ())
-				return name;
-
 			return HTMLSupport .attributeLowerCaseToCamelCase .get (name);
 		},
 	});
@@ -93793,7 +93790,10 @@ function (X3DConstants,
 					accessType      = fieldDefinition .accessType;
 
 				if (accessType & X3DConstants .initializeOnly)
+				{
+					HTMLSupport .attributeLowerCaseToCamelCase .set (name,                 name);
 					HTMLSupport .attributeLowerCaseToCamelCase .set (name .toLowerCase (), name);
+				}
 			}
 		},
 		addAbstractType: function (typeName, Type)
