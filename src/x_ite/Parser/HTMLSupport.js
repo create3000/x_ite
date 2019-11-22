@@ -146,6 +146,7 @@ define (function ()
 			"color" : "color",
 			"colorindex" : "colorIndex",
 			"colorkey" : "colorKey",
+			"colormode" : "colorMode",
 			"colorpervertex" : "colorPerVertex",
 			"colorsteps" : "colorSteps",
 			"constantforcemix" : "constantForceMix",
