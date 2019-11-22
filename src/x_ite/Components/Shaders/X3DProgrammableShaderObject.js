@@ -103,11 +103,11 @@ function (Fields,
 
 		this .numClipPlanes               = 0;
 		this .fogNode                     = null;
-		this .numGlobalLights             = 0;
 		this .numLights                   = 0;
+		this .numGlobalLights             = 0;
 		this .lightNodes                  = [ ];
-		this .numGlobalProjectiveTextures = 0;
 		this .numProjectiveTextures       = 0;
+		this .numGlobalProjectiveTextures = 0;
 		this .projectiveTextureNodes      = [ ];
 		this .textures                    = new Map ();
 	}
