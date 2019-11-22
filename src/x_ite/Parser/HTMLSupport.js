@@ -45,6 +45,7 @@ define (function ()
 		"DEF",
 		"dir",
 		"documentation",
+		"exportedDEF",
 		"fromField",
 		"fromNode",
 		"http-equiv",

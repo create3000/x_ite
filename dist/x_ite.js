@@ -1,4 +1,4 @@
-/* X_ITE v4.6.9a-956 */
+/* X_ITE v4.6.9a-957 */
 
 (function () {
 
@@ -46563,6 +46563,7 @@ define ('x_ite/Parser/HTMLSupport',[],function ()
 		"DEF",
 		"dir",
 		"documentation",
+		"exportedDEF",
 		"fromField",
 		"fromNode",
 		"http-equiv",
