@@ -49,8 +49,10 @@
 
 define ([
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Parser/HTMLSupport",
 ],
-function (X3DConstants)
+function (X3DConstants,
+          HTMLSupport)
 {
 "use strict";
 
@@ -68,8 +70,23 @@ function (X3DConstants)
 		{
 			X3DConstants [typeName] = ++ nodeType; // Start with 1, as X3DBaseNode is 0.
 
-			this .types .set (typeName,                 Type); 
-			this .types .set (typeName .toUpperCase (), Type); 
+			this .types .set (typeName,                 Type);
+			this .types .set (typeName .toUpperCase (), Type);
+
+			// HTMLSupport
+
+			var fieldDefinitions = Type .prototype .fieldDefinitions;
+
+			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
+			{
+				var
+					fieldDefinition = fieldDefinitions [i],
+					name            = fieldDefinition .name,
+					accessType      = fieldDefinition .accessType;
+
+				if (accessType & X3DConstants .initializeOnly)
+					HTMLSupport .attributeLowerCaseToCamelCase .set (name .toLowerCase (), name);
+			}
 		},
 		addAbstractType: function (typeName, Type)
 		{
@@ -77,10 +94,9 @@ function (X3DConstants)
 		},
 		getType: function (typeName)
 		{
-			return this .types .get (typeName); 
+			return this .types .get (typeName);
 		},
 	};
 
 	return new SupportedNodes ();
 });
-

@@ -1082,7 +1082,7 @@ function ($,
 			if (name !== name .toLowerCase ())
 				return name;
 
-			return HTMLSupport .attributeLowerCaseToCamelCase [name];
+			return HTMLSupport .attributeLowerCaseToCamelCase .get (name);
 		},
 	});
 
