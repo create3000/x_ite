@@ -612,7 +612,7 @@ define (function ()
 
 	var HTMLSupport =
 	{
-		attributeLowerCaseToCamelCase: { }
+		attributeLowerCaseToCamelCase: { },
 	};
 
 	fields            .forEach (transform);
