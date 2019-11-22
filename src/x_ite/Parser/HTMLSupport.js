@@ -39,7 +39,7 @@ define (function ()
 	var HTMLSupport =
 	{
 		// Fields are set when component is registered.
-		attributeLowerCaseToCamelCase: new Map (),
+		fields: new Map (),
 	};
 
 	Object .preventExtensions (HTMLSupport);

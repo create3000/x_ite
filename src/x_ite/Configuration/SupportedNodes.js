@@ -86,8 +86,8 @@ function (X3DConstants,
 
 				if (accessType & X3DConstants .initializeOnly)
 				{
-					HTMLSupport .attributeLowerCaseToCamelCase .set (name,                 name);
-					HTMLSupport .attributeLowerCaseToCamelCase .set (name .toLowerCase (), name);
+					HTMLSupport .fields .set (name,                 name);
+					HTMLSupport .fields .set (name .toLowerCase (), name);
 				}
 			}
 		},

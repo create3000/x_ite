@@ -1,4 +1,4 @@
-/* X_ITE v4.6.9a-961 */
+/* X_ITE v4.6.9a-962 */
 
 (function () {
 
@@ -46557,7 +46557,7 @@ define ('x_ite/Parser/HTMLSupport',[],function ()
 	var HTMLSupport =
 	{
 		// Fields are set when component is registered.
-		attributeLowerCaseToCamelCase: new Map (),
+		fields: new Map (),
 	};
 
 	Object .preventExtensions (HTMLSupport);
@@ -47538,7 +47538,7 @@ function ($,
 			try
 			{
 				var
-					field      = node .getField (this .attributeToCamelCase (xmlAttribute .name)),
+					field      = node .getField (this .fieldToCamelCase (xmlAttribute .name)),
 					accessType = field .getAccessType ();
 
 				if (accessType & X3DConstants .initializeOnly)
@@ -47646,9 +47646,9 @@ function ($,
 
 			return true;
 		},
-		attributeToCamelCase: function (name)
+		fieldToCamelCase: function (name)
 		{
-			return HTMLSupport .attributeLowerCaseToCamelCase .get (name);
+			return HTMLSupport .fields .get (name);
 		},
 	});
 
@@ -93791,8 +93791,8 @@ function (X3DConstants,
 
 				if (accessType & X3DConstants .initializeOnly)
 				{
-					HTMLSupport .attributeLowerCaseToCamelCase .set (name,                 name);
-					HTMLSupport .attributeLowerCaseToCamelCase .set (name .toLowerCase (), name);
+					HTMLSupport .fields .set (name,                 name);
+					HTMLSupport .fields .set (name .toLowerCase (), name);
 				}
 			}
 		},

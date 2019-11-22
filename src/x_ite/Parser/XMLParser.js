@@ -969,7 +969,7 @@ function ($,
 			try
 			{
 				var
-					field      = node .getField (this .attributeToCamelCase (xmlAttribute .name)),
+					field      = node .getField (this .fieldToCamelCase (xmlAttribute .name)),
 					accessType = field .getAccessType ();
 
 				if (accessType & X3DConstants .initializeOnly)
@@ -1077,9 +1077,9 @@ function ($,
 
 			return true;
 		},
-		attributeToCamelCase: function (name)
+		fieldToCamelCase: function (name)
 		{
-			return HTMLSupport .attributeLowerCaseToCamelCase .get (name);
+			return HTMLSupport .fields .get (name);
 		},
 	});
 
