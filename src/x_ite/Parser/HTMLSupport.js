@@ -655,6 +655,16 @@ define (function ()
 			"yscale" : "yScale",
 			"zdimension" : "zDimension",
 			"zspacing" : "zSpacing",
+
+			// Non standard
+
+			"alphaequation" : "alphaEquation",
+			"blendcolor" : "blendColor",
+			"colorequation" : "colorEquation",
+			"destinationalphafactor" : "destinationAlphaFactor",
+			"destinationcolorfactor" : "destinationColorFactor",
+			"sourcealphafactor" : "sourceAlphaFactor",
+			"sourcecolorfactor" : "sourceColorFactor",
 		}
 	};
 
