@@ -72,6 +72,27 @@ function (X3DChildNode,
 	X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DLightNode,
+		initialize: function ()
+		{
+			X3DChildNode .prototype .initialize .call (this);
+
+			this .on_ .addInterest ("set_on__", this);
+
+			this .set_on__ ();
+		},
+		set_on__: function ()
+		{
+			if (this .on_ .getValue ())
+			{
+				delete this .push;
+				delete this .pop;
+			}
+			else
+			{
+				this .push = Function .prototype;
+				this .pop  = Function .prototype;
+			}
+		},
 		getGlobal: function ()
 		{
 			return this .global_ .getValue ();
@@ -123,70 +144,64 @@ function (X3DChildNode,
 		})(),
 		push: function (renderObject, group)
 		{
-			if (this .on_ .getValue ())
+			if (renderObject .isIndependent ())
 			{
-				if (renderObject .isIndependent ())
+				var lightContainer = this .getLights () .pop ();
+
+				if (this .global_ .getValue ())
 				{
-					var lightContainer = this .getLights () .pop ();
+					lightContainer .set (renderObject .getBrowser (),
+												this,
+												renderObject .getLayer () .getGroup (),
+												renderObject .getModelViewMatrix () .get ());
 
-					if (this .global_ .getValue ())
-					{
-						lightContainer .set (renderObject .getBrowser (),
-						                     this,
-						                     renderObject .getLayer () .getGroup (),
-						                     renderObject .getModelViewMatrix () .get ());
-
-						renderObject .getGlobalObjects () .push (lightContainer);
-						renderObject .getLights ()        .push (lightContainer);
-					}
-					else
-					{
-						lightContainer .set (renderObject .getBrowser (),
-						                     this,
-						                     group,
-						                     renderObject .getModelViewMatrix () .get ());
-
-						renderObject .getLocalObjects () .push (lightContainer);
-						renderObject .getLights ()       .push (lightContainer);
-					}
+					renderObject .getGlobalObjects () .push (lightContainer);
+					renderObject .getLights ()        .push (lightContainer);
 				}
 				else
 				{
-					var lightContainer = renderObject .getLightContainer ();
+					lightContainer .set (renderObject .getBrowser (),
+												this,
+												group,
+												renderObject .getModelViewMatrix () .get ());
 
-					if (this .global_ .getValue ())
-					{
-						lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
-
-						renderObject .getGlobalObjects () .push (lightContainer);
-						renderObject .getLights ()        .push (lightContainer);
-					}
-					else
-					{
-						lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
-
-						renderObject .getLocalObjects () .push (lightContainer);
-						renderObject .getLights ()       .push (lightContainer);
-					}
+					renderObject .getLocalObjects () .push (lightContainer);
+					renderObject .getLights ()       .push (lightContainer);
 				}
-
-				renderObject .pushShadow (this .shadowIntensity_ .getValue () > 0);
 			}
+			else
+			{
+				var lightContainer = renderObject .getLightContainer ();
+
+				if (this .global_ .getValue ())
+				{
+					lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
+
+					renderObject .getGlobalObjects () .push (lightContainer);
+					renderObject .getLights ()        .push (lightContainer);
+				}
+				else
+				{
+					lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
+
+					renderObject .getLocalObjects () .push (lightContainer);
+					renderObject .getLights ()       .push (lightContainer);
+				}
+			}
+
+			renderObject .pushShadow (this .shadowIntensity_ .getValue () > 0);
 		},
 		pop: function (renderObject)
 		{
-			if (this .on_ .getValue ())
-			{
-				if (this .global_ .getValue ())
-				   return;
+			if (this .global_ .getValue ())
+				return;
 
-				if (renderObject .isIndependent ())
-					renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
-				else
-					renderObject .getLocalObjects () .pop ();
+			if (renderObject .isIndependent ())
+				renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
+			else
+				renderObject .getLocalObjects () .pop ();
 
-				renderObject .popShadow ();
-			}
+			renderObject .popShadow ();
 		},
 	});
 
