@@ -118,6 +118,7 @@ function (TextureBuffer,
 				gl .uniform1i (shaderNode .x3d_NumLights,             0);
 				gl .uniform1i (shaderNode .x3d_NumTextures,           0);
 				gl .uniform1i (shaderNode .x3d_NumProjectiveTextures, 0);
+				gl .uniform1i (shaderNode .x3d_NumClipPlanes,         0);
 
 				gl .uniform1i (shaderNode .x3d_SeparateBackColor, false);
 				gl .uniform1f (shaderNode .x3d_AmbientIntensity,  0);

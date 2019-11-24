@@ -122,13 +122,6 @@ function (Fields,
 			this .x3d_MaxClipPlanes = browser .getMaxClipPlanes ();
 			this .x3d_MaxLights     = browser .getMaxLights ();
 			this .x3d_MaxTextures   = browser .getMaxTextures ();
-
-			var defaultClipPlanes = [ ];
-
-			for (var i = 0, length = this .x3d_MaxClipPlanes; i < length; ++ i)
-				defaultClipPlanes .push (0, 0, -1, 0);
-
-			this .defaultClipPlanesArray  = new Float32Array (defaultClipPlanes);
 		},
 		hasUserDefinedFields: function ()
 		{
@@ -924,11 +917,9 @@ function (Fields,
 
 			this .numClipPlanes                  = 0;
 			this .numLights                      = 0;
-			this .lightNodes .length             = 0;
 			this .numProjectiveTextures          = 0;
+			this .lightNodes .length             = 0;
 			this .projectiveTextureNodes .length = 0;
-
-			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
 
 			for (var i = 0, length = localObjects .length; i < length; ++ i)
 				localObjects [i] .setShaderUniforms (gl, this);
@@ -957,8 +948,8 @@ function (Fields,
 			// Set global lights and global texture projectors
 
 			this .numLights                      = 0;
-			this .lightNodes .length             = 0;
 			this .numProjectiveTextures          = 0;
+			this .lightNodes .length             = 0;
 			this .projectiveTextureNodes .length = 0;
 
 			for (var i = 0, length = globalObjects .length; i < length; ++ i)
@@ -998,8 +989,6 @@ function (Fields,
 			this .numClipPlanes         = 0;
 			this .numLights             = this .numGlobalLights;
 			this .numProjectiveTextures = this .numGlobalProjectiveTextures;
-
-			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
 
 			for (var i = 0, length = localObjects .length; i < length; ++ i)
 				localObjects [i] .setShaderUniforms (gl, this);
