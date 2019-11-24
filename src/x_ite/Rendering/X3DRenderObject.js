@@ -957,13 +957,15 @@ function ($,
 				gl .scissor (viewport [0],
 				             viewport [1],
 				             viewport [2],
-				             viewport [3]);
+								 viewport [3]);
+
+				// Draw background.
 
 				gl .clear (gl .DEPTH_BUFFER_BIT);
 
 				this .getBackground () .display (gl, this, viewport);
 
-				// Sorted blend
+				// Set global uniforms.
 
 				viewportArray          .set (viewport);
 				cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
@@ -979,6 +981,8 @@ function ($,
 					shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 				},
 				this);
+
+				// Sorted blend
 
 				// Render opaque objects first
 
