@@ -193,55 +193,29 @@ function (X3DChildNode,
 		},
 		push: function (renderObject)
 		{
-			if (renderObject .isIndependent ())
+			var textureProjectorContainer = this .getTextureProjectors () .pop ();
+
+			textureProjectorContainer .set (renderObject .getBrowser (),
+			                                this,
+			                                renderObject .getModelViewMatrix () .get ());
+
+			if (this .global_ .getValue ())
 			{
-				var textureProjectorContainer = this .getTextureProjectors () .pop ();
-
-				textureProjectorContainer .set (renderObject .getBrowser (),
-				                                this,
-				                                renderObject .getModelViewMatrix () .get ());
-
-				if (this .global_ .getValue ())
-				{
-					renderObject .getGlobalObjects ()     .push (textureProjectorContainer);
-					renderObject .getTextureProjectors () .push (textureProjectorContainer);
-				}
-				else
-				{
-					renderObject .getLocalObjects ()      .push (textureProjectorContainer);
-					renderObject .getTextureProjectors () .push (textureProjectorContainer);
-				}
+				renderObject .getGlobalObjects ()     .push (textureProjectorContainer);
+				renderObject .getTextureProjectors () .push (textureProjectorContainer);
 			}
 			else
 			{
-				var textureProjectorContainer = renderObject .getTextureProjectorContainer ();
-
-				if (this .global_ .getValue ())
-				{
-					textureProjectorContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
-
-					renderObject .getGlobalObjects ()     .push (textureProjectorContainer);
-					renderObject .getTextureProjectors () .push (textureProjectorContainer);
-				}
-				else
-				{
-					textureProjectorContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
-
-					renderObject .getLocalObjects ()      .push (textureProjectorContainer);
-					renderObject .getTextureProjectors () .push (textureProjectorContainer);
-				}
+				renderObject .getLocalObjects ()      .push (textureProjectorContainer);
+				renderObject .getTextureProjectors () .push (textureProjectorContainer);
 			}
-
 		},
 		pop: function (renderObject)
 		{
 			if (this .global_ .getValue ())
 				return;
 
-			if (renderObject .isIndependent ())
-				renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
-			else
-				renderObject .getLocalObjects () .pop ();
+			renderObject .getLocalObjects () .pop ();
 		},
 	});
 
@@ -307,7 +281,6 @@ define ('x_ite/Components/ProjectiveTextureMapping/TextureProjectorPerspective',
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
-	"standard/Math/Utility/MatrixStack",
 	"standard/Utility/ObjectCache",
 ],
 function (Fields,
@@ -319,7 +292,6 @@ function (Fields,
           Vector3,
           Rotation4,
           Matrix4,
-          MatrixStack,
           ObjectCache)
 {
 "use strict";
@@ -329,7 +301,7 @@ function (Fields,
 	function TextureProjectorPerspectiveContainer ()
 	{
 		this .projectionMatrix                = new Matrix4 ();
-		this .modelViewMatrix                 = new MatrixStack (Matrix4);
+		this .modelViewMatrix                 = new Matrix4 ();
 		this .modelMatrix                     = new Matrix4 ();
 		this .invTextureSpaceMatrix           = new Matrix4 ();
 		this .invTextureSpaceProjectionMatrix = new Matrix4 ();
@@ -349,7 +321,7 @@ function (Fields,
 			this .browser              = browser;
 			this .textureProjectorNode = textureProjectorNode;
 
-			this .modelViewMatrix .pushMatrix (modelViewMatrix);
+			this .modelViewMatrix .assign (modelViewMatrix);
 		},
 		getModelViewMatrix: function ()
 		{
@@ -362,7 +334,7 @@ function (Fields,
 				var
 					textureProjectorNode  = this .textureProjectorNode,
 					cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
-					modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+					modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix) .multRight (cameraSpaceMatrix),
 					invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (textureProjectorNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
 				this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (textureProjectorNode .getDirection ()) .negate ());
@@ -389,7 +361,7 @@ function (Fields,
 				this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
 				this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 
-				this .modelViewMatrix .get () .multVecMatrix (this .location .assign (textureProjectorNode .location_ .getValue ()));
+				this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode .location_ .getValue ()));
 				this .locationArray .set (this .location);
 			}
 			catch (error)
@@ -537,7 +509,6 @@ define ('x_ite/Components/ProjectiveTextureMapping/TextureProjectorParallel',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
-	"standard/Math/Utility/MatrixStack",
 	"standard/Utility/ObjectCache",
 ],
 function (Fields,
@@ -549,7 +520,6 @@ function (Fields,
           Vector3,
           Rotation4,
           Matrix4,
-          MatrixStack,
           ObjectCache)
 {
 "use strict";
@@ -559,7 +529,7 @@ function (Fields,
 	function TextureProjectorParallelContainer ()
 	{
 		this .projectionMatrix                = new Matrix4 ();
-		this .modelViewMatrix                 = new MatrixStack (Matrix4);
+		this .modelViewMatrix                 = new Matrix4 ();
 		this .modelMatrix                     = new Matrix4 ();
 		this .invTextureSpaceMatrix           = new Matrix4 ();
 		this .location                        = new Vector3 (0, 0, 0);
@@ -579,7 +549,7 @@ function (Fields,
 			this .browser              = browser;
 			this .textureProjectorNode = textureProjectorNode;
 
-			this .modelViewMatrix .pushMatrix (modelViewMatrix);
+			this .modelViewMatrix .assign (modelViewMatrix);
 		},
 		getModelViewMatrix: function ()
 		{
@@ -592,7 +562,7 @@ function (Fields,
 				var
 					textureProjectorNode  = this .textureProjectorNode,
 					cameraSpaceMatrix     = renderObject .getCameraSpaceMatrix () .get (),
-					modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix .get ()) .multRight (cameraSpaceMatrix),
+					modelMatrix           = this .modelMatrix .assign (this .modelViewMatrix) .multRight (cameraSpaceMatrix),
 					invTextureSpaceMatrix = this .invTextureSpaceMatrix .assign (textureProjectorNode .getGlobal () ? modelMatrix : Matrix4 .Identity);
 
 				this .rotation .setFromToVec (Vector3 .zAxis, this .direction .assign (textureProjectorNode .getDirection ()) .negate ());
@@ -640,7 +610,7 @@ function (Fields,
 				this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
 				this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 
-				this .modelViewMatrix .get () .multVecMatrix (this .location .assign (textureProjectorNode .location_ .getValue ()));
+				this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode .location_ .getValue ()));
 				this .locationArray .set (this .location);
 			}
 			catch (error)

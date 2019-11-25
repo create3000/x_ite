@@ -1,4 +1,4 @@
-/* X_ITE v4.6.9a-962 */
+/* X_ITE v4.6.9a-963 */
 
 (function () {
 
@@ -44127,13 +44127,6 @@ function (Fields,
 			this .x3d_MaxClipPlanes = browser .getMaxClipPlanes ();
 			this .x3d_MaxLights     = browser .getMaxLights ();
 			this .x3d_MaxTextures   = browser .getMaxTextures ();
-
-			var defaultClipPlanes = [ ];
-
-			for (var i = 0, length = this .x3d_MaxClipPlanes; i < length; ++ i)
-				defaultClipPlanes .push (0, 0, -1, 0);
-
-			this .defaultClipPlanesArray  = new Float32Array (defaultClipPlanes);
 		},
 		hasUserDefinedFields: function ()
 		{
@@ -44929,11 +44922,9 @@ function (Fields,
 
 			this .numClipPlanes                  = 0;
 			this .numLights                      = 0;
-			this .lightNodes .length             = 0;
 			this .numProjectiveTextures          = 0;
+			this .lightNodes .length             = 0;
 			this .projectiveTextureNodes .length = 0;
-
-			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
 
 			for (var i = 0, length = localObjects .length; i < length; ++ i)
 				localObjects [i] .setShaderUniforms (gl, this);
@@ -44962,8 +44953,8 @@ function (Fields,
 			// Set global lights and global texture projectors
 
 			this .numLights                      = 0;
-			this .lightNodes .length             = 0;
 			this .numProjectiveTextures          = 0;
+			this .lightNodes .length             = 0;
 			this .projectiveTextureNodes .length = 0;
 
 			for (var i = 0, length = globalObjects .length; i < length; ++ i)
@@ -45003,8 +44994,6 @@ function (Fields,
 			this .numClipPlanes         = 0;
 			this .numLights             = this .numGlobalLights;
 			this .numProjectiveTextures = this .numGlobalProjectiveTextures;
-
-			gl .uniform4fv (this .x3d_ClipPlanes, this .defaultClipPlanesArray);
 
 			for (var i = 0, length = localObjects .length; i < length; ++ i)
 				localObjects [i] .setShaderUniforms (gl, this);
@@ -58489,6 +58478,7 @@ function (TextureBuffer,
 				gl .uniform1i (shaderNode .x3d_NumLights,             0);
 				gl .uniform1i (shaderNode .x3d_NumTextures,           0);
 				gl .uniform1i (shaderNode .x3d_NumProjectiveTextures, 0);
+				gl .uniform1i (shaderNode .x3d_NumClipPlanes,         0);
 
 				gl .uniform1i (shaderNode .x3d_SeparateBackColor, false);
 				gl .uniform1f (shaderNode .x3d_AmbientIntensity,  0);
@@ -70541,6 +70531,27 @@ function (X3DChildNode,
 	X3DLightNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DLightNode,
+		initialize: function ()
+		{
+			X3DChildNode .prototype .initialize .call (this);
+
+			this .on_ .addInterest ("set_on__", this);
+
+			this .set_on__ ();
+		},
+		set_on__: function ()
+		{
+			if (this .on_ .getValue ())
+			{
+				delete this .push;
+				delete this .pop;
+			}
+			else
+			{
+				this .push = Function .prototype;
+				this .pop  = Function .prototype;
+			}
+		},
 		getGlobal: function ()
 		{
 			return this .global_ .getValue ();
@@ -70592,70 +70603,64 @@ function (X3DChildNode,
 		})(),
 		push: function (renderObject, group)
 		{
-			if (this .on_ .getValue ())
+			if (renderObject .isIndependent ())
 			{
-				if (renderObject .isIndependent ())
+				var lightContainer = this .getLights () .pop ();
+
+				if (this .global_ .getValue ())
 				{
-					var lightContainer = this .getLights () .pop ();
+					lightContainer .set (renderObject .getBrowser (),
+												this,
+												renderObject .getLayer () .getGroup (),
+												renderObject .getModelViewMatrix () .get ());
 
-					if (this .global_ .getValue ())
-					{
-						lightContainer .set (renderObject .getBrowser (),
-						                     this,
-						                     renderObject .getLayer () .getGroup (),
-						                     renderObject .getModelViewMatrix () .get ());
-
-						renderObject .getGlobalObjects () .push (lightContainer);
-						renderObject .getLights ()        .push (lightContainer);
-					}
-					else
-					{
-						lightContainer .set (renderObject .getBrowser (),
-						                     this,
-						                     group,
-						                     renderObject .getModelViewMatrix () .get ());
-
-						renderObject .getLocalObjects () .push (lightContainer);
-						renderObject .getLights ()       .push (lightContainer);
-					}
+					renderObject .getGlobalObjects () .push (lightContainer);
+					renderObject .getLights ()        .push (lightContainer);
 				}
 				else
 				{
-					var lightContainer = renderObject .getLightContainer ();
+					lightContainer .set (renderObject .getBrowser (),
+												this,
+												group,
+												renderObject .getModelViewMatrix () .get ());
 
-					if (this .global_ .getValue ())
-					{
-						lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
-
-						renderObject .getGlobalObjects () .push (lightContainer);
-						renderObject .getLights ()        .push (lightContainer);
-					}
-					else
-					{
-						lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
-
-						renderObject .getLocalObjects () .push (lightContainer);
-						renderObject .getLights ()       .push (lightContainer);
-					}
+					renderObject .getLocalObjects () .push (lightContainer);
+					renderObject .getLights ()       .push (lightContainer);
 				}
-
-				renderObject .pushShadow (this .shadowIntensity_ .getValue () > 0);
 			}
+			else
+			{
+				var lightContainer = renderObject .getLightContainer ();
+
+				if (this .global_ .getValue ())
+				{
+					lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
+
+					renderObject .getGlobalObjects () .push (lightContainer);
+					renderObject .getLights ()        .push (lightContainer);
+				}
+				else
+				{
+					lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
+
+					renderObject .getLocalObjects () .push (lightContainer);
+					renderObject .getLights ()       .push (lightContainer);
+				}
+			}
+
+			renderObject .pushShadow (this .shadowIntensity_ .getValue () > 0);
 		},
 		pop: function (renderObject)
 		{
-			if (this .on_ .getValue ())
-			{
-				if (this .global_ .getValue ())
-				   return;
+			if (this .global_ .getValue ())
+				return;
 
-				if (renderObject .isIndependent ())
-					renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
-				else
-					renderObject .getLocalObjects () .pop ();
+			if (renderObject .isIndependent ())
+				renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
+			else
+				renderObject .getLocalObjects () .pop ();
 
-				renderObject .popShadow ();
-			}
+			renderObject .popShadow ();
 		},
 	});
 
@@ -90378,13 +90383,15 @@ function ($,
 				gl .scissor (viewport [0],
 				             viewport [1],
 				             viewport [2],
-				             viewport [3]);
+								 viewport [3]);
+
+				// Draw background.
 
 				gl .clear (gl .DEPTH_BUFFER_BIT);
 
 				this .getBackground () .display (gl, this, viewport);
 
-				// Sorted blend
+				// Set global uniforms.
 
 				viewportArray          .set (viewport);
 				cameraSpaceMatrixArray .set (this .getCameraSpaceMatrix () .get ());
@@ -90400,6 +90407,8 @@ function ($,
 					shader .setGlobalUniforms (gl, this, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray);
 				},
 				this);
+
+				// Sorted blend
 
 				// Render opaque objects first
 
