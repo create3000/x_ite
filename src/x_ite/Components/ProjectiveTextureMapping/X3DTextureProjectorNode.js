@@ -187,55 +187,29 @@ function (X3DChildNode,
 		},
 		push: function (renderObject)
 		{
-			if (renderObject .isIndependent ())
+			var textureProjectorContainer = this .getTextureProjectors () .pop ();
+
+			textureProjectorContainer .set (renderObject .getBrowser (),
+			                                this,
+			                                renderObject .getModelViewMatrix () .get ());
+
+			if (this .global_ .getValue ())
 			{
-				var textureProjectorContainer = this .getTextureProjectors () .pop ();
-
-				textureProjectorContainer .set (renderObject .getBrowser (),
-				                                this,
-				                                renderObject .getModelViewMatrix () .get ());
-
-				if (this .global_ .getValue ())
-				{
-					renderObject .getGlobalObjects ()     .push (textureProjectorContainer);
-					renderObject .getTextureProjectors () .push (textureProjectorContainer);
-				}
-				else
-				{
-					renderObject .getLocalObjects ()      .push (textureProjectorContainer);
-					renderObject .getTextureProjectors () .push (textureProjectorContainer);
-				}
+				renderObject .getGlobalObjects ()     .push (textureProjectorContainer);
+				renderObject .getTextureProjectors () .push (textureProjectorContainer);
 			}
 			else
 			{
-				var textureProjectorContainer = renderObject .getTextureProjectorContainer ();
-
-				if (this .global_ .getValue ())
-				{
-					textureProjectorContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
-
-					renderObject .getGlobalObjects ()     .push (textureProjectorContainer);
-					renderObject .getTextureProjectors () .push (textureProjectorContainer);
-				}
-				else
-				{
-					textureProjectorContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
-
-					renderObject .getLocalObjects ()      .push (textureProjectorContainer);
-					renderObject .getTextureProjectors () .push (textureProjectorContainer);
-				}
+				renderObject .getLocalObjects ()      .push (textureProjectorContainer);
+				renderObject .getTextureProjectors () .push (textureProjectorContainer);
 			}
-
 		},
 		pop: function (renderObject)
 		{
 			if (this .global_ .getValue ())
 				return;
 
-			if (renderObject .isIndependent ())
-				renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
-			else
-				renderObject .getLocalObjects () .pop ();
+			renderObject .getLocalObjects () .pop ();
 		},
 	});
 
