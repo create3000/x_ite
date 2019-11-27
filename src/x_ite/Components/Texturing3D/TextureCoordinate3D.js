@@ -123,7 +123,8 @@ function (Fields,
 			{
 				const point = this .point;
 
-				index = (this .length - 1) * 3;
+				index %= this .length;
+				index *= 3;
 
 				return vector .set (point [index], point [index + 1], point [index + 2], 1);
 			}
@@ -146,7 +147,8 @@ function (Fields,
 			{
 				var point = this .point;
 
-				index = (this .length - 1) * 3;
+				index %= this .length;
+				index *= 3;
 
 				array .push (point [index], point [index + 1], point [index + 2], 1);
 			}

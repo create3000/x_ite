@@ -125,7 +125,8 @@ function (Fields,
 			{
 				const point = this .point;
 
-				index = (this .length - 1) * 2;
+				index %= this .length;
+				index *= 2;
 
 				return vector .set (point [index], point [index + 1], 0, 1);
 			}
@@ -148,7 +149,8 @@ function (Fields,
 			{
 				var point = this .point;
 
-				index = (this .length - 1) * 2;
+				index %= this .length;
+				index *= 2;
 
 				array .push (point [index], point [index + 1], 0, 1);
 			}
