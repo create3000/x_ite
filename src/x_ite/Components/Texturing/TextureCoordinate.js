@@ -144,6 +144,14 @@ function (Fields,
 
 				array .push (point [index], point [index + 1], 0, 1);
 			}
+			else if (this .length)
+			{
+				var point = this .point;
+
+				index = (this .length - 1) * 2;
+
+				array .push (point [index], point [index + 1], 0, 1);
+			}
 			else
 				array .push (0, 0, 0, 1);
 		},

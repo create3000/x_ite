@@ -1,4 +1,4 @@
-/* X_ITE v4.6.9a-963 */
+/* X_ITE v4.6.9a-964 */
 
 (function () {
 
@@ -64612,7 +64612,7 @@ define ('x_ite/Components/Texturing/TextureCoordinate',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureCoordinateNode, 
+          X3DTextureCoordinateNode,
           X3DConstants,
           Vector4)
 {
@@ -64675,6 +64675,14 @@ function (Fields,
 
 				return vector .set (point [index], point [index + 1], 0, 1);
 			}
+			else if (this .length)
+			{
+				const point = this .point;
+
+				index = (this .length - 1) * 2;
+
+				return vector .set (point [index], point [index + 1], 0, 1);
+			}
 			else
 			{
 				return vector .set (0, 0, 0, 1);
@@ -64712,8 +64720,6 @@ function (Fields,
 
 	return TextureCoordinate;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -94853,7 +94859,7 @@ define ('x_ite/Components/EnvironmentalEffects/FogCoordinate',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGeometricPropertyNode, 
+          X3DGeometricPropertyNode,
           X3DConstants)
 {
 "use strict";
@@ -94914,6 +94920,9 @@ function (Fields,
 
 			else if (this .length)
 				array .push (this .depth [this .length - 1]);
+
+			else
+				array .push (0);
 		},
 		addDepths: function (array, min)
 		{
@@ -94922,7 +94931,7 @@ function (Fields,
 			if (length)
 			{
 				const depth = this .depth;
-	
+
 				for (var index = 0; index < length; ++ index)
 					array .push (depth [index]);
 
@@ -94936,8 +94945,6 @@ function (Fields,
 
 	return FogCoordinate;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -108293,7 +108300,7 @@ define ('x_ite/Components/Rendering/ColorRGBA',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DColorNode, 
+          X3DColorNode,
           X3DConstants,
           Vector4)
 {
@@ -108350,11 +108357,11 @@ function (Fields,
 
 				array .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
 			}
-			else if (this .color_ .length)
+			else if (this .length)
 			{
 				const color = this .color;
 
-				index = (this .color_ .length - 1) * 4;
+				index = (this .length - 1) * 4;
 
 				array .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
 			}
@@ -108392,8 +108399,6 @@ function (Fields,
 
 	return ColorRGBA;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -109795,7 +109800,7 @@ define ('x_ite/Components/Rendering/Normal',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNormalNode, 
+          X3DNormalNode,
           X3DConstants,
           Vector3)
 {
@@ -109854,6 +109859,14 @@ function (Fields,
 
 				return result .set (vector [index], vector [index + 1], vector [index + 2]);
 			}
+			else if (this .length)
+			{
+				const vector = this .vector;
+
+				index = (this .length - 1) * 3;
+
+				return result .set (vector [index], vector [index + 1], vector [index + 2]);
+			}
 			else
 			{
 				return result .set (0, 0, 0);
@@ -109878,8 +109891,6 @@ function (Fields,
 
 	return Normal;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -110780,7 +110791,7 @@ define ('x_ite/Components/Shaders/FloatVertexAttribute',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DVertexAttributeNode, 
+          X3DVertexAttributeNode,
           X3DConstants,
           Algorithm)
 {
@@ -110845,6 +110856,14 @@ function (Fields,
 				for (; first < last; ++ first)
 					array .push (value [first]);
 			}
+			else if (this .numComponents <= this .length)
+			{
+				last  = value .length;
+				first = last - this .numComponents;
+
+				for (; first < last; ++ first)
+					array .push (value [first]);
+			}
 			else
 			{
 				for (; first < last; ++ first)
@@ -110863,8 +110882,6 @@ function (Fields,
 
 	return FloatVertexAttribute;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -110926,7 +110943,7 @@ define ('x_ite/Components/Shaders/Matrix3VertexAttribute',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DVertexAttributeNode, 
+          X3DVertexAttributeNode,
           X3DConstants,
           Matrix3)
 {
@@ -110981,6 +110998,15 @@ function (Fields,
 				for (var i = index * 9, l = i + 9; i < l; ++ i)
 					array .push (value [i]);
 			}
+			else if (this .length)
+			{
+				var value = this .value;
+
+				index = this .length - 1;
+
+				for (var i = index * 9, l = i + 9; i < l; ++ i)
+					array .push (value [i]);
+			}
 			else
 			{
 				var value = Matrix3 .Identity;
@@ -111001,8 +111027,6 @@ function (Fields,
 
 	return Matrix3VertexAttribute;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -111063,7 +111087,7 @@ define ('x_ite/Components/Shaders/Matrix4VertexAttribute',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DVertexAttributeNode, 
+          X3DVertexAttributeNode,
           X3DConstants)
 {
 "use strict";
@@ -111117,6 +111141,15 @@ function (Fields,
 				for (var i = index * 16, l = i + 16; i < l; ++ i)
 					array .push (value [i]);
 			}
+			else if (this .length)
+			{
+				var value = this .value;
+
+				index = this .length - 1;
+
+				for (var i = index * 16, l = i + 16; i < l; ++ i)
+					array .push (value [i]);
+			}
 			else
 			{
 				var value = Matrix4 .Identity;
@@ -111137,8 +111170,6 @@ function (Fields,
 
 	return Matrix4VertexAttribute;
 });
-
-
 
 /*******************************************************************************
  *

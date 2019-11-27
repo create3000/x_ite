@@ -23706,7 +23706,7 @@ define ('x_ite/Components/Texturing3D/TextureCoordinate3D',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureCoordinateNode, 
+          X3DTextureCoordinateNode,
           X3DConstants)
 {
 "use strict";
@@ -23768,6 +23768,14 @@ function (Fields,
 
 				return vector .set (point [index], point [index + 1], point [index + 2], 1);
 			}
+			else if (this .length)
+			{
+				const point = this .point;
+
+				index = (this .length - 1) * 3;
+
+				return vector .set (point [index], point [index + 1], point [index + 2], 1);
+			}
 			else
 			{
 				return vector .set (0, 0, 0, 1);
@@ -23805,8 +23813,6 @@ function (Fields,
 
 	return TextureCoordinate3D;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -23867,7 +23873,7 @@ define ('x_ite/Components/Texturing3D/TextureCoordinate4D',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureCoordinateNode, 
+          X3DTextureCoordinateNode,
           X3DConstants)
 {
 "use strict";
@@ -23929,6 +23935,14 @@ function (Fields,
 
 				return vector .set (point [index], point [index + 1], point [index + 2], point [index + 3]);
 			}
+			else if (this .length)
+			{
+				const point = this .point;
+
+				index = (this .length - 1) * 4;
+
+				return vector .set (point [index], point [index + 1], point [index + 2], point [index + 3]);
+			}
 			else
 			{
 				return vector .set (0, 0, 0, 1);
@@ -23966,8 +23980,6 @@ function (Fields,
 
 	return TextureCoordinate4D;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
