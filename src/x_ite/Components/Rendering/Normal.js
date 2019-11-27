@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNormalNode, 
+          X3DNormalNode,
           X3DConstants,
           Vector3)
 {
@@ -117,6 +117,14 @@ function (Fields,
 
 				return result .set (vector [index], vector [index + 1], vector [index + 2]);
 			}
+			else if (this .length)
+			{
+				const vector = this .vector;
+
+				index = (this .length - 1) * 3;
+
+				return result .set (vector [index], vector [index + 1], vector [index + 2]);
+			}
 			else
 			{
 				return result .set (0, 0, 0);
@@ -141,5 +149,3 @@ function (Fields,
 
 	return Normal;
 });
-
-

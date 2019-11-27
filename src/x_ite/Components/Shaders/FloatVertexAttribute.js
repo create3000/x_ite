@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DVertexAttributeNode, 
+          X3DVertexAttributeNode,
           X3DConstants,
           Algorithm)
 {
@@ -123,6 +123,14 @@ function (Fields,
 				for (; first < last; ++ first)
 					array .push (value [first]);
 			}
+			else if (this .numComponents <= this .length)
+			{
+				last  = value .length;
+				first = last - this .numComponents;
+
+				for (; first < last; ++ first)
+					array .push (value [first]);
+			}
 			else
 			{
 				for (; first < last; ++ first)
@@ -141,5 +149,3 @@ function (Fields,
 
 	return FloatVertexAttribute;
 });
-
-

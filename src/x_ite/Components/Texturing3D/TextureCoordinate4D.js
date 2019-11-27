@@ -57,7 +57,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureCoordinateNode, 
+          X3DTextureCoordinateNode,
           X3DConstants)
 {
 "use strict";
@@ -119,6 +119,14 @@ function (Fields,
 
 				return vector .set (point [index], point [index + 1], point [index + 2], point [index + 3]);
 			}
+			else if (this .length)
+			{
+				const point = this .point;
+
+				index = (this .length - 1) * 4;
+
+				return vector .set (point [index], point [index + 1], point [index + 2], point [index + 3]);
+			}
 			else
 			{
 				return vector .set (0, 0, 0, 1);
@@ -156,5 +164,3 @@ function (Fields,
 
 	return TextureCoordinate4D;
 });
-
-

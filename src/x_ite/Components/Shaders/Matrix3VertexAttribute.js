@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DVertexAttributeNode, 
+          X3DVertexAttributeNode,
           X3DConstants,
           Matrix3)
 {
@@ -113,6 +113,15 @@ function (Fields,
 				for (var i = index * 9, l = i + 9; i < l; ++ i)
 					array .push (value [i]);
 			}
+			else if (this .length)
+			{
+				var value = this .value;
+
+				index = this .length - 1;
+
+				for (var i = index * 9, l = i + 9; i < l; ++ i)
+					array .push (value [i]);
+			}
 			else
 			{
 				var value = Matrix3 .Identity;
@@ -133,5 +142,3 @@ function (Fields,
 
 	return Matrix3VertexAttribute;
 });
-
-

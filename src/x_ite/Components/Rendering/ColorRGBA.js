@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DColorNode, 
+          X3DColorNode,
           X3DConstants,
           Vector4)
 {
@@ -115,11 +115,11 @@ function (Fields,
 
 				array .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
 			}
-			else if (this .color_ .length)
+			else if (this .length)
 			{
 				const color = this .color;
 
-				index = (this .color_ .length - 1) * 4;
+				index = (this .length - 1) * 4;
 
 				array .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
 			}
@@ -157,5 +157,3 @@ function (Fields,
 
 	return ColorRGBA;
 });
-
-
