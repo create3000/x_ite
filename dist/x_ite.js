@@ -1,4 +1,4 @@
-/* X_ITE v4.6.9a-964 */
+/* X_ITE v4.6.9a-965 */
 
 (function () {
 
@@ -64679,7 +64679,8 @@ function (Fields,
 			{
 				const point = this .point;
 
-				index = (this .length - 1) * 2;
+				index %= this .length;
+				index *= 2;
 
 				return vector .set (point [index], point [index + 1], 0, 1);
 			}
@@ -64702,7 +64703,8 @@ function (Fields,
 			{
 				var point = this .point;
 
-				index = (this .length - 1) * 2;
+				index %= this .length;
+				index *= 2;
 
 				array .push (point [index], point [index + 1], 0, 1);
 			}
@@ -92201,6 +92203,7 @@ function (X3DBindableNode,
 					gl .uniform1i (shaderNode .x3d_NumTextures,                        1);
 					gl .uniform1i (shaderNode .x3d_TextureType [0],                    2);
 					gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
+					gl .uniform1i (shaderNode .x3d_NumProjectiveTextures,              0);
 
 					gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
 					gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
@@ -93532,7 +93535,7 @@ function ($,
 		X3DTexturingContext            .call (this);
 		X3DTimeContext                 .call (this);
 
-		contexts .forEach (function (context) { context .call (this); } .bind (this));
+		contexts .forEach (function (context) { context .call (this); }, this);
 
 		this .addChildObjects ("initialized",   new SFTime (),
 		                       "shutdown",      new SFTime (),
@@ -93710,7 +93713,7 @@ function ($,
 			contexts .push (context);
 
 			Object .assign (X3DBrowserContext .prototype, context .prototype);
-	
+
 			$("X3DCanvas") .each (function (i, canvas)
 			{
 				var browser = X3D .getBrowser (canvas);
