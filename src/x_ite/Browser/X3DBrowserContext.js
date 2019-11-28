@@ -122,7 +122,7 @@ function ($,
 		X3DTexturingContext            .call (this);
 		X3DTimeContext                 .call (this);
 
-		contexts .forEach (function (context) { context .call (this); } .bind (this));
+		contexts .forEach (function (context) { context .call (this); }, this);
 
 		this .addChildObjects ("initialized",   new SFTime (),
 		                       "shutdown",      new SFTime (),
@@ -300,7 +300,7 @@ function ($,
 			contexts .push (context);
 
 			Object .assign (X3DBrowserContext .prototype, context .prototype);
-	
+
 			$("X3DCanvas") .each (function (i, canvas)
 			{
 				var browser = X3D .getBrowser (canvas);
