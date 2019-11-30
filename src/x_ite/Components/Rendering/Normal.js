@@ -121,7 +121,8 @@ function (Fields,
 			{
 				const vector = this .vector;
 
-				index = (this .length - 1) * 3;
+				index %= this .length;
+				index *= 3;
 
 				return result .set (vector [index], vector [index + 1], vector [index + 2]);
 			}
@@ -136,6 +137,15 @@ function (Fields,
 			{
 				const vector = this .vector;
 
+				index *= 3;
+
+				array .push (vector [index], vector [index + 1], vector [index + 2]);
+			}
+			else if (this .length)
+			{
+				const vector = this .vector;
+
+				index %= this .length;
 				index *= 3;
 
 				array .push (vector [index], vector [index + 1], vector [index + 2]);

@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DColorNode, 
+          X3DColorNode,
           X3DConstants,
           Vector4)
 {
@@ -128,13 +128,27 @@ function (Fields,
 		},
 		addColors: function (array, min)
 		{
-			const color = this .color;
+			if (this .length)
+			{
+				const color = this .color;
 
-			for (var index = 0, length = this .length * 3; index < length; index += 3)
-				array .push (color [index], color [index + 1], color [index + 2], 1);
+				for (var index = 0, length = this .length * 3; index < length; index += 3)
+					array .push (color [index], color [index + 1], color [index + 2], 1);
 
-			for (var index = length, length = min * 3; index < length; index += 3)
-				array .push (1, 1, 1, 1);
+				var
+					index = (this .length - 1) * 3,
+					r     = color [index],
+					g     = color [index + 1],
+					b     = color [index + 2];
+
+				for (var index = length, length = min * 3; index < length; index += 3)
+					array .push (r, g, b, 1);
+			}
+			else
+			{
+				for (var index = 0; index < min; ++ index)
+					array .push (1, 1, 1, 1);
+			}
 		},
 		getVectors: function (array)
 		{
@@ -155,5 +169,3 @@ function (Fields,
 
 	return Color;
 });
-
-

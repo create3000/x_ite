@@ -138,6 +138,11 @@ function (Fields,
 				for (var index = length; index < min; ++ index)
 					array .push (last);
 			}
+			else
+			{
+				for (var index = 0; index < min; ++ index)
+					array .push (0);
+			}
 		},
 	});
 
