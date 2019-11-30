@@ -1,4 +1,4 @@
-/* X_ITE v4.6.9a-965 */
+/* X_ITE v4.6.9a-966 */
 
 (function () {
 
@@ -64667,7 +64667,7 @@ function (Fields,
 		},
 		get1Point: function (index, vector)
 		{
-			if (index < this .length)
+			if (index >= 0 && index < this .length)
 			{
 				const point = this .point;
 
@@ -64675,7 +64675,7 @@ function (Fields,
 
 				return vector .set (point [index], point [index + 1], 0, 1);
 			}
-			else if (this .length)
+			else if (index >= 0 && this .length)
 			{
 				const point = this .point;
 
@@ -64699,7 +64699,7 @@ function (Fields,
 
 				array .push (point [index], point [index + 1], 0, 1);
 			}
-			else if (this .length)
+			else if (index >= 0 && this .length)
 			{
 				var point = this .point;
 
@@ -64709,7 +64709,9 @@ function (Fields,
 				array .push (point [index], point [index + 1], 0, 1);
 			}
 			else
+			{
 				array .push (0, 0, 0, 1);
+			}
 		},
 		getTexCoord: function (array)
 		{
@@ -94951,6 +94953,11 @@ function (Fields,
 				for (var index = length; index < min; ++ index)
 					array .push (last);
 			}
+			else
+			{
+				for (var index = 0; index < min; ++ index)
+					array .push (0);
+			}
 		},
 	});
 
@@ -108151,7 +108158,7 @@ define ('x_ite/Components/Rendering/Color',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DColorNode, 
+          X3DColorNode,
           X3DConstants,
           Vector4)
 {
@@ -108221,13 +108228,27 @@ function (Fields,
 		},
 		addColors: function (array, min)
 		{
-			const color = this .color;
+			if (this .length)
+			{
+				const color = this .color;
 
-			for (var index = 0, length = this .length * 3; index < length; index += 3)
-				array .push (color [index], color [index + 1], color [index + 2], 1);
+				for (var index = 0, length = this .length * 3; index < length; index += 3)
+					array .push (color [index], color [index + 1], color [index + 2], 1);
 
-			for (var index = length, length = min * 3; index < length; index += 3)
-				array .push (1, 1, 1, 1);
+				var
+					index = (this .length - 1) * 3,
+					r     = color [index],
+					g     = color [index + 1],
+					b     = color [index + 2];
+
+				for (var index = length, length = min * 3; index < length; index += 3)
+					array .push (r, g, b, 1);
+			}
+			else
+			{
+				for (var index = 0; index < min; ++ index)
+					array .push (1, 1, 1, 1);
+			}
 		},
 		getVectors: function (array)
 		{
@@ -108248,8 +108269,6 @@ function (Fields,
 
 	return Color;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -108383,13 +108402,28 @@ function (Fields,
 		},
 		addColors: function (array, min)
 		{
-			const color = this .color;
+			if (this .length)
+			{
+				const color = this .color;
 
-			for (var index = 0, length = this .length * 4; index < length; index += 4)
-				array .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
+				for (var index = 0, length = this .length * 4; index < length; index += 4)
+					array .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
 
-			for (var index = length, length = min * 4; index < length; index += 4)
-				array .push (1, 1, 1, 1);
+				var
+					index = (this .length - 1) * 4,
+					r     = color [index],
+					g     = color [index + 1],
+					b     = color [index + 2],
+					a     = color [index + 2];
+
+				for (var index = length, length = min * 4; index < length; index += 4)
+					array .push (r, g, b, a);
+			}
+			else
+			{
+				for (var index = 0; index < min; ++ index)
+					array .push (1, 1, 1, 1);
+			}
 		},
 		getVectors: function (array)
 		{
@@ -109862,7 +109896,7 @@ function (Fields,
 		},
 		get1Vector: function (index, result)
 		{
-			if (index < this .length)
+			if (index >= 0 && index < this .length)
 			{
 				const vector = this .vector;
 
@@ -109870,11 +109904,12 @@ function (Fields,
 
 				return result .set (vector [index], vector [index + 1], vector [index + 2]);
 			}
-			else if (this .length)
+			else if (index >= 0 && this .length)
 			{
 				const vector = this .vector;
 
-				index = (this .length - 1) * 3;
+				index %= this .length;
+				index *= 3;
 
 				return result .set (vector [index], vector [index + 1], vector [index + 2]);
 			}
@@ -109889,6 +109924,15 @@ function (Fields,
 			{
 				const vector = this .vector;
 
+				index *= 3;
+
+				array .push (vector [index], vector [index + 1], vector [index + 2]);
+			}
+			else if (index >= 0 && this .length)
+			{
+				const vector = this .vector;
+
+				index %= this .length;
 				index *= 3;
 
 				array .push (vector [index], vector [index + 1], vector [index + 2]);
