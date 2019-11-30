@@ -109,7 +109,7 @@ function (Fields,
 		},
 		get1Vector: function (index, result)
 		{
-			if (index < this .length)
+			if (index >= 0 && index < this .length)
 			{
 				const vector = this .vector;
 
@@ -117,7 +117,7 @@ function (Fields,
 
 				return result .set (vector [index], vector [index + 1], vector [index + 2]);
 			}
-			else if (this .length)
+			else if (index >= 0 && this .length)
 			{
 				const vector = this .vector;
 
@@ -141,7 +141,7 @@ function (Fields,
 
 				array .push (vector [index], vector [index + 1], vector [index + 2]);
 			}
-			else if (this .length)
+			else if (index >= 0 && this .length)
 			{
 				const vector = this .vector;
 

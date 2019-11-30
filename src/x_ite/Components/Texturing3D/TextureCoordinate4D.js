@@ -111,7 +111,7 @@ function (Fields,
 		},
 		get1Point: function (index, vector)
 		{
-			if (index < this .length)
+			if (index >= 0 && index < this .length)
 			{
 				const point = this .point;
 
@@ -119,7 +119,7 @@ function (Fields,
 
 				return vector .set (point [index], point [index + 1], point [index + 2], point [index + 3]);
 			}
-			else if (this .length)
+			else if (index >= 0 && this .length)
 			{
 				const point = this .point;
 
@@ -143,7 +143,7 @@ function (Fields,
 
 				array .push (point [index], point [index + 1], point [index + 2], point [index + 3]);
 			}
-			else if (this .length)
+			else if (index >= 0 && this .length)
 			{
 				var point = this .point;
 
@@ -153,7 +153,9 @@ function (Fields,
 				array .push (point [index], point [index + 1], point [index + 2], point [index + 3]);
 			}
 			else
+			{
 				array .push (0, 0, 0, 1);
+			}
 		},
 		getTexCoord: function (array)
 		{
