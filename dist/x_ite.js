@@ -1,4 +1,4 @@
-/* X_ITE v4.6.9-967 */
+/* X_ITE v4.6.10a-968 */
 
 (function () {
 
@@ -25263,7 +25263,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.6.9";
+	return "4.6.10a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-

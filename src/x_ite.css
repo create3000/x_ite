@@ -63,6 +63,7 @@ X3DCanvas canvas.x_ite-private-canvas {
 }
 
 X3DCanvas .x_ite-private-notification {
+	all: initial;
 	display: none;
 	padding: 2px 5px 5px 5px;
 	position: absolute;
@@ -84,11 +85,13 @@ X3DCanvas .x_ite-private-notification {
 }
 
 X3DCanvas .x_ite-private-notification span {
+	all: initial
 	padding: 0px 24px 0px 20px;
 	background: url(assets/images/icon.bw.png) no-repeat 0px 3px;
 }
 
 X3DCanvas .x_ite-private-browser-timings {
+	all: initial
 	display: none;
 	position: absolute;
 	bottom: -4px;
@@ -166,6 +169,7 @@ X3DCanvas .x_ite-private-browser-timings tfoot td {
 }
 
 X3DCanvas .x_ite-private-browser-timings button {
+	all: unset;
 	border: 0;
 	padding: 2px;
 	background: rgba(0,0,0,0.38196601);
@@ -213,6 +217,7 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 
 .x_ite-private-menu.context-menu-list,
 .x_ite-private-menu .context-menu-list {
+	all: initial;
 	position: absolute;
 	display: inline-block;
 	min-width: 120px;
