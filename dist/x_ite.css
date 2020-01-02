@@ -1,4 +1,4 @@
-/* X_ITE v4.6.10a-976 */
+/* X_ITE v4.6.10a-977 */
 @charset "utf-8";
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
 X3DCanvas .x_ite-private-splash-screen {
@@ -192,8 +192,6 @@ X3DCanvas .x_ite-private-browser-timings table {
 X3DCanvas .x_ite-private-browser-timings thead th {
 	padding-left: 20px;
 	padding-bottom: 5px;
-}
-X3DCanvas .x_ite-private-browser-timings thead th {
 	font-weight: bold;
 }
 X3DCanvas .x_ite-private-browser-timings td:first-child {
