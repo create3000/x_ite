@@ -222,6 +222,7 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 	min-width: 120px;
 	padding: 0;
 	margin: 0;
+	margin-left: 1px;
 	white-space: pre;
 	font-family: PT Sans, sans-serif;
 	font-size: 10pt;
@@ -245,6 +246,7 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 	   -moz-user-select: none;
 	    -ms-user-select: none;
 			  user-select: none;
+	font-size: 10pt;
 	line-height: 1;
 	letter-spacing: unset;
 }
@@ -312,7 +314,7 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 	font-size: 10pt;
 	font-weight: normal;
 	letter-spacing: unset;
-	line-height: 1.2;
+	line-height: 1;
 }
 
 /* position checkboxes and radios as icons */
@@ -334,10 +336,15 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 .x_ite-private-menu .context-menu-input > label > textarea,
 .x_ite-private-menu .context-menu-input > label > select {
 	display: block;
+	margin: 0px;
+	padding: 0px;
 	width: 100%;
 	-webkit-box-sizing: border-box;
 	   -moz-box-sizing: border-box;
-	        box-sizing: border-box;
+			  box-sizing: border-box;
+	font-size: 10pt;
+	letter-spacing: unset;
+	line-height: 1;
 }
 
 .x_ite-private-menu .context-menu-input > label > textarea {
