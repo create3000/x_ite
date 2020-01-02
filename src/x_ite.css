@@ -79,6 +79,8 @@ X3DCanvas .x_ite-private-notification {
 	color: white;
 	font-family: PT Sans, sans-serif;
 	font-size: 10pt;
+	letter-spacing: unset;
+	line-height: 1;
 	white-space: pre;
 	pointer-events: none;
 }
@@ -106,7 +108,6 @@ X3DCanvas .x_ite-private-browser-timings {
 	color: white;
 	font-family: PT Sans, sans-serif;
 	font-size: 9pt;
-	line-height: 1.1;
 	white-space: pre;
 	pointer-events: none;
 }
@@ -124,8 +125,10 @@ X3DCanvas .x_ite-private-browser-timings td {
 	padding: 0;
 	background: none;
 	color: white;
+	font-size: inherit;
 	font-weight: normal;
 	font-style: normal;
+	letter-spacing: unset;
 	line-height: 1;
 	text-align: left;
 }
@@ -170,10 +173,11 @@ X3DCanvas .x_ite-private-browser-timings button {
 	padding: 2px;
 	background: rgba(0,0,0,0.38196601);
 	color: white;
-	font-size: 9pt;
-	line-height: 1.1;
 	font-family: PT Sans, sans-serif;
 	font-style: italic;
+	font-size: 9pt;
+	letter-spacing: unset;
+	line-height: 1.1;
 	pointer-events: all;
 	cursor: default;
 }
@@ -233,13 +237,16 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 .x_ite-private-menu .context-menu-item {
 	position: relative;
 	background-color: #222;
+	margin: 0px;
 	border-top: 1px solid #222;
 	border-bottom: 1px solid #222;
 	padding: 3px 24px 3px 24px;
 	-webkit-user-select: none;
 	   -moz-user-select: none;
 	    -ms-user-select: none;
-	        user-select: none;
+			  user-select: none;
+	line-height: 1;
+	letter-spacing: unset;
 }
 
 .x_ite-private-menu .context-menu-separator {
@@ -301,6 +308,10 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 /* vertically align inside labels */
 .x_ite-private-menu .context-menu-input > label > * {
 	vertical-align: top;
+	font-size: 10pt;
+	font-weight: normal;
+	letter-spacing: unset;
+	line-height: 1;
 }
 
 /* position checkboxes and radios as icons */
