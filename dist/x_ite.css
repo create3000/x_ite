@@ -1,4 +1,4 @@
-/* X_ITE v4.6.10a-979 */
+/* X_ITE v4.6.10a-980 */
 @charset "utf-8";
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
 X3DCanvas .x_ite-private-splash-screen {
@@ -71,6 +71,7 @@ X3DCanvas {
 	margin: 0px;
 	padding: 0px;
 	border: 0px;
+	border-radius: 0px;
 	width: 300px;
 	height: 150px;
 }
@@ -89,18 +90,20 @@ X3DCanvas .x_ite-private-browser {
 	z-index: 0;
 	display: block;
 	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
 	margin: 0px;
 	padding: 0px;
 	border: 0px;
+	border-radius: 0px;
 }
 X3DCanvas .x_ite-private-surface {
 	margin: 0px;
 	padding: 0px;
 	border: 0px;
+	border-radius: 0px;
 	height: 100%;
 	margin-right: 0px;
 }
@@ -110,6 +113,7 @@ X3DCanvas canvas.x_ite-private-canvas {
 	margin: 0px;
 	padding: 0px;
 	border: 0px;
+	border-radius: 0px;
 	width: 100%;
 	height: 100%;
 }
@@ -167,10 +171,11 @@ X3DCanvas .x_ite-private-browser-timings tfoot,
 X3DCanvas .x_ite-private-browser-timings tr,
 X3DCanvas .x_ite-private-browser-timings th,
 X3DCanvas .x_ite-private-browser-timings td {
-	box-sizing: border-box;;
-	outline: 0;
-	margin: 0;
-	border: 0;
+	box-sizing: border-box;
+	outline: 0px;
+	margin: 0px;
+	border: 0px;
+	border-radius: 0px;
 	padding: 0;
 	background: none;
 	color: white;
@@ -211,8 +216,8 @@ X3DCanvas .x_ite-private-browser-timings tfoot td {
 	padding-top: 4px;
 }
 X3DCanvas .x_ite-private-browser-timings button {
-	box-sizing: border-box;;
-	border: 0;
+	box-sizing: border-box;
+	border: 0px;
 	border-radius: 10px;
 	padding: 2px 2px 4px 2px;
 	width: 100%;
