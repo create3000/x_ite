@@ -271,6 +271,14 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
  	       user-select: text;
 }
 
+.x_ite-private-menu .context-menu-input > label > input[type="checkbox"] {
+	-webkit-appearance: checkbox;
+}
+
+.x_ite-private-menu .context-menu-input > label > input[type="radio"] {
+	-webkit-appearance: radio;
+}
+
 .x_ite-private-menu .context-menu-hover {
 	cursor: pointer;
 	background-color: #444;
@@ -323,7 +331,7 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 	line-height: 1;
 }
 
-/* position checkboxes and radios as icons */
+/* position checkboxes and radios like icons */
 .x_ite-private-menu .context-menu-input > label > input[type="checkbox"],
 .x_ite-private-menu .context-menu-input > label > input[type="radio"] {
 	display: inline;
