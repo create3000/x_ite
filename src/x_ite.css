@@ -190,10 +190,6 @@ X3DCanvas .x_ite-private-browser-timings button {
 	line-height: 1.1;
 	text-align: center;
 	pointer-events: all;
-	cursor: default;
-}
-
-X3DCanvas .x_ite-private-browser-timings button:hover {
 	cursor: pointer;
 }
 
