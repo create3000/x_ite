@@ -119,6 +119,7 @@ X3DCanvas .x_ite-private-browser-timings tfoot,
 X3DCanvas .x_ite-private-browser-timings tr,
 X3DCanvas .x_ite-private-browser-timings th,
 X3DCanvas .x_ite-private-browser-timings td {
+	box-sizing: border-box;
 	outline: 0;
 	margin: 0;
 	border: 0;
@@ -170,6 +171,7 @@ X3DCanvas .x_ite-private-browser-timings tfoot td {
 }
 
 X3DCanvas .x_ite-private-browser-timings button {
+	box-sizing: border-box;
 	border: 0;
 	border-radius: 10px;
 	padding: 2px 2px 4px 2px;
@@ -350,12 +352,10 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 .x_ite-private-menu .context-menu-input > label > textarea,
 .x_ite-private-menu .context-menu-input > label > select {
 	display: block;
+	box-sizing: border-box;
 	margin: 0px;
 	padding: 0px;
 	width: 100%;
-	-webkit-box-sizing: border-box;
-	   -moz-box-sizing: border-box;
-			  box-sizing: border-box;
 	font-size: 10pt;
 	letter-spacing: unset;
 	line-height: 1;
