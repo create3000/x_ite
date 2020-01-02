@@ -134,7 +134,13 @@ X3DCanvas .x_ite-private-browser-timings td {
 }
 
 X3DCanvas .x_ite-private-browser-timings table {
+	overflow: hidden;
 	background: url(assets/images/Time.png) no-repeat;
+	width: 100%;
+	max-width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	empty-cells: show;
 }
 
 X3DCanvas .x_ite-private-browser-timings tr,
