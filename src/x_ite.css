@@ -139,14 +139,8 @@ X3DCanvas .x_ite-private-browser-timings table {
 	width: 100%;
 	max-width: 100%;
 	border-collapse: separate;
-	border-spacing: revert;
+	border-spacing: 2px;
 	empty-cells: show;
-}
-
-X3DCanvas .x_ite-private-browser-timings tr,
-X3DCanvas .x_ite-private-browser-timings th,
-X3DCanvas .x_ite-private-browser-timings td {
-	border-collapse: separate;
 }
 
 X3DCanvas .x_ite-private-browser-timings thead th {
@@ -273,10 +267,12 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 
 .x_ite-private-menu .context-menu-input > label > input[type="checkbox"] {
 	-webkit-appearance: checkbox;
+	-moz-appearance: checkbox;
 }
 
 .x_ite-private-menu .context-menu-input > label > input[type="radio"] {
 	-webkit-appearance: radio;
+	-moz-appearance: radio;
 }
 
 .x_ite-private-menu .context-menu-hover {
@@ -342,7 +338,7 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 }
 
 .x_ite-private-menu .context-menu-input > label > span {
-	margin-left: 4px;
+	margin-left: 2px;
 }
 
 .x_ite-private-menu .context-menu-input > label,
