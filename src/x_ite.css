@@ -139,7 +139,7 @@ X3DCanvas .x_ite-private-browser-timings table {
 	width: 100%;
 	max-width: 100%;
 	border-collapse: separate;
-	border-spacing: 0;
+	border-spacing: revert;
 	empty-cells: show;
 }
 
