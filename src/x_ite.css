@@ -256,6 +256,7 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 
 .x_ite-private-menu .context-menu-item > label > input,
 .x_ite-private-menu .context-menu-item > label > textarea {
+	all: revert;
 	-webkit-user-select: text;
 	   -moz-user-select: text;
 	    -ms-user-select: text;
@@ -311,7 +312,7 @@ X3DCanvas .x_ite-private-browser-timings button:hover {
 	font-size: 10pt;
 	font-weight: normal;
 	letter-spacing: unset;
-	line-height: 1;
+	line-height: 1.2;
 }
 
 /* position checkboxes and radios as icons */
