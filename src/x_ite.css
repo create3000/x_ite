@@ -161,13 +161,19 @@ X3DCanvas .x_ite-private-browser-timings td {
 	padding-bottom: 2px;
 }
 
+X3DCanvas .x_ite-private-browser-timings tfoot td:first-child {
+	padding-right: 0px;
+}
+
 X3DCanvas .x_ite-private-browser-timings tfoot td {
 	padding-top: 4px;
 }
 
 X3DCanvas .x_ite-private-browser-timings button {
 	border: 0;
-	padding: 2px;
+	border-radius: 10px;
+	padding: 2px 2px 4px 2px;
+	width: 100%;
 	background: rgba(0,0,0,0.38196601);
 	color: white;
 	font-family: PT Sans, sans-serif;
@@ -175,6 +181,7 @@ X3DCanvas .x_ite-private-browser-timings button {
 	font-size: 9pt;
 	letter-spacing: unset;
 	line-height: 1.1;
+	text-align: center;
 	pointer-events: all;
 	cursor: default;
 }

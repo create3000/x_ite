@@ -1,4 +1,4 @@
-/* X_ITE v4.6.10a-977 */
+/* X_ITE v4.6.10a-978 */
 @charset "utf-8";
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
 X3DCanvas .x_ite-private-splash-screen {
@@ -203,12 +203,17 @@ X3DCanvas .x_ite-private-browser-timings tr.x_ite-private-more td {
 X3DCanvas .x_ite-private-browser-timings td {
 	padding-bottom: 2px;
 }
+X3DCanvas .x_ite-private-browser-timings tfoot td:first-child {
+	padding-right: 0px;
+}
 X3DCanvas .x_ite-private-browser-timings tfoot td {
 	padding-top: 4px;
 }
 X3DCanvas .x_ite-private-browser-timings button {
 	border: 0;
-	padding: 2px;
+	border-radius: 10px;
+	padding: 2px 2px 4px 2px;
+	width: 100%;
 	background: rgba(0,0,0,0.38196601);
 	color: white;
 	font-family: PT Sans, sans-serif;
@@ -216,6 +221,7 @@ X3DCanvas .x_ite-private-browser-timings button {
 	font-size: 9pt;
 	letter-spacing: unset;
 	line-height: 1.1;
+	text-align: center;
 	pointer-events: all;
 	cursor: default;
 }
