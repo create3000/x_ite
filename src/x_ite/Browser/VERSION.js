@@ -49,5 +49,5 @@
 
 define (function ()
 {
-	return "4.6.10a";
+	return "4.6.10";
 });
