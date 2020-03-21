@@ -1,4 +1,4 @@
-/* X_ITE v4.6.10-983 */
+/* X_ITE v4.6.10-984 */
 
 (function () {
 
@@ -40989,7 +40989,7 @@ function (URI,
 				return this .scriptUrl .transform ("assets/components/" + file + ".js") .toString ();
 			}
 
-			return "http://create3000.de/x_ite";
+			return "https://github.com/create3000/x_ite";
 		},
 		getShaderUrl: function (file)
 		{
