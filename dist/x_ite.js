@@ -1,4 +1,4 @@
-/* X_ITE v4.6.10-982 */
+/* X_ITE v4.6.10-983 */
 
 (function () {
 
@@ -47527,7 +47527,7 @@ function ($,
 			try
 			{
 				var
-					field      = node .getField (this .fieldToCamelCase (xmlAttribute .name)),
+					field      = node .getField (this .attributeToCamelCase (xmlAttribute .name)),
 					accessType = field .getAccessType ();
 
 				if (accessType & X3DConstants .initializeOnly)
@@ -47635,8 +47635,9 @@ function ($,
 
 			return true;
 		},
-		fieldToCamelCase: function (name)
+		attributeToCamelCase: function (name)
 		{
+			// Function also needed by X_ITE DOM.
 			return HTMLSupport .fields .get (name);
 		},
 	});
