@@ -1,4 +1,4 @@
-/* X_ITE v4.6.10-984 */
+/* X_ITE v4.6.10-985 */
 
 (function () {
 
@@ -115048,7 +115048,7 @@ define ('x_ite/Components/Texturing/TextureCoordinateGenerator',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureCoordinateNode, 
+          X3DTextureCoordinateNode,
           X3DConstants,
           ModeType)
 {
@@ -115083,10 +115083,6 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "texCoord";
-		},
-		getTexCoord: function (array)
-		{
-			return array;
 		},
 		initialize: function ()
 		{
@@ -115150,8 +115146,6 @@ function (Fields,
 
 	return TextureCoordinateGenerator;
 });
-
-
 
 /*******************************************************************************
  *

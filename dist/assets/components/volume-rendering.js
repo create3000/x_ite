@@ -1868,11 +1868,6 @@ function (Fields,
 		{
 			X3DChildNode     .prototype .initialize .call (this);
 			X3DBoundedObject .prototype .initialize .call (this);
-		},
-		initialize: function ()
-		{
-			X3DChildNode     .prototype .initialize .call (this);
-			X3DBoundedObject .prototype .initialize .call (this);
 
 			var
 				browser = this .getBrowser (),

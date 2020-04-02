@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureCoordinateNode, 
+          X3DTextureCoordinateNode,
           X3DConstants,
           ModeType)
 {
@@ -93,10 +93,6 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "texCoord";
-		},
-		getTexCoord: function (array)
-		{
-			return array;
 		},
 		initialize: function ()
 		{
@@ -160,5 +156,3 @@ function (Fields,
 
 	return TextureCoordinateGenerator;
 });
-
-
