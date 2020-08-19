@@ -57,13 +57,13 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
-	"lib/ammojs/Ammo",
+	"lib/ammojs/AmmoJS,
 ],
 function ($,
           Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DRigidJointNode, 
+          X3DRigidJointNode,
           X3DConstants,
           Vector3,
           Rotation4,
@@ -120,7 +120,7 @@ function ($,
 		initialize: function ()
 		{
 			X3DRigidJointNode .prototype .initialize .call (this);
-		
+
 			this .axis_          .addInterest ("set_joint__",       this);
 			this .minSeparation_ .addInterest ("set_separation__",  this);
 			this .maxSeparation_ .addInterest ("set_separation__",  this);
@@ -139,16 +139,16 @@ function ($,
 			{
 				if (! this .getCollection ())
 					return;
-	
+
 				if (! this .getBody1 ())
 					return;
-		
+
 				if (! this .getBody2 ())
 					return;
-			
+
 			   if (this .getBody1 () .getCollection () !== this .getCollection ())
 					return;
-			
+
 			   if (this .getBody2 () .getCollection () !== this .getCollection ())
 					return;
 
@@ -178,7 +178,7 @@ function ($,
 				                                            frameInA,
 				                                            frameInB,
 				                                            true);
-				
+
 				this .joint .setLowerAngLimit (0);
 				this .joint .setUpperAngLimit (0);
 
@@ -232,5 +232,3 @@ function ($,
 
 	return SliderJoint;
 });
-
-

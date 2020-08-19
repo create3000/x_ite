@@ -56,12 +56,12 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Numbers/Vector3",
-	"lib/ammojs/Ammo",
+	"lib/ammojs/AmmoJS",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNBodyCollidableNode, 
+          X3DNBodyCollidableNode,
           X3DConstants,
           X3DCast,
           TraverseType,
@@ -121,13 +121,13 @@ function (Fields,
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
 				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .shape_);
-		
+
 				if (boundedObject)
 					return boundedObject .getBBox (bbox);
-		
+
 				return bbox .set ();
 			}
-		
+
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 		},
 		setConvex: function (value)
@@ -145,19 +145,19 @@ function (Fields,
 			return function ()
 			{
 				var vertices = this .geometryNode .getVertices () .getValue ();
-	
+
 				if (vertices .length === 0)
 					return null;
-	
+
 				var convexHull = new Ammo .btConvexHullShape ();
-	
+
 				for (var i = 0, length = vertices .length; i < length; i += 4)
 				{
 					p .setValue (vertices [i], vertices [i + 1], vertices [i + 2]);
 					convexHull .addPoint (p, false);
 				}
 
-				convexHull .recalcLocalAabb ();	
+				convexHull .recalcLocalAabb ();
 
 				return convexHull;
 			};
@@ -172,21 +172,21 @@ function (Fields,
 			return function ()
 			{
 				var vertices = this .geometryNode .getVertices () .getValue ();
-	
+
 				if (vertices .length === 0)
 					return null;
-	
+
 				this .triangleMesh = new Ammo .btTriangleMesh ();
-	
+
 				for (var i = 0, length = vertices .length; i < length; i += 12)
 				{
 					p1 .setValue (vertices [i],     vertices [i + 1], vertices [i + 2]);
 					p2 .setValue (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 					p3 .setValue (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
 
-					this .triangleMesh .addTriangle (p1, p2, p3);	
+					this .triangleMesh .addTriangle (p1, p2, p3);
 				}
-	
+
 				return new Ammo .btBvhTriangleMeshShape (this .triangleMesh, false);
 			};
 		})(),
@@ -247,15 +247,15 @@ function (Fields,
 			{
 				var ls = this .getCompoundShape () .getLocalScaling ();
 				localScaling .setValue (ls .x (), ls .y (), ls .z ());
-	
+
 				this .removeCollidableGeometry ();
 				this .setOffset (0, 0, 0);
 				this .getCompoundShape () .setLocalScaling (defaultScaling);
-	
+
 				if (this .enabled_ .getValue () && this .geometryNode && this .geometryNode .getGeometryType () > 1)
 				{
 					var type = this .geometryNode .getType ();
-	
+
 					for (var t = type .length - 1; t >= 0; -- t)
 					{
 						switch (type [t])
@@ -265,19 +265,19 @@ function (Fields,
 								var
 									box  = this .geometryNode,
 									size = box .size_ .getValue ();
-		
+
 								this .collisionShape = new Ammo .btBoxShape (new Ammo .btVector3 (size .x / 2, size .y / 2, size .z / 2));
 								break;
 							}
 							case X3DConstants .Cone:
 							{
 								var cone = this .geometryNode;
-				
+
 								if (cone .side_ .getValue () && cone .bottom_ .getValue ())
 									this .collisionShape = new Ammo .btConeShape (cone .bottomRadius_ .getValue (), cone .height_ .getValue ());
 								else
 									this .collisionShape = this .createConcaveGeometry ();
-		
+
 								break;
 							}
 							case X3DConstants .Cylinder:
@@ -286,18 +286,18 @@ function (Fields,
 									cylinder  = this .geometryNode,
 									radius    = cylinder .radius_ .getValue (),
 									height1_2 = cylinder .height_ .getValue () * 0.5;
-				
+
 								if (cylinder .side_ .getValue () && cylinder .top_ .getValue () && cylinder .bottom_ .getValue ())
 									this .collisionShape = new Ammo .btCylinderShape (new Ammo .btVector3 (radius, height1_2, radius));
 								else
 									this .collisionShape = this .createConcaveGeometry ();
-		
+
 								break;
 							}
 							case X3DConstants .ElevationGrid:
 							{
 								var elevationGrid = this .geometryNode;
-				
+
 								if (elevationGrid .xDimension_ .getValue () > 1 && elevationGrid .zDimension_ .getValue () > 1)
 								{
 									var
@@ -305,19 +305,19 @@ function (Fields,
 										max         = Number .NEGATIVE_INFINITY,
 										heightField = this .heightField = Ammo ._malloc (4 * elevationGrid .xDimension_ .getValue () * elevationGrid .zDimension_ .getValue ()),
 										i4          = 0;
-		
+
 									for (var i = 0, length = elevationGrid .height_ .length; i < length; ++ i)
 									{
 										var value = elevationGrid .height_ [i];
-		
+
 										min = Math .min (min, value);
 										max = Math .max (max, value);
-		
+
 										Ammo .HEAPF32 [heightField + i4 >> 2] = elevationGrid .height_ [i];
-		
+
 										i4 += 4;
 									}
-		
+
 									this .collisionShape = new Ammo .btHeightfieldTerrainShape (elevationGrid .xDimension_ .getValue (),
 									                                                            elevationGrid .zDimension_ .getValue (),
 									                                                            heightField,
@@ -327,20 +327,20 @@ function (Fields,
 									                                                            1,
 									                                                            "PHY_FLOAT",
 									                                                            true);
-					
+
 									this .collisionShape .setLocalScaling (new Ammo .btVector3 (elevationGrid .xSpacing_ .getValue (), 1, elevationGrid .zSpacing_ .getValue ()));
-		
+
 									this .setOffset (elevationGrid .xSpacing_ .getValue () * (elevationGrid .xDimension_ .getValue () - 1) * 0.5,
 									                 (min + max) * 0.5,
 									                 elevationGrid .zSpacing_ .getValue () * (elevationGrid .zDimension_ .getValue () - 1) * 0.5);
 								}
-				
+
 								break;
 							}
 							case X3DConstants .Sphere:
 							{
 								var sphere = this .geometryNode;
-				
+
 								this .collisionShape = new Ammo .btSphereShape (sphere .radius_ .getValue ());
 								break;
 							}
@@ -350,7 +350,7 @@ function (Fields,
 									this .collisionShape = this .createConvexGeometry ();
 								else
 									this .collisionShape = this .createConcaveGeometry ();
-	
+
 								break;
 							}
 							default:
@@ -366,7 +366,7 @@ function (Fields,
 				{
 					this .collisionShape = null;
 				}
-	
+
 				if (this .collisionShape)
 					this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collisionShape);
 
@@ -381,7 +381,7 @@ function (Fields,
 			{
 				this .getCompoundShape () .removeChildShapeByIndex (0);
 				Ammo .destroy (this .collisionShape);
-				this .collisionShape = null;;	
+				this .collisionShape = null;;
 			}
 
 			if (this .heightField)
@@ -406,13 +406,13 @@ function (Fields,
 						browser          = renderObject .getBrowser (),
 						pickingHierarchy = browser .getPickingHierarchy (),
 						modelViewMatrix  = renderObject .getModelViewMatrix ();
-		
+
 					pickingHierarchy .push (this);
 					modelViewMatrix .push ();
 					modelViewMatrix .multLeft (this .getMatrix ());
-			
+
 					this .shapeNode .traverse (type, renderObject);
-				
+
 					modelViewMatrix .pop ();
 					pickingHierarchy .pop ();
 					break;
@@ -420,12 +420,12 @@ function (Fields,
 				default:
 				{
 					var modelViewMatrix = renderObject .getModelViewMatrix ();
-		
+
 					modelViewMatrix .push ();
 					modelViewMatrix .multLeft (this .getMatrix ());
-			
+
 					this .shapeNode .traverse (type, renderObject);
-				
+
 					modelViewMatrix .pop ();
 					break;
 				}
@@ -441,5 +441,3 @@ function (Fields,
 
 	return CollidableShape;
 });
-
-

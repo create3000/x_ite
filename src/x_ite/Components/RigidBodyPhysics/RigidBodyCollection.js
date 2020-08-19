@@ -55,12 +55,12 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Browser/RigidBodyPhysics/AppliedParametersType",
-	"lib/ammojs/Ammo",
+	"lib/ammojs/AmmoJS",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChildNode, 
+          X3DChildNode,
           X3DConstants,
           X3DCast,
           AppliedParametersType,
@@ -75,7 +75,7 @@ function (Fields,
 		this .addType (X3DConstants .RigidBodyCollection);
 
 		// Units
-	
+
 		this .gravity_                 .setUnit ("acceleration");
 		this .constantForceMix_        .setUnit ("force");
 		this .maxCorrectionSpeed_      .setUnit ("speed");
@@ -160,11 +160,11 @@ function (Fields,
 		getTimeStep: function ()
 		{
 			const DELAY = 15; // Delay in frames when dt full applies.
-		
+
 			var
 				dt        = 1 / Math .max (10, this .getBrowser () .getCurrentFrameRate ()),
 				deltaTime = this .deltaTime = ((DELAY - 1) * this .deltaTime + dt) / DELAY; // Moving average about DELAY frames.
-		
+
 			return deltaTime;
 		},
 		set_enabled__: function ()
@@ -218,7 +218,7 @@ function (Fields,
 						else
 							rigidBody .setRestitution (0);
 					}
-		
+
 					return;
 				}
 			}
@@ -239,7 +239,7 @@ function (Fields,
 						rigidBody .setFriction (this .colliderNode .frictionCoefficients_ .x);
 						rigidBody .setRollingFriction (this .colliderNode .frictionCoefficients_ .y);
 					}
-		
+
 					return;
 				}
 			}
@@ -273,16 +273,16 @@ function (Fields,
 
 				if (! bodyNode)
 					continue;
-		
+
 				if (bodyNode .getCollection ())
 				{
 					bodyNode .collection_ .addInterest ("set_bodies__", this);
 					this .otherBodyNodes .push (bodyNode);
 					continue;
 				}
-		
+
 				bodyNode .setCollection (this);
-		
+
 				this .bodyNodes .push (bodyNode);
 			}
 
@@ -306,10 +306,10 @@ function (Fields,
 
 				if (! bodyNode .enabled_ .getValue ())
 					continue;
-		
+
 				this .rigidBodies .push (bodyNode .getRigidBody ());
 			}
-		
+
 			for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
 				this .dynamicsWorld .addRigidBody (this .rigidBodies [i]);
 		},
@@ -317,17 +317,17 @@ function (Fields,
 		{
 			for (var i = 0, length = this .jointNodes .length; i < length; ++ i)
 				this .jointNodes [i] .setCollection (null);
-		
+
 			for (var i = 0, length = this .otherJointNodes .length; i < length; ++ i)
 				this .otherJointNodes [i] .collection_ .removeInterest ("set_joints__", this);
 
 			for (var i = 0, length = this .joints_ .length; i < length; ++ i)
 			{
 				var jointNode = X3DCast (X3DConstants .X3DRigidJointNode, this .joints_ [i]);
-		
+
 				if (! jointNode)
 					continue;
-		
+
 				if (jointNode .getCollection ())
 				{
 					jointNode .collection_ .addInterest ("set_joints__", this);
@@ -348,19 +348,19 @@ function (Fields,
 					deltaTime  = this .getTimeStep (),
 					iterations = this .iterations_ .getValue (),
 					gravity    = this .gravity_ .getValue ();
-			
+
 				this .set_bounce__ ();
 				this .set_frictionCoefficients__ ();
-			
+
 				if (this .preferAccuracy_ .getValue ())
 				{
 					deltaTime /= iterations;
-			
+
 					for (var i = 0; i < iterations; ++ i)
 					{
 						for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
 							this .bodyNodes [i] .applyForces (gravity);
-			
+
 						this .dynamicsWorld .stepSimulation (deltaTime, 0);
 					}
 				}
@@ -368,10 +368,10 @@ function (Fields,
 				{
 					for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
 						this .bodyNodes [i] .applyForces (gravity);
-			
+
 					this .dynamicsWorld .stepSimulation (deltaTime, iterations + 2, deltaTime / iterations);
 				}
-			
+
 				for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
 					this .bodyNodes [i] .update ();
 			}
@@ -384,5 +384,3 @@ function (Fields,
 
 	return RigidBodyCollection;
 });
-
-

@@ -54,11 +54,11 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
-	"lib/ammojs/Ammo",
+	"lib/ammojs/AmmoJS",
 ],
 function (Fields,
-          X3DChildNode, 
-          X3DBoundedObject, 
+          X3DChildNode,
+          X3DBoundedObject,
           X3DConstants,
           Vector3,
           Matrix4,
@@ -76,7 +76,7 @@ function (Fields,
 		this .addChildObjects ("body", new Fields .SFNode ());
 
 		// Units
-	
+
 		this .translation_ .setUnit ("length");
 
 		// Members
@@ -120,7 +120,7 @@ function (Fields,
 				                          m [2], m [6], m [10]);
 
 				l .setOrigin (o);
-	
+
 				return l;
 			};
 		})(),
@@ -155,10 +155,8 @@ function (Fields,
 
 			if (this .compoundShape .getNumChildShapes ())
 				this .compoundShape .updateChildTransform (0, this .getLocalTransform (), true);
-		},	
+		},
 	});
 
 	return X3DNBodyCollidableNode;
 });
-
-

@@ -57,13 +57,13 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
-	"lib/ammojs/Ammo",
+	"lib/ammojs/AmmoJS",
 ],
 function ($,
           Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DRigidJointNode, 
+          X3DRigidJointNode,
           X3DConstants,
           Vector3,
           Rotation4,
@@ -126,7 +126,7 @@ function ($,
 		initialize: function ()
 		{
 			X3DRigidJointNode .prototype .initialize .call (this);
-		
+
 			this .anchorPoint_ .addInterest ("set_joint__", this);
 			this .axis_        .addInterest ("set_joint__", this);
 		},
@@ -140,16 +140,16 @@ function ($,
 			{
 				if (! this .getCollection ())
 					return;
-	
+
 				if (! this .getBody1 ())
 					return;
-		
+
 				if (! this .getBody2 ())
 					return;
-			
+
 			   if (this .getBody1 () .getCollection () !== this .getCollection ())
 					return;
-			
+
 			   if (this .getBody2 () .getCollection () !== this .getCollection ())
 					return;
 
@@ -234,14 +234,14 @@ function ($,
 			{
 				if (this .outputs .body2AnchorPoint)
 					this .body2AnchorPoint_ = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
-	
+
 				if (this .outputs .angle)
 				{
 					var lastAngle  = this .angle_ .getValue ();
 
 					difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
 					difference .get (null, rotation);
-			
+
 					this .angle_ = rotation .angle;
 
 					if (this .outputs .angleRate)
@@ -253,5 +253,3 @@ function ($,
 
 	return SingleAxisHingeJoint;
 });
-
-

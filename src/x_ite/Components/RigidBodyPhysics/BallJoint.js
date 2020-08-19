@@ -55,13 +55,13 @@ define ([
 	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
-	"lib/ammojs/Ammo",
+	"lib/ammojs/AmmoJS",
 ],
 function ($,
           Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DRigidJointNode, 
+          X3DRigidJointNode,
           X3DConstants,
           Vector3,
           Ammo)
@@ -109,7 +109,7 @@ function ($,
 		initialize: function ()
 		{
 			X3DRigidJointNode .prototype .initialize .call (this);
-		
+
 			this .anchorPoint_ .addInterest ("set_anchorPoint__", this);
 		},
 		addJoint: function ()
@@ -119,13 +119,13 @@ function ($,
 
 			if (! this .getBody1 ())
 				return;
-	
+
 			if (! this .getBody2 ())
 				return;
-		
+
 		   if (this .getBody1 () .getCollection () !== this .getCollection ())
 				return;
-		
+
 		   if (this .getBody2 () .getCollection () !== this .getCollection ())
 				return;
 
@@ -133,7 +133,7 @@ function ($,
 			                                                 this .getBody2 () .getRigidBody (),
 			                                                 new Ammo .btVector3 (),
 			                                                 new Ammo .btVector3 ());
-	
+
 			this .set_anchorPoint__ ();
 
 			this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
@@ -181,7 +181,7 @@ function ($,
 
 				this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .anchorPoint_ .getValue ()));
 				this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .anchorPoint_ .getValue ()));
-		
+
 				this .joint .setPivotA (new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z));
 				this .joint .setPivotB (new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z));
 			}
@@ -210,5 +210,3 @@ function ($,
 
 	return BallJoint;
 });
-
-

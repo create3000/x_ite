@@ -58,12 +58,12 @@ define ([
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Quaternion",
 	"standard/Math/Numbers/Matrix4",
-	"lib/ammojs/Ammo",
+	"lib/ammojs/AmmoJS",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNode, 
+          X3DNode,
           X3DConstants,
           X3DCast,
           Vector3,
@@ -215,7 +215,7 @@ function (Fields,
 				var m = this .matrix;
 
 				m .set (this .position_ .getValue (), this .orientation_ .getValue ());
-		
+
 				//t .setFromOpenGLMatrix (m);
 
 				o .setValue (m [12], m [13], m [14]);
@@ -230,7 +230,7 @@ function (Fields,
 
 				im .assign (m);
 				im .inverse ();
-		
+
 				//it .setFromOpenGLMatrix (im);
 
 				io .setValue (im [12], im [13], im [14]);
@@ -240,15 +240,15 @@ function (Fields,
 				                           im [2], im [6], im [10]);
 
 				it .setOrigin (io);
-			
+
 				var compoundShape = this .compoundShape;
 
 				for (var i = 0, length = this .compoundShape .getNumChildShapes (); i < length; ++ i)
 					compoundShape .updateChildTransform (i, it, false);
-	
+
 				this .compoundShape .recalculateLocalAabb ();
 				this .motionState .setWorldTransform (t);
-			
+
 				this .rigidBody .setMotionState (this .motionState);
 			};
 		})(),
@@ -302,7 +302,7 @@ function (Fields,
 				this .rigidBody .setDamping (this .linearDampingFactor_ .getValue (), this .angularDampingFactor_ .getValue ());
 			else
 				this .rigidBody .setDamping (0, 0);
-		
+
 			this .rigidBody .activate ();
 		},
 		set_centerOfMass__: (function ()
@@ -333,7 +333,7 @@ function (Fields,
 				                        inertia [6] + inertia [7] + inertia [8]);
 
 				this .compoundShape .calculateLocalInertia (this .fixed_ .getValue () ? 0 : this .mass_ .getValue (), localInertia);
-			
+
 				this .rigidBody .setMassProps (this .fixed_ .getValue () ? 0 : this .mass_ .getValue (), localInertia);
 			};
 		})(),
@@ -371,12 +371,12 @@ function (Fields,
 				var geometryNode = geometryNodes [i];
 
 				geometryNode .removeInterest ("addEvent", this .transform_);
-		
+
 				geometryNode .setBody (null);
-		
+
 				geometryNode .translation_ .removeFieldInterest (this .position_);
 				geometryNode .rotation_    .removeFieldInterest (this .orientation_);
-		
+
 				this .position_    .removeFieldInterest (geometryNode .translation_);
 				this .orientation_ .removeFieldInterest (geometryNode .rotation_);
 			}
@@ -389,22 +389,22 @@ function (Fields,
 			for (var i = 0, length = this .geometry_ .length; i < length; ++ i)
 			{
 				var geometryNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .geometry_ [i]);
-				
+
 				if (! geometryNode)
 					continue;
-		
+
 				if (geometryNode .getBody ())
 				{
 					geometryNode .body_ .addInterest ("set_body__", this);
 					this .otherGeometryNodes .push (geometryNode);
 					continue;
 				}
-		
+
 				geometryNode .setBody (this);
-		
+
 				geometryNodes .push (geometryNode);
 			}
-		
+
 			for (var i = 0, length = geometryNodes .length; i < length; ++ i)
 			{
 				var geometryNode = geometryNodes [i];
@@ -427,17 +427,17 @@ function (Fields,
 		set_compoundShape__: (function ()
 		{
 			var transform = new Ammo .btTransform ();
-		
+
 			return function ()
 			{
 				var compoundShape = this .compoundShape;
-	
+
 				for (var i = compoundShape .getNumChildShapes () - 1; i >= 0; -- i)
 					compoundShape .removeChildShapeByIndex (i);
-			
+
 				for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
 					compoundShape .addChildShape (transform, this .geometryNodes [i] .getCompoundShape ());
-	
+
 				this .set_position__ ();
 				this .set_orientation__ ();
 				this .set_transform__ ();
@@ -488,13 +488,13 @@ function (Fields,
 			return function ()
 			{
 				this .motionState .getWorldTransform (transform);
-			
+
 				var
 					btOrigin          = transform .getOrigin (),
 					btQuaternion      = transform .getRotation (),
 					btLinearVeloctity = this .rigidBody .getLinearVelocity (),
 					btAngularVelocity = this .rigidBody .getAngularVelocity ();
-			
+
 				orientation .value .set (btQuaternion .x (), btQuaternion .y (), btQuaternion .z (), btQuaternion .w ());
 
 				this .position_        = position .set (btOrigin .x (), btOrigin .y (), btOrigin .z ());
@@ -516,5 +516,3 @@ function (Fields,
 
 	return RigidBody;
 });
-
-

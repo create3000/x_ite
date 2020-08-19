@@ -57,13 +57,13 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
-	"lib/ammojs/Ammo",
+	"lib/ammojs/AmmoJS",
 ],
 function ($,
           Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DRigidJointNode, 
+          X3DRigidJointNode,
           X3DConstants,
           Vector3,
           Rotation4,
@@ -140,7 +140,7 @@ function ($,
 		initialize: function ()
 		{
 			X3DRigidJointNode .prototype .initialize .call (this);
-		
+
 			this .anchorPoint_ .addInterest ("set_joint__", this);
 			this .axis1_       .addInterest ("set_joint__", this);
 			this .axis2_       .addInterest ("set_joint__", this);
@@ -157,16 +157,16 @@ function ($,
 			{
 				if (! this .getCollection ())
 					return;
-	
+
 				if (! this .getBody1 ())
 					return;
-		
+
 				if (! this .getBody2 ())
 					return;
-			
+
 			   if (this .getBody1 () .getCollection () !== this .getCollection ())
 					return;
-			
+
 			   if (this .getBody2 () .getCollection () !== this .getCollection ())
 					return;
 
@@ -245,14 +245,14 @@ function ($,
 
 				if (this .outputs .body1Axis)
 					this .body1Axis_ = this .getInitialInverseMatrix1 () .multDirMatrix (this .getBody1 () .getMatrix () .multDirMatrix (localAxis1 .assign (this .localAxis1))) .normalize ();
-	
+
 				if (this .outputs .hinge1Angle)
 				{
 					var lastAngle  = this .hinge1Angle_ .getValue ();
 
 					difference .assign (this .getInitialInverseMatrix1 ()) .multRight (this .getBody1 () .getMatrix ());
 					difference .get (null, rotation);
-			
+
 					this .hinge1Angle_ = rotation .angle;
 
 					if (this .outputs .angleRate)
@@ -275,14 +275,14 @@ function ($,
 
 				if (this .outputs .body2Axis)
 					this .body2Axis_ = this .getInitialInverseMatrix2 () .multDirMatrix (this .getBody2 () .getMatrix () .multDirMatrix (localAxis2 .assign (this .localAxis2))) .normalize ();
-	
+
 				if (this .outputs .hinge2Angle)
 				{
 					var lastAngle  = this .hinge2Angle_ .getValue ();
 
 					difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
 					difference .get (null, rotation);
-			
+
 					this .hinge2Angle_ = rotation .angle;
 
 					if (this .outputs .angleRate)
@@ -294,5 +294,3 @@ function ($,
 
 	return DoubleAxisHingeJoint;
 });
-
-
