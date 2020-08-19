@@ -6,7 +6,7 @@
 Introduction
 --------------------------------------
 
-X_ITE is a X3D JavaScript WebGL Browser. It is a full standard WebGL X3D browser for all major web browsers.
+X_ITE is an X3D JavaScript WebGL Browser. It is a full standard X3D WebGL browser for all major web browsers.
 
 For more information and live preview please have a look at the [Wiki](https://github.com/create3000/x_ite/wiki).
 
