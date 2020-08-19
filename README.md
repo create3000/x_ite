@@ -17,7 +17,7 @@ Links
 * [Supported Nodes](http://create3000.de/x_ite/supported-nodes/)
 * [Accessing the External Browser](http://create3000.de/x_ite/accessing-the-external-browser/)
 * [XHTML DOM Integration](http://create3000.de/x_ite/xhtml-dom-integration/)
-* [Custom Shaders](http://create3000.de/x_ite/shaders/)
+* [Custom Shaders](https://github.com/create3000/x_ite/wiki/Custom-Shaders)
 
 License
 --------------------------------------
