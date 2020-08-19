@@ -13,9 +13,9 @@ For more information and live preview please have a look at the [Wiki](https://g
 Links
 --------------------------------------
 * [Getting Started](https://github.com/create3000/x_ite/wiki)
-* [Supported Nodes](http://create3000.de/x_ite/supported-nodes/)
-* [Accessing the External Browser](http://create3000.de/x_ite/accessing-the-external-browser/)
-* [XHTML DOM Integration](http://create3000.de/x_ite/xhtml-dom-integration/)
+* [Supported Nodes](https://github.com/create3000/x_ite/wiki/Supported-Nodes)
+* [Accessing the External Browser](https://github.com/create3000/x_ite/wiki/Accessing-the-External-Browser)
+* [XHTML DOM Integration](https://github.com/create3000/x_ite/wiki/XHTML-DOM-Integration)
 * [Custom Shaders](https://github.com/create3000/x_ite/wiki/Custom-Shaders)
 
 License
