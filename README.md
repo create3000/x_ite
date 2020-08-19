@@ -13,7 +13,6 @@ For more information and live preview please have a look at the [Wiki](https://g
 Links
 --------------------------------------
 * [Getting Started](https://github.com/create3000/x_ite/wiki)
-* [What’s New](http://create3000.de/x_ite/whats-new/)
 * [Supported Nodes](http://create3000.de/x_ite/supported-nodes/)
 * [Accessing the External Browser](http://create3000.de/x_ite/accessing-the-external-browser/)
 * [XHTML DOM Integration](http://create3000.de/x_ite/xhtml-dom-integration/)
