@@ -338,7 +338,7 @@ function ($,
 						{
 							$("body > ul.context-menu-list") .fadeOut (500);
 
-							window .open ("http://create3000.de/x_ite/");
+							window .open (browser .getProviderUrl ());
 						},
 					},
 				}
