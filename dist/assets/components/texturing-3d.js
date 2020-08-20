@@ -1072,7 +1072,7 @@ function (pako)
 	return NRRDParser;
 });
 
-/*! dicom-parser - 1.8.2 - 2018-12-05 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
+/*! dicom-parser - 1.8.5 - 2020-02-28 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -1147,7 +1147,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	}
 /******/
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "724db93d22d12b1c5d76"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a0b3a8ee0163bf174bb4"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -17755,6 +17755,8 @@ var _readTag = __webpack_require__(/*! ./readTag.js */ "./readTag.js");
 
 var _readTag2 = _interopRequireDefault(_readTag);
 
+var _util = __webpack_require__(/*! ./util/util.js */ "./util/util.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -17803,7 +17805,7 @@ function readDicomElementImplicit(byteStream, untilTag, vrCallback) {
     return element;
   }
 
-  if (isSequence(element, byteStream, vrCallback)) {
+  if (isSequence(element, byteStream, vrCallback) && !(0, _util.isPrivateTag)(element.tag)) {
     // parse the sequence
     (0, _readSequenceElementImplicit2.default)(byteStream, element);
 
@@ -19231,7 +19233,7 @@ exports.parsePN = parsePN;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = '1.8.2';
+exports.default = '1.8.5';
 
 /***/ }),
 

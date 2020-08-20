@@ -57,7 +57,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
-	"lib/ammojs/AmmoJS,
+	"lib/ammojs/AmmoJS"
 ],
 function ($,
           Fields,
