@@ -147,4 +147,4 @@ var X_ITE_EXAMPLES = [
 	{ component: "X3D", test: "WaterQuality" },
 	{ component: "X_ITE", test: "BlendMode" },
 ];
-X_ITE_EXAMPLES .server = "http://media.create3000.de/components";
+X_ITE_EXAMPLES .server = "https://create3000.github.io/media/examples";
