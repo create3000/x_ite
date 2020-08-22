@@ -43,31 +43,29 @@ sub publish
 	system "git", "push", "origin", "--tags";
 }
 
-sub rsync
+sub update
 {
 	my $release = shift;
-	my $local   = "/home/holger/Projekte/X_ITE/dist";
-	my $ftp     = "/html/create3000.de/code/htdocs/x_ite";
-	my $host    = "alfa3008.alfahosting-server.de";
-	my $user    = netuser ($host);
+	my $dist    = "$CWD/dist";
+	my $code    = "$CWD/../code/docs/x_ite/$release";
 
 	say "Uploading $release";
 
-	#system "mkdir", "-p", "$ftp/$release/dist/";
-	#system "rsync", "-r", "-x", "-c", "-v", "--progress", "--delete", "$local/", "$ftp/$release/dist/";
+	system "rm", "-r", "$code/dist";
 
-	system "lftp", "-e", "mkdir -p $ftp/$release/dist; bye", "ftp://$user\@$host";
-	system "lftp", "-e", "mirror --reverse --delete --overwrite --use-cache --verbose $local $ftp/$release/dist; bye", "ftp://$user\@$host";
+	system "mkdir", "-p", $code;
+	system "cp", "-r", $dist, "$code/dist";
 }
 
-sub netuser
+sub upload
 {
-	my $host  = shift;
-	my $netrc = `cat ~/.netrc`;
+	my $code = "$CWD/../code";
 
-	$netrc =~ /machine\s+$host\s+login\s+(\w+)/;
+	chdir $code;
 
-	return $1;
+	system "git", "commit", "-am", "Published version $VERSION-$REVISION";
+	system "git", "push";
+	system "git", "push", "origin";
 }
 
 my $result = system "zenity", "--question", "--text=Do you really want to publish X_ITE X3D v$VERSION-$REVISION now?", "--ok-label=Yes", "--cancel-label=No";
@@ -89,13 +87,15 @@ if ($result == 0)
 		publish ("latest");
 	}
 
-	# FTP
+	# code
 
-	rsync ("alpha");
+	update ("alpha");
 
 	unless ($ALPHA)
 	{
-		rsync ("latest");
-		rsync ($VERSION);
+		update ("latest");
+		update ($VERSION);
 	}
+
+	upload;
 }
