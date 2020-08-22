@@ -63,7 +63,7 @@ sub upload
 
 	chdir $code;
 
-	system "echo -e 'a\n*\nq\n' | git add -i";
+	system "git add -A";
 	system "git", "commit", "-am", "Published version $VERSION-$REVISION";
 	system "git", "push";
 	system "git", "push", "origin";
