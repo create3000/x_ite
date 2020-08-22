@@ -66,7 +66,7 @@ define ([
 	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
 	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode",
 	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
-	"lib/ammojs/Ammo",
+	"lib/ammojs/AmmoJS",
 ],
 function (Components,
           BallJoint,
@@ -121,4 +121,3 @@ function (Components,
 		Ammo: Ammo,
 	};
 });
-
