@@ -1,4 +1,4 @@
-/* X_ITE v4.6.11-995 */
+/* X_ITE v4.6.11-996 */
 
 (function () {
 
@@ -115091,7 +115091,7 @@ function ($,
           Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTexture2DNode, 
+          X3DTexture2DNode,
           X3DConstants,
           Algorithm)
 {
@@ -115205,6 +115205,36 @@ function ($,
 				}
 			}
 		},
+		resize: function (input, inputWidth, inputHeight, outputWidth, outputHeight)
+		{
+		   // Nearest neighbor scaling algorithm for very small images.
+
+			var
+				output = new Uint8Array (outputWidth * outputHeight * 4),
+				scaleX = outputWidth / inputWidth,
+				scaleY = outputHeight / inputHeight;
+
+			for (var y = 0; y < outputHeight; ++ y)
+			{
+				var
+					inputW  = Math .floor (y / scaleY) * inputWidth,
+					outputW = y * outputWidth;
+
+				for (var x = 0; x < outputWidth; ++ x)
+				{
+					var
+						index       = (inputW + Math.floor (x / scaleX)) * 4,
+						indexScaled = (outputW + x) * 4;
+
+					output [indexScaled]     = input [index];
+					output [indexScaled + 1] = input [index + 1];
+					output [indexScaled + 2] = input [index + 2];
+					output [indexScaled + 3] = input [index + 3];
+				}
+			}
+
+			return output;
+		},
 		set_image__: function ()
 		{
 			var
@@ -115262,7 +115292,7 @@ function ($,
 
 					cx2 .clearRect (0, 0, width, height);
 					cx2 .drawImage (canvas1, 0, 0, canvas1 .width, canvas1 .height, 0, 0, width, height);
-	
+
 					data = cx2 .getImageData (0, 0, width, height) .data;
 				}
 
@@ -115279,8 +115309,6 @@ function ($,
 
 	return PixelTexture;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
