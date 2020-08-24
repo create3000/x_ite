@@ -209,7 +209,7 @@ function (Fields,
 			   case "length":
 			   case "mass":
 					return value / this .getUnits () .get (category) .conversionFactor;
-			
+
 				// Derived units
 
 				case "acceleration:":
@@ -337,7 +337,7 @@ function (Fields,
 
 			if (specificationVersion === "2.0")
 				specificationVersion = "3.3";
-		
+
 			stream .string += "#X3D V";
 			stream .string += specificationVersion;
 			stream .string += " ";
@@ -384,7 +384,7 @@ function (Fields,
 						empty = false;
 
 						unit .toVRMLStream (stream);
-	
+
 						stream .string += "\n";
 					}
 				}
@@ -417,7 +417,7 @@ function (Fields,
 			generator .ExportedNodes (exportedNodes);
 
 			X3DExecutionContext .prototype .toVRMLStream .call (this, stream);
-		
+
 			if (exportedNodes .size)
 			{
 				stream .string += "\n";
@@ -427,7 +427,7 @@ function (Fields,
 					try
 					{
 						exportedNode .toVRMLStream (stream);
-	
+
 						stream .string += "\n";
 					}
 					catch (error)
@@ -448,14 +448,14 @@ function (Fields,
 
 			if (specificationVersion === "2.0")
 				specificationVersion = "3.3";
-		
+
 			stream .string += "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 			stream .string += "<!DOCTYPE X3D PUBLIC \"ISO//Web3D//DTD X3D ";
 			stream .string += specificationVersion;
 			stream .string += "//EN\" \"http://www.web3d.org/specifications/x3d-";
 			stream .string += specificationVersion;
 			stream .string += ".dtd\">\n";
-		
+
 			stream .string += "<X3D";
 			stream .string += " ";
 			stream .string += "profile='";
@@ -478,7 +478,7 @@ function (Fields,
 			stream .string += "<head>\n";
 
 			generator .IncIndent ();
-		
+
 			// <head>
 
 			this .getComponents () .toXMLStream (stream);
@@ -511,7 +511,7 @@ function (Fields,
 				stream .string += "'";
 				stream .string += "/>\n";
 			});
-		
+
 			// </head>
 
 			generator .DecIndent ();
@@ -522,7 +522,7 @@ function (Fields,
 			stream .string += "<Scene>\n";
 
 			generator .IncIndent ();
-		
+
 			// <Scene>
 
 			var exportedNodes = this .getExportedNodes ();
@@ -532,7 +532,7 @@ function (Fields,
 			generator .ExportedNodes (exportedNodes);
 
 			X3DExecutionContext .prototype .toXMLStream .call (this, stream);
-		
+
 			exportedNodes .forEach (function (exportedNode)
 			{
 				try
