@@ -3,8 +3,13 @@
 #extension GL_EXT_frag_depth : enable
 #endif
 
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+precision highp int;
+#else
 precision mediump float;
 precision mediump int;
+#endif
 
 uniform int x3d_GeometryType;
 
