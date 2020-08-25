@@ -4,6 +4,7 @@
 use strict;
 use warnings;
 use v5.10.0;
+use utf8;
 use open qw/:std :utf8/;
 
 sub check_version {

@@ -4,11 +4,12 @@
 use strict;
 use warnings;
 use v5.10.0;
+use utf8;
 use open qw/:std :utf8/;
 
-my $CWD = `pwd`;
-chomp $CWD;
+use Cwd;
 
+my $CWD = cwd;
 say $CWD;
 
 my $VERSION;
@@ -69,6 +70,26 @@ sub upload
 	system "git", "push", "origin";
 }
 
+sub wiki
+{
+	my $VERSION = shift;
+
+	chdir "$CWD/../x_ite.wiki/";
+
+	my $home = `cat 'Home.md'`;
+
+	$home =~ s|/x_ite/\d+\.\d+\.\d+/dist/|/x_ite/$VERSION/dist/|sgo;
+
+	open HOME, ">", "Home.md";
+	print HOME $home;
+	close HOME;
+
+	system "git", "add", "-A";
+	system "git", "commit", "-am", "Updated Home.md because of new version '$VERSION'";
+	system "git", "push";
+	system "git", "push", "origin";
+}
+
 my $result = system "zenity", "--question", "--text=Do you really want to publish X_ITE X3D v$VERSION-$REVISION now?", "--ok-label=Yes", "--cancel-label=No";
 
 if ($result == 0)
@@ -84,7 +105,7 @@ if ($result == 0)
 
 	unless ($ALPHA)
 	{
-		publish ("$VERSION");
+		publish ($VERSION);
 		publish ("latest");
 	}
 
@@ -99,4 +120,8 @@ if ($result == 0)
 	}
 
 	upload;
+
+	# Wiki
+
+	wiki ($VERSION) unless $ALPHA;
 }
