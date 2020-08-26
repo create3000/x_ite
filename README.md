@@ -1,5 +1,3 @@
-<img alt="X_ITE" src="https://rawgit.com/create3000/x_ite/master/meta/logo/logo.svg" width="60" height="60"/>
-
 [X_ITE](https://github.com/create3000/x_ite/wiki) — X_ITE X3D Browser
 ==================================================
 
