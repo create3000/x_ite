@@ -175,6 +175,7 @@ function ($,
 			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
 
 			this .audio .attr ("src", this .URL);
+			this .audio .get (0) .load ();
 		},
 		setError: function ()
 		{

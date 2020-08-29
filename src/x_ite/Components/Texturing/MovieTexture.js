@@ -187,6 +187,7 @@ function ($,
 			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
 
 			this .video .attr ("src", this .URL);
+			this .video .get (0) .load ();
 		},
 		setError: function ()
 		{

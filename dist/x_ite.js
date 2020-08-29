@@ -1,4 +1,4 @@
-/* X_ITE v4.6.11-1000 */
+/* X_ITE v4.6.11-1001 */
 
 (function () {
 
@@ -113296,6 +113296,7 @@ function ($,
 			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
 
 			this .audio .attr ("src", this .URL);
+			this .audio .get (0) .load ();
 		},
 		setError: function ()
 		{
@@ -114273,6 +114274,7 @@ function ($,
 			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
 
 			this .video .attr ("src", this .URL);
+			this .video .get (0) .load ();
 		},
 		setError: function ()
 		{
