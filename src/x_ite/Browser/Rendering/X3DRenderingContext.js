@@ -152,19 +152,21 @@ function ($,
 		reshape: function ()
 		{
 			var
+				gl     = this .getContext (),
 				canvas = this .getCanvas (),
 				width  = canvas .width (),
 				height = canvas .height ();
 
 			canvas = canvas [0];
 
-			canvas .width       = width;
-			canvas .height      = height;
+			canvas .width  = width;
+			canvas .height = height;
+
 			this .viewport_ [2] = width;
 			this .viewport_ [3] = height;
 
-			this .context .viewport (0, 0, width, height);
-			this .context .scissor  (0, 0, width, height);
+			gl .viewport (0, 0, width, height);
+			gl .scissor  (0, 0, width, height);
 
 			this .addBrowserEvent ();
 		},
