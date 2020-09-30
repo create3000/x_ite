@@ -89,12 +89,12 @@ function (Fields,
 		                       "centerOfRotationOffset", new Fields .SFVec3f (),
 		                       "fieldOfViewScale",       new Fields .SFFloat (1));
 
-	   this .userPosition             = new Vector3 (0, 1, 0);
-	   this .userOrientation          = new Rotation4 (0, 0, 1, 0);
-	   this .userCenterOfRotation     = new Vector3 (0, 0, 0);
-		this .modelMatrix              = new Matrix4 ();
-		this .cameraSpaceMatrix        = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
-		this .inverseCameraSpaceMatrix = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
+	   this .userPosition         = new Vector3 (0, 1, 0);
+	   this .userOrientation      = new Rotation4 (0, 0, 1, 0);
+	   this .userCenterOfRotation = new Vector3 (0, 0, 0);
+		this .modelMatrix          = new Matrix4 ();
+		this .cameraSpaceMatrix    = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
+		this .viewMatrix           = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
 
 		var browser = this .getBrowser ();
 
@@ -149,18 +149,6 @@ function (Fields,
 			return this .easeInEaseOut;
 		},
 		setInterpolators: function () { },
-		bindToLayer: function (layer)
-		{
-			layer .getViewpointStack () .push (this);
-		},
-		unbindFromLayer: function (layer)
-		{
-			layer .getViewpointStack () .pop (this);
-		},
-		removeFromLayer: function (layer)
-		{
-			layer .getViewpointStack () .remove (this);
-		},
 		getPosition: function ()
 		{
 			return this .position_ .getValue ();
@@ -195,11 +183,27 @@ function (Fields,
 		},
 		getCameraSpaceMatrix: function ()
 		{
+			this .cameraSpaceMatrix .set (this .getUserPosition (),
+			                              this .getUserOrientation (),
+			                              this .scaleOffset_ .getValue (),
+			                              this .scaleOrientationOffset_ .getValue ());
+
+			this .cameraSpaceMatrix .multRight (this .modelMatrix);
+
 			return this .cameraSpaceMatrix;
 		},
-		getInverseCameraSpaceMatrix: function ()
+		getViewMatrix: function ()
 		{
-			return this .inverseCameraSpaceMatrix;
+			try
+			{
+				this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
+			}
+			catch (error)
+			{
+			   console .log (error);
+			}
+
+			return this .viewMatrix;
 		},
 		getModelMatrix: function ()
 		{
@@ -237,7 +241,7 @@ function (Fields,
 				relativeScale            = new Vector3 (0, 0, 0),
 				relativeScaleOrientation = new Rotation4 (0, 0, 1, 0);
 
-			return function (fromViewpoint)
+			return function (layer, fromViewpoint)
 			{
 				try
 				{
@@ -349,7 +353,7 @@ function (Fields,
 		getRelativeTransformation: function (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
 		// throw
 		{
-			var differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpoint .getInverseCameraSpaceMatrix ()) .inverse ();
+			var differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpoint .getViewMatrix ()) .inverse ();
 
 			differenceMatrix .get (relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
 
@@ -508,24 +512,6 @@ function (Fields,
 			renderObject .getLayer () .getViewpoints () .push (this);
 
 			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
-		},
-		update: function ()
-		{
-			try
-			{
-				this .cameraSpaceMatrix .set (this .getUserPosition (),
-				                              this .getUserOrientation (),
-				                              this .scaleOffset_ .getValue (),
-				                              this .scaleOrientationOffset_ .getValue ());
-
-				this .cameraSpaceMatrix .multRight (this .modelMatrix);
-
-				this .inverseCameraSpaceMatrix .assign (this .cameraSpaceMatrix) .inverse ();
-			}
-			catch (error)
-			{
-			   console .log (error);
-			}
 		},
 	});
 

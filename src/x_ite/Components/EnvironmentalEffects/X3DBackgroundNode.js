@@ -242,18 +242,6 @@ function (X3DBindableNode,
 			else
 				this .textures &= ~(1 << bit);
 		},
-		bindToLayer: function (layer)
-		{
-			layer .getBackgroundStack () .push (this);
-		},
-		unbindFromLayer: function (layer)
-		{
-			layer .getBackgroundStack () .pop (this);
-		},
-		removeFromLayer: function (layer)
-		{
-			layer .getBackgroundStack () .remove (this);
-		},
 		setHidden: function (value)
 		{
 			this .hidden = value;
@@ -546,7 +534,7 @@ function (X3DBindableNode,
 					// Rotate and scale background.
 
 					modelViewMatrix .assign (this .modelMatrix);
-					modelViewMatrix .multRight (renderObject .getInverseCameraSpaceMatrix () .get ());
+					modelViewMatrix .multRight (renderObject .getViewMatrix () .get ());
 					modelViewMatrix .get (null, rotation);
 					modelViewMatrix .identity ();
 					modelViewMatrix .rotate (rotation);

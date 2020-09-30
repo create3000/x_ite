@@ -58,7 +58,6 @@ function (X3DBaseNode)
 	{
 		X3DBaseNode .call (this, executionContext);
 
-		this .layer = layer;
 		this .array = [ defaultNode ];
 	}
 
@@ -85,99 +84,92 @@ function (X3DBaseNode)
 		{
 			return this .array [this .array .length - 1];
 		},
-		forcePush: function (node)
+		pushOnTop: function (node)
 		{
+			if (node !== this .array [0])
+			{
+				this .top () .isBound_ = false;
+				this .array .push (node);
+			}
+
 			node .isBound_  = true;
 			node .bindTime_ = this .getBrowser () .getCurrentTime ();
 
-			this .push (node);
+			this .addNodeEvent ();
 		},
-		push: function (node)
+		update: function (layer, removedNodes, changedNodes)
 		{
-			if (this .array .length === 0)
+			if (removedNodes .length === 0 && changedNodes .length === 0)
 				return;
 
-			if (node === this .array [0])
-				return;
+			// Save top node for later use.
 
-			var top = this .top ();
+			var boundNode = this .top ();
 
-			if (node !== top)
+			// Remove invisible nodes and unbind them if needed.
+
+			for (var i = 0, length = removedNodes .length; i < length; ++ i)
 			{
-				this .pushOnTop (node);
+				var
+					removedNode = removedNodes [i],
+					index       = this .array .indexOf (removedNode);
 
-				if (top .isBound_ .getValue ())
+				if (index > -1)
 				{
-					top .set_bind_ = false;
-					top .isBound_  = false;
+					this .array .splice (index, 1);
 				}
 
-				if (! node .isBound_ .getValue ())
+				if (removedNode .isBound_ .getValue ())
 				{
-					node .isBound_  = true;
-					node .bindTime_ = this .getBrowser () .getCurrentTime ();
-					node .transitionStart (top);
+					removedNode .isBound_ = false;
 				}
-
-				this .pushOnTop (node);
-
-				this .addNodeEvent ();
 			}
-		},
-		pushOnTop: function (node)
-		{
-			var index = this .array .indexOf (node);
 
-			if (index > -1)
-				this .array .splice (index, 1);
+			// Unbind nodes with set_bind false and pop top node.
 
-			this .array .push (node);
-		},
-		remove: function (node)
-		{
-			if (node === this .array [0])
-				return;
+			var unbindNodes = changedNodes .filter (function (node) { return ! node .set_bind_ .getValue (); });
 
-			// If on top, pop node.
-
-			var top = this .top ();
-
-			if (node === top)
-				return this .pop (node);
-
-			// Simply remove.
-
-			var index = this .array .indexOf (node);
-
-			if (index > -1)
-				this .array .splice (index, 1);
-		},
-		pop: function (node)
-		{
-			if (node === this .array [0])
-				return;
-
-			var top = this .top ();
-
-			if (node === top)
+			for (var i = 0, length = unbindNodes .length; i < length; ++ i)
 			{
-				if (node .isBound_ .getValue ())
-					node .isBound_ = false;
+				unbindNodes [i] .isBound_ = false;
+			}
 
-				if (this .array .length === 0)
-					return;
-
+			if (unbindNodes .indexOf (boundNode) > -1)
+			{
 				this .array .pop ();
+			}
 
-				top = this .top ();
+			// Push nodes with set_bind true to top of stack.
 
-				if (! top .isBound_ .getValue ())
+			var bindNodes = changedNodes .filter (function (node) { return node .set_bind_ .getValue (); });
+
+			for (var i = 0, length = bindNodes .length; i < length; ++ i)
+			{
+				var
+					bindNode = bindNodes [i],
+					index    = this .array .indexOf (bindNode);
+
+				if (index > -1)
 				{
-					top .set_bind_ = true;
-					top .isBound_  = true;
-					top .bindTime_ = this .getBrowser () .getCurrentTime ();
-					top .transitionStart (node);
+					this .array .splice (index, 1);
 				}
+
+				this .array .push (bindNode);
+			}
+
+			// Bind top node if not bound.
+
+			var top = this .top ();
+
+			if (! top .isBound_ .getValue ())
+			{
+				// Bound node could be the default node, and this node must be unbound here.
+				boundNode .isBound_ = false;
+
+				top .isBound_  = true;
+				top .bindTime_ = this .getBrowser () .getCurrentTime ();
+
+				top .transitionStart (layer, boundNode);
 
 				this .addNodeEvent ();
 			}

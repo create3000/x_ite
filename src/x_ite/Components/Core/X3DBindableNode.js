@@ -62,7 +62,7 @@ function (X3DChildNode,
 
 		this .addType (X3DConstants .X3DBindableNode);
 
-		this .layers = [ ];
+		this .updateTime = 0;
 	}
 
 	X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -78,29 +78,13 @@ function (X3DChildNode,
 		{
 		   return true;
 		},
-		addLayer: function (layer)
-		{
-			this .layers .push (layer);
-		},
 		transitionStart: function ()
 		{ },
 		set_bind__: function ()
 		{
-			if (this .set_bind_ .getValue ())
+			if (this .set_bind_ .getValue () != this .isBound_ .getValue)
 			{
-				this .layers = this .getLayers ();
-
-				// Bind
-
-				for (var i = 0; i < this .layers .length; ++ i)
-					this .bindToLayer (this .layers [i]);
-			}
-			else
-			{
-				// Unbind
-
-				for (var i = 0; i < this .layers .length; ++ i)
-					this .unbindFromLayer (this .layers [i]);
+				this .updateTime = performance .now () / 1000;
 			}
 		},
 	});

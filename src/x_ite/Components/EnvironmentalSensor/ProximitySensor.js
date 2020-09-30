@@ -178,7 +178,7 @@ function (Fields,
 							centerOfRotationMatrix .translate (this .viewpointNode .getUserCenterOfRotation ());
 							centerOfRotationMatrix .multRight (invModelMatrix .assign (modelMatrix) .inverse ());
 
-							modelMatrix .multRight (this .viewpointNode .getInverseCameraSpaceMatrix ());
+							modelMatrix .multRight (this .viewpointNode .getViewMatrix ());
 							modelMatrix .get (null, orientation);
 							modelMatrix .inverse ();
 

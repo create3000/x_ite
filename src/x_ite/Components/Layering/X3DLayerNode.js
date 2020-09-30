@@ -94,20 +94,20 @@ function (X3DNode,
 		this .groupNode       = groupNode;
 		this .currentViewport = null;
 
-		this .defaultBackground     = new Background (executionContext);
-		this .defaultFog            = new Fog (executionContext);
 		this .defaultNavigationInfo = new NavigationInfo (executionContext);
 		this .defaultViewpoint      = defaultViewpoint;
+		this .defaultBackground     = new Background (executionContext);
+		this .defaultFog            = new Fog (executionContext);
 
-		this .backgroundStack     = new BindableStack (executionContext, this, this .defaultBackground);
-		this .fogStack            = new BindableStack (executionContext, this, this .defaultFog);
 		this .navigationInfoStack = new BindableStack (executionContext, this, this .defaultNavigationInfo);
 		this .viewpointStack      = new BindableStack (executionContext, this, this .defaultViewpoint);
+		this .backgroundStack     = new BindableStack (executionContext, this, this .defaultBackground);
+		this .fogStack            = new BindableStack (executionContext, this, this .defaultFog);
 
-		this .backgrounds     = new BindableList (executionContext, this, this .defaultBackground);
-		this .fogs            = new BindableList (executionContext, this, this .defaultFog);
 		this .navigationInfos = new BindableList (executionContext, this, this .defaultNavigationInfo);
 		this .viewpoints      = new BindableList (executionContext, this, this .defaultViewpoint);
+		this .backgrounds     = new BindableList (executionContext, this, this .defaultBackground);
+		this .fogs            = new BindableList (executionContext, this, this .defaultFog);
 
 		this .defaultBackground .setHidden (true);
 		this .defaultFog        .setHidden (true);
@@ -126,19 +126,19 @@ function (X3DNode,
 			X3DRenderObject .prototype .initialize .call (this);
 
 			this .defaultNavigationInfo .setup ();
+			this .defaultViewpoint      .setup ();
 			this .defaultBackground     .setup ();
 			this .defaultFog            .setup ();
-			this .defaultViewpoint      .setup ();
 
-			this .backgroundStack     .setup ();
-			this .fogStack            .setup ();
 			this .navigationInfoStack .setup ();
 			this .viewpointStack      .setup ();
+			this .backgroundStack     .setup ();
+			this .fogStack            .setup ();
 
-			this .backgrounds     .setup ();
-			this .fogs            .setup ();
 			this .navigationInfos .setup ();
 			this .viewpoints      .setup ();
+			this .backgrounds     .setup ();
+			this .fogs            .setup ();
 
 			this .viewport_       .addInterest ("set_viewport__", this);
 
@@ -250,15 +250,10 @@ function (X3DNode,
 				fog            = this .fogs            .getBound (),
 				viewpoint      = this .viewpoints      .getBound (viewpointName);
 
-			this .navigationInfoStack .forcePush (navigationInfo);
-			this .backgroundStack     .forcePush (background);
-			this .fogStack            .forcePush (fog);
-			this .viewpointStack      .forcePush (viewpoint);
-
-			navigationInfo .addLayer (this);
-			background     .addLayer (this);
-			fog            .addLayer (this);
-			viewpoint      .addLayer (this);
+			this .navigationInfoStack .pushOnTop (navigationInfo);
+			this .viewpointStack      .pushOnTop (viewpoint);
+			this .backgroundStack     .pushOnTop (background);
+			this .fogStack            .pushOnTop (fog);
 
 			viewpoint .resetUserOffsets ();
 		},
@@ -268,9 +263,9 @@ function (X3DNode,
 
 			var viewpoint = this .getViewpoint ();
 
-			this .getCameraSpaceMatrix        () .pushMatrix (viewpoint .getCameraSpaceMatrix ());
-			this .getInverseCameraSpaceMatrix () .pushMatrix (viewpoint .getInverseCameraSpaceMatrix ());
-			this .getProjectionMatrix         () .pushMatrix (viewpoint .getProjectionMatrix (this));
+			this .getProjectionMatrix ()  .pushMatrix (viewpoint .getProjectionMatrix (this));
+			this .getCameraSpaceMatrix () .pushMatrix (viewpoint .getCameraSpaceMatrix ());
+			this .getViewMatrix ()        .pushMatrix (viewpoint .getViewMatrix ());
 
 			switch (type)
 			{
@@ -292,9 +287,9 @@ function (X3DNode,
 					break;
 			}
 
-			this .getProjectionMatrix         () .pop ();
-			this .getInverseCameraSpaceMatrix () .pop ();
-			this .getCameraSpaceMatrix        () .pop ();
+			this .getViewMatrix ()        .pop ();
+			this .getCameraSpaceMatrix () .pop ();
+			this .getProjectionMatrix ()  .pop ();
 		},
 		pointer: function (type, renderObject)
 		{
@@ -316,7 +311,7 @@ function (X3DNode,
 				}
 
 				browser .setHitRay (this .getProjectionMatrix () .get (), viewport);
-				this .getModelViewMatrix () .pushMatrix (this .getInverseCameraSpaceMatrix () .get ());
+				this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
 
 				this .currentViewport .push (this);
 				this .groupNode .traverse (type, renderObject);
@@ -333,14 +328,12 @@ function (X3DNode,
 			this .groupNode .traverse (type, renderObject);
 			this .currentViewport .pop (this);
 
-			this .navigationInfos .update ();
-			this .backgrounds     .update ();
-			this .fogs            .update ();
-			this .viewpoints      .update ();
-
-			this .getViewpoint () .update ();
-
 			this .getModelViewMatrix () .pop ();
+
+			this .navigationInfos .update (this, this .navigationInfoStack);
+			this .viewpoints      .update (this, this .viewpointStack);
+			this .backgrounds     .update (this, this .backgroundStack);
+			this .fogs            .update (this, this .fogStack);
 		},
 		picking: function (type, renderObject)
 		{
@@ -369,7 +362,7 @@ function (X3DNode,
 			Camera .ortho (-size, size, -size, size, -size, size, projectionMatrix);
 
 			this .getProjectionMatrix () .pushMatrix (projectionMatrix);
-			this .getModelViewMatrix  () .pushMatrix (this .getInverseCameraSpaceMatrix () .get ());
+			this .getModelViewMatrix  () .pushMatrix (this .getViewMatrix () .get ());
 
 			// Render
 			this .currentViewport .push (this);
@@ -383,7 +376,7 @@ function (X3DNode,
 		{
 			this .getNavigationInfo () .enable (type, renderObject);
 
-			this .getModelViewMatrix () .pushMatrix (this .getInverseCameraSpaceMatrix () .get ());
+			this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
 
 			this .currentViewport .push (this);
 			renderObject .render (type, this .groupNode .traverse, this .groupNode);

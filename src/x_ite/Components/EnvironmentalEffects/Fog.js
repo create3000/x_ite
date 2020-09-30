@@ -60,7 +60,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DBindableNode, 
+          X3DBindableNode,
           X3DFogObject,
           TraverseType,
 		  X3DConstants,
@@ -112,18 +112,6 @@ function (Fields,
 		{
 			return this .modelMatrix;
 		},
-		bindToLayer: function (layer)
-		{
-			layer .getFogStack () .push (this);
-		},
-		unbindFromLayer: function (layer)
-		{
-			layer .getFogStack () .pop (this);
-		},
-		removeFromLayer: function (layer)
-		{
-			layer .getFogStack () .remove (this);
-		},
 		traverse: function (type, renderObject)
 		{
 			renderObject .getLayer () .getFogs () .push (this);
@@ -134,5 +122,3 @@ function (Fields,
 
 	return Fog;
 });
-
-

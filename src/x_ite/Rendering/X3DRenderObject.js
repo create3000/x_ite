@@ -87,7 +87,7 @@ function ($,
 	function X3DRenderObject (executionContext)
 	{
 		this .cameraSpaceMatrix        = new MatrixStack (Matrix4);
-		this .inverseCameraSpaceMatrix = new MatrixStack (Matrix4);
+		this .viewMatrix               = new MatrixStack (Matrix4);
 		this .projectionMatrix         = new MatrixStack (Matrix4);
 		this .modelViewMatrix          = new MatrixStack (Matrix4);
 		this .viewVolumes              = [ ];
@@ -138,9 +138,9 @@ function ($,
 		{
 			return this .cameraSpaceMatrix;
 		},
-		getInverseCameraSpaceMatrix: function ()
+		getViewMatrix: function ()
 		{
-			return this .inverseCameraSpaceMatrix;
+			return this .viewMatrix;
 		},
 		getProjectionMatrix: function ()
 		{
@@ -186,7 +186,7 @@ function ($,
 			{
 				var fogContainer = this .localFogs [0] || fog .getFogs () .pop ();
 
-				modelViewMatrix .assign (fog .getModelMatrix ()) .multRight (this .getInverseCameraSpaceMatrix () .get ());
+				modelViewMatrix .assign (fog .getModelMatrix ()) .multRight (this .getViewMatrix () .get ());
 				fogContainer .set (fog, modelViewMatrix);
 
 				this .localFog = this .localFogs [0] = fogContainer;
@@ -804,7 +804,7 @@ function ($,
 								//if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
 								//{
 								//	float step = getBrowser () -> getCurrentSpeed () / getBrowser () -> getCurrentFrameRate ();
-								//	step = abs (getInverseCameraSpaceMatrix () .mult_matrix_dir (Vector3f (0, step, 0) * up));
+								//	step = abs (getViewMatrix () .mult_matrix_dir (Vector3f (0, step, 0) * up));
 								//
 								//	Vector3f offset = Vector3f (0, step, 0) * up;
 								//

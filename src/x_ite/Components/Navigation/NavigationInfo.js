@@ -328,18 +328,6 @@ function (Fields,
 			if (this .transitionActive_ .getValue ())
 				this .transitionActive_ = false;
 		},
-		bindToLayer: function (layer)
-		{
-			layer .getNavigationInfoStack () .push (this);
-		},
-		unbindFromLayer: function (layer)
-		{
-			layer .getNavigationInfoStack () .pop (this);
-		},
-		removeFromLayer: function (layer)
-		{
-			layer .getNavigationInfoStack () .remove (this);
-		},
 		enable: function (type, renderObject)
 		{
 			if (type !== TraverseType .DISPLAY)
