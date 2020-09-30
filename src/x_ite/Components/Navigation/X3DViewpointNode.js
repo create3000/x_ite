@@ -183,26 +183,10 @@ function (Fields,
 		},
 		getCameraSpaceMatrix: function ()
 		{
-			this .cameraSpaceMatrix .set (this .getUserPosition (),
-			                              this .getUserOrientation (),
-			                              this .scaleOffset_ .getValue (),
-			                              this .scaleOrientationOffset_ .getValue ());
-
-			this .cameraSpaceMatrix .multRight (this .modelMatrix);
-
 			return this .cameraSpaceMatrix;
 		},
 		getViewMatrix: function ()
 		{
-			try
-			{
-				this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
-			}
-			catch (error)
-			{
-			   console .log (error);
-			}
-
 			return this .viewMatrix;
 		},
 		getModelMatrix: function ()
@@ -513,6 +497,24 @@ function (Fields,
 
 			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
 		},
+		update: function ()
+		{
+			try
+			{
+				this .cameraSpaceMatrix .set (this .getUserPosition (),
+														this .getUserOrientation (),
+														this .scaleOffset_ .getValue (),
+														this .scaleOrientationOffset_ .getValue ());
+
+				this .cameraSpaceMatrix .multRight (this .modelMatrix);
+
+				this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
+			}
+			catch (error)
+			{
+				console .log (error);
+			}
+		}
 	});
 
 	return X3DViewpointNode;

@@ -334,6 +334,8 @@ function (X3DNode,
 			this .viewpoints      .update (this, this .viewpointStack);
 			this .backgrounds     .update (this, this .backgroundStack);
 			this .fogs            .update (this, this .fogStack);
+
+			this .getViewpoint () .update ();
 		},
 		picking: function (type, renderObject)
 		{
