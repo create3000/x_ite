@@ -127,7 +127,7 @@ function (X3DBaseNode)
 
 			// Unbind nodes with set_bind false and pop top node.
 
-			var unbindNodes = changedNodes .filter (function (node) { return ! node .set_bind_ .getValue (); });
+			var unbindNodes = changedNodes .filter (node => ! node .set_bind_ .getValue ());
 
 			for (var i = 0, length = unbindNodes .length; i < length; ++ i)
 			{
@@ -141,7 +141,7 @@ function (X3DBaseNode)
 
 			// Push nodes with set_bind true to top of stack.
 
-			var bindNodes = changedNodes .filter (function (node) { return node .set_bind_ .getValue (); });
+			var bindNodes = changedNodes .filter (node => node .set_bind_ .getValue ());
 
 			for (var i = 0, length = bindNodes .length; i < length; ++ i)
 			{
