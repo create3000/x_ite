@@ -1442,24 +1442,10 @@ function (Fields,
 												{
 													var field = baseNode .getField (fieldId);
 
-													if (reference .getType () === field .getType ())
+													if (! (accessType === field .getAccessType () && reference .getType () === field .getType ()))
 													{
-														if (accessType === field .getAccessType ())
-															;
-														else if (field .getAccessType () === X3DConstants .inputOutput)
-														{
-															if (accessType !== field .getAccessType ())
-																field = this .createUserDefinedField (baseNode, accessType, fieldId, supportedField);
-														}
-														else
-														{
-															this .exception ("Field '" + fieldId + "' must have access type " + accessTypeToString (field .getAccessType ()) + ".");
-
-															return true;
-														}
-													}
-													else
 														field = this .createUserDefinedField (baseNode, accessType, fieldId, supportedField);
+													}
 												}
 												catch (error)
 												{
