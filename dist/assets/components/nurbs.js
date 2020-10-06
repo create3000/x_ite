@@ -4191,8 +4191,8 @@ define ('x_ite/Components/NURBS/NurbsSet',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChildNode, 
-          X3DBoundedObject, 
+          X3DChildNode,
+          X3DBoundedObject,
           X3DConstants,
           X3DCast)
 {
@@ -4254,8 +4254,19 @@ function (Fields,
 			this .addGeometry_       .addInterest ("set_addGeometry__",       this);
 			this .removeGeometry_    .addInterest ("set_removeGeometry__",    this);
 			this .geometry_          .addInterest ("set_geometry__",          this);
-		
+
 			this .set_geometry__ ();
+		},
+		getBBox: function (bbox)
+		{
+			// Add bounding boxes
+
+			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+			{
+				bbox .add (his .geometryNodes [i] .getBBox ());
+			}
+
+			return bbox;
 		},
 		set_tessellationScale__: function ()
 		{
@@ -4293,7 +4304,7 @@ function (Fields,
 			for (var i = 0, length = this .geometry_ .length; i < length; ++ i)
 			{
 				var geometryNode = X3DCast (X3DConstants .X3DNurbsSurfaceGeometryNode, this .geometry_ [i]);
-		
+
 				if (geometryNode)
 					this .geometryNodes .push (geometryNode);
 			}
@@ -4304,8 +4315,6 @@ function (Fields,
 
 	return NurbsSet;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************

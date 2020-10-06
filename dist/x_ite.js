@@ -1,4 +1,4 @@
-/* X_ITE v4.6.11-1001 */
+/* X_ITE v4.6.11-1002 */
 
 (function () {
 
@@ -38663,24 +38663,10 @@ function (Fields,
 												{
 													var field = baseNode .getField (fieldId);
 
-													if (reference .getType () === field .getType ())
+													if (! (accessType === field .getAccessType () && reference .getType () === field .getType ()))
 													{
-														if (accessType === field .getAccessType ())
-															;
-														else if (field .getAccessType () === X3DConstants .inputOutput)
-														{
-															if (accessType !== field .getAccessType ())
-																field = this .createUserDefinedField (baseNode, accessType, fieldId, supportedField);
-														}
-														else
-														{
-															this .exception ("Field '" + fieldId + "' must have access type " + accessTypeToString (field .getAccessType ()) + ".");
-
-															return true;
-														}
-													}
-													else
 														field = this .createUserDefinedField (baseNode, accessType, fieldId, supportedField);
+													}
 												}
 												catch (error)
 												{
@@ -41973,7 +41959,7 @@ function (X3DChildNode,
 
 		this .addType (X3DConstants .X3DBindableNode);
 
-		this .layers = [ ];
+		this .updateTime = 0;
 	}
 
 	X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -41989,29 +41975,13 @@ function (X3DChildNode,
 		{
 		   return true;
 		},
-		addLayer: function (layer)
-		{
-			this .layers .push (layer);
-		},
 		transitionStart: function ()
 		{ },
 		set_bind__: function ()
 		{
-			if (this .set_bind_ .getValue ())
+			if (this .set_bind_ .getValue () != this .isBound_ .getValue)
 			{
-				this .layers = this .getLayers ();
-
-				// Bind
-
-				for (var i = 0; i < this .layers .length; ++ i)
-					this .bindToLayer (this .layers [i]);
-			}
-			else
-			{
-				// Unbind
-
-				for (var i = 0; i < this .layers .length; ++ i)
-					this .unbindFromLayer (this .layers [i]);
+				this .updateTime = performance .now () / 1000;
 			}
 		},
 	});
@@ -43309,12 +43279,12 @@ function (Fields,
 		                       "centerOfRotationOffset", new Fields .SFVec3f (),
 		                       "fieldOfViewScale",       new Fields .SFFloat (1));
 
-	   this .userPosition             = new Vector3 (0, 1, 0);
-	   this .userOrientation          = new Rotation4 (0, 0, 1, 0);
-	   this .userCenterOfRotation     = new Vector3 (0, 0, 0);
-		this .modelMatrix              = new Matrix4 ();
-		this .cameraSpaceMatrix        = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
-		this .inverseCameraSpaceMatrix = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
+	   this .userPosition         = new Vector3 (0, 1, 0);
+	   this .userOrientation      = new Rotation4 (0, 0, 1, 0);
+	   this .userCenterOfRotation = new Vector3 (0, 0, 0);
+		this .modelMatrix          = new Matrix4 ();
+		this .cameraSpaceMatrix    = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
+		this .viewMatrix           = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
 
 		var browser = this .getBrowser ();
 
@@ -43369,18 +43339,6 @@ function (Fields,
 			return this .easeInEaseOut;
 		},
 		setInterpolators: function () { },
-		bindToLayer: function (layer)
-		{
-			layer .getViewpointStack () .push (this);
-		},
-		unbindFromLayer: function (layer)
-		{
-			layer .getViewpointStack () .pop (this);
-		},
-		removeFromLayer: function (layer)
-		{
-			layer .getViewpointStack () .remove (this);
-		},
 		getPosition: function ()
 		{
 			return this .position_ .getValue ();
@@ -43417,9 +43375,9 @@ function (Fields,
 		{
 			return this .cameraSpaceMatrix;
 		},
-		getInverseCameraSpaceMatrix: function ()
+		getViewMatrix: function ()
 		{
-			return this .inverseCameraSpaceMatrix;
+			return this .viewMatrix;
 		},
 		getModelMatrix: function ()
 		{
@@ -43457,7 +43415,7 @@ function (Fields,
 				relativeScale            = new Vector3 (0, 0, 0),
 				relativeScaleOrientation = new Rotation4 (0, 0, 1, 0);
 
-			return function (fromViewpoint)
+			return function (layer, fromViewpoint)
 			{
 				try
 				{
@@ -43569,7 +43527,7 @@ function (Fields,
 		getRelativeTransformation: function (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
 		// throw
 		{
-			var differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpoint .getInverseCameraSpaceMatrix ()) .inverse ();
+			var differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpoint .getViewMatrix ()) .inverse ();
 
 			differenceMatrix .get (relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
 
@@ -43734,19 +43692,19 @@ function (Fields,
 			try
 			{
 				this .cameraSpaceMatrix .set (this .getUserPosition (),
-				                              this .getUserOrientation (),
-				                              this .scaleOffset_ .getValue (),
-				                              this .scaleOrientationOffset_ .getValue ());
+														this .getUserOrientation (),
+														this .scaleOffset_ .getValue (),
+														this .scaleOrientationOffset_ .getValue ());
 
 				this .cameraSpaceMatrix .multRight (this .modelMatrix);
 
-				this .inverseCameraSpaceMatrix .assign (this .cameraSpaceMatrix) .inverse ();
+				this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
 			}
 			catch (error)
 			{
-			   console .log (error);
+				console .log (error);
 			}
-		},
+		}
 	});
 
 	return X3DViewpointNode;
@@ -59614,19 +59572,21 @@ function ($,
 		reshape: function ()
 		{
 			var
+				gl     = this .getContext (),
 				canvas = this .getCanvas (),
 				width  = canvas .width (),
 				height = canvas .height ();
 
 			canvas = canvas [0];
 
-			canvas .width       = width;
-			canvas .height      = height;
+			canvas .width  = width;
+			canvas .height = height;
+
 			this .viewport_ [2] = width;
 			this .viewport_ [3] = height;
 
-			this .context .viewport (0, 0, width, height);
-			this .context .scissor  (0, 0, width, height);
+			gl .viewport (0, 0, width, height);
+			gl .scissor  (0, 0, width, height);
 
 			this .addBrowserEvent ();
 		},
@@ -63270,11 +63230,15 @@ function (Fields,
 
 						gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
 
-						if (context .transparent && ! this .solid)
+						if (context .transparent)
 						{
 							gl .enable (gl .CULL_FACE);
-							gl .cullFace (gl .FRONT);
-							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+
+							if (!this .solid)
+							{
+								gl .cullFace (gl .FRONT);
+								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+							}
 
 							gl .cullFace (gl .BACK);
 							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
@@ -89826,7 +89790,7 @@ function ($,
 	function X3DRenderObject (executionContext)
 	{
 		this .cameraSpaceMatrix        = new MatrixStack (Matrix4);
-		this .inverseCameraSpaceMatrix = new MatrixStack (Matrix4);
+		this .viewMatrix               = new MatrixStack (Matrix4);
 		this .projectionMatrix         = new MatrixStack (Matrix4);
 		this .modelViewMatrix          = new MatrixStack (Matrix4);
 		this .viewVolumes              = [ ];
@@ -89877,9 +89841,9 @@ function ($,
 		{
 			return this .cameraSpaceMatrix;
 		},
-		getInverseCameraSpaceMatrix: function ()
+		getViewMatrix: function ()
 		{
-			return this .inverseCameraSpaceMatrix;
+			return this .viewMatrix;
 		},
 		getProjectionMatrix: function ()
 		{
@@ -89925,7 +89889,7 @@ function ($,
 			{
 				var fogContainer = this .localFogs [0] || fog .getFogs () .pop ();
 
-				modelViewMatrix .assign (fog .getModelMatrix ()) .multRight (this .getInverseCameraSpaceMatrix () .get ());
+				modelViewMatrix .assign (fog .getModelMatrix ()) .multRight (this .getViewMatrix () .get ());
 				fogContainer .set (fog, modelViewMatrix);
 
 				this .localFog = this .localFogs [0] = fogContainer;
@@ -90543,7 +90507,7 @@ function ($,
 								//if (getBrowser () -> getBrowserOptions () -> animateStairWalks ())
 								//{
 								//	float step = getBrowser () -> getCurrentSpeed () / getBrowser () -> getCurrentFrameRate ();
-								//	step = abs (getInverseCameraSpaceMatrix () .mult_matrix_dir (Vector3f (0, step, 0) * up));
+								//	step = abs (getViewMatrix () .mult_matrix_dir (Vector3f (0, step, 0) * up));
 								//
 								//	Vector3f offset = Vector3f (0, step, 0) * up;
 								//
@@ -90872,7 +90836,6 @@ function (X3DBaseNode)
 	{
 		X3DBaseNode .call (this, executionContext);
 
-		this .layer = layer;
 		this .array = [ defaultNode ];
 	}
 
@@ -90899,99 +90862,92 @@ function (X3DBaseNode)
 		{
 			return this .array [this .array .length - 1];
 		},
-		forcePush: function (node)
+		pushOnTop: function (node)
 		{
+			if (node !== this .array [0])
+			{
+				this .top () .isBound_ = false;
+				this .array .push (node);
+			}
+
 			node .isBound_  = true;
 			node .bindTime_ = this .getBrowser () .getCurrentTime ();
 
-			this .push (node);
+			this .addNodeEvent ();
 		},
-		push: function (node)
+		update: function (layer, removedNodes, changedNodes)
 		{
-			if (this .array .length === 0)
+			if (removedNodes .length === 0 && changedNodes .length === 0)
 				return;
 
-			if (node === this .array [0])
-				return;
+			// Save top node for later use.
 
-			var top = this .top ();
+			var boundNode = this .top ();
 
-			if (node !== top)
+			// Remove invisible nodes and unbind them if needed.
+
+			for (var i = 0, length = removedNodes .length; i < length; ++ i)
 			{
-				this .pushOnTop (node);
+				var
+					removedNode = removedNodes [i],
+					index       = this .array .indexOf (removedNode);
 
-				if (top .isBound_ .getValue ())
+				if (index > -1)
 				{
-					top .set_bind_ = false;
-					top .isBound_  = false;
+					this .array .splice (index, 1);
 				}
 
-				if (! node .isBound_ .getValue ())
+				if (removedNode .isBound_ .getValue ())
 				{
-					node .isBound_  = true;
-					node .bindTime_ = this .getBrowser () .getCurrentTime ();
-					node .transitionStart (top);
+					removedNode .isBound_ = false;
 				}
-
-				this .pushOnTop (node);
-
-				this .addNodeEvent ();
 			}
-		},
-		pushOnTop: function (node)
-		{
-			var index = this .array .indexOf (node);
 
-			if (index > -1)
-				this .array .splice (index, 1);
+			// Unbind nodes with set_bind false and pop top node.
 
-			this .array .push (node);
-		},
-		remove: function (node)
-		{
-			if (node === this .array [0])
-				return;
+			var unbindNodes = changedNodes .filter (node => ! node .set_bind_ .getValue ());
 
-			// If on top, pop node.
-
-			var top = this .top ();
-
-			if (node === top)
-				return this .pop (node);
-
-			// Simply remove.
-
-			var index = this .array .indexOf (node);
-
-			if (index > -1)
-				this .array .splice (index, 1);
-		},
-		pop: function (node)
-		{
-			if (node === this .array [0])
-				return;
-
-			var top = this .top ();
-
-			if (node === top)
+			for (var i = 0, length = unbindNodes .length; i < length; ++ i)
 			{
-				if (node .isBound_ .getValue ())
-					node .isBound_ = false;
+				unbindNodes [i] .isBound_ = false;
+			}
 
-				if (this .array .length === 0)
-					return;
-
+			if (unbindNodes .indexOf (boundNode) > -1)
+			{
 				this .array .pop ();
+			}
 
-				top = this .top ();
+			// Push nodes with set_bind true to top of stack.
 
-				if (! top .isBound_ .getValue ())
+			var bindNodes = changedNodes .filter (node => node .set_bind_ .getValue ());
+
+			for (var i = 0, length = bindNodes .length; i < length; ++ i)
+			{
+				var
+					bindNode = bindNodes [i],
+					index    = this .array .indexOf (bindNode);
+
+				if (index > -1)
 				{
-					top .set_bind_ = true;
-					top .isBound_  = true;
-					top .bindTime_ = this .getBrowser () .getCurrentTime ();
-					top .transitionStart (node);
+					this .array .splice (index, 1);
 				}
+
+				this .array .push (bindNode);
+			}
+
+			// Bind top node if not bound.
+
+			var top = this .top ();
+
+			if (! top .isBound_ .getValue ())
+			{
+				// Bound node could be the default node, and this node must be unbound here.
+				boundNode .isBound_ = false;
+
+				top .isBound_  = true;
+				top .bindTime_ = this .getBrowser () .getCurrentTime ();
+
+				top .transitionStart (layer, boundNode);
 
 				this .addNodeEvent ();
 			}
@@ -91057,27 +91013,14 @@ function (X3DBaseNode)
 {
 "use strict";
 
-	function equals (lhs, rhs)
-	{
-		if (lhs .length !== rhs .length)
-			return false;
-
-		for (var i = 0; i < lhs .length; ++ i)
-		{
-			if (lhs [i] !== rhs [i])
-				return false
-		}
-
-		return true;
-	}
-
 	function BindableList (executionContext, layer, defaultNode)
 	{
 		X3DBaseNode .call (this, executionContext);
 
-		this .layer     = layer;
-		this .collected = [ defaultNode ];
-		this .array     = [ defaultNode ];
+		this .collected    = [ defaultNode ];
+		this .array        = [ defaultNode ];
+		this .updateTime   = 0;
+		this .removedNodes = [ ];
 	}
 
 	BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -91157,8 +91100,12 @@ function (X3DBaseNode)
 		{
 			return this .collected .push (node);
 		},
-		update: function ()
+		update: function (layer, stack)
 		{
+			var
+				changedNodes = this .collected .filter (node => node .updateTime > this .updateTime),
+				removedNodes = this .removedNodes;
+
 			if (! equals (this .collected, this .array))
 			{
 				// Unbind nodes not in current list (collected);
@@ -91169,8 +91116,7 @@ function (X3DBaseNode)
 
 					if (this .collected .indexOf (node) < 0)
 					{
-						if (node .isBound_ .getValue ())
-							node .set_bind_ = false;
+						removedNodes .push (node);
 					}
 				}
 
@@ -91182,9 +91128,35 @@ function (X3DBaseNode)
 				this .collected = tmp;
 			}
 
+			// Clear collected array.
+
 			this .collected .length = 1;
+
+			// Update stack.
+
+			stack .update (layer, removedNodes, changedNodes)
+
+			removedNodes .length = 0;
+
+			// Advance update time.
+
+			this .updateTime = performance .now () / 1000;
 		},
 	});
+
+	function equals (lhs, rhs)
+	{
+		if (lhs .length !== rhs .length)
+			return false;
+
+		for (var i = 0; i < lhs .length; ++ i)
+		{
+			if (lhs [i] !== rhs [i])
+				return false
+		}
+
+		return true;
+	}
 
 	return BindableList;
 });
@@ -91519,18 +91491,6 @@ function (Fields,
 			if (this .transitionActive_ .getValue ())
 				this .transitionActive_ = false;
 		},
-		bindToLayer: function (layer)
-		{
-			layer .getNavigationInfoStack () .push (this);
-		},
-		unbindFromLayer: function (layer)
-		{
-			layer .getNavigationInfoStack () .pop (this);
-		},
-		removeFromLayer: function (layer)
-		{
-			layer .getNavigationInfoStack () .remove (this);
-		},
 		enable: function (type, renderObject)
 		{
 			if (type !== TraverseType .DISPLAY)
@@ -91774,7 +91734,7 @@ define ('x_ite/Components/EnvironmentalEffects/Fog',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DBindableNode, 
+          X3DBindableNode,
           X3DFogObject,
           TraverseType,
 		  X3DConstants,
@@ -91826,18 +91786,6 @@ function (Fields,
 		{
 			return this .modelMatrix;
 		},
-		bindToLayer: function (layer)
-		{
-			layer .getFogStack () .push (this);
-		},
-		unbindFromLayer: function (layer)
-		{
-			layer .getFogStack () .pop (this);
-		},
-		removeFromLayer: function (layer)
-		{
-			layer .getFogStack () .remove (this);
-		},
 		traverse: function (type, renderObject)
 		{
 			renderObject .getLayer () .getFogs () .push (this);
@@ -91848,8 +91796,6 @@ function (Fields,
 
 	return Fog;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -92094,18 +92040,6 @@ function (X3DBindableNode,
 				this .textures |= 1 << bit;
 			else
 				this .textures &= ~(1 << bit);
-		},
-		bindToLayer: function (layer)
-		{
-			layer .getBackgroundStack () .push (this);
-		},
-		unbindFromLayer: function (layer)
-		{
-			layer .getBackgroundStack () .pop (this);
-		},
-		removeFromLayer: function (layer)
-		{
-			layer .getBackgroundStack () .remove (this);
 		},
 		setHidden: function (value)
 		{
@@ -92399,7 +92333,7 @@ function (X3DBindableNode,
 					// Rotate and scale background.
 
 					modelViewMatrix .assign (this .modelMatrix);
-					modelViewMatrix .multRight (renderObject .getInverseCameraSpaceMatrix () .get ());
+					modelViewMatrix .multRight (renderObject .getViewMatrix () .get ());
 					modelViewMatrix .get (null, rotation);
 					modelViewMatrix .identity ();
 					modelViewMatrix .rotate (rotation);
@@ -92801,20 +92735,20 @@ function (X3DNode,
 		this .groupNode       = groupNode;
 		this .currentViewport = null;
 
-		this .defaultBackground     = new Background (executionContext);
-		this .defaultFog            = new Fog (executionContext);
 		this .defaultNavigationInfo = new NavigationInfo (executionContext);
 		this .defaultViewpoint      = defaultViewpoint;
+		this .defaultBackground     = new Background (executionContext);
+		this .defaultFog            = new Fog (executionContext);
 
-		this .backgroundStack     = new BindableStack (executionContext, this, this .defaultBackground);
-		this .fogStack            = new BindableStack (executionContext, this, this .defaultFog);
 		this .navigationInfoStack = new BindableStack (executionContext, this, this .defaultNavigationInfo);
 		this .viewpointStack      = new BindableStack (executionContext, this, this .defaultViewpoint);
+		this .backgroundStack     = new BindableStack (executionContext, this, this .defaultBackground);
+		this .fogStack            = new BindableStack (executionContext, this, this .defaultFog);
 
-		this .backgrounds     = new BindableList (executionContext, this, this .defaultBackground);
-		this .fogs            = new BindableList (executionContext, this, this .defaultFog);
 		this .navigationInfos = new BindableList (executionContext, this, this .defaultNavigationInfo);
 		this .viewpoints      = new BindableList (executionContext, this, this .defaultViewpoint);
+		this .backgrounds     = new BindableList (executionContext, this, this .defaultBackground);
+		this .fogs            = new BindableList (executionContext, this, this .defaultFog);
 
 		this .defaultBackground .setHidden (true);
 		this .defaultFog        .setHidden (true);
@@ -92833,19 +92767,19 @@ function (X3DNode,
 			X3DRenderObject .prototype .initialize .call (this);
 
 			this .defaultNavigationInfo .setup ();
+			this .defaultViewpoint      .setup ();
 			this .defaultBackground     .setup ();
 			this .defaultFog            .setup ();
-			this .defaultViewpoint      .setup ();
 
-			this .backgroundStack     .setup ();
-			this .fogStack            .setup ();
 			this .navigationInfoStack .setup ();
 			this .viewpointStack      .setup ();
+			this .backgroundStack     .setup ();
+			this .fogStack            .setup ();
 
-			this .backgrounds     .setup ();
-			this .fogs            .setup ();
 			this .navigationInfos .setup ();
 			this .viewpoints      .setup ();
+			this .backgrounds     .setup ();
+			this .fogs            .setup ();
 
 			this .viewport_       .addInterest ("set_viewport__", this);
 
@@ -92957,15 +92891,10 @@ function (X3DNode,
 				fog            = this .fogs            .getBound (),
 				viewpoint      = this .viewpoints      .getBound (viewpointName);
 
-			this .navigationInfoStack .forcePush (navigationInfo);
-			this .backgroundStack     .forcePush (background);
-			this .fogStack            .forcePush (fog);
-			this .viewpointStack      .forcePush (viewpoint);
-
-			navigationInfo .addLayer (this);
-			background     .addLayer (this);
-			fog            .addLayer (this);
-			viewpoint      .addLayer (this);
+			this .navigationInfoStack .pushOnTop (navigationInfo);
+			this .viewpointStack      .pushOnTop (viewpoint);
+			this .backgroundStack     .pushOnTop (background);
+			this .fogStack            .pushOnTop (fog);
 
 			viewpoint .resetUserOffsets ();
 		},
@@ -92975,9 +92904,9 @@ function (X3DNode,
 
 			var viewpoint = this .getViewpoint ();
 
-			this .getCameraSpaceMatrix        () .pushMatrix (viewpoint .getCameraSpaceMatrix ());
-			this .getInverseCameraSpaceMatrix () .pushMatrix (viewpoint .getInverseCameraSpaceMatrix ());
-			this .getProjectionMatrix         () .pushMatrix (viewpoint .getProjectionMatrix (this));
+			this .getProjectionMatrix ()  .pushMatrix (viewpoint .getProjectionMatrix (this));
+			this .getCameraSpaceMatrix () .pushMatrix (viewpoint .getCameraSpaceMatrix ());
+			this .getViewMatrix ()        .pushMatrix (viewpoint .getViewMatrix ());
 
 			switch (type)
 			{
@@ -92999,9 +92928,9 @@ function (X3DNode,
 					break;
 			}
 
-			this .getProjectionMatrix         () .pop ();
-			this .getInverseCameraSpaceMatrix () .pop ();
-			this .getCameraSpaceMatrix        () .pop ();
+			this .getViewMatrix ()        .pop ();
+			this .getCameraSpaceMatrix () .pop ();
+			this .getProjectionMatrix ()  .pop ();
 		},
 		pointer: function (type, renderObject)
 		{
@@ -93023,7 +92952,7 @@ function (X3DNode,
 				}
 
 				browser .setHitRay (this .getProjectionMatrix () .get (), viewport);
-				this .getModelViewMatrix () .pushMatrix (this .getInverseCameraSpaceMatrix () .get ());
+				this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
 
 				this .currentViewport .push (this);
 				this .groupNode .traverse (type, renderObject);
@@ -93040,14 +92969,14 @@ function (X3DNode,
 			this .groupNode .traverse (type, renderObject);
 			this .currentViewport .pop (this);
 
-			this .navigationInfos .update ();
-			this .backgrounds     .update ();
-			this .fogs            .update ();
-			this .viewpoints      .update ();
+			this .getModelViewMatrix () .pop ();
+
+			this .navigationInfos .update (this, this .navigationInfoStack);
+			this .viewpoints      .update (this, this .viewpointStack);
+			this .backgrounds     .update (this, this .backgroundStack);
+			this .fogs            .update (this, this .fogStack);
 
 			this .getViewpoint () .update ();
-
-			this .getModelViewMatrix () .pop ();
 		},
 		picking: function (type, renderObject)
 		{
@@ -93076,7 +93005,7 @@ function (X3DNode,
 			Camera .ortho (-size, size, -size, size, -size, size, projectionMatrix);
 
 			this .getProjectionMatrix () .pushMatrix (projectionMatrix);
-			this .getModelViewMatrix  () .pushMatrix (this .getInverseCameraSpaceMatrix () .get ());
+			this .getModelViewMatrix  () .pushMatrix (this .getViewMatrix () .get ());
 
 			// Render
 			this .currentViewport .push (this);
@@ -93090,7 +93019,7 @@ function (X3DNode,
 		{
 			this .getNavigationInfo () .enable (type, renderObject);
 
-			this .getModelViewMatrix () .pushMatrix (this .getInverseCameraSpaceMatrix () .get ());
+			this .getModelViewMatrix () .pushMatrix (this .getViewMatrix () .get ());
 
 			this .currentViewport .push (this);
 			renderObject .render (type, this .groupNode .traverse, this .groupNode);
@@ -95952,7 +95881,7 @@ function (Fields,
 							centerOfRotationMatrix .translate (this .viewpointNode .getUserCenterOfRotation ());
 							centerOfRotationMatrix .multRight (invModelMatrix .assign (modelMatrix) .inverse ());
 
-							modelMatrix .multRight (this .viewpointNode .getInverseCameraSpaceMatrix ());
+							modelMatrix .multRight (this .viewpointNode .getViewMatrix ());
 							modelMatrix .get (null, orientation);
 							modelMatrix .inverse ();
 
@@ -105432,8 +105361,8 @@ function (Fields,
 		constructor: ViewpointGroup,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "displayed",         new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "displayed",         new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "size",              new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "center",            new Fields .SFVec3f ()),

@@ -52,8 +52,8 @@ define ([
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DNode, 
-          X3DBoundedObject, 
+function (X3DNode,
+          X3DBoundedObject,
           X3DConstants)
 {
 "use strict";
@@ -74,5 +74,3 @@ function (X3DNode,
 
 	return X3DNBodyCollisionSpaceNode;
 });
-
-

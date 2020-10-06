@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNBodyCollisionSpaceNode, 
+          X3DNBodyCollisionSpaceNode,
           X3DConstants,
           X3DCast)
 {
@@ -105,6 +105,14 @@ function (Fields,
 
 			this .set_collidables__ ();
 		},
+		getBBox: function (bbox)
+		{
+			// TODO: add space node.
+			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+				return X3DBoundedObject .prototype .getBBox .call (this, this .collidableNodes, bbox);
+
+			return bbox;
+		},
 		getCollidables: function ()
 		{
 			return this .collidableNodes;
@@ -129,7 +137,7 @@ function (Fields,
 					collisionSpaceNodes .push (collisionSpaceNode);
 				}
 			}
-	
+
 			this .collect ();
 		},
 		collect: function ()
@@ -166,5 +174,3 @@ function (Fields,
 
 	return CollisionSpace;
 });
-
-

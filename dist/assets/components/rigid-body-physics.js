@@ -1981,8 +1981,8 @@ define ('x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode',[
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DNode, 
-          X3DBoundedObject, 
+function (X3DNode,
+          X3DBoundedObject,
           X3DConstants)
 {
 "use strict";
@@ -2003,8 +2003,6 @@ function (X3DNode,
 
 	return X3DNBodyCollisionSpaceNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -2066,7 +2064,7 @@ define ('x_ite/Components/RigidBodyPhysics/CollisionSpace',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNBodyCollisionSpaceNode, 
+          X3DNBodyCollisionSpaceNode,
           X3DConstants,
           X3DCast)
 {
@@ -2113,6 +2111,13 @@ function (Fields,
 
 			this .set_collidables__ ();
 		},
+		getBBox: function (bbox)
+		{
+			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+				return X3DBoundedObject .prototype .getBBox .call (this, this .collidableNodes, bbox);
+
+			return bbox;
+		},
 		getCollidables: function ()
 		{
 			return this .collidableNodes;
@@ -2137,7 +2142,7 @@ function (Fields,
 					collisionSpaceNodes .push (collisionSpaceNode);
 				}
 			}
-	
+
 			this .collect ();
 		},
 		collect: function ()
@@ -2174,8 +2179,6 @@ function (Fields,
 
 	return CollisionSpace;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************

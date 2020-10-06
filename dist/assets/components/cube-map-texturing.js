@@ -618,9 +618,9 @@ define ('x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DEnvironmentTextureNode, 
-          DependentRenderer, 
-          TextureBuffer, 
+          X3DEnvironmentTextureNode,
+          DependentRenderer,
+          TextureBuffer,
           X3DConstants,
           TraverseType,
           Camera,
@@ -711,9 +711,9 @@ function (Fields,
 				var
 					gl          = this .getBrowser () .getContext (),
 					defaultData = new Uint8Array (size * size * 4);
-	
+
 				gl .bindTexture (this .getTarget (), this .getTexture ());
-	
+
 				for (var i = 0; i < 6; ++ i)
 					gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
@@ -733,13 +733,13 @@ function (Fields,
 		{
 			if (type !== TraverseType .DISPLAY)
 				return;
-		
+
 			if (this .update_ .getValue () === "NONE")
 				return;
 
 			if (! this .frameBuffer)
 				return;
-		
+
 			//if (renderObject .getBrowser () !== this .getBrowser ())
 			//	return; // Could be interesting for four-side-view
 
@@ -790,13 +790,13 @@ function (Fields,
 
 				try
 				{
-					renderer .getInverseCameraSpaceMatrix () .pushMatrix (invCameraSpaceMatrix .assign (renderer .getCameraSpaceMatrix () .get ()) .inverse ());
+					renderer .getViewMatrix () .pushMatrix (invCameraSpaceMatrix .assign (renderer .getCameraSpaceMatrix () .get ()) .inverse ());
 				}
 				catch (error)
 				{
 					console .log (error);
 
-					renderer .getInverseCameraSpaceMatrix () .pushMatrix (Matrix4 .Identity);
+					renderer .getViewMatrix () .pushMatrix (Matrix4 .Identity);
 				}
 
 				renderer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
@@ -818,9 +818,9 @@ function (Fields,
 				if (headlight)
 					headlightContainer .getModelViewMatrix () .pop ();
 
-				renderer .getModelViewMatrix          () .pop ();
-				renderer .getCameraSpaceMatrix        () .pop ();
-				renderer .getInverseCameraSpaceMatrix () .pop ();
+				renderer .getModelViewMatrix ()   .pop ();
+				renderer .getCameraSpaceMatrix () .pop ();
+				renderer .getViewMatrix ()        .pop ();
 
 				// Transfer image.
 
@@ -846,8 +846,6 @@ function (Fields,
 
 	return GeneratedCubeMapTexture;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
