@@ -958,11 +958,15 @@ function (Fields,
 
 						gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
 
-						if (context .transparent && ! this .solid)
+						if (context .transparent)
 						{
 							gl .enable (gl .CULL_FACE);
-							gl .cullFace (gl .FRONT);
-							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+
+							if (!this .solid)
+							{
+								gl .cullFace (gl .FRONT);
+								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+							}
 
 							gl .cullFace (gl .BACK);
 							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
