@@ -2113,6 +2113,7 @@ function (Fields,
 		},
 		getBBox: function (bbox)
 		{
+			// TODO: add space node.
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 				return X3DBoundedObject .prototype .getBBox .call (this, this .collidableNodes, bbox);
 

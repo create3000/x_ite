@@ -20756,7 +20756,7 @@ function (Quaternion,
 				           arg0 .y,
 				           arg0 .z,
 				           arg1);
-			
+
 			   return;
 			}
 			case 4:
@@ -20842,7 +20842,7 @@ function (Quaternion,
 			{
 				var value = this .value;
 
-				if (Math .abs (value .w > 1))
+				if (Math .abs (value .w) > 1)
 				{
 					return Vector4 .zAxis;
 				}
@@ -20883,35 +20883,35 @@ function (Quaternion,
 			return function (fromVec, toVec)
 			{
 				// https://bitbucket.org/Coin3D/coin/src/abc9f50968c9/src/base/SbRotation.cpp
-	
+
 				from .assign (fromVec) .normalize ();
 				to   .assign (toVec)   .normalize ();
-	
+
 				var
 					cos_angle = Algorithm .clamp (from .dot (to), -1, 1),
 					crossvec  = cv .assign (from) .cross (to) .normalize (),
 					crosslen  = crossvec .abs ();
-	
+
 				if (crosslen === 0)
 				{
 					// Parallel vectors
 					// Check if they are pointing in the same direction.
 					if (cos_angle > 0)
 						this .value .set (0, 0, 0, 1); // standard rotation
-	
+
 					// Ok, so they are parallel and pointing in the opposite direction
 					// of each other.
 					else
 					{
 						// Try crossing with x axis.
 						t .assign (from) .cross (Vector3 .xAxis);
-	
+
 						// If not ok, cross with y axis.
 						if (t .norm () === 0)
 							t .assign (from) .cross (Vector3 .yAxis);
-	
+
 						t .normalize ();
-	
+
 						this .value .set (t .x, t .y, t .z, 0);
 					}
 				}
@@ -20921,15 +20921,15 @@ function (Quaternion,
 					// The abs () wrapping is to avoid problems when `dot' "overflows" a tiny wee bit,
 					// which can lead to sqrt () returning NaN.
 					crossvec .multiply (Math .sqrt (Math .abs (1 - cos_angle) / 2));
-	
+
 					this .value .set (crossvec .x,
 					                  crossvec .y,
 					                  crossvec .z,
 					                  Math .sqrt (Math .abs (1 + cos_angle) / 2));
 				}
-	
+
 				this .update ();
-	
+
 				return this;
 			};
 		})(),
