@@ -302,7 +302,7 @@ function (ComponentInfoArray,
 	{
 		title:      "Shape",
 		name:       "Shape",
-		level:       4,
+		level:       5,
 		providerUrl: urls .getProviderUrl (),
 	});
 
