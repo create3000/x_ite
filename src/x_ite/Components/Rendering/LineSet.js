@@ -111,7 +111,7 @@ function (Fields,
 
 			this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
 			this .setSolid (false);
-			
+
 			this .set_attrib__ ();
 			this .set_fogCoord__ ();
 			this .set_color__ ();
@@ -237,5 +237,3 @@ function (Fields,
 
 	return LineSet;
 });
-
-

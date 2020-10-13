@@ -124,6 +124,9 @@ function (Fields,
 			{
 				var first = index [i];
 
+				if (first < 0)
+					continue;
+
 				if (++ i < length)
 				{
 					var second = index [i];

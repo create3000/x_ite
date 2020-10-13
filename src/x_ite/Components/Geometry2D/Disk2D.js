@@ -134,12 +134,12 @@ function (Fields,
 
 				// Point
 
-				//if (radius === 0)
-				//{
-				//	vertexArray .push (0, 0, 0, 1);
-				//	this .setGeometryType (GeometryType .GEOMETRY_POINTS);
-				//	return;
-				//}
+				if (radius === 0)
+				{
+					// vertexArray .push (0, 0, 0, 1);
+					// this .setGeometryType (GeometryType .GEOMETRY_POINTS);
+					return;
+				}
 
 				// Circle
 
