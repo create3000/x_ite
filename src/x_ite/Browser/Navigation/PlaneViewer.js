@@ -68,8 +68,10 @@ function ($,
           Vector3)
 {
 "use strict";
-	
-	var SCROLL_FACTOR = 0.05;
+
+	var macOS = /Mac OS X/i .test (navigator .userAgent)
+
+	var SCROLL_FACTOR = macOS ? 1 / 160 : 1 / 20;
 
 	var
 		vector                 = new Vector3 (0 ,0, 0),
@@ -108,7 +110,7 @@ function ($,
 		{
 			if (this .button >= 0)
 				return;
-		
+
 			this .pressTime = performance .now ();
 
 			var
@@ -116,7 +118,7 @@ function ($,
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
-			switch (event .button)
+			switch (this .getButton (event .button))
 			{
 				case 1:
 				{
@@ -126,11 +128,11 @@ function ($,
 					event .stopImmediatePropagation ();
 
 					this .button = event .button;
-					
+
 					this .getBrowser () .getElement () .unbind ("mousemove.PlaneViewer");
 					$(document) .bind ("mouseup.PlaneViewer"   + this .getId (), this .mouseup .bind (this));
 					$(document) .bind ("mousemove.PlaneViewer" + this .getId (), this .mousemove .bind (this));
-		
+
 					this .getActiveViewpoint () .transitionStop ();
 					this .getBrowser () .setCursor ("MOVE");
 
@@ -150,9 +152,9 @@ function ($,
 
 			if (event .button !== this .button)
 				return;
-			
+
 			this .button = -1;
-		
+
 			$(document) .unbind (".PlaneViewer" + this .getId ());
 			this .getBrowser () .getElement () .bind ("mousemove.PlaneViewer", this .mousemove .bind (this));
 
@@ -167,7 +169,7 @@ function ($,
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
-			switch (this .button)
+			switch (this .getButton (this .button))
 			{
 				case 1:
 				{
@@ -224,7 +226,7 @@ function ($,
 
 			if (viewpoint .set_fieldOfView___)
 				viewpoint .set_fieldOfView___ (); // XXX: Immediately apply fieldOfViewScale;
-					
+
 			var
 				toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
 				translation = viewpoint .getUserOrientation () .multVecRot (vector .assign (fromPoint) .subtract (toPoint));

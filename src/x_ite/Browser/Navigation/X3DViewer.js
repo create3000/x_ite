@@ -100,6 +100,19 @@ function (X3DBaseNode,
 		{
 			return this .getBrowser () .getActiveLayer () .getViewpoint ();
 		},
+		getButton: function (button)
+		{
+			// If Alt key is pressed and button 0, then emulate button 1 (middle).
+			if (button === 0)
+			{
+				if (this .getBrowser () .getAltKey ())
+				{
+					return 1;
+				}
+			}
+
+			return button;
+		},
 		getPointOnCenterPlane: function (x, y, result)
 		{
 			try

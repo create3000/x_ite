@@ -66,7 +66,9 @@ function ($,
           Camera)
 {
 "use strict";
-	
+
+	var macOS = /Mac OS X/i .test (navigator .userAgent)
+
 	var
 		SPEED_FACTOR           = 0.007,
 		SHIFT_SPEED_FACTOR     = 4 * SPEED_FACTOR,
@@ -74,13 +76,13 @@ function ($,
 		ROTATION_LIMIT         = 40,
 		PAN_SPEED_FACTOR       = SPEED_FACTOR,
 		PAN_SHIFT_SPEED_FACTOR = 1.4 * PAN_SPEED_FACTOR,
-		ROLL_ANGLE             = Math .PI / 32,
+		ROLL_ANGLE             = macOS ? Math .PI / 512 : Math .PI / 32,
 		ROTATE_TIME            = 0.3;
-	
+
 	var
 		MOVE = 0,
 		PAN  = 1;
-	
+
 	function X3DFlyViewer (executionContext)
 	{
 		X3DViewer .call (this, executionContext);
@@ -150,8 +152,8 @@ function ($,
 				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
-			
-			switch (event .button)
+
+			switch (this .getButton (event .button))
 			{
 				case 0:
 				{
@@ -162,7 +164,7 @@ function ($,
 					event .stopImmediatePropagation ();
 
 					this .button = event .button;
-				
+
 					$(document) .bind ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
 					$(document) .bind ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
 					$(document) .bind ("touchend.X3DFlyViewer"  + this .getId (), this .touchend  .bind (this));
@@ -205,7 +207,7 @@ function ($,
 					event .stopImmediatePropagation ();
 
 					this .button = event .button;
-				
+
 					$(document) .bind ("mouseup.X3DFlyViewer"   + this .getId (), this .mouseup   .bind (this));
 					$(document) .bind ("mousemove.X3DFlyViewer" + this .getId (), this .mousemove .bind (this));
 
@@ -222,7 +224,7 @@ function ($,
 
 					if (this .getBrowser () .getBrowserOption ("Rubberband"))
 						this .getBrowser () .finished () .addInterest ("display", this, PAN);
-					
+
 					this .isActive_ = true;
 					break;
 				}
@@ -237,7 +239,7 @@ function ($,
 
 			this .event  = null;
 			this .button = -1;
-		
+
 			$(document) .unbind (".X3DFlyViewer" + this .getId ());
 
 			this .disconnect ();
@@ -256,8 +258,8 @@ function ($,
 				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
-			
-			switch (this .button)
+
+			switch (this .getButton (this .button))
 			{
 				case 0:
 				{
@@ -387,7 +389,7 @@ function ($,
 					event .button = 0;
 					event .pageX  = touches [0] .pageX;
 					event .pageY  = touches [0] .pageY;
-		
+
 					this .mousemove (event);
 					break;
 				}
@@ -398,7 +400,7 @@ function ($,
 					event .button = 0;
 					event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
 					event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
-		
+
 					this .mousemove (event);
 					break;
 				}
@@ -423,18 +425,18 @@ function ($,
 					viewpoint      = this .getActiveViewpoint (),
 					now            = performance .now (),
 					dt             = (now - this .startTime) / 1000;
-	
+
 				upVector .assign (viewpoint .getUpVector ());
-	
+
 				// Rubberband values
-	
+
 				up .setFromToVec (Vector3 .yAxis, upVector);
 
 				if (this .direction .z > 0)
 					rubberBandRotation .setFromToVec (up .multVecRot (direction .assign (this .direction)), up .multVecRot (axis .set (0, 0, 1)));
 				else
 					rubberBandRotation .setFromToVec (up .multVecRot (axis .set (0, 0, -1)), up .multVecRot (direction .assign (this .direction)));
-	
+
 				var rubberBandLength = this .direction .abs ();
 
 				// Determine positionOffset.
@@ -445,13 +447,13 @@ function ($,
 				speedFactor *= viewpoint .getSpeedFactor ();
 				speedFactor *= this .getBrowser () .getShiftKey () ? SHIFT_SPEED_FACTOR : SPEED_FACTOR;
 				speedFactor *= dt;
-	
+
 				var translation = this .getTranslationOffset (direction .assign (this .direction) .multiply (speedFactor));
-	
+
 				this .getActiveLayer () .constrainTranslation (translation, true);
-	
+
 				viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
-	
+
 				// Determine weight for rubberBandRotation.
 
 				var weight = ROTATION_SPEED_FACTOR * dt * Math .pow (rubberBandLength / (rubberBandLength + ROTATION_LIMIT), 2);
@@ -480,11 +482,11 @@ function ($,
 				viewpoint .orientationOffset_ = orientationOffset;
 
 				// GeoRotation
-	
+
 				geoRotation .setFromToVec (upVector, viewpoint .getUpVector ());
-	
+
 				viewpoint .orientationOffset_ = geoRotation .multLeft (viewpoint .orientationOffset_ .getValue ());
-	
+
 				this .startTime = now;
 			};
 		})(),
@@ -502,24 +504,24 @@ function ($,
 					now            = performance .now (),
 					dt             = (now - this .startTime) / 1000,
 					upVector       = viewpoint .getUpVector ();
-	
+
 				this .constrainPanDirection (direction .assign (this .direction));
-	
+
 				var speedFactor = 1;
-	
+
 				speedFactor *= navigationInfo .speed_ .getValue ();
 				speedFactor *= viewpoint .getSpeedFactor ();
 				speedFactor *= this .getBrowser () .getShiftKey () ? PAN_SHIFT_SPEED_FACTOR : PAN_SPEED_FACTOR;
 				speedFactor *= dt;
-	
+
 				var
 					orientation = viewpoint .getUserOrientation () .multRight (new Rotation4 (viewpoint .getUserOrientation () .multVecRot (axis .assign (Vector3 .yAxis)), upVector)),
 					translation = orientation .multVecRot (direction .multiply (speedFactor));
-	
+
 				this .getActiveLayer () .constrainTranslation (translation, true);
-	
+
 				viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
-	
+
 				this .startTime = now;
 			};
 		})(),
@@ -543,7 +545,7 @@ function ($,
 		{
 			if (this .startTime)
 				return;
-			
+
 			this .disconnect ();
 			this .getBrowser () .prepareEvents () .addInterest ("pan", this);
 			this .getBrowser () .addBrowserEvent ();
@@ -559,7 +561,7 @@ function ($,
 			return function (rollAngle)
 			{
 				var viewpoint = this .getActiveViewpoint ();
-	
+
 				if (this .orientationChaser .isActive_ .getValue () && this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
 				{
 					orientationOffset
@@ -582,7 +584,7 @@ function ($,
 					this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
 					this .orientationChaser .set_destination_ = orientationOffset;
 				}
-	
+
 				this .disconnect ();
 				this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
 			};
@@ -596,7 +598,7 @@ function ($,
 			return function (fromVector, toVector)
 			{
 				var viewpoint = this .getActiveViewpoint ();
-	
+
 				if (this .orientationChaser .isActive_ .getValue () && this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
 				{
 					userOrientation
@@ -606,9 +608,9 @@ function ($,
 
 					if (viewpoint .getTypeName () !== "GeoViewpoint")
 						viewpoint .straightenHorizon (userOrientation);
-	
+
 					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
-	
+
 					this .orientationChaser .set_destination_ = orientationOffset;
 				}
 				else
@@ -619,13 +621,13 @@ function ($,
 
 					if (viewpoint .getTypeName () !== "GeoViewpoint")
 						viewpoint .straightenHorizon (userOrientation);
-	
+
 					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
-	
+
 					this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
 					this .orientationChaser .set_destination_ = orientationOffset;
 				}
-	
+
 				this .disconnect ();
 				this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
 			};
@@ -642,7 +644,7 @@ function ($,
 			return function (interest, type)
 			{
 				// Configure HUD
-	
+
 				var
 					browser  = this .getBrowser (),
 					viewport = browser .getViewport (),
@@ -650,11 +652,11 @@ function ($,
 					height   = viewport [3];
 
 				Camera .ortho (0, width, 0, height, -1, 1, projectionMatrix);
-	
+
 				projectionMatrixArray .set (projectionMatrix);
-	
+
 				// Display Rubberband.
-	
+
 				if (type === MOVE)
 				{
 					fromPoint .set (this .fromVector .x, height - this .fromVector .z, 0);
@@ -665,9 +667,9 @@ function ($,
 					fromPoint .set (this .fromVector .x, height + this .fromVector .y, 0);
 					toPoint   .set (this .toVector   .x, height + this .toVector   .y, 0);
 				}
-	
+
 				this .transfer (fromPoint, toPoint);
-	
+
 				var
 					gl         = browser .getContext (),
 					shaderNode = browser .getLineShader (),
@@ -677,7 +679,7 @@ function ($,
 				{
 					shaderNode .enable (gl);
 					shaderNode .enableVertexAttribute (gl, this .lineBuffer);
-		
+
 					gl .uniform1i (shaderNode .x3d_NumClipPlanes,         0);
 					gl .uniform1i (shaderNode .x3d_FogType,               0);
 					gl .uniform1i (shaderNode .x3d_ColorMaterial,         false);
@@ -685,22 +687,22 @@ function ($,
 
 					gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, projectionMatrixArray);
 					gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, modelViewMatrixArray);
-					
+
 					gl .disable (gl .DEPTH_TEST);
-		
+
 					// Draw a black and a white line.
 					gl .lineWidth (2);
 					gl .uniform3f (shaderNode .x3d_EmissiveColor, 0, 0, 0);
 					gl .uniform1f (shaderNode .x3d_Transparency,  0);
-		
+
 					gl .drawArrays (gl .LINES, 0, this .lineCount);
-		
+
 					gl .lineWidth (1);
 					gl .uniform3f (shaderNode .x3d_EmissiveColor, 1, 1, 1);
-		
+
 					gl .drawArrays (gl .LINES, 0, this .lineCount);
 					gl .enable (gl .DEPTH_TEST);
-		
+
 					gl .lineWidth (lineWidth);
 					shaderNode .disable (gl);
 				}

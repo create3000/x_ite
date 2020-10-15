@@ -170,19 +170,6 @@ function ($,
 
 			this .disconnect ();
 		},
-		getButton: function (button)
-		{
-			// If Alt key is pressed and button 0, then emulate button 1 (middle).
-			if (button === 0)
-			{
-				if (this .getBrowser () .getAltKey ())
-				{
-					return 1;
-				}
-			}
-
-			return button;
-		},
 		mousedown: function (event)
 		{
 			if (this .button >= 0)

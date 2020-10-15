@@ -73,8 +73,11 @@ function ($,
           Rotation4)
 {
 "use strict";
+
+	var macOS = /Mac OS X/i .test (navigator .userAgent)
+
 	var
-		SCROLL_FACTOR = 1.0 / 20.0,
+		SCROLL_FACTOR = macOS ? 1 / 120 : 1 / 20,
 		MOVE_TIME     = 0.3,
 		ROTATE_TIME   = 0.3;
 
@@ -138,7 +141,7 @@ function ($,
 		{
 			if (this .button >= 0)
 				return;
-		
+
 			this .pressTime = performance .now ();
 
 			var
@@ -179,7 +182,7 @@ function ($,
 				return;
 
 			this .button = -1;
-		
+
 			$(document) .unbind (".LookAtViewer" + this .getId ());
 
 			switch (event .button)
@@ -203,7 +206,7 @@ function ($,
 			event .stopImmediatePropagation ();
 
 			var
-				offset = this .getBrowser () .getElement () .offset (), 
+				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = this .getBrowser () .getElement () .height () - (event .pageY - offset .top);
 
@@ -220,7 +223,7 @@ function ($,
 				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
-			
+
 			switch (this .button)
 			{
 				case 0:
@@ -250,19 +253,19 @@ function ($,
 				// Stop event propagation.
 				event .preventDefault ();
 				event .stopImmediatePropagation ();
-	
+
 				// Change viewpoint position.
-	
+
 				var viewpoint = this .getActiveViewpoint ();
-	
+
 				viewpoint .transitionStop ();
 
 				step        = this .getDistanceToCenter (step) .multiply (event .zoomFactor || SCROLL_FACTOR),
 				translation = viewpoint .getUserOrientation () .multVecRot (translation .set (0, 0, step .abs ()));
-	
+
 				if (event .deltaY > 0)
-					this .addMove (translation .negate (), Vector3 .Zero);		
-				
+					this .addMove (translation .negate (), Vector3 .Zero);
+
 				else if (event .deltaY < 0)
 					this .addMove (translation, Vector3 .Zero);
 			};
@@ -343,7 +346,7 @@ function ($,
 			return function (event)
 			{
 				var touches = event .originalEvent .touches;
-	
+
 				switch (touches .length)
 				{
 					case 1:
@@ -363,32 +366,32 @@ function ($,
 						if (move)
 						{
 							// Look around (button 0).
-		
+
 							event .button = 0;
 							event .pageX  = (touches [0] .pageX + touches [1] .pageX) / 2;
 							event .pageY  = (touches [0] .pageY + touches [1] .pageY) / 2;
-				
+
 							this .mousemove (event);
 						}
 						else if (zoom)
-						{	
+						{
 							// Zoom (mouse wheel).
-		
+
 							var distance1 = this .touch1 .distance (this .touch2);
-			
+
 							this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
 							this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
-			
+
 							var
 								distance2 = this .touch1 .distance (this .touch2),
 								delta     = distance2 - distance1;
-			
+
 							event .deltaY     = delta;
 							event .zoomFactor = Math .abs (delta) / $(window) .width ();
 
 							this .mousewheel (event);
 						}
-		
+
 						this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
 						this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
 						break;
@@ -423,13 +426,13 @@ function ($,
 			return function (positionOffsetChange, centerOfRotationOffsetChange)
 			{
 				var viewpoint = this .getActiveViewpoint ();
-	
+
 				if (this .positionChaser .isActive_ .getValue () && this .positionChaser .value_changed_ .hasInterest ("set_positionOffset__", this))
 				{
 					positionOffset
 						.assign (this .positionChaser .set_destination_ .getValue ())
 						.add (positionOffsetChange);
-	
+
 					this .positionChaser .set_destination_ = positionOffset;
 				}
 				else
@@ -437,11 +440,11 @@ function ($,
 					positionOffset
 						.assign (viewpoint .positionOffset_ .getValue ())
 						.add (positionOffsetChange);
-	
+
 					this .positionChaser .set_value_       = viewpoint .positionOffset_;
 					this .positionChaser .set_destination_ = positionOffset;
 				}
-	
+
 				if (this .centerOfRotationChaser .isActive_ .getValue () && this .centerOfRotationChaser .value_changed_ .hasInterest ("set_centerOfRotationOffset__", this))
 				{
 					centerOfRotationOffset
@@ -459,7 +462,7 @@ function ($,
 					this .centerOfRotationChaser .set_value_       = viewpoint .centerOfRotationOffset_;
 					this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
 				}
-	
+
 				this .disconnect ();
 				this .positionChaser         .value_changed_ .addInterest ("set_positionOffset__",         this);
 				this .centerOfRotationChaser .value_changed_ .addInterest ("set_centerOfRotationOffset__", this);
@@ -474,7 +477,7 @@ function ($,
 			return function (fromVector, toVector)
 			{
 				var viewpoint = this .getActiveViewpoint ();
-	
+
 				if (this .orientationChaser .isActive_ .getValue () && this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
 				{
 					userOrientation
@@ -483,9 +486,9 @@ function ($,
 						.multRight (this .orientationChaser .set_destination_ .getValue ());
 
 					viewpoint .straightenHorizon (userOrientation);
-	
+
 					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
-	
+
 					this .orientationChaser .set_destination_ = orientationOffset;
 				}
 				else
@@ -495,13 +498,13 @@ function ($,
 						.multRight (viewpoint .getUserOrientation ());
 
 					viewpoint .straightenHorizon (userOrientation);
-	
+
 					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
-	
+
 					this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
 					this .orientationChaser .set_destination_ = orientationOffset;
 				}
-	
+
 				this .disconnect ();
 				this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
 			};
