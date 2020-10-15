@@ -101,6 +101,7 @@ function ($,
 		this .pressTime                = 0;
 		this .motionTime               = 0;
 
+		this .touchMode                = 0;
 		this .touch1                   = new Vector2 (0, 0);
 		this .touch2                   = new Vector2 (0, 0);
 		this .tapStart                 = 0;
@@ -442,7 +443,9 @@ function ($,
 				case 0:
 				{
 					// End rotate (button 0).
+
 					event .button = 0;
+
 					this .mouseup (event);
 
 					// Start dblclick (button 0).
@@ -462,7 +465,10 @@ function ($,
 				case 1:
 				{
 					// End move (button 1).
-					event .button = 1;
+
+					this .touchMode = 0;
+					event .button   = 1;
+
 					this .mouseup (event);
 					break;
 				}
@@ -499,34 +505,46 @@ function ($,
 
 						var
 							move = touch1Change .dot (touch2Change) > MOVE_ANGLE,
-							zoom = touch1Change .dot (touch2Change) < ZOOM_ANGLE;
+							zoom = touch1Change .dot (touch2Change) < ZOOM_ANGLE,
+							mode = this .touchMode || (move ? 1 : (zoom ? 2 : 0));
 
-						if (move)
+						switch (mode)
 						{
-							// Move (button 1).
+							case 1:
+							{
+								// Move (button 1).
 
-							event .pageX = (touches [0] .pageX + touches [1] .pageX) / 2;
-							event .pageY = (touches [0] .pageY + touches [1] .pageY) / 2;
+								this .touchMode = 1;
 
-							this .mousemove (event);
-						}
-						else if (zoom)
-						{
-							// Zoom (mouse wheel).
+								event .pageX = (touches [0] .pageX + touches [1] .pageX) / 2;
+								event .pageY = (touches [0] .pageY + touches [1] .pageY) / 2;
 
-							var distance1 = this .touch1 .distance (this .touch2);
+								this .mousemove (event);
 
-							this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
-							this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+								break;
+							}
+							case 2:
+							{
+								// Zoom (mouse wheel).
 
-							var
-								distance2 = this .touch1 .distance (this .touch2),
-								delta     = distance2 - distance1;
+								this .touchMode = 2;
 
-							event .deltaY     = delta;
-							event .zoomFactor = Math .abs (delta) / $(window) .width ();
+								var distance1 = this .touch1 .distance (this .touch2);
 
-							this .mousewheel (event);
+								this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
+								this .touch2 .set (touches [1] .pageX, touches [1] .pageY);
+
+								var
+									distance2 = this .touch1 .distance (this .touch2),
+									delta     = distance2 - distance1;
+
+								event .deltaY     = delta;
+								event .zoomFactor = Math .abs (delta) / $(window) .width ();
+
+								this .mousewheel (event);
+
+								break;
+							}
 						}
 
 						this .touch1 .set (touches [0] .pageX, touches [0] .pageY);
