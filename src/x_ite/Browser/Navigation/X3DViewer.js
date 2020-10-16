@@ -150,8 +150,12 @@ function (X3DBaseNode,
 		},
 		trackballProjectToSphere: function (x, y, vector)
 		{
-			x =  x / this .getBrowser () .getViewport () [2] - 0.5;
-			y = -y / this .getBrowser () .getViewport () [3] + 0.5;
+			var viewport = this .getViewport () .getRectangle (this .getBrowser ());
+
+			y = this .getBrowser () .getViewport () [3] - y;
+
+			x = (x - viewport [0]) / viewport [2] - 0.5;
+			y = (y - viewport [1]) / viewport [3] - 0.5;
 
 			return vector .set (x, y, tbProjectToSphere (0.5, x, y));
 		},
