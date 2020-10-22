@@ -764,6 +764,11 @@ function ($,
 				{
 					this .fieldValue (field, xmlElement .getAttribute ("value"));
 
+					if (field .getType () === X3DConstants .MFNode)
+					{
+						field .length = 0
+					}
+
 					this .pushParent (field);
 					this .childrenElements (xmlElement);
 					this .popParent ();
