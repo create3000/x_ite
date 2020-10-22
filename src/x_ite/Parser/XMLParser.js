@@ -762,12 +762,12 @@ function ($,
 
 				if (accessType & X3DConstants .initializeOnly)
 				{
-					this .fieldValue (field, xmlElement .getAttribute ("value"));
-
 					if (field .getType () === X3DConstants .MFNode)
 					{
 						field .length = 0
 					}
+
+					this .fieldValue (field, xmlElement .getAttribute ("value"));
 
 					this .pushParent (field);
 					this .childrenElements (xmlElement);

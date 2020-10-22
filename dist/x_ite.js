@@ -1,4 +1,4 @@
-/* X_ITE v4.6.12-1004 */
+/* X_ITE v4.6.12-1005 */
 
 (function () {
 
@@ -47552,6 +47552,11 @@ function ($,
 
 				if (accessType & X3DConstants .initializeOnly)
 				{
+					if (field .getType () === X3DConstants .MFNode)
+					{
+						field .length = 0
+					}
+
 					this .fieldValue (field, xmlElement .getAttribute ("value"));
 
 					this .pushParent (field);
