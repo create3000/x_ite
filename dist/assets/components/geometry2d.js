@@ -2032,7 +2032,7 @@ define ('x_ite/Components/Geometry2D/TriangleSet2D',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGeometryNode, 
+          X3DGeometryNode,
           X3DConstants,
           Vector3)
 {
@@ -2095,7 +2095,7 @@ function (Fields,
 					min           = p .min,
 					Ssize         = p .Ssize,
 					vertexArray   = this .getVertices () .getValue ();
-	
+
 				for (var i = 0, length = vertexArray .length; i < length; i += 4)
 				{
 					texCoordArray .push ((vertexArray [i]     - min [0]) / Ssize,
@@ -2113,8 +2113,6 @@ function (Fields,
 
 	return TriangleSet2D;
 });
-
-
 
 /*******************************************************************************
  *

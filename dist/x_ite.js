@@ -1,4 +1,4 @@
-/* X_ITE v4.6.12-1005 */
+/* X_ITE v4.6.14-1006 */
 
 (function () {
 
@@ -25537,7 +25537,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.6.12";
+	return "4.6.14";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -43899,14 +43899,14 @@ function (Vector3)
 				A = (r + l) / r_l,
 				B = (t + b) / t_b,
 				C = -(f + n) / f_n,
-				D = -n_2 * f / f_n,
+				D = -(n_2 * f) / f_n,
 				E = n_2 / r_l,
 				F = n_2 / t_b;
 
 			return matrix .set (E, 0, 0, 0,
 			                    0, F, 0, 0,
 			                    A, B, C, -1,
-			                    0, 0, D, 0);
+									  0, 0, D, 0);
 		},
 		perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
 		{
@@ -43957,7 +43957,7 @@ function (Vector3)
 			return function (box, matrix)
 			{
 				box .getExtents (min, max);
-	
+
 				return this .ortho (min .x, max .x, min .y, max .y, -max .z, -min .z, matrix);
 			};
 		})(),
@@ -44028,8 +44028,8 @@ define ('x_ite/Components/Navigation/OrthoViewpoint',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DViewpointNode, 
-          ScalarInterpolator, 
+          X3DViewpointNode,
+          ScalarInterpolator,
           X3DConstants,
           Camera,
           Vector2,
@@ -44124,7 +44124,7 @@ function (Fields,
 			else
 			{
 				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (this .fromFieldOfViewScale, this .fieldOfViewScale_ .getValue ());
-	
+
 				this .fieldOfViewScale_ = this .fromFieldOfViewScale;
 			}
 		},
@@ -44168,16 +44168,16 @@ function (Fields,
 					sizeX  = this .sizeX,
 					sizeY  = this .sizeY,
 					aspect = width / height;
-	
+
 				if (aspect > sizeX / sizeY)
 				{
 					var s = sizeY / height;
-	
+
 					return screenScale .set (s, s, s);
 				}
-	
+
 				var s = sizeX / width;
-	
+
 				return screenScale .set (s, s, s);
 			};
 		})(),
@@ -44193,10 +44193,10 @@ function (Fields,
 					sizeX  = this .sizeX,
 					sizeY  = this .sizeY,
 					aspect = width / height;
-	
+
 				if (aspect > sizeX / sizeY)
 					return viewportSize .set (sizeY * aspect, sizeY);
-	
+
 				return viewportSize .set (sizeX, sizeX / aspect);
 			};
 		})(),
@@ -44206,6 +44206,9 @@ function (Fields,
 		},
 		getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
 		{
+			nearValue = 10;
+			farValue  = 100;
+
 			var
 				width  = viewport [2],
 				height = viewport [3],
@@ -44232,8 +44235,6 @@ function (Fields,
 
 	return OrthoViewpoint;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -47913,7 +47914,7 @@ function ($,
 	XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix3f]  = Parser .prototype .sfmatrix3fValues;
 	XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4d]  = Parser .prototype .sfmatrix4dValues;
 	XMLParser .prototype .fieldTypes [X3DConstants .MFMatrix4f]  = Parser .prototype .sfmatrix4fValues;
-	XMLParser .prototype .fieldTypes [X3DConstants .MFNode]      = function () { };
+	XMLParser .prototype .fieldTypes [X3DConstants .MFNode]      = function (field) { field .length = 0; };
 	XMLParser .prototype .fieldTypes [X3DConstants .MFRotation]  = Parser .prototype .sfrotationValues;
 	XMLParser .prototype .fieldTypes [X3DConstants .MFString]    = Parser .prototype .sfstringValues;
 	XMLParser .prototype .fieldTypes [X3DConstants .MFTime]      = Parser .prototype .sftimeValues;
@@ -69852,9 +69853,9 @@ function (Fields,
 			else
 			{
 				var scale = fromViewpoint .getFieldOfView () / this .fieldOfView_ .getValue ();
-	
+
 				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (scale, this .fieldOfViewScale_ .getValue ());
-	
+
 				this .fieldOfViewScale_ = scale;
 			}
 		},
@@ -69871,17 +69872,17 @@ function (Fields,
 			return function (point, viewport)
 			{
 			   // Returns the screen scale in meter/pixel for on pixel.
-	
+
 				var
 					width  = viewport [2],
 					height = viewport [3],
 					size   = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
-	
+
 				if (width > height)
 					size /= height;
 				else
 					size /= width;
-	
+
 				return screenScale .set (size, size, size);
 			};
 		})(),
@@ -69892,7 +69893,7 @@ function (Fields,
 			return function (viewport, nearValue)
 			{
 				// Returns viewport size in meters.
-	
+
 				var
 					width  = viewport [2],
 					height = viewport [3],
@@ -69901,7 +69902,7 @@ function (Fields,
 
 				if (aspect > 1)
 					return viewportSize .set (size * aspect, size);
-	
+
 				return viewportSize .set (size, size / aspect);
 			};
 		})(),
@@ -69917,8 +69918,6 @@ function (Fields,
 
 	return Viewpoint;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
