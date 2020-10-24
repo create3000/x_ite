@@ -74,28 +74,6 @@ function (Vector3)
 			                    0, F, 0, 0,
 			                    A, B, C, -1,
 									  0, 0, D, 1);
-
-		/*
-      let r_l = right - left
-      let t_b = top - bottom
-      let f_n = farValue - nearValue
-      let n_2 = 2 * nearValue
-
-      let A = (right + left) / r_l
-      let B = (top + bottom) / t_b
-      let C = -farValue / f_n
-      let D = -(nearValue * farValue) / f_n + 1.05
-      let E = n_2 / r_l
-      let F = n_2 / t_b
-
-      return Matrix4f (columns: (
-         Vector4f (E, 0, 0,  0),
-         Vector4f (0, F, 0,  0),
-         Vector4f (A, B, C, -1),
-			Vector4f (0, 0, D,  1)
-		))
-		*/
-
 		},
 		perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
 		{
