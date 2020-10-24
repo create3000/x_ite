@@ -133,9 +133,9 @@ function (Fields,
 			else
 			{
 				var scale = fromViewpoint .getFieldOfView () / this .fieldOfView_ .getValue ();
-	
+
 				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (scale, this .fieldOfViewScale_ .getValue ());
-	
+
 				this .fieldOfViewScale_ = scale;
 			}
 		},
@@ -152,17 +152,17 @@ function (Fields,
 			return function (point, viewport)
 			{
 			   // Returns the screen scale in meter/pixel for on pixel.
-	
+
 				var
 					width  = viewport [2],
 					height = viewport [3],
 					size   = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
-	
+
 				if (width > height)
 					size /= height;
 				else
 					size /= width;
-	
+
 				return screenScale .set (size, size, size);
 			};
 		})(),
@@ -173,7 +173,7 @@ function (Fields,
 			return function (viewport, nearValue)
 			{
 				// Returns viewport size in meters.
-	
+
 				var
 					width  = viewport [2],
 					height = viewport [3],
@@ -182,7 +182,7 @@ function (Fields,
 
 				if (aspect > 1)
 					return viewportSize .set (size * aspect, size);
-	
+
 				return viewportSize .set (size, size / aspect);
 			};
 		})(),
@@ -198,5 +198,3 @@ function (Fields,
 
 	return Viewpoint;
 });
-
-
