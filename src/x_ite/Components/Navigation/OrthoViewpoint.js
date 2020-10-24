@@ -62,8 +62,8 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DViewpointNode, 
-          ScalarInterpolator, 
+          X3DViewpointNode,
+          ScalarInterpolator,
           X3DConstants,
           Camera,
           Vector2,
@@ -158,7 +158,7 @@ function (Fields,
 			else
 			{
 				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (this .fromFieldOfViewScale, this .fieldOfViewScale_ .getValue ());
-	
+
 				this .fieldOfViewScale_ = this .fromFieldOfViewScale;
 			}
 		},
@@ -202,16 +202,16 @@ function (Fields,
 					sizeX  = this .sizeX,
 					sizeY  = this .sizeY,
 					aspect = width / height;
-	
+
 				if (aspect > sizeX / sizeY)
 				{
 					var s = sizeY / height;
-	
+
 					return screenScale .set (s, s, s);
 				}
-	
+
 				var s = sizeX / width;
-	
+
 				return screenScale .set (s, s, s);
 			};
 		})(),
@@ -227,10 +227,10 @@ function (Fields,
 					sizeX  = this .sizeX,
 					sizeY  = this .sizeY,
 					aspect = width / height;
-	
+
 				if (aspect > sizeX / sizeY)
 					return viewportSize .set (sizeY * aspect, sizeY);
-	
+
 				return viewportSize .set (sizeX, sizeX / aspect);
 			};
 		})(),
@@ -266,5 +266,3 @@ function (Fields,
 
 	return OrthoViewpoint;
 });
-
-

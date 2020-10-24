@@ -108,7 +108,7 @@ function (Vector3)
 				C = -2 / f_n,
 				D = -(r + l) / r_l,
 				E = -(t + b) / t_b,
-				F = -(f + n) / f_n;
+				F = -(f + n - 2) / f_n;
 
 			return matrix .set (A, 0, 0, 0,
 			                    0, B, 0, 0,
@@ -124,7 +124,7 @@ function (Vector3)
 			return function (box, matrix)
 			{
 				box .getExtents (min, max);
-	
+
 				return this .ortho (min .x, max .x, min .y, max .y, -max .z, -min .z, matrix);
 			};
 		})(),
