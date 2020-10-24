@@ -11,15 +11,15 @@
     <meta name='title' content='LayerSet'/>
   </head>
   <Scene>
-    <Viewpoint position="0 0 0" fieldOfView="0.1"/>
-    <Transform translation='0 0 -100.001'>
-    	<Shape>
-    		<Appearance>
-    			<Material diffuseColor="0.8 0.1 0.1"/>
-    		</Appearance>
-    		<Box/>
-    	</Shape>
-    </Transform>
+     <OrthoViewpoint position="0 0 0"/>
+     <Transform translation='0 0 -230.00001'>
+        <Shape>
+           <Appearance>
+              <Material diffuseColor="0.8 0.1 0.1"/>
+           </Appearance>
+           <Rectangle2D/>
+        </Shape>
+     </Transform>
   </Scene>
 </X3D>
 

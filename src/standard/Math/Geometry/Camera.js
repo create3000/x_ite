@@ -66,14 +66,14 @@ function (Vector3)
 				A = (r + l) / r_l,
 				B = (t + b) / t_b,
 				C = -(f + n) / f_n,
-				D = -(n_2 * f - 20) / f_n + 1,
+				D = -(n_2 * f) / f_n,
 				E = n_2 / r_l,
 				F = n_2 / t_b;
 
 			return matrix .set (E, 0, 0, 0,
 			                    0, F, 0, 0,
 			                    A, B, C, -1,
-									  0, 0, D, 1);
+									  0, 0, D, 0);
 		},
 		perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
 		{
@@ -108,7 +108,7 @@ function (Vector3)
 				C = -2 / f_n,
 				D = -(r + l) / r_l,
 				E = -(t + b) / t_b,
-				F = -(f + n - 2) / f_n;
+				F = -(f + n) / f_n;
 
 			return matrix .set (A, 0, 0, 0,
 			                    0, B, 0, 0,

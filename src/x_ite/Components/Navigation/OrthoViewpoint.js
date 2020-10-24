@@ -240,6 +240,9 @@ function (Fields,
 		},
 		getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
 		{
+			nearValue = 10;
+			farValue  = 100;
+
 			var
 				width  = viewport [2],
 				height = viewport [3],
