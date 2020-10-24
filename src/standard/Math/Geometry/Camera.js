@@ -66,7 +66,7 @@ function (Vector3)
 				A = (r + l) / r_l,
 				B = (t + b) / t_b,
 				C = -(f + n) / f_n,
-				D = -n_2 * f / f_n + 1.05,
+				D = -(n_2 * f - 20) / f_n + 1,
 				E = n_2 / r_l,
 				F = n_2 / t_b;
 
