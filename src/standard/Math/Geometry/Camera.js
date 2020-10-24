@@ -57,8 +57,6 @@ function (Vector3)
 	return {
 		frustum: function (l, r, b, t, n, f, matrix)
 		{
-			console .log (n, f)
-
 			var
 				r_l = r - l,
 				t_b = t - b,
