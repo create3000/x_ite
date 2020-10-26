@@ -189,16 +189,6 @@ function (Fields,
 		},
 		set_type__: function ()
 		{
-			this .availableViewers_ .length = 0;;
-
-			var
-				examineViewer = false,
-				walkViewer    = false,
-				flyViewer     = false,
-				planeViewer   = false,
-				noneViewer    = false,
-				lookAt        = false;
-
 			// Determine active viewer.
 
 			this .viewer_ = "EXAMINE";
@@ -229,6 +219,14 @@ function (Fields,
 			}
 
 			// Determine available viewers.
+
+			var
+				examineViewer = false,
+				walkViewer    = false,
+				flyViewer     = false,
+				planeViewer   = false,
+				noneViewer    = false,
+				lookAt        = false;
 
 			if (! this .type_ .length)
 			{
@@ -265,25 +263,25 @@ function (Fields,
 						case "NONE":
 							noneViewer = true;
 							continue;
+						case "ANY":
+							examineViewer = true;
+							walkViewer    = true;
+							flyViewer     = true;
+							planeViewer   = true;
+							noneViewer    = true;
+							lookAt        = true;
+							break;
+						default:
+							// Some string defaults to EXAMINE.
+							examineViewer = true;
+							continue;
 					}
 
-					if (string == "ANY")
-					{
-						examineViewer = true;
-						walkViewer    = true;
-						flyViewer     = true;
-						planeViewer   = true;
-						noneViewer    = true;
-						lookAt        = true;
-
-						// Leave for loop.
-						break;
-					}
-
-					// Some string defaults to EXAMINE.
-					examineViewer = true;
+					break;
 				}
 			}
+
+			this .availableViewers_ .length = 0;
 
 			if (examineViewer)
 				this .availableViewers_ .push ("EXAMINE");
