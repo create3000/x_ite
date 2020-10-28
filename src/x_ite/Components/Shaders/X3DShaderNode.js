@@ -143,7 +143,7 @@ function (Fields,
 		},
 		deselect: function ()
 		{
-			++ this .selected;
+			-- this .selected;
 
 			if (this .selected === 0)
 			{
