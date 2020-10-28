@@ -48,13 +48,15 @@
 
 
 define ([
+	"x_ite/Fields",
 	"x_ite/Browser/Core/Shading",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/TraverseType",
 ],
-function (Shading,
-          X3DAppearanceChildNode, 
+function (Fields,
+          Shading,
+          X3DAppearanceChildNode,
           X3DConstants,
           TraverseType)
 {
@@ -66,6 +68,8 @@ function (Shading,
 
 		this .addType (X3DConstants .X3DShaderNode);
 
+		this .addChildObjects ("activationTime", new Fields .SFTime ());
+
 		this .valid    = false;
 		this .selected = 0;
 	}
@@ -73,6 +77,16 @@ function (Shading,
 	X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: X3DShaderNode,
+		initialize: function ()
+		{
+			X3DAppearanceChildNode .prototype .initialize .call (this);
+
+			this .activate_ .addInterest ("set_activate__", this);
+		},
+		set_activate__: function ()
+		{
+			this .activationTime_ = this .getBrowser () .getCurrentTime ();
+		},
 		custom: true,
 		setCustom: function (value)
 		{
@@ -118,7 +132,7 @@ function (Shading,
 					this .wireframe     = false;
 					break;
 				}
-			}	
+			}
 		},
 		select: function ()
 		{
@@ -148,5 +162,3 @@ function (Shading,
 
 	return X3DShaderNode;
 });
-
-

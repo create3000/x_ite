@@ -218,7 +218,12 @@ function (Fields,
 				shaderNodes = this .shaderNodes;
 
 			for (var i = 0, length = shaderNodes .length; i < length; ++ i)
-				shaderNodes [i] .isValid_ .removeInterest ("set_shader__", this);
+			{
+				var shaderNode = shaderNodes [i];
+
+				shaderNode .isValid_        .removeInterest ("set_shader__", this);
+				shaderNode .activationTime_ .removeInterest ("set_shader__", this);
+			}
 
 			shaderNodes .length = 0;
 
@@ -229,7 +234,8 @@ function (Fields,
 				if (shaderNode)
 				{
 					shaderNodes .push (shaderNode);
-					shaderNode .isValid_ .addInterest ("set_shader__", this);
+					shaderNode .isValid_        .addInterest ("set_shader__", this);
+					shaderNode .activationTime_ .addInterest ("set_shader__", this);
 				}
 			}
 
@@ -249,10 +255,29 @@ function (Fields,
 
 			for (var i = 0, length = shaderNodes .length; i < length; ++ i)
 			{
-				if (shaderNodes [i] .isValid_ .getValue ())
+				var shaderNode = shaderNodes [i];
+
+				if (shaderNode .isValid_ .getValue ())
 				{
-					this .shaderNode = shaderNodes [i];
-					break;
+					if (shaderNode .activationTime_ .getValue () === this .getBrowser () .getCurrentTime ())
+					{
+						this .shaderNode = shaderNode;
+						break;
+					}
+				}
+			}
+
+			if (!this .shaderNode)
+			{
+				for (var i = 0, length = shaderNodes .length; i < length; ++ i)
+				{
+					var shaderNode = shaderNodes [i];
+
+					if (shaderNode .isValid_ .getValue ())
+					{
+						this .shaderNode = shaderNode;
+						break;
+					}
 				}
 			}
 

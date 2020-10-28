@@ -114,8 +114,7 @@ function (Fields,
 
 			this .isLive () .addInterest ("set_live__", this);
 
-			this .activate_ .addInterest ("set_activate__", this);
-			this .parts_    .addFieldInterest (this .loadSensor .watchList_);
+			this .parts_ .addFieldInterest (this .loadSensor .watchList_);
 
 			this .loadSensor .isLoaded_ .addInterest ("set_loaded__", this);
 			this .loadSensor .watchList_ = this .parts_;
@@ -150,11 +149,6 @@ function (Fields,
 					this .disable (gl);
 				}
 			}
-		},
-		set_activate__: function ()
-		{
-			if (this .activate_ .getValue ())
-				this .set_loaded__ ();
 		},
 		set_loaded__: function ()
 		{
