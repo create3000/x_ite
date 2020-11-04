@@ -59,14 +59,14 @@ function (X3DField,
 "use strict";
 
 	var
-		unescape = /\\([\\"])/g,
+		unescape = /\\(.)/g,
 		escape   = /([\\"])/g;
 
 	function SFString (value)
 	{
 		return X3DField .call (this, arguments .length ? "" + value : "");
 	}
-	
+
 	Object .assign (SFString,
 	{
 		unescape: function (string)

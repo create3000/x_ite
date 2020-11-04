@@ -216,13 +216,11 @@ function (TextAlignment,
 
 				// Calculate charSpacing and lineBounds.
 
-				var lineNumber = topToBottom ? l : numLines - l - 1;
-
 				var
 					charSpacing = 0,
 					length      = text .getLength (l);
 
-				lineBound .set (size .x, lineNumber == 0 ? max .y - font .descender / font .unitsPerEm : spacing) .multiply (scale);
+				lineBound .set (size .x * scale, ll == 0 ? max .y - font .descender / font .unitsPerEm * scale : spacing);
 
 				if (maxExtent)
 				{

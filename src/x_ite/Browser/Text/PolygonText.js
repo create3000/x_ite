@@ -140,13 +140,15 @@ function (Fields,
 						{
 							var
 								glyph         = line [g],
-								glyphVertices = this .getGlyphGeometry (font, glyph, primitiveQuality);
+								glyphVertices = this .getGlyphGeometry (font, glyph, primitiveQuality),
+								xOffset       = minorAlignment .x + translation .x + advanceWidth + g * charSpacing,
+								yOffset       = minorAlignment .y + translation .y;
 
 							for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
 							{
 								var
-									x = glyphVertices [v] .x * size + minorAlignment .x + translation .x + advanceWidth + g * charSpacing,
-									y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
+									x = glyphVertices [v] .x * size + xOffset,
+									y = glyphVertices [v] .y * size + yOffset;
 
 								texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
 								normalArray   .push (0, 0, 1);
