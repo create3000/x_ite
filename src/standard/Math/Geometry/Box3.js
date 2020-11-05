@@ -66,10 +66,10 @@ function (Triangle3,
 		{
 			case 0:
 			{
-				this .matrix = new Matrix4 (0.5, 0,   0,   0,
-				                            0,   0.5, 0,   0,
-				                            0,   0,   0.5, 0,
-				                            0,   0,   0,   0);
+				this .matrix = new Matrix4 (0, 0, 0, 0,
+				                            0, 0, 0, 0,
+				                            0, 0, 0, 0,
+				                            0, 0, 0, 0);
 				return;
 			}
 			case 2:
@@ -156,7 +156,7 @@ function (Triangle3,
 						cx  = (max .x + min .x) / 2,
 						cy  = (max .y + min .y) / 2,
 						cz  = (max .z + min .z) / 2;
-	
+
 					this .matrix .set (sx, 0,  0,  0,
 					                   0,  sy, 0,  0,
 					                   0,  0,  sz, 0,
@@ -203,29 +203,29 @@ function (Triangle3,
 					x = m .xAxis,
 					y = m .yAxis,
 					z = m .zAxis;
-	
+
 				r1 .assign (y) .add (z);
-	
+
 				var r2 = z .subtract (y);
-	
+
 				p1 .assign (x) .add (r1),
 				p4 .assign (x) .add (r2);
-				
+
 				var
 					p2 = r1 .subtract (x),
 					p3 = r2 .subtract (x);
-	
+
 				min .assign (p1);
 				max .assign (p1);
-	
+
 				min .min (p2, p3, p4);
 				max .max (p2, p3, p4);
-	
+
 				p1 .negate ();
 				p2 .negate ();
 				p3 .negate ();
 				p4 .negate ();
-	
+
 				min .min (p1, p2, p3, p4);
 				max .max (p1, p2, p3, p4);
 			};
@@ -251,39 +251,39 @@ function (Triangle3,
 				 *   \|            \|
 				 *    p3 ---------- p4
 				 */
-			
+
 				var m = this .matrix;
-	
+
 				x .assign (m .xAxis);
 				y .assign (m .yAxis);
 				z .assign (m .zAxis);
-			
+
 				r1 .assign (y) .add (z);
-	
+
 				var r2 = z .subtract (y);
-			
+
 				points [0] .assign (x)  .add (r1);
 				points [1] .assign (r1) .subtract (x);
 				points [2] .assign (r2) .subtract (x);
 				points [3] .assign (x)  .add (r2);
-			
+
 				points [4] .assign (points [2]) .negate ();
 				points [5] .assign (points [3]) .negate ();
 				points [6] .assign (points [0]) .negate ();
 				points [7] .assign (points [1]) .negate ();
-			
+
 				var center = this .center;
-	
+
 				points [0] .add (center);
 				points [1] .add (center);
 				points [2] .add (center);
 				points [3] .add (center);
-			
+
 				points [4] .add (center);
 				points [5] .add (center);
 				points [6] .add (center);
 				points [7] .add (center);
-			
+
 				return points;
 			};
 		})(),
@@ -434,7 +434,7 @@ function (Triangle3,
 				planes [0] .assign (y) .cross (z) .normalize ();
 				planes [1] .assign (z) .cross (x) .normalize ();
 				planes [2] .assign (x) .cross (y) .normalize ();
-			
+
 				return planes;
 			};
 		})(),
@@ -454,10 +454,10 @@ function (Triangle3,
 			{
 				if (this .isEmpty ())
 					return this .assign (box);
-	
+
 				if (box .isEmpty ())
 					return this;
-	
+
 				this .getExtents (lhs_min, lhs_max);
 				box  .getExtents (rhs_min, rhs_max);
 
@@ -483,7 +483,7 @@ function (Triangle3,
 			return function (point)
 			{
 				this .getExtents (min, max);
-	
+
 				return min .x <= point .x &&
 				       max .x >= point .x &&
 				       min .y <= point .y &&
@@ -499,7 +499,7 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
-		
+
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -511,7 +511,7 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
-		
+
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -534,11 +534,11 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
-		
+
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
-		
+
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -553,44 +553,44 @@ function (Triangle3,
 			return function (other)
 			{
 				// Test special cases.
-			
+
 				if (this .isEmpty ())
 					return false;
-			
+
 				if (other .isEmpty ())
 					return false;
-			
+
 				// Get points.
-			
+
 				this  .getPoints (points1);
 				other .getPoints (points2);
-			
+
 				// Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
-			
+
 				if (SAT .isSeparated (this .getNormals (planes), points1, points2))
 					return false;
-			
+
 				// Test the three planes spanned by the normal vectors of the faces of the second parallelepiped.
-			
+
 				if (SAT .isSeparated (other .getNormals (planes), points1, points2))
 					return false;
-	
+
 				// Test the nine other planes spanned by the edges of each parallelepiped.
-			
+
 				this  .getAxes (axes1);
 				other .getAxes (axes2);
-	
+
 				for (var i1 = 0; i1 < 3; ++ i1)
 				{
 					for (var i2 = 0; i2 < 3; ++ i2)
 						axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (axes2 [i2]);
 				}
-			
+
 				if (SAT .isSeparated (axes9, points1, points2))
 					return false;
-			
+
 				// Both boxes intersect.
-			
+
 				return true;
 			};
 		})(),
@@ -601,7 +601,7 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
-		
+
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -618,11 +618,11 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
-		
+
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
-		
+
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -647,49 +647,49 @@ function (Triangle3,
 			return function (a, b, c)
 			{
 				// Test special cases.
-	
+
 				if (this .isEmpty ())
 					return false;
-	
+
 				// Get points.
-	
+
 				this .getPoints (points1);
-	
+
 				triangle [0] = a;
 				triangle [1] = b;
 				triangle [2] = c;
-	
+
 				// Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
-	
+
 				if (SAT .isSeparated (this .getNormals (planes), points1, triangle))
 					return false;
-	
+
 				// Test the normal of the triangle.
-	
+
 				Triangle3 .normal (a, b, c, triangleNormal [0]);
-	
+
 				if (SAT .isSeparated (triangleNormal, points1, triangle))
 					return false;
-	
+
 				// Test the nine other planes spanned by the edges of each parallelepiped.
-	
+
 				this .getAxes (axes1);
-	
+
 				triangleEdges [0] .assign (a) .subtract (b);
 				triangleEdges [1] .assign (b) .subtract (c);
 				triangleEdges [2] .assign (c) .subtract (a);
-	
+
 				for (var i1 = 0; i1 < 3; ++ i1)
 				{
 					for (var i2 = 0; i2 < 3; ++ i2)
 						axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (triangleEdges [i2]);
 				}
-	
+
 				if (SAT .isSeparated (axes9, points1, triangle))
 					return false;
-	
+
 				// Box and triangle intersect.
-	
+
 				return true;
 			};
 		})(),
@@ -710,7 +710,7 @@ function (Triangle3,
 			return function ()
 			{
 				this .getAbsoluteExtents (min, max);
-	
+
 				return max .subtract (min);
 			};
 		})(),

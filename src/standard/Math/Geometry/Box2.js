@@ -61,9 +61,9 @@ function (Matrix3, Vector2)
 		{
 			case 0:
 			{
-				this .matrix = new Matrix3 (0.5, 0,   0,
-				                            0,   0.5, 0,
-				                            0,   0,   0);
+				this .matrix = new Matrix3 (0, 0, 0,
+				                            0, 0, 0,
+				                            0, 0, 0);
 				return;
 			}
 			case 2:
@@ -112,7 +112,7 @@ function (Matrix3, Vector2)
 		set: function (size, center)
 		{
 			var m = this .matrix;
-		
+
 			switch (arguments .length)
 			{
 				case 0:
@@ -139,7 +139,7 @@ function (Matrix3, Vector2)
 						sy  = (max .y - min .y) / 2,
 						cx  = (max .x + min .x) / 2,
 						cy  = (max .y + min .y) / 2;
-	
+
 					this .matrix .set (sx, 0,  0,
 					                   0,  sy, 0,
 					                   cx, cy, 1);
@@ -177,13 +177,13 @@ function (Matrix3, Vector2)
 			{
 				if (this .isEmpty ())
 					return this .assign (box);
-	
+
 				if (box .isEmpty ())
 					return this;
-	
+
 				this .getExtents (lhs_min, lhs_max);
 				box  .getExtents (rhs_min, rhs_max);
-	
+
 				return this .set (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true);
 			};
 		})(),
@@ -214,17 +214,17 @@ function (Matrix3, Vector2)
 					m = this .matrix,
 					x = m .xAxis,
 					y = m .yAxis;
-	
+
 				p1 .assign (x) .add (y);
-	
+
 				var p2 = y .subtract (x);
-	
+
 				min .assign (p1) .min (p2);
 				max .assign (p1) .max (p2);
-	
+
 				p1 .negate ();
 				p2 .negate ();
-	
+
 				min .min (p1, p2);
 				max .max (p1, p2);
 			};
@@ -238,7 +238,7 @@ function (Matrix3, Vector2)
 			return function (point)
 			{
 				this .getExtents (min, max);
-	
+
 				return min .x <= point .x &&
 				       max .x >= point .x &&
 				       min .y <= point .y &&
@@ -262,7 +262,7 @@ function (Matrix3, Vector2)
 			return function ()
 			{
 				this .getAbsoluteExtents (min, max);
-	
+
 				return max .subtract (min);
 			};
 		})(),
