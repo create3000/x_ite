@@ -1,4 +1,4 @@
-/* X_ITE v4.6.14-1006 */
+/* X_ITE v4.6.15-1007 */
 
 (function () {
 
@@ -23114,14 +23114,14 @@ function (X3DField,
 "use strict";
 
 	var
-		unescape = /\\([\\"])/g,
+		unescape = /\\(.)/g,
 		escape   = /([\\"])/g;
 
 	function SFString (value)
 	{
 		return X3DField .call (this, arguments .length ? "" + value : "");
 	}
-	
+
 	Object .assign (SFString,
 	{
 		unescape: function (string)
@@ -25537,7 +25537,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.6.14";
+	return "4.6.15";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -41688,13 +41688,15 @@ define ('x_ite/Bits/TraverseType',[],function ()
 
 
 define ('x_ite/Components/Shaders/X3DShaderNode',[
+	"x_ite/Fields",
 	"x_ite/Browser/Core/Shading",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/TraverseType",
 ],
-function (Shading,
-          X3DAppearanceChildNode, 
+function (Fields,
+          Shading,
+          X3DAppearanceChildNode,
           X3DConstants,
           TraverseType)
 {
@@ -41706,6 +41708,8 @@ function (Shading,
 
 		this .addType (X3DConstants .X3DShaderNode);
 
+		this .addChildObjects ("activationTime", new Fields .SFTime ());
+
 		this .valid    = false;
 		this .selected = 0;
 	}
@@ -41713,6 +41717,16 @@ function (Shading,
 	X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: X3DShaderNode,
+		initialize: function ()
+		{
+			X3DAppearanceChildNode .prototype .initialize .call (this);
+
+			this .activate_ .addInterest ("set_activate__", this);
+		},
+		set_activate__: function ()
+		{
+			this .activationTime_ = this .getBrowser () .getCurrentTime ();
+		},
 		custom: true,
 		setCustom: function (value)
 		{
@@ -41758,7 +41772,7 @@ function (Shading,
 					this .wireframe     = false;
 					break;
 				}
-			}	
+			}
 		},
 		select: function ()
 		{
@@ -41769,7 +41783,7 @@ function (Shading,
 		},
 		deselect: function ()
 		{
-			++ this .selected;
+			-- this .selected;
 
 			if (this .selected === 0)
 			{
@@ -41788,8 +41802,6 @@ function (Shading,
 
 	return X3DShaderNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -44206,9 +44218,6 @@ function (Fields,
 		},
 		getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
 		{
-			nearValue = 10;
-			farValue  = 100;
-
 			var
 				width  = viewport [2],
 				height = viewport [3],
@@ -46046,8 +46055,7 @@ function (Fields,
 
 			this .isLive () .addInterest ("set_live__", this);
 
-			this .activate_ .addInterest ("set_activate__", this);
-			this .parts_    .addFieldInterest (this .loadSensor .watchList_);
+			this .parts_ .addFieldInterest (this .loadSensor .watchList_);
 
 			this .loadSensor .isLoaded_ .addInterest ("set_loaded__", this);
 			this .loadSensor .watchList_ = this .parts_;
@@ -46082,11 +46090,6 @@ function (Fields,
 					this .disable (gl);
 				}
 			}
-		},
-		set_activate__: function ()
-		{
-			if (this .activate_ .getValue ())
-				this .set_loaded__ ();
 		},
 		set_loaded__: function ()
 		{
@@ -59922,7 +59925,12 @@ function (Fields,
 				shaderNodes = this .shaderNodes;
 
 			for (var i = 0, length = shaderNodes .length; i < length; ++ i)
-				shaderNodes [i] .isValid_ .removeInterest ("set_shader__", this);
+			{
+				var shaderNode = shaderNodes [i];
+
+				shaderNode .isValid_        .removeInterest ("set_shader__", this);
+				shaderNode .activationTime_ .removeInterest ("set_shader__", this);
+			}
 
 			shaderNodes .length = 0;
 
@@ -59933,7 +59941,8 @@ function (Fields,
 				if (shaderNode)
 				{
 					shaderNodes .push (shaderNode);
-					shaderNode .isValid_ .addInterest ("set_shader__", this);
+					shaderNode .isValid_        .addInterest ("set_shader__", this);
+					shaderNode .activationTime_ .addInterest ("set_shader__", this);
 				}
 			}
 
@@ -59953,10 +59962,29 @@ function (Fields,
 
 			for (var i = 0, length = shaderNodes .length; i < length; ++ i)
 			{
-				if (shaderNodes [i] .isValid_ .getValue ())
+				var shaderNode = shaderNodes [i];
+
+				if (shaderNode .isValid_ .getValue ())
 				{
-					this .shaderNode = shaderNodes [i];
-					break;
+					if (shaderNode .activationTime_ .getValue () === this .getBrowser () .getCurrentTime ())
+					{
+						this .shaderNode = shaderNode;
+						break;
+					}
+				}
+			}
+
+			if (!this .shaderNode)
+			{
+				for (var i = 0, length = shaderNodes .length; i < length; ++ i)
+				{
+					var shaderNode = shaderNodes [i];
+
+					if (shaderNode .isValid_ .getValue ())
+					{
+						this .shaderNode = shaderNode;
+						break;
+					}
 				}
 			}
 
@@ -61611,10 +61639,10 @@ function (Triangle3,
 		{
 			case 0:
 			{
-				this .matrix = new Matrix4 (0.5, 0,   0,   0,
-				                            0,   0.5, 0,   0,
-				                            0,   0,   0.5, 0,
-				                            0,   0,   0,   0);
+				this .matrix = new Matrix4 (0, 0, 0, 0,
+				                            0, 0, 0, 0,
+				                            0, 0, 0, 0,
+				                            0, 0, 0, 0);
 				return;
 			}
 			case 2:
@@ -61701,7 +61729,7 @@ function (Triangle3,
 						cx  = (max .x + min .x) / 2,
 						cy  = (max .y + min .y) / 2,
 						cz  = (max .z + min .z) / 2;
-	
+
 					this .matrix .set (sx, 0,  0,  0,
 					                   0,  sy, 0,  0,
 					                   0,  0,  sz, 0,
@@ -61748,29 +61776,29 @@ function (Triangle3,
 					x = m .xAxis,
 					y = m .yAxis,
 					z = m .zAxis;
-	
+
 				r1 .assign (y) .add (z);
-	
+
 				var r2 = z .subtract (y);
-	
+
 				p1 .assign (x) .add (r1),
 				p4 .assign (x) .add (r2);
-				
+
 				var
 					p2 = r1 .subtract (x),
 					p3 = r2 .subtract (x);
-	
+
 				min .assign (p1);
 				max .assign (p1);
-	
+
 				min .min (p2, p3, p4);
 				max .max (p2, p3, p4);
-	
+
 				p1 .negate ();
 				p2 .negate ();
 				p3 .negate ();
 				p4 .negate ();
-	
+
 				min .min (p1, p2, p3, p4);
 				max .max (p1, p2, p3, p4);
 			};
@@ -61796,39 +61824,39 @@ function (Triangle3,
 				 *   \|            \|
 				 *    p3 ---------- p4
 				 */
-			
+
 				var m = this .matrix;
-	
+
 				x .assign (m .xAxis);
 				y .assign (m .yAxis);
 				z .assign (m .zAxis);
-			
+
 				r1 .assign (y) .add (z);
-	
+
 				var r2 = z .subtract (y);
-			
+
 				points [0] .assign (x)  .add (r1);
 				points [1] .assign (r1) .subtract (x);
 				points [2] .assign (r2) .subtract (x);
 				points [3] .assign (x)  .add (r2);
-			
+
 				points [4] .assign (points [2]) .negate ();
 				points [5] .assign (points [3]) .negate ();
 				points [6] .assign (points [0]) .negate ();
 				points [7] .assign (points [1]) .negate ();
-			
+
 				var center = this .center;
-	
+
 				points [0] .add (center);
 				points [1] .add (center);
 				points [2] .add (center);
 				points [3] .add (center);
-			
+
 				points [4] .add (center);
 				points [5] .add (center);
 				points [6] .add (center);
 				points [7] .add (center);
-			
+
 				return points;
 			};
 		})(),
@@ -61979,7 +62007,7 @@ function (Triangle3,
 				planes [0] .assign (y) .cross (z) .normalize ();
 				planes [1] .assign (z) .cross (x) .normalize ();
 				planes [2] .assign (x) .cross (y) .normalize ();
-			
+
 				return planes;
 			};
 		})(),
@@ -61999,10 +62027,10 @@ function (Triangle3,
 			{
 				if (this .isEmpty ())
 					return this .assign (box);
-	
+
 				if (box .isEmpty ())
 					return this;
-	
+
 				this .getExtents (lhs_min, lhs_max);
 				box  .getExtents (rhs_min, rhs_max);
 
@@ -62028,7 +62056,7 @@ function (Triangle3,
 			return function (point)
 			{
 				this .getExtents (min, max);
-	
+
 				return min .x <= point .x &&
 				       max .x >= point .x &&
 				       min .y <= point .y &&
@@ -62044,7 +62072,7 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
-		
+
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -62056,7 +62084,7 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
-		
+
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -62079,11 +62107,11 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
-		
+
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
-		
+
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -62098,44 +62126,44 @@ function (Triangle3,
 			return function (other)
 			{
 				// Test special cases.
-			
+
 				if (this .isEmpty ())
 					return false;
-			
+
 				if (other .isEmpty ())
 					return false;
-			
+
 				// Get points.
-			
+
 				this  .getPoints (points1);
 				other .getPoints (points2);
-			
+
 				// Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
-			
+
 				if (SAT .isSeparated (this .getNormals (planes), points1, points2))
 					return false;
-			
+
 				// Test the three planes spanned by the normal vectors of the faces of the second parallelepiped.
-			
+
 				if (SAT .isSeparated (other .getNormals (planes), points1, points2))
 					return false;
-	
+
 				// Test the nine other planes spanned by the edges of each parallelepiped.
-			
+
 				this  .getAxes (axes1);
 				other .getAxes (axes2);
-	
+
 				for (var i1 = 0; i1 < 3; ++ i1)
 				{
 					for (var i2 = 0; i2 < 3; ++ i2)
 						axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (axes2 [i2]);
 				}
-			
+
 				if (SAT .isSeparated (axes9, points1, points2))
 					return false;
-			
+
 				// Both boxes intersect.
-			
+
 				return true;
 			};
 		})(),
@@ -62146,7 +62174,7 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
-		
+
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -62163,11 +62191,11 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
-		
+
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
-		
+
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -62192,49 +62220,49 @@ function (Triangle3,
 			return function (a, b, c)
 			{
 				// Test special cases.
-	
+
 				if (this .isEmpty ())
 					return false;
-	
+
 				// Get points.
-	
+
 				this .getPoints (points1);
-	
+
 				triangle [0] = a;
 				triangle [1] = b;
 				triangle [2] = c;
-	
+
 				// Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
-	
+
 				if (SAT .isSeparated (this .getNormals (planes), points1, triangle))
 					return false;
-	
+
 				// Test the normal of the triangle.
-	
+
 				Triangle3 .normal (a, b, c, triangleNormal [0]);
-	
+
 				if (SAT .isSeparated (triangleNormal, points1, triangle))
 					return false;
-	
+
 				// Test the nine other planes spanned by the edges of each parallelepiped.
-	
+
 				this .getAxes (axes1);
-	
+
 				triangleEdges [0] .assign (a) .subtract (b);
 				triangleEdges [1] .assign (b) .subtract (c);
 				triangleEdges [2] .assign (c) .subtract (a);
-	
+
 				for (var i1 = 0; i1 < 3; ++ i1)
 				{
 					for (var i2 = 0; i2 < 3; ++ i2)
 						axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (triangleEdges [i2]);
 				}
-	
+
 				if (SAT .isSeparated (axes9, points1, triangle))
 					return false;
-	
+
 				// Box and triangle intersect.
-	
+
 				return true;
 			};
 		})(),
@@ -62255,7 +62283,7 @@ function (Triangle3,
 			return function ()
 			{
 				this .getAbsoluteExtents (min, max);
-	
+
 				return max .subtract (min);
 			};
 		})(),
@@ -73747,9 +73775,9 @@ function (Matrix3, Vector2)
 		{
 			case 0:
 			{
-				this .matrix = new Matrix3 (0.5, 0,   0,
-				                            0,   0.5, 0,
-				                            0,   0,   0);
+				this .matrix = new Matrix3 (0, 0, 0,
+				                            0, 0, 0,
+				                            0, 0, 0);
 				return;
 			}
 			case 2:
@@ -73798,7 +73826,7 @@ function (Matrix3, Vector2)
 		set: function (size, center)
 		{
 			var m = this .matrix;
-		
+
 			switch (arguments .length)
 			{
 				case 0:
@@ -73825,7 +73853,7 @@ function (Matrix3, Vector2)
 						sy  = (max .y - min .y) / 2,
 						cx  = (max .x + min .x) / 2,
 						cy  = (max .y + min .y) / 2;
-	
+
 					this .matrix .set (sx, 0,  0,
 					                   0,  sy, 0,
 					                   cx, cy, 1);
@@ -73863,13 +73891,13 @@ function (Matrix3, Vector2)
 			{
 				if (this .isEmpty ())
 					return this .assign (box);
-	
+
 				if (box .isEmpty ())
 					return this;
-	
+
 				this .getExtents (lhs_min, lhs_max);
 				box  .getExtents (rhs_min, rhs_max);
-	
+
 				return this .set (lhs_min .min (rhs_min), lhs_max .max (rhs_max), true);
 			};
 		})(),
@@ -73900,17 +73928,17 @@ function (Matrix3, Vector2)
 					m = this .matrix,
 					x = m .xAxis,
 					y = m .yAxis;
-	
+
 				p1 .assign (x) .add (y);
-	
+
 				var p2 = y .subtract (x);
-	
+
 				min .assign (p1) .min (p2);
 				max .assign (p1) .max (p2);
-	
+
 				p1 .negate ();
 				p2 .negate ();
-	
+
 				min .min (p1, p2);
 				max .max (p1, p2);
 			};
@@ -73924,7 +73952,7 @@ function (Matrix3, Vector2)
 			return function (point)
 			{
 				this .getExtents (min, max);
-	
+
 				return min .x <= point .x &&
 				       max .x >= point .x &&
 				       min .y <= point .y &&
@@ -73948,7 +73976,7 @@ function (Matrix3, Vector2)
 			return function ()
 			{
 				this .getAbsoluteExtents (min, max);
-	
+
 				return max .subtract (min);
 			};
 		})(),
@@ -74187,13 +74215,11 @@ function (TextAlignment,
 
 				// Calculate charSpacing and lineBounds.
 
-				var lineNumber = topToBottom ? l : numLines - l - 1;
-
 				var
 					charSpacing = 0,
 					length      = text .getLength (l);
 
-				lineBound .set (size .x, lineNumber == 0 ? max .y - font .descender / font .unitsPerEm : spacing) .multiply (scale);
+				lineBound .set (size .x * scale, ll == 0 ? max .y - font .descender / font .unitsPerEm * scale : spacing);
 
 				if (maxExtent)
 				{
@@ -74746,13 +74772,15 @@ function (Fields,
 						{
 							var
 								glyph         = line [g],
-								glyphVertices = this .getGlyphGeometry (font, glyph, primitiveQuality);
+								glyphVertices = this .getGlyphGeometry (font, glyph, primitiveQuality),
+								xOffset       = minorAlignment .x + translation .x + advanceWidth + g * charSpacing,
+								yOffset       = minorAlignment .y + translation .y;
 
 							for (var v = 0, vl = glyphVertices .length; v < vl; ++ v)
 							{
 								var
-									x = glyphVertices [v] .x * size + minorAlignment .x + translation .x + advanceWidth + g * charSpacing,
-									y = glyphVertices [v] .y * size + minorAlignment .y + translation .y;
+									x = glyphVertices [v] .x * size + xOffset,
+									y = glyphVertices [v] .y * size + yOffset;
 
 								texCoordArray .push ((x - origin .x) / spacing, (y - origin .y) / spacing, 0, 1);
 								normalArray   .push (0, 0, 1);
@@ -91400,16 +91428,6 @@ function (Fields,
 		},
 		set_type__: function ()
 		{
-			this .availableViewers_ .length = 0;;
-
-			var
-				examineViewer = false,
-				walkViewer    = false,
-				flyViewer     = false,
-				planeViewer   = false,
-				noneViewer    = false,
-				lookAt        = false;
-
 			// Determine active viewer.
 
 			this .viewer_ = "EXAMINE";
@@ -91440,6 +91458,14 @@ function (Fields,
 			}
 
 			// Determine available viewers.
+
+			var
+				examineViewer = false,
+				walkViewer    = false,
+				flyViewer     = false,
+				planeViewer   = false,
+				noneViewer    = false,
+				lookAt        = false;
 
 			if (! this .type_ .length)
 			{
@@ -91476,25 +91502,25 @@ function (Fields,
 						case "NONE":
 							noneViewer = true;
 							continue;
+						case "ANY":
+							examineViewer = true;
+							walkViewer    = true;
+							flyViewer     = true;
+							planeViewer   = true;
+							noneViewer    = true;
+							lookAt        = true;
+							break;
+						default:
+							// Some string defaults to EXAMINE.
+							examineViewer = true;
+							continue;
 					}
 
-					if (string == "ANY")
-					{
-						examineViewer = true;
-						walkViewer    = true;
-						flyViewer     = true;
-						planeViewer   = true;
-						noneViewer    = true;
-						lookAt        = true;
-
-						// Leave for loop.
-						break;
-					}
-
-					// Some string defaults to EXAMINE.
-					examineViewer = true;
+					break;
 				}
 			}
+
+			this .availableViewers_ .length = 0;
 
 			if (examineViewer)
 				this .availableViewers_ .push ("EXAMINE");
@@ -116109,7 +116135,7 @@ function (ComponentInfoArray,
 	{
 		title:      "Layout",
 		name:       "Layout",
-		level:       1,
+		level:       2,
 		providerUrl: urls .getProviderUrl ("layout"),
 	});
 
