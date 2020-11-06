@@ -198,7 +198,7 @@ function (ComponentInfoArray,
 	{
 		title:      "Layout",
 		name:       "Layout",
-		level:       1,
+		level:       2,
 		providerUrl: urls .getProviderUrl ("layout"),
 	});
 
