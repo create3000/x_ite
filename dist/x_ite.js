@@ -1,4 +1,4 @@
-/* X_ITE v4.6.15-1008 */
+/* X_ITE v4.6.15-1009 */
 
 (function () {
 
@@ -116103,6 +116103,14 @@ function (ComponentInfoArray,
 	{
 		title:      "Humanoid animation (H-Anim)",
 		name:       "H-Anim",
+		level:       3,
+		providerUrl: urls .getProviderUrl ("h-anim"),
+	});
+
+	SupportedComponents .addBaseComponent (
+	{
+		title:      "Humanoid animation (H-Anim)",
+		name:       "HAnim",
 		level:       3,
 		providerUrl: urls .getProviderUrl ("h-anim"),
 	});

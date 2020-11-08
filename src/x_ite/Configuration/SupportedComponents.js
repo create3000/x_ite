@@ -172,6 +172,14 @@ function (ComponentInfoArray,
 
 	SupportedComponents .addBaseComponent (
 	{
+		title:      "Humanoid animation (H-Anim)",
+		name:       "HAnim",
+		level:       3,
+		providerUrl: urls .getProviderUrl ("h-anim"),
+	});
+
+	SupportedComponents .addBaseComponent (
+	{
 		title:      "Interpolation",
 		name:       "Interpolation",
 		level:       5,
