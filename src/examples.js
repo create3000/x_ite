@@ -35,7 +35,7 @@ var X_ITE_EXAMPLES = [
 	{ component: "Grouping", test: "Group" },
 	{ component: "Grouping", test: "Switch" },
 	{ component: "Grouping", test: "Transform" },
-	{ component: "H-Anim", test: "HAnimHumanoid" },
+	{ component: "HAnim", test: "HAnimHumanoid" },
 	{ component: "Interpolation", test: "ColorInterpolator" },
 	{ component: "Interpolation", test: "CoordinateInterpolator" },
 	{ component: "Interpolation", test: "OrientationInterpolator" },
