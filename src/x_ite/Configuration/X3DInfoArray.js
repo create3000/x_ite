@@ -105,6 +105,10 @@ define (function ()
 			this .array .push (value);
 			this .index .set (key, value);
 		},
+		addAlias: function (key, value)
+		{
+			this .index .set (key, this .index .get (value));
+		},
 		get: function (key)
 		{
 			return this .index .get (key);
@@ -120,7 +124,7 @@ define (function ()
 				try
 				{
 					value .toVRMLStream (stream);
-	
+
 					stream .string += "\n";
 				}
 				catch (error)
@@ -136,7 +140,7 @@ define (function ()
 				try
 				{
 					value .toXMLStream (stream);
-	
+
 					stream .string += "\n";
 				}
 				catch (error)

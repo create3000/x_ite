@@ -1,4 +1,4 @@
-/* X_ITE v4.6.15-1009 */
+/* X_ITE v4.6.15-1010 */
 
 (function () {
 
@@ -31888,6 +31888,10 @@ define ('x_ite/Configuration/X3DInfoArray',[],function ()
 			this .array .push (value);
 			this .index .set (key, value);
 		},
+		addAlias: function (key, value)
+		{
+			this .index .set (key, this .index .get (value));
+		},
 		get: function (key)
 		{
 			return this .index .get (key);
@@ -31903,7 +31907,7 @@ define ('x_ite/Configuration/X3DInfoArray',[],function ()
 				try
 				{
 					value .toVRMLStream (stream);
-	
+
 					stream .string += "\n";
 				}
 				catch (error)
@@ -31919,7 +31923,7 @@ define ('x_ite/Configuration/X3DInfoArray',[],function ()
 				try
 				{
 					value .toXMLStream (stream);
-	
+
 					stream .string += "\n";
 				}
 				catch (error)
@@ -33557,7 +33561,7 @@ function (ComponentInfo,
 	function ComponentInfoArray (array)
 	{
 		var proxy = X3DInfoArray .call (this);
-	
+
 		if (array)
 		{
 			for (var i = 0, length = array .length; i < length; ++ i)
@@ -116101,19 +116105,13 @@ function (ComponentInfoArray,
 
 	SupportedComponents .addBaseComponent (
 	{
-		title:      "Humanoid animation (H-Anim)",
-		name:       "H-Anim",
-		level:       3,
-		providerUrl: urls .getProviderUrl ("h-anim"),
-	});
-
-	SupportedComponents .addBaseComponent (
-	{
-		title:      "Humanoid animation (H-Anim)",
+		title:      "Humanoid animation (HAnim)",
 		name:       "HAnim",
 		level:       3,
 		providerUrl: urls .getProviderUrl ("h-anim"),
 	});
+
+	SupportedComponents .addAlias ("H-Anim", "HAnim");
 
 	SupportedComponents .addBaseComponent (
 	{
@@ -116421,7 +116419,7 @@ function (ProfileInfo,
 			SupportedComponents ["Geometry3D"],
 			SupportedComponents ["Geospatial"],
 			SupportedComponents ["Grouping"],
-			SupportedComponents ["H-Anim"],
+			SupportedComponents ["HAnim"],
 			SupportedComponents ["Interpolation"],
 			SupportedComponents ["KeyDeviceSensor"],
 			SupportedComponents ["Layering"],

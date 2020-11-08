@@ -59,7 +59,7 @@ function (ComponentInfo,
 	function ComponentInfoArray (array)
 	{
 		var proxy = X3DInfoArray .call (this);
-	
+
 		if (array)
 		{
 			for (var i = 0, length = array .length; i < length; ++ i)
