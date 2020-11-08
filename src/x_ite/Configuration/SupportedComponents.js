@@ -167,7 +167,7 @@ function (ComponentInfoArray,
 		title:      "Humanoid animation (HAnim)",
 		name:       "HAnim",
 		level:       3,
-		providerUrl: urls .getProviderUrl ("hanim"),
+		providerUrl: urls .getProviderUrl ("h-anim"),
 	});
 
 	SupportedComponents .addAlias ("H-Anim", "HAnim");

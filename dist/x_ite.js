@@ -1,4 +1,4 @@
-/* X_ITE v4.6.15-1011 */
+/* X_ITE v4.6.15-1012 */
 
 (function () {
 
@@ -116108,7 +116108,7 @@ function (ComponentInfoArray,
 		title:      "Humanoid animation (HAnim)",
 		name:       "HAnim",
 		level:       3,
-		providerUrl: urls .getProviderUrl ("hanim"),
+		providerUrl: urls .getProviderUrl ("h-anim"),
 	});
 
 	SupportedComponents .addAlias ("H-Anim", "HAnim");

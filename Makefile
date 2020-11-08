@@ -22,7 +22,7 @@ all:
 	$(call generate_component,event-utilities,--compress)
 	$(call generate_component,geometry2d,--compress)
 	$(call generate_component,geospatial,--compress)
-	$(call generate_component,hanim,--compress)
+	$(call generate_component,h-anim,--compress)
 	$(call generate_component,key-device-sensor,--compress)
 	$(call generate_component,layout,--compress)
 	$(call generate_component,nurbs,--compress)
