@@ -53,7 +53,7 @@
  ******************************************************************************/
 
 
-define ('x_ite/Components/H-Anim/HAnimDisplacer',[
+define ('x_ite/Components/HAnim/HAnimDisplacer',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -63,7 +63,7 @@ define ('x_ite/Components/H-Anim/HAnimDisplacer',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGeometricPropertyNode, 
+          X3DGeometricPropertyNode,
           X3DConstants)
 {
 "use strict";
@@ -93,7 +93,7 @@ function (Fields,
 		},
 		getComponentName: function ()
 		{
-			return "H-Anim";
+			return "HAnim";
 		},
 		getContainerField: function ()
 		{
@@ -103,8 +103,6 @@ function (Fields,
 
 	return HAnimDisplacer;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -155,7 +153,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Components/H-Anim/HAnimHumanoid',[
+define ('x_ite/Components/HAnim/HAnimHumanoid',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -239,7 +237,7 @@ function (Fields,
 		},
 		getComponentName: function ()
 		{
-			return "H-Anim";
+			return "HAnim";
 		},
 		getContainerField: function ()
 		{
@@ -514,7 +512,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Components/H-Anim/HAnimJoint',[
+define ('x_ite/Components/HAnim/HAnimJoint',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -581,7 +579,7 @@ function (Fields,
 		},
 		getComponentName: function ()
 		{
-			return "H-Anim";
+			return "HAnim";
 		},
 		getContainerField: function ()
 		{
@@ -715,7 +713,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Components/H-Anim/HAnimMotion',[
+define ('x_ite/Components/HAnim/HAnimMotion',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -829,7 +827,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Components/H-Anim/HAnimSegment',[
+define ('x_ite/Components/HAnim/HAnimSegment',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -839,7 +837,7 @@ define ('x_ite/Components/H-Anim/HAnimSegment',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGroupingNode, 
+          X3DGroupingNode,
           X3DConstants)
 {
 "use strict";
@@ -876,7 +874,7 @@ function (Fields,
 		},
 		getComponentName: function ()
 		{
-			return "H-Anim";
+			return "HAnim";
 		},
 		getContainerField: function ()
 		{
@@ -886,8 +884,6 @@ function (Fields,
 
 	return HAnimSegment;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -938,7 +934,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Components/H-Anim/HAnimSite',[
+define ('x_ite/Components/HAnim/HAnimSite',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -948,7 +944,7 @@ define ('x_ite/Components/H-Anim/HAnimSite',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTransformNode, 
+          X3DTransformNode,
           X3DConstants)
 {
 "use strict";
@@ -983,7 +979,7 @@ function (Fields,
 		},
 		getComponentName: function ()
 		{
-			return "H-Anim";
+			return "HAnim";
 		},
 		getContainerField: function ()
 		{
@@ -993,8 +989,6 @@ function (Fields,
 
 	return HAnimSite;
 });
-
-
 
 /*******************************************************************************
  *
@@ -1046,12 +1040,12 @@ function (Fields,
 
 define ([
 	"x_ite/Components",
-	"x_ite/Components/H-Anim/HAnimDisplacer",
-	"x_ite/Components/H-Anim/HAnimHumanoid",
-	"x_ite/Components/H-Anim/HAnimJoint",
-	"x_ite/Components/H-Anim/HAnimMotion",
-	"x_ite/Components/H-Anim/HAnimSegment",
-	"x_ite/Components/H-Anim/HAnimSite",
+	"x_ite/Components/HAnim/HAnimDisplacer",
+	"x_ite/Components/HAnim/HAnimHumanoid",
+	"x_ite/Components/HAnim/HAnimJoint",
+	"x_ite/Components/HAnim/HAnimMotion",
+	"x_ite/Components/HAnim/HAnimSegment",
+	"x_ite/Components/HAnim/HAnimSite",
 ],
 function (Components,
           HAnimDisplacer,
@@ -1064,7 +1058,7 @@ function (Components,
 "use strict";
 
 	Components .addComponent ({
-		name: "H-Anim",
+		name: "HAnim",
 		types:
 		{
 			HAnimDisplacer: HAnimDisplacer,
