@@ -8,20 +8,5 @@ Shape {
    appearance Appearance {
       material Material { }
    }
-   geometry Text {
-      string [
-         "Hello, Wörld!"
-         "Hello, \"X3D\"!"
-         ""
-         "\\"
-      ]
-      solid TRUE
-      fontStyle FontStyle
-      {
-         family "SANS"
-         horizontal FALSE
-         leftToRight TRUE
-         topToBottom FALSE
-      }
-   }
+   geometry NULL
 }

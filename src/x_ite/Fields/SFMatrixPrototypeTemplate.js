@@ -81,7 +81,7 @@ function (X3DField)
 				scale            = scale            ? scale            .getValue () : null;
 				scaleOrientation = scaleOrientation ? scaleOrientation .getValue () : null;
 				center           = center           ? center           .getValue () : null;
-	
+
 				this .getValue () .set (translation, rotation, scale, scaleOrientation, center);
 			},
 			getTransform: function (translation, rotation, scale, scaleOrientation, center)
@@ -91,8 +91,12 @@ function (X3DField)
 				scale            = scale            ? scale            .getValue () : null;
 				scaleOrientation = scaleOrientation ? scaleOrientation .getValue () : null;
 				center           = center           ? center           .getValue () : null;
-	
+
 				this .getValue () .get (translation, rotation, scale, scaleOrientation, center);
+			},
+			determinant: function ()
+			{
+				return this .getValue () .determinant ();
 			},
 			transpose: function ()
 			{
