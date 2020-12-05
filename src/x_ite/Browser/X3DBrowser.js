@@ -628,7 +628,7 @@ function ($,
 				var viewpoints = layer .getUserViewpoints ();
 
 				if (viewpoints .length)
-					this .bindViewpoint (viewpoints [0]);
+					this .bindViewpoint (layer, viewpoints [0]);
 			}
 		},
 		previousViewpoint: function (layer)
@@ -656,13 +656,13 @@ function ($,
 				if (index < viewpoints .length)
 				{
 					if (index === 0)
-						this .bindViewpoint (viewpoints [viewpoints .length - 1]);
+						this .bindViewpoint (layer, viewpoints [viewpoints .length - 1]);
 
 					else
-						this .bindViewpoint (viewpoints [index - 1]);
+						this .bindViewpoint (layer, viewpoints [index - 1]);
 				}
 				else
-					this .bindViewpoint (viewpoints [viewpoints .length - 1]);
+					this .bindViewpoint (layer, viewpoints [viewpoints .length - 1]);
 			}
 		},
 		nextViewpoint: function (layer)
@@ -690,13 +690,13 @@ function ($,
 				if (index < viewpoints .length)
 				{
 					if (index === viewpoints .length - 1)
-						this .bindViewpoint (viewpoints [0]);
+						this .bindViewpoint (layer, viewpoints [0]);
 
 					else
-						this .bindViewpoint (viewpoints [index + 1]);
+						this .bindViewpoint (layer, viewpoints [index + 1]);
 				}
 				else
-					this .bindViewpoint (viewpoints [0]);
+					this .bindViewpoint (layer, viewpoints [0]);
 			}
 		},
 		lastViewpoint: function (layer)
@@ -709,7 +709,7 @@ function ($,
 				var viewpoints = layer .getUserViewpoints ();
 
 				if (viewpoints .length)
-					this .bindViewpoint (viewpoints [viewpoints .length - 1]);
+					this .bindViewpoint (layer, viewpoints [viewpoints .length - 1]);
 			}
 		},
 		changeViewpoint: function (name)
@@ -723,12 +723,12 @@ function ($,
 				console .log (error .message);
 			}
 		},
-		bindViewpoint: function (viewpoint)
+		bindViewpoint: function (layer, viewpoint)
 		{
 			viewpoint .setAnimate (true); // VRML
 
 			if (viewpoint .isBound_ .getValue ())
-				viewpoint .transitionStart (viewpoint);
+				viewpoint .transitionStart (layer, viewpoint);
 
 			else
 				viewpoint .set_bind_ = true;

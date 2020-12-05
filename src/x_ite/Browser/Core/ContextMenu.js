@@ -121,7 +121,7 @@ function ($,
 							if (! viewpoint)
 								return;
 
-							browser .bindViewpoint (viewpoint);
+							browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
 							browser .getElement () .focus ();
 						}
 						.bind (this, currentViewpoint),
@@ -396,7 +396,7 @@ function ($,
 					{
 						$("body > ul.context-menu-list") .fadeOut (500);
 
-						browser .bindViewpoint (viewpoint);
+						browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
 						browser .getElement () .focus ();
 					}
 					.bind (this, viewpoint),
