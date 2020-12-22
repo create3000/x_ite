@@ -1,4 +1,4 @@
-/* X_ITE v4.6.16-1014 */
+/* X_ITE v4.6.17-1015 */
 
 (function () {
 
@@ -25541,7 +25541,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.6.16";
+	return "4.6.17";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -69888,7 +69888,7 @@ function (Fields,
 			}
 			else
 			{
-				var scale = fromViewpoint .getFieldOfView () / this .fieldOfView_ .getValue ();
+				var scale = fromViewpoint .getFieldOfView () / this .getFieldOfView ();
 
 				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (scale, this .fieldOfViewScale_ .getValue ());
 
