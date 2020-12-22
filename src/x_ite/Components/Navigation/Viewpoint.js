@@ -132,7 +132,7 @@ function (Fields,
 			}
 			else
 			{
-				var scale = fromViewpoint .getFieldOfView () / this .fieldOfView_ .getValue ();
+				var scale = fromViewpoint .getFieldOfView () / this .getFieldOfView ();
 
 				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (scale, this .fieldOfViewScale_ .getValue ());
 
