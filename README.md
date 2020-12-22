@@ -16,10 +16,6 @@ Links
 * [XHTML DOM Integration](https://github.com/create3000/x_ite/wiki/XHTML-DOM-Integration)
 * [Custom Shaders](https://github.com/create3000/x_ite/wiki/Custom-Shaders)
 
-WordPress Plug-in
------------------
-* [WordPress Plug-in on GitHub](https://github.com/create3000/x_ite-wordpress)
-
 License
 --------------------------------------
 X_ITE is free software: you can redistribute it and/or modify it under the terms of
