@@ -711,7 +711,8 @@ function (X3DEventObject,
 			var
 				fieldTypeLength   = 0,
 				accessTypeLength  = 0,
-				userDefinedFields = this .getUserDefinedFields ();
+				userDefinedFields = this .getUserDefinedFields (),
+				fields            = this .getChangedFields ();
 
 			if (this .hasUserDefinedFields ())
 			{
@@ -735,11 +736,11 @@ function (X3DEventObject,
 					this);
 
 					generator .DecIndent ();
-					stream .string += "\n";
+
+					if (fields .length)
+						stream .string += "\n";
 				}
 			}
-
-			var fields = this .getChangedFields ();
 
 			if (fields .length === 0)
 			{
@@ -788,14 +789,10 @@ function (X3DEventObject,
 			}
 			else
 			{
-				var
-					index                  = 0,
-					initializableReference = false;
+				var index = 0;
 
 				field .getReferences () .forEach (function (reference)
 				{
-					initializableReference |= reference .isInitializable ();
-
 					// Output build in reference field
 
 					stream .string += generator .Indent ();
@@ -810,18 +807,6 @@ function (X3DEventObject,
 					if (index !== field .getReferences () .size)
 						stream .string += "\n";
 				});
-
-				if (field .getAccessType () === X3DConstants .inputOutput && ! initializableReference && ! field .isDefaultValue ())
-				{
-					// Output build in field
-
-					stream .string += "\n";
-					stream .string += generator .Indent ();
-					stream .string += field .getName ();
-					stream .string += " ";
-
-					field .toVRMLStream (stream);
-				}
 			}
 		},
 		toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
@@ -846,14 +831,10 @@ function (X3DEventObject,
 			}
 			else
 			{
-				var
-					index                  = 0,
-					initializableReference = false;
+				var index = 0;
 
 				field .getReferences () .forEach (function (reference)
 				{
-					initializableReference |= reference .isInitializable ();
-
 					// Output user defined reference field
 
 					stream .string += generator .Indent ();
@@ -872,24 +853,6 @@ function (X3DEventObject,
 					if (index !== field .getReferences () .size)
 						stream .string += "\n";
 				});
-
-				if (field .getAccessType () === X3DConstants .inputOutput && ! initializableReference && ! field .isDefaultValue ())
-				{
-					stream .string += "\n";
-					stream .string += generator .Indent ();
-					stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
-					stream .string += " ";
-					stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
-					stream .string += " ";
-					stream .string += field .getName ();
-
-					if (field .isInitializable ())
-					{
-						stream .string += " ";
-
-						field .toVRMLStream (stream);
-					}
-				}
 			}
 		},
 		toXMLStream: function (stream)

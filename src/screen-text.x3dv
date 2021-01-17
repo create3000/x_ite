@@ -1,0 +1,28 @@
+#X3D V3.3 utf8
+
+Background {
+   skyColor 0.2 0.2 0.2
+}
+
+Shape {
+   appearance Appearance {
+      material Material { }
+   }
+   geometry Text {
+      string [
+         "Hello, Wörld!"
+         "Hello, \"X3D\" and friends!"
+         "West"
+      ]
+      solid TRUE
+      fontStyle ScreenFontStyle {
+         pointSize 12
+         family "SANS"
+         horizontal TRUE
+         leftToRight TRUE
+         topToBottom TRUE
+      }
+   }
+}
+
+TouchSensor { }
