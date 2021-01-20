@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DInterpolatorNode, 
+          X3DInterpolatorNode,
           X3DConstants,
           Rotation4)
 {
@@ -69,6 +69,9 @@ function (Fields,
 		X3DInterpolatorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .OrientationInterpolator);
+
+		this .keyValue_      .setUnit ("angle");
+		this .value_changed_ .setUnit ("angle");
 	}
 
 	OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
@@ -134,5 +137,3 @@ function (Fields,
 
 	return OrientationInterpolator;
 });
-
-

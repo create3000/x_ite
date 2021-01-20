@@ -70,6 +70,9 @@ function (Fields,
 
 		this .addType (X3DConstants .SquadOrientationInterpolator);
 
+		this .keyValue_      .setUnit ("angle");
+		this .value_changed_ .setUnit ("angle");
+
 		this .squad = new SquatInterpolator ();
 	}
 
@@ -99,7 +102,7 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DInterpolatorNode .prototype .initialize .call (this);
-		
+
 			this .keyValue_    .addInterest ("set_keyValue__", this);
 		},
 		set_keyValue__: function ()
@@ -130,5 +133,3 @@ function (Fields,
 
 	return SquadOrientationInterpolator;
 });
-
-

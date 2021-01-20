@@ -73,6 +73,12 @@ function (Fields,
 		X3DDamperNode .call (this, executionContext);
 
 		this .addType (X3DConstants .OrientationDamper);
+
+		this .set_value_          .setUnit ("angle");
+		this .set_destination_    .setUnit ("angle");
+		this .initialValue_       .setUnit ("angle");
+		this .initialDestination_ .setUnit ("angle");
+		this .value_changed_      .setUnit ("angle");
 	}
 
 	OrientationDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
