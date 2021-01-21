@@ -141,10 +141,10 @@ function (Fields,
 					route ._route .dispose ();
 
 				if (sourceNode instanceof ImportedNode)
-					sourceNode = sourceNode .getExportedNode () .getValue ();
+					sourceNode = sourceNode .getExportedNode ();
 
 				if (destinationNode instanceof ImportedNode)
-					destinationNode = destinationNode .getExportedNode () .getValue ();
+					destinationNode = destinationNode .getExportedNode ();
 
 				route ._route = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
 			}
@@ -157,9 +157,7 @@ function (Fields,
 		{
 			this .routes .forEach (function (route)
 			{
-				var route = route ._route;
-
-				if (route === real)
+				if (route ._route === real)
 				{
 					var
 						sourceNode       = route .sourceNode,
@@ -183,7 +181,7 @@ function (Fields,
 				if (real)
 				{
 					delete route ._route;
-					this .getExecutionContext () .deleteRoute (real);
+					this .getExecutionContext () .deleteSimpleRoute (real);
 				}
 			},
 			this);

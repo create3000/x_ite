@@ -417,11 +417,13 @@ function (Fields,
 			{
 				try
 				{
-					if (importedNode .getExportedNode () === node)
-						return key;
+					if (importedNode .getExportedNode () .getValue () === node .getValue ())
+						return importedNode .getImportedName ();
 				}
 				catch (error)
-				{ }
+				{
+					//console .log (error);
+				}
 			}
 
 			throw new Error ("Couldn't get local name: node is shared.");
@@ -468,26 +470,17 @@ function (Fields,
 			if (! (destinationNode instanceof Fields .SFNode))
 				throw new Error ("Bad ROUTE specification: destination node must be of type SFNode.");
 
-			sourceNode      = sourceNode      .getValue ();
-			destinationNode = destinationNode .getValue ();
-
-			if (! sourceNode)
-				throw new Error ("Bad ROUTE specification: source node is NULL.");
-
-			if (! destinationNode)
-				throw new Error ("Bad ROUTE specification: destination node is NULL.");
-
 			// Imported nodes handling.
 
 			var
-				importedSourceNode      = sourceNode      instanceof ImportedNode ? sourceNode      : null,
-				importedDestinationNode = destinationNode instanceof ImportedNode ? destinationNode : null;
+				importedSourceNode      = sourceNode      .getValue () instanceof ImportedNode ? sourceNode      .getValue () : null,
+				importedDestinationNode = destinationNode .getValue () instanceof ImportedNode ? destinationNode .getValue () : null;
 
 			try
 			{
 				// If sourceNode is shared node try to find the corresponding ImportedNode.
-				if (sourceNode .getExecutionContext () !== this)
-					importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode));
+				if (sourceNode .getValue () .getExecutionContext () !== this)
+					importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
 			}
 			catch (error)
 			{
@@ -497,8 +490,8 @@ function (Fields,
 			try
 			{
 				// If destinationNode is shared node try to find the corresponding ImportedNode.
-				if (destinationNode .getExecutionContext () !== this)
-					importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode));
+				if (destinationNode .getValue () .getExecutionContext () !== this)
+					importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
 			}
 			catch (error)
 			{
@@ -520,7 +513,7 @@ function (Fields,
 			}
 
 			// If either sourceNode or destinationNode is an ImportedNode return here without value.
-			if (importedSourceNode === sourceNode || importedDestinationNode === destinationNode)
+			if (importedSourceNode === sourceNode .getValue () || importedDestinationNode === destinationNode .getValue ())
 				return;
 
 			// Create route and return.
@@ -533,6 +526,15 @@ function (Fields,
 			{
 				// Private function.
 				// Create route and return.
+
+				sourceNode      = sourceNode      .getValue ();
+				destinationNode = destinationNode .getValue ();
+
+				if (! sourceNode)
+					throw new Error ("Bad ROUTE specification: source node is NULL.");
+
+				if (! destinationNode)
+					throw new Error ("Bad ROUTE specification: destination node is NULL.");
 
 				sourceField      = sourceNode      .getField (sourceField),
 				destinationField = destinationNode .getField (destinationField);
@@ -567,24 +569,27 @@ function (Fields,
 		},
 		deleteRoute: function (route)
 		{
+			// sourceNode, sourceField, destinationNode, destinationField
+			if (arguments .length === 4)
+			{
+				route = this .getRoute .apply (this, arguments);
+
+				if (! route)
+					return false;
+			}
+
+			if (this .deleteSimpleRoute (route))
+				this .deleteImportedRoute (route .getSourceNode (), route .getDestinationNode (), route);
+		},
+		deleteSimpleRoute: function (route)
+		{
 			try
 			{
-				// sourceNode, sourceField, destinationNode, destinationField
-				if (arguments .length === 4)
-				{
-					route = this .getRoute .apply (this, arguments);
-
-					if (! route)
-						return;
-				}
-
 				var
 					sourceField      = route ._sourceField,
 					destinationField = route ._destinationField,
 					id               = sourceField .getId () + "." + destinationField .getId (),
 					index            = this ._routes .getValue () .indexOf (route);
-
-				this .deleteImportedRoute (route .getSourceNode (), route .getDestinationNode (), route);
 
 				route .disconnect ();
 
@@ -592,10 +597,13 @@ function (Fields,
 					this ._routes .getValue () .splice (index, 1);
 
 				this ._routeIndex .delete (id);
+
+				return true;
 			}
 			catch (error)
 			{
 				console .log (error);
+				return false;
 			}
 		},
 		deleteImportedRoute (sourceNode, destinationNode, route)
@@ -609,8 +617,8 @@ function (Fields,
 			try
 			{
 				// If sourceNode is shared node try to find the corresponding ImportedNode.
-				if (sourceNode .getExecutionContext () !== this)
-					importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode));
+				if (sourceNode .getValue () .getExecutionContext () !== this)
+					importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
 			}
 			catch (error)
 			{
@@ -620,8 +628,8 @@ function (Fields,
 			try
 			{
 				// If destinationNode is shared node try to find the corresponding ImportedNode.
-				if (destinationNode .getExecutionContext () !== this)
-					importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode));
+				if (destinationNode .getValue () .getExecutionContext () !== this)
+					importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
 			}
 			catch (error)
 			{
