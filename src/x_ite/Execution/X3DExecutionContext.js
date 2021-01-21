@@ -538,6 +538,8 @@ function (Fields,
 		},
 		addSimpleRoute: function (sourceNode, sourceField, destinationNode, destinationField)
 		{
+			// Source and dest node are here X3DBaseNode.
+
 			try
 			{
 				// Private function.
