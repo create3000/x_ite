@@ -505,11 +505,19 @@ function (Fields,
 				// Destination node is shared but not imported.
 			}
 
-			if (importedSourceNode instanceof ImportedNode)
+			if (importedSourceNode instanceof ImportedNode && importedDestinationNode instanceof ImportedNode)
+			{
+				importedSourceNode      .addRoute (importedSourceNode, sourceField, importedDestinationNode, destinationField);
+				importedDestinationNode .addRoute (importedSourceNode, sourceField, importedDestinationNode, destinationField);
+			}
+			else if (importedSourceNode instanceof ImportedNode)
+			{
 				importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNode, destinationField);
-
-			if (importedDestinationNode instanceof ImportedNode)
+			}
+			else if (importedDestinationNode instanceof ImportedNode)
+			{
 				importedDestinationNode .addRoute (sourceNode, sourceField, importedDestinationNode, destinationField);
+			}
 
 			// If either sourceNode or destinationNode is an ImportedNode return here without value.
 			if (importedSourceNode === sourceNode || importedDestinationNode === destinationNode)
@@ -576,6 +584,8 @@ function (Fields,
 					id               = sourceField .getId () + "." + destinationField .getId (),
 					index            = this ._routes .getValue () .indexOf (route);
 
+				this .deleteImportedRoute (route .getSourceNode (), route .getDestinationNode (), route);
+
 				route .disconnect ();
 
 				if (index !== -1)
@@ -586,6 +596,50 @@ function (Fields,
 			catch (error)
 			{
 				console .log (error);
+			}
+		},
+		deleteImportedRoute (sourceNode, destinationNode, route)
+		{
+			// Imported nodes handling.
+
+			var
+				importedSourceNode      = null,
+				importedDestinationNode = null;
+
+			try
+			{
+				// If sourceNode is shared node try to find the corresponding ImportedNode.
+				if (sourceNode .getExecutionContext () !== this)
+					importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode));
+			}
+			catch (error)
+			{
+				// Source node is shared but not imported.
+			}
+
+			try
+			{
+				// If destinationNode is shared node try to find the corresponding ImportedNode.
+				if (destinationNode .getExecutionContext () !== this)
+					importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode));
+			}
+			catch (error)
+			{
+				// Destination node is shared but not imported.
+			}
+
+			if (importedSourceNode instanceof ImportedNode && importedDestinationNode instanceof ImportedNode)
+			{
+				importedSourceNode      .deleteRoute (route);
+				importedDestinationNode .deleteRoute (route);
+			}
+			else if (importedSourceNode instanceof ImportedNode)
+			{
+				importedSourceNode .deleteRoute (route);
+			}
+			else if (importedDestinationNode instanceof ImportedNode)
+			{
+				importedDestinationNode .deleteRoute (route);
 			}
 		},
 		getRoute: function (sourceNode, sourceField, destinationNode, destinationField)

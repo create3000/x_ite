@@ -153,14 +153,37 @@ function (Fields,
 				console .error (error .message);
 			}
 		},
+		deleteRoute: function (real)
+		{
+			this .routes .forEach (function (route)
+			{
+				var route = route ._route;
+
+				if (route === real)
+				{
+					var
+						sourceNode       = route .sourceNode,
+						sourceField      = route .sourceField,
+						destinationNode  = route .destinationNode,
+						destinationField = route .destinationField;
+
+					var id = sourceNode .getId () + "." + sourceField + " " + destinationNode .getId () + "." + destinationField;
+
+					this .routes .delete (id);
+				}
+			},
+			this);
+		},
 		deleteRoutes: function ()
 		{
 			this .routes .forEach (function (route)
 			{
-				if (route ._route)
+				var real = route ._route
+
+				if (real)
 				{
-					this .getExecutionContext () .deleteRoute (route ._route);
 					delete route ._route;
+					this .getExecutionContext () .deleteRoute (real);
 				}
 			},
 			this);
@@ -233,12 +256,12 @@ function (Fields,
 								var sourceNodeName = sourceNode .getImportedName ();
 							else
 								var sourceNodeName = generator .Name (sourceNode);
-	
+
 							if (destinationNode instanceof ImportedNode)
 								var destinationNodeName = destinationNode .getImportedName ();
 							else
 								var destinationNodeName = generator .Name (destinationNode);
-	
+
 							stream .string += "\n";
 							stream .string += "\n";
 							stream .string += generator .Indent ();
@@ -310,12 +333,12 @@ function (Fields,
 								var sourceNodeName = sourceNode .getImportedName ();
 							else
 								var sourceNodeName = generator .Name (sourceNode);
-	
+
 							if (destinationNode instanceof ImportedNode)
 								var destinationNodeName = destinationNode .getImportedName ();
 							else
 								var destinationNodeName = generator .Name (destinationNode);
-	
+
 							stream .string += "\n";
 							stream .string += "\n";
 							stream .string += generator .Indent ();
