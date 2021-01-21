@@ -141,10 +141,10 @@ function (Fields,
 					route ._route .dispose ();
 
 				if (sourceNode instanceof ImportedNode)
-					sourceNode = sourceNode .getExportedNode ();
+					sourceNode = sourceNode .getExportedNode () .getValue ();
 
 				if (destinationNode instanceof ImportedNode)
-					destinationNode = destinationNode .getExportedNode ();
+					destinationNode = destinationNode .getExportedNode () .getValue ();
 
 				route ._route = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
 			}

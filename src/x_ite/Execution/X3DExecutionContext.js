@@ -470,16 +470,32 @@ function (Fields,
 			if (! (destinationNode instanceof Fields .SFNode))
 				throw new Error ("Bad ROUTE specification: destination node must be of type SFNode.");
 
+			if (! sourceNode .getValue ())
+				throw new Error ("Bad ROUTE specification: source node is NULL.");
+
+			if (! destinationNode .getValue ())
+				throw new Error ("Bad ROUTE specification: destination node is NULL.");
+
+			var
+				sourceNodeValue      = sourceNode      .getValue (),
+				destinationNodeValue = destinationNode .getValue ();
+
+			if (! sourceNodeValue)
+				throw new Error ("Bad ROUTE specification: source node is NULL.");
+
+			if (! destinationNodeValue)
+				throw new Error ("Bad ROUTE specification: destination node is NULL.");
+
 			// Imported nodes handling.
 
 			var
-				importedSourceNode      = sourceNode      .getValue () instanceof ImportedNode ? sourceNode      .getValue () : null,
-				importedDestinationNode = destinationNode .getValue () instanceof ImportedNode ? destinationNode .getValue () : null;
+				importedSourceNode      = sourceNodeValue      instanceof ImportedNode ? sourceNodeValue      : null,
+				importedDestinationNode = destinationNodeValue instanceof ImportedNode ? destinationNodeValue : null;
 
 			try
 			{
 				// If sourceNode is shared node try to find the corresponding ImportedNode.
-				if (sourceNode .getValue () .getExecutionContext () !== this)
+				if (sourceNodeValue .getExecutionContext () !== this)
 					importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
 			}
 			catch (error)
@@ -490,7 +506,7 @@ function (Fields,
 			try
 			{
 				// If destinationNode is shared node try to find the corresponding ImportedNode.
-				if (destinationNode .getValue () .getExecutionContext () !== this)
+				if (destinationNodeValue .getExecutionContext () !== this)
 					importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
 			}
 			catch (error)
@@ -505,20 +521,20 @@ function (Fields,
 			}
 			else if (importedSourceNode instanceof ImportedNode)
 			{
-				importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNode, destinationField);
+				importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNodeValue, destinationField);
 			}
 			else if (importedDestinationNode instanceof ImportedNode)
 			{
-				importedDestinationNode .addRoute (sourceNode, sourceField, importedDestinationNode, destinationField);
+				importedDestinationNode .addRoute (sourceNodeValue, sourceField, importedDestinationNode, destinationField);
 			}
 
 			// If either sourceNode or destinationNode is an ImportedNode return here without value.
-			if (importedSourceNode === sourceNode .getValue () || importedDestinationNode === destinationNode .getValue ())
+			if (importedSourceNode === sourceNodeValue || importedDestinationNode === destinationNodeValue)
 				return;
 
 			// Create route and return.
 
-			return this .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
+			return this .addSimpleRoute (sourceNodeValue, sourceField, destinationNodeValue, destinationField);
 		},
 		addSimpleRoute: function (sourceNode, sourceField, destinationNode, destinationField)
 		{
@@ -526,15 +542,6 @@ function (Fields,
 			{
 				// Private function.
 				// Create route and return.
-
-				sourceNode      = sourceNode      .getValue ();
-				destinationNode = destinationNode .getValue ();
-
-				if (! sourceNode)
-					throw new Error ("Bad ROUTE specification: source node is NULL.");
-
-				if (! destinationNode)
-					throw new Error ("Bad ROUTE specification: destination node is NULL.");
 
 				sourceField      = sourceNode      .getField (sourceField),
 				destinationField = destinationNode .getField (destinationField);
