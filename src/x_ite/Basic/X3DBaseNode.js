@@ -811,7 +811,7 @@ function (X3DEventObject,
 						stream .string += "\n";
 				});
 
-				if (field .getAccessType () === X3DConstants .inputOutput && ! initializableReference && ! field .isDefaultValue ())
+				if (field .getAccessType () === X3DConstants .inputOutput && ! initializableReference)
 				{
 					// Output build in field
 
