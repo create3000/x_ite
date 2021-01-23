@@ -80,10 +80,10 @@ function (Fields,
 		if (this .getExecutionContext () .constructor !== X3DProtoDeclaration)
 		{
 			this .getScene () .addInitLoadCount (this);
-	
+
 			if (protoNode .isExternProto)
 				protoNode .requestAsyncLoad (this .construct .bind (this));
-	
+
 			else
 				this .construct ();
 		}
@@ -118,7 +118,7 @@ function (Fields,
 			if (proto)
 			{
 				// If there is a proto the externproto is completely loaded.
-			
+
 				if (! this .metadata_ .getSet ())
 					this .metadata_ = proto .metadata_;
 
@@ -147,7 +147,7 @@ function (Fields,
 							if (! (field .getAccessType () & X3DConstants .initializeOnly))
 								continue;
 
-							// Is set during parse.	
+							// Is set during parse.
 							if (field .getSet ())
 								continue;
 
@@ -204,7 +204,7 @@ function (Fields,
 				// TODO: connect getRootNodes () to X3DChildObject .prototype .addEvent .call (this);
 
 				// Now initialize bases.
-	
+
 				X3DNode             .prototype .initialize .call (this);
 				X3DExecutionContext .prototype .initialize .call (this);
 			}
@@ -252,11 +252,11 @@ function (Fields,
 		getInnerNode: function ()
 		{
 			var rootNodes = this .getRootNodes () .getValue ();
-			
+
 			if (rootNodes .length)
 			{
 				var rootNode = rootNodes [0];
-				
+
 				if (rootNode)
 					return rootNode .getValue () .getInnerNode ();
 			}
@@ -332,7 +332,7 @@ function (Fields,
 			if (generator .IsSharedNode (this))
 			{
 				stream .string += generator .Indent ();
-				stream .string += "<!-- NULL -->";		
+				stream .string += "<!-- NULL -->";
 				return;
 			}
 
@@ -404,7 +404,7 @@ function (Fields,
 					stream .string += "'";
 				}
 			}
-		
+
 			var fields = this .getChangedFields ();
 
 			if (fields .length === 0)
@@ -442,7 +442,7 @@ function (Fields,
 							});
 
 							if (! initializableReference)
-								mustOutputValue = true;
+								mustOutputValue = ! this .isDefaultValue (field);
 						}
 					}
 
@@ -504,7 +504,7 @@ function (Fields,
 									stream .string += generator .XMLEncode (field .getName ());
 									stream .string += "'";
 									stream .string += ">\n";
-									
+
 									generator .IncIndent ();
 
 									field .toXMLStream (stream);
@@ -514,12 +514,12 @@ function (Fields,
 									generator .DecIndent ();
 
 									stream .string += generator .Indent ();
-									stream .string += "</fieldValue>\n";	
-	
+									stream .string += "</fieldValue>\n";
+
 									generator .PopContainerField ();
 									break;
 								}
-		
+
 								// Proceed with next case.
 							}
 							default:
@@ -554,7 +554,7 @@ function (Fields,
 					stream .string += "\n";
 
 					generator .IncIndent ();
-		
+
 					for (var i = 0, length = references .length; i < length; ++ i)
 					{
 						var
@@ -595,5 +595,3 @@ function (Fields,
 
 	return X3DPrototypeInstance;
 });
-
-
