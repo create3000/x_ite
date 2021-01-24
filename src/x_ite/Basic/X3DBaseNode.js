@@ -709,9 +709,10 @@ function (X3DEventObject,
 			stream .string += "{";
 
 			var
+				fields            = this .getChangedFields (),
+				userDefinedFields = this .getUserDefinedFields (),
 				fieldTypeLength   = 0,
-				accessTypeLength  = 0,
-				userDefinedFields = this .getUserDefinedFields ();
+				accessTypeLength  = 0;
 
 			if (this .hasUserDefinedFields ())
 			{
@@ -735,11 +736,11 @@ function (X3DEventObject,
 					this);
 
 					generator .DecIndent ();
-					stream .string += "\n";
+
+					if (fields .length !== 0)
+						stream .string += "\n";
 				}
 			}
-
-			var fields = this .getChangedFields ();
 
 			if (fields .length === 0)
 			{

@@ -324,7 +324,20 @@ function (SFBool,
 					else
 					{
 						stream .string += generator .Indent ();
-						stream .string += "<!-- NULL -->\n";
+                  stream .string += "<";
+						stream .string += "NULL";
+
+						var containerField = generator .ContainerField ();
+
+                  if (containerField)
+                  {
+                     stream .string += " ";
+                     stream .string += "containerField='";
+                     stream .string += generator .XMLEncode (containerField .getName ());
+                     stream .string += "'";
+                  }
+
+                  stream .string += "/>";
 					}
 				}
 
@@ -337,7 +350,18 @@ function (SFBool,
 				else
 				{
 					stream .string += generator .Indent ();
-					stream .string += "<!-- NULL -->";
+					stream .string += "<";
+					stream .string += "NULL";
+
+					var containerField = generator .ContainerField ();
+
+					if (containerField)
+					{
+						stream .string += " ";
+						stream .string += "containerField='";
+						stream .string += generator .XMLEncode (containerField .getName ());
+						stream .string += "'";
+					}
 				}
 
 				generator .LeaveScope ();

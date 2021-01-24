@@ -804,6 +804,14 @@ function ($,
 			}
 			catch (error)
 			{
+				// NULL
+
+				if (xmlElement .nodeName == "NULL")
+				{
+					this .addNode (xmlElement, null);
+					return;
+				}
+
 				//console .error (error);
 
 				console .error ("XML Parser Error: " + error .message);
@@ -1034,7 +1042,12 @@ function ($,
 				var containerField = xmlElement .getAttribute ("containerField");
 
 				if (! containerField)
-					containerField = node .getContainerField ();
+				{
+					if (node)
+						containerField = node .getContainerField ();
+					else
+						throw new Error ("NULL node must have a container field attribute.");
+				}
 
 				var field = parent .getField (containerField);
 
@@ -1103,7 +1116,7 @@ function ($,
 	XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix4d]  = Parser .prototype .sfmatrix4fValue;
 	XMLParser .prototype .fieldTypes [X3DConstants .SFNode]      = function (field) { field .set (null); };
 	XMLParser .prototype .fieldTypes [X3DConstants .SFRotation]  = Parser .prototype .sfrotationValue;
-	XMLParser .prototype .fieldTypes [X3DConstants .SFString]    = function (field) { field .set (this .input); };
+	XMLParser .prototype .fieldTypes [X3DConstants .SFString]    = function (field) { field .set (Fields .SFString .unescape (this .input)); };
 	XMLParser .prototype .fieldTypes [X3DConstants .SFTime]      = Parser .prototype .sftimeValue;
 	XMLParser .prototype .fieldTypes [X3DConstants .SFVec2d]     = Parser .prototype .sfvec2dValue;
 	XMLParser .prototype .fieldTypes [X3DConstants .SFVec2f]     = Parser .prototype .sfvec2fValue;

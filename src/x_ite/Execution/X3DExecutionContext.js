@@ -727,9 +727,14 @@ function (Fields,
 
 			for (var i = 0, length = rootNodes .length; i < length; ++ i)
 			{
+				var rootNode = rootNodes [i];
+
 				stream .string += generator .Indent ();
 
-				rootNodes [i] .toVRMLStream (stream);
+				if (rootNode)
+					rootNode .toVRMLStream (stream);
+				else
+					stream .string += "NULL";
 
 				stream .string += "\n";
 
