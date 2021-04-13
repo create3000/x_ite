@@ -88,8 +88,8 @@ function ($,
 		{
 			if (this .pointSize === undefined)
 			{
-				var div = $("<div></div>");
-				this .pointSize = div .appendTo ($("body")) .css ("height", "1in") .css ("display", "none") .height () / 72;
+				var div = $("<div></div>") .css ("height", "1in") .css ("display", "none");
+				this .pointSize = div .appendTo ($("body")) .height () / 72;
 				div .remove ();
 			}
 

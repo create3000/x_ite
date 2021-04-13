@@ -1,4 +1,4 @@
-/* X_ITE v4.6.17-1016 */
+/* X_ITE v4.6.18-1017 */
 
 (function () {
 
@@ -25181,7 +25181,20 @@ function (SFBool,
 					else
 					{
 						stream .string += generator .Indent ();
-						stream .string += "<!-- NULL -->\n";
+                  stream .string += "<";
+						stream .string += "NULL";
+
+						var containerField = generator .ContainerField ();
+
+                  if (containerField)
+                  {
+                     stream .string += " ";
+                     stream .string += "containerField='";
+                     stream .string += generator .XMLEncode (containerField .getName ());
+                     stream .string += "'";
+                  }
+
+                  stream .string += "/>";
 					}
 				}
 
@@ -25194,7 +25207,18 @@ function (SFBool,
 				else
 				{
 					stream .string += generator .Indent ();
-					stream .string += "<!-- NULL -->";
+					stream .string += "<";
+					stream .string += "NULL";
+
+					var containerField = generator .ContainerField ();
+
+					if (containerField)
+					{
+						stream .string += " ";
+						stream .string += "containerField='";
+						stream .string += generator .XMLEncode (containerField .getName ());
+						stream .string += "'";
+					}
 				}
 
 				generator .LeaveScope ();
@@ -25541,7 +25565,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.6.17";
+	return "4.6.18";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -26442,9 +26466,10 @@ function (X3DEventObject,
 			stream .string += "{";
 
 			var
+				fields            = this .getChangedFields (),
+				userDefinedFields = this .getUserDefinedFields (),
 				fieldTypeLength   = 0,
-				accessTypeLength  = 0,
-				userDefinedFields = this .getUserDefinedFields ();
+				accessTypeLength  = 0;
 
 			if (this .hasUserDefinedFields ())
 			{
@@ -26468,11 +26493,11 @@ function (X3DEventObject,
 					this);
 
 					generator .DecIndent ();
-					stream .string += "\n";
+
+					if (fields .length !== 0)
+						stream .string += "\n";
 				}
 			}
-
-			var fields = this .getChangedFields ();
 
 			if (fields .length === 0)
 			{
@@ -26544,7 +26569,7 @@ function (X3DEventObject,
 						stream .string += "\n";
 				});
 
-				if (field .getAccessType () === X3DConstants .inputOutput && ! initializableReference && ! field .isDefaultValue ())
+				if (field .getAccessType () === X3DConstants .inputOutput && ! initializableReference && ! this .isDefaultValue (field))
 				{
 					// Output build in field
 
@@ -26738,7 +26763,7 @@ function (X3DEventObject,
 						});
 
 						if (! initializableReference)
-							mustOutputValue = true;
+							mustOutputValue = ! this .isDefaultValue (field);
 					}
 				}
 
@@ -31581,14 +31606,35 @@ function (Fields,
 				console .error (error .message);
 			}
 		},
+		deleteRoute: function (real)
+		{
+			this .routes .forEach (function (route)
+			{
+				if (route ._route === real)
+				{
+					var
+						sourceNode       = route .sourceNode,
+						sourceField      = route .sourceField,
+						destinationNode  = route .destinationNode,
+						destinationField = route .destinationField;
+
+					var id = sourceNode .getId () + "." + sourceField + " " + destinationNode .getId () + "." + destinationField;
+
+					this .routes .delete (id);
+				}
+			},
+			this);
+		},
 		deleteRoutes: function ()
 		{
 			this .routes .forEach (function (route)
 			{
-				if (route ._route)
+				var real = route ._route
+
+				if (real)
 				{
-					this .getExecutionContext () .deleteRoute (route ._route);
 					delete route ._route;
+					this .getExecutionContext () .deleteSimpleRoute (real);
 				}
 			},
 			this);
@@ -31661,12 +31707,12 @@ function (Fields,
 								var sourceNodeName = sourceNode .getImportedName ();
 							else
 								var sourceNodeName = generator .Name (sourceNode);
-	
+
 							if (destinationNode instanceof ImportedNode)
 								var destinationNodeName = destinationNode .getImportedName ();
 							else
 								var destinationNodeName = generator .Name (destinationNode);
-	
+
 							stream .string += "\n";
 							stream .string += "\n";
 							stream .string += generator .Indent ();
@@ -31738,12 +31784,12 @@ function (Fields,
 								var sourceNodeName = sourceNode .getImportedName ();
 							else
 								var sourceNodeName = generator .Name (sourceNode);
-	
+
 							if (destinationNode instanceof ImportedNode)
 								var destinationNodeName = destinationNode .getImportedName ();
 							else
 								var destinationNodeName = generator .Name (destinationNode);
-	
+
 							stream .string += "\n";
 							stream .string += "\n";
 							stream .string += generator .Indent ();
@@ -32988,11 +33034,13 @@ function (Fields,
 			{
 				try
 				{
-					if (importedNode .getExportedNode () === node)
-						return key;
+					if (importedNode .getExportedNode () .getValue () === node .getValue ())
+						return importedNode .getImportedName ();
 				}
 				catch (error)
-				{ }
+				{
+					//console .log (error);
+				}
 			}
 
 			throw new Error ("Couldn't get local name: node is shared.");
@@ -33039,26 +33087,33 @@ function (Fields,
 			if (! (destinationNode instanceof Fields .SFNode))
 				throw new Error ("Bad ROUTE specification: destination node must be of type SFNode.");
 
-			sourceNode      = sourceNode      .getValue ();
-			destinationNode = destinationNode .getValue ();
-
-			if (! sourceNode)
+			if (! sourceNode .getValue ())
 				throw new Error ("Bad ROUTE specification: source node is NULL.");
 
-			if (! destinationNode)
+			if (! destinationNode .getValue ())
+				throw new Error ("Bad ROUTE specification: destination node is NULL.");
+
+			var
+				sourceNodeValue      = sourceNode      .getValue (),
+				destinationNodeValue = destinationNode .getValue ();
+
+			if (! sourceNodeValue)
+				throw new Error ("Bad ROUTE specification: source node is NULL.");
+
+			if (! destinationNodeValue)
 				throw new Error ("Bad ROUTE specification: destination node is NULL.");
 
 			// Imported nodes handling.
 
 			var
-				importedSourceNode      = sourceNode      instanceof ImportedNode ? sourceNode      : null,
-				importedDestinationNode = destinationNode instanceof ImportedNode ? destinationNode : null;
+				importedSourceNode      = sourceNodeValue      instanceof ImportedNode ? sourceNodeValue      : null,
+				importedDestinationNode = destinationNodeValue instanceof ImportedNode ? destinationNodeValue : null;
 
 			try
 			{
 				// If sourceNode is shared node try to find the corresponding ImportedNode.
-				if (sourceNode .getExecutionContext () !== this)
-					importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode));
+				if (sourceNodeValue .getExecutionContext () !== this)
+					importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
 			}
 			catch (error)
 			{
@@ -33068,30 +33123,40 @@ function (Fields,
 			try
 			{
 				// If destinationNode is shared node try to find the corresponding ImportedNode.
-				if (destinationNode .getExecutionContext () !== this)
-					importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode));
+				if (destinationNodeValue .getExecutionContext () !== this)
+					importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
 			}
 			catch (error)
 			{
 				// Destination node is shared but not imported.
 			}
 
-			if (importedSourceNode instanceof ImportedNode)
-				importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNode, destinationField);
-
-			if (importedDestinationNode instanceof ImportedNode)
-				importedDestinationNode .addRoute (sourceNode, sourceField, importedDestinationNode, destinationField);
+			if (importedSourceNode instanceof ImportedNode && importedDestinationNode instanceof ImportedNode)
+			{
+				importedSourceNode      .addRoute (importedSourceNode, sourceField, importedDestinationNode, destinationField);
+				importedDestinationNode .addRoute (importedSourceNode, sourceField, importedDestinationNode, destinationField);
+			}
+			else if (importedSourceNode instanceof ImportedNode)
+			{
+				importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNodeValue, destinationField);
+			}
+			else if (importedDestinationNode instanceof ImportedNode)
+			{
+				importedDestinationNode .addRoute (sourceNodeValue, sourceField, importedDestinationNode, destinationField);
+			}
 
 			// If either sourceNode or destinationNode is an ImportedNode return here without value.
-			if (importedSourceNode === sourceNode || importedDestinationNode === destinationNode)
+			if (importedSourceNode === sourceNodeValue || importedDestinationNode === destinationNodeValue)
 				return;
 
 			// Create route and return.
 
-			return this .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
+			return this .addSimpleRoute (sourceNodeValue, sourceField, destinationNodeValue, destinationField);
 		},
 		addSimpleRoute: function (sourceNode, sourceField, destinationNode, destinationField)
 		{
+			// Source and dest node are here X3DBaseNode.
+
 			try
 			{
 				// Private function.
@@ -33130,17 +33195,22 @@ function (Fields,
 		},
 		deleteRoute: function (route)
 		{
+			// sourceNode, sourceField, destinationNode, destinationField
+			if (arguments .length === 4)
+			{
+				route = this .getRoute .apply (this, arguments);
+
+				if (! route)
+					return false;
+			}
+
+			if (this .deleteSimpleRoute (route))
+				this .deleteImportedRoute (route .getSourceNode (), route .getDestinationNode (), route);
+		},
+		deleteSimpleRoute: function (route)
+		{
 			try
 			{
-				// sourceNode, sourceField, destinationNode, destinationField
-				if (arguments .length === 4)
-				{
-					route = this .getRoute .apply (this, arguments);
-
-					if (! route)
-						return;
-				}
-
 				var
 					sourceField      = route ._sourceField,
 					destinationField = route ._destinationField,
@@ -33153,10 +33223,57 @@ function (Fields,
 					this ._routes .getValue () .splice (index, 1);
 
 				this ._routeIndex .delete (id);
+
+				return true;
 			}
 			catch (error)
 			{
 				console .log (error);
+				return false;
+			}
+		},
+		deleteImportedRoute (sourceNode, destinationNode, route)
+		{
+			// Imported nodes handling.
+
+			var
+				importedSourceNode      = null,
+				importedDestinationNode = null;
+
+			try
+			{
+				// If sourceNode is shared node try to find the corresponding ImportedNode.
+				if (sourceNode .getValue () .getExecutionContext () !== this)
+					importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
+			}
+			catch (error)
+			{
+				// Source node is shared but not imported.
+			}
+
+			try
+			{
+				// If destinationNode is shared node try to find the corresponding ImportedNode.
+				if (destinationNode .getValue () .getExecutionContext () !== this)
+					importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
+			}
+			catch (error)
+			{
+				// Destination node is shared but not imported.
+			}
+
+			if (importedSourceNode instanceof ImportedNode && importedDestinationNode instanceof ImportedNode)
+			{
+				importedSourceNode      .deleteRoute (route);
+				importedDestinationNode .deleteRoute (route);
+			}
+			else if (importedSourceNode instanceof ImportedNode)
+			{
+				importedSourceNode .deleteRoute (route);
+			}
+			else if (importedDestinationNode instanceof ImportedNode)
+			{
+				importedDestinationNode .deleteRoute (route);
 			}
 		},
 		getRoute: function (sourceNode, sourceField, destinationNode, destinationField)
@@ -33227,9 +33344,14 @@ function (Fields,
 
 			for (var i = 0, length = rootNodes .length; i < length; ++ i)
 			{
+				var rootNode = rootNodes [i];
+
 				stream .string += generator .Indent ();
 
-				rootNodes [i] .toVRMLStream (stream);
+				if (rootNode)
+					rootNode .toVRMLStream (stream);
+				else
+					stream .string += "NULL";
 
 				stream .string += "\n";
 
@@ -35887,10 +36009,10 @@ function (Fields,
 		if (this .getExecutionContext () .constructor !== X3DProtoDeclaration)
 		{
 			this .getScene () .addInitLoadCount (this);
-	
+
 			if (protoNode .isExternProto)
 				protoNode .requestAsyncLoad (this .construct .bind (this));
-	
+
 			else
 				this .construct ();
 		}
@@ -35925,7 +36047,7 @@ function (Fields,
 			if (proto)
 			{
 				// If there is a proto the externproto is completely loaded.
-			
+
 				if (! this .metadata_ .getSet ())
 					this .metadata_ = proto .metadata_;
 
@@ -35954,7 +36076,7 @@ function (Fields,
 							if (! (field .getAccessType () & X3DConstants .initializeOnly))
 								continue;
 
-							// Is set during parse.	
+							// Is set during parse.
 							if (field .getSet ())
 								continue;
 
@@ -36011,7 +36133,7 @@ function (Fields,
 				// TODO: connect getRootNodes () to X3DChildObject .prototype .addEvent .call (this);
 
 				// Now initialize bases.
-	
+
 				X3DNode             .prototype .initialize .call (this);
 				X3DExecutionContext .prototype .initialize .call (this);
 			}
@@ -36059,11 +36181,11 @@ function (Fields,
 		getInnerNode: function ()
 		{
 			var rootNodes = this .getRootNodes () .getValue ();
-			
+
 			if (rootNodes .length)
 			{
 				var rootNode = rootNodes [0];
-				
+
 				if (rootNode)
 					return rootNode .getValue () .getInnerNode ();
 			}
@@ -36139,7 +36261,7 @@ function (Fields,
 			if (generator .IsSharedNode (this))
 			{
 				stream .string += generator .Indent ();
-				stream .string += "<!-- NULL -->";		
+				stream .string += "<!-- NULL -->";
 				return;
 			}
 
@@ -36211,7 +36333,7 @@ function (Fields,
 					stream .string += "'";
 				}
 			}
-		
+
 			var fields = this .getChangedFields ();
 
 			if (fields .length === 0)
@@ -36249,7 +36371,7 @@ function (Fields,
 							});
 
 							if (! initializableReference)
-								mustOutputValue = true;
+								mustOutputValue = ! this .isDefaultValue (field);
 						}
 					}
 
@@ -36311,7 +36433,7 @@ function (Fields,
 									stream .string += generator .XMLEncode (field .getName ());
 									stream .string += "'";
 									stream .string += ">\n";
-									
+
 									generator .IncIndent ();
 
 									field .toXMLStream (stream);
@@ -36321,12 +36443,12 @@ function (Fields,
 									generator .DecIndent ();
 
 									stream .string += generator .Indent ();
-									stream .string += "</fieldValue>\n";	
-	
+									stream .string += "</fieldValue>\n";
+
 									generator .PopContainerField ();
 									break;
 								}
-		
+
 								// Proceed with next case.
 							}
 							default:
@@ -36361,7 +36483,7 @@ function (Fields,
 					stream .string += "\n";
 
 					generator .IncIndent ();
-		
+
 					for (var i = 0, length = references .length; i < length; ++ i)
 					{
 						var
@@ -36402,8 +36524,6 @@ function (Fields,
 
 	return X3DPrototypeInstance;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -43129,7 +43249,7 @@ define ('x_ite/Components/Interpolation/OrientationInterpolator',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DInterpolatorNode, 
+          X3DInterpolatorNode,
           X3DConstants,
           Rotation4)
 {
@@ -43140,6 +43260,9 @@ function (Fields,
 		X3DInterpolatorNode .call (this, executionContext);
 
 		this .addType (X3DConstants .OrientationInterpolator);
+
+		this .keyValue_      .setUnit ("angle");
+		this .value_changed_ .setUnit ("angle");
 	}
 
 	OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
@@ -43205,8 +43328,6 @@ function (Fields,
 
 	return OrientationInterpolator;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -47606,6 +47727,14 @@ function ($,
 			}
 			catch (error)
 			{
+				// NULL
+
+				if (xmlElement .nodeName == "NULL")
+				{
+					this .addNode (xmlElement, null);
+					return;
+				}
+
 				//console .error (error);
 
 				console .error ("XML Parser Error: " + error .message);
@@ -47836,7 +47965,12 @@ function ($,
 				var containerField = xmlElement .getAttribute ("containerField");
 
 				if (! containerField)
-					containerField = node .getContainerField ();
+				{
+					if (node)
+						containerField = node .getContainerField ();
+					else
+						throw new Error ("NULL node must have a container field attribute.");
+				}
 
 				var field = parent .getField (containerField);
 
@@ -47905,7 +48039,7 @@ function ($,
 	XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix4d]  = Parser .prototype .sfmatrix4fValue;
 	XMLParser .prototype .fieldTypes [X3DConstants .SFNode]      = function (field) { field .set (null); };
 	XMLParser .prototype .fieldTypes [X3DConstants .SFRotation]  = Parser .prototype .sfrotationValue;
-	XMLParser .prototype .fieldTypes [X3DConstants .SFString]    = function (field) { field .set (this .input); };
+	XMLParser .prototype .fieldTypes [X3DConstants .SFString]    = function (field) { field .set (Fields .SFString .unescape (this .input)); };
 	XMLParser .prototype .fieldTypes [X3DConstants .SFTime]      = Parser .prototype .sftimeValue;
 	XMLParser .prototype .fieldTypes [X3DConstants .SFVec2d]     = Parser .prototype .sfvec2dValue;
 	XMLParser .prototype .fieldTypes [X3DConstants .SFVec2f]     = Parser .prototype .sfvec2fValue;
@@ -66066,7 +66200,7 @@ function ($,
 					element = browser .getElement (),
 					offset  = element .offset (),
 					x       = event .pageX - offset .left,
-					y       = element .height () - (event .pageY - offset .top);
+					y       = element .innerHeight () - (event .pageY - offset .top);
 
 				element .unbind ("mousemove.PointingDevice" + this .getId ());
 
@@ -66096,7 +66230,7 @@ function ($,
 					element = browser .getElement (),
 					offset  = element .offset (),
 					x       = event .pageX - offset .left,
-					y       = element .height () - (event .pageY - offset .top);
+					y       = element .innerHeight () - (event .pageY - offset .top);
 
 				$(document) .unbind (".PointingDevice"   + this .getId ());
 				element .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
@@ -66129,7 +66263,7 @@ function ($,
 				element = browser .getElement (),
 				offset  = element .offset (),
 				x       = event .pageX - offset .left,
-				y       = element .height () - (event .pageY - offset .top);
+				y       = element .innerHeight ()  - (event .pageY - offset .top);
 
 			this .onmotion (x, y);
 		},
@@ -67664,6 +67798,12 @@ function (Fields,
 		X3DChaserNode .call (this, executionContext);
 
 		this .addType (X3DConstants .OrientationChaser);
+
+		this .set_value_          .setUnit ("angle");
+		this .set_destination_    .setUnit ("angle");
+		this .initialValue_       .setUnit ("angle");
+		this .initialDestination_ .setUnit ("angle");
+		this .value_changed_      .setUnit ("angle");
 	}
 
 	OrientationChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
@@ -68238,7 +68378,7 @@ function ($,
 			var
 				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
-				y      = this .getBrowser () .getElement () .height () - (event .pageY - offset .top);
+				y      = this .getBrowser () .getElement () .innerHeight () - (event .pageY - offset .top);
 
 			this .disconnect ();
 			this .lookAtBBox (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
@@ -70501,7 +70641,7 @@ function ($,
 			var
 				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
-				y      = this .getBrowser () .getElement () .height () - (event .pageY - offset .top);
+				y      = this .getBrowser () .getElement () .innerHeight () - (event .pageY - offset .top);
 
 			this .disconnect ();
 			this .lookAtPoint (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
@@ -97674,6 +97814,12 @@ function (Fields,
 		X3DDamperNode .call (this, executionContext);
 
 		this .addType (X3DConstants .OrientationDamper);
+
+		this .set_value_          .setUnit ("angle");
+		this .set_destination_    .setUnit ("angle");
+		this .initialValue_       .setUnit ("angle");
+		this .initialDestination_ .setUnit ("angle");
+		this .value_changed_      .setUnit ("angle");
 	}
 
 	OrientationDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
@@ -103581,6 +103727,9 @@ function (Fields,
 
 		this .addType (X3DConstants .SquadOrientationInterpolator);
 
+		this .keyValue_      .setUnit ("angle");
+		this .value_changed_ .setUnit ("angle");
+
 		this .squad = new SquatInterpolator ();
 	}
 
@@ -103610,7 +103759,7 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DInterpolatorNode .prototype .initialize .call (this);
-		
+
 			this .keyValue_    .addInterest ("set_keyValue__", this);
 		},
 		set_keyValue__: function ()
@@ -103641,8 +103790,6 @@ function (Fields,
 
 	return SquadOrientationInterpolator;
 });
-
-
 
 /*******************************************************************************
  *
