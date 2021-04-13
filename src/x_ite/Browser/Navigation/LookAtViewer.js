@@ -208,7 +208,7 @@ function ($,
 			var
 				offset = this .getBrowser () .getElement () .offset (),
 				x      = event .pageX - offset .left,
-				y      = this .getBrowser () .getElement () .height () - (event .pageY - offset .top);
+				y      = this .getBrowser () .getElement () .innerHeight () - (event .pageY - offset .top);
 
 			this .disconnect ();
 			this .lookAtPoint (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));

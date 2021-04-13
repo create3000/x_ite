@@ -1,275 +1,305 @@
-#X3D V3.3 utf8 Sunrise X3D Browser V1.0
+#X3D V3.3 utf8 Titania V4.6.9
 
-PROFILE Full
+PROFILE Interchange
 
-COMPONENT Shape : 1
-COMPONENT Time : 1
-
-UNIT length cm 0.01
-
-META "comment" "World of Sunrise X3D Editor"
-META "created" "Sat, 23 Jan 2021 17:53:31 +0100"
+META "comment" "World of Titania"
+META "created" "Tue, 22 Sep 2020 02:26:02 GMT"
 META "creator" "Holger Seelig"
-META "generator" "Sunrise X3D Editor V1.0, https://create3000.github.io/Sunrise/"
-META "identifier" "file:///Users/holger/Desktop/X3D/tests/parse.x3dv"
-META "modified" "Sun, 24 Jan 2021 21:49:59 +0100"
+META "generator" "Titania V4.6.9, http://titania.create3000.de"
+META "identifier" ""
+META "modified" "Tue, 22 Sep 2020 02:26:02 GMT"
+META "titania-output-style" "Nicest"
 
-EXTERNPROTO Extern1 [
-  inputOutput MFString url
-  inputOutput SFColor  color
-]
-"proto/proto.x3dv#Test"
-
-EXTERNPROTO Extern2 [
-  inputOutput MFString url
-  inputOutput SFColor  color
-]
-[
-  "proto/proto.x3dv#Test",
-  "proto/proto.x3dv#Test"
-]
-
-PROTO Empty [ ]
-{
-}
-
-PROTO Proto [
-  inputOutput SFBool bool1 TRUE
-  inputOutput SFBool bool2 FALSE
-]
-{
-  TimeSensor {
-    enabled IS bool1
-  }
-}
-
-PROTO FullProto [
-  inputOutput SFBool bool1 TRUE
-  inputOutput SFBool bool2 FALSE
-  outputOnly  SFBool out
-]
-{
-  EXTERNPROTO Extern2 [
-    inputOutput MFString url
-    inputOutput SFColor  color
-  ]
-  [
-    "proto/proto.x3dv#Test",
-    "proto/proto.x3dv#Test"
-  ]
-
-  PROTO Proto [
-    inputOutput SFBool bool1 TRUE
-    inputOutput SFBool bool2 FALSE
-  ]
-  {
-    TimeSensor {
-      enabled IS bool1
-    }
-  }
-
-  TimeSensor {
-    enabled IS out
-    enabled FALSE
-    loop IS out
-  }
-
-  Script {
-    inputOutput SFBool enabled IS out
-    inputOutput SFBool enabled TRUE
-  }
-
-  Proto {
-    bool1 IS out
-    bool2 IS out
-    bool2 TRUE
-  }
-}
-
-DEF B Box { }
-
-Group {
-  children [
-    DEF T Transform {
-      rotation 1 2 3 4
-      children Shape {
-        appearance Appearance {
-          material Material { }
-        }
-        geometry Box {
-          size 400 200 200
+WorldInfo {
+  metadata DEF Titania MetadataSet {
+    name "Titania"
+    reference "http://titania.create3000.de"
+    value [
+      DEF AngleGrid MetadataSet {
+        name "AngleGrid"
+        reference "http://titania.create3000.de"
+        value DEF enabled MetadataBoolean {
+          name "enabled"
+          reference "http://titania.create3000.de"
+          value FALSE
         }
       }
-    }
-    USE B
-    NULL
-    Switch { }
-    DEF _1 LOD { }
-    USE B
-  ]
-}
-
-USE T
-
-NULL
-
-FullProto {
-  bool1 FALSE
-  bool2 TRUE
-}
-
-DEF I Inline {
-  load FALSE
-  url "parse-exported.x3dv"
-}
-
-Script {
-  initializeOnly SFBool      bool1 FALSE
-  initializeOnly SFBool      bool2 TRUE
-  initializeOnly SFColor     color1 0.1 0.2 0.3
-  initializeOnly SFColorRGBA color2 0.1 0.2 0.3 0.4
-  inputOutput    SFDouble    double1 2
-  inputOutput    SFDouble    double2 1.234567890123457e+19
-  inputOutput    SFFloat     float 1
-  inputOutput    SFImage     image 1 2 3 0x1 0x2
-  inputOutput    SFInt32     int 123
-  inputOutput    SFMatrix3d  matrix1 1 2 3 4 5 6 7 8 9
-  inputOutput    SFMatrix3f  matrix2 1 2 3 4 5 6 7 8 9
-  inputOutput    SFMatrix4d  matrix3 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
-  inputOutput    SFMatrix4f  matrix4 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
-  initializeOnly SFNode      transform0 NULL
-  initializeOnly SFNode      transform1 USE T
-  initializeOnly SFNode      transform2 Transform { }
-  initializeOnly SFNode      transform3 Transform {
-    translation 1 2 3
+      DEF Grid MetadataSet {
+        name "Grid"
+        reference "http://titania.create3000.de"
+        value DEF enabled_1 MetadataBoolean {
+          name "enabled"
+          reference "http://titania.create3000.de"
+          value TRUE
+        }
+      }
+      DEF Selection MetadataSet {
+        name "Selection"
+        reference "http://titania.create3000.de"
+        value [
+          DEF selectGeometry MetadataBoolean {
+            name "selectGeometry"
+            reference "http://titania.create3000.de"
+            value FALSE
+          }
+          DEF nodes MetadataSet {
+            name "nodes"
+            reference "http://titania.create3000.de"
+            value DEF Box Transform {
+              children Shape {
+                appearance Appearance {
+                  material Material { }
+                }
+                geometry IndexedFaceSet {
+                  texCoordIndex [
+                    0,
+                    1,
+                    2,
+                    3,
+                    -1,
+                    0,
+                    1,
+                    2,
+                    3,
+                    -1,
+                    0,
+                    1,
+                    2,
+                    3,
+                    -1,
+                    0,
+                    1,
+                    2,
+                    3,
+                    -1,
+                    0,
+                    1,
+                    2,
+                    3,
+                    -1,
+                    0,
+                    1,
+                    2,
+                    3,
+                    -1
+                  ]
+                  coordIndex [
+                    0,
+                    1,
+                    2,
+                    3,
+                    -1,
+                    5,
+                    4,
+                    7,
+                    6,
+                    -1,
+                    3,
+                    2,
+                    6,
+                    7,
+                    -1,
+                    4,
+                    5,
+                    1,
+                    0,
+                    -1,
+                    4,
+                    0,
+                    3,
+                    7,
+                    -1,
+                    1,
+                    5,
+                    6,
+                    2,
+                    -1
+                  ]
+                  texCoord TextureCoordinate {
+                    point [
+                      0 0,
+                      1 0,
+                      1 1,
+                      0 1
+                    ]
+                  }
+                  coord Coordinate {
+                    point [
+                      -1 -1 1,
+                      1 -1 1,
+                      1 1 1,
+                      -1 1 1,
+                      -1 -1 -1,
+                      1 -1 -1,
+                      1 1 -1,
+                      -1 1 -1
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+      DEF BrowserPanel MetadataSet {
+        name "BrowserPanel"
+        reference "http://titania.create3000.de"
+        value [
+          DEF type_2 MetadataString {
+            name "type"
+            reference "http://titania.create3000.de"
+            value [
+              "TOP_VIEW",
+              "MAIN_VIEW",
+              "PERSPECTIVE_VIEW",
+              "FRONT_VIEW"
+            ]
+          }
+          DEF viewpoints MetadataSet {
+            name "viewpoints"
+            reference "http://titania.create3000.de"
+            value [
+              DEF PerspectiveViewpoint MetadataSet {
+                name "PerspectiveViewpoint"
+                reference "http://titania.create3000.de"
+                value [
+                  DEF position_3 MetadataDouble {
+                    name "position"
+                    reference "http://titania.create3000.de"
+                    value [
+                      5.87788534164429,
+                      6.46984958648682,
+                      13.8524446487427
+                    ]
+                  }
+                  DEF orientation_4 MetadataDouble {
+                    name "orientation"
+                    reference "http://titania.create3000.de"
+                    value [
+                      -0.704047462871212,
+                      0.695566762376517,
+                      0.143192350010952,
+                      0.568941727555854
+                    ]
+                  }
+                  DEF centerOfRotation_5 MetadataDouble {
+                    name "centerOfRotation"
+                    reference "http://titania.create3000.de"
+                    value [
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                  DEF fieldOfViewScale MetadataDouble {
+                    name "fieldOfViewScale"
+                    reference "http://titania.create3000.de"
+                    value 1
+                  }
+                ]
+              }
+              DEF TopViewpoint MetadataSet {
+                name "TopViewpoint"
+                reference "http://titania.create3000.de"
+                value [
+                  DEF position_6 MetadataDouble {
+                    name "position"
+                    reference "http://titania.create3000.de"
+                    value [
+                      0,
+                      10000,
+                      0
+                    ]
+                  }
+                  DEF orientation_7 MetadataDouble {
+                    name "orientation"
+                    reference "http://titania.create3000.de"
+                    value [
+                      1,
+                      0,
+                      0,
+                      4.71238898038469
+                    ]
+                  }
+                  DEF centerOfRotation_8 MetadataDouble {
+                    name "centerOfRotation"
+                    reference "http://titania.create3000.de"
+                    value [
+                      -0.0320612526145463,
+                      0,
+                      0.0937320149966475
+                    ]
+                  }
+                  DEF fieldOfViewScale_9 MetadataDouble {
+                    name "fieldOfViewScale"
+                    reference "http://titania.create3000.de"
+                    value 1.21023944190259
+                  }
+                ]
+              }
+              DEF FrontViewpoint MetadataSet {
+                name "FrontViewpoint"
+                reference "http://titania.create3000.de"
+                value [
+                  DEF position_10 MetadataDouble {
+                    name "position"
+                    reference "http://titania.create3000.de"
+                    value [
+                      0,
+                      0,
+                      10000
+                    ]
+                  }
+                  DEF orientation_11 MetadataDouble {
+                    name "orientation"
+                    reference "http://titania.create3000.de"
+                    value [
+                      0,
+                      0,
+                      1,
+                      0
+                    ]
+                  }
+                  DEF centerOfRotation_12 MetadataDouble {
+                    name "centerOfRotation"
+                    reference "http://titania.create3000.de"
+                    value [
+                      -0.00884759203065143,
+                      0.0177734813359099,
+                      0
+                    ]
+                  }
+                  DEF fieldOfViewScale_13 MetadataDouble {
+                    name "fieldOfViewScale"
+                    reference "http://titania.create3000.de"
+                    value 1.212467484375
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+      DEF Page MetadataSet {
+        name "Page"
+        reference "http://titania.create3000.de"
+        value [
+          DEF activeView MetadataInteger {
+            name "activeView"
+            reference "http://titania.create3000.de"
+            value 1
+          }
+          DEF multiView MetadataInteger {
+            name "multiView"
+            reference "http://titania.create3000.de"
+            value 1
+          }
+        ]
+      }
+    ]
   }
-  inputOutput    SFRotation  rotation 1 2 3 4
-  inputOutput    SFString    string1 ""
-  inputOutput    SFString    string2 "a \"string\" in a string"
-  inputOutput    SFTime      time 1.234567890123457
-  inputOutput    SFVec2d     vec1 1 2
-  inputOutput    SFVec2f     vec2 1 2
-  inputOutput    SFVec3d     vec3 1 2 3
-  inputOutput    SFVec3f     vec4 1 2 3
-  inputOutput    SFVec4d     vec5 1 2 3 4
-  inputOutput    SFVec4f     vec6 1 2 3 4
-  inputOutput    MFBool      bools1 [ ]
-  inputOutput    MFBool      bools2 TRUE
-  inputOutput    MFBool      bools3 [
-    TRUE,
-    FALSE,
-    TRUE
-  ]
-  inputOutput    MFInt32     ints1 [ ]
-  inputOutput    MFInt32     ints2 1
-  inputOutput    MFInt32     ints3 [
-    1,
-    2,
-    3,
-    4
-  ]
-  inputOutput    MFImage     images [
-    1 2 3 0x1 0x2,
-    1 2 3 0x1 0x2
-  ]
-  inputOutput    MFMatrix3d  matrices1 [ ]
-  inputOutput    MFMatrix3d  matrices2 1 2 3 4 5 6 7 8 9
-  inputOutput    MFMatrix3d  matrices3 [
-    1 2 3 4 5 6 7 8 9,
-    1 2 3 4 5 6 7 8 9,
-    1 2 3 4 5 6 7 8 9
-  ]
-  inputOutput    MFMatrix3f  matrices4 [ ]
-  inputOutput    MFMatrix3f  matrices5 1 2 3 4 5 6 7 8 9
-  inputOutput    MFMatrix3f  matrices6 [
-    1 2 3 4 5 6 7 8 9,
-    1 2 3 4 5 6 7 8 9,
-    1 2 3 4 5 6 7 8 9
-  ]
-  inputOutput    MFMatrix4d  matrices7 [ ]
-  inputOutput    MFMatrix4d  matrices8 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
-  inputOutput    MFMatrix4d  matrices9 [
-    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16,
-    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16,
-    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
-  ]
-  inputOutput    MFMatrix4f  matrices10 [ ]
-  inputOutput    MFMatrix4f  matrices11 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
-  inputOutput    MFMatrix4f  matrices12 [
-    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16,
-    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16,
-    1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
-  ]
-  initializeOnly MFNode      nodes1 [ ]
-  initializeOnly MFNode      nodes2 Transform { }
-  initializeOnly MFNode      nodes3 [
-    Transform { }
-    Box { }
-    Switch { }
-  ]
 }
 
-Script {
-  inputOutput SFBool bool TRUE
+USE Box
 
-  url "ecmascript:"
-}
-
-Script {
-  url "ecmascript:"
-}
-
-DEF Touch TouchSensor { }
-
-DEF Debug Script {
-  inputOnly SFTime set_time
-
-  url "ecmascript:
-function initialize ()
-{
-   //print (Browser .currentScene .toJSONString ())
-}
-function set_time ()
-{
-   var xml  = Browser .currentScene .toXMLString  ()
-////   var json = Browser .currentScene .toJSONString ()
-   var vrml = Browser .currentScene .toVRMLString ()
-
-   var xml_vrml  = Browser .createX3DFromString (xml)  .toVRMLString ()
-//   var json_vrml = Browser .createX3DFromString (json) .toVRMLString ()
-   var vrml_vrml = Browser .createX3DFromString (vrml) .toVRMLString ()
-
-   print (\"print and reparse\")
-   print (\"xml \", xml_vrml  == vrml)
-//   print (\"json\", json_vrml == vrml)
-   print (\"vrml\", vrml_vrml == vrml)
-
-   print (vrml)
-}"
-}
-
-DEF Timer TimeSensor {
-  loop TRUE
-}
-
-DEF Interpolator PositionInterpolator {
-  key [
-    0,
-    1
-  ]
-  keyValue [
-    -5 0 0,
-    5 0 0
-  ]
-}
-
-IMPORT I.ExportedTransform AS ImportedTransform
-ROUTE Interpolator.value_changed TO ImportedTransform.set_translation
-
-ROUTE Timer.fraction_changed TO Interpolator.set_fraction
-ROUTE Touch.touchTime TO Debug.set_time
-ROUTE _1.metadata_changed TO B.set_metadata
-
-EXPORT B
-EXPORT B AS B1
-EXPORT T AS T1
+TouchSensor { }

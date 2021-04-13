@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <!-- X_ITE START -->
+    <link rel="stylesheet" type="text/css" href="x_ite.css"/>
+    <script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
+    <script type="text/javascript" src="x_ite.config.js"></script>
+    <script type="text/javascript" src="x_ite.js"></script>
+    <!-- X_ITE END -->
+    <style type="text/css">
+X3DCanvas {
+  width: 768px;
+  height: 432px;
+  padding-top: 20px;
+}
+    </style>
+    <script>
+function test(){
+    X3D.getBrowser().loadURL(new X3D.MFString ('test.x3dv'), new X3D.MFString ());
+}
+    </script>
+  </head>
+  <body>
+    <X3DCanvas src="test.x3dv">
+      <p>Your browser may not support all features required by X_ITE.
+         For a better experience, keep your browser up to date.
+         <a href="http://outdatedbrowser.com">Check here for latest versions.</a></p>
+    </X3DCanvas>
+    <button onclick="test()">Click me</button>
+  </body>
+</html>

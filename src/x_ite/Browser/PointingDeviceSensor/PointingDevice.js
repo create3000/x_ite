@@ -105,7 +105,7 @@ function ($,
 					element = browser .getElement (),
 					offset  = element .offset (),
 					x       = event .pageX - offset .left,
-					y       = element .height () - (event .pageY - offset .top);
+					y       = element .innerHeight () - (event .pageY - offset .top);
 
 				element .unbind ("mousemove.PointingDevice" + this .getId ());
 
@@ -135,7 +135,7 @@ function ($,
 					element = browser .getElement (),
 					offset  = element .offset (),
 					x       = event .pageX - offset .left,
-					y       = element .height () - (event .pageY - offset .top);
+					y       = element .innerHeight () - (event .pageY - offset .top);
 
 				$(document) .unbind (".PointingDevice"   + this .getId ());
 				element .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
@@ -168,7 +168,7 @@ function ($,
 				element = browser .getElement (),
 				offset  = element .offset (),
 				x       = event .pageX - offset .left,
-				y       = element .height () - (event .pageY - offset .top);
+				y       = element .innerHeight ()  - (event .pageY - offset .top);
 
 			this .onmotion (x, y);
 		},
