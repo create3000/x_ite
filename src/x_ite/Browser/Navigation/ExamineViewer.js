@@ -294,9 +294,11 @@ function ($,
 			event .stopImmediatePropagation ();
 
 			var
-				offset = this .getBrowser () .getElement () .offset (),
-				x      = event .pageX - offset .left,
-				y      = this .getBrowser () .getElement () .innerHeight () - (event .pageY - offset .top);
+				element = this .getBrowser () .getElement (),
+				offset  = element .offset (),
+				x       = event .pageX - offset .left - parseInt (element .css ('borderLeftWidth')),
+				y       = element .innerHeight () - (event .pageY - offset .top - parseInt (element .css ('borderTopWidth')));
+;
 
 			this .disconnect ();
 			this .lookAtBBox (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
