@@ -296,8 +296,8 @@ function ($,
 			var
 				element = this .getBrowser () .getElement (),
 				offset  = element .offset (),
-				x       = event .pageX - offset .left - parseInt (element .css ('borderLeftWidth')),
-				y       = element .innerHeight () - (event .pageY - offset .top - parseInt (element .css ('borderTopWidth')));
+				x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
+				y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 ;
 
 			this .disconnect ();

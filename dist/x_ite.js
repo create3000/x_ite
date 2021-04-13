@@ -1,4 +1,4 @@
-/* X_ITE v4.6.18-1019 */
+/* X_ITE v4.6.18-1020 */
 
 (function () {
 
@@ -66199,8 +66199,8 @@ function ($,
 				var
 					element = browser .getElement (),
 					offset  = element .offset (),
-					x       = event .pageX - offset .left - parseInt (element .css ('borderLeftWidth')),
-					y       = element .innerHeight () - (event .pageY - offset .top - parseInt (element .css ('borderTopWidth')));
+					x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
+					y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 
 				element .unbind ("mousemove.PointingDevice" + this .getId ());
 
@@ -66229,8 +66229,8 @@ function ($,
 					browser = this .getBrowser (),
 					element = browser .getElement (),
 					offset  = element .offset (),
-					x       = event .pageX - offset .left - parseInt (element .css ('borderLeftWidth')),
-					y       = element .innerHeight () - (event .pageY - offset .top - parseInt (element .css ('borderTopWidth')));
+					x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
+					y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 
 
 				$(document) .unbind (".PointingDevice"   + this .getId ());
@@ -66263,8 +66263,8 @@ function ($,
 			var
 				element = browser .getElement (),
 				offset  = element .offset (),
-				x       = event .pageX - offset .left - parseInt (element .css ('borderLeftWidth')),
-				y       = element .innerHeight () - (event .pageY - offset .top - parseInt (element .css ('borderTopWidth')));
+				x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
+				y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 
 			this .onmotion (x, y);
 		},
@@ -68379,8 +68379,8 @@ function ($,
 			var
 				element = this .getBrowser () .getElement (),
 				offset  = element .offset (),
-				x       = event .pageX - offset .left - parseInt (element .css ('borderLeftWidth')),
-				y       = element .innerHeight () - (event .pageY - offset .top - parseInt (element .css ('borderTopWidth')));
+				x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
+				y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 ;
 
 			this .disconnect ();
@@ -70644,8 +70644,8 @@ function ($,
 			var
 				element = this .getBrowser () .getElement (),
 				offset  = element .offset (),
-				x       = event .pageX - offset .left - parseInt (element .css ('borderLeftWidth')),
-				y       = element .innerHeight () - (event .pageY - offset .top - parseInt (element .css ('borderTopWidth')));
+				x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
+				y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 
 			this .disconnect ();
 			this .lookAtPoint (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));

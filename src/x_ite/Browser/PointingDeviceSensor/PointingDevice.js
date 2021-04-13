@@ -104,8 +104,8 @@ function ($,
 				var
 					element = browser .getElement (),
 					offset  = element .offset (),
-					x       = event .pageX - offset .left - parseInt (element .css ('borderLeftWidth')),
-					y       = element .innerHeight () - (event .pageY - offset .top - parseInt (element .css ('borderTopWidth')));
+					x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
+					y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 
 				element .unbind ("mousemove.PointingDevice" + this .getId ());
 
@@ -134,8 +134,8 @@ function ($,
 					browser = this .getBrowser (),
 					element = browser .getElement (),
 					offset  = element .offset (),
-					x       = event .pageX - offset .left - parseInt (element .css ('borderLeftWidth')),
-					y       = element .innerHeight () - (event .pageY - offset .top - parseInt (element .css ('borderTopWidth')));
+					x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
+					y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 
 
 				$(document) .unbind (".PointingDevice"   + this .getId ());
@@ -168,8 +168,8 @@ function ($,
 			var
 				element = browser .getElement (),
 				offset  = element .offset (),
-				x       = event .pageX - offset .left - parseInt (element .css ('borderLeftWidth')),
-				y       = element .innerHeight () - (event .pageY - offset .top - parseInt (element .css ('borderTopWidth')));
+				x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
+				y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 
 			this .onmotion (x, y);
 		},
