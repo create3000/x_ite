@@ -585,9 +585,10 @@ function (Fields,
 
 					normalArray .push (normal .x, normal .y, normal .z);
 				}
+
 				// Build caps
 
-				if (capMax && crossSection .length > 2)
+				if (capMax && numCapPoints > 2)
 				{
 					if (this .beginCap_ .getValue ())
 					{
