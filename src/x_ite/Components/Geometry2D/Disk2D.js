@@ -128,13 +128,11 @@ function (Fields,
 
 			if (innerRadius === outerRadius)
 			{
-				var
-					radius      = outerRadius,
-					vertexArray = this .getVertices ();
+				var vertexArray = this .getVertices ();
 
 				// Point
 
-				if (radius === 0)
+				if (outerRadius === 0)
 				{
 					// vertexArray .push (0, 0, 0, 1);
 					// this .setGeometryType (GeometryType .GEOMETRY_POINTS);
@@ -143,7 +141,7 @@ function (Fields,
 
 				// Circle
 
-				if (radius === 1)
+				if (outerRadius === 1)
 				{
 					this .setVertices (options .getCircleVertices ());
 				}
@@ -152,11 +150,11 @@ function (Fields,
 					var defaultVertices = options .getCircleVertices () .getValue ();
 
 					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
-						vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
+						vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
 				}
 
-				this .getMin () .set (-radius, -radius, 0);
-				this .getMax () .set ( radius,  radius, 0);
+				this .getMin () .set (-outerRadius, -outerRadius, 0);
+				this .getMax () .set ( outerRadius,  outerRadius, 0);
 
 				this .setGeometryType (1);
 				return;
@@ -166,12 +164,10 @@ function (Fields,
 			{
 				// Disk
 
-				var radius = outerRadius;
-
 				this .getMultiTexCoords () .push (options .getDiskTexCoords ());
 				this .setNormals (options .getDiskNormals ());
 
-				if (radius === 1)
+				if (outerRadius === 1)
 				{
 					this .setVertices (options .getDiskVertices ());
 				}
@@ -182,11 +178,11 @@ function (Fields,
 						vertexArray     = this .getVertices ();
 
 					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
-						vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
+						vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
 				}
 
-				this .getMin () .set (-radius, -radius, 0);
-				this .getMax () .set ( radius,  radius, 0);
+				this .getMin () .set (-outerRadius, -outerRadius, 0);
+				this .getMax () .set ( outerRadius,  outerRadius, 0);
 
 				this .setGeometryType (2);
 				this .setSolid (this .solid_ .getValue ());
