@@ -375,7 +375,7 @@ return getTexCoord (i);
 }
 case x3d_Sphere:
 {
-return vec4 (normal .x / 2.0 + 0.5, normal .y / 2.0 + 0.5, 0.0, 1.0);
+return vec4 (normal .xy / 2.0 + 0.5, 0.0, 1.0);
 }
 case x3d_CameraSpaceNormal:
 {
@@ -391,7 +391,7 @@ return vec4 (reflect (normalize (vertex), -normal), 1.0);
 }
 case x3d_SphereLocal:
 {
-return vec4 (localNormal .x / 2.0 + 0.5, localNormal .y / 2.0 + 0.5, 0.0, 1.0);
+return vec4 (localNormal .xy / 2.0 + 0.5, 0.0, 1.0);
 }
 case x3d_Coord:
 {
