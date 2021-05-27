@@ -147,7 +147,7 @@ getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
 
 		texCoord .stp /= texCoord .q;
 
-		if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing ? false : true))
+		if ((x3d_GeometryType == x3d_Geometry2D) && ! gl_FrontFacing)
 			texCoord .s = 1.0 - texCoord .s;
 
 		if (x3d_TextureType [i] == x3d_TextureType2D)
