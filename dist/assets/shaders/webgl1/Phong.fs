@@ -339,11 +339,13 @@ return getTexCoord (i);
 }
 else if (mode == x3d_Sphere)
 {
-return vec4 (normal .xy / 2.0 + 0.5, 0.0, 1.0);
+vec2 N = normalize (gl_FrontFacing ? normal : -normal) .xy;
+return vec4 (N / 2.0 + 0.5, 0.0, 1.0);
 }
 else if (mode == x3d_CameraSpaceNormal)
 {
-return vec4 (normal, 1.0);
+vec3 N = normalize (gl_FrontFacing ? normal : -normal);
+return vec4 (N, 1.0);
 }
 else if (mode == x3d_CameraSpacePosition)
 {
@@ -351,11 +353,13 @@ return vec4 (vertex, 1.0);
 }
 else if (mode == x3d_CameraSpaceReflectionVector)
 {
-return vec4 (reflect (normalize (vertex), -normal), 1.0);
+vec3 N = normalize (gl_FrontFacing ? -normal : normal);
+return vec4 (reflect (normalize (vertex), N), 1.0);
 }
 else if (mode == x3d_SphereLocal)
 {
-return vec4 (localNormal .xy / 2.0 + 0.5, 0.0, 1.0);
+vec2 N = normalize (gl_FrontFacing ? localNormal : -localNormal) .xy;
+return vec4 (N / 2.0 + 0.5, 0.0, 1.0);
 }
 else if (mode == x3d_Coord)
 {
@@ -379,14 +383,16 @@ return vec4 (perlin (vertex * scale + translation), 1.0);
 }
 else if (mode == x3d_SphereReflect)
 {
+vec3 N = normalize (gl_FrontFacing ? -normal : normal);
 float eta = textureCoordinateGenerator .parameter [0];
-return vec4 (refract (normalize (vertex), -normal, eta), 1.0);
+return vec4 (refract (normalize (vertex), N, eta), 1.0);
 }
 else if (mode == x3d_SphereReflectLocal)
 {
+vec3 N = normalize (gl_FrontFacing ? -localNormal : localNormal);
 float eta = textureCoordinateGenerator .parameter [0];
 vec3 eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2], textureCoordinateGenerator .parameter [3]);
-return vec4 (refract (normalize (localVertex - eye), -localNormal, eta), 1.0);
+return vec4 (refract (normalize (localVertex - eye), N, eta), 1.0);
 }
 return getTexCoord (i);
 }
