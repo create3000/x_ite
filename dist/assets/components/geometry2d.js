@@ -1416,18 +1416,16 @@ function (Fields,
 		{
 			var
 				options     = this .getBrowser () .getDisk2DOptions (),
-				innerRadius = this .innerRadius_ .getValue (),
-				outerRadius = this .outerRadius_ .getValue ();
+				innerRadius = Math .min (Math .abs (this .innerRadius_ .getValue ()), Math .abs (this .outerRadius_ .getValue ())),
+				outerRadius = Math .max (Math .abs (this .innerRadius_ .getValue ()), Math .abs (this .outerRadius_ .getValue ()));
 
 			if (innerRadius === outerRadius)
 			{
-				var
-					radius      = Math .abs (outerRadius),
-					vertexArray = this .getVertices ();
+				var vertexArray = this .getVertices ();
 
 				// Point
 
-				if (radius === 0)
+				if (outerRadius === 0)
 				{
 					// vertexArray .push (0, 0, 0, 1);
 					// this .setGeometryType (GeometryType .GEOMETRY_POINTS);
@@ -1436,7 +1434,7 @@ function (Fields,
 
 				// Circle
 
-				if (radius === 1)
+				if (outerRadius === 1)
 				{
 					this .setVertices (options .getCircleVertices ());
 				}
@@ -1445,26 +1443,24 @@ function (Fields,
 					var defaultVertices = options .getCircleVertices () .getValue ();
 
 					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
-						vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
+						vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
 				}
 
-				this .getMin () .set (-radius, -radius, 0);
-				this .getMax () .set ( radius,  radius, 0);
+				this .getMin () .set (-outerRadius, -outerRadius, 0);
+				this .getMax () .set ( outerRadius,  outerRadius, 0);
 
 				this .setGeometryType (1);
 				return;
 			}
 
-			if (innerRadius === 0 || outerRadius === 0)
+			if (innerRadius === 0)
 			{
 				// Disk
-
-				var radius = Math .abs (Math .max (innerRadius, outerRadius));
 
 				this .getMultiTexCoords () .push (options .getDiskTexCoords ());
 				this .setNormals (options .getDiskNormals ());
 
-				if (radius === 1)
+				if (outerRadius === 1)
 				{
 					this .setVertices (options .getDiskVertices ());
 				}
@@ -1475,11 +1471,11 @@ function (Fields,
 						vertexArray     = this .getVertices ();
 
 					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
-						vertexArray .push (defaultVertices [i] * radius, defaultVertices [i + 1] * radius, 0, 1);
+						vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
 				}
 
-				this .getMin () .set (-radius, -radius, 0);
-				this .getMax () .set ( radius,  radius, 0);
+				this .getMin () .set (-outerRadius, -outerRadius, 0);
+				this .getMax () .set ( outerRadius,  outerRadius, 0);
 
 				this .setGeometryType (2);
 				this .setSolid (this .solid_ .getValue ());
@@ -1490,9 +1486,7 @@ function (Fields,
 			// Disk with hole
 
 			var
-				maxRadius        = Math .abs (Math .max (innerRadius, outerRadius)),
-				minRadius        = Math .abs (Math .min (innerRadius, outerRadius)),
-				scale            = minRadius / maxRadius,
+				scale            = innerRadius / outerRadius,
 				offset           = (1 - scale) / 2,
 				defaultTexCoords = options .getDiskTexCoords () .getValue (),
 				defaultVertices  = options .getDiskVertices () .getValue (),
@@ -1515,17 +1509,17 @@ function (Fields,
 				normalArray .push (0, 0, 1,  0, 0, 1,  0, 0, 1,
                                0, 0, 1,  0, 0, 1,  0, 0, 1);
 
-				vertexArray .push (defaultVertices [i + 4] * minRadius, defaultVertices [i + 5] * minRadius, 0, 1,
-				                   defaultVertices [i + 4] * maxRadius, defaultVertices [i + 5] * maxRadius, 0, 1,
-				                   defaultVertices [i + 8] * maxRadius, defaultVertices [i + 9] * maxRadius, 0, 1,
+				vertexArray .push (defaultVertices [i + 4] * innerRadius, defaultVertices [i + 5] * innerRadius, 0, 1,
+				                   defaultVertices [i + 4] * outerRadius, defaultVertices [i + 5] * outerRadius, 0, 1,
+				                   defaultVertices [i + 8] * outerRadius, defaultVertices [i + 9] * outerRadius, 0, 1,
 
-				                   defaultVertices [i + 4] * minRadius, defaultVertices [i + 5] * minRadius, 0, 1,
-				                   defaultVertices [i + 8] * maxRadius, defaultVertices [i + 9] * maxRadius, 0, 1,
-				                   defaultVertices [i + 8] * minRadius, defaultVertices [i + 9] * minRadius, 0, 1);
+				                   defaultVertices [i + 4] * innerRadius, defaultVertices [i + 5] * innerRadius, 0, 1,
+				                   defaultVertices [i + 8] * outerRadius, defaultVertices [i + 9] * outerRadius, 0, 1,
+				                   defaultVertices [i + 8] * innerRadius, defaultVertices [i + 9] * innerRadius, 0, 1);
 			}
 
-			this .getMin () .set (-maxRadius, -maxRadius, 0);
-			this .getMax () .set ( maxRadius,  maxRadius, 0);
+			this .getMin () .set (-outerRadius, -outerRadius, 0);
+			this .getMax () .set ( outerRadius,  outerRadius, 0);
 
 			this .setGeometryType (2);
 			this .setSolid (this .solid_ .getValue ());

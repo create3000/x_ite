@@ -1,4 +1,4 @@
-/* X_ITE v4.6.18-1020 */
+/* X_ITE v4.6.19-1021 */
 
 (function () {
 
@@ -25565,7 +25565,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.6.18";
+	return "4.6.19";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -100556,9 +100556,10 @@ function (Fields,
 
 					normalArray .push (normal .x, normal .y, normal .z);
 				}
+
 				// Build caps
 
-				if (capMax && crossSection .length > 2)
+				if (capMax && numCapPoints > 2)
 				{
 					if (this .beginCap_ .getValue ())
 					{
