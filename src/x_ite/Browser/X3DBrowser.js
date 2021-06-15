@@ -516,6 +516,8 @@ function ($,
 				currentScene = this .currentScene,
 				external     = this .isExternal ();
 
+			scene .dom = dom;
+
 			if (success)
 			{
 				new XMLParser (scene) .parseIntoScene (dom,
@@ -566,7 +568,7 @@ function ($,
 
 			if (success)
 			{
-				new JSONParser (scene) .parseJavaScript (jsobj,
+				scene .dom = new JSONParser (scene) .parseJavaScript (jsobj,
 				function ()
 				{
 					if (! external)
@@ -588,7 +590,7 @@ function ($,
 			}
 			else
 			{
-				new JSONParser (scene) .parseJavaScript (jsobj);
+				scene .dom = new JSONParser (scene) .parseJavaScript (jsobj);
 
 				if (! external)
 				{

@@ -1,4 +1,4 @@
-/* X_ITE v4.6.19-1024 */
+/* X_ITE v4.6.20-1025 */
 
 (function () {
 
@@ -25565,7 +25565,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.6.19";
+	return "4.6.20";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -117242,6 +117242,8 @@ function ($,
 				currentScene = this .currentScene,
 				external     = this .isExternal ();
 
+			scene .dom = dom;
+
 			if (success)
 			{
 				new XMLParser (scene) .parseIntoScene (dom,
@@ -117292,7 +117294,7 @@ function ($,
 
 			if (success)
 			{
-				new JSONParser (scene) .parseJavaScript (jsobj,
+				scene .dom = new JSONParser (scene) .parseJavaScript (jsobj,
 				function ()
 				{
 					if (! external)
@@ -117314,7 +117316,7 @@ function ($,
 			}
 			else
 			{
-				new JSONParser (scene) .parseJavaScript (jsobj);
+				scene .dom = new JSONParser (scene) .parseJavaScript (jsobj);
 
 				if (! external)
 				{
