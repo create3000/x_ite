@@ -321,25 +321,53 @@ function ($,
 		{
 			return this .createX3DFromString (vrmlSyntax) .rootNodes;
 		},
-		createX3DFromString: function (x3dSyntax)
+		createX3DFromString: function (x3dSyntax, success, error)
 		{
-			var
-				currentScene = this .currentScene,
-				external     = this .isExternal (),
-				scene        = new FileLoader (this .getWorld ()) .createX3DFromString (this .currentScene .getURL (), x3dSyntax);
-
-			if (! external)
+			if (success)
 			{
-				scene .setExecutionContext (currentScene);
-				currentScene .isLive () .addInterest ("setLive", scene);
+				var
+					currentScene = this .currentScene,
+					external     = this .isExternal ();
 
-				if (currentScene .isLive () .getValue ())
-					scene .setLive (true);
+				success = function (success, scene)
+				{
+					if (! external)
+					{
+						scene .setExecutionContext (currentScene);
+						currentScene .isLive () .addInterest ("setLive", scene);
+
+						if (currentScene .isLive () .getValue ())
+							scene .setLive (true);
+					}
+
+					scene .setup ();
+
+					success (scene);
+				}
+				.bind (null, success);
+
+				new FileLoader (this .getWorld ()) .createX3DFromString (this .currentScene .getURL (), x3dSyntax, success, error);
 			}
+			else
+			{
+				var
+					currentScene = this .currentScene,
+					external     = this .isExternal (),
+					scene        = new FileLoader (this .getWorld ()) .createX3DFromString (this .currentScene .getURL (), x3dSyntax);
 
-			scene .setup ();
+				if (! external)
+				{
+					scene .setExecutionContext (currentScene);
+					currentScene .isLive () .addInterest ("setLive", scene);
 
-			return scene;
+					if (currentScene .isLive () .getValue ())
+						scene .setLive (true);
+				}
+
+				scene .setup ();
+
+				return scene;
+			}
 		},
 		createVrmlFromURL: function (url, node, event)
 		{
