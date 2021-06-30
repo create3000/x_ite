@@ -197,7 +197,7 @@ function (Fields,
 
 			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (renderObject .getCameraSpaceMatrix () .get ());
 		},
-		renderTexture: function (renderObject, group)
+		renderTexture: function (renderObject)
 		{
 			this .renderer .setRenderer (renderObject);
 
@@ -219,7 +219,7 @@ function (Fields,
 
 			this .frameBuffer .bind ();
 
-			renderer .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
+			renderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
 			renderer .getProjectionMatrix () .pushMatrix (projectionMatrix);
 
 			gl .bindTexture (this .getTarget (), this .getTexture ());
@@ -289,6 +289,18 @@ function (Fields,
 			if (this .update_ .getValue () === "NEXT_FRAME_ONLY")
 				this .update_ = "NONE";
 		},
+		setShaderUniformsToChannel: (function ()
+		{
+			const Zero = new Float32Array (16); // Trick: zero model view matrix to hide object.
+
+			return function (gl, shaderObject, renderObject, i)
+			{
+				X3DEnvironmentTextureNode .prototype .setShaderUniformsToChannel .call (this, gl, shaderObject, renderObject, i);
+
+				if (! renderObject .isIndependent ())
+					gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, Zero);
+			};
+		})(),
 	});
 
 	return GeneratedCubeMapTexture;

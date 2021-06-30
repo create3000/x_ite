@@ -189,7 +189,7 @@ function (Fields,
 			                                                          this .repeatT_ .getValue (),
 			                                                          false);
 		},
-		setShaderUniformsToChannel: function (gl, shaderObject, i)
+		setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
 		{
 			gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getTexture2DUnits () [i]);
 			gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());

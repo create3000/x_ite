@@ -61,7 +61,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureNode, 
+          X3DTextureNode,
           X3DConstants,
           X3DCast,
           ModeType,
@@ -293,7 +293,7 @@ function (Fields,
 
 				if (textureNode)
 					this .textureNodes .push (textureNode);
-			}	
+			}
 		},
 		traverse: function (type, renderObject)
 		{
@@ -302,7 +302,7 @@ function (Fields,
 			for (var i = 0, length = textureNodes .length; i < length; ++ i)
 				textureNodes [i] .traverse (type, renderObject);
 		},
-		setShaderUniforms: function (gl, shaderObject)
+		setShaderUniforms: function (gl, shaderObject, renderObject)
 		{
 			var
 				textureNodes = this .textureNodes,
@@ -313,7 +313,7 @@ function (Fields,
 
 			for (var i = 0; i < channels; ++ i)
 			{
-				textureNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
+				textureNodes [i] .setShaderUniformsToChannel (gl, shaderObject, renderObject, i);
 
 				gl .uniform1i  (shaderObject .x3d_MultiTextureMode [i],      this .getMode (i));
 				gl .uniform1i  (shaderObject .x3d_MultiTextureAlphaMode [i], this .getAlphaMode (i));
@@ -325,5 +325,3 @@ function (Fields,
 
 	return MultiTexture;
 });
-
-

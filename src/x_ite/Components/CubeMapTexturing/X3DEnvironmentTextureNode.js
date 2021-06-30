@@ -124,7 +124,7 @@ function (X3DTextureNode,
 					gl .texImage2D (targets [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 			};
 		})(),
-		setShaderUniformsToChannel: function (gl, shaderObject, i)
+		setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
 		{
 			gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getCubeMapTextureUnits () [i]);
 			gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());

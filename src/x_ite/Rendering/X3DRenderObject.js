@@ -930,7 +930,7 @@ function ($,
 					// Render GeneratedCubeMapTextures.
 
 					for (var i = 0, length = generatedCubeMapTextures .length; i < length; ++ i)
-						generatedCubeMapTextures [i] .renderTexture (this, group);
+						generatedCubeMapTextures [i] .renderTexture (this);
 				}
 
 

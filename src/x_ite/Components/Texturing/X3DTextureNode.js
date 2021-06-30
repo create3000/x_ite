@@ -159,9 +159,9 @@ function (Fields,
 				}
 			}
 		},
-		setShaderUniforms: function (gl, shaderObject)
+		setShaderUniforms: function (gl, shaderObject, renderObject)
 		{
-			this .setShaderUniformsToChannel (gl, shaderObject, 0);
+			this .setShaderUniformsToChannel (gl, shaderObject, renderObject, 0);
 
 			gl .uniform1i (shaderObject .x3d_NumTextures, 1);
 			gl .uniform1i (shaderObject .x3d_MultiTextureMode [0],      ModeType .MODULATE);

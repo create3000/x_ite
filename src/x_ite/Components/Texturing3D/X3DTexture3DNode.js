@@ -180,7 +180,7 @@ function (X3DTextureNode,
 			                                                          this .repeatT_ .getValue (),
 			                                                          this .repeatR_ .getValue ());
 		},
-		setShaderUniformsToChannel: function (gl, shaderObject, i)
+		setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
 		{
 			if (gl .getVersion () >= 2)
 			{

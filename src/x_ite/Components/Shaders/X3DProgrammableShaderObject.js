@@ -980,6 +980,10 @@ function (Fields,
 				modelViewMatrix       = context .modelViewMatrix,
 				localObjects          = context .localObjects;
 
+			// Model view matrix
+
+			gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+
 			// Geometry type
 
 			gl .uniform1i (this .x3d_GeometryType, context .geometryType);
@@ -1032,7 +1036,7 @@ function (Fields,
 
 			if (textureNode)
 			{
-				textureNode           .setShaderUniforms (gl, this);
+				textureNode           .setShaderUniforms (gl, this, context .renderer);
 				textureTransformNode  .setShaderUniforms (gl, this);
 				textureCoordinateNode .setShaderUniforms (gl, this);
 			}
@@ -1046,8 +1050,6 @@ function (Fields,
 					textureCoordinateNode .setShaderUniforms (gl, this);
 				}
 			}
-
-			gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
 		},
 		getNormalMatrix: (function ()
 		{
