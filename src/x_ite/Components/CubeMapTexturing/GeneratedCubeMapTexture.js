@@ -82,8 +82,6 @@ function (Fields,
 {
 "use strict";
 
-
-
 	// Rotations to negated normals of the texture cube.
 
 	var rotations = [

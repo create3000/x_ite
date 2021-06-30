@@ -51,7 +51,7 @@ define ([
 	"x_ite/Components/Texturing/X3DTextureNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DTextureNode, 
+function (X3DTextureNode,
           X3DConstants)
 {
 "use strict";
@@ -88,7 +88,7 @@ function (X3DTextureNode,
 			if (this .isLive () .getValue ())
 			{
 				this .getBrowser () .getBrowserOptions () .TextureQuality_ .addInterest ("set_textureQuality__", this);
-	
+
 				this .set_textureQuality__ ();
 			}
 			else
@@ -134,5 +134,3 @@ function (X3DTextureNode,
 
 	return X3DEnvironmentTextureNode;
 });
-
-

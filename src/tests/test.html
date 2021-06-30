@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <link rel="stylesheet" type="text/css" href="https://create3000.github.io/code/x_ite/latest/dist/x_ite.css"/>
+    <script type="text/javascript" src="https://create3000.github.io/code/x_ite/latest/dist/x_ite.min.js"></script>
+    <style type="text/css">
+X3DCanvas {
+  width: 768px;
+  height: 432px;
+}
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+function load ()
+{
+	console .log ("load");
+
+	$.getJSON ("Billboard.x3dj", function (json)
+	{
+		X3D (function ()
+		{
+      var Browser = X3D .getBrowser ();
+
+			Browser .createX3DFromString (JSON .stringify (json), function (scene)
+      {
+        Browser .replaceWorld (scene);
+        console .log (scene .dom);
+      });
+		});
+	});
+}
+    </script>
+  </head>
+  <body>
+    <X3DCanvas></X3DCanvas>
+    <button onclick="load()">Click Me!</button>
+  </body>
+</html>

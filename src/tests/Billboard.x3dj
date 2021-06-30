@@ -1,0 +1,228 @@
+{ "X3D": {
+    "encoding": "UTF-8",
+    "@profile": "Immersive",
+    "@version": "3.3",
+    "@xsd:noNamespaceSchemaLocation": "http://www.web3d.org/specifications/x3d-3.3.xsd",
+    "JSON schema": "http://www.web3d.org/specifications/x3d-3.3-JSONSchema.json",
+    "head": {
+      "meta": [
+        {
+          "@name": "comment",
+          "@content": "World of Titania"
+        },
+        {
+          "@name": "created",
+          "@content": "Mon, 27 Nov 2017 03:58:59 GMT"
+        },
+        {
+          "@name": "creator",
+          "@content": "Holger Seelig"
+        },
+        {
+          "@name": "generator",
+          "@content": "Titania V4.4.2, http://titania.create3000.de"
+        },
+        {
+          "@name": "identifier",
+          "@content": "file:///home/holger/Projekte/Sunrise/src/drive/user/test/components/Navigation/Billboard/Billboard.O.x3d"
+        },
+        {
+          "@name": "modified",
+          "@content": "Sun, 10 Mar 2019 13:51:09 GMT"
+        },
+        {
+          "@name": "titania-add-metadata",
+          "@content": "true"
+        }
+      ],
+      "component": [
+        {
+          "@name": "Layout",
+          "@level": 2
+        },
+        {
+          "@name": "Shape",
+          "@level": 4
+        }
+      ]
+    },
+    "Scene": {
+      "-children": [
+        { "WorldInfo":
+          {
+          }
+        },
+        { "Transform":
+          {
+            "@DEF": "ElevationGrid",
+            "-children": [
+              { "Inline":
+                {
+                  "@DEF": "model",
+                  "@url": [ "model.x3d", "file:///home/holger/Projekte/Server/create3000.de/media/htdocs/components/Navigation/Billboard/model.x3d" ]
+                }
+              }
+            ]
+          }
+        },
+        { "Transform":
+          {
+            "@DEF": "North",
+            "@translation": [ 18.8727, 2.69088, 0 ],
+            "-children": [
+              { "Billboard":
+                {
+                  "@axisOfRotation": [ 0, 0, 0 ],
+                  "-children": [
+                    { "Shape":
+                      {
+                        "-appearance": { "Appearance":
+                          {
+                            "@DEF": "_1",
+                            "-material": { "Material":
+                              {
+                                "@diffuseColor": [ 1, 1, 1 ]
+                              }
+                            }
+                          }
+                        },
+                        "-geometry": { "Text":
+                          {
+                            "@string": [ "North" ],
+                            "@solid": true,
+                            "-fontStyle": { "ScreenFontStyle":
+                              {
+                                "@family": [ "SANS" ],
+                                "@justify": [ "MIDDLE", "MIDDLE" ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        { "Transform":
+          {
+            "@DEF": "East",
+            "@translation": [ 38.8519, 2.69088, 19.6852 ],
+            "-children": [
+              { "Billboard":
+                {
+                  "@axisOfRotation": [ 0, 0, 0 ],
+                  "-children": [
+                    { "Shape":
+                      {
+                        "-appearance": { "Appearance":
+                          {
+                            "@USE": "_1"
+                          }
+                        },
+                        "-geometry": { "Text":
+                          {
+                            "@string": [ "East" ],
+                            "@solid": true,
+                            "-fontStyle": { "ScreenFontStyle":
+                              {
+                                "@family": [ "SANS" ],
+                                "@justify": [ "MIDDLE", "MIDDLE" ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        { "Transform":
+          {
+            "@DEF": "South",
+            "@translation": [ 19.2866, 2.69088, 38.9015 ],
+            "-children": [
+              { "Billboard":
+                {
+                  "@axisOfRotation": [ 0, 0, 0 ],
+                  "-children": [
+                    { "Shape":
+                      {
+                        "-appearance": { "Appearance":
+                          {
+                            "@USE": "_1"
+                          }
+                        },
+                        "-geometry": { "Text":
+                          {
+                            "@string": [ "South" ],
+                            "@solid": true,
+                            "-fontStyle": { "ScreenFontStyle":
+                              {
+                                "@family": [ "SANS" ],
+                                "@justify": [ "MIDDLE", "MIDDLE" ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        { "Transform":
+          {
+            "@DEF": "West",
+            "@translation": [ -0.326128, 2.69088, 18.1129 ],
+            "-children": [
+              { "Billboard":
+                {
+                  "@axisOfRotation": [ 0, 0, 0 ],
+                  "-children": [
+                    { "Shape":
+                      {
+                        "-appearance": { "Appearance":
+                          {
+                            "@USE": "_1"
+                          }
+                        },
+                        "-geometry": { "Text":
+                          {
+                            "@string": [ "West" ],
+                            "@solid": true,
+                            "-fontStyle": { "ScreenFontStyle":
+                              {
+                                "@family": [ "SANS" ],
+                                "@justify": [ "MIDDLE", "MIDDLE" ]
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        { "Viewpoint":
+          {
+            "@description": "Initial View",
+            "@position": [ 34.6873, 15.7369, 59.8055 ],
+            "@orientation": [ -0.684959077473456, 0.728121297606291, 0.0258928206042409, 0.480507504601277 ],
+            "@centerOfRotation": [ 19.481, 1.24912, 19.4962 ]
+          }
+        }
+      ]
+    }
+  }
+}
