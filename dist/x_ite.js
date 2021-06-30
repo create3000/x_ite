@@ -1,4 +1,4 @@
-/* X_ITE v4.6.20-1028 */
+/* X_ITE v4.6.21-1029 */
 
 (function () {
 
@@ -25565,7 +25565,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.6.20";
+	return "4.6.21";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -45356,6 +45356,10 @@ function (Fields,
 				modelViewMatrix       = context .modelViewMatrix,
 				localObjects          = context .localObjects;
 
+			// Model view matrix
+
+			gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
+
 			// Geometry type
 
 			gl .uniform1i (this .x3d_GeometryType, context .geometryType);
@@ -45408,7 +45412,7 @@ function (Fields,
 
 			if (textureNode)
 			{
-				textureNode           .setShaderUniforms (gl, this);
+				textureNode           .setShaderUniforms (gl, this, context .renderer);
 				textureTransformNode  .setShaderUniforms (gl, this);
 				textureCoordinateNode .setShaderUniforms (gl, this);
 			}
@@ -45422,8 +45426,6 @@ function (Fields,
 					textureCoordinateNode .setShaderUniforms (gl, this);
 				}
 			}
-
-			gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
 		},
 		getNormalMatrix: (function ()
 		{
@@ -60829,9 +60831,9 @@ function (Fields,
 				}
 			}
 		},
-		setShaderUniforms: function (gl, shaderObject)
+		setShaderUniforms: function (gl, shaderObject, renderObject)
 		{
-			this .setShaderUniformsToChannel (gl, shaderObject, 0);
+			this .setShaderUniformsToChannel (gl, shaderObject, renderObject, 0);
 
 			gl .uniform1i (shaderObject .x3d_NumTextures, 1);
 			gl .uniform1i (shaderObject .x3d_MultiTextureMode [0],      ModeType .MODULATE);
@@ -61035,7 +61037,7 @@ function (Fields,
 			                                                          this .repeatT_ .getValue (),
 			                                                          false);
 		},
-		setShaderUniformsToChannel: function (gl, shaderObject, i)
+		setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
 		{
 			gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getTexture2DUnits () [i]);
 			gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
@@ -90861,7 +90863,7 @@ function ($,
 					// Render GeneratedCubeMapTextures.
 
 					for (var i = 0, length = generatedCubeMapTextures .length; i < length; ++ i)
-						generatedCubeMapTextures [i] .renderTexture (this, group);
+						generatedCubeMapTextures [i] .renderTexture (this);
 				}
 
 
@@ -114578,7 +114580,7 @@ define ('x_ite/Components/Texturing/MultiTexture',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureNode, 
+          X3DTextureNode,
           X3DConstants,
           X3DCast,
           ModeType,
@@ -114810,7 +114812,7 @@ function (Fields,
 
 				if (textureNode)
 					this .textureNodes .push (textureNode);
-			}	
+			}
 		},
 		traverse: function (type, renderObject)
 		{
@@ -114819,7 +114821,7 @@ function (Fields,
 			for (var i = 0, length = textureNodes .length; i < length; ++ i)
 				textureNodes [i] .traverse (type, renderObject);
 		},
-		setShaderUniforms: function (gl, shaderObject)
+		setShaderUniforms: function (gl, shaderObject, renderObject)
 		{
 			var
 				textureNodes = this .textureNodes,
@@ -114830,7 +114832,7 @@ function (Fields,
 
 			for (var i = 0; i < channels; ++ i)
 			{
-				textureNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
+				textureNodes [i] .setShaderUniformsToChannel (gl, shaderObject, renderObject, i);
 
 				gl .uniform1i  (shaderObject .x3d_MultiTextureMode [i],      this .getMode (i));
 				gl .uniform1i  (shaderObject .x3d_MultiTextureAlphaMode [i], this .getAlphaMode (i));
@@ -114842,8 +114844,6 @@ function (Fields,
 
 	return MultiTexture;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************

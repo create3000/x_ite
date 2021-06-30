@@ -57,7 +57,7 @@ define ('x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode',[
 	"x_ite/Components/Texturing/X3DTextureNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DTextureNode, 
+function (X3DTextureNode,
           X3DConstants)
 {
 "use strict";
@@ -94,7 +94,7 @@ function (X3DTextureNode,
 			if (this .isLive () .getValue ())
 			{
 				this .getBrowser () .getBrowserOptions () .TextureQuality_ .addInterest ("set_textureQuality__", this);
-	
+
 				this .set_textureQuality__ ();
 			}
 			else
@@ -130,7 +130,7 @@ function (X3DTextureNode,
 					gl .texImage2D (targets [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 			};
 		})(),
-		setShaderUniformsToChannel: function (gl, shaderObject, i)
+		setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
 		{
 			gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getCubeMapTextureUnits () [i]);
 			gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
@@ -140,8 +140,6 @@ function (X3DTextureNode,
 
 	return X3DEnvironmentTextureNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -633,8 +631,6 @@ function (Fields,
 {
 "use strict";
 
-
-
 	// Rotations to negated normals of the texture cube.
 
 	var rotations = [
@@ -750,7 +746,7 @@ function (Fields,
 
 			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (renderObject .getCameraSpaceMatrix () .get ());
 		},
-		renderTexture: function (renderObject, group)
+		renderTexture: function (renderObject)
 		{
 			this .renderer .setRenderer (renderObject);
 
@@ -772,7 +768,7 @@ function (Fields,
 
 			this .frameBuffer .bind ();
 
-			renderer .getViewVolumes      () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
+			renderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
 			renderer .getProjectionMatrix () .pushMatrix (projectionMatrix);
 
 			gl .bindTexture (this .getTarget (), this .getTexture ());
@@ -842,6 +838,18 @@ function (Fields,
 			if (this .update_ .getValue () === "NEXT_FRAME_ONLY")
 				this .update_ = "NONE";
 		},
+		setShaderUniformsToChannel: (function ()
+		{
+			const Zero = new Float32Array (16); // Trick: zero model view matrix to hide object.
+
+			return function (gl, shaderObject, renderObject, i)
+			{
+				X3DEnvironmentTextureNode .prototype .setShaderUniformsToChannel .call (this, gl, shaderObject, renderObject, i);
+
+				if (! renderObject .isIndependent ())
+					gl .uniformMatrix4fv (shaderObject .x3d_ModelViewMatrix, false, Zero);
+			};
+		})(),
 	});
 
 	return GeneratedCubeMapTexture;
