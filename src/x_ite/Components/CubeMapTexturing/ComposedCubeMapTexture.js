@@ -117,19 +117,19 @@ function (Fields,
 
 			this .isLive () .addInterest ("set_live__", this);
 
-			this .front_  .addInterest ("set_texture__", this, 0);
-			this .back_   .addInterest ("set_texture__", this, 1);
-			this .left_   .addInterest ("set_texture__", this, 2);
-			this .right_  .addInterest ("set_texture__", this, 3);
-			this .top_    .addInterest ("set_texture__", this, 5);
-			this .bottom_ .addInterest ("set_texture__", this, 4);
+			this .frontTexture_  .addInterest ("set_texture__", this, 0);
+			this .backTexture_   .addInterest ("set_texture__", this, 1);
+			this .leftTexture_   .addInterest ("set_texture__", this, 2);
+			this .rightTexture_  .addInterest ("set_texture__", this, 3);
+			this .topTexture_    .addInterest ("set_texture__", this, 5);
+			this .bottomTexture_ .addInterest ("set_texture__", this, 4);
 
-			this .set_texture__ (this .front_,  0);
-			this .set_texture__ (this .back_,   1);
-			this .set_texture__ (this .left_,   2);
-			this .set_texture__ (this .right_,  3);
-			this .set_texture__ (this .top_,    4);
-			this .set_texture__ (this .bottom_, 5);
+			this .set_texture__ (this .frontTexture_,  0);
+			this .set_texture__ (this .backTexture_,   1);
+			this .set_texture__ (this .leftTexture_,   2);
+			this .set_texture__ (this .rightTexture_,  3);
+			this .set_texture__ (this .topTexture_,    4);
+			this .set_texture__ (this .bottomTexture_, 5);
 
 			this .set_live__ ();
 		},
