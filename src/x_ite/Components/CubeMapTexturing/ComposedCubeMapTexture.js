@@ -70,6 +70,13 @@ function (Fields,
 
 		this .addType (X3DConstants .ComposedCubeMapTexture);
 
+		this .addAlias ("front",  this .frontTexture_);
+		this .addAlias ("back",   this .backTexture_);
+		this .addAlias ("left",   this .leftTexture_);
+		this .addAlias ("right",  this .rightTexture_);
+		this .addAlias ("bottom", this .bottomTexture_);
+		this .addAlias ("top",    this .topTexture_);
+
 		this .textures   = [null, null, null, null, null, null];
 		this .loadStates = 0;
 	}
@@ -78,13 +85,13 @@ function (Fields,
 	{
 		constructor: ComposedCubeMapTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "front",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "back",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "left",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "right",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "bottom",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "top",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "frontTexture",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "backTexture",     new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "leftTexture",     new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "rightTexture",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "bottomTexture",   new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "topTexture",      new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -207,7 +214,7 @@ function (Fields,
 						width   = texture .getWidth (),
 						height  = texture .getHeight (),
 						data    = texture .getData ();
-	
+
 					gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, !texture .getFlipY ());
 					gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
 
@@ -254,5 +261,3 @@ function (Fields,
 
 	return ComposedCubeMapTexture;
 });
-
-
