@@ -1,4 +1,4 @@
-/* X_ITE v4.6.22-1032 */
+/* X_ITE v4.6.22-1033 */
 
 (function () {
 
@@ -44694,7 +44694,11 @@ function (Fields,
 
 			if (this .x3d_Vertex < 0)
 			{
-				console .warn ("Missing »attribute vec4 x3d_Vertex;«.");
+				if (gl .getVersion () >= 2)
+					console .warn ("Missing »in vec4 x3d_Vertex;«.");
+				else
+					console .warn ("Missing »attribute vec4 x3d_Vertex;«.");
+
 				return false;
 			}
 
