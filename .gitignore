@@ -1,5 +1,6 @@
 .bzr
 node_modules
+src/tests
 
 .vscode/ipch
 .DS_Store
