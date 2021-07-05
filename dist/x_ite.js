@@ -1,4 +1,4 @@
-/* X_ITE v4.6.22-1034 */
+/* X_ITE v4.6.22-1035 */
 
 (function () {
 
@@ -92263,14 +92263,14 @@ function (X3DBindableNode,
 			if (texture)
 			{
 				texture .loadState_ .addInterest ("setTextureBit", this, bit);
-				this .setTextureBit (texture .loadState_, bit);
+				this .setTextureBit (texture .loadState_, texture .getData (), bit);
 			}
 			else
-				this .textures &= ~(1 << bit);
+				this .setTextureBit (X3DConstants .NOT_STARTED, null, bit);
 		},
-		setTextureBit: function (loadState, bit)
+		setTextureBit: function (loadState, data, bit)
 		{
-			if (loadState .getValue () === X3DConstants .COMPLETE_STATE)
+			if (loadState .getValue () === X3DConstants .COMPLETE_STATE || data)
 				this .textures |= 1 << bit;
 			else
 				this .textures &= ~(1 << bit);
