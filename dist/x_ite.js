@@ -1,4 +1,4 @@
-/* X_ITE v4.6.22-1033 */
+/* X_ITE v4.6.22-1034 */
 
 (function () {
 
@@ -60983,6 +60983,8 @@ function (Fields,
 		clearTexture: function ()
 		{
 			this .setTexture (1, 1, false, defaultData, false);
+
+			this .data = null;
 		},
 		setTexture: function (width, height, transparent, data, flipY)
 		{
@@ -92690,7 +92692,7 @@ function (X3DBindableNode,
 		})(),
 		drawRectangle: function (gl, shaderNode, texture, buffer)
 		{
-			if (texture && texture .checkLoadState () === X3DConstants .COMPLETE_STATE)
+			if (texture && (texture .checkLoadState () === X3DConstants .COMPLETE_STATE || texture .getData ()))
 			{
 				texture .setShaderUniforms (gl, shaderNode);
 

@@ -131,6 +131,8 @@ function (Fields,
 		clearTexture: function ()
 		{
 			this .setTexture (1, 1, false, defaultData, false);
+
+			this .data = null;
 		},
 		setTexture: function (width, height, transparent, data, flipY)
 		{

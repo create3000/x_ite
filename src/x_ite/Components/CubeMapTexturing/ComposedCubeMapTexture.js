@@ -160,15 +160,15 @@ function (Fields,
 		set_loadState__: function (output, texture, index)
 		{
 			if (texture)
-				this .setLoadStateBit (texture .checkLoadState (), index);
+				this .setLoadStateBit (texture .checkLoadState (), texture .getData (), index);
 			else
-				this .setLoadStateBit (X3DConstants .NOT_STARTED, index);
+				this .setLoadStateBit (X3DConstants .NOT_STARTED, null, index);
 
 			this .setTextures ();
 		},
-		setLoadStateBit: function (loadState, bit)
+		setLoadStateBit: function (loadState, data, bit)
 		{
-			if (loadState === X3DConstants .COMPLETE_STATE)
+			if (loadState === X3DConstants .COMPLETE_STATE || data)
 				this .loadStates |= 1 << bit;
 			else
 				this .loadStates &= ~(1 << bit);

@@ -659,7 +659,7 @@ function (X3DBindableNode,
 		})(),
 		drawRectangle: function (gl, shaderNode, texture, buffer)
 		{
-			if (texture && texture .checkLoadState () === X3DConstants .COMPLETE_STATE)
+			if (texture && (texture .checkLoadState () === X3DConstants .COMPLETE_STATE || texture .getData ()))
 			{
 				texture .setShaderUniforms (gl, shaderNode);
 
