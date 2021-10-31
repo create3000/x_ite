@@ -72,7 +72,16 @@ function (Algorithm)
 	{
 		getLUT: function (dimension)
 		{
-			var lut = [ ];
+			var
+				x0  = this .x0,
+				y0  = this .y0,
+				x1  = this .x1,
+				y1  = this .y1,
+				x2  = this .x2,
+				y2  = this .y2,
+				x3  = this .x3,
+				y3  = this .y3,
+				lut = [ ];
 
 			switch (this .order)
 			{
@@ -80,13 +89,7 @@ function (Algorithm)
 				{
 					for (var i = 0, d = dimension - 1; i < dimension; ++ i)
 					{
-						lut .push (quadric (this .x0,
-							                 this .y0,
-												  this .x1,
-												  this .y1,
-												  this .x2,
-												  this .y2,
-												  i / d));
+						lut .push (quadric (x0, y0, x1, y1, x2, y2, i / d));
 					}
 
 					break;
@@ -95,15 +98,7 @@ function (Algorithm)
 				{
 					for (var i = 0, d = dimension - 1; i < dimension; ++ i)
 					{
-						lut .push (cubic (this .x0,
-							               this .y0,
-												this .x1,
-												this .y1,
-												this .x2,
-												this .y2,
-												this .x3,
-												this .y3,
-												i / d));
+						lut .push (cubic (x0, y0, x1, y1, x2, y2, x3, y3, i / d));
 					}
 
 					break;
