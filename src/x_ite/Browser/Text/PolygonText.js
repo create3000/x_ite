@@ -48,23 +48,21 @@
 
 
 define ([
-	"x_ite/Fields",
 	"x_ite/Browser/Core/PrimitiveQuality",
 	"x_ite/Browser/Text/X3DTextGeometry",
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Triangle3",
-	"bezier",
+	"standard/Math/Algorithms/Bezier"
 ],
-function (Fields,
-          PrimitiveQuality,
+function (PrimitiveQuality,
           X3DTextGeometry,
           X3DGeometryNode,
           Vector3,
           Matrix4,
           Triangle3,
-          bezier)
+          Bezier)
 {
 "use strict";
 
@@ -312,10 +310,10 @@ function (Fields,
 							points .push (new Vector3 (command .x, -command .y, 0));
 							break;
 						}
-						case "C": // Cubic
+						case "Q": // Quadric
 						{
 							var
-								curve = new Bezier (x, -y, command .x1, -command .y1, command .x2, -command .y2, command .x, -command .y),
+								curve = new Bezier (x, -y, command .x1, -command .y1, command .x, -command .y),
 								lut   = curve .getLUT (dimension);
 
 							for (var l = 1, ll = lut .length; l < ll; ++ l)
@@ -323,10 +321,10 @@ function (Fields,
 
 							break;
 						}
-						case "Q": // Quadric
+						case "C": // Cubic
 						{
 							var
-								curve = new Bezier (x, -y, command .x1, -command .y1, command .x, -command .y),
+								curve = new Bezier (x, -y, command .x1, -command .y1, command .x2, -command .y2, command .x, -command .y),
 								lut   = curve .getLUT (dimension);
 
 							for (var l = 1, ll = lut .length; l < ll; ++ l)

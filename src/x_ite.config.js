@@ -37,11 +37,6 @@ require .config ({
 			"main": "dist/opentype.js"
 		},
 		{
-			"name": "bezier",
-			"location": "../node_modules/bezier-js",
-			"main": "bezier.js"
-		},
-		{
 			"name": "sprintf",
 			"location": "../node_modules/sprintf-js",
 			"main": "dist/sprintf.min.js"
