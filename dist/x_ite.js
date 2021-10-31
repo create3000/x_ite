@@ -1,4 +1,4 @@
-/* X_ITE v4.6.23-1038 */
+/* X_ITE v4.6.23-1039 */
 
 (function () {
 
@@ -74878,7 +74878,7 @@ function (Algorithm)
 			{
 				case 2:
 				{
-					for (var i = 0; i < dimension; ++ i)
+					for (var i = 0, d = dimension - 1; i < dimension; ++ i)
 					{
 						lut .push (quadric (this .x0,
 							                 this .y0,
@@ -74886,14 +74886,14 @@ function (Algorithm)
 												  this .y1,
 												  this .x2,
 												  this .y2,
-												  i / (dimension - 1)));
+												  i / d));
 					}
 
 					break;
 				}
 				case 3:
 				{
-					for (var i = 0; i < dimension; ++ i)
+					for (var i = 0, d = dimension - 1; i < dimension; ++ i)
 					{
 						lut .push (cubic (this .x0,
 							               this .y0,
@@ -74903,7 +74903,7 @@ function (Algorithm)
 												this .y2,
 												this .x3,
 												this .y3,
-												i / (dimension - 1)));
+												i / d));
 					}
 
 					break;
