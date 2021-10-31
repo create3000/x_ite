@@ -80,6 +80,11 @@ require .config ({
 			"name": "OpenJPEG",
 			"location": "../node_modules/OpenJPEG.js",
 			"main": "build/openJPEG-FixedMemory-browser.js"
+		},
+		{
+			"name": "zlib",
+			"location": "../node_modules/zlib",
+			"main": "lib/zlib.js"
 		}
 	],
 	"shim": { },

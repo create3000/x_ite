@@ -1,7 +1,7 @@
 {
 	"name": "x_ite",
-	"version": "4.6.22",
-	"revision": "1036",
+	"version": "4.6.23",
+	"revision": "1037",
 	"description": "X_ITE X3D Browser, a framework for integrating and manipulating X3D and VRML scenes in HTML5.",
 	"main": "src/x_ite.js",
 	"repository": {
@@ -58,7 +58,8 @@
 		"requirejs": "^2.3.6",
 		"requirejs-text": "^2.0.15",
 		"sprintf-js": "^1.1.2",
-		"uglify-js-es6": "^2.8.9"
+		"uglify-js-es6": "^2.8.9",
+		"zlib": "^1.0.5"
 	},
 	"scripts": {
 		"lint": "jshint **",
