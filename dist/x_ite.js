@@ -1,4 +1,4 @@
-/* X_ITE v4.6.23-1040 */
+/* X_ITE v4.6.23-1041 */
 
 (function () {
 
@@ -32966,26 +32966,7 @@ function (Fields,
 			if (importedName .length === 0)
 				throw new Error ("Couldn't update imported node: imported name is empty.");
 
-			// Update existing imported node.
-
-			for (var item of this ._importedNodes)
-			{
-				var
-					key          = item [0],
-					importedNode = item [1];
-
-				if (importedNode .getInlineNode () === inlineNode && importedNode .getExportedName () === exportedName)
-				{
-					this ._importedNodes .delete (key);
-
-					this ._importedNodes .set (importedName, importedNode);
-
-					importedNode .setImportedName (importedName);
-					return;
-				}
-			}
-
-			// Add new imported node.
+			// Update imported node.
 
 			this .removeImportedNode (importedName);
 
