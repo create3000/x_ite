@@ -83,8 +83,8 @@ require .config ({
 		},
 		{
 			"name": "zlib",
-			"location": "../node_modules/zlib",
-			"main": "lib/zlib.js"
+			"location": "../src",
+			"main": "dummy.js"
 		}
 	],
 	"shim": { },
