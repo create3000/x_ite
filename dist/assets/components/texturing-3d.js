@@ -1074,11 +1074,11 @@ function (pako)
 	return NRRDParser;
 });
 
-module.exports = require('./zlib_bindings');
+// Dummy file instead of zlib needed by dicom-parser.
+;
+define('zlib', ['zlib/dummy'], function (main) { return main; });
 
-define('zlib', ['zlib/lib/zlib'], function (main) { return main; });
-
-define("zlib/lib/zlib", function(){});
+define("zlib/dummy", function(){});
 
 /*! dicom-parser - 1.8.5 - 2021-10-06 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
 (function webpackUniversalModuleDefinition(root, factory) {
