@@ -1,4 +1,4 @@
-/* X_ITE v4.6.23-1042 */
+/* X_ITE v4.6.23-1043 */
 
 (function () {
 
@@ -89747,11 +89747,12 @@ function (TextureProperties,
 	{
 		var
 			gl                    = this .getContext (),
-			maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS);
+			maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS),
+			isWindows             = navigator .userAgent .indexOf ('Win') > -1;
 
 		this .maxTextures              = maxVertexTextureUnits > 8 ? 2 : 1;
-		this .multiTexturing           = maxVertexTextureUnits > 8;
-		this .projectiveTextureMapping = maxVertexTextureUnits > 8;
+		this .multiTexturing           = maxVertexTextureUnits > 8 && !isWindows;
+		this .projectiveTextureMapping = maxVertexTextureUnits > 8 && !isWindows;
 		this .combinedTextureUnits     = [ ];
 	}
 
