@@ -320,14 +320,16 @@ uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator 
 vec4
 getTexCoord (const in int i)
 {
+vec4 texCoord = vec4 (0.0);
 #if x3d_MaxTextures > 0
 if (i == 0)
-return texCoord0;
+texCoord = texCoord0;
 #endif
 #if x3d_MaxTextures > 1
-if (i == 1)
-return texCoord1;
+else if (i == 1)
+texCoord = texCoord1;
 #endif
+return texCoord;
 }
 vec4
 getTextureCoordinate (const in x3d_TextureCoordinateGeneratorParameters textureCoordinateGenerator, const in int i)
@@ -353,8 +355,8 @@ return vec4 (vertex, 1.0);
 }
 else if (mode == x3d_CameraSpaceReflectionVector)
 {
-vec3 N = normalize (gl_FrontFacing ? -normal : normal);
-return vec4 (reflect (normalize (vertex), N), 1.0);
+vec3 N = normalize (gl_FrontFacing ? normal : -normal);
+return vec4 (reflect (normalize (vertex), -N), 1.0);
 }
 else if (mode == x3d_SphereLocal)
 {
@@ -383,42 +385,46 @@ return vec4 (perlin (vertex * scale + translation), 1.0);
 }
 else if (mode == x3d_SphereReflect)
 {
-vec3 N = normalize (gl_FrontFacing ? -normal : normal);
+vec3 N = normalize (gl_FrontFacing ? normal : -normal);
 float eta = textureCoordinateGenerator .parameter [0];
-return vec4 (refract (normalize (vertex), N, eta), 1.0);
+return vec4 (refract (normalize (vertex), -N, eta), 1.0);
 }
 else if (mode == x3d_SphereReflectLocal)
 {
-vec3 N = normalize (gl_FrontFacing ? -localNormal : localNormal);
+vec3 N = normalize (gl_FrontFacing ? localNormal : -localNormal);
 float eta = textureCoordinateGenerator .parameter [0];
 vec3 eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2], textureCoordinateGenerator .parameter [3]);
-return vec4 (refract (normalize (localVertex - eye), N, eta), 1.0);
+return vec4 (refract (normalize (localVertex - eye), -N, eta), 1.0);
 }
 return getTexCoord (i);
 }
 vec4
 getTexture2D (const in int i, const in vec2 texCoord)
 {
+vec4 color = vec4 (0.0);
 #if x3d_MaxTextures > 0
 if (i == 0)
-return texture2D (x3d_Texture2D [0], texCoord);
+color = texture2D (x3d_Texture2D [0], texCoord);
 #endif
 #if x3d_MaxTextures > 1
-if (i == 1)
-return texture2D (x3d_Texture2D [1], texCoord);
+else if (i == 1)
+color = texture2D (x3d_Texture2D [1], texCoord);
 #endif
+return color;
 }
 vec4
 getTextureCube (const in int i, const in vec3 texCoord)
 {
+vec4 color = vec4 (0.0);
 #if x3d_MaxTextures > 0
 if (i == 0)
-return textureCube (x3d_CubeMapTexture [0], texCoord);
+color = textureCube (x3d_CubeMapTexture [0], texCoord);
 #endif
 #if x3d_MaxTextures > 1
-if (i == 1)
-return textureCube (x3d_CubeMapTexture [1], texCoord);
+else if (i == 1)
+color = textureCube (x3d_CubeMapTexture [1], texCoord);
 #endif
+return color;
 }
 vec4
 getTextureColor (const in vec4 diffuseColor, const in vec4 specularColor)
@@ -631,14 +637,16 @@ return currentColor;
 vec4
 getProjectiveTexture (const in int i, const in vec2 texCoord)
 {
+vec4 color = vec4 (0.0);
 #if x3d_MaxTextures > 0
 if (i == 0)
-return texture2D (x3d_ProjectiveTexture [0], texCoord);
+color = texture2D (x3d_ProjectiveTexture [0], texCoord);
 #endif
 #if x3d_MaxTextures > 1
-if (i == 1)
-return texture2D (x3d_ProjectiveTexture [1], texCoord);
+else if (i == 1)
+color = texture2D (x3d_ProjectiveTexture [1], texCoord);
 #endif
+return color;
 }
 vec4
 getProjectiveTextureColor (in vec4 currentColor)

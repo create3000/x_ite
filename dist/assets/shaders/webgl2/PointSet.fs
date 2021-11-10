@@ -136,6 +136,10 @@ case 1:
 return texCoord1;
 }
 #endif
+default:
+{
+return vec4 (0.0);
+}
 }
 }
 vec4
@@ -164,8 +168,8 @@ return vec4 (vertex, 1.0);
 }
 case x3d_CameraSpaceReflectionVector:
 {
-vec3 N = normalize (gl_FrontFacing ? -normal : normal);
-return vec4 (reflect (normalize (vertex), N), 1.0);
+vec3 N = normalize (gl_FrontFacing ? normal : -normal);
+return vec4 (reflect (normalize (vertex), -N), 1.0);
 }
 case x3d_SphereLocal:
 {
@@ -194,16 +198,16 @@ return vec4 (perlin (vertex * scale + translation), 1.0);
 }
 case x3d_SphereReflect:
 {
-vec3 N = normalize (gl_FrontFacing ? -normal : normal);
+vec3 N = normalize (gl_FrontFacing ? normal : -normal);
 float eta = textureCoordinateGenerator .parameter [0];
-return vec4 (refract (normalize (vertex), N, eta), 1.0);
+return vec4 (refract (normalize (vertex), -N, eta), 1.0);
 }
 case x3d_SphereReflectLocal:
 {
-vec3 N = normalize (gl_FrontFacing ? -localNormal : localNormal);
+vec3 N = normalize (gl_FrontFacing ? localNormal : -localNormal);
 float eta = textureCoordinateGenerator .parameter [0];
 vec3 eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2], textureCoordinateGenerator .parameter [3]);
-return vec4 (refract (normalize (localVertex - eye), N, eta), 1.0);
+return vec4 (refract (normalize (localVertex - eye), -N, eta), 1.0);
 }
 default:
 {
@@ -228,6 +232,10 @@ case 1:
 return texture (x3d_Texture2D [1], texCoord);
 }
 #endif
+default:
+{
+return vec4 (0.0);
+}
 }
 }
 vec4
@@ -247,6 +255,10 @@ case 1:
 return texture (x3d_Texture3D [1], texCoord);
 }
 #endif
+default:
+{
+return vec4 (0.0);
+}
 }
 }
 vec4
@@ -266,6 +278,10 @@ case 1:
 return texture (x3d_CubeMapTexture [1], texCoord);
 }
 #endif
+default:
+{
+return vec4 (0.0);
+}
 }
 }
 vec4
@@ -562,6 +578,10 @@ case 1:
 return texture (x3d_ProjectiveTexture [1], texCoord);
 }
 #endif
+default:
+{
+return vec4 (0.0);
+}
 }
 }
 vec4
