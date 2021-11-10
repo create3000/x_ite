@@ -63,7 +63,7 @@ function (TextureProperties,
 		var
 			gl                    = this .getContext (),
 			maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS),
-			isWindows             = navigator .userAgent .indexOf ('Win') > -1;
+			isWindows             = navigator .userAgent .indexOf ('Windows') > -1;
 
 		this .maxTextures              = maxVertexTextureUnits > 8 ? 2 : 1;
 		this .multiTexturing           = maxVertexTextureUnits > 8 && !isWindows;
