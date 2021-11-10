@@ -44,6 +44,10 @@ getTexCoord (const in int i)
 			return texCoord1;
 		}
 		#endif
+		default:
+		{
+			return vec4 (0.0);
+		}
 	}
 }
 
@@ -76,9 +80,9 @@ getTextureCoordinate (const in x3d_TextureCoordinateGeneratorParameters textureC
 		}
 		case x3d_CameraSpaceReflectionVector:
 		{
-			vec3 N = normalize (gl_FrontFacing ? -normal : normal);
+			vec3 N = normalize (gl_FrontFacing ? normal : -normal);
 
-			return vec4 (reflect (normalize (vertex), N), 1.0);
+			return vec4 (reflect (normalize (vertex), -N), 1.0);
 		}
 		case x3d_SphereLocal:
 		{
@@ -110,18 +114,18 @@ getTextureCoordinate (const in x3d_TextureCoordinateGeneratorParameters textureC
 		}
 		case x3d_SphereReflect:
 		{
-			vec3  N   = normalize (gl_FrontFacing ? -normal : normal);
+			vec3  N   = normalize (gl_FrontFacing ? normal : -normal);
 			float eta = textureCoordinateGenerator .parameter [0];
 
-			return vec4 (refract (normalize (vertex), N, eta), 1.0);
+			return vec4 (refract (normalize (vertex), -N, eta), 1.0);
 		}
 		case x3d_SphereReflectLocal:
 		{
-			vec3  N   = normalize (gl_FrontFacing ? -localNormal : localNormal);
+			vec3  N   = normalize (gl_FrontFacing ? localNormal : -localNormal);
 			float eta = textureCoordinateGenerator .parameter [0];
 			vec3  eye = vec3 (textureCoordinateGenerator .parameter [1], textureCoordinateGenerator .parameter [2], textureCoordinateGenerator .parameter [3]);
 
-			return vec4 (refract (normalize (localVertex - eye), N, eta), 1.0);
+			return vec4 (refract (normalize (localVertex - eye), -N, eta), 1.0);
 		}
 		default:
 		{
@@ -147,6 +151,10 @@ getTexture2D (const in int i, const in vec2 texCoord)
 			return texture (x3d_Texture2D [1], texCoord);
 		}
 		#endif
+		default:
+		{
+			return vec4 (0.0);
+		}
 	}
 }
 
@@ -167,6 +175,10 @@ getTexture3D (const in int i, const in vec3 texCoord)
 			return texture (x3d_Texture3D [1], texCoord);
 		}
 		#endif
+		default:
+		{
+			return vec4 (0.0);
+		}
 	}
 }
 
@@ -187,6 +199,10 @@ getTextureCube (const in int i, const in vec3 texCoord)
 			return texture (x3d_CubeMapTexture [1], texCoord);
 		}
 		#endif
+		default:
+		{
+			return vec4 (0.0);
+		}
 	}
 }
 
@@ -514,6 +530,10 @@ getProjectiveTexture (const in int i, const in vec2 texCoord)
 			return texture (x3d_ProjectiveTexture [1], texCoord);
 		}
 		#endif
+		default:
+		{
+			return vec4 (0.0);
+		}
 	}
 }
 
