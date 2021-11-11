@@ -219,7 +219,7 @@ function (Fields,
 
 						if (child)
 						{
-								var
+							var
 								browser          = renderObject .getBrowser (),
 								pickingHierarchy = browser .getPickingHierarchy ();
 

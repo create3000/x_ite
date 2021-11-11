@@ -1,4 +1,4 @@
-/* X_ITE v4.6.23-1045 */
+/* X_ITE v4.6.23-1046 */
 
 (function () {
 
@@ -71267,7 +71267,7 @@ function (Fields,
 		getBBox: function (nodes, bbox)
 		{
 			bbox .set ();
-	
+
 			// Add bounding boxes
 
 			for (var i = 0, length = nodes .length; i < length; ++ i)
@@ -71300,8 +71300,6 @@ function (Fields,
 
 	return X3DBoundedObject;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -96432,7 +96430,7 @@ define ('x_ite/Components/EnvironmentalSensor/TransformSensor',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DEnvironmentalSensorNode, 
+          X3DEnvironmentalSensorNode,
           TraverseType,
           X3DConstants,
           X3DCast,
@@ -96494,7 +96492,7 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DEnvironmentalSensorNode .prototype .initialize .call (this);
-		
+
 			this .isLive () .addInterest ("set_enabled__", this);
 
 			this .enabled_      .addInterest ("set_enabled__",      this);
@@ -96544,7 +96542,7 @@ function (Fields,
 				var
 					node = this .targetObject_ .getValue () .getInnerNode (),
 					type = node .getType ();
-	
+
 				for (var t = type .length - 1; t >= 0; -- t)
 				{
 					switch (type [t])
@@ -96558,6 +96556,8 @@ function (Fields,
 						default:
 							continue;
 					}
+
+					break;
 				}
 			}
 			catch (error)
@@ -96582,48 +96582,25 @@ function (Fields,
 		process: (function ()
 		{
 			var
-				bbox        = new Box3 (),
 				position    = new Vector3 (0, 0, 0),
-				orientation = new Rotation4 (0, 0, 1, 0),
-				infinity    = new Vector3 (-1, -1, -1);
+				orientation = new Rotation4 (0, 0, 1, 0);
 
 			return function ()
 			{
 				var
 					modelMatrices = this .modelMatrices,
 					targetBBoxes  = this .targetBBoxes,
-					active        = false;
+					bbox          = this .intersects ();
 
-				for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+				if (bbox)
 				{
-					var modelMatrix = modelMatrices [m];
+					bbox .getMatrix () .get (position, orientation);
 
-					bbox .assign (this .bbox) .multRight (modelMatrix);
-
-					for (var t = 0, tLength = targetBBoxes .length; t < tLength; ++ t)
-					{
-						var targetBBox = targetBBoxes [t];
-
-						if (this .size_ .getValue () .equals (infinity) || bbox .intersectsBox (targetBBox))
-						{
-							active = true;
-
-							targetBBox .multRight (modelMatrix .inverse ()) .getMatrix () .get (position, orientation);
-						}
-
-						TargetBBoxCache .push (targetBBox);
-					}
-
-					ModelMatrixCache .push (modelMatrix);
-				}
-
-				if (active)
-				{
 					if (this .isActive_ .getValue ())
 					{
 						if (! this .position_changed_ .getValue () .equals (position))
 							this .position_changed_ = position;
-		
+
 						if (! this .orientation_changed_ .getValue () .equals (orientation))
 							this .orientation_changed_ = orientation;
 					}
@@ -96644,16 +96621,52 @@ function (Fields,
 					}
 				}
 
-				this .modelMatrices .length = 0;
-				this .targetBBoxes  .length = 0;
+				for (var i = 0, length = modelMatrices .length; i < length; ++ i)
+					ModelMatrixCache .push (modelMatrices [i]);
+
+				for (var i = 0, length = targetBBoxes .length; i < length; ++ i)
+					TargetBBoxCache .push (targetBBoxes [i]);
+
+				modelMatrices .length = 0;
+				targetBBoxes  .length = 0;
+			};
+		})(),
+		intersects: (function ()
+		{
+			var
+				bbox     = new Box3 (),
+				infinity = new Vector3 (-1, -1, -1);
+
+			return function ()
+			{
+				var
+					modelMatrices = this .modelMatrices,
+					targetBBoxes  = this .targetBBoxes;
+
+				for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+				{
+					var modelMatrix = modelMatrices [m];
+
+					bbox .assign (this .bbox) .multRight (modelMatrix);
+
+					for (var t = 0, tLength = targetBBoxes .length; t < tLength; ++ t)
+					{
+						var targetBBox = targetBBoxes [t];
+
+						if (this .size_ .getValue () .equals (infinity) || bbox .intersectsBox (targetBBox))
+						{
+							return targetBBox .multRight (modelMatrix .inverse ());
+						}
+					}
+				}
+
+				return null;
 			};
 		})(),
 	});
 
 	return TransformSensor;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -101547,20 +101560,20 @@ function (Fields,
 			{
 				var child = this .child;
 
-				if (child)
+				if (type === TraverseType .PICKING)
 				{
-					if (type === TraverseType .PICKING)
+					if (this .getTransformSensors () .size)
 					{
-						if (this .getTransformSensors () .size)
+						this .getBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+
+						this .getTransformSensors () .forEach (function (transformSensorNode)
 						{
-							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+							transformSensorNode .collect (bbox);
+						});
+					}
 
-							this .getTransformSensors () .forEach (function (transformSensorNode)
-							{
-								transformSensorNode .collect (bbox);
-							});
-						}
-
+					if (child)
+					{
 						var
 							browser          = renderObject .getBrowser (),
 							pickingHierarchy = browser .getPickingHierarchy ();
@@ -101571,10 +101584,11 @@ function (Fields,
 
 						pickingHierarchy .pop ();
 					}
-					else
-					{
+				}
+				else
+				{
+					if (child)
 						child .traverse (type, renderObject);
-					}
 				}
 			};
 		})(),
@@ -105577,7 +105591,7 @@ function (Fields,
 					{
 						if (this .getTransformSensors () .size)
 						{
-							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+							this .getBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
 
 							this .getTransformSensors () .forEach (function (transformSensorNode)
 							{
