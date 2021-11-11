@@ -64,7 +64,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DEnvironmentalSensorNode, 
+          X3DEnvironmentalSensorNode,
           TraverseType,
           X3DConstants,
           X3DCast,
@@ -126,7 +126,7 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DEnvironmentalSensorNode .prototype .initialize .call (this);
-		
+
 			this .isLive () .addInterest ("set_enabled__", this);
 
 			this .enabled_      .addInterest ("set_enabled__",      this);
@@ -176,7 +176,7 @@ function (Fields,
 				var
 					node = this .targetObject_ .getValue () .getInnerNode (),
 					type = node .getType ();
-	
+
 				for (var t = type .length - 1; t >= 0; -- t)
 				{
 					switch (type [t])
@@ -190,6 +190,8 @@ function (Fields,
 						default:
 							continue;
 					}
+
+					break;
 				}
 			}
 			catch (error)
@@ -255,7 +257,7 @@ function (Fields,
 					{
 						if (! this .position_changed_ .getValue () .equals (position))
 							this .position_changed_ = position;
-		
+
 						if (! this .orientation_changed_ .getValue () .equals (orientation))
 							this .orientation_changed_ = orientation;
 					}
@@ -284,5 +286,3 @@ function (Fields,
 
 	return TransformSensor;
 });
-
-
