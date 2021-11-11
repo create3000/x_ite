@@ -216,43 +216,20 @@ function (Fields,
 		process: (function ()
 		{
 			var
-				bbox        = new Box3 (),
 				position    = new Vector3 (0, 0, 0),
-				orientation = new Rotation4 (0, 0, 1, 0),
-				infinity    = new Vector3 (-1, -1, -1);
+				orientation = new Rotation4 (0, 0, 1, 0);
 
 			return function ()
 			{
 				var
 					modelMatrices = this .modelMatrices,
 					targetBBoxes  = this .targetBBoxes,
-					active        = false;
+					bbox          = this .intersects ();
 
-				for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+				if (bbox)
 				{
-					var modelMatrix = modelMatrices [m];
+					bbox .getMatrix () .get (position, orientation);
 
-					bbox .assign (this .bbox) .multRight (modelMatrix);
-
-					for (var t = 0, tLength = targetBBoxes .length; t < tLength; ++ t)
-					{
-						var targetBBox = targetBBoxes [t];
-
-						if (this .size_ .getValue () .equals (infinity) || bbox .intersectsBox (targetBBox))
-						{
-							active = true;
-
-							targetBBox .multRight (modelMatrix .inverse ()) .getMatrix () .get (position, orientation);
-						}
-
-						TargetBBoxCache .push (targetBBox);
-					}
-
-					ModelMatrixCache .push (modelMatrix);
-				}
-
-				if (active)
-				{
 					if (this .isActive_ .getValue ())
 					{
 						if (! this .position_changed_ .getValue () .equals (position))
@@ -278,8 +255,46 @@ function (Fields,
 					}
 				}
 
-				this .modelMatrices .length = 0;
-				this .targetBBoxes  .length = 0;
+				for (var i = 0, length = modelMatrices .length; i < length; ++ i)
+					ModelMatrixCache .push (modelMatrices [i]);
+
+				for (var i = 0, length = targetBBoxes .length; i < length; ++ i)
+					TargetBBoxCache .push (targetBBoxes [i]);
+
+				modelMatrices .length = 0;
+				targetBBoxes  .length = 0;
+			};
+		})(),
+		intersects: (function ()
+		{
+			var
+				bbox     = new Box3 (),
+				infinity = new Vector3 (-1, -1, -1);
+
+			return function ()
+			{
+				var
+					modelMatrices = this .modelMatrices,
+					targetBBoxes  = this .targetBBoxes;
+
+				for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+				{
+					var modelMatrix = modelMatrices [m];
+
+					bbox .assign (this .bbox) .multRight (modelMatrix);
+
+					for (var t = 0, tLength = targetBBoxes .length; t < tLength; ++ t)
+					{
+						var targetBBox = targetBBoxes [t];
+
+						if (this .size_ .getValue () .equals (infinity) || bbox .intersectsBox (targetBBox))
+						{
+							return targetBBox .multRight (modelMatrix .inverse ());
+						}
+					}
+				}
+
+				return null;
 			};
 		})(),
 	});
