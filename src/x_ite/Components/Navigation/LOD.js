@@ -207,19 +207,19 @@ function (Fields,
 				{
 					case TraverseType .PICKING:
 					{
+						if (this .getTransformSensors () .size)
+						{
+							this .getBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+
+							this .getTransformSensors () .forEach (function (transformSensorNode)
+							{
+								transformSensorNode .collect (bbox);
+							});
+						}
+
 						if (child)
 						{
-							if (this .getTransformSensors () .size)
-							{
-								this .getBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
-
-								this .getTransformSensors () .forEach (function (transformSensorNode)
-								{
-									transformSensorNode .collect (bbox);
-								});
-							}
-
-							var
+								var
 								browser          = renderObject .getBrowser (),
 								pickingHierarchy = browser .getPickingHierarchy ();
 

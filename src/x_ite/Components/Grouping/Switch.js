@@ -160,20 +160,20 @@ function (Fields,
 			{
 				var child = this .child;
 
-				if (child)
+				if (type === TraverseType .PICKING)
 				{
-					if (type === TraverseType .PICKING)
+					if (this .getTransformSensors () .size)
 					{
-						if (this .getTransformSensors () .size)
+						this .getBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+
+						this .getTransformSensors () .forEach (function (transformSensorNode)
 						{
-							this .getBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+							transformSensorNode .collect (bbox);
+						});
+					}
 
-							this .getTransformSensors () .forEach (function (transformSensorNode)
-							{
-								transformSensorNode .collect (bbox);
-							});
-						}
-
+					if (child)
+					{
 						var
 							browser          = renderObject .getBrowser (),
 							pickingHierarchy = browser .getPickingHierarchy ();
@@ -184,10 +184,11 @@ function (Fields,
 
 						pickingHierarchy .pop ();
 					}
-					else
-					{
+				}
+				else
+				{
+					if (child)
 						child .traverse (type, renderObject);
-					}
 				}
 			};
 		})(),
