@@ -91,7 +91,7 @@ function (Fields,
 		getBBox: function (nodes, bbox)
 		{
 			bbox .set ();
-	
+
 			// Add bounding boxes
 
 			for (var i = 0, length = nodes .length; i < length; ++ i)
@@ -124,5 +124,3 @@ function (Fields,
 
 	return X3DBoundedObject;
 });
-
-

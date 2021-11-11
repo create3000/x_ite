@@ -166,7 +166,7 @@ function (Fields,
 					{
 						if (this .getTransformSensors () .size)
 						{
-							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+							child .getBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
 
 							this .getTransformSensors () .forEach (function (transformSensorNode)
 							{
