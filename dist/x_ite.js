@@ -1,4 +1,4 @@
-/* X_ITE v4.6.24-1050 */
+/* X_ITE v4.6.24-1051 */
 
 (function () {
 
@@ -101570,7 +101570,7 @@ function (Fields,
 			else
 				this .setCameraObject (false);
 		},
-		set_pickableObjects__: function ()
+		set_transformSensors__: function ()
 		{
 			if (this .getTransformSensors () .size)
 				this .setPickableObject (true);
@@ -105556,7 +105556,7 @@ function (Fields,
 			else
 				this .setCameraObject (false);
 		},
-		set_pickableObjects__: function ()
+		set_transformSensors__: function ()
 		{
 			if (this .getTransformSensors () .size)
 				this .setPickableObject (true);
