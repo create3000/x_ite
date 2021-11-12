@@ -1,4 +1,4 @@
-/* X_ITE v4.6.23-1046 */
+/* X_ITE v4.6.24-1047 */
 
 (function () {
 
@@ -25574,7 +25574,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.6.23";
+	return "4.6.24";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -62191,7 +62191,7 @@ function (Triangle3,
 			this .matrix .multRight (matrix);
 			return this;
 		},
-		intersectsPoint: (function ()
+		containsPoint: (function ()
 		{
 			var
 				min = new Vector3 (0, 0, 0),
@@ -71415,7 +71415,7 @@ function (Fields,
 			X3DChildNode     .prototype .initialize .call (this);
 			X3DBoundedObject .prototype .initialize .call (this);
 
-			this .transformSensors_changed_ .addInterest ("set_pickableObjects__", this);
+			this .transformSensors_changed_ .addInterest ("set_transformSensors__", this);
 
 			this .addChildren_    .addInterest ("set_addChildren__",    this);
 			this .removeChildren_ .addInterest ("set_removeChildren__", this);
@@ -71845,7 +71845,11 @@ function (Fields,
 					pickableObjects .push (childNode);
 			}
 
-			this .setPickableObject (Boolean (this .getTransformSensors () .size || pickableSensorNodes .length || pickableObjects .length));
+			this .set_transformSensors__ ()
+		},
+		set_transformSensors__: function ()
+		{
+			this .setPickableObject (Boolean (this .getTransformSensors () .size || this .pickableSensorNodes .length || this .pickableObjects .length));
 		},
 		set_display_nodes: function ()
 		{
@@ -71922,11 +71926,11 @@ function (Fields,
 					{
 						if (this .getTransformSensors () .size)
 						{
-							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+							var modelMatrix = renderObject .getModelViewMatrix () .get ();
 
 							this .getTransformSensors () .forEach (function (transformSensorNode)
 							{
-								transformSensorNode .collect (bbox);
+								transformSensorNode .collect (modelMatrix);
 							});
 						}
 
@@ -74095,7 +74099,7 @@ function (Matrix3, Vector2)
 				max .max (p1, p2);
 			};
 		})(),
-		intersectsPoint: (function ()
+		containsPoint: (function ()
 		{
 			var
 				min = new Vector2 (0, 0),
@@ -96151,6 +96155,8 @@ function (Fields,
 
 		this .setZeroTest (true);
 
+		this .min           = new Vector3 (0, 0, 0);
+		this .max           = new Vector3 (0, 0, 0);
 		this .viewpointNode = null;
 		this .modelMatrix   = new Matrix4 ();
 		this .inside        = false;
@@ -96192,9 +96198,6 @@ function (Fields,
 			this .center_  .addInterest ("set_extents__", this);
 
 			this .traversed_ .addFieldInterest (this .isCameraObject_);
-
-			this .min = new Vector3 (0, 0, 0);
-			this .max = new Vector3 (0, 0, 0);
 
 			this .set_enabled__ ();
 			this .set_extents__ ();
@@ -96301,7 +96304,6 @@ function (Fields,
 		{
 			var
 				invModelViewMatrix = new Matrix4 (),
-				viewer             = new Vector3 (0, 0, 0),
 				infinity           = new Vector3 (-1, -1, -1);
 
 			return function (type, renderObject)
@@ -96331,9 +96333,7 @@ function (Fields,
 							{
 							   invModelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()) .inverse ();
 
-								viewer .set (invModelViewMatrix [12], invModelViewMatrix [13], invModelViewMatrix [14]);
-
-								this .inside = this .intersectsPoint (viewer);
+								this .inside = this .containsPoint (invModelViewMatrix .origin);
 							}
 
 							return;
@@ -96346,7 +96346,7 @@ function (Fields,
 				}
 			};
 		})(),
-		intersectsPoint: function (point)
+		containsPoint: function (point)
 		{
 			var
 				min = this .min,
@@ -96420,11 +96420,9 @@ define ('x_ite/Components/EnvironmentalSensor/TransformSensor',[
 	"x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
-	"standard/Math/Geometry/Box3",
 	"standard/Utility/ObjectCache",
 ],
 function (Fields,
@@ -96433,18 +96431,16 @@ function (Fields,
           X3DEnvironmentalSensorNode,
           TraverseType,
           X3DConstants,
-          X3DCast,
           Vector3,
           Rotation4,
           Matrix4,
-          Box3,
           ObjectCache)
 {
 "use strict";
 
 	var
-		ModelMatrixCache = ObjectCache (Matrix4),
-		TargetBBoxCache  = ObjectCache (Box3);
+		ModelMatrixCache  = ObjectCache (Matrix4),
+		TargetMatrixCache = ObjectCache (Matrix4);
 
 	function TransformSensor (executionContext)
 	{
@@ -96456,10 +96452,11 @@ function (Fields,
 
 		this .setZeroTest (true);
 
-		this .bbox             = new Box3 ();
+		this .min              = new Vector3 ();
+		this .max              = new Vector3 ();
 		this .targetObjectNode = null;
 		this .modelMatrices    = [ ];
-		this .targetBBoxes     = [ ];
+		this .targetMatrices   = [ ];
 	}
 
 	TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
@@ -96497,11 +96494,11 @@ function (Fields,
 
 			this .enabled_      .addInterest ("set_enabled__",      this);
 			this .size_         .addInterest ("set_enabled__",      this);
-			this .size_         .addInterest ("set_bbox__",         this);
-			this .center_       .addInterest ("set_bbox__",         this);
+			this .size_         .addInterest ("set_extents__",      this);
+			this .center_       .addInterest ("set_extents__",      this);
 			this .targetObject_ .addInterest ("set_targetObject__", this);
 
-			this .set_bbox__ ();
+			this .set_extents__ ();
 			this .set_targetObject__ ();
 		},
 		set_live__: function ()
@@ -96529,9 +96526,20 @@ function (Fields,
 				}
 			}
 		},
-		set_bbox__: function ()
+		set_extents__: function ()
 		{
-			this .bbox .set (this .size_ .getValue (), this .center_ .getValue ());
+			var
+				s  = this .size_ .getValue (),
+				c  = this .center_ .getValue (),
+				sx = s .x / 2,
+				sy = s .y / 2,
+				sz = s .z / 2,
+				cx = c .x,
+				cy = c .y,
+				cz = c .z;
+
+			this .min .set (cx - sx, cy - sy, cz - sz);
+			this .max .set (cx + sx, cy + sy, cz + sz);
 		},
 		set_targetObject__: function ()
 		{
@@ -96575,9 +96583,9 @@ function (Fields,
 			if (this .getPickableObject ())
 				this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
 		},
-		collect: function (targetBBox)
+		collect: function (targetMatrix)
 		{
-			this .targetBBoxes .push (TargetBBoxCache .pop () .assign (targetBBox));
+			this .targetMatrices .push (TargetMatrixCache .pop () .assign (targetMatrix));
 		},
 		process: (function ()
 		{
@@ -96588,13 +96596,13 @@ function (Fields,
 			return function ()
 			{
 				var
-					modelMatrices = this .modelMatrices,
-					targetBBoxes  = this .targetBBoxes,
-					bbox          = this .intersects ();
+					modelMatrices  = this .modelMatrices,
+					targetMatrices = this .targetMatrices,
+					matrix         = this .intersects ();
 
-				if (bbox)
+				if (matrix)
 				{
-					bbox .getMatrix () .get (position, orientation);
+					matrix .get (position, orientation);
 
 					if (this .isActive_ .getValue ())
 					{
@@ -96624,38 +96632,35 @@ function (Fields,
 				for (var i = 0, length = modelMatrices .length; i < length; ++ i)
 					ModelMatrixCache .push (modelMatrices [i]);
 
-				for (var i = 0, length = targetBBoxes .length; i < length; ++ i)
-					TargetBBoxCache .push (targetBBoxes [i]);
+				for (var i = 0, length = targetMatrices .length; i < length; ++ i)
+					TargetMatrixCache .push (targetMatrices [i]);
 
-				modelMatrices .length = 0;
-				targetBBoxes  .length = 0;
+				modelMatrices  .length = 0;
+				targetMatrices .length = 0;
 			};
 		})(),
 		intersects: (function ()
 		{
-			var
-				bbox     = new Box3 (),
-				infinity = new Vector3 (-1, -1, -1);
+			var infinity = new Vector3 (-1, -1, -1);
 
 			return function ()
 			{
 				var
-					modelMatrices = this .modelMatrices,
-					targetBBoxes  = this .targetBBoxes;
+					modelMatrices  = this .modelMatrices,
+					targetMatrices = this .targetMatrices,
+					always         = this .size_ .getValue () .equals (infinity);
 
 				for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
 				{
-					var modelMatrix = modelMatrices [m];
+					var invModelMatrix = modelMatrices [m] .inverse ();
 
-					bbox .assign (this .bbox) .multRight (modelMatrix);
-
-					for (var t = 0, tLength = targetBBoxes .length; t < tLength; ++ t)
+					for (var t = 0, tLength = targetMatrices .length; t < tLength; ++ t)
 					{
-						var targetBBox = targetBBoxes [t];
+						var matrix = targetMatrices [t] .multRight (invModelMatrix);
 
-						if (this .size_ .getValue () .equals (infinity) || bbox .intersectsBox (targetBBox))
+						if (always || this .containsPoint (matrix .origin))
 						{
-							return targetBBox .multRight (modelMatrix .inverse ());
+							return matrix;
 						}
 					}
 				}
@@ -96663,6 +96668,19 @@ function (Fields,
 				return null;
 			};
 		})(),
+		containsPoint: function (point)
+		{
+			var
+				min = this .min,
+				max = this .max;
+
+			return min .x <= point .x &&
+			       max .x >= point .x &&
+			       min .y <= point .y &&
+			       max .y >= point .y &&
+			       min .z <= point .z &&
+			       max .z >= point .z;
+		},
 	});
 
 	return TransformSensor;
@@ -101564,11 +101582,11 @@ function (Fields,
 				{
 					if (this .getTransformSensors () .size)
 					{
-						this .getBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+						var modelMatrix = renderObject .getModelViewMatrix () .get ();
 
 						this .getTransformSensors () .forEach (function (transformSensorNode)
 						{
-							transformSensorNode .collect (bbox);
+							transformSensorNode .collect (modelMatrix);
 						});
 					}
 
@@ -105591,11 +105609,11 @@ function (Fields,
 					{
 						if (this .getTransformSensors () .size)
 						{
-							this .getBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+							var modelMatrix = renderObject .getModelViewMatrix () .get ();
 
 							this .getTransformSensors () .forEach (function (transformSensorNode)
 							{
-								transformSensorNode .collect (bbox);
+								transformSensorNode .collect (modelMatrix);
 							});
 						}
 
@@ -112764,11 +112782,11 @@ function (Fields,
 			{
 				if (this .getTransformSensors () .size)
 				{
-					this .getBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+					var modelMatrix = renderObject .getModelViewMatrix () .get ();
 
 					this .getTransformSensors () .forEach (function (transformSensorNode)
 					{
-						transformSensorNode .collect (bbox);
+						transformSensorNode .collect (modelMatrix);
 					});
 				}
 
