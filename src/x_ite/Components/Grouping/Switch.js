@@ -138,24 +138,14 @@ function (Fields,
 		},
 		set_cameraObjects__: function ()
 		{
-			if (this .child && this .child .getCameraObject)
-				this .setCameraObject (this .child .getCameraObject ());
-			else
-				this .setCameraObject (false);
+			this .setCameraObject (Boolean (this .child && this .child .getCameraObject ()));
 		},
 		set_transformSensors__: function ()
 		{
-			if (this .getTransformSensors () .size)
-				this .setPickableObject (true);
-			else if (this .child && this .child .getPickableObject)
-				this .setPickableObject (this .child .getPickableObject ());
-			else
-				this .setPickableObject (false);
+			this .setPickableObject (Boolean (this .getTransformSensors () .size || this .child && this .child .getPickableObject ()));
 		},
 		traverse: (function ()
 		{
-			var bbox = new Box3 ();
-
 			return function (type, renderObject)
 			{
 				var child = this .child;

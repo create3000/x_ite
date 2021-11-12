@@ -53,6 +53,7 @@ define ([
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 	"standard/Math/Geometry/Box3",
 ],
 function (Fields,
@@ -60,6 +61,7 @@ function (Fields,
           X3DBoundedObject,
           TraverseType,
           X3DConstants,
+          X3DCast,
           Box3)
 {
 "use strict";
@@ -157,18 +159,8 @@ function (Fields,
 		{
 			// Used in LOD and Switch.
 
-			try
-			{
-				if (index >= 0 && index < this .children_ .length)
-				{
-					var child = this .children_ [index];
-
-					if (child)
-						return child .getValue () .getInnerNode ();
-				}
-			}
-			catch (error)
-			{ }
+			if (index >= 0 && index < this .children_ .length)
+				return X3DCast (X3DConstants .X3DChildNode, this .children_ [index]);
 
 			return null;
 		},

@@ -1,4 +1,4 @@
-/* X_ITE v4.6.24-1051 */
+/* X_ITE v4.6.24-1052 */
 
 (function () {
 
@@ -71359,6 +71359,7 @@ define ('x_ite/Components/Grouping/X3DGroupingNode',[
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 	"standard/Math/Geometry/Box3",
 ],
 function (Fields,
@@ -71366,6 +71367,7 @@ function (Fields,
           X3DBoundedObject,
           TraverseType,
           X3DConstants,
+          X3DCast,
           Box3)
 {
 "use strict";
@@ -71463,18 +71465,8 @@ function (Fields,
 		{
 			// Used in LOD and Switch.
 
-			try
-			{
-				if (index >= 0 && index < this .children_ .length)
-				{
-					var child = this .children_ [index];
-
-					if (child)
-						return child .getValue () .getInnerNode ();
-				}
-			}
-			catch (error)
-			{ }
+			if (index >= 0 && index < this .children_ .length)
+				return X3DCast (X3DConstants .X3DChildNode, this .children_ [index]);
 
 			return null;
 		},
@@ -101565,24 +101557,14 @@ function (Fields,
 		},
 		set_cameraObjects__: function ()
 		{
-			if (this .child && this .child .getCameraObject)
-				this .setCameraObject (this .child .getCameraObject ());
-			else
-				this .setCameraObject (false);
+			this .setCameraObject (Boolean (this .child && this .child .getCameraObject ()));
 		},
 		set_transformSensors__: function ()
 		{
-			if (this .getTransformSensors () .size)
-				this .setPickableObject (true);
-			else if (this .child && this .child .getPickableObject)
-				this .setPickableObject (this .child .getPickableObject ());
-			else
-				this .setPickableObject (false);
+			this .setPickableObject (Boolean (this .getTransformSensors () .size || this .child && this .child .getPickableObject ()));
 		},
 		traverse: (function ()
 		{
-			var bbox = new Box3 ();
-
 			return function (type, renderObject)
 			{
 				var child = this .child;
@@ -105551,19 +105533,11 @@ function (Fields,
 		},
 		set_cameraObjects__: function ()
 		{
-			if (this .child && this .child .getCameraObject)
-				this .setCameraObject (this .child .getCameraObject ());
-			else
-				this .setCameraObject (false);
+			this .setCameraObject (Boolean (this .child && this .child .getCameraObject ()));
 		},
 		set_transformSensors__: function ()
 		{
-			if (this .getTransformSensors () .size)
-				this .setPickableObject (true);
-			else if (this .child && this .child .getPickableObject)
-				this .setPickableObject (this .child .getPickableObject ());
-			else
-				this .setPickableObject (false);
+			this .setPickableObject (Boolean (this .getTransformSensors () .size || this .child && this .child .getPickableObject ()));
 		},
 		getLevel: (function ()
 		{
@@ -105604,9 +105578,7 @@ function (Fields,
 		},
 		traverse: (function ()
 		{
-			var
-				modelViewMatrix = new Matrix4 (),
-				bbox            = new Box3 ();
+			var modelViewMatrix = new Matrix4 ();
 
 			return function (type, renderObject)
 			{
