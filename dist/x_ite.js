@@ -1,4 +1,4 @@
-/* X_ITE v4.6.24-1048 */
+/* X_ITE v4.6.24-1049 */
 
 (function () {
 
@@ -43818,6 +43818,9 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
+			if (type !== TraverseType .CAMERA)
+				return;
+
 			renderObject .getLayer () .getViewpoints () .push (this);
 
 			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
@@ -91870,6 +91873,9 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
+			if (type !== TraverseType .CAMERA)
+				return;
+
 			renderObject .getLayer () .getNavigationInfos () .push (this);
 		}
 	});
@@ -92106,7 +92112,7 @@ function (Fields,
           X3DBindableNode,
           X3DFogObject,
           TraverseType,
-		  X3DConstants,
+		    X3DConstants,
           Matrix4)
 {
 "use strict";
@@ -92157,6 +92163,9 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
+			if (type !== TraverseType .CAMERA)
+				return;
+
 			renderObject .getLayer () .getFogs () .push (this);
 
 			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
