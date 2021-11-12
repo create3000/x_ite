@@ -63,7 +63,7 @@ function (Fields,
           X3DBindableNode,
           X3DFogObject,
           TraverseType,
-		  X3DConstants,
+		    X3DConstants,
           Matrix4)
 {
 "use strict";
@@ -114,6 +114,9 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
+			if (type !== TraverseType .CAMERA)
+				return;
+
 			renderObject .getLayer () .getFogs () .push (this);
 
 			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());

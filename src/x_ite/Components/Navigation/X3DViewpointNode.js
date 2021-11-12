@@ -493,6 +493,9 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
+			if (type !== TraverseType .CAMERA)
+				return;
+
 			renderObject .getLayer () .getViewpoints () .push (this);
 
 			this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ());
