@@ -474,7 +474,7 @@ function (Triangle3,
 			this .matrix .multRight (matrix);
 			return this;
 		},
-		intersectsPoint: (function ()
+		containsPoint: (function ()
 		{
 			var
 				min = new Vector3 (0, 0, 0),

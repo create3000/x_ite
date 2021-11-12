@@ -209,11 +209,11 @@ function (Fields,
 					{
 						if (this .getTransformSensors () .size)
 						{
-							this .getBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+							var modelMatrix = renderObject .getModelViewMatrix () .get ();
 
 							this .getTransformSensors () .forEach (function (transformSensorNode)
 							{
-								transformSensorNode .collect (bbox);
+								transformSensorNode .collect (modelMatrix);
 							});
 						}
 

@@ -229,7 +229,7 @@ function (Matrix3, Vector2)
 				max .max (p1, p2);
 			};
 		})(),
-		intersectsPoint: (function ()
+		containsPoint: (function ()
 		{
 			var
 				min = new Vector2 (0, 0),

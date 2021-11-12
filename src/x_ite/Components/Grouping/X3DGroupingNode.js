@@ -112,7 +112,7 @@ function (Fields,
 			X3DChildNode     .prototype .initialize .call (this);
 			X3DBoundedObject .prototype .initialize .call (this);
 
-			this .transformSensors_changed_ .addInterest ("set_pickableObjects__", this);
+			this .transformSensors_changed_ .addInterest ("set_transformSensors__", this);
 
 			this .addChildren_    .addInterest ("set_addChildren__",    this);
 			this .removeChildren_ .addInterest ("set_removeChildren__", this);
@@ -542,7 +542,11 @@ function (Fields,
 					pickableObjects .push (childNode);
 			}
 
-			this .setPickableObject (Boolean (this .getTransformSensors () .size || pickableSensorNodes .length || pickableObjects .length));
+			this .set_transformSensors__ ()
+		},
+		set_transformSensors__: function ()
+		{
+			this .setPickableObject (Boolean (this .getTransformSensors () .size || this .pickableSensorNodes .length || this .pickableObjects .length));
 		},
 		set_display_nodes: function ()
 		{
@@ -619,11 +623,11 @@ function (Fields,
 					{
 						if (this .getTransformSensors () .size)
 						{
-							this .getSubBBox (bbox) .multRight (renderObject .getModelViewMatrix () .get ());
+							var modelMatrix = renderObject .getModelViewMatrix () .get ();
 
 							this .getTransformSensors () .forEach (function (transformSensorNode)
 							{
-								transformSensorNode .collect (bbox);
+								transformSensorNode .collect (modelMatrix);
 							});
 						}
 

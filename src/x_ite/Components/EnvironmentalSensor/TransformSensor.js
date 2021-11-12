@@ -54,11 +54,9 @@ define ([
 	"x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
-	"standard/Math/Geometry/Box3",
 	"standard/Utility/ObjectCache",
 ],
 function (Fields,
@@ -67,18 +65,16 @@ function (Fields,
           X3DEnvironmentalSensorNode,
           TraverseType,
           X3DConstants,
-          X3DCast,
           Vector3,
           Rotation4,
           Matrix4,
-          Box3,
           ObjectCache)
 {
 "use strict";
 
 	var
-		ModelMatrixCache = ObjectCache (Matrix4),
-		TargetBBoxCache  = ObjectCache (Box3);
+		ModelMatrixCache  = ObjectCache (Matrix4),
+		TargetMatrixCache = ObjectCache (Matrix4);
 
 	function TransformSensor (executionContext)
 	{
@@ -90,10 +86,11 @@ function (Fields,
 
 		this .setZeroTest (true);
 
-		this .bbox             = new Box3 ();
+		this .min              = new Vector3 ();
+		this .max              = new Vector3 ();
 		this .targetObjectNode = null;
 		this .modelMatrices    = [ ];
-		this .targetBBoxes     = [ ];
+		this .targetMatrices   = [ ];
 	}
 
 	TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
@@ -131,11 +128,11 @@ function (Fields,
 
 			this .enabled_      .addInterest ("set_enabled__",      this);
 			this .size_         .addInterest ("set_enabled__",      this);
-			this .size_         .addInterest ("set_bbox__",         this);
-			this .center_       .addInterest ("set_bbox__",         this);
+			this .size_         .addInterest ("set_extents__",      this);
+			this .center_       .addInterest ("set_extents__",      this);
 			this .targetObject_ .addInterest ("set_targetObject__", this);
 
-			this .set_bbox__ ();
+			this .set_extents__ ();
 			this .set_targetObject__ ();
 		},
 		set_live__: function ()
@@ -163,9 +160,20 @@ function (Fields,
 				}
 			}
 		},
-		set_bbox__: function ()
+		set_extents__: function ()
 		{
-			this .bbox .set (this .size_ .getValue (), this .center_ .getValue ());
+			var
+				s  = this .size_ .getValue (),
+				c  = this .center_ .getValue (),
+				sx = s .x / 2,
+				sy = s .y / 2,
+				sz = s .z / 2,
+				cx = c .x,
+				cy = c .y,
+				cz = c .z;
+
+			this .min .set (cx - sx, cy - sy, cz - sz);
+			this .max .set (cx + sx, cy + sy, cz + sz);
 		},
 		set_targetObject__: function ()
 		{
@@ -209,9 +217,9 @@ function (Fields,
 			if (this .getPickableObject ())
 				this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
 		},
-		collect: function (targetBBox)
+		collect: function (targetMatrix)
 		{
-			this .targetBBoxes .push (TargetBBoxCache .pop () .assign (targetBBox));
+			this .targetMatrices .push (TargetMatrixCache .pop () .assign (targetMatrix));
 		},
 		process: (function ()
 		{
@@ -222,13 +230,13 @@ function (Fields,
 			return function ()
 			{
 				var
-					modelMatrices = this .modelMatrices,
-					targetBBoxes  = this .targetBBoxes,
-					bbox          = this .intersects ();
+					modelMatrices  = this .modelMatrices,
+					targetMatrices = this .targetMatrices,
+					matrix         = this .intersects ();
 
-				if (bbox)
+				if (matrix)
 				{
-					bbox .getMatrix () .get (position, orientation);
+					matrix .get (position, orientation);
 
 					if (this .isActive_ .getValue ())
 					{
@@ -258,38 +266,35 @@ function (Fields,
 				for (var i = 0, length = modelMatrices .length; i < length; ++ i)
 					ModelMatrixCache .push (modelMatrices [i]);
 
-				for (var i = 0, length = targetBBoxes .length; i < length; ++ i)
-					TargetBBoxCache .push (targetBBoxes [i]);
+				for (var i = 0, length = targetMatrices .length; i < length; ++ i)
+					TargetMatrixCache .push (targetMatrices [i]);
 
-				modelMatrices .length = 0;
-				targetBBoxes  .length = 0;
+				modelMatrices  .length = 0;
+				targetMatrices .length = 0;
 			};
 		})(),
 		intersects: (function ()
 		{
-			var
-				bbox     = new Box3 (),
-				infinity = new Vector3 (-1, -1, -1);
+			var infinity = new Vector3 (-1, -1, -1);
 
 			return function ()
 			{
 				var
-					modelMatrices = this .modelMatrices,
-					targetBBoxes  = this .targetBBoxes;
+					modelMatrices  = this .modelMatrices,
+					targetMatrices = this .targetMatrices,
+					always         = this .size_ .getValue () .equals (infinity);
 
 				for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
 				{
-					var modelMatrix = modelMatrices [m];
+					var invModelMatrix = modelMatrices [m] .inverse ();
 
-					bbox .assign (this .bbox) .multRight (modelMatrix);
-
-					for (var t = 0, tLength = targetBBoxes .length; t < tLength; ++ t)
+					for (var t = 0, tLength = targetMatrices .length; t < tLength; ++ t)
 					{
-						var targetBBox = targetBBoxes [t];
+						var matrix = targetMatrices [t] .multRight (invModelMatrix);
 
-						if (this .size_ .getValue () .equals (infinity) || bbox .intersectsBox (targetBBox))
+						if (always || this .containsPoint (matrix .origin))
 						{
-							return targetBBox .multRight (modelMatrix .inverse ());
+							return matrix;
 						}
 					}
 				}
@@ -297,6 +302,19 @@ function (Fields,
 				return null;
 			};
 		})(),
+		containsPoint: function (point)
+		{
+			var
+				min = this .min,
+				max = this .max;
+
+			return min .x <= point .x &&
+			       max .x >= point .x &&
+			       min .y <= point .y &&
+			       max .y >= point .y &&
+			       min .z <= point .z &&
+			       max .z >= point .z;
+		},
 	});
 
 	return TransformSensor;

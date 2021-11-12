@@ -83,6 +83,8 @@ function (Fields,
 
 		this .setZeroTest (true);
 
+		this .min           = new Vector3 (0, 0, 0);
+		this .max           = new Vector3 (0, 0, 0);
 		this .viewpointNode = null;
 		this .modelMatrix   = new Matrix4 ();
 		this .inside        = false;
@@ -124,9 +126,6 @@ function (Fields,
 			this .center_  .addInterest ("set_extents__", this);
 
 			this .traversed_ .addFieldInterest (this .isCameraObject_);
-
-			this .min = new Vector3 (0, 0, 0);
-			this .max = new Vector3 (0, 0, 0);
 
 			this .set_enabled__ ();
 			this .set_extents__ ();
@@ -233,7 +232,6 @@ function (Fields,
 		{
 			var
 				invModelViewMatrix = new Matrix4 (),
-				viewer             = new Vector3 (0, 0, 0),
 				infinity           = new Vector3 (-1, -1, -1);
 
 			return function (type, renderObject)
@@ -263,9 +261,7 @@ function (Fields,
 							{
 							   invModelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()) .inverse ();
 
-								viewer .set (invModelViewMatrix [12], invModelViewMatrix [13], invModelViewMatrix [14]);
-
-								this .inside = this .intersectsPoint (viewer);
+								this .inside = this .containsPoint (invModelViewMatrix .origin);
 							}
 
 							return;
@@ -278,7 +274,7 @@ function (Fields,
 				}
 			};
 		})(),
-		intersectsPoint: function (point)
+		containsPoint: function (point)
 		{
 			var
 				min = this .min,
