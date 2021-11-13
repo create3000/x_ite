@@ -56,19 +56,17 @@ define ([
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
-	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/ViewVolume",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGroupingNode, 
+          X3DGroupingNode,
           X3DConstants,
           TraverseType,
           Vector3,
           Vector4,
-          Rotation4,
           Matrix4,
           ViewVolume)
 {
@@ -80,7 +78,7 @@ function (Fields,
 
 		this .addType (X3DConstants .ScreenGroup);
 
-		this .screenMatrix = new Matrix4 ();
+		this .matrix = new Matrix4 ();
 	}
 
 	ScreenGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -108,17 +106,10 @@ function (Fields,
 		},
 		getBBox: function (bbox)
 		{
-			return X3DGroupingNode .prototype .getBBox .call (this, bbox) .multRight (this .getMatrix ());
+			return X3DGroupingNode .prototype .getBBox .call (this, bbox) .multRight (this .matrix);
 		},
 		getMatrix: function ()
 		{
-			try
-			{
-				this .matrix .assign (this .modelViewMatrix) .inverse () .multLeft (this .screenMatrix);
-			}
-			catch (error)
-			{ }
-
 			return this .matrix;
 		},
 		scale: (function ()
@@ -127,18 +118,18 @@ function (Fields,
 				x            = new Vector4 (0, 0, 0, 0),
 				y            = new Vector4 (0, 0, 0, 0),
 				z            = new Vector4 (0, 0, 0, 0),
-				screenPoint  = new Vector3 (0, 0, 0);
+				screenPoint  = new Vector3 (0, 0, 0),
+				screenMatrix = new Matrix4 ();
 
 			return function (renderObject)
 			{
 				// throws domain error
-	
+
 				var
 					modelViewMatrix  = renderObject .getModelViewMatrix () .get (),
 					projectionMatrix = renderObject .getProjectionMatrix () .get (),
-					viewport         = renderObject .getViewVolume () .getViewport (),
-					screenMatrix     = this .screenMatrix;
-			
+					viewport         = renderObject .getViewVolume () .getViewport ();
+
 				// Determine screenMatrix.
 				// Same as in ScreenText.
 
@@ -156,7 +147,7 @@ function (Fields,
 				                   y .x, y .y, y .z, y .w,
 				                   z .x, z .y, z .z, z .w,
 				                   modelViewMatrix [12], modelViewMatrix [13], modelViewMatrix [14], modelViewMatrix [15]);
-	
+
 				// Snap to whole pixel.
 
 				ViewVolume .projectPoint (Vector3 .Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
@@ -168,33 +159,35 @@ function (Fields,
 
 				screenPoint .z = 0;
 				screenMatrix .translate (screenPoint);
-	
-				// Return modelViewMatrix
-	
-				return screenMatrix;
+
+				// Assign relative matrix.
+
+				this .matrix .assign (modelViewMatrix) .inverse () .multLeft (screenMatrix);
 			};
 		})(),
 		traverse: function (type, renderObject)
 		{
 			try
 			{
-				var modelViewMatrix = renderObject .getModelViewMatrix ();
-
 				switch (type)
 				{
 					case TraverseType .CAMERA:
 					case TraverseType .PICKING:
 					case TraverseType .DEPTH: // ???
 						// No clone support for shadow, generated cube map texture and bbox
-						modelViewMatrix .pushMatrix (this .screenMatrix);
 						break;
 					default:
-						modelViewMatrix .pushMatrix (this .scale (renderObject));
+						this .scale (renderObject);
 						break;
 				}
 
+				var modelViewMatrix = renderObject .getModelViewMatrix ();
+
+				modelViewMatrix .push ();
+				modelViewMatrix .multLeft (this .matrix);
+
 				X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-	
+
 				modelViewMatrix .pop ();
 			}
 			catch (error)
@@ -204,5 +197,3 @@ function (Fields,
 
 	return ScreenGroup;
 });
-
-
