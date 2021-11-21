@@ -225,7 +225,6 @@ function (Fields,
 
 				if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
 				{
-					childNode .visible_     .removeInterest ("set_cameraObjects__", this);
 					childNode .visible_     .removeInterest ("set_visibles__",      this);
 					childNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__",  this);
 				}
@@ -313,9 +312,8 @@ function (Fields,
 
 									if (X3DCast (X3DConstants .X3DBoundedObject, innerNode))
 									{
-										innerNode .visible_     .addInterest ("set_cameraObjects__", this);
-										innerNode .visible_     .addInterest ("set_visibles__",      this);
-										innerNode .bboxDisplay_ .addInterest ("set_bboxDisplays__",  this);
+										innerNode .visible_     .addInterest ("set_visibles__",     this);
+										innerNode .bboxDisplay_ .addInterest ("set_bboxDisplays__", this);
 									}
 
 									this .maybeCameraObjects .push (innerNode);
@@ -349,7 +347,6 @@ function (Fields,
 				}
 			}
 
-			this .set_cameraObjects__ ()
 			this .set_pickableObjects__ ()
 			this .set_displayNodes__ ()
 			this .set_visibles__ ()
@@ -447,9 +444,8 @@ function (Fields,
 
 									if (X3DCast (X3DConstants .X3DBoundedObject, innerNode))
 									{
-										innerNode .visible_     .removeInterest ("set_cameraObjects__", this);
-										innerNode .visible_     .removeInterest ("set_visibles__",      this);
-										innerNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__",  this);
+										innerNode .visible_     .removeInterest ("set_visibles__",     this);
+										innerNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__", this);
 									}
 
 									var index = this .maybeCameraObjects .indexOf (innerNode);
@@ -491,10 +487,9 @@ function (Fields,
 				}
 			}
 
-			this .set_cameraObjects__ ()
-			this .set_pickableObjects__ ()
-			this .set_displayNodes__ ()
-			this .set_visibles__ ()
+			this .set_pickableObjects__ ();
+			this .set_displayNodes__ ();
+			this .set_visibles__ ();
 			this .set_bboxDisplays__ ();
 		},
 		set_cameraObjects__: function ()
@@ -607,6 +602,8 @@ function (Fields,
 					visibleNodes .push (childNode);
 				}
 			}
+
+			this .set_cameraObjects__ ();
 		},
 		set_bboxDisplays__: function ()
 		{

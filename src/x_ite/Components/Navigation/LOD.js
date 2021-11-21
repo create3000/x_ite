@@ -180,7 +180,6 @@ function (Fields,
 				this .childNode = null;
 			}
 
-			this .set_cameraObject__ ();
 			this .set_transformSensors__ ();
 			this .set_visible__ ();
 			this .set_bboxDisplay__ ();
@@ -217,6 +216,8 @@ function (Fields,
 			{
 				this .visibleNode = this .childNode;
 			}
+
+			this .set_cameraObject__ ();
 		},
 		set_bboxDisplay__: function ()
 		{
