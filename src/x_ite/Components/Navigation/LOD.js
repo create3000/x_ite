@@ -84,6 +84,7 @@ function (Fields,
 
 		this .frameRate        = 60;
 		this .keepCurrentLevel = false;
+		this .cameraObject     = null;
 		this .childNode        = null;
 		this .visibleNode      = null;
 		this .boundedObject    = null;
@@ -187,7 +188,23 @@ function (Fields,
 		},
 		set_cameraObject__: function ()
 		{
-			this .setCameraObject (Boolean (this .childNode && this .childNode .getCameraObject ()));
+			if (this .childNode && this .childNode .getCameraObject ())
+			{
+				if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+				{
+					this .cameraObject = this .childNode .visible_ .getValue () ? this .childNode : null;
+				}
+				else
+				{
+					this .cameraObject = this .childNode;
+				}
+			}
+			else
+			{
+				this .cameraObject = null;
+			}
+
+			this .setCameraObject (Boolean (this .cameraObject));
 		},
 		set_transformSensors__: function ()
 		{
@@ -260,12 +277,12 @@ function (Fields,
 			{
 				switch (type)
 				{
-					case TraverseType .PICKING:
+					case TraverseType .CAMERA:
 					{
-						var visibleNode = this .visibleNode;
+						var cameraObject = this .cameraObject;
 
-						if (visibleNode)
-							visibleNode .traverse (type, renderObject);
+						if (cameraObject)
+							cameraObject .traverse (type, renderObject);
 
 						return;
 					}

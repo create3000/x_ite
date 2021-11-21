@@ -77,6 +77,7 @@ function (Fields,
 		if (executionContext .getSpecificationVersion () == "2.0")
 			this .addAlias ("choice", this .children_);
 
+		this .cameraObject  = null;
 		this .childNode     = null;
 		this .visibleNode   = null;
 		this .boundedObject = null;
@@ -145,8 +146,9 @@ function (Fields,
 
 			if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
 			{
-				this .childNode .visible_     .removeInterest ("set_visible__",     this);
-				this .childNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+				this .childNode .visible_     .removeInterest ("set_cameraObject__", this);
+				this .childNode .visible_     .removeInterest ("set_visible__",      this);
+				this .childNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__",  this);
 			}
 
 			var whichChoice = this .whichChoice_ .getValue ();
@@ -161,8 +163,9 @@ function (Fields,
 
 					if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
 					{
-						this .childNode .visible_     .addInterest ("set_visible__",     this);
-						this .childNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
+						this .childNode .visible_     .addInterest ("set_cameraObject__", this);
+						this .childNode .visible_     .addInterest ("set_visible__",      this);
+						this .childNode .bboxDisplay_ .addInterest ("set_bboxDisplay__",  this);
 					}
 				}
 			}
@@ -178,7 +181,23 @@ function (Fields,
 		},
 		set_cameraObject__: function ()
 		{
-			this .setCameraObject (Boolean (this .childNode && this .childNode .getCameraObject ()));
+			if (this .childNode && this .childNode .getCameraObject ())
+			{
+				if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+				{
+					this .cameraObject = this .childNode .visible_ .getValue () ? this .childNode : null;
+				}
+				else
+				{
+					this .cameraObject = this .childNode;
+				}
+			}
+			else
+			{
+				this .cameraObject = null;
+			}
+
+			this .setCameraObject (Boolean (this .cameraObject));
 		},
 		set_transformSensors__: function ()
 		{
@@ -210,12 +229,12 @@ function (Fields,
 		{
 			switch (type)
 			{
-				case TraverseType .PICKING:
+				case TraverseType .CAMERA:
 				{
-					var visibleNode = this .visibleNode;
+					var cameraObject = this .cameraObject;
 
-					if (visibleNode)
-						visibleNode .traverse (type, renderObject);
+					if (cameraObject)
+						cameraObject .traverse (type, renderObject);
 
 					return;
 				}

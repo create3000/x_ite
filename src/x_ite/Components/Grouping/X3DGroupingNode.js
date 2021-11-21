@@ -225,8 +225,9 @@ function (Fields,
 
 				if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
 				{
-					childNode .visible_     .removeInterest ("set_visibles__",     this);
-					childNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__", this);
+					childNode .visible_     .removeInterest ("set_cameraObjects__", this);
+					childNode .visible_     .removeInterest ("set_visibles__",      this);
+					childNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__",  this);
 				}
 			}
 
@@ -312,8 +313,9 @@ function (Fields,
 
 									if (X3DCast (X3DConstants .X3DBoundedObject, innerNode))
 									{
-										innerNode .visible_     .addInterest ("set_visibles__",     this);
-										innerNode .bboxDisplay_ .addInterest ("set_bboxDisplays__", this);
+										innerNode .visible_     .addInterest ("set_cameraObjects__", this);
+										innerNode .visible_     .addInterest ("set_visibles__",      this);
+										innerNode .bboxDisplay_ .addInterest ("set_bboxDisplays__",  this);
 									}
 
 									this .maybeCameraObjects .push (innerNode);
@@ -445,8 +447,9 @@ function (Fields,
 
 									if (X3DCast (X3DConstants .X3DBoundedObject, innerNode))
 									{
-										innerNode .visible_     .removeInterest ("set_visibles__",     this);
-										innerNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__", this);
+										innerNode .visible_     .removeInterest ("set_cameraObjects__", this);
+										innerNode .visible_     .removeInterest ("set_visibles__",      this);
+										innerNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__",  this);
 									}
 
 									var index = this .maybeCameraObjects .indexOf (innerNode);
@@ -507,7 +510,19 @@ function (Fields,
 				var childNode = maybeCameraObjects [i];
 
 				if (childNode .getCameraObject ())
-					cameraObjects .push (childNode);
+				{
+					if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+					{
+						if (childNode .visible_ .getValue ())
+						{
+							cameraObjects .push (childNode);
+						}
+					}
+					else
+					{
+						cameraObjects .push (childNode);
+					}
+				}
 			}
 
 			this .setCameraObject (Boolean (cameraObjects .length));
