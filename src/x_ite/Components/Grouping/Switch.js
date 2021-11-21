@@ -76,6 +76,10 @@ function (Fields,
 
 		if (executionContext .getSpecificationVersion () == "2.0")
 			this .addAlias ("choice", this .children_);
+
+		this .childNode     = null;
+		this .visibleNode   = null;
+		this .boundedObject = null;
 	}
 
 	Switch .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -84,6 +88,8 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "whichChoice",    new Fields .SFInt32 (-1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
@@ -106,16 +112,16 @@ function (Fields,
 		{
 			X3DGroupingNode .prototype .initialize .call (this);
 
-			this .whichChoice_ .addInterest ("set_whichChoice__", this);
-			this .children_    .addInterest ("set_whichChoice__", this);
+			this .whichChoice_ .addInterest ("set_child__", this);
+			this .children_    .addInterest ("set_child__", this);
 
-			this .set_whichChoice__ ();
+			this .set_child__ ();
 		},
 		getBBox: function (bbox)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
-				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .child);
+				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .childNode);
 
 				if (boundedObject)
 					return boundedObject .getBBox (bbox);
@@ -129,28 +135,91 @@ function (Fields,
 		{
 			return this .getBBox (bbox);
 		},
-		set_whichChoice__: function ()
+		clear: function () { },
+		add: function () { },
+		remove: function () { },
+		set_child__: function ()
 		{
-			this .child = this .getChild (this .whichChoice_ .getValue ());
+			if (this .childNode)
+				this .childNode .isCameraObject_ .removeInterest ("set_cameraObject__", this);
 
-			this .set_cameraObjects__ ();
-			this .set_pickableObjects__ ();
+			if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+			{
+				this .childNode .visible_     .removeInterest ("set_visible__",     this);
+				this .childNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+			}
+
+			var whichChoice = this .whichChoice_ .getValue ();
+
+			if (whichChoice >= 0 && whichChoice < this .children_ .length)
+			{
+				this .childNode = X3DCast (X3DConstants .X3DChildNode, this .children_ [whichChoice]);
+
+				if (this .childNode)
+				{
+					this .childNode .isCameraObject_ .addInterest ("set_cameraObject__", this);
+
+					if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+					{
+						this .childNode .visible_     .addInterest ("set_visible__",     this);
+						this .childNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
+					}
+				}
+			}
+			else
+			{
+				this .childNode = null;
+			}
+
+			this .set_cameraObject__ ();
+			this .set_transformSensors__ ();
+			this .set_visible__ ();
+			this .set_bboxDisplay__ ();
 		},
-		set_cameraObjects__: function ()
+		set_cameraObject__: function ()
 		{
-			this .setCameraObject (Boolean (this .child && this .child .getCameraObject ()));
+			this .setCameraObject (Boolean (this .childNode && this .childNode .getCameraObject ()));
 		},
 		set_transformSensors__: function ()
 		{
-			this .setPickableObject (Boolean (this .getTransformSensors () .size || this .child && this .child .getPickableObject ()));
+			this .setPickableObject (Boolean (this .getTransformSensors () .size || this .childNode && this .childNode .getPickableObject ()));
 		},
-		traverse: (function ()
+		set_visible__: function ()
 		{
-			return function (type, renderObject)
+			if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
 			{
-				var child = this .child;
+				this .visibleNode = this .childNode .visible_ .getValue () ? this .childNode : null;
+			}
+			else
+			{
+				this .visibleNode = this .childNode;
+			}
+		},
+		set_bboxDisplay__: function ()
+		{
+			if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+			{
+				this .boundedObject = this .childNode .bboxDisplay_ .getValue () ? this .childNode : null;
+			}
+			else
+			{
+				this .boundedObject = null;
+			}
+		},
+		traverse: function (type, renderObject)
+		{
+			switch (type)
+			{
+				case TraverseType .PICKING:
+				{
+					var visibleNode = this .visibleNode;
 
-				if (type === TraverseType .PICKING)
+					if (visibleNode)
+						visibleNode .traverse (type, renderObject);
+
+					return;
+				}
+				case TraverseType .PICKING:
 				{
 					if (this .getTransformSensors () .size)
 					{
@@ -162,7 +231,9 @@ function (Fields,
 						});
 					}
 
-					if (child)
+					var childNode = this .childNode;
+
+					if (childNode)
 					{
 						var
 							browser          = renderObject .getBrowser (),
@@ -170,18 +241,47 @@ function (Fields,
 
 						pickingHierarchy .push (this);
 
-						child .traverse (type, renderObject);
+						childNode .traverse (type, renderObject);
 
 						pickingHierarchy .pop ();
 					}
+
+					return;
 				}
-				else
+				case TraverseType .COLLISION:
 				{
-					if (child)
-						child .traverse (type, renderObject);
+					var childNode = this .childNode;
+
+					if (childNode)
+						childNode .traverse (type, renderObject);
+
+					return;
 				}
-			};
-		})(),
+				case TraverseType .DEPTH:
+				{
+					var visibleNode = this .visibleNode;
+
+					if (visibleNode)
+						visibleNode .traverse (type, renderObject);
+
+					return;
+				}
+				case TraverseType .DISPLAY:
+				{
+					var visibleNode = this .visibleNode;
+
+					if (visibleNode)
+						visibleNode .traverse (type, renderObject);
+
+					var boundedObject = this .boundedObject;
+
+					if (boundedObject)
+						boundedObject .displayBBox (type, renderObject);
+
+					return;
+				}
+			}
+		},
 	});
 
 	return Switch;

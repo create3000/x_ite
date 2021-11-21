@@ -61,7 +61,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DViewportNode, 
+          X3DViewportNode,
           X3DConstants,
           TraverseType,
           ObjectCache,
@@ -87,6 +87,8 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "clipBoundary",   new Fields .MFFloat (0, 1, 0, 1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
@@ -178,5 +180,3 @@ function (Fields,
 
 	return Viewport;
 });
-
-

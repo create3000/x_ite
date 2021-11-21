@@ -62,8 +62,8 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChildNode, 
-          X3DBoundedObject, 
+          X3DChildNode,
+          X3DBoundedObject,
           Group,
           X3DConstants,
           TraverseType,
@@ -94,10 +94,12 @@ function (Fields,
 	{
 		constructor: StaticGroup,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",   new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter", new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "children",   new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "children",    new Fields .MFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -176,14 +178,14 @@ function (Fields,
 								projectionMatrix    = renderObject .getProjectionMatrix (),
 								modelViewMatrix     = renderObject .getModelViewMatrix (),
 								firstCollisionShape = renderObject .getNumCollisionShapes ();
-				
+
 							viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
-	
+
 							modelViewMatrix .push ();
 							modelViewMatrix .identity ();
-	
+
 							this .group .traverse (type, renderObject);
-	
+
 							modelViewMatrix .pop ();
 							viewVolumes     .pop ();
 
@@ -222,14 +224,14 @@ function (Fields,
 								projectionMatrix = renderObject .getProjectionMatrix (),
 								modelViewMatrix  = renderObject .getModelViewMatrix (),
 								firstDepthShape  = renderObject .getNumDepthShapes ();
-				
+
 							viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
-	
+
 							modelViewMatrix .push ();
 							modelViewMatrix .identity ();
-	
+
 							this .group .traverse (type, renderObject);
-	
+
 							modelViewMatrix .pop ();
 							viewVolumes     .pop ();
 
@@ -269,14 +271,14 @@ function (Fields,
 								modelViewMatrix       = renderObject .getModelViewMatrix (),
 								firstOpaqueShape      = renderObject .getNumOpaqueShapes (),
 								firstTransparentShape = renderObject .getNumTransparentShapes ();
-				
+
 							viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
-	
+
 							modelViewMatrix .push ();
 							modelViewMatrix .identity ();
-	
+
 							this .group .traverse (type, renderObject);
-	
+
 							modelViewMatrix .pop ();
 							viewVolumes     .pop ();
 

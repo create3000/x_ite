@@ -60,7 +60,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DProductStructureChildNode, 
+          X3DProductStructureChildNode,
           X3DBoundedObject,
           X3DCast,
           X3DConstants,
@@ -83,11 +83,13 @@ function (Fields,
 	{
 		constructor: CADFace,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "name",       new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",   new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter", new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "shape",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "name",        new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shape",       new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -115,13 +117,13 @@ function (Fields,
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
 				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .shape_);
-		
+
 				if (boundedObject)
 					return boundedObject .getBBox (bbox);
-		
+
 				return bbox .set ();
 			}
-		
+
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 		},
 		set_shape__: function ()
@@ -139,7 +141,7 @@ function (Fields,
 				var
 					node = this .shape_ .getValue () .getInnerNode (),
 					type = node .getType ();
-	
+
 				for (var t = type .length - 1; t >= 0; -- t)
 				{
 					switch (type [t])
@@ -198,5 +200,3 @@ function (Fields,
 
 	return CADFace;
 });
-
-

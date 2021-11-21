@@ -58,8 +58,8 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DSensorNode, 
-          X3DBoundedObject, 
+          X3DSensorNode,
+          X3DBoundedObject,
           X3DConstants)
 {
 "use strict";
@@ -78,6 +78,8 @@ function (Fields,
 		constructor: TransmitterPdu,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",                           new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",                            new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",                        new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",                           new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",                         new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                            new Fields .SFBool (true)),
@@ -144,5 +146,3 @@ function (Fields,
 
 	return TransmitterPdu;
 });
-
-

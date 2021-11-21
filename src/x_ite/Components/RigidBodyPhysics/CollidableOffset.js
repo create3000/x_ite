@@ -59,7 +59,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNBodyCollidableNode, 
+          X3DNBodyCollidableNode,
           X3DConstants,
           X3DCast,
           TraverseType)
@@ -83,6 +83,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "translation", new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",    new Fields .SFRotation ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "collidable",  new Fields .SFNode ()),
@@ -113,13 +115,13 @@ function (Fields,
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
 				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .collidable_);
-		
+
 				if (boundedObject)
 					return boundedObject .getBBox (bbox);
-		
+
 				return bbox .set ();
 			}
-		
+
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 		},
 		set_collidable__: function ()
@@ -130,7 +132,7 @@ function (Fields,
 				this .collidableNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
 				this .collidableNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
 			}
-		
+
 			this .collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .collidable_);
 
 			if (this .collidableNode)
@@ -151,14 +153,14 @@ function (Fields,
 
 				this .traverse = Function .prototype;
 			}
-		
+
 			this .set_collidableGeometry__ ();
 		},
 		set_collidableGeometry__: function ()
 		{
 			if (this .getCompoundShape () .getNumChildShapes ())
 				this .getCompoundShape () .removeChildShapeByIndex (0);
-		
+
 			if (this .collidableNode && this .enabled_ .getValue ())
 				this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collidableNode .getCompoundShape ());
 		},
@@ -172,7 +174,7 @@ function (Fields,
 						browser          = renderObject .getBrowser (),
 						pickingHierarchy = browser .getPickingHierarchy (),
 						modelViewMatrix  = renderObject .getModelViewMatrix ();
-		
+
 					pickingHierarchy .push (this);
 					modelViewMatrix .push ();
 					modelViewMatrix .multLeft (this .getMatrix ());
@@ -201,5 +203,3 @@ function (Fields,
 
 	return CollidableOffset;
 });
-
-

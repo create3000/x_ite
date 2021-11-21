@@ -87,11 +87,13 @@ function (Fields,
 	{
 		constructor: Shape,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",   new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter", new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "appearance", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",   new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "appearance",  new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",    new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{

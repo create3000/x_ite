@@ -59,8 +59,8 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTransformMatrix3DNode, 
-          X3DGeospatialObject, 
+          X3DTransformMatrix3DNode,
+          X3DGeospatialObject,
           X3DConstants,
           Matrix4)
 {
@@ -85,6 +85,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",      new Fields .MFString ("GD", "WE")),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "geoCoords",      new Fields .SFVec3d ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
@@ -107,9 +109,9 @@ function (Fields,
 		{
 			X3DTransformMatrix3DNode .prototype .initialize .call (this);
 			X3DGeospatialObject      .prototype .initialize .call (this);
-		
+
 			this .addInterest ("eventsProcessed", this);
-		
+
 			this .eventsProcessed ();
 		},
 		eventsProcessed: function ()
@@ -120,5 +122,3 @@ function (Fields,
 
 	return GeoLocation;
 });
-
-

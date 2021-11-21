@@ -49,58 +49,51 @@
 
 define ([
 	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Grouping/X3DTransformNode",
-	"x_ite/Bits/X3DConstants",
+	"x_ite/Components/Shape/Shape",
+	"x_ite/Components/Rendering/IndexedLineSet",
+	"x_ite/Components/Rendering/Color",
+	"x_ite/Components/Rendering/Coordinate",
 ],
 function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DTransformNode,
-          X3DConstants)
+          Shape,
+          IndexedLineSet,
+			 Color,
+			 Coordinate)
 {
 "use strict";
 
-	function HAnimSite (executionContext)
+	function X3DGroupingContext () { }
+
+	X3DGroupingContext .prototype =
 	{
-		X3DTransformNode .call (this, executionContext);
-
-		this .addType (X3DConstants .HAnimSite);
-	}
-
-	HAnimSite .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
-	{
-		constructor: HAnimSite,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "name",             new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",      new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",         new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",            new Fields .SFVec3f (1, 1, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientation", new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "center",           new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
+		initialize: function () { },
+		getBBoxNode: function ()
 		{
-			return "HAnimSite";
-		},
-		getComponentName: function ()
-		{
-			return "HAnim";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-	});
+			if (this .bboxNode)
+				return this .bboxNode;
 
-	return HAnimSite;
+			const bboxNode       = new Shape (this .getPrivateScene ());
+			const bboxGeometry   = new IndexedLineSet (this .getPrivateScene ());
+			const bboxColor      = new Color (this .getPrivateScene ());
+			const bboxCoordinate = new Coordinate (this .getPrivateScene ());
+
+			bboxNode .geometry_       = bboxGeometry;
+			bboxGeometry .coordIndex_ = new Fields .MFFloat (0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 1, 5, -1, 2, 6, -1, 3, 7, -1);
+			bboxGeometry .color_      = bboxColor;
+			bboxGeometry .coord_      = bboxCoordinate;
+			bboxColor .color_         = new Fields .MFColor (new Fields .SFColor (1, 1, 1));
+			bboxCoordinate .point_    = new Fields .MFVec3f (new Fields .SFVec3f (0.5, 0.5, 0.5), new Fields .SFVec3f (-0.5, 0.5, 0.5), new Fields .SFVec3f (-0.5, -0.5, 0.5), new Fields .SFVec3f (0.5, -0.5, 0.5), new Fields .SFVec3f (0.5, 0.5, -0.5), new Fields .SFVec3f (-0.5, 0.5, -0.5), new Fields .SFVec3f (-0.5, -0.5, -0.5), new Fields .SFVec3f (0.5, -0.5, -0.5));
+
+			bboxCoordinate .setup ();
+			bboxColor      .setup ();
+			bboxGeometry   .setup ();
+			bboxNode       .setup ();
+
+			this .bboxNode = bboxNode;
+
+			return bboxNode;
+		}
+	};
+
+	return X3DGroupingContext;
 });

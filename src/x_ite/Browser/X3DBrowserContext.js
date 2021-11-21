@@ -58,6 +58,7 @@ define ([
 	"x_ite/Browser/Shaders/X3DShadersContext",
 	"x_ite/Browser/Rendering/X3DRenderingContext",
 	"x_ite/Browser/Shape/X3DShapeContext",
+	"x_ite/Browser/Grouping/X3DGroupingContext",
 	"x_ite/Browser/Geometry3D/X3DGeometry3DContext",
 	"x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext",
 	"x_ite/Browser/Navigation/X3DNavigationContext",
@@ -82,6 +83,7 @@ function ($,
           X3DShadersContext,
           X3DRenderingContext,
           X3DShapeContext,
+			 X3DGroupingContext,
           X3DGeometry3DContext,
           X3DPointingDeviceSensorContext,
           X3DNavigationContext,
@@ -110,6 +112,7 @@ function ($,
 		X3DShadersContext              .call (this);
 		X3DRenderingContext            .call (this);
 		X3DShapeContext                .call (this);
+		X3DGroupingContext             .call (this);
 		X3DGeometry3DContext           .call (this);
 		X3DPointingDeviceSensorContext .call (this);
 		X3DNavigationContext           .call (this);
@@ -149,6 +152,7 @@ function ($,
 		X3DShadersContext .prototype,
 		X3DRenderingContext .prototype,
 		X3DShapeContext .prototype,
+		X3DGroupingContext .prototype,
 		X3DGeometry3DContext .prototype,
 		X3DPointingDeviceSensorContext .prototype,
 		X3DNavigationContext .prototype,
@@ -172,6 +176,7 @@ function ($,
 			X3DShadersContext              .prototype .initialize .call (this);
 			X3DRenderingContext            .prototype .initialize .call (this);
 			X3DShapeContext                .prototype .initialize .call (this);
+			X3DGroupingContext             .prototype .initialize .call (this);
 			X3DGeometry3DContext           .prototype .initialize .call (this);
 			X3DPointingDeviceSensorContext .prototype .initialize .call (this);
 			X3DNavigationContext           .prototype .initialize .call (this);

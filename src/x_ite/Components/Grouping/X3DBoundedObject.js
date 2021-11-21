@@ -52,12 +52,14 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/Box3",
 ],
 function (Fields,
           X3DCast,
           X3DConstants,
           Vector3,
+			 Matrix4,
           Box3)
 {
 "use strict";
@@ -81,7 +83,7 @@ function (Fields,
 		initialize: function () { },
 		getDefaultBBoxSize: (function ()
 		{
-			var defaultBBoxSize = new Vector3 (-1, -1, -1);
+			const defaultBBoxSize = new Vector3 (-1, -1, -1);
 
 			return function ()
 			{
@@ -96,7 +98,7 @@ function (Fields,
 
 			for (var i = 0, length = nodes .length; i < length; ++ i)
 			{
-				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, nodes [i]);
+				const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, nodes [i]);
 
 				if (boundedObject)
 					bbox .add (boundedObject .getBBox (this .childBBox));
@@ -104,6 +106,27 @@ function (Fields,
 
 			return bbox;
 		},
+		displayBBox: (function ()
+		{
+			const bbox = new Box3 ();
+
+			return function (type, renderObject)
+			{
+				this .getBBox (bbox);
+
+				const matrix          = new Matrix4 ();
+				const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+				matrix .set (bbox .center, null, bbox .size);
+
+				modelViewMatrix .push ();
+				modelViewMatrix .multLeft (matrix);
+
+				this .getBrowser () .getBBoxNode () .traverse (type, renderObject);
+
+				modelViewMatrix .pop ();
+			};
+		})(),
 		addTransformSensor: function (transformSensorNode)
 		{
 			this .transformSensorNodes .add (transformSensorNode);

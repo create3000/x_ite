@@ -56,7 +56,6 @@ define ([
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
-	"standard/Math/Geometry/Box3",
 	"standard/Math/Algorithm",
 ],
 function (Fields,
@@ -67,7 +66,6 @@ function (Fields,
           TraverseType,
           X3DConstants,
           Matrix4,
-          Box3,
           Algorithm)
 {
 "use strict";
@@ -86,6 +84,9 @@ function (Fields,
 
 		this .frameRate        = 60;
 		this .keepCurrentLevel = false;
+		this .childNode        = null;
+		this .visibleNode      = null;
+		this .boundedObject    = null;
 	}
 
 	LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -97,6 +98,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "center",           new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "range",            new Fields .MFFloat ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "level_changed",    new Fields .SFInt32 (-1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
@@ -119,14 +122,13 @@ function (Fields,
 		{
 			X3DGroupingNode .prototype .initialize .call (this);
 
-			this .child = this .getChild (this .level_changed_ .getValue ());
-			this .set_cameraObjects__ ();
+			this .children_ .addInterest ("set_child__", this);
 		},
 		getBBox: function (bbox)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
-				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .child);
+				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .childNode);
 
 				if (boundedObject)
 					return boundedObject .getBBox (bbox);
@@ -140,13 +142,78 @@ function (Fields,
 		{
 			return this .getBBox (bbox);
 		},
-		set_cameraObjects__: function ()
+		clear: function () { },
+		add: function () { },
+		remove: function () { },
+		set_child__: function ()
 		{
-			this .setCameraObject (Boolean (this .child && this .child .getCameraObject ()));
+			this .set_level (Math .min (this .level_changed_ .getValue (), this .children_ .length - 1));
+		},
+		set_level__: function (level)
+		{
+			if (this .childNode)
+				this .childNode .isCameraObject_ .removeInterest ("set_cameraObject__", this);
+
+			if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+			{
+				this .childNode .visible_     .removeInterest ("set_visible__",     this);
+				this .childNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+			}
+
+			if (level >= 0 && level < this .children_ .length)
+			{
+				this .childNode = X3DCast (X3DConstants .X3DChildNode, this .children_ [level]);
+
+				if (this .childNode)
+				{
+					this .childNode .isCameraObject_ .addInterest ("set_cameraObject__", this);
+
+					if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+					{
+						this .childNode .visible_     .addInterest ("set_visible__",     this);
+						this .childNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
+					}
+				}
+			}
+			else
+			{
+				this .childNode = null;
+			}
+
+			this .set_cameraObject__ ();
+			this .set_transformSensors__ ();
+			this .set_visible__ ();
+			this .set_bboxDisplay__ ();
+		},
+		set_cameraObject__: function ()
+		{
+			this .setCameraObject (Boolean (this .childNode && this .childNode .getCameraObject ()));
 		},
 		set_transformSensors__: function ()
 		{
-			this .setPickableObject (Boolean (this .getTransformSensors () .size || this .child && this .child .getPickableObject ()));
+			this .setPickableObject (Boolean (this .getTransformSensors () .size || this .childNode && this .childNode .getPickableObject ()));
+		},
+		set_visible__: function ()
+		{
+			if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+			{
+				this .visibleNode = this .childNode .visible_ .getValue () ? this .childNode : null;
+			}
+			else
+			{
+				this .visibleNode = this .childNode;
+			}
+		},
+		set_bboxDisplay__: function ()
+		{
+			if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+			{
+				this .boundedObject = this .childNode .bboxDisplay_ .getValue () ? this .childNode : null;
+			}
+			else
+			{
+				this .boundedObject = null;
+			}
 		},
 		getLevel: (function ()
 		{
@@ -159,42 +226,49 @@ function (Fields,
 			{
 				if (this .range_ .length === 0)
 				{
-					var size = this .children_ .length;
-
-					if (size < 2)
-						return 0;
-
 					this .frameRate = ((FRAMES - 1) * this .frameRate + browser .currentFrameRate) / FRAMES;
 
-					if (size === 2)
-						return (this .frameRate > FRAME_RATE_MAX) * 1;
+					var size = this .children_ .length;
 
-					var fraction = 1 - Algorithm .clamp ((this .frameRate - FRAME_RATE_MIN) / (FRAME_RATE_MAX - FRAME_RATE_MIN), 0, 1);
+					switch (size)
+					{
+						case 0:
+							return -1;
+						case 1:
+							return 0;
+						case 2:
+							return (this .frameRate > FRAME_RATE_MAX) * 1;
+						default:
+						{
+							var fraction = 1 - Algorithm .clamp ((this .frameRate - FRAME_RATE_MIN) / (FRAME_RATE_MAX - FRAME_RATE_MIN), 0, 1);
 
-					return Math .min (Math .floor (fraction * size), size - 1);
+							return Math .min (Math .floor (fraction * size), size - 1);
+						}
+					}
 				}
 
-				var distance = this .getDistance (modelViewMatrix);
+				var distance = modelViewMatrix .translate (this .center_ .getValue ()) .origin .abs ();
 
 				return Algorithm .upperBound (this .range_, 0, this .range_ .length, distance, Algorithm .less);
 			};
 		})(),
-		getDistance: function (modelViewMatrix)
-		{
-			modelViewMatrix .translate (this .center_ .getValue ());
-
-			return modelViewMatrix .origin .abs ();
-		},
 		traverse: (function ()
 		{
 			var modelViewMatrix = new Matrix4 ();
 
 			return function (type, renderObject)
 			{
-				var child = this .child;
-
 				switch (type)
 				{
+					case TraverseType .PICKING:
+					{
+						var visibleNode = this .visibleNode;
+
+						if (visibleNode)
+							visibleNode .traverse (type, renderObject);
+
+						return;
+					}
 					case TraverseType .PICKING:
 					{
 						if (this .getTransformSensors () .size)
@@ -207,7 +281,9 @@ function (Fields,
 							});
 						}
 
-						if (child)
+						var childNode = this .childNode;
+
+						if (childNode)
 						{
 							var
 								browser          = renderObject .getBrowser (),
@@ -215,10 +291,28 @@ function (Fields,
 
 							pickingHierarchy .push (this);
 
-							child .traverse (type, renderObject);
+							childNode .traverse (type, renderObject);
 
 							pickingHierarchy .pop ();
 						}
+
+						return;
+					}
+					case TraverseType .COLLISION:
+					{
+						var childNode = this .childNode;
+
+						if (childNode)
+							childNode .traverse (type, renderObject);
+
+						return;
+					}
+					case TraverseType .DEPTH:
+					{
+						var visibleNode = this .visibleNode;
+
+						if (visibleNode)
+							visibleNode .traverse (type, renderObject);
 
 						return;
 					}
@@ -243,21 +337,19 @@ function (Fields,
 							{
 								this .level_changed_ = level;
 
-								child = this .child = this .getChild (Math .min (level, this .children_ .length - 1));
-
-								this .set_cameraObjects__ ();
+								this .set_level__ (Math .min (level, this .children_ .length - 1));
 							}
 						}
 
-						if (child)
-							child .traverse (type, renderObject);
+						var visibleNode = this .visibleNode;
 
-						return;
-					}
-					default:
-					{
-						if (child)
-							child .traverse (type, renderObject);
+						if (visibleNode)
+							visibleNode .traverse (type, renderObject);
+
+						var boundedObject = this .boundedObject;
+
+						if (boundedObject)
+							boundedObject .displayBBox (type, renderObject);
 
 						return;
 					}

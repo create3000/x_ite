@@ -60,7 +60,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGroupingNode, 
+          X3DGroupingNode,
           X3DSensorNode,
           X3DCast,
           TraverseType,
@@ -88,6 +88,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",        new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",       new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "collideTime",    new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "proxy",          new Fields .SFNode ()),
@@ -111,7 +113,7 @@ function (Fields,
 		{
 			X3DGroupingNode .prototype .initialize .call (this);
 			//X3DSensorNode   .prototype .initialize .call (this); // We can only call the base of a *Objects.
-	
+
 			this .isLive () .addInterest ("set_live__", this);
 			this .enabled_  .addInterest ("set_live__", this);
 			this .proxy_    .addInterest ("set_proxy__", this);
@@ -123,7 +125,7 @@ function (Fields,
 		{
 		   if (this .isLive () .getValue () && this .enabled_ .getValue ())
 		      this .getBrowser () .addCollision (this);
-		   
+
 		   else
 		      this .getBrowser () .removeCollision (this);
 		},
@@ -175,5 +177,3 @@ function (Fields,
 
 	return Collision;
 });
-
-

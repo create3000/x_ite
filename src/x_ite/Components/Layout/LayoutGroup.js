@@ -87,6 +87,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "layout",         new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "viewport",       new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
@@ -111,7 +113,7 @@ function (Fields,
 
 			this .viewport_ .addInterest ("set_viewport__", this);
 			this .layout_   .addInterest ("set_layout__", this);
-		
+
 			this .set_viewport__ ();
 			this .set_layout__ ();
 		},
@@ -138,7 +140,7 @@ function (Fields,
 			}
 			catch (error)
 			{ }
-		
+
 			return this .matrix;
 		},
 		traverse: function (type, renderObject)
@@ -176,7 +178,7 @@ function (Fields,
 
 					if (this .viewportNode)
 						this .viewportNode .pop ();
-		
+
 					return;
 				}
 			}
@@ -185,5 +187,3 @@ function (Fields,
 
 	return LayoutGroup;
 });
-
-
