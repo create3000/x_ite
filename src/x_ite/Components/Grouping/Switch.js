@@ -228,6 +228,7 @@ function (Fields,
 			{
 				case TraverseType .POINTER:
 				case TraverseType .CAMERA:
+				case TraverseType .DEPTH:
 				{
 					var visibleNode = this .visibleNode;
 
@@ -271,15 +272,6 @@ function (Fields,
 
 					if (childNode)
 						childNode .traverse (type, renderObject);
-
-					return;
-				}
-				case TraverseType .DEPTH:
-				{
-					var visibleNode = this .visibleNode;
-
-					if (visibleNode)
-						visibleNode .traverse (type, renderObject);
 
 					return;
 				}
