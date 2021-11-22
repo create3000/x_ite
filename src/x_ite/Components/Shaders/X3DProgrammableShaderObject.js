@@ -979,10 +979,12 @@ function (Fields,
 		setLocalUniforms: function (gl, context)
 		{
 			const
-				stylePropertiesNode   = context .stylePropertiesNode,
-				materialNode          = context .materialNode,
-				textureNode           = context .textureNode,
-				textureTransformNode  = context .textureTransformNode,
+				geometryType          = context .geometryType,
+				appearanceNode        = context .appearanceNode,
+				stylePropertiesNode   = appearanceNode .stylePropertiesNode [geometryType],
+				materialNode          = appearanceNode .materialNode,
+				textureNode           = appearanceNode .textureNode,
+				textureTransformNode  = appearanceNode .textureTransformNode,
 				textureCoordinateNode = context .textureCoordinateNode,
 				modelViewMatrix       = context .modelViewMatrix,
 				localObjects          = context .localObjects;
@@ -993,7 +995,7 @@ function (Fields,
 
 			// Geometry type
 
-			gl .uniform1i (this .x3d_GeometryType, context .geometryType);
+			gl .uniform1i (this .x3d_GeometryType, geometryType);
 
 			// Clip planes and local lights
 
@@ -1015,8 +1017,8 @@ function (Fields,
 
 			// Alpha
 
-			gl .uniform1i (this .x3d_Mask,        context .mask);
-			gl .uniform1f (this .x3d_AlphaCutoff, context .alphaCutoff);
+			gl .uniform1i (this .x3d_Mask,        appearanceNode .mask);
+			gl .uniform1f (this .x3d_AlphaCutoff, appearanceNode .alphaCutoff);
 
 			// Style
 

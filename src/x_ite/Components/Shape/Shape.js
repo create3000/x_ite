@@ -275,7 +275,7 @@ function (Fields,
 		{
 			var geometryNode = this .getGeometry ();
 
-			this .getAppearance () .enable (gl, context, geometryNode .getGeometryType ());
+			this .getAppearance () .enable (gl, context);
 
 			geometryNode .display (gl, context);
 

@@ -349,15 +349,9 @@ function (Fields,
 			if (this .shaderNode)
 				this .shaderNode .traverse (type, renderObject);
 		},
-		enable: function (gl, context, geometryType)
+		enable: function (gl, context)
 		{
-			context .mask                 = this .mask;
-			context .alphaCutoff          = this .alphaCutoff;
-			context .stylePropertiesNode  = this .stylePropertiesNode [geometryType];
-			context .materialNode         = this .materialNode;
-			context .textureNode          = this .textureNode;
-			context .textureTransformNode = this .textureTransformNode;
-			context .shaderNode           = this .shaderNode;
+			context .appearanceNode = this;
 
 			if (this .blendModeNode)
 				this .blendModeNode .enable (gl);

@@ -1384,7 +1384,7 @@ function (Fields,
 
 				// Traverse appearance before everything.
 
-				this .getAppearance () .enable (gl, context, this .shaderGeometryType);
+				this .getAppearance () .enable (gl, context);
 
 				// Update geometry if SPRITE.
 
@@ -1403,7 +1403,7 @@ function (Fields,
 				{
 					const
 						browser    = context .browser,
-						shaderNode = context .shaderNode || this .shaderNode;
+						shaderNode = context .appearanceNode .shaderNode || this .shaderNode;
 
 					// Setup shader.
 
