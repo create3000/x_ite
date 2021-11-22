@@ -117,23 +117,23 @@ function (Fields,
 
 			this .set_child__ ();
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
 				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .childNode);
 
 				if (boundedObject)
-					return boundedObject .getBBox (bbox);
+					return boundedObject .getBBox (bbox, shadow);
 
 				return bbox .set ();
 			}
 
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 		},
-		getSubBBox: function (bbox)
+		getSubBBox: function (bbox, shadow)
 		{
-			return this .getBBox (bbox);
+			return this .getBBox (bbox, shadow);
 		},
 		clear: function () { },
 		add: function () { },

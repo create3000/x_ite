@@ -127,13 +127,13 @@ function (Fields,
 
 			this .set_geometry__ ();
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
 			// Add bounding boxes
 
 			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
 			{
-				bbox .add (his .geometryNodes [i] .getBBox ());
+				bbox .add (this .geometryNodes [i] .getBBox ());
 			}
 
 			return bbox;

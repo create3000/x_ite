@@ -52,13 +52,15 @@ define ([
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Shape/AlphaMode",
 	"standard/Math/Geometry/Box3",
 	"standard/Math/Numbers/Vector3",
 ],
-function (X3DChildNode, 
+function (X3DChildNode,
           X3DBoundedObject,
           X3DCast,
           X3DConstants,
+			 AlphaMode,
           Box3,
           Vector3)
 {
@@ -85,17 +87,35 @@ function (X3DChildNode,
 			X3DChildNode     .prototype .initialize .call (this);
 			X3DBoundedObject .prototype .initialize .call (this);
 
-			this .bboxSize_   .addInterest ("set_bbox__", this);
-			this .bboxCenter_ .addInterest ("set_bbox__", this);
+			this .bboxSize_   .addInterest ("set_bbox__",      this);
+			this .bboxCenter_ .addInterest ("set_bbox__",      this);
 			this .appearance_ .addInterest ("set_apparance__", this);
-			this .geometry_   .addInterest ("set_geometry__", this);
+			this .geometry_   .addInterest ("set_geometry__",  this);
+
+			this .appearance_ .addInterest ("set_transparent__", this);
+			this .geometry_   .addInterest ("set_transparent__", this);
 
 			this .set_apparance__ ();
 			this .set_geometry__ ();
+			this .set_transparent__ ();
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
-			return bbox .assign (this .bbox);
+			if (shadow)
+			{
+				if (this .castShadow_ .getValue ())
+				{
+					return bbox .assign (this .bbox);
+				}
+				else
+				{
+					return bbox .set ();
+				}
+			}
+			else
+			{
+				return bbox .assign (this .bbox);
+			}
 		},
 		getBBoxSize: function ()
 		{
@@ -149,8 +169,6 @@ function (X3DChildNode,
 
 			else
 				this .apparanceNode = this .getBrowser () .getDefaultAppearance ();
-
-			this .set_transparent__ ();
 		},
 		set_geometry__: function ()
 		{
@@ -168,17 +186,15 @@ function (X3DChildNode,
 				this .geometryNode .bbox_changed_ .addInterest ("set_bbox__",        this);
 			}
 
-			this .set_transparent__ ();
 			this .set_bbox__ ();
 		},
 		set_transparent__: function ()
 		{
-			this .transparent = (this .apparanceNode && this .apparanceNode .getTransparent ()) ||
-			                    (this .geometryNode  && this .geometryNode  .getTransparent ());
+			this .transparent = this .apparanceNode .getTransparent () ||
+			                    (this .geometryNode && this .geometryNode .getTransparent () &&
+									   this .apparanceNode .getAlphaMode () == AlphaMode .AUTO);
 		},
 	});
 
 	return X3DShapeNode;
 });
-
-

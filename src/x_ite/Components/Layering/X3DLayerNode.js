@@ -223,9 +223,9 @@ function (X3DNode,
 		{
 			return this .viewpointStack;
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
-			return this .groupNode .getBBox (bbox);
+			return this .groupNode .getBBox (bbox, shadow);
 		},
 		lookAt: function (factor, straighten)
 		{

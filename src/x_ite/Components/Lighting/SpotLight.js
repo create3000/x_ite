@@ -70,8 +70,8 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DLightNode, 
-          X3DGroupingNode, 
+          X3DLightNode,
+          X3DGroupingNode,
           TraverseType,
           X3DConstants,
           Box3,
@@ -89,13 +89,13 @@ function (Fields,
 "use strict";
 
 	var SpotLights = ObjectCache (SpotLightContainer);
-	
+
 	function SpotLightContainer ()
 	{
 		this .location                      = new Vector3 (0, 0, 0);
 		this .direction                     = new Vector3 (0, 0, 0);
 		this .matrixArray                   = new Float32Array (9);
-		this .renderShadow                  = true; 
+		this .renderShadow                  = true;
 		this .shadowBuffer                  = null;
 		this .bbox                          = new Box3 ();
 		this .viewVolume                    = new ViewVolume ();
@@ -191,9 +191,9 @@ function (Fields,
 				invLightSpaceMatrix .inverse ();
 
 				var
-					groupBBox        = X3DGroupingNode .prototype .getBBox .call (this .groupNode, this .bbox), // Group bbox.
-					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                              // Group bbox from the perspective of the light.
-					lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax),          // Result not used, but arguments.
+					groupBBox        = this .groupNode .getSubBBox (this .bbox, true),                 // Group bbox.
+					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                     // Group bbox from the perspective of the light.
+					lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax), // Result not used, but arguments.
 					shadowMapSize    = lightNode .getShadowMapSize (),
 					farValue         = Math .min (lightNode .getRadius (), -this .lightBBoxMin .z),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
@@ -214,7 +214,7 @@ function (Fields,
 				renderObject .getViewVolumes      () .pop ();
 
 				this .shadowBuffer .unbind ();
-	
+
 				if (! lightNode .getGlobal ())
 					invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 
@@ -228,7 +228,7 @@ function (Fields,
 		},
 		setGlobalVariables: function (renderObject)
 		{
-			var 
+			var
 				lightNode       = this .lightNode,
 				modelViewMatrix = this .modelViewMatrix .get ();
 
@@ -245,7 +245,7 @@ function (Fields,
 			if (shaderObject .hasLight (i, this))
 				return;
 
-			var 
+			var
 				lightNode   = this .lightNode,
 				color       = lightNode .getColor (),
 				attenuation = lightNode .getAttenuation (),
@@ -278,7 +278,7 @@ function (Fields,
 			else
 			{
 				// Must be set to zero in case of multiple lights.
-				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);			
+				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
 			}
 		},
 		dispose: function ()
@@ -331,7 +331,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "radius",           new Fields .SFFloat (100)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "beamWidth",        new Fields .SFFloat (0.785398)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "cutOffAngle",      new Fields .SFFloat (1.5708)),
-																				   
+
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadow.
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat ()),        // Intensity of shadow color in the range (0, 1).
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
@@ -386,5 +386,3 @@ function (Fields,
 
 	return SpotLight;
 });
-
-

@@ -89,6 +89,7 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",  new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
@@ -155,7 +156,9 @@ function (Fields,
 				}
 				case TraverseType .DEPTH:
 				{
-					renderObject .addDepthShape (this);
+					if (this .castShadow_ .getValue ())
+						renderObject .addDepthShape (this);
+
 					break;
 				}
 				case TraverseType .DISPLAY:
@@ -272,8 +275,10 @@ function (Fields,
 		{
 			var geometryNode = this .getGeometry ();
 
-			this .getAppearance () .enable  (gl, context, geometryNode .getGeometryType ());
+			this .getAppearance () .enable (gl, context, geometryNode .getGeometryType ());
+
 			geometryNode .display (gl, context);
+
 			this .getAppearance () .disable (gl, context);
 		},
 	});

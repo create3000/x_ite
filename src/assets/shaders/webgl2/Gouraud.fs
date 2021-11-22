@@ -8,9 +8,11 @@ precision mediump float;
 precision mediump int;
 #endif
 
-uniform int  x3d_GeometryType;
-uniform bool x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
-uniform bool x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
+uniform int   x3d_GeometryType;
+uniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
+uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
+uniform bool  x3d_Mask;
+uniform float x3d_AlphaCutoff;
 
 in float fogDepth;    // fog depth
 in vec4  frontColor;  // color
@@ -69,7 +71,13 @@ main ()
 	finalColor      = getProjectiveTextureColor (finalColor);
 	finalColor      = getHatchColor (finalColor);
 	finalColor .rgb = getFogColor (finalColor .rgb);
-	x3d_FragColor   = finalColor;
+
+   if (x3d_Mask && finalColor .a < x3d_AlphaCutoff)
+   {
+      discard;
+   }
+
+	x3d_FragColor = finalColor;
 
 	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 	//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html

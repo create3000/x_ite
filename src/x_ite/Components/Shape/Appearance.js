@@ -54,13 +54,15 @@ define ([
 	"x_ite/Components/Shape/X3DAppearanceNode",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Shape/AlphaMode",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DAppearanceNode,
           X3DCast,
-          X3DConstants)
+          X3DConstants,
+			 AlphaMode)
 {
 "use strict";
 
@@ -86,6 +88,8 @@ function (Fields,
 		constructor: Appearance,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "alphaMode",        new Fields .SFString ("AUTO")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "alphaCutoff",      new Fields .SFFloat (0.5)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "pointProperties",  new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "lineProperties",   new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "fillProperties",   new Fields .SFNode ()),
@@ -113,6 +117,7 @@ function (Fields,
 
 			this .isLive () .addInterest ("set_live__", this);
 
+			this .alphaMode_  		.addInterest ("set_alphaMode__",        this);
 			this .pointProperties_  .addInterest ("set_pointProperties__",  this);
 			this .lineProperties_   .addInterest ("set_lineProperties__",   this);
 			this .fillProperties_   .addInterest ("set_fillProperties__",   this);
@@ -122,7 +127,14 @@ function (Fields,
 			this .shaders_          .addInterest ("set_shaders__",          this);
 			this .blendMode_        .addInterest ("set_blendMode__",        this);
 
+			this .alphaMode_      .addInterest ("set_transparent__", this);
+			this .fillProperties_ .addInterest ("set_transparent__", this);
+			this .material_       .addInterest ("set_transparent__", this);
+			this .texture_        .addInterest ("set_transparent__", this);
+			this .blendMode_      .addInterest ("set_transparent__", this);
+
 			this .set_live__ ();
+			this .set_alphaMode__ ();
 			this .set_pointProperties__ ();
 			this .set_lineProperties__ ();
 			this .set_fillProperties__ ();
@@ -131,6 +143,11 @@ function (Fields,
 			this .set_textureTransform__ ();
 			this .set_shaders__ ();
 			this .set_blendMode__ ();
+			this .set_transparent__ ();
+		},
+		getAlphaMode: function ()
+		{
+			return this .alphaMode;
 		},
 		set_live__: function ()
 		{
@@ -148,6 +165,10 @@ function (Fields,
 				if (this .shaderNode)
 					this .getBrowser () .removeShader (this .shaderNode);
 			}
+		},
+		set_alphaMode__: function ()
+		{
+			this .alphaMode = AlphaMode [this .alphaMode_ .getValue ()] || AlphaMode .AUTO;
 		},
 		set_pointProperties__: function ()
 		{
@@ -175,8 +196,6 @@ function (Fields,
 
 			if (this .fillPropertiesNode)
 				this .fillPropertiesNode .transparent_ .addInterest ("set_transparent__", this);
-
-			this .set_transparent__ ();
 		},
 		set_material__: function ()
 		{
@@ -187,8 +206,6 @@ function (Fields,
 
 			if (this .materialNode)
 				this .materialNode .transparent_ .addInterest ("set_transparent__", this);
-
-			this .set_transparent__ ();
 		},
 		set_texture__: function ()
 		{
@@ -199,8 +216,6 @@ function (Fields,
 
 			if (this .textureNode)
 				this .textureNode .transparent_ .addInterest ("set_transparent__", this);
-
-			this .set_transparent__ ();
 		},
 		set_textureTransform__: function ()
 		{
@@ -289,8 +304,6 @@ function (Fields,
 					this .shaderNode .select ();
 				}
 			}
-
-			this .set_transparent__ ();
 		},
 		set_shading__: function ()
 		{
@@ -299,15 +312,27 @@ function (Fields,
 		set_blendMode__: function ()
 		{
 			this .blendModeNode = X3DCast (X3DConstants .BlendMode, this .blendMode_);
-
-			this .set_transparent__ ();
 		},
 		set_transparent__: function ()
 		{
-			this .setTransparent (this .fillPropertiesNode .getTransparent () ||
-			                      (this .materialNode && this .materialNode .getTransparent ()) ||
-			                      (this .textureNode  && this .textureNode  .getTransparent () ||
-			                      this .blendModeNode));
+			switch (this .alphaMode)
+			{
+				case AlphaMode .AUTO:
+					this .setTransparent (this .fillPropertiesNode .getTransparent () ||
+												 (this .materialNode && this .materialNode .getTransparent ()) ||
+												 (this .textureNode  && this .textureNode  .getTransparent () ||
+												 this .blendModeNode));
+					break;
+				case AlphaMode .OPAQUE:
+					this .setTransparent (false);
+					break;
+				case AlphaMode .MASK:
+					this .setTransparent (false);
+					break;
+				case AlphaMode .BLEND:
+					this .setTransparent (true);
+					break;
+			}
 		},
 		traverse: function (type, renderObject)
 		{
@@ -320,6 +345,9 @@ function (Fields,
 		enable: function (gl, context, geometryType)
 		{
 			var browser = context .browser;
+
+			context .mask        = this .alphaMode == AlphaMode .MASK;
+			context .alphaCutoff = this .alphaCutoff_ .getValue ();
 
 			switch (geometryType)
 			{

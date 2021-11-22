@@ -8,6 +8,8 @@ precision mediump float;
 precision mediump int;
 #endif
 
+uniform bool  x3d_Mask;
+uniform float x3d_AlphaCutoff;
 uniform x3d_LinePropertiesParameters x3d_LineProperties;
 uniform ivec4 x3d_Viewport;
 
@@ -55,8 +57,17 @@ main ()
 	stipple ();
 	#endif
 
-	x3d_FragColor .rgb = getFogColor (color .rgb);
-	x3d_FragColor .a   = color .a;
+	vec4 finalColor = vec4 (0.0);
+
+	finalColor .rgb = getFogColor (color .rgb);
+	finalColor .a   = color .a;
+
+   if (x3d_Mask && finalColor .a < x3d_AlphaCutoff)
+   {
+      discard;
+   }
+
+	x3d_FragColor = finalColor;
 
 	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 	//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html

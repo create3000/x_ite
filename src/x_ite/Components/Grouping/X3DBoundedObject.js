@@ -90,7 +90,7 @@ function (Fields,
 				return defaultBBoxSize;
 			};
 		})(),
-		getBBox: function (nodes, bbox)
+		getBBox: function (nodes, bbox, shadow)
 		{
 			bbox .set ();
 
@@ -101,7 +101,7 @@ function (Fields,
 				const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, nodes [i]);
 
 				if (boundedObject)
-					bbox .add (boundedObject .getBBox (this .childBBox));
+					bbox .add (boundedObject .getBBox (this .childBBox, shadow));
 			}
 
 			return bbox;

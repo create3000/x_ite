@@ -11,7 +11,9 @@ precision mediump float;
 precision mediump int;
 #endif
 
-uniform int x3d_GeometryType;
+uniform int   x3d_GeometryType;
+uniform bool  x3d_Mask;
+uniform float x3d_AlphaCutoff;
 uniform x3d_PointPropertiesParameters x3d_PointProperties;
 
 varying float pointSize; // point size
@@ -84,6 +86,11 @@ main ()
 	vec4 finalColor = getPointColor ();
 
 	finalColor .rgb = getFogColor (finalColor .rgb);
+
+   if (x3d_Mask && finalColor .a < x3d_AlphaCutoff)
+   {
+      discard;
+   }
 
 	gl_FragColor = finalColor;
 

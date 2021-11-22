@@ -107,11 +107,11 @@ function (Fields,
 
 			this .set_collidables__ ();
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
 			// TODO: add space node.
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
-				return X3DBoundedObject .prototype .getBBox .call (this, this .collidableNodes, bbox);
+				return X3DBoundedObject .prototype .getBBox .call (this, this .collidableNodes, bbox, shadow);
 
 			return bbox;
 		},

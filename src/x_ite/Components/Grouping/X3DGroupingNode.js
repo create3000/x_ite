@@ -122,16 +122,16 @@ function (Fields,
 
 			this .set_children__ ();
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
-				return X3DBoundedObject .prototype .getBBox .call (this, this .childNodes, bbox);
+				return X3DBoundedObject .prototype .getBBox .call (this, this .childNodes, bbox, shadow);
 
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 		},
-		getSubBBox: function (bbox)
+		getSubBBox: function (bbox, shadow)
 		{
-			return X3DGroupingNode .prototype .getBBox .call (this, bbox);
+			return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadow);
 		},
 		setHidden: function (value)
 		{

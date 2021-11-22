@@ -125,9 +125,9 @@ function (Fields,
 		{
 			this .layoutNode = X3DCast (X3DConstants .X3DLayoutNode, this .layout_);
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
-			return X3DGroupingNode .prototype .getBBox .call (this, bbox) .multRight (this .getMatrix ());
+			return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadow) .multRight (this .getMatrix ());
 		},
 		getMatrix: function ()
 		{

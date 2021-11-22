@@ -203,9 +203,9 @@ function (Fields,
 			this .set_skinNormal__ ();
 			this .set_skinCoord__ ();
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
-			return this .transformNode .getBBox (bbox);
+			return this .transformNode .getBBox (bbox, shadow);
 		},
 		set_joints__: function ()
 		{

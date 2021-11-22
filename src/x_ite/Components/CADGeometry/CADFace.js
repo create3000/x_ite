@@ -112,14 +112,14 @@ function (Fields,
 
 			this .set_shape__ ();
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
 				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .shape_);
 
 				if (boundedObject)
-					return boundedObject .getBBox (bbox);
+					return boundedObject .getBBox (bbox, shadow);
 
 				return bbox .set ();
 			}

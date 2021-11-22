@@ -54,7 +54,9 @@ getShadowDepth (const in int index, const in vec2 shadowCoord)
 float
 texture2DCompare (const in int index, const in vec2 texCoord, const in float compare)
 {
-	return step (getShadowDepth (index, texCoord), compare);
+	float shadowDepth = getShadowDepth (index, texCoord);
+
+	return (1.0 - step (1.0, shadowDepth)) * step (shadowDepth, compare);
 }
 
 float
@@ -242,6 +244,11 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 			shadowCoord .z   -= light .shadowBias;
 			shadowCoord .xyz /= shadowCoord .w;
 
+			if (shadowCoord .x < 0.0 || shadowCoord .x > 1.0 || shadowCoord .y < 0.0 || shadowCoord .y > 1.0)
+			{
+				return 0.0;
+			}
+
 			float dx0 = - texelSize .x;
 			float dy0 = - texelSize .y;
 			float dx1 = + texelSize .x;
@@ -269,6 +276,11 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 			shadowCoord .z   -= light .shadowBias;
 			shadowCoord .xyz /= shadowCoord .w;
 
+			if (shadowCoord .x < 0.0 || shadowCoord .x > 1.0 || shadowCoord .y < 0.0 || shadowCoord .y > 1.0)
+			{
+				return 0.0;
+			}
+
 			float dx0 = - texelSize.x;
 			float dy0 = - texelSize.y;
 			float dx1 = + texelSize.x;
@@ -294,6 +306,11 @@ getShadowIntensity (const in int index, const in x3d_LightSourceParameters light
 
 			shadowCoord .z   -= shadowBias;
 			shadowCoord .xyz /= shadowCoord .w;
+
+			if (shadowCoord .x < 0.0 || shadowCoord .x > 1.0 || shadowCoord .y < 0.0 || shadowCoord .y > 1.0)
+			{
+				return 0.0;
+			}
 
 			float value = texture2DCompare (index, shadowCoord .xy, shadowCoord .z);
 

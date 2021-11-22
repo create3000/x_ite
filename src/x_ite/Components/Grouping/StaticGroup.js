@@ -87,6 +87,7 @@ function (Fields,
 		this .opaqueShapes      = null;
 		this .transparentShapes = null;
 		this .bbox              = new Box3 ();
+		this .shadowBBox        = new Box3 ();
 	}
 
 	StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -138,13 +139,14 @@ function (Fields,
 
 			this .set_children__ ();
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
-			return bbox .assign (this .bbox);
+			return bbox .assign (shadow ? this .shadowBBox : this .bbox);
 		},
 		set_children__: function ()
 		{
 			this .group .getBBox (this .bbox);
+			this .group .getBBox (this .shadowBBox, true);
 
 			this .collisionShapes   = null;
 			this .depthShapes       = null;

@@ -131,7 +131,7 @@ function (Fields,
 
 			this .textureTransformNode .addInterest ("set_textureTransform__", this);
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 				return bbox .set (this .dimensions_ .getValue (), Vector3 .Zero);

@@ -11,9 +11,11 @@ precision mediump float;
 precision mediump int;
 #endif
 
-uniform int  x3d_GeometryType;
-uniform bool x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
-uniform bool x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
+uniform int   x3d_GeometryType;
+uniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
+uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
+uniform bool  x3d_Mask;
+uniform float x3d_AlphaCutoff;
 
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
@@ -187,11 +189,19 @@ main ()
 {
 	clip ();
 
+	vec4 finalColor = vec4 (0.0);
 	bool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;
 
-	gl_FragColor      = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
-	gl_FragColor      = getHatchColor (gl_FragColor);
-	gl_FragColor .rgb = getFogColor (gl_FragColor .rgb);
+	finalColor      = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
+	finalColor      = getHatchColor (finalColor);
+	finalColor .rgb = getFogColor (finalColor .rgb);
+
+   if (x3d_Mask && finalColor .a < x3d_AlphaCutoff)
+   {
+      discard;
+   }
+
+	gl_FragColor = finalColor;
 
 	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 	//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html

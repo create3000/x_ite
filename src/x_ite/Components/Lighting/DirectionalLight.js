@@ -85,7 +85,7 @@ function (Fields,
 "use strict";
 
 	var DirectionalLights = ObjectCache (DirectionalLightContainer);
-	
+
 	function DirectionalLightContainer ()
 	{
 		this .direction                     = new Vector3 (0, 0, 0);
@@ -172,8 +172,8 @@ function (Fields,
 				invLightSpaceMatrix .inverse ();
 
 				var
-					groupBBox        = X3DGroupingNode .prototype .getBBox .call (this .groupNode, this .bbox), // Group bbox.
-					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                              // Group bbox from the perspective of the light.
+					groupBBox        = this .groupNode .getSubBBox (this .bbox, true), // Group bbox.
+					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),     // Group bbox from the perspective of the light.
 					shadowMapSize    = lightNode .getShadowMapSize (),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
 					projectionMatrix = Camera .orthoBox (lightBBox, this .projectionMatrix);
@@ -191,7 +191,7 @@ function (Fields,
 				renderObject .getViewVolumes      () .pop ();
 
 				this .shadowBuffer .unbind ();
-	
+
 				if (! lightNode .getGlobal ())
 					invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 
@@ -242,7 +242,7 @@ function (Fields,
 			else
 			{
 				// Must be set to zero in case of multiple lights.
-				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);			
+				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
 			}
 		},
 		dispose: function ()
@@ -313,5 +313,3 @@ function (Fields,
 
 	return DirectionalLight;
 });
-
-

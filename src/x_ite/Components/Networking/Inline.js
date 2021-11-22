@@ -134,9 +134,9 @@ function (Fields,
 
 			this .set_url__ ();
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
-			return this .group .getBBox (bbox);
+			return this .group .getBBox (bbox, shadow);
 		},
 		set_live__: function ()
 		{
