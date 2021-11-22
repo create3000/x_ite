@@ -116,6 +116,7 @@ function (Fields,
 			this .isLive () .addInterest ("set_live__", this);
 
 			this .alphaMode_  		.addInterest ("set_alphaMode__",        this);
+			this .alphaCutoff_  		.addInterest ("set_alphaCutoff__",      this);
 			this .pointProperties_  .addInterest ("set_pointProperties__",  this);
 			this .lineProperties_   .addInterest ("set_lineProperties__",   this);
 			this .fillProperties_   .addInterest ("set_fillProperties__",   this);
@@ -133,6 +134,7 @@ function (Fields,
 
 			this .set_live__ ();
 			this .set_alphaMode__ ();
+			this .set_alphaCutoff__ ();
 			this .set_pointProperties__ ();
 			this .set_lineProperties__ ();
 			this .set_fillProperties__ ();
@@ -167,6 +169,11 @@ function (Fields,
 		set_alphaMode__: function ()
 		{
 			this .alphaMode = AlphaMode [this .alphaMode_ .getValue ()] || AlphaMode .AUTO;
+			this .mask      = this .alphaMode == AlphaMode .MASK;
+		},
+		set_alphaCutoff__: function ()
+		{
+			this .alphaCutoff = this .alphaCutoff_ .getValue ();
 		},
 		set_pointProperties__: function ()
 		{
@@ -344,8 +351,8 @@ function (Fields,
 		},
 		enable: function (gl, context, geometryType)
 		{
-			context .mask                 = this .alphaMode == AlphaMode .MASK;
-			context .alphaCutoff          = this .alphaCutoff_ .getValue ();
+			context .mask                 = this .mask;
+			context .alphaCutoff          = this .alphaCutoff;
 			context .stylePropertiesNode  = this .stylePropertiesNode [geometryType];
 			context .materialNode         = this .materialNode;
 			context .textureNode          = this .textureNode;
