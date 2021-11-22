@@ -180,20 +180,20 @@ function (Fields,
 			if (this .removeChildren_ .length === 0)
 				return;
 
-			if (this .children_ .length === 0)
-				return;
-
-			if (! this .children_ .getTainted ())
+			if (this .children_ .length > 0)
 			{
-				this .children_ .removeInterest ("set_children__", this);
-				this .children_ .addInterest ("connectChildren", this);
+				if (! this .children_ .getTainted ())
+				{
+					this .children_ .removeInterest ("set_children__", this);
+					this .children_ .addInterest ("connectChildren", this);
+				}
+
+				this .children_ .erase (remove (this .children_,       0, this .children_ .length,
+														  this .removeChildren_, 0, this .removeChildren_ .length),
+												this .children_ .length);
+
+				this .remove (this .removeChildren_);
 			}
-
-			this .children_ .erase (remove (this .children_,       0, this .children_ .length,
-			                                this .removeChildren_, 0, this .removeChildren_ .length),
-			                        this .children_ .length);
-
-			this .remove (this .removeChildren_);
 
 			this .removeChildren_ .set ([ ]);
 		},
