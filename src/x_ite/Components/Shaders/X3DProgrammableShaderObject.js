@@ -937,7 +937,7 @@ function (Fields,
 		},
 		setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
-			var globalObjects = renderObject .getGlobalObjects ();
+			const globalObjects = renderObject .getGlobalObjects ();
 
 			// Set viewport
 
@@ -967,7 +967,7 @@ function (Fields,
 
 			// Logarithmic depth buffer support.
 
-			var
+			const
 				viewpoint      = renderObject .getViewpoint (),
 				navigationInfo = renderObject .getNavigationInfo ();
 
@@ -978,7 +978,7 @@ function (Fields,
 		},
 		setLocalUniforms: function (gl, context)
 		{
-			var
+			const
 				stylePropertiesNode   = context .stylePropertiesNode,
 				materialNode          = context .materialNode,
 				textureNode           = context .textureNode,
