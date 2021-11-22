@@ -72,9 +72,7 @@ function (Fields,
 
 		this .addType (X3DConstants .Appearance);
 
-		this .pointPropertiesNode  = null;
-		this .linePropertiesNode   = null;
-		this .fillPropertiesNode   = null;
+		this .stylePropertiesNode  = [ ];
 		this .materialNode         = null;
 		this .textureNode          = null;
 		this .textureTransformNode = null;
@@ -172,30 +170,32 @@ function (Fields,
 		},
 		set_pointProperties__: function ()
 		{
-			this .pointPropertiesNode = X3DCast (X3DConstants .PointProperties, this .pointProperties_);
+			this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this .pointProperties_);
 
-			if (! this .pointPropertiesNode)
-				this .pointPropertiesNode = this .getBrowser () .getDefaultPointProperties ();
+			if (! this .stylePropertiesNode [0])
+				this .stylePropertiesNode [0] = this .getBrowser () .getDefaultPointProperties ();
 		},
 		set_lineProperties__: function ()
 		{
-			this .linePropertiesNode = X3DCast (X3DConstants .LineProperties, this .lineProperties_);
+			this .stylePropertiesNode [1] = X3DCast (X3DConstants .LineProperties, this .lineProperties_);
 
-			if (! this .linePropertiesNode)
-				this .linePropertiesNode = this .getBrowser () .getDefaultLineProperties ();
+			if (! this .stylePropertiesNode [1])
+				this .stylePropertiesNode [1] = this .getBrowser () .getDefaultLineProperties ();
 		},
 		set_fillProperties__: function ()
 		{
-			if (this .fillPropertiesNode)
-				this .fillPropertiesNode .transparent_ .removeInterest ("set_transparent__", this);
+			if (this .stylePropertiesNode [2])
+				this .stylePropertiesNode [2] .transparent_ .removeInterest ("set_transparent__", this);
 
-			this .fillPropertiesNode = X3DCast (X3DConstants .FillProperties, this .fillProperties_);
+			this .stylePropertiesNode [2] = X3DCast (X3DConstants .FillProperties, this .fillProperties_);
 
-			if (! this .fillPropertiesNode)
-				this .fillPropertiesNode = this .getBrowser () .getDefaultFillProperties ();
+			if (! this .stylePropertiesNode [2])
+				this .stylePropertiesNode [2] = this .getBrowser () .getDefaultFillProperties ();
 
-			if (this .fillPropertiesNode)
-				this .fillPropertiesNode .transparent_ .addInterest ("set_transparent__", this);
+			if (this .stylePropertiesNode [2])
+				this .stylePropertiesNode [2] .transparent_ .addInterest ("set_transparent__", this);
+
+			this .stylePropertiesNode [3] = this .stylePropertiesNode [2];
 		},
 		set_material__: function ()
 		{
@@ -318,7 +318,7 @@ function (Fields,
 			switch (this .alphaMode)
 			{
 				case AlphaMode .AUTO:
-					this .setTransparent (this .fillPropertiesNode .getTransparent () ||
+					this .setTransparent (this .stylePropertiesNode [3] .getTransparent () ||
 												 (this .materialNode && this .materialNode .getTransparent ()) ||
 												 (this .textureNode  && this .textureNode  .getTransparent () ||
 												 this .blendModeNode));
@@ -344,22 +344,9 @@ function (Fields,
 		},
 		enable: function (gl, context, geometryType)
 		{
-			context .mask        = this .alphaMode == AlphaMode .MASK;
-			context .alphaCutoff = this .alphaCutoff_ .getValue ();
-
-			switch (geometryType)
-			{
-				case 0:
-					context .stylePropertiesNode = this .pointPropertiesNode;
-					break;
-				case 1:
-					context .stylePropertiesNode = this .linePropertiesNode;
-					break;
-				default:
-					context .stylePropertiesNode = this .fillPropertiesNode;
-					break;
-			}
-
+			context .mask                 = this .alphaMode == AlphaMode .MASK;
+			context .alphaCutoff          = this .alphaCutoff_ .getValue ();
+			context .stylePropertiesNode  = this .stylePropertiesNode [geometryType];
 			context .materialNode         = this .materialNode;
 			context .textureNode          = this .textureNode;
 			context .textureTransformNode = this .textureTransformNode;
