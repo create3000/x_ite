@@ -87,9 +87,9 @@ function (X3DGeometryNode,
 				var
 					texCoords = this .getTexCoords (),
 					vertices  = this .getVertices ();
-	
+
 				this .getMultiTexCoords () .push (texCoords);
-	
+
 				for (var i = 0, length = vertices .length; i < length; i += 8)
 				{
 					texCoords .push (vertices [i],
@@ -101,7 +101,7 @@ function (X3DGeometryNode,
 					                 vertices [i + 2],
 					                 vertices [i + 3]);
 				}
-	
+
 				texCoords .shrinkToFit ();
 			}
 
@@ -111,37 +111,34 @@ function (X3DGeometryNode,
 		{
 			try
 			{
-				var
+				const
 					browser    = context .browser,
-					shaderNode = context .shaderNode;
-
-				if (! shaderNode .getCustom ())
-					shaderNode = this .getShader (browser);
+					shaderNode = context .shaderNode || this .getShader (browser);
 
 				if (shaderNode .getValid ())
 				{
-					var
+					const
 						attribNodes   = this .attribNodes,
 						attribBuffers = this .attribBuffers;
 
 					// Setup shader.
-		
+
 					context .geometryType          = this .getGeometryType ();
 					context .fogCoords             = this .fogCoords;
 					context .colorMaterial         = this .colorMaterial;
 					context .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
-	
+
 					shaderNode .enable (gl);
 					shaderNode .setLocalUniforms (gl, context);
-		
+
 					// Setup vertex attributes.
-		
+
 					for (var i = 0, length = attribNodes .length; i < length; ++ i)
 						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-	
+
 					if (this .fogCoords)
 						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
-	
+
 					if (this .colorMaterial)
 						shaderNode .enableColorAttribute (gl, this .colorBuffer);
 
@@ -149,20 +146,20 @@ function (X3DGeometryNode,
 						shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, true);
 
 					shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
-		
+
 					// Wireframes are always solid so only one drawing call is needed.
-	
+
 					gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
-		
+
 					for (var i = 0, length = attribNodes .length; i < length; ++ i)
 						attribNodes [i] .disable (gl, shaderNode);
-		
+
 					if (this .fogCoords)
 						shaderNode .disableFogDepthAttribute (gl);
-	
+
 					if (this .colorMaterial)
 						shaderNode .disableColorAttribute (gl);
-	
+
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disable (gl);
 				}
@@ -177,76 +174,73 @@ function (X3DGeometryNode,
 		{
 			try
 			{
-				var
+				const
 					browser    = context .browser,
-					shaderNode = context .shaderNode;
-
-				if (! shaderNode .getCustom ())
-					shaderNode = this .getShader (browser);
+					shaderNode = context .shaderNode || this .getShader (browser);
 
 				if (shaderNode .getValid ())
 				{
-					var
+					const
 						attribNodes   = this .attribNodes,
 						attribBuffers = this .attribBuffers;
 
 					// Setup shader.
-		
+
 					context .geometryType          = this .getGeometryType ();
 					context .fogCoords             = this .fogCoords;
 					context .colorMaterial         = this .colorMaterial;
 					context .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
-	
+
 					shaderNode .enable (gl);
 					shaderNode .setLocalUniforms (gl, context);
-		
+
 					// Setup vertex attributes.
-		
+
 					for (var i = 0, length = attribNodes .length; i < length; ++ i)
 						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-	
+
 					if (this .fogCoords)
 						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
-	
+
 					if (this .colorMaterial)
 						shaderNode .enableColorAttribute (gl, this .colorBuffer);
-		
+
 					if (this .getMultiTexCoords () .length)
 						shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-						
+
 					shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
 
 					// Wireframes are always solid so only one drawing call is needed.
-		
-					var
+
+					const
 						modelViewMatrix = context .modelViewMatrix,
 						x               = modelViewMatrix [12],
 						y               = modelViewMatrix [13],
 						z               = modelViewMatrix [14],
 						primitiveMode   = shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode;
-		
+
 					for (var p = 0; p < numParticles; ++ p)
 					{
 						modelViewMatrix [12] = x;
 						modelViewMatrix [13] = y;
 						modelViewMatrix [14] = z;
-		
+
 						Matrix4 .prototype .translate .call (modelViewMatrix, particles [p] .position);
-		
+
 						gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
-			
+
 						gl .drawArrays (primitiveMode, 0, this .vertexCount);
 					}
-		
+
 					for (var i = 0, length = attribNodes .length; i < length; ++ i)
 						attribNodes [i] .disable (gl, shaderNode);
-		
+
 					if (this .fogCoords)
 						shaderNode .disableFogDepthAttribute (gl);
-	
+
 					if (this .colorMaterial)
 						shaderNode .disableColorAttribute (gl);
-	
+
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disable (gl);
 				}
@@ -261,5 +255,3 @@ function (X3DGeometryNode,
 
 	return X3DLineGeometryNode;
 });
-
-

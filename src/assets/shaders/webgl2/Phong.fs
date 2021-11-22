@@ -188,7 +188,7 @@ main ()
 	clip ();
 
 	vec4 finalColor = vec4 (0.0);
-	bool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;
+	bool frontColor = gl_FrontFacing || x3d_SeparateBackColor == false;
 
 	finalColor      = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
 	finalColor      = getHatchColor (finalColor);

@@ -104,7 +104,7 @@ define (function ()
 				for (var i = 0, length = profileComponents .length; i < length; ++ i)
 				{
 					var providerUrl = profileComponents [i] .providerUrl;
-	
+
 					if (providerUrl .match (componentsUrl))
 						providerUrls .add (providerUrl);
 				}
@@ -112,7 +112,7 @@ define (function ()
 				for (var i = 0, length = components .length; i < length; ++ i)
 				{
 					var providerUrl = components [i] .providerUrl;
-	
+
 					if (providerUrl .match (componentsUrl))
 						providerUrls .add (providerUrl);
 				}
@@ -143,7 +143,7 @@ define (function ()
 					return;
 				}
 			}
-		
+
 			this .units = true;
 		},
 		getUnits: function ()

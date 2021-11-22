@@ -199,6 +199,10 @@ function (Fields,
 
 			this .set_live__ ();
 		},
+		getShader: function (browser, shadow)
+		{
+			return shadow ? browser .getDefaultShadowShader () : browser .getDefaultShader ();
+		},
 		setGeometryType: function (value)
 		{
 			this .geometryType = value;
@@ -910,13 +914,13 @@ function (Fields,
 		{
 			try
 			{
-				var shaderNode = context .shaderNode;
+				const shaderNode = context .shaderNode || this .getShader (context .browser, context .shadow);
 
 				// Setup shader.
 
 				if (shaderNode .getValid ())
 				{
-					var
+					const
 						attribNodes   = this .attribNodes,
 						attribBuffers = this .attribBuffers;
 
@@ -954,7 +958,7 @@ function (Fields,
 					}
 					else
 					{
-						var positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+						const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
 
 						gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
 
@@ -1004,8 +1008,6 @@ function (Fields,
 		},
 		displayParticlesDepth: function (gl, context, shaderNode, particles, numParticles)
 		{
-			var gl = context .browser .getContext ();
-
 			// Attribs in depth rendering are not supported:
 			//for (var i = 0, length = attribNodes .length; i < length; ++ i)
 			//	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -1022,7 +1024,7 @@ function (Fields,
 
 			for (var p = 0; p < numParticles; ++ p)
 			{
-				var particle = particles [p];
+				const particle = particles [p];
 
 				modelViewMatrix [12] = x;
 				modelViewMatrix [13] = y;
@@ -1042,11 +1044,11 @@ function (Fields,
 		{
 			try
 			{
-				var shaderNode = context .shaderNode;
+				const shaderNode = context .shaderNode || this .getShader (context .browser, context .shadow);
 
 				if (shaderNode .getValid ())
 				{
-					var
+					const
 						attribNodes   = this .attribNodes,
 						attribBuffers = this .attribBuffers;
 
@@ -1077,7 +1079,7 @@ function (Fields,
 
 					// Draw depending on wireframe, solid and transparent.
 
-					var
+					const
 						materialNode    = context .materialNode,
 						normalMatrix    = materialNode || shaderNode .getCustom (),
 						modelViewMatrix = context .modelViewMatrix,
@@ -1091,7 +1093,7 @@ function (Fields,
 
 						for (var p = 0; p < numParticles; ++ p)
 						{
-							var particle = particles [p];
+							const particle = particles [p];
 
 							modelViewMatrix [12] = x;
 							modelViewMatrix [13] = y;
@@ -1107,7 +1109,7 @@ function (Fields,
 					}
 					else
 					{
-						var positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+						const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
 
 						gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
 

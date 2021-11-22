@@ -344,8 +344,6 @@ function (Fields,
 		},
 		enable: function (gl, context, geometryType)
 		{
-			var browser = context .browser;
-
 			context .mask        = this .alphaMode == AlphaMode .MASK;
 			context .alphaCutoff = this .alphaCutoff_ .getValue ();
 
@@ -365,13 +363,7 @@ function (Fields,
 			context .materialNode         = this .materialNode;
 			context .textureNode          = this .textureNode;
 			context .textureTransformNode = this .textureTransformNode;
-
-			if (this .shaderNode)
-				context .shaderNode = this .shaderNode;
-			else if (context .shadow)
-				context .shaderNode = browser .getDefaultShadowShader ();
-			else
-				context .shaderNode = browser .getDefaultShader ();
+			context .shaderNode           = this .shaderNode;
 
 			if (this .blendModeNode)
 				this .blendModeNode .enable (gl);

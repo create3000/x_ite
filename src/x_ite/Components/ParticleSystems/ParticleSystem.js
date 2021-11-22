@@ -1401,12 +1401,9 @@ function (Fields,
 				}
 				else
 				{
-					var
+					const
 						browser    = context .browser,
-						shaderNode = context .shaderNode;
-
-					if (! shaderNode .getCustom ())
-						shaderNode = this .shaderNode;
+						shaderNode = context .shaderNode || this .shaderNode;
 
 					// Setup shader.
 
