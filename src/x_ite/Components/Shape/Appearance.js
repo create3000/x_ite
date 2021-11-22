@@ -169,7 +169,7 @@ function (Fields,
 		set_alphaMode__: function ()
 		{
 			this .alphaMode = AlphaMode [this .alphaMode_ .getValue ()] || AlphaMode .AUTO;
-			this .mask      = this .alphaMode == AlphaMode .MASK;
+			this .mask      = this .alphaMode === AlphaMode .MASK;
 		},
 		set_alphaCutoff__: function ()
 		{
