@@ -199,7 +199,7 @@ function (X3DChildNode,
 		},
 		set_transparent__: function ()
 		{
-			if (this .apparanceNode .getAlphaMode () == AlphaMode .AUTO)
+			if (this .apparanceNode .getAlphaMode () === AlphaMode .AUTO)
 			{
 				this .transparent = this .apparanceNode .getTransparent () ||
 				                    (this .geometryNode && this .geometryNode .getTransparent ());

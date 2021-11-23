@@ -273,7 +273,7 @@ function (Fields,
 		},
 		set_transparent__: function ()
 		{
-			if (this .getAppearance () .getAlphaMode () == AlphaMode .AUTO)
+			if (this .getAppearance () .getAlphaMode () === AlphaMode .AUTO)
 			{
 				switch (this .geometryType)
 				{
