@@ -185,9 +185,7 @@ function (Fields,
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
-				var level = this .level_changed_ .getValue ();
-
-				switch (this .childrenLoaded ? level : 0)
+				switch (this .childrenLoaded ? this .level_changed_ .getValue () : 0)
 				{
 					case 0:
 					{
@@ -198,12 +196,15 @@ function (Fields,
 					}
 					case 1:
 					{
+						// Must be unique for each GeoLOD..
+						const childBBox = this .childBBox;
+
 						bbox .set ();
 
-						bbox .add (this .child1Inline .getBBox (this .childBBox, shadow));
-						bbox .add (this .child2Inline .getBBox (this .childBBox, shadow));
-						bbox .add (this .child3Inline .getBBox (this .childBBox, shadow));
-						bbox .add (this .child4Inline .getBBox (this .childBBox, shadow));
+						bbox .add (this .child1Inline .getBBox (childBBox, shadow));
+						bbox .add (this .child2Inline .getBBox (childBBox, shadow));
+						bbox .add (this .child3Inline .getBBox (childBBox, shadow));
+						bbox .add (this .child4Inline .getBBox (childBBox, shadow));
 
 						return bbox;
 					}
