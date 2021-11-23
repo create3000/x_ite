@@ -1122,7 +1122,7 @@ function (Fields,
 						{
 							for (var p = 0; p < numParticles; ++ p)
 							{
-								var particle = particles [p];
+								const particle = particles [p];
 
 								modelViewMatrix [12] = x;
 								modelViewMatrix [13] = y;
@@ -1149,7 +1149,7 @@ function (Fields,
 
 							for (var p = 0; p < numParticles; ++ p)
 							{
-								var particle = particles [p];
+								const particle = particles [p];
 
 								modelViewMatrix [12] = x;
 								modelViewMatrix [13] = y;

@@ -78,16 +78,16 @@ function ($,
 	{
 		X3DTextGeometry .call (this, text, fontStyle);
 
-		text .transparent_ = true;
+		text .setTransparent (true);
 
 		this .texCoordArray = X3DGeometryNode .createArray ();
-		this .texture       = new PixelTexture (text .getExecutionContext ());
+		this .textureNode   = new PixelTexture (text .getExecutionContext ());
 		this .canvas        = $("<canvas></canvas>");
 		this .context       = this .canvas [0] .getContext ("2d");
 		this .matrix        = new Matrix4 ();
 
-		this .texture .textureProperties_ = fontStyle .getBrowser () .getScreenTextureProperties ();
-		this .texture .setup ();
+		this .textureNode .textureProperties_ = fontStyle .getBrowser () .getScreenTextureProperties ();
+		this .textureNode .setup ();
 	}
 
 	ScreenText .prototype = Object .assign (Object .create (X3DTextGeometry .prototype),
@@ -325,9 +325,9 @@ function ($,
 
 				// If the cavas is to large imageData is null.
 				if (imageData)
-					this .texture .setTexture (canvas .width, canvas .height, true, new Uint8Array (imageData .data), true);
+					this .textureNode .setTexture (canvas .width, canvas .height, true, new Uint8Array (imageData .data), true);
 				else
-				   this .texture .clear ();
+				   this .textureNode .clear ();
 			};
 		})(),
 		drawGlyph: function (cx, font, glyph, x, y, size)
@@ -461,7 +461,7 @@ function ($,
 		{
 			Matrix4 .prototype .multLeft .call (context .modelViewMatrix, this .matrix);
 
-		   context .textureNode = this .texture;
+		   context .textureNode = this .textureNode;
 		},
 		transformLine: function (line)
 		{
