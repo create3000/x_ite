@@ -174,7 +174,7 @@ function (Fields,
 		},
 		pointer: (function ()
 		{
-			var
+			const
 				modelViewMatrix    = new Matrix4 (),
 				invModelViewMatrix = new Matrix4 (),
 				hitRay             = new Line3 (new Vector3 (0, 0, 0), new Vector3 (0, 0, 0)),
@@ -188,12 +188,12 @@ function (Fields,
 			{
 				try
 				{
-					var geometry = this .getGeometry ();
+					const geometry = this .getGeometry ();
 
 					if (geometry .getGeometryType () < 2)
 						return;
 
-					var browser = renderObject .getBrowser ();
+					const browser = renderObject .getBrowser ();
 
 					modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
 					invModelViewMatrix .assign (modelViewMatrix) .inverse ();
@@ -211,7 +211,7 @@ function (Fields,
 						intersectionSorter .sort (0, intersections .length);
 
 						// Find first point that is not greater than near plane;
-						var index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
+						const index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
 						function (lhs, rhs)
 						{
 						   return lhs .point .z > rhs;
@@ -243,7 +243,7 @@ function (Fields,
 			{
 				if (this .getTransformSensors () .size)
 				{
-					var modelMatrix = renderObject .getModelViewMatrix () .get ();
+					const modelMatrix = renderObject .getModelViewMatrix () .get ();
 
 					this .getTransformSensors () .forEach (function (transformSensorNode)
 					{
@@ -251,7 +251,7 @@ function (Fields,
 					});
 				}
 
-				var
+				const
 					browser          = renderObject .getBrowser (),
 					pickSensorStack  = browser .getPickSensors (),
 					pickingHierarchy = browser .getPickingHierarchy ();

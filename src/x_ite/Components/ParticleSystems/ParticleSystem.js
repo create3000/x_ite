@@ -1419,14 +1419,15 @@ function (Fields,
 				}
 				else
 				{
-					const shaderNode = this .getAppearance () .shaderNode || this .shaderNode;
+					const
+						appearanceNode = this .getAppearance (),
+						shaderNode     = appearanceNode .shaderNode || this .shaderNode;
 
 					// Setup shader.
 
 					if (shaderNode .getValid ())
 					{
-						const
-							blendModeNode = this .getAppearance () .blendModeNode;
+						const blendModeNode = appearanceNode .blendModeNode;
 
 						if (blendModeNode)
 							blendModeNode .enable (gl);
