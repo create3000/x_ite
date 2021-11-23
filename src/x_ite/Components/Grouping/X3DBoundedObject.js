@@ -92,16 +92,18 @@ function (Fields,
 		})(),
 		getBBox: function (nodes, bbox, shadow)
 		{
-			bbox .set ();
+			const childBBox = this .childBBox;
 
-			// Add bounding boxes
+			// Add bounding boxes.
+
+			bbox .set ();
 
 			for (var i = 0, length = nodes .length; i < length; ++ i)
 			{
 				const node = nodes [i];
 
 				if (node .getBBox)
-					bbox .add (node .getBBox (this .childBBox, shadow));
+					bbox .add (node .getBBox (childBBox, shadow));
 			}
 
 			return bbox;
