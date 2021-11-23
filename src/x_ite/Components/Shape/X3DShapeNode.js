@@ -101,20 +101,27 @@ function (X3DChildNode,
 		},
 		getBBox: function (bbox, shadow)
 		{
-			if (shadow)
+			if (this .visible_ .getValue ())
 			{
-				if (this .castShadow_ .getValue ())
+				if (shadow)
 				{
-					return bbox .assign (this .bbox);
+					if (this .castShadow_ .getValue ())
+					{
+						return bbox .assign (this .bbox);
+					}
+					else
+					{
+						return bbox .set ();
+					}
 				}
 				else
 				{
-					return bbox .set ();
+					return bbox .assign (this .bbox);
 				}
 			}
 			else
 			{
-				return bbox .assign (this .bbox);
+				return bbox .set ();
 			}
 		},
 		getBBoxSize: function ()

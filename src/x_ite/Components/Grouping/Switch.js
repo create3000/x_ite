@@ -117,11 +117,11 @@ function (Fields,
 
 			this .set_child__ ();
 		},
-		getBBox: function (bbox, shadow)
+		getSubBBox: function (bbox, shadow)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
-				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .childNode);
+				const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .visibleNode);
 
 				if (boundedObject)
 					return boundedObject .getBBox (bbox, shadow);
@@ -130,10 +130,6 @@ function (Fields,
 			}
 
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
-		},
-		getSubBBox: function (bbox, shadow)
-		{
-			return this .getBBox (bbox, shadow);
 		},
 		clear: function () { },
 		add: function () { },

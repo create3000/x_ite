@@ -124,14 +124,14 @@ function (Fields,
 		},
 		getBBox: function (bbox, shadow)
 		{
-			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
-				return X3DBoundedObject .prototype .getBBox .call (this, this .childNodes, bbox, shadow);
-
-			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+			return this .getSubBBox (bbox, shadow);
 		},
 		getSubBBox: function (bbox, shadow)
 		{
-			return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadow);
+			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+				return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadow);
+
+			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 		},
 		setHidden: function (value)
 		{

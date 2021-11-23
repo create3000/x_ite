@@ -1487,8 +1487,6 @@ function (Fields,
 							blendModeNode .disable (gl);
 					}
 				}
-
-				this .getAppearance () .disable (gl, context);
 			}
 			catch (error)
 			{

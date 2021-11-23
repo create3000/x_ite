@@ -77,16 +77,12 @@ function (X3DGroupingNode,
 		constructor: X3DTransformMatrix3DNode,
 		getBBox: function (bbox, shadow)
 		{
-			var bbox = X3DGroupingNode .prototype .getBBox .call (this, bbox, shadow);
+			var bbox = this .getSubBBox (bbox, shadow);
 
 			if (this .traverse === this .getGroupTraverse ())
 				return bbox;
 
 			return bbox .multRight (this .matrix);
-		},
-		getSubBBox: function (bbox, shadow)
-		{
-			return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadow);
 		},
 		setMatrix: function (matrix)
 		{
