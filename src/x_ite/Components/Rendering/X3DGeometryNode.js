@@ -179,7 +179,7 @@ function (Fields,
 			this .addInterest ("requestRebuild", this);
 			this .rebuild_ .addInterest ("rebuild", this);
 
-			var gl = this .getBrowser () .getContext ();
+			const gl = this .getBrowser () .getContext ();
 
 			this .primitiveMode   = gl .TRIANGLES;
 			this .frontFace       = gl .CCW;
@@ -295,7 +295,7 @@ function (Fields,
 		},
 		setMultiTexCoords: function (value)
 		{
-			var multiTexCoords = this .multiTexCoords;
+			const multiTexCoords = this .multiTexCoords;
 
 			for (var i = 0, length = value .length; i < length; ++ i)
 				multiTexCoords [i] = value [i];
@@ -335,11 +335,11 @@ function (Fields,
 		},
 		buildTexCoords: function ()
 		{
-			var texCoords = this .texCoords;
+			const texCoords = this .texCoords;
 
 			if (texCoords .length === 0)
 			{
-				var
+				const
 					p         = this .getTexCoordParams (),
 					min       = p .min,
 					Sindex    = p .Sindex,
@@ -364,11 +364,11 @@ function (Fields,
 		},
 		getTexCoordParams: (function ()
 		{
-			var texCoordParams = { min: new Vector3 (0, 0, 0) };
+			const texCoordParams = { min: new Vector3 (0, 0, 0) };
 
 			return function ()
 			{
-				var
+				const
 					bbox  = this .getBBox (),
 					size  = bbox .size,
 					Xsize = size .x,
@@ -416,24 +416,24 @@ function (Fields,
 			if (creaseAngle === 0)
 				return normals;
 
-			var
+			const
 				cosCreaseAngle = Math .cos (Algorithm .clamp (creaseAngle, 0, Math .PI)),
 				normals_       = [ ];
 
 			for (var i in normalIndex) // Don't use forEach
 			{
-				var vertex = normalIndex [i];
+				const vertex = normalIndex [i];
 
 				for (var p = 0, length = vertex .length; p < length; ++ p)
 				{
-					var
+					const
 						P = vertex [p],
 						m = normals [P],
 						n = new Vector3 (0, 0, 0);
 
 					for (var q = 0; q < length; ++ q)
 					{
-						var Q = normals [vertex [q]];
+						const Q = normals [vertex [q]];
 
 						if (Q .dot (m) >= cosCreaseAngle)
 							n .add (Q);
@@ -462,7 +462,7 @@ function (Fields,
 		},
 		intersectsLine: (function ()
 		{
-			var
+			const
 				modelViewMatrix = new Matrix4 (),
 				uvt             = { u: 0, v: 0, t: 0 },
 				v0              = new Vector3 (0, 0, 0),
@@ -481,14 +481,14 @@ function (Fields,
 						this .transformLine   (line);                                       // Apply screen transformations from screen nodes.
 						this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
 
-						var
+						const
 							texCoords  = this .multiTexCoords [0] .getValue (),
 							normals    = this .normals .getValue (),
 							vertices   = this .vertices .getValue ();
 
 						for (var i = 0, length = this .vertexCount; i < length; i += 3)
 						{
-							var i4 = i * 4;
+							const i4 = i * 4;
 
 							v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
 							v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
@@ -498,28 +498,28 @@ function (Fields,
 							{
 								// Get barycentric coordinates.
 
-								var
+								const
 									u = uvt .u,
 									v = uvt .v,
 									t = uvt .t;
 
 								// Determine vectors for X3DPointingDeviceSensors.
 
-								var point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
-								                         t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
-								                         t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
+								const point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
+								                           t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
+								                           t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
 
 								if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
 									continue;
 
-								var texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
-								                            t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
+								const texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
+																		t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
 
-								var i3 = i * 3;
+								const i3 = i * 3;
 
-								var normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
-								                          t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
-								                          t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
+								const normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
+								                            t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
+								                            t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
 
 								intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
 								intersected = true;
@@ -538,11 +538,11 @@ function (Fields,
 		})(),
 		intersectsBBox: (function ()
 		{
-			var intersection = new Vector3 (0, 0, 0);
+			const intersection = new Vector3 (0, 0, 0);
 
 			return function (line)
 			{
-				var
+				const
 					planes = this .planes,
 					min    = this .min,
 					max    = this .max,
@@ -598,7 +598,7 @@ function (Fields,
 		})(),
 		intersectsBox: (function ()
 		{
-			var
+			const
 				v0        = new Vector3 (0, 0, 0),
 				v1        = new Vector3 (0, 0, 0),
 				v2        = new Vector3 (0, 0, 0),
@@ -615,11 +615,11 @@ function (Fields,
 
 						this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
 
-						var vertices = this .vertices .getValue ();
+						const vertices = this .vertices .getValue ();
 
 						for (var i = 0, length = this .vertexCount; i < length; i += 3)
 						{
-							var i4 = i * 4;
+							const i4 = i * 4;
 
 							v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
 							v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
@@ -662,7 +662,7 @@ function (Fields,
 		},
 		set_shading__: (function ()
 		{
-			var
+			const
 				v0     = new Vector3 (0, 0, 0),
 				v1     = new Vector3 (0, 0, 0),
 				v2     = new Vector3 (0, 0, 0),
@@ -673,7 +673,7 @@ function (Fields,
 				if (this .geometryType < 2)
 					return;
 
-				var flatShading = this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
+				const flatShading = this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
 
 				if (flatShading === this .flatShading)
 					return;
@@ -682,13 +682,13 @@ function (Fields,
 
 				// Generate flat normals if needed.
 
-				var gl = this .getBrowser () .getContext ();
+				const gl = this .getBrowser () .getContext ();
 
 				if (flatShading)
 				{
 					if (! this .flatNormals .length)
 					{
-						var
+						const
 							cw          = this .frontFace === gl .CW,
 							flatNormals = this .flatNormals,
 							vertices    = this .vertices .getValue ();
@@ -724,7 +724,7 @@ function (Fields,
 		},
 		rebuild: (function ()
 		{
-			var point = new Vector3 (0, 0, 0);
+			const point = new Vector3 (0, 0, 0);
 
 			return function ()
 			{
@@ -746,7 +746,7 @@ function (Fields,
 
 				// Determine bbox.
 
-				var
+				const
 					min      = this .min,
 					max      = this .max,
 					vertices = this .vertices .getValue ();
@@ -809,7 +809,7 @@ function (Fields,
 
 			// Create attrib arrays.
 
-			var attribs = this .attribs;
+			const attribs = this .attribs;
 
 			for (var a = 0, length = attribs .length; a < length; ++ a)
 				attribs [a] .length = 0;
@@ -833,7 +833,7 @@ function (Fields,
 		},
 		transfer: function ()
 		{
-			var
+			const
 				gl    = this .getBrowser () .getContext (),
 				count = this .vertices .length / 4;
 
@@ -1020,7 +1020,7 @@ function (Fields,
 
 			// Draw depending on wireframe, solid and transparent.
 
-			var
+			const
 				modelViewMatrix = context .modelViewMatrix,
 				x               = modelViewMatrix [12],
 				y               = modelViewMatrix [13],
