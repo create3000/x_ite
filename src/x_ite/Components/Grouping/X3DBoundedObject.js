@@ -98,10 +98,10 @@ function (Fields,
 
 			for (var i = 0, length = nodes .length; i < length; ++ i)
 			{
-				const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, nodes [i]);
+				const node = nodes [i];
 
-				if (boundedObject)
-					bbox .add (boundedObject .getBBox (this .childBBox, shadow));
+				if (node .getBBox)
+					bbox .add (node .getBBox (this .childBBox, shadow));
 			}
 
 			return bbox;
