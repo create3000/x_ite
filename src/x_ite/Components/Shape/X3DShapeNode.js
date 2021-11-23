@@ -172,8 +172,10 @@ function (X3DChildNode,
 			this .apparanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this .appearance_);
 
 			if (this .apparanceNode)
+			{
+				this .apparanceNode .alphaMode_   .addInterest ("set_transparent__", this);
 				this .apparanceNode .transparent_ .addInterest ("set_transparent__", this);
-
+			}
 			else
 				this .apparanceNode = this .getBrowser () .getDefaultAppearance ();
 		},
