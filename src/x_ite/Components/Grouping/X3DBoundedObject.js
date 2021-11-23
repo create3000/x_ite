@@ -92,6 +92,7 @@ function (Fields,
 		})(),
 		getBBox: function (nodes, bbox, shadow)
 		{
+			// Must be unique for each X3DBoundedObject.
 			const childBBox = this .childBBox;
 
 			// Add bounding boxes.
