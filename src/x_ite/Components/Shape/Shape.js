@@ -273,11 +273,9 @@ function (Fields,
 		},
 		display: function (gl, context)
 		{
-			this .getAppearance () .enable (gl, context);
+			context .appearanceNode = this .getAppearance ();
 
 			this .getGeometry () .display (gl, context);
-
-			this .getAppearance () .disable (gl, context);
 		},
 	});
 

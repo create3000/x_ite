@@ -914,15 +914,21 @@ function (Fields,
 		{
 			try
 			{
-				const shaderNode = context .appearanceNode .shaderNode || this .getShader (context .browser, context .shadow);
+				const
+					appearanceNode = context .appearanceNode,
+					shaderNode     = appearanceNode .shaderNode || this .getShader (context .browser, context .shadow);
 
 				// Setup shader.
 
 				if (shaderNode .getValid ())
 				{
 					const
+						blendModeNode = appearanceNode .blendModeNode,
 						attribNodes   = this .attribNodes,
 						attribBuffers = this .attribBuffers;
+
+					if (blendModeNode)
+						blendModeNode .enable (gl);
 
 					context .geometryType          = this .geometryType;
 					context .fogCoords             = this .fogCoords;
@@ -998,6 +1004,9 @@ function (Fields,
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disableNormalAttribute   (gl);
 					shaderNode .disable                  (gl);
+
+					if (blendModeNode)
+						blendModeNode .disable (gl);
 				}
 			}
 			catch (error)
@@ -1044,13 +1053,19 @@ function (Fields,
 		{
 			try
 			{
-				const shaderNode = context .appearanceNode .shaderNode || this .getShader (context .browser, context .shadow);
+				const
+					appearanceNode = context .appearanceNode,
+					shaderNode     = appearanceNode .shaderNode || this .getShader (context .browser, context .shadow);
 
 				if (shaderNode .getValid ())
 				{
 					const
+						blendModeNode = appearanceNode .blendModeNode,
 						attribNodes   = this .attribNodes,
 						attribBuffers = this .attribBuffers;
+
+					if (blendModeNode)
+						blendModeNode .enable (gl);
 
 					// Setup shader.
 
@@ -1171,6 +1186,9 @@ function (Fields,
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disableNormalAttribute   (gl);
 					shaderNode .disable                  (gl);
+
+					if (blendModeNode)
+						blendModeNode .disable (gl);
 				}
 			}
 			catch (error)

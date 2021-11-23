@@ -1382,9 +1382,9 @@ function (Fields,
 				if (this .numParticles <= 0)
 					return;
 
-				// Traverse appearance before everything.
+				// Assign appearance before everything.
 
-				this .getAppearance () .enable (gl, context);
+				context .appearanceNode = this .getAppearance ();
 
 				// Update geometry if SPRITE.
 
@@ -1409,6 +1409,11 @@ function (Fields,
 
 					if (shaderNode .getValid ())
 					{
+						const blendModeNode = context .appearanceNode .blendModeNode;
+
+						if (blendModeNode)
+							blendModeNode .enable (gl);
+
 						context .geometryType          = this .shaderGeometryType;
 						context .colorMaterial         = this .colorMaterial;
 						context .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
@@ -1477,6 +1482,9 @@ function (Fields,
 						shaderNode .disableTexCoordAttribute (gl);
 						shaderNode .disableNormalAttribute   (gl);
 						shaderNode .disable                  (gl);
+
+						if (blendModeNode)
+							blendModeNode .disable (gl);
 					}
 				}
 

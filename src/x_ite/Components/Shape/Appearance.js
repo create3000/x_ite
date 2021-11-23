@@ -349,18 +349,6 @@ function (Fields,
 			if (this .shaderNode)
 				this .shaderNode .traverse (type, renderObject);
 		},
-		enable: function (gl, context)
-		{
-			context .appearanceNode = this;
-
-			if (this .blendModeNode)
-				this .blendModeNode .enable (gl);
-		},
-		disable: function (gl, context)
-		{
-			if (this .blendModeNode)
-				this .blendModeNode .disable (gl);
-		},
 	});
 
 	return Appearance;

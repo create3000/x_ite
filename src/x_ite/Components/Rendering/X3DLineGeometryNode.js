@@ -112,14 +112,19 @@ function (X3DGeometryNode,
 			try
 			{
 				const
-					browser    = context .browser,
-					shaderNode = context .appearanceNode .shaderNode || this .getShader (browser);
+					browser        = context .browser,
+					appearanceNode = context .appearanceNode,
+					shaderNode     = appearanceNode .shaderNode || this .getShader (browser);
 
 				if (shaderNode .getValid ())
 				{
 					const
+						blendModeNode = appearanceNode .blendModeNode,
 						attribNodes   = this .attribNodes,
 						attribBuffers = this .attribBuffers;
+
+					if (blendModeNode)
+						blendModeNode .enable (gl);
 
 					// Setup shader.
 
@@ -162,6 +167,9 @@ function (X3DGeometryNode,
 
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disable (gl);
+
+					if (blendModeNode)
+						blendModeNode .disable (gl);
 				}
 			}
 			catch (error)
@@ -175,14 +183,19 @@ function (X3DGeometryNode,
 			try
 			{
 				const
-					browser    = context .browser,
-					shaderNode = context .appearanceNode .shaderNode || this .getShader (browser);
+					browser        = context .browser,
+					appearanceNode = context .appearanceNode,
+					shaderNode     = appearanceNode .shaderNode || this .getShader (browser);
 
 				if (shaderNode .getValid ())
 				{
 					const
+						blendModeNode = appearanceNode .blendModeNode,
 						attribNodes   = this .attribNodes,
 						attribBuffers = this .attribBuffers;
+
+					if (blendModeNode)
+						blendModeNode .enable (gl);
 
 					// Setup shader.
 
@@ -243,6 +256,9 @@ function (X3DGeometryNode,
 
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disable (gl);
+
+					if (blendModeNode)
+						blendModeNode .disable (gl);
 				}
 			}
 			catch (error)
