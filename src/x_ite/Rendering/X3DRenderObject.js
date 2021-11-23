@@ -591,10 +591,11 @@ function ($,
 
 					context .modelViewMatrix .set (modelViewMatrix);
 					context .scissor .assign (viewVolume .getScissor ());
-					context .shapeNode = shapeNode;
-					context .distance  = bboxCenter .z;
-					context .fogNode   = this .localFog;
-					context .shadow    = this .shadow [0];
+					context .shapeNode   = shapeNode;
+					context .textureNode = null;
+					context .distance    = bboxCenter .z;
+					context .fogNode     = this .localFog;
+					context .shadow      = this .shadow [0];
 
 					// Clip planes and local lights
 
@@ -619,12 +620,9 @@ function ($,
 				renderer: this,
 				browser: this .getBrowser (),
 				transparent: transparent,
-				shadow: false,
 				modelViewMatrix: new Float32Array (16),
 				scissor: new Vector4 (0, 0, 0, 0),
 				localObjects: [ ],
-				appearanceNode: null,
-				geometryNode: null,
 			};
 		},
 		collide: (function ()

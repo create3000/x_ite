@@ -985,7 +985,7 @@ function (Fields,
 				appearanceNode        = context .appearanceNode,
 				stylePropertiesNode   = appearanceNode .stylePropertiesNode [geometryType],
 				materialNode          = appearanceNode .materialNode,
-				textureNode           = context .screenTextTextureNode || appearanceNode .textureNode,
+				textureNode           = context .textureNode || appearanceNode .textureNode,
 				textureTransformNode  = appearanceNode .textureTransformNode,
 				modelViewMatrix       = context .modelViewMatrix,
 				localObjects          = context .localObjects;
