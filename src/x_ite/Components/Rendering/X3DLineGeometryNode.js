@@ -113,7 +113,7 @@ function (X3DGeometryNode,
 			{
 				const
 					browser        = context .browser,
-					appearanceNode = context .appearanceNode,
+					appearanceNode = context .shapeNode .getAppearance (),
 					shaderNode     = appearanceNode .shaderNode || this .getShader (browser);
 
 				if (shaderNode .getValid ())
@@ -179,7 +179,7 @@ function (X3DGeometryNode,
 			{
 				const
 					browser        = context .browser,
-					appearanceNode = context .appearanceNode,
+					appearanceNode = context .shapeNode .getAppearance (),
 					shaderNode     = appearanceNode .shaderNode || this .getShader (browser);
 
 				if (shaderNode .getValid ())

@@ -399,6 +399,8 @@ function (Fields,
 					this .primitiveMode = gl .POINTS;
 					this .texCoordCount = 0;
 					this .vertexCount   = 1;
+
+					this .geometryContext .geometryType = 0;
 					break;
 				}
 				case LINE:
@@ -422,6 +424,8 @@ function (Fields,
 					this .primitiveMode = gl .LINES;
 					this .texCoordCount = 2;
 					this .vertexCount   = 2;
+
+					this .geometryContext .geometryType = 1;
 					break;
 				}
 				case TRIANGLE:
@@ -500,6 +504,8 @@ function (Fields,
 					this .primitiveMode = gl .TRIANGLES;
 					this .texCoordCount = 4;
 					this .vertexCount   = 6;
+
+					this .geometryContext .geometryType = 2;
 					break;
 				}
 				case GEOMETRY:
@@ -522,22 +528,19 @@ function (Fields,
 			{
 				case POINT:
 				{
-					this .geometryContext .geometryType = 0;
-					this .shaderNode                    = this .getBrowser () .getPointShader ();
+					this .shaderNode = this .getBrowser () .getPointShader ();
 					break;
 				}
 				case LINE:
 				{
-					this .geometryContext .geometryType = 1;
-					this .shaderNode                    = this .getBrowser () .getLineShader ();
+					this .shaderNode = this .getBrowser () .getLineShader ();
 					break;
 				}
 				case TRIANGLE:
 				case QUAD:
 				case SPRITE:
 				{
-					this .geometryContext .geometryType = 2;
-					this .shaderNode                    = this .getBrowser () .getDefaultShader ();
+					this .shaderNode = this .getBrowser () .getDefaultShader ();
 					break;
 				}
 				case GEOMETRY:
@@ -1397,10 +1400,6 @@ function (Fields,
 				if (this .numParticles <= 0)
 					return;
 
-				// Assign appearance before everything.
-
-				context .appearanceNode = this .getAppearance ();
-
 				// Update geometry if SPRITE.
 
 				this .updateGeometry (context .modelViewMatrix);
@@ -1413,26 +1412,26 @@ function (Fields,
 
 					if (geometryNode)
 					{
-						context .geometryNode = geometryNode;
+						context .geometryContext = null;
 
 						geometryNode .displayParticles (gl, context, this .particles, this .numParticles);
 					}
 				}
 				else
 				{
-					const shaderNode = context .appearanceNode .shaderNode || this .shaderNode;
+					const shaderNode = this .getAppearance () .shaderNode || this .shaderNode;
 
 					// Setup shader.
 
 					if (shaderNode .getValid ())
 					{
-						context .geometryNode = this .geometryContext;
-
 						const
-							blendModeNode = context .appearanceNode .blendModeNode;
+							blendModeNode = this .getAppearance () .blendModeNode;
 
 						if (blendModeNode)
 							blendModeNode .enable (gl);
+
+						context .geometryContext = this .geometryContext;
 
 						shaderNode .enable (gl);
 						shaderNode .setLocalUniforms (gl, context);

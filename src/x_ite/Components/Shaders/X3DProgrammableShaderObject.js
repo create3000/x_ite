@@ -978,10 +978,11 @@ function (X3DCast,
 		setLocalUniforms: function (gl, context)
 		{
 			const
-				geometryNode          = context .geometryNode,
+				shapeNode             = context .shapeNode,
+				geometryNode          = context .geometryContext || shapeNode .getGeometry (),
 				geometryType          = geometryNode .geometryType,
 				textureCoordinateNode = geometryNode .textureCoordinateNode,
-				appearanceNode        = context .appearanceNode,
+				appearanceNode        = shapeNode .getAppearance (),
 				stylePropertiesNode   = appearanceNode .stylePropertiesNode [geometryType],
 				materialNode          = appearanceNode .materialNode,
 				textureNode           = context .textureNode || appearanceNode .textureNode,

@@ -915,7 +915,7 @@ function (Fields,
 			try
 			{
 				const
-					appearanceNode = context .appearanceNode,
+					appearanceNode = context .shapeNode .getAppearance (),
 					shaderNode     = appearanceNode .shaderNode || this .getShader (context .browser, context .shadow);
 
 				// Setup shader.
@@ -1049,7 +1049,7 @@ function (Fields,
 			try
 			{
 				const
-					appearanceNode = context .appearanceNode,
+					appearanceNode = context .shapeNode .getAppearance (),
 					shaderNode     = appearanceNode .shaderNode || this .getShader (context .browser, context .shadow);
 
 				if (shaderNode .getValid ())
