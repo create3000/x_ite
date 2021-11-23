@@ -216,8 +216,6 @@ function (Fields,
 		},
 		set_texture__: function ()
 		{
-			// The textureNode property will be overriden by ScreenText!
-
 			if (this .textureNode)
 				this .textureNode .transparent_ .removeInterest ("set_transparent__", this);
 
