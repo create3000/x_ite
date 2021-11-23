@@ -536,7 +536,7 @@ function (Fields,
 				case QUAD:
 				case SPRITE:
 				{
-					this .geometryContext .geometryType = 3;
+					this .geometryContext .geometryType = 2;
 					this .shaderNode                    = this .getBrowser () .getDefaultShader ();
 					break;
 				}
