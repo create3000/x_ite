@@ -74,10 +74,10 @@ function (Fields,
 {
 "use strict";
 
-	var ARRAY_TYPE = "Array"; // For color, texCoord, normal, and vertex array, can be MFFloat or Array;
+	const ARRAY_TYPE = "Array"; // For color, texCoord, normal, and vertex array, can be MFFloat or Array;
 
 	// Box normals for bbox / line intersection.
-	var boxNormals = [
+	const boxNormals = [
 		new Vector3 (0,  0,  1), // front
 		new Vector3 (0,  0, -1), // back
 		new Vector3 (0,  1,  0), // top
@@ -133,7 +133,7 @@ function (Fields,
 		if (ARRAY_TYPE == "MFFloat")
 			return new Fields .MFFloat ();
 
-		var array = [ ];
+		const array = [ ];
 
 		array .typedArray = new Float32Array ();
 
@@ -930,11 +930,6 @@ function (Fields,
 					if (blendModeNode)
 						blendModeNode .enable (gl);
 
-					context .geometryType          = this .geometryType;
-					context .fogCoords             = this .fogCoords;
-					context .colorMaterial         = this .colorMaterial;
-					context .textureCoordinateNode = this .textureCoordinateNode;
-
 					shaderNode .enable (gl);
 					shaderNode .setLocalUniforms (gl, context);
 
@@ -1068,11 +1063,6 @@ function (Fields,
 						blendModeNode .enable (gl);
 
 					// Setup shader.
-
-					context .geometryType          = this .geometryType;
-					context .fogCoords             = this .fogCoords;
-					context .colorMaterial         = this .colorMaterial;
-					context .textureCoordinateNode = this .textureCoordinateNode;
 
 					shaderNode .enable (gl);
 					shaderNode .setLocalUniforms (gl, context);

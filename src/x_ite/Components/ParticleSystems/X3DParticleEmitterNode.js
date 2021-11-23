@@ -57,7 +57,7 @@ define ([
 	"standard/Math/Algorithm",
 	"standard/Math/Algorithms/QuickSort",
 ],
-function (X3DNode, 
+function (X3DNode,
           X3DConstants,
           Vector3,
           Rotation4,
@@ -141,7 +141,7 @@ function (X3DNode,
 				v   = particleLifetime * lifetimeVariation,
 				min = Math .max (0, particleLifetime - v),
 				max = particleLifetime + v;
-		
+
 			return Math .random () * (max - min) + min;
 		},
 		getRandomSpeed: function ()
@@ -151,7 +151,7 @@ function (X3DNode,
 				v     = speed * this .variation,
 				min   = Math .max (0, speed - v),
 				max   = speed + v;
-		
+
 			return Math .random () * (max - min) + min;
 		},
 		getSphericalRandomVelocity: function (velocity)
@@ -169,7 +169,7 @@ function (X3DNode,
 				cphi  = this .getRandomValue (-1, 1),
 				phi   = Math .acos (cphi),
 				r     = Math .sin (phi);
-		
+
 			return normal .set (Math .sin (theta) * r,
 			                    Math .cos (theta) * r,
 			                    cphi);
@@ -181,7 +181,7 @@ function (X3DNode,
 				cphi  = this .getRandomValue (Math .cos (angle), 1),
 				phi   = Math .acos (cphi),
 				r     = Math .sin (phi);
-		
+
 			return normal .set (Math .sin (theta) * r,
 			                    Math .cos (theta) * r,
 			                    cphi);
@@ -199,7 +199,7 @@ function (X3DNode,
 				cphi  = Math .pow (Math .random (), 1/3),
 				phi   = Math .acos (cphi),
 				r     = Math .sin (phi);
-		
+
 			return normal .set (Math .sin (theta) * r,
 			                    Math .cos (theta) * r,
 			                    cphi);
@@ -231,7 +231,7 @@ function (X3DNode,
 				var
 					particle    = particles [i],
 					elapsedTime = particle .elapsedTime + deltaTime;
-		
+
 				if (elapsedTime > particle .lifetime)
 				{
 					// Create new particle or hide particle.
@@ -270,7 +270,7 @@ function (X3DNode,
 						position .x += velocity .x * deltaTime;
 						position .y += velocity .y * deltaTime;
 						position .z += velocity .z * deltaTime;
-			
+
 						this .bounce (boundedVolume, fromPosition, position, velocity);
 					}
 					else
@@ -279,14 +279,14 @@ function (X3DNode,
 						position .y += velocity .y * deltaTime;
 						position .z += velocity .z * deltaTime;
 					}
-				
+
 					particle .elapsedTime = elapsedTime;
 				}
 			}
 
 			// Animate color if needed.
 
-			if (particleSystem .colorMaterial)
+			if (particleSystem .geometryContext .colorMaterial)
 				this .getColors (particles, particleSystem .colorKeys, particleSystem .colorRamp, numParticles);
 		},
 		bounce: function (boundedVolume, fromPosition, toPosition, velocity)
@@ -294,7 +294,7 @@ function (X3DNode,
 			normal .assign (velocity) .normalize ();
 
 			line .set (fromPosition, normal);
-		
+
 			var
 				intersections       = this .intersections,
 				intersectionNormals = this .intersectionNormals,
@@ -306,11 +306,11 @@ function (X3DNode,
 					intersections [i] .index = i;
 
 				plane .set (fromPosition, normal);
-		
+
 				this .sorter .sort (0, numIntersections);
 
 				var index = Algorithm .upperBound (intersections, 0, numIntersections, 0, PlaneCompareValue);
-				
+
 				if (index < numIntersections)
 				{
 					var
@@ -318,7 +318,7 @@ function (X3DNode,
 						intersectionNormal = intersectionNormals [intersection .index];
 
 					plane .set (intersection, intersectionNormal);
-		
+
 					if (plane .getDistanceToPoint (fromPosition) * plane .getDistanceToPoint (toPosition) < 0)
 					{
 						var dot2 = 2 * intersectionNormal .dot (velocity);
@@ -345,7 +345,7 @@ function (X3DNode,
 				index0 = 0,
 				index1 = 0,
 				weight = 0;
-		
+
 			for (var i = 0; i < numParticles; ++ i)
 			{
 				// Determine index0, index1 and weight.
@@ -370,16 +370,16 @@ function (X3DNode,
 				else
 				{
 					var index = Algorithm .upperBound (colorKeys, 0, length, fraction, Algorithm .less);
-	
+
 					if (index < length)
 					{
 						index1 = index;
 						index0 = index - 1;
-				
+
 						var
 							key0 = colorKeys [index0],
 							key1 = colorKeys [index1];
-				
+
 						weight = Algorithm .clamp ((fraction - key0) / (key1 - key0), 0, 1);
 					}
 					else
@@ -389,13 +389,13 @@ function (X3DNode,
 						weight = 0;
 					}
 				}
-	
+
 				// Interpolate and set color.
 
 				var
 					color0 = colorRamp [index0],
 					color1 = colorRamp [index1];
-	
+
 				// Algorithm .lerp (color0, color1, weight);
 				color .x = color0 .x + weight * (color1 .x - color0 .x);
 				color .y = color0 .y + weight * (color1 .y - color0 .y);
@@ -407,5 +407,3 @@ function (X3DNode,
 
 	return X3DParticleEmitterNode;
 });
-
-

@@ -979,13 +979,14 @@ function (Fields,
 		setLocalUniforms: function (gl, context)
 		{
 			const
-				geometryType          = context .geometryType,
+				geometryNode          = context .geometryNode,
+				geometryType          = geometryNode .geometryType,
+				textureCoordinateNode = geometryNode .textureCoordinateNode,
 				appearanceNode        = context .appearanceNode,
 				stylePropertiesNode   = appearanceNode .stylePropertiesNode [geometryType],
 				materialNode          = appearanceNode .materialNode,
 				textureNode           = appearanceNode .textureNode,
 				textureTransformNode  = appearanceNode .textureTransformNode,
-				textureCoordinateNode = context .textureCoordinateNode,
 				modelViewMatrix       = context .modelViewMatrix,
 				localObjects          = context .localObjects;
 
@@ -1013,7 +1014,7 @@ function (Fields,
 			// Fog, there is always one
 
 			context .fogNode .setShaderUniforms (gl, this);
-			gl .uniform1i (this .x3d_FogCoord, context .fogCoords);
+			gl .uniform1i (this .x3d_FogCoord, geometryNode .fogCoords);
 
 			// Alpha
 
@@ -1026,7 +1027,7 @@ function (Fields,
 
 			// Material
 
-			gl .uniform1i (this .x3d_ColorMaterial, context .colorMaterial);
+			gl .uniform1i (this .x3d_ColorMaterial, geometryNode .colorMaterial);
 
 			if (materialNode)
 			{

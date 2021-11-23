@@ -199,9 +199,15 @@ function (X3DChildNode,
 		},
 		set_transparent__: function ()
 		{
-			this .transparent = this .apparanceNode .getTransparent () ||
-			                    (this .geometryNode && this .geometryNode .getTransparent () &&
-									   this .apparanceNode .getAlphaMode () == AlphaMode .AUTO);
+			if (this .apparanceNode .getAlphaMode () == AlphaMode .AUTO)
+			{
+				this .transparent = this .apparanceNode .getTransparent () ||
+				                    (this .geometryNode && this .geometryNode .getTransparent ());
+			}
+			else
+			{
+				this .transparent = this .apparanceNode .getTransparent ();
+			}
 		},
 	});
 

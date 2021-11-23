@@ -461,8 +461,7 @@ function ($,
 		{
 			Matrix4 .prototype .multLeft .call (context .modelViewMatrix, this .matrix);
 
-		   context .textureNode          = this .texture;
-		   context .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
+		   context .appearanceNode .textureNode = this .texture;
 		},
 		transformLine: function (line)
 		{

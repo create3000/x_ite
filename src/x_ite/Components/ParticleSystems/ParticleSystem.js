@@ -55,7 +55,7 @@ define ([
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
-	"standard/Math/Numbers/Color4",
+	"x_ite/Browser/Shape/AlphaMode",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
 	"standard/Math/Numbers/Matrix4",
@@ -71,7 +71,7 @@ function (Fields,
           TraverseType,
           X3DConstants,
           X3DCast,
-          Color4,
+			 AlphaMode,
           Vector3,
           Vector4,
           Matrix4,
@@ -82,8 +82,9 @@ function (Fields,
 {
 "use strict";
 
-	var
-		i        = 0,
+	var i = 0;
+
+	const
 		POINT    = i ++,
 		LINE     = i ++,
 		TRIANGLE = i ++,
@@ -91,7 +92,7 @@ function (Fields,
 		GEOMETRY = i ++,
 		SPRITE   = i ++;
 
-	var GeometryTypes = {
+	const GeometryTypes = {
 		POINT:    POINT,
 		LINE:     LINE,
 		TRIANGLE: TRIANGLE,
@@ -100,7 +101,7 @@ function (Fields,
 		SPRITE:   SPRITE,
 	};
 
-	var
+	const
 		invModelViewMatrix = new Matrix4 (),
 		billboardToScreen  = new Vector3 (0, 0, 0),
 		viewerYAxis        = new Vector3 (0, 0, 0),
@@ -146,7 +147,6 @@ function (Fields,
 		this .colorKeys                = [ ];
 		this .colorRamppNode           = null;
 		this .colorRamp                = [ ];
-		this .colorMaterial            = false;
 		this .texCoordKeys             = [ ];
 		this .texCoordRampNode         = null;
 		this .texCoordRamp             = [ ];
@@ -156,6 +156,7 @@ function (Fields,
 		this .rotation                 = new Matrix3 ();
 		this .particleSorter           = new QuickSort (this .particles, compareDistance);
 		this .sortParticles            = false;
+		this .geometryContext          = { };
 	}
 
 	ParticleSystem .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
@@ -201,12 +202,13 @@ function (Fields,
 		{
 			X3DShapeNode .prototype .initialize .call (this);
 
-			var gl = this .getBrowser () .getContext ();
+			const
+				browser = this .getBrowser (),
+				gl      = browser .getContext ();
 
 			this .isLive () .addInterest ("set_live__", this);
 
-			this .getBrowser () .getBrowserOptions () .Shading_ .addInterest ("set_shader__", this);
-			//this .getBrowser () .getDefaultShader () .addInterest ("set_shader__", this);
+			browser .getBrowserOptions () .Shading_ .addInterest ("set_shader__", this);
 
 			this .enabled_           .addInterest ("set_enabled__",           this);
 			this .createParticles_   .addInterest ("set_createParticles__",   this);
@@ -244,6 +246,11 @@ function (Fields,
 
 			this .primitiveMode = gl .TRIANGLES;
 
+			// Geometry context
+
+			this .geometryContext .fogCoords             = false;
+			this .geometryContext .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
+
 			// Call order is higly important at startup.
 			this .set_emitter__ ();
 			this .set_enabled__ ();
@@ -266,20 +273,27 @@ function (Fields,
 		},
 		set_transparent__: function ()
 		{
-			switch (this .geometryType)
+			if (this .getAppearance () .getAlphaMode () == AlphaMode .AUTO)
 			{
-				case POINT:
+				switch (this .geometryType)
 				{
-					this .setTransparent (true);
-					break;
+					case POINT:
+					{
+						this .setTransparent (true);
+						break;
+					}
+					default:
+					{
+						this .setTransparent (this .getAppearance () .getTransparent () ||
+													 (this .colorRampNode && this .colorRampNode .getTransparent ()) ||
+													 (this .geometryType === GEOMETRY && this .geometryNode && this .geometryNode .getTransparent ()));
+						break;
+					}
 				}
-				default:
-				{
-					this .setTransparent ((this .getAppearance () && this .getAppearance () .getTransparent ()) ||
-					                      (this .colorRampNode && this .colorRampNode .getTransparent ()) ||
-					                      (this .geometryType === GEOMETRY && this .geometryNode && this .geometryNode .getTransparent ()));
-					break;
-				}
+			}
+			else
+			{
+				this .setTransparent (this .getAppearance () .getTransparent ());
 			}
 		},
 		set_live__: function ()
@@ -381,6 +395,7 @@ function (Fields,
 					this .colorArray  .fill (1);
 					this .vertexArray .fill (1);
 
+					this .testWireframe = false;
 					this .primitiveMode = gl .POINTS;
 					this .texCoordCount = 0;
 					this .vertexCount   = 1;
@@ -403,6 +418,7 @@ function (Fields,
 					this .colorArray  .fill (1);
 					this .vertexArray .fill (1);
 
+					this .testWireframe = false;
 					this .primitiveMode = gl .LINES;
 					this .texCoordCount = 2;
 					this .vertexCount   = 2;
@@ -480,6 +496,7 @@ function (Fields,
 					gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [0]);
 					gl .bufferData (gl .ARRAY_BUFFER, this .texCoordArray, gl .STATIC_DRAW);
 
+					this .testWireframe = true;
 					this .primitiveMode = gl .TRIANGLES;
 					this .texCoordCount = 4;
 					this .vertexCount   = 6;
@@ -505,28 +522,26 @@ function (Fields,
 			{
 				case POINT:
 				{
-					this .shaderGeometryType = 0;
-					this .shaderNode         = this .getBrowser () .getPointShader ();
+					this .geometryContext .geometryType = 0;
+					this .shaderNode                    = this .getBrowser () .getPointShader ();
 					break;
 				}
 				case LINE:
 				{
-					this .shaderGeometryType = 1;
-					this .shaderNode         = this .getBrowser () .getLineShader ();
+					this .geometryContext .geometryType = 1;
+					this .shaderNode                    = this .getBrowser () .getLineShader ();
 					break;
 				}
 				case TRIANGLE:
 				case QUAD:
 				case SPRITE:
 				{
-					this .shaderGeometryType = 3;
-					this .shaderNode         = this .getBrowser () .getDefaultShader ();
+					this .geometryContext .geometryType = 3;
+					this .shaderNode                    = this .getBrowser () .getDefaultShader ();
 					break;
 				}
 				case GEOMETRY:
 				{
-					this .shaderGeometryType = 3; // determine from geometry node.
-					this .shaderNode         = this .getBrowser () .getDefaultShader ();
 					break;
 				}
 			}
@@ -681,7 +696,7 @@ function (Fields,
 
 			colorRamp .length = length;
 
-			this .colorMaterial = !! (colorKeys .length && this .colorRampNode);
+			this .geometryContext .colorMaterial = !! (colorKeys .length && this .colorRampNode);
 		},
 		set_texCoordRamp__: function ()
 		{
@@ -845,7 +860,7 @@ function (Fields,
 
 			// Colors
 
-			if (this .colorMaterial)
+			if (this .geometryContext .colorMaterial)
 			{
 				for (var i = 0; i < numParticles; ++ i)
 				{
@@ -909,7 +924,7 @@ function (Fields,
 
 			// Colors
 
-			if (this .colorMaterial)
+			if (this .geometryContext .colorMaterial)
 			{
 				for (var i = 0; i < numParticles; ++ i)
 				{
@@ -1019,7 +1034,7 @@ function (Fields,
 
 				if (! modelViewMatrix) // if called from animateParticles
 				{
-					if (this .colorMaterial)
+					if (this .geometryContext .colorMaterial)
 					{
 						for (var i = 0; i < maxParticles; ++ i)
 						{
@@ -1394,29 +1409,30 @@ function (Fields,
 
 				if (this .geometryType === GEOMETRY)
 				{
-					var geometryNode = this .getGeometry ();
+					const geometryNode = this .getGeometry ();
 
 					if (geometryNode)
+					{
+						context .geometryNode = geometryNode;
+
 						geometryNode .displayParticles (gl, context, this .particles, this .numParticles);
+					}
 				}
 				else
 				{
-					const
-						browser    = context .browser,
-						shaderNode = context .appearanceNode .shaderNode || this .shaderNode;
+					const shaderNode = context .appearanceNode .shaderNode || this .shaderNode;
 
 					// Setup shader.
 
 					if (shaderNode .getValid ())
 					{
-						const blendModeNode = context .appearanceNode .blendModeNode;
+						context .geometryNode = this .geometryContext;
+
+						const
+							blendModeNode = context .appearanceNode .blendModeNode;
 
 						if (blendModeNode)
 							blendModeNode .enable (gl);
-
-						context .geometryType          = this .shaderGeometryType;
-						context .colorMaterial         = this .colorMaterial;
-						context .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
 
 						shaderNode .enable (gl);
 						shaderNode .setLocalUniforms (gl, context);
@@ -1428,7 +1444,7 @@ function (Fields,
 						shaderNode .enableFloatAttrib (gl, "x3d_ParticleElapsedTime", this .elapsedTimeBuffer, 1);
 						shaderNode .enableFloatAttrib (gl, "x3d_ParticleLife",        this .lifeBuffer,        1);
 
-						if (this .colorMaterial)
+						if (this .geometryContext .colorMaterial)
 							shaderNode .enableColorAttribute (gl, this .colorBuffer);
 
 						if (this .texCoordArray .length)
@@ -1439,23 +1455,7 @@ function (Fields,
 
 						shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
-						var testWireframe = false;
-
-						switch (this .geometryType)
-						{
-							case POINT:
-							case LINE:
-								break;
-							case TRIANGLE:
-							case QUAD:
-							case SPRITE:
-								testWireframe = true;
-								break;
-							case GEOMETRY:
-								break;
-						}
-
-						if (shaderNode .wireframe && testWireframe)
+						if (shaderNode .wireframe && this .testWireframe)
 						{
 							// Wireframes are always solid so only one drawing call is needed.
 
@@ -1464,7 +1464,7 @@ function (Fields,
 						}
 						else
 						{
-							var positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+							const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
 
 							gl .frontFace (positiveScale ? gl .CCW : gl .CW);
 							gl .enable (gl .CULL_FACE);

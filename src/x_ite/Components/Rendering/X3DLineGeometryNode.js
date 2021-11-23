@@ -128,11 +128,6 @@ function (X3DGeometryNode,
 
 					// Setup shader.
 
-					context .geometryType          = this .getGeometryType ();
-					context .fogCoords             = this .fogCoords;
-					context .colorMaterial         = this .colorMaterial;
-					context .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
-
 					shaderNode .enable (gl);
 					shaderNode .setLocalUniforms (gl, context);
 
@@ -198,11 +193,6 @@ function (X3DGeometryNode,
 						blendModeNode .enable (gl);
 
 					// Setup shader.
-
-					context .geometryType          = this .getGeometryType ();
-					context .fogCoords             = this .fogCoords;
-					context .colorMaterial         = this .colorMaterial;
-					context .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
 
 					shaderNode .enable (gl);
 					shaderNode .setLocalUniforms (gl, context);

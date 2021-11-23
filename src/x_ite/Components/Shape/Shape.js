@@ -274,6 +274,7 @@ function (Fields,
 		display: function (gl, context)
 		{
 			context .appearanceNode = this .getAppearance ();
+			context .geometryNode   = this .getGeometry ();
 
 			this .getGeometry () .display (gl, context);
 		},
