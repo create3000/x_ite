@@ -154,7 +154,6 @@ function (X3DCast,
 			this .x3d_FogMatrix          = this .getUniformLocation (gl, program, "x3d_Fog.matrix",          "x3d_FogMatrix");
 			this .x3d_FogCoord           = this .getUniformLocation (gl, program, "x3d_Fog.fogCoord",        "x3d_FogCoord");
 
-			this .x3d_Mask        = gl .getUniformLocation (program, "x3d_Mask");
 			this .x3d_AlphaCutoff = gl .getUniformLocation (program, "x3d_AlphaCutoff");
 
 			this .x3d_PointPropertiesPointSizeScaleFactor = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeScaleFactor");
@@ -1018,7 +1017,6 @@ function (X3DCast,
 
 			// Alpha
 
-			gl .uniform1i (this .x3d_Mask,        appearanceNode .mask);
 			gl .uniform1f (this .x3d_AlphaCutoff, appearanceNode .alphaCutoff);
 
 			// Style

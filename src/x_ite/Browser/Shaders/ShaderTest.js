@@ -111,7 +111,7 @@ function (TextureBuffer,
 				// Set clip planes and lights to none.
 
 				gl .uniform1i (shaderNode .x3d_FogType,               0);
-				gl .uniform1i (shaderNode .x3d_Mask,                  false);
+				gl .uniform1f (shaderNode .x3d_AlphaCutoff,           0);
 				gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,  true);
 				gl .uniform1i (shaderNode .x3d_FillPropertiesHatched, false);
 				gl .uniform1i (shaderNode .x3d_ColorMaterial,         false);

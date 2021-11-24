@@ -134,7 +134,6 @@ function (Fields,
 
 			this .set_live__ ();
 			this .set_alphaMode__ ();
-			this .set_alphaCutoff__ ();
 			this .set_pointProperties__ ();
 			this .set_lineProperties__ ();
 			this .set_fillProperties__ ();
@@ -169,11 +168,12 @@ function (Fields,
 		set_alphaMode__: function ()
 		{
 			this .alphaMode = AlphaMode [this .alphaMode_ .getValue ()] || AlphaMode .AUTO;
-			this .mask      = this .alphaMode === AlphaMode .MASK;
+
+			this .set_alphaCutoff__ ();
 		},
 		set_alphaCutoff__: function ()
 		{
-			this .alphaCutoff = this .alphaCutoff_ .getValue ();
+			this .alphaCutoff = this .alphaMode === AlphaMode .MASK ? this .alphaCutoff_ .getValue () : 0;
 		},
 		set_pointProperties__: function ()
 		{

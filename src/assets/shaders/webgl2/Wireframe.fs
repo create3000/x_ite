@@ -8,7 +8,6 @@ precision mediump float;
 precision mediump int;
 #endif
 
-uniform bool  x3d_Mask;
 uniform float x3d_AlphaCutoff;
 uniform x3d_LinePropertiesParameters x3d_LineProperties;
 uniform ivec4 x3d_Viewport;
@@ -62,7 +61,7 @@ main ()
 	finalColor .rgb = getFogColor (color .rgb);
 	finalColor .a   = color .a;
 
-   if (x3d_Mask && finalColor .a < x3d_AlphaCutoff)
+   if (finalColor .a < x3d_AlphaCutoff)
    {
       discard;
    }

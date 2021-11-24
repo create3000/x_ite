@@ -14,7 +14,6 @@ precision mediump int;
 uniform int   x3d_GeometryType;
 uniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
 uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
-uniform bool  x3d_Mask;
 uniform float x3d_AlphaCutoff;
 
 uniform int x3d_NumLights;
@@ -196,7 +195,7 @@ main ()
 	finalColor      = getHatchColor (finalColor);
 	finalColor .rgb = getFogColor (finalColor .rgb);
 
-   if (x3d_Mask && finalColor .a < x3d_AlphaCutoff)
+   if (finalColor .a < x3d_AlphaCutoff)
    {
       discard;
    }
