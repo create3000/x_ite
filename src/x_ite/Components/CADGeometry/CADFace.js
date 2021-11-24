@@ -116,10 +116,10 @@ function (Fields,
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
-				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .shape_);
+				const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .shape_);
 
 				if (boundedObject)
-					return boundedObject .getBBox (bbox, shadow);
+					return boundedObject .getBBox (box, shadow);
 
 				return bbox .set ();
 			}
@@ -138,7 +138,7 @@ function (Fields,
 
 			try
 			{
-				var
+				const
 					node = this .shape_ .getValue () .getInnerNode (),
 					type = node .getType ();
 
@@ -176,9 +176,25 @@ function (Fields,
 		{
 			switch (type)
 			{
+				case TraverseType .POINTER:
+				case TraverseType .DEPTH:
+				{
+					const shapeNode = this .shapeNode;
+
+					if (shapeNode .visible_ .getValue ())
+						shapeNode .traverse (type, renderObject);
+
+					return;
+				}
+				case TraverseType .CAMERA:
+				case TraverseType .COLLISION:
+				{
+					this .shapeNode .traverse (type, renderObject);
+					return;
+				}
 				case TraverseType .PICKING:
 				{
-					var
+					const
 						browser          = renderObject .getBrowser (),
 						pickingHierarchy = browser .getPickingHierarchy ();
 
@@ -189,9 +205,16 @@ function (Fields,
 					pickingHierarchy .pop ();
 					return;
 				}
-				default:
+				case TraverseType .DISPLAY:
 				{
-					this .shapeNode .traverse (type, renderObject);
+					const shapeNode = this .shapeNode;
+
+					if (shapeNode .visible_ .getValue ())
+						shapeNode .traverse (type, renderObject);
+
+					if (shapeNode .bboxDisplay_ .getValue ())
+						shapeNode .displayBBox (type, renderObject);
+
 					return;
 				}
 			}
