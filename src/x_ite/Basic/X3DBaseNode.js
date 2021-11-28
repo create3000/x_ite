@@ -117,7 +117,7 @@ function (X3DEventObject,
 
 			return executionContext;
 		},
-		getMasterScene: function ()
+		getMainScene: function ()
 		{
 			var scene = this ._executionContext .getScene ();
 

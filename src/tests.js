@@ -379,4 +379,4 @@ var X_ITE_TESTS = [
 	{ path: "images/test.svg" },
 	{ path: "images/ubuntu.png" },
 ];
-X_ITE_TESTS .server = "https://rawgit.com/create3000/Library/master/Tests/Components";
+X_ITE_TESTS .server = "https://rawgit.com/create3000/Library/main/Tests/Components";

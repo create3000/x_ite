@@ -89,7 +89,7 @@ function (X3DBaseNode)
 			{
 				var
 					enableInlineBindables = false,
-					masterScene           = this .getMasterScene ();
+					mainScene             = this .getMainScene ();
 
 				if (name && name .length)
 				{
@@ -99,7 +99,7 @@ function (X3DBaseNode)
 					{
 						var node = this .array [i];
 
-						if (! enableInlineBindables && node .getScene () !== masterScene)
+						if (! enableInlineBindables && node .getScene () !== mainScene)
 							continue;
 
 						if (node .getName () == name)
@@ -113,7 +113,7 @@ function (X3DBaseNode)
 				{
 					var node = this .array [i];
 
-					if (! enableInlineBindables && node .getScene () !== masterScene)
+					if (! enableInlineBindables && node .getScene () !== mainScene)
 						continue;
 
 					if (node .isBound_ .getValue ())
@@ -126,7 +126,7 @@ function (X3DBaseNode)
 				{
 					var node = this .array [i];
 
-					if (! enableInlineBindables && node .getScene () !== masterScene)
+					if (! enableInlineBindables && node .getScene () !== mainScene)
 						continue;
 
 					return node;
