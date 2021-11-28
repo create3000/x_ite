@@ -41749,7 +41749,7 @@ define ('x_ite/Bits/TraverseType',[],function ()
 		CAMERA:    i ++,
 		PICKING:   i ++,
 		COLLISION: i ++,
-		DEPTH:     i ++,
+		SHADOW:    i ++,
 		DISPLAY:   i ++,
 	};
 
@@ -63366,7 +63366,7 @@ function (Fields,
 					renderObject .addCollisionShape (this);
 					break;
 				}
-				case TraverseType .DEPTH:
+				case TraverseType .SHADOW:
 				{
 					if (this .castShadow_ .getValue ())
 						renderObject .addDepthShape (this);
@@ -73676,7 +73676,7 @@ function (X3DChildNode,
 
 					return;
 				}
-				case TraverseType .DEPTH:
+				case TraverseType .SHADOW:
 				{
 					// Nodes that are not visible do not cast shadows.
 
@@ -74117,7 +74117,7 @@ function (Fields,
 				renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
 				renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
 
-				renderObject .render (TraverseType .DEPTH, X3DGroupingNode .prototype .traverse, this .groupNode);
+				renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
 
 				renderObject .getModelViewMatrix  () .pop ();
 				renderObject .getProjectionMatrix () .pop ();
@@ -92206,7 +92206,7 @@ function ($,
 					this .gravite ();
 					break;
 				}
-				case TraverseType .DEPTH:
+				case TraverseType .SHADOW:
 				{
 					this .numDepthShapes = 0;
 
@@ -95001,7 +95001,7 @@ function (X3DNode,
 				case TraverseType .COLLISION:
 					this .collision (type, renderObject);
 					break;
-				case TraverseType .DEPTH:
+				case TraverseType .SHADOW:
 				case TraverseType .DISPLAY:
 					this .display (type, renderObject);
 					break;
@@ -103017,7 +103017,7 @@ function (Fields,
 
 						return;
 					}
-					case TraverseType .DEPTH:
+					case TraverseType .SHADOW:
 					{
 						if (! this .depthShapes)
 						{
@@ -103358,7 +103358,7 @@ function (Fields,
 			{
 				case TraverseType .POINTER:
 				case TraverseType .CAMERA:
-				case TraverseType .DEPTH:
+				case TraverseType .SHADOW:
 				{
 					const visibleNode = this .visibleNode;
 
@@ -106045,8 +106045,8 @@ define ('x_ite/Components/Lighting/PointLight',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DLightNode, 
-          X3DGroupingNode, 
+          X3DLightNode,
+          X3DGroupingNode,
           TraverseType,
           X3DConstants,
           Box3,
@@ -106084,11 +106084,11 @@ function (Fields,
 		new Vector4 (0.75, 0.5, 0.25, 0.5), // front
 		new Vector4 (0.25, 0.5, 0.25, 0.5), // back
 		new Vector4 (0.0,  0,   0.5,  0.5), // bottom
-		new Vector4 (0.5,  0,   0.5,  0.5), // top   
+		new Vector4 (0.5,  0,   0.5,  0.5), // top
 	];
 
 	var PointLights = ObjectCache (PointLightContainer);
-	
+
 	function PointLightContainer ()
 	{
 		this .location                      = new Vector3 (0, 0, 0);
@@ -106199,16 +106199,16 @@ function (Fields,
 					renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
 					renderObject .getModelViewMatrix  () .pushMatrix (orientationMatrices [i]);
 					renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
-	
-					renderObject .render (TraverseType .DEPTH, X3DGroupingNode .prototype .traverse, this .groupNode);
-	
+
+					renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
+
 					renderObject .getModelViewMatrix  () .pop ();
 					renderObject .getProjectionMatrix () .pop ();
 					renderObject .getViewVolumes () .pop ();
 				}
 
 				this .shadowBuffer .unbind ();
-	
+
 				if (! lightNode .getGlobal ())
 					invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 
@@ -106234,7 +106234,7 @@ function (Fields,
 			if (shaderObject .hasLight (i, this))
 				return;
 
-			var 
+			var
 				lightNode   = this .lightNode,
 				color       = lightNode .getColor (),
 				attenuation = lightNode .getAttenuation (),
@@ -106263,7 +106263,7 @@ function (Fields,
 			else
 			{
 				// Must be set to zero in case of multiple lights.
-				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);			
+				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
 			}
 		},
 		dispose: function ()
@@ -106311,7 +106311,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "attenuation",      new Fields .SFVec3f (1, 0, 0)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "radius",           new Fields .SFFloat (100)),
-																				   
+
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadow.
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat ()),        // Intensity of shadow color in the range (0, 1).
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
@@ -106349,8 +106349,6 @@ function (Fields,
 
 	return PointLight;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -106561,7 +106559,7 @@ function (Fields,
 				renderObject .getProjectionMatrix () .pushMatrix (projectionMatrix);
 				renderObject .getModelViewMatrix  () .pushMatrix (invLightSpaceMatrix);
 
-				renderObject .render (TraverseType .DEPTH, X3DGroupingNode .prototype .traverse, this .groupNode);
+				renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
 
 				renderObject .getModelViewMatrix  () .pop ();
 				renderObject .getProjectionMatrix () .pop ();
@@ -106998,7 +106996,7 @@ function (Fields,
 				{
 					case TraverseType .CAMERA:
 					case TraverseType .PICKING:
-					case TraverseType .DEPTH:
+					case TraverseType .SHADOW:
 						// No clone support for shadow, generated cube map texture, and bbox
 						modelViewMatrix .multLeft (this .matrix);
 						break;
@@ -107476,7 +107474,7 @@ function (Fields,
 				{
 					case TraverseType .POINTER:
 					case TraverseType .CAMERA:
-					case TraverseType .DEPTH:
+					case TraverseType .SHADOW:
 					{
 						const visibleNode = this .visibleNode;
 

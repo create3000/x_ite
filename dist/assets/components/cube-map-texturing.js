@@ -527,7 +527,7 @@ function (X3DBaseNode,
 					X3DRenderObject .prototype .render .call (this, type, callback, group);
 					break;
 				}
-				case TraverseType .DEPTH:
+				case TraverseType .SHADOW:
 				{
 					X3DRenderObject .prototype .render .call (this, type, callback, group);
 					break;
