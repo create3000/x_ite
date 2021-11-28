@@ -266,5 +266,3 @@ function ($,
 
 	return ImageTexture;
 });
-
-// https://github.com/toji/texture-tester/blob/master/js/webgl-texture-util.js
