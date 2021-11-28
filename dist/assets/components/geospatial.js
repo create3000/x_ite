@@ -2036,9 +2036,9 @@ define ('x_ite/Components/Geospatial/GeoLOD',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChildNode, 
-          X3DBoundedObject, 
-          X3DGeospatialObject, 
+          X3DChildNode,
+          X3DBoundedObject,
+          X3DGeospatialObject,
           X3DConstants,
           TraverseType,
           Group,
@@ -2091,6 +2091,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "center",        new Fields .SFVec3d ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "range",         new Fields .SFFloat (10)),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "level_changed", new Fields .SFInt32 (-1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",       new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",   new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",      new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",    new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "rootNode",      new Fields .MFNode ()),
@@ -2115,65 +2117,66 @@ function (Fields,
 			X3DGeospatialObject .prototype .initialize .call (this);
 
 			this .rootNode_ .addFieldInterest (this .rootGroup .children_);
-		
+
 			this .rootGroup .children_ = this .rootNode_;
 			this .rootGroup .setPrivate (true);
 			this .rootGroup .setup ();
-		
+
 			this .rootInline   .loadState_ .addInterest ("set_rootLoadState__", this);
 			this .child1Inline .loadState_ .addInterest ("set_childLoadState__", this);
 			this .child2Inline .loadState_ .addInterest ("set_childLoadState__", this);
 			this .child3Inline .loadState_ .addInterest ("set_childLoadState__", this);
 			this .child4Inline .loadState_ .addInterest ("set_childLoadState__", this);
-		
+
 			this .rootUrl_   .addFieldInterest (this .rootInline   .url_);
 			this .child1Url_ .addFieldInterest (this .child1Inline .url_);
 			this .child2Url_ .addFieldInterest (this .child2Inline .url_);
 			this .child3Url_ .addFieldInterest (this .child3Inline .url_);
 			this .child4Url_ .addFieldInterest (this .child4Inline .url_);
-		
+
 			this .rootInline   .load_ = true;
 			this .child1Inline .load_ = false;
 			this .child2Inline .load_ = false;
 			this .child3Inline .load_ = false;
 			this .child4Inline .load_ = false;
-		
+
 			this .rootInline   .url_ = this .rootUrl_;
 			this .child1Inline .url_ = this .child1Url_;
 			this .child2Inline .url_ = this .child2Url_;
 			this .child3Inline .url_ = this .child3Url_;
 			this .child4Inline .url_ = this .child4Url_;
-		
+
 			this .rootInline   .setup ();
 			this .child1Inline .setup ();
 			this .child2Inline .setup ();
 			this .child3Inline .setup ();
 			this .child4Inline .setup ();
 		},
-		getBBox: function (bbox) 
+		getBBox: function (bbox, shadow)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
-				var level = this .level_changed_ .getValue ();
-
-				switch (this .childrenLoaded ? level : 0)
+				switch (this .childrenLoaded ? this .level_changed_ .getValue () : 0)
 				{
 					case 0:
 					{
 						if (this .rootNode_ .length)
-							return this .rootGroup .getBBox (bbox);
+							return this .rootGroup .getBBox (bbox, shadow);
 
-						return this .rootInline .getBBox (bbox);
+						return this .rootInline .getBBox (bbox, shadow);
 					}
 					case 1:
 					{
+						// Must be unique for each GeoLOD..
+						const childBBox = this .childBBox;
+
 						bbox .set ();
-						
-						bbox .add (this .child1Inline .getBBox (this .childBBox));
-						bbox .add (this .child2Inline .getBBox (this .childBBox));
-						bbox .add (this .child3Inline .getBBox (this .childBBox));
-						bbox .add (this .child4Inline .getBBox (this .childBBox));
-		
+
+						bbox .add (this .child1Inline .getBBox (childBBox, shadow));
+						bbox .add (this .child2Inline .getBBox (childBBox, shadow));
+						bbox .add (this .child3Inline .getBBox (childBBox, shadow));
+						bbox .add (this .child4Inline .getBBox (childBBox, shadow));
+
 						return bbox;
 					}
 				}
@@ -2187,10 +2190,10 @@ function (Fields,
 		{
 			if (this .level_changed_ .getValue () !== 0)
 				return;
-		
+
 			if (this .rootNode_ .length)
 				return;
-		
+
 			if (this .rootInline .checkLoadState () === X3DConstants .COMPLETE_STATE)
 			{
 				this .children_      = this .rootInline .getInternalScene () .getRootNodes ();
@@ -2201,9 +2204,9 @@ function (Fields,
 		{
 			if (this .level_changed_ .getValue () !== 1)
 				return;
-	
+
 			var loaded = 0;
-	
+
 			if (this .child1Inline .checkLoadState () === X3DConstants .COMPLETE_STATE ||
 			    this .child1Inline .checkLoadState () === X3DConstants .FAILED_STATE)
 				++ loaded;
@@ -2219,32 +2222,32 @@ function (Fields,
 			if (this .child4Inline .checkLoadState () === X3DConstants .COMPLETE_STATE ||
 			    this .child4Inline .checkLoadState () === X3DConstants .FAILED_STATE)
 				++ loaded;
-	
+
 			if (loaded === 4)
 			{
 				this .childrenLoaded = true;
-	
+
 				var children = this .children_;
 
 				children .length = 0;
 
 				var rootNodes = this .child1Inline .getInternalScene () .getRootNodes ();
-	
+
 				for (var i = 0, length = rootNodes .length; i < length; ++ i)
 					children .push (rootNodes [i]);
-	
+
 				var rootNodes = this .child2Inline .getInternalScene () .getRootNodes ();
-	
+
 				for (var i = 0, length = rootNodes .length; i < length; ++ i)
 					children .push (rootNodes [i]);
-	
+
 				var rootNodes = this .child3Inline .getInternalScene () .getRootNodes ();
-	
+
 				for (var i = 0, length = rootNodes .length; i < length; ++ i)
 					children .push (rootNodes [i]);
-	
+
 				var rootNodes = this .child4Inline .getInternalScene () .getRootNodes ();
-	
+
 				for (var i = 0, length = rootNodes .length; i < length; ++ i)
 					children .push (rootNodes [i]);
 			}
@@ -2266,10 +2269,10 @@ function (Fields,
 		getLevel: function (modelViewMatrix)
 		{
 			var distance = this .getDistance (modelViewMatrix);
-		
+
 			if (distance < this .range_ .getValue ())
 				return 1;
-		
+
 			return 0;
 		},
 		getDistance: function (modelViewMatrix)
@@ -2298,11 +2301,11 @@ function (Fields,
 				case TraverseType .DISPLAY:
 				{
 					var level = this .getLevel (this .modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ()));
-				
+
 					if (level !== this .level_changed_ .getValue ())
 					{
 						this .level_changed_ = level;
-				
+
 						switch (level)
 						{
 							case 0:
@@ -2315,15 +2318,15 @@ function (Fields,
 								this .child2Inline .isPickableObject_ .removeInterest ("set_childPickableObject__", this);
 								this .child3Inline .isPickableObject_ .removeInterest ("set_childPickableObject__", this);
 								this .child4Inline .isPickableObject_ .removeInterest ("set_childPickableObject__", this);
-	
+
 								if (this .rootNode_ .length)
 								{
 									this .rootGroup .isCameraObject_   .addFieldInterest (this .isCameraObject_);
 									this .rootGroup .isPickableObject_ .addFieldInterest (this .isPickableObject_);
-	
+
 									this .setCameraObject   (this .rootGroup .getCameraObject ());
 									this .setPickableObject (this .rootGroup .getPickableObject ());
-	
+
 									this .children_      = this .rootNode_;
 									this .childrenLoaded = false;
 								}
@@ -2333,10 +2336,10 @@ function (Fields,
 									{
 										this .rootInline .isCameraObject_   .addFieldInterest (this .isCameraObject_);
 										this .rootInline .isPickableObject_ .addFieldInterest (this .isPickableObject_);
-	
+
 										this .setCameraObject   (this .rootInline .getCameraObject ());
 										this .setPickableObject (this .rootInline .getPickableObject ());
-	
+
 										this .children_      = this .rootInline .getInternalScene () .getRootNodes ();
 										this .childrenLoaded = false;
 									}
@@ -2364,7 +2367,7 @@ function (Fields,
 									this .rootInline .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
 									this .rootInline .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
 								}
-	
+
 								this .child1Inline .isCameraObject_   .addInterest ("set_childCameraObject__",   this);
 								this .child2Inline .isCameraObject_   .addInterest ("set_childCameraObject__",   this);
 								this .child3Inline .isCameraObject_   .addInterest ("set_childCameraObject__",   this);
@@ -2373,7 +2376,7 @@ function (Fields,
 								this .child2Inline .isPickableObject_ .addInterest ("set_childPickableObject__", this);
 								this .child3Inline .isPickableObject_ .addInterest ("set_childPickableObject__", this);
 								this .child4Inline .isPickableObject_ .addInterest ("set_childPickableObject__", this);
-	
+
 								this .set_childCameraObject__ ();
 								this .set_childPickableObject__ ();
 
@@ -2414,7 +2417,7 @@ function (Fields,
 						this .rootGroup .traverse (type, renderObject);
 					else
 						this .rootInline .traverse (type, renderObject);
-		
+
 					break;
 				}
 				case 1:
@@ -2431,8 +2434,6 @@ function (Fields,
 
 	return GeoLOD;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -2495,8 +2496,8 @@ define ('x_ite/Components/Geospatial/GeoLocation',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTransformMatrix3DNode, 
-          X3DGeospatialObject, 
+          X3DTransformMatrix3DNode,
+          X3DGeospatialObject,
           X3DConstants,
           Matrix4)
 {
@@ -2521,6 +2522,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",      new Fields .MFString ("GD", "WE")),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "geoCoords",      new Fields .SFVec3d ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
@@ -2543,9 +2546,9 @@ function (Fields,
 		{
 			X3DTransformMatrix3DNode .prototype .initialize .call (this);
 			X3DGeospatialObject      .prototype .initialize .call (this);
-		
+
 			this .addInterest ("eventsProcessed", this);
-		
+
 			this .eventsProcessed ();
 		},
 		eventsProcessed: function ()
@@ -2556,8 +2559,6 @@ function (Fields,
 
 	return GeoLocation;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -3303,8 +3304,8 @@ define ('x_ite/Components/Geospatial/GeoTransform',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTransformMatrix3DNode, 
-          X3DGeospatialObject, 
+          X3DTransformMatrix3DNode,
+          X3DGeospatialObject,
           X3DConstants,
           Matrix4)
 {
@@ -3337,6 +3338,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",        new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",        new Fields .MFString ("GD", "WE")),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "geoCenter",        new Fields .SFVec3d ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
@@ -3359,9 +3362,9 @@ function (Fields,
 		{
 			X3DTransformMatrix3DNode .prototype .initialize .call (this);
 			X3DGeospatialObject      .prototype .initialize .call (this);
-		
+
 			this .addInterest ("eventsProcessed", this);
-		
+
 			this .eventsProcessed ();
 		},
 		eventsProcessed: function ()
@@ -3371,14 +3374,14 @@ function (Fields,
 				this .setHidden (this .scale_ .x === 0 ||
 				                 this .scale_ .y === 0 ||
 				                 this .scale_ .z === 0);
-	
+
 				this .getLocationMatrix (this .geoCenter_ .getValue (), locationMatrix);
-	
+
 				matrix .set (this .translation_      .getValue (),
 				             this .rotation_         .getValue (),
 				             this .scale_            .getValue (),
 				             this .scaleOrientation_ .getValue ());
-	
+
 				this .setMatrix (matrix .multRight (locationMatrix) .multLeft (locationMatrix .inverse ()));
 			}
 			catch (error)
@@ -3391,8 +3394,6 @@ function (Fields,
 
 	return GeoTransform;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************

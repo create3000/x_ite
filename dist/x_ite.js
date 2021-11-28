@@ -1,4 +1,4 @@
-/* X_ITE v4.6.24-1052 */
+/* X_ITE v4.6.25a-1053 */
 
 (function () {
 
@@ -25574,7 +25574,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.6.24";
+	return "4.6.25a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -25883,7 +25883,7 @@ function (X3DEventObject,
 
 			return executionContext;
 		},
-		getMasterScene: function ()
+		getMainScene: function ()
 		{
 			var scene = this ._executionContext .getScene ();
 
@@ -35633,7 +35633,7 @@ define ('x_ite/Parser/X3DParser',[],function ()
 				for (var i = 0, length = profileComponents .length; i < length; ++ i)
 				{
 					var providerUrl = profileComponents [i] .providerUrl;
-	
+
 					if (providerUrl .match (componentsUrl))
 						providerUrls .add (providerUrl);
 				}
@@ -35641,7 +35641,7 @@ define ('x_ite/Parser/X3DParser',[],function ()
 				for (var i = 0, length = components .length; i < length; ++ i)
 				{
 					var providerUrl = components [i] .providerUrl;
-	
+
 					if (providerUrl .match (componentsUrl))
 						providerUrls .add (providerUrl);
 				}
@@ -35672,7 +35672,7 @@ define ('x_ite/Parser/X3DParser',[],function ()
 					return;
 				}
 			}
-		
+
 			this .units = true;
 		},
 		getUnits: function ()
@@ -44421,14 +44421,12 @@ function (Fields,
 
 
 define ('x_ite/Components/Shaders/X3DProgrammableShaderObject',[
-	"x_ite/Fields",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Components/Navigation/OrthoViewpoint",
 	"standard/Math/Numbers/Matrix3",
 ],
-function (Fields,
-          X3DCast,
+function (X3DCast,
           X3DConstants,
           OrthoViewpoint,
           Matrix3)
@@ -44490,7 +44488,7 @@ function (Fields,
 		constructor: X3DProgrammableShaderObject,
 		initialize: function ()
 		{
-			var browser = this .getBrowser ();
+			const browser = this .getBrowser ();
 
 			this .x3d_MaxClipPlanes = browser .getMaxClipPlanes ();
 			this .x3d_MaxLights     = browser .getMaxLights ();
@@ -44508,7 +44506,7 @@ function (Fields,
 		{
 			// Get uniforms and attributes.
 
-			var
+			const
 				browser = this .getBrowser (),
 				gl      = browser .getContext (),
 				program = this .getProgram ();
@@ -44528,6 +44526,8 @@ function (Fields,
 			this .x3d_FogVisibilityRange = this .getUniformLocation (gl, program, "x3d_Fog.visibilityRange", "x3d_FogVisibilityRange");
 			this .x3d_FogMatrix          = this .getUniformLocation (gl, program, "x3d_Fog.matrix",          "x3d_FogMatrix");
 			this .x3d_FogCoord           = this .getUniformLocation (gl, program, "x3d_Fog.fogCoord",        "x3d_FogCoord");
+
+			this .x3d_AlphaCutoff = gl .getUniformLocation (program, "x3d_AlphaCutoff");
 
 			this .x3d_PointPropertiesPointSizeScaleFactor = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeScaleFactor");
 			this .x3d_PointPropertiesPointSizeMinValue    = gl .getUniformLocation (program, "x3d_PointProperties.pointSizeMinValue");
@@ -44749,7 +44749,7 @@ function (Fields,
 		},
 		addShaderFields: function ()
 		{
-			var
+			const
 				gl                = this .getBrowser () .getContext (),
 				program           = this .getProgram (),
 				userDefinedFields = this .getUserDefinedFields ();
@@ -44758,7 +44758,7 @@ function (Fields,
 
 			userDefinedFields .forEach (function (field)
 			{
-				var location = gl .getUniformLocation (program, field .getName ());
+				const location = gl .getUniformLocation (program, field .getName ());
 
 				if (location)
 				{
@@ -44823,11 +44823,11 @@ function (Fields,
 						}
 						case X3DConstants .MFNode:
 						{
-							var locations = location .locations = [ ];
+							const locations = location .locations = [ ];
 
 							for (var i = 0;; ++ i)
 							{
-								var l = gl .getUniformLocation (program, field .getName () + "[" + i + "]");
+								const l = gl .getUniformLocation (program, field .getName () + "[" + i + "]");
 
 								if (! l)
 									break;
@@ -44866,7 +44866,7 @@ function (Fields,
 		},
 		removeShaderFields: function ()
 		{
-			var userDefinedFields = this .getUserDefinedFields ();
+			const userDefinedFields = this .getUserDefinedFields ();
 
 			userDefinedFields .forEach (function (field)
 			{
@@ -44876,11 +44876,11 @@ function (Fields,
 		},
 		set_field__: (function ()
 		{
-			var matrix3 = new Matrix3 ();
+			const matrix3 = new Matrix3 ();
 
 			return function (field)
 			{
-				var
+				const
 					gl       = this .getBrowser () .getContext (),
 					location = field ._uniformLocation;
 
@@ -44896,13 +44896,13 @@ function (Fields,
 						}
 						case X3DConstants .SFColor:
 						{
-							var value = field .getValue ();
+							const value = field .getValue ();
 							gl .uniform3f (location, value .r, value .g, value .b);
 							return;
 						}
 						case X3DConstants .SFColorRGBA:
 						{
-							var value = field .getValue ();
+							const value = field .getValue ();
 							gl .uniform4f (location, value .r, value .g, value .b, value .a);
 							return;
 						}
@@ -44915,8 +44915,9 @@ function (Fields,
 						}
 						case X3DConstants .SFImage:
 						{
-							var
-								array  = location .array,
+							var array = location .array;
+
+							const
 								pixels = field .array,
 								length = 3 + pixels .length;
 
@@ -44927,7 +44928,7 @@ function (Fields,
 							array [1] = field .height;
 							array [2] = field .comp;
 
-							for (var a = 3, p = 0, length = pixels .length; p < length; ++ p, ++ a)
+							for (var a = 3, p = 0, pl = pixels .length; p < pl; ++ p, ++ a)
 								array [a] = pixels [p];
 
 							gl .uniform1iv (location, array);
@@ -44951,7 +44952,7 @@ function (Fields,
 						}
 						case X3DConstants .SFNode:
 						{
-							var texture = X3DCast (X3DConstants .X3DTextureNode, field);
+							const texture = X3DCast (X3DConstants .X3DTextureNode, field);
 
 							if (texture)
 							{
@@ -44976,28 +44977,28 @@ function (Fields,
 						case X3DConstants .SFVec2d:
 						case X3DConstants .SFVec2f:
 						{
-							var value = field .getValue ();
+							const value = field .getValue ();
 							gl .uniform2f (location, value .x, value .y);
 							return;
 						}
 						case X3DConstants .SFVec3d:
 						case X3DConstants .SFVec3f:
 						{
-							var value = field .getValue ();
+							const value = field .getValue ();
 							gl .uniform3f (location, value .x, value .y, value .z);
 							return;
 						}
 						case X3DConstants .SFVec4d:
 						case X3DConstants .SFVec4f:
 						{
-							var value = field .getValue ();
+							const value = field .getValue ();
 							gl .uniform4f (location, value .x, value .y, value .z, value .w);
 							return;
 						}
 						case X3DConstants .MFBool:
 						case X3DConstants .MFInt32:
 						{
-							var array = location .array;
+							const array = location .array;
 
 							for (var i = 0, length = field .length; i < length; ++ i)
 								array [i] = field [i];
@@ -45010,11 +45011,11 @@ function (Fields,
 						}
 						case X3DConstants .MFColor:
 						{
-							var array = location .array;
+							const array = location .array;
 
 							for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 							{
-								var color = field [i];
+								const color = field [i];
 
 								array [k++] = color .r;
 								array [k++] = color .g;
@@ -45029,11 +45030,11 @@ function (Fields,
 						}
 						case X3DConstants .MFColorRGBA:
 						{
-							var array = location .array;
+							const array = location .array;
 
 							for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 							{
-								var color = field [i];
+								const color = field [i];
 
 								array [k++] = color .r;
 								array [k++] = color .g;
@@ -45051,7 +45052,7 @@ function (Fields,
 						case X3DConstants .MFFloat:
 						case X3DConstants .MFTime:
 						{
-							var array = location .array;
+							const array = location .array;
 
 							for (var i = 0, length = field .length; i < length; ++ i)
 								array [i] = field [i];
@@ -45064,16 +45065,16 @@ function (Fields,
 						}
 						case X3DConstants .MFImage:
 						{
-							var
-								array  = location .array,
-								length = this .getImagesLength (field);
+							var array = location .array;
 
-							if (length !== array .length)
-								array = location .array = new Int32Array (length);
+							const numImages = this .getImagesLength (field);
+
+							if (numImages !== array .length)
+								array = location .array = new Int32Array (numImages);
 
 							for (var i = 0, a = 0, length = field .length; i < length; ++ i)
 							{
-								var
+								const
 									value  = field [i],
 									pixels = value .array;
 
@@ -45081,7 +45082,7 @@ function (Fields,
 								array [a ++] = value .height;
 								array [a ++] = value .comp;
 
-								for (var p = 0, plength = pixels .length; p < plength; ++ p)
+								for (var p = 0, pl = pixels .length; p < pl; ++ p)
 									array [a ++] = pixels [p];
 							}
 
@@ -45091,11 +45092,11 @@ function (Fields,
 						case X3DConstants .MFMatrix3d:
 						case X3DConstants .MFMatrix3f:
 						{
-							var array = location .array;
+							const array = location .array;
 
 							for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 							{
-								var matrix = field [i];
+								const matrix = field [i];
 
 								for (var m = 0; m < 9; ++ m)
 									array [k++] = matrix [m];
@@ -45110,11 +45111,11 @@ function (Fields,
 						case X3DConstants .MFMatrix4d:
 						case X3DConstants .MFMatrix4f:
 						{
-							var array = location .array;
+							const array = location .array;
 
 							for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 							{
-								var matrix = field [i];
+								const matrix = field [i];
 
 								for (var m = 0; m < 16; ++ m)
 									array [k++] = matrix [m];
@@ -45128,11 +45129,11 @@ function (Fields,
 						}
 						case X3DConstants .MFNode:
 						{
-							var locations = location .locations;
+							const locations = location .locations;
 
 							for (var i = 0, length = field .length; i < length; ++ i)
 							{
-								var texture = X3DCast (X3DConstants .X3DTextureNode, field [i]);
+								const texture = X3DCast (X3DConstants .X3DTextureNode, field [i]);
 
 								if (texture)
 								{
@@ -45145,11 +45146,11 @@ function (Fields,
 						}
 						case X3DConstants .MFRotation:
 						{
-							var array = location .array;
+							const array = location .array;
 
 							for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 							{
-								var matrix = field [i] .getValue () .getMatrix (matrix3);
+								const matrix = field [i] .getValue () .getMatrix (matrix3);
 
 								array [k++] = matrix [0];
 								array [k++] = matrix [1];
@@ -45175,11 +45176,11 @@ function (Fields,
 						case X3DConstants .MFVec2d:
 						case X3DConstants .MFVec2f:
 						{
-							var array = location .array;
+							const array = location .array;
 
 							for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 							{
-								var vector = field [i];
+								const vector = field [i];
 
 								array [k++] = vector .x;
 								array [k++] = vector .y;
@@ -45194,11 +45195,11 @@ function (Fields,
 						case X3DConstants .MFVec3d:
 						case X3DConstants .MFVec3f:
 						{
-							var array = location .array;
+							const array = location .array;
 
 							for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 							{
-								var vector = field [i];
+								const vector = field [i];
 
 								array [k++] = vector .x;
 								array [k++] = vector .y;
@@ -45214,11 +45215,11 @@ function (Fields,
 						case X3DConstants .MFVec4d:
 						case X3DConstants .MFVec4f:
 						{
-							var array = location .array;
+							const array = location .array;
 
 							for (var i = 0, k = 0, length = field .length; i < length; ++ i)
 							{
-								var vector = field [i];
+								const vector = field [i];
 
 								array [k++] = vector .x;
 								array [k++] = vector .y;
@@ -45238,9 +45239,9 @@ function (Fields,
 		})(),
 		getImagesLength: function (field)
 		{
-			var
-				images = field .getValue (),
-				length = 3 * images .length;
+			const images = field .getValue ();
+
+			var length = 3 * images .length;
 
 			for (var i = 0, l = images .length; i < l; ++ i)
 				length += images [i] .array .length;
@@ -45249,11 +45250,11 @@ function (Fields,
 		},
 		getLocationLength: function (gl, program, field)
 		{
-			var name = field .getName ();
+			const name = field .getName ();
 
 			for (var i = 0; ; ++ i)
 			{
-				var location = gl .getUniformLocation (program, name + "[" + i + "]");
+				const location = gl .getUniformLocation (program, name + "[" + i + "]");
 
 				if (! location)
 					break;
@@ -45307,7 +45308,7 @@ function (Fields,
 		},
 		setGlobalUniforms: function (gl, renderObject, cameraSpaceMatrixArray, projectionMatrixArray, viewportArray)
 		{
-			var globalObjects = renderObject .getGlobalObjects ();
+			const globalObjects = renderObject .getGlobalObjects ();
 
 			// Set viewport
 
@@ -45337,7 +45338,7 @@ function (Fields,
 
 			// Logarithmic depth buffer support.
 
-			var
+			const
 				viewpoint      = renderObject .getViewpoint (),
 				navigationInfo = renderObject .getNavigationInfo ();
 
@@ -45348,12 +45349,16 @@ function (Fields,
 		},
 		setLocalUniforms: function (gl, context)
 		{
-			var
-				stylePropertiesNode   = context .stylePropertiesNode,
-				materialNode          = context .materialNode,
-				textureNode           = context .textureNode,
-				textureTransformNode  = context .textureTransformNode,
-				textureCoordinateNode = context .textureCoordinateNode,
+			const
+				shapeNode             = context .shapeNode,
+				geometryNode          = context .geometryContext || shapeNode .getGeometry (),
+				geometryType          = geometryNode .geometryType,
+				textureCoordinateNode = geometryNode .textureCoordinateNode,
+				appearanceNode        = shapeNode .getAppearance (),
+				stylePropertiesNode   = appearanceNode .stylePropertiesNode [geometryType],
+				materialNode          = appearanceNode .materialNode,
+				textureNode           = context .textureNode || appearanceNode .textureNode,
+				textureTransformNode  = appearanceNode .textureTransformNode,
 				modelViewMatrix       = context .modelViewMatrix,
 				localObjects          = context .localObjects;
 
@@ -45363,7 +45368,7 @@ function (Fields,
 
 			// Geometry type
 
-			gl .uniform1i (this .x3d_GeometryType, context .geometryType);
+			gl .uniform1i (this .x3d_GeometryType, geometryType);
 
 			// Clip planes and local lights
 
@@ -45381,13 +45386,19 @@ function (Fields,
 			// Fog, there is always one
 
 			context .fogNode .setShaderUniforms (gl, this);
-			gl .uniform1i (this .x3d_FogCoord, context .fogCoords);
+			gl .uniform1i (this .x3d_FogCoord, geometryNode .fogCoords);
+
+			// Alpha
+
+			gl .uniform1f (this .x3d_AlphaCutoff, appearanceNode .alphaCutoff);
+
+			// Style
 
 			stylePropertiesNode .setShaderUniforms (gl, this);
 
 			// Material
 
-			gl .uniform1i (this .x3d_ColorMaterial, context .colorMaterial);
+			gl .uniform1i (this .x3d_ColorMaterial, geometryNode .colorMaterial);
 
 			if (materialNode)
 			{
@@ -45430,7 +45441,7 @@ function (Fields,
 		},
 		getNormalMatrix: (function ()
 		{
-			var normalMatrix = new Float32Array (9);
+			const normalMatrix = new Float32Array (9);
 
 			return function (modelViewMatrix)
 			{
@@ -45454,14 +45465,14 @@ function (Fields,
 		})(),
 		enable: function (gl)
 		{
-			var browser = this .getBrowser ();
+			const browser = this .getBrowser ();
 
 			//console .log (this .getName ());
 			//console .log (browser .getCombinedTextureUnits () .length);
 
 			this .textures .forEach (function (object, location)
 			{
-				var
+				const
 					name    = object .name,
 					texture = object .texture;
 
@@ -45471,7 +45482,7 @@ function (Fields,
 					return;
 				}
 
-				var textureUnit = object .textureUnit = browser .getCombinedTextureUnits () .pop ();
+				const textureUnit = object .textureUnit = browser .getCombinedTextureUnits () .pop ();
 
 				gl .uniform1i (location, textureUnit);
 				gl .activeTexture (gl .TEXTURE0 + textureUnit);
@@ -45482,11 +45493,11 @@ function (Fields,
 		},
 		disable: function (gl)
 		{
-			var browser = this .getBrowser ();
+			const browser = this .getBrowser ();
 
 			this .textures .forEach (function (object)
 			{
-				var textureUnit = object .textureUnit;
+				const textureUnit = object .textureUnit;
 
 				if (textureUnit !== undefined)
 					browser .getCombinedTextureUnits () .push (textureUnit);
@@ -45498,7 +45509,7 @@ function (Fields,
 		},
 		enableFloatAttrib: function (gl, name, buffer, components)
 		{
-			var location = gl. getAttribLocation (this .getProgram (), name);
+			const location = gl. getAttribLocation (this .getProgram (), name);
 
 			if (location === -1)
 				return;
@@ -45510,7 +45521,7 @@ function (Fields,
 		},
 		disableFloatAttrib: function (gl, name)
 		{
-			var location = gl .getAttribLocation (this .getProgram (), name);
+			const location = gl .getAttribLocation (this .getProgram (), name);
 
 			if (location === -1)
 				return;
@@ -45519,7 +45530,7 @@ function (Fields,
 		},
 		enableMatrix3Attrib: function (gl, name, buffer)
 		{
-			var location = gl .getAttribLocation (this .getProgram (), name);
+			const location = gl .getAttribLocation (this .getProgram (), name);
 
 			if (location === -1)
 				return;
@@ -45536,7 +45547,7 @@ function (Fields,
 		},
 		disableMatrix3Attrib: function (gl, name)
 		{
-			var location = gl .getAttribLocation (this .getProgram (), name);
+			const location = gl .getAttribLocation (this .getProgram (), name);
 
 			if (location === -1)
 				return;
@@ -45547,7 +45558,7 @@ function (Fields,
 		},
 		enableMatrix4Attrib: function (gl, name, buffer)
 		{
-			var location = gl .getAttribLocation (this .getProgram (), name);
+			const location = gl .getAttribLocation (this .getProgram (), name);
 
 			if (location === -1)
 				return;
@@ -45566,7 +45577,7 @@ function (Fields,
 		},
 		disableMatrix4Attrib: function (gl, name)
 		{
-			var location = gl .getAttribLocation (this .getProgram (), name);
+			const location = gl .getAttribLocation (this .getProgram (), name);
 
 			if (location === -1)
 				return;
@@ -45598,11 +45609,11 @@ function (Fields,
 		},
 		enableTexCoordAttribute: function (gl, texCoordBuffers, d)
 		{
-			var length = Math .min (this .x3d_MaxTextures, texCoordBuffers .length);
+			const length = Math .min (this .x3d_MaxTextures, texCoordBuffers .length);
 
 			for (var i = 0; i < length; ++ i)
 			{
-				var x3d_TexCoord = this .x3d_TexCoord [i];
+				const x3d_TexCoord = this .x3d_TexCoord [i];
 
 				if (x3d_TexCoord === -1)
 					continue;
@@ -45616,7 +45627,7 @@ function (Fields,
 		{
 			for (var i = 0, length = this .x3d_MaxTextures; i < length; ++ i)
 			{
-				var x3d_TexCoord = this .x3d_TexCoord [i];
+				const x3d_TexCoord = this .x3d_TexCoord [i];
 
 				if (x3d_TexCoord === -1)
 					continue;
@@ -45659,11 +45670,11 @@ function (Fields,
 		{
 			function cmp (lhs, rhs) { return lhs < rhs ? -1 : lhs > rhs ? 1 : 0; }
 
-			var
+			const
 				gl      = this .getBrowser () .getContext (),
 				program = this .getProgram ();
 
-			var
+			const
 				result = {
 					attributes: [ ],
 					uniforms: [ ],
@@ -45675,7 +45686,7 @@ function (Fields,
 
 			// Taken from the WebGl spec:
 			// http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.14
-			var enums = {
+			const enums = {
 				0x8B50: 'vec2',
 				0x8B51: 'vec3',
 				0x8B52: 'vec4',
@@ -45703,7 +45714,7 @@ function (Fields,
 			// Loop through active uniforms
 			for (var i = 0; i < activeUniforms; ++ i)
 			{
-				var uniform = gl .getActiveUniform (program, i);
+				const uniform = gl .getActiveUniform (program, i);
 				uniform .typeName = enums [uniform.type];
 				result .uniforms .push (Object .assign ({ }, uniform));
 				result .uniformCount += uniform .size;
@@ -45712,7 +45723,7 @@ function (Fields,
 			// Loop through active attributes
 			for (var i = 0; i < activeAttributes; ++ i)
 			{
-				var attribute = gl .getActiveAttrib (program, i);
+				const attribute = gl .getActiveAttrib (program, i);
 				attribute .typeName = enums [attribute .type];
 				result .attributes .push (Object .assign ({ }, attribute));
 				result .attributeCount += attribute .size;
@@ -45725,7 +45736,7 @@ function (Fields,
 		},
 		printProgramInfo: function ()
 		{
-			var programInfo = this .getProgramInfo ();
+			const programInfo = this .getProgramInfo ();
 
 			console .log (this .getName ());
 			console .table (programInfo .attributes);
@@ -58858,6 +58869,7 @@ function (TextureBuffer,
 				// Set clip planes and lights to none.
 
 				gl .uniform1i (shaderNode .x3d_FogType,               0);
+				gl .uniform1f (shaderNode .x3d_AlphaCutoff,           0);
 				gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,  true);
 				gl .uniform1i (shaderNode .x3d_FillPropertiesHatched, false);
 				gl .uniform1i (shaderNode .x3d_ColorMaterial,         false);
@@ -59899,6 +59911,72 @@ function (Fields,
  ******************************************************************************/
 
 
+define ('x_ite/Browser/Shape/AlphaMode',[],function ()
+{
+"use strict";
+
+	var i = 0;
+
+	var AlphaMode =
+	{
+		AUTO:   i ++,
+		OPAQUE: i ++,
+		MASK:   i ++,
+		BLEND:  i ++,
+	};
+
+	return AlphaMode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Shape/Appearance',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
@@ -59906,13 +59984,15 @@ define ('x_ite/Components/Shape/Appearance',[
 	"x_ite/Components/Shape/X3DAppearanceNode",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Shape/AlphaMode",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DAppearanceNode,
           X3DCast,
-          X3DConstants)
+          X3DConstants,
+			 AlphaMode)
 {
 "use strict";
 
@@ -59922,9 +60002,7 @@ function (Fields,
 
 		this .addType (X3DConstants .Appearance);
 
-		this .pointPropertiesNode  = null;
-		this .linePropertiesNode   = null;
-		this .fillPropertiesNode   = null;
+		this .stylePropertiesNode  = [ ];
 		this .materialNode         = null;
 		this .textureNode          = null;
 		this .textureTransformNode = null;
@@ -59938,6 +60016,8 @@ function (Fields,
 		constructor: Appearance,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "alphaMode",        new Fields .SFString ("AUTO")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "alphaCutoff",      new Fields .SFFloat (0.5)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "pointProperties",  new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "lineProperties",   new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "fillProperties",   new Fields .SFNode ()),
@@ -59965,6 +60045,8 @@ function (Fields,
 
 			this .isLive () .addInterest ("set_live__", this);
 
+			this .alphaMode_  		.addInterest ("set_alphaMode__",        this);
+			this .alphaCutoff_  		.addInterest ("set_alphaCutoff__",      this);
 			this .pointProperties_  .addInterest ("set_pointProperties__",  this);
 			this .lineProperties_   .addInterest ("set_lineProperties__",   this);
 			this .fillProperties_   .addInterest ("set_fillProperties__",   this);
@@ -59974,7 +60056,14 @@ function (Fields,
 			this .shaders_          .addInterest ("set_shaders__",          this);
 			this .blendMode_        .addInterest ("set_blendMode__",        this);
 
+			this .alphaMode_      .addInterest ("set_transparent__", this);
+			this .fillProperties_ .addInterest ("set_transparent__", this);
+			this .material_       .addInterest ("set_transparent__", this);
+			this .texture_        .addInterest ("set_transparent__", this);
+			this .blendMode_      .addInterest ("set_transparent__", this);
+
 			this .set_live__ ();
+			this .set_alphaMode__ ();
 			this .set_pointProperties__ ();
 			this .set_lineProperties__ ();
 			this .set_fillProperties__ ();
@@ -59983,6 +60072,11 @@ function (Fields,
 			this .set_textureTransform__ ();
 			this .set_shaders__ ();
 			this .set_blendMode__ ();
+			this .set_transparent__ ();
+		},
+		getAlphaMode: function ()
+		{
+			return this .alphaMode;
 		},
 		set_live__: function ()
 		{
@@ -60001,34 +60095,44 @@ function (Fields,
 					this .getBrowser () .removeShader (this .shaderNode);
 			}
 		},
+		set_alphaMode__: function ()
+		{
+			this .alphaMode = AlphaMode [this .alphaMode_ .getValue ()] || AlphaMode .AUTO;
+
+			this .set_alphaCutoff__ ();
+		},
+		set_alphaCutoff__: function ()
+		{
+			this .alphaCutoff = this .alphaMode === AlphaMode .MASK ? this .alphaCutoff_ .getValue () : 0;
+		},
 		set_pointProperties__: function ()
 		{
-			this .pointPropertiesNode = X3DCast (X3DConstants .PointProperties, this .pointProperties_);
+			this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this .pointProperties_);
 
-			if (! this .pointPropertiesNode)
-				this .pointPropertiesNode = this .getBrowser () .getDefaultPointProperties ();
+			if (! this .stylePropertiesNode [0])
+				this .stylePropertiesNode [0] = this .getBrowser () .getDefaultPointProperties ();
 		},
 		set_lineProperties__: function ()
 		{
-			this .linePropertiesNode = X3DCast (X3DConstants .LineProperties, this .lineProperties_);
+			this .stylePropertiesNode [1] = X3DCast (X3DConstants .LineProperties, this .lineProperties_);
 
-			if (! this .linePropertiesNode)
-				this .linePropertiesNode = this .getBrowser () .getDefaultLineProperties ();
+			if (! this .stylePropertiesNode [1])
+				this .stylePropertiesNode [1] = this .getBrowser () .getDefaultLineProperties ();
 		},
 		set_fillProperties__: function ()
 		{
-			if (this .fillPropertiesNode)
-				this .fillPropertiesNode .transparent_ .removeInterest ("set_transparent__", this);
+			if (this .stylePropertiesNode [2])
+				this .stylePropertiesNode [2] .transparent_ .removeInterest ("set_transparent__", this);
 
-			this .fillPropertiesNode = X3DCast (X3DConstants .FillProperties, this .fillProperties_);
+			this .stylePropertiesNode [2] = X3DCast (X3DConstants .FillProperties, this .fillProperties_);
 
-			if (! this .fillPropertiesNode)
-				this .fillPropertiesNode = this .getBrowser () .getDefaultFillProperties ();
+			if (! this .stylePropertiesNode [2])
+				this .stylePropertiesNode [2] = this .getBrowser () .getDefaultFillProperties ();
 
-			if (this .fillPropertiesNode)
-				this .fillPropertiesNode .transparent_ .addInterest ("set_transparent__", this);
+			if (this .stylePropertiesNode [2])
+				this .stylePropertiesNode [2] .transparent_ .addInterest ("set_transparent__", this);
 
-			this .set_transparent__ ();
+			this .stylePropertiesNode [3] = this .stylePropertiesNode [2];
 		},
 		set_material__: function ()
 		{
@@ -60039,8 +60143,6 @@ function (Fields,
 
 			if (this .materialNode)
 				this .materialNode .transparent_ .addInterest ("set_transparent__", this);
-
-			this .set_transparent__ ();
 		},
 		set_texture__: function ()
 		{
@@ -60051,8 +60153,6 @@ function (Fields,
 
 			if (this .textureNode)
 				this .textureNode .transparent_ .addInterest ("set_transparent__", this);
-
-			this .set_transparent__ ();
 		},
 		set_textureTransform__: function ()
 		{
@@ -60141,8 +60241,6 @@ function (Fields,
 					this .shaderNode .select ();
 				}
 			}
-
-			this .set_transparent__ ();
 		},
 		set_shading__: function ()
 		{
@@ -60151,15 +60249,27 @@ function (Fields,
 		set_blendMode__: function ()
 		{
 			this .blendModeNode = X3DCast (X3DConstants .BlendMode, this .blendMode_);
-
-			this .set_transparent__ ();
 		},
 		set_transparent__: function ()
 		{
-			this .setTransparent (this .fillPropertiesNode .getTransparent () ||
-			                      (this .materialNode && this .materialNode .getTransparent ()) ||
-			                      (this .textureNode  && this .textureNode  .getTransparent () ||
-			                      this .blendModeNode));
+			switch (this .alphaMode)
+			{
+				case AlphaMode .AUTO:
+					this .setTransparent (this .stylePropertiesNode [3] .getTransparent () ||
+												 (this .materialNode && this .materialNode .getTransparent ()) ||
+												 (this .textureNode  && this .textureNode  .getTransparent () ||
+												 this .blendModeNode));
+					break;
+				case AlphaMode .OPAQUE:
+					this .setTransparent (false);
+					break;
+				case AlphaMode .MASK:
+					this .setTransparent (false);
+					break;
+				case AlphaMode .BLEND:
+					this .setTransparent (true);
+					break;
+			}
 		},
 		traverse: function (type, renderObject)
 		{
@@ -60168,42 +60278,6 @@ function (Fields,
 
 			if (this .shaderNode)
 				this .shaderNode .traverse (type, renderObject);
-		},
-		enable: function (gl, context, geometryType)
-		{
-			var browser = context .browser;
-
-			switch (geometryType)
-			{
-				case 0:
-					context .stylePropertiesNode = this .pointPropertiesNode;
-					break;
-				case 1:
-					context .stylePropertiesNode = this .linePropertiesNode;
-					break;
-				default:
-					context .stylePropertiesNode = this .fillPropertiesNode;
-					break;
-			}
-
-			context .materialNode         = this .materialNode;
-			context .textureNode          = this .textureNode;
-			context .textureTransformNode = this .textureTransformNode;
-
-			if (this .shaderNode)
-				context .shaderNode = this .shaderNode;
-			else if (context .shadow)
-				context .shaderNode = browser .getDefaultShadowShader ();
-			else
-				context .shaderNode = browser .getDefaultShader ();
-
-			if (this .blendModeNode)
-				this .blendModeNode .enable (gl);
-		},
-		disable: function (gl, context)
-		{
-			if (this .blendModeNode)
-				this .blendModeNode .disable (gl);
 		},
 	});
 
@@ -61320,8 +61394,6 @@ function ($,
 	return ImageTexture;
 });
 
-// https://github.com/toji/texture-tester/blob/master/js/webgl-texture-util.js
-;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -62500,6 +62572,975 @@ function (Triangle3,
  ******************************************************************************/
 
 
+define ('x_ite/Components/Grouping/X3DBoundedObject',[
+	"x_ite/Fields",
+	"x_ite/Bits/X3DCast",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Geometry/Box3",
+],
+function (Fields,
+          X3DCast,
+          X3DConstants,
+          Vector3,
+			 Matrix4,
+          Box3)
+{
+"use strict";
+
+	function X3DBoundedObject (executionContext)
+	{
+		this .addType (X3DConstants .X3DBoundedObject);
+
+		this .addChildObjects ("transformSensors_changed", new Fields .SFTime ());
+
+		this .bboxSize_   .setUnit ("length");
+		this .bboxCenter_ .setUnit ("length");
+
+		this .childBBox            = new Box3 (); // Must be unique for each X3DBoundedObject.
+		this .transformSensorNodes = new Set ();
+	}
+
+	X3DBoundedObject .prototype =
+	{
+		constructor: X3DBoundedObject,
+		initialize: function () { },
+		getDefaultBBoxSize: (function ()
+		{
+			const defaultBBoxSize = new Vector3 (-1, -1, -1);
+
+			return function ()
+			{
+				return defaultBBoxSize;
+			};
+		})(),
+		getBBox: function (nodes, bbox, shadow)
+		{
+			// Must be unique for each X3DBoundedObject.
+			const childBBox = this .childBBox;
+
+			// Add bounding boxes.
+
+			bbox .set ();
+
+			for (var i = 0, length = nodes .length; i < length; ++ i)
+			{
+				const node = nodes [i];
+
+				if (node .getBBox)
+					bbox .add (node .getBBox (childBBox, shadow));
+			}
+
+			return bbox;
+		},
+		displayBBox: (function ()
+		{
+			const bbox = new Box3 ();
+
+			return function (type, renderObject)
+			{
+				this .getBBox (bbox);
+
+				const matrix          = new Matrix4 ();
+				const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+				matrix .set (bbox .center, null, bbox .size);
+
+				modelViewMatrix .push ();
+				modelViewMatrix .multLeft (matrix);
+
+				this .getBrowser () .getBBoxNode () .traverse (type, renderObject);
+
+				modelViewMatrix .pop ();
+			};
+		})(),
+		addTransformSensor: function (transformSensorNode)
+		{
+			this .transformSensorNodes .add (transformSensorNode);
+
+			this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
+		},
+		removeTransformSensor: function (transformSensorNode)
+		{
+			this .transformSensorNodes .delete (transformSensorNode);
+
+			this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
+		},
+		getTransformSensors: function ()
+		{
+			return this .transformSensorNodes;
+		},
+	};
+
+	return X3DBoundedObject;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Shape/X3DShapeNode',[
+	"x_ite/Components/Core/X3DChildNode",
+	"x_ite/Components/Grouping/X3DBoundedObject",
+	"x_ite/Bits/X3DCast",
+	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Shape/AlphaMode",
+	"standard/Math/Geometry/Box3",
+	"standard/Math/Numbers/Vector3",
+],
+function (X3DChildNode,
+          X3DBoundedObject,
+          X3DCast,
+          X3DConstants,
+			 AlphaMode,
+          Box3,
+          Vector3)
+{
+"use strict";
+
+	function X3DShapeNode (executionContext)
+	{
+		X3DChildNode     .call (this, executionContext);
+		X3DBoundedObject .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DShapeNode);
+
+		this .bbox       = new Box3 ();
+		this .bboxSize   = new Vector3 (0, 0, 0);
+		this .bboxCenter = new Vector3 (0, 0, 0);
+	}
+
+	X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+		X3DBoundedObject .prototype,
+	{
+		constructor: X3DShapeNode,
+		initialize: function ()
+		{
+			X3DChildNode     .prototype .initialize .call (this);
+			X3DBoundedObject .prototype .initialize .call (this);
+
+			this .bboxSize_   .addInterest ("set_bbox__",      this);
+			this .bboxCenter_ .addInterest ("set_bbox__",      this);
+			this .appearance_ .addInterest ("set_apparance__", this);
+			this .geometry_   .addInterest ("set_geometry__",  this);
+
+			this .appearance_ .addInterest ("set_transparent__", this);
+			this .geometry_   .addInterest ("set_transparent__", this);
+
+			this .set_apparance__ ();
+			this .set_geometry__ ();
+			this .set_transparent__ ();
+		},
+		getBBox: function (bbox, shadow)
+		{
+			if (shadow)
+			{
+				if (this .castShadow_ .getValue ())
+				{
+					return bbox .assign (this .bbox);
+				}
+				else
+				{
+					return bbox .set ();
+				}
+			}
+			else
+			{
+				return bbox .assign (this .bbox);
+			}
+		},
+		getBBoxSize: function ()
+		{
+			return this .bboxSize;
+		},
+		getBBoxCenter: function ()
+		{
+			return this .bboxCenter;
+		},
+		getAppearance: function ()
+		{
+			return this .apparanceNode;
+		},
+		getGeometry: function ()
+		{
+			return this .geometryNode;
+		},
+		setTransparent: function (value)
+		{
+			this .transparent = value;
+		},
+		getTransparent: function ()
+		{
+			return this .transparent;
+		},
+		set_bbox__: function ()
+		{
+			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+			{
+				if (this .getGeometry ())
+					this .bbox .assign (this .getGeometry () .getBBox ());
+
+				else
+					this .bbox .set ();
+			}
+			else
+				this .bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+
+			this .bboxSize   .assign (this .bbox .size);
+			this .bboxCenter .assign (this .bbox .center);
+		},
+		set_apparance__: function ()
+		{
+			if (this .apparanceNode)
+				this .apparanceNode .transparent_ .removeInterest ("set_transparent__", this);
+
+			this .apparanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this .appearance_);
+
+			if (this .apparanceNode)
+			{
+				this .apparanceNode .alphaMode_   .addInterest ("set_transparent__", this);
+				this .apparanceNode .transparent_ .addInterest ("set_transparent__", this);
+			}
+			else
+				this .apparanceNode = this .getBrowser () .getDefaultAppearance ();
+		},
+		set_geometry__: function ()
+		{
+			if (this .geometryNode)
+			{
+				this .geometryNode .transparent_  .addInterest ("set_transparent__", this);
+				this .geometryNode .bbox_changed_ .addInterest ("set_bbox__",        this);
+			}
+
+			this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this .geometry_);
+
+			if (this .geometryNode)
+			{
+				this .geometryNode .transparent_  .addInterest ("set_transparent__", this);
+				this .geometryNode .bbox_changed_ .addInterest ("set_bbox__",        this);
+			}
+
+			this .set_bbox__ ();
+		},
+		set_transparent__: function ()
+		{
+			if (this .apparanceNode .getAlphaMode () === AlphaMode .AUTO)
+			{
+				this .transparent = this .apparanceNode .getTransparent () ||
+				                    (this .geometryNode && this .geometryNode .getTransparent ());
+			}
+			else
+			{
+				this .transparent = this .apparanceNode .getTransparent ();
+			}
+		},
+	});
+
+	return X3DShapeNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('standard/Math/Geometry/Line3',[
+	"standard/Math/Numbers/Vector3",
+],
+function (Vector3)
+{
+"use strict";
+
+	function Line3 (point, direction)
+	{
+		this .point     = point     .copy ();
+		this .direction = direction .copy ();
+	}
+
+	Line3 .prototype =
+	{
+		constructor: Line3,
+		copy: function ()
+		{
+			var copy = Object .create (Line3 .prototype);
+			copy .point     = this .point .copy ();
+			copy .direction = this .direction .copy ();
+			return copy;
+		},
+		assign: function (line)
+		{
+			this .point     .assign (line .point);
+			this .direction .assign (line .direction);
+			return this;
+		},
+		set: function (point, direction)
+		{
+			this .point     .assign (point);
+			this .direction .assign (direction);
+			return this;
+		},
+		setPoints: function (point1, point2)
+		{
+			this .point .assign (point1);
+			this .direction .assign (point2) .subtract (point1) .normalize ();
+			return this;
+		},
+		multMatrixLine: function (matrix)
+		{
+			matrix .multMatrixVec (this .point);
+			matrix .multMatrixDir (this .direction) .normalize ();
+			return this;
+		},
+		multLineMatrix: function (matrix)
+		{
+			matrix .multVecMatrix (this .point);
+			matrix .multDirMatrix (this .direction) .normalize ();
+			return this;
+		},
+		getClosestPointToPoint: function (point, result)
+		{
+			var
+				r = result .assign (point) .subtract (this .point),
+				d = r .dot (this .direction);
+
+			return result .assign (this .direction) .multiply (d) .add (this .point);
+		},
+		getClosestPointToLine: (function ()
+		{
+			var u = new Vector3 (0, 0, 0);
+
+			return function (line, point)
+			{
+				var
+					p1 = this .point,
+					p2 = line .point,
+					d1 = this .direction,
+					d2 = line .direction;
+	
+				var t = Vector3 .dot (d1, d2);
+	
+				if (Math .abs (t) >= 1)
+					return false;  // lines are parallel
+	
+				u .assign (p2) .subtract (p1);
+	
+				t = (u .dot (d1) - t * u .dot (d2)) / (1 - t * t);
+	
+				point .assign (d1) .multiply (t) .add (p1);
+				return true;
+			};
+		})(),
+		getPerpendicularVector: function (point)
+		{
+			var d = Vector3 .subtract (this .point, point);
+
+			return d .subtract (this .direction .copy () .multiply (Vector3 .dot (d, this .direction)));
+		},
+		intersectsTriangle: (function ()
+		{
+			var
+				pvec = new Vector3 (0, 0, 0),
+				tvec = new Vector3 (0, 0, 0);
+
+			return function (A, B, C, uvt)
+			{
+				// Find vectors for two edges sharing vert0.
+				var
+					edge1 = B .subtract (A),
+					edge2 = C .subtract (A);
+	
+				// Begin calculating determinant - also used to calculate U parameter.
+				pvec .assign (this .direction) .cross (edge2);
+	
+				// If determinant is near zero, ray lies in plane of triangle.
+				var det = edge1 .dot (pvec);
+	
+				// Non culling intersection.
+	
+				if (det === 0)
+					return false;
+	
+				var inv_det = 1 / det;
+	
+				// Calculate distance from vert0 to ray point.
+				tvec .assign (this .point) .subtract (A);
+	
+				// Calculate U parameter and test bounds.
+				var u = tvec .dot (pvec) * inv_det;
+	
+				if (u < 0 || u > 1)
+					return false;
+	
+				// Prepare to test V parameter.
+				var qvec = tvec .cross (edge1);
+	
+				// Calculate V parameter and test bounds.
+				var v = this .direction .dot (qvec) * inv_det;
+	
+				if (v < 0 || u + v > 1)
+					return false;
+	
+				//var t = edge2 .dot (qvec) * inv_det;
+	
+				uvt .u = u;
+				uvt .v = v;
+				uvt .t = 1 - u - v;
+	
+				return true;
+			};
+		})(),
+		toString: function ()
+		{
+			return this .point + ", " + this .direction;
+		},
+	};
+
+	Line3 .Points = function (point1, point2)
+	{
+		var line = Object .create (Line3 .prototype);
+		line .point     = point1 .copy ();
+		line .direction = Vector3 .subtract (point2, point1) .normalize ();
+		return line;
+	};
+
+	return Line3;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('standard/Math/Algorithms/QuickSort',[],function ()
+{
+"use strict";
+
+	function QuickSort (array, compare)
+	{
+		this .array = array;
+		
+		if (compare)
+			this .compare = compare;
+	}
+
+	QuickSort .prototype =
+	{
+		compare: function (lhs, rhs)
+		{
+			return lhs < rhs;
+		},
+		sort: function (first, last)
+		{
+			if (last - first > 1)
+				this .quicksort (first, last - 1);
+		},
+		quicksort: function (lo, hi)
+		{
+			var
+				i = lo,
+				j = hi,
+				array   = this .array,
+				compare = this .compare;
+
+			// Vergleichs­element x
+			var x = array [(lo + hi) >>> 1];
+
+			for (;;)
+			{
+				while (compare (array [i], x)) ++ i;
+				while (compare (x, array [j])) -- j;
+
+				if (i < j)
+				{
+					// Exchange
+					
+					var t = array [i];
+					array [i] = array [j];
+					array [j] = t;
+
+					i ++; j --;
+				}
+				else
+				{
+					if (i === j) ++ i, -- j;
+					break;
+				}
+			}
+
+			// Rekursion
+			if (lo < j) this .quicksort (lo, j);
+			if (i < hi) this .quicksort (i, hi);
+		},
+	};
+
+	return QuickSort;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Shape/Shape',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Shape/X3DShapeNode",
+	"x_ite/Bits/TraverseType",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Algorithm",
+	"standard/Math/Numbers/Vector3",
+	"standard/Math/Numbers/Matrix4",
+	"standard/Math/Geometry/Box3",
+	"standard/Math/Geometry/Line3",
+	"standard/Math/Algorithms/QuickSort",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DShapeNode,
+          TraverseType,
+          X3DConstants,
+          Algorithm,
+          Vector3,
+          Matrix4,
+          Box3,
+          Line3,
+          QuickSort)
+{
+"use strict";
+
+	function Shape (executionContext)
+	{
+		X3DShapeNode .call (this, executionContext);
+
+		this .addType (X3DConstants .Shape);
+	}
+
+	Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
+	{
+		constructor: Shape,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",  new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "appearance",  new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",    new Fields .SFNode ()),
+		]),
+		getTypeName: function ()
+		{
+			return "Shape";
+		},
+		getComponentName: function ()
+		{
+			return "Shape";
+		},
+		getContainerField: function ()
+		{
+			return "children";
+		},
+		initialize: function ()
+		{
+			X3DShapeNode .prototype .initialize .call (this);
+
+			this .transformSensors_changed_ .addInterest ("set_transformSensors__", this);
+
+			this .set_transformSensors__ ();
+		},
+		set_geometry__: function ()
+		{
+			X3DShapeNode .prototype .set_geometry__ .call (this);
+
+			if (this .getGeometry ())
+				delete this .traverse;
+			else
+				this .traverse = Function .prototype;
+		},
+		set_transformSensors__: function ()
+		{
+			this .setPickableObject (this .getTransformSensors () .size);
+		},
+		intersectsBox: function (box, clipPlanes, modelViewMatrix)
+		{
+			return this .getGeometry () .intersectsBox (box, clipPlanes, modelViewMatrix);
+		},
+		traverse: function (type, renderObject)
+		{
+			// Always look at ParticleSystem if you do modify something here and there.
+
+			switch (type)
+			{
+				case TraverseType .POINTER:
+				{
+					this .pointer (renderObject);
+					break;
+				}
+				case TraverseType .PICKING:
+				{
+					this .picking (renderObject);
+					break;
+				}
+				case TraverseType .COLLISION:
+				{
+					renderObject .addCollisionShape (this);
+					break;
+				}
+				case TraverseType .DEPTH:
+				{
+					if (this .castShadow_ .getValue ())
+						renderObject .addDepthShape (this);
+
+					break;
+				}
+				case TraverseType .DISPLAY:
+				{
+					if (renderObject .addDisplayShape (this))
+						this .getAppearance () .traverse (type, renderObject); // Currently used for GeneratedCubeMapTexture.
+
+					break;
+				}
+			}
+
+			this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
+		},
+		pointer: (function ()
+		{
+			const
+				modelViewMatrix    = new Matrix4 (),
+				invModelViewMatrix = new Matrix4 (),
+				hitRay             = new Line3 (new Vector3 (0, 0, 0), new Vector3 (0, 0, 0)),
+				intersections      = [ ],
+				intersectionSorter = new QuickSort (intersections, function (lhs, rhs)
+				{
+					return lhs .point .z > rhs .point .z;
+				});
+
+			return function (renderObject)
+			{
+				try
+				{
+					const geometry = this .getGeometry ();
+
+					if (geometry .getGeometryType () < 2)
+						return;
+
+					const browser = renderObject .getBrowser ();
+
+					modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
+					invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+
+					hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
+
+					if (geometry .intersectsLine (hitRay, renderObject .getLocalObjects (), modelViewMatrix, intersections))
+					{
+						// Finally we have intersections and must now find the closest hit in front of the camera.
+
+						// Transform hitPoints to absolute space.
+						for (var i = 0; i < intersections .length; ++ i)
+							modelViewMatrix .multVecMatrix (intersections [i] .point);
+
+						intersectionSorter .sort (0, intersections .length);
+
+						// Find first point that is not greater than near plane;
+						const index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
+						function (lhs, rhs)
+						{
+						   return lhs .point .z > rhs;
+						});
+
+						// Are there intersections before the camera?
+						if (index !== intersections .length)
+						{
+							// Transform hitNormal to absolute space.
+							invModelViewMatrix .multMatrixDir (intersections [index] .normal) .normalize ();
+
+							browser .addHit (intersections [index], renderObject .getLayer (), this, modelViewMatrix .multRight (renderObject .getCameraSpaceMatrix () .get ()));
+						}
+
+						intersections .length = 0;
+					}
+				}
+				catch (error)
+				{
+					console .log (error);
+				}
+			};
+		})(),
+		picking: (function ()
+		{
+			var bbox = new Box3 ();
+
+			return function (renderObject)
+			{
+				if (this .getTransformSensors () .size)
+				{
+					const modelMatrix = renderObject .getModelViewMatrix () .get ();
+
+					this .getTransformSensors () .forEach (function (transformSensorNode)
+					{
+						transformSensorNode .collect (modelMatrix);
+					});
+				}
+
+				const
+					browser          = renderObject .getBrowser (),
+					pickSensorStack  = browser .getPickSensors (),
+					pickingHierarchy = browser .getPickingHierarchy ();
+
+				pickingHierarchy .push (this);
+
+				pickSensorStack [pickSensorStack .length - 1] .forEach (function (pickSensor)
+				{
+					pickSensor .collect (this .getGeometry (), renderObject .getModelViewMatrix () .get (), browser .getPickingHierarchy ());
+				},
+				this);
+
+				pickingHierarchy .pop ();
+			};
+		})(),
+		depth: function (gl, context, shaderNode)
+		{
+			this .getGeometry () .depth (gl, context, shaderNode);
+		},
+		display: function (gl, context)
+		{
+			this .getGeometry () .display (gl, context);
+		},
+	});
+
+	return Shape;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Rendering/X3DGeometryNode',[
 	"x_ite/Fields",
 	"x_ite/Components/Core/X3DNode",
@@ -62527,10 +63568,10 @@ function (Fields,
 {
 "use strict";
 
-	var ARRAY_TYPE = "Array"; // For color, texCoord, normal, and vertex array, can be MFFloat or Array;
+	const ARRAY_TYPE = "Array"; // For color, texCoord, normal, and vertex array, can be MFFloat or Array;
 
 	// Box normals for bbox / line intersection.
-	var boxNormals = [
+	const boxNormals = [
 		new Vector3 (0,  0,  1), // front
 		new Vector3 (0,  0, -1), // back
 		new Vector3 (0,  1,  0), // top
@@ -62586,7 +63627,7 @@ function (Fields,
 		if (ARRAY_TYPE == "MFFloat")
 			return new Fields .MFFloat ();
 
-		var array = [ ];
+		const array = [ ];
 
 		array .typedArray = new Float32Array ();
 
@@ -62632,7 +63673,7 @@ function (Fields,
 			this .addInterest ("requestRebuild", this);
 			this .rebuild_ .addInterest ("rebuild", this);
 
-			var gl = this .getBrowser () .getContext ();
+			const gl = this .getBrowser () .getContext ();
 
 			this .primitiveMode   = gl .TRIANGLES;
 			this .frontFace       = gl .CCW;
@@ -62651,6 +63692,10 @@ function (Fields,
 			}
 
 			this .set_live__ ();
+		},
+		getShader: function (browser, shadow)
+		{
+			return shadow ? browser .getDefaultShadowShader () : browser .getDefaultShader ();
 		},
 		setGeometryType: function (value)
 		{
@@ -62744,7 +63789,7 @@ function (Fields,
 		},
 		setMultiTexCoords: function (value)
 		{
-			var multiTexCoords = this .multiTexCoords;
+			const multiTexCoords = this .multiTexCoords;
 
 			for (var i = 0, length = value .length; i < length; ++ i)
 				multiTexCoords [i] = value [i];
@@ -62784,11 +63829,11 @@ function (Fields,
 		},
 		buildTexCoords: function ()
 		{
-			var texCoords = this .texCoords;
+			const texCoords = this .texCoords;
 
 			if (texCoords .length === 0)
 			{
-				var
+				const
 					p         = this .getTexCoordParams (),
 					min       = p .min,
 					Sindex    = p .Sindex,
@@ -62813,11 +63858,11 @@ function (Fields,
 		},
 		getTexCoordParams: (function ()
 		{
-			var texCoordParams = { min: new Vector3 (0, 0, 0) };
+			const texCoordParams = { min: new Vector3 (0, 0, 0) };
 
 			return function ()
 			{
-				var
+				const
 					bbox  = this .getBBox (),
 					size  = bbox .size,
 					Xsize = size .x,
@@ -62865,24 +63910,24 @@ function (Fields,
 			if (creaseAngle === 0)
 				return normals;
 
-			var
+			const
 				cosCreaseAngle = Math .cos (Algorithm .clamp (creaseAngle, 0, Math .PI)),
 				normals_       = [ ];
 
 			for (var i in normalIndex) // Don't use forEach
 			{
-				var vertex = normalIndex [i];
+				const vertex = normalIndex [i];
 
 				for (var p = 0, length = vertex .length; p < length; ++ p)
 				{
-					var
+					const
 						P = vertex [p],
 						m = normals [P],
 						n = new Vector3 (0, 0, 0);
 
 					for (var q = 0; q < length; ++ q)
 					{
-						var Q = normals [vertex [q]];
+						const Q = normals [vertex [q]];
 
 						if (Q .dot (m) >= cosCreaseAngle)
 							n .add (Q);
@@ -62911,7 +63956,7 @@ function (Fields,
 		},
 		intersectsLine: (function ()
 		{
-			var
+			const
 				modelViewMatrix = new Matrix4 (),
 				uvt             = { u: 0, v: 0, t: 0 },
 				v0              = new Vector3 (0, 0, 0),
@@ -62930,14 +63975,14 @@ function (Fields,
 						this .transformLine   (line);                                       // Apply screen transformations from screen nodes.
 						this .transformMatrix (modelViewMatrix .assign (modelViewMatrix_)); // Apply screen transformations from screen nodes.
 
-						var
+						const
 							texCoords  = this .multiTexCoords [0] .getValue (),
 							normals    = this .normals .getValue (),
 							vertices   = this .vertices .getValue ();
 
 						for (var i = 0, length = this .vertexCount; i < length; i += 3)
 						{
-							var i4 = i * 4;
+							const i4 = i * 4;
 
 							v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
 							v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
@@ -62947,28 +63992,28 @@ function (Fields,
 							{
 								// Get barycentric coordinates.
 
-								var
+								const
 									u = uvt .u,
 									v = uvt .v,
 									t = uvt .t;
 
 								// Determine vectors for X3DPointingDeviceSensors.
 
-								var point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
-								                         t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
-								                         t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
+								const point = new Vector3 (t * vertices [i4]     + u * vertices [i4 + 4] + v * vertices [i4 +  8],
+								                           t * vertices [i4 + 1] + u * vertices [i4 + 5] + v * vertices [i4 +  9],
+								                           t * vertices [i4 + 2] + u * vertices [i4 + 6] + v * vertices [i4 + 10]);
 
 								if (this .isClipped (modelViewMatrix .multVecMatrix (clipPoint .assign (point)), clipPlanes))
 									continue;
 
-								var texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
-								                            t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
+								const texCoord = new Vector2 (t * texCoords [i4]     + u * texCoords [i4 + 4] + v * texCoords [i4 + 8],
+																		t * texCoords [i4 + 1] + u * texCoords [i4 + 5] + v * texCoords [i4 + 9]);
 
-								var i3 = i * 3;
+								const i3 = i * 3;
 
-								var normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
-								                          t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
-								                          t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
+								const normal = new Vector3 (t * normals [i3]     + u * normals [i3 + 3] + v * normals [i3 + 6],
+								                            t * normals [i3 + 1] + u * normals [i3 + 4] + v * normals [i3 + 7],
+								                            t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
 
 								intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
 								intersected = true;
@@ -62987,11 +64032,11 @@ function (Fields,
 		})(),
 		intersectsBBox: (function ()
 		{
-			var intersection = new Vector3 (0, 0, 0);
+			const intersection = new Vector3 (0, 0, 0);
 
 			return function (line)
 			{
-				var
+				const
 					planes = this .planes,
 					min    = this .min,
 					max    = this .max,
@@ -63047,7 +64092,7 @@ function (Fields,
 		})(),
 		intersectsBox: (function ()
 		{
-			var
+			const
 				v0        = new Vector3 (0, 0, 0),
 				v1        = new Vector3 (0, 0, 0),
 				v2        = new Vector3 (0, 0, 0),
@@ -63064,11 +64109,11 @@ function (Fields,
 
 						this .transformMatrix (modelViewMatrix); // Apply screen transformations from screen nodes.
 
-						var vertices = this .vertices .getValue ();
+						const vertices = this .vertices .getValue ();
 
 						for (var i = 0, length = this .vertexCount; i < length; i += 3)
 						{
-							var i4 = i * 4;
+							const i4 = i * 4;
 
 							v0 .x = vertices [i4];     v0 .y = vertices [i4 + 1]; v0 .z = vertices [i4 +  2];
 							v1 .x = vertices [i4 + 4]; v1 .y = vertices [i4 + 5]; v1 .z = vertices [i4 +  6];
@@ -63111,7 +64156,7 @@ function (Fields,
 		},
 		set_shading__: (function ()
 		{
-			var
+			const
 				v0     = new Vector3 (0, 0, 0),
 				v1     = new Vector3 (0, 0, 0),
 				v2     = new Vector3 (0, 0, 0),
@@ -63122,7 +64167,7 @@ function (Fields,
 				if (this .geometryType < 2)
 					return;
 
-				var flatShading = this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
+				const flatShading = this .getBrowser () .getBrowserOptions () .getShading () === Shading .FLAT;
 
 				if (flatShading === this .flatShading)
 					return;
@@ -63131,13 +64176,13 @@ function (Fields,
 
 				// Generate flat normals if needed.
 
-				var gl = this .getBrowser () .getContext ();
+				const gl = this .getBrowser () .getContext ();
 
 				if (flatShading)
 				{
 					if (! this .flatNormals .length)
 					{
-						var
+						const
 							cw          = this .frontFace === gl .CW,
 							flatNormals = this .flatNormals,
 							vertices    = this .vertices .getValue ();
@@ -63173,7 +64218,7 @@ function (Fields,
 		},
 		rebuild: (function ()
 		{
-			var point = new Vector3 (0, 0, 0);
+			const point = new Vector3 (0, 0, 0);
 
 			return function ()
 			{
@@ -63195,7 +64240,7 @@ function (Fields,
 
 				// Determine bbox.
 
-				var
+				const
 					min      = this .min,
 					max      = this .max,
 					vertices = this .vertices .getValue ();
@@ -63258,7 +64303,7 @@ function (Fields,
 
 			// Create attrib arrays.
 
-			var attribs = this .attribs;
+			const attribs = this .attribs;
 
 			for (var a = 0, length = attribs .length; a < length; ++ a)
 				attribs [a] .length = 0;
@@ -63282,7 +64327,7 @@ function (Fields,
 		},
 		transfer: function ()
 		{
-			var
+			const
 				gl    = this .getBrowser () .getContext (),
 				count = this .vertices .length / 4;
 
@@ -63363,20 +64408,21 @@ function (Fields,
 		{
 			try
 			{
-				var shaderNode = context .shaderNode;
+				const
+					appearanceNode = context .shapeNode .getAppearance (),
+					shaderNode     = appearanceNode .shaderNode || this .getShader (context .browser, context .shadow);
 
 				// Setup shader.
 
 				if (shaderNode .getValid ())
 				{
-					var
+					const
+						blendModeNode = appearanceNode .blendModeNode,
 						attribNodes   = this .attribNodes,
 						attribBuffers = this .attribBuffers;
 
-					context .geometryType          = this .geometryType;
-					context .fogCoords             = this .fogCoords;
-					context .colorMaterial         = this .colorMaterial;
-					context .textureCoordinateNode = this .textureCoordinateNode;
+					if (blendModeNode)
+						blendModeNode .enable (gl);
 
 					shaderNode .enable (gl);
 					shaderNode .setLocalUniforms (gl, context);
@@ -63407,7 +64453,7 @@ function (Fields,
 					}
 					else
 					{
-						var positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+						const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
 
 						gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
 
@@ -63447,6 +64493,9 @@ function (Fields,
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disableNormalAttribute   (gl);
 					shaderNode .disable                  (gl);
+
+					if (blendModeNode)
+						blendModeNode .disable (gl);
 				}
 			}
 			catch (error)
@@ -63457,8 +64506,6 @@ function (Fields,
 		},
 		displayParticlesDepth: function (gl, context, shaderNode, particles, numParticles)
 		{
-			var gl = context .browser .getContext ();
-
 			// Attribs in depth rendering are not supported:
 			//for (var i = 0, length = attribNodes .length; i < length; ++ i)
 			//	attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
@@ -63467,7 +64514,7 @@ function (Fields,
 
 			// Draw depending on wireframe, solid and transparent.
 
-			var
+			const
 				modelViewMatrix = context .modelViewMatrix,
 				x               = modelViewMatrix [12],
 				y               = modelViewMatrix [13],
@@ -63475,7 +64522,7 @@ function (Fields,
 
 			for (var p = 0; p < numParticles; ++ p)
 			{
-				var particle = particles [p];
+				const particle = particles [p];
 
 				modelViewMatrix [12] = x;
 				modelViewMatrix [13] = y;
@@ -63495,20 +64542,21 @@ function (Fields,
 		{
 			try
 			{
-				var shaderNode = context .shaderNode;
+				const
+					appearanceNode = context .shapeNode .getAppearance (),
+					shaderNode     = appearanceNode .shaderNode || this .getShader (context .browser, context .shadow);
 
 				if (shaderNode .getValid ())
 				{
-					var
+					const
+						blendModeNode = appearanceNode .blendModeNode,
 						attribNodes   = this .attribNodes,
 						attribBuffers = this .attribBuffers;
 
-					// Setup shader.
+					if (blendModeNode)
+						blendModeNode .enable (gl);
 
-					context .geometryType          = this .geometryType;
-					context .fogCoords             = this .fogCoords;
-					context .colorMaterial         = this .colorMaterial;
-					context .textureCoordinateNode = this .textureCoordinateNode;
+					// Setup shader.
 
 					shaderNode .enable (gl);
 					shaderNode .setLocalUniforms (gl, context);
@@ -63530,7 +64578,7 @@ function (Fields,
 
 					// Draw depending on wireframe, solid and transparent.
 
-					var
+					const
 						materialNode    = context .materialNode,
 						normalMatrix    = materialNode || shaderNode .getCustom (),
 						modelViewMatrix = context .modelViewMatrix,
@@ -63544,7 +64592,7 @@ function (Fields,
 
 						for (var p = 0; p < numParticles; ++ p)
 						{
-							var particle = particles [p];
+							const particle = particles [p];
 
 							modelViewMatrix [12] = x;
 							modelViewMatrix [13] = y;
@@ -63560,7 +64608,7 @@ function (Fields,
 					}
 					else
 					{
-						var positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+						const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
 
 						gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
 
@@ -63568,7 +64616,7 @@ function (Fields,
 						{
 							for (var p = 0; p < numParticles; ++ p)
 							{
-								var particle = particles [p];
+								const particle = particles [p];
 
 								modelViewMatrix [12] = x;
 								modelViewMatrix [13] = y;
@@ -63595,7 +64643,7 @@ function (Fields,
 
 							for (var p = 0; p < numParticles; ++ p)
 							{
-								var particle = particles [p];
+								const particle = particles [p];
 
 								modelViewMatrix [12] = x;
 								modelViewMatrix [13] = y;
@@ -63622,6 +64670,9 @@ function (Fields,
 					shaderNode .disableTexCoordAttribute (gl);
 					shaderNode .disableNormalAttribute   (gl);
 					shaderNode .disable                  (gl);
+
+					if (blendModeNode)
+						blendModeNode .disable (gl);
 				}
 			}
 			catch (error)
@@ -63633,6 +64684,1306 @@ function (Fields,
 	});
 
 	return X3DGeometryNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Rendering/X3DLineGeometryNode',[
+	"x_ite/Components/Rendering/X3DGeometryNode",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Matrix4",
+],
+function (X3DGeometryNode,
+          X3DConstants,
+          Matrix4)
+{
+"use strict";
+
+	function X3DLineGeometryNode (executionContext)
+	{
+		X3DGeometryNode .call (this, executionContext);
+
+		//this .addType (X3DConstants .X3DLineGeometryNode);
+	}
+
+	X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+	{
+		constructor: X3DLineGeometryNode,
+		getShader: function (browser)
+		{
+			return browser .getLineShader ();
+		},
+		intersectsLine: function (line, clipPlanes, modelViewMatrix, intersections)
+		{
+			return false;
+		},
+		intersectsBox: function (box, clipPlanes, modelViewMatrix)
+		{
+			return false;
+		},
+		transfer: function ()
+		{
+			if (this .getGeometryType () === 1)
+			{
+				var
+					texCoords = this .getTexCoords (),
+					vertices  = this .getVertices ();
+
+				this .getMultiTexCoords () .push (texCoords);
+
+				for (var i = 0, length = vertices .length; i < length; i += 8)
+				{
+					texCoords .push (vertices [i],
+					                 vertices [i + 1],
+					                 vertices [i + 2],
+					                 vertices [i + 3],
+					                 vertices [i],
+					                 vertices [i + 1],
+					                 vertices [i + 2],
+					                 vertices [i + 3]);
+				}
+
+				texCoords .shrinkToFit ();
+			}
+
+			X3DGeometryNode .prototype .transfer .call (this);
+		},
+		display: function (gl, context)
+		{
+			try
+			{
+				const
+					browser        = context .browser,
+					appearanceNode = context .shapeNode .getAppearance (),
+					shaderNode     = appearanceNode .shaderNode || this .getShader (browser);
+
+				if (shaderNode .getValid ())
+				{
+					const
+						blendModeNode = appearanceNode .blendModeNode,
+						attribNodes   = this .attribNodes,
+						attribBuffers = this .attribBuffers;
+
+					if (blendModeNode)
+						blendModeNode .enable (gl);
+
+					// Setup shader.
+
+					shaderNode .enable (gl);
+					shaderNode .setLocalUniforms (gl, context);
+
+					// Setup vertex attributes.
+
+					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+					if (this .fogCoords)
+						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+
+					if (this .colorMaterial)
+						shaderNode .enableColorAttribute (gl, this .colorBuffer);
+
+					if (this .getMultiTexCoords () .length)
+						shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, true);
+
+					shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+
+					// Wireframes are always solid so only one drawing call is needed.
+
+					gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
+
+					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+						attribNodes [i] .disable (gl, shaderNode);
+
+					if (this .fogCoords)
+						shaderNode .disableFogDepthAttribute (gl);
+
+					if (this .colorMaterial)
+						shaderNode .disableColorAttribute (gl);
+
+					shaderNode .disableTexCoordAttribute (gl);
+					shaderNode .disable (gl);
+
+					if (blendModeNode)
+						blendModeNode .disable (gl);
+				}
+			}
+			catch (error)
+			{
+				// Catch error from setLocalUniforms.
+				console .log (error);
+			}
+		},
+		displayParticles: function (gl, context, particles, numParticles)
+		{
+			try
+			{
+				const
+					browser        = context .browser,
+					appearanceNode = context .shapeNode .getAppearance (),
+					shaderNode     = appearanceNode .shaderNode || this .getShader (browser);
+
+				if (shaderNode .getValid ())
+				{
+					const
+						blendModeNode = appearanceNode .blendModeNode,
+						attribNodes   = this .attribNodes,
+						attribBuffers = this .attribBuffers;
+
+					if (blendModeNode)
+						blendModeNode .enable (gl);
+
+					// Setup shader.
+
+					shaderNode .enable (gl);
+					shaderNode .setLocalUniforms (gl, context);
+
+					// Setup vertex attributes.
+
+					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+					if (this .fogCoords)
+						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+
+					if (this .colorMaterial)
+						shaderNode .enableColorAttribute (gl, this .colorBuffer);
+
+					if (this .getMultiTexCoords () .length)
+						shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+
+					shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+
+					// Wireframes are always solid so only one drawing call is needed.
+
+					const
+						modelViewMatrix = context .modelViewMatrix,
+						x               = modelViewMatrix [12],
+						y               = modelViewMatrix [13],
+						z               = modelViewMatrix [14],
+						primitiveMode   = shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode;
+
+					for (var p = 0; p < numParticles; ++ p)
+					{
+						modelViewMatrix [12] = x;
+						modelViewMatrix [13] = y;
+						modelViewMatrix [14] = z;
+
+						Matrix4 .prototype .translate .call (modelViewMatrix, particles [p] .position);
+
+						gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
+
+						gl .drawArrays (primitiveMode, 0, this .vertexCount);
+					}
+
+					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+						attribNodes [i] .disable (gl, shaderNode);
+
+					if (this .fogCoords)
+						shaderNode .disableFogDepthAttribute (gl);
+
+					if (this .colorMaterial)
+						shaderNode .disableColorAttribute (gl);
+
+					shaderNode .disableTexCoordAttribute (gl);
+					shaderNode .disable (gl);
+
+					if (blendModeNode)
+						blendModeNode .disable (gl);
+				}
+			}
+			catch (error)
+			{
+				// Catch error from setLocalUniforms.
+				console .log (error);
+			}
+		},
+	});
+
+	return X3DLineGeometryNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Rendering/IndexedLineSet',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Rendering/X3DLineGeometryNode",
+	"x_ite/Bits/X3DCast",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DLineGeometryNode,
+          X3DCast,
+          X3DConstants)
+{
+"use strict";
+
+	function IndexedLineSet (executionContext)
+	{
+		X3DLineGeometryNode .call (this, executionContext);
+
+		this .addType (X3DConstants .IndexedLineSet);
+
+		this .setGeometryType (1);
+
+		this .fogCoordNode = null;
+		this .colorNode    = null;
+		this .coordNode    = null;
+	}
+
+	IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+	{
+		constructor: IndexedLineSet,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_colorIndex", new Fields .MFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_coordIndex", new Fields .MFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex", new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "colorIndex",     new Fields .MFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "coordIndex",     new Fields .MFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",         new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",       new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "color",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",          new Fields .SFNode ()),
+		]),
+		getTypeName: function ()
+		{
+			return "IndexedLineSet";
+		},
+		getComponentName: function ()
+		{
+			return "Rendering";
+		},
+		getContainerField: function ()
+		{
+			return "geometry";
+		},
+		initialize: function ()
+		{
+			X3DLineGeometryNode .prototype .initialize .call (this);
+
+			this .set_colorIndex_ .addFieldInterest (this .colorIndex_);
+			this .set_coordIndex_ .addFieldInterest (this .coordIndex_);
+			this .attrib_         .addInterest ("set_attrib__",   this);
+			this .fogCoord_       .addInterest ("set_fogCoord__", this);
+			this .color_          .addInterest ("set_color__",    this);
+			this .coord_          .addInterest ("set_coord__",    this);
+
+			this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
+			this .setSolid (false);
+
+			this .set_attrib__ ();
+			this .set_fogCoord__ ();
+			this .set_color__ ();
+			this .set_coord__ ();
+		},
+		set_attrib__: function ()
+		{
+			var attribNodes = this .getAttrib ();
+
+			for (var i = 0, length = attribNodes .length; i < length; ++ i)
+				attribNodes [i] .removeInterest ("requestRebuild", this);
+
+			attribNodes .length = 0;
+
+			for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
+			{
+				var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+
+				if (attribNode)
+					attribNodes .push (attribNode);
+			}
+
+			for (var i = 0; i < this .attribNodes .length; ++ i)
+				attribNodes [i] .addInterest ("requestRebuild", this);
+		},
+		set_fogCoord__: function ()
+		{
+			if (this .fogCoordNode)
+				this .fogCoordNode .removeInterest ("requestRebuild", this);
+
+			this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
+
+			if (this .fogCoordNode)
+				this .fogCoordNode .addInterest ("requestRebuild", this);
+		},
+		set_color__: function ()
+		{
+			if (this .colorNode)
+			{
+				this .colorNode .removeInterest ("requestRebuild", this);
+				this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
+			}
+
+			this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
+
+			if (this .colorNode)
+			{
+				this .colorNode .addInterest ("requestRebuild", this);
+				this .colorNode .transparent_ .addInterest ("set_transparent__", this);
+
+				this .set_transparent__ ();
+			}
+			else
+				this .setTransparent (false);
+		},
+		set_transparent__: function ()
+		{
+			this .setTransparent (this .colorNode .getTransparent ());
+		},
+		set_coord__: function ()
+		{
+			if (this .coordNode)
+				this .coordNode .removeInterest ("requestRebuild", this);
+
+			this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
+
+			if (this .coordNode)
+				this .coordNode .addInterest ("requestRebuild", this);
+		},
+		getColorPerVertexIndex: function (index)
+		{
+			if (index < this .colorIndex_ .length)
+				return this .colorIndex_ [index];
+
+			return this .coordIndex_ [index];
+		},
+		getColorIndex: function (index)
+		{
+			if (index < this .colorIndex_ .length)
+				return this .colorIndex_ [index];
+
+			return index;
+		},
+		getPolylineIndices: function ()
+		{
+			var
+				coordIndex = this .coordIndex_,
+				polylines  = [ ],
+				polyline   = [ ];
+
+			if (coordIndex .length)
+			{
+				var i = 0;
+
+				for (var i = 0, length = coordIndex .length; i < length; ++ i)
+				{
+					var index = coordIndex [i];
+
+					if (index >= 0)
+						// Add vertex.
+						polyline .push (i);
+
+					else
+					{
+						// Negativ index.
+						// Add polylines.
+						polylines .push (polyline);
+
+						polyline = [ ];
+					}
+				}
+
+				if (coordIndex [coordIndex .length - 1] >= 0)
+				{
+					polylines .push (polyline);
+				}
+			}
+
+			return polylines;
+		},
+		build: function ()
+		{
+			if (! this .coordNode || this .coordNode .isEmpty ())
+				return;
+
+			var
+				coordIndex     = this .coordIndex_,
+				polylines      = this .getPolylineIndices (),
+				colorPerVertex = this .colorPerVertex_ .getValue (),
+				attribNodes    = this .getAttrib (),
+				numAttrib      = attribNodes .length,
+				attribs        = this .getAttribs (),
+				fogCoordNode   = this .fogCoordNode,
+				colorNode      = this .colorNode,
+				coordNode      = this .coordNode,
+				fogDepthArray  = this .getFogDepths (),
+				colorArray     = this .getColors (),
+				vertexArray    = this .getVertices ();
+
+			// Fill GeometryNode
+
+			var face = 0;
+
+			for (var p = 0, pl = polylines .length; p < pl; ++ p)
+			{
+				var polyline = polylines [p];
+
+				// Create two vertices for each line.
+
+				if (polyline .length > 1)
+				{
+					for (var line = 0, l_end = polyline .length - 1; line < l_end; ++ line)
+					{
+						for (var l = line, i_end = line + 2; l < i_end; ++ l)
+						{
+							var
+								i     = polyline [l],
+								index = coordIndex [i];
+
+							for (var a = 0; a < numAttrib; ++ a)
+								attribNodes [a] .addValue (index, attribs [a]);
+
+							if (fogCoordNode)
+								fogCoordNode .addDepth (index, fogDepthArray);
+
+							if (colorNode)
+							{
+								if (colorPerVertex)
+									colorNode .addColor (this .getColorPerVertexIndex (i), colorArray);
+								else
+									colorNode .addColor (this .getColorIndex (face), colorArray);
+							}
+
+							coordNode .addPoint (index, vertexArray);
+						}
+					}
+				}
+
+				++ face;
+			}
+		},
+	});
+
+	return IndexedLineSet;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Rendering/X3DGeometricPropertyNode',[
+	"x_ite/Components/Core/X3DNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (X3DNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function X3DGeometricPropertyNode (executionContext)
+	{
+		X3DNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DGeometricPropertyNode);
+	}
+
+	X3DGeometricPropertyNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+	{
+		constructor: X3DGeometricPropertyNode,
+	});
+
+	return X3DGeometricPropertyNode;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Rendering/X3DColorNode',[
+	"x_ite/Fields",
+	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DGeometricPropertyNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function X3DColorNode (executionContext)
+	{
+		X3DGeometricPropertyNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DColorNode);
+
+		this .addChildObjects ("transparent", new Fields .SFBool ());
+
+		this .transparent_ .setAccessType (X3DConstants .outputOnly);
+	}
+
+	X3DColorNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+	{
+		constructor: X3DColorNode,
+		setTransparent: function (value)
+		{
+			if (value !== this .transparent_ .getValue ())
+				this .transparent_ = value;
+		},
+		getTransparent: function ()
+		{
+			return this .transparent_ .getValue ();
+		},
+	});
+
+	return X3DColorNode;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Rendering/Color',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Rendering/X3DColorNode",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Vector4",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DColorNode,
+          X3DConstants,
+          Vector4)
+{
+"use strict";
+
+	function Color (executionContext)
+	{
+		X3DColorNode .call (this, executionContext);
+
+		this .addType (X3DConstants .Color);
+	}
+
+	Color .prototype = Object .assign (Object .create (X3DColorNode .prototype),
+	{
+		constructor: Color,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .MFColor ()),
+		]),
+		getTypeName: function ()
+		{
+			return "Color";
+		},
+		getComponentName: function ()
+		{
+			return "Rendering";
+		},
+		getContainerField: function ()
+		{
+			return "color";
+		},
+		initialize: function ()
+		{
+			X3DColorNode .prototype .initialize .call (this);
+
+			this .color_ .addInterest ("set_color__", this);
+
+			this .set_color__ ();
+		},
+		set_color__: function ()
+		{
+			this .color  = this .color_ .getValue ();
+			this .length = this .color_ .length;
+		},
+		addColor: function (index, array)
+		{
+			if (index >= 0 && index < this .length)
+			{
+				const color = this .color;
+
+				index *= 3;
+
+				array .push (color [index], color [index + 1], color [index + 2], 1);
+			}
+			else if (this .length)
+			{
+				const color = this .color;
+
+				index = (this .length - 1) * 3;
+
+				array .push (color [index], color [index + 1], color [index + 2], 1);
+			}
+			else
+			{
+				array .push (1, 1, 1, 1);
+			}
+		},
+		addColors: function (array, min)
+		{
+			if (this .length)
+			{
+				const color = this .color;
+
+				for (var index = 0, length = this .length * 3; index < length; index += 3)
+					array .push (color [index], color [index + 1], color [index + 2], 1);
+
+				var
+					index = (this .length - 1) * 3,
+					r     = color [index],
+					g     = color [index + 1],
+					b     = color [index + 2];
+
+				for (var index = length, length = min * 3; index < length; index += 3)
+					array .push (r, g, b, 1);
+			}
+			else
+			{
+				for (var index = 0; index < min; ++ index)
+					array .push (1, 1, 1, 1);
+			}
+		},
+		getVectors: function (array)
+		{
+			var color = this .color_;
+
+			for (var i = 0, length = color .length; i < length; ++ i)
+			{
+				var c = color [i];
+
+				array [i] = new Vector4 (c .r, c .g, c .b, 1);
+			}
+
+			array .length = length;
+
+			return array;
+		},
+	});
+
+	return Color;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Rendering/X3DCoordinateNode',[
+	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Geometry/Triangle3",
+	"standard/Math/Numbers/Vector3",
+],
+function (X3DGeometricPropertyNode, 
+          X3DConstants,
+          Triangle3,
+          Vector3)
+{
+"use strict";
+
+	function X3DCoordinateNode (executionContext)
+	{
+		X3DGeometricPropertyNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DCoordinateNode);
+	}
+
+	X3DCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+	{
+		constructor: X3DCoordinateNode,
+		initialize: function ()
+		{
+			X3DGeometricPropertyNode .prototype .initialize .call (this);
+
+			this .point_ .addInterest ("set_point__", this);
+
+			this .set_point__ ();
+		},
+		set_point__: function ()
+		{
+			this .point  = this .point_ .getValue ();
+			this .length = this .point_ .length;
+		},
+		isEmpty: function ()
+		{
+			return this .length === 0;
+		},
+		getSize: function ()
+		{
+			return this .length;
+		},
+		set1Point: function (index, point)
+		{
+			this .point_ [index] = point;
+		},
+		get1Point: function (index, result)
+		{
+			if (index < this .length)
+			{
+				const point = this .point;
+
+				index *= 3;
+
+				return result .set (point [index], point [index + 1], point [index + 2]);
+			}
+			else
+			{
+				return result .set (0, 0, 0);
+			}
+		},
+		addPoint: function (index, array)
+		{
+			if (index < this .length)
+			{
+				const point = this .point;
+
+				index *= 3;
+
+				array .push (point [index], point [index + 1], point [index + 2], 1);
+			}
+			else
+			{
+				array .push (0, 0, 0, 1);
+			}
+		},
+		addPoints: function (array, min)
+		{
+			const point = this .point;
+
+			for (var index = 0, length = this .length * 3; index < length; index += 3)
+				array .push (point [index], point [index + 1], point [index + 2], 1);
+
+			for (var index = length, length = min * 3; index < length; index += 3)
+				array .push (0, 0, 0, 1);
+		},
+		getNormal: (function ()
+		{
+			var
+				point1 = new Vector3 (0, 0, 0),
+				point2 = new Vector3 (0, 0, 0),
+				point3 = new Vector3 (0, 0, 0);
+
+			return function (index1, index2, index3)
+			{
+				// The index[1,2,3] cannot be less than 0.
+	
+				var length = this .length;
+	
+				if (index1 < length && index2 < length && index3 < length)
+				{
+					return Triangle3 .normal (this .get1Point (index1, point1),
+					                          this .get1Point (index2, point2),
+					                          this .get1Point (index3, point3),
+					                          new Vector3 (0, 0, 0));
+				}
+	
+				return new Vector3 (0, 0, 0);
+			};
+		})(),
+		getQuadNormal: (function ()
+		{
+			var
+				point1 = new Vector3 (0, 0, 0),
+				point2 = new Vector3 (0, 0, 0),
+				point3 = new Vector3 (0, 0, 0),
+				point4 = new Vector3 (0, 0, 0);
+
+			return function (index1, index2, index3, index4)
+			{
+				// The index[1,2,3,4] cannot be less than 0.
+	
+				var length = this .length;
+	
+				if (index1 < length && index2 < length && index3 < length && index4 < length)
+				{
+					return Triangle3 .quadNormal (this .get1Point (index1, point1),
+					                              this .get1Point (index2, point2),
+					                              this .get1Point (index3, point3),
+					                              this .get1Point (index4, point4),
+					                              new Vector3 (0, 0, 0));
+				}
+	
+				return new Vector3 (0, 0, 0);
+			};
+		})(),
+	});
+
+	return X3DCoordinateNode;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Rendering/Coordinate',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Rendering/X3DCoordinateNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DCoordinateNode, 
+          X3DConstants)
+{
+"use strict";
+
+	function Coordinate (executionContext)
+	{
+		X3DCoordinateNode .call (this, executionContext);
+
+		this .addType (X3DConstants .Coordinate);
+
+		this .point_ .setUnit ("length");
+	}
+
+	Coordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
+	{
+		constructor: Coordinate,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3f ()),
+		]),
+		getTypeName: function ()
+		{
+			return "Coordinate";
+		},
+		getComponentName: function ()
+		{
+			return "Rendering";
+		},
+		getContainerField: function ()
+		{
+			return "coord";
+		},
+	});
+
+	return Coordinate;
+});
+
+
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Grouping/X3DGroupingContext',[
+	"x_ite/Fields",
+	"x_ite/Components/Shape/Shape",
+	"x_ite/Components/Rendering/IndexedLineSet",
+	"x_ite/Components/Rendering/Color",
+	"x_ite/Components/Rendering/Coordinate",
+],
+function (Fields,
+          Shape,
+          IndexedLineSet,
+			 Color,
+			 Coordinate)
+{
+"use strict";
+
+	function X3DGroupingContext () { }
+
+	X3DGroupingContext .prototype =
+	{
+		initialize: function () { },
+		getBBoxNode: function ()
+		{
+			if (this .bboxNode)
+				return this .bboxNode;
+
+			const bboxNode       = new Shape (this .getPrivateScene ());
+			const bboxGeometry   = new IndexedLineSet (this .getPrivateScene ());
+			const bboxColor      = new Color (this .getPrivateScene ());
+			const bboxCoordinate = new Coordinate (this .getPrivateScene ());
+
+			bboxNode .geometry_       = bboxGeometry;
+			bboxGeometry .coordIndex_ = new Fields .MFFloat (0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 1, 5, -1, 2, 6, -1, 3, 7, -1);
+			bboxGeometry .color_      = bboxColor;
+			bboxGeometry .coord_      = bboxCoordinate;
+			bboxColor .color_         = new Fields .MFColor (new Fields .SFColor (1, 1, 1));
+			bboxCoordinate .point_    = new Fields .MFVec3f (new Fields .SFVec3f (0.5, 0.5, 0.5), new Fields .SFVec3f (-0.5, 0.5, 0.5), new Fields .SFVec3f (-0.5, -0.5, 0.5), new Fields .SFVec3f (0.5, -0.5, 0.5), new Fields .SFVec3f (0.5, 0.5, -0.5), new Fields .SFVec3f (-0.5, 0.5, -0.5), new Fields .SFVec3f (-0.5, -0.5, -0.5), new Fields .SFVec3f (0.5, -0.5, -0.5));
+
+			bboxCoordinate .setup ();
+			bboxColor      .setup ();
+			bboxGeometry   .setup ();
+			bboxNode       .setup ();
+
+			this .bboxNode = bboxNode;
+
+			return bboxNode;
+		}
+	};
+
+	return X3DGroupingContext;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -64525,374 +66876,6 @@ function (Fields,
 
 	return IndexedFaceSet;
 });
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Rendering/X3DGeometricPropertyNode',[
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (X3DNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function X3DGeometricPropertyNode (executionContext)
-	{
-		X3DNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DGeometricPropertyNode);
-	}
-
-	X3DGeometricPropertyNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-	{
-		constructor: X3DGeometricPropertyNode,
-	});
-
-	return X3DGeometricPropertyNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Rendering/X3DCoordinateNode',[
-	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Geometry/Triangle3",
-	"standard/Math/Numbers/Vector3",
-],
-function (X3DGeometricPropertyNode, 
-          X3DConstants,
-          Triangle3,
-          Vector3)
-{
-"use strict";
-
-	function X3DCoordinateNode (executionContext)
-	{
-		X3DGeometricPropertyNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DCoordinateNode);
-	}
-
-	X3DCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
-	{
-		constructor: X3DCoordinateNode,
-		initialize: function ()
-		{
-			X3DGeometricPropertyNode .prototype .initialize .call (this);
-
-			this .point_ .addInterest ("set_point__", this);
-
-			this .set_point__ ();
-		},
-		set_point__: function ()
-		{
-			this .point  = this .point_ .getValue ();
-			this .length = this .point_ .length;
-		},
-		isEmpty: function ()
-		{
-			return this .length === 0;
-		},
-		getSize: function ()
-		{
-			return this .length;
-		},
-		set1Point: function (index, point)
-		{
-			this .point_ [index] = point;
-		},
-		get1Point: function (index, result)
-		{
-			if (index < this .length)
-			{
-				const point = this .point;
-
-				index *= 3;
-
-				return result .set (point [index], point [index + 1], point [index + 2]);
-			}
-			else
-			{
-				return result .set (0, 0, 0);
-			}
-		},
-		addPoint: function (index, array)
-		{
-			if (index < this .length)
-			{
-				const point = this .point;
-
-				index *= 3;
-
-				array .push (point [index], point [index + 1], point [index + 2], 1);
-			}
-			else
-			{
-				array .push (0, 0, 0, 1);
-			}
-		},
-		addPoints: function (array, min)
-		{
-			const point = this .point;
-
-			for (var index = 0, length = this .length * 3; index < length; index += 3)
-				array .push (point [index], point [index + 1], point [index + 2], 1);
-
-			for (var index = length, length = min * 3; index < length; index += 3)
-				array .push (0, 0, 0, 1);
-		},
-		getNormal: (function ()
-		{
-			var
-				point1 = new Vector3 (0, 0, 0),
-				point2 = new Vector3 (0, 0, 0),
-				point3 = new Vector3 (0, 0, 0);
-
-			return function (index1, index2, index3)
-			{
-				// The index[1,2,3] cannot be less than 0.
-	
-				var length = this .length;
-	
-				if (index1 < length && index2 < length && index3 < length)
-				{
-					return Triangle3 .normal (this .get1Point (index1, point1),
-					                          this .get1Point (index2, point2),
-					                          this .get1Point (index3, point3),
-					                          new Vector3 (0, 0, 0));
-				}
-	
-				return new Vector3 (0, 0, 0);
-			};
-		})(),
-		getQuadNormal: (function ()
-		{
-			var
-				point1 = new Vector3 (0, 0, 0),
-				point2 = new Vector3 (0, 0, 0),
-				point3 = new Vector3 (0, 0, 0),
-				point4 = new Vector3 (0, 0, 0);
-
-			return function (index1, index2, index3, index4)
-			{
-				// The index[1,2,3,4] cannot be less than 0.
-	
-				var length = this .length;
-	
-				if (index1 < length && index2 < length && index3 < length && index4 < length)
-				{
-					return Triangle3 .quadNormal (this .get1Point (index1, point1),
-					                              this .get1Point (index2, point2),
-					                              this .get1Point (index3, point3),
-					                              this .get1Point (index4, point4),
-					                              new Vector3 (0, 0, 0));
-				}
-	
-				return new Vector3 (0, 0, 0);
-			};
-		})(),
-	});
-
-	return X3DCoordinateNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Rendering/Coordinate',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DCoordinateNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DCoordinateNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function Coordinate (executionContext)
-	{
-		X3DCoordinateNode .call (this, executionContext);
-
-		this .addType (X3DConstants .Coordinate);
-
-		this .point_ .setUnit ("length");
-	}
-
-	Coordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
-	{
-		constructor: Coordinate,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3f ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Coordinate";
-		},
-		getComponentName: function ()
-		{
-			return "Rendering";
-		},
-		getContainerField: function ()
-		{
-			return "coord";
-		},
-	});
-
-	return Coordinate;
-});
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -66360,217 +68343,6 @@ function ($,
 	});
 
 	return PointingDevice;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('standard/Math/Geometry/Line3',[
-	"standard/Math/Numbers/Vector3",
-],
-function (Vector3)
-{
-"use strict";
-
-	function Line3 (point, direction)
-	{
-		this .point     = point     .copy ();
-		this .direction = direction .copy ();
-	}
-
-	Line3 .prototype =
-	{
-		constructor: Line3,
-		copy: function ()
-		{
-			var copy = Object .create (Line3 .prototype);
-			copy .point     = this .point .copy ();
-			copy .direction = this .direction .copy ();
-			return copy;
-		},
-		assign: function (line)
-		{
-			this .point     .assign (line .point);
-			this .direction .assign (line .direction);
-			return this;
-		},
-		set: function (point, direction)
-		{
-			this .point     .assign (point);
-			this .direction .assign (direction);
-			return this;
-		},
-		setPoints: function (point1, point2)
-		{
-			this .point .assign (point1);
-			this .direction .assign (point2) .subtract (point1) .normalize ();
-			return this;
-		},
-		multMatrixLine: function (matrix)
-		{
-			matrix .multMatrixVec (this .point);
-			matrix .multMatrixDir (this .direction) .normalize ();
-			return this;
-		},
-		multLineMatrix: function (matrix)
-		{
-			matrix .multVecMatrix (this .point);
-			matrix .multDirMatrix (this .direction) .normalize ();
-			return this;
-		},
-		getClosestPointToPoint: function (point, result)
-		{
-			var
-				r = result .assign (point) .subtract (this .point),
-				d = r .dot (this .direction);
-
-			return result .assign (this .direction) .multiply (d) .add (this .point);
-		},
-		getClosestPointToLine: (function ()
-		{
-			var u = new Vector3 (0, 0, 0);
-
-			return function (line, point)
-			{
-				var
-					p1 = this .point,
-					p2 = line .point,
-					d1 = this .direction,
-					d2 = line .direction;
-	
-				var t = Vector3 .dot (d1, d2);
-	
-				if (Math .abs (t) >= 1)
-					return false;  // lines are parallel
-	
-				u .assign (p2) .subtract (p1);
-	
-				t = (u .dot (d1) - t * u .dot (d2)) / (1 - t * t);
-	
-				point .assign (d1) .multiply (t) .add (p1);
-				return true;
-			};
-		})(),
-		getPerpendicularVector: function (point)
-		{
-			var d = Vector3 .subtract (this .point, point);
-
-			return d .subtract (this .direction .copy () .multiply (Vector3 .dot (d, this .direction)));
-		},
-		intersectsTriangle: (function ()
-		{
-			var
-				pvec = new Vector3 (0, 0, 0),
-				tvec = new Vector3 (0, 0, 0);
-
-			return function (A, B, C, uvt)
-			{
-				// Find vectors for two edges sharing vert0.
-				var
-					edge1 = B .subtract (A),
-					edge2 = C .subtract (A);
-	
-				// Begin calculating determinant - also used to calculate U parameter.
-				pvec .assign (this .direction) .cross (edge2);
-	
-				// If determinant is near zero, ray lies in plane of triangle.
-				var det = edge1 .dot (pvec);
-	
-				// Non culling intersection.
-	
-				if (det === 0)
-					return false;
-	
-				var inv_det = 1 / det;
-	
-				// Calculate distance from vert0 to ray point.
-				tvec .assign (this .point) .subtract (A);
-	
-				// Calculate U parameter and test bounds.
-				var u = tvec .dot (pvec) * inv_det;
-	
-				if (u < 0 || u > 1)
-					return false;
-	
-				// Prepare to test V parameter.
-				var qvec = tvec .cross (edge1);
-	
-				// Calculate V parameter and test bounds.
-				var v = this .direction .dot (qvec) * inv_det;
-	
-				if (v < 0 || u + v > 1)
-					return false;
-	
-				//var t = edge2 .dot (qvec) * inv_det;
-	
-				uvt .u = u;
-				uvt .v = v;
-				uvt .t = 1 - u - v;
-	
-				return true;
-			};
-		})(),
-		toString: function ()
-		{
-			return this .point + ", " + this .direction;
-		},
-	};
-
-	Line3 .Points = function (point1, point2)
-	{
-		var line = Object .create (Line3 .prototype);
-		line .point     = point1 .copy ();
-		line .direction = Vector3 .subtract (point2, point1) .normalize ();
-		return line;
-	};
-
-	return Line3;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -71226,149 +72998,18 @@ function (X3DChildNode,
  ******************************************************************************/
 
 
-define ('x_ite/Components/Grouping/X3DBoundedObject',[
-	"x_ite/Fields",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Geometry/Box3",
-],
-function (Fields,
-          X3DCast,
-          X3DConstants,
-          Vector3,
-          Box3)
-{
-"use strict";
-
-	function X3DBoundedObject (executionContext)
-	{
-		this .addType (X3DConstants .X3DBoundedObject);
-
-		this .addChildObjects ("transformSensors_changed", new Fields .SFTime ());
-
-		this .bboxSize_   .setUnit ("length");
-		this .bboxCenter_ .setUnit ("length");
-
-		this .childBBox            = new Box3 (); // Must be unique for each X3DBoundedObject.
-		this .transformSensorNodes = new Set ();
-	}
-
-	X3DBoundedObject .prototype =
-	{
-		constructor: X3DBoundedObject,
-		initialize: function () { },
-		getDefaultBBoxSize: (function ()
-		{
-			var defaultBBoxSize = new Vector3 (-1, -1, -1);
-
-			return function ()
-			{
-				return defaultBBoxSize;
-			};
-		})(),
-		getBBox: function (nodes, bbox)
-		{
-			bbox .set ();
-
-			// Add bounding boxes
-
-			for (var i = 0, length = nodes .length; i < length; ++ i)
-			{
-				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, nodes [i]);
-
-				if (boundedObject)
-					bbox .add (boundedObject .getBBox (this .childBBox));
-			}
-
-			return bbox;
-		},
-		addTransformSensor: function (transformSensorNode)
-		{
-			this .transformSensorNodes .add (transformSensorNode);
-
-			this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
-		},
-		removeTransformSensor: function (transformSensorNode)
-		{
-			this .transformSensorNodes .delete (transformSensorNode);
-
-			this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
-		},
-		getTransformSensors: function ()
-		{
-			return this .transformSensorNodes;
-		},
-	};
-
-	return X3DBoundedObject;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Components/Grouping/X3DGroupingNode',[
-	"x_ite/Fields",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
-	"standard/Math/Geometry/Box3",
 ],
-function (Fields,
-          X3DChildNode,
+function (X3DChildNode,
           X3DBoundedObject,
           TraverseType,
           X3DConstants,
-          X3DCast,
-          Box3)
+          X3DCast)
 {
 "use strict";
 
@@ -71386,8 +73027,6 @@ function (Fields,
 		return array .remove (first, last, compare);
 	}
 
-	var visible = new Fields .MFBool ();
-
 	function X3DGroupingNode (executionContext)
 	{
 		X3DChildNode     .call (this, executionContext);
@@ -71397,18 +73036,20 @@ function (Fields,
 
 		this .hidden                    = false;
 		this .allowedTypes              = new Set ();
+		this .clipPlaneNodes            = [ ];
+		this .localFogNodes             = [ ];
+		this .lightNodes                = [ ];
+		this .textureProjectorNodes     = [ ];
 		this .pointingDeviceSensorNodes = [ ];
 		this .maybeCameraObjects        = [ ];
 		this .cameraObjects             = [ ];
 		this .maybePickableSensorNodes  = [ ];
 		this .pickableSensorNodes       = [ ];
 		this .pickableObjects           = [ ];
-		this .clipPlaneNodes            = [ ];
-		this .localFogNodes             = [ ];
-		this .lightNodes                = [ ];
-		this .textureProjectorNodes     = [ ];
-		this .displayNodes              = [ ];
 		this .childNodes                = [ ];
+		this .displayNodes              = [ ];
+		this .visibleNodes              = [ ];
+		this .boundedObjects            = [ ];
 	}
 
 	X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -71428,16 +73069,16 @@ function (Fields,
 
 			this .set_children__ ();
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
+		{
+			return this .getSubBBox (bbox, shadow);
+		},
+		getSubBBox: function (bbox, shadow)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
-				return X3DBoundedObject .prototype .getBBox .call (this, this .childNodes, bbox);
+				return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadow);
 
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
-		},
-		getSubBBox: function (bbox)
-		{
-			return X3DGroupingNode .prototype .getBBox .call (this, bbox);
 		},
 		setHidden: function (value)
 		{
@@ -71448,10 +73089,6 @@ function (Fields,
 				this .set_children__ ();
 			}
 		},
-		getVisible: function ()
-		{
-			return visible;
-		},
 		setAllowedTypes: function (type)
 		{
 			var allowedTypes = this .allowedTypes;
@@ -71460,15 +73097,6 @@ function (Fields,
 
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 				allowedTypes .add (arguments [i]);
-		},
-		getChild: function (index)
-		{
-			// Used in LOD and Switch.
-
-			if (index >= 0 && index < this .children_ .length)
-				return X3DCast (X3DConstants .X3DChildNode, this .children_ [index]);
-
-			return null;
 		},
 		set_addChildren__: function ()
 		{
@@ -71499,20 +73127,20 @@ function (Fields,
 			if (this .removeChildren_ .length === 0)
 				return;
 
-			if (this .children_ .length === 0)
-				return;
-
-			if (! this .children_ .getTainted ())
+			if (this .children_ .length > 0)
 			{
-				this .children_ .removeInterest ("set_children__", this);
-				this .children_ .addInterest ("connectChildren", this);
+				if (! this .children_ .getTainted ())
+				{
+					this .children_ .removeInterest ("set_children__", this);
+					this .children_ .addInterest ("connectChildren", this);
+				}
+
+				this .children_ .erase (remove (this .children_,       0, this .children_ .length,
+														  this .removeChildren_, 0, this .removeChildren_ .length),
+												this .children_ .length);
+
+				this .remove (this .removeChildren_);
 			}
-
-			this .children_ .erase (remove (this .children_,       0, this .children_ .length,
-			                                this .removeChildren_, 0, this .removeChildren_ .length),
-			                        this .children_ .length);
-
-			this .remove (this .removeChildren_);
 
 			this .removeChildren_ .set ([ ]);
 		},
@@ -71526,20 +73154,48 @@ function (Fields,
 			this .children_ .removeInterest ("connectChildren", this);
 			this .children_ .addInterest ("set_children__", this);
 		},
+		clear: function ()
+		{
+			var
+				maybePickableSensorNodes = this .maybePickableSensorNodes,
+				childNodes               = this .childNodes;
+
+			for (var i = 0, length = maybePickableSensorNodes .length; i < length; ++ i)
+				maybePickableSensorNodes [i] .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+
+			for (var i = 0, length = childNodes .length; i < length; ++ i)
+			{
+				var childNode = childNodes [i];
+
+				childNode .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
+				childNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+
+				if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+				{
+					childNode .visible_     .removeInterest ("set_visibles__",      this);
+					childNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__",  this);
+				}
+			}
+
+			this .clipPlaneNodes            .length = 0;
+			this .localFogNodes             .length = 0;
+			this .lightNodes                .length = 0;
+			this .textureProjectorNodes     .length = 0;
+			this .pointingDeviceSensorNodes .length = 0;
+			this .maybeCameraObjects        .length = 0;
+			this .maybePickableSensorNodes  .length = 0;
+			this .childNodes                .length = 0;
+		},
 		add: function (first, children)
 		{
 			if (this .hidden)
 				return;
 
-			var
-				visible    = this .getVisible (),
-				numVisible = visible .length;
-
 			for (var i = 0, v = first, length = children .length; i < length; ++ i, ++ v)
 			{
 				var child = children [i];
 
-				if (child && (v >= numVisible || visible [v]))
+				if (child)
 				{
 					try
 					{
@@ -71601,6 +73257,12 @@ function (Fields,
 									innerNode .isCameraObject_   .addInterest ("set_cameraObjects__",   this);
 									innerNode .isPickableObject_ .addInterest ("set_pickableObjects__", this);
 
+									if (X3DCast (X3DConstants .X3DBoundedObject, innerNode))
+									{
+										innerNode .visible_     .addInterest ("set_visibles__",     this);
+										innerNode .bboxDisplay_ .addInterest ("set_bboxDisplays__", this);
+									}
+
 									this .maybeCameraObjects .push (innerNode);
 									this .childNodes .push (innerNode);
 									break;
@@ -71632,9 +73294,10 @@ function (Fields,
 				}
 			}
 
-			this .set_cameraObjects__ ();
-			this .set_pickableObjects__ ();
-			this .set_display_nodes ();
+			this .set_pickableObjects__ ()
+			this .set_displayNodes__ ()
+			this .set_visibles__ ()
+			this .set_bboxDisplays__ ();
 		},
 		remove: function (children)
 		{
@@ -71726,6 +73389,12 @@ function (Fields,
 									innerNode .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
 									innerNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
 
+									if (X3DCast (X3DConstants .X3DBoundedObject, innerNode))
+									{
+										innerNode .visible_     .removeInterest ("set_visibles__",     this);
+										innerNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__", this);
+									}
+
 									var index = this .maybeCameraObjects .indexOf (innerNode);
 
 									if (index >= 0)
@@ -71765,35 +73434,10 @@ function (Fields,
 				}
 			}
 
-			this .set_cameraObjects__ ();
 			this .set_pickableObjects__ ();
-			this .set_display_nodes ();
-		},
-		clear: function ()
-		{
-			var
-				maybePickableSensorNodes = this .maybePickableSensorNodes,
-				childNodes               = this .childNodes;
-
-			for (var i = 0, length = maybePickableSensorNodes .length; i < length; ++ i)
-				maybePickableSensorNodes [i] .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
-
-			for (var i = 0, length = childNodes .length; i < length; ++ i)
-			{
-				var childNode = childNodes [i];
-
-				childNode .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
-				childNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
-			}
-
-			this .pointingDeviceSensorNodes .length = 0;
-			this .maybeCameraObjects        .length = 0;
-			this .clipPlaneNodes            .length = 0;
-			this .localFogNodes             .length = 0;
-			this .lightNodes                .length = 0;
-			this .textureProjectorNodes     .length = 0;
-			this .maybePickableSensorNodes  .length = 0;
-			this .childNodes                .length = 0;
+			this .set_displayNodes__ ();
+			this .set_visibles__ ();
+			this .set_bboxDisplays__ ();
 		},
 		set_cameraObjects__: function ()
 		{
@@ -71808,7 +73452,19 @@ function (Fields,
 				var childNode = maybeCameraObjects [i];
 
 				if (childNode .getCameraObject ())
-					cameraObjects .push (childNode);
+				{
+					if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+					{
+						if (childNode .visible_ .getValue ())
+						{
+							cameraObjects .push (childNode);
+						}
+					}
+					else
+					{
+						cameraObjects .push (childNode);
+					}
+				}
 			}
 
 			this .setCameraObject (Boolean (cameraObjects .length));
@@ -71846,7 +73502,7 @@ function (Fields,
 		{
 			this .setPickableObject (Boolean (this .getTransformSensors () .size || this .pickableSensorNodes .length || this .pickableObjects .length));
 		},
-		set_display_nodes: function ()
+		set_displayNodes__: function ()
 		{
 			var
 				clipPlaneNodes        = this .clipPlaneNodes,
@@ -71869,135 +73525,199 @@ function (Fields,
 			for (var i = 0, length = textureProjectorNodes .length; i < length; ++ i)
 				displayNodes .push (textureProjectorNodes [i]);
 		},
-		traverse: (function ()
+		set_visibles__: function ()
 		{
-			var bbox = new Box3 ();
+			var
+				childNodes   = this .childNodes,
+				visibleNodes = this .visibleNodes;
 
-			return function (type, renderObject)
+			visibleNodes .length = 0;
+
+			for (var i = 0, length = childNodes .length; i < length; ++ i)
 			{
-				switch (type)
+				var childNode = childNodes [i];
+
+				if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
 				{
-					case TraverseType .POINTER:
+					if (childNode .visible_ .getValue ())
 					{
-						var
-							pointingDeviceSensorNodes = this .pointingDeviceSensorNodes,
-							clipPlaneNodes            = this .clipPlaneNodes,
-							childNodes                = this .childNodes;
-
-						if (pointingDeviceSensorNodes .length)
-						{
-							var sensors = { };
-
-							renderObject .getBrowser () .getSensors () .push (sensors);
-
-							for (var i = 0, length = pointingDeviceSensorNodes .length; i < length; ++ i)
-								pointingDeviceSensorNodes [i] .push (renderObject, sensors);
-						}
-
-						for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
-							clipPlaneNodes [i] .push (renderObject);
-
-						for (var i = 0, length = childNodes .length; i < length; ++ i)
-							childNodes [i] .traverse (type, renderObject);
-
-						for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
-							clipPlaneNodes [i] .pop (renderObject);
-
-						if (pointingDeviceSensorNodes .length)
-							renderObject .getBrowser () .getSensors () .pop ();
-
-						return;
-					}
-					case TraverseType .CAMERA:
-					{
-						var cameraObjects = this .cameraObjects;
-
-						for (var i = 0, length = cameraObjects .length; i < length; ++ i)
-							cameraObjects [i] .traverse (type, renderObject);
-
-						return;
-					}
-					case TraverseType .PICKING:
-					{
-						if (this .getTransformSensors () .size)
-						{
-							var modelMatrix = renderObject .getModelViewMatrix () .get ();
-
-							this .getTransformSensors () .forEach (function (transformSensorNode)
-							{
-								transformSensorNode .collect (modelMatrix);
-							});
-						}
-
-						var pickableSensorNodes = this .pickableSensorNodes;
-
-						for (var i = 0, length = pickableSensorNodes .length; i < length; ++ i)
-							pickableSensorNodes [i] .traverse (type, renderObject);
-
-						var
-							browser          = renderObject .getBrowser (),
-							pickingHierarchy = browser .getPickingHierarchy (),
-							pickableStack    = browser .getPickable ();
-
-						pickingHierarchy .push (this);
-
-						if (pickableStack [pickableStack .length - 1])
-						{
-							var childNodes = this .childNodes;
-
-							for (var i = 0, length = childNodes .length; i < length; ++ i)
-								childNodes [i] .traverse (type, renderObject);
-						}
-						else
-						{
-							var pickableObjects = this .pickableObjects;
-
-							for (var i = 0, length = pickableObjects .length; i < length; ++ i)
-								pickableObjects [i] .traverse (type, renderObject);
-						}
-
-						pickingHierarchy .pop ();
-						return;
-					}
-					case TraverseType .COLLISION:
-					case TraverseType .DEPTH:
-					{
-						var
-							clipPlaneNodes = this .clipPlaneNodes,
-							childNodes     = this .childNodes;
-
-						for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
-							clipPlaneNodes [i] .push (renderObject);
-
-						for (var i = 0, length = childNodes .length; i < length; ++ i)
-							childNodes [i] .traverse (type, renderObject);
-
-						for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
-							clipPlaneNodes [i] .pop (renderObject);
-
-						return;
-					}
-					case TraverseType .DISPLAY:
-					{
-
-						var
-							displayNodes = this .displayNodes,
-							childNodes   = this .childNodes;
-
-						for (var i = 0, length = displayNodes .length; i < length; ++ i)
-							displayNodes [i] .push (renderObject, this);
-
-						for (var i = 0, length = childNodes .length; i < length; ++ i)
-							childNodes [i] .traverse (type, renderObject);
-
-						for (var i = displayNodes .length - 1; i >= 0; -- i)
-							displayNodes [i] .pop (renderObject);
-
-						return;
+						visibleNodes .push (childNode);
 					}
 				}
-			};
-		})(),
+				else
+				{
+					visibleNodes .push (childNode);
+				}
+			}
+
+			this .set_cameraObjects__ ();
+		},
+		set_bboxDisplays__: function ()
+		{
+			var
+				childNodes     = this .childNodes,
+				boundedObjects = this .boundedObjects;
+
+			boundedObjects .length = 0;
+
+			for (var i = 0, length = childNodes .length; i < length; ++ i)
+			{
+				var childNode = childNodes [i];
+
+				if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+				{
+					if (childNode .bboxDisplay_ .getValue ())
+					{
+						boundedObjects .push (childNode);
+					}
+				}
+			}
+		},
+		traverse: function (type, renderObject)
+		{
+			switch (type)
+			{
+				case TraverseType .POINTER:
+				{
+					var
+						pointingDeviceSensorNodes = this .pointingDeviceSensorNodes,
+						clipPlaneNodes            = this .clipPlaneNodes,
+						childNodes                = this .childNodes;
+
+					if (pointingDeviceSensorNodes .length)
+					{
+						var sensors = { };
+
+						renderObject .getBrowser () .getSensors () .push (sensors);
+
+						for (var i = 0, length = pointingDeviceSensorNodes .length; i < length; ++ i)
+							pointingDeviceSensorNodes [i] .push (renderObject, sensors);
+					}
+
+					for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
+						clipPlaneNodes [i] .push (renderObject);
+
+					for (var i = 0, length = childNodes .length; i < length; ++ i)
+						childNodes [i] .traverse (type, renderObject);
+
+					for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
+						clipPlaneNodes [i] .pop (renderObject);
+
+					if (pointingDeviceSensorNodes .length)
+						renderObject .getBrowser () .getSensors () .pop ();
+
+					return;
+				}
+				case TraverseType .CAMERA:
+				{
+					var cameraObjects = this .cameraObjects;
+
+					for (var i = 0, length = cameraObjects .length; i < length; ++ i)
+						cameraObjects [i] .traverse (type, renderObject);
+
+					return;
+				}
+				case TraverseType .PICKING:
+				{
+					if (this .getTransformSensors () .size)
+					{
+						var modelMatrix = renderObject .getModelViewMatrix () .get ();
+
+						this .getTransformSensors () .forEach (function (transformSensorNode)
+						{
+							transformSensorNode .collect (modelMatrix);
+						});
+					}
+
+					var pickableSensorNodes = this .pickableSensorNodes;
+
+					for (var i = 0, length = pickableSensorNodes .length; i < length; ++ i)
+						pickableSensorNodes [i] .traverse (type, renderObject);
+
+					var
+						browser          = renderObject .getBrowser (),
+						pickingHierarchy = browser .getPickingHierarchy (),
+						pickableStack    = browser .getPickable ();
+
+					pickingHierarchy .push (this);
+
+					if (pickableStack [pickableStack .length - 1])
+					{
+						var childNodes = this .childNodes;
+
+						for (var i = 0, length = childNodes .length; i < length; ++ i)
+							childNodes [i] .traverse (type, renderObject);
+					}
+					else
+					{
+						var pickableObjects = this .pickableObjects;
+
+						for (var i = 0, length = pickableObjects .length; i < length; ++ i)
+							pickableObjects [i] .traverse (type, renderObject);
+					}
+
+					pickingHierarchy .pop ();
+					return;
+				}
+				case TraverseType .COLLISION:
+				{
+					var
+						clipPlaneNodes = this .clipPlaneNodes,
+						childNodes     = this .childNodes;
+
+					for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
+						clipPlaneNodes [i] .push (renderObject);
+
+					for (var i = 0, length = childNodes .length; i < length; ++ i)
+						childNodes [i] .traverse (type, renderObject);
+
+					for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
+						clipPlaneNodes [i] .pop (renderObject);
+
+					return;
+				}
+				case TraverseType .DEPTH:
+				{
+					// Nodes that are not visible do not cast shadows.
+
+					var
+						clipPlaneNodes = this .clipPlaneNodes,
+						visibleNodes   = this .visibleNodes;
+
+					for (var i = 0, length = clipPlaneNodes .length; i < length; ++ i)
+						clipPlaneNodes [i] .push (renderObject);
+
+					for (var i = 0, length = visibleNodes .length; i < length; ++ i)
+						visibleNodes [i] .traverse (type, renderObject);
+
+					for (var i = clipPlaneNodes .length - 1; i >= 0; -- i)
+						clipPlaneNodes [i] .pop (renderObject);
+
+					return;
+				}
+				case TraverseType .DISPLAY:
+				{
+					var
+						displayNodes   = this .displayNodes,
+						visibleNodes   = this .visibleNodes,
+						boundedObjects = this .boundedObjects;
+
+					for (var i = 0, length = displayNodes .length; i < length; ++ i)
+						displayNodes [i] .push (renderObject, this);
+
+					for (var i = 0, length = visibleNodes .length; i < length; ++ i)
+						visibleNodes [i] .traverse (type, renderObject);
+
+					for (var i = 0, length = boundedObjects .length; i < length; ++ i)
+						boundedObjects [i] .displayBBox (type, renderObject);
+
+					for (var i = displayNodes .length - 1; i >= 0; -- i)
+						displayNodes [i] .pop (renderObject);
+
+					return;
+				}
+			}
+		},
 	});
 
 	return X3DGroupingNode;
@@ -72298,7 +74018,7 @@ function (Fields,
 "use strict";
 
 	var DirectionalLights = ObjectCache (DirectionalLightContainer);
-	
+
 	function DirectionalLightContainer ()
 	{
 		this .direction                     = new Vector3 (0, 0, 0);
@@ -72385,8 +74105,8 @@ function (Fields,
 				invLightSpaceMatrix .inverse ();
 
 				var
-					groupBBox        = X3DGroupingNode .prototype .getBBox .call (this .groupNode, this .bbox), // Group bbox.
-					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                              // Group bbox from the perspective of the light.
+					groupBBox        = this .groupNode .getSubBBox (this .bbox, true), // Group bbox.
+					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),     // Group bbox from the perspective of the light.
 					shadowMapSize    = lightNode .getShadowMapSize (),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
 					projectionMatrix = Camera .orthoBox (lightBBox, this .projectionMatrix);
@@ -72404,7 +74124,7 @@ function (Fields,
 				renderObject .getViewVolumes      () .pop ();
 
 				this .shadowBuffer .unbind ();
-	
+
 				if (! lightNode .getGlobal ())
 					invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 
@@ -72455,7 +74175,7 @@ function (Fields,
 			else
 			{
 				// Must be set to zero in case of multiple lights.
-				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);			
+				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
 			}
 		},
 		dispose: function ()
@@ -72526,8 +74246,6 @@ function (Fields,
 
 	return DirectionalLight;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -72911,7 +74629,7 @@ define ('x_ite/Components/Layering/Viewport',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DViewportNode, 
+          X3DViewportNode,
           X3DConstants,
           TraverseType,
           ObjectCache,
@@ -72937,6 +74655,8 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "clipBoundary",   new Fields .MFFloat (0, 1, 0, 1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
@@ -73028,8 +74748,6 @@ function (Fields,
 
 	return Viewport;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -73163,8 +74881,7 @@ function (TextureProperties)
 {
 "use strict";
 
-	function X3DEnvironmentalEffectsContext ()
-	{ }
+	function X3DEnvironmentalEffectsContext () { }
 
 	X3DEnvironmentalEffectsContext .prototype =
 	{
@@ -90660,10 +92377,11 @@ function ($,
 
 					context .modelViewMatrix .set (modelViewMatrix);
 					context .scissor .assign (viewVolume .getScissor ());
-					context .shapeNode = shapeNode;
-					context .distance  = bboxCenter .z;
-					context .fogNode   = this .localFog;
-					context .shadow    = this .shadow [0];
+					context .shapeNode   = shapeNode;
+					context .textureNode = null;
+					context .distance    = bboxCenter .z;
+					context .fogNode     = this .localFog;
+					context .shadow      = this .shadow [0];
 
 					// Clip planes and local lights
 
@@ -90688,18 +92406,9 @@ function ($,
 				renderer: this,
 				browser: this .getBrowser (),
 				transparent: transparent,
-				geometryType: 3,
-				fogCoords: false,
-				colorMaterial: false,
 				modelViewMatrix: new Float32Array (16),
 				scissor: new Vector4 (0, 0, 0, 0),
 				localObjects: [ ],
-				linePropertiesNode: null,
-				materialNode: null,
-				textureNode: null,
-				textureTransformNode: null,
-				shaderNode: null,
-				shadow: false,
 			};
 		},
 		collide: (function ()
@@ -91414,7 +93123,7 @@ function (X3DBaseNode)
 			{
 				var
 					enableInlineBindables = false,
-					masterScene           = this .getMasterScene ();
+					mainScene             = this .getMainScene ();
 
 				if (name && name .length)
 				{
@@ -91424,7 +93133,7 @@ function (X3DBaseNode)
 					{
 						var node = this .array [i];
 
-						if (! enableInlineBindables && node .getScene () !== masterScene)
+						if (! enableInlineBindables && node .getScene () !== mainScene)
 							continue;
 
 						if (node .getName () == name)
@@ -91438,7 +93147,7 @@ function (X3DBaseNode)
 				{
 					var node = this .array [i];
 
-					if (! enableInlineBindables && node .getScene () !== masterScene)
+					if (! enableInlineBindables && node .getScene () !== mainScene)
 						continue;
 
 					if (node .isBound_ .getValue ())
@@ -91451,7 +93160,7 @@ function (X3DBaseNode)
 				{
 					var node = this .array [i];
 
-					if (! enableInlineBindables && node .getScene () !== masterScene)
+					if (! enableInlineBindables && node .getScene () !== mainScene)
 						continue;
 
 					return node;
@@ -93234,9 +94943,9 @@ function (X3DNode,
 		{
 			return this .viewpointStack;
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
-			return this .groupNode .getBBox (bbox);
+			return this .groupNode .getBBox (bbox, shadow);
 		},
 		lookAt: function (factor, straighten)
 		{
@@ -93461,7 +95170,7 @@ define ('x_ite/Components/Grouping/Group',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGroupingNode, 
+          X3DGroupingNode,
           X3DConstants)
 {
 "use strict";
@@ -93478,6 +95187,8 @@ function (Fields,
 		constructor: Group,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
@@ -93500,8 +95211,6 @@ function (Fields,
 
 	return Group;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -94067,6 +95776,7 @@ define ('x_ite/Browser/X3DBrowserContext',[
 	"x_ite/Browser/Shaders/X3DShadersContext",
 	"x_ite/Browser/Rendering/X3DRenderingContext",
 	"x_ite/Browser/Shape/X3DShapeContext",
+	"x_ite/Browser/Grouping/X3DGroupingContext",
 	"x_ite/Browser/Geometry3D/X3DGeometry3DContext",
 	"x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext",
 	"x_ite/Browser/Navigation/X3DNavigationContext",
@@ -94091,6 +95801,7 @@ function ($,
           X3DShadersContext,
           X3DRenderingContext,
           X3DShapeContext,
+			 X3DGroupingContext,
           X3DGeometry3DContext,
           X3DPointingDeviceSensorContext,
           X3DNavigationContext,
@@ -94119,6 +95830,7 @@ function ($,
 		X3DShadersContext              .call (this);
 		X3DRenderingContext            .call (this);
 		X3DShapeContext                .call (this);
+		X3DGroupingContext             .call (this);
 		X3DGeometry3DContext           .call (this);
 		X3DPointingDeviceSensorContext .call (this);
 		X3DNavigationContext           .call (this);
@@ -94158,6 +95870,7 @@ function ($,
 		X3DShadersContext .prototype,
 		X3DRenderingContext .prototype,
 		X3DShapeContext .prototype,
+		X3DGroupingContext .prototype,
 		X3DGeometry3DContext .prototype,
 		X3DPointingDeviceSensorContext .prototype,
 		X3DNavigationContext .prototype,
@@ -94181,6 +95894,7 @@ function ($,
 			X3DShadersContext              .prototype .initialize .call (this);
 			X3DRenderingContext            .prototype .initialize .call (this);
 			X3DShapeContext                .prototype .initialize .call (this);
+			X3DGroupingContext             .prototype .initialize .call (this);
 			X3DGeometry3DContext           .prototype .initialize .call (this);
 			X3DPointingDeviceSensorContext .prototype .initialize .call (this);
 			X3DNavigationContext           .prototype .initialize .call (this);
@@ -95255,7 +96969,7 @@ define ('x_ite/Components/Core/WorldInfo',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DInfoNode, 
+          X3DInfoNode,
           X3DConstants)
 {
 "use strict";
@@ -95271,9 +96985,9 @@ function (Fields,
 	{
 		constructor: WorldInfo,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "title",    new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "info",     new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "title",    new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "info",     new Fields .MFString ()),
 		]),
 		getTypeName: function ()
 		{
@@ -95291,8 +97005,6 @@ function (Fields,
 
 	return WorldInfo;
 });
-
-
 
 /*******************************************************************************
  *
@@ -101153,8 +102865,8 @@ define ('x_ite/Components/Grouping/StaticGroup',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChildNode, 
-          X3DBoundedObject, 
+          X3DChildNode,
+          X3DBoundedObject,
           Group,
           X3DConstants,
           TraverseType,
@@ -101178,6 +102890,7 @@ function (Fields,
 		this .opaqueShapes      = null;
 		this .transparentShapes = null;
 		this .bbox              = new Box3 ();
+		this .shadowBBox        = new Box3 ();
 	}
 
 	StaticGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -101185,10 +102898,12 @@ function (Fields,
 	{
 		constructor: StaticGroup,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",   new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter", new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "children",   new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "children",    new Fields .MFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -101227,13 +102942,14 @@ function (Fields,
 
 			this .set_children__ ();
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
-			return bbox .assign (this .bbox);
+			return bbox .assign (shadow ? this .shadowBBox : this .bbox);
 		},
 		set_children__: function ()
 		{
 			this .group .getBBox (this .bbox);
+			this .group .getBBox (this .shadowBBox, true);
 
 			this .collisionShapes   = null;
 			this .depthShapes       = null;
@@ -101267,14 +102983,14 @@ function (Fields,
 								projectionMatrix    = renderObject .getProjectionMatrix (),
 								modelViewMatrix     = renderObject .getModelViewMatrix (),
 								firstCollisionShape = renderObject .getNumCollisionShapes ();
-				
+
 							viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
-	
+
 							modelViewMatrix .push ();
 							modelViewMatrix .identity ();
-	
+
 							this .group .traverse (type, renderObject);
-	
+
 							modelViewMatrix .pop ();
 							viewVolumes     .pop ();
 
@@ -101313,14 +103029,14 @@ function (Fields,
 								projectionMatrix = renderObject .getProjectionMatrix (),
 								modelViewMatrix  = renderObject .getModelViewMatrix (),
 								firstDepthShape  = renderObject .getNumDepthShapes ();
-				
+
 							viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
-	
+
 							modelViewMatrix .push ();
 							modelViewMatrix .identity ();
-	
+
 							this .group .traverse (type, renderObject);
-	
+
 							modelViewMatrix .pop ();
 							viewVolumes     .pop ();
 
@@ -101360,14 +103076,14 @@ function (Fields,
 								modelViewMatrix       = renderObject .getModelViewMatrix (),
 								firstOpaqueShape      = renderObject .getNumOpaqueShapes (),
 								firstTransparentShape = renderObject .getNumTransparentShapes ();
-				
+
 							viewVolumes .push (viewVolume .set (projectionMatrix, viewport, viewport));
-	
+
 							modelViewMatrix .push ();
 							modelViewMatrix .identity ();
-	
+
 							this .group .traverse (type, renderObject);
-	
+
 							modelViewMatrix .pop ();
 							viewVolumes     .pop ();
 
@@ -101495,6 +103211,10 @@ function (Fields,
 
 		if (executionContext .getSpecificationVersion () == "2.0")
 			this .addAlias ("choice", this .children_);
+
+		this .childNode     = null;
+		this .visibleNode   = null;
+		this .boundedObject = null;
 	}
 
 	Switch .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -101503,6 +103223,8 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "whichChoice",    new Fields .SFInt32 (-1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
@@ -101525,55 +103247,131 @@ function (Fields,
 		{
 			X3DGroupingNode .prototype .initialize .call (this);
 
-			this .whichChoice_ .addInterest ("set_whichChoice__", this);
-			this .children_    .addInterest ("set_whichChoice__", this);
+			this .whichChoice_ .addInterest ("set_child__", this);
+			this .children_    .addInterest ("set_child__", this);
 
-			this .set_whichChoice__ ();
+			this .set_child__ ();
 		},
-		getBBox: function (bbox)
+		getSubBBox: function (bbox, shadow)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
-				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .child);
+				const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .visibleNode);
 
 				if (boundedObject)
-					return boundedObject .getBBox (bbox);
+					return boundedObject .getBBox (bbox, shadow);
 
 				return bbox .set ();
 			}
 
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 		},
-		getSubBBox: function (bbox)
+		clear: function () { },
+		add: function () { },
+		remove: function () { },
+		set_child__: function ()
 		{
-			return this .getBBox (bbox);
-		},
-		set_whichChoice__: function ()
-		{
-			this .child = this .getChild (this .whichChoice_ .getValue ());
+			if (this .childNode)
+				this .childNode .isCameraObject_ .removeInterest ("set_cameraObject__", this);
 
-			this .set_cameraObjects__ ();
-			this .set_pickableObjects__ ();
+			if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+			{
+				this .childNode .visible_     .removeInterest ("set_visible__",     this);
+				this .childNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+			}
+
+			var whichChoice = this .whichChoice_ .getValue ();
+
+			if (whichChoice >= 0 && whichChoice < this .children_ .length)
+			{
+				this .childNode = X3DCast (X3DConstants .X3DChildNode, this .children_ [whichChoice]);
+
+				if (this .childNode)
+				{
+					this .childNode .isCameraObject_ .addInterest ("set_cameraObject__", this);
+
+					if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+					{
+						this .childNode .visible_     .addInterest ("set_visible__",     this);
+						this .childNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
+					}
+				}
+			}
+			else
+			{
+				this .childNode = null;
+			}
+
+			this .set_transformSensors__ ();
+			this .set_visible__ ();
+			this .set_bboxDisplay__ ();
 		},
-		set_cameraObjects__: function ()
+		set_cameraObject__: function ()
 		{
-			this .setCameraObject (Boolean (this .child && this .child .getCameraObject ()));
+			if (this .childNode && this .childNode .getCameraObject ())
+			{
+				if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+				{
+					this .setCameraObject (this .childNode .visible_ .getValue ());
+				}
+				else
+				{
+					this .setCameraObject (true);
+				}
+			}
+			else
+			{
+				this .setCameraObject (false);
+			}
 		},
 		set_transformSensors__: function ()
 		{
-			this .setPickableObject (Boolean (this .getTransformSensors () .size || this .child && this .child .getPickableObject ()));
+			this .setPickableObject (Boolean (this .getTransformSensors () .size || this .childNode && this .childNode .getPickableObject ()));
 		},
-		traverse: (function ()
+		set_visible__: function ()
 		{
-			return function (type, renderObject)
+			if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
 			{
-				var child = this .child;
+				this .visibleNode = this .childNode .visible_ .getValue () ? this .childNode : null;
+			}
+			else
+			{
+				this .visibleNode = this .childNode;
+			}
 
-				if (type === TraverseType .PICKING)
+			this .set_cameraObject__ ();
+		},
+		set_bboxDisplay__: function ()
+		{
+			if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+			{
+				this .boundedObject = this .childNode .bboxDisplay_ .getValue () ? this .childNode : null;
+			}
+			else
+			{
+				this .boundedObject = null;
+			}
+		},
+		traverse: function (type, renderObject)
+		{
+			switch (type)
+			{
+				case TraverseType .POINTER:
+				case TraverseType .CAMERA:
+				case TraverseType .DEPTH:
+				{
+					const visibleNode = this .visibleNode;
+
+					if (visibleNode)
+						visibleNode .traverse (type, renderObject);
+
+					return;
+				}
+				case TraverseType .PICKING:
 				{
 					if (this .getTransformSensors () .size)
 					{
-						var modelMatrix = renderObject .getModelViewMatrix () .get ();
+						const modelMatrix = renderObject .getModelViewMatrix () .get ();
 
 						this .getTransformSensors () .forEach (function (transformSensorNode)
 						{
@@ -101581,26 +103379,48 @@ function (Fields,
 						});
 					}
 
-					if (child)
+					const childNode = this .childNode;
+
+					if (childNode)
 					{
-						var
+						const
 							browser          = renderObject .getBrowser (),
 							pickingHierarchy = browser .getPickingHierarchy ();
 
 						pickingHierarchy .push (this);
 
-						child .traverse (type, renderObject);
+						childNode .traverse (type, renderObject);
 
 						pickingHierarchy .pop ();
 					}
+
+					return;
 				}
-				else
+				case TraverseType .COLLISION:
 				{
-					if (child)
-						child .traverse (type, renderObject);
+					const childNode = this .childNode;
+
+					if (childNode)
+						childNode .traverse (type, renderObject);
+
+					return;
 				}
-			};
-		})(),
+				case TraverseType .DISPLAY:
+				{
+					const visibleNode = this .visibleNode;
+
+					if (visibleNode)
+						visibleNode .traverse (type, renderObject);
+
+					const boundedObject = this .boundedObject;
+
+					if (boundedObject)
+						boundedObject .displayBBox (type, renderObject);
+
+					return;
+				}
+			}
+		},
 	});
 
 	return Switch;
@@ -101683,18 +103503,14 @@ function (X3DGroupingNode,
 	X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 	{
 		constructor: X3DTransformMatrix3DNode,
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
-			var bbox = X3DGroupingNode .prototype .getBBox .call (this, bbox);
+			var bbox = this .getSubBBox (bbox, shadow);
 
 			if (this .traverse === this .getGroupTraverse ())
 				return bbox;
 
 			return bbox .multRight (this .matrix);
-		},
-		getSubBBox: function (bbox)
-		{
-			return X3DGroupingNode .prototype .getBBox .call (this, bbox);
 		},
 		setMatrix: function (matrix)
 		{
@@ -101731,12 +103547,12 @@ function (X3DGroupingNode,
 			function traverse (type, renderObject)
 			{
 				var modelViewMatrix = renderObject .getModelViewMatrix ();
-	
+
 				modelViewMatrix .push ();
 				modelViewMatrix .multLeft (this .matrix);
-				
+
 				X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-	
+
 				modelViewMatrix .pop ();
 			}
 
@@ -101753,8 +103569,6 @@ function (X3DGroupingNode,
 
 	return X3DTransformMatrix3DNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -101913,7 +103727,7 @@ define ('x_ite/Components/Grouping/Transform',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTransformNode, 
+          X3DTransformNode,
           X3DConstants)
 {
 "use strict";
@@ -101935,6 +103749,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",            new Fields .SFVec3f (1, 1, 1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientation", new Fields .SFRotation ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "center",           new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
@@ -101957,8 +103773,6 @@ function (Fields,
 
 	return Transform;
 });
-
-
 
 /*******************************************************************************
  *
@@ -104610,8 +106424,8 @@ define ('x_ite/Components/Lighting/SpotLight',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DLightNode, 
-          X3DGroupingNode, 
+          X3DLightNode,
+          X3DGroupingNode,
           TraverseType,
           X3DConstants,
           Box3,
@@ -104629,13 +106443,13 @@ function (Fields,
 "use strict";
 
 	var SpotLights = ObjectCache (SpotLightContainer);
-	
+
 	function SpotLightContainer ()
 	{
 		this .location                      = new Vector3 (0, 0, 0);
 		this .direction                     = new Vector3 (0, 0, 0);
 		this .matrixArray                   = new Float32Array (9);
-		this .renderShadow                  = true; 
+		this .renderShadow                  = true;
 		this .shadowBuffer                  = null;
 		this .bbox                          = new Box3 ();
 		this .viewVolume                    = new ViewVolume ();
@@ -104731,9 +106545,9 @@ function (Fields,
 				invLightSpaceMatrix .inverse ();
 
 				var
-					groupBBox        = X3DGroupingNode .prototype .getBBox .call (this .groupNode, this .bbox), // Group bbox.
-					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                              // Group bbox from the perspective of the light.
-					lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax),          // Result not used, but arguments.
+					groupBBox        = this .groupNode .getSubBBox (this .bbox, true),                 // Group bbox.
+					lightBBox        = groupBBox .multRight (invLightSpaceMatrix),                     // Group bbox from the perspective of the light.
+					lightBBoxExtents = lightBBox .getExtents (this .lightBBoxMin, this .lightBBoxMax), // Result not used, but arguments.
 					shadowMapSize    = lightNode .getShadowMapSize (),
 					farValue         = Math .min (lightNode .getRadius (), -this .lightBBoxMin .z),
 					viewport         = this .viewport .set (0, 0, shadowMapSize, shadowMapSize),
@@ -104754,7 +106568,7 @@ function (Fields,
 				renderObject .getViewVolumes      () .pop ();
 
 				this .shadowBuffer .unbind ();
-	
+
 				if (! lightNode .getGlobal ())
 					invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 
@@ -104768,7 +106582,7 @@ function (Fields,
 		},
 		setGlobalVariables: function (renderObject)
 		{
-			var 
+			var
 				lightNode       = this .lightNode,
 				modelViewMatrix = this .modelViewMatrix .get ();
 
@@ -104785,7 +106599,7 @@ function (Fields,
 			if (shaderObject .hasLight (i, this))
 				return;
 
-			var 
+			var
 				lightNode   = this .lightNode,
 				color       = lightNode .getColor (),
 				attenuation = lightNode .getAttenuation (),
@@ -104818,7 +106632,7 @@ function (Fields,
 			else
 			{
 				// Must be set to zero in case of multiple lights.
-				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);			
+				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
 			}
 		},
 		dispose: function ()
@@ -104871,7 +106685,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "radius",           new Fields .SFFloat (100)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "beamWidth",        new Fields .SFFloat (0.785398)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "cutOffAngle",      new Fields .SFFloat (1.5708)),
-																				   
+
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadow.
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat ()),        // Intensity of shadow color in the range (0, 1).
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
@@ -104926,8 +106740,6 @@ function (Fields,
 
 	return SpotLight;
 });
-
-
 
 /*******************************************************************************
  *
@@ -105075,7 +106887,7 @@ define ('x_ite/Components/Navigation/Billboard',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGroupingNode, 
+          X3DGroupingNode,
           X3DConstants,
           TraverseType,
           Vector3,
@@ -105100,7 +106912,7 @@ function (Fields,
 		X3DGroupingNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Billboard);
-		
+
 		this .matrix = new Matrix4 ();
 	}
 
@@ -105110,6 +106922,8 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "axisOfRotation", new Fields .SFVec3f (0, 1, 0)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
@@ -105128,9 +106942,9 @@ function (Fields,
 		{
 			return "children";
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
-			return X3DGroupingNode .prototype .getBBox .call (this, bbox) .multRight (this .matrix);
+			return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadow) .multRight (this .matrix);
 		},
 		getMatrix: function ()
 		{
@@ -105207,8 +107021,6 @@ function (Fields,
 	return Billboard;
 });
 
-
-
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -105271,7 +107083,7 @@ define ('x_ite/Components/Navigation/Collision',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGroupingNode, 
+          X3DGroupingNode,
           X3DSensorNode,
           X3DCast,
           TraverseType,
@@ -105299,6 +107111,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",        new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",       new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "collideTime",    new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "proxy",          new Fields .SFNode ()),
@@ -105322,7 +107136,7 @@ function (Fields,
 		{
 			X3DGroupingNode .prototype .initialize .call (this);
 			//X3DSensorNode   .prototype .initialize .call (this); // We can only call the base of a *Objects.
-	
+
 			this .isLive () .addInterest ("set_live__", this);
 			this .enabled_  .addInterest ("set_live__", this);
 			this .proxy_    .addInterest ("set_proxy__", this);
@@ -105334,7 +107148,7 @@ function (Fields,
 		{
 		   if (this .isLive () .getValue () && this .enabled_ .getValue ())
 		      this .getBrowser () .addCollision (this);
-		   
+
 		   else
 		      this .getBrowser () .removeCollision (this);
 		},
@@ -105386,8 +107200,6 @@ function (Fields,
 
 	return Collision;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -105447,7 +107259,6 @@ define ('x_ite/Components/Navigation/LOD',[
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
-	"standard/Math/Geometry/Box3",
 	"standard/Math/Algorithm",
 ],
 function (Fields,
@@ -105458,7 +107269,6 @@ function (Fields,
           TraverseType,
           X3DConstants,
           Matrix4,
-          Box3,
           Algorithm)
 {
 "use strict";
@@ -105477,6 +107287,9 @@ function (Fields,
 
 		this .frameRate        = 60;
 		this .keepCurrentLevel = false;
+		this .childNode        = null;
+		this .visibleNode      = null;
+		this .boundedObject    = null;
 	}
 
 	LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -105488,6 +107301,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "center",           new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "range",            new Fields .MFFloat ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "level_changed",    new Fields .SFInt32 (-1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
@@ -105510,34 +107325,109 @@ function (Fields,
 		{
 			X3DGroupingNode .prototype .initialize .call (this);
 
-			this .child = this .getChild (this .level_changed_ .getValue ());
-			this .set_cameraObjects__ ();
+			this .children_ .addInterest ("set_child__", this);
 		},
-		getBBox: function (bbox)
+		getSubBBox: function (bbox, shadow)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
-				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .child);
+				const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .visibleNode);
 
 				if (boundedObject)
-					return boundedObject .getBBox (bbox);
+					return boundedObject .getBBox (bbox, shadow);
 
 				return bbox .set ();
 			}
 
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 		},
-		getSubBBox: function (bbox)
+		clear: function () { },
+		add: function () { },
+		remove: function () { },
+		set_child__: function ()
 		{
-			return this .getBBox (bbox);
+			this .set_level (Math .min (this .level_changed_ .getValue (), this .children_ .length - 1));
 		},
-		set_cameraObjects__: function ()
+		set_level__: function (level)
 		{
-			this .setCameraObject (Boolean (this .child && this .child .getCameraObject ()));
+			if (this .childNode)
+				this .childNode .isCameraObject_ .removeInterest ("set_cameraObject__", this);
+
+			if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+			{
+				this .childNode .visible_     .removeInterest ("set_visible__",     this);
+				this .childNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+			}
+
+			if (level >= 0 && level < this .children_ .length)
+			{
+				this .childNode = X3DCast (X3DConstants .X3DChildNode, this .children_ [level]);
+
+				if (this .childNode)
+				{
+					this .childNode .isCameraObject_ .addInterest ("set_cameraObject__", this);
+
+					if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+					{
+						this .childNode .visible_     .addInterest ("set_visible__",     this);
+						this .childNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
+					}
+				}
+			}
+			else
+			{
+				this .childNode = null;
+			}
+
+			this .set_transformSensors__ ();
+			this .set_visible__ ();
+			this .set_bboxDisplay__ ();
+		},
+		set_cameraObject__: function ()
+		{
+			if (this .childNode && this .childNode .getCameraObject ())
+			{
+				if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+				{
+					this .setCameraObject (this .childNode .visible_ .getValue ());
+				}
+				else
+				{
+					this .setCameraObject (true);
+				}
+			}
+			else
+			{
+				this .setCameraObject (false);
+			}
 		},
 		set_transformSensors__: function ()
 		{
-			this .setPickableObject (Boolean (this .getTransformSensors () .size || this .child && this .child .getPickableObject ()));
+			this .setPickableObject (Boolean (this .getTransformSensors () .size || this .childNode && this .childNode .getPickableObject ()));
+		},
+		set_visible__: function ()
+		{
+			if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+			{
+				this .visibleNode = this .childNode .visible_ .getValue () ? this .childNode : null;
+			}
+			else
+			{
+				this .visibleNode = this .childNode;
+			}
+
+			this .set_cameraObject__ ();
+		},
+		set_bboxDisplay__: function ()
+		{
+			if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
+			{
+				this .boundedObject = this .childNode .bboxDisplay_ .getValue () ? this .childNode : null;
+			}
+			else
+			{
+				this .boundedObject = null;
+			}
 		},
 		getLevel: (function ()
 		{
@@ -105550,47 +107440,56 @@ function (Fields,
 			{
 				if (this .range_ .length === 0)
 				{
-					var size = this .children_ .length;
-
-					if (size < 2)
-						return 0;
-
 					this .frameRate = ((FRAMES - 1) * this .frameRate + browser .currentFrameRate) / FRAMES;
 
-					if (size === 2)
-						return (this .frameRate > FRAME_RATE_MAX) * 1;
+					var size = this .children_ .length;
 
-					var fraction = 1 - Algorithm .clamp ((this .frameRate - FRAME_RATE_MIN) / (FRAME_RATE_MAX - FRAME_RATE_MIN), 0, 1);
+					switch (size)
+					{
+						case 0:
+							return -1;
+						case 1:
+							return 0;
+						case 2:
+							return (this .frameRate > FRAME_RATE_MAX) * 1;
+						default:
+						{
+							var fraction = 1 - Algorithm .clamp ((this .frameRate - FRAME_RATE_MIN) / (FRAME_RATE_MAX - FRAME_RATE_MIN), 0, 1);
 
-					return Math .min (Math .floor (fraction * size), size - 1);
+							return Math .min (Math .floor (fraction * size), size - 1);
+						}
+					}
 				}
 
-				var distance = this .getDistance (modelViewMatrix);
+				var distance = modelViewMatrix .translate (this .center_ .getValue ()) .origin .abs ();
 
 				return Algorithm .upperBound (this .range_, 0, this .range_ .length, distance, Algorithm .less);
 			};
 		})(),
-		getDistance: function (modelViewMatrix)
-		{
-			modelViewMatrix .translate (this .center_ .getValue ());
-
-			return modelViewMatrix .origin .abs ();
-		},
 		traverse: (function ()
 		{
 			var modelViewMatrix = new Matrix4 ();
 
 			return function (type, renderObject)
 			{
-				var child = this .child;
-
 				switch (type)
 				{
+					case TraverseType .POINTER:
+					case TraverseType .CAMERA:
+					case TraverseType .DEPTH:
+					{
+						const visibleNode = this .visibleNode;
+
+						if (visibleNode)
+							visibleNode .traverse (type, renderObject);
+
+						return;
+					}
 					case TraverseType .PICKING:
 					{
 						if (this .getTransformSensors () .size)
 						{
-							var modelMatrix = renderObject .getModelViewMatrix () .get ();
+							const modelMatrix = renderObject .getModelViewMatrix () .get ();
 
 							this .getTransformSensors () .forEach (function (transformSensorNode)
 							{
@@ -105598,18 +107497,29 @@ function (Fields,
 							});
 						}
 
-						if (child)
+						const childNode = this .childNode;
+
+						if (childNode)
 						{
-							var
+							const
 								browser          = renderObject .getBrowser (),
 								pickingHierarchy = browser .getPickingHierarchy ();
 
 							pickingHierarchy .push (this);
 
-							child .traverse (type, renderObject);
+							childNode .traverse (type, renderObject);
 
 							pickingHierarchy .pop ();
 						}
+
+						return;
+					}
+					case TraverseType .COLLISION:
+					{
+						const childNode = this .childNode;
+
+						if (childNode)
+							childNode .traverse (type, renderObject);
 
 						return;
 					}
@@ -105634,21 +107544,19 @@ function (Fields,
 							{
 								this .level_changed_ = level;
 
-								child = this .child = this .getChild (Math .min (level, this .children_ .length - 1));
-
-								this .set_cameraObjects__ ();
+								this .set_level__ (Math .min (level, this .children_ .length - 1));
 							}
 						}
 
-						if (child)
-							child .traverse (type, renderObject);
+						const visibleNode = this .visibleNode;
 
-						return;
-					}
-					default:
-					{
-						if (child)
-							child .traverse (type, renderObject);
+						if (visibleNode)
+							visibleNode .traverse (type, renderObject);
+
+							const boundedObject = this .boundedObject;
+
+						if (boundedObject)
+							boundedObject .displayBBox (type, renderObject);
 
 						return;
 					}
@@ -106540,6 +108448,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",    new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",            new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "parameter",      new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
@@ -106595,7 +108505,7 @@ function (Fields,
 					this .setLoadState (X3DConstants .COMPLETE_STATE, false);
 				}
 				else
-					this .setLoadState (X3DConstants .FAILED_STATE, false);		
+					this .setLoadState (X3DConstants .FAILED_STATE, false);
 			}
 			.bind (this),
 			function (fragment)
@@ -106641,8 +108551,6 @@ function (Fields,
 
 	return Anchor;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -106740,11 +108648,13 @@ function (Fields,
 	{
 		constructor: Inline,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",       new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",        new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",   new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter", new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",         new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
 		]),
 		getTypeName: function ()
 		{
@@ -106778,9 +108688,9 @@ function (Fields,
 
 			this .set_url__ ();
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
-			return this .group .getBBox (bbox);
+			return this .group .getBBox (bbox, shadow);
 		},
 		set_live__: function ()
 		{
@@ -108669,268 +110579,6 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Components/Rendering/X3DColorNode',[
-	"x_ite/Fields",
-	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DGeometricPropertyNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function X3DColorNode (executionContext)
-	{
-		X3DGeometricPropertyNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DColorNode);
-
-		this .addChildObjects ("transparent", new Fields .SFBool ());
-
-		this .transparent_ .setAccessType (X3DConstants .outputOnly);
-	}
-
-	X3DColorNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
-	{
-		constructor: X3DColorNode,
-		setTransparent: function (value)
-		{
-			if (value !== this .transparent_ .getValue ())
-				this .transparent_ = value;
-		},
-		getTransparent: function ()
-		{
-			return this .transparent_ .getValue ();
-		},
-	});
-
-	return X3DColorNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Rendering/Color',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DColorNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector4",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DColorNode,
-          X3DConstants,
-          Vector4)
-{
-"use strict";
-
-	function Color (executionContext)
-	{
-		X3DColorNode .call (this, executionContext);
-
-		this .addType (X3DConstants .Color);
-	}
-
-	Color .prototype = Object .assign (Object .create (X3DColorNode .prototype),
-	{
-		constructor: Color,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .MFColor ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Color";
-		},
-		getComponentName: function ()
-		{
-			return "Rendering";
-		},
-		getContainerField: function ()
-		{
-			return "color";
-		},
-		initialize: function ()
-		{
-			X3DColorNode .prototype .initialize .call (this);
-
-			this .color_ .addInterest ("set_color__", this);
-
-			this .set_color__ ();
-		},
-		set_color__: function ()
-		{
-			this .color  = this .color_ .getValue ();
-			this .length = this .color_ .length;
-		},
-		addColor: function (index, array)
-		{
-			if (index >= 0 && index < this .length)
-			{
-				const color = this .color;
-
-				index *= 3;
-
-				array .push (color [index], color [index + 1], color [index + 2], 1);
-			}
-			else if (this .length)
-			{
-				const color = this .color;
-
-				index = (this .length - 1) * 3;
-
-				array .push (color [index], color [index + 1], color [index + 2], 1);
-			}
-			else
-			{
-				array .push (1, 1, 1, 1);
-			}
-		},
-		addColors: function (array, min)
-		{
-			if (this .length)
-			{
-				const color = this .color;
-
-				for (var index = 0, length = this .length * 3; index < length; index += 3)
-					array .push (color [index], color [index + 1], color [index + 2], 1);
-
-				var
-					index = (this .length - 1) * 3,
-					r     = color [index],
-					g     = color [index + 1],
-					b     = color [index + 2];
-
-				for (var index = length, length = min * 3; index < length; index += 3)
-					array .push (r, g, b, 1);
-			}
-			else
-			{
-				for (var index = 0; index < min; ++ index)
-					array .push (1, 1, 1, 1);
-			}
-		},
-		getVectors: function (array)
-		{
-			var color = this .color_;
-
-			for (var i = 0, length = color .length; i < length; ++ i)
-			{
-				var c = color [i];
-
-				array [i] = new Vector4 (c .r, c .g, c .b, 1);
-			}
-
-			array .length = length;
-
-			return array;
-		},
-	});
-
-	return Color;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Components/Rendering/ColorRGBA',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
@@ -109055,578 +110703,6 @@ function (Fields,
 	});
 
 	return ColorRGBA;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Rendering/X3DLineGeometryNode',[
-	"x_ite/Components/Rendering/X3DGeometryNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Matrix4",
-],
-function (X3DGeometryNode,
-          X3DConstants,
-          Matrix4)
-{
-"use strict";
-
-	function X3DLineGeometryNode (executionContext)
-	{
-		X3DGeometryNode .call (this, executionContext);
-
-		//this .addType (X3DConstants .X3DLineGeometryNode);
-	}
-
-	X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
-	{
-		constructor: X3DLineGeometryNode,
-		getShader: function (browser)
-		{
-			return browser .getLineShader ();
-		},
-		intersectsLine: function (line, clipPlanes, modelViewMatrix, intersections)
-		{
-			return false;
-		},
-		intersectsBox: function (box, clipPlanes, modelViewMatrix)
-		{
-			return false;
-		},
-		transfer: function ()
-		{
-			if (this .getGeometryType () === 1)
-			{
-				var
-					texCoords = this .getTexCoords (),
-					vertices  = this .getVertices ();
-	
-				this .getMultiTexCoords () .push (texCoords);
-	
-				for (var i = 0, length = vertices .length; i < length; i += 8)
-				{
-					texCoords .push (vertices [i],
-					                 vertices [i + 1],
-					                 vertices [i + 2],
-					                 vertices [i + 3],
-					                 vertices [i],
-					                 vertices [i + 1],
-					                 vertices [i + 2],
-					                 vertices [i + 3]);
-				}
-	
-				texCoords .shrinkToFit ();
-			}
-
-			X3DGeometryNode .prototype .transfer .call (this);
-		},
-		display: function (gl, context)
-		{
-			try
-			{
-				var
-					browser    = context .browser,
-					shaderNode = context .shaderNode;
-
-				if (! shaderNode .getCustom ())
-					shaderNode = this .getShader (browser);
-
-				if (shaderNode .getValid ())
-				{
-					var
-						attribNodes   = this .attribNodes,
-						attribBuffers = this .attribBuffers;
-
-					// Setup shader.
-		
-					context .geometryType          = this .getGeometryType ();
-					context .fogCoords             = this .fogCoords;
-					context .colorMaterial         = this .colorMaterial;
-					context .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
-	
-					shaderNode .enable (gl);
-					shaderNode .setLocalUniforms (gl, context);
-		
-					// Setup vertex attributes.
-		
-					for (var i = 0, length = attribNodes .length; i < length; ++ i)
-						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-	
-					if (this .fogCoords)
-						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
-	
-					if (this .colorMaterial)
-						shaderNode .enableColorAttribute (gl, this .colorBuffer);
-
-					if (this .getMultiTexCoords () .length)
-						shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, true);
-
-					shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
-		
-					// Wireframes are always solid so only one drawing call is needed.
-	
-					gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
-		
-					for (var i = 0, length = attribNodes .length; i < length; ++ i)
-						attribNodes [i] .disable (gl, shaderNode);
-		
-					if (this .fogCoords)
-						shaderNode .disableFogDepthAttribute (gl);
-	
-					if (this .colorMaterial)
-						shaderNode .disableColorAttribute (gl);
-	
-					shaderNode .disableTexCoordAttribute (gl);
-					shaderNode .disable (gl);
-				}
-			}
-			catch (error)
-			{
-				// Catch error from setLocalUniforms.
-				console .log (error);
-			}
-		},
-		displayParticles: function (gl, context, particles, numParticles)
-		{
-			try
-			{
-				var
-					browser    = context .browser,
-					shaderNode = context .shaderNode;
-
-				if (! shaderNode .getCustom ())
-					shaderNode = this .getShader (browser);
-
-				if (shaderNode .getValid ())
-				{
-					var
-						attribNodes   = this .attribNodes,
-						attribBuffers = this .attribBuffers;
-
-					// Setup shader.
-		
-					context .geometryType          = this .getGeometryType ();
-					context .fogCoords             = this .fogCoords;
-					context .colorMaterial         = this .colorMaterial;
-					context .textureCoordinateNode = browser .getDefaultTextureCoordinate ();
-	
-					shaderNode .enable (gl);
-					shaderNode .setLocalUniforms (gl, context);
-		
-					// Setup vertex attributes.
-		
-					for (var i = 0, length = attribNodes .length; i < length; ++ i)
-						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-	
-					if (this .fogCoords)
-						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
-	
-					if (this .colorMaterial)
-						shaderNode .enableColorAttribute (gl, this .colorBuffer);
-		
-					if (this .getMultiTexCoords () .length)
-						shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-						
-					shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
-
-					// Wireframes are always solid so only one drawing call is needed.
-		
-					var
-						modelViewMatrix = context .modelViewMatrix,
-						x               = modelViewMatrix [12],
-						y               = modelViewMatrix [13],
-						z               = modelViewMatrix [14],
-						primitiveMode   = shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode;
-		
-					for (var p = 0; p < numParticles; ++ p)
-					{
-						modelViewMatrix [12] = x;
-						modelViewMatrix [13] = y;
-						modelViewMatrix [14] = z;
-		
-						Matrix4 .prototype .translate .call (modelViewMatrix, particles [p] .position);
-		
-						gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
-			
-						gl .drawArrays (primitiveMode, 0, this .vertexCount);
-					}
-		
-					for (var i = 0, length = attribNodes .length; i < length; ++ i)
-						attribNodes [i] .disable (gl, shaderNode);
-		
-					if (this .fogCoords)
-						shaderNode .disableFogDepthAttribute (gl);
-	
-					if (this .colorMaterial)
-						shaderNode .disableColorAttribute (gl);
-	
-					shaderNode .disableTexCoordAttribute (gl);
-					shaderNode .disable (gl);
-				}
-			}
-			catch (error)
-			{
-				// Catch error from setLocalUniforms.
-				console .log (error);
-			}
-		},
-	});
-
-	return X3DLineGeometryNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Rendering/IndexedLineSet',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DLineGeometryNode",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DLineGeometryNode,
-          X3DCast,
-          X3DConstants)
-{
-"use strict";
-
-	function IndexedLineSet (executionContext)
-	{
-		X3DLineGeometryNode .call (this, executionContext);
-
-		this .addType (X3DConstants .IndexedLineSet);
-
-		this .setGeometryType (1);
-
-		this .fogCoordNode = null;
-		this .colorNode    = null;
-		this .coordNode    = null;
-	}
-
-	IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
-	{
-		constructor: IndexedLineSet,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_colorIndex", new Fields .MFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_coordIndex", new Fields .MFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "colorIndex",     new Fields .MFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "coordIndex",     new Fields .MFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",         new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "color",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",          new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "IndexedLineSet";
-		},
-		getComponentName: function ()
-		{
-			return "Rendering";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-		initialize: function ()
-		{
-			X3DLineGeometryNode .prototype .initialize .call (this);
-
-			this .set_colorIndex_ .addFieldInterest (this .colorIndex_);
-			this .set_coordIndex_ .addFieldInterest (this .coordIndex_);
-			this .attrib_         .addInterest ("set_attrib__",   this);
-			this .fogCoord_       .addInterest ("set_fogCoord__", this);
-			this .color_          .addInterest ("set_color__",    this);
-			this .coord_          .addInterest ("set_coord__",    this);
-
-			this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
-			this .setSolid (false);
-
-			this .set_attrib__ ();
-			this .set_fogCoord__ ();
-			this .set_color__ ();
-			this .set_coord__ ();
-		},
-		set_attrib__: function ()
-		{
-			var attribNodes = this .getAttrib ();
-
-			for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				attribNodes [i] .removeInterest ("requestRebuild", this);
-
-			attribNodes .length = 0;
-
-			for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
-			{
-				var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
-
-				if (attribNode)
-					attribNodes .push (attribNode);
-			}
-
-			for (var i = 0; i < this .attribNodes .length; ++ i)
-				attribNodes [i] .addInterest ("requestRebuild", this);
-		},
-		set_fogCoord__: function ()
-		{
-			if (this .fogCoordNode)
-				this .fogCoordNode .removeInterest ("requestRebuild", this);
-
-			this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
-
-			if (this .fogCoordNode)
-				this .fogCoordNode .addInterest ("requestRebuild", this);
-		},
-		set_color__: function ()
-		{
-			if (this .colorNode)
-			{
-				this .colorNode .removeInterest ("requestRebuild", this);
-				this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
-			}
-
-			this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
-
-			if (this .colorNode)
-			{
-				this .colorNode .addInterest ("requestRebuild", this);
-				this .colorNode .transparent_ .addInterest ("set_transparent__", this);
-
-				this .set_transparent__ ();
-			}
-			else
-				this .setTransparent (false);
-		},
-		set_transparent__: function ()
-		{
-			this .setTransparent (this .colorNode .getTransparent ());
-		},
-		set_coord__: function ()
-		{
-			if (this .coordNode)
-				this .coordNode .removeInterest ("requestRebuild", this);
-
-			this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
-
-			if (this .coordNode)
-				this .coordNode .addInterest ("requestRebuild", this);
-		},
-		getColorPerVertexIndex: function (index)
-		{
-			if (index < this .colorIndex_ .length)
-				return this .colorIndex_ [index];
-
-			return this .coordIndex_ [index];
-		},
-		getColorIndex: function (index)
-		{
-			if (index < this .colorIndex_ .length)
-				return this .colorIndex_ [index];
-
-			return index;
-		},
-		getPolylineIndices: function ()
-		{
-			var
-				coordIndex = this .coordIndex_,
-				polylines  = [ ],
-				polyline   = [ ];
-
-			if (coordIndex .length)
-			{
-				var i = 0;
-
-				for (var i = 0, length = coordIndex .length; i < length; ++ i)
-				{
-					var index = coordIndex [i];
-
-					if (index >= 0)
-						// Add vertex.
-						polyline .push (i);
-
-					else
-					{
-						// Negativ index.
-						// Add polylines.
-						polylines .push (polyline);
-
-						polyline = [ ];
-					}
-				}
-
-				if (coordIndex [coordIndex .length - 1] >= 0)
-				{
-					polylines .push (polyline);
-				}
-			}
-
-			return polylines;
-		},
-		build: function ()
-		{
-			if (! this .coordNode || this .coordNode .isEmpty ())
-				return;
-
-			var
-				coordIndex     = this .coordIndex_,
-				polylines      = this .getPolylineIndices (),
-				colorPerVertex = this .colorPerVertex_ .getValue (),
-				attribNodes    = this .getAttrib (),
-				numAttrib      = attribNodes .length,
-				attribs        = this .getAttribs (),
-				fogCoordNode   = this .fogCoordNode,
-				colorNode      = this .colorNode,
-				coordNode      = this .coordNode,
-				fogDepthArray  = this .getFogDepths (),
-				colorArray     = this .getColors (),
-				vertexArray    = this .getVertices ();
-
-			// Fill GeometryNode
-
-			var face = 0;
-
-			for (var p = 0, pl = polylines .length; p < pl; ++ p)
-			{
-				var polyline = polylines [p];
-
-				// Create two vertices for each line.
-
-				if (polyline .length > 1)
-				{
-					for (var line = 0, l_end = polyline .length - 1; line < l_end; ++ line)
-					{
-						for (var l = line, i_end = line + 2; l < i_end; ++ l)
-						{
-							var
-								i     = polyline [l],
-								index = coordIndex [i];
-
-							for (var a = 0; a < numAttrib; ++ a)
-								attribNodes [a] .addValue (index, attribs [a]);
-
-							if (fogCoordNode)
-								fogCoordNode .addDepth (index, fogDepthArray);
-
-							if (colorNode)
-							{
-								if (colorPerVertex)
-									colorNode .addColor (this .getColorPerVertexIndex (i), colorArray);
-								else
-									colorNode .addColor (this .getColorIndex (face), colorArray);
-							}
-
-							coordNode .addPoint (index, vertexArray);
-						}
-					}
-				}
-
-				++ face;
-			}
-		},
-	});
-
-	return IndexedLineSet;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -112223,586 +113299,6 @@ function (Fields,
 });
 
 
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Shape/X3DShapeNode',[
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Components/Grouping/X3DBoundedObject",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Geometry/Box3",
-	"standard/Math/Numbers/Vector3",
-],
-function (X3DChildNode, 
-          X3DBoundedObject,
-          X3DCast,
-          X3DConstants,
-          Box3,
-          Vector3)
-{
-"use strict";
-
-	function X3DShapeNode (executionContext)
-	{
-		X3DChildNode     .call (this, executionContext);
-		X3DBoundedObject .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DShapeNode);
-
-		this .bbox       = new Box3 ();
-		this .bboxSize   = new Vector3 (0, 0, 0);
-		this .bboxCenter = new Vector3 (0, 0, 0);
-	}
-
-	X3DShapeNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-		X3DBoundedObject .prototype,
-	{
-		constructor: X3DShapeNode,
-		initialize: function ()
-		{
-			X3DChildNode     .prototype .initialize .call (this);
-			X3DBoundedObject .prototype .initialize .call (this);
-
-			this .bboxSize_   .addInterest ("set_bbox__", this);
-			this .bboxCenter_ .addInterest ("set_bbox__", this);
-			this .appearance_ .addInterest ("set_apparance__", this);
-			this .geometry_   .addInterest ("set_geometry__", this);
-
-			this .set_apparance__ ();
-			this .set_geometry__ ();
-		},
-		getBBox: function (bbox)
-		{
-			return bbox .assign (this .bbox);
-		},
-		getBBoxSize: function ()
-		{
-			return this .bboxSize;
-		},
-		getBBoxCenter: function ()
-		{
-			return this .bboxCenter;
-		},
-		getAppearance: function ()
-		{
-			return this .apparanceNode;
-		},
-		getGeometry: function ()
-		{
-			return this .geometryNode;
-		},
-		setTransparent: function (value)
-		{
-			this .transparent = value;
-		},
-		getTransparent: function ()
-		{
-			return this .transparent;
-		},
-		set_bbox__: function ()
-		{
-			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
-			{
-				if (this .getGeometry ())
-					this .bbox .assign (this .getGeometry () .getBBox ());
-
-				else
-					this .bbox .set ();
-			}
-			else
-				this .bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
-
-			this .bboxSize   .assign (this .bbox .size);
-			this .bboxCenter .assign (this .bbox .center);
-		},
-		set_apparance__: function ()
-		{
-			if (this .apparanceNode)
-				this .apparanceNode .transparent_ .removeInterest ("set_transparent__", this);
-
-			this .apparanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this .appearance_);
-
-			if (this .apparanceNode)
-				this .apparanceNode .transparent_ .addInterest ("set_transparent__", this);
-
-			else
-				this .apparanceNode = this .getBrowser () .getDefaultAppearance ();
-
-			this .set_transparent__ ();
-		},
-		set_geometry__: function ()
-		{
-			if (this .geometryNode)
-			{
-				this .geometryNode .transparent_  .addInterest ("set_transparent__", this);
-				this .geometryNode .bbox_changed_ .addInterest ("set_bbox__",        this);
-			}
-
-			this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this .geometry_);
-
-			if (this .geometryNode)
-			{
-				this .geometryNode .transparent_  .addInterest ("set_transparent__", this);
-				this .geometryNode .bbox_changed_ .addInterest ("set_bbox__",        this);
-			}
-
-			this .set_transparent__ ();
-			this .set_bbox__ ();
-		},
-		set_transparent__: function ()
-		{
-			this .transparent = (this .apparanceNode && this .apparanceNode .getTransparent ()) ||
-			                    (this .geometryNode  && this .geometryNode  .getTransparent ());
-		},
-	});
-
-	return X3DShapeNode;
-});
-
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('standard/Math/Algorithms/QuickSort',[],function ()
-{
-"use strict";
-
-	function QuickSort (array, compare)
-	{
-		this .array = array;
-		
-		if (compare)
-			this .compare = compare;
-	}
-
-	QuickSort .prototype =
-	{
-		compare: function (lhs, rhs)
-		{
-			return lhs < rhs;
-		},
-		sort: function (first, last)
-		{
-			if (last - first > 1)
-				this .quicksort (first, last - 1);
-		},
-		quicksort: function (lo, hi)
-		{
-			var
-				i = lo,
-				j = hi,
-				array   = this .array,
-				compare = this .compare;
-
-			// Vergleichs­element x
-			var x = array [(lo + hi) >>> 1];
-
-			for (;;)
-			{
-				while (compare (array [i], x)) ++ i;
-				while (compare (x, array [j])) -- j;
-
-				if (i < j)
-				{
-					// Exchange
-					
-					var t = array [i];
-					array [i] = array [j];
-					array [j] = t;
-
-					i ++; j --;
-				}
-				else
-				{
-					if (i === j) ++ i, -- j;
-					break;
-				}
-			}
-
-			// Rekursion
-			if (lo < j) this .quicksort (lo, j);
-			if (i < hi) this .quicksort (i, hi);
-		},
-	};
-
-	return QuickSort;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Shape/Shape',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Shape/X3DShapeNode",
-	"x_ite/Bits/TraverseType",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Algorithm",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Matrix4",
-	"standard/Math/Geometry/Box3",
-	"standard/Math/Geometry/Line3",
-	"standard/Math/Algorithms/QuickSort",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DShapeNode,
-          TraverseType,
-          X3DConstants,
-          Algorithm,
-          Vector3,
-          Matrix4,
-          Box3,
-          Line3,
-          QuickSort)
-{
-"use strict";
-
-	function Shape (executionContext)
-	{
-		X3DShapeNode .call (this, executionContext);
-
-		this .addType (X3DConstants .Shape);
-	}
-
-	Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
-	{
-		constructor: Shape,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",   new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter", new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "appearance", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",   new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Shape";
-		},
-		getComponentName: function ()
-		{
-			return "Shape";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DShapeNode .prototype .initialize .call (this);
-
-			this .transformSensors_changed_ .addInterest ("set_transformSensors__", this);
-
-			this .set_transformSensors__ ();
-		},
-		set_geometry__: function ()
-		{
-			X3DShapeNode .prototype .set_geometry__ .call (this);
-
-			if (this .getGeometry ())
-				delete this .traverse;
-			else
-				this .traverse = Function .prototype;
-		},
-		set_transformSensors__: function ()
-		{
-			this .setPickableObject (this .getTransformSensors () .size);
-		},
-		intersectsBox: function (box, clipPlanes, modelViewMatrix)
-		{
-			return this .getGeometry () .intersectsBox (box, clipPlanes, modelViewMatrix);
-		},
-		traverse: function (type, renderObject)
-		{
-			// Always look at ParticleSystem if you do modify something here and there.
-
-			switch (type)
-			{
-				case TraverseType .POINTER:
-				{
-					this .pointer (renderObject);
-					break;
-				}
-				case TraverseType .PICKING:
-				{
-					this .picking (renderObject);
-					break;
-				}
-				case TraverseType .COLLISION:
-				{
-					renderObject .addCollisionShape (this);
-					break;
-				}
-				case TraverseType .DEPTH:
-				{
-					renderObject .addDepthShape (this);
-					break;
-				}
-				case TraverseType .DISPLAY:
-				{
-					if (renderObject .addDisplayShape (this))
-						this .getAppearance () .traverse (type, renderObject); // Currently used for GeneratedCubeMapTexture.
-
-					break;
-				}
-			}
-
-			this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
-		},
-		pointer: (function ()
-		{
-			var
-				modelViewMatrix    = new Matrix4 (),
-				invModelViewMatrix = new Matrix4 (),
-				hitRay             = new Line3 (new Vector3 (0, 0, 0), new Vector3 (0, 0, 0)),
-				intersections      = [ ],
-				intersectionSorter = new QuickSort (intersections, function (lhs, rhs)
-				{
-					return lhs .point .z > rhs .point .z;
-				});
-
-			return function (renderObject)
-			{
-				try
-				{
-					var geometry = this .getGeometry ();
-
-					if (geometry .getGeometryType () < 2)
-						return;
-
-					var browser = renderObject .getBrowser ();
-
-					modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
-					invModelViewMatrix .assign (modelViewMatrix) .inverse ();
-
-					hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
-
-					if (geometry .intersectsLine (hitRay, renderObject .getLocalObjects (), modelViewMatrix, intersections))
-					{
-						// Finally we have intersections and must now find the closest hit in front of the camera.
-
-						// Transform hitPoints to absolute space.
-						for (var i = 0; i < intersections .length; ++ i)
-							modelViewMatrix .multVecMatrix (intersections [i] .point);
-
-						intersectionSorter .sort (0, intersections .length);
-
-						// Find first point that is not greater than near plane;
-						var index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
-						function (lhs, rhs)
-						{
-						   return lhs .point .z > rhs;
-						});
-
-						// Are there intersections before the camera?
-						if (index !== intersections .length)
-						{
-							// Transform hitNormal to absolute space.
-							invModelViewMatrix .multMatrixDir (intersections [index] .normal) .normalize ();
-
-							browser .addHit (intersections [index], renderObject .getLayer (), this, modelViewMatrix .multRight (renderObject .getCameraSpaceMatrix () .get ()));
-						}
-
-						intersections .length = 0;
-					}
-				}
-				catch (error)
-				{
-					console .log (error);
-				}
-			};
-		})(),
-		picking: (function ()
-		{
-			var bbox = new Box3 ();
-
-			return function (renderObject)
-			{
-				if (this .getTransformSensors () .size)
-				{
-					var modelMatrix = renderObject .getModelViewMatrix () .get ();
-
-					this .getTransformSensors () .forEach (function (transformSensorNode)
-					{
-						transformSensorNode .collect (modelMatrix);
-					});
-				}
-
-				var
-					browser          = renderObject .getBrowser (),
-					pickSensorStack  = browser .getPickSensors (),
-					pickingHierarchy = browser .getPickingHierarchy ();
-
-				pickingHierarchy .push (this);
-
-				pickSensorStack [pickSensorStack .length - 1] .forEach (function (pickSensor)
-				{
-					pickSensor .collect (this .getGeometry (), renderObject .getModelViewMatrix () .get (), browser .getPickingHierarchy ());
-				},
-				this);
-
-				pickingHierarchy .pop ();
-			};
-		})(),
-		depth: function (gl, context, shaderNode)
-		{
-			this .getGeometry () .depth (gl, context, shaderNode);
-		},
-		display: function (gl, context)
-		{
-			var geometryNode = this .getGeometry ();
-
-			this .getAppearance () .enable  (gl, context, geometryNode .getGeometryType ());
-			geometryNode .display (gl, context);
-			this .getAppearance () .disable (gl, context);
-		},
-	});
-
-	return Shape;
-});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************

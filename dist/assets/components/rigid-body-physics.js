@@ -763,7 +763,7 @@ define ('x_ite/Components/RigidBodyPhysics/CollidableOffset',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNBodyCollidableNode, 
+          X3DNBodyCollidableNode,
           X3DConstants,
           X3DCast,
           TraverseType)
@@ -787,6 +787,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "translation", new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",    new Fields .SFRotation ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "collidable",  new Fields .SFNode ()),
@@ -812,18 +814,18 @@ function (Fields,
 
 			this .set_collidable__ ();
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
-				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .collidable_);
-		
+				const boundedObject = this .visibleNode;
+
 				if (boundedObject)
-					return boundedObject .getBBox (bbox);
-		
+					return boundedObject .getBBox (bbox, shadow);
+
 				return bbox .set ();
 			}
-		
+
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 		},
 		set_collidable__: function ()
@@ -831,17 +833,25 @@ function (Fields,
 			if (this .collidableNode)
 			{
 				this .collidableNode .removeInterest ("addNodeEvent", this);
+
 				this .collidableNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
 				this .collidableNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
+
+				this .collidableNode .visible_     .removeInterest ("set_visible__",     this);
+				this .collidableNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
 			}
-		
+
 			this .collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .collidable_);
 
 			if (this .collidableNode)
 			{
 				this .collidableNode .addInterest ("addNodeEvent", this);
+
 				this .collidableNode .isCameraObject_   .addFieldInterest (this .isCameraObject_);
 				this .collidableNode .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+
+				this .collidableNode .visible_     .addInterest ("set_visible__",     this);
+				this .collidableNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
 
 				this .setCameraObject   (this .collidableNode .getCameraObject ());
 				this .setPickableObject (this .collidableNode .getPickableObject ());
@@ -855,14 +865,51 @@ function (Fields,
 
 				this .traverse = Function .prototype;
 			}
-		
+
+			this .set_visible__ ();
+			this .set_bboxDisplay__ ();
 			this .set_collidableGeometry__ ();
+		},
+		set_cameraObject__: function ()
+		{
+			if (this .collidableNode && this .collidableNode .getCameraObject ())
+			{
+				this .setCameraObject (this .collidableNode .visible_ .getValue ());
+			}
+			else
+			{
+				this .setCameraObject (false);
+			}
+		},
+		set_visible__: function ()
+		{
+			if (this .collidableNode)
+			{
+				this .visibleNode = this .collidableNode .visible_ .getValue () ? this .collidableNode : null;
+			}
+			else
+			{
+				this .visibleNode = this .collidableNode;
+			}
+
+			this .set_cameraObject__ ();
+		},
+		set_bboxDisplay__: function ()
+		{
+			if (this .collidableNode)
+			{
+				this .boundedObject = this .collidableNode .bboxDisplay_ .getValue () ? this .collidableNode : null;
+			}
+			else
+			{
+				this .boundedObject = null;
+			}
 		},
 		set_collidableGeometry__: function ()
 		{
 			if (this .getCompoundShape () .getNumChildShapes ())
 				this .getCompoundShape () .removeChildShapeByIndex (0);
-		
+
 			if (this .collidableNode && this .enabled_ .getValue ())
 				this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collidableNode .getCompoundShape ());
 		},
@@ -870,13 +917,30 @@ function (Fields,
 		{
 			switch (type)
 			{
+				case TraverseType .POINTER:
+				case TraverseType .CAMERA:
+				case TraverseType .DEPTH:
+				{
+					const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+					modelViewMatrix .push ();
+					modelViewMatrix .multLeft (this .getMatrix ());
+
+					const visibleNode = this .visibleNode;
+
+					if (visibleNode)
+						visibleNode .traverse (type, renderObject);
+
+					modelViewMatrix .pop ();
+					return;
+				}
 				case TraverseType .PICKING:
 				{
-					var
+					const
 						browser          = renderObject .getBrowser (),
 						pickingHierarchy = browser .getPickingHierarchy (),
 						modelViewMatrix  = renderObject .getModelViewMatrix ();
-		
+
 					pickingHierarchy .push (this);
 					modelViewMatrix .push ();
 					modelViewMatrix .multLeft (this .getMatrix ());
@@ -887,9 +951,9 @@ function (Fields,
 					pickingHierarchy .pop ();
 					break;
 				}
-				default:
+				case TraverseType .COLLISION:
 				{
-					var modelViewMatrix = renderObject .getModelViewMatrix ();
+					const modelViewMatrix = renderObject .getModelViewMatrix ();
 
 					modelViewMatrix .push ();
 					modelViewMatrix .multLeft (this .getMatrix ());
@@ -899,14 +963,32 @@ function (Fields,
 					modelViewMatrix .pop ();
 					break;
 				}
+				case TraverseType .DISPLAY:
+				{
+					const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+					modelViewMatrix .push ();
+					modelViewMatrix .multLeft (this .getMatrix ());
+
+					const visibleNode = this .visibleNode;
+
+					if (visibleNode)
+						visibleNode .traverse (type, renderObject);
+
+					const boundedObject = this .boundedObject;
+
+					if (boundedObject)
+						boundedObject .displayBBox (type, renderObject);
+
+					modelViewMatrix .pop ();
+					return;
+				}
 			}
 		},
 	});
 
 	return CollidableOffset;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -965,7 +1047,6 @@ define ('x_ite/Components/RigidBodyPhysics/CollidableShape',[
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/TraverseType",
-	"standard/Math/Numbers/Vector3",
 	"lib/ammojs/AmmoJS",
 ],
 function (Fields,
@@ -975,7 +1056,6 @@ function (Fields,
           X3DConstants,
           X3DCast,
           TraverseType,
-          Vector3,
           Ammo)
 {
 "use strict";
@@ -988,6 +1068,8 @@ function (Fields,
 
 		this .convex         = false;
 		this .shapeNode      = null;
+		this .visibleNode    = null;
+		this .boundedObject  = null;
 		this .geometryNode   = null;
 		this .collisionShape = null;
 		this .triangleMesh   = null;
@@ -1001,6 +1083,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "translation", new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",    new Fields .SFRotation ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "shape",       new Fields .SFNode ()),
@@ -1026,14 +1110,14 @@ function (Fields,
 
 			this .set_shape__ ();
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
-				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .shape_);
+				const boundedObject = this .visibleNode;
 
 				if (boundedObject)
-					return boundedObject .getBBox (bbox);
+					return boundedObject .getBBox (bbox, shadow);
 
 				return bbox .set ();
 			}
@@ -1106,6 +1190,10 @@ function (Fields,
 			{
 				this .shapeNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
 				this .shapeNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
+
+				this .shapeNode .visible_     .removeInterest ("set_visible__",     this);
+				this .shapeNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+
 				this .shapeNode .geometry_ .removeInterest ("set_geometry__", this);
 			}
 
@@ -1115,6 +1203,10 @@ function (Fields,
 			{
 				this .shapeNode .isCameraObject_   .addFieldInterest (this .isCameraObject_);
 				this .shapeNode .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+
+				this .shapeNode .visible_     .addInterest ("set_visible__",     this);
+				this .shapeNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
+
 				this .shapeNode .geometry_ .addInterest ("set_geometry__", this);
 
 				this .setCameraObject   (this .shapeNode .getCameraObject ());
@@ -1130,7 +1222,44 @@ function (Fields,
 				this .traverse = Function .prototype;
 			}
 
+			this .set_visible__ ();
+			this .set_bboxDisplay__ ();
 			this .set_geometry__ ();
+		},
+		set_cameraObject__: function ()
+		{
+			if (this .shapeNode && this .shapeNode .getCameraObject ())
+			{
+				this .setCameraObject (this .shapeNode .visible_ .getValue ());
+			}
+			else
+			{
+				this .setCameraObject (false);
+			}
+		},
+		set_visible__: function ()
+		{
+			if (this .shapeNode)
+			{
+				this .visibleNode = this .shapeNode .visible_ .getValue () ? this .shapeNode : null;
+			}
+			else
+			{
+				this .visibleNode = this .shapeNode;
+			}
+
+			this .set_cameraObject__ ();
+		},
+		set_bboxDisplay__: function ()
+		{
+			if (this .shapeNode)
+			{
+				this .boundedObject = this .shapeNode .bboxDisplay_ .getValue () ? this .shapeNode : null;
+			}
+			else
+			{
+				this .boundedObject = null;
+			}
 		},
 		set_geometry__: function ()
 		{
@@ -1310,9 +1439,26 @@ function (Fields,
 		{
 			switch (type)
 			{
+				case TraverseType .POINTER:
+				case TraverseType .CAMERA:
+				case TraverseType .DEPTH:
+				{
+					const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+					modelViewMatrix .push ();
+					modelViewMatrix .multLeft (this .getMatrix ());
+
+					const visibleNode = this .visibleNode;
+
+					if (visibleNode)
+						visibleNode .traverse (type, renderObject);
+
+					modelViewMatrix .pop ();
+					return;
+				}
 				case TraverseType .PICKING:
 				{
-					var
+					const
 						browser          = renderObject .getBrowser (),
 						pickingHierarchy = browser .getPickingHierarchy (),
 						modelViewMatrix  = renderObject .getModelViewMatrix ();
@@ -1325,11 +1471,11 @@ function (Fields,
 
 					modelViewMatrix .pop ();
 					pickingHierarchy .pop ();
-					break;
+					return;
 				}
-				default:
+				case TraverseType .COLLISION:
 				{
-					var modelViewMatrix = renderObject .getModelViewMatrix ();
+					const modelViewMatrix = renderObject .getModelViewMatrix ();
 
 					modelViewMatrix .push ();
 					modelViewMatrix .multLeft (this .getMatrix ());
@@ -1337,7 +1483,27 @@ function (Fields,
 					this .shapeNode .traverse (type, renderObject);
 
 					modelViewMatrix .pop ();
-					break;
+					return;
+				}
+				case TraverseType .DISPLAY:
+				{
+					const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+					modelViewMatrix .push ();
+					modelViewMatrix .multLeft (this .getMatrix ());
+
+					const visibleNode = this .visibleNode;
+
+					if (visibleNode)
+						visibleNode .traverse (type, renderObject);
+
+					const boundedObject = this .boundedObject;
+
+					if (boundedObject)
+						boundedObject .displayBBox (type, renderObject);
+
+					modelViewMatrix .pop ();
+					return;
 				}
 			}
 		},
@@ -2087,6 +2253,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "useGeometry", new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "collidables", new Fields .MFNode ()),
@@ -2111,11 +2279,11 @@ function (Fields,
 
 			this .set_collidables__ ();
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
 			// TODO: add space node.
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
-				return X3DBoundedObject .prototype .getBBox .call (this, this .collidableNodes, bbox);
+				return X3DBoundedObject .getBBox (this .collidableNodes, bbox, shadow);
 
 			return bbox;
 		},

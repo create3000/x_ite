@@ -139,8 +139,8 @@ define ('x_ite/Components/CADGeometry/CADAssembly',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGroupingNode, 
-          X3DProductStructureChildNode, 
+          X3DGroupingNode,
+          X3DProductStructureChildNode,
           X3DConstants)
 {
 "use strict";
@@ -160,6 +160,8 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "name",           new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
@@ -182,8 +184,6 @@ function (Fields,
 
 	return CADAssembly;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -240,16 +240,14 @@ define ('x_ite/Components/CADGeometry/CADFace',[
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/CADGeometry/X3DProductStructureChildNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
-	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/TraverseType",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DProductStructureChildNode, 
+          X3DProductStructureChildNode,
           X3DBoundedObject,
-          X3DCast,
           X3DConstants,
           TraverseType)
 {
@@ -262,7 +260,9 @@ function (Fields,
 
 		this .addType (X3DConstants .CADFace);
 
-		this .shapeNode = null;
+		this .shapeNode     = null;
+		this .visibleNode   = null;
+		this .boundedObject = null;
 	}
 
 	CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNode .prototype),
@@ -270,11 +270,13 @@ function (Fields,
 	{
 		constructor: CADFace,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "name",       new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",   new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter", new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "shape",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "name",        new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shape",       new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -297,18 +299,18 @@ function (Fields,
 
 			this .set_shape__ ();
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
-				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .shape_);
-		
+				const boundedObject = this .visibleNode;
+
 				if (boundedObject)
-					return boundedObject .getBBox (bbox);
-		
+					return boundedObject .getBBox (bbox, shadow);
+
 				return bbox .set ();
 			}
-		
+
 			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 		},
 		set_shape__: function ()
@@ -317,16 +319,19 @@ function (Fields,
 			{
 				this .shapeNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
 				this .shapeNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
+
+				this .shapeNode .visible_     .removeInterest ("set_visible__",     this);
+				this .shapeNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
 			}
 
 			this .shapeNode = null;
 
 			try
 			{
-				var
+				const
 					node = this .shape_ .getValue () .getInnerNode (),
 					type = node .getType ();
-	
+
 				for (var t = type .length - 1; t >= 0; -- t)
 				{
 					switch (type [t])
@@ -337,6 +342,9 @@ function (Fields,
 						{
 							node .isCameraObject_   .addFieldInterest (this .isCameraObject_);
 							node .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+
+							node .visible_     .addInterest ("set_visible__",     this);
+							node .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
 
 							this .setCameraObject   (node .getCameraObject ());
 							this .setPickableObject (node .getPickableObject ());
@@ -353,17 +361,73 @@ function (Fields,
 			{ }
 
 			if (this .shapeNode)
+			{
 				delete this .traverse;
+			}
 			else
+			{
+				this .setCameraObject   (false);
+				this .setPickableObject (false);
+
 				this .traverse = Function .prototype;
+			}
+
+			this .set_visible__ ();
+			this .set_bboxDisplay__ ();
+		},
+		set_cameraObject__: function ()
+		{
+			if (this .shapeNode && this .shapeNode .getCameraObject ())
+			{
+				this .setCameraObject (this .shapeNode .visible_ .getValue ());
+			}
+			else
+			{
+				this .setCameraObject (false);
+			}
+		},
+		set_visible__: function ()
+		{
+			if (this .shapeNode)
+			{
+				this .visibleNode = this .shapeNode .visible_ .getValue () ? this .shapeNode : null;
+			}
+			else
+			{
+				this .visibleNode = this .shapeNode;
+			}
+
+			this .set_cameraObject__ ();
+		},
+		set_bboxDisplay__: function ()
+		{
+			if (this .shapeNode)
+			{
+				this .boundedObject = this .shapeNode .bboxDisplay_ .getValue () ? this .shapeNode : null;
+			}
+			else
+			{
+				this .boundedObject = null;
+			}
 		},
 		traverse: function (type, renderObject)
 		{
 			switch (type)
 			{
+				case TraverseType .POINTER:
+				case TraverseType .CAMERA:
+				case TraverseType .DEPTH:
+				{
+					const visibleNode = this .visibleNode;
+
+					if (visibleNode)
+						visibleNode .traverse (type, renderObject);
+
+					return;
+				}
 				case TraverseType .PICKING:
 				{
-					var
+					const
 						browser          = renderObject .getBrowser (),
 						pickingHierarchy = browser .getPickingHierarchy ();
 
@@ -374,9 +438,23 @@ function (Fields,
 					pickingHierarchy .pop ();
 					return;
 				}
-				default:
+				case TraverseType .COLLISION:
 				{
 					this .shapeNode .traverse (type, renderObject);
+					return;
+				}
+				case TraverseType .DISPLAY:
+				{
+					const visibleNode = this .visibleNode;
+
+					if (visibleNode)
+						visibleNode .traverse (type, renderObject);
+
+					const boundedObject = this .boundedObject;
+
+					if (boundedObject)
+						boundedObject .displayBBox (type, renderObject);
+
 					return;
 				}
 			}
@@ -385,8 +463,6 @@ function (Fields,
 
 	return CADFace;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -447,7 +523,7 @@ define ('x_ite/Components/CADGeometry/CADLayer',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGroupingNode, 
+          X3DGroupingNode,
           X3DConstants)
 {
 "use strict";
@@ -465,7 +541,8 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "name",           new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .MFBool ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
@@ -484,26 +561,10 @@ function (Fields,
 		{
 			return "children";
 		},
-		initialize: function ()
-		{
-			X3DGroupingNode .prototype .initialize .call (this);
-
-			this .visible_ .addInterest ("set_children__", this);
-		},
-		getVisible: function ()
-		{
-			return this .visible_;
-		},
-		remove: function ()
-		{
-			this .set_children__ ();
-		},
 	});
 
 	return CADLayer;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -565,8 +626,8 @@ define ('x_ite/Components/CADGeometry/CADPart',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTransformNode, 
-          X3DProductStructureChildNode, 
+          X3DTransformNode,
+          X3DProductStructureChildNode,
           X3DConstants)
 {
 "use strict";
@@ -591,6 +652,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",            new Fields .SFVec3f (1, 1, 1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientation", new Fields .SFRotation ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "center",           new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
@@ -613,8 +676,6 @@ function (Fields,
 
 	return CADPart;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************

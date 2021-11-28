@@ -9,6 +9,7 @@ precision mediump int;
 uniform int x3d_GeometryType;
 uniform bool x3d_Lighting; 
 uniform bool x3d_ColorMaterial; 
+uniform float x3d_AlphaCutoff;
 in float fogDepth; 
 in vec4 frontColor; 
 in vec4 backColor; 
@@ -252,7 +253,7 @@ break;
 vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
 vec4 textureColor = vec4 (1.0);
 texCoord .stp /= texCoord .q;
-if ((x3d_GeometryType == x3d_Geometry2D) && ! gl_FrontFacing)
+if ((x3d_GeometryType == x3d_Geometry2D) && gl_FrontFacing == false)
 texCoord .s = 1.0 - texCoord .s;
 switch (x3d_TextureType [i])
 {
@@ -696,6 +697,10 @@ finalColor = getTextureColor (vec4 (1.0), vec4 (1.0));
 finalColor = getProjectiveTextureColor (finalColor);
 finalColor = getHatchColor (finalColor);
 finalColor .rgb = getFogColor (finalColor .rgb);
+if (finalColor .a < x3d_AlphaCutoff)
+{
+discard;
+}
 x3d_FragColor = finalColor;
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 if (x3d_LogarithmicFarFactor1_2 > 0.0)

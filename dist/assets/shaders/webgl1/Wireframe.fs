@@ -8,6 +8,7 @@ precision highp int;
 precision mediump float;
 precision mediump int;
 #endif
+uniform float x3d_AlphaCutoff;
 uniform x3d_LinePropertiesParameters x3d_LineProperties;
 uniform ivec4 x3d_Viewport;
 varying float fogDepth; 
@@ -80,8 +81,14 @@ clip ();
 #ifdef X_ITE
 stipple ();
 #endif
-gl_FragColor .rgb = getFogColor (color .rgb);
-gl_FragColor .a = color .a;
+vec4 finalColor = vec4 (0.0);
+finalColor .rgb = getFogColor (color .rgb);
+finalColor .a = color .a;
+if (finalColor .a < x3d_AlphaCutoff)
+{
+discard;
+}
+gl_FragColor = finalColor;
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 if (x3d_LogarithmicFarFactor1_2 > 0.0)
 gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;

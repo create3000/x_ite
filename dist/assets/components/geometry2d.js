@@ -1397,11 +1397,17 @@ function (Fields,
 
 			this .setPrimitiveMode (this .getBrowser () .getContext () .LINE_LOOP);
 		},
-		getShader: function (browser)
+		getShader: function (browser, shadow)
 		{
-			// For circle support.
-
-			return browser .getLineShader ();
+			if (this .getGeometryType () < 2)
+			{
+				// For circle support.
+				return browser .getLineShader ();
+			}
+			else
+			{
+				return shadow ? browser .getDefaultShadowShader () : browser .getDefaultShader ();
+			}
 		},
 		set_live__: function ()
 		{

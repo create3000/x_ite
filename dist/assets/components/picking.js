@@ -1155,8 +1155,8 @@ define ('x_ite/Components/Picking/PickableGroup',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGroupingNode, 
-          X3DPickableObject, 
+          X3DGroupingNode,
+          X3DPickableObject,
           MatchCriterion,
           X3DConstants,
           TraverseType)
@@ -1179,6 +1179,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "pickable",       new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "objectType",     new Fields .MFString ("ALL")),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
@@ -1227,10 +1229,10 @@ function (Fields,
 						if (this .getObjectType () .has ("NONE"))
 							return;
 
-						var
-							browser         = renderObject .getBrowser (),
-							pickableStack   = browser .getPickable ();
-		
+						const
+							browser       = renderObject .getBrowser (),
+							pickableStack = browser .getPickable ();
+
 						if (this .getObjectType () .has ("ALL"))
 						{
 							pickableStack .push (true);
@@ -1240,8 +1242,8 @@ function (Fields,
 						else
 						{
 							// Filter pick sensors.
-	
-							var pickSensorStack = browser .getPickSensors ();
+
+							const pickSensorStack = browser .getPickSensors ();
 
 							pickSensorStack [pickSensorStack .length - 1] .forEach (function (pickSensorNode)
 							{
@@ -1253,7 +1255,7 @@ function (Fields,
 									{
 										if (pickSensorNode .getObjectType () .has (objectType))
 										{
-											++intersection;
+											++ intersection;
 											break;
 										}
 									}
@@ -1264,14 +1266,14 @@ function (Fields,
 										{
 											if (intersection === 0)
 												return;
-				
+
 											break;
 										}
 										case MatchCriterion .MATCH_EVERY:
 										{
 											if (intersection !== pickSensor .getObjectType () .size)
 												return;
-				
+
 											break;
 										}
 										case MatchCriterion .MATCH_ONLY_ONE:
@@ -1287,15 +1289,15 @@ function (Fields,
 								pickSensorNodes .add (pickSensorNode);
 							},
 							this);
-	
+
 							pickableStack .push (true);
 							pickSensorStack .push (pickSensorNodes);
-	
+
 							X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-	
+
 							pickSensorStack .pop ();
 							pickableStack .pop ();
-	
+
 							pickSensorNodes .clear ();
 						}
 					}
@@ -1310,8 +1312,6 @@ function (Fields,
 
 	return PickableGroup;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************

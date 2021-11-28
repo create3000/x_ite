@@ -907,6 +907,8 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "layout",         new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "viewport",       new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
@@ -931,7 +933,7 @@ function (Fields,
 
 			this .viewport_ .addInterest ("set_viewport__", this);
 			this .layout_   .addInterest ("set_layout__", this);
-		
+
 			this .set_viewport__ ();
 			this .set_layout__ ();
 		},
@@ -943,9 +945,9 @@ function (Fields,
 		{
 			this .layoutNode = X3DCast (X3DConstants .X3DLayoutNode, this .layout_);
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
-			return X3DGroupingNode .prototype .getBBox .call (this, bbox) .multRight (this .getMatrix ());
+			return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadow) .multRight (this .getMatrix ());
 		},
 		getMatrix: function ()
 		{
@@ -958,7 +960,7 @@ function (Fields,
 			}
 			catch (error)
 			{ }
-		
+
 			return this .matrix;
 		},
 		traverse: function (type, renderObject)
@@ -996,7 +998,7 @@ function (Fields,
 
 					if (this .viewportNode)
 						this .viewportNode .pop ();
-		
+
 					return;
 				}
 			}
@@ -1005,8 +1007,6 @@ function (Fields,
 
 	return LayoutGroup;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -1210,16 +1210,16 @@ function ($,
 	{
 		X3DTextGeometry .call (this, text, fontStyle);
 
-		text .transparent_ = true;
+		text .setTransparent (true);
 
 		this .texCoordArray = X3DGeometryNode .createArray ();
-		this .texture       = new PixelTexture (text .getExecutionContext ());
+		this .textureNode   = new PixelTexture (text .getExecutionContext ());
 		this .canvas        = $("<canvas></canvas>");
 		this .context       = this .canvas [0] .getContext ("2d");
 		this .matrix        = new Matrix4 ();
 
-		this .texture .textureProperties_ = fontStyle .getBrowser () .getScreenTextureProperties ();
-		this .texture .setup ();
+		this .textureNode .textureProperties_ = fontStyle .getBrowser () .getScreenTextureProperties ();
+		this .textureNode .setup ();
 	}
 
 	ScreenText .prototype = Object .assign (Object .create (X3DTextGeometry .prototype),
@@ -1457,9 +1457,9 @@ function ($,
 
 				// If the cavas is to large imageData is null.
 				if (imageData)
-					this .texture .setTexture (canvas .width, canvas .height, true, new Uint8Array (imageData .data), true);
+					this .textureNode .setTexture (canvas .width, canvas .height, true, new Uint8Array (imageData .data), true);
 				else
-				   this .texture .clear ();
+				   this .textureNode .clear ();
 			};
 		})(),
 		drawGlyph: function (cx, font, glyph, x, y, size)
@@ -1593,8 +1593,7 @@ function ($,
 		{
 			Matrix4 .prototype .multLeft .call (context .modelViewMatrix, this .matrix);
 
-		   context .textureNode          = this .texture;
-		   context .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
+		   context .textureNode = this .textureNode;
 		},
 		transformLine: function (line)
 		{
@@ -1782,19 +1781,17 @@ define ('x_ite/Components/Layout/ScreenGroup',[
 	"x_ite/Bits/TraverseType",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Vector4",
-	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Geometry/ViewVolume",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGroupingNode, 
+          X3DGroupingNode,
           X3DConstants,
           TraverseType,
           Vector3,
           Vector4,
-          Rotation4,
           Matrix4,
           ViewVolume)
 {
@@ -1806,7 +1803,7 @@ function (Fields,
 
 		this .addType (X3DConstants .ScreenGroup);
 
-		this .screenMatrix = new Matrix4 ();
+		this .matrix = new Matrix4 ();
 	}
 
 	ScreenGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -1814,6 +1811,8 @@ function (Fields,
 		constructor: ScreenGroup,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
@@ -1832,19 +1831,12 @@ function (Fields,
 		{
 			return "children";
 		},
-		getBBox: function (bbox)
+		getBBox: function (bbox, shadow)
 		{
-			return X3DGroupingNode .prototype .getBBox .call (this, bbox) .multRight (this .getMatrix ());
+			return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadow) .multRight (this .matrix);
 		},
 		getMatrix: function ()
 		{
-			try
-			{
-				this .matrix .assign (this .modelViewMatrix) .inverse () .multLeft (this .screenMatrix);
-			}
-			catch (error)
-			{ }
-
 			return this .matrix;
 		},
 		scale: (function ()
@@ -1853,18 +1845,18 @@ function (Fields,
 				x            = new Vector4 (0, 0, 0, 0),
 				y            = new Vector4 (0, 0, 0, 0),
 				z            = new Vector4 (0, 0, 0, 0),
-				screenPoint  = new Vector3 (0, 0, 0);
+				screenPoint  = new Vector3 (0, 0, 0),
+				screenMatrix = new Matrix4 ();
 
 			return function (renderObject)
 			{
 				// throws domain error
-	
+
 				var
 					modelViewMatrix  = renderObject .getModelViewMatrix () .get (),
 					projectionMatrix = renderObject .getProjectionMatrix () .get (),
-					viewport         = renderObject .getViewVolume () .getViewport (),
-					screenMatrix     = this .screenMatrix;
-			
+					viewport         = renderObject .getViewVolume () .getViewport ();
+
 				// Determine screenMatrix.
 				// Same as in ScreenText.
 
@@ -1882,7 +1874,7 @@ function (Fields,
 				                   y .x, y .y, y .z, y .w,
 				                   z .x, z .y, z .z, z .w,
 				                   modelViewMatrix [12], modelViewMatrix [13], modelViewMatrix [14], modelViewMatrix [15]);
-	
+
 				// Snap to whole pixel.
 
 				ViewVolume .projectPoint (Vector3 .Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
@@ -1894,33 +1886,35 @@ function (Fields,
 
 				screenPoint .z = 0;
 				screenMatrix .translate (screenPoint);
-	
-				// Return modelViewMatrix
-	
-				return screenMatrix;
+
+				// Assign relative matrix.
+
+				this .matrix .assign (modelViewMatrix) .inverse () .multLeft (screenMatrix);
 			};
 		})(),
 		traverse: function (type, renderObject)
 		{
 			try
 			{
-				var modelViewMatrix = renderObject .getModelViewMatrix ();
-
 				switch (type)
 				{
 					case TraverseType .CAMERA:
 					case TraverseType .PICKING:
 					case TraverseType .DEPTH: // ???
 						// No clone support for shadow, generated cube map texture and bbox
-						modelViewMatrix .pushMatrix (this .screenMatrix);
 						break;
 					default:
-						modelViewMatrix .pushMatrix (this .scale (renderObject));
+						this .scale (renderObject);
 						break;
 				}
 
+				var modelViewMatrix = renderObject .getModelViewMatrix ();
+
+				modelViewMatrix .push ();
+				modelViewMatrix .multLeft (this .matrix);
+
 				X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-	
+
 				modelViewMatrix .pop ();
 			}
 			catch (error)
@@ -1930,8 +1924,6 @@ function (Fields,
 
 	return ScreenGroup;
 });
-
-
 
 /*******************************************************************************
  *

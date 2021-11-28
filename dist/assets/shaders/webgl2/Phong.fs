@@ -9,6 +9,7 @@ precision mediump int;
 uniform int x3d_GeometryType;
 uniform bool x3d_Lighting; 
 uniform bool x3d_ColorMaterial; 
+uniform float x3d_AlphaCutoff;
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform bool x3d_SeparateBackColor;
@@ -133,7 +134,8 @@ return 0.0;
 float
 texture2DCompare (const in int index, const in vec2 texCoord, const in float compare)
 {
-return step (getShadowDepth (index, texCoord), compare);
+float shadowDepth = getShadowDepth (index, texCoord);
+return (1.0 - step (1.0, shadowDepth)) * step (shadowDepth, compare);
 }
 float
 texture2DShadowLerp (const in int index, const in vec2 texelSize, const in float shadowMapSize, const in vec2 texCoord, const in float compare)
@@ -520,7 +522,7 @@ break;
 vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
 vec4 textureColor = vec4 (1.0);
 texCoord .stp /= texCoord .q;
-if ((x3d_GeometryType == x3d_Geometry2D) && ! gl_FrontFacing)
+if ((x3d_GeometryType == x3d_Geometry2D) && gl_FrontFacing == false)
 texCoord .s = 1.0 - texCoord .s;
 switch (x3d_TextureType [i])
 {
@@ -1044,10 +1046,16 @@ void
 main ()
 {
 clip ();
-bool frontColor = gl_FrontFacing || ! x3d_SeparateBackColor;
-x3d_FragColor = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
-x3d_FragColor = getHatchColor (x3d_FragColor);
-x3d_FragColor .rgb = getFogColor (x3d_FragColor .rgb);
+vec4 finalColor = vec4 (0.0);
+bool frontColor = gl_FrontFacing || x3d_SeparateBackColor == false;
+finalColor = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
+finalColor = getHatchColor (finalColor);
+finalColor .rgb = getFogColor (finalColor .rgb);
+if (finalColor .a < x3d_AlphaCutoff)
+{
+discard;
+}
+x3d_FragColor = finalColor;
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 if (x3d_LogarithmicFarFactor1_2 > 0.0)
 gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
