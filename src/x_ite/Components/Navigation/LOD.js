@@ -275,7 +275,7 @@ function (Fields,
 					case TraverseType .CAMERA:
 					case TraverseType .DEPTH:
 					{
-						var visibleNode = this .visibleNode;
+						const visibleNode = this .visibleNode;
 
 						if (visibleNode)
 							visibleNode .traverse (type, renderObject);
@@ -286,7 +286,7 @@ function (Fields,
 					{
 						if (this .getTransformSensors () .size)
 						{
-							var modelMatrix = renderObject .getModelViewMatrix () .get ();
+							const modelMatrix = renderObject .getModelViewMatrix () .get ();
 
 							this .getTransformSensors () .forEach (function (transformSensorNode)
 							{
@@ -294,11 +294,11 @@ function (Fields,
 							});
 						}
 
-						var childNode = this .childNode;
+						const childNode = this .childNode;
 
 						if (childNode)
 						{
-							var
+							const
 								browser          = renderObject .getBrowser (),
 								pickingHierarchy = browser .getPickingHierarchy ();
 
@@ -313,7 +313,7 @@ function (Fields,
 					}
 					case TraverseType .COLLISION:
 					{
-						var childNode = this .childNode;
+						const childNode = this .childNode;
 
 						if (childNode)
 							childNode .traverse (type, renderObject);
@@ -345,12 +345,12 @@ function (Fields,
 							}
 						}
 
-						var visibleNode = this .visibleNode;
+						const visibleNode = this .visibleNode;
 
 						if (visibleNode)
 							visibleNode .traverse (type, renderObject);
 
-						var boundedObject = this .boundedObject;
+							const boundedObject = this .boundedObject;
 
 						if (boundedObject)
 							boundedObject .displayBBox (type, renderObject);

@@ -48,21 +48,17 @@
 
 
 define ([
-	"x_ite/Fields",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Components/Grouping/X3DBoundedObject",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
-	"standard/Math/Geometry/Box3",
 ],
-function (Fields,
-          X3DChildNode,
+function (X3DChildNode,
           X3DBoundedObject,
           TraverseType,
           X3DConstants,
-          X3DCast,
-          Box3)
+          X3DCast)
 {
 "use strict";
 
@@ -611,7 +607,7 @@ function (Fields,
 				childNodes     = this .childNodes,
 				boundedObjects = this .boundedObjects;
 
-				boundedObjects .length = 0;
+			boundedObjects .length = 0;
 
 			for (var i = 0, length = childNodes .length; i < length; ++ i)
 			{
@@ -750,7 +746,6 @@ function (Fields,
 				}
 				case TraverseType .DISPLAY:
 				{
-
 					var
 						displayNodes   = this .displayNodes,
 						visibleNodes   = this .visibleNodes,

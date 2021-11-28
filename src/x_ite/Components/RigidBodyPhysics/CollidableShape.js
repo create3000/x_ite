@@ -55,7 +55,6 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/TraverseType",
-	"standard/Math/Numbers/Vector3",
 	"lib/ammojs/AmmoJS",
 ],
 function (Fields,
@@ -65,7 +64,6 @@ function (Fields,
           X3DConstants,
           X3DCast,
           TraverseType,
-          Vector3,
           Ammo)
 {
 "use strict";
@@ -78,6 +76,8 @@ function (Fields,
 
 		this .convex         = false;
 		this .shapeNode      = null;
+		this .visibleNode    = null;
+		this .boundedObject  = null;
 		this .geometryNode   = null;
 		this .collisionShape = null;
 		this .triangleMesh   = null;
@@ -122,7 +122,7 @@ function (Fields,
 		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 			{
-				var boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .shape_);
+				const boundedObject = this .visibleNode;
 
 				if (boundedObject)
 					return boundedObject .getBBox (bbox, shadow);
@@ -198,6 +198,10 @@ function (Fields,
 			{
 				this .shapeNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
 				this .shapeNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
+
+				this .shapeNode .visible_     .removeInterest ("set_visible__",     this);
+				this .shapeNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+
 				this .shapeNode .geometry_ .removeInterest ("set_geometry__", this);
 			}
 
@@ -207,6 +211,10 @@ function (Fields,
 			{
 				this .shapeNode .isCameraObject_   .addFieldInterest (this .isCameraObject_);
 				this .shapeNode .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+
+				this .shapeNode .visible_     .addInterest ("set_visible__",     this);
+				this .shapeNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
+
 				this .shapeNode .geometry_ .addInterest ("set_geometry__", this);
 
 				this .setCameraObject   (this .shapeNode .getCameraObject ());
@@ -222,7 +230,44 @@ function (Fields,
 				this .traverse = Function .prototype;
 			}
 
+			this .set_visible__ ();
+			this .set_bboxDisplay__ ();
 			this .set_geometry__ ();
+		},
+		set_cameraObject__: function ()
+		{
+			if (this .shapeNode && this .shapeNode .getCameraObject ())
+			{
+				this .setCameraObject (this .shapeNode .visible_ .getValue ());
+			}
+			else
+			{
+				this .setCameraObject (false);
+			}
+		},
+		set_visible__: function ()
+		{
+			if (this .shapeNode)
+			{
+				this .visibleNode = this .shapeNode .visible_ .getValue () ? this .shapeNode : null;
+			}
+			else
+			{
+				this .visibleNode = this .shapeNode;
+			}
+
+			this .set_cameraObject__ ();
+		},
+		set_bboxDisplay__: function ()
+		{
+			if (this .shapeNode)
+			{
+				this .boundedObject = this .shapeNode .bboxDisplay_ .getValue () ? this .shapeNode : null;
+			}
+			else
+			{
+				this .boundedObject = null;
+			}
 		},
 		set_geometry__: function ()
 		{
@@ -402,9 +447,26 @@ function (Fields,
 		{
 			switch (type)
 			{
+				case TraverseType .POINTER:
+				case TraverseType .CAMERA:
+				case TraverseType .DEPTH:
+				{
+					const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+					modelViewMatrix .push ();
+					modelViewMatrix .multLeft (this .getMatrix ());
+
+					const visibleNode = this .visibleNode;
+
+					if (visibleNode)
+						visibleNode .traverse (type, renderObject);
+
+					modelViewMatrix .pop ();
+					return;
+				}
 				case TraverseType .PICKING:
 				{
-					var
+					const
 						browser          = renderObject .getBrowser (),
 						pickingHierarchy = browser .getPickingHierarchy (),
 						modelViewMatrix  = renderObject .getModelViewMatrix ();
@@ -417,11 +479,11 @@ function (Fields,
 
 					modelViewMatrix .pop ();
 					pickingHierarchy .pop ();
-					break;
+					return;
 				}
-				default:
+				case TraverseType .COLLISION:
 				{
-					var modelViewMatrix = renderObject .getModelViewMatrix ();
+					const modelViewMatrix = renderObject .getModelViewMatrix ();
 
 					modelViewMatrix .push ();
 					modelViewMatrix .multLeft (this .getMatrix ());
@@ -429,7 +491,27 @@ function (Fields,
 					this .shapeNode .traverse (type, renderObject);
 
 					modelViewMatrix .pop ();
-					break;
+					return;
+				}
+				case TraverseType .DISPLAY:
+				{
+					const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+					modelViewMatrix .push ();
+					modelViewMatrix .multLeft (this .getMatrix ());
+
+					const visibleNode = this .visibleNode;
+
+					if (visibleNode)
+						visibleNode .traverse (type, renderObject);
+
+					const boundedObject = this .boundedObject;
+
+					if (boundedObject)
+						boundedObject .displayBBox (type, renderObject);
+
+					modelViewMatrix .pop ();
+					return;
 				}
 			}
 		},

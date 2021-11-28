@@ -134,9 +134,9 @@ function (Fields,
 						if (this .getObjectType () .has ("NONE"))
 							return;
 
-						var
-							browser         = renderObject .getBrowser (),
-							pickableStack   = browser .getPickable ();
+						const
+							browser       = renderObject .getBrowser (),
+							pickableStack = browser .getPickable ();
 
 						if (this .getObjectType () .has ("ALL"))
 						{
@@ -148,7 +148,7 @@ function (Fields,
 						{
 							// Filter pick sensors.
 
-							var pickSensorStack = browser .getPickSensors ();
+							const pickSensorStack = browser .getPickSensors ();
 
 							pickSensorStack [pickSensorStack .length - 1] .forEach (function (pickSensorNode)
 							{
@@ -160,7 +160,7 @@ function (Fields,
 									{
 										if (pickSensorNode .getObjectType () .has (objectType))
 										{
-											++intersection;
+											++ intersection;
 											break;
 										}
 									}
