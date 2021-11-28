@@ -214,7 +214,7 @@ function (Fields,
 
 						return;
 					}
-					case TraverseType .DEPTH:
+					case TraverseType .SHADOW:
 					{
 						if (! this .depthShapes)
 						{

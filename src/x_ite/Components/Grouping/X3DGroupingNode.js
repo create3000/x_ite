@@ -725,7 +725,7 @@ function (X3DChildNode,
 
 					return;
 				}
-				case TraverseType .DEPTH:
+				case TraverseType .SHADOW:
 				{
 					// Nodes that are not visible do not cast shadows.
 

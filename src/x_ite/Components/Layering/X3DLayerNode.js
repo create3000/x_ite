@@ -281,7 +281,7 @@ function (X3DNode,
 				case TraverseType .COLLISION:
 					this .collision (type, renderObject);
 					break;
-				case TraverseType .DEPTH:
+				case TraverseType .SHADOW:
 				case TraverseType .DISPLAY:
 					this .display (type, renderObject);
 					break;

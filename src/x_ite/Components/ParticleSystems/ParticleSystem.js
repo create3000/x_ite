@@ -1334,7 +1334,7 @@ function (Fields,
 					// TODO: to be implemented.
 					break;
 				}
-				case TraverseType .DEPTH:
+				case TraverseType .SHADOW:
 				{
 					if (this .castShadow_ .getValue ())
 						renderObject .addDepthShape (this);

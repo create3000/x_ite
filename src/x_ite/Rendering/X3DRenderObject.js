@@ -420,7 +420,7 @@ function ($,
 					this .gravite ();
 					break;
 				}
-				case TraverseType .DEPTH:
+				case TraverseType .SHADOW:
 				{
 					this .numDepthShapes = 0;
 

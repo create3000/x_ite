@@ -70,8 +70,8 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DLightNode, 
-          X3DGroupingNode, 
+          X3DLightNode,
+          X3DGroupingNode,
           TraverseType,
           X3DConstants,
           Box3,
@@ -109,11 +109,11 @@ function (Fields,
 		new Vector4 (0.75, 0.5, 0.25, 0.5), // front
 		new Vector4 (0.25, 0.5, 0.25, 0.5), // back
 		new Vector4 (0.0,  0,   0.5,  0.5), // bottom
-		new Vector4 (0.5,  0,   0.5,  0.5), // top   
+		new Vector4 (0.5,  0,   0.5,  0.5), // top
 	];
 
 	var PointLights = ObjectCache (PointLightContainer);
-	
+
 	function PointLightContainer ()
 	{
 		this .location                      = new Vector3 (0, 0, 0);
@@ -224,16 +224,16 @@ function (Fields,
 					renderObject .getProjectionMatrix () .pushMatrix (this .projectionMatrix);
 					renderObject .getModelViewMatrix  () .pushMatrix (orientationMatrices [i]);
 					renderObject .getModelViewMatrix  () .multLeft (invLightSpaceMatrix);
-	
-					renderObject .render (TraverseType .DEPTH, X3DGroupingNode .prototype .traverse, this .groupNode);
-	
+
+					renderObject .render (TraverseType .SHADOW, X3DGroupingNode .prototype .traverse, this .groupNode);
+
 					renderObject .getModelViewMatrix  () .pop ();
 					renderObject .getProjectionMatrix () .pop ();
 					renderObject .getViewVolumes () .pop ();
 				}
 
 				this .shadowBuffer .unbind ();
-	
+
 				if (! lightNode .getGlobal ())
 					invLightSpaceMatrix .multLeft (modelMatrix .inverse ());
 
@@ -259,7 +259,7 @@ function (Fields,
 			if (shaderObject .hasLight (i, this))
 				return;
 
-			var 
+			var
 				lightNode   = this .lightNode,
 				color       = lightNode .getColor (),
 				attenuation = lightNode .getAttenuation (),
@@ -288,7 +288,7 @@ function (Fields,
 			else
 			{
 				// Must be set to zero in case of multiple lights.
-				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);			
+				gl .uniform1f (shaderObject .x3d_ShadowIntensity [i], 0);
 			}
 		},
 		dispose: function ()
@@ -336,7 +336,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "attenuation",      new Fields .SFVec3f (1, 0, 0)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "radius",           new Fields .SFFloat (100)),
-																				   
+
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadow.
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat ()),        // Intensity of shadow color in the range (0, 1).
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
@@ -374,5 +374,3 @@ function (Fields,
 
 	return PointLight;
 });
-
-

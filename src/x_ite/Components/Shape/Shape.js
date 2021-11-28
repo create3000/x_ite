@@ -154,7 +154,7 @@ function (Fields,
 					renderObject .addCollisionShape (this);
 					break;
 				}
-				case TraverseType .DEPTH:
+				case TraverseType .SHADOW:
 				{
 					if (this .castShadow_ .getValue ())
 						renderObject .addDepthShape (this);

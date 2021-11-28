@@ -229,7 +229,7 @@ function (Fields,
 			{
 				case TraverseType .POINTER:
 				case TraverseType .CAMERA:
-				case TraverseType .DEPTH:
+				case TraverseType .SHADOW:
 				{
 					const visibleNode = this .visibleNode;
 
