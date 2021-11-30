@@ -261,6 +261,10 @@ X3DCanvas .x_ite-private-world-info p {
  * Date: 2015-09-20T18:47:54.927Z
  */
 
+#context-menu-layer {
+	z-index: 0 !important;
+}
+
 /* menu title */
 .x_ite-private-menu.x_ite-private-menu-title:before {
     content: "X_ITE Browser";
