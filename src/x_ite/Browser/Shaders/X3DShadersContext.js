@@ -117,9 +117,11 @@ function (Shading,
 		},
 		getPointShader: function ()
 		{
-			this .pointShader = this .createShader ("PointShader", "PointSet", false);
+			const pointShader = this .pointShader = this .createShader ("PointShader", "PointSet", false);
 
-			this .pointShader .getShadowShader = this .getPointShader = function () { return this .pointShader; };
+			this .pointShader .getShadowShader = function () { return pointShader; };
+
+			this .getPointShader = function () { return this .pointShader; };
 
 			return this .pointShader;
 		},
@@ -129,12 +131,11 @@ function (Shading,
 		},
 		getLineShader: function ()
 		{
-			if (this .lineShader)
-				return this .lineShader;
+			const lineShader = this .lineShader = this .createShader ("WireframeShader", "Wireframe", false);
 
-			this .lineShader = this .createShader ("WireframeShader", "Wireframe", false);
+			this .lineShader .getShadowShader = function () { return lineShader; };
 
-			this .lineShader .getShadowShader = this .getLineShader = function () { return this .lineShader; };
+			this .getLineShader = function () { return this .lineShader; };
 
 			return this .lineShader;
 		},
@@ -154,7 +155,7 @@ function (Shading,
 			{
 				const shadowShader = browser .getShadowShader ();
 
-				this .getShadowShader = function () { return browser .shadowShader };
+				this .getShadowShader = function () { return shadowShader };
 
 				return shadowShader;
 			};
@@ -179,7 +180,7 @@ function (Shading,
 			{
 				const shadowShader = browser .getShadowShader ();
 
-				this .getShadowShader = function () { return browser .shadowShader };
+				this .getShadowShader = function () { return shadowShader };
 
 				return shadowShader;
 			};
@@ -208,10 +209,9 @@ function (Shading,
 		},
 		getDepthShader: function ()
 		{
-			if (this .depthShader)
-				return this .depthShader;
-
 			this .depthShader = this .createShader ("DepthShader", "Depth", false);
+
+			this .getDepthShader = function () { return this .depthShader; };
 
 			return this .depthShader;
 		},
