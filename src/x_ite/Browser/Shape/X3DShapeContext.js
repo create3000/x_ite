@@ -78,47 +78,41 @@ function (Appearance,
 		{ },
 		getDefaultAppearance: function ()
 		{
-			if (this .defaultAppearance)
-				return this .defaultAppearance;
-
 			this .defaultAppearance = new Appearance (this .getPrivateScene ());
-
 			this .defaultAppearance .setup ();
+
+			this .getDefaultAppearance = function () { return this .defaultAppearance; };
 
 			return this .defaultAppearance;
 		},
 		getDefaultPointProperties: function ()
 		{
-			if (this .defaultPointProperties)
-				return this .defaultPointProperties;
-
 			this .defaultPointProperties = new PointProperties (this .getPrivateScene ());
-
 			this .defaultPointProperties .setup ();
+
+			this .getDefaultPointProperties = function () { return this .defaultPointProperties; };
 
 			return this .defaultPointProperties;
 		},
 		getDefaultLineProperties: function ()
 		{
-			if (this .defaultLineProperties)
-				return this .defaultLineProperties;
-
 			this .defaultLineProperties = new LineProperties (this .getPrivateScene ());
 
 			this .defaultLineProperties .applied_ = false;
 			this .defaultLineProperties .setup ();
 
+			this .getDefaultLineProperties = function () { return this .defaultLineProperties; };
+
 			return this .defaultLineProperties;
 		},
 		getDefaultFillProperties: function ()
 		{
-			if (this .defaultFillProperties)
-				return this .defaultFillProperties;
-
 			this .defaultFillProperties = new FillProperties (this .getPrivateScene ());
 
 			this .defaultFillProperties .hatched_ = false;
 			this .defaultFillProperties .setup ();
+
+			this .getDefaultFillProperties = function () { return this .defaultFillProperties; };
 
 			return this .defaultFillProperties;
 		},
@@ -160,12 +154,10 @@ function (Appearance,
 		},
 		getLineFillTextureProperties: function ()
 		{
-			if (this .lineFillTextureProperties)
-				return this .lineFillTextureProperties;
-
 			this .lineFillTextureProperties = new TextureProperties (this .getPrivateScene ());
-
 			this .lineFillTextureProperties .setup ();
+
+			this .getLineFillTextureProperties = function () { return this .lineFillTextureProperties; };
 
 			return this .lineFillTextureProperties;
 		},

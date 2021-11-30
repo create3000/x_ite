@@ -59,14 +59,13 @@ function (BoxOptions,
           QuadSphereOptions)
 {
 "use strict";
-	
-	function getOptionNode (name, Type)
-	{
-		if (this [name])
-			return this [name];
 
+	function getOptionNode (fun, name, Type)
+	{
 		this [name] = new Type (this .getPrivateScene ());
 		this [name] .setup ();
+
+		this [fun] = function () { return this [name]; };
 
 		return this [name];
 	}
@@ -79,19 +78,19 @@ function (BoxOptions,
 		{ },
 		getBoxOptions: function ()
 		{
-			return getOptionNode .call (this, "boxOptions", BoxOptions);
+			return getOptionNode .call (this, "getBoxOptions", "boxOptions", BoxOptions);
 		},
 		getConeOptions: function ()
 		{
-			return getOptionNode .call (this, "coneOptions", ConeOptions);
+			return getOptionNode .call (this, "getConeOptions", "coneOptions", ConeOptions);
 		},
 		getCylinderOptions: function ()
 		{
-			return getOptionNode .call (this, "cylinderOptions", CylinderOptions);
+			return getOptionNode .call (this, "getCylinderOptions", "cylinderOptions", CylinderOptions);
 		},
 		getSphereOptions: function ()
 		{
-			return getOptionNode .call (this, "sphereOptions", QuadSphereOptions);
+			return getOptionNode .call (this, "getSphereOptions", "sphereOptions", QuadSphereOptions);
 		},
 	};
 

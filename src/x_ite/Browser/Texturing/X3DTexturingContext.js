@@ -246,9 +246,6 @@ function (TextureProperties,
 		},
 		getDefaultTextureProperties: function ()
 		{
-			if (this .defaultTextureProperties)
-				return this .defaultTextureProperties;
-
 			this .defaultTextureProperties = new TextureProperties (this .getPrivateScene ());
 			this .defaultTextureProperties .magnificationFilter_ = "NICEST";
 			this .defaultTextureProperties .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
@@ -257,27 +254,25 @@ function (TextureProperties,
 
 			this .defaultTextureProperties .setup ();
 
+			this .getDefaultTextureProperties = function () { return this .defaultTextureProperties; };
+
 			return this .defaultTextureProperties;
 		},
 		getDefaultTextureTransform: function ()
 		{
-			if (this .defaultTextureTransform)
-				return this .defaultTextureTransform;
-
 			this .defaultTextureTransform = new TextureTransform (this .getPrivateScene ());
-
 			this .defaultTextureTransform .setup ();
+
+			this .getDefaultTextureTransform = function () { return this .defaultTextureTransform; };
 
 			return this .defaultTextureTransform;
 		},
 		getDefaultTextureCoordinate: function ()
 		{
-			if (this .defaultTextureCoordinate)
-				return this .defaultTextureCoordinate;
-
 			this .defaultTextureCoordinate = new TextureCoordinate (this .getPrivateScene ());
-
 			this .defaultTextureCoordinate .setup ();
+
+			this .getDefaultTextureCoordinate = function () { return this .defaultTextureCoordinate; };
 
 			return this .defaultTextureCoordinate;
 		},

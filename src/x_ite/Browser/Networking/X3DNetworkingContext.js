@@ -104,14 +104,13 @@ function (Fields,
 		{
 			// Inline node's empty scene.
 
-			if (this .defaultScene)
-				return this .defaultScene;
-
 			this .defaultScene = this .createScene ();
 
 			this .defaultScene .setPrivate (true);
 			this .defaultScene .setLive (true);
 			this .defaultScene .setup ();
+
+			this .getDefaultScene = function () { return this .defaultScene; };
 
 			return this .defaultScene;
 		},

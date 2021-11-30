@@ -104,10 +104,12 @@ function (Shading,
 			return this .shaders;
 		},
 		getDefaultShader: function ()
-		{ },
+		{
+			return this .defaultShader;
+		},
 		getDefaultShadowShader: function ()
 		{
-			return this .getDefaultShader () .getShadowShader ();
+			return this .defaultShader .getShadowShader ();
 		},
 		hasPointShader: function ()
 		{
@@ -115,12 +117,9 @@ function (Shading,
 		},
 		getPointShader: function ()
 		{
-			if (this .pointShader)
-				return this .pointShader;
-
 			this .pointShader = this .createShader ("PointShader", "PointSet", false);
 
-			this .pointShader .getShadowShader = this .getPointShader .bind (this);
+			this .pointShader .getShadowShader = this .getPointShader = function () { return this .pointShader; };
 
 			return this .pointShader;
 		},
@@ -135,7 +134,7 @@ function (Shading,
 
 			this .lineShader = this .createShader ("WireframeShader", "Wireframe", false);
 
-			this .lineShader .getShadowShader = this .getLineShader .bind (this);
+			this .lineShader .getShadowShader = this .getLineShader = function () { return this .lineShader; };
 
 			return this .lineShader;
 		},
@@ -145,14 +144,13 @@ function (Shading,
 		},
 		getGouraudShader: function ()
 		{
-			if (this .gouraudShader)
-				return this .gouraudShader;
-
 			this .gouraudShader = this .createShader ("GouraudShader", "Gouraud", false);
+
+			this .gouraudShader .isValid_ .addInterest ("set_gouraud_shader_valid__", this);
 
 			this .gouraudShader .getShadowShader = this .getShadowShader .bind (this);
 
-			this .gouraudShader .isValid_ .addInterest ("set_gouraud_shader_valid__", this);
+			this .getGouraudShader = function () { return this .gouraudShader; };
 
 			return this .gouraudShader;
 		},
@@ -162,14 +160,13 @@ function (Shading,
 		},
 		getPhongShader: function ()
 		{
-			if (this .phongShader)
-				return this .phongShader;
-
 			this .phongShader = this .createShader ("PhongShader", "Phong", false);
+
+			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__", this);
 
 			this .phongShader .getShadowShader = this .getShadowShader .bind (this);
 
-			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__", this);
+			this .getPhongShader = function () { return this .phongShader; };
 
 			return this .phongShader;
 		},
@@ -207,12 +204,12 @@ function (Shading,
 			{
 				case Shading .PHONG:
 				{
-					this .getDefaultShader = this .getPhongShader;
+					this .defaultShader = this .getPhongShader ();
 					break;
 				}
 				default:
 				{
-					this .getDefaultShader = this .getGouraudShader;
+					this .defaultShader = this .getGouraudShader ();
 					break;
 				}
 			}

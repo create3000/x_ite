@@ -69,9 +69,6 @@ function (Fields,
 		initialize: function () { },
 		getBBoxNode: function ()
 		{
-			if (this .bboxNode)
-				return this .bboxNode;
-
 			const bboxNode       = new Shape (this .getPrivateScene ());
 			const bboxGeometry   = new IndexedLineSet (this .getPrivateScene ());
 			const bboxColor      = new Color (this .getPrivateScene ());
@@ -90,6 +87,8 @@ function (Fields,
 			bboxNode       .setup ();
 
 			this .bboxNode = bboxNode;
+
+			this .getBBoxNode = function () { return this .bboxNode; };
 
 			return bboxNode;
 		}

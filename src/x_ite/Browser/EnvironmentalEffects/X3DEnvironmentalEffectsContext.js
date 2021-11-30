@@ -61,18 +61,14 @@ function (TextureProperties)
 		initialize: function () { },
 		getBackgroundSphereShader: function ()
 		{
-			if (this .backgroundSphereShader)
-				return this .backgroundSphereShader;
-
 			this .backgroundSphereShader = this .createShader ("BackgroundSphereShader", "Background", false);
+
+			this .getBackgroundSphereShader = function () { return this .backgroundSphereShader; };
 
 			return this .backgroundSphereShader;
 		},
 		getBackgroundTextureProperties: function ()
 		{
-			if (this .backgroundTextureProperties)
-				return this .backgroundTextureProperties;
-
 			this .backgroundTextureProperties = new TextureProperties (this .getPrivateScene ());
 
 			this .backgroundTextureProperties .boundaryModeS_       = "CLAMP_TO_EDGE";
@@ -81,6 +77,8 @@ function (TextureProperties)
 			this .backgroundTextureProperties .minificationFilter_  = "NICEST";
 			this .backgroundTextureProperties .magnificationFilter_ = "NICEST";
 			this .backgroundTextureProperties .setup ();
+
+			this .getBackgroundTextureProperties = function () { return this .backgroundTextureProperties; };
 
 			return this .backgroundTextureProperties;
 		},

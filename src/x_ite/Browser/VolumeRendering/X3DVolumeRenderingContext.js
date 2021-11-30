@@ -64,29 +64,24 @@ function (PixelTexture,
 	{
 		getDefaultVolumeStyle: function ()
 		{
-			if (this .defaultVolumeStyle !== undefined)
-				return this .defaultVolumeStyle;
-
 			this .defaultVolumeStyle = new OpacityMapVolumeStyle (this .getPrivateScene ());
 			this .defaultVolumeStyle .setup ();
+
+			this .getDefaultVolumeStyle = function () { return this .defaultVolumeStyle; };
 
 			return this .defaultVolumeStyle;
 		},
 		getDefaultBlendedVolumeStyle: function ()
 		{
-			if (this .defaultBlendedVolumeStyle !== undefined)
-				return this .defaultBlendedVolumeStyle;
-
 			this .defaultBlendedVolumeStyle = new OpacityMapVolumeStyle (this .getPrivateScene ());
 			this .defaultBlendedVolumeStyle .setup ();
+
+			this .getDefaultBlendedVolumeStyle = function () { return this .defaultBlendedVolumeStyle; };
 
 			return this .defaultBlendedVolumeStyle;
 		},
 		getDefaultTransferFunction: function ()
 		{
-			if (this .defaultTransferFunction !== undefined)
-				return this .defaultTransferFunction;
-
 			this .defaultTransferFunction = new PixelTexture (this .getPrivateScene ());
 
 			var textureProperties = new TextureProperties (this .getPrivateScene ());
@@ -108,6 +103,8 @@ function (PixelTexture,
 
 			textureProperties             .setup ();
 			this .defaultTransferFunction .setup ();
+
+			this .getDefaultTransferFunction = function () { return this .defaultTransferFunction; };
 
 			return this .defaultTransferFunction;
 		},

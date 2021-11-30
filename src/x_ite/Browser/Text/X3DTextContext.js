@@ -70,12 +70,10 @@ function ($,
 		{ },
 		getDefaultFontStyle: function ()
 		{
-			if (this .defaultFontStyle)
-				return this .defaultFontStyle;
-
 			this .defaultFontStyle = new FontStyle (this .getPrivateScene ());
-
 			this .defaultFontStyle .setup ();
+
+			this .getDefaultFontStyle = function () { return this .defaultFontStyle; };
 
 			return this .defaultFontStyle;
 		},
