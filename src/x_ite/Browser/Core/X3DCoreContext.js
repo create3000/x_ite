@@ -187,11 +187,11 @@ function ($,
 
 		// Get canvas & context.
 
-		var browser      = $("<div></div>") .addClass ("x_ite-private-browser") .prependTo (this .element);
+		var browser      = $("<div></div>") .addClass ("x_ite-private-browser x_ite-private-browser-" + this .getId ()) .prependTo (this .element);
 		var splashScreen = $("<div></div>") .addClass ("x_ite-private-splash-screen") .appendTo (browser);
 		var spinner      = $("<div></div>") .addClass ("x_ite-private-spinner")  .appendTo (splashScreen);
 		var progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen);
-		var surface      = $("<div></div>") .addClass ("x_ite-private-surface x_ite-private-surface-" + this .getId ()) .appendTo (browser);
+		var surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
 
 		$("<div></div>") .addClass ("x_ite-private-x_ite") .html ("X_ITE<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
 		$("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));

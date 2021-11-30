@@ -93,7 +93,7 @@ function ($,
 				return;
 
 			$.contextMenu ({
-				selector: ".x_ite-private-surface-" + browser .getId (),
+				selector: ".x_ite-private-browser-" + browser .getId (),
 				build: this .build .bind (this),
 			});
 		},
