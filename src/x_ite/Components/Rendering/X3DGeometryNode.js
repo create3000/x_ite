@@ -201,7 +201,7 @@ function (Fields,
 		},
 		getShader: function (browser, shadow)
 		{
-			return shadow ? browser .getDefaultShadowShader () : browser .getDefaultShader ();
+			return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
 		},
 		setGeometryType: function (value)
 		{

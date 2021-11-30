@@ -113,7 +113,7 @@ function (Fields,
 			}
 			else
 			{
-				return shadow ? browser .getDefaultShadowShader () : browser .getDefaultShader ();
+				return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
 			}
 		},
 		set_live__: function ()

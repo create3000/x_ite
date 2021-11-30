@@ -107,19 +107,13 @@ function (Shading,
 		{
 			return this .defaultShader;
 		},
-		getDefaultShadowShader: function ()
-		{
-			return this .defaultShader .getShadowShader ();
-		},
 		hasPointShader: function ()
 		{
 			return !! this .pointShader;
 		},
 		getPointShader: function ()
 		{
-			const pointShader = this .pointShader = this .createShader ("PointShader", "PointSet", false);
-
-			this .pointShader .getShadowShader = function () { return pointShader; };
+			this .pointShader = this .createShader ("PointShader", "PointSet", false);
 
 			this .getPointShader = function () { return this .pointShader; };
 
@@ -131,9 +125,7 @@ function (Shading,
 		},
 		getLineShader: function ()
 		{
-			const lineShader = this .lineShader = this .createShader ("WireframeShader", "Wireframe", false);
-
-			this .lineShader .getShadowShader = function () { return lineShader; };
+			this .lineShader = this .createShader ("WireframeShader", "Wireframe", false);
 
 			this .getLineShader = function () { return this .lineShader; };
 
@@ -145,20 +137,9 @@ function (Shading,
 		},
 		getGouraudShader: function ()
 		{
-			const browser = this;
-
 			this .gouraudShader = this .createShader ("GouraudShader", "Gouraud", false);
 
 			this .gouraudShader .isValid_ .addInterest ("set_gouraud_shader_valid__", this);
-
-			this .gouraudShader .getShadowShader = function ()
-			{
-				const shadowShader = browser .getShadowShader ();
-
-				this .getShadowShader = function () { return shadowShader };
-
-				return shadowShader;
-			};
 
 			this .getGouraudShader = function () { return this .gouraudShader; };
 
@@ -170,20 +151,9 @@ function (Shading,
 		},
 		getPhongShader: function ()
 		{
-			const browser = this;
-
 			this .phongShader = this .createShader ("PhongShader", "Phong", false);
 
 			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__", this);
-
-			this .phongShader .getShadowShader = function ()
-			{
-				const shadowShader = browser .getShadowShader ();
-
-				this .getShadowShader = function () { return shadowShader };
-
-				return shadowShader;
-			};
 
 			this .getPhongShader = function () { return this .phongShader; };
 
