@@ -144,11 +144,20 @@ function (Shading,
 		},
 		getGouraudShader: function ()
 		{
+			const browser = this;
+
 			this .gouraudShader = this .createShader ("GouraudShader", "Gouraud", false);
 
 			this .gouraudShader .isValid_ .addInterest ("set_gouraud_shader_valid__", this);
 
-			this .gouraudShader .getShadowShader = this .getShadowShader .bind (this);
+			this .gouraudShader .getShadowShader = function ()
+			{
+				const shadowShader = browser .getShadowShader ();
+
+				this .getShadowShader = function () { return browser .shadowShader };
+
+				return shadowShader;
+			};
 
 			this .getGouraudShader = function () { return this .gouraudShader; };
 
@@ -160,11 +169,20 @@ function (Shading,
 		},
 		getPhongShader: function ()
 		{
+			const browser = this;
+
 			this .phongShader = this .createShader ("PhongShader", "Phong", false);
 
 			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__", this);
 
-			this .phongShader .getShadowShader = this .getShadowShader .bind (this);
+			this .phongShader .getShadowShader = function ()
+			{
+				const shadowShader = browser .getShadowShader ();
+
+				this .getShadowShader = function () { return browser .shadowShader };
+
+				return shadowShader;
+			};
 
 			this .getPhongShader = function () { return this .phongShader; };
 
@@ -176,12 +194,11 @@ function (Shading,
 		},
 		getShadowShader: function ()
 		{
-			if (this .shadowShader)
-				return this .shadowShader;
-
 			this .shadowShader = this .createShader ("ShadowShader", "Phong", true);
 
 			this .shadowShader .isValid_ .addInterest ("set_shadow_shader_valid__", this);
+
+			this .getShadowShader = function () { return this .shadowShader; };
 
 			return this .shadowShader;
 		},
