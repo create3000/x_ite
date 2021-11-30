@@ -68,9 +68,6 @@ function ($,
 	{
 		getScreenTextureProperties: function ()
 		{
-			if (this .screenTextureProperties !== undefined)
-			   return this .screenTextureProperties;
-
 			this .screenTextureProperties = new TextureProperties (this .getPrivateScene ());
 
 			this .screenTextureProperties .boundaryModeS_       = "CLAMP";
@@ -81,6 +78,8 @@ function ($,
 			this .screenTextureProperties .generateMipMaps_     = false;
 
 			this .screenTextureProperties .setup ();
+
+			this .getScreenTextureProperties = function () { return this .screenTextureProperties; };
 
 		   return this .screenTextureProperties;
 		},

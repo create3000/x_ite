@@ -619,18 +619,17 @@ define ('x_ite/Browser/ParticleSystems/X3DParticleSystemsContext',[
 function (PointEmitter)
 {
 "use strict";
-	
+
 	function X3DParticleSystemsContext () { }
 
 	X3DParticleSystemsContext .prototype =
 	{
 		getDefaultEmitter: function ()
 		{
-			if (this .defaultEmitter !== undefined)
-				return this .defaultEmitter;
-
 			this .defaultEmitter = new PointEmitter (this .getPrivateScene ());
 			this .defaultEmitter .setup ();
+
+			this .getDefaultEmitter = function () { return this .defaultEmitter; };
 
 			return this .defaultEmitter;
 		},

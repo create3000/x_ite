@@ -1,4 +1,4 @@
-/* X_ITE v4.6.25a-1059 */
+/* X_ITE v4.6.25a-1060 */
 
 (function () {
 
@@ -41589,14 +41589,13 @@ function (Fields,
 		{
 			// Inline node's empty scene.
 
-			if (this .defaultScene)
-				return this .defaultScene;
-
 			this .defaultScene = this .createScene ();
 
 			this .defaultScene .setPrivate (true);
 			this .defaultScene .setLive (true);
 			this .defaultScene .setup ();
+
+			this .getDefaultScene = function () { return this .defaultScene; };
 
 			return this .defaultScene;
 		},
@@ -59100,10 +59099,8 @@ function (Shading,
 			return this .shaders;
 		},
 		getDefaultShader: function ()
-		{ },
-		getDefaultShadowShader: function ()
 		{
-			return this .getDefaultShader () .getShadowShader ();
+			return this .defaultShader;
 		},
 		hasPointShader: function ()
 		{
@@ -59111,12 +59108,9 @@ function (Shading,
 		},
 		getPointShader: function ()
 		{
-			if (this .pointShader)
-				return this .pointShader;
-
 			this .pointShader = this .createShader ("PointShader", "PointSet", false);
 
-			this .pointShader .getShadowShader = this .getPointShader .bind (this);
+			this .getPointShader = function () { return this .pointShader; };
 
 			return this .pointShader;
 		},
@@ -59126,12 +59120,9 @@ function (Shading,
 		},
 		getLineShader: function ()
 		{
-			if (this .lineShader)
-				return this .lineShader;
-
 			this .lineShader = this .createShader ("WireframeShader", "Wireframe", false);
 
-			this .lineShader .getShadowShader = this .getLineShader .bind (this);
+			this .getLineShader = function () { return this .lineShader; };
 
 			return this .lineShader;
 		},
@@ -59141,14 +59132,11 @@ function (Shading,
 		},
 		getGouraudShader: function ()
 		{
-			if (this .gouraudShader)
-				return this .gouraudShader;
-
 			this .gouraudShader = this .createShader ("GouraudShader", "Gouraud", false);
 
-			this .gouraudShader .getShadowShader = this .getShadowShader .bind (this);
-
 			this .gouraudShader .isValid_ .addInterest ("set_gouraud_shader_valid__", this);
+
+			this .getGouraudShader = function () { return this .gouraudShader; };
 
 			return this .gouraudShader;
 		},
@@ -59158,14 +59146,11 @@ function (Shading,
 		},
 		getPhongShader: function ()
 		{
-			if (this .phongShader)
-				return this .phongShader;
-
 			this .phongShader = this .createShader ("PhongShader", "Phong", false);
 
-			this .phongShader .getShadowShader = this .getShadowShader .bind (this);
-
 			this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__", this);
+
+			this .getPhongShader = function () { return this .phongShader; };
 
 			return this .phongShader;
 		},
@@ -59175,12 +59160,11 @@ function (Shading,
 		},
 		getShadowShader: function ()
 		{
-			if (this .shadowShader)
-				return this .shadowShader;
-
 			this .shadowShader = this .createShader ("ShadowShader", "Phong", true);
 
 			this .shadowShader .isValid_ .addInterest ("set_shadow_shader_valid__", this);
+
+			this .getShadowShader = function () { return this .shadowShader; };
 
 			return this .shadowShader;
 		},
@@ -59190,10 +59174,9 @@ function (Shading,
 		},
 		getDepthShader: function ()
 		{
-			if (this .depthShader)
-				return this .depthShader;
-
 			this .depthShader = this .createShader ("DepthShader", "Depth", false);
+
+			this .getDepthShader = function () { return this .depthShader; };
 
 			return this .depthShader;
 		},
@@ -59203,12 +59186,12 @@ function (Shading,
 			{
 				case Shading .PHONG:
 				{
-					this .getDefaultShader = this .getPhongShader;
+					this .defaultShader = this .getPhongShader ();
 					break;
 				}
 				default:
 				{
-					this .getDefaultShader = this .getGouraudShader;
+					this .defaultShader = this .getGouraudShader ();
 					break;
 				}
 			}
@@ -61771,47 +61754,41 @@ function (Appearance,
 		{ },
 		getDefaultAppearance: function ()
 		{
-			if (this .defaultAppearance)
-				return this .defaultAppearance;
-
 			this .defaultAppearance = new Appearance (this .getPrivateScene ());
-
 			this .defaultAppearance .setup ();
+
+			this .getDefaultAppearance = function () { return this .defaultAppearance; };
 
 			return this .defaultAppearance;
 		},
 		getDefaultPointProperties: function ()
 		{
-			if (this .defaultPointProperties)
-				return this .defaultPointProperties;
-
 			this .defaultPointProperties = new PointProperties (this .getPrivateScene ());
-
 			this .defaultPointProperties .setup ();
+
+			this .getDefaultPointProperties = function () { return this .defaultPointProperties; };
 
 			return this .defaultPointProperties;
 		},
 		getDefaultLineProperties: function ()
 		{
-			if (this .defaultLineProperties)
-				return this .defaultLineProperties;
-
 			this .defaultLineProperties = new LineProperties (this .getPrivateScene ());
 
 			this .defaultLineProperties .applied_ = false;
 			this .defaultLineProperties .setup ();
 
+			this .getDefaultLineProperties = function () { return this .defaultLineProperties; };
+
 			return this .defaultLineProperties;
 		},
 		getDefaultFillProperties: function ()
 		{
-			if (this .defaultFillProperties)
-				return this .defaultFillProperties;
-
 			this .defaultFillProperties = new FillProperties (this .getPrivateScene ());
 
 			this .defaultFillProperties .hatched_ = false;
 			this .defaultFillProperties .setup ();
+
+			this .getDefaultFillProperties = function () { return this .defaultFillProperties; };
 
 			return this .defaultFillProperties;
 		},
@@ -61853,12 +61830,10 @@ function (Appearance,
 		},
 		getLineFillTextureProperties: function ()
 		{
-			if (this .lineFillTextureProperties)
-				return this .lineFillTextureProperties;
-
 			this .lineFillTextureProperties = new TextureProperties (this .getPrivateScene ());
-
 			this .lineFillTextureProperties .setup ();
+
+			this .getLineFillTextureProperties = function () { return this .lineFillTextureProperties; };
 
 			return this .lineFillTextureProperties;
 		},
@@ -63772,7 +63747,7 @@ function (Fields,
 		},
 		getShader: function (browser, shadow)
 		{
-			return shadow ? browser .getDefaultShadowShader () : browser .getDefaultShader ();
+			return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
 		},
 		setGeometryType: function (value)
 		{
@@ -66034,9 +66009,6 @@ function (Fields,
 		initialize: function () { },
 		getBBoxNode: function ()
 		{
-			if (this .bboxNode)
-				return this .bboxNode;
-
 			const bboxNode       = new Shape (this .getPrivateScene ());
 			const bboxGeometry   = new IndexedLineSet (this .getPrivateScene ());
 			const bboxColor      = new Color (this .getPrivateScene ());
@@ -66055,6 +66027,8 @@ function (Fields,
 			bboxNode       .setup ();
 
 			this .bboxNode = bboxNode;
+
+			this .getBBoxNode = function () { return this .bboxNode; };
 
 			return bboxNode;
 		}
@@ -68119,14 +68093,13 @@ function (BoxOptions,
           QuadSphereOptions)
 {
 "use strict";
-	
-	function getOptionNode (name, Type)
-	{
-		if (this [name])
-			return this [name];
 
+	function getOptionNode (fun, name, Type)
+	{
 		this [name] = new Type (this .getPrivateScene ());
 		this [name] .setup ();
+
+		this [fun] = function () { return this [name]; };
 
 		return this [name];
 	}
@@ -68139,19 +68112,19 @@ function (BoxOptions,
 		{ },
 		getBoxOptions: function ()
 		{
-			return getOptionNode .call (this, "boxOptions", BoxOptions);
+			return getOptionNode .call (this, "getBoxOptions", "boxOptions", BoxOptions);
 		},
 		getConeOptions: function ()
 		{
-			return getOptionNode .call (this, "coneOptions", ConeOptions);
+			return getOptionNode .call (this, "getConeOptions", "coneOptions", ConeOptions);
 		},
 		getCylinderOptions: function ()
 		{
-			return getOptionNode .call (this, "cylinderOptions", CylinderOptions);
+			return getOptionNode .call (this, "getCylinderOptions", "cylinderOptions", CylinderOptions);
 		},
 		getSphereOptions: function ()
 		{
-			return getOptionNode .call (this, "sphereOptions", QuadSphereOptions);
+			return getOptionNode .call (this, "getSphereOptions", "sphereOptions", QuadSphereOptions);
 		},
 	};
 
@@ -74965,18 +74938,14 @@ function (TextureProperties)
 		initialize: function () { },
 		getBackgroundSphereShader: function ()
 		{
-			if (this .backgroundSphereShader)
-				return this .backgroundSphereShader;
-
 			this .backgroundSphereShader = this .createShader ("BackgroundSphereShader", "Background", false);
+
+			this .getBackgroundSphereShader = function () { return this .backgroundSphereShader; };
 
 			return this .backgroundSphereShader;
 		},
 		getBackgroundTextureProperties: function ()
 		{
-			if (this .backgroundTextureProperties)
-				return this .backgroundTextureProperties;
-
 			this .backgroundTextureProperties = new TextureProperties (this .getPrivateScene ());
 
 			this .backgroundTextureProperties .boundaryModeS_       = "CLAMP_TO_EDGE";
@@ -74985,6 +74954,8 @@ function (TextureProperties)
 			this .backgroundTextureProperties .minificationFilter_  = "NICEST";
 			this .backgroundTextureProperties .magnificationFilter_ = "NICEST";
 			this .backgroundTextureProperties .setup ();
+
+			this .getBackgroundTextureProperties = function () { return this .backgroundTextureProperties; };
 
 			return this .backgroundTextureProperties;
 		},
@@ -91158,12 +91129,10 @@ function ($,
 		{ },
 		getDefaultFontStyle: function ()
 		{
-			if (this .defaultFontStyle)
-				return this .defaultFontStyle;
-
 			this .defaultFontStyle = new FontStyle (this .getPrivateScene ());
-
 			this .defaultFontStyle .setup ();
+
+			this .getDefaultFontStyle = function () { return this .defaultFontStyle; };
 
 			return this .defaultFontStyle;
 		},
@@ -91722,9 +91691,6 @@ function (TextureProperties,
 		},
 		getDefaultTextureProperties: function ()
 		{
-			if (this .defaultTextureProperties)
-				return this .defaultTextureProperties;
-
 			this .defaultTextureProperties = new TextureProperties (this .getPrivateScene ());
 			this .defaultTextureProperties .magnificationFilter_ = "NICEST";
 			this .defaultTextureProperties .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
@@ -91733,27 +91699,25 @@ function (TextureProperties,
 
 			this .defaultTextureProperties .setup ();
 
+			this .getDefaultTextureProperties = function () { return this .defaultTextureProperties; };
+
 			return this .defaultTextureProperties;
 		},
 		getDefaultTextureTransform: function ()
 		{
-			if (this .defaultTextureTransform)
-				return this .defaultTextureTransform;
-
 			this .defaultTextureTransform = new TextureTransform (this .getPrivateScene ());
-
 			this .defaultTextureTransform .setup ();
+
+			this .getDefaultTextureTransform = function () { return this .defaultTextureTransform; };
 
 			return this .defaultTextureTransform;
 		},
 		getDefaultTextureCoordinate: function ()
 		{
-			if (this .defaultTextureCoordinate)
-				return this .defaultTextureCoordinate;
-
 			this .defaultTextureCoordinate = new TextureCoordinate (this .getPrivateScene ());
-
 			this .defaultTextureCoordinate .setup ();
+
+			this .getDefaultTextureCoordinate = function () { return this .defaultTextureCoordinate; };
 
 			return this .defaultTextureCoordinate;
 		},
