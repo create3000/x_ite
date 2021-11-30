@@ -369,12 +369,12 @@ function ($,
 
 							if (title .length)
 							{
-								$("<h1></h1>") .text (title) .appendTo (div);
+								$("<h1></h1>") .html (title) .appendTo (div);
 							}
 
 							for (var i = 0, length = info .length; i < length; ++ i)
 							{
-								$("<p></p>") .text (info [i]) .appendTo (div);
+								$("<p></p>") .html (info [i]) .appendTo (div);
 							}
 
 							div .on ("click", function ()
