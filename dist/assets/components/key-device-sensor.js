@@ -59,15 +59,15 @@ define ('x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext',[
 function (Fields)
 {
 "use strict";
-	
+
 	function X3DKeyDeviceSensorContext () { }
 
 	X3DKeyDeviceSensorContext .prototype =
 	{
 		initialize: function ()
 		{
-			this .getElement () .bind ("keydown.X3DKeyDeviceSensorContext", this .keydown_X3DKeyDeviceSensorContext .bind (this));
-			this .getElement () .bind ("keyup.X3DKeyDeviceSensorContext",   this .keyup_X3DKeyDeviceSensorContext   .bind (this));
+			this .getSurface () .bind ("keydown.X3DKeyDeviceSensorContext", this .keydown_X3DKeyDeviceSensorContext .bind (this));
+			this .getSurface () .bind ("keyup.X3DKeyDeviceSensorContext",   this .keyup_X3DKeyDeviceSensorContext   .bind (this));
 		},
 		addKeyDeviceSensorNode: function (keyDeviceSensorNode)
 		{

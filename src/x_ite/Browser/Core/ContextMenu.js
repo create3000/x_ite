@@ -122,7 +122,7 @@ function ($,
 								return;
 
 							browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
-							browser .getElement () .focus ();
+							browser .getSurface () .focus ();
 						}
 						.bind (this, currentViewpoint),
 					},
@@ -136,7 +136,7 @@ function ($,
 
 							browser .viewer_ = viewer;
 							browser .getNotification () .string_ = _(this .getViewerName (viewer));
-							browser .getElement () .focus ();
+							browser .getSurface () .focus ();
 						}
 						.bind (this, currentViewer),
 					},
@@ -314,7 +314,7 @@ function ($,
 								$("body > ul.context-menu-list") .fadeOut (500);
 
 								browser .getBrowserTimings () .setEnabled (! browser .getBrowserTimings () .getEnabled ());
-								browser .getElement () .focus ();
+								browser .getSurface () .focus ();
 							}
 							.bind (this),
 						},
@@ -331,6 +331,38 @@ function ($,
 						.bind (this),
 					},
 					"separator3": "--------",
+					"world-info": {
+						name: _("Show World Info"),
+						className: "context-menu-icon x_ite-private-icon-world-info",
+						callback: function ()
+						{
+							$("body > ul.context-menu-list") .fadeOut (500);
+
+							const
+								priv      = browser .getElement () .find (".x_ite-private-browser"),
+								div       = $("<div></div>") .addClass ("x_ite-private-world-info") .prependTo (priv),
+								worldInfo = browser .getExecutionContext () .getWorldInfo (),
+								title     = worldInfo .title_ .getValue (),
+								info      = worldInfo .info_;
+
+							$("<span></span>") .text ("World Info") .appendTo (div);
+
+							if (title .length)
+							{
+								$("<h1></h1>") .text (title) .appendTo (div);
+							}
+
+							for (var i = 0, length = info .length; i < length; ++ i)
+							{
+								$("<p></p>") .text (info [i]) .appendTo (div);
+							}
+
+							div .on ("click", function ()
+							{
+								div .remove ();
+							});
+						},
+					},
 					"about": {
 						name: _("About X_ITE"),
 						className: "context-menu-icon x_ite-private-icon-help-about",
@@ -358,6 +390,11 @@ function ($,
 			if (!(browser .getCurrentViewer () == "EXAMINE" && browser .getActiveViewpoint () .getTypeName () !== "GeoViewpoint"))
 			{
 				delete menu .items ["straighten-horizon"];
+			}
+
+			if (!browser .getExecutionContext () .getWorldInfo ())
+			{
+				delete menu .items ["world-info"];
 			}
 
 			return menu;
@@ -397,7 +434,7 @@ function ($,
 						$("body > ul.context-menu-list") .fadeOut (500);
 
 						browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
-						browser .getElement () .focus ();
+						browser .getSurface () .focus ();
 					}
 					.bind (this, viewpoint),
 				};
@@ -431,7 +468,7 @@ function ($,
 
 						browser .viewer_ = viewer;
 						browser .getNotification () .string_ = _(this .getViewerName (viewer));
-						browser .getElement () .focus ();
+						browser .getSurface () .focus ();
 					}
 					.bind (this, viewer),
 				};

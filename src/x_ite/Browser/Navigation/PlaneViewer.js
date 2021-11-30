@@ -99,7 +99,7 @@ function ($,
 
 			var
 			   browser = this .getBrowser (),
-			   element = browser .getElement ();
+			   element = browser .getSurface ();
 
 			element .bind ("mousedown.PlaneViewer",  this .mousedown  .bind (this));
 			element .bind ("mouseup.PlaneViewer",    this .mouseup    .bind (this));
@@ -114,7 +114,7 @@ function ($,
 			this .pressTime = performance .now ();
 
 			var
-				offset = this .getBrowser () .getElement () .offset (),
+				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -129,7 +129,7 @@ function ($,
 
 					this .button = event .button;
 
-					this .getBrowser () .getElement () .unbind ("mousemove.PlaneViewer");
+					this .getBrowser () .getSurface () .unbind ("mousemove.PlaneViewer");
 					$(document) .bind ("mouseup.PlaneViewer"   + this .getId (), this .mouseup .bind (this));
 					$(document) .bind ("mousemove.PlaneViewer" + this .getId (), this .mousemove .bind (this));
 
@@ -156,7 +156,7 @@ function ($,
 			this .button = -1;
 
 			$(document) .unbind (".PlaneViewer" + this .getId ());
-			this .getBrowser () .getElement () .bind ("mousemove.PlaneViewer", this .mousemove .bind (this));
+			this .getBrowser () .getSurface () .bind ("mousemove.PlaneViewer", this .mousemove .bind (this));
 
 			this .getBrowser () .setCursor ("DEFAULT");
 
@@ -165,7 +165,7 @@ function ($,
 		mousemove: function (event)
 		{
 			var
-				offset = this .getBrowser () .getElement () .offset (),
+				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -201,7 +201,7 @@ function ($,
 			event .stopImmediatePropagation ();
 
 			var
-				offset = this .getBrowser () .getElement () .offset (),
+				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -246,7 +246,7 @@ function ($,
 		},
 		dispose: function ()
 		{
-			this .getBrowser () .getElement () .unbind (".PlaneViewer");
+			this .getBrowser () .getSurface () .unbind (".PlaneViewer");
 			$(document) .unbind (".PlaneViewer" + this .getId ());
 		},
 	});

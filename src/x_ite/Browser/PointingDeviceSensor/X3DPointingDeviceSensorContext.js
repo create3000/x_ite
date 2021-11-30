@@ -73,7 +73,7 @@ function ($,
           Algorithm)
 {
 "use strict";
-	
+
 	var line = new Line3 (Vector3 .Zero, Vector3 .Zero);
 
 	function X3DPointingDeviceSensorContext ()
@@ -107,7 +107,7 @@ function ($,
 		{
 			this .cursorType = value;
 
-			var div = this .getElement () .find (".x_ite-private-surface");
+			var div = this .getSurface ();
 
 			switch (value)
 			{
@@ -241,7 +241,7 @@ function ($,
 			}
 
 			var t0 = performance .now ();
-		
+
 			this .pointer .set (x, y);
 
 			// Clear hits.
@@ -249,7 +249,7 @@ function ($,
 			this .hits .length = 0;
 
 			// Pick.
-			
+
 			this .getWorld () .traverse (TraverseType .POINTER, null);
 
 			// Picking end.

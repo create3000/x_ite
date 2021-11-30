@@ -95,7 +95,7 @@ function ($,
 			this .startTime     = 0;
 			this .frames        = 0;
 
-			this .element = $("<div></div>") .addClass ("x_ite-private-browser-timings") .appendTo (this .getBrowser () .getElement () .find (".x_ite-private-surface"));
+			this .element = $("<div></div>") .addClass ("x_ite-private-browser-timings") .appendTo (this .getBrowser () .getSurface ());
 			this .table   = $("<table></table>") .appendTo (this .element);
 			this .header  = $("<thead></thead>") .append ($("<tr></tr>") .append ($("<th colspan='2'></th>"))) .appendTo (this .table);
 			this .body    = $("<tbody></tbody>") .appendTo (this .table);

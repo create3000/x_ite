@@ -126,7 +126,7 @@ function ($,
 
 			var
 			   browser = this .getBrowser (),
-			   element = browser .getElement ();
+			   element = browser .getSurface ();
 
 			// Disconnect from spin.
 
@@ -179,7 +179,7 @@ function ($,
 			this .pressTime = performance .now ();
 
 			var
-				offset = this .getBrowser () .getElement () .offset (),
+				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -294,7 +294,7 @@ function ($,
 			event .stopImmediatePropagation ();
 
 			var
-				element = this .getBrowser () .getElement (),
+				element = this .getBrowser () .getSurface (),
 				offset  = element .offset (),
 				x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
 				y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
@@ -310,7 +310,7 @@ function ($,
 			return function (event)
 			{
 				var
-					offset = this .getBrowser () .getElement () .offset (),
+					offset = this .getBrowser () .getSurface () .offset (),
 					x      = event .pageX - offset .left,
 					y      = event .pageY - offset .top;
 
@@ -808,7 +808,7 @@ function ($,
 
 			this .disconnect ();
 			browser .activeViewpoint_ .removeInterest ("set_activeViewpoint__", this);
-			browser .getElement () .unbind (".ExamineViewer");
+			browser .getSurface () .unbind (".ExamineViewer");
 			$(document) .unbind (".ExamineViewer" + this .getId ());
 		},
 	});

@@ -187,7 +187,7 @@ function ($,
 
 		// Get canvas & context.
 
-		var browser      = $("<div></div>") .addClass ("x_ite-private-browser")  .prependTo (this .element);
+		var browser      = $("<div></div>") .addClass ("x_ite-private-browser") .prependTo (this .element);
 		var splashScreen = $("<div></div>") .addClass ("x_ite-private-splash-screen") .appendTo (browser);
 		var spinner      = $("<div></div>") .addClass ("x_ite-private-spinner")  .appendTo (splashScreen);
 		var progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen);
@@ -293,8 +293,8 @@ function ($,
 			this .setBrowserEventHandler ("onshutdown");
 			this .setBrowserEventHandler ("onerror");
 
-			this .getElement () .bind ("keydown.X3DCoreContext", this .keydown_X3DCoreContext .bind (this));
-			this .getElement () .bind ("keyup.X3DCoreContext",   this .keyup_X3DCoreContext   .bind (this));
+			this .getSurface () .bind ("keydown.X3DCoreContext", this .keydown_X3DCoreContext .bind (this));
+			this .getSurface () .bind ("keyup.X3DCoreContext",   this .keyup_X3DCoreContext   .bind (this));
 		},
 		getDebug: function ()
 		{

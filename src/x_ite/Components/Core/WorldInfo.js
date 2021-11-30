@@ -89,6 +89,18 @@ function (Fields,
 		{
 			return "children";
 		},
+		initialize: function ()
+		{
+			X3DInfoNode .prototype .initialize .call (this);
+
+			this .getExecutionContext () .addWorldInfo (this);
+		},
+		dispose: function ()
+		{
+			this .getExecutionContext () .removeWorldInfo (this);
+
+			X3DInfoNode .prototype .dispose .call (this);
+		},
 	});
 
 	return WorldInfo;

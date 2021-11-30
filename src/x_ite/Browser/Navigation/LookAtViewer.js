@@ -111,7 +111,7 @@ function ($,
 
 			var
 			   browser = this .getBrowser (),
-			   element = browser .getElement ();
+			   element = browser .getSurface ();
 
 			// Bind pointing device events.
 
@@ -145,7 +145,7 @@ function ($,
 			this .pressTime = performance .now ();
 
 			var
-				offset = this .getBrowser () .getElement () .offset (),
+				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -206,7 +206,7 @@ function ($,
 			event .stopImmediatePropagation ();
 
 			var
-				element = this .getBrowser () .getElement (),
+				element = this .getBrowser () .getSurface (),
 				offset  = element .offset (),
 				x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
 				y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
@@ -221,7 +221,7 @@ function ($,
 			this .event = event;
 
 			var
-				offset = this .getBrowser () .getElement () .offset (),
+				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -518,7 +518,7 @@ function ($,
 		},
 		dispose: function ()
 		{
-			this .getBrowser () .getElement () .unbind (".LookAtViewer");
+			this .getBrowser () .getSurface () .unbind (".LookAtViewer");
 			$(document) .unbind (".LookAtViewer" + this .getId ());
 		},
 	});

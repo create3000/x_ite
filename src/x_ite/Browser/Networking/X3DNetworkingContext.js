@@ -123,6 +123,8 @@ function (Fields,
 			{
 				this .resetLoadCount ();
 
+				this .getElement () .find (".x_ite-private-world-info") .remove ();
+
 				if (this .getBrowserOptions () .getSplashScreen ())
 				{
 					this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeOut (0);

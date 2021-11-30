@@ -74,7 +74,7 @@ function ($,
 		},
 		initialize: function ()
 		{
-			var element = this .getBrowser () .getElement ();
+			var element = this .getBrowser () .getSurface ();
 
 			//element .bind ("mousewheel.PointingDevice", this .mousewheel .bind (this));
 			element .bind ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
@@ -94,7 +94,7 @@ function ($,
 		{
 			var browser = this .getBrowser ();
 
-			browser .getElement () .focus ();
+			browser .getSurface () .focus ();
 
 			if (browser .getShiftKey () && browser .getControlKey ())
 				return;
@@ -102,7 +102,7 @@ function ($,
 			if (event .button === 0)
 			{
 				var
-					element = browser .getElement (),
+					element = browser .getSurface (),
 					offset  = element .offset (),
 					x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
 					y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
@@ -132,7 +132,7 @@ function ($,
 			{
 				var
 					browser = this .getBrowser (),
-					element = browser .getElement (),
+					element = browser .getSurface (),
 					offset  = element .offset (),
 					x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
 					y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
@@ -166,7 +166,7 @@ function ($,
 			this .motionTime = browser .getCurrentTime ();
 
 			var
-				element = browser .getElement (),
+				element = browser .getSurface (),
 				offset  = element .offset (),
 				x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
 				y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));

@@ -1,4 +1,4 @@
-/* X_ITE v4.6.25a-1055 */
+/* X_ITE v4.6.25a-1056 */
 
 (function () {
 
@@ -27984,7 +27984,7 @@ function ($,
           X3DBaseNode)
 {
 "use strict";
-	
+
 	$.fn.textWidth = function (string)
 	{
 		var children = $(this) .children ();
@@ -28021,7 +28021,7 @@ function ($,
 
 			this .element = $("<div></div>")
 				.addClass ("x_ite-private-notification")
-				.appendTo (this .getBrowser () .getElement () .find (".x_ite-private-surface"))
+				.appendTo (this .getBrowser () .getSurface ())
 				.animate ({ width: 0 });
 
 			$("<span></span>") .appendTo (this .element);
@@ -28038,7 +28038,7 @@ function ($,
 
 			this .element .children () .text (this .string_ .getValue ());
 
-			this .element 
+			this .element
 				.stop (true, true)
 				.fadeIn (0)
 				.animate ({ width: this .element .textWidth () })
@@ -28697,7 +28697,7 @@ function ($,
 			this .startTime     = 0;
 			this .frames        = 0;
 
-			this .element = $("<div></div>") .addClass ("x_ite-private-browser-timings") .appendTo (this .getBrowser () .getElement () .find (".x_ite-private-surface"));
+			this .element = $("<div></div>") .addClass ("x_ite-private-browser-timings") .appendTo (this .getBrowser () .getSurface ());
 			this .table   = $("<table></table>") .appendTo (this .element);
 			this .header  = $("<thead></thead>") .append ($("<tr></tr>") .append ($("<th colspan='2'></th>"))) .appendTo (this .table);
 			this .body    = $("<tbody></tbody>") .appendTo (this .table);
@@ -31121,7 +31121,7 @@ function ($,
 								return;
 
 							browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
-							browser .getElement () .focus ();
+							browser .getSurface () .focus ();
 						}
 						.bind (this, currentViewpoint),
 					},
@@ -31135,7 +31135,7 @@ function ($,
 
 							browser .viewer_ = viewer;
 							browser .getNotification () .string_ = _(this .getViewerName (viewer));
-							browser .getElement () .focus ();
+							browser .getSurface () .focus ();
 						}
 						.bind (this, currentViewer),
 					},
@@ -31313,7 +31313,7 @@ function ($,
 								$("body > ul.context-menu-list") .fadeOut (500);
 
 								browser .getBrowserTimings () .setEnabled (! browser .getBrowserTimings () .getEnabled ());
-								browser .getElement () .focus ();
+								browser .getSurface () .focus ();
 							}
 							.bind (this),
 						},
@@ -31330,6 +31330,38 @@ function ($,
 						.bind (this),
 					},
 					"separator3": "--------",
+					"world-info": {
+						name: _("Show World Info"),
+						className: "context-menu-icon x_ite-private-icon-world-info",
+						callback: function ()
+						{
+							$("body > ul.context-menu-list") .fadeOut (500);
+
+							const
+								priv      = browser .getElement () .find (".x_ite-private-browser"),
+								div       = $("<div></div>") .addClass ("x_ite-private-world-info") .prependTo (priv),
+								worldInfo = browser .getExecutionContext () .getWorldInfo (),
+								title     = worldInfo .title_ .getValue (),
+								info      = worldInfo .info_;
+
+							$("<span></span>") .text ("World Info") .appendTo (div);
+
+							if (title .length)
+							{
+								$("<h1></h1>") .text (title) .appendTo (div);
+							}
+
+							for (var i = 0, length = info .length; i < length; ++ i)
+							{
+								$("<p></p>") .text (info [i]) .appendTo (div);
+							}
+
+							div .on ("click", function ()
+							{
+								div .remove ();
+							});
+						},
+					},
 					"about": {
 						name: _("About X_ITE"),
 						className: "context-menu-icon x_ite-private-icon-help-about",
@@ -31357,6 +31389,11 @@ function ($,
 			if (!(browser .getCurrentViewer () == "EXAMINE" && browser .getActiveViewpoint () .getTypeName () !== "GeoViewpoint"))
 			{
 				delete menu .items ["straighten-horizon"];
+			}
+
+			if (!browser .getExecutionContext () .getWorldInfo ())
+			{
+				delete menu .items ["world-info"];
 			}
 
 			return menu;
@@ -31396,7 +31433,7 @@ function ($,
 						$("body > ul.context-menu-list") .fadeOut (500);
 
 						browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
-						browser .getElement () .focus ();
+						browser .getSurface () .focus ();
 					}
 					.bind (this, viewpoint),
 				};
@@ -31430,7 +31467,7 @@ function ($,
 
 						browser .viewer_ = viewer;
 						browser .getNotification () .string_ = _(this .getViewerName (viewer));
-						browser .getElement () .focus ();
+						browser .getSurface () .focus ();
 					}
 					.bind (this, viewer),
 				};
@@ -32726,6 +32763,7 @@ function (Fields,
 		this ._externprotos         = new ExternProtoDeclarationArray ();
 		this ._routes               = new RouteArray ();
 		this ._routeIndex           = new Map ();
+		this ._worldInfoNodes       = new Set ();
 	}
 
 	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -33288,6 +33326,23 @@ function (Fields,
 		getRoutes: function ()
 		{
 			return this ._routes;
+		},
+		getWorldInfo: function ()
+		{
+			for (const worldInfoNode of this ._worldInfoNodes)
+			{
+				return worldInfoNode;
+			}
+
+			return null;
+		},
+		addWorldInfo: function (worldInfoNode)
+		{
+			this ._worldInfoNodes .add (worldInfoNode);
+		},
+		removeWorldInfo: function (worldInfoNode)
+		{
+			this ._worldInfoNodes .delete (worldInfoNode);
 		},
 		changeViewpoint: function (name)
 		{
@@ -40568,7 +40623,7 @@ function ($,
 
 		// Get canvas & context.
 
-		var browser      = $("<div></div>") .addClass ("x_ite-private-browser")  .prependTo (this .element);
+		var browser      = $("<div></div>") .addClass ("x_ite-private-browser") .prependTo (this .element);
 		var splashScreen = $("<div></div>") .addClass ("x_ite-private-splash-screen") .appendTo (browser);
 		var spinner      = $("<div></div>") .addClass ("x_ite-private-spinner")  .appendTo (splashScreen);
 		var progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen);
@@ -40674,8 +40729,8 @@ function ($,
 			this .setBrowserEventHandler ("onshutdown");
 			this .setBrowserEventHandler ("onerror");
 
-			this .getElement () .bind ("keydown.X3DCoreContext", this .keydown_X3DCoreContext .bind (this));
-			this .getElement () .bind ("keyup.X3DCoreContext",   this .keyup_X3DCoreContext   .bind (this));
+			this .getSurface () .bind ("keydown.X3DCoreContext", this .keydown_X3DCoreContext .bind (this));
+			this .getSurface () .bind ("keyup.X3DCoreContext",   this .keyup_X3DCoreContext   .bind (this));
 		},
 		getDebug: function ()
 		{
@@ -41532,6 +41587,8 @@ function (Fields,
 			if (value)
 			{
 				this .resetLoadCount ();
+
+				this .getElement () .find (".x_ite-private-world-info") .remove ();
 
 				if (this .getBrowserOptions () .getSplashScreen ())
 				{
@@ -68157,7 +68214,7 @@ function ($,
 		},
 		initialize: function ()
 		{
-			var element = this .getBrowser () .getElement ();
+			var element = this .getBrowser () .getSurface ();
 
 			//element .bind ("mousewheel.PointingDevice", this .mousewheel .bind (this));
 			element .bind ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
@@ -68177,7 +68234,7 @@ function ($,
 		{
 			var browser = this .getBrowser ();
 
-			browser .getElement () .focus ();
+			browser .getSurface () .focus ();
 
 			if (browser .getShiftKey () && browser .getControlKey ())
 				return;
@@ -68185,7 +68242,7 @@ function ($,
 			if (event .button === 0)
 			{
 				var
-					element = browser .getElement (),
+					element = browser .getSurface (),
 					offset  = element .offset (),
 					x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
 					y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
@@ -68215,7 +68272,7 @@ function ($,
 			{
 				var
 					browser = this .getBrowser (),
-					element = browser .getElement (),
+					element = browser .getSurface (),
 					offset  = element .offset (),
 					x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
 					y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
@@ -68249,7 +68306,7 @@ function ($,
 			this .motionTime = browser .getCurrentTime ();
 
 			var
-				element = browser .getElement (),
+				element = browser .getSurface (),
 				offset  = element .offset (),
 				x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
 				y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
@@ -68530,7 +68587,7 @@ function ($,
           Algorithm)
 {
 "use strict";
-	
+
 	var line = new Line3 (Vector3 .Zero, Vector3 .Zero);
 
 	function X3DPointingDeviceSensorContext ()
@@ -68564,7 +68621,7 @@ function ($,
 		{
 			this .cursorType = value;
 
-			var div = this .getElement () .find (".x_ite-private-surface");
+			var div = this .getSurface ();
 
 			switch (value)
 			{
@@ -68698,7 +68755,7 @@ function ($,
 			}
 
 			var t0 = performance .now ();
-		
+
 			this .pointer .set (x, y);
 
 			// Clear hits.
@@ -68706,7 +68763,7 @@ function ($,
 			this .hits .length = 0;
 
 			// Pick.
-			
+
 			this .getWorld () .traverse (TraverseType .POINTER, null);
 
 			// Picking end.
@@ -69986,7 +70043,7 @@ function ($,
 
 			var
 			   browser = this .getBrowser (),
-			   element = browser .getElement ();
+			   element = browser .getSurface ();
 
 			// Disconnect from spin.
 
@@ -70039,7 +70096,7 @@ function ($,
 			this .pressTime = performance .now ();
 
 			var
-				offset = this .getBrowser () .getElement () .offset (),
+				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -70154,7 +70211,7 @@ function ($,
 			event .stopImmediatePropagation ();
 
 			var
-				element = this .getBrowser () .getElement (),
+				element = this .getBrowser () .getSurface (),
 				offset  = element .offset (),
 				x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
 				y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
@@ -70170,7 +70227,7 @@ function ($,
 			return function (event)
 			{
 				var
-					offset = this .getBrowser () .getElement () .offset (),
+					offset = this .getBrowser () .getSurface () .offset (),
 					x      = event .pageX - offset .left,
 					y      = event .pageY - offset .top;
 
@@ -70668,7 +70725,7 @@ function ($,
 
 			this .disconnect ();
 			browser .activeViewpoint_ .removeInterest ("set_activeViewpoint__", this);
-			browser .getElement () .unbind (".ExamineViewer");
+			browser .getSurface () .unbind (".ExamineViewer");
 			$(document) .unbind (".ExamineViewer" + this .getId ());
 		},
 	});
@@ -70790,7 +70847,7 @@ function ($,
 
 			var
 			   browser = this .getBrowser (),
-			   element = browser .getElement ();
+			   element = browser .getSurface ();
 
 			// Bind pointing device events.
 
@@ -70827,7 +70884,7 @@ function ($,
 			this .event = event;
 
 			var
-				offset = this .getBrowser () .getElement () .offset (),
+				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -70933,7 +70990,7 @@ function ($,
 			this .event = event;
 
 			var
-				offset = this .getBrowser () .getElement () .offset (),
+				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -71427,7 +71484,7 @@ function ($,
 		{
 			this .disconnect ();
 			this .getBrowser () .controlKey_ .removeInterest ("set_controlKey_", this);
-			this .getBrowser () .getElement () .unbind (".X3DFlyViewer");
+			this .getBrowser () .getSurface () .unbind (".X3DFlyViewer");
 			$(document) .unbind (".X3DFlyViewer" + this .getId ());
 		},
 	});
@@ -71976,7 +72033,7 @@ function ($,
 
 			var
 			   browser = this .getBrowser (),
-			   element = browser .getElement ();
+			   element = browser .getSurface ();
 
 			element .bind ("mousedown.PlaneViewer",  this .mousedown  .bind (this));
 			element .bind ("mouseup.PlaneViewer",    this .mouseup    .bind (this));
@@ -71991,7 +72048,7 @@ function ($,
 			this .pressTime = performance .now ();
 
 			var
-				offset = this .getBrowser () .getElement () .offset (),
+				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -72006,7 +72063,7 @@ function ($,
 
 					this .button = event .button;
 
-					this .getBrowser () .getElement () .unbind ("mousemove.PlaneViewer");
+					this .getBrowser () .getSurface () .unbind ("mousemove.PlaneViewer");
 					$(document) .bind ("mouseup.PlaneViewer"   + this .getId (), this .mouseup .bind (this));
 					$(document) .bind ("mousemove.PlaneViewer" + this .getId (), this .mousemove .bind (this));
 
@@ -72033,7 +72090,7 @@ function ($,
 			this .button = -1;
 
 			$(document) .unbind (".PlaneViewer" + this .getId ());
-			this .getBrowser () .getElement () .bind ("mousemove.PlaneViewer", this .mousemove .bind (this));
+			this .getBrowser () .getSurface () .bind ("mousemove.PlaneViewer", this .mousemove .bind (this));
 
 			this .getBrowser () .setCursor ("DEFAULT");
 
@@ -72042,7 +72099,7 @@ function ($,
 		mousemove: function (event)
 		{
 			var
-				offset = this .getBrowser () .getElement () .offset (),
+				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -72078,7 +72135,7 @@ function ($,
 			event .stopImmediatePropagation ();
 
 			var
-				offset = this .getBrowser () .getElement () .offset (),
+				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -72123,7 +72180,7 @@ function ($,
 		},
 		dispose: function ()
 		{
-			this .getBrowser () .getElement () .unbind (".PlaneViewer");
+			this .getBrowser () .getSurface () .unbind (".PlaneViewer");
 			$(document) .unbind (".PlaneViewer" + this .getId ());
 		},
 	});
@@ -72324,7 +72381,7 @@ function ($,
 
 			var
 			   browser = this .getBrowser (),
-			   element = browser .getElement ();
+			   element = browser .getSurface ();
 
 			// Bind pointing device events.
 
@@ -72358,7 +72415,7 @@ function ($,
 			this .pressTime = performance .now ();
 
 			var
-				offset = this .getBrowser () .getElement () .offset (),
+				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -72419,7 +72476,7 @@ function ($,
 			event .stopImmediatePropagation ();
 
 			var
-				element = this .getBrowser () .getElement (),
+				element = this .getBrowser () .getSurface (),
 				offset  = element .offset (),
 				x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
 				y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
@@ -72434,7 +72491,7 @@ function ($,
 			this .event = event;
 
 			var
-				offset = this .getBrowser () .getElement () .offset (),
+				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -72731,7 +72788,7 @@ function ($,
 		},
 		dispose: function ()
 		{
-			this .getBrowser () .getElement () .unbind (".LookAtViewer");
+			this .getBrowser () .getSurface () .unbind (".LookAtViewer");
 			$(document) .unbind (".LookAtViewer" + this .getId ());
 		},
 	});
@@ -97000,6 +97057,18 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "children";
+		},
+		initialize: function ()
+		{
+			X3DInfoNode .prototype .initialize .call (this);
+
+			this .getExecutionContext () .addWorldInfo (this);
+		},
+		dispose: function ()
+		{
+			this .getExecutionContext () .removeWorldInfo (this);
+
+			X3DInfoNode .prototype .dispose .call (this);
 		},
 	});
 

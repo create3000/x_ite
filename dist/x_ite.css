@@ -1,4 +1,4 @@
-/* X_ITE v4.6.25a-1055 */
+/* X_ITE v4.6.25a-1056 */
 @charset "utf-8";
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
 X3DCanvas .x_ite-private-splash-screen {
@@ -232,6 +232,53 @@ X3DCanvas .x_ite-private-browser-timings button {
 	pointer-events: all;
 	cursor: pointer;
 }
+X3DCanvas .x_ite-private-world-info {
+	overflow-y: scroll;
+	z-index: 90;
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: #1b1d21da;
+	margin: 21pt;
+	border: 4px solid rgba(60,60,60,0.61803);
+	border-radius: 15px;
+	padding: 21pt;
+}
+X3DCanvas .x_ite-private-world-info h1,
+X3DCanvas .x_ite-private-world-info p {
+	box-sizing: border-box;
+	outline: 0px;
+	margin: 0px;
+	border: 0px;
+	border-radius: 0px;
+	padding: 0;
+	background: none;
+	color: white;
+	font-family: PT Sans, sans-serif;
+	font-size: inherit;
+	font-weight: normal;
+	font-style: normal;
+	letter-spacing: unset;
+	line-height: 1.2;
+	text-align: left;
+}
+X3DCanvas .x_ite-private-world-info span {
+	display: block;
+	font-weight: bold;
+	font-style: italic;
+	font-size: 9pt;
+}
+X3DCanvas .x_ite-private-world-info h1 {
+	margin: 0.3em 0px 1em 0px;
+	font-weight: bold;
+	font-size: 21pt;
+}
+X3DCanvas .x_ite-private-world-info p {
+	margin: 1em 0px 1em 0px;
+	font-size: 14pt;
+}
 /*!
  * jQuery contextMenu - Plugin for simple contextMenu handling
  *
@@ -425,6 +472,9 @@ X3DCanvas .x_ite-private-browser-timings button {
 }
 .x_ite-private-icon-leave-fullscreen {
 	background: url("assets/images/gtk-leave-fullscreen.png");
+}
+.x_ite-private-icon-world-info {
+	background: url("assets/images/go-next.png");
 }
 .x_ite-private-icon-help-about {
 	background: url("assets/images/help-about.png");

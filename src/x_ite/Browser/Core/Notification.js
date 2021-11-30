@@ -57,7 +57,7 @@ function ($,
           X3DBaseNode)
 {
 "use strict";
-	
+
 	$.fn.textWidth = function (string)
 	{
 		var children = $(this) .children ();
@@ -94,7 +94,7 @@ function ($,
 
 			this .element = $("<div></div>")
 				.addClass ("x_ite-private-notification")
-				.appendTo (this .getBrowser () .getElement () .find (".x_ite-private-surface"))
+				.appendTo (this .getBrowser () .getSurface ())
 				.animate ({ width: 0 });
 
 			$("<span></span>") .appendTo (this .element);
@@ -111,7 +111,7 @@ function ($,
 
 			this .element .children () .text (this .string_ .getValue ());
 
-			this .element 
+			this .element
 				.stop (true, true)
 				.fadeIn (0)
 				.animate ({ width: this .element .textWidth () })

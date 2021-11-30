@@ -112,7 +112,7 @@ function ($,
 
 			var
 			   browser = this .getBrowser (),
-			   element = browser .getElement ();
+			   element = browser .getSurface ();
 
 			// Bind pointing device events.
 
@@ -149,7 +149,7 @@ function ($,
 			this .event = event;
 
 			var
-				offset = this .getBrowser () .getElement () .offset (),
+				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -255,7 +255,7 @@ function ($,
 			this .event = event;
 
 			var
-				offset = this .getBrowser () .getElement () .offset (),
+				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,
 				y      = event .pageY - offset .top;
 
@@ -749,7 +749,7 @@ function ($,
 		{
 			this .disconnect ();
 			this .getBrowser () .controlKey_ .removeInterest ("set_controlKey_", this);
-			this .getBrowser () .getElement () .unbind (".X3DFlyViewer");
+			this .getBrowser () .getSurface () .unbind (".X3DFlyViewer");
 			$(document) .unbind (".X3DFlyViewer" + this .getId ());
 		},
 	});

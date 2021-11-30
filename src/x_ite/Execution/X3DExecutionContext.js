@@ -96,6 +96,7 @@ function (Fields,
 		this ._externprotos         = new ExternProtoDeclarationArray ();
 		this ._routes               = new RouteArray ();
 		this ._routeIndex           = new Map ();
+		this ._worldInfoNodes       = new Set ();
 	}
 
 	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -658,6 +659,23 @@ function (Fields,
 		getRoutes: function ()
 		{
 			return this ._routes;
+		},
+		getWorldInfo: function ()
+		{
+			for (const worldInfoNode of this ._worldInfoNodes)
+			{
+				return worldInfoNode;
+			}
+
+			return null;
+		},
+		addWorldInfo: function (worldInfoNode)
+		{
+			this ._worldInfoNodes .add (worldInfoNode);
+		},
+		removeWorldInfo: function (worldInfoNode)
+		{
+			this ._worldInfoNodes .delete (worldInfoNode);
 		},
 		changeViewpoint: function (name)
 		{
