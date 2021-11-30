@@ -1,4 +1,4 @@
-/* X_ITE v4.6.25a-1057 */
+/* X_ITE v4.6.25a-1058 */
 
 (function () {
 
@@ -31086,7 +31086,7 @@ function ($,
 		{
 			X3DBaseNode .prototype .initialize .call (this);
 
-			var browser = this .getBrowser ();
+			const browser = this .getBrowser ();
 
 			if (! browser .getBrowserOptions () .getContextMenu ())
 				return;
@@ -31094,6 +31094,26 @@ function ($,
 			$.contextMenu ({
 				selector: ".x_ite-private-browser-" + browser .getId (),
 				build: this .build .bind (this),
+				events:
+				{
+					show: function (options)
+					{
+						if (browser .getElement () .fullScreen ())
+						{
+							browser .getElement () .append ($(".x_ite-private-menu"));
+
+							setTimeout (function ()
+							{
+								browser .getElement () .append ($("#context-menu-layer") .css ({
+									position: "absolute",
+									width: "100%",
+									height: "100%",
+								}));
+							},
+							1);
+						}
+					},
+				},
 			});
 		},
 		build: function (trigger, event)
@@ -31115,7 +31135,7 @@ function ($,
 						items: this .getViewpoints (),
 						callback: function (viewpoint)
 						{
-							$("body > ul.context-menu-list") .fadeOut (500);
+							$(".x_ite-private-menu") .fadeOut (500);
 
 							if (! viewpoint)
 								return;
@@ -31131,7 +31151,7 @@ function ($,
 						className: "context-menu-icon x_ite-private-icon-" + currentViewer .toLowerCase () + "-viewer",
 						callback: function (viewer)
 						{
-							$("body > ul.context-menu-list") .fadeOut (500);
+							$(".x_ite-private-menu") .fadeOut (500);
 
 							browser .viewer_ = viewer;
 							browser .getNotification () .string_ = _(this .getViewerName (viewer));
@@ -31150,7 +31170,7 @@ function ($,
 						events: {
 							click: function ()
 							{
-								$("body > ul.context-menu-list") .fadeOut (500);
+								$(".x_ite-private-menu") .fadeOut (500);
 
 								var straightenHorizon = ! browser .getBrowserOption ("StraightenHorizon");
 
@@ -31186,7 +31206,7 @@ function ($,
 								events: {
 									click: function ()
 									{
-										$("body > ul.context-menu-list") .fadeOut (500);
+										$(".x_ite-private-menu") .fadeOut (500);
 
 										browser .setBrowserOption ("PrimitiveQuality", "HIGH");
 										browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("high");
@@ -31202,7 +31222,7 @@ function ($,
 								events: {
 									click: function ()
 									{
-										$("body > ul.context-menu-list") .fadeOut (500);
+										$(".x_ite-private-menu") .fadeOut (500);
 
 										browser .setBrowserOption ("PrimitiveQuality", "MEDIUM");
 										browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("medium");
@@ -31218,7 +31238,7 @@ function ($,
 								events: {
 									click: function ()
 									{
-										$("body > ul.context-menu-list") .fadeOut (500);
+										$(".x_ite-private-menu") .fadeOut (500);
 
 										browser .setBrowserOption ("PrimitiveQuality", "LOW");
 										browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("low");
@@ -31240,7 +31260,7 @@ function ($,
 								events: {
 									click: function ()
 									{
-										$("body > ul.context-menu-list") .fadeOut (500);
+										$(".x_ite-private-menu") .fadeOut (500);
 
 										browser .setBrowserOption ("TextureQuality", "HIGH");
 										browser .getNotification () .string_ = _("Texture Quality") + ": " + _("high");
@@ -31256,7 +31276,7 @@ function ($,
 								events: {
 									click: function ()
 									{
-										$("body > ul.context-menu-list") .fadeOut (500);
+										$(".x_ite-private-menu") .fadeOut (500);
 
 										browser .setBrowserOption ("TextureQuality", "MEDIUM");
 										browser .getNotification () .string_ = _("Texture Quality") + ": " + _("medium");
@@ -31272,7 +31292,7 @@ function ($,
 								events: {
 									click: function ()
 									{
-										$("body > ul.context-menu-list") .fadeOut (500);
+										$(".x_ite-private-menu") .fadeOut (500);
 
 										browser .setBrowserOption ("TextureQuality", "LOW");
 										browser .getNotification () .string_ = _("Texture Quality") + ": " + _("low");
@@ -31289,7 +31309,7 @@ function ($,
 						events: {
 							click: function ()
 							{
-								$("body > ul.context-menu-list") .fadeOut (500);
+								$(".x_ite-private-menu") .fadeOut (500);
 
 								var rubberband = ! browser .getBrowserOption ("Rubberband");
 
@@ -31310,7 +31330,7 @@ function ($,
 						events: {
 							click: function ()
 							{
-								$("body > ul.context-menu-list") .fadeOut (500);
+								$(".x_ite-private-menu") .fadeOut (500);
 
 								browser .getBrowserTimings () .setEnabled (! browser .getBrowserTimings () .getEnabled ());
 								browser .getSurface () .focus ();
@@ -31323,7 +31343,7 @@ function ($,
 						className: "context-menu-icon " + (fullscreen ? "x_ite-private-icon-leave-fullscreen" : "x_ite-private-icon-fullscreen"),
 						callback: function ()
 						{
-							$("body > ul.context-menu-list") .fadeOut (500);
+							$(".x_ite-private-menu") .fadeOut (500);
 
 							browser .getElement () .toggleFullScreen ();
 						}
@@ -31335,7 +31355,7 @@ function ($,
 						className: "context-menu-icon x_ite-private-icon-world-info",
 						callback: function ()
 						{
-							$("body > ul.context-menu-list") .fadeOut (500);
+							$(".x_ite-private-menu") .fadeOut (500);
 
 							const
 								priv      = browser .getElement () .find (".x_ite-private-browser"),
@@ -31367,7 +31387,7 @@ function ($,
 						className: "context-menu-icon x_ite-private-icon-help-about",
 						callback: function ()
 						{
-							$("body > ul.context-menu-list") .fadeOut (500);
+							$(".x_ite-private-menu") .fadeOut (500);
 
 							window .open (browser .getProviderUrl ());
 						},
@@ -31430,7 +31450,7 @@ function ($,
 					name: description,
 					callback: function (viewpoint)
 					{
-						$("body > ul.context-menu-list") .fadeOut (500);
+						$(".x_ite-private-menu") .fadeOut (500);
 
 						browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
 						browser .getSurface () .focus ();
@@ -31463,7 +31483,7 @@ function ($,
 					className: "context-menu-icon x_ite-private-icon-" + viewer .toLowerCase () + "-viewer",
 					callback: function (viewer)
 					{
-						$("body > ul.context-menu-list") .fadeOut (500);
+						$(".x_ite-private-menu") .fadeOut (500);
 
 						browser .viewer_ = viewer;
 						browser .getNotification () .string_ = _(this .getViewerName (viewer));
