@@ -1,4 +1,4 @@
-/* X_ITE v4.6.25a-1065 */
+/* X_ITE v4.6.25a-1066 */
 
 (function () {
 
@@ -62716,11 +62716,12 @@ function (Fields,
 			{
 				const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-				this .getBBox (bbox) .multRight (modelViewMatrix .get ());
+				this .getBBox (bbox);
 
 				matrix .set (bbox .center, null, bbox .size);
 
-				modelViewMatrix .pushMatrix (matrix);
+				modelViewMatrix .push ();
+				modelViewMatrix .multLeft (matrix);
 
 				this .getBrowser () .getBBoxNode () .traverse (type, renderObject);
 
