@@ -111,19 +111,19 @@ function (Fields,
 		},
 		displayBBox: (function ()
 		{
-			const bbox = new Box3 ();
+			const
+				bbox   = new Box3 (),
+				matrix = new Matrix4 ();
 
 			return function (type, renderObject)
 			{
-				this .getBBox (bbox);
-
-				const matrix          = new Matrix4 ();
 				const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+				this .getBBox (bbox) .multRight (modelViewMatrix .get ());
 
 				matrix .set (bbox .center, null, bbox .size);
 
-				modelViewMatrix .push ();
-				modelViewMatrix .multLeft (matrix);
+				modelViewMatrix .pushMatrix (matrix);
 
 				this .getBrowser () .getBBoxNode () .traverse (type, renderObject);
 

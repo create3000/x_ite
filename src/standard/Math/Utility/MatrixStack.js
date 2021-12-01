@@ -60,14 +60,14 @@ define (function ()
 			{
 				this [this .top] .assign (matrix);
 			},
-			get: function (matrix)
+			get: function ()
 			{
 				return this [this .top];
 			},
 			push: function ()
 			{
 				var top = ++ this .top;
-			
+
 				if (top < this .length)
 					this [top] .assign (this [top - 1]);
 				else

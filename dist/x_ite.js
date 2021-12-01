@@ -1,4 +1,4 @@
-/* X_ITE v4.6.25a-1064 */
+/* X_ITE v4.6.25a-1065 */
 
 (function () {
 
@@ -15244,7 +15244,7 @@ function (Algorithm)
 {
 "use strict";
 
-	var clamp = Algorithm .clamp;
+	const clamp = Algorithm .clamp;
 
 	function Color3 (r, g, b)
 	{
@@ -15268,7 +15268,7 @@ function (Algorithm)
 		length: 3,
 		copy: function ()
 		{
-			var copy = Object .create (Color3 .prototype);
+			const copy = Object .create (Color3 .prototype);
 			copy .r_ = this .r_;
 			copy .g_ = this .g_;
 			copy .b_ = this .b_;
@@ -15296,11 +15296,11 @@ function (Algorithm)
 		{
 			var h, s, v;
 
-			var min = Math .min (this .r_, this .g_, this .b_);
-			var max = Math .max (this .r_, this .g_, this .b_);
+			const min = Math .min (this .r_, this .g_, this .b_);
+			const max = Math .max (this .r_, this .g_, this .b_);
 			v = max; // value
 
-			var delta = max - min;
+			const delta = max - min;
 
 			if (max !== 0 && delta !== 0)
 			{
@@ -15341,13 +15341,13 @@ function (Algorithm)
 			}
 			else
 			{
-				var w = Algorithm .degrees (Algorithm .interval (h, 0, Math .PI * 2)) / 60;     // sector 0 to 5
+				const w = Algorithm .degrees (Algorithm .interval (h, 0, Math .PI * 2)) / 60;     // sector 0 to 5
 
-				var i = Math .floor (w);
-				var f = w - i;                      // factorial part of h
-				var p = v * ( 1 - s );
-				var q = v * ( 1 - s * f );
-				var t = v * ( 1 - s * ( 1 - f ) );
+				const i = Math .floor (w);
+				const f = w - i;                      // factorial part of h
+				const p = v * ( 1 - s );
+				const q = v * ( 1 - s * f );
+				const t = v * ( 1 - s * ( 1 - f ) );
 
 				switch (i % 6)
 				{
@@ -15368,21 +15368,21 @@ function (Algorithm)
 		},
 	};
 
-	var r = {
+	const r = {
 		get: function () { return this .r_; },
 		set: function (value) { this .r_ = clamp (value, 0, 1); },
 		enumerable: true,
 		configurable: false
 	};
-	
-	var g = {
+
+	const g = {
 		get: function () { return this .g_; },
 		set: function (value) { this .g_ = clamp (value, 0, 1); },
 		enumerable: true,
 		configurable: false
 	};
 
-	var b = {
+	const b = {
 		get: function () { return this .b_; },
 		set: function (value) { this .b_ = clamp (value, 0, 1); },
 		enumerable: true,
@@ -15405,7 +15405,7 @@ function (Algorithm)
 	{
 		HSV: function (h, s, v)
 		{
-			var color = Object .create (this .prototype);
+			const color = Object .create (this .prototype);
 			color .setHSV (h, s, v);
 			return color;
 		},
@@ -15415,7 +15415,9 @@ function (Algorithm)
 			// Source and destination color must be in HSV space. The resulting HSV color is stored in @a r.
 
 			var
-				ha = a [0], hb = b [0],
+				ha = a [0], hb = b [0];
+
+			const
 				sa = a [1], sb = b [1],
 				va = a [2], vb = b [2];
 
@@ -15425,7 +15427,7 @@ function (Algorithm)
 			if (sb === 0)
 				hb = ha;
 
-			var range = Math .abs (hb - ha);
+			const range = Math .abs (hb - ha);
 
 			if (range <= Math .PI)
 			{
@@ -15435,10 +15437,11 @@ function (Algorithm)
 				return r;
 			}
 
-			var
+			const
 				PI2  = Math .PI * 2,
-				step = (PI2 - range) * t,
-				h    = ha < hb ? ha - step : ha + step;
+				step = (PI2 - range) * t;
+
+			var h = ha < hb ? ha - step : ha + step;
 
 			if (h < 0)
 				h += PI2;
@@ -15720,7 +15723,7 @@ function (Color3, Algorithm)
 {
 "use strict";
 
-	var clamp = Algorithm .clamp;
+	const clamp = Algorithm .clamp;
 
 	function Color4 (r, g, b, a)
 	{
@@ -15746,7 +15749,7 @@ function (Color3, Algorithm)
 		length: 4,
 		copy: function ()
 		{
-			var copy = Object .create (Color4 .prototype);
+			const copy = Object .create (Color4 .prototype);
 			copy .r_ = this .r_;
 			copy .g_ = this .g_;
 			copy .b_ = this .b_;
@@ -15797,28 +15800,28 @@ function (Color3, Algorithm)
 		},
 	};
 
-	var r = {
+	const r = {
 		get: function () { return this .r_; },
 		set: function (value) { this .r_ = clamp (value, 0, 1); },
 		enumerable: true,
 		configurable: false
 	};
-	
-	var g = {
+
+	const g = {
 		get: function () { return this .g_; },
 		set: function (value) { this .g_ = clamp (value, 0, 1); },
 		enumerable: true,
 		configurable: false
 	};
 
-	var b = {
+	const b = {
 		get: function () { return this .b_; },
 		set: function (value) { this .b_ = clamp (value, 0, 1); },
 		enumerable: true,
 		configurable: false
 	};
 
-	var a = {
+	const a = {
 		get: function () { return this .a_; },
 		set: function (value) { this .a_ = clamp (value, 0, 1); },
 		enumerable: true,
@@ -15844,7 +15847,7 @@ function (Color3, Algorithm)
 	{
 		HSVA: function (h, s, v, a)
 		{
-			var color = Object .create (this .prototype);
+			const color = Object .create (this .prototype);
 			color .setHSVA (h, s, v, a);
 			return color;
 		},
@@ -15852,7 +15855,7 @@ function (Color3, Algorithm)
 		{
 			// Linearely interpolate in HSVA space between source color @a a and destination color @a b by an amount of @a t.
 			// Source and destination color must be in HSVA space. The resulting HSVA color is stored in @a r.
-			var aa = a [3];
+			const aa = a [3];
 			Color3 .lerp (a, b, t, r);
 			r [3] = aa + t * (b [3] - aa);
 			return r;
@@ -17047,7 +17050,7 @@ function (Algorithm)
 "use strict";
 
 	function Vector2 (x, y)
-	{		
+	{
 		this .x = x;
 		this .y = y;
 	}
@@ -17058,7 +17061,7 @@ function (Algorithm)
 		length: 2,
 		copy: function ()
 		{
-			var copy = Object .create (Vector2 .prototype);
+			const copy = Object .create (Vector2 .prototype);
 			copy .x = this .x;
 			copy .y = this .y;
 			return copy;
@@ -17124,7 +17127,7 @@ function (Algorithm)
 		},
 		normalize: function ()
 		{
-			var
+			const
 				x = this .x,
 				y = this .y;
 
@@ -17133,8 +17136,10 @@ function (Algorithm)
 
 			if (length)
 			{
-				this .x = x / length;
-				this .y = y / length;
+				length = 1 / length;
+
+				this .x = x * length;
+				this .y = y * length;
 			}
 
 			return this;
@@ -17146,7 +17151,7 @@ function (Algorithm)
 		},
 		norm: function ()
 		{
-			var
+			const
 				x = this .x,
 				y = this .y;
 
@@ -17155,7 +17160,7 @@ function (Algorithm)
 		},
 		abs: function ()
 		{
-			var
+			const
 				x = this .x,
 				y = this .y;
 
@@ -17164,7 +17169,7 @@ function (Algorithm)
 		},
 		distance: function (vector)
 		{
-			var
+			const
 				x = this .x - vector .x,
 				y = this .y - vector .y;
 
@@ -17173,7 +17178,7 @@ function (Algorithm)
 		},
 		lerp: function (dest, t)
 		{
-			var
+			const
 				x = this .x,
 				y = this .y;
 
@@ -17189,7 +17194,7 @@ function (Algorithm)
 
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .min (x, vector .x);
 				y = Math .min (y, vector .y);
@@ -17207,7 +17212,7 @@ function (Algorithm)
 
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .max (x, vector .x);
 				y = Math .max (y, vector .y);
@@ -17246,65 +17251,68 @@ function (Algorithm)
 		One: new Vector2 (1, 1),
 		negate: function (vector)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = -vector .x;
 			copy .y = -vector .y;
 			return copy;
 		},
 		add: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x + rhs .x;
 			copy .y = lhs .y + rhs .y;
 			return copy;
 		},
 		subtract: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x - rhs .x;
 			copy .y = lhs .y - rhs .y;
 			return copy;
 		},
 		multiply: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x * rhs;
 			copy .y = lhs .y * rhs;
 			return copy;
 		},
 		multVec: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x * rhs .x;
 			copy .y = lhs .y * rhs .y;
 			return copy;
 		},
 		divide: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x / rhs;
 			copy .y = lhs .y / rhs;
 			return copy;
 		},
 		divVec: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x / rhs .x;
 			copy .y = lhs .y / rhs .y;
 			return copy;
 		},
 		normalize: function (vector)
 		{
-			var
+			const
 				copy   = Object .create (this .prototype),
 				x      = vector .x,
-				y      = vector .y,
-				length = Math .sqrt (x * x + y * y);
+				y      = vector .y;
+
+			var length = Math .sqrt (x * x + y * y);
 
 			if (length)
 			{
-				copy .x = x / length;
-				copy .y = y / length;
+				length = 1 / length;
+
+				copy .x = x * length;
+				copy .y = y * length;
 			}
 			else
 			{
@@ -17320,7 +17328,7 @@ function (Algorithm)
 		},
 		lerp: function (source, dest, t)
 		{
-			var
+			const
 				x = source .x,
 				y = source .y;
 
@@ -17335,7 +17343,7 @@ function (Algorithm)
 
 			for (var i = 1, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .min (x, vector .x);
 				y = Math .min (y, vector .y);
@@ -17351,7 +17359,7 @@ function (Algorithm)
 
 			for (var i = 1, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .max (x, vector .x);
 				y = Math .max (y, vector .y);
@@ -17559,7 +17567,7 @@ function (Algorithm)
 "use strict";
 
 	function Vector3 (x, y, z)
-	{		
+	{
 		this .x = x;
 		this .y = y;
 		this .z = z;
@@ -17571,7 +17579,7 @@ function (Algorithm)
 		length: 3,
 		copy: function ()
 		{
-			var copy = Object .create (Vector3 .prototype);
+			const copy = Object .create (Vector3 .prototype);
 			copy .x = this .x;
 			copy .y = this .y;
 			copy .z = this .z;
@@ -17648,7 +17656,7 @@ function (Algorithm)
 		},
 		cross: function (vector)
 		{
-			var x = this .x, y = this .y, z = this .z;
+			const x = this .x, y = this .y, z = this .z;
 
 			this .x = y * vector .z - z * vector .y;
 			this .y = z * vector .x - x * vector .z;
@@ -17658,7 +17666,7 @@ function (Algorithm)
 		},
 		normalize: function ()
 		{
-			var
+			const
 				x = this .x,
 				y = this .y,
 				z = this .z;
@@ -17669,9 +17677,11 @@ function (Algorithm)
 
 			if (length)
 			{
-				this .x = x / length;
-				this .y = y / length;
-				this .z = z / length;
+				length = 1 / length;
+
+				this .x = x * length;
+				this .y = y * length;
+				this .z = z * length;
 			}
 
 			return this;
@@ -17695,7 +17705,7 @@ function (Algorithm)
 		},
 		abs: function ()
 		{
-			var
+			const
 				x = this .x,
 				y = this .y,
 				z = this .z;
@@ -17706,7 +17716,7 @@ function (Algorithm)
 		},
 		distance: function (vector)
 		{
-			var
+			const
 				x = this .x - vector .x,
 				y = this .y - vector .y,
 				z = this .z - vector .z;
@@ -17717,7 +17727,7 @@ function (Algorithm)
 		},
 		lerp: function (dest, t)
 		{
-			var
+			const
 				x = this .x,
 				y = this .y,
 				z = this .z;
@@ -17727,10 +17737,15 @@ function (Algorithm)
 			this .z = z + t * (dest .z - z);
 			return this;
 		},
-		slerp: function (destination, t)
+		slerp: (function ()
 		{
-			return Algorithm .simpleSlerp (this, tmp .assign (destination), t);
-		},
+			const tmp = new Vector3 (0, 0, 0);
+
+			return function (destination, t)
+			{
+				return Algorithm .simpleSlerp (this, tmp .assign (destination), t);
+			};
+		})(),
 		min: function (vector)
 		{
 			var
@@ -17740,7 +17755,7 @@ function (Algorithm)
 
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .min (x, vector .x);
 				y = Math .min (y, vector .y);
@@ -17761,7 +17776,7 @@ function (Algorithm)
 
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .max (x, vector .x);
 				y = Math .max (y, vector .y);
@@ -17814,7 +17829,7 @@ function (Algorithm)
 		zAxis: new Vector3 (0, 0, 1),
 		negate: function (vector)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = -vector .x;
 			copy .y = -vector .y;
 			copy .z = -vector .z;
@@ -17822,7 +17837,7 @@ function (Algorithm)
 		},
 		add: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x + rhs .x;
 			copy .y = lhs .y + rhs .y;
 			copy .z = lhs .z + rhs .z;
@@ -17830,7 +17845,7 @@ function (Algorithm)
 		},
 		subtract: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x - rhs .x;
 			copy .y = lhs .y - rhs .y;
 			copy .z = lhs .z - rhs .z;
@@ -17838,7 +17853,7 @@ function (Algorithm)
 		},
 		multiply: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x * rhs;
 			copy .y = lhs .y * rhs;
 			copy .z = lhs .z * rhs;
@@ -17846,7 +17861,7 @@ function (Algorithm)
 		},
 		multVec: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x * rhs .x;
 			copy .y = lhs .y * rhs .y;
 			copy .z = lhs .z * rhs .z;
@@ -17854,7 +17869,7 @@ function (Algorithm)
 		},
 		divide: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x / rhs;
 			copy .y = lhs .y / rhs;
 			copy .z = lhs .z / rhs;
@@ -17862,7 +17877,7 @@ function (Algorithm)
 		},
 		divVec: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x / rhs .x;
 			copy .y = lhs .y / rhs .y;
 			copy .z = lhs .z / rhs .z;
@@ -17870,7 +17885,7 @@ function (Algorithm)
 		},
 		cross: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .y * rhs .z - lhs .z * rhs .y;
 			copy .y = lhs .z * rhs .x - lhs .x * rhs .z;
 			copy .z = lhs .x * rhs .y - lhs .y * rhs .x;
@@ -17878,18 +17893,21 @@ function (Algorithm)
 		},
 		normalize: function (vector)
 		{
-			var
+			const
 				copy   = Object .create (this .prototype),
 				x      = vector .x,
 				y      = vector .y,
-				z      = vector .z,
-				length = Math .sqrt (x * x + y * y + z * z);
+				z      = vector .z;
+
+			var length = Math .sqrt (x * x + y * y + z * z);
 
 			if (length)
 			{
-				copy .x = x / length;
-				copy .y = y / length;
-				copy .z = z / length;
+				length = 1 / length;
+
+				copy .x = x * length;
+				copy .y = y * length;
+				copy .z = z * length;
 			}
 			else
 			{
@@ -17906,7 +17924,7 @@ function (Algorithm)
 		},
 		lerp: function (source, dest, t)
 		{
-			var
+			const
 				x = source .x,
 				y = source .y,
 				z = source .z;
@@ -17915,10 +17933,15 @@ function (Algorithm)
 			                    y + t * (dest .y - y),
 			                    z + t * (dest .z - z));
 		},
-		slerp: function (source, destination, t)
+		slerp: (function ()
 		{
-			return Algorithm .simpleSlerp (source .copy (), tmp .assign (destination), t);
-		},
+			const tmp = new Vector3 (0, 0, 0);
+
+			return function (source, destination, t)
+			{
+				return Algorithm .simpleSlerp (source .copy (), tmp .assign (destination), t);
+			};
+		})(),
 		min: function (lhs, rhs)
 		{
 			var
@@ -17928,7 +17951,7 @@ function (Algorithm)
 
 			for (var i = 1, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .min (x, vector .x);
 				y = Math .min (y, vector .y);
@@ -17946,7 +17969,7 @@ function (Algorithm)
 
 			for (var i = 1, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .max (x, vector .x);
 				y = Math .max (y, vector .y);
@@ -17956,8 +17979,6 @@ function (Algorithm)
 			return new Vector3 (x, y, z);
 		},
 	});
-
-	var tmp = new Vector3 (0, 0, 0);
 
 	return Vector3;
 });
@@ -18042,7 +18063,7 @@ function (Vector2,
 		length: 4,
 		copy: function ()
 		{
-			var copy = Object .create (Matrix2 .prototype);
+			const copy = Object .create (Matrix2 .prototype);
 			copy [0] = this [0];
 			copy [1] = this [1];
 			copy [2] = this [2];
@@ -18086,7 +18107,7 @@ function (Vector2,
 					this [0] = arguments [0];
 					this [1] = arguments [1];
 					this [2] = arguments [2];
-					this [3] = arguments [3];	
+					this [3] = arguments [3];
 					break;
 				}
 			}
@@ -18102,7 +18123,7 @@ function (Vector2,
 		},
 		transpose: function ()
 		{
-			var tmp = this [1];
+			const tmp = this [1];
 
 			this [1] = this [2];
 			this [2] = tmp;
@@ -18111,8 +18132,8 @@ function (Vector2,
 		},
 		inverse: function ()
 		{
-			var d = this .determinant ();
-		
+			const d = this .determinant ();
+
 			if (d === 0)
 				throw new Error ("Matrix2 .inverse: determinant is 0.");
 
@@ -18125,7 +18146,7 @@ function (Vector2,
 		},
 		multLeft: function (matrix)
 		{
-			var
+			const
 				a0 = this [0], a1 = this [1],
 				a2 = this [2], a3 = this [3],
 				b0 = matrix [0], b1 = matrix [1],
@@ -18140,7 +18161,7 @@ function (Vector2,
 		},
 		multRight: function (matrix)
 		{
-			var
+			const
 				a0 = this [0], a1 = this [1],
 				a2 = this [2], a3 = this [3],
 				b0 = matrix [0], b1 = matrix [1],
@@ -18158,7 +18179,7 @@ function (Vector2,
 			this [0] = 1;
 			this [1] = 0;
 			this [2] = 0;
-			this [3] = 1;	
+			this [3] = 1;
 		},
 		toString: function ()
 		{
@@ -18171,7 +18192,7 @@ function (Vector2,
 	{
 		get: (function ()
 		{
-			var vector = new Vector2 (0, 0);
+			const vector = new Vector2 (0, 0);
 
 			return function () { return vector .set (this [0], this [1]); };
 		})(),
@@ -18465,7 +18486,7 @@ function (Vector2,
           eigendecomposition)
 {
 "use strict";
-								
+
 	function Matrix3 ()
 	{
 		if (arguments .length)
@@ -18493,7 +18514,7 @@ function (Vector2,
 		length: 9,
 		copy: function ()
 		{
-			var copy = Object .create (Matrix3 .prototype);
+			const copy = Object .create (Matrix3 .prototype);
 			copy [0] = this [0];
 			copy [1] = this [1];
 			copy [2] = this [2];
@@ -18606,7 +18627,7 @@ function (Vector2,
 
 					if (! scale .equals (Vector2 .One))
 					{
-						var hasScaleOrientation = scaleOrientation !== 0;
+						const hasScaleOrientation = scaleOrientation !== 0;
 
 						if (hasScaleOrientation)
 						{
@@ -18632,7 +18653,7 @@ function (Vector2,
 					this .identity ();
 					this .translate (translation);
 
-					var hasCenter = ! center .equals (Vector2 .Zero);
+					const hasCenter = ! center .equals (Vector2 .Zero);
 
 					if (hasCenter)
 						this .translate (center);
@@ -18676,7 +18697,7 @@ function (Vector2,
 		},
 		get: (function ()
 		{
-			var
+			const
 				dummyTranslation      = new Vector2 (0, 0),
 				dummyRotation         = new Vector3 (0, 0, 0),
 				dummyScale            = new Vector2 (0, 0),
@@ -18693,7 +18714,7 @@ function (Vector2,
 				if (scale            === null) scale            = dummyScale;
 				if (scaleOrientation === null) scaleOrientation = dummyScaleOrientation;
 				if (center           === null) center           = dummyCenter;
-	
+
 				switch (arguments .length)
 				{
 					case 1:
@@ -18704,7 +18725,7 @@ function (Vector2,
 					case 2:
 					{
 						this .factor (translation, rotMatrix, dummyScale, soMatrix);
-	
+
 						rotation [0] = rotMatrix [0];
 						rotation [1] = rotMatrix [1];
 						rotation [2] = Math .atan2 (rotMatrix [1], rotMatrix [0]);
@@ -18713,7 +18734,7 @@ function (Vector2,
 					case 3:
 					{
 						this .factor (translation, rotMatrix, scale, soMatrix);
-	
+
 						rotation [0] = rotMatrix [0];
 						rotation [1] = rotMatrix [1];
 						rotation [2] = Math .atan2 (rotMatrix [1], rotMatrix [0]);
@@ -18722,11 +18743,11 @@ function (Vector2,
 					case 4:
 					{
 						this .factor (translation, rotMatrix, scale, soMatrix);
-	
+
 						rotation [0] = rotMatrix [0];
 						rotation [1] = rotMatrix [1];
 						rotation [2] = Math .atan2 (rotMatrix [1], rotMatrix [0]);
-	
+
 						scaleOrientation [0] = soMatrix [0];
 						scaleOrientation [1] = soMatrix [1];
 						scaleOrientation [2] = Math .atan2 (soMatrix [1], soMatrix [0]);
@@ -18734,12 +18755,12 @@ function (Vector2,
 					}
 					case 5:
 					{
-						var m = new Matrix3 ();
-	
+						const m = new Matrix3 ();
+
 						m .set (c .assign (center) .negate ());
 						m .multLeft (this);
 						m .translate (center);
-	
+
 						m .get (translation, rotation, scale, scaleOrientation);
 						break;
 					}
@@ -18748,48 +18769,48 @@ function (Vector2,
 		})(),
 		factor: (function ()
 		{
-			var
+			const
 				si   = new Matrix2 (),
 				sosi = new Matrix2 (),
 				b    = new Matrix2 ();
 
-			var eigen = { values: [ ], vectors: [[ ], [ ]] };
+			const eigen = { values: [ ], vectors: [[ ], [ ]] };
 
 			return function (translation, rotation, scale, scaleOrientation)
 			{
 				// (1) Get translation.
 				translation .set (this [6], this [7]);
-	
+
 				// (2) Create 3x3 matrix.
-				var a = this .submatrix;
-	
+				const a = this .submatrix;
+
 				// (3) Compute det A. If negative, set sign = -1, else sign = 1
-				var det      = a .determinant ();
-				var det_sign = det < 0 ? -1 : 1;
-	
+				const det      = a .determinant ();
+				const det_sign = det < 0 ? -1 : 1;
+
 				if (det === 0)
 					throw new Error ("Matrix3 .factor: determinant is 0.");
-	
+
 				// (4) B = A * !A  (here !A means A transpose)
 				b .assign (a) .transpose () .multLeft (a);
-				var e = eigendecomposition (b, eigen);
-	
+				const e = eigendecomposition (b, eigen);
+
 				// Find min / max eigenvalues and do ratio test to determine singularity.
-	
+
 				scaleOrientation .set (e .vectors [0] [0], e .vectors [0] [1],
 				                       e .vectors [1] [0], e .vectors [1] [1]);
-	
+
 				// Compute s = sqrt(evalues), with sign. Set si = s-inverse
-	
+
 				scale .x = det_sign * Math .sqrt (e .values [0]);
 				scale .y = det_sign * Math .sqrt (e .values [1]);
-	
+
 				si [0] = 1 / scale .x;
 				si [3] = 1 / scale .y;
-	
+
 				// (5) Compute U = !R ~S R A.
 				rotation .assign (sosi .assign (scaleOrientation) .multRight (si) .transpose () .multLeft (scaleOrientation) .multRight (a));
-	
+
 				scaleOrientation .transpose ();
 			};
 		})(),
@@ -18800,7 +18821,7 @@ function (Vector2,
 		},
 		determinant: function ()
 		{
-			var
+			const
 				m0 = this [0], m1 = this [1], m2 = this [2],
 				m3 = this [3], m4 = this [4], m5 = this [5],
 				m6 = this [6], m7 = this [7], m8 = this [8];
@@ -18821,7 +18842,7 @@ function (Vector2,
 		},
 		inverse: function ()
 		{
-			var
+			const
 				m0  = this [0],
 				m1  = this [1],
 				m2  = this [2],
@@ -18845,14 +18866,14 @@ function (Vector2,
 
 			d = 1 / d;
 
-			var
+			const
 				b0 =  (m4 * m8 - m7 * m5) * d,
 				b1 = -(m1 * m8 - m7 * m2) * d,
 				b2 =  (m1 * m5 - m4 * m2) * d,
 				b3 = -(m3 * m8 - m6 * m5) * d,
 				b4 =  (m0 * m8 - m6 * m2) * d,
 				b5 = -(m0 * m5 - m3 * m2) * d;
-	
+
 			this [0] = b0;
 			this [1] = b1;
 			this [2] = b2;
@@ -18867,7 +18888,7 @@ function (Vector2,
 		},
 		multLeft: function (matrix)
 		{
-			var
+			const
 				a0 = this [0], a1 = this [1], a2 = this [2],
 				a3 = this [3], a4 = this [4], a5 = this [5],
 				a6 = this [6], a7 = this [7], a8 = this [8],
@@ -18889,7 +18910,7 @@ function (Vector2,
 		},
 		multRight: function (matrix)
 		{
-			var
+			const
 				a0 = this [0], a1 = this [1], a2 = this [2],
 				a3 = this [3], a4 = this [4], a5 = this [5],
 				a6 = this [6], a7 = this [7], a8 = this [8],
@@ -18913,18 +18934,18 @@ function (Vector2,
 		{
 			if (vector .length === 2)
 			{
-				var
+				const
 					x = vector .x,
 					y = vector .y,
 					w = x * this [2] + y * this [5] + this [8];
 
 				vector .x = (x * this [0] + y * this [3] + this [6]) / w;
 				vector .y = (x * this [1] + y * this [4] + this [7]) / w;
-				
+
 				return vector;
 			}
 
-			var
+			const
 				x = vector .x,
 				y = vector .y,
 				z = vector .z;
@@ -18939,18 +18960,18 @@ function (Vector2,
 		{
 			if (vector .length === 2)
 			{
-				var
+				const
 					x = vector .x,
 					y = vector .y,
 					w = x * this [6] + y * this [7] + this [8];
 
 				vector .x = (x * this [0] + y * this [1] + this [2]) / w;
 				vector .y = (x * this [3] + y * this [4] + this [5]) / w;
-				
+
 				return vector;
 			}
 
-			var
+			const
 				x = vector .x,
 				y = vector .y,
 				z = vector .z;
@@ -18963,7 +18984,7 @@ function (Vector2,
 		},
 		multDirMatrix: function (vector)
 		{
-			var
+			const
 				x = vector .x,
 				y = vector .y;
 
@@ -18974,7 +18995,7 @@ function (Vector2,
 		},
 		multMatrixDir: function (vector)
 		{
-			var
+			const
 				x = vector .x,
 				y = vector .y;
 
@@ -18991,7 +19012,7 @@ function (Vector2,
 		},
 		translate: function (translation)
 		{
-			var
+			const
 				x = translation .x,
 				y = translation .y;
 
@@ -19008,7 +19029,7 @@ function (Vector2,
 		},
 		scale: function (scale)
 		{
-			var
+			const
 				x = scale .x,
 				y = scale .y;
 
@@ -19032,7 +19053,7 @@ function (Vector2,
 	{
 		get: (function ()
 		{
-			var vector = new Vector3 (0, 0, 0);
+			const vector = new Vector3 (0, 0, 0);
 
 			return function () { return vector .set (this [0], this [1], this [2]); };
 		})(),
@@ -19044,7 +19065,7 @@ function (Vector2,
 	{
 		get: (function ()
 		{
-			var vector = new Vector3 (0, 0, 0);
+			const vector = new Vector3 (0, 0, 0);
 
 			return function () { return vector .set (this [3], this [4], this [5]); };
 		})(),
@@ -19056,7 +19077,7 @@ function (Vector2,
 	{
 		get: (function ()
 		{
-			var vector = new Vector2 (0, 0);
+			const vector = new Vector2 (0, 0);
 
 			return function () { return vector .set (this [0], this [1]); };
 		})(),
@@ -19068,7 +19089,7 @@ function (Vector2,
 	{
 		get: (function ()
 		{
-			var vector = new Vector2 (0, 0);
+			const vector = new Vector2 (0, 0);
 
 			return function () { return vector .set (this [3], this [4]); };
 		})(),
@@ -19080,7 +19101,7 @@ function (Vector2,
 	{
 		get: (function ()
 		{
-			var vector = new Vector2 (0, 0);
+			const vector = new Vector2 (0, 0);
 
 			return function () { return vector .set (this [6], this [7]); };
 		})(),
@@ -19092,7 +19113,7 @@ function (Vector2,
 	{
 		get: (function ()
 		{
-			var matrix = new Matrix2 ();
+			const matrix = new Matrix2 ();
 
 			return function ()
 			{
@@ -19110,7 +19131,7 @@ function (Vector2,
 		Identity: new Matrix3 (),
 		Rotation: function (rotation)
 		{
-			var
+			const
 				sinAngle = Math .sin (rotation),
 				cosAngle = Math .cos (rotation);
 
@@ -19126,7 +19147,7 @@ function (Vector2,
 		},
 		transpose: function (matrix)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy [0] = matrix [0]; copy [1] = matrix [3]; copy [2] = matrix [6];
 			copy [3] = matrix [1]; copy [4] = matrix [4]; copy [5] = matrix [7];
 			copy [6] = matrix [2]; copy [7] = matrix [5]; copy [8] = matrix [8];
@@ -19134,7 +19155,7 @@ function (Vector2,
 		},
 		inverse: function (matrix)
 		{
-			var
+			const
 				copy = Object .create (this .prototype),
 				m0  = matrix [0],
 				m1  = matrix [1],
@@ -19159,14 +19180,14 @@ function (Vector2,
 
 			d = 1 / d;
 
-			var
+			const
 				b0 =  (m4 * m8 - m7 * m5) * d,
 				b1 = -(m1 * m8 - m7 * m2) * d,
 				b2 =  (m1 * m5 - m4 * m2) * d,
 				b3 = -(m3 * m8 - m6 * m5) * d,
 				b4 =  (m0 * m8 - m6 * m2) * d,
 				b5 = -(m0 * m5 - m3 * m2) * d;
-	
+
 			copy [0] = b0;
 			copy [1] = b1;
 			copy [2] = b2;
@@ -19181,7 +19202,7 @@ function (Vector2,
 		},
 		multLeft: function (lhs, rhs)
 		{
-			var
+			const
 				copy = Object .create (this .prototype),
 				a0 = lhs [0], a1 = lhs [1], a2 = lhs [2],
 				a3 = lhs [3], a4 = lhs [4], a5 = lhs [5],
@@ -19204,7 +19225,7 @@ function (Vector2,
 		},
 		multRight: function (lhs, rhs)
 		{
-			var
+			const
 				copy = Object .create (this .prototype),
 				a0 = lhs [0], a1 = lhs [1], a2 = lhs [2],
 				a3 = lhs [3], a4 = lhs [4], a5 = lhs [5],
@@ -19604,7 +19625,7 @@ function (Algorithm)
 		length: 4,
 		copy: function ()
 		{
-			var copy = Object .create (Vector4 .prototype);
+			const copy = Object .create (Vector4 .prototype);
 			copy .x = this .x;
 			copy .y = this .y;
 			copy .z = this .z;
@@ -19698,7 +19719,7 @@ function (Algorithm)
 		},
 		normalize: function ()
 		{
-			var
+			const
 				x = this .x,
 				y = this .y,
 				z = this .z,
@@ -19711,10 +19732,12 @@ function (Algorithm)
 
 			if (length)
 			{
-				this .x = x / length;
-				this .y = y / length;
-				this .z = z / length;
-				this .w = w / length;
+				length = 1 / length;
+
+				this .x = x * length;
+				this .y = y * length;
+				this .z = z * length;
+				this .w = w * length;
 			}
 
 			return this;
@@ -19728,7 +19751,7 @@ function (Algorithm)
 		},
 		norm: function ()
 		{
-			var
+			const
 				x = this .x,
 				y = this .y,
 				z = this .z,
@@ -19741,7 +19764,7 @@ function (Algorithm)
 		},
 		abs: function ()
 		{
-			var
+			const
 				x = this .x,
 				y = this .y,
 				z = this .z,
@@ -19754,7 +19777,7 @@ function (Algorithm)
 		},
 		distance: function (vector)
 		{
-			var
+			const
 				x = this .x - vector .x,
 				y = this .y - vector .y,
 				z = this .z - vector .z,
@@ -19767,7 +19790,7 @@ function (Algorithm)
 		},
 		lerp: function (dest, t)
 		{
-			var
+			const
 				x = this .x,
 				y = this .y,
 				z = this .z,
@@ -19789,7 +19812,7 @@ function (Algorithm)
 
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .min (x, vector .x);
 				y = Math .min (y, vector .y);
@@ -19813,7 +19836,7 @@ function (Algorithm)
 
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .max (x, vector .x);
 				y = Math .max (y, vector .y);
@@ -19878,7 +19901,7 @@ function (Algorithm)
 		wAxis: new Vector4 (0, 0, 0, 1),
 		negate: function (vector)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = -vector .x;
 			copy .y = -vector .y;
 			copy .z = -vector .z;
@@ -19887,7 +19910,7 @@ function (Algorithm)
 		},
 		add: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x + rhs .x;
 			copy .y = lhs .y + rhs .y;
 			copy .z = lhs .z + rhs .z;
@@ -19896,7 +19919,7 @@ function (Algorithm)
 		},
 		subtract: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x - rhs .x;
 			copy .y = lhs .y - rhs .y;
 			copy .z = lhs .z - rhs .z;
@@ -19905,7 +19928,7 @@ function (Algorithm)
 		},
 		multiply: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x * rhs;
 			copy .y = lhs .y * rhs;
 			copy .z = lhs .z * rhs;
@@ -19914,7 +19937,7 @@ function (Algorithm)
 		},
 		multVec: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x * rhs .x;
 			copy .y = lhs .y * rhs .y;
 			copy .z = lhs .z * rhs .z;
@@ -19923,7 +19946,7 @@ function (Algorithm)
 		},
 		divide: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x / rhs;
 			copy .y = lhs .y / rhs;
 			copy .z = lhs .z / rhs;
@@ -19932,7 +19955,7 @@ function (Algorithm)
 		},
 		divVec: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x / rhs .x;
 			copy .y = lhs .y / rhs .y;
 			copy .z = lhs .z / rhs .z;
@@ -19941,20 +19964,23 @@ function (Algorithm)
 		},
 		normalize: function (vector)
 		{
-			var
+			const
 				copy   = Object .create (this .prototype),
 				x      = vector .x,
 				y      = vector .y,
 				z      = vector .z,
-				w      = vector .w,
-				length = Math .sqrt (x * x + y * y + z * z + w * w);
+				w      = vector .w;
+
+			var length = Math .sqrt (x * x + y * y + z * z + w * w);
 
 			if (length)
 			{
-				copy .x = x / length;
-				copy .y = y / length;
-				copy .z = z / length;
-				copy .w = w / length;
+				length = 1 / length;
+
+				copy .x = x * length;
+				copy .y = y * length;
+				copy .z = z * length;
+				copy .w = w * length;
 			}
 			else
 			{
@@ -19972,7 +19998,7 @@ function (Algorithm)
 		},
 		lerp: function (source, dest, t)
 		{
-			var
+			const
 				x = source .x,
 				y = source .y,
 				z = source .z,
@@ -19993,7 +20019,7 @@ function (Algorithm)
 
 			for (var i = 1, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .min (x, vector .x);
 				y = Math .min (y, vector .y);
@@ -20013,7 +20039,7 @@ function (Algorithm)
 
 			for (var i = 1, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .max (x, vector .x);
 				y = Math .max (y, vector .y);
@@ -20099,7 +20125,7 @@ function (Vector3, Algorithm)
 		length: 4,
 		copy: function ()
 		{
-			var copy = Object .create (Quaternion .prototype);
+			const copy = Object .create (Quaternion .prototype);
 			copy .x = this .x;
 			copy .y = this .y;
 			copy .z = this .z;
@@ -20136,7 +20162,7 @@ function (Vector3, Algorithm)
 				i = matrix [4] > matrix [8] ? 1 : 2;
 			}
 
-			var scalerow = matrix [0] + matrix [4] + matrix [8];
+			const scalerow = matrix [0] + matrix [4] + matrix [8];
 
 			if (scalerow > matrix [i * 3 + i])
 			{
@@ -20144,7 +20170,7 @@ function (Vector3, Algorithm)
 				this [3] = Math .sqrt (scalerow + 1) / 2;
 
 				// And compute other values:
-				var d = 4 * this [3];
+				const d = 4 * this [3];
 				this [0] = (matrix [5] - matrix [7]) / d;
 				this [1] = (matrix [6] - matrix [2]) / d;
 				this [2] = (matrix [1] - matrix [3]) / d;
@@ -20152,14 +20178,14 @@ function (Vector3, Algorithm)
 			else
 			{
 				// Compute x, y, or z first:
-				var j = (i + 1) % 3;
-				var k = (i + 2) % 3;
+				const j = (i + 1) % 3;
+				const k = (i + 2) % 3;
 
 				// Compute first value:
 				this [i] = Math .sqrt (matrix [i * 3 + i] - matrix [j * 3 + j] - matrix [k * 3 + k] + 1) / 2;
 
 				// And the others:
-				var d = 4 * this [i];
+				const d = 4 * this [i];
 				this [j] = (matrix [i * 3 + j] + matrix [j * 3 + i]) / d;
 				this [k] = (matrix [i * 3 + k] + matrix [k * 3 + i]) / d;
 				this [3] = (matrix [j * 3 + k] - matrix [k * 3 + j]) / d;
@@ -20169,13 +20195,13 @@ function (Vector3, Algorithm)
 		},
 		getMatrix: function (matrix)
 		{
-			var
+			const
 				x = this .x,
 				y = this .y,
 				z = this .z,
 				w = this .w;
 
-			var
+			const
 				a = x * x,
 				b = x * y,
 				c = y * y,
@@ -20185,7 +20211,7 @@ function (Vector3, Algorithm)
 				g = w * x,
 				h = w * y,
 				i = w * z;
-		
+
 			matrix [0] = 1 - 2 * (c + f);
 			matrix [1] =     2 * (b + i);
 			matrix [2] =     2 * (e - h);
@@ -20256,7 +20282,7 @@ function (Vector3, Algorithm)
 		},
 		multLeft: function (quat)
 		{
-			var
+			const
 				ax = this .x, ay = this .y, az = this .z, aw = this .w,
 				bx = quat .x, by = quat .y, bz = quat .z, bw = quat .w;
 
@@ -20269,7 +20295,7 @@ function (Vector3, Algorithm)
 		},
 		multRight: function (quat)
 		{
-			var
+			const
 				ax = this .x, ay = this .y, az = this .z, aw = this .w,
 				bx = quat .x, by = quat .y, bz = quat .z, bw = quat .w;
 
@@ -20290,27 +20316,27 @@ function (Vector3, Algorithm)
 		},
 		multVecQuat: function (vector)
 		{
-			var
+			const
 				qx = this .x, qy = this .y, qz = this .z, qw = this .w,
 				vx = vector .x, vy = vector .y, vz = vector .z,
-				a  = qw * qw - qx * qx - qy * qy - qz * qz,                   
-				b  = 2 * (vx * qx + vy * qy + vz * qz), 
-				c  = 2 * qw;                                       
+				a  = qw * qw - qx * qx - qy * qy - qz * qz,
+				b  = 2 * (vx * qx + vy * qy + vz * qz),
+				c  = 2 * qw;
 
 			vector .x = a * vx + b * qx + c * (qy * vz - qz * vy);
 			vector .y = a * vy + b * qy + c * (qz * vx - qx * vz);
 			vector .z = a * vz + b * qz + c * (qx * vy - qy * vx);
-			
+
 			return vector;
 		},
 		multQuatVec: function (vector)
 		{
-			var
+			const
 				qx = this .x, qy = this .y, qz = this .z, qw = this .w,
 				vx = vector .x, vy = vector .y, vz = vector .z,
-				a  = qw * qw - qx * qx - qy * qy - qz * qz,                    
-				b  = 2 * (vx * qx + vy * qy + vz * qz), 
-				c  = 2 * qw;                                       
+				a  = qw * qw - qx * qx - qy * qy - qz * qz,
+				b  = 2 * (vx * qx + vy * qy + vz * qz),
+				c  = 2 * qw;
 
 			vector .x = a * vx + b * qx - c * (qy * vz - qz * vy);
 			vector .y = a * vy + b * qy - c * (qz * vx - qx * vz);
@@ -20323,8 +20349,8 @@ function (Vector3, Algorithm)
 			var length = Math .sqrt (this .x * this .x +
 			                         this .y * this .y +
 			                         this .z * this .z +
-			                         this .w * this .w);
-			
+			                      	 this .w * this .w);
+
 			if (length)
 			{
 				length = 1 / length;
@@ -20366,7 +20392,7 @@ function (Vector3, Algorithm)
 			if (this .isReal ())
 				return this .set (0, 0, 0, Math .pow (this .w, exponent));
 
-			var
+			const
 				l     = this .abs (),
 				theta = Math .acos (this .w / l),
 				li    = this .imag .abs (),
@@ -20391,7 +20417,7 @@ function (Vector3, Algorithm)
 					return this .set (Math .PI, 0, 0, Math .log (-this .w));
 			}
 
-			var
+			const
 				l = this .abs (),
 				v = this .imag .normalize () .multiply (Math .acos (this .w / l)),
 				w = Math .log (l);
@@ -20403,11 +20429,11 @@ function (Vector3, Algorithm)
 			return this;
 		},
 		exp: function ()
-		{	
+		{
 			if (this .isReal ())
 				return this .set (0, 0, 0, Math .exp (this .w));
 
-			var
+			const
 				i  = this .imag,
 				li = i .abs (),
 				ew = Math .exp (this .w),
@@ -20484,7 +20510,7 @@ function (Vector3, Algorithm)
 	{
 		get: (function ()
 		{
-			var result = new Vector3 (0, 0, 0);
+			const result = new Vector3 (0, 0, 0);
 
 			return function ()
 			{
@@ -20501,7 +20527,7 @@ function (Vector3, Algorithm)
 	{
 		negate: function (vector)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = -this .x;
 			copy .y = -this .y;
 			copy .z = -this .z;
@@ -20510,7 +20536,7 @@ function (Vector3, Algorithm)
 		},
 		inverse: function (vector)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = -vector .x;
 			copy .y = -vector .y;
 			copy .z = -vector .z;
@@ -20519,7 +20545,7 @@ function (Vector3, Algorithm)
 		},
 		add: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x + rhs .x;
 			copy .y = lhs .y + rhs .y;
 			copy .z = lhs .z + rhs .z;
@@ -20528,7 +20554,7 @@ function (Vector3, Algorithm)
 		},
 		subtract: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x - rhs .x;
 			copy .y = lhs .y - rhs .y;
 			copy .z = lhs .z - rhs .z;
@@ -20537,7 +20563,7 @@ function (Vector3, Algorithm)
 		},
 		multiply: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x * rhs;
 			copy .y = lhs .y * rhs;
 			copy .z = lhs .z * rhs;
@@ -20546,7 +20572,7 @@ function (Vector3, Algorithm)
 		},
 		multLeft: function (lhs, rhs)
 		{
-			var
+			const
 				copy = Object .create (this .prototype),
 				ax = lhs .x, ay = lhs .y, az = lhs .z, aw = lhs .w,
 				bx = rhs .x, by = rhs .y, bz = rhs .z, bw = rhs .w;
@@ -20560,7 +20586,7 @@ function (Vector3, Algorithm)
 		},
 		multRight: function (lhs, rhs)
 		{
-			var
+			const
 				copy = Object .create (this .prototype),
 				ax = lhs .x, ay = lhs .y, az = lhs .z, aw = lhs .w,
 				bx = rhs .x, by = rhs .y, bz = rhs .z, bw = rhs .w;
@@ -20574,7 +20600,7 @@ function (Vector3, Algorithm)
 		},
 		divide: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x / rhs;
 			copy .y = lhs .y / rhs;
 			copy .z = lhs .z / rhs;
@@ -20583,13 +20609,14 @@ function (Vector3, Algorithm)
 		},
 		normalize: function (quat)
 		{
-			var
+			const
 				copy   = Object .create (this .prototype),
 				x      = quat .x,
 				y      = quat .y,
 				z      = quat .z,
-				w      = quat .w,
-				length = Math .sqrt (x * x + y * y + z * z + w * w);
+				w      = quat .w;
+
+			var length = Math .sqrt (x * x + y * y + z * z + w * w);
 
 			if (length)
 			{
@@ -20625,9 +20652,9 @@ function (Vector3, Algorithm)
 		/*
 		bezier: function (q0, a, b, q1, t)
 		{
-			var q11 = Algorithm .slerp (q0,  a, t);
-			var q12 = Algorithm .slerp ( a,  b, t);
-			var q13 = Algorithm .slerp ( b, q1, t);
+			const q11 = Algorithm .slerp (q0,  a, t);
+			const q12 = Algorithm .slerp ( a,  b, t);
+			const q13 = Algorithm .slerp ( b, q1, t);
 
 			return Algorithm .slerp (Algorithm .slerp (q11, q12, t), Algorithm .slerp (q12, q13, t), t);
 		},
@@ -20658,12 +20685,12 @@ function (Vector3, Algorithm)
 		},
 	});
 
-	var
+	const
 		t1 = new Quaternion (0, 0, 0, 1),
 		t2 = new Quaternion (0, 0, 0, 1),
 		t3 = new Quaternion (0, 0, 0, 1);
-	
-	var
+
+	const
 		q0   = new Quaternion (0, 0, 0, 1),
 		q1   = new Quaternion (0, 0, 0, 1),
 		q2   = new Quaternion (0, 0, 0, 1),
@@ -20756,7 +20783,7 @@ function (Quaternion,
 			}
 			case 2:
 			{
-				var
+				const
 					arg0 = arguments [0],
 					arg1 = arguments [1];
 
@@ -20787,7 +20814,7 @@ function (Quaternion,
 		length: 4,
 		update: function ()
 		{
-			var rotation = this .get ();
+			const rotation = this .get ();
 
 			this .x_     = rotation .x;
 			this .y_     = rotation .y;
@@ -20798,7 +20825,7 @@ function (Quaternion,
 		},
 		copy: function ()
 		{
-			var copy = Object .create (Rotation4 .prototype);
+			const copy = Object .create (Rotation4 .prototype);
 
 			copy .x_     = this .x_;
 			copy .y_     = this .y_;
@@ -20827,7 +20854,7 @@ function (Quaternion,
 			this .z_     = z;
 			this .angle_ = angle;
 
-			var scale = Math .sqrt (x * x + y * y + z * z);
+			const scale = Math .sqrt (x * x + y * y + z * z);
 
 			if (scale === 0)
 			{
@@ -20837,23 +20864,23 @@ function (Quaternion,
 
 			// Calculate quaternion
 
-			var
+			const
 				halfTheta = Algorithm .interval (angle / 2, 0, Math .PI),
-				scale     = Math .sin (halfTheta) / scale;
+				ascale    = Math .sin (halfTheta) / scale;
 
-			this .value .set (x * scale,
-			                  y * scale,
-			                  z * scale,
+			this .value .set (x * ascale,
+			                  y * ascale,
+			                  z * ascale,
 			                  Math .cos (halfTheta));
 			return this;
 		},
 		get: (function ()
 		{
-			var result = new Vector4 (0, 0, 0, 0);
+			const result = new Vector4 (0, 0, 0, 0);
 
 			return function ()
 			{
-				var value = this .value;
+				const value = this .value;
 
 				if (Math .abs (value .w) > 1)
 				{
@@ -20861,7 +20888,7 @@ function (Quaternion,
 				}
 				else
 				{
-					var
+					const
 						angle = Math .acos (value .w) * 2,
 						scale = Math .sin (angle / 2);
 
@@ -20871,7 +20898,7 @@ function (Quaternion,
 					}
 					else
 					{
-						var axis = value .imag .divide (scale);
+						const axis = value .imag .divide (scale);
 
 						return result .set (axis .x,
 						                    axis .y,
@@ -20887,7 +20914,7 @@ function (Quaternion,
 		},
 		setFromToVec: (function ()
 		{
-			var
+			const
 				from = new Vector3 (0, 0, 0),
 				to   = new Vector3 (0, 0, 0),
 				cv   = new Vector3 (0, 0, 0),
@@ -20900,7 +20927,7 @@ function (Quaternion,
 				from .assign (fromVec) .normalize ();
 				to   .assign (toVec)   .normalize ();
 
-				var
+				const
 					cos_angle = Algorithm .clamp (from .dot (to), -1, 1),
 					crossvec  = cv .assign (from) .cross (to) .normalize (),
 					crosslen  = crossvec .abs ();
@@ -20952,7 +20979,7 @@ function (Quaternion,
 		},
 		getAxis: (function ()
 		{
-			var axis = new Vector3 (0, 0, 0);
+			const axis = new Vector3 (0, 0, 0);
 
 			return function ()
 			{
@@ -21032,7 +21059,7 @@ function (Quaternion,
 		}
 	};
 
-	var x = {
+	const x = {
 		get: function ()
 		{
 			return this .x_;
@@ -21046,7 +21073,7 @@ function (Quaternion,
 		configurable: false
 	};
 
-	var y = {
+	const y = {
 		get: function ()
 		{
 			return this .y_;
@@ -21060,7 +21087,7 @@ function (Quaternion,
 		configurable: false
 	};
 
-	var z = {
+	const z = {
 		get: function ()
 		{
 			return this .z_;
@@ -21074,7 +21101,7 @@ function (Quaternion,
 		configurable: false
 	};
 
-	var angle = {
+	const angle = {
 		get: function ()
 		{
 			return this .angle_;
@@ -21108,49 +21135,49 @@ function (Quaternion,
 		Identity: new Rotation4 (),
 		inverse: function (rotation)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .value = Quaternion .inverse (rotation .value);
 			copy .update ();
 			return copy;
 		},
 		multRight: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .value = Quaternion .multRight (lhs .value, rhs .value);
 			copy .update ();
 			return copy;
 		},
 		normalize: function ()
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .value = rotation .value .copy ();
 			copy .update ();
 			return copy;
 		},
 		slerp: function (source, destination, t)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .value = Quaternion .slerp (source .value, destination .value, t);
 			copy .update ();
 			return copy;
 		},
 		squad: function (source, a, b, destination, t)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .value = Quaternion .squad (source .value, a, b, destination .value, t);
 			copy .update ();
 			return copy;
 		},
 		bezier: function (source, a, b, destination, t)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .value = Quaternion .bezier (source .value, a, b, destination .value, t);
 			copy .update ();
 			return copy;
 		},
 		spline: function (q0, q1, q2)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .value = Quaternion .spline (q0 .value, q1 .value, q2 .value);
 			copy .update ();
 			return copy;
@@ -21258,7 +21285,7 @@ function (Vector3,
 		length: 16,
 		copy: function ()
 		{
-			var copy = Object .create (Matrix4 .prototype);
+			const copy = Object .create (Matrix4 .prototype);
 			copy [ 0] = this [ 0];
 			copy [ 1] = this [ 1];
 			copy [ 2] = this [ 2];
@@ -21388,7 +21415,7 @@ function (Vector3,
 
 					if (! scale .equals (Vector3 .One))
 					{
-						var hasScaleOrientation = ! scaleOrientation .equals (Rotation4 .Identity);
+						const hasScaleOrientation = ! scaleOrientation .equals (Rotation4 .Identity);
 
 						if (hasScaleOrientation)
 						{
@@ -21414,7 +21441,7 @@ function (Vector3,
 					this .identity ();
 					this .translate (translation);
 
-					var hasCenter = ! center .equals (Vector3 .Zero);
+					const hasCenter = ! center .equals (Vector3 .Zero);
 
 					if (hasCenter)
 						this .translate (center);
@@ -21465,7 +21492,7 @@ function (Vector3,
 		},
 		get: (function ()
 		{
-			var
+			const
 				dummyTranslation      = new Vector3 (0, 0, 0),
 				dummyRotation         = new Rotation4 (),
 				dummyScale            = new Vector3 (0, 0, 0),
@@ -21511,7 +21538,7 @@ function (Vector3,
 					}
 					case 5:
 					{
-						var m = new Matrix4 ();
+						const m = new Matrix4 ();
 
 						m .set (c .assign (center) .negate ());
 						m .multLeft (this);
@@ -21529,7 +21556,7 @@ function (Vector3,
 		},
 		setQuaternion: function (quaternion)
 		{
-			var
+			const
 				x = quaternion .x,
 				y = quaternion .y,
 				z = quaternion .z,
@@ -21565,12 +21592,12 @@ function (Vector3,
 		},
 		factor: (function ()
 		{
-			var
+			const
 				si   = new Matrix3 (),
 				sosi = new Matrix3 (),
 				b    = new Matrix3 ();
 
-			var eigen = { values: [ ], vectors: [[ ], [ ], [ ]] };
+			const eigen = { values: [ ], vectors: [[ ], [ ], [ ]] };
 
 			return function (translation, rotation, scale, scaleOrientation)
 			{
@@ -21578,18 +21605,18 @@ function (Vector3,
 				translation .set (this [12], this [13], this [14]);
 
 				// (2) Create 3x3 matrix.
-				var a = this .submatrix;
+				const a = this .submatrix;
 
 				// (3) Compute det A. If negative, set sign = -1, else sign = 1
-				var det      = a .determinant ();
-				var det_sign = det < 0 ? -1 : 1;
+				const det      = a .determinant ();
+				const det_sign = det < 0 ? -1 : 1;
 
 				if (det === 0)
 					throw new Error ("Matrix4 .factor: determinant is 0.");
 
 				// (4) B = A * !A  (here !A means A transpose)
 				b .assign (a) .transpose () .multLeft (a);
-				var e = eigendecomposition (b, eigen);
+				const e = eigendecomposition (b, eigen);
 
 				// Find min / max eigenvalues and do ratio test to determine singularity.
 
@@ -21616,7 +21643,7 @@ function (Vector3,
 		})(),
 		determinant3: function ()
 		{
-			var
+			const
 				m00 = this [0], m01 = this [1], m02 = this [ 2],
 				m04 = this [4], m05 = this [5], m06 = this [ 6],
 				m08 = this [8], m09 = this [9], m10 = this [10];
@@ -21627,7 +21654,7 @@ function (Vector3,
 		},
 		determinant: function ()
 		{
-			var
+			const
 				m00 = this [ 0],
 				m01 = this [ 1],
 				m02 = this [ 2],
@@ -21678,7 +21705,7 @@ function (Vector3,
 		},
 		inverse: function ()
 		{
-			var
+			const
 				m00 = this [ 0],
 				m01 = this [ 1],
 				m02 = this [ 2],
@@ -21722,8 +21749,9 @@ function (Vector3,
 				H = b * m05 + e * m09 + f * m13 - ((c * m05) + (d * m09) + (g * m13)),
 				I = c * m01 + h * m09 + o * m13 - ((b * m01) + (i * m09) + (j * m13)),
 				J = d * m01 + i * m05 + r * m13 - ((e * m01) + (h * m05) + (x * m13)),
-				K = g * m01 + j * m05 + x * m09 - ((f * m01) + (o * m05) + (r * m09)),
-				B = m00 * H + m04 * I + m08 * J + m12 * K;
+				K = g * m01 + j * m05 + x * m09 - ((f * m01) + (o * m05) + (r * m09));
+
+			var B = m00 * H + m04 * I + m08 * J + m12 * K;
 
 			if (B === 0)
 				throw new Error ("Matrix4 .inverse: determinant is 0.");
@@ -21751,7 +21779,7 @@ function (Vector3,
 		},
 		multLeft: function (matrix)
 		{
-			var
+			const
 				a00 = this [ 0], a01 = this [ 1], a02 = this [ 2], a03 = this [ 3],
 				a04 = this [ 4], a05 = this [ 5], a06 = this [ 6], a07 = this [ 7],
 				a08 = this [ 8], a09 = this [ 9], a10 = this [10], a11 = this [11],
@@ -21782,7 +21810,7 @@ function (Vector3,
 		},
 		multRight: function (matrix)
 		{
-			var
+			const
 				a00 = this [ 0], a01 = this [ 1], a02 = this [ 2], a03 = this [ 3],
 				a04 = this [ 4], a05 = this [ 5], a06 = this [ 6], a07 = this [ 7],
 				a08 = this [ 8], a09 = this [ 9], a10 = this [10], a11 = this [11],
@@ -21815,7 +21843,7 @@ function (Vector3,
 		{
 			if (vector .length === 3)
 			{
-				var
+				const
 					x = vector .x,
 					y = vector .y,
 					z = vector .z,
@@ -21828,7 +21856,7 @@ function (Vector3,
 				return vector;
 			}
 
-			var
+			const
 				x = vector .x,
 				y = vector .y,
 				z = vector .z,
@@ -21845,7 +21873,7 @@ function (Vector3,
 		{
 			if (vector .length === 3)
 			{
-				var
+				const
 					x = vector .x,
 					y = vector .y,
 					z = vector .z,
@@ -21858,7 +21886,7 @@ function (Vector3,
 				return vector;
 			}
 
-			var
+			const
 				x = vector .x,
 				y = vector .y,
 				z = vector .z,
@@ -21873,7 +21901,7 @@ function (Vector3,
 		},
 		multDirMatrix: function (vector)
 		{
-			var
+			const
 				x = vector .x,
 				y = vector .y,
 				z = vector .z;
@@ -21886,7 +21914,7 @@ function (Vector3,
 		},
 		multMatrixDir: function (vector)
 		{
-			var
+			const
 				x = vector .x,
 				y = vector .y,
 				z = vector .z;
@@ -21906,7 +21934,7 @@ function (Vector3,
 		},
 		translate: function (translation)
 		{
-			var
+			const
 				x = translation .x,
 				y = translation .y,
 				z = translation .z;
@@ -21925,7 +21953,7 @@ function (Vector3,
 		},
 		scale: function (scale)
 		{
-			var
+			const
 				x = scale .x,
 				y = scale .y,
 				z = scale .z;
@@ -21946,7 +21974,7 @@ function (Vector3,
 		},
 		getDepth: function (vector)
 		{
-			var
+			const
 				x = vector .x,
 				y = vector .y,
 				z = vector .z,
@@ -21967,7 +21995,7 @@ function (Vector3,
 	{
 		get: (function ()
 		{
-			var vector = new Vector4 (0, 0, 0, 0);
+			const vector = new Vector4 (0, 0, 0, 0);
 
 			return function () { return vector .set (this [0], this [1], this [2], this [3]); };
 		})(),
@@ -21979,7 +22007,7 @@ function (Vector3,
 	{
 		get: (function ()
 		{
-			var vector = new Vector4 (0, 0, 0, 0);
+			const vector = new Vector4 (0, 0, 0, 0);
 
 			return function () { return vector .set (this [4], this [5], this [6], this [7]); };
 		})(),
@@ -21991,7 +22019,7 @@ function (Vector3,
 	{
 		get: (function ()
 		{
-			var vector = new Vector4 (0, 0, 0, 0);
+			const vector = new Vector4 (0, 0, 0, 0);
 
 			return function () { return vector .set (this [8], this [9], this [10], this [11]); };
 		})(),
@@ -22003,7 +22031,7 @@ function (Vector3,
 	{
 		get: (function ()
 		{
-			var vector = new Vector3 (0, 0, 0);
+			const vector = new Vector3 (0, 0, 0);
 
 			return function () { return vector .set (this [0], this [1], this [2]); };
 		})(),
@@ -22015,7 +22043,7 @@ function (Vector3,
 	{
 		get: (function ()
 		{
-			var vector = new Vector3 (0, 0, 0);
+			const vector = new Vector3 (0, 0, 0);
 
 			return function () { return vector .set (this [4], this [5], this [6]); };
 		})(),
@@ -22027,7 +22055,7 @@ function (Vector3,
 	{
 		get: (function ()
 		{
-			var vector = new Vector3 (0, 0, 0);
+			const vector = new Vector3 (0, 0, 0);
 
 			return function () { return vector .set (this [8], this [9], this [10]); };
 		})(),
@@ -22039,7 +22067,7 @@ function (Vector3,
 	{
 		get: (function ()
 		{
-			var vector = new Vector3 (0, 0, 0);
+			const vector = new Vector3 (0, 0, 0);
 
 			return function () { return vector .set (this [12], this [13], this [14]); };
 		})(),
@@ -22051,7 +22079,7 @@ function (Vector3,
 	{
 		get: (function ()
 		{
-			var matrix = new Matrix3 ();
+			const matrix = new Matrix3 ();
 
 			return function ()
 			{
@@ -22085,7 +22113,7 @@ function (Vector3,
 		},
 		transpose: function (matrix)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy [ 0] = matrix [ 0]; copy [ 1] = matrix [ 4]; copy [ 2] = matrix [ 8]; copy [ 3] = matrix [12];
 			copy [ 4] = matrix [ 1]; copy [ 5] = matrix [ 5]; copy [ 6] = matrix [ 9]; copy [ 7] = matrix [13];
 			copy [ 8] = matrix [ 2]; copy [ 9] = matrix [ 6]; copy [10] = matrix [10]; copy [11] = matrix [14];
@@ -22094,7 +22122,7 @@ function (Vector3,
 		},
 		inverse: function (matrix)
 		{
-			var
+			const
 				copy = Object .create (this .prototype),
 				m00 = matrix [ 0],
 				m01 = matrix [ 1],
@@ -22139,8 +22167,9 @@ function (Vector3,
 				H = b * m05 + e * m09 + f * m13 - ((c * m05) + (d * m09) + (g * m13)),
 				I = c * m01 + h * m09 + o * m13 - ((b * m01) + (i * m09) + (j * m13)),
 				J = d * m01 + i * m05 + r * m13 - ((e * m01) + (h * m05) + (x * m13)),
-				K = g * m01 + j * m05 + x * m09 - ((f * m01) + (o * m05) + (r * m09)),
-				B = m00 * H + m04 * I + m08 * J + m12 * K;
+				K = g * m01 + j * m05 + x * m09 - ((f * m01) + (o * m05) + (r * m09));
+
+			var B = m00 * H + m04 * I + m08 * J + m12 * K;
 
 			if (B == 0)
 				throw new Error ("Matrix4 .inverse: determinant is 0.");
@@ -22168,7 +22197,7 @@ function (Vector3,
 		},
 		multLeft: function (lhs, rhs)
 		{
-			var
+			const
 				copy = Object .create (this .prototype),
 				a00 = lhs [ 0], a01 = lhs [ 1], a02 = lhs [ 2], a03 = lhs [ 3],
 				a04 = lhs [ 4], a05 = lhs [ 5], a06 = lhs [ 6], a07 = lhs [ 7],
@@ -22200,7 +22229,7 @@ function (Vector3,
 		},
 		multRight: function (lhs, rhs)
 		{
-			var
+			const
 				copy = Object .create (this .prototype),
 				a00 = lhs [ 0], a01 = lhs [ 1], a02 = lhs [ 2], a03 = lhs [ 3],
 				a04 = lhs [ 4], a05 = lhs [ 5], a06 = lhs [ 6], a07 = lhs [ 7],
@@ -22232,7 +22261,7 @@ function (Vector3,
 		},
 	});
 
-	var rotateMatrix = new Matrix4 ();
+	const rotateMatrix = new Matrix4 ();
 
 	return Matrix4;
 });
@@ -31333,7 +31362,7 @@ function ($,
 						className: "context-menu-icon x_ite-private-icon-world-info",
 						callback: function ()
 						{
-							require (["https://cdn.jsdelivr.net/gh/showdownjs/showdown/dist/showdown.min.js"], function (showdown)
+							require (["https://cdn.jsdelivr.net/gh/showdownjs/showdown@1.9.1/dist/showdown.min.js"], function (showdown)
 							{
 								browser .getElement () .find (".x_ite-private-world-info") .remove ();
 
@@ -31356,7 +31385,7 @@ function ($,
 
 								if (title .length)
 								{
-									$("<div></div>") .addClass ("x_ite-private-world-info-title") .html (converter .makeHtml (title)) .appendTo (div);
+									$("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
 								}
 
 								for (var i = 0, length = info .length; i < length; ++ i)
@@ -40740,8 +40769,8 @@ function ($,
 			this .setBrowserEventHandler ("onshutdown");
 			this .setBrowserEventHandler ("onerror");
 
-			this .getSurface () .bind ("keydown.X3DCoreContext", this .keydown_X3DCoreContext .bind (this));
-			this .getSurface () .bind ("keyup.X3DCoreContext",   this .keyup_X3DCoreContext   .bind (this));
+			this .getElement () .bind ("keydown.X3DCoreContext", this .keydown_X3DCoreContext .bind (this));
+			this .getElement () .bind ("keyup.X3DCoreContext",   this .keyup_X3DCoreContext   .bind (this));
 		},
 		getDebug: function ()
 		{
@@ -62679,19 +62708,19 @@ function (Fields,
 		},
 		displayBBox: (function ()
 		{
-			const bbox = new Box3 ();
+			const
+				bbox   = new Box3 (),
+				matrix = new Matrix4 ();
 
 			return function (type, renderObject)
 			{
-				this .getBBox (bbox);
-
-				const matrix          = new Matrix4 ();
 				const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+				this .getBBox (bbox) .multRight (modelViewMatrix .get ());
 
 				matrix .set (bbox .center, null, bbox .size);
 
-				modelViewMatrix .push ();
-				modelViewMatrix .multLeft (matrix);
+				modelViewMatrix .pushMatrix (matrix);
 
 				this .getBrowser () .getBBoxNode () .traverse (type, renderObject);
 
@@ -67574,7 +67603,7 @@ define ('standard/Math/Numbers/Complex',[],function ()
 		constructor: Complex,
 		copy: function ()
 		{
-			var copy = Object .create (Complex .prototype);
+			const copy = Object .create (Complex .prototype);
 			copy .real = this .real;
 			copy .imag = this .imag;
 			return copy;
@@ -67633,7 +67662,7 @@ define ('standard/Math/Numbers/Complex',[],function ()
 		},
 		inverse: function ()
 		{
-			var d = this .real * this .real + this .imag * this .imag;
+			const d = this .real * this .real + this .imag * this .imag;
 
 			this .real /=  d;
 			this .imag /= -d;
@@ -67659,8 +67688,9 @@ define ('standard/Math/Numbers/Complex',[],function ()
 		},
 		multComp: function ()
 		{
-			var
-				real = this .real, imag = this .imag;
+			const
+				real = this .real,
+				imag = this .imag;
 
 			this .real = real * value .real - imag * value .imag;
 			this .imag = real * value .imag + imag * value .real;
@@ -67672,11 +67702,11 @@ define ('standard/Math/Numbers/Complex',[],function ()
 		//},
 		divComp: function (value)
 		{
-			var
+			const
 				ar = this .real, ai = this .imag,
 				br = value .real, bi = value .imag;
 
-			var d = br * br + bi * bi;
+			const d = br * br + bi * bi;
 
 			this .real = (ar * br + ai * bi) / d;
 			this .imag = (ai * br - ar * bi) / d;
@@ -67695,21 +67725,21 @@ define ('standard/Math/Numbers/Complex',[],function ()
 	{
 		Polar: function (radius, angle)
 		{
-			var complex = Object .create (Complex .prototype);
+			const complex = Object .create (Complex .prototype);
 			complex .real = radius * Math .cos (angle);
 			complex .imag = radius * Math .sin (angle);
 			return complex;
 		},
 		multiply: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .real = lhs .real * rhs;
 			copy .imag = lhs .imag * rhs;
 			return copy;
 		},
 		multComp: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .real = lhs .real * rhs .real - lsh .imag * rhs .imag;
 			copy .imag = lhs .real * rhs .imag + lsh .imag * rhs .real;
 			return copy;
@@ -68596,6 +68626,7 @@ function ($,
 	{
 		initialize: function ()
 		{
+			// Make element focusable.
 			this .getElement () .attr ("tabindex", this .getElement () .attr ("tabindex") || 0);
 			this .setCursor ("DEFAULT");
 
@@ -73826,14 +73857,14 @@ define ('standard/Math/Utility/MatrixStack',[],function ()
 			{
 				this [this .top] .assign (matrix);
 			},
-			get: function (matrix)
+			get: function ()
 			{
 				return this [this .top];
 			},
 			push: function ()
 			{
 				var top = ++ this .top;
-			
+
 				if (top < this .length)
 					this [top] .assign (this [top - 1]);
 				else
@@ -107388,7 +107419,7 @@ function (Fields,
 		remove: function () { },
 		set_child__: function ()
 		{
-			this .set_level (Math .min (this .level_changed_ .getValue (), this .children_ .length - 1));
+			this .set_level__ (Math .min (this .level_changed_ .getValue (), this .children_ .length - 1));
 		},
 		set_level__: function (level)
 		{
