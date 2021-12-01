@@ -96,7 +96,7 @@ function (Fields,
 		this ._externprotos         = new ExternProtoDeclarationArray ();
 		this ._routes               = new RouteArray ();
 		this ._routeIndex           = new Map ();
-		this ._worldInfoNodes       = new Set ();
+		this ._worldInfoNodes       = [ ];
 	}
 
 	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -662,20 +662,20 @@ function (Fields,
 		},
 		getWorldInfo: function ()
 		{
-			for (const worldInfoNode of this ._worldInfoNodes)
-			{
-				return worldInfoNode;
-			}
+			const length = this ._worldInfoNodes .length;
+
+			if (length)
+				return this ._worldInfoNodes [length - 1];
 
 			return null;
 		},
 		addWorldInfo: function (worldInfoNode)
 		{
-			this ._worldInfoNodes .add (worldInfoNode);
+			this ._worldInfoNodes .push (worldInfoNode);
 		},
 		removeWorldInfo: function (worldInfoNode)
 		{
-			this ._worldInfoNodes .delete (worldInfoNode);
+			this ._worldInfoNodes = this ._worldInfoNodes .filter (function (node) { return node !== worldInfoNode; });
 		},
 		changeViewpoint: function (name)
 		{
