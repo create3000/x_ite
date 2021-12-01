@@ -31094,6 +31094,8 @@ function ($,
 			$.contextMenu ({
 				selector: ".x_ite-private-browser-" + browser .getId (),
 				build: this .build .bind (this),
+				animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
+				hideOnSecondTrigger: true,
 				events:
 				{
 					show: function (options)
@@ -31135,8 +31137,6 @@ function ($,
 						items: this .getViewpoints (),
 						callback: function (viewpoint)
 						{
-							$(".x_ite-private-menu") .fadeOut (500);
-
 							if (! viewpoint)
 								return;
 
@@ -31151,8 +31151,6 @@ function ($,
 						className: "context-menu-icon x_ite-private-icon-" + currentViewer .toLowerCase () + "-viewer",
 						callback: function (viewer)
 						{
-							$(".x_ite-private-menu") .fadeOut (500);
-
 							browser .viewer_ = viewer;
 							browser .getNotification () .string_ = _(this .getViewerName (viewer));
 							browser .getSurface () .focus ();
@@ -31170,9 +31168,7 @@ function ($,
 						events: {
 							click: function ()
 							{
-								$(".x_ite-private-menu") .fadeOut (500);
-
-								var straightenHorizon = ! browser .getBrowserOption ("StraightenHorizon");
+								const straightenHorizon = ! browser .getBrowserOption ("StraightenHorizon");
 
 								browser .setBrowserOption ("StraightenHorizon", straightenHorizon);
 
@@ -31180,7 +31176,7 @@ function ($,
 								{
 									browser .getNotification () .string_ = _("Straighten Horizon") + ": " + _("on");
 
-									var activeViewpoint = browser .getActiveViewpoint ();
+									const activeViewpoint = browser .getActiveViewpoint ();
 
 									if (activeViewpoint)
 										activeViewpoint .straighten (true);
@@ -31206,8 +31202,6 @@ function ($,
 								events: {
 									click: function ()
 									{
-										$(".x_ite-private-menu") .fadeOut (500);
-
 										browser .setBrowserOption ("PrimitiveQuality", "HIGH");
 										browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("high");
 									}
@@ -31222,8 +31216,6 @@ function ($,
 								events: {
 									click: function ()
 									{
-										$(".x_ite-private-menu") .fadeOut (500);
-
 										browser .setBrowserOption ("PrimitiveQuality", "MEDIUM");
 										browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("medium");
 									}
@@ -31238,8 +31230,6 @@ function ($,
 								events: {
 									click: function ()
 									{
-										$(".x_ite-private-menu") .fadeOut (500);
-
 										browser .setBrowserOption ("PrimitiveQuality", "LOW");
 										browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("low");
 									}
@@ -31260,8 +31250,6 @@ function ($,
 								events: {
 									click: function ()
 									{
-										$(".x_ite-private-menu") .fadeOut (500);
-
 										browser .setBrowserOption ("TextureQuality", "HIGH");
 										browser .getNotification () .string_ = _("Texture Quality") + ": " + _("high");
 									}
@@ -31276,8 +31264,6 @@ function ($,
 								events: {
 									click: function ()
 									{
-										$(".x_ite-private-menu") .fadeOut (500);
-
 										browser .setBrowserOption ("TextureQuality", "MEDIUM");
 										browser .getNotification () .string_ = _("Texture Quality") + ": " + _("medium");
 									}
@@ -31292,8 +31278,6 @@ function ($,
 								events: {
 									click: function ()
 									{
-										$(".x_ite-private-menu") .fadeOut (500);
-
 										browser .setBrowserOption ("TextureQuality", "LOW");
 										browser .getNotification () .string_ = _("Texture Quality") + ": " + _("low");
 									}
@@ -31309,9 +31293,7 @@ function ($,
 						events: {
 							click: function ()
 							{
-								$(".x_ite-private-menu") .fadeOut (500);
-
-								var rubberband = ! browser .getBrowserOption ("Rubberband");
+								const rubberband = ! browser .getBrowserOption ("Rubberband");
 
 								browser .setBrowserOption ("Rubberband", rubberband);
 
@@ -31330,8 +31312,6 @@ function ($,
 						events: {
 							click: function ()
 							{
-								$(".x_ite-private-menu") .fadeOut (500);
-
 								browser .getBrowserTimings () .setEnabled (! browser .getBrowserTimings () .getEnabled ());
 								browser .getSurface () .focus ();
 							}
@@ -31343,8 +31323,6 @@ function ($,
 						className: "context-menu-icon " + (fullscreen ? "x_ite-private-icon-leave-fullscreen" : "x_ite-private-icon-fullscreen"),
 						callback: function ()
 						{
-							$(".x_ite-private-menu") .fadeOut (500);
-
 							browser .getElement () .toggleFullScreen ();
 						}
 						.bind (this),
@@ -31355,32 +31333,43 @@ function ($,
 						className: "context-menu-icon x_ite-private-icon-world-info",
 						callback: function ()
 						{
-							$(".x_ite-private-menu") .fadeOut (500);
-
-							const
-								priv      = browser .getElement () .find (".x_ite-private-browser"),
-								div       = $("<div></div>") .addClass ("x_ite-private-world-info") .prependTo (priv),
-								worldInfo = browser .getExecutionContext () .getWorldInfo (),
-								title     = worldInfo .title_ .getValue (),
-								info      = worldInfo .info_;
-
-							$("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
-
-							if (title .length)
+							require (["https://cdn.jsdelivr.net/gh/showdownjs/showdown/dist/showdown.min.js"], function (showdown)
 							{
-								$("<div></div>") .addClass ("x_ite-private-world-info-title") .html (transform (title)) .appendTo (div);
-							}
+								browser .getElement () .find (".x_ite-private-world-info") .remove ();
 
-							for (var i = 0, length = info .length; i < length; ++ i)
-							{
-								$("<div></div>") .addClass ("x_ite-private-world-info-info") .html (transform (info [i])) .appendTo (div);
-							}
+								const
+									converter = new showdown .Converter (),
+									priv      = browser .getElement () .find (".x_ite-private-browser"),
+									div       = $("<div></div>") .addClass ("x_ite-private-world-info") .prependTo (priv),
+									worldInfo = browser .getExecutionContext () .getWorldInfo (),
+									title     = worldInfo .title_ .getValue (),
+									info      = worldInfo .info_;
 
-							div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
+								converter .setOption ("omitExtraWLInCodeBlocks",            true);
+								converter .setOption ("simplifiedAutoLink",                 true);
+								converter .setOption ("excludeTrailingPunctuationFromURLs", true);
+								converter .setOption ("literalMidWordUnderscores",          true);
+								converter .setOption ("strikethrough",                      true);
+								converter .setOption ("openLinksInNewWindow",               false);
 
-							div .on ("click", function ()
-							{
-								div .remove ();
+								$("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
+
+								if (title .length)
+								{
+									$("<div></div>") .addClass ("x_ite-private-world-info-title") .html (converter .makeHtml (title)) .appendTo (div);
+								}
+
+								for (var i = 0, length = info .length; i < length; ++ i)
+								{
+									$("<div></div>") .addClass ("x_ite-private-world-info-info") .html (converter .makeHtml (info [i])) .appendTo (div);
+								}
+
+								div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
+
+								div .on ("click", function ()
+								{
+									div .remove ();
+								});
 							});
 						},
 					},
@@ -31389,8 +31378,6 @@ function ($,
 						className: "context-menu-icon x_ite-private-icon-help-about",
 						callback: function ()
 						{
-							$(".x_ite-private-menu") .fadeOut (500);
-
 							window .open (browser .getProviderUrl ());
 						},
 					},
@@ -31452,8 +31439,6 @@ function ($,
 					name: description,
 					callback: function (viewpoint)
 					{
-						$(".x_ite-private-menu") .fadeOut (500);
-
 						browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
 						browser .getSurface () .focus ();
 					}
@@ -31485,8 +31470,6 @@ function ($,
 					className: "context-menu-icon x_ite-private-icon-" + viewer .toLowerCase () + "-viewer",
 					callback: function (viewer)
 					{
-						$(".x_ite-private-menu") .fadeOut (500);
-
 						browser .viewer_ = viewer;
 						browser .getNotification () .string_ = _(this .getViewerName (viewer));
 						browser .getSurface () .focus ();
@@ -31519,43 +31502,6 @@ function ($,
 			}
 		},
 	});
-
-	const transform = (function ()
-	{
-		const
-		strongem = /(^|[ *_:,;.!?<>()\[\]{}-])(\*{3}|_{3})(\S.*?\S|\S)\2($|[ *_:,;.!?<>()\[\]{}-])/g,
-		strong   = /(^|[ *_:,;.!?<>()\[\]{}-])(\*{2}|_{2})(\S.*?\S|\S)\2($|[ *_:,;.!?<>()\[\]{}-])/g,
-		em       = /(^|[ *_:,;.!?<>()\[\]{}-])([*_])(\S.*?\S|\S)\2($|[ *_:,;.!?<>()\[\]{}-])/g,
-		url      = /(\b(?:https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-
-		return function (string)
-		{
-			let output = string;
-
-			do
-			{
-				string = output;
-				output = string .replaceAll (strongem, "$1<strong><em>$3</em></strong>$4");
-			}
-			while (output != string);
-
-			do
-			{
-				string = output;
-				output = string .replaceAll (strong, "$1<strong>$3</strong>$4");
-			}
-			while (output != string);
-
-			do
-			{
-				string = output;
-				output = string .replaceAll (em, "$1<em>$3</em>$4");
-			}
-			while (output != string);
-
-			return string .replaceAll (url, "<a href=\"$1\">$1</a>");
-		};
-	})();
 
 	return ContextMenu;
 });

@@ -371,6 +371,15 @@ function ($,
 								{
 									div .remove ();
 								});
+
+								// Open external link in new tab.
+								div .find ("a[href^=http]") .each (function ()
+								{
+									if (this .href .indexOf (location .hostname) !== -1)
+										return;
+
+									$(this) .attr ("target", "_blank");
+								});
 							});
 						},
 					},
