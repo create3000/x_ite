@@ -369,13 +369,15 @@ function ($,
 
 							if (title .length)
 							{
-								$("<div></div>") .addClass ("x_ite-private-world-info-title") .html (title) .appendTo (div);
+								$("<div></div>") .addClass ("x_ite-private-world-info-title") .html (transform (title)) .appendTo (div);
 							}
 
 							for (var i = 0, length = info .length; i < length; ++ i)
 							{
-								$("<div></div>") .addClass ("x_ite-private-world-info-info") .html (info [i]) .appendTo (div);
+								$("<div></div>") .addClass ("x_ite-private-world-info-info") .html (transform (info [i])) .appendTo (div);
 							}
+
+							div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
 
 							div .on ("click", function ()
 							{
@@ -518,6 +520,22 @@ function ($,
 			}
 		},
 	});
+
+	const transform = (function ()
+	{
+		const
+			strong = /(^|[ *_:,;.!?<>()\[\]{}-])\*(\S.*?\S|\S)\*($|[ *_:,;.!?<>()\[\]{}-])/g,
+			em     = /(^|[ *_:,;.!?<>()\[\]{}-])\_(\S.*?\S|\S)\_($|[ *_:,;.!?<>()\[\]{}-])/g,
+			url    = /(\b(?:https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+
+		return function (string)
+		{
+			return string
+						.replaceAll (strong, "$1<strong>$2</strong>$3")
+						.replaceAll (em, "$1<em>$2</em>$3")
+						.replaceAll (url, "<a href=\"$1\">$1</a>");
+		};
+	})();
 
 	return ContextMenu;
 });

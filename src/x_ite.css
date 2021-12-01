@@ -245,6 +245,11 @@ X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-info {
 	font-size: 14pt;
 }
 
+X3DCanvas .x_ite-private-world-info a {
+	text-decoration: underline;
+	color: rgb(255, 81, 0)
+}
+
 /*!
  * jQuery contextMenu - Plugin for simple contextMenu handling
  *
