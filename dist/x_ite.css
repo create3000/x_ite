@@ -1,4 +1,4 @@
-/* X_ITE v4.6.25a-1061 */
+/* X_ITE v4.6.25a-1062 */
 @charset "utf-8";
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
 X3DCanvas .x_ite-private-splash-screen {
@@ -246,8 +246,9 @@ X3DCanvas .x_ite-private-world-info {
 	border-radius: 15px;
 	padding: 21pt;
 }
-X3DCanvas .x_ite-private-world-info h1,
-X3DCanvas .x_ite-private-world-info p {
+X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-top,
+X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-title,
+X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-info {
 	box-sizing: border-box;
 	outline: 0px;
 	margin: 0px;
@@ -264,20 +265,23 @@ X3DCanvas .x_ite-private-world-info p {
 	line-height: 1.2;
 	text-align: left;
 }
-X3DCanvas .x_ite-private-world-info span {
-	display: block;
+X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-top {
 	font-weight: bold;
 	font-style: italic;
 	font-size: 9pt;
 }
-X3DCanvas .x_ite-private-world-info h1 {
+X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-title {
 	margin: 0.3em 0px 1em 0px;
 	font-weight: bold;
 	font-size: 21pt;
 }
-X3DCanvas .x_ite-private-world-info p {
+X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-info {
 	margin: 1em 0px 1em 0px;
 	font-size: 14pt;
+}
+X3DCanvas .x_ite-private-world-info a {
+	text-decoration: underline;
+	color: rgb(255, 81, 0)
 }
 /*!
  * jQuery contextMenu - Plugin for simple contextMenu handling

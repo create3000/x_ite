@@ -1,4 +1,4 @@
-/* X_ITE v4.6.25a-1061 */
+/* X_ITE v4.6.25a-1062 */
 
 (function () {
 
@@ -31364,17 +31364,19 @@ function ($,
 								title     = worldInfo .title_ .getValue (),
 								info      = worldInfo .info_;
 
-							$("<span></span>") .text ("World Info") .appendTo (div);
+							$("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
 
 							if (title .length)
 							{
-								$("<h1></h1>") .html (title) .appendTo (div);
+								$("<div></div>") .addClass ("x_ite-private-world-info-title") .html (transform (title)) .appendTo (div);
 							}
 
 							for (var i = 0, length = info .length; i < length; ++ i)
 							{
-								$("<p></p>") .html (info [i]) .appendTo (div);
+								$("<div></div>") .addClass ("x_ite-private-world-info-info") .html (transform (info [i])) .appendTo (div);
 							}
+
+							div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
 
 							div .on ("click", function ()
 							{
@@ -31517,6 +31519,22 @@ function ($,
 			}
 		},
 	});
+
+	const transform = (function ()
+	{
+		const
+			strong = /(^|[ *_:,;.!?<>()\[\]{}-])\*(\S.*?\S|\S)\*($|[ *_:,;.!?<>()\[\]{}-])/g,
+			em     = /(^|[ *_:,;.!?<>()\[\]{}-])\_(\S.*?\S|\S)\_($|[ *_:,;.!?<>()\[\]{}-])/g,
+			url    = /(\b(?:https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+
+		return function (string)
+		{
+			return string
+						.replaceAll (strong, "$1<strong>$2</strong>$3")
+						.replaceAll (em, "$1<em>$2</em>$3")
+						.replaceAll (url, "<a href=\"$1\">$1</a>");
+		};
+	})();
 
 	return ContextMenu;
 });
@@ -32783,7 +32801,7 @@ function (Fields,
 		this ._externprotos         = new ExternProtoDeclarationArray ();
 		this ._routes               = new RouteArray ();
 		this ._routeIndex           = new Map ();
-		this ._worldInfoNodes       = new Set ();
+		this ._worldInfoNodes       = [ ];
 	}
 
 	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -33349,20 +33367,20 @@ function (Fields,
 		},
 		getWorldInfo: function ()
 		{
-			for (const worldInfoNode of this ._worldInfoNodes)
-			{
-				return worldInfoNode;
-			}
+			const length = this ._worldInfoNodes .length;
+
+			if (length)
+				return this ._worldInfoNodes [length - 1];
 
 			return null;
 		},
 		addWorldInfo: function (worldInfoNode)
 		{
-			this ._worldInfoNodes .add (worldInfoNode);
+			this ._worldInfoNodes .push (worldInfoNode);
 		},
 		removeWorldInfo: function (worldInfoNode)
 		{
-			this ._worldInfoNodes .delete (worldInfoNode);
+			this ._worldInfoNodes = this ._worldInfoNodes .filter (function (node) { return node !== worldInfoNode; });
 		},
 		changeViewpoint: function (name)
 		{
