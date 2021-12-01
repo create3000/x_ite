@@ -242,7 +242,7 @@ X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-title {
 }
 
 X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-info,
-X3DCanvas .x_ite-private-world-info p {
+X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-info p {
 	margin: 1em 0px 1em 0px;
 	font-size: 14pt;
 }
