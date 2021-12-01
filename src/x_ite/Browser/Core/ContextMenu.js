@@ -334,7 +334,7 @@ function ($,
 						className: "context-menu-icon x_ite-private-icon-world-info",
 						callback: function ()
 						{
-							require (["https://cdn.jsdelivr.net/gh/showdownjs/showdown/dist/showdown.min.js"], function (showdown)
+							require (["https://cdn.jsdelivr.net/gh/showdownjs/showdown@1.9.1/dist/showdown.min.js"], function (showdown)
 							{
 								browser .getElement () .find (".x_ite-private-world-info") .remove ();
 
