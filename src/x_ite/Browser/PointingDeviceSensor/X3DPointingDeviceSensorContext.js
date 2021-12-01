@@ -98,6 +98,7 @@ function ($,
 	{
 		initialize: function ()
 		{
+			// Make element focusable.
 			this .getElement () .attr ("tabindex", this .getElement () .attr ("tabindex") || 0);
 			this .setCursor ("DEFAULT");
 
