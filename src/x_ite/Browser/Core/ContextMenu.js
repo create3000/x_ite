@@ -357,7 +357,7 @@ function ($,
 
 								if (title .length)
 								{
-									$("<div></div>") .addClass ("x_ite-private-world-info-title") .html (converter .makeHtml (title)) .appendTo (div);
+									$("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
 								}
 
 								for (var i = 0, length = info .length; i < length; ++ i)
