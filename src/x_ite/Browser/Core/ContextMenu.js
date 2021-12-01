@@ -365,16 +365,16 @@ function ($,
 								title     = worldInfo .title_ .getValue (),
 								info      = worldInfo .info_;
 
-							$("<div></div>") .addClass ("world-info") .text ("World Info") .appendTo (div);
+							$("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
 
 							if (title .length)
 							{
-								$("<div></div>") .addClass ("title") .html (title) .appendTo (div);
+								$("<div></div>") .addClass ("x_ite-private-world-info-title") .html (title) .appendTo (div);
 							}
 
 							for (var i = 0, length = info .length; i < length; ++ i)
 							{
-								$("<div></div>") .addClass ("info") .html (info [i]) .appendTo (div);
+								$("<div></div>") .addClass ("x_ite-private-world-info-info") .html (info [i]) .appendTo (div);
 							}
 
 							div .on ("click", function ()
