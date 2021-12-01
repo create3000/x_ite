@@ -62,7 +62,7 @@ define (function ()
 		constructor: Complex,
 		copy: function ()
 		{
-			var copy = Object .create (Complex .prototype);
+			const copy = Object .create (Complex .prototype);
 			copy .real = this .real;
 			copy .imag = this .imag;
 			return copy;
@@ -121,7 +121,7 @@ define (function ()
 		},
 		inverse: function ()
 		{
-			var d = this .real * this .real + this .imag * this .imag;
+			const d = this .real * this .real + this .imag * this .imag;
 
 			this .real /=  d;
 			this .imag /= -d;
@@ -147,8 +147,9 @@ define (function ()
 		},
 		multComp: function ()
 		{
-			var
-				real = this .real, imag = this .imag;
+			const
+				real = this .real,
+				imag = this .imag;
 
 			this .real = real * value .real - imag * value .imag;
 			this .imag = real * value .imag + imag * value .real;
@@ -160,11 +161,11 @@ define (function ()
 		//},
 		divComp: function (value)
 		{
-			var
+			const
 				ar = this .real, ai = this .imag,
 				br = value .real, bi = value .imag;
 
-			var d = br * br + bi * bi;
+			const d = br * br + bi * bi;
 
 			this .real = (ar * br + ai * bi) / d;
 			this .imag = (ai * br - ar * bi) / d;
@@ -183,21 +184,21 @@ define (function ()
 	{
 		Polar: function (radius, angle)
 		{
-			var complex = Object .create (Complex .prototype);
+			const complex = Object .create (Complex .prototype);
 			complex .real = radius * Math .cos (angle);
 			complex .imag = radius * Math .sin (angle);
 			return complex;
 		},
 		multiply: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .real = lhs .real * rhs;
 			copy .imag = lhs .imag * rhs;
 			return copy;
 		},
 		multComp: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .real = lhs .real * rhs .real - lsh .imag * rhs .imag;
 			copy .imag = lhs .real * rhs .imag + lsh .imag * rhs .real;
 			return copy;

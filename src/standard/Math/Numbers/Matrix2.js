@@ -78,7 +78,7 @@ function (Vector2,
 		length: 4,
 		copy: function ()
 		{
-			var copy = Object .create (Matrix2 .prototype);
+			const copy = Object .create (Matrix2 .prototype);
 			copy [0] = this [0];
 			copy [1] = this [1];
 			copy [2] = this [2];
@@ -122,7 +122,7 @@ function (Vector2,
 					this [0] = arguments [0];
 					this [1] = arguments [1];
 					this [2] = arguments [2];
-					this [3] = arguments [3];	
+					this [3] = arguments [3];
 					break;
 				}
 			}
@@ -138,7 +138,7 @@ function (Vector2,
 		},
 		transpose: function ()
 		{
-			var tmp = this [1];
+			const tmp = this [1];
 
 			this [1] = this [2];
 			this [2] = tmp;
@@ -147,8 +147,8 @@ function (Vector2,
 		},
 		inverse: function ()
 		{
-			var d = this .determinant ();
-		
+			const d = this .determinant ();
+
 			if (d === 0)
 				throw new Error ("Matrix2 .inverse: determinant is 0.");
 
@@ -161,7 +161,7 @@ function (Vector2,
 		},
 		multLeft: function (matrix)
 		{
-			var
+			const
 				a0 = this [0], a1 = this [1],
 				a2 = this [2], a3 = this [3],
 				b0 = matrix [0], b1 = matrix [1],
@@ -176,7 +176,7 @@ function (Vector2,
 		},
 		multRight: function (matrix)
 		{
-			var
+			const
 				a0 = this [0], a1 = this [1],
 				a2 = this [2], a3 = this [3],
 				b0 = matrix [0], b1 = matrix [1],
@@ -194,7 +194,7 @@ function (Vector2,
 			this [0] = 1;
 			this [1] = 0;
 			this [2] = 0;
-			this [3] = 1;	
+			this [3] = 1;
 		},
 		toString: function ()
 		{
@@ -207,7 +207,7 @@ function (Vector2,
 	{
 		get: (function ()
 		{
-			var vector = new Vector2 (0, 0);
+			const vector = new Vector2 (0, 0);
 
 			return function () { return vector .set (this [0], this [1]); };
 		})(),

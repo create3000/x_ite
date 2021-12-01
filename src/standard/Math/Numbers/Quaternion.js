@@ -69,7 +69,7 @@ function (Vector3, Algorithm)
 		length: 4,
 		copy: function ()
 		{
-			var copy = Object .create (Quaternion .prototype);
+			const copy = Object .create (Quaternion .prototype);
 			copy .x = this .x;
 			copy .y = this .y;
 			copy .z = this .z;
@@ -106,7 +106,7 @@ function (Vector3, Algorithm)
 				i = matrix [4] > matrix [8] ? 1 : 2;
 			}
 
-			var scalerow = matrix [0] + matrix [4] + matrix [8];
+			const scalerow = matrix [0] + matrix [4] + matrix [8];
 
 			if (scalerow > matrix [i * 3 + i])
 			{
@@ -114,7 +114,7 @@ function (Vector3, Algorithm)
 				this [3] = Math .sqrt (scalerow + 1) / 2;
 
 				// And compute other values:
-				var d = 4 * this [3];
+				const d = 4 * this [3];
 				this [0] = (matrix [5] - matrix [7]) / d;
 				this [1] = (matrix [6] - matrix [2]) / d;
 				this [2] = (matrix [1] - matrix [3]) / d;
@@ -122,14 +122,14 @@ function (Vector3, Algorithm)
 			else
 			{
 				// Compute x, y, or z first:
-				var j = (i + 1) % 3;
-				var k = (i + 2) % 3;
+				const j = (i + 1) % 3;
+				const k = (i + 2) % 3;
 
 				// Compute first value:
 				this [i] = Math .sqrt (matrix [i * 3 + i] - matrix [j * 3 + j] - matrix [k * 3 + k] + 1) / 2;
 
 				// And the others:
-				var d = 4 * this [i];
+				const d = 4 * this [i];
 				this [j] = (matrix [i * 3 + j] + matrix [j * 3 + i]) / d;
 				this [k] = (matrix [i * 3 + k] + matrix [k * 3 + i]) / d;
 				this [3] = (matrix [j * 3 + k] - matrix [k * 3 + j]) / d;
@@ -139,13 +139,13 @@ function (Vector3, Algorithm)
 		},
 		getMatrix: function (matrix)
 		{
-			var
+			const
 				x = this .x,
 				y = this .y,
 				z = this .z,
 				w = this .w;
 
-			var
+			const
 				a = x * x,
 				b = x * y,
 				c = y * y,
@@ -155,7 +155,7 @@ function (Vector3, Algorithm)
 				g = w * x,
 				h = w * y,
 				i = w * z;
-		
+
 			matrix [0] = 1 - 2 * (c + f);
 			matrix [1] =     2 * (b + i);
 			matrix [2] =     2 * (e - h);
@@ -226,7 +226,7 @@ function (Vector3, Algorithm)
 		},
 		multLeft: function (quat)
 		{
-			var
+			const
 				ax = this .x, ay = this .y, az = this .z, aw = this .w,
 				bx = quat .x, by = quat .y, bz = quat .z, bw = quat .w;
 
@@ -239,7 +239,7 @@ function (Vector3, Algorithm)
 		},
 		multRight: function (quat)
 		{
-			var
+			const
 				ax = this .x, ay = this .y, az = this .z, aw = this .w,
 				bx = quat .x, by = quat .y, bz = quat .z, bw = quat .w;
 
@@ -260,27 +260,27 @@ function (Vector3, Algorithm)
 		},
 		multVecQuat: function (vector)
 		{
-			var
+			const
 				qx = this .x, qy = this .y, qz = this .z, qw = this .w,
 				vx = vector .x, vy = vector .y, vz = vector .z,
-				a  = qw * qw - qx * qx - qy * qy - qz * qz,                   
-				b  = 2 * (vx * qx + vy * qy + vz * qz), 
-				c  = 2 * qw;                                       
+				a  = qw * qw - qx * qx - qy * qy - qz * qz,
+				b  = 2 * (vx * qx + vy * qy + vz * qz),
+				c  = 2 * qw;
 
 			vector .x = a * vx + b * qx + c * (qy * vz - qz * vy);
 			vector .y = a * vy + b * qy + c * (qz * vx - qx * vz);
 			vector .z = a * vz + b * qz + c * (qx * vy - qy * vx);
-			
+
 			return vector;
 		},
 		multQuatVec: function (vector)
 		{
-			var
+			const
 				qx = this .x, qy = this .y, qz = this .z, qw = this .w,
 				vx = vector .x, vy = vector .y, vz = vector .z,
-				a  = qw * qw - qx * qx - qy * qy - qz * qz,                    
-				b  = 2 * (vx * qx + vy * qy + vz * qz), 
-				c  = 2 * qw;                                       
+				a  = qw * qw - qx * qx - qy * qy - qz * qz,
+				b  = 2 * (vx * qx + vy * qy + vz * qz),
+				c  = 2 * qw;
 
 			vector .x = a * vx + b * qx - c * (qy * vz - qz * vy);
 			vector .y = a * vy + b * qy - c * (qz * vx - qx * vz);
@@ -293,8 +293,8 @@ function (Vector3, Algorithm)
 			var length = Math .sqrt (this .x * this .x +
 			                         this .y * this .y +
 			                         this .z * this .z +
-			                         this .w * this .w);
-			
+			                      	 this .w * this .w);
+
 			if (length)
 			{
 				length = 1 / length;
@@ -336,7 +336,7 @@ function (Vector3, Algorithm)
 			if (this .isReal ())
 				return this .set (0, 0, 0, Math .pow (this .w, exponent));
 
-			var
+			const
 				l     = this .abs (),
 				theta = Math .acos (this .w / l),
 				li    = this .imag .abs (),
@@ -361,7 +361,7 @@ function (Vector3, Algorithm)
 					return this .set (Math .PI, 0, 0, Math .log (-this .w));
 			}
 
-			var
+			const
 				l = this .abs (),
 				v = this .imag .normalize () .multiply (Math .acos (this .w / l)),
 				w = Math .log (l);
@@ -373,11 +373,11 @@ function (Vector3, Algorithm)
 			return this;
 		},
 		exp: function ()
-		{	
+		{
 			if (this .isReal ())
 				return this .set (0, 0, 0, Math .exp (this .w));
 
-			var
+			const
 				i  = this .imag,
 				li = i .abs (),
 				ew = Math .exp (this .w),
@@ -454,7 +454,7 @@ function (Vector3, Algorithm)
 	{
 		get: (function ()
 		{
-			var result = new Vector3 (0, 0, 0);
+			const result = new Vector3 (0, 0, 0);
 
 			return function ()
 			{
@@ -471,7 +471,7 @@ function (Vector3, Algorithm)
 	{
 		negate: function (vector)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = -this .x;
 			copy .y = -this .y;
 			copy .z = -this .z;
@@ -480,7 +480,7 @@ function (Vector3, Algorithm)
 		},
 		inverse: function (vector)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = -vector .x;
 			copy .y = -vector .y;
 			copy .z = -vector .z;
@@ -489,7 +489,7 @@ function (Vector3, Algorithm)
 		},
 		add: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x + rhs .x;
 			copy .y = lhs .y + rhs .y;
 			copy .z = lhs .z + rhs .z;
@@ -498,7 +498,7 @@ function (Vector3, Algorithm)
 		},
 		subtract: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x - rhs .x;
 			copy .y = lhs .y - rhs .y;
 			copy .z = lhs .z - rhs .z;
@@ -507,7 +507,7 @@ function (Vector3, Algorithm)
 		},
 		multiply: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x * rhs;
 			copy .y = lhs .y * rhs;
 			copy .z = lhs .z * rhs;
@@ -516,7 +516,7 @@ function (Vector3, Algorithm)
 		},
 		multLeft: function (lhs, rhs)
 		{
-			var
+			const
 				copy = Object .create (this .prototype),
 				ax = lhs .x, ay = lhs .y, az = lhs .z, aw = lhs .w,
 				bx = rhs .x, by = rhs .y, bz = rhs .z, bw = rhs .w;
@@ -530,7 +530,7 @@ function (Vector3, Algorithm)
 		},
 		multRight: function (lhs, rhs)
 		{
-			var
+			const
 				copy = Object .create (this .prototype),
 				ax = lhs .x, ay = lhs .y, az = lhs .z, aw = lhs .w,
 				bx = rhs .x, by = rhs .y, bz = rhs .z, bw = rhs .w;
@@ -544,7 +544,7 @@ function (Vector3, Algorithm)
 		},
 		divide: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x / rhs;
 			copy .y = lhs .y / rhs;
 			copy .z = lhs .z / rhs;
@@ -553,13 +553,14 @@ function (Vector3, Algorithm)
 		},
 		normalize: function (quat)
 		{
-			var
+			const
 				copy   = Object .create (this .prototype),
 				x      = quat .x,
 				y      = quat .y,
 				z      = quat .z,
-				w      = quat .w,
-				length = Math .sqrt (x * x + y * y + z * z + w * w);
+				w      = quat .w;
+
+			var length = Math .sqrt (x * x + y * y + z * z + w * w);
 
 			if (length)
 			{
@@ -595,9 +596,9 @@ function (Vector3, Algorithm)
 		/*
 		bezier: function (q0, a, b, q1, t)
 		{
-			var q11 = Algorithm .slerp (q0,  a, t);
-			var q12 = Algorithm .slerp ( a,  b, t);
-			var q13 = Algorithm .slerp ( b, q1, t);
+			const q11 = Algorithm .slerp (q0,  a, t);
+			const q12 = Algorithm .slerp ( a,  b, t);
+			const q13 = Algorithm .slerp ( b, q1, t);
 
 			return Algorithm .slerp (Algorithm .slerp (q11, q12, t), Algorithm .slerp (q12, q13, t), t);
 		},
@@ -628,12 +629,12 @@ function (Vector3, Algorithm)
 		},
 	});
 
-	var
+	const
 		t1 = new Quaternion (0, 0, 0, 1),
 		t2 = new Quaternion (0, 0, 0, 1),
 		t3 = new Quaternion (0, 0, 0, 1);
-	
-	var
+
+	const
 		q0   = new Quaternion (0, 0, 0, 1),
 		q1   = new Quaternion (0, 0, 0, 1),
 		q2   = new Quaternion (0, 0, 0, 1),

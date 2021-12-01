@@ -82,7 +82,7 @@ function (Quaternion,
 			}
 			case 2:
 			{
-				var
+				const
 					arg0 = arguments [0],
 					arg1 = arguments [1];
 
@@ -113,7 +113,7 @@ function (Quaternion,
 		length: 4,
 		update: function ()
 		{
-			var rotation = this .get ();
+			const rotation = this .get ();
 
 			this .x_     = rotation .x;
 			this .y_     = rotation .y;
@@ -124,7 +124,7 @@ function (Quaternion,
 		},
 		copy: function ()
 		{
-			var copy = Object .create (Rotation4 .prototype);
+			const copy = Object .create (Rotation4 .prototype);
 
 			copy .x_     = this .x_;
 			copy .y_     = this .y_;
@@ -153,7 +153,7 @@ function (Quaternion,
 			this .z_     = z;
 			this .angle_ = angle;
 
-			var scale = Math .sqrt (x * x + y * y + z * z);
+			const scale = Math .sqrt (x * x + y * y + z * z);
 
 			if (scale === 0)
 			{
@@ -163,23 +163,23 @@ function (Quaternion,
 
 			// Calculate quaternion
 
-			var
+			const
 				halfTheta = Algorithm .interval (angle / 2, 0, Math .PI),
-				scale     = Math .sin (halfTheta) / scale;
+				ascale    = Math .sin (halfTheta) / scale;
 
-			this .value .set (x * scale,
-			                  y * scale,
-			                  z * scale,
+			this .value .set (x * ascale,
+			                  y * ascale,
+			                  z * ascale,
 			                  Math .cos (halfTheta));
 			return this;
 		},
 		get: (function ()
 		{
-			var result = new Vector4 (0, 0, 0, 0);
+			const result = new Vector4 (0, 0, 0, 0);
 
 			return function ()
 			{
-				var value = this .value;
+				const value = this .value;
 
 				if (Math .abs (value .w) > 1)
 				{
@@ -187,7 +187,7 @@ function (Quaternion,
 				}
 				else
 				{
-					var
+					const
 						angle = Math .acos (value .w) * 2,
 						scale = Math .sin (angle / 2);
 
@@ -197,7 +197,7 @@ function (Quaternion,
 					}
 					else
 					{
-						var axis = value .imag .divide (scale);
+						const axis = value .imag .divide (scale);
 
 						return result .set (axis .x,
 						                    axis .y,
@@ -213,7 +213,7 @@ function (Quaternion,
 		},
 		setFromToVec: (function ()
 		{
-			var
+			const
 				from = new Vector3 (0, 0, 0),
 				to   = new Vector3 (0, 0, 0),
 				cv   = new Vector3 (0, 0, 0),
@@ -226,7 +226,7 @@ function (Quaternion,
 				from .assign (fromVec) .normalize ();
 				to   .assign (toVec)   .normalize ();
 
-				var
+				const
 					cos_angle = Algorithm .clamp (from .dot (to), -1, 1),
 					crossvec  = cv .assign (from) .cross (to) .normalize (),
 					crosslen  = crossvec .abs ();
@@ -278,7 +278,7 @@ function (Quaternion,
 		},
 		getAxis: (function ()
 		{
-			var axis = new Vector3 (0, 0, 0);
+			const axis = new Vector3 (0, 0, 0);
 
 			return function ()
 			{
@@ -358,7 +358,7 @@ function (Quaternion,
 		}
 	};
 
-	var x = {
+	const x = {
 		get: function ()
 		{
 			return this .x_;
@@ -372,7 +372,7 @@ function (Quaternion,
 		configurable: false
 	};
 
-	var y = {
+	const y = {
 		get: function ()
 		{
 			return this .y_;
@@ -386,7 +386,7 @@ function (Quaternion,
 		configurable: false
 	};
 
-	var z = {
+	const z = {
 		get: function ()
 		{
 			return this .z_;
@@ -400,7 +400,7 @@ function (Quaternion,
 		configurable: false
 	};
 
-	var angle = {
+	const angle = {
 		get: function ()
 		{
 			return this .angle_;
@@ -434,49 +434,49 @@ function (Quaternion,
 		Identity: new Rotation4 (),
 		inverse: function (rotation)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .value = Quaternion .inverse (rotation .value);
 			copy .update ();
 			return copy;
 		},
 		multRight: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .value = Quaternion .multRight (lhs .value, rhs .value);
 			copy .update ();
 			return copy;
 		},
 		normalize: function ()
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .value = rotation .value .copy ();
 			copy .update ();
 			return copy;
 		},
 		slerp: function (source, destination, t)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .value = Quaternion .slerp (source .value, destination .value, t);
 			copy .update ();
 			return copy;
 		},
 		squad: function (source, a, b, destination, t)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .value = Quaternion .squad (source .value, a, b, destination .value, t);
 			copy .update ();
 			return copy;
 		},
 		bezier: function (source, a, b, destination, t)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .value = Quaternion .bezier (source .value, a, b, destination .value, t);
 			copy .update ();
 			return copy;
 		},
 		spline: function (q0, q1, q2)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .value = Quaternion .spline (q0 .value, q1 .value, q2 .value);
 			copy .update ();
 			return copy;

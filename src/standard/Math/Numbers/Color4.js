@@ -55,7 +55,7 @@ function (Color3, Algorithm)
 {
 "use strict";
 
-	var clamp = Algorithm .clamp;
+	const clamp = Algorithm .clamp;
 
 	function Color4 (r, g, b, a)
 	{
@@ -81,7 +81,7 @@ function (Color3, Algorithm)
 		length: 4,
 		copy: function ()
 		{
-			var copy = Object .create (Color4 .prototype);
+			const copy = Object .create (Color4 .prototype);
 			copy .r_ = this .r_;
 			copy .g_ = this .g_;
 			copy .b_ = this .b_;
@@ -132,28 +132,28 @@ function (Color3, Algorithm)
 		},
 	};
 
-	var r = {
+	const r = {
 		get: function () { return this .r_; },
 		set: function (value) { this .r_ = clamp (value, 0, 1); },
 		enumerable: true,
 		configurable: false
 	};
-	
-	var g = {
+
+	const g = {
 		get: function () { return this .g_; },
 		set: function (value) { this .g_ = clamp (value, 0, 1); },
 		enumerable: true,
 		configurable: false
 	};
 
-	var b = {
+	const b = {
 		get: function () { return this .b_; },
 		set: function (value) { this .b_ = clamp (value, 0, 1); },
 		enumerable: true,
 		configurable: false
 	};
 
-	var a = {
+	const a = {
 		get: function () { return this .a_; },
 		set: function (value) { this .a_ = clamp (value, 0, 1); },
 		enumerable: true,
@@ -179,7 +179,7 @@ function (Color3, Algorithm)
 	{
 		HSVA: function (h, s, v, a)
 		{
-			var color = Object .create (this .prototype);
+			const color = Object .create (this .prototype);
 			color .setHSVA (h, s, v, a);
 			return color;
 		},
@@ -187,7 +187,7 @@ function (Color3, Algorithm)
 		{
 			// Linearely interpolate in HSVA space between source color @a a and destination color @a b by an amount of @a t.
 			// Source and destination color must be in HSVA space. The resulting HSVA color is stored in @a r.
-			var aa = a [3];
+			const aa = a [3];
 			Color3 .lerp (a, b, t, r);
 			r [3] = aa + t * (b [3] - aa);
 			return r;

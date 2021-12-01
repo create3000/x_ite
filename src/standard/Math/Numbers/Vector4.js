@@ -68,7 +68,7 @@ function (Algorithm)
 		length: 4,
 		copy: function ()
 		{
-			var copy = Object .create (Vector4 .prototype);
+			const copy = Object .create (Vector4 .prototype);
 			copy .x = this .x;
 			copy .y = this .y;
 			copy .z = this .z;
@@ -162,7 +162,7 @@ function (Algorithm)
 		},
 		normalize: function ()
 		{
-			var
+			const
 				x = this .x,
 				y = this .y,
 				z = this .z,
@@ -175,10 +175,12 @@ function (Algorithm)
 
 			if (length)
 			{
-				this .x = x / length;
-				this .y = y / length;
-				this .z = z / length;
-				this .w = w / length;
+				length = 1 / length;
+
+				this .x = x * length;
+				this .y = y * length;
+				this .z = z * length;
+				this .w = w * length;
 			}
 
 			return this;
@@ -192,7 +194,7 @@ function (Algorithm)
 		},
 		norm: function ()
 		{
-			var
+			const
 				x = this .x,
 				y = this .y,
 				z = this .z,
@@ -205,7 +207,7 @@ function (Algorithm)
 		},
 		abs: function ()
 		{
-			var
+			const
 				x = this .x,
 				y = this .y,
 				z = this .z,
@@ -218,7 +220,7 @@ function (Algorithm)
 		},
 		distance: function (vector)
 		{
-			var
+			const
 				x = this .x - vector .x,
 				y = this .y - vector .y,
 				z = this .z - vector .z,
@@ -231,7 +233,7 @@ function (Algorithm)
 		},
 		lerp: function (dest, t)
 		{
-			var
+			const
 				x = this .x,
 				y = this .y,
 				z = this .z,
@@ -253,7 +255,7 @@ function (Algorithm)
 
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .min (x, vector .x);
 				y = Math .min (y, vector .y);
@@ -277,7 +279,7 @@ function (Algorithm)
 
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .max (x, vector .x);
 				y = Math .max (y, vector .y);
@@ -342,7 +344,7 @@ function (Algorithm)
 		wAxis: new Vector4 (0, 0, 0, 1),
 		negate: function (vector)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = -vector .x;
 			copy .y = -vector .y;
 			copy .z = -vector .z;
@@ -351,7 +353,7 @@ function (Algorithm)
 		},
 		add: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x + rhs .x;
 			copy .y = lhs .y + rhs .y;
 			copy .z = lhs .z + rhs .z;
@@ -360,7 +362,7 @@ function (Algorithm)
 		},
 		subtract: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x - rhs .x;
 			copy .y = lhs .y - rhs .y;
 			copy .z = lhs .z - rhs .z;
@@ -369,7 +371,7 @@ function (Algorithm)
 		},
 		multiply: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x * rhs;
 			copy .y = lhs .y * rhs;
 			copy .z = lhs .z * rhs;
@@ -378,7 +380,7 @@ function (Algorithm)
 		},
 		multVec: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x * rhs .x;
 			copy .y = lhs .y * rhs .y;
 			copy .z = lhs .z * rhs .z;
@@ -387,7 +389,7 @@ function (Algorithm)
 		},
 		divide: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x / rhs;
 			copy .y = lhs .y / rhs;
 			copy .z = lhs .z / rhs;
@@ -396,7 +398,7 @@ function (Algorithm)
 		},
 		divVec: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x / rhs .x;
 			copy .y = lhs .y / rhs .y;
 			copy .z = lhs .z / rhs .z;
@@ -405,20 +407,23 @@ function (Algorithm)
 		},
 		normalize: function (vector)
 		{
-			var
+			const
 				copy   = Object .create (this .prototype),
 				x      = vector .x,
 				y      = vector .y,
 				z      = vector .z,
-				w      = vector .w,
-				length = Math .sqrt (x * x + y * y + z * z + w * w);
+				w      = vector .w;
+
+			var length = Math .sqrt (x * x + y * y + z * z + w * w);
 
 			if (length)
 			{
-				copy .x = x / length;
-				copy .y = y / length;
-				copy .z = z / length;
-				copy .w = w / length;
+				length = 1 / length;
+
+				copy .x = x * length;
+				copy .y = y * length;
+				copy .z = z * length;
+				copy .w = w * length;
 			}
 			else
 			{
@@ -436,7 +441,7 @@ function (Algorithm)
 		},
 		lerp: function (source, dest, t)
 		{
-			var
+			const
 				x = source .x,
 				y = source .y,
 				z = source .z,
@@ -457,7 +462,7 @@ function (Algorithm)
 
 			for (var i = 1, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .min (x, vector .x);
 				y = Math .min (y, vector .y);
@@ -477,7 +482,7 @@ function (Algorithm)
 
 			for (var i = 1, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .max (x, vector .x);
 				y = Math .max (y, vector .y);

@@ -55,7 +55,7 @@ function (Algorithm)
 "use strict";
 
 	function Vector2 (x, y)
-	{		
+	{
 		this .x = x;
 		this .y = y;
 	}
@@ -66,7 +66,7 @@ function (Algorithm)
 		length: 2,
 		copy: function ()
 		{
-			var copy = Object .create (Vector2 .prototype);
+			const copy = Object .create (Vector2 .prototype);
 			copy .x = this .x;
 			copy .y = this .y;
 			return copy;
@@ -132,7 +132,7 @@ function (Algorithm)
 		},
 		normalize: function ()
 		{
-			var
+			const
 				x = this .x,
 				y = this .y;
 
@@ -141,8 +141,10 @@ function (Algorithm)
 
 			if (length)
 			{
-				this .x = x / length;
-				this .y = y / length;
+				length = 1 / length;
+
+				this .x = x * length;
+				this .y = y * length;
 			}
 
 			return this;
@@ -154,7 +156,7 @@ function (Algorithm)
 		},
 		norm: function ()
 		{
-			var
+			const
 				x = this .x,
 				y = this .y;
 
@@ -163,7 +165,7 @@ function (Algorithm)
 		},
 		abs: function ()
 		{
-			var
+			const
 				x = this .x,
 				y = this .y;
 
@@ -172,7 +174,7 @@ function (Algorithm)
 		},
 		distance: function (vector)
 		{
-			var
+			const
 				x = this .x - vector .x,
 				y = this .y - vector .y;
 
@@ -181,7 +183,7 @@ function (Algorithm)
 		},
 		lerp: function (dest, t)
 		{
-			var
+			const
 				x = this .x,
 				y = this .y;
 
@@ -197,7 +199,7 @@ function (Algorithm)
 
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .min (x, vector .x);
 				y = Math .min (y, vector .y);
@@ -215,7 +217,7 @@ function (Algorithm)
 
 			for (var i = 0, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .max (x, vector .x);
 				y = Math .max (y, vector .y);
@@ -254,65 +256,68 @@ function (Algorithm)
 		One: new Vector2 (1, 1),
 		negate: function (vector)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = -vector .x;
 			copy .y = -vector .y;
 			return copy;
 		},
 		add: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x + rhs .x;
 			copy .y = lhs .y + rhs .y;
 			return copy;
 		},
 		subtract: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x - rhs .x;
 			copy .y = lhs .y - rhs .y;
 			return copy;
 		},
 		multiply: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x * rhs;
 			copy .y = lhs .y * rhs;
 			return copy;
 		},
 		multVec: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x * rhs .x;
 			copy .y = lhs .y * rhs .y;
 			return copy;
 		},
 		divide: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x / rhs;
 			copy .y = lhs .y / rhs;
 			return copy;
 		},
 		divVec: function (lhs, rhs)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy .x = lhs .x / rhs .x;
 			copy .y = lhs .y / rhs .y;
 			return copy;
 		},
 		normalize: function (vector)
 		{
-			var
+			const
 				copy   = Object .create (this .prototype),
 				x      = vector .x,
-				y      = vector .y,
-				length = Math .sqrt (x * x + y * y);
+				y      = vector .y;
+
+			var length = Math .sqrt (x * x + y * y);
 
 			if (length)
 			{
-				copy .x = x / length;
-				copy .y = y / length;
+				length = 1 / length;
+
+				copy .x = x * length;
+				copy .y = y * length;
 			}
 			else
 			{
@@ -328,7 +333,7 @@ function (Algorithm)
 		},
 		lerp: function (source, dest, t)
 		{
-			var
+			const
 				x = source .x,
 				y = source .y;
 
@@ -343,7 +348,7 @@ function (Algorithm)
 
 			for (var i = 1, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .min (x, vector .x);
 				y = Math .min (y, vector .y);
@@ -359,7 +364,7 @@ function (Algorithm)
 
 			for (var i = 1, length = arguments .length; i < length; ++ i)
 			{
-				var vector = arguments [i];
+				const vector = arguments [i];
 
 				x = Math .max (x, vector .x);
 				y = Math .max (y, vector .y);

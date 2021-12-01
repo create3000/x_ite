@@ -293,8 +293,8 @@ function ($,
 			this .setBrowserEventHandler ("onshutdown");
 			this .setBrowserEventHandler ("onerror");
 
-			this .getSurface () .bind ("keydown.X3DCoreContext", this .keydown_X3DCoreContext .bind (this));
-			this .getSurface () .bind ("keyup.X3DCoreContext",   this .keyup_X3DCoreContext   .bind (this));
+			this .getElement () .bind ("keydown.X3DCoreContext", this .keydown_X3DCoreContext .bind (this));
+			this .getElement () .bind ("keyup.X3DCoreContext",   this .keyup_X3DCoreContext   .bind (this));
 		},
 		getDebug: function ()
 		{

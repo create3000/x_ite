@@ -143,7 +143,7 @@ function (Fields,
 		remove: function () { },
 		set_child__: function ()
 		{
-			this .set_level (Math .min (this .level_changed_ .getValue (), this .children_ .length - 1));
+			this .set_level__ (Math .min (this .level_changed_ .getValue (), this .children_ .length - 1));
 		},
 		set_level__: function (level)
 		{

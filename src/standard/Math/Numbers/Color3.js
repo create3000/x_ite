@@ -54,7 +54,7 @@ function (Algorithm)
 {
 "use strict";
 
-	var clamp = Algorithm .clamp;
+	const clamp = Algorithm .clamp;
 
 	function Color3 (r, g, b)
 	{
@@ -78,7 +78,7 @@ function (Algorithm)
 		length: 3,
 		copy: function ()
 		{
-			var copy = Object .create (Color3 .prototype);
+			const copy = Object .create (Color3 .prototype);
 			copy .r_ = this .r_;
 			copy .g_ = this .g_;
 			copy .b_ = this .b_;
@@ -106,11 +106,11 @@ function (Algorithm)
 		{
 			var h, s, v;
 
-			var min = Math .min (this .r_, this .g_, this .b_);
-			var max = Math .max (this .r_, this .g_, this .b_);
+			const min = Math .min (this .r_, this .g_, this .b_);
+			const max = Math .max (this .r_, this .g_, this .b_);
 			v = max; // value
 
-			var delta = max - min;
+			const delta = max - min;
 
 			if (max !== 0 && delta !== 0)
 			{
@@ -151,13 +151,13 @@ function (Algorithm)
 			}
 			else
 			{
-				var w = Algorithm .degrees (Algorithm .interval (h, 0, Math .PI * 2)) / 60;     // sector 0 to 5
+				const w = Algorithm .degrees (Algorithm .interval (h, 0, Math .PI * 2)) / 60;     // sector 0 to 5
 
-				var i = Math .floor (w);
-				var f = w - i;                      // factorial part of h
-				var p = v * ( 1 - s );
-				var q = v * ( 1 - s * f );
-				var t = v * ( 1 - s * ( 1 - f ) );
+				const i = Math .floor (w);
+				const f = w - i;                      // factorial part of h
+				const p = v * ( 1 - s );
+				const q = v * ( 1 - s * f );
+				const t = v * ( 1 - s * ( 1 - f ) );
 
 				switch (i % 6)
 				{
@@ -178,21 +178,21 @@ function (Algorithm)
 		},
 	};
 
-	var r = {
+	const r = {
 		get: function () { return this .r_; },
 		set: function (value) { this .r_ = clamp (value, 0, 1); },
 		enumerable: true,
 		configurable: false
 	};
-	
-	var g = {
+
+	const g = {
 		get: function () { return this .g_; },
 		set: function (value) { this .g_ = clamp (value, 0, 1); },
 		enumerable: true,
 		configurable: false
 	};
 
-	var b = {
+	const b = {
 		get: function () { return this .b_; },
 		set: function (value) { this .b_ = clamp (value, 0, 1); },
 		enumerable: true,
@@ -215,7 +215,7 @@ function (Algorithm)
 	{
 		HSV: function (h, s, v)
 		{
-			var color = Object .create (this .prototype);
+			const color = Object .create (this .prototype);
 			color .setHSV (h, s, v);
 			return color;
 		},
@@ -225,7 +225,9 @@ function (Algorithm)
 			// Source and destination color must be in HSV space. The resulting HSV color is stored in @a r.
 
 			var
-				ha = a [0], hb = b [0],
+				ha = a [0], hb = b [0];
+
+			const
 				sa = a [1], sb = b [1],
 				va = a [2], vb = b [2];
 
@@ -235,7 +237,7 @@ function (Algorithm)
 			if (sb === 0)
 				hb = ha;
 
-			var range = Math .abs (hb - ha);
+			const range = Math .abs (hb - ha);
 
 			if (range <= Math .PI)
 			{
@@ -245,10 +247,11 @@ function (Algorithm)
 				return r;
 			}
 
-			var
+			const
 				PI2  = Math .PI * 2,
-				step = (PI2 - range) * t,
-				h    = ha < hb ? ha - step : ha + step;
+				step = (PI2 - range) * t;
+
+			var h = ha < hb ? ha - step : ha + step;
 
 			if (h < 0)
 				h += PI2;

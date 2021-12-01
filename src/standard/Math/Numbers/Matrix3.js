@@ -59,7 +59,7 @@ function (Vector2,
           eigendecomposition)
 {
 "use strict";
-								
+
 	function Matrix3 ()
 	{
 		if (arguments .length)
@@ -87,7 +87,7 @@ function (Vector2,
 		length: 9,
 		copy: function ()
 		{
-			var copy = Object .create (Matrix3 .prototype);
+			const copy = Object .create (Matrix3 .prototype);
 			copy [0] = this [0];
 			copy [1] = this [1];
 			copy [2] = this [2];
@@ -200,7 +200,7 @@ function (Vector2,
 
 					if (! scale .equals (Vector2 .One))
 					{
-						var hasScaleOrientation = scaleOrientation !== 0;
+						const hasScaleOrientation = scaleOrientation !== 0;
 
 						if (hasScaleOrientation)
 						{
@@ -226,7 +226,7 @@ function (Vector2,
 					this .identity ();
 					this .translate (translation);
 
-					var hasCenter = ! center .equals (Vector2 .Zero);
+					const hasCenter = ! center .equals (Vector2 .Zero);
 
 					if (hasCenter)
 						this .translate (center);
@@ -270,7 +270,7 @@ function (Vector2,
 		},
 		get: (function ()
 		{
-			var
+			const
 				dummyTranslation      = new Vector2 (0, 0),
 				dummyRotation         = new Vector3 (0, 0, 0),
 				dummyScale            = new Vector2 (0, 0),
@@ -287,7 +287,7 @@ function (Vector2,
 				if (scale            === null) scale            = dummyScale;
 				if (scaleOrientation === null) scaleOrientation = dummyScaleOrientation;
 				if (center           === null) center           = dummyCenter;
-	
+
 				switch (arguments .length)
 				{
 					case 1:
@@ -298,7 +298,7 @@ function (Vector2,
 					case 2:
 					{
 						this .factor (translation, rotMatrix, dummyScale, soMatrix);
-	
+
 						rotation [0] = rotMatrix [0];
 						rotation [1] = rotMatrix [1];
 						rotation [2] = Math .atan2 (rotMatrix [1], rotMatrix [0]);
@@ -307,7 +307,7 @@ function (Vector2,
 					case 3:
 					{
 						this .factor (translation, rotMatrix, scale, soMatrix);
-	
+
 						rotation [0] = rotMatrix [0];
 						rotation [1] = rotMatrix [1];
 						rotation [2] = Math .atan2 (rotMatrix [1], rotMatrix [0]);
@@ -316,11 +316,11 @@ function (Vector2,
 					case 4:
 					{
 						this .factor (translation, rotMatrix, scale, soMatrix);
-	
+
 						rotation [0] = rotMatrix [0];
 						rotation [1] = rotMatrix [1];
 						rotation [2] = Math .atan2 (rotMatrix [1], rotMatrix [0]);
-	
+
 						scaleOrientation [0] = soMatrix [0];
 						scaleOrientation [1] = soMatrix [1];
 						scaleOrientation [2] = Math .atan2 (soMatrix [1], soMatrix [0]);
@@ -328,12 +328,12 @@ function (Vector2,
 					}
 					case 5:
 					{
-						var m = new Matrix3 ();
-	
+						const m = new Matrix3 ();
+
 						m .set (c .assign (center) .negate ());
 						m .multLeft (this);
 						m .translate (center);
-	
+
 						m .get (translation, rotation, scale, scaleOrientation);
 						break;
 					}
@@ -342,48 +342,48 @@ function (Vector2,
 		})(),
 		factor: (function ()
 		{
-			var
+			const
 				si   = new Matrix2 (),
 				sosi = new Matrix2 (),
 				b    = new Matrix2 ();
 
-			var eigen = { values: [ ], vectors: [[ ], [ ]] };
+			const eigen = { values: [ ], vectors: [[ ], [ ]] };
 
 			return function (translation, rotation, scale, scaleOrientation)
 			{
 				// (1) Get translation.
 				translation .set (this [6], this [7]);
-	
+
 				// (2) Create 3x3 matrix.
-				var a = this .submatrix;
-	
+				const a = this .submatrix;
+
 				// (3) Compute det A. If negative, set sign = -1, else sign = 1
-				var det      = a .determinant ();
-				var det_sign = det < 0 ? -1 : 1;
-	
+				const det      = a .determinant ();
+				const det_sign = det < 0 ? -1 : 1;
+
 				if (det === 0)
 					throw new Error ("Matrix3 .factor: determinant is 0.");
-	
+
 				// (4) B = A * !A  (here !A means A transpose)
 				b .assign (a) .transpose () .multLeft (a);
-				var e = eigendecomposition (b, eigen);
-	
+				const e = eigendecomposition (b, eigen);
+
 				// Find min / max eigenvalues and do ratio test to determine singularity.
-	
+
 				scaleOrientation .set (e .vectors [0] [0], e .vectors [0] [1],
 				                       e .vectors [1] [0], e .vectors [1] [1]);
-	
+
 				// Compute s = sqrt(evalues), with sign. Set si = s-inverse
-	
+
 				scale .x = det_sign * Math .sqrt (e .values [0]);
 				scale .y = det_sign * Math .sqrt (e .values [1]);
-	
+
 				si [0] = 1 / scale .x;
 				si [3] = 1 / scale .y;
-	
+
 				// (5) Compute U = !R ~S R A.
 				rotation .assign (sosi .assign (scaleOrientation) .multRight (si) .transpose () .multLeft (scaleOrientation) .multRight (a));
-	
+
 				scaleOrientation .transpose ();
 			};
 		})(),
@@ -394,7 +394,7 @@ function (Vector2,
 		},
 		determinant: function ()
 		{
-			var
+			const
 				m0 = this [0], m1 = this [1], m2 = this [2],
 				m3 = this [3], m4 = this [4], m5 = this [5],
 				m6 = this [6], m7 = this [7], m8 = this [8];
@@ -415,7 +415,7 @@ function (Vector2,
 		},
 		inverse: function ()
 		{
-			var
+			const
 				m0  = this [0],
 				m1  = this [1],
 				m2  = this [2],
@@ -439,14 +439,14 @@ function (Vector2,
 
 			d = 1 / d;
 
-			var
+			const
 				b0 =  (m4 * m8 - m7 * m5) * d,
 				b1 = -(m1 * m8 - m7 * m2) * d,
 				b2 =  (m1 * m5 - m4 * m2) * d,
 				b3 = -(m3 * m8 - m6 * m5) * d,
 				b4 =  (m0 * m8 - m6 * m2) * d,
 				b5 = -(m0 * m5 - m3 * m2) * d;
-	
+
 			this [0] = b0;
 			this [1] = b1;
 			this [2] = b2;
@@ -461,7 +461,7 @@ function (Vector2,
 		},
 		multLeft: function (matrix)
 		{
-			var
+			const
 				a0 = this [0], a1 = this [1], a2 = this [2],
 				a3 = this [3], a4 = this [4], a5 = this [5],
 				a6 = this [6], a7 = this [7], a8 = this [8],
@@ -483,7 +483,7 @@ function (Vector2,
 		},
 		multRight: function (matrix)
 		{
-			var
+			const
 				a0 = this [0], a1 = this [1], a2 = this [2],
 				a3 = this [3], a4 = this [4], a5 = this [5],
 				a6 = this [6], a7 = this [7], a8 = this [8],
@@ -507,18 +507,18 @@ function (Vector2,
 		{
 			if (vector .length === 2)
 			{
-				var
+				const
 					x = vector .x,
 					y = vector .y,
 					w = x * this [2] + y * this [5] + this [8];
 
 				vector .x = (x * this [0] + y * this [3] + this [6]) / w;
 				vector .y = (x * this [1] + y * this [4] + this [7]) / w;
-				
+
 				return vector;
 			}
 
-			var
+			const
 				x = vector .x,
 				y = vector .y,
 				z = vector .z;
@@ -533,18 +533,18 @@ function (Vector2,
 		{
 			if (vector .length === 2)
 			{
-				var
+				const
 					x = vector .x,
 					y = vector .y,
 					w = x * this [6] + y * this [7] + this [8];
 
 				vector .x = (x * this [0] + y * this [1] + this [2]) / w;
 				vector .y = (x * this [3] + y * this [4] + this [5]) / w;
-				
+
 				return vector;
 			}
 
-			var
+			const
 				x = vector .x,
 				y = vector .y,
 				z = vector .z;
@@ -557,7 +557,7 @@ function (Vector2,
 		},
 		multDirMatrix: function (vector)
 		{
-			var
+			const
 				x = vector .x,
 				y = vector .y;
 
@@ -568,7 +568,7 @@ function (Vector2,
 		},
 		multMatrixDir: function (vector)
 		{
-			var
+			const
 				x = vector .x,
 				y = vector .y;
 
@@ -585,7 +585,7 @@ function (Vector2,
 		},
 		translate: function (translation)
 		{
-			var
+			const
 				x = translation .x,
 				y = translation .y;
 
@@ -602,7 +602,7 @@ function (Vector2,
 		},
 		scale: function (scale)
 		{
-			var
+			const
 				x = scale .x,
 				y = scale .y;
 
@@ -626,7 +626,7 @@ function (Vector2,
 	{
 		get: (function ()
 		{
-			var vector = new Vector3 (0, 0, 0);
+			const vector = new Vector3 (0, 0, 0);
 
 			return function () { return vector .set (this [0], this [1], this [2]); };
 		})(),
@@ -638,7 +638,7 @@ function (Vector2,
 	{
 		get: (function ()
 		{
-			var vector = new Vector3 (0, 0, 0);
+			const vector = new Vector3 (0, 0, 0);
 
 			return function () { return vector .set (this [3], this [4], this [5]); };
 		})(),
@@ -650,7 +650,7 @@ function (Vector2,
 	{
 		get: (function ()
 		{
-			var vector = new Vector2 (0, 0);
+			const vector = new Vector2 (0, 0);
 
 			return function () { return vector .set (this [0], this [1]); };
 		})(),
@@ -662,7 +662,7 @@ function (Vector2,
 	{
 		get: (function ()
 		{
-			var vector = new Vector2 (0, 0);
+			const vector = new Vector2 (0, 0);
 
 			return function () { return vector .set (this [3], this [4]); };
 		})(),
@@ -674,7 +674,7 @@ function (Vector2,
 	{
 		get: (function ()
 		{
-			var vector = new Vector2 (0, 0);
+			const vector = new Vector2 (0, 0);
 
 			return function () { return vector .set (this [6], this [7]); };
 		})(),
@@ -686,7 +686,7 @@ function (Vector2,
 	{
 		get: (function ()
 		{
-			var matrix = new Matrix2 ();
+			const matrix = new Matrix2 ();
 
 			return function ()
 			{
@@ -704,7 +704,7 @@ function (Vector2,
 		Identity: new Matrix3 (),
 		Rotation: function (rotation)
 		{
-			var
+			const
 				sinAngle = Math .sin (rotation),
 				cosAngle = Math .cos (rotation);
 
@@ -720,7 +720,7 @@ function (Vector2,
 		},
 		transpose: function (matrix)
 		{
-			var copy = Object .create (this .prototype);
+			const copy = Object .create (this .prototype);
 			copy [0] = matrix [0]; copy [1] = matrix [3]; copy [2] = matrix [6];
 			copy [3] = matrix [1]; copy [4] = matrix [4]; copy [5] = matrix [7];
 			copy [6] = matrix [2]; copy [7] = matrix [5]; copy [8] = matrix [8];
@@ -728,7 +728,7 @@ function (Vector2,
 		},
 		inverse: function (matrix)
 		{
-			var
+			const
 				copy = Object .create (this .prototype),
 				m0  = matrix [0],
 				m1  = matrix [1],
@@ -753,14 +753,14 @@ function (Vector2,
 
 			d = 1 / d;
 
-			var
+			const
 				b0 =  (m4 * m8 - m7 * m5) * d,
 				b1 = -(m1 * m8 - m7 * m2) * d,
 				b2 =  (m1 * m5 - m4 * m2) * d,
 				b3 = -(m3 * m8 - m6 * m5) * d,
 				b4 =  (m0 * m8 - m6 * m2) * d,
 				b5 = -(m0 * m5 - m3 * m2) * d;
-	
+
 			copy [0] = b0;
 			copy [1] = b1;
 			copy [2] = b2;
@@ -775,7 +775,7 @@ function (Vector2,
 		},
 		multLeft: function (lhs, rhs)
 		{
-			var
+			const
 				copy = Object .create (this .prototype),
 				a0 = lhs [0], a1 = lhs [1], a2 = lhs [2],
 				a3 = lhs [3], a4 = lhs [4], a5 = lhs [5],
@@ -798,7 +798,7 @@ function (Vector2,
 		},
 		multRight: function (lhs, rhs)
 		{
-			var
+			const
 				copy = Object .create (this .prototype),
 				a0 = lhs [0], a1 = lhs [1], a2 = lhs [2],
 				a3 = lhs [3], a4 = lhs [4], a5 = lhs [5],
