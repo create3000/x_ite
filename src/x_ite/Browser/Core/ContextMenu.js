@@ -334,7 +334,7 @@ function ($,
 						className: "context-menu-icon x_ite-private-icon-world-info",
 						callback: function ()
 						{
-							require (["https://cdn.jsdelivr.net/gh/showdownjs/showdown@1.9.1/dist/showdown.min.js"], function (showdown)
+							require (["https://cdn.jsdelivr.net/gh/showdownjs/showdown/dist/showdown.min.js"], function (showdown)
 							{
 								browser .getElement () .find (".x_ite-private-world-info") .remove ();
 
@@ -346,11 +346,12 @@ function ($,
 									title     = worldInfo .title_ .getValue (),
 									info      = worldInfo .info_;
 
-								converter .setOption ("omitExtraWLInCodeBlocks",   true);
-								converter .setOption ("simplifiedAutoLink",        true);
-								converter .setOption ("literalMidWordUnderscores", true);
-								converter .setOption ("strikethrough",             true);
-								converter .setOption ("openLinksInNewWindow",      false);
+								converter .setOption ("omitExtraWLInCodeBlocks",            true);
+								converter .setOption ("simplifiedAutoLink",                 true);
+								converter .setOption ("excludeTrailingPunctuationFromURLs", true);
+								converter .setOption ("literalMidWordUnderscores",          true);
+								converter .setOption ("strikethrough",                      true);
+								converter .setOption ("openLinksInNewWindow",               false);
 
 								$("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
 
