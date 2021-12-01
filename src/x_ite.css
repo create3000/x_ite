@@ -210,7 +210,8 @@ X3DCanvas .x_ite-private-world-info {
 
 X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-top,
 X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-title,
-X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-info {
+X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-info,
+X3DCanvas .x_ite-private-world-info p {
 	box-sizing: border-box;
 	outline: 0px;
 	margin: 0px;
@@ -221,7 +222,7 @@ X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-info {
 	color: white;
 	font-family: PT Sans, sans-serif;
 	font-size: inherit;
-	font-weight: normal;
+	font-weight: inherit;
 	font-style: normal;
 	letter-spacing: unset;
 	line-height: 1.2;
