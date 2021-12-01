@@ -31366,10 +31366,16 @@ function ($,
 
 								div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
 
-								div .on ("click", function ()
+								// Open external link in new tab.
+								div .find ("a[href^=http]") .each (function ()
 								{
-									div .remove ();
+									if (this .href .indexOf (location .hostname) !== -1)
+										return;
+
+									$(this) .attr ("target", "_blank");
 								});
+
+								div .on ("click", function () { div .remove (); });
 							});
 						},
 					},

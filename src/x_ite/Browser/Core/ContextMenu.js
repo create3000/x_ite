@@ -367,11 +367,6 @@ function ($,
 
 								div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
 
-								div .on ("click", function ()
-								{
-									div .remove ();
-								});
-
 								// Open external link in new tab.
 								div .find ("a[href^=http]") .each (function ()
 								{
@@ -380,6 +375,8 @@ function ($,
 
 									$(this) .attr ("target", "_blank");
 								});
+
+								div .on ("click", function () { div .remove (); });
 							});
 						},
 					},
