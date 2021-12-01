@@ -524,16 +524,37 @@ function ($,
 	const transform = (function ()
 	{
 		const
-			strong = /(^|[ *_:,;.!?<>()\[\]{}-])\*(\S.*?\S|\S)\*($|[ *_:,;.!?<>()\[\]{}-])/g,
-			em     = /(^|[ *_:,;.!?<>()\[\]{}-])\_(\S.*?\S|\S)\_($|[ *_:,;.!?<>()\[\]{}-])/g,
-			url    = /(\b(?:https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+		strongem = /(^|[ *_:,;.!?<>()\[\]{}-])(\*{3}|_{3})(\S.*?\S|\S)\2($|[ *_:,;.!?<>()\[\]{}-])/g,
+		strong   = /(^|[ *_:,;.!?<>()\[\]{}-])(\*{2}|_{2})(\S.*?\S|\S)\2($|[ *_:,;.!?<>()\[\]{}-])/g,
+		em       = /(^|[ *_:,;.!?<>()\[\]{}-])([*_])(\S.*?\S|\S)\2($|[ *_:,;.!?<>()\[\]{}-])/g,
+		url      = /(\b(?:https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
 
 		return function (string)
 		{
-			return string
-						.replaceAll (strong, "$1<strong>$2</strong>$3")
-						.replaceAll (em, "$1<em>$2</em>$3")
-						.replaceAll (url, "<a href=\"$1\">$1</a>");
+			let output = string;
+
+			do
+			{
+				string = output;
+				output = string .replaceAll (strongem, "$1<strong><em>$3</em></strong>$4");
+			}
+			while (output != string);
+
+			do
+			{
+				string = output;
+				output = string .replaceAll (strong, "$1<strong>$3</strong>$4");
+			}
+			while (output != string);
+
+			do
+			{
+				string = output;
+				output = string .replaceAll (em, "$1<em>$3</em>$4");
+			}
+			while (output != string);
+
+			return string .replaceAll (url, "<a href=\"$1\">$1</a>");
 		};
 	})();
 
