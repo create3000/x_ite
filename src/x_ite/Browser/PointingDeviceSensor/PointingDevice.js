@@ -94,7 +94,7 @@ function ($,
 		{
 			var browser = this .getBrowser ();
 
-			browser .getSurface () .focus ();
+			browser .getElement () .focus ();
 
 			if (browser .getShiftKey () && browser .getControlKey ())
 				return;
