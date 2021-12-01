@@ -334,32 +334,42 @@ function ($,
 						className: "context-menu-icon x_ite-private-icon-world-info",
 						callback: function ()
 						{
-							browser .getElement () .find (".x_ite-private-world-info") .remove ();
-
-							const
-								priv      = browser .getElement () .find (".x_ite-private-browser"),
-								div       = $("<div></div>") .addClass ("x_ite-private-world-info") .prependTo (priv),
-								worldInfo = browser .getExecutionContext () .getWorldInfo (),
-								title     = worldInfo .title_ .getValue (),
-								info      = worldInfo .info_;
-
-							$("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
-
-							if (title .length)
+							require (["https://cdn.jsdelivr.net/gh/showdownjs/showdown@1.9.1/dist/showdown.min.js"], function (showdown)
 							{
-								$("<div></div>") .addClass ("x_ite-private-world-info-title") .html (transform (title)) .appendTo (div);
-							}
+								browser .getElement () .find (".x_ite-private-world-info") .remove ();
 
-							for (var i = 0, length = info .length; i < length; ++ i)
-							{
-								$("<div></div>") .addClass ("x_ite-private-world-info-info") .html (transform (info [i])) .appendTo (div);
-							}
+								const
+									converter = new showdown .Converter (),
+									priv      = browser .getElement () .find (".x_ite-private-browser"),
+									div       = $("<div></div>") .addClass ("x_ite-private-world-info") .prependTo (priv),
+									worldInfo = browser .getExecutionContext () .getWorldInfo (),
+									title     = worldInfo .title_ .getValue (),
+									info      = worldInfo .info_;
 
-							div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
+								converter .setOption ("omitExtraWLInCodeBlocks",   true);
+								converter .setOption ("simplifiedAutoLink",        true);
+								converter .setOption ("literalMidWordUnderscores", true);
+								converter .setOption ("strikethrough",             true);
+								converter .setOption ("openLinksInNewWindow",      false);
 
-							div .on ("click", function ()
-							{
-								div .remove ();
+								$("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
+
+								if (title .length)
+								{
+									$("<div></div>") .addClass ("x_ite-private-world-info-title") .html (converter .makeHtml (title)) .appendTo (div);
+								}
+
+								for (var i = 0, length = info .length; i < length; ++ i)
+								{
+									$("<div></div>") .addClass ("x_ite-private-world-info-info") .html (converter .makeHtml (info [i])) .appendTo (div);
+								}
+
+								div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
+
+								div .on ("click", function ()
+								{
+									div .remove ();
+								});
 							});
 						},
 					},
@@ -492,43 +502,6 @@ function ($,
 			}
 		},
 	});
-
-	const transform = (function ()
-	{
-		const
-		strongem = /(^|[ *_:,;.!?<>()\[\]{}-])(\*{3}|_{3})(\S.*?\S|\S)\2($|[ *_:,;.!?<>()\[\]{}-])/g,
-		strong   = /(^|[ *_:,;.!?<>()\[\]{}-])(\*{2}|_{2})(\S.*?\S|\S)\2($|[ *_:,;.!?<>()\[\]{}-])/g,
-		em       = /(^|[ *_:,;.!?<>()\[\]{}-])([*_])(\S.*?\S|\S)\2($|[ *_:,;.!?<>()\[\]{}-])/g,
-		url      = /(\b(?:https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
-
-		return function (string)
-		{
-			let output = string;
-
-			do
-			{
-				string = output;
-				output = string .replaceAll (strongem, "$1<strong><em>$3</em></strong>$4");
-			}
-			while (output != string);
-
-			do
-			{
-				string = output;
-				output = string .replaceAll (strong, "$1<strong>$3</strong>$4");
-			}
-			while (output != string);
-
-			do
-			{
-				string = output;
-				output = string .replaceAll (em, "$1<em>$3</em>$4");
-			}
-			while (output != string);
-
-			return string .replaceAll (url, "<a href=\"$1\">$1</a>");
-		};
-	})();
 
 	return ContextMenu;
 });
