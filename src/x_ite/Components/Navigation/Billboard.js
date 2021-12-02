@@ -70,7 +70,7 @@ function (Fields,
 {
 "use strict";
 
-	var
+	const
 	   inverseModelViewMatrix = new Matrix4 (),
 		yAxis                  = new Vector3 (0, 1, 0),
 		zAxis                  = new Vector3 (0, 0, 1),
@@ -130,7 +130,7 @@ function (Fields,
 
 			inverseModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-			var billboardToViewer = inverseModelViewMatrix .origin .normalize (); // Normalized to get work with Geo
+			const billboardToViewer = inverseModelViewMatrix .origin .normalize (); // Normalized to get work with Geo
 
 			if (this .axisOfRotation_ .getValue () .equals (Vector3 .Zero))
 			{
@@ -138,7 +138,7 @@ function (Fields,
 
 				x .assign (viewerYAxis) .cross (billboardToViewer);
 				y .assign (billboardToViewer) .cross (x);
-				var z = billboardToViewer;
+				const z = billboardToViewer;
 
 				// Compose rotation
 
@@ -162,7 +162,7 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
-			var modelViewMatrix = renderObject .getModelViewMatrix ();
+			const modelViewMatrix = renderObject .getModelViewMatrix ();
 
 			modelViewMatrix .push ();
 
