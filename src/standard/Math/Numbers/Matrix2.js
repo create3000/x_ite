@@ -152,10 +152,10 @@ function (Vector2,
 			if (d === 0)
 				throw new Error ("Matrix2 .inverse: determinant is 0.");
 
-			this [0] =  array [0] / d;
-			this [1] = -array [1] / d;
-			this [2] = -array [2] / d;
-			this [3] =  array [3] / d;
+			this [0] =  this [3] / d;
+			this [1] = -this [1] / d;
+			this [2] = -this [2] / d;
+			this [3] =  this [0] / d;
 
 			return this;
 		},
