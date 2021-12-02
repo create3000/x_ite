@@ -325,9 +325,9 @@ function (Fields,
 			switch (this .alphaMode)
 			{
 				case AlphaMode .AUTO:
-					this .setTransparent (this .stylePropertiesNode [3] .getTransparent () ||
+					this .setTransparent (Boolean (this .stylePropertiesNode [3] .getTransparent () ||
 												 (this .materialNode && this .materialNode .getTransparent ()) ||
-												 (this .textureNode  && this .textureNode  .getTransparent () ||
+												 (this .textureNode  && this .textureNode  .getTransparent ()) ||
 												 this .blendModeNode));
 					break;
 				case AlphaMode .OPAQUE:
