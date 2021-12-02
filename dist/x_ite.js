@@ -1,4 +1,4 @@
-/* X_ITE v4.6.25a-1067 */
+/* X_ITE v4.6.25a-1068 */
 
 (function () {
 
@@ -59903,7 +59903,7 @@ define ('x_ite/Components/Shape/X3DAppearanceNode',[
 	"x_ite/Bits/X3DConstants",
 ],
 function (Fields,
-          X3DNode, 
+          X3DNode,
           X3DConstants)
 {
 "use strict";
@@ -59913,7 +59913,7 @@ function (Fields,
 		X3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DAppearanceNode);
-		
+
 		this .addChildObjects ("transparent", new Fields .SFBool ());
 
 		this .transparent_ .setAccessType (X3DConstants .outputOnly);
@@ -59922,10 +59922,6 @@ function (Fields,
 	X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DAppearanceNode,
-		initialize: function ()
-		{
-			X3DNode .prototype .initialize .call (this);
-		},
 		setTransparent: function (value)
 		{
 			if (value !== this .transparent_ .getValue ())
@@ -59939,8 +59935,6 @@ function (Fields,
 
 	return X3DAppearanceNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -60335,9 +60329,9 @@ function (Fields,
 			switch (this .alphaMode)
 			{
 				case AlphaMode .AUTO:
-					this .setTransparent (this .stylePropertiesNode [3] .getTransparent () ||
+					this .setTransparent (Boolean (this .stylePropertiesNode [3] .getTransparent () ||
 												 (this .materialNode && this .materialNode .getTransparent ()) ||
-												 (this .textureNode  && this .textureNode  .getTransparent () ||
+												 (this .textureNode  && this .textureNode  .getTransparent ()) ||
 												 this .blendModeNode));
 					break;
 				case AlphaMode .OPAQUE:
@@ -72863,13 +72857,11 @@ function ($,
 
 define ('x_ite/Components/Lighting/X3DLightNode',[
 	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Algorithm",
 ],
 function (X3DChildNode,
-          TraverseType,
           X3DConstants,
           Matrix4,
           Algorithm)
@@ -72917,7 +72909,7 @@ function (X3DChildNode,
 		},
 		getIntensity: function ()
 		{
-			return Algorithm .clamp (this .intensity_ .getValue (), 0, 1);
+			return Math .max (this .intensity_ .getValue (), 0);
 		},
 		getAmbientIntensity: function ()
 		{
@@ -72927,13 +72919,17 @@ function (X3DChildNode,
 		{
 			return this .direction_ .getValue ();
 		},
+		getShadows: function ()
+		{
+			return this .shadows_ .getValue ();
+		},
 		getShadowColor: function ()
 		{
 			return this .shadowColor_ .getValue ();
 		},
 		getShadowIntensity: function ()
 		{
-			return Algorithm .clamp (this .shadowIntensity_ .getValue (), 0, 1);
+			return this .getShadows () ? Algorithm .clamp (this .shadowIntensity_ .getValue (), 0, 1) : 0;
 		},
 		getShadowBias: function ()
 		{
@@ -73003,7 +72999,7 @@ function (X3DChildNode,
 				}
 			}
 
-			renderObject .pushShadow (this .shadowIntensity_ .getValue () > 0);
+			renderObject .pushShadow (this .getShadowIntensity ());
 		},
 		pop: function (renderObject)
 		{
@@ -74294,8 +74290,9 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "ambientIntensity", new Fields .SFFloat ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",        new Fields .SFVec3f (0, 0, -1)),
 
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",         new  Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadow.
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat ()),        // Intensity of shadow color in the range (0, 1).
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat (1)),       // Intensity of shadow color in the range (0, 1).
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
 		]),
@@ -92024,7 +92021,7 @@ function ($,
 		{
 			this .shadow .unshift (value || this .shadow [0]);
 		},
-		popShadow: function (value)
+		popShadow: function ()
 		{
 			this .shadow .pop ();
 		},
@@ -106106,7 +106103,6 @@ define ('x_ite/Components/Lighting/PointLight',[
 	"x_ite/Components/Grouping/X3DGroupingNode",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Geometry/Box3",
 	"standard/Math/Geometry/Camera",
 	"standard/Math/Geometry/ViewVolume",
 	"standard/Math/Numbers/Vector3",
@@ -106125,7 +106121,6 @@ function (Fields,
           X3DGroupingNode,
           TraverseType,
           X3DConstants,
-          Box3,
           Camera,
           ViewVolume,
           Vector3,
@@ -106388,8 +106383,9 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "location",         new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "radius",           new Fields .SFFloat (100)),
 
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",         new  Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadow.
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat ()),        // Intensity of shadow color in the range (0, 1).
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat (1)),        // Intensity of shadow color in the range (0, 1).
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
 		]),
@@ -106760,8 +106756,9 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "beamWidth",        new Fields .SFFloat (0.785398)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "cutOffAngle",      new Fields .SFFloat (1.5708)),
 
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadows",         new  Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowColor",     new  Fields .SFColor ()),        // Color of shadow.
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat ()),        // Intensity of shadow color in the range (0, 1).
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowIntensity", new  Fields .SFFloat (1)),       // Intensity of shadow color in the range (0, 1).
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "shadowBias",      new  Fields .SFFloat (0.005)),   // Bias of the shadow.
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "shadowMapSize",   new  Fields .SFInt32 (1024)),    // Size of the shadow map in pixels in the range (0, inf).
 		]),
