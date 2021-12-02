@@ -78,7 +78,7 @@ function ($,
 {
 "use strict";
 
-	var
+	const
 		DEPTH_BUFFER_WIDTH  = 16,
 		DEPTH_BUFFER_HEIGHT = DEPTH_BUFFER_WIDTH;
 
@@ -180,11 +180,11 @@ function ($,
 		},
 		setGlobalFog: (function ()
 		{
-			var modelViewMatrix = new Matrix4 ();
+			const modelViewMatrix = new Matrix4 ();
 
 			return function (fog)
 			{
-				var fogContainer = this .localFogs [0] || fog .getFogs () .pop ();
+				const fogContainer = this .localFogs [0] || fog .getFogs () .pop ();
 
 				modelViewMatrix .assign (fog .getModelMatrix ()) .multRight (this .getViewMatrix () .get ());
 				fogContainer .set (fog, modelViewMatrix);
@@ -200,7 +200,7 @@ function ($,
 		},
 		popLocalFog: function ()
 		{
-			var localFog = this .localFogs .pop ();
+			const localFog = this .localFogs .pop ();
 
 			this .localFog = this .localFogs [this .localFogs .length - 1];
 
@@ -284,17 +284,15 @@ function ($,
 			///  and obstacle and @a stepBack is true a translation in the opposite directiion is returned.  Future implementation will
 			///  will then return a value where the avatar slides along the wall.  Modifies translation in place.
 
-			var distance = this .getDistance (translation);
-
 			// Constrain translation when the viewer collides with an obstacle.
 
-			distance -= this .getNavigationInfo () .getCollisionRadius ();
+			const distance = this .getDistance (translation) - this .getNavigationInfo () .getCollisionRadius ();
 
 			if (distance > 0)
 			{
 				// Move.
 
-				var length = translation .abs ();
+				const length = translation .abs ();
 
 				if (length > distance)
 				{
@@ -317,7 +315,7 @@ function ($,
 		},
 		getDistance: (function ()
 		{
-			var
+			const
 				projectionMatrix            = new Matrix4 (),
 				cameraSpaceProjectionMatrix = new Matrix4 (),
 				localOrientation            = new Rotation4 (0, 0, 1, 0),
@@ -330,9 +328,9 @@ function ($,
 
 				try
 				{
-				   var t0 = performance .now ();
+				   const t0 = performance .now ();
 
-					var
+					const
 						viewpoint       = this .getViewpoint (),
 						navigationInfo  = this .getNavigationInfo (),
 						collisionRadius = navigationInfo .getCollisionRadius (),
@@ -368,7 +366,7 @@ function ($,
 
 					this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
 
-					var depth = this .getDepth (projectionMatrix);
+					const depth = this .getDepth (projectionMatrix);
 
 					this .getProjectionMatrix () .pop ();
 
@@ -383,7 +381,7 @@ function ($,
 		})(),
 		getDepth: (function ()
 		{
-			var
+			const
 				depthBufferViewport   = new Vector4 (0, 0, DEPTH_BUFFER_WIDTH, DEPTH_BUFFER_HEIGHT),
 				depthBufferViewVolume = new ViewVolume ();
 
@@ -399,7 +397,7 @@ function ($,
 				this .depth (this .collisionShapes, this .numCollisionShapes);
 				this .viewVolumes .pop ();
 
-				var depth = this .depthBuffer .getDepth (projectionMatrix, depthBufferViewport);
+				const depth = this .depthBuffer .getDepth (projectionMatrix, depthBufferViewport);
 
 				this .depthBuffer .unbind ();
 
@@ -444,18 +442,18 @@ function ($,
 		},
 		addCollisionShape: (function ()
 		{
-			var
+			const
 				bboxSize   = new Vector3 (0, 0, 0),
 				bboxCenter = new Vector3 (0, 0, 0);
 
 			return function (shapeNode)
 			{
-				var modelViewMatrix = this .getModelViewMatrix () .get ();
+				const modelViewMatrix = this .getModelViewMatrix () .get ();
 
 				modelViewMatrix .multDirMatrix (bboxSize   .assign (shapeNode .getBBoxSize ()));
 				modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
-				var
+				const
 					radius     = bboxSize .abs () / 2,
 					viewVolume = this .viewVolumes [this .viewVolumes .length - 1];
 
@@ -464,7 +462,7 @@ function ($,
 					if (this .numCollisionShapes === this .collisionShapes .length)
 						this .collisionShapes .push ({ renderer: this, browser: this .getBrowser (), modelViewMatrix: new Float32Array (16), collisions: [ ], clipPlanes: [ ] });
 
-					var context = this .collisionShapes [this .numCollisionShapes];
+					const context = this .collisionShapes [this .numCollisionShapes];
 
 					++ this .numCollisionShapes;
 
@@ -474,7 +472,7 @@ function ($,
 
 					// Collisions
 
-					var
+					const
 						sourceCollisions      = this .collisions,
 						destinationCollisions = context .collisions;
 
@@ -485,7 +483,7 @@ function ($,
 
 					// Clip planes
 
-					var
+					const
 						sourceClipPlanes      = this .localObjects,
 						destinationClipPlanes = context .clipPlanes;
 
@@ -502,18 +500,18 @@ function ($,
 		})(),
 		addDepthShape: (function ()
 		{
-			var
+			const
 				bboxSize   = new Vector3 (0, 0, 0),
 				bboxCenter = new Vector3 (0, 0, 0);
 
 			return function (shapeNode)
 			{
-				var modelViewMatrix = this .getModelViewMatrix () .get ();
+				const modelViewMatrix = this .getModelViewMatrix () .get ();
 
 				modelViewMatrix .multDirMatrix (bboxSize   .assign (shapeNode .getBBoxSize ()));
 				modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
-				var
+				const
 					radius     = bboxSize .abs () / 2,
 					viewVolume = this .viewVolumes [this .viewVolumes .length - 1];
 
@@ -522,7 +520,7 @@ function ($,
 					if (this .numDepthShapes === this .depthShapes .length)
 						this .depthShapes .push ({ renderer: this, browser: this .getBrowser (), modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
 
-					var context = this .depthShapes [this .numDepthShapes];
+					const context = this .depthShapes [this .numDepthShapes];
 
 					++ this .numDepthShapes;
 
@@ -532,7 +530,7 @@ function ($,
 
 					// Clip planes
 
-					var
+					const
 						sourceClipPlanes      = this .localObjects,
 						destinationClipPlanes = context .clipPlanes;
 
@@ -549,18 +547,18 @@ function ($,
 		})(),
 		addDisplayShape: (function ()
 		{
-			var
+			const
 				bboxSize   = new Vector3 (0, 0, 0),
 				bboxCenter = new Vector3 (0, 0, 0);
 
 			return function (shapeNode)
 			{
-				var modelViewMatrix = this .getModelViewMatrix () .get ();
+				const modelViewMatrix = this .getModelViewMatrix () .get ();
 
 				modelViewMatrix .multDirMatrix (bboxSize   .assign (shapeNode .getBBoxSize ()));
 				modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
-				var
+				const
 					radius     = bboxSize .abs () / 2,
 					viewVolume = this .viewVolumes [this .viewVolumes .length - 1];
 
@@ -568,7 +566,7 @@ function ($,
 				{
 					if (shapeNode .getTransparent ())
 					{
-						var num = this .numTransparentShapes;
+						const num = this .numTransparentShapes;
 
 						if (num === this .transparentShapes .length)
 							this .transparentShapes .push (this .createShapeContext (true));
@@ -579,7 +577,7 @@ function ($,
 					}
 					else
 					{
-						var num = this .numOpaqueShapes;
+						const num = this .numOpaqueShapes;
 
 						if (num === this .opaqueShapes .length)
 							this .opaqueShapes .push (this .createShapeContext (false));
@@ -599,7 +597,7 @@ function ($,
 
 					// Clip planes and local lights
 
-					var
+					const
 						sourceShaderObjects      = this .localObjects,
 						destinationShaderObjects = context .localObjects;
 
@@ -627,7 +625,7 @@ function ($,
 		},
 		collide: (function ()
 		{
-			var
+			const
 				invModelViewMatrix = new Matrix4 (),
 				modelViewMatrix    = new Matrix4 (),
 				collisionBox       = new Box3 (Vector3 .Zero, Vector3 .Zero),
@@ -637,7 +635,7 @@ function ($,
 			{
 				// Collision nodes are handled here.
 
-				var
+				const
 					activeCollisions = { }, // current active Collision nodes
 					collisionRadius2 = 2.2 * this .getNavigationInfo () .getCollisionRadius (); // Make the radius a little bit larger.
 
@@ -647,7 +645,7 @@ function ($,
 				{
 					try
 					{
-						var
+						const
 							context    = this .collisionShapes [i],
 							collisions = context .collisions;
 
@@ -673,9 +671,9 @@ function ($,
 
 				if (! $.isEmptyObject (this .activeCollisions))
 				{
-					var inActiveCollisions = $.isEmptyObject (activeCollisions)
-					                         ? this .activeCollisions
-					                         : Algorithm .set_difference (this .activeCollisions, activeCollisions, { });
+					const inActiveCollisions = $.isEmptyObject (activeCollisions)
+					                           ? this .activeCollisions
+					                           : Algorithm .set_difference (this .activeCollisions, activeCollisions, { });
 
 					for (var key in inActiveCollisions)
 						inActiveCollisions [key] .set_active (false);
@@ -691,7 +689,7 @@ function ($,
 		})(),
 		gravite: (function ()
 		{
-			var
+			const
 				projectionMatrix            = new Matrix4 (),
 				cameraSpaceProjectionMatrix = new Matrix4 (),
 				translation                 = new Vector3 (0, 0, 0),
@@ -701,7 +699,7 @@ function ($,
 			{
 			   try
 			   {
-					var
+					const
 						browser    = this .getBrowser (),
 						shaderNode = browser .getDepthShader ();
 
@@ -719,7 +717,7 @@ function ($,
 
 						// Get NavigationInfo values
 
-						var
+						const
 							navigationInfo  = this .getNavigationInfo (),
 							viewpoint       = this .getViewpoint (),
 							collisionRadius = navigationInfo .getCollisionRadius (),
@@ -739,7 +737,7 @@ function ($,
 
 						// Transform viewpoint to look down the up vector
 
-						var
+						const
 							upVector = viewpoint .getUpVector (),
 							down     = rotation .setFromToVec (Vector3 .zAxis, upVector);
 
@@ -761,13 +759,13 @@ function ($,
 
 						distance -= avatarHeight;
 
-						var up = rotation .setFromToVec (Vector3 .yAxis, upVector);
+						const up = rotation .setFromToVec (Vector3 .yAxis, upVector);
 
 						if (distance > 0)
 						{
 							// Gravite and fall down the to the floor
 
-							var currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
+							const currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
 
 							this .speed -= browser .getBrowserOptions () .Gravity_ .getValue () / currentFrameRate;
 
@@ -819,11 +817,11 @@ function ($,
 		})(),
 		depth: (function ()
 		{
-			var projectionMatrixArray = new Float32Array (16);
+			const projectionMatrixArray = new Float32Array (16);
 
 			return function (shapes, numShapes)
 			{
-				var
+				const
 					browser    = this .getBrowser (),
 					gl         = browser .getContext (),
 					viewport   = this .getViewVolume () .getViewport (),
@@ -863,7 +861,7 @@ function ($,
 
 					for (var s = 0; s < numShapes; ++ s)
 					{
-						var
+						const
 							context = shapes [s],
 							scissor = context .scissor;
 
@@ -892,14 +890,14 @@ function ($,
 		})(),
 		draw: (function ()
 		{
-			var
+			const
 				viewportArray          = new Int32Array (4),
 				projectionMatrixArray  = new Float32Array (16),
 				cameraSpaceMatrixArray = new Float32Array (16);
 
 			return function (group)
 			{
-				var
+				const
 					browser                  = this .getBrowser (),
 					gl                       = browser .getContext (),
 					viewport                 = this .getViewVolume () .getViewport (),
@@ -982,11 +980,11 @@ function ($,
 				gl .depthMask (true);
 				gl .disable (gl .BLEND);
 
-				var opaqueShapes = this .opaqueShapes;
+				const opaqueShapes = this .opaqueShapes;
 
 				for (var i = 0, length = this .numOpaqueShapes; i < length; ++ i)
 				{
-					var
+					const
 						context = opaqueShapes [i],
 						scissor = context .scissor;
 
@@ -1003,13 +1001,13 @@ function ($,
 				gl .depthMask (false);
 				gl .enable (gl .BLEND);
 
-				var transparentShapes = this .transparentShapes;
+				const transparentShapes = this .transparentShapes;
 
 				this .transparencySorter .sort (0, this .numTransparentShapes);
 
 				for (var i = 0, length = this .numTransparentShapes; i < length; ++ i)
 				{
-					var
+					const
 						context = transparentShapes [i],
 						scissor = context .scissor;
 
@@ -1034,7 +1032,7 @@ function ($,
 				{
 					// Recycle clip planes, local fogs, local lights, and local projective textures.
 
-					var localObjects = browser .getLocalObjects ();
+					const localObjects = browser .getLocalObjects ();
 
 					for (var i = 0, length = localObjects .length; i < length; ++ i)
 						localObjects [i] .dispose ();
@@ -1043,7 +1041,7 @@ function ($,
 
 					// Recycle global lights and global projective textures.
 
-					var globalObjects = this .globalObjects;
+					const globalObjects = this .globalObjects;
 
 					for (var i = 0, length = globalObjects .length; i < length; ++ i)
 						globalObjects [i] .dispose ();

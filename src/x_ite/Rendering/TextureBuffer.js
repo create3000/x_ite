@@ -60,7 +60,7 @@ function (ViewVolume,
 
 	function TextureBuffer (browser, width, height)
 	{
-		var gl = browser .getContext ();
+		const gl = browser .getContext ();
 
 		this .browser = browser;
 		this .width   = width;
@@ -100,7 +100,7 @@ function (ViewVolume,
 			gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
 			gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
 
-			var internalFormat = gl .getVersion () >= 2 ? gl .DEPTH_COMPONENT24 : gl .DEPTH_COMPONENT;
+			const internalFormat = gl .getVersion () >= 2 ? gl .DEPTH_COMPONENT24 : gl .DEPTH_COMPONENT;
 
 			gl .texImage2D (gl .TEXTURE_2D, 0, internalFormat, width, height, 0, gl .DEPTH_COMPONENT, gl .UNSIGNED_INT, null);
 			gl.framebufferTexture2D (gl .FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.TEXTURE_2D, this .depthTexture, 0);
@@ -116,7 +116,7 @@ function (ViewVolume,
 
 		// Always check that our framebuffer is ok
 
-		var complete = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
+		const complete = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
 		gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
 
@@ -147,7 +147,7 @@ function (ViewVolume,
 		},
 		readPixels: function ()
 		{
-			var
+			const
 				gl     = this .browser .getContext (),
 				array  = this .array,
 				width  = this .width,
@@ -159,7 +159,7 @@ function (ViewVolume,
 		},
 		getDepth: (function ()
 		{
-			var
+			const
 				invProjectionMatrix = new Matrix4 (),
 				point               = new Vector3 (0, 0, 0);
 
@@ -167,25 +167,27 @@ function (ViewVolume,
 			{
 				try
 				{
-					var
+					const
 						gl     = this .browser .getContext (),
 						array  = this .array,
 						width  = this .width,
-						height = this .height,
-						winx   = 0,
-						winy   = 0,
-						winz   = Number .POSITIVE_INFINITY;
+						height = this .height;
+
+					var
+						winx = 0,
+						winy = 0,
+						winz = Number .POSITIVE_INFINITY;
 
 					invProjectionMatrix .assign (projectionMatrix) .inverse ();
 
 					gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
-	
+
 					for (var wy = 0, i = 0; wy < height; ++ wy)
 					{
 						for (var wx = 0; wx < width; ++ wx, i += 4)
 						{
-							var wz = array [i] / 255 + array [i + 1] / (255 * 255) + array [i + 2] / (255 * 255 * 255) + array [i + 3] / (255 * 255 * 255 * 255);
-	
+							const wz = array [i] / 255 + array [i + 1] / (255 * 255) + array [i + 2] / (255 * 255 * 255) + array [i + 3] / (255 * 255 * 255 * 255);
+
 							if (wz < winz)
 							{
 								winx = wx;
@@ -196,7 +198,7 @@ function (ViewVolume,
 					}
 
 					ViewVolume .unProjectPointMatrix (winx, winy, winz, invProjectionMatrix, viewport, point);
-	
+
 					return point .z;
 				}
 				catch (error)
@@ -207,7 +209,7 @@ function (ViewVolume,
 		})(),
 		bind: function ()
 		{
-			var gl = this .browser .getContext ();
+			const gl = this .browser .getContext ();
 
 			this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
@@ -215,7 +217,7 @@ function (ViewVolume,
 		},
 		unbind: function ()
 		{
-			var gl = this .browser .getContext ();
+			const gl = this .browser .getContext ();
 			gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
 		},
 	};
