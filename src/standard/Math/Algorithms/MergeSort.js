@@ -74,7 +74,7 @@ define (function ()
 		{
 			if (lo < hi)
 			{
-				var m = (lo + hi) >>> 1;
+				const m = (lo + hi) >>> 1;
 				this .mergeSort (lo, m);   // Recursion
 				this .mergeSort (m + 1, hi); // Recursion
 				this .merge (lo, m, hi);

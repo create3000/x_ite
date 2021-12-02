@@ -72,21 +72,21 @@ function (Vector3)
 		{
 			// https://github.com/Alexpux/Coin3D/blob/master/src/base/SbSphere.cpp
 
-			var
+			const
 				linepos = line .point,
 				linedir = line .direction;
 
-			var
+			const
 				scenter = this .center,
 				r       = this .radius;
 
-			var
+			const
 				b = 2 * (linepos .dot (linedir) - scenter .dot (linedir)),
 				c = (linepos .x * linepos .x + linepos .y * linepos .y + linepos .z * linepos .z) +
 			       (scenter .x * scenter .x + scenter .y * scenter .y + scenter .z * scenter .z) -
 			       2 * linepos .dot (scenter) - r * r;
 
-			var core = b * b - 4 * c;
+			const core = b * b - 4 * c;
 
 			if (core >= 0)
 			{
@@ -113,7 +113,7 @@ function (Vector3)
 		},
 		intersectsTriangle: (function ()
 		{
-			var
+			const
 				AB = new Vector3 (0, 0, 0),
 				AC = new Vector3 (0, 0, 0),
 				BC = new Vector3 (0, 0, 0),
@@ -124,7 +124,7 @@ function (Vector3)
 
 			return function (A, B, C)
 			{
-				var
+				const
 					P = this .center,
 					r = this .radius;
 
@@ -137,7 +137,7 @@ function (Vector3)
 				AB .assign (B) .subtract (A);
 				AC .assign (C) .subtract (A);
 
-				var
+				const
 					rr   = r * r,
 					V    = AB .cross (AC),
 					d    = Vector3 .dot (A, V),
@@ -148,7 +148,7 @@ function (Vector3)
 					return false;
 
 				// Testing if sphere lies outside a triangle vertex.
-				var
+				const
 					aa   = Vector3 .dot (A, A),
 					ab   = Vector3 .dot (A, B),
 					ac   = Vector3 .dot (A, C),
@@ -168,7 +168,7 @@ function (Vector3)
 				BC .assign (C) .subtract (B);
 				CA .assign (A) .subtract (C);
 
-				var
+				const
 					d1   = ab - aa,
 					d2   = bc - bb,
 					d3   = ac - cc,
@@ -180,7 +180,7 @@ function (Vector3)
 				Q2 .assign (B) .multiply (e2) .subtract (BC .multiply (d2));
 				Q3 .assign (C) .multiply (e3) .subtract (CA .multiply (d3));
 
-				var
+				const
 					QC   = C .multiply (e1) .subtract (Q1),
 					QA   = A .multiply (e2) .subtract (Q2),
 					QB   = B .multiply (e3) .subtract (Q3),

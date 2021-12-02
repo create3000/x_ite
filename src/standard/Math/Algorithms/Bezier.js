@@ -54,6 +54,8 @@ function (Algorithm)
 {
 	"use strict";
 
+	const lerp = Algorithm .lerp;
+
 	function Bezier (x0, y0, x1, y1, x2, y2, x3, y3)
 	{
 		this .x0 = x0;
@@ -72,7 +74,7 @@ function (Algorithm)
 	{
 		getLUT: function (dimension)
 		{
-			var
+			const
 				x0  = this .x0,
 				y0  = this .y0,
 				x1  = this .x1,
@@ -111,32 +113,32 @@ function (Algorithm)
 
 	function quadric (x0, y0, x1, y1, x2, y2, t)
 	{
-		var
-			ax0 = Algorithm .lerp (x0, x1, t),
-			ay0 = Algorithm .lerp (y0, y1, t),
-			ax1 = Algorithm .lerp (x1, x2, t),
-			ay1 = Algorithm .lerp (y1, y2, t),
-			bx0 = Algorithm .lerp (ax0, ax1, t),
-			by0 = Algorithm .lerp (ay0, ay1, t);
+		const
+			ax0 = lerp (x0, x1, t),
+			ay0 = lerp (y0, y1, t),
+			ax1 = lerp (x1, x2, t),
+			ay1 = lerp (y1, y2, t),
+			bx0 = lerp (ax0, ax1, t),
+			by0 = lerp (ay0, ay1, t);
 
 		return {x: bx0, y: by0};
 	}
 
 	function cubic (x0, y0, x1, y1, x2, y2, x3, y3, t)
 	{
-		var
-			ax0 = Algorithm .lerp (x0, x1, t),
-			ay0 = Algorithm .lerp (y0, y1, t),
-			ax1 = Algorithm .lerp (x1, x2, t),
-			ay1 = Algorithm .lerp (y1, y2, t),
-			ax2 = Algorithm .lerp (x2, x3, t),
-			ay2 = Algorithm .lerp (y2, y3, t),
-			bx0 = Algorithm .lerp (ax0, ax1, t),
-			by0 = Algorithm .lerp (ay0, ay1, t),
-			bx1 = Algorithm .lerp (ax1, ax2, t),
-			by1 = Algorithm .lerp (ay1, ay2, t),
-			cx0 = Algorithm .lerp (bx0, bx1, t),
-			cy0 = Algorithm .lerp (by0, by1, t);
+		const
+			ax0 = lerp (x0, x1, t),
+			ay0 = lerp (y0, y1, t),
+			ax1 = lerp (x1, x2, t),
+			ay1 = lerp (y1, y2, t),
+			ax2 = lerp (x2, x3, t),
+			ay2 = lerp (y2, y3, t),
+			bx0 = lerp (ax0, ax1, t),
+			by0 = lerp (ay0, ay1, t),
+			bx1 = lerp (ax1, ax2, t),
+			by1 = lerp (ay1, ay2, t),
+			cx0 = lerp (bx0, bx1, t),
+			cy0 = lerp (by0, by1, t);
 
 		return {x: cx0, y: cy0};
 	}

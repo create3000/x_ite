@@ -54,19 +54,18 @@ define (function ()
    return function shuffle (array)
 	{
 		var i = array .length;
-	
+
 		while (i > 1)
 		{
-			var
+			const
 				a = -- i,
 				b = Math .floor (Math .random () * a),
 				t = array [a];
-	
+
 			array [a] = array [b];
 			array [b] = t;
 		}
-	
+
 		return array;
 	};
 });
-

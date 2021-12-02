@@ -51,7 +51,7 @@ define (function ($)
 {
 "use strict";
 
-   var MapUtilities = {
+   const MapUtilities = {
       assign: function (m1, m2)
       {
          m1 .clear ();

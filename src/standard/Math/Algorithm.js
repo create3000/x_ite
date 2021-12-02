@@ -51,7 +51,7 @@ define (function ()
 {
 "use strict";
 
-	var Algorithm =
+	const Algorithm =
 	{
 		signum: function (value)
 		{
@@ -110,7 +110,7 @@ define (function ()
 				destination .negate ();
 			}
 
-			var
+			const
 				omega = Math .acos (cosom),
 				sinom = Math .sin  (omega),
 
@@ -126,7 +126,7 @@ define (function ()
 		},
 		simpleSlerp: function (source, destination, t)
 		{
-			var cosom = source .dot (destination);
+			const cosom = source .dot (destination);
 
 			if (cosom <= -1)
 				throw new Error ("slerp is not possible: vectors are inverse collinear.");
@@ -134,7 +134,7 @@ define (function ()
 			if (cosom >= 1) // both normal vectors are equal
 				return source;
 
-			var
+			const
 				omega = Math .acos (cosom),
 				sinom = Math .sin  (omega),
 

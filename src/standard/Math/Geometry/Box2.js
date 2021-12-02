@@ -75,7 +75,7 @@ function (Matrix3, Vector2)
 			}
 			case 3:
 			{
-				var
+				const
 					min = arguments [0],
 					max = arguments [1],
 					sx  = (max .x - min .x) / 2,
@@ -96,7 +96,7 @@ function (Matrix3, Vector2)
 		constructor: Box2,
 		copy: function ()
 		{
-			var copy = Object .create (Box2 .prototype);
+			const copy = Object .create (Box2 .prototype);
 			copy .matrix = this .matrix .copy ();
 			return copy;
 		},
@@ -111,7 +111,7 @@ function (Matrix3, Vector2)
 		},
 		set: function (size, center)
 		{
-			var m = this .matrix;
+			const m = this .matrix;
 
 			switch (arguments .length)
 			{
@@ -132,7 +132,7 @@ function (Matrix3, Vector2)
 				}
 				case 3:
 				{
-					var
+					const
 						min = arguments [0],
 						max = arguments [1],
 						sx  = (max .x - min .x) / 2,
@@ -149,7 +149,7 @@ function (Matrix3, Vector2)
 		},
 		setExtents: function (min, max)
 		{
-			var
+			const
 				m  = this .matrix,
 				sx = (max .x - min .x) / 2,
 				sy = (max .y - min .y) / 2,
@@ -167,7 +167,7 @@ function (Matrix3, Vector2)
 		},
 		add: (function ()
 		{
-			var
+			const
 				lhs_min = new Vector2 (0, 0),
 				lhs_max = new Vector2 (0, 0),
 				rhs_min = new Vector2 (0, 0),
@@ -206,18 +206,18 @@ function (Matrix3, Vector2)
 		},
 		getAbsoluteExtents: (function ()
 		{
-			var p1 = new Vector2 (0, 0);
+			const p1 = new Vector2 (0, 0);
 
 			return function (min, max)
 			{
-			   var
+			   const
 					m = this .matrix,
 					x = m .xAxis,
 					y = m .yAxis;
 
 				p1 .assign (x) .add (y);
 
-				var p2 = y .subtract (x);
+				const p2 = y .subtract (x);
 
 				min .assign (p1) .min (p2);
 				max .assign (p1) .max (p2);
@@ -231,7 +231,7 @@ function (Matrix3, Vector2)
 		})(),
 		containsPoint: (function ()
 		{
-			var
+			const
 				min = new Vector2 (0, 0),
 				max = new Vector2 (0, 0);
 
@@ -255,7 +255,7 @@ function (Matrix3, Vector2)
 	{
 		get: (function ()
 		{
-			var
+			const
 				min = new Vector2 (0, 0),
 				max = new Vector2 (0, 0);
 

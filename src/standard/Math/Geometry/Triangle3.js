@@ -60,7 +60,7 @@ function (Vector3,
 	return {
 	   area: (function ()
 		{
-			var
+			const
 				B = new Vector3 (0, 0, 0),
 				C = new Vector3 (0, 0, 0);
 
@@ -71,7 +71,7 @@ function (Vector3,
 		})(),
 		normal: function (v1, v2, v3, normal)
 		{
-			var
+			const
 				x1 = v3 .x - v2 .x,
 				y1 = v3 .y - v2 .y,
 				z1 = v3 .z - v2 .z,
@@ -87,7 +87,7 @@ function (Vector3,
 		},
 		quadNormal: function (v1, v2, v3, v4, normal)
 		{
-			var
+			const
 				x1 = v3 .x - v1 .x,
 				y1 = v3 .y - v1 .y,
 				z1 = v3 .z - v1 .z,
@@ -103,7 +103,7 @@ function (Vector3,
 		},
 		triangulatePolygon: (function ()
 		{
-			var tessy = (function ()
+			const tessy = (function ()
 			{
 				// Function called for each vertex of tesselator output.
 				function vertexCallback (data, polyVertArray)
@@ -137,7 +137,7 @@ function (Vector3,
 					// console .log ('edge flag: ' + flag);
 				}
 
-				var tessy = new libtess .GluTesselator ();
+				const tessy = new libtess .GluTesselator ();
 
 				tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
 				tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_BEGIN,        beginCallback);
@@ -152,7 +152,7 @@ function (Vector3,
 
 			return function (/* contour, [ contour, ..., ] triangles */)
 			{
-				var triangles = arguments [arguments .length - 1];
+				const triangles = arguments [arguments .length - 1];
 
 				tessy .gluTessBeginPolygon (triangles);
 
@@ -160,7 +160,7 @@ function (Vector3,
 				{
 					tessy .gluTessBeginContour ();
 
-					var contour = arguments [i];
+					const contour = arguments [i];
 
 					for (var j = 0; j < contour .length; ++ j)
 					{

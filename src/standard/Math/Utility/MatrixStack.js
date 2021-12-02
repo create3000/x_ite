@@ -66,7 +66,7 @@ define (function ()
 			},
 			push: function ()
 			{
-				var top = ++ this .top;
+				const top = ++ this .top;
 
 				if (top < this .length)
 					this [top] .assign (this [top - 1]);
@@ -75,7 +75,7 @@ define (function ()
 			},
 			pushMatrix: function (matrix)
 			{
-				var top = ++ this .top;
+				const top = ++ this .top;
 
 				if (top < this .length)
 					this [top] .assign (matrix);

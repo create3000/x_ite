@@ -56,11 +56,11 @@ function (Vector3,
 {
 "use strict";
 
-	var
+	const
 		EPS_H = 1e-3,
 		EPS_P = 1e-10,
 		IMAX  = 30;
-		
+
 	function Geodetic (spheroid, latitudeFirst, radians)
 	{
 		this .longitudeFirst = ! latitudeFirst;
@@ -76,7 +76,7 @@ function (Vector3,
 		constructor: Geodetic,
 		convert: function (geodetic, result)
 		{
-			var elevation = geodetic .z;
+			const elevation = geodetic .z;
 
 			if (this .longitudeFirst)
 			{
@@ -90,18 +90,18 @@ function (Vector3,
 					latitude  = geodetic .x,
 					longitude = geodetic .y;
 			}
-		
+
 			if (this .degrees)
 			{
 				latitude  *= Math .PI / 180;
 				longitude *= Math .PI / 180;
 			}
-		
+
 			return this .convertRadians (latitude, longitude, elevation, result);
 		},
 		convertRadians: function (latitude, longitude, elevation, result)
 		{
-			var
+			const
 				slat  = Math .sin (latitude),
 				slat2 = Math .pow (slat, 2),
 				clat  = Math .cos (latitude),
@@ -124,7 +124,7 @@ function (Vector3,
 
 			if (this .longitudeFirst)
 			{
-				var tmp = result .x;
+				const tmp = result .x;
 
 				result .x = result .y; // latitude
 				result .y = tmp;       // longitude
@@ -134,13 +134,13 @@ function (Vector3,
 		},
 		applyRadians: function (geocentric, result)
 		{
-			var
+			const
 				x = geocentric .x,
 				y = geocentric .y,
 				z = geocentric .z;
-		
-			var P = Math .sqrt (x * x + y * y);
-		
+
+			const P = Math .sqrt (x * x + y * y);
+
 			// Handle pole case.
 			if (P == 0)
 				return result .set (Math .PI, 0, z - this .c);
@@ -149,25 +149,25 @@ function (Vector3,
 				latitude  = 0,
 				longitude = Math .atan2 (y, x),
 				elevation = 0;
-		
+
 			var
 				a    = this .a,
 				N    = a,
 				ecc2 = this .ecc2;
-		
+
 			for (var i = 0; i < IMAX; ++ i)
 			{
-				var
+				const
 					h0 = elevation,
 					b0 = latitude;
-		
+
 				latitude = Math .atan (z / P / (1 - ecc2 * N / (N + elevation)));
-		
-				var sin_p = Math .sin (latitude);
-		
+
+				const sin_p = Math .sin (latitude);
+
 				N         = a / Math .sqrt (1 - ecc2 * sin_p * sin_p);
 				elevation = P / Math .cos (latitude) - N;
-		
+
 				if (Math .abs (elevation - h0) < EPS_H && Math .abs (latitude - b0) < EPS_P)
 					break;
 			}
@@ -176,15 +176,15 @@ function (Vector3,
 		},
 		normal: function (geocentric, result)
 		{
-			var geodetic = this .applyRadians (geocentric, result);
+			const geodetic = this .applyRadians (geocentric, result);
 
-			var
+			const
 				latitude  = geodetic .x,
 				longitude = geodetic .y;
 
-			var clat = Math .cos (latitude);
+			const clat = Math .cos (latitude);
 
-			var
+			const
 				nx = Math .cos (longitude) * clat,
 				ny = Math .sin (longitude) * clat,
 				nz = Math .sin (latitude);
@@ -202,58 +202,58 @@ function (Vector3,
 				RANGE    = this .degrees ? 180 : M_PI,
 				RANGE1_2 = RANGE / 2,
 				RANGE2   = RANGE * 2;
-		
+
 			var range = 0;
-		
+
 			if (this .longitudeFirst)
 			{
-				source .x = Algorithm .interval (source .x, -RANGE,    RANGE);	
+				source .x = Algorithm .interval (source .x, -RANGE,    RANGE);
 				source .y = Algorithm .interval (source .y, -RANGE1_2, RANGE1_2);
-		
-				destination .x = Algorithm .interval (destination .x, -RANGE,    RANGE);	
+
+				destination .x = Algorithm .interval (destination .x, -RANGE,    RANGE);
 				destination .y = Algorithm .interval (destination .y, -RANGE1_2, RANGE1_2);
-		
+
 				range = Math .abs (destination .x - source .x);
 			}
 			else
 			{
 				source .x = Algorithm .interval (source .x, -RANGE1_2, RANGE1_2);
 				source .y = Algorithm .interval (source .y, -RANGE,    RANGE);
-		
+
 				destination .x = Algorithm .interval (destination .x, -RANGE1_2, RANGE1_2);
 				destination .y = Algorithm .interval (destination .y, -RANGE,    RANGE);
-		
+
 				range = Math .abs (destination .y - source .y);
 			}
-		
+
 			if (range <= RANGE)
 				return source .lerp (destination, t);
-		
+
 			var step = (RANGE2 - range) * t;
-		
+
 			if (this .longitudeFirst)
 			{
 				var longitude = source .x < destination .x ? source .x - step : source .x + step;
-		
+
 				if (longitude < -RANGE)
 					longitude += RANGE2;
-		
+
 				else if (longitude > RANGE)
 					longitude -= RANGE2;
-		
+
 				return source .set (longitude,
 				                    source .y + t * (destination .y - source .y),
 				                    source .z + t * (destination .z - source .z));
 			}
 
 			var longitude = source .y < destination .y ? source .y - step : source .y + step;
-	
+
 			if (longitude < -RANGE)
 				longitude += RANGE2;
-	
+
 			else if (longitude > RANGE)
 				longitude -= RANGE2;
-	
+
 			return source .set (source .x + t * (destination .x - source .x),
 			                    longitude,
 			                    source .z + t * (destination .z - source .z));

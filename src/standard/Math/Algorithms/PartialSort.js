@@ -51,12 +51,12 @@ define (function ()
 {
 "use strict";
 
-	var shrinkFactor = 1 - Math .pow (Math .E, -Math .PHI); // 0.801711847137793
+	const shrinkFactor = 1 - Math .pow (Math .E, -Math .PHI); // 0.801711847137793
 
 	function PartialSort (array, compare)
 	{
 		this .array = array;
-		
+
 		if (compare)
 			this .compare = compare;
 	}
@@ -78,14 +78,14 @@ define (function ()
 
 			if (gap > 1)
 				gap = Math .floor (gap * shrinkFactor);
-				
+
 			for (i = 0, last = this .last - gap; i < last; ++ i)
 			{
-				var j = i + gap;
+				const j = i + gap;
 
 				if (this .compare (this .array [j], this .array [i]))
 				{
-					var t = array [i];
+					const t = array [i];
 					array [i] = array [j];
 					array [j] = t;
 				}

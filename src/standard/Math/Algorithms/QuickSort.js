@@ -54,7 +54,7 @@ define (function ()
 	function QuickSort (array, compare)
 	{
 		this .array = array;
-		
+
 		if (compare)
 			this .compare = compare;
 	}
@@ -74,12 +74,14 @@ define (function ()
 		{
 			var
 				i = lo,
-				j = hi,
+				j = hi;
+
+			const
 				array   = this .array,
 				compare = this .compare;
 
 			// Vergleichs­element x
-			var x = array [(lo + hi) >>> 1];
+			const x = array [(lo + hi) >>> 1];
 
 			for (;;)
 			{
@@ -89,8 +91,8 @@ define (function ()
 				if (i < j)
 				{
 					// Exchange
-					
-					var t = array [i];
+
+					const t = array [i];
 					array [i] = array [j];
 					array [j] = t;
 

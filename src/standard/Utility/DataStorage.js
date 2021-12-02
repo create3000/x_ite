@@ -54,11 +54,11 @@ function ($)
 {
 "use strict";
 
-	var
+	const
 		storages   = new WeakMap (),
 		namespaces = new WeakMap ();
 
-	var handler =
+	const handler =
 	{
 		get: function (target, key)
 		{
@@ -108,7 +108,7 @@ function ($)
 		},
 		clear: function ()
 		{
-			var
+			const
 				storage   = this .getStorage (),
 				namespace = this .getNameSpace ();
 

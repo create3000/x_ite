@@ -60,8 +60,8 @@ define (function ()
 	      {
 				if (this .last > -1)
 				{
-					var object = this .stack [this .last];
-				
+					const object = this .stack [this .last];
+
 					this .last --;
 
 	            return object;
@@ -82,4 +82,3 @@ define (function ()
 	   };
    };
 });
-

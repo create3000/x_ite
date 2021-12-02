@@ -51,15 +51,15 @@ define (function ()
 {
 "use strict";
 
-	var a = [ ]; // more scratch
-	var b = [ ]; // more scratch
-	var z = [ ]; // more scratch
+	const a = [ ]; // more scratch
+	const b = [ ]; // more scratch
+	const z = [ ]; // more scratch
 
 	// Calculate eigenvalues and eigenvectors.
 	// This is from SGI Inventor Matrix.cpp.
 	return function (matrix, result)
 	{
-		var
+		const
 			ORDER   = matrix .order,
 			values  = result .values,
 			vectors = result .vectors;

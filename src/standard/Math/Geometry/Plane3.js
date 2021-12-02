@@ -56,7 +56,7 @@ function (Vector3,
 {
 "use strict";
 
-	var
+	const
 		normal    = new Vector3 (0, 0, 0),
 		point     = new Vector3 (0, 0, 0),
 		invMatrix = new Matrix4 ();
@@ -86,27 +86,27 @@ function (Vector3,
 		set: function (point, normal)
 		{
 			this .normal .assign (normal);
-			this .distanceFromOrigin = normal .dot (point);	   
+			this .distanceFromOrigin = normal .dot (point);
 			return this;
 		},
 		multRight: function (matrix)
 		//throw
 		{
 			// Taken from Inventor:
-		
+
 			// Find the point on the plane along the normal from the origin
 			point .assign (this .normal) .multiply (this .distanceFromOrigin);
-		
+
 			// Transform the plane normal by the matrix
 			// to get the new normal. Use the inverse transpose
 			// of the matrix so that normals are not scaled incorrectly.
 			// n' = n * !~m = ~m * n
 			invMatrix .assign (matrix) .inverse ();
 			invMatrix .multMatrixDir (normal .assign (this .normal)) .normalize ();
-		
+
 			// Transform the point by the matrix
 			matrix .multVecMatrix (point);
-		
+
 			// The new distance is the projected distance of the vector to the
 			// transformed point onto the (unit) transformed normal. This is
 			// just a dot product.
@@ -119,20 +119,20 @@ function (Vector3,
 		//throw
 		{
 			// Taken from Inventor:
-		
+
 			// Find the point on the plane along the normal from the origin
 			point .assign (this .normal) .multiply (this .distanceFromOrigin);
-		
+
 			// Transform the plane normal by the matrix
 			// to get the new normal. Use the inverse transpose
 			// of the matrix so that normals are not scaled incorrectly.
 			// n' = !~m * n = n * ~m
 			invMatrix .assign (matrix) .inverse ();
 			invMatrix .multDirMatrix (normal .assign (this .normal)) .normalize ();
-		
+
 			// Transform the point by the matrix
 			matrix .multMatrixVec (point);
-		
+
 			// The new distance is the projected distance of the vector to the
 			// transformed point onto the (unit) transformed normal. This is
 			// just a dot product.
@@ -147,19 +147,19 @@ function (Vector3,
 		},
 		intersectsLine: function (line, intersection)
 		{
-			var
+			const
 				point     = line .point,
 				direction = line .direction;
-		
+
 			// Check if the line is parallel to the plane.
-			var theta = direction .dot (this .normal);
+			const theta = direction .dot (this .normal);
 
 			// Plane and line are parallel.
 			if (theta === 0)
 				return false;
 
 			// Plane and line are not parallel. The intersection point can be calculated now.
-			var t = (this .distanceFromOrigin - this .normal .dot (point)) / theta;
+			const t = (this .distanceFromOrigin - this .normal .dot (point)) / theta;
 
 			intersection .x = point .x + direction .x * t;
 			intersection .y = point .y + direction .y * t;

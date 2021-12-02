@@ -51,7 +51,7 @@ define (function ()
 {
 "use strict";
 
-	var
+	const
 		extents1 = { min: 0, max: 0 },
 		extents2 = { min: 0, max: 0 };
 
@@ -66,7 +66,7 @@ define (function ()
 
 		for (var i = 0, length = axes .length; i < length; ++ i)
 		{
-			var axis = axes [i];
+			const axis = axes [i];
 
 			project (points1, axis, extents1);
 			project (points2, axis, extents2);
@@ -88,13 +88,13 @@ define (function ()
 
 		for (var i = 0, length = points .length; i < length; ++ i)
 		{
-			var point = points [i];
+			const point = points [i];
 
 			// Just dot it to get the min and max along this axis.
 			// NOTE: the axis must be normalized to get accurate projections to calculate the MTV, but if it is only needed to
 			// know whether it overlaps, every axis can be used.
 
-			var dotVal = point .dot (axis);
+			const dotVal = point .dot (axis);
 
 			if (dotVal < extents .min)
 				extents .min = dotVal;

@@ -57,7 +57,7 @@ function (Vector3)
 	return {
 		frustum: function (l, r, b, t, n, f, matrix)
 		{
-			var
+			const
 				r_l = r - l,
 				t_b = t - b,
 				f_n = f - n,
@@ -77,28 +77,28 @@ function (Vector3)
 		},
 		perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
 		{
-			var ratio = Math .tan (fieldOfView / 2) * zNear;
+			const ratio = Math .tan (fieldOfView / 2) * zNear;
 
 			if (width > height)
 			{
-				var aspect = width * ratio / height;
+				const aspect = width * ratio / height;
 				return this .frustum (-aspect, aspect, -ratio, ratio, zNear, zFar, matrix);
 			}
 			else
 			{
-				var aspect = height * ratio / width;
+				const aspect = height * ratio / width;
 				return this .frustum (-ratio, ratio, -aspect, aspect, zNear, zFar, matrix);
 			}
 		},
 		perspective2: function (fieldOfView, zNear, zFar, width, height, matrix)
 		{
-			var ratio = Math .tan (fieldOfView / 2) * zNear;
+			const ratio = Math .tan (fieldOfView / 2) * zNear;
 
 			return this .frustum (-ratio, ratio, -ratio, ratio, zNear, zFar, matrix);
 		},
 		ortho: function (l, r, b, t, n, f, matrix)
 		{
-			var
+			const
 				r_l = r - l,
 				t_b = t - b,
 				f_n = f - n,
@@ -117,7 +117,7 @@ function (Vector3)
 		},
 		orthoBox: (function ()
 		{
-			var
+			const
 				min = new Vector3 (0, 0, 0),
 				max = new Vector3 (0, 0, 0);
 

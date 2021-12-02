@@ -61,7 +61,7 @@ define (function ()
 		{
 			case 2:
 			{
-				var value = this .value = path ? path .split (separator) : [];
+				const value = this .value = path ? path .split (separator) : [];
 
 				value .separator         = separator;
 				value .leadingSeparator  = false;
@@ -89,7 +89,7 @@ define (function ()
 			}
 			case 4:
 			{
-				var value = this .value = arguments [0];
+				const value = this .value = arguments [0];
 
 				value .separator         = arguments [1];
 				value .leadingSeparator  = arguments [2];
@@ -103,7 +103,7 @@ define (function ()
 	{
 		copy: function ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			return new Path (value .slice (0, value .length),
 			                 value .separator,
@@ -138,7 +138,7 @@ define (function ()
 		},
 		get parent ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			switch (value .length)
 			{
@@ -162,7 +162,7 @@ define (function ()
 		},
 		get basename ()
 		{
-			var
+			const
 				value  = this .value,
 				length = value .length;
 
@@ -173,11 +173,11 @@ define (function ()
 		},
 		get stem ()
 		{
-			var basename = this .basename;
+			const basename = this .basename;
 
 			if (this .trailingSeparator && basename .length)
 			{
-				var extension = this .extension;
+				const extension = this .extension;
 
 				if (extension .length)
 					return basename .substr (0, basename .length - extension .length);
@@ -187,7 +187,7 @@ define (function ()
 		},
 		get extension ()
 		{
-			var
+			const
 				basename = this .basename,
 				dot      = basename .lastIndexOf (".");
 
@@ -201,7 +201,7 @@ define (function ()
 			if (! descendant .leadingSeparator)
 				return descendant;
 
-			var
+			const
 				path           = new Path ([ ], "/", false, descendant .value .trailingSeparator),
 				basePath       = this .removeDotSegments () .base,
 				descendantPath = descendant .removeDotSegments ();
@@ -227,7 +227,7 @@ define (function ()
 		},
 		removeDotSegments: function ()
 		{
-			var
+			const
 				value = this .value,
 				path  = new Path ([ ], value .separator, value .leadingSeparator, value .trailingSeparator);
 
@@ -235,7 +235,7 @@ define (function ()
 			{
 				for (var i = 0; i < value .length; ++ i)
 				{
-					var segment = value [i];
+					const segment = value [i];
 
 					switch (segment)
 					{
@@ -272,7 +272,7 @@ define (function ()
 		},
 		escape: function ()
 		{
-			var
+			const
 				copy  = this .copy (),
 				value = copy .value;
 
@@ -283,7 +283,7 @@ define (function ()
 		},
 		unescape: function ()
 		{
-			var
+			const
 				copy  = this .copy (),
 				value = copy .value;
 
@@ -294,9 +294,9 @@ define (function ()
 		},
 		toString: function ()
 		{
-			var
-				value  = this .value,
-				string = "";
+			const value = this .value;
+
+			var string = "";
 
 			if (value .leadingSeparator)
 				string += value .separator;
@@ -318,7 +318,7 @@ define (function ()
 	 *  https://tools.ietf.org/html/rfc3986
 	 */
 
-	var wellKnownPorts =
+	const wellKnownPorts =
 	{
 		ftp:   21,
 		http:  80,
@@ -326,7 +326,7 @@ define (function ()
 		ftps:  990,
 	};
 
-	var
+	const
 		address   = /^(?:([^:\/?#]*?):)?(?:(\/\/)([^\/?#]*))?([^?#]*)(?:\?([^#]*))?(?:#(.*))?$/,
 		authority = /^(.*?)(?:\:([^:]*))?$/;
 
@@ -366,7 +366,7 @@ define (function ()
 
 	function URI (uri)
 	{
-		var value = this .value =
+		const value = this .value =
 		{
 			local:     true,
 			absolute:  true,
@@ -411,7 +411,7 @@ define (function ()
 	{
 		copy: function ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			return new URI (value .local,
 			                value .absolute,
@@ -445,7 +445,7 @@ define (function ()
 		},
 		isDirectory: function ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			if (value .path .length)
 				return value .path .trailingSeparator;
@@ -458,9 +458,9 @@ define (function ()
 		},
 		get hierarchy ()
 		{
-			var
-				value     = this .value,
-				hierarchy = "";
+			const value = this .value;
+
+			var hierarchy = "";
 
 			hierarchy += value .slashs;
 			hierarchy += this .authority;
@@ -470,9 +470,9 @@ define (function ()
 		},
 		get authority ()
 		{
-			var
-				value     = this .value,
-				authority = value .host;
+			const value = this .value;
+
+			var authority = value .host;
 
 			if (value .port)
 			{
@@ -496,7 +496,7 @@ define (function ()
 		},
 		get wellKnownPort ()
 		{
-			var wellKnownPort = wellKnownPorts [this .value .scheme];
+			const wellKnownPort = wellKnownPorts [this .value .scheme];
 
 			if (wellKnownPort !== undefined)
 				return wellKnownPort;
@@ -529,7 +529,7 @@ define (function ()
 		},
 		get root ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			return new URI (value .local,
 			                value .absolute,
@@ -543,7 +543,7 @@ define (function ()
 		},
 		get base ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			if (this .isDirectory ())
 			{
@@ -562,7 +562,7 @@ define (function ()
 		},
 		get parent ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			return new URI (value .local,
 			                value .absolute,
@@ -576,7 +576,7 @@ define (function ()
 		},
 		get filename ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			return new URI (value .local,
 			                value .absolute,
@@ -608,8 +608,9 @@ define (function ()
 			if (reference .scheme == "data")
 				return new URI (reference .toString ());
 
+			const value = this .value;
+
 			var
-				value       = this .value,
 				T_local     = false,
 				T_absolute  = false,
 				T_scheme    = "",
@@ -663,7 +664,7 @@ define (function ()
 						{
 							// merge (Base .path (), reference .path ());
 
-							var base = this .base;
+							const base = this .base;
 
 							if (base .path)
 								T_path += base .path;
@@ -700,7 +701,7 @@ define (function ()
 		},
 		removeDotSegments: function ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			return new URI (value .local,
 			                value .absolute,
@@ -717,7 +718,7 @@ define (function ()
 			if (! (descendant instanceof URI))
 				descendant = new URI (descendant .toString ());
 
-			var value = this .value;
+			const value = this .value;
 
 			if (value .scheme !== descendant .scheme)
 				return descendant;
@@ -737,7 +738,7 @@ define (function ()
 		},
 		escape: function ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			if (value .scheme === "data")
 				return new URI (value .string);
@@ -754,7 +755,7 @@ define (function ()
 		},
 		unescape: function ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			if (value .scheme === "data")
 				return new URI (value .string);
@@ -775,9 +776,9 @@ define (function ()
 		},
 		createString: function ()
 		{
-			var
-				value  = this .value,
-				string = this .value .scheme;
+			const value = this .value;
+
+			var string = this .value .scheme;
 
 			if (value .scheme)
 				string += ":";

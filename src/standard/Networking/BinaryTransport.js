@@ -63,7 +63,7 @@ define (function ()
 					send: function (headers, callback)
 					{
 						// Setup all variables
-						var xhr = options .xhr ();
+						const xhr = options .xhr ();
 
 						xhr .open (options .type, options .url, options .async, options .username, options .password);
 
@@ -87,7 +87,7 @@ define (function ()
 						{
 							xhr .onload = xhr .onerror = null;
 
-							var data = { };
+							const data = { };
 
 							data [options .dataType] = xhr .response;
 
@@ -101,14 +101,14 @@ define (function ()
 
 							callback (xhr .status || 404, xhr .statusText);
 						};
-						
+
 						// Send data
 						xhr .responseType = options .responseType || "blob";
 						xhr .send (options .hasContent && options .data || null);
 					},
 					abort: function ()
 					{
-						var xhr = options .xhr ();
+						const xhr = options .xhr ();
 
 						xhr .onload = xhr .onerror = null;
 

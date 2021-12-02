@@ -65,7 +65,7 @@ function (Vector3)
 		constructor: Line3,
 		copy: function ()
 		{
-			var copy = Object .create (Line3 .prototype);
+			const copy = Object .create (Line3 .prototype);
 			copy .point     = this .point .copy ();
 			copy .direction = this .direction .copy ();
 			return copy;
@@ -102,7 +102,7 @@ function (Vector3)
 		},
 		getClosestPointToPoint: function (point, result)
 		{
-			var
+			const
 				r = result .assign (point) .subtract (this .point),
 				d = r .dot (this .direction);
 
@@ -110,85 +110,85 @@ function (Vector3)
 		},
 		getClosestPointToLine: (function ()
 		{
-			var u = new Vector3 (0, 0, 0);
+			const u = new Vector3 (0, 0, 0);
 
 			return function (line, point)
 			{
-				var
+				const
 					p1 = this .point,
 					p2 = line .point,
 					d1 = this .direction,
 					d2 = line .direction;
-	
+
 				var t = Vector3 .dot (d1, d2);
-	
+
 				if (Math .abs (t) >= 1)
 					return false;  // lines are parallel
-	
+
 				u .assign (p2) .subtract (p1);
-	
+
 				t = (u .dot (d1) - t * u .dot (d2)) / (1 - t * t);
-	
+
 				point .assign (d1) .multiply (t) .add (p1);
 				return true;
 			};
 		})(),
 		getPerpendicularVector: function (point)
 		{
-			var d = Vector3 .subtract (this .point, point);
+			const d = Vector3 .subtract (this .point, point);
 
 			return d .subtract (this .direction .copy () .multiply (Vector3 .dot (d, this .direction)));
 		},
 		intersectsTriangle: (function ()
 		{
-			var
+			const
 				pvec = new Vector3 (0, 0, 0),
 				tvec = new Vector3 (0, 0, 0);
 
 			return function (A, B, C, uvt)
 			{
 				// Find vectors for two edges sharing vert0.
-				var
+				const
 					edge1 = B .subtract (A),
 					edge2 = C .subtract (A);
-	
+
 				// Begin calculating determinant - also used to calculate U parameter.
 				pvec .assign (this .direction) .cross (edge2);
-	
+
 				// If determinant is near zero, ray lies in plane of triangle.
-				var det = edge1 .dot (pvec);
-	
+				const det = edge1 .dot (pvec);
+
 				// Non culling intersection.
-	
+
 				if (det === 0)
 					return false;
-	
-				var inv_det = 1 / det;
-	
+
+					const inv_det = 1 / det;
+
 				// Calculate distance from vert0 to ray point.
 				tvec .assign (this .point) .subtract (A);
-	
+
 				// Calculate U parameter and test bounds.
-				var u = tvec .dot (pvec) * inv_det;
-	
+				const u = tvec .dot (pvec) * inv_det;
+
 				if (u < 0 || u > 1)
 					return false;
-	
+
 				// Prepare to test V parameter.
-				var qvec = tvec .cross (edge1);
-	
+				const qvec = tvec .cross (edge1);
+
 				// Calculate V parameter and test bounds.
-				var v = this .direction .dot (qvec) * inv_det;
-	
+				const v = this .direction .dot (qvec) * inv_det;
+
 				if (v < 0 || u + v > 1)
 					return false;
-	
+
 				//var t = edge2 .dot (qvec) * inv_det;
-	
+
 				uvt .u = u;
 				uvt .v = v;
 				uvt .t = 1 - u - v;
-	
+
 				return true;
 			};
 		})(),

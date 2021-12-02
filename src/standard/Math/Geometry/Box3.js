@@ -82,7 +82,7 @@ function (Triangle3,
 			}
 			case 3:
 			{
-				var
+				const
 					min = arguments [0],
 					max = arguments [1],
 					sx  = (max .x - min .x) / 2,
@@ -106,7 +106,7 @@ function (Triangle3,
 		constructor: Box3,
 		copy: function ()
 		{
-			var copy = Object .create (Box3 .prototype);
+			const copy = Object .create (Box3 .prototype);
 			copy .matrix = this .matrix .copy ();
 			return copy;
 		},
@@ -125,7 +125,7 @@ function (Triangle3,
 		},
 		set: function (size, center)
 		{
-			var m = this .matrix;
+			const m = this .matrix;
 
 			switch (arguments .length)
 			{
@@ -147,7 +147,7 @@ function (Triangle3,
 				}
 				case 3:
 				{
-					var
+					const
 						min = arguments [0],
 						max = arguments [1],
 						sx  = (max .x - min .x) / 2,
@@ -167,7 +167,7 @@ function (Triangle3,
 		},
 		setExtents: function (min, max)
 		{
-			var
+			const
 				m  = this .matrix,
 				sx = (max .x - min .x) / 2,
 				sy = (max .y - min .y) / 2,
@@ -191,14 +191,14 @@ function (Triangle3,
 		},
 		getAbsoluteExtents: (function ()
 		{
-			var
+			const
 				r1 = new Vector3 (0, 0, 0),
 				p1 = new Vector3 (0, 0, 0),
 				p4 = new Vector3 (0, 0, 0);
 
 			return function (min, max)
 			{
-				var
+				const
 					m = this .matrix,
 					x = m .xAxis,
 					y = m .yAxis,
@@ -206,12 +206,12 @@ function (Triangle3,
 
 				r1 .assign (y) .add (z);
 
-				var r2 = z .subtract (y);
+				const r2 = z .subtract (y);
 
 				p1 .assign (x) .add (r1),
 				p4 .assign (x) .add (r2);
 
-				var
+				const
 					p2 = r1 .subtract (x),
 					p3 = r2 .subtract (x);
 
@@ -232,7 +232,7 @@ function (Triangle3,
 		})(),
 		getPoints: (function ()
 		{
-			var
+			const
 				x  = new Vector3 (0, 0, 0),
 				y  = new Vector3 (0, 0, 0),
 				z  = new Vector3 (0, 0, 0),
@@ -252,7 +252,7 @@ function (Triangle3,
 				 *    p3 ---------- p4
 				 */
 
-				var m = this .matrix;
+				const m = this .matrix;
 
 				x .assign (m .xAxis);
 				y .assign (m .yAxis);
@@ -260,7 +260,7 @@ function (Triangle3,
 
 				r1 .assign (y) .add (z);
 
-				var r2 = z .subtract (y);
+				const r2 = z .subtract (y);
 
 				points [0] .assign (x)  .add (r1);
 				points [1] .assign (r1) .subtract (x);
@@ -272,7 +272,7 @@ function (Triangle3,
 				points [6] .assign (points [0]) .negate ();
 				points [7] .assign (points [1]) .negate ();
 
-				var center = this .center;
+				const center = this .center;
 
 				points [0] .add (center);
 				points [1] .add (center);
@@ -289,7 +289,7 @@ function (Triangle3,
 		})(),
 		getAxes: function (axes)
 		{
-			var m = this .matrix;
+			const m = this .matrix;
 
 			axes [0] .assign (m .xAxis);
 			axes [1] .assign (m .yAxis);
@@ -299,16 +299,16 @@ function (Triangle3,
 		},
 		getNormals: (function ()
 		{
-			var
+			const
 				x = new Vector3 (0, 0, 0),
 				y = new Vector3 (0, 0, 0),
 				z = new Vector3 (0, 0, 0);
 
-			var axes = [ Vector3 .xAxis, Vector3 .yAxis, Vector3 .zAxis ];
+			const axes = [ Vector3 .xAxis, Vector3 .yAxis, Vector3 .zAxis ];
 
 			return function (planes)
 			{
-				var m = this .matrix;
+				const m = this .matrix;
 
 				x .assign (m .xAxis);
 				y .assign (m .yAxis);
@@ -444,7 +444,7 @@ function (Triangle3,
 		},
 		add: (function ()
 		{
-			var
+			const
 				lhs_min = new Vector3 (0, 0, 0),
 				lhs_max = new Vector3 (0, 0, 0),
 				rhs_min = new Vector3 (0, 0, 0),
@@ -476,7 +476,7 @@ function (Triangle3,
 		},
 		containsPoint: (function ()
 		{
-			var
+			const
 				min = new Vector3 (0, 0, 0),
 				max = new Vector3 (0, 0, 0);
 
@@ -494,7 +494,7 @@ function (Triangle3,
 		})(),
 		intersectsBox: (function ()
 		{
-			var points1 = [
+			const points1 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -506,7 +506,7 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 			];
 
-			var points2 = [
+			const points2 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -518,19 +518,19 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 			];
 
-			var axes1 = [
+			const axes1 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 			];
 
-			var axes2 = [
+			const axes2 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 			];
 
-			var axes9 = [
+			const axes9 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -544,7 +544,7 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 			];
 
-			var planes = [
+			const planes = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -596,7 +596,7 @@ function (Triangle3,
 		})(),
 		intersectsTriangle: (function ()
 		{
-			var points1 = [
+			const points1 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -608,13 +608,13 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 			];
 
-			var axes1 = [
+			const axes1 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 			];
 
-			var axes9 = [
+			const axes9 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -628,17 +628,17 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 			];
 
-			var planes = [
+			const planes = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 			];
 
-			var triangle = [ ];
+			const triangle = [ ];
 
-			var triangleNormal = [ new Vector3 (0, 0, 0) ];
+			const triangleNormal = [ new Vector3 (0, 0, 0) ];
 
-			var triangleEdges = [
+			const triangleEdges = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0)
@@ -703,7 +703,7 @@ function (Triangle3,
 	{
 		get: (function ()
 		{
-			var
+			const
 				min = new Vector3 (0, 0, 0),
 				max = new Vector3 (0, 0, 0);
 

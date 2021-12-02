@@ -54,7 +54,7 @@ function (Spheroid3)
 {
 "use strict";
 
-	var ReferenceEllipsoids =
+	const ReferenceEllipsoids =
 	{
 		// Earth
 		// X3D Specification

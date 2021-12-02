@@ -64,7 +64,7 @@ define (function ()
 				this .semiMinorAxis = semiMinorAxis; // c
 				break;
 			case 3:
-				var f_1 = arguments [1];
+				const f_1 = arguments [1];
 				this .semiMajorAxis = semiMajorAxis;                 // a
 				this .semiMinorAxis = semiMajorAxis * (1 - 1 / f_1); // c
 				break;
