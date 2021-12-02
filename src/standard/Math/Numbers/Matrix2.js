@@ -147,15 +147,20 @@ function (Vector2,
 		},
 		inverse: function ()
 		{
-			const d = this .determinant ();
+			const
+				A = this [0],
+				B = this [1],
+				C = this [2],
+				D = this [3],
+				d = A * D - B * C;
 
 			if (d === 0)
 				throw new Error ("Matrix2 .inverse: determinant is 0.");
 
-			this [0] =  this [3] / d;
-			this [1] = -this [1] / d;
-			this [2] = -this [2] / d;
-			this [3] =  this [0] / d;
+			this [0] =  D / d;
+			this [1] = -B / d;
+			this [2] = -C / d;
+			this [3] =  A / d;
 
 			return this;
 		},
