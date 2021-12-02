@@ -111,6 +111,7 @@ function (Fields,
 			this .transformNode .children_           = new Fields .MFNode (this .shapeNode);
 			this .shapeNode .appearance_             = this .appearanceNode;
 			this .shapeNode .geometry_               = this .geometryNode;
+			this .appearanceNode .alphaMode_         = "BLEND";
 			this .appearanceNode .textureTransform_  = this .textureTransformNode;
 			this .textureTransformNode .translation_ = new Fields .SFVec3f (0.5, 0.5, 0.5);
 			this .textureTransformNode .center_      = new Fields .SFVec3f (-0.5, -0.5, -0.5);

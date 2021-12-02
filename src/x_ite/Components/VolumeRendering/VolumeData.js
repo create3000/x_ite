@@ -81,7 +81,6 @@ function (Fields,
 		this .addType (X3DConstants .VolumeData);
 
 		this .renderStyleNode = null;
-		this .blendModeNode   = executionContext .createNode ("BlendMode", false);
   }
 
 	VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
@@ -124,10 +123,7 @@ function (Fields,
 
 			this .renderStyle_ .addInterest ("update", this);
 
-			this .blendModeNode .setup ();
-
 			this .getAppearance () .texture_   = this .voxels_;
-			this .getAppearance () .blendMode_ = this .blendModeNode;
 
 			this .set_renderStyle__ ();
 			this .set_voxels__ ();

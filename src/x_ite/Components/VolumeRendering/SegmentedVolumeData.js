@@ -82,7 +82,6 @@ function (Fields,
 
 		this .segmentIdentifiersNode = null;
 		this .renderStyleNodes       = [ ];
-		this .blendModeNode          = executionContext .createNode ("BlendMode", false);
 	}
 
 	SegmentedVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
@@ -129,10 +128,7 @@ function (Fields,
 			this .segmentIdentifiers_ .addInterest ("update", this);
 			this .renderStyle_        .addInterest ("update", this);
 
-			this .blendModeNode .setup ();
-
-			this .getAppearance () .texture_   = this .voxels_;
-			this .getAppearance () .blendMode_ = this .blendModeNode;
+			this .getAppearance () .texture_ = this .voxels_;
 
 			this .set_segmentIdentifiers__ ();
 			this .set_renderStyle__ ();

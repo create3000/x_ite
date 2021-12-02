@@ -67,7 +67,6 @@ define ([
 	"x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode",
 	X3D .getComponentUrl ("cad-geometry"),
 	X3D .getComponentUrl ("texturing-3d"),
-	X3D .getComponentUrl ("x_ite"),
 ],
 function (Components,
           X3DVolumeRenderingContext,
