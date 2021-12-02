@@ -103,7 +103,7 @@ function (X3DChildNode,
 		},
 		getIntensity: function ()
 		{
-			return Algorithm .clamp (this .intensity_ .getValue (), 0, 1);
+			return Math .max (this .intensity_ .getValue (), 0);
 		},
 		getAmbientIntensity: function ()
 		{
