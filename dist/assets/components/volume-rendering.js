@@ -1885,6 +1885,7 @@ function (Fields,
 			this .transformNode .children_           = new Fields .MFNode (this .shapeNode);
 			this .shapeNode .appearance_             = this .appearanceNode;
 			this .shapeNode .geometry_               = this .geometryNode;
+			this .appearanceNode .alphaMode_         = "BLEND";
 			this .appearanceNode .textureTransform_  = this .textureTransformNode;
 			this .textureTransformNode .translation_ = new Fields .SFVec3f (0.5, 0.5, 0.5);
 			this .textureTransformNode .center_      = new Fields .SFVec3f (-0.5, -0.5, -0.5);
@@ -2089,7 +2090,6 @@ function (Fields,
 		this .addType (X3DConstants .IsoSurfaceVolumeData);
 
 		this .renderStyleNodes = [ ];
-		this .blendModeNode    = executionContext .createNode ("BlendMode", false);
 	}
 
 	IsoSurfaceVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
@@ -2139,10 +2139,7 @@ function (Fields,
 			this .surfaceTolerance_   .addInterest ("update", this);
 			this .renderStyle_        .addInterest ("update", this);
 
-			this .blendModeNode .setup ();
-
-			this .getAppearance () .texture_   = this .voxels_;
-			this .getAppearance () .blendMode_ = this .blendModeNode;
+			this .getAppearance () .texture_ = this .voxels_;
 
 			this .set_gradients__ ();
 			this .set_renderStyle__ ();
@@ -2723,7 +2720,6 @@ function (Fields,
 
 		this .segmentIdentifiersNode = null;
 		this .renderStyleNodes       = [ ];
-		this .blendModeNode          = executionContext .createNode ("BlendMode", false);
 	}
 
 	SegmentedVolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
@@ -2770,10 +2766,7 @@ function (Fields,
 			this .segmentIdentifiers_ .addInterest ("update", this);
 			this .renderStyle_        .addInterest ("update", this);
 
-			this .blendModeNode .setup ();
-
-			this .getAppearance () .texture_   = this .voxels_;
-			this .getAppearance () .blendMode_ = this .blendModeNode;
+			this .getAppearance () .texture_ = this .voxels_;
 
 			this .set_segmentIdentifiers__ ();
 			this .set_renderStyle__ ();
@@ -3689,7 +3682,6 @@ function (Fields,
 		this .addType (X3DConstants .VolumeData);
 
 		this .renderStyleNode = null;
-		this .blendModeNode   = executionContext .createNode ("BlendMode", false);
   }
 
 	VolumeData .prototype = Object .assign (Object .create (X3DVolumeDataNode .prototype),
@@ -3732,10 +3724,7 @@ function (Fields,
 
 			this .renderStyle_ .addInterest ("update", this);
 
-			this .blendModeNode .setup ();
-
 			this .getAppearance () .texture_   = this .voxels_;
-			this .getAppearance () .blendMode_ = this .blendModeNode;
 
 			this .set_renderStyle__ ();
 			this .set_voxels__ ();
@@ -3923,7 +3912,6 @@ define ([
 	"x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode",
 	X3D .getComponentUrl ("cad-geometry"),
 	X3D .getComponentUrl ("texturing-3d"),
-	X3D .getComponentUrl ("x_ite"),
 ],
 function (Components,
           X3DVolumeRenderingContext,
