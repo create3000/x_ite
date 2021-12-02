@@ -235,13 +235,13 @@ function (Fields,
 		},
 		set_shaders__: function ()
 		{
-			var
+			const
 				shaders     = this .shaders_ .getValue (),
 				shaderNodes = this .shaderNodes;
 
 			for (var i = 0, length = shaderNodes .length; i < length; ++ i)
 			{
-				var shaderNode = shaderNodes [i];
+				const shaderNode = shaderNodes [i];
 
 				shaderNode .isValid_        .removeInterest ("set_shader__", this);
 				shaderNode .activationTime_ .removeInterest ("set_shader__", this);
@@ -251,7 +251,7 @@ function (Fields,
 
 			for (var i = 0, length = shaders .length; i < length; ++ i)
 			{
-				var shaderNode = X3DCast (X3DConstants .X3DShaderNode, shaders [i]);
+				const shaderNode = X3DCast (X3DConstants .X3DShaderNode, shaders [i]);
 
 				if (shaderNode)
 				{
@@ -265,7 +265,7 @@ function (Fields,
 		},
 		set_shader__: function ()
 		{
-			var shaderNodes = this .shaderNodes;
+			const shaderNodes = this .shaderNodes;
 
 			if (this .shaderNode)
 			{
@@ -277,7 +277,7 @@ function (Fields,
 
 			for (var i = 0, length = shaderNodes .length; i < length; ++ i)
 			{
-				var shaderNode = shaderNodes [i];
+				const shaderNode = shaderNodes [i];
 
 				if (shaderNode .isValid_ .getValue ())
 				{
@@ -293,7 +293,7 @@ function (Fields,
 			{
 				for (var i = 0, length = shaderNodes .length; i < length; ++ i)
 				{
-					var shaderNode = shaderNodes [i];
+					const shaderNode = shaderNodes [i];
 
 					if (shaderNode .isValid_ .getValue ())
 					{

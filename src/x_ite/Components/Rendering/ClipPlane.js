@@ -70,7 +70,7 @@ function (Fields,
 {
 "use strict";
 
-	var ClipPlanes = ObjectCache (ClipPlaneContainer);
+	const ClipPlanes = ObjectCache (ClipPlaneContainer);
 
 	function ClipPlaneContainer ()
 	{
@@ -86,7 +86,7 @@ function (Fields,
 		},
 		set: function (clipPlane, modelViewMatrix)
 		{
-			var
+			const
 				plane      = this .plane,
 				localPlane = clipPlane .plane;
 
@@ -105,7 +105,7 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			var
+			const
 				plane  = this .plane,
 				normal = plane .normal;
 
@@ -166,7 +166,7 @@ function (Fields,
 		{
 			if (this .enabled)
 			{
-				var clipPlaneContainer = ClipPlanes .pop ();
+				const clipPlaneContainer = ClipPlanes .pop ();
 
 				clipPlaneContainer .set (this, renderObject .getModelViewMatrix () .get ());
 

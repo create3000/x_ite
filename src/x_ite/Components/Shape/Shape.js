@@ -237,7 +237,7 @@ function (Fields,
 		})(),
 		picking: (function ()
 		{
-			var bbox = new Box3 ();
+			const bbox = new Box3 ();
 
 			return function (renderObject)
 			{

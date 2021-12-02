@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DMaterialNode, 
+          X3DMaterialNode,
           X3DConstants,
           Algorithm)
 {
@@ -73,7 +73,7 @@ function (Fields,
 		this .diffuseColor  = new Float32Array (3);
 		this .specularColor = new Float32Array (3);
 		this .emissiveColor = new Float32Array (3);
-			
+
 		this .backDiffuseColor  = new Float32Array (3);
 		this .backSpecularColor = new Float32Array (3);
 		this .backEmissiveColor = new Float32Array (3);
@@ -122,14 +122,14 @@ function (Fields,
 			this .emissiveColor_    .addInterest ("set_emissiveColor__",    this);
 			this .shininess_        .addInterest ("set_shininess__",        this);
 			this .transparency_     .addInterest ("set_transparency__",     this);
-	
+
 			this .backAmbientIntensity_ .addInterest ("set_backAmbientIntensity__", this);
 			this .backDiffuseColor_     .addInterest ("set_backDiffuseColor__",     this);
 			this .backSpecularColor_    .addInterest ("set_backSpecularColor__",    this);
 			this .backEmissiveColor_    .addInterest ("set_backEmissiveColor__",    this);
 			this .backShininess_        .addInterest ("set_backShininess__",        this);
 			this .backTransparency_     .addInterest ("set_backTransparency__",     this);
-	
+
 			this .set_ambientIntensity__ ();
 			this .set_diffuseColor__ ();
 			this .set_specularColor__ ();
@@ -152,11 +152,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .diffuseColor .set (this .diffuseColor_ .getValue ());
-			
-			var
+
+			const
 				diffuseColor  = this .diffuseColor,
 				diffuseColor_ = this .diffuseColor_ .getValue ();
-			
+
 			diffuseColor [0] = diffuseColor_ .r;
 			diffuseColor [1] = diffuseColor_ .g;
 			diffuseColor [2] = diffuseColor_ .b;
@@ -165,11 +165,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .specularColor .set (this .specularColor_ .getValue ());
-			
-			var
+
+			const
 				specularColor  = this .specularColor,
 				specularColor_ = this .specularColor_ .getValue ();
-			
+
 			specularColor [0] = specularColor_ .r;
 			specularColor [1] = specularColor_ .g;
 			specularColor [2] = specularColor_ .b;
@@ -178,11 +178,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .emissiveColor .set (this .emissiveColor_ .getValue ());
-			
-			var
+
+			const
 				emissiveColor  = this .emissiveColor,
 				emissiveColor_ = this .emissiveColor_ .getValue ();
-			
+
 			emissiveColor [0] = emissiveColor_ .r;
 			emissiveColor [1] = emissiveColor_ .g;
 			emissiveColor [2] = emissiveColor_ .b;
@@ -208,11 +208,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .backDiffuseColor .set (this .backDiffuseColor_ .getValue ());
-			
-			var
+
+			const
 				backDiffuseColor  = this .backDiffuseColor,
 				backDiffuseColor_ = this .backDiffuseColor_ .getValue ();
-			
+
 			backDiffuseColor [0] = backDiffuseColor_ .r;
 			backDiffuseColor [1] = backDiffuseColor_ .g;
 			backDiffuseColor [2] = backDiffuseColor_ .b;
@@ -221,11 +221,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .backSpecularColor .set (this .backSpecularColor_ .getValue ());
-			
-			var
+
+			const
 				backSpecularColor  = this .backSpecularColor,
 				backSpecularColor_ = this .backSpecularColor_ .getValue ();
-			
+
 			backSpecularColor [0] = backSpecularColor_ .r;
 			backSpecularColor [1] = backSpecularColor_ .g;
 			backSpecularColor [2] = backSpecularColor_ .b;
@@ -234,11 +234,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .backEmissiveColor .set (this .backEmissiveColor_ .getValue ());
-			
-			var
+
+			const
 				backEmissiveColor  = this .backEmissiveColor,
 				backEmissiveColor_ = this .backEmissiveColor_ .getValue ();
-			
+
 			backEmissiveColor [0] = backEmissiveColor_ .r;
 			backEmissiveColor [1] = backEmissiveColor_ .g;
 			backEmissiveColor [2] = backEmissiveColor_ .b;
@@ -285,5 +285,3 @@ function (Fields,
 
 	return TwoSidedMaterial;
 });
-
-

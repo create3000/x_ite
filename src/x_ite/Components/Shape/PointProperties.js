@@ -124,7 +124,7 @@ function (Fields,
 		},
 		set_pointSizeAttenuation__: function ()
 		{
-			var length = this .pointSizeAttenuation_ .length;
+			const length = this .pointSizeAttenuation_ .length;
 
 			this .pointSizeAttenuation [0] = length > 0 ? Math .max (0, this .pointSizeAttenuation_ [0]) : 1;
 			this .pointSizeAttenuation [1] = length > 1 ? Math .max (0, this .pointSizeAttenuation_ [1]) : 0;
@@ -132,7 +132,7 @@ function (Fields,
 		},
 		set_colorMode__: (function ()
 		{
-			var colorModes = new Map ([
+			const colorModes = new Map ([
 				["POINT_COLOR",             0],
 				["TEXTURE_COLOR",           1],
 				["TEXTURE_AND_POINT_COLOR", 2],
@@ -140,7 +140,7 @@ function (Fields,
 
 			return function ()
 			{
-				var colorMode = colorModes .get (this .colorMode_ .getValue ());
+				const colorMode = colorModes .get (this .colorMode_ .getValue ());
 
 				if (colorMode !== undefined)
 					this .colorMode = colorMode;

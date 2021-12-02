@@ -137,12 +137,13 @@ function (Fields,
 				for (var index = 0, length = this .length * 4; index < length; index += 4)
 					array .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
 
-				var
-					index = (this .length - 1) * 4,
-					r     = color [index],
-					g     = color [index + 1],
-					b     = color [index + 2],
-					a     = color [index + 2];
+				var index = (this .length - 1) * 4;
+
+				const
+					r = color [index],
+					g = color [index + 1],
+					b = color [index + 2],
+					a = color [index + 2];
 
 				for (var index = length, length = min * 4; index < length; index += 4)
 					array .push (r, g, b, a);
@@ -155,11 +156,11 @@ function (Fields,
 		},
 		getVectors: function (array)
 		{
-			var color = this .color_;
+			const color = this .color_;
 
 			for (var i = 0, length = color .length; i < length; ++ i)
 			{
-				var c = color [i];
+				const c = color [i];
 
 				array [i] = new Vector4 (c .r, c .g, c .b, c .a);
 			}

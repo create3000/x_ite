@@ -112,7 +112,7 @@ function (Fields,
 		{
 			if (this .applied)
 			{
-				var
+				const
 					browser = shaderObject .getBrowser (),
 					texture = browser .getLinetype (this .linetype_ .getValue ());
 

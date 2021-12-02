@@ -125,7 +125,7 @@ function (Fields,
 		},
 		set_attrib__: function ()
 		{
-			var attribNodes = this .getAttrib ();
+			const attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
 				attribNodes [i] .removeInterest ("requestRebuild", this);
@@ -134,7 +134,7 @@ function (Fields,
 
 			for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
 			{
-				var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+				const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
 
 				if (attribNode)
 					attribNodes .push (attribNode);
@@ -203,18 +203,17 @@ function (Fields,
 		},
 		getPolylineIndices: function ()
 		{
-			var
+			const
 				coordIndex = this .coordIndex_,
-				polylines  = [ ],
-				polyline   = [ ];
+				polylines  = [ ];
+
+			var polyline = [ ];
 
 			if (coordIndex .length)
 			{
-				var i = 0;
-
 				for (var i = 0, length = coordIndex .length; i < length; ++ i)
 				{
-					var index = coordIndex [i];
+					const index = coordIndex [i];
 
 					if (index >= 0)
 						// Add vertex.
@@ -243,7 +242,7 @@ function (Fields,
 			if (! this .coordNode || this .coordNode .isEmpty ())
 				return;
 
-			var
+			const
 				coordIndex     = this .coordIndex_,
 				polylines      = this .getPolylineIndices (),
 				colorPerVertex = this .colorPerVertex_ .getValue (),
@@ -263,7 +262,7 @@ function (Fields,
 
 			for (var p = 0, pl = polylines .length; p < pl; ++ p)
 			{
-				var polyline = polylines [p];
+				const polyline = polylines [p];
 
 				// Create two vertices for each line.
 
@@ -273,7 +272,7 @@ function (Fields,
 					{
 						for (var l = line, i_end = line + 2; l < i_end; ++ l)
 						{
-							var
+							const
 								i     = polyline [l],
 								index = coordIndex [i];
 

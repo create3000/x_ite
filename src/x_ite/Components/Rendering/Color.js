@@ -135,11 +135,12 @@ function (Fields,
 				for (var index = 0, length = this .length * 3; index < length; index += 3)
 					array .push (color [index], color [index + 1], color [index + 2], 1);
 
-				var
-					index = (this .length - 1) * 3,
-					r     = color [index],
-					g     = color [index + 1],
-					b     = color [index + 2];
+				var index = (this .length - 1) * 3;
+
+				const
+					r = color [index],
+					g = color [index + 1],
+					b = color [index + 2];
 
 				for (var index = length, length = min * 3; index < length; index += 3)
 					array .push (r, g, b, 1);
@@ -152,7 +153,7 @@ function (Fields,
 		},
 		getVectors: function (array)
 		{
-			var color = this .color_;
+			const color = this .color_;
 
 			for (var i = 0, length = color .length; i < length; ++ i)
 			{

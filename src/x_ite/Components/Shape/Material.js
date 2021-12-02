@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DMaterialNode, 
+          X3DMaterialNode,
           X3DConstants,
           Algorithm)
 {
@@ -109,7 +109,7 @@ function (Fields,
 			this .emissiveColor_    .addInterest ("set_emissiveColor__",    this);
 			this .shininess_        .addInterest ("set_shininess__",        this);
 			this .transparency_     .addInterest ("set_transparency__",     this);
-	
+
 			this .set_ambientIntensity__ ();
 			this .set_diffuseColor__ ();
 			this .set_specularColor__ ();
@@ -125,11 +125,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .diffuseColor .set (this .diffuseColor_ .getValue ());
-			
-			var
+
+			const
 				diffuseColor  = this .diffuseColor,
 				diffuseColor_ = this .diffuseColor_ .getValue ();
-			
+
 			diffuseColor [0] = diffuseColor_ .r;
 			diffuseColor [1] = diffuseColor_ .g;
 			diffuseColor [2] = diffuseColor_ .b;
@@ -138,11 +138,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .specularColor .set (this .specularColor_ .getValue ());
-			
-			var
+
+			const
 				specularColor  = this .specularColor,
 				specularColor_ = this .specularColor_ .getValue ();
-			
+
 			specularColor [0] = specularColor_ .r;
 			specularColor [1] = specularColor_ .g;
 			specularColor [2] = specularColor_ .b;
@@ -151,11 +151,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .emissiveColor .set (this .emissiveColor_ .getValue ());
-			
-			var
+
+			const
 				emissiveColor  = this .emissiveColor,
 				emissiveColor_ = this .emissiveColor_ .getValue ();
-			
+
 			emissiveColor [0] = emissiveColor_ .r;
 			emissiveColor [1] = emissiveColor_ .g;
 			emissiveColor [2] = emissiveColor_ .b;
@@ -166,7 +166,7 @@ function (Fields,
 		},
 		set_transparency__: function ()
 		{
-			var transparency = Algorithm .clamp (this .transparency_ .getValue (), 0, 1);
+			const transparency = Algorithm .clamp (this .transparency_ .getValue (), 0, 1);
 
 			this .transparency = transparency;
 
@@ -186,5 +186,3 @@ function (Fields,
 
 	return Material;
 });
-
-

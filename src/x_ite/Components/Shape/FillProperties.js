@@ -57,7 +57,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DAppearanceChildNode, 
+          X3DAppearanceChildNode,
           X3DConstants)
 {
 "use strict";
@@ -136,14 +136,14 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			var hatched = this .hatched;
+			const hatched = this .hatched;
 
 			gl .uniform1i (shaderObject .x3d_FillPropertiesFilled,  this .filled);
 			gl .uniform1i (shaderObject .x3d_FillPropertiesHatched, hatched);
 
 			if (hatched)
 			{
-				var
+				const
 					browser = shaderObject .getBrowser (),
 					texture = browser .getHatchStyle (this .hatchStyle_ .getValue ());
 
@@ -156,5 +156,3 @@ function (Fields,
 
 	return FillProperties;
 });
-
-
