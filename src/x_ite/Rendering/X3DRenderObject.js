@@ -174,7 +174,7 @@ function ($,
 		{
 			this .shadow .unshift (value || this .shadow [0]);
 		},
-		popShadow: function (value)
+		popShadow: function ()
 		{
 			this .shadow .pop ();
 		},
