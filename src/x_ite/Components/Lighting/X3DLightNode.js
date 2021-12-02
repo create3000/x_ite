@@ -111,13 +111,17 @@ function (X3DChildNode,
 		{
 			return this .direction_ .getValue ();
 		},
+		getShadows: function ()
+		{
+			return this .shadows_ .getValue ();
+		},
 		getShadowColor: function ()
 		{
 			return this .shadowColor_ .getValue ();
 		},
 		getShadowIntensity: function ()
 		{
-			return Algorithm .clamp (this .shadowIntensity_ .getValue (), 0, 1);
+			return this .getShadows () ? Algorithm .clamp (this .shadowIntensity_ .getValue (), 0, 1) : 0;
 		},
 		getShadowBias: function ()
 		{
@@ -187,7 +191,7 @@ function (X3DChildNode,
 				}
 			}
 
-			renderObject .pushShadow (this .shadowIntensity_ .getValue () > 0);
+			renderObject .pushShadow (this .getShadowIntensity ());
 		},
 		pop: function (renderObject)
 		{
