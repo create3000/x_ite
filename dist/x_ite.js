@@ -1,4 +1,4 @@
-/* X_ITE v4.6.25a-1069 */
+/* X_ITE v4.6.25a-1070 */
 
 (function () {
 
@@ -18132,15 +18132,20 @@ function (Vector2,
 		},
 		inverse: function ()
 		{
-			const d = this .determinant ();
+			const
+				A = this [0],
+				B = this [1],
+				C = this [2],
+				D = this [3],
+				d = A * D - B * C;
 
 			if (d === 0)
 				throw new Error ("Matrix2 .inverse: determinant is 0.");
 
-			this [0] =  array [0] / d;
-			this [1] = -array [1] / d;
-			this [2] = -array [2] / d;
-			this [3] =  array [3] / d;
+			this [0] =  D / d;
+			this [1] = -B / d;
+			this [2] = -C / d;
+			this [3] =  A / d;
 
 			return this;
 		},
@@ -60239,13 +60244,13 @@ function (Fields,
 		},
 		set_shaders__: function ()
 		{
-			var
+			const
 				shaders     = this .shaders_ .getValue (),
 				shaderNodes = this .shaderNodes;
 
 			for (var i = 0, length = shaderNodes .length; i < length; ++ i)
 			{
-				var shaderNode = shaderNodes [i];
+				const shaderNode = shaderNodes [i];
 
 				shaderNode .isValid_        .removeInterest ("set_shader__", this);
 				shaderNode .activationTime_ .removeInterest ("set_shader__", this);
@@ -60255,7 +60260,7 @@ function (Fields,
 
 			for (var i = 0, length = shaders .length; i < length; ++ i)
 			{
-				var shaderNode = X3DCast (X3DConstants .X3DShaderNode, shaders [i]);
+				const shaderNode = X3DCast (X3DConstants .X3DShaderNode, shaders [i]);
 
 				if (shaderNode)
 				{
@@ -60269,7 +60274,7 @@ function (Fields,
 		},
 		set_shader__: function ()
 		{
-			var shaderNodes = this .shaderNodes;
+			const shaderNodes = this .shaderNodes;
 
 			if (this .shaderNode)
 			{
@@ -60281,7 +60286,7 @@ function (Fields,
 
 			for (var i = 0, length = shaderNodes .length; i < length; ++ i)
 			{
-				var shaderNode = shaderNodes [i];
+				const shaderNode = shaderNodes [i];
 
 				if (shaderNode .isValid_ .getValue ())
 				{
@@ -60297,7 +60302,7 @@ function (Fields,
 			{
 				for (var i = 0, length = shaderNodes .length; i < length; ++ i)
 				{
-					var shaderNode = shaderNodes [i];
+					const shaderNode = shaderNodes [i];
 
 					if (shaderNode .isValid_ .getValue ())
 					{
@@ -60484,7 +60489,7 @@ function (Fields,
 		},
 		set_pointSizeAttenuation__: function ()
 		{
-			var length = this .pointSizeAttenuation_ .length;
+			const length = this .pointSizeAttenuation_ .length;
 
 			this .pointSizeAttenuation [0] = length > 0 ? Math .max (0, this .pointSizeAttenuation_ [0]) : 1;
 			this .pointSizeAttenuation [1] = length > 1 ? Math .max (0, this .pointSizeAttenuation_ [1]) : 0;
@@ -60492,7 +60497,7 @@ function (Fields,
 		},
 		set_colorMode__: (function ()
 		{
-			var colorModes = new Map ([
+			const colorModes = new Map ([
 				["POINT_COLOR",             0],
 				["TEXTURE_COLOR",           1],
 				["TEXTURE_AND_POINT_COLOR", 2],
@@ -60500,7 +60505,7 @@ function (Fields,
 
 			return function ()
 			{
-				var colorMode = colorModes .get (this .colorMode_ .getValue ());
+				const colorMode = colorModes .get (this .colorMode_ .getValue ());
 
 				if (colorMode !== undefined)
 					this .colorMode = colorMode;
@@ -60635,7 +60640,7 @@ function (Fields,
 		{
 			if (this .applied)
 			{
-				var
+				const
 					browser = shaderObject .getBrowser (),
 					texture = browser .getLinetype (this .linetype_ .getValue ());
 
@@ -60717,7 +60722,7 @@ define ('x_ite/Components/Shape/FillProperties',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DAppearanceChildNode, 
+          X3DAppearanceChildNode,
           X3DConstants)
 {
 "use strict";
@@ -60796,14 +60801,14 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			var hatched = this .hatched;
+			const hatched = this .hatched;
 
 			gl .uniform1i (shaderObject .x3d_FillPropertiesFilled,  this .filled);
 			gl .uniform1i (shaderObject .x3d_FillPropertiesHatched, hatched);
 
 			if (hatched)
 			{
-				var
+				const
 					browser = shaderObject .getBrowser (),
 					texture = browser .getHatchStyle (this .hatchStyle_ .getValue ());
 
@@ -60816,8 +60821,6 @@ function (Fields,
 
 	return FillProperties;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -63516,7 +63519,7 @@ function (Fields,
 		})(),
 		picking: (function ()
 		{
-			var bbox = new Box3 ();
+			const bbox = new Box3 ();
 
 			return function (renderObject)
 			{
@@ -64035,8 +64038,6 @@ function (Fields,
 			{
 				try
 				{
-					var intersected = false;
-
 					if (this .intersectsBBox (line))
 					{
 						this .transformLine   (line);                                       // Apply screen transformations from screen nodes.
@@ -64083,12 +64084,11 @@ function (Fields,
 								                            t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
 
 								intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
-								intersected = true;
 							}
 						}
 					}
 
-					return intersected;
+					return intersections .length;
 				}
 				catch (error)
 				{
@@ -64344,7 +64344,7 @@ function (Fields,
 					if (this .multiTexCoords .length === 0)
 						this .multiTexCoords .push (this .buildTexCoords ());
 
-					var last = this .multiTexCoords .length - 1;
+					const last = this .multiTexCoords .length - 1;
 
 					for (var i = this .multiTexCoords .length, length = this .getBrowser () .getMaxTextures (); i < length; ++ i)
 						this .multiTexCoords [i] = this .multiTexCoords [last];
@@ -64839,7 +64839,7 @@ function (X3DGeometryNode,
 		{
 			if (this .getGeometryType () === 1)
 			{
-				var
+				const
 					texCoords = this .getTexCoords (),
 					vertices  = this .getVertices ();
 
@@ -65144,7 +65144,7 @@ function (Fields,
 		},
 		set_attrib__: function ()
 		{
-			var attribNodes = this .getAttrib ();
+			const attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
 				attribNodes [i] .removeInterest ("requestRebuild", this);
@@ -65153,7 +65153,7 @@ function (Fields,
 
 			for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
 			{
-				var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+				const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
 
 				if (attribNode)
 					attribNodes .push (attribNode);
@@ -65222,18 +65222,17 @@ function (Fields,
 		},
 		getPolylineIndices: function ()
 		{
-			var
+			const
 				coordIndex = this .coordIndex_,
-				polylines  = [ ],
-				polyline   = [ ];
+				polylines  = [ ];
+
+			var polyline = [ ];
 
 			if (coordIndex .length)
 			{
-				var i = 0;
-
 				for (var i = 0, length = coordIndex .length; i < length; ++ i)
 				{
-					var index = coordIndex [i];
+					const index = coordIndex [i];
 
 					if (index >= 0)
 						// Add vertex.
@@ -65262,7 +65261,7 @@ function (Fields,
 			if (! this .coordNode || this .coordNode .isEmpty ())
 				return;
 
-			var
+			const
 				coordIndex     = this .coordIndex_,
 				polylines      = this .getPolylineIndices (),
 				colorPerVertex = this .colorPerVertex_ .getValue (),
@@ -65282,7 +65281,7 @@ function (Fields,
 
 			for (var p = 0, pl = polylines .length; p < pl; ++ p)
 			{
-				var polyline = polylines [p];
+				const polyline = polylines [p];
 
 				// Create two vertices for each line.
 
@@ -65292,7 +65291,7 @@ function (Fields,
 					{
 						for (var l = line, i_end = line + 2; l < i_end; ++ l)
 						{
-							var
+							const
 								i     = polyline [l],
 								index = coordIndex [i];
 
@@ -65625,11 +65624,12 @@ function (Fields,
 				for (var index = 0, length = this .length * 3; index < length; index += 3)
 					array .push (color [index], color [index + 1], color [index + 2], 1);
 
-				var
-					index = (this .length - 1) * 3,
-					r     = color [index],
-					g     = color [index + 1],
-					b     = color [index + 2];
+				var index = (this .length - 1) * 3;
+
+				const
+					r = color [index],
+					g = color [index + 1],
+					b = color [index + 2];
 
 				for (var index = length, length = min * 3; index < length; index += 3)
 					array .push (r, g, b, 1);
@@ -65642,7 +65642,7 @@ function (Fields,
 		},
 		getVectors: function (array)
 		{
-			var color = this .color_;
+			const color = this .color_;
 
 			for (var i = 0, length = color .length; i < length; ++ i)
 			{
@@ -65715,7 +65715,7 @@ define ('x_ite/Components/Rendering/X3DCoordinateNode',[
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Numbers/Vector3",
 ],
-function (X3DGeometricPropertyNode, 
+function (X3DGeometricPropertyNode,
           X3DConstants,
           Triangle3,
           Vector3)
@@ -65799,7 +65799,7 @@ function (X3DGeometricPropertyNode,
 		},
 		getNormal: (function ()
 		{
-			var
+			const
 				point1 = new Vector3 (0, 0, 0),
 				point2 = new Vector3 (0, 0, 0),
 				point3 = new Vector3 (0, 0, 0);
@@ -65807,9 +65807,9 @@ function (X3DGeometricPropertyNode,
 			return function (index1, index2, index3)
 			{
 				// The index[1,2,3] cannot be less than 0.
-	
-				var length = this .length;
-	
+
+				const length = this .length;
+
 				if (index1 < length && index2 < length && index3 < length)
 				{
 					return Triangle3 .normal (this .get1Point (index1, point1),
@@ -65817,13 +65817,13 @@ function (X3DGeometricPropertyNode,
 					                          this .get1Point (index3, point3),
 					                          new Vector3 (0, 0, 0));
 				}
-	
+
 				return new Vector3 (0, 0, 0);
 			};
 		})(),
 		getQuadNormal: (function ()
 		{
-			var
+			const
 				point1 = new Vector3 (0, 0, 0),
 				point2 = new Vector3 (0, 0, 0),
 				point3 = new Vector3 (0, 0, 0),
@@ -65832,9 +65832,9 @@ function (X3DGeometricPropertyNode,
 			return function (index1, index2, index3, index4)
 			{
 				// The index[1,2,3,4] cannot be less than 0.
-	
-				var length = this .length;
-	
+
+				const length = this .length;
+
 				if (index1 < length && index2 < length && index3 < length && index4 < length)
 				{
 					return Triangle3 .quadNormal (this .get1Point (index1, point1),
@@ -65843,7 +65843,7 @@ function (X3DGeometricPropertyNode,
 					                              this .get1Point (index4, point4),
 					                              new Vector3 (0, 0, 0));
 				}
-	
+
 				return new Vector3 (0, 0, 0);
 			};
 		})(),
@@ -65851,8 +65851,6 @@ function (X3DGeometricPropertyNode,
 
 	return X3DCoordinateNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -66272,7 +66270,7 @@ function (X3DGeometryNode,
 			polygonsSize  -= polygonsSize % verticesPerPolygon;
 			trianglesSize -= trianglesSize % verticesPerFace;
 
-			var
+			const
 				colorPerVertex     = this .colorPerVertex_ .getValue (),
 				normalPerVertex    = this .normalPerVertex_ .getValue (),
 				attribNodes        = this .getAttrib (),
@@ -66287,19 +66285,20 @@ function (X3DGeometryNode,
 				colorArray         = this .getColors (),
 				multiTexCoordArray = this .getMultiTexCoords (),
 				normalArray        = this .getNormals (),
-				vertexArray        = this .getVertices (),
-				face               = 0;
+				vertexArray        = this .getVertices ();
+
+			var face = 0;
 
 			if (texCoordNode)
 				texCoordNode .init (multiTexCoordArray);
-		
+
 			// Fill GeometryNode
-		
+
 			for (var i = 0; i < trianglesSize; ++ i)
 			{
 				face = Math .floor (i / verticesPerFace);
 
-				var index = this .getPolygonIndex (this .getTriangleIndex (i));
+				const index = this .getPolygonIndex (this .getTriangleIndex (i));
 
 				for (var a = 0; a < numAttrib; ++ a)
 					attribNodes [a] .addValue (index, attribs [a]);
@@ -66317,7 +66316,7 @@ function (X3DGeometryNode,
 
 				if (texCoordNode)
 					texCoordNode .addTexCoord (index, multiTexCoordArray);
-	
+
 				if (normalNode)
 				{
 					if (normalPerVertex)
@@ -66329,7 +66328,7 @@ function (X3DGeometryNode,
 
 				coordNode .addPoint (index, vertexArray);
 			}
-		
+
 			// Autogenerate normal if not specified.
 
 			if (! this .getNormal ())
@@ -66340,30 +66339,30 @@ function (X3DGeometryNode,
 		},
 		buildNormals: function (verticesPerPolygon, polygonsSize, trianglesSize)
 		{
-			var
+			const
 				normals     = this .createNormals (verticesPerPolygon, polygonsSize),
 				normalArray = this .getNormals ();
 
 			for (var i = 0; i < trianglesSize; ++ i)
 			{
-				var normal = normals [this .getTriangleIndex (i)];
+				const normal = normals [this .getTriangleIndex (i)];
 
 				normalArray .push (normal .x, normal .y, normal .z);
 			}
 		},
 		createNormals: function (verticesPerPolygon, polygonsSize)
 		{
-			var normals = this .createFaceNormals (verticesPerPolygon, polygonsSize);
-		
+			const normals = this .createFaceNormals (verticesPerPolygon, polygonsSize);
+
 			if (this .normalPerVertex_ .getValue ())
 			{
-				var normalIndex = [ ];
-		
+				const normalIndex = [ ];
+
 				for (var i = 0; i < polygonsSize; ++ i)
 				{
-					var
-						index      = this .getPolygonIndex (i),
-						pointIndex = normalIndex [index];
+					const index = this .getPolygonIndex (i);
+
+					var pointIndex = normalIndex [index];
 
 					if (! pointIndex)
 						pointIndex = normalIndex [index] = [ ];
@@ -66373,19 +66372,19 @@ function (X3DGeometryNode,
 
 				return this .refineNormals (normalIndex, normals, Math .PI);
 			}
-		
+
 			return normals;
 		},
 		createFaceNormals: function (verticesPerPolygon, polygonsSize)
 		{
-			var
+			const
 				cw      = ! this .ccw_ .getValue (),
 				coord   = this .coordNode,
 				normals = [ ];
 
 			for (var i = 0; i < polygonsSize; i += verticesPerPolygon)
 			{
-				var normal = this .getPolygonNormal (i, verticesPerPolygon, coord);
+				const normal = this .getPolygonNormal (i, verticesPerPolygon, coord);
 
 				if (cw)
 					normal .negate ();
@@ -66406,14 +66405,14 @@ function (X3DGeometryNode,
 			{
 				// Determine polygon normal.
 				// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
-	
-				var normal = new Vector3 (0, 0, 0);
+
+				const normal = new Vector3 (0, 0, 0);
 
 				coord .get1Point (this .getPolygonIndex (index), next);
 
 				for (var i = 0; i < verticesPerPolygon; ++ i)
 				{
-					var tmp = current;
+					const tmp = current;
 					current = next;
 					next    = tmp;
 
@@ -66431,8 +66430,6 @@ function (X3DGeometryNode,
 
 	return X3DComposedGeometryNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -72882,13 +72879,14 @@ function (X3DChildNode,
 		{
 			X3DChildNode .prototype .initialize .call (this);
 
-			this .on_ .addInterest ("set_on__", this);
+			this .on_        .addInterest ("set_on__", this);
+			this .intensity_ .addInterest ("set_on__", this);
 
 			this .set_on__ ();
 		},
 		set_on__: function ()
 		{
-			if (this .on_ .getValue ())
+			if (this .on_ .getValue () && this .getIntensity () > 0)
 			{
 				delete this .push;
 				delete this .pop;
@@ -72942,10 +72940,10 @@ function (X3DChildNode,
 		getBiasMatrix: (function ()
 		{
 			// Transforms normalized coords from range (-1, 1) to (0, 1).
-			var biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
-			                              0.0, 0.5, 0.0, 0.0,
-			                              0.0, 0.0, 0.5, 0.0,
-			                              0.5, 0.5, 0.5, 1.0);
+			const biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
+			                                0.0, 0.5, 0.0, 0.0,
+			                                0.0, 0.0, 0.5, 0.0,
+			                                0.5, 0.5, 0.5, 1.0);
 
 			return function ()
 			{
@@ -72956,7 +72954,7 @@ function (X3DChildNode,
 		{
 			if (renderObject .isIndependent ())
 			{
-				var lightContainer = this .getLights () .pop ();
+				const lightContainer = this .getLights () .pop ();
 
 				if (this .global_ .getValue ())
 				{
@@ -72981,7 +72979,7 @@ function (X3DChildNode,
 			}
 			else
 			{
-				var lightContainer = renderObject .getLightContainer ();
+				const lightContainer = renderObject .getLightContainer ();
 
 				if (this .global_ .getValue ())
 				{
@@ -106967,7 +106965,7 @@ function (Fields,
 {
 "use strict";
 
-	var
+	const
 	   inverseModelViewMatrix = new Matrix4 (),
 		yAxis                  = new Vector3 (0, 1, 0),
 		zAxis                  = new Vector3 (0, 0, 1),
@@ -107027,7 +107025,7 @@ function (Fields,
 
 			inverseModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-			var billboardToViewer = inverseModelViewMatrix .origin .normalize (); // Normalized to get work with Geo
+			const billboardToViewer = inverseModelViewMatrix .origin .normalize (); // Normalized to get work with Geo
 
 			if (this .axisOfRotation_ .getValue () .equals (Vector3 .Zero))
 			{
@@ -107035,7 +107033,7 @@ function (Fields,
 
 				x .assign (viewerYAxis) .cross (billboardToViewer);
 				y .assign (billboardToViewer) .cross (x);
-				var z = billboardToViewer;
+				const z = billboardToViewer;
 
 				// Compose rotation
 
@@ -107059,7 +107057,7 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
-			var modelViewMatrix = renderObject .getModelViewMatrix ();
+			const modelViewMatrix = renderObject .getModelViewMatrix ();
 
 			modelViewMatrix .push ();
 
@@ -110488,7 +110486,7 @@ function (Fields,
 {
 "use strict";
 
-	var ClipPlanes = ObjectCache (ClipPlaneContainer);
+	const ClipPlanes = ObjectCache (ClipPlaneContainer);
 
 	function ClipPlaneContainer ()
 	{
@@ -110504,7 +110502,7 @@ function (Fields,
 		},
 		set: function (clipPlane, modelViewMatrix)
 		{
-			var
+			const
 				plane      = this .plane,
 				localPlane = clipPlane .plane;
 
@@ -110523,7 +110521,7 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			var
+			const
 				plane  = this .plane,
 				normal = plane .normal;
 
@@ -110584,7 +110582,7 @@ function (Fields,
 		{
 			if (this .enabled)
 			{
-				var clipPlaneContainer = ClipPlanes .pop ();
+				const clipPlaneContainer = ClipPlanes .pop ();
 
 				clipPlaneContainer .set (this, renderObject .getModelViewMatrix () .get ());
 
@@ -110740,12 +110738,13 @@ function (Fields,
 				for (var index = 0, length = this .length * 4; index < length; index += 4)
 					array .push (color [index], color [index + 1], color [index + 2], color [index + 3]);
 
-				var
-					index = (this .length - 1) * 4,
-					r     = color [index],
-					g     = color [index + 1],
-					b     = color [index + 2],
-					a     = color [index + 2];
+				var index = (this .length - 1) * 4;
+
+				const
+					r = color [index],
+					g = color [index + 1],
+					b = color [index + 2],
+					a = color [index + 2];
 
 				for (var index = length, length = min * 4; index < length; index += 4)
 					array .push (r, g, b, a);
@@ -110758,11 +110757,11 @@ function (Fields,
 		},
 		getVectors: function (array)
 		{
-			var color = this .color_;
+			const color = this .color_;
 
 			for (var i = 0, length = color .length; i < length; ++ i)
 			{
-				var c = color [i];
+				const c = color [i];
 
 				array [i] = new Vector4 (c .r, c .g, c .b, c .a);
 			}
@@ -110892,7 +110891,7 @@ function (Fields,
 		{
 			// Build coordIndex
 
-			var
+			const
 				index         = this .index_,
 				triangleIndex = this .triangleIndex;
 
@@ -110900,7 +110899,7 @@ function (Fields,
 
 			for (var i = 0, length = index .length; i < length; ++ i)
 			{
-				var first = index [i];
+				const first = index [i];
 
 				if (first < 0)
 					continue;
@@ -110914,7 +110913,7 @@ function (Fields,
 
 					for (++ i; i < length; ++ i)
 					{
-						var third = index [i];
+						const third = index [i];
 
 						if (third < 0)
 							break;
@@ -111175,7 +111174,7 @@ function (Fields,
 		{
 			// Build coordIndex
 
-			var
+			const
 				index         = this .index_,
 				triangleIndex = this .triangleIndex;
 
@@ -111201,7 +111200,7 @@ function (Fields,
 
 					for (var face = 0; i < length; ++ i, ++ face)
 					{
-						var third = index [i];
+						const third = index [i];
 
 						if (third < 0)
 							break;
@@ -111351,7 +111350,7 @@ function (Fields,
 		},
 		set_attrib__: function ()
 		{
-			var attribNodes = this .getAttrib ();
+			const attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
 				attribNodes [i] .removeInterest ("requestRebuild", this);
@@ -111360,7 +111359,7 @@ function (Fields,
 
 			for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
 			{
-				var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+				const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
 
 				if (attribNode)
 					attribNodes .push (attribNode);
@@ -111420,7 +111419,7 @@ function (Fields,
 
 			// Fill GeometryNode
 
-			var
+			const
 				vertexCount   = this .vertexCount_,
 				attribNodes   = this .getAttrib (),
 				numAttrib     = attribNodes .length,
@@ -111431,8 +111430,9 @@ function (Fields,
 				fogDepthArray = this .getFogDepths (),
 				colorArray    = this .getColors (),
 				vertexArray   = this .getVertices (),
-				size          = coordNode .getSize (),
-				index         = 0;
+				size          = coordNode .getSize ();
+
+			var index = 0;
 
 			for (var c = 0, length = vertexCount .length; c < length; ++ c)
 			{
@@ -111818,7 +111818,7 @@ function (Fields,
 			this .color_    .addInterest ("set_color__",    this);
 			this .coord_    .addInterest ("set_coord__",    this);
 
-			var browser = this .getBrowser ();
+			const browser = this .getBrowser ();
 
 			this .setPrimitiveMode (browser .getContext () .POINTS);
 			this .setSolid (false);
@@ -111838,7 +111838,7 @@ function (Fields,
 		},
 		set_attrib__: function ()
 		{
-			var attribNodes = this .getAttrib ();
+			const attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
 				attribNodes [i] .removeInterest ("requestRebuild", this);
@@ -111847,7 +111847,7 @@ function (Fields,
 
 			for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
 			{
-				var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+				const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
 
 				if (attribNode)
 					attribNodes .push (attribNode);
@@ -111891,15 +111891,15 @@ function (Fields,
 			if (! this .coordNode || this .coordNode .isEmpty ())
 				return;
 
-			var
+			const
 				attribNodes   = this .getAttrib (),
 				numAttrib     = attribNodes .length,
 				attribs       = this .getAttribs (),
 				fogCoordNode  = this .fogCoordNode,
-				colorNode     = this .colorNode,
-				coordNode     = this .coordNode,
 				fogDepthArray = this .getFogDepths (),
+				colorNode     = this .colorNode,
 				colorArray    = this .getColors (),
+				coordNode     = this .coordNode,
 				vertexArray   = this .getVertices (),
 				numPoints     = coordNode .point_ .length;
 
@@ -111981,7 +111981,7 @@ define ('x_ite/Components/Rendering/TriangleFanSet',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DComposedGeometryNode, 
+          X3DComposedGeometryNode,
           X3DConstants)
 {
 "use strict";
@@ -112027,30 +112027,30 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DComposedGeometryNode .prototype .initialize .call (this);
-		
+
 			this .fanCount_ .addInterest ("set_fanCount__", this);
-		
+
 			this .set_fanCount__ ();
 		},
 		set_fanCount__: function ()
 		{
 			// Build coordIndex
 
-			var
+			const
 				fanCount      = this .fanCount_,
 				triangleIndex = this .triangleIndex;
-		
+
 			triangleIndex .length = 0;
 
 			for (var f = 0, fans = fanCount .length, index = 0; f < fans; ++ f)
 			{
-				var vertexCount = fanCount [f];
+				const vertexCount = fanCount [f];
 
 				for (var i = 1, count = vertexCount - 1; i < count; ++ i)
 				{
 					triangleIndex .push (index, index + i, index + i + 1);
 				}
-		
+
 				index += vertexCount;
 			}
 		},
@@ -112066,8 +112066,6 @@ function (Fields,
 
 	return TriangleFanSet;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -112245,7 +112243,7 @@ define ('x_ite/Components/Rendering/TriangleStripSet',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DComposedGeometryNode, 
+          X3DComposedGeometryNode,
           X3DConstants)
 {
 "use strict";
@@ -112291,16 +112289,16 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DComposedGeometryNode .prototype .initialize .call (this);
-		
+
 			this .stripCount_ .addInterest ("set_stripCount__", this);
-		
+
 			this .set_stripCount__ ();
 		},
 		set_stripCount__: function ()
 		{
 			// Build coordIndex
 
-			var
+			const
 				stripCount    = this .stripCount_,
 				triangleIndex = this .triangleIndex;
 
@@ -112308,11 +112306,11 @@ function (Fields,
 
 			for (var s = 0, strips = stripCount .length, index = 0; s < strips; ++ s)
 			{
-				var vertexCount = stripCount [s];
+				const vertexCount = stripCount [s];
 
 				for (var i = 0, count = vertexCount - 2; i < count; ++ i)
 				{
-					var is_odd = i & 1;
+					const is_odd = i & 1;
 
 					triangleIndex .push (index + (is_odd ? i + 1 : i),
 					                     index + (is_odd ? i : i + 1),
@@ -112334,8 +112332,6 @@ function (Fields,
 
 	return TriangleStripSet;
 });
-
-
 
 /*******************************************************************************
  *
@@ -113240,7 +113236,7 @@ define ('x_ite/Components/Shape/Material',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DMaterialNode, 
+          X3DMaterialNode,
           X3DConstants,
           Algorithm)
 {
@@ -113291,7 +113287,7 @@ function (Fields,
 			this .emissiveColor_    .addInterest ("set_emissiveColor__",    this);
 			this .shininess_        .addInterest ("set_shininess__",        this);
 			this .transparency_     .addInterest ("set_transparency__",     this);
-	
+
 			this .set_ambientIntensity__ ();
 			this .set_diffuseColor__ ();
 			this .set_specularColor__ ();
@@ -113307,11 +113303,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .diffuseColor .set (this .diffuseColor_ .getValue ());
-			
-			var
+
+			const
 				diffuseColor  = this .diffuseColor,
 				diffuseColor_ = this .diffuseColor_ .getValue ();
-			
+
 			diffuseColor [0] = diffuseColor_ .r;
 			diffuseColor [1] = diffuseColor_ .g;
 			diffuseColor [2] = diffuseColor_ .b;
@@ -113320,11 +113316,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .specularColor .set (this .specularColor_ .getValue ());
-			
-			var
+
+			const
 				specularColor  = this .specularColor,
 				specularColor_ = this .specularColor_ .getValue ();
-			
+
 			specularColor [0] = specularColor_ .r;
 			specularColor [1] = specularColor_ .g;
 			specularColor [2] = specularColor_ .b;
@@ -113333,11 +113329,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .emissiveColor .set (this .emissiveColor_ .getValue ());
-			
-			var
+
+			const
 				emissiveColor  = this .emissiveColor,
 				emissiveColor_ = this .emissiveColor_ .getValue ();
-			
+
 			emissiveColor [0] = emissiveColor_ .r;
 			emissiveColor [1] = emissiveColor_ .g;
 			emissiveColor [2] = emissiveColor_ .b;
@@ -113348,7 +113344,7 @@ function (Fields,
 		},
 		set_transparency__: function ()
 		{
-			var transparency = Algorithm .clamp (this .transparency_ .getValue (), 0, 1);
+			const transparency = Algorithm .clamp (this .transparency_ .getValue (), 0, 1);
 
 			this .transparency = transparency;
 
@@ -113368,8 +113364,6 @@ function (Fields,
 
 	return Material;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -113431,7 +113425,7 @@ define ('x_ite/Components/Shape/TwoSidedMaterial',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DMaterialNode, 
+          X3DMaterialNode,
           X3DConstants,
           Algorithm)
 {
@@ -113446,7 +113440,7 @@ function (Fields,
 		this .diffuseColor  = new Float32Array (3);
 		this .specularColor = new Float32Array (3);
 		this .emissiveColor = new Float32Array (3);
-			
+
 		this .backDiffuseColor  = new Float32Array (3);
 		this .backSpecularColor = new Float32Array (3);
 		this .backEmissiveColor = new Float32Array (3);
@@ -113495,14 +113489,14 @@ function (Fields,
 			this .emissiveColor_    .addInterest ("set_emissiveColor__",    this);
 			this .shininess_        .addInterest ("set_shininess__",        this);
 			this .transparency_     .addInterest ("set_transparency__",     this);
-	
+
 			this .backAmbientIntensity_ .addInterest ("set_backAmbientIntensity__", this);
 			this .backDiffuseColor_     .addInterest ("set_backDiffuseColor__",     this);
 			this .backSpecularColor_    .addInterest ("set_backSpecularColor__",    this);
 			this .backEmissiveColor_    .addInterest ("set_backEmissiveColor__",    this);
 			this .backShininess_        .addInterest ("set_backShininess__",        this);
 			this .backTransparency_     .addInterest ("set_backTransparency__",     this);
-	
+
 			this .set_ambientIntensity__ ();
 			this .set_diffuseColor__ ();
 			this .set_specularColor__ ();
@@ -113525,11 +113519,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .diffuseColor .set (this .diffuseColor_ .getValue ());
-			
-			var
+
+			const
 				diffuseColor  = this .diffuseColor,
 				diffuseColor_ = this .diffuseColor_ .getValue ();
-			
+
 			diffuseColor [0] = diffuseColor_ .r;
 			diffuseColor [1] = diffuseColor_ .g;
 			diffuseColor [2] = diffuseColor_ .b;
@@ -113538,11 +113532,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .specularColor .set (this .specularColor_ .getValue ());
-			
-			var
+
+			const
 				specularColor  = this .specularColor,
 				specularColor_ = this .specularColor_ .getValue ();
-			
+
 			specularColor [0] = specularColor_ .r;
 			specularColor [1] = specularColor_ .g;
 			specularColor [2] = specularColor_ .b;
@@ -113551,11 +113545,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .emissiveColor .set (this .emissiveColor_ .getValue ());
-			
-			var
+
+			const
 				emissiveColor  = this .emissiveColor,
 				emissiveColor_ = this .emissiveColor_ .getValue ();
-			
+
 			emissiveColor [0] = emissiveColor_ .r;
 			emissiveColor [1] = emissiveColor_ .g;
 			emissiveColor [2] = emissiveColor_ .b;
@@ -113581,11 +113575,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .backDiffuseColor .set (this .backDiffuseColor_ .getValue ());
-			
-			var
+
+			const
 				backDiffuseColor  = this .backDiffuseColor,
 				backDiffuseColor_ = this .backDiffuseColor_ .getValue ();
-			
+
 			backDiffuseColor [0] = backDiffuseColor_ .r;
 			backDiffuseColor [1] = backDiffuseColor_ .g;
 			backDiffuseColor [2] = backDiffuseColor_ .b;
@@ -113594,11 +113588,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .backSpecularColor .set (this .backSpecularColor_ .getValue ());
-			
-			var
+
+			const
 				backSpecularColor  = this .backSpecularColor,
 				backSpecularColor_ = this .backSpecularColor_ .getValue ();
-			
+
 			backSpecularColor [0] = backSpecularColor_ .r;
 			backSpecularColor [1] = backSpecularColor_ .g;
 			backSpecularColor [2] = backSpecularColor_ .b;
@@ -113607,11 +113601,11 @@ function (Fields,
 		{
 			//We cannot use this in Windows Edge:
 			//this .backEmissiveColor .set (this .backEmissiveColor_ .getValue ());
-			
-			var
+
+			const
 				backEmissiveColor  = this .backEmissiveColor,
 				backEmissiveColor_ = this .backEmissiveColor_ .getValue ();
-			
+
 			backEmissiveColor [0] = backEmissiveColor_ .r;
 			backEmissiveColor [1] = backEmissiveColor_ .g;
 			backEmissiveColor [2] = backEmissiveColor_ .b;
@@ -113658,8 +113652,6 @@ function (Fields,
 
 	return TwoSidedMaterial;
 });
-
-
 
 /*******************************************************************************
  *

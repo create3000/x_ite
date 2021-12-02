@@ -1427,17 +1427,24 @@ function (Vector3,
 
 			return function (compoundShape, matrix, childShape)
 			{
-				if (compoundShape .getNumChildShapes ())
-					compoundShape .removeChildShapeByIndex (0);
-
-				if (childShape .getNumChildShapes ())
+				try
 				{
-					matrix .get (translation, rotation, scale);
-	
-					s .setValue (scale .x, scale .y, scale .z);
+					if (compoundShape .getNumChildShapes ())
+						compoundShape .removeChildShapeByIndex (0);
 
-					childShape .setLocalScaling (s);				
-					compoundShape .addChildShape (this .getTransform (translation, rotation), childShape);
+					if (childShape .getNumChildShapes ())
+					{
+						matrix .get (translation, rotation, scale);
+
+						s .setValue (scale .x, scale .y, scale .z);
+
+						childShape .setLocalScaling (s);
+						compoundShape .addChildShape (this .getTransform (translation, rotation), childShape);
+					}
+				}
+				catch (error)
+				{
+					// matrix .get
 				}
 			};
 		})(),
@@ -1448,7 +1455,7 @@ function (Vector3,
 
 			if (childShape .getNumChildShapes ())
 			{
-				childShape .setLocalScaling (localScaling);				
+				childShape .setLocalScaling (localScaling);
 				compoundShape .addChildShape (transform, childShape);
 			}
 		},
