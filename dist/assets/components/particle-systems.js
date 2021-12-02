@@ -1298,14 +1298,14 @@ function (Vector3,
 {
 "use strict";
 
-	var
+	const
 		v0  = new Vector3 (0, 0, 0),
 		v1  = new Vector3 (0, 0, 0),
 		v2  = new Vector3 (0, 0, 0),
 		uvt = { u: 0, v: 0, t: 0 };
 
 	// Box normals for bbox / line intersection.
-	var boxNormals = [
+	const boxNormals = [
 		new Vector3 (0,  0,  1), // front
 		new Vector3 (0,  0, -1), // back
 		new Vector3 (0,  1,  0), // top
@@ -1318,7 +1318,7 @@ function (Vector3,
 	{
 		function compare (a, b)
 		{
-			var
+			const
 				vertices = compare .vertices;
 				axis     = compare .axis;
 
@@ -1344,7 +1344,7 @@ function (Vector3,
 	{
 		intersectsLine: function (line, intersections, intersectionNormals)
 		{
-			var
+			const
 				vertices = this .vertices,
 				normals  = this .normals,
 				i4       = this .i4,
@@ -1358,14 +1358,14 @@ function (Vector3,
 			{
 				// Get barycentric coordinates.
 
-				var
+				const
 					u = uvt .u,
 					v = uvt .v,
 					t = 1 - u - v;
 
 				// Determine vectors for X3DPointingDeviceSensors.
 
-				var i = intersections .size ++;
+				const i = intersections .size ++;
 
 				if (i >= intersections .length)
 					intersections .push (new Vector3 (0, 0, 0));
@@ -1394,12 +1394,13 @@ function (Vector3,
 		this .planes       = [ ];
 		this .intersection = new Vector3 (0, 0, 0);
 
-		var
+		const
 			vertices = tree .vertices,
 			min      = this .min,
 			max      = this .max,
-			last     = first + size,
-			t        = triangles [first] * 12;
+			last     = first + size;
+
+		var t = triangles [first] * 12;
 
 		// Calculate bbox
 
@@ -1439,7 +1440,7 @@ function (Vector3,
 
 		// Split array
 
-		var rightSize = size - leftSize;
+		const rightSize = size - leftSize;
 
 		// Construct left and right node
 
@@ -1466,7 +1467,7 @@ function (Vector3,
 		},
 		intersectsBBox: function (line)
 		{
-			var
+			const
 				planes       = this .planes,
 				min          = this .min,
 				max          = this .max,
@@ -1522,11 +1523,11 @@ function (Vector3,
 		},
 		getLongestAxis: function (min, max)
 		{
-			var
+			const
 				x = max .x - min .x,
 				y = max .y - min .y,
 				z = max .z - min .z;
-	
+
 			if (x < y)
 			{
 				if (y < z)
@@ -1549,8 +1550,8 @@ function (Vector3,
 		this .vertices = vertices;
 		this .normals  = normals;
 
-		var numTriangles = vertices .length / 12;
-	
+		const numTriangles = vertices .length / 12;
+
 		switch (numTriangles)
 		{
 			case 0:
@@ -1565,7 +1566,7 @@ function (Vector3,
 			}
 			default:
 			{
-				var triangles = [ ];
+				const triangles = [ ];
 
 				for (var i = 0; i < numTriangles; ++ i)
 					triangles .push (i);
@@ -1581,7 +1582,7 @@ function (Vector3,
 	BVH .prototype =
 	{
 		constructor: BVH,
-		
+
 		intersectsLine: function (line, intersections, intersectionNormals)
 		{
 			intersections .size = 0;

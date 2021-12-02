@@ -1,4 +1,4 @@
-/* X_ITE v4.6.25a-1070 */
+/* X_ITE v4.6.25a-1071 */
 
 (function () {
 
@@ -14333,7 +14333,7 @@ define ('standard/Utility/MapUtilities',['require'],function ($)
 {
 "use strict";
 
-   var MapUtilities = {
+   const MapUtilities = {
       assign: function (m1, m2)
       {
          m1 .clear ();
@@ -14974,7 +14974,7 @@ define ('standard/Math/Algorithm',[],function ()
 {
 "use strict";
 
-	var Algorithm =
+	const Algorithm =
 	{
 		signum: function (value)
 		{
@@ -15033,7 +15033,7 @@ define ('standard/Math/Algorithm',[],function ()
 				destination .negate ();
 			}
 
-			var
+			const
 				omega = Math .acos (cosom),
 				sinom = Math .sin  (omega),
 
@@ -15049,7 +15049,7 @@ define ('standard/Math/Algorithm',[],function ()
 		},
 		simpleSlerp: function (source, destination, t)
 		{
-			var cosom = source .dot (destination);
+			const cosom = source .dot (destination);
 
 			if (cosom <= -1)
 				throw new Error ("slerp is not possible: vectors are inverse collinear.");
@@ -15057,7 +15057,7 @@ define ('standard/Math/Algorithm',[],function ()
 			if (cosom >= 1) // both normal vectors are equal
 				return source;
 
-			var
+			const
 				omega = Math .acos (cosom),
 				sinom = Math .sin  (omega),
 
@@ -18287,15 +18287,15 @@ define ('standard/Math/Algorithms/eigendecomposition',[],function ()
 {
 "use strict";
 
-	var a = [ ]; // more scratch
-	var b = [ ]; // more scratch
-	var z = [ ]; // more scratch
+	const a = [ ]; // more scratch
+	const b = [ ]; // more scratch
+	const z = [ ]; // more scratch
 
 	// Calculate eigenvalues and eigenvectors.
 	// This is from SGI Inventor Matrix.cpp.
 	return function (matrix, result)
 	{
-		var
+		const
 			ORDER   = matrix .order,
 			values  = result .values,
 			vectors = result .vectors;
@@ -31440,7 +31440,9 @@ function ($,
 				delete menu .items ["straighten-horizon"];
 			}
 
-			if (!browser .getExecutionContext () .getWorldInfo ())
+			const worldInfo = browser .getExecutionContext () .getWorldInfo ();
+
+			if (!worldInfo || (worldInfo .title_ .getValue () .length === 0 && worldInfo .info_ .length === 0))
 			{
 				delete menu .items ["world-info"];
 			}
@@ -34177,7 +34179,7 @@ define ('standard/Networking/URI',[],function ()
 		{
 			case 2:
 			{
-				var value = this .value = path ? path .split (separator) : [];
+				const value = this .value = path ? path .split (separator) : [];
 
 				value .separator         = separator;
 				value .leadingSeparator  = false;
@@ -34205,7 +34207,7 @@ define ('standard/Networking/URI',[],function ()
 			}
 			case 4:
 			{
-				var value = this .value = arguments [0];
+				const value = this .value = arguments [0];
 
 				value .separator         = arguments [1];
 				value .leadingSeparator  = arguments [2];
@@ -34219,7 +34221,7 @@ define ('standard/Networking/URI',[],function ()
 	{
 		copy: function ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			return new Path (value .slice (0, value .length),
 			                 value .separator,
@@ -34254,7 +34256,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		get parent ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			switch (value .length)
 			{
@@ -34278,7 +34280,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		get basename ()
 		{
-			var
+			const
 				value  = this .value,
 				length = value .length;
 
@@ -34289,11 +34291,11 @@ define ('standard/Networking/URI',[],function ()
 		},
 		get stem ()
 		{
-			var basename = this .basename;
+			const basename = this .basename;
 
 			if (this .trailingSeparator && basename .length)
 			{
-				var extension = this .extension;
+				const extension = this .extension;
 
 				if (extension .length)
 					return basename .substr (0, basename .length - extension .length);
@@ -34303,7 +34305,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		get extension ()
 		{
-			var
+			const
 				basename = this .basename,
 				dot      = basename .lastIndexOf (".");
 
@@ -34317,7 +34319,7 @@ define ('standard/Networking/URI',[],function ()
 			if (! descendant .leadingSeparator)
 				return descendant;
 
-			var
+			const
 				path           = new Path ([ ], "/", false, descendant .value .trailingSeparator),
 				basePath       = this .removeDotSegments () .base,
 				descendantPath = descendant .removeDotSegments ();
@@ -34343,7 +34345,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		removeDotSegments: function ()
 		{
-			var
+			const
 				value = this .value,
 				path  = new Path ([ ], value .separator, value .leadingSeparator, value .trailingSeparator);
 
@@ -34351,7 +34353,7 @@ define ('standard/Networking/URI',[],function ()
 			{
 				for (var i = 0; i < value .length; ++ i)
 				{
-					var segment = value [i];
+					const segment = value [i];
 
 					switch (segment)
 					{
@@ -34388,7 +34390,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		escape: function ()
 		{
-			var
+			const
 				copy  = this .copy (),
 				value = copy .value;
 
@@ -34399,7 +34401,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		unescape: function ()
 		{
-			var
+			const
 				copy  = this .copy (),
 				value = copy .value;
 
@@ -34410,9 +34412,9 @@ define ('standard/Networking/URI',[],function ()
 		},
 		toString: function ()
 		{
-			var
-				value  = this .value,
-				string = "";
+			const value = this .value;
+
+			var string = "";
 
 			if (value .leadingSeparator)
 				string += value .separator;
@@ -34434,7 +34436,7 @@ define ('standard/Networking/URI',[],function ()
 	 *  https://tools.ietf.org/html/rfc3986
 	 */
 
-	var wellKnownPorts =
+	const wellKnownPorts =
 	{
 		ftp:   21,
 		http:  80,
@@ -34442,7 +34444,7 @@ define ('standard/Networking/URI',[],function ()
 		ftps:  990,
 	};
 
-	var
+	const
 		address   = /^(?:([^:\/?#]*?):)?(?:(\/\/)([^\/?#]*))?([^?#]*)(?:\?([^#]*))?(?:#(.*))?$/,
 		authority = /^(.*?)(?:\:([^:]*))?$/;
 
@@ -34482,7 +34484,7 @@ define ('standard/Networking/URI',[],function ()
 
 	function URI (uri)
 	{
-		var value = this .value =
+		const value = this .value =
 		{
 			local:     true,
 			absolute:  true,
@@ -34527,7 +34529,7 @@ define ('standard/Networking/URI',[],function ()
 	{
 		copy: function ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			return new URI (value .local,
 			                value .absolute,
@@ -34561,7 +34563,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		isDirectory: function ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			if (value .path .length)
 				return value .path .trailingSeparator;
@@ -34574,9 +34576,9 @@ define ('standard/Networking/URI',[],function ()
 		},
 		get hierarchy ()
 		{
-			var
-				value     = this .value,
-				hierarchy = "";
+			const value = this .value;
+
+			var hierarchy = "";
 
 			hierarchy += value .slashs;
 			hierarchy += this .authority;
@@ -34586,9 +34588,9 @@ define ('standard/Networking/URI',[],function ()
 		},
 		get authority ()
 		{
-			var
-				value     = this .value,
-				authority = value .host;
+			const value = this .value;
+
+			var authority = value .host;
 
 			if (value .port)
 			{
@@ -34612,7 +34614,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		get wellKnownPort ()
 		{
-			var wellKnownPort = wellKnownPorts [this .value .scheme];
+			const wellKnownPort = wellKnownPorts [this .value .scheme];
 
 			if (wellKnownPort !== undefined)
 				return wellKnownPort;
@@ -34645,7 +34647,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		get root ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			return new URI (value .local,
 			                value .absolute,
@@ -34659,7 +34661,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		get base ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			if (this .isDirectory ())
 			{
@@ -34678,7 +34680,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		get parent ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			return new URI (value .local,
 			                value .absolute,
@@ -34692,7 +34694,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		get filename ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			return new URI (value .local,
 			                value .absolute,
@@ -34724,8 +34726,9 @@ define ('standard/Networking/URI',[],function ()
 			if (reference .scheme == "data")
 				return new URI (reference .toString ());
 
+			const value = this .value;
+
 			var
-				value       = this .value,
 				T_local     = false,
 				T_absolute  = false,
 				T_scheme    = "",
@@ -34779,7 +34782,7 @@ define ('standard/Networking/URI',[],function ()
 						{
 							// merge (Base .path (), reference .path ());
 
-							var base = this .base;
+							const base = this .base;
 
 							if (base .path)
 								T_path += base .path;
@@ -34816,7 +34819,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		removeDotSegments: function ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			return new URI (value .local,
 			                value .absolute,
@@ -34833,7 +34836,7 @@ define ('standard/Networking/URI',[],function ()
 			if (! (descendant instanceof URI))
 				descendant = new URI (descendant .toString ());
 
-			var value = this .value;
+			const value = this .value;
 
 			if (value .scheme !== descendant .scheme)
 				return descendant;
@@ -34853,7 +34856,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		escape: function ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			if (value .scheme === "data")
 				return new URI (value .string);
@@ -34870,7 +34873,7 @@ define ('standard/Networking/URI',[],function ()
 		},
 		unescape: function ()
 		{
-			var value = this .value;
+			const value = this .value;
 
 			if (value .scheme === "data")
 				return new URI (value .string);
@@ -34891,9 +34894,9 @@ define ('standard/Networking/URI',[],function ()
 		},
 		createString: function ()
 		{
-			var
-				value  = this .value,
-				string = this .value .scheme;
+			const value = this .value;
+
+			var string = this .value .scheme;
 
 			if (value .scheme)
 				string += ":";
@@ -40411,11 +40414,11 @@ function ($)
 {
 "use strict";
 
-	var
+	const
 		storages   = new WeakMap (),
 		namespaces = new WeakMap ();
 
-	var handler =
+	const handler =
 	{
 		get: function (target, key)
 		{
@@ -40465,7 +40468,7 @@ function ($)
 		},
 		clear: function ()
 		{
-			var
+			const
 				storage   = this .getStorage (),
 				namespace = this .getNameSpace ();
 
@@ -40479,6 +40482,7 @@ function ($)
 
 	return DataStorage;
 });
+
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -44129,7 +44133,7 @@ function (Vector3)
 	return {
 		frustum: function (l, r, b, t, n, f, matrix)
 		{
-			var
+			const
 				r_l = r - l,
 				t_b = t - b,
 				f_n = f - n,
@@ -44149,28 +44153,28 @@ function (Vector3)
 		},
 		perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
 		{
-			var ratio = Math .tan (fieldOfView / 2) * zNear;
+			const ratio = Math .tan (fieldOfView / 2) * zNear;
 
 			if (width > height)
 			{
-				var aspect = width * ratio / height;
+				const aspect = width * ratio / height;
 				return this .frustum (-aspect, aspect, -ratio, ratio, zNear, zFar, matrix);
 			}
 			else
 			{
-				var aspect = height * ratio / width;
+				const aspect = height * ratio / width;
 				return this .frustum (-ratio, ratio, -aspect, aspect, zNear, zFar, matrix);
 			}
 		},
 		perspective2: function (fieldOfView, zNear, zFar, width, height, matrix)
 		{
-			var ratio = Math .tan (fieldOfView / 2) * zNear;
+			const ratio = Math .tan (fieldOfView / 2) * zNear;
 
 			return this .frustum (-ratio, ratio, -ratio, ratio, zNear, zFar, matrix);
 		},
 		ortho: function (l, r, b, t, n, f, matrix)
 		{
-			var
+			const
 				r_l = r - l,
 				t_b = t - b,
 				f_n = f - n,
@@ -44189,7 +44193,7 @@ function (Vector3)
 		},
 		orthoBox: (function ()
 		{
-			var
+			const
 				min = new Vector3 (0, 0, 0),
 				max = new Vector3 (0, 0, 0);
 
@@ -48698,7 +48702,7 @@ define ('standard/Networking/BinaryTransport',[],function ()
 					send: function (headers, callback)
 					{
 						// Setup all variables
-						var xhr = options .xhr ();
+						const xhr = options .xhr ();
 
 						xhr .open (options .type, options .url, options .async, options .username, options .password);
 
@@ -48722,7 +48726,7 @@ define ('standard/Networking/BinaryTransport',[],function ()
 						{
 							xhr .onload = xhr .onerror = null;
 
-							var data = { };
+							const data = { };
 
 							data [options .dataType] = xhr .response;
 
@@ -48736,14 +48740,14 @@ define ('standard/Networking/BinaryTransport',[],function ()
 
 							callback (xhr .status || 404, xhr .statusText);
 						};
-						
+
 						// Send data
 						xhr .responseType = options .responseType || "blob";
 						xhr .send (options .hasContent && options .data || null);
 					},
 					abort: function ()
 					{
-						var xhr = options .xhr ();
+						const xhr = options .xhr ();
 
 						xhr .onload = xhr .onerror = null;
 
@@ -48754,6 +48758,7 @@ define ('standard/Networking/BinaryTransport',[],function ()
 		});
 	};
 });
+
 /* pako 1.0.11 nodeca/pako */(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('pako_inflate/dist/pako_inflate',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.pako = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
 'use strict';
 
@@ -52976,7 +52981,7 @@ function (Vector3,
 {
 "use strict";
 
-	var
+	const
 		normal    = new Vector3 (0, 0, 0),
 		point     = new Vector3 (0, 0, 0),
 		invMatrix = new Matrix4 ();
@@ -53006,27 +53011,27 @@ function (Vector3,
 		set: function (point, normal)
 		{
 			this .normal .assign (normal);
-			this .distanceFromOrigin = normal .dot (point);	   
+			this .distanceFromOrigin = normal .dot (point);
 			return this;
 		},
 		multRight: function (matrix)
 		//throw
 		{
 			// Taken from Inventor:
-		
+
 			// Find the point on the plane along the normal from the origin
 			point .assign (this .normal) .multiply (this .distanceFromOrigin);
-		
+
 			// Transform the plane normal by the matrix
 			// to get the new normal. Use the inverse transpose
 			// of the matrix so that normals are not scaled incorrectly.
 			// n' = n * !~m = ~m * n
 			invMatrix .assign (matrix) .inverse ();
 			invMatrix .multMatrixDir (normal .assign (this .normal)) .normalize ();
-		
+
 			// Transform the point by the matrix
 			matrix .multVecMatrix (point);
-		
+
 			// The new distance is the projected distance of the vector to the
 			// transformed point onto the (unit) transformed normal. This is
 			// just a dot product.
@@ -53039,20 +53044,20 @@ function (Vector3,
 		//throw
 		{
 			// Taken from Inventor:
-		
+
 			// Find the point on the plane along the normal from the origin
 			point .assign (this .normal) .multiply (this .distanceFromOrigin);
-		
+
 			// Transform the plane normal by the matrix
 			// to get the new normal. Use the inverse transpose
 			// of the matrix so that normals are not scaled incorrectly.
 			// n' = !~m * n = n * ~m
 			invMatrix .assign (matrix) .inverse ();
 			invMatrix .multDirMatrix (normal .assign (this .normal)) .normalize ();
-		
+
 			// Transform the point by the matrix
 			matrix .multMatrixVec (point);
-		
+
 			// The new distance is the projected distance of the vector to the
 			// transformed point onto the (unit) transformed normal. This is
 			// just a dot product.
@@ -53067,19 +53072,19 @@ function (Vector3,
 		},
 		intersectsLine: function (line, intersection)
 		{
-			var
+			const
 				point     = line .point,
 				direction = line .direction;
-		
+
 			// Check if the line is parallel to the plane.
-			var theta = direction .dot (this .normal);
+			const theta = direction .dot (this .normal);
 
 			// Plane and line are parallel.
 			if (theta === 0)
 				return false;
 
 			// Plane and line are not parallel. The intersection point can be calculated now.
-			var t = (this .distanceFromOrigin - this .normal .dot (point)) / theta;
+			const t = (this .distanceFromOrigin - this .normal .dot (point)) / theta;
 
 			intersection .x = point .x + direction .x * t;
 			intersection .y = point .y + direction .y * t;
@@ -57935,7 +57940,7 @@ function (Vector3,
 	return {
 	   area: (function ()
 		{
-			var
+			const
 				B = new Vector3 (0, 0, 0),
 				C = new Vector3 (0, 0, 0);
 
@@ -57946,7 +57951,7 @@ function (Vector3,
 		})(),
 		normal: function (v1, v2, v3, normal)
 		{
-			var
+			const
 				x1 = v3 .x - v2 .x,
 				y1 = v3 .y - v2 .y,
 				z1 = v3 .z - v2 .z,
@@ -57962,7 +57967,7 @@ function (Vector3,
 		},
 		quadNormal: function (v1, v2, v3, v4, normal)
 		{
-			var
+			const
 				x1 = v3 .x - v1 .x,
 				y1 = v3 .y - v1 .y,
 				z1 = v3 .z - v1 .z,
@@ -57978,7 +57983,7 @@ function (Vector3,
 		},
 		triangulatePolygon: (function ()
 		{
-			var tessy = (function ()
+			const tessy = (function ()
 			{
 				// Function called for each vertex of tesselator output.
 				function vertexCallback (data, polyVertArray)
@@ -58012,7 +58017,7 @@ function (Vector3,
 					// console .log ('edge flag: ' + flag);
 				}
 
-				var tessy = new libtess .GluTesselator ();
+				const tessy = new libtess .GluTesselator ();
 
 				tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_VERTEX_DATA,  vertexCallback);
 				tessy .gluTessCallback (libtess .gluEnum .GLU_TESS_BEGIN,        beginCallback);
@@ -58027,7 +58032,7 @@ function (Vector3,
 
 			return function (/* contour, [ contour, ..., ] triangles */)
 			{
-				var triangles = arguments [arguments .length - 1];
+				const triangles = arguments [arguments .length - 1];
 
 				tessy .gluTessBeginPolygon (triangles);
 
@@ -58035,7 +58040,7 @@ function (Vector3,
 				{
 					tessy .gluTessBeginContour ();
 
-					var contour = arguments [i];
+					const contour = arguments [i];
 
 					for (var j = 0; j < contour .length; ++ j)
 					{
@@ -58134,7 +58139,7 @@ define ('standard/Math/Algorithms/SAT',[],function ()
 {
 "use strict";
 
-	var
+	const
 		extents1 = { min: 0, max: 0 },
 		extents2 = { min: 0, max: 0 };
 
@@ -58149,7 +58154,7 @@ define ('standard/Math/Algorithms/SAT',[],function ()
 
 		for (var i = 0, length = axes .length; i < length; ++ i)
 		{
-			var axis = axes [i];
+			const axis = axes [i];
 
 			project (points1, axis, extents1);
 			project (points2, axis, extents2);
@@ -58171,13 +58176,13 @@ define ('standard/Math/Algorithms/SAT',[],function ()
 
 		for (var i = 0, length = points .length; i < length; ++ i)
 		{
-			var point = points [i];
+			const point = points [i];
 
 			// Just dot it to get the min and max along this axis.
 			// NOTE: the axis must be normalized to get accurate projections to calculate the MTV, but if it is only needed to
 			// know whether it overlaps, every axis can be used.
 
-			var dotVal = point .dot (axis);
+			const dotVal = point .dot (axis);
 
 			if (dotVal < extents .min)
 				extents .min = dotVal;
@@ -58284,7 +58289,7 @@ function (Plane3,
 	{
 		this .viewport = new Vector4 (0, 0, 0, 0);
 		this .scissor  = new Vector4 (0, 0, 0, 0);
-		
+
 		this .points = [
 			new Vector3 (0, 0, 0),
 			new Vector3 (0, 0, 0),
@@ -58303,7 +58308,7 @@ function (Plane3,
 			new Vector3 (0, 0, 0), // right
 			new Vector3 (0, 0, 0), // top
 			new Vector3 (0, 0, 0), // bottom
-			new Vector3 (0, 0, 0), // back  
+			new Vector3 (0, 0, 0), // back
 		];
 
 		this .edges = [
@@ -58324,7 +58329,7 @@ function (Plane3,
 			new Plane3 (Vector3 .Zero, Vector3 .Zero), // right
 			new Plane3 (Vector3 .Zero, Vector3 .Zero), // top
 			new Plane3 (Vector3 .Zero, Vector3 .Zero), // bottom
-			new Plane3 (Vector3 .Zero, Vector3 .Zero), // back  
+			new Plane3 (Vector3 .Zero, Vector3 .Zero), // back
 		];
 
 		if (arguments .length)
@@ -58336,7 +58341,7 @@ function (Plane3,
 		constructor: ViewVolume,
 		set: (function ()
 		{
-			var matrix = new Matrix4 ();
+			const matrix = new Matrix4 ();
 
 			return function (projectionMatrix, viewport, scissor)
 			{
@@ -58344,10 +58349,10 @@ function (Plane3,
 				{
 					this .viewport .assign (viewport);
 					this .scissor  .assign (scissor);
-	
-					var points = this .points;
 
-					var
+					const points = this .points;
+
+					const
 						p0 = points [0],
 						p1 = points [1],
 						p2 = points [2],
@@ -58357,12 +58362,12 @@ function (Plane3,
 						p6 = points [6],
 						p7 = points [7];
 
-					var
+					const
 						x1 = scissor [0],
 						x2 = x1 + scissor [2],
 						y1 = scissor [1],
 						y2 = y1 + scissor [3];
-	
+
 					matrix .assign (projectionMatrix) .inverse ();
 
 					ViewVolume .unProjectPointMatrix (x1, y1, 0, matrix, viewport, p0),
@@ -58374,23 +58379,23 @@ function (Plane3,
 					ViewVolume .unProjectPointMatrix (x2, y2, 1, matrix, viewport, p6);
 					ViewVolume .unProjectPointMatrix (x1, y2, 1, matrix, viewport, p7);
 
-					var normals = this .normals;
+					const normals = this .normals;
 
 					Triangle3 .normal (p0, p1, p2, normals [0]); // front
 					Triangle3 .normal (p7, p4, p0, normals [1]); // left
 					Triangle3 .normal (p6, p2, p1, normals [2]); // right
 					Triangle3 .normal (p2, p6, p7, normals [3]); // top
 					Triangle3 .normal (p1, p0, p4, normals [4]); // bottom
-					Triangle3 .normal (p4, p7, p6, normals [5]); // back  
+					Triangle3 .normal (p4, p7, p6, normals [5]); // back
 
-					var planes = this .planes;
+					const planes = this .planes;
 
 					planes [0] .set (p1, normals [0]); // front
 					planes [1] .set (p4, normals [1]); // left
 					planes [2] .set (p2, normals [2]); // right
 					planes [3] .set (p6, normals [3]); // top
 					planes [4] .set (p0, normals [4]); // bottom
-					planes [5] .set (p7, normals [5]); // back  
+					planes [5] .set (p7, normals [5]); // back
 
 					this .edges .tainted = true;
 					this .valid          = true;
@@ -58400,7 +58405,7 @@ function (Plane3,
 					this .valid = false;
 					//console .log (error);
 				}
-	
+
 				return this;
 			};
 		})(),
@@ -58416,11 +58421,11 @@ function (Plane3,
 		{
 			// Return suitable edges for SAT theorem.
 
-			var edges = this .edges;
+			const edges = this .edges;
 
 			if (edges .tainted)
 			{
-				var points = this .points;
+				const points = this .points;
 
 				edges [0] .assign (points [0]) .subtract (points [1]);
 				edges [1] .assign (points [1]) .subtract (points [2]);
@@ -58443,23 +58448,23 @@ function (Plane3,
 		{
 			if (this .valid)
 			{
-				var planes = this .planes;
-			
+				const planes = this .planes;
+
 				if (planes [0] .getDistanceToPoint (center) > radius)
 					return false;
-	
+
 				if (planes [1] .getDistanceToPoint (center) > radius)
 					return false;
-	
+
 				if (planes [2] .getDistanceToPoint (center) > radius)
 					return false;
-	
+
 				if (planes [3] .getDistanceToPoint (center) > radius)
 					return false;
-	
+
 				if (planes [4] .getDistanceToPoint (center) > radius)
 					return false;
-	
+
 				if (planes [5] .getDistanceToPoint (center) > radius)
 					return false;
 			}
@@ -58468,31 +58473,31 @@ function (Plane3,
 		},
 		intersectsBox: (function ()
 		{
-			var points1 = [
+			const points1 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
-		
+
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 			];
 
-			var normals1 = [
+			const normals1 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 			];
 
-			var axes1 = [
+			const axes1 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 			];
 
-			var axes = [ ];
+			const axes = [ ];
 
 			for (var i = 0; i < 3 * 8; ++ i)
 				axes .push (new Vector3 (0, 0, 0));
@@ -58500,26 +58505,26 @@ function (Plane3,
 			return function (box)
 			{
 				// Get points.
-			
+
 				box .getPoints (points1);
 
-				var points2 = this .points;
-			
+				const points2 = this .points;
+
 				// Test the three planes spanned by the normal vectors of the faces of the box.
-			
+
 				if (SAT .isSeparated (box .getNormals (normals1), points1, points2))
 					return false;
-			
+
 				// Test the six planes spanned by the normal vectors of the faces of the view volume.
-			
+
 				if (SAT .isSeparated (this .normals, points1, points2))
 					return false;
-	
+
 				// Test the planes spanned by the edges of each object.
-			
+
 				box .getAxes (axes1);
 
-				var edges = this .getEdges ();
+				const edges = this .getEdges ();
 
 				for (var i1 = 0; i1 < 3; ++ i1)
 				{
@@ -58529,9 +58534,9 @@ function (Plane3,
 
 				if (SAT .isSeparated (axes, points1, points2))
 					return false;
-			
+
 				// Both boxes intersect.
-			
+
 				return true;
 			};
 		})(),
@@ -58541,18 +58546,18 @@ function (Plane3,
 	{
 		unProjectPoint: (function ()
 		{
-			var matrix = new Matrix4 ();
+			const matrix = new Matrix4 ();
 
 			return function (winx, winy, winz, modelViewMatrix, projectionMatrix, viewport, point)
 			{
 				matrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse ();
-	
+
 				return this .unProjectPointMatrix (winx, winy, winz, matrix, viewport, point);
 			};
 		})(),
 		unProjectPointMatrix: (function ()
 		{
-			var vin = new Vector4 (0, 0, 0, 0);
+			const vin = new Vector4 (0, 0, 0, 0);
 
 			return function (winx, winy, winz, invModelViewProjection, viewport, point)
 			{
@@ -58561,21 +58566,21 @@ function (Plane3,
 				          (winy - viewport [1]) / viewport [3] * 2 - 1,
 				          2 * winz - 1,
 				          1);
-	
+
 				//Objects coordinates
 				invModelViewProjection .multVecMatrix (vin);
-	
+
 				if (vin .w === 0)
 					throw new Error ("Couldn't unproject point: divisor is 0.");
-	
-				var d = 1 / vin .w;
-	
+
+				const d = 1 / vin .w;
+
 				return point .set (vin .x * d, vin .y * d, vin .z * d);
 			};
 		})(),
 		unProjectRay: (function ()
 		{
-			var
+			const
 				near   = new Vector3 (0, 0, 0),
 				far    = new Vector3 (0, 0, 0),
 				matrix = new Matrix4 ();
@@ -58583,28 +58588,28 @@ function (Plane3,
 			return function (winx, winy, modelViewMatrix, projectionMatrix, viewport, result)
 			{
 				matrix .assign (modelViewMatrix) .multRight (projectionMatrix) .inverse ();
-	
+
 				ViewVolume .unProjectPointMatrix (winx, winy, 0.0, matrix, viewport, near);
 				ViewVolume .unProjectPointMatrix (winx, winy, 0.9, matrix, viewport, far);
-	
+
 				return result .setPoints (near, far);
 			};
 		})(),
 		projectPoint: (function ()
 		{
-			var vin = new Vector4 (0, 0, 0, 0);
+			const vin = new Vector4 (0, 0, 0, 0);
 
 			return function (point, modelViewMatrix, projectionMatrix, viewport, vout)
 			{
 				vin .set (point .x, point .y, point .z, 1);
-	
+
 				projectionMatrix .multVecMatrix (modelViewMatrix .multVecMatrix (vin));
-	
+
 				if (vin .w === 0)
 					throw new Error ("Couldn't project point: divisor is 0.");
-	
-				var d = 1 / (2 * vin .w);
-	
+
+				const d = 1 / (2 * vin .w);
+
 				return vout .set ((vin .x * d + 0.5) * viewport [2] + viewport [0],
 				                  (vin .y * d + 0.5) * viewport [3] + viewport [1],
 				                  (vin .z * d + 0.5));
@@ -58612,7 +58617,7 @@ function (Plane3,
 		})(),
 		projectLine: (function ()
 		{
-			var
+			const
 				near = new Vector3 (0, 0, 0),
 				far  = new Vector3 (0, 0, 0);
 
@@ -58620,10 +58625,10 @@ function (Plane3,
 			{
 				ViewVolume .projectPoint (line .point, modelViewMatrix, projectionMatrix, viewport, near);
 				ViewVolume .projectPoint (Vector3 .multiply (line .direction, 1e9) .add (line .point), modelViewMatrix, projectionMatrix, viewport, far);
-	
+
 				near .z = 0;
 				far  .z = 0;
-	
+
 				return result .setPoints (near, far);
 			};
 		})(),
@@ -58694,7 +58699,7 @@ function (ViewVolume,
 
 	function TextureBuffer (browser, width, height)
 	{
-		var gl = browser .getContext ();
+		const gl = browser .getContext ();
 
 		this .browser = browser;
 		this .width   = width;
@@ -58734,7 +58739,7 @@ function (ViewVolume,
 			gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
 			gl .texParameteri (gl .TEXTURE_2D, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
 
-			var internalFormat = gl .getVersion () >= 2 ? gl .DEPTH_COMPONENT24 : gl .DEPTH_COMPONENT;
+			const internalFormat = gl .getVersion () >= 2 ? gl .DEPTH_COMPONENT24 : gl .DEPTH_COMPONENT;
 
 			gl .texImage2D (gl .TEXTURE_2D, 0, internalFormat, width, height, 0, gl .DEPTH_COMPONENT, gl .UNSIGNED_INT, null);
 			gl.framebufferTexture2D (gl .FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.TEXTURE_2D, this .depthTexture, 0);
@@ -58750,7 +58755,7 @@ function (ViewVolume,
 
 		// Always check that our framebuffer is ok
 
-		var complete = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
+		const complete = gl .checkFramebufferStatus (gl .FRAMEBUFFER) === gl .FRAMEBUFFER_COMPLETE;
 
 		gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
 
@@ -58781,7 +58786,7 @@ function (ViewVolume,
 		},
 		readPixels: function ()
 		{
-			var
+			const
 				gl     = this .browser .getContext (),
 				array  = this .array,
 				width  = this .width,
@@ -58793,7 +58798,7 @@ function (ViewVolume,
 		},
 		getDepth: (function ()
 		{
-			var
+			const
 				invProjectionMatrix = new Matrix4 (),
 				point               = new Vector3 (0, 0, 0);
 
@@ -58801,25 +58806,27 @@ function (ViewVolume,
 			{
 				try
 				{
-					var
+					const
 						gl     = this .browser .getContext (),
 						array  = this .array,
 						width  = this .width,
-						height = this .height,
-						winx   = 0,
-						winy   = 0,
-						winz   = Number .POSITIVE_INFINITY;
+						height = this .height;
+
+					var
+						winx = 0,
+						winy = 0,
+						winz = Number .POSITIVE_INFINITY;
 
 					invProjectionMatrix .assign (projectionMatrix) .inverse ();
 
 					gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
-	
+
 					for (var wy = 0, i = 0; wy < height; ++ wy)
 					{
 						for (var wx = 0; wx < width; ++ wx, i += 4)
 						{
-							var wz = array [i] / 255 + array [i + 1] / (255 * 255) + array [i + 2] / (255 * 255 * 255) + array [i + 3] / (255 * 255 * 255 * 255);
-	
+							const wz = array [i] / 255 + array [i + 1] / (255 * 255) + array [i + 2] / (255 * 255 * 255) + array [i + 3] / (255 * 255 * 255 * 255);
+
 							if (wz < winz)
 							{
 								winx = wx;
@@ -58830,7 +58837,7 @@ function (ViewVolume,
 					}
 
 					ViewVolume .unProjectPointMatrix (winx, winy, winz, invProjectionMatrix, viewport, point);
-	
+
 					return point .z;
 				}
 				catch (error)
@@ -58841,7 +58848,7 @@ function (ViewVolume,
 		})(),
 		bind: function ()
 		{
-			var gl = this .browser .getContext ();
+			const gl = this .browser .getContext ();
 
 			this .lastBuffer = gl .getParameter (gl .FRAMEBUFFER_BINDING);
 
@@ -58849,7 +58856,7 @@ function (ViewVolume,
 		},
 		unbind: function ()
 		{
-			var gl = this .browser .getContext ();
+			const gl = this .browser .getContext ();
 			gl .bindFramebuffer (gl .FRAMEBUFFER, this .lastBuffer);
 		},
 	};
@@ -61943,7 +61950,7 @@ function (Triangle3,
 			}
 			case 3:
 			{
-				var
+				const
 					min = arguments [0],
 					max = arguments [1],
 					sx  = (max .x - min .x) / 2,
@@ -61967,7 +61974,7 @@ function (Triangle3,
 		constructor: Box3,
 		copy: function ()
 		{
-			var copy = Object .create (Box3 .prototype);
+			const copy = Object .create (Box3 .prototype);
 			copy .matrix = this .matrix .copy ();
 			return copy;
 		},
@@ -61986,7 +61993,7 @@ function (Triangle3,
 		},
 		set: function (size, center)
 		{
-			var m = this .matrix;
+			const m = this .matrix;
 
 			switch (arguments .length)
 			{
@@ -62008,7 +62015,7 @@ function (Triangle3,
 				}
 				case 3:
 				{
-					var
+					const
 						min = arguments [0],
 						max = arguments [1],
 						sx  = (max .x - min .x) / 2,
@@ -62028,7 +62035,7 @@ function (Triangle3,
 		},
 		setExtents: function (min, max)
 		{
-			var
+			const
 				m  = this .matrix,
 				sx = (max .x - min .x) / 2,
 				sy = (max .y - min .y) / 2,
@@ -62052,14 +62059,14 @@ function (Triangle3,
 		},
 		getAbsoluteExtents: (function ()
 		{
-			var
+			const
 				r1 = new Vector3 (0, 0, 0),
 				p1 = new Vector3 (0, 0, 0),
 				p4 = new Vector3 (0, 0, 0);
 
 			return function (min, max)
 			{
-				var
+				const
 					m = this .matrix,
 					x = m .xAxis,
 					y = m .yAxis,
@@ -62067,12 +62074,12 @@ function (Triangle3,
 
 				r1 .assign (y) .add (z);
 
-				var r2 = z .subtract (y);
+				const r2 = z .subtract (y);
 
 				p1 .assign (x) .add (r1),
 				p4 .assign (x) .add (r2);
 
-				var
+				const
 					p2 = r1 .subtract (x),
 					p3 = r2 .subtract (x);
 
@@ -62093,7 +62100,7 @@ function (Triangle3,
 		})(),
 		getPoints: (function ()
 		{
-			var
+			const
 				x  = new Vector3 (0, 0, 0),
 				y  = new Vector3 (0, 0, 0),
 				z  = new Vector3 (0, 0, 0),
@@ -62113,7 +62120,7 @@ function (Triangle3,
 				 *    p3 ---------- p4
 				 */
 
-				var m = this .matrix;
+				const m = this .matrix;
 
 				x .assign (m .xAxis);
 				y .assign (m .yAxis);
@@ -62121,7 +62128,7 @@ function (Triangle3,
 
 				r1 .assign (y) .add (z);
 
-				var r2 = z .subtract (y);
+				const r2 = z .subtract (y);
 
 				points [0] .assign (x)  .add (r1);
 				points [1] .assign (r1) .subtract (x);
@@ -62133,7 +62140,7 @@ function (Triangle3,
 				points [6] .assign (points [0]) .negate ();
 				points [7] .assign (points [1]) .negate ();
 
-				var center = this .center;
+				const center = this .center;
 
 				points [0] .add (center);
 				points [1] .add (center);
@@ -62150,7 +62157,7 @@ function (Triangle3,
 		})(),
 		getAxes: function (axes)
 		{
-			var m = this .matrix;
+			const m = this .matrix;
 
 			axes [0] .assign (m .xAxis);
 			axes [1] .assign (m .yAxis);
@@ -62160,16 +62167,16 @@ function (Triangle3,
 		},
 		getNormals: (function ()
 		{
-			var
+			const
 				x = new Vector3 (0, 0, 0),
 				y = new Vector3 (0, 0, 0),
 				z = new Vector3 (0, 0, 0);
 
-			var axes = [ Vector3 .xAxis, Vector3 .yAxis, Vector3 .zAxis ];
+			const axes = [ Vector3 .xAxis, Vector3 .yAxis, Vector3 .zAxis ];
 
 			return function (planes)
 			{
-				var m = this .matrix;
+				const m = this .matrix;
 
 				x .assign (m .xAxis);
 				y .assign (m .yAxis);
@@ -62305,7 +62312,7 @@ function (Triangle3,
 		},
 		add: (function ()
 		{
-			var
+			const
 				lhs_min = new Vector3 (0, 0, 0),
 				lhs_max = new Vector3 (0, 0, 0),
 				rhs_min = new Vector3 (0, 0, 0),
@@ -62337,7 +62344,7 @@ function (Triangle3,
 		},
 		containsPoint: (function ()
 		{
-			var
+			const
 				min = new Vector3 (0, 0, 0),
 				max = new Vector3 (0, 0, 0);
 
@@ -62355,7 +62362,7 @@ function (Triangle3,
 		})(),
 		intersectsBox: (function ()
 		{
-			var points1 = [
+			const points1 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -62367,7 +62374,7 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 			];
 
-			var points2 = [
+			const points2 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -62379,19 +62386,19 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 			];
 
-			var axes1 = [
+			const axes1 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 			];
 
-			var axes2 = [
+			const axes2 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 			];
 
-			var axes9 = [
+			const axes9 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -62405,7 +62412,7 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 			];
 
-			var planes = [
+			const planes = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -62457,7 +62464,7 @@ function (Triangle3,
 		})(),
 		intersectsTriangle: (function ()
 		{
-			var points1 = [
+			const points1 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -62469,13 +62476,13 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 			];
 
-			var axes1 = [
+			const axes1 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 			];
 
-			var axes9 = [
+			const axes9 = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -62489,17 +62496,17 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 			];
 
-			var planes = [
+			const planes = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 			];
 
-			var triangle = [ ];
+			const triangle = [ ];
 
-			var triangleNormal = [ new Vector3 (0, 0, 0) ];
+			const triangleNormal = [ new Vector3 (0, 0, 0) ];
 
-			var triangleEdges = [
+			const triangleEdges = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0)
@@ -62564,7 +62571,7 @@ function (Triangle3,
 	{
 		get: (function ()
 		{
-			var
+			const
 				min = new Vector3 (0, 0, 0),
 				max = new Vector3 (0, 0, 0);
 
@@ -63022,7 +63029,7 @@ function (Vector3)
 		constructor: Line3,
 		copy: function ()
 		{
-			var copy = Object .create (Line3 .prototype);
+			const copy = Object .create (Line3 .prototype);
 			copy .point     = this .point .copy ();
 			copy .direction = this .direction .copy ();
 			return copy;
@@ -63059,7 +63066,7 @@ function (Vector3)
 		},
 		getClosestPointToPoint: function (point, result)
 		{
-			var
+			const
 				r = result .assign (point) .subtract (this .point),
 				d = r .dot (this .direction);
 
@@ -63067,85 +63074,85 @@ function (Vector3)
 		},
 		getClosestPointToLine: (function ()
 		{
-			var u = new Vector3 (0, 0, 0);
+			const u = new Vector3 (0, 0, 0);
 
 			return function (line, point)
 			{
-				var
+				const
 					p1 = this .point,
 					p2 = line .point,
 					d1 = this .direction,
 					d2 = line .direction;
-	
+
 				var t = Vector3 .dot (d1, d2);
-	
+
 				if (Math .abs (t) >= 1)
 					return false;  // lines are parallel
-	
+
 				u .assign (p2) .subtract (p1);
-	
+
 				t = (u .dot (d1) - t * u .dot (d2)) / (1 - t * t);
-	
+
 				point .assign (d1) .multiply (t) .add (p1);
 				return true;
 			};
 		})(),
 		getPerpendicularVector: function (point)
 		{
-			var d = Vector3 .subtract (this .point, point);
+			const d = Vector3 .subtract (this .point, point);
 
 			return d .subtract (this .direction .copy () .multiply (Vector3 .dot (d, this .direction)));
 		},
 		intersectsTriangle: (function ()
 		{
-			var
+			const
 				pvec = new Vector3 (0, 0, 0),
 				tvec = new Vector3 (0, 0, 0);
 
 			return function (A, B, C, uvt)
 			{
 				// Find vectors for two edges sharing vert0.
-				var
+				const
 					edge1 = B .subtract (A),
 					edge2 = C .subtract (A);
-	
+
 				// Begin calculating determinant - also used to calculate U parameter.
 				pvec .assign (this .direction) .cross (edge2);
-	
+
 				// If determinant is near zero, ray lies in plane of triangle.
-				var det = edge1 .dot (pvec);
-	
+				const det = edge1 .dot (pvec);
+
 				// Non culling intersection.
-	
+
 				if (det === 0)
 					return false;
-	
-				var inv_det = 1 / det;
-	
+
+					const inv_det = 1 / det;
+
 				// Calculate distance from vert0 to ray point.
 				tvec .assign (this .point) .subtract (A);
-	
+
 				// Calculate U parameter and test bounds.
-				var u = tvec .dot (pvec) * inv_det;
-	
+				const u = tvec .dot (pvec) * inv_det;
+
 				if (u < 0 || u > 1)
 					return false;
-	
+
 				// Prepare to test V parameter.
-				var qvec = tvec .cross (edge1);
-	
+				const qvec = tvec .cross (edge1);
+
 				// Calculate V parameter and test bounds.
-				var v = this .direction .dot (qvec) * inv_det;
-	
+				const v = this .direction .dot (qvec) * inv_det;
+
 				if (v < 0 || u + v > 1)
 					return false;
-	
+
 				//var t = edge2 .dot (qvec) * inv_det;
-	
+
 				uvt .u = u;
 				uvt .v = v;
 				uvt .t = 1 - u - v;
-	
+
 				return true;
 			};
 		})(),
@@ -63222,7 +63229,7 @@ define ('standard/Math/Algorithms/QuickSort',[],function ()
 	function QuickSort (array, compare)
 	{
 		this .array = array;
-		
+
 		if (compare)
 			this .compare = compare;
 	}
@@ -63242,12 +63249,14 @@ define ('standard/Math/Algorithms/QuickSort',[],function ()
 		{
 			var
 				i = lo,
-				j = hi,
+				j = hi;
+
+			const
 				array   = this .array,
 				compare = this .compare;
 
 			// Vergleichs­element x
-			var x = array [(lo + hi) >>> 1];
+			const x = array [(lo + hi) >>> 1];
 
 			for (;;)
 			{
@@ -63257,8 +63266,8 @@ define ('standard/Math/Algorithms/QuickSort',[],function ()
 				if (i < j)
 				{
 					// Exchange
-					
-					var t = array [i];
+
+					const t = array [i];
 					array [i] = array [j];
 					array [j] = t;
 
@@ -63928,7 +63937,7 @@ function (Fields,
 		},
 		getTexCoordParams: (function ()
 		{
-			const texCoordParams = { min: new Vector3 (0, 0, 0) };
+			const texCoordParams = { min: new Vector3 (0, 0, 0), Ssize: 0, Sindex: 0, Tindex: 0 };
 
 			return function ()
 			{
@@ -68484,7 +68493,7 @@ define ('standard/Math/Algorithms/MergeSort',[],function ()
 		{
 			if (lo < hi)
 			{
-				var m = (lo + hi) >>> 1;
+				const m = (lo + hi) >>> 1;
 				this .mergeSort (lo, m);   // Recursion
 				this .mergeSort (m + 1, hi); // Recursion
 				this .merge (lo, m, hi);
@@ -73858,7 +73867,7 @@ define ('standard/Math/Utility/MatrixStack',[],function ()
 			},
 			push: function ()
 			{
-				var top = ++ this .top;
+				const top = ++ this .top;
 
 				if (top < this .length)
 					this [top] .assign (this [top - 1]);
@@ -73867,7 +73876,7 @@ define ('standard/Math/Utility/MatrixStack',[],function ()
 			},
 			pushMatrix: function (matrix)
 			{
-				var top = ++ this .top;
+				const top = ++ this .top;
 
 				if (top < this .length)
 					this [top] .assign (matrix);
@@ -73974,8 +73983,8 @@ define ('standard/Utility/ObjectCache',[],function ()
 	      {
 				if (this .last > -1)
 				{
-					var object = this .stack [this .last];
-				
+					const object = this .stack [this .last];
+
 					this .last --;
 
 	            return object;
@@ -73996,7 +74005,6 @@ define ('standard/Utility/ObjectCache',[],function ()
 	   };
    };
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -75723,7 +75731,7 @@ function (Matrix3, Vector2)
 			}
 			case 3:
 			{
-				var
+				const
 					min = arguments [0],
 					max = arguments [1],
 					sx  = (max .x - min .x) / 2,
@@ -75744,7 +75752,7 @@ function (Matrix3, Vector2)
 		constructor: Box2,
 		copy: function ()
 		{
-			var copy = Object .create (Box2 .prototype);
+			const copy = Object .create (Box2 .prototype);
 			copy .matrix = this .matrix .copy ();
 			return copy;
 		},
@@ -75759,7 +75767,7 @@ function (Matrix3, Vector2)
 		},
 		set: function (size, center)
 		{
-			var m = this .matrix;
+			const m = this .matrix;
 
 			switch (arguments .length)
 			{
@@ -75780,7 +75788,7 @@ function (Matrix3, Vector2)
 				}
 				case 3:
 				{
-					var
+					const
 						min = arguments [0],
 						max = arguments [1],
 						sx  = (max .x - min .x) / 2,
@@ -75797,7 +75805,7 @@ function (Matrix3, Vector2)
 		},
 		setExtents: function (min, max)
 		{
-			var
+			const
 				m  = this .matrix,
 				sx = (max .x - min .x) / 2,
 				sy = (max .y - min .y) / 2,
@@ -75815,7 +75823,7 @@ function (Matrix3, Vector2)
 		},
 		add: (function ()
 		{
-			var
+			const
 				lhs_min = new Vector2 (0, 0),
 				lhs_max = new Vector2 (0, 0),
 				rhs_min = new Vector2 (0, 0),
@@ -75854,18 +75862,18 @@ function (Matrix3, Vector2)
 		},
 		getAbsoluteExtents: (function ()
 		{
-			var p1 = new Vector2 (0, 0);
+			const p1 = new Vector2 (0, 0);
 
 			return function (min, max)
 			{
-			   var
+			   const
 					m = this .matrix,
 					x = m .xAxis,
 					y = m .yAxis;
 
 				p1 .assign (x) .add (y);
 
-				var p2 = y .subtract (x);
+				const p2 = y .subtract (x);
 
 				min .assign (p1) .min (p2);
 				max .assign (p1) .max (p2);
@@ -75879,7 +75887,7 @@ function (Matrix3, Vector2)
 		})(),
 		containsPoint: (function ()
 		{
-			var
+			const
 				min = new Vector2 (0, 0),
 				max = new Vector2 (0, 0);
 
@@ -75903,7 +75911,7 @@ function (Matrix3, Vector2)
 	{
 		get: (function ()
 		{
-			var
+			const
 				min = new Vector2 (0, 0),
 				max = new Vector2 (0, 0);
 
@@ -76615,6 +76623,8 @@ function (Algorithm)
 {
 	"use strict";
 
+	const lerp = Algorithm .lerp;
+
 	function Bezier (x0, y0, x1, y1, x2, y2, x3, y3)
 	{
 		this .x0 = x0;
@@ -76633,7 +76643,7 @@ function (Algorithm)
 	{
 		getLUT: function (dimension)
 		{
-			var
+			const
 				x0  = this .x0,
 				y0  = this .y0,
 				x1  = this .x1,
@@ -76672,32 +76682,32 @@ function (Algorithm)
 
 	function quadric (x0, y0, x1, y1, x2, y2, t)
 	{
-		var
-			ax0 = Algorithm .lerp (x0, x1, t),
-			ay0 = Algorithm .lerp (y0, y1, t),
-			ax1 = Algorithm .lerp (x1, x2, t),
-			ay1 = Algorithm .lerp (y1, y2, t),
-			bx0 = Algorithm .lerp (ax0, ax1, t),
-			by0 = Algorithm .lerp (ay0, ay1, t);
+		const
+			ax0 = lerp (x0, x1, t),
+			ay0 = lerp (y0, y1, t),
+			ax1 = lerp (x1, x2, t),
+			ay1 = lerp (y1, y2, t),
+			bx0 = lerp (ax0, ax1, t),
+			by0 = lerp (ay0, ay1, t);
 
 		return {x: bx0, y: by0};
 	}
 
 	function cubic (x0, y0, x1, y1, x2, y2, x3, y3, t)
 	{
-		var
-			ax0 = Algorithm .lerp (x0, x1, t),
-			ay0 = Algorithm .lerp (y0, y1, t),
-			ax1 = Algorithm .lerp (x1, x2, t),
-			ay1 = Algorithm .lerp (y1, y2, t),
-			ax2 = Algorithm .lerp (x2, x3, t),
-			ay2 = Algorithm .lerp (y2, y3, t),
-			bx0 = Algorithm .lerp (ax0, ax1, t),
-			by0 = Algorithm .lerp (ay0, ay1, t),
-			bx1 = Algorithm .lerp (ax1, ax2, t),
-			by1 = Algorithm .lerp (ay1, ay2, t),
-			cx0 = Algorithm .lerp (bx0, bx1, t),
-			cy0 = Algorithm .lerp (by0, by1, t);
+		const
+			ax0 = lerp (x0, x1, t),
+			ay0 = lerp (y0, y1, t),
+			ax1 = lerp (x1, x2, t),
+			ay1 = lerp (y1, y2, t),
+			ax2 = lerp (x2, x3, t),
+			ay2 = lerp (y2, y3, t),
+			bx0 = lerp (ax0, ax1, t),
+			by0 = lerp (ay0, ay1, t),
+			bx1 = lerp (ax1, ax2, t),
+			by1 = lerp (ay1, ay2, t),
+			cx0 = lerp (bx0, bx1, t),
+			cy0 = lerp (by0, by1, t);
 
 		return {x: cx0, y: cy0};
 	}
@@ -91923,7 +91933,7 @@ function ($,
 {
 "use strict";
 
-	var
+	const
 		DEPTH_BUFFER_WIDTH  = 16,
 		DEPTH_BUFFER_HEIGHT = DEPTH_BUFFER_WIDTH;
 
@@ -92025,11 +92035,11 @@ function ($,
 		},
 		setGlobalFog: (function ()
 		{
-			var modelViewMatrix = new Matrix4 ();
+			const modelViewMatrix = new Matrix4 ();
 
 			return function (fog)
 			{
-				var fogContainer = this .localFogs [0] || fog .getFogs () .pop ();
+				const fogContainer = this .localFogs [0] || fog .getFogs () .pop ();
 
 				modelViewMatrix .assign (fog .getModelMatrix ()) .multRight (this .getViewMatrix () .get ());
 				fogContainer .set (fog, modelViewMatrix);
@@ -92045,7 +92055,7 @@ function ($,
 		},
 		popLocalFog: function ()
 		{
-			var localFog = this .localFogs .pop ();
+			const localFog = this .localFogs .pop ();
 
 			this .localFog = this .localFogs [this .localFogs .length - 1];
 
@@ -92129,17 +92139,15 @@ function ($,
 			///  and obstacle and @a stepBack is true a translation in the opposite directiion is returned.  Future implementation will
 			///  will then return a value where the avatar slides along the wall.  Modifies translation in place.
 
-			var distance = this .getDistance (translation);
-
 			// Constrain translation when the viewer collides with an obstacle.
 
-			distance -= this .getNavigationInfo () .getCollisionRadius ();
+			const distance = this .getDistance (translation) - this .getNavigationInfo () .getCollisionRadius ();
 
 			if (distance > 0)
 			{
 				// Move.
 
-				var length = translation .abs ();
+				const length = translation .abs ();
 
 				if (length > distance)
 				{
@@ -92162,7 +92170,7 @@ function ($,
 		},
 		getDistance: (function ()
 		{
-			var
+			const
 				projectionMatrix            = new Matrix4 (),
 				cameraSpaceProjectionMatrix = new Matrix4 (),
 				localOrientation            = new Rotation4 (0, 0, 1, 0),
@@ -92175,9 +92183,9 @@ function ($,
 
 				try
 				{
-				   var t0 = performance .now ();
+				   const t0 = performance .now ();
 
-					var
+					const
 						viewpoint       = this .getViewpoint (),
 						navigationInfo  = this .getNavigationInfo (),
 						collisionRadius = navigationInfo .getCollisionRadius (),
@@ -92213,7 +92221,7 @@ function ($,
 
 					this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
 
-					var depth = this .getDepth (projectionMatrix);
+					const depth = this .getDepth (projectionMatrix);
 
 					this .getProjectionMatrix () .pop ();
 
@@ -92228,7 +92236,7 @@ function ($,
 		})(),
 		getDepth: (function ()
 		{
-			var
+			const
 				depthBufferViewport   = new Vector4 (0, 0, DEPTH_BUFFER_WIDTH, DEPTH_BUFFER_HEIGHT),
 				depthBufferViewVolume = new ViewVolume ();
 
@@ -92244,7 +92252,7 @@ function ($,
 				this .depth (this .collisionShapes, this .numCollisionShapes);
 				this .viewVolumes .pop ();
 
-				var depth = this .depthBuffer .getDepth (projectionMatrix, depthBufferViewport);
+				const depth = this .depthBuffer .getDepth (projectionMatrix, depthBufferViewport);
 
 				this .depthBuffer .unbind ();
 
@@ -92289,18 +92297,18 @@ function ($,
 		},
 		addCollisionShape: (function ()
 		{
-			var
+			const
 				bboxSize   = new Vector3 (0, 0, 0),
 				bboxCenter = new Vector3 (0, 0, 0);
 
 			return function (shapeNode)
 			{
-				var modelViewMatrix = this .getModelViewMatrix () .get ();
+				const modelViewMatrix = this .getModelViewMatrix () .get ();
 
 				modelViewMatrix .multDirMatrix (bboxSize   .assign (shapeNode .getBBoxSize ()));
 				modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
-				var
+				const
 					radius     = bboxSize .abs () / 2,
 					viewVolume = this .viewVolumes [this .viewVolumes .length - 1];
 
@@ -92309,7 +92317,7 @@ function ($,
 					if (this .numCollisionShapes === this .collisionShapes .length)
 						this .collisionShapes .push ({ renderer: this, browser: this .getBrowser (), modelViewMatrix: new Float32Array (16), collisions: [ ], clipPlanes: [ ] });
 
-					var context = this .collisionShapes [this .numCollisionShapes];
+					const context = this .collisionShapes [this .numCollisionShapes];
 
 					++ this .numCollisionShapes;
 
@@ -92319,7 +92327,7 @@ function ($,
 
 					// Collisions
 
-					var
+					const
 						sourceCollisions      = this .collisions,
 						destinationCollisions = context .collisions;
 
@@ -92330,7 +92338,7 @@ function ($,
 
 					// Clip planes
 
-					var
+					const
 						sourceClipPlanes      = this .localObjects,
 						destinationClipPlanes = context .clipPlanes;
 
@@ -92347,18 +92355,18 @@ function ($,
 		})(),
 		addDepthShape: (function ()
 		{
-			var
+			const
 				bboxSize   = new Vector3 (0, 0, 0),
 				bboxCenter = new Vector3 (0, 0, 0);
 
 			return function (shapeNode)
 			{
-				var modelViewMatrix = this .getModelViewMatrix () .get ();
+				const modelViewMatrix = this .getModelViewMatrix () .get ();
 
 				modelViewMatrix .multDirMatrix (bboxSize   .assign (shapeNode .getBBoxSize ()));
 				modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
-				var
+				const
 					radius     = bboxSize .abs () / 2,
 					viewVolume = this .viewVolumes [this .viewVolumes .length - 1];
 
@@ -92367,7 +92375,7 @@ function ($,
 					if (this .numDepthShapes === this .depthShapes .length)
 						this .depthShapes .push ({ renderer: this, browser: this .getBrowser (), modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
 
-					var context = this .depthShapes [this .numDepthShapes];
+					const context = this .depthShapes [this .numDepthShapes];
 
 					++ this .numDepthShapes;
 
@@ -92377,7 +92385,7 @@ function ($,
 
 					// Clip planes
 
-					var
+					const
 						sourceClipPlanes      = this .localObjects,
 						destinationClipPlanes = context .clipPlanes;
 
@@ -92394,18 +92402,18 @@ function ($,
 		})(),
 		addDisplayShape: (function ()
 		{
-			var
+			const
 				bboxSize   = new Vector3 (0, 0, 0),
 				bboxCenter = new Vector3 (0, 0, 0);
 
 			return function (shapeNode)
 			{
-				var modelViewMatrix = this .getModelViewMatrix () .get ();
+				const modelViewMatrix = this .getModelViewMatrix () .get ();
 
 				modelViewMatrix .multDirMatrix (bboxSize   .assign (shapeNode .getBBoxSize ()));
 				modelViewMatrix .multVecMatrix (bboxCenter .assign (shapeNode .getBBoxCenter ()));
 
-				var
+				const
 					radius     = bboxSize .abs () / 2,
 					viewVolume = this .viewVolumes [this .viewVolumes .length - 1];
 
@@ -92413,7 +92421,7 @@ function ($,
 				{
 					if (shapeNode .getTransparent ())
 					{
-						var num = this .numTransparentShapes;
+						const num = this .numTransparentShapes;
 
 						if (num === this .transparentShapes .length)
 							this .transparentShapes .push (this .createShapeContext (true));
@@ -92424,7 +92432,7 @@ function ($,
 					}
 					else
 					{
-						var num = this .numOpaqueShapes;
+						const num = this .numOpaqueShapes;
 
 						if (num === this .opaqueShapes .length)
 							this .opaqueShapes .push (this .createShapeContext (false));
@@ -92444,7 +92452,7 @@ function ($,
 
 					// Clip planes and local lights
 
-					var
+					const
 						sourceShaderObjects      = this .localObjects,
 						destinationShaderObjects = context .localObjects;
 
@@ -92472,7 +92480,7 @@ function ($,
 		},
 		collide: (function ()
 		{
-			var
+			const
 				invModelViewMatrix = new Matrix4 (),
 				modelViewMatrix    = new Matrix4 (),
 				collisionBox       = new Box3 (Vector3 .Zero, Vector3 .Zero),
@@ -92482,7 +92490,7 @@ function ($,
 			{
 				// Collision nodes are handled here.
 
-				var
+				const
 					activeCollisions = { }, // current active Collision nodes
 					collisionRadius2 = 2.2 * this .getNavigationInfo () .getCollisionRadius (); // Make the radius a little bit larger.
 
@@ -92492,7 +92500,7 @@ function ($,
 				{
 					try
 					{
-						var
+						const
 							context    = this .collisionShapes [i],
 							collisions = context .collisions;
 
@@ -92518,9 +92526,9 @@ function ($,
 
 				if (! $.isEmptyObject (this .activeCollisions))
 				{
-					var inActiveCollisions = $.isEmptyObject (activeCollisions)
-					                         ? this .activeCollisions
-					                         : Algorithm .set_difference (this .activeCollisions, activeCollisions, { });
+					const inActiveCollisions = $.isEmptyObject (activeCollisions)
+					                           ? this .activeCollisions
+					                           : Algorithm .set_difference (this .activeCollisions, activeCollisions, { });
 
 					for (var key in inActiveCollisions)
 						inActiveCollisions [key] .set_active (false);
@@ -92536,7 +92544,7 @@ function ($,
 		})(),
 		gravite: (function ()
 		{
-			var
+			const
 				projectionMatrix            = new Matrix4 (),
 				cameraSpaceProjectionMatrix = new Matrix4 (),
 				translation                 = new Vector3 (0, 0, 0),
@@ -92546,7 +92554,7 @@ function ($,
 			{
 			   try
 			   {
-					var
+					const
 						browser    = this .getBrowser (),
 						shaderNode = browser .getDepthShader ();
 
@@ -92564,7 +92572,7 @@ function ($,
 
 						// Get NavigationInfo values
 
-						var
+						const
 							navigationInfo  = this .getNavigationInfo (),
 							viewpoint       = this .getViewpoint (),
 							collisionRadius = navigationInfo .getCollisionRadius (),
@@ -92584,7 +92592,7 @@ function ($,
 
 						// Transform viewpoint to look down the up vector
 
-						var
+						const
 							upVector = viewpoint .getUpVector (),
 							down     = rotation .setFromToVec (Vector3 .zAxis, upVector);
 
@@ -92606,13 +92614,13 @@ function ($,
 
 						distance -= avatarHeight;
 
-						var up = rotation .setFromToVec (Vector3 .yAxis, upVector);
+						const up = rotation .setFromToVec (Vector3 .yAxis, upVector);
 
 						if (distance > 0)
 						{
 							// Gravite and fall down the to the floor
 
-							var currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
+							const currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
 
 							this .speed -= browser .getBrowserOptions () .Gravity_ .getValue () / currentFrameRate;
 
@@ -92664,11 +92672,11 @@ function ($,
 		})(),
 		depth: (function ()
 		{
-			var projectionMatrixArray = new Float32Array (16);
+			const projectionMatrixArray = new Float32Array (16);
 
 			return function (shapes, numShapes)
 			{
-				var
+				const
 					browser    = this .getBrowser (),
 					gl         = browser .getContext (),
 					viewport   = this .getViewVolume () .getViewport (),
@@ -92708,7 +92716,7 @@ function ($,
 
 					for (var s = 0; s < numShapes; ++ s)
 					{
-						var
+						const
 							context = shapes [s],
 							scissor = context .scissor;
 
@@ -92737,14 +92745,14 @@ function ($,
 		})(),
 		draw: (function ()
 		{
-			var
+			const
 				viewportArray          = new Int32Array (4),
 				projectionMatrixArray  = new Float32Array (16),
 				cameraSpaceMatrixArray = new Float32Array (16);
 
 			return function (group)
 			{
-				var
+				const
 					browser                  = this .getBrowser (),
 					gl                       = browser .getContext (),
 					viewport                 = this .getViewVolume () .getViewport (),
@@ -92827,11 +92835,11 @@ function ($,
 				gl .depthMask (true);
 				gl .disable (gl .BLEND);
 
-				var opaqueShapes = this .opaqueShapes;
+				const opaqueShapes = this .opaqueShapes;
 
 				for (var i = 0, length = this .numOpaqueShapes; i < length; ++ i)
 				{
-					var
+					const
 						context = opaqueShapes [i],
 						scissor = context .scissor;
 
@@ -92848,13 +92856,13 @@ function ($,
 				gl .depthMask (false);
 				gl .enable (gl .BLEND);
 
-				var transparentShapes = this .transparentShapes;
+				const transparentShapes = this .transparentShapes;
 
 				this .transparencySorter .sort (0, this .numTransparentShapes);
 
 				for (var i = 0, length = this .numTransparentShapes; i < length; ++ i)
 				{
-					var
+					const
 						context = transparentShapes [i],
 						scissor = context .scissor;
 
@@ -92879,7 +92887,7 @@ function ($,
 				{
 					// Recycle clip planes, local fogs, local lights, and local projective textures.
 
-					var localObjects = browser .getLocalObjects ();
+					const localObjects = browser .getLocalObjects ();
 
 					for (var i = 0, length = localObjects .length; i < length; ++ i)
 						localObjects [i] .dispose ();
@@ -92888,7 +92896,7 @@ function ($,
 
 					// Recycle global lights and global projective textures.
 
-					var globalObjects = this .globalObjects;
+					const globalObjects = this .globalObjects;
 
 					for (var i = 0, length = globalObjects .length; i < length; ++ i)
 						globalObjects [i] .dispose ();
@@ -109140,39 +109148,39 @@ function (Vector3,
 			//  intersection (and results are valid).
 			//
 			// Taken from Inventor SbCylinder.c++
-			
+
 			// The intersection will actually be done on a radius 1 cylinder
 			// aligned with the y axis, so we transform the line into that
 			// space, then intersect, then transform the results back.
 
 			// rotation to y axis
-			var
+			const
 				rotToYAxis = new Rotation4 (this .axis .direction, new Vector3 (0, 1, 0)),
 				mtxToYAxis = Matrix4 .Rotation (rotToYAxis);
 
 			// scale to unit space
-			var
+			const
 				scaleFactor    = 1 / this .radius,
 				toUnitCylSpace = new Matrix4 ();
-	
+
 			toUnitCylSpace .scale (new Vector3 (scaleFactor, scaleFactor, scaleFactor));
 			toUnitCylSpace .multLeft (mtxToYAxis);
 
 			// find the given line un-translated
-			var
+			const
 				point             = Vector3 .subtract (line .point, this .axis .point),
 				noTranslationLine = new Line3 (point, line .direction);
 
 			// find the un-translated line in unit cylinder's space
-			var cylLine = noTranslationLine .multLineMatrix (toUnitCylSpace);
+			const cylLine = noTranslationLine .multLineMatrix (toUnitCylSpace);
 
 			// find the intersection on the unit cylinder
-			var intersected = this .unitCylinderIntersectsLine (cylLine, enter, exit);
+			const intersected = this .unitCylinderIntersectsLine (cylLine, enter, exit);
 
 			if (intersected)
 			{
 				// transform back to original space
-				var fromUnitCylSpace = toUnitCylSpace .inverse ();
+				const fromUnitCylSpace = toUnitCylSpace .inverse ();
 
 				fromUnitCylSpace .multVecMatrix (enter);
 				enter .add (this .axis .point);
@@ -109187,23 +109195,23 @@ function (Vector3,
 		{
 			var t0, t1;
 
-			var
+			const
 				pos = line .point,
 				dir = line .direction;
 
-			var
+				const
 				A = dir [0] * dir [0] + dir [2] * dir [2],
 				B = 2 * (pos [0] * dir [0] + pos [2] * dir [2]),
 				C = pos [0] * pos [0] + pos [2] * pos [2] - 1;
 
 			// discriminant = B^2 - 4AC
-			var discr = B * B - 4 * A * C;
+			const discr = B * B - 4 * A * C;
 
 			// if discriminant is negative, no intersection
 			if (discr < 0)
 				return false;
 
-			var sqroot = Math .sqrt (discr);
+				const sqroot = Math .sqrt (discr);
 
 			// magic to stabilize the answer
 			if (B > 0)
@@ -109949,21 +109957,21 @@ function (Vector3)
 		{
 			// https://github.com/Alexpux/Coin3D/blob/master/src/base/SbSphere.cpp
 
-			var
+			const
 				linepos = line .point,
 				linedir = line .direction;
 
-			var
+			const
 				scenter = this .center,
 				r       = this .radius;
 
-			var
+			const
 				b = 2 * (linepos .dot (linedir) - scenter .dot (linedir)),
 				c = (linepos .x * linepos .x + linepos .y * linepos .y + linepos .z * linepos .z) +
 			       (scenter .x * scenter .x + scenter .y * scenter .y + scenter .z * scenter .z) -
 			       2 * linepos .dot (scenter) - r * r;
 
-			var core = b * b - 4 * c;
+			const core = b * b - 4 * c;
 
 			if (core >= 0)
 			{
@@ -109990,7 +109998,7 @@ function (Vector3)
 		},
 		intersectsTriangle: (function ()
 		{
-			var
+			const
 				AB = new Vector3 (0, 0, 0),
 				AC = new Vector3 (0, 0, 0),
 				BC = new Vector3 (0, 0, 0),
@@ -110001,7 +110009,7 @@ function (Vector3)
 
 			return function (A, B, C)
 			{
-				var
+				const
 					P = this .center,
 					r = this .radius;
 
@@ -110014,7 +110022,7 @@ function (Vector3)
 				AB .assign (B) .subtract (A);
 				AC .assign (C) .subtract (A);
 
-				var
+				const
 					rr   = r * r,
 					V    = AB .cross (AC),
 					d    = Vector3 .dot (A, V),
@@ -110025,7 +110033,7 @@ function (Vector3)
 					return false;
 
 				// Testing if sphere lies outside a triangle vertex.
-				var
+				const
 					aa   = Vector3 .dot (A, A),
 					ab   = Vector3 .dot (A, B),
 					ac   = Vector3 .dot (A, C),
@@ -110045,7 +110053,7 @@ function (Vector3)
 				BC .assign (C) .subtract (B);
 				CA .assign (A) .subtract (C);
 
-				var
+				const
 					d1   = ab - aa,
 					d2   = bc - bb,
 					d3   = ac - cc,
@@ -110057,7 +110065,7 @@ function (Vector3)
 				Q2 .assign (B) .multiply (e2) .subtract (BC .multiply (d2));
 				Q3 .assign (C) .multiply (e3) .subtract (CA .multiply (d3));
 
-				var
+				const
 					QC   = C .multiply (e1) .subtract (Q1),
 					QA   = A .multiply (e2) .subtract (Q2),
 					QB   = B .multiply (e3) .subtract (Q3),
