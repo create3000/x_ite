@@ -474,8 +474,6 @@ function (Fields,
 			{
 				try
 				{
-					var intersected = false;
-
 					if (this .intersectsBBox (line))
 					{
 						this .transformLine   (line);                                       // Apply screen transformations from screen nodes.
@@ -522,12 +520,11 @@ function (Fields,
 								                            t * normals [i3 + 2] + u * normals [i3 + 5] + v * normals [i3 + 8]);
 
 								intersections .push ({ texCoord: texCoord, normal: normal, point: this .getMatrix () .multVecMatrix (point) });
-								intersected = true;
 							}
 						}
 					}
 
-					return intersected;
+					return intersections .length;
 				}
 				catch (error)
 				{
@@ -783,7 +780,7 @@ function (Fields,
 					if (this .multiTexCoords .length === 0)
 						this .multiTexCoords .push (this .buildTexCoords ());
 
-					var last = this .multiTexCoords .length - 1;
+					const last = this .multiTexCoords .length - 1;
 
 					for (var i = this .multiTexCoords .length, length = this .getBrowser () .getMaxTextures (); i < length; ++ i)
 						this .multiTexCoords [i] = this .multiTexCoords [last];

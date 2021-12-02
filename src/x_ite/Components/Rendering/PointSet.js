@@ -109,7 +109,7 @@ function (Fields,
 			this .color_    .addInterest ("set_color__",    this);
 			this .coord_    .addInterest ("set_coord__",    this);
 
-			var browser = this .getBrowser ();
+			const browser = this .getBrowser ();
 
 			this .setPrimitiveMode (browser .getContext () .POINTS);
 			this .setSolid (false);
@@ -129,7 +129,7 @@ function (Fields,
 		},
 		set_attrib__: function ()
 		{
-			var attribNodes = this .getAttrib ();
+			const attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
 				attribNodes [i] .removeInterest ("requestRebuild", this);
@@ -138,7 +138,7 @@ function (Fields,
 
 			for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
 			{
-				var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+				const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
 
 				if (attribNode)
 					attribNodes .push (attribNode);
@@ -182,15 +182,15 @@ function (Fields,
 			if (! this .coordNode || this .coordNode .isEmpty ())
 				return;
 
-			var
+			const
 				attribNodes   = this .getAttrib (),
 				numAttrib     = attribNodes .length,
 				attribs       = this .getAttribs (),
 				fogCoordNode  = this .fogCoordNode,
-				colorNode     = this .colorNode,
-				coordNode     = this .coordNode,
 				fogDepthArray = this .getFogDepths (),
+				colorNode     = this .colorNode,
 				colorArray    = this .getColors (),
+				coordNode     = this .coordNode,
 				vertexArray   = this .getVertices (),
 				numPoints     = coordNode .point_ .length;
 

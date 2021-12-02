@@ -84,7 +84,7 @@ function (X3DGeometryNode,
 		{
 			if (this .getGeometryType () === 1)
 			{
-				var
+				const
 					texCoords = this .getTexCoords (),
 					vertices  = this .getVertices ();
 

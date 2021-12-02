@@ -114,7 +114,7 @@ function (Fields,
 		{
 			// Build coordIndex
 
-			var
+			const
 				index         = this .index_,
 				triangleIndex = this .triangleIndex;
 
@@ -122,7 +122,7 @@ function (Fields,
 
 			for (var i = 0, length = index .length; i < length; ++ i)
 			{
-				var first = index [i];
+				const first = index [i];
 
 				if (first < 0)
 					continue;
@@ -136,7 +136,7 @@ function (Fields,
 
 					for (++ i; i < length; ++ i)
 					{
-						var third = index [i];
+						const third = index [i];
 
 						if (third < 0)
 							break;

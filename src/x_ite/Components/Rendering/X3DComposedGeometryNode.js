@@ -218,7 +218,7 @@ function (X3DGeometryNode,
 			polygonsSize  -= polygonsSize % verticesPerPolygon;
 			trianglesSize -= trianglesSize % verticesPerFace;
 
-			var
+			const
 				colorPerVertex     = this .colorPerVertex_ .getValue (),
 				normalPerVertex    = this .normalPerVertex_ .getValue (),
 				attribNodes        = this .getAttrib (),
@@ -233,19 +233,20 @@ function (X3DGeometryNode,
 				colorArray         = this .getColors (),
 				multiTexCoordArray = this .getMultiTexCoords (),
 				normalArray        = this .getNormals (),
-				vertexArray        = this .getVertices (),
-				face               = 0;
+				vertexArray        = this .getVertices ();
+
+			var face = 0;
 
 			if (texCoordNode)
 				texCoordNode .init (multiTexCoordArray);
-		
+
 			// Fill GeometryNode
-		
+
 			for (var i = 0; i < trianglesSize; ++ i)
 			{
 				face = Math .floor (i / verticesPerFace);
 
-				var index = this .getPolygonIndex (this .getTriangleIndex (i));
+				const index = this .getPolygonIndex (this .getTriangleIndex (i));
 
 				for (var a = 0; a < numAttrib; ++ a)
 					attribNodes [a] .addValue (index, attribs [a]);
@@ -263,7 +264,7 @@ function (X3DGeometryNode,
 
 				if (texCoordNode)
 					texCoordNode .addTexCoord (index, multiTexCoordArray);
-	
+
 				if (normalNode)
 				{
 					if (normalPerVertex)
@@ -275,7 +276,7 @@ function (X3DGeometryNode,
 
 				coordNode .addPoint (index, vertexArray);
 			}
-		
+
 			// Autogenerate normal if not specified.
 
 			if (! this .getNormal ())
@@ -286,30 +287,30 @@ function (X3DGeometryNode,
 		},
 		buildNormals: function (verticesPerPolygon, polygonsSize, trianglesSize)
 		{
-			var
+			const
 				normals     = this .createNormals (verticesPerPolygon, polygonsSize),
 				normalArray = this .getNormals ();
 
 			for (var i = 0; i < trianglesSize; ++ i)
 			{
-				var normal = normals [this .getTriangleIndex (i)];
+				const normal = normals [this .getTriangleIndex (i)];
 
 				normalArray .push (normal .x, normal .y, normal .z);
 			}
 		},
 		createNormals: function (verticesPerPolygon, polygonsSize)
 		{
-			var normals = this .createFaceNormals (verticesPerPolygon, polygonsSize);
-		
+			const normals = this .createFaceNormals (verticesPerPolygon, polygonsSize);
+
 			if (this .normalPerVertex_ .getValue ())
 			{
-				var normalIndex = [ ];
-		
+				const normalIndex = [ ];
+
 				for (var i = 0; i < polygonsSize; ++ i)
 				{
-					var
-						index      = this .getPolygonIndex (i),
-						pointIndex = normalIndex [index];
+					const index = this .getPolygonIndex (i);
+
+					var pointIndex = normalIndex [index];
 
 					if (! pointIndex)
 						pointIndex = normalIndex [index] = [ ];
@@ -319,19 +320,19 @@ function (X3DGeometryNode,
 
 				return this .refineNormals (normalIndex, normals, Math .PI);
 			}
-		
+
 			return normals;
 		},
 		createFaceNormals: function (verticesPerPolygon, polygonsSize)
 		{
-			var
+			const
 				cw      = ! this .ccw_ .getValue (),
 				coord   = this .coordNode,
 				normals = [ ];
 
 			for (var i = 0; i < polygonsSize; i += verticesPerPolygon)
 			{
-				var normal = this .getPolygonNormal (i, verticesPerPolygon, coord);
+				const normal = this .getPolygonNormal (i, verticesPerPolygon, coord);
 
 				if (cw)
 					normal .negate ();
@@ -352,14 +353,14 @@ function (X3DGeometryNode,
 			{
 				// Determine polygon normal.
 				// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
-	
-				var normal = new Vector3 (0, 0, 0);
+
+				const normal = new Vector3 (0, 0, 0);
 
 				coord .get1Point (this .getPolygonIndex (index), next);
 
 				for (var i = 0; i < verticesPerPolygon; ++ i)
 				{
-					var tmp = current;
+					const tmp = current;
 					current = next;
 					next    = tmp;
 
@@ -377,5 +378,3 @@ function (X3DGeometryNode,
 
 	return X3DComposedGeometryNode;
 });
-
-

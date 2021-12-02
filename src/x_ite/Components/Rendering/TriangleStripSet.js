@@ -57,7 +57,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DComposedGeometryNode, 
+          X3DComposedGeometryNode,
           X3DConstants)
 {
 "use strict";
@@ -103,16 +103,16 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DComposedGeometryNode .prototype .initialize .call (this);
-		
+
 			this .stripCount_ .addInterest ("set_stripCount__", this);
-		
+
 			this .set_stripCount__ ();
 		},
 		set_stripCount__: function ()
 		{
 			// Build coordIndex
 
-			var
+			const
 				stripCount    = this .stripCount_,
 				triangleIndex = this .triangleIndex;
 
@@ -120,11 +120,11 @@ function (Fields,
 
 			for (var s = 0, strips = stripCount .length, index = 0; s < strips; ++ s)
 			{
-				var vertexCount = stripCount [s];
+				const vertexCount = stripCount [s];
 
 				for (var i = 0, count = vertexCount - 2; i < count; ++ i)
 				{
-					var is_odd = i & 1;
+					const is_odd = i & 1;
 
 					triangleIndex .push (index + (is_odd ? i + 1 : i),
 					                     index + (is_odd ? i : i + 1),
@@ -146,5 +146,3 @@ function (Fields,
 
 	return TriangleStripSet;
 });
-
-

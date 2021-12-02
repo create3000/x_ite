@@ -57,7 +57,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DComposedGeometryNode, 
+          X3DComposedGeometryNode,
           X3DConstants)
 {
 "use strict";
@@ -103,30 +103,30 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DComposedGeometryNode .prototype .initialize .call (this);
-		
+
 			this .fanCount_ .addInterest ("set_fanCount__", this);
-		
+
 			this .set_fanCount__ ();
 		},
 		set_fanCount__: function ()
 		{
 			// Build coordIndex
 
-			var
+			const
 				fanCount      = this .fanCount_,
 				triangleIndex = this .triangleIndex;
-		
+
 			triangleIndex .length = 0;
 
 			for (var f = 0, fans = fanCount .length, index = 0; f < fans; ++ f)
 			{
-				var vertexCount = fanCount [f];
+				const vertexCount = fanCount [f];
 
 				for (var i = 1, count = vertexCount - 1; i < count; ++ i)
 				{
 					triangleIndex .push (index, index + i, index + i + 1);
 				}
-		
+
 				index += vertexCount;
 			}
 		},
@@ -142,5 +142,3 @@ function (Fields,
 
 	return TriangleFanSet;
 });
-
-

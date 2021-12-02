@@ -53,7 +53,7 @@ define ([
 	"standard/Math/Geometry/Triangle3",
 	"standard/Math/Numbers/Vector3",
 ],
-function (X3DGeometricPropertyNode, 
+function (X3DGeometricPropertyNode,
           X3DConstants,
           Triangle3,
           Vector3)
@@ -137,7 +137,7 @@ function (X3DGeometricPropertyNode,
 		},
 		getNormal: (function ()
 		{
-			var
+			const
 				point1 = new Vector3 (0, 0, 0),
 				point2 = new Vector3 (0, 0, 0),
 				point3 = new Vector3 (0, 0, 0);
@@ -145,9 +145,9 @@ function (X3DGeometricPropertyNode,
 			return function (index1, index2, index3)
 			{
 				// The index[1,2,3] cannot be less than 0.
-	
-				var length = this .length;
-	
+
+				const length = this .length;
+
 				if (index1 < length && index2 < length && index3 < length)
 				{
 					return Triangle3 .normal (this .get1Point (index1, point1),
@@ -155,13 +155,13 @@ function (X3DGeometricPropertyNode,
 					                          this .get1Point (index3, point3),
 					                          new Vector3 (0, 0, 0));
 				}
-	
+
 				return new Vector3 (0, 0, 0);
 			};
 		})(),
 		getQuadNormal: (function ()
 		{
-			var
+			const
 				point1 = new Vector3 (0, 0, 0),
 				point2 = new Vector3 (0, 0, 0),
 				point3 = new Vector3 (0, 0, 0),
@@ -170,9 +170,9 @@ function (X3DGeometricPropertyNode,
 			return function (index1, index2, index3, index4)
 			{
 				// The index[1,2,3,4] cannot be less than 0.
-	
-				var length = this .length;
-	
+
+				const length = this .length;
+
 				if (index1 < length && index2 < length && index3 < length && index4 < length)
 				{
 					return Triangle3 .quadNormal (this .get1Point (index1, point1),
@@ -181,7 +181,7 @@ function (X3DGeometricPropertyNode,
 					                              this .get1Point (index4, point4),
 					                              new Vector3 (0, 0, 0));
 				}
-	
+
 				return new Vector3 (0, 0, 0);
 			};
 		})(),
@@ -189,5 +189,3 @@ function (X3DGeometricPropertyNode,
 
 	return X3DCoordinateNode;
 });
-
-

@@ -119,7 +119,7 @@ function (Fields,
 		},
 		set_attrib__: function ()
 		{
-			var attribNodes = this .getAttrib ();
+			const attribNodes = this .getAttrib ();
 
 			for (var i = 0, length = attribNodes .length; i < length; ++ i)
 				attribNodes [i] .removeInterest ("requestRebuild", this);
@@ -128,7 +128,7 @@ function (Fields,
 
 			for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
 			{
-				var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+				const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
 
 				if (attribNode)
 					attribNodes .push (attribNode);
@@ -188,7 +188,7 @@ function (Fields,
 
 			// Fill GeometryNode
 
-			var
+			const
 				vertexCount   = this .vertexCount_,
 				attribNodes   = this .getAttrib (),
 				numAttrib     = attribNodes .length,
@@ -199,8 +199,9 @@ function (Fields,
 				fogDepthArray = this .getFogDepths (),
 				colorArray    = this .getColors (),
 				vertexArray   = this .getVertices (),
-				size          = coordNode .getSize (),
-				index         = 0;
+				size          = coordNode .getSize ();
+
+			var index = 0;
 
 			for (var c = 0, length = vertexCount .length; c < length; ++ c)
 			{
