@@ -407,7 +407,9 @@ function ($,
 				delete menu .items ["straighten-horizon"];
 			}
 
-			if (!browser .getExecutionContext () .getWorldInfo ())
+			const worldInfo = browser .getExecutionContext () .getWorldInfo ();
+
+			if (!worldInfo || (worldInfo .title_ .getValue () .length === 0 && worldInfo .info_ .length === 0))
 			{
 				delete menu .items ["world-info"];
 			}
