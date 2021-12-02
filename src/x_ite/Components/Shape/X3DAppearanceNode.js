@@ -53,7 +53,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 ],
 function (Fields,
-          X3DNode, 
+          X3DNode,
           X3DConstants)
 {
 "use strict";
@@ -63,7 +63,7 @@ function (Fields,
 		X3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DAppearanceNode);
-		
+
 		this .addChildObjects ("transparent", new Fields .SFBool ());
 
 		this .transparent_ .setAccessType (X3DConstants .outputOnly);
@@ -72,10 +72,6 @@ function (Fields,
 	X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
 	{
 		constructor: X3DAppearanceNode,
-		initialize: function ()
-		{
-			X3DNode .prototype .initialize .call (this);
-		},
 		setTransparent: function (value)
 		{
 			if (value !== this .transparent_ .getValue ())
@@ -89,5 +85,3 @@ function (Fields,
 
 	return X3DAppearanceNode;
 });
-
-
