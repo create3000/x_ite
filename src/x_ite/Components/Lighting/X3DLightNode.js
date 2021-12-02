@@ -49,13 +49,11 @@
 
 define ([
 	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 	"standard/Math/Algorithm",
 ],
 function (X3DChildNode,
-          TraverseType,
           X3DConstants,
           Matrix4,
           Algorithm)
