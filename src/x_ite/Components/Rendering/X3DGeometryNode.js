@@ -364,7 +364,7 @@ function (Fields,
 		},
 		getTexCoordParams: (function ()
 		{
-			const texCoordParams = { min: new Vector3 (0, 0, 0) };
+			const texCoordParams = { min: new Vector3 (0, 0, 0), Ssize: 0, Sindex: 0, Tindex: 0 };
 
 			return function ()
 			{
