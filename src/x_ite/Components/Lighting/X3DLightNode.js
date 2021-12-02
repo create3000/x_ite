@@ -135,10 +135,10 @@ function (X3DChildNode,
 		getBiasMatrix: (function ()
 		{
 			// Transforms normalized coords from range (-1, 1) to (0, 1).
-			var biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
-			                              0.0, 0.5, 0.0, 0.0,
-			                              0.0, 0.0, 0.5, 0.0,
-			                              0.5, 0.5, 0.5, 1.0);
+			const biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
+			                                0.0, 0.5, 0.0, 0.0,
+			                                0.0, 0.0, 0.5, 0.0,
+			                                0.5, 0.5, 0.5, 1.0);
 
 			return function ()
 			{
@@ -149,7 +149,7 @@ function (X3DChildNode,
 		{
 			if (renderObject .isIndependent ())
 			{
-				var lightContainer = this .getLights () .pop ();
+				const lightContainer = this .getLights () .pop ();
 
 				if (this .global_ .getValue ())
 				{
@@ -174,7 +174,7 @@ function (X3DChildNode,
 			}
 			else
 			{
-				var lightContainer = renderObject .getLightContainer ();
+				const lightContainer = renderObject .getLightContainer ();
 
 				if (this .global_ .getValue ())
 				{
