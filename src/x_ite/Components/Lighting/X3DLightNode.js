@@ -74,13 +74,14 @@ function (X3DChildNode,
 		{
 			X3DChildNode .prototype .initialize .call (this);
 
-			this .on_ .addInterest ("set_on__", this);
+			this .on_        .addInterest ("set_on__", this);
+			this .intensity_ .addInterest ("set_on__", this);
 
 			this .set_on__ ();
 		},
 		set_on__: function ()
 		{
-			if (this .on_ .getValue ())
+			if (this .on_ .getValue () && this .getIntensity () > 0)
 			{
 				delete this .push;
 				delete this .pop;
