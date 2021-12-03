@@ -173,11 +173,15 @@ function (Fields,
 						this .childNode .visible_     .addInterest ("set_visible__",     this);
 						this .childNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
 					}
+
+					delete this .traverse;
 				}
 			}
 			else
 			{
 				this .childNode = null;
+
+				this .traverse = Function .prototype;
 			}
 
 			this .set_transformSensors__ ();
@@ -232,7 +236,7 @@ function (Fields,
 		},
 		getLevel: (function ()
 		{
-			var
+			const
 				FRAMES         = 180, // Number of frames after wich a level change takes in affect.
 				FRAME_RATE_MIN = 20,  // Lowest level of detail.
 				FRAME_RATE_MAX = 55;  // Highest level of detail.
@@ -243,7 +247,7 @@ function (Fields,
 				{
 					this .frameRate = ((FRAMES - 1) * this .frameRate + browser .currentFrameRate) / FRAMES;
 
-					var size = this .children_ .length;
+					const size = this .children_ .length;
 
 					switch (size)
 					{
@@ -255,21 +259,21 @@ function (Fields,
 							return (this .frameRate > FRAME_RATE_MAX) * 1;
 						default:
 						{
-							var fraction = 1 - Algorithm .clamp ((this .frameRate - FRAME_RATE_MIN) / (FRAME_RATE_MAX - FRAME_RATE_MIN), 0, 1);
+							const fraction = 1 - Algorithm .clamp ((this .frameRate - FRAME_RATE_MIN) / (FRAME_RATE_MAX - FRAME_RATE_MIN), 0, 1);
 
 							return Math .min (Math .floor (fraction * size), size - 1);
 						}
 					}
 				}
 
-				var distance = modelViewMatrix .translate (this .center_ .getValue ()) .origin .abs ();
+				const distance = modelViewMatrix .translate (this .center_ .getValue ()) .origin .abs ();
 
 				return Algorithm .upperBound (this .range_, 0, this .range_ .length, distance, Algorithm .less);
 			};
 		})(),
 		traverse: (function ()
 		{
-			var modelViewMatrix = new Matrix4 ();
+			const modelViewMatrix = new Matrix4 ();
 
 			return function (type, renderObject)
 			{
@@ -354,7 +358,7 @@ function (Fields,
 						if (visibleNode)
 							visibleNode .traverse (type, renderObject);
 
-							const boundedObject = this .boundedObject;
+						const boundedObject = this .boundedObject;
 
 						if (boundedObject)
 							boundedObject .displayBBox (type, renderObject);

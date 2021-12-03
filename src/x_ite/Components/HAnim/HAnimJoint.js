@@ -51,7 +51,6 @@ define ([
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Grouping/X3DGroupingNode",
 	"x_ite/Components/Grouping/X3DTransformNode",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
@@ -61,7 +60,6 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGroupingNode,
           X3DTransformNode,
           TraverseType,
           X3DConstants,
@@ -144,13 +142,13 @@ function (Fields,
 		},
 		set_displacers__: function ()
 		{
-			var displacerNodes = this .displacerNodes;
+			const displacerNodes = this .displacerNodes;
 
 			displacerNodes .length = 0;
 
 			for (var i = 0, length = this .displacers_ .length; i < length; ++ i)
 			{
-				var displacerNode = X3DCast (X3DConstants .HAnimDisplacer, this .displacers_ [i]);
+				const displacerNode = X3DCast (X3DConstants .HAnimDisplacer, this .displacers_ [i]);
 
 				if (displacerNode)
 					displacerNodes .push (displacerNode);
@@ -158,7 +156,7 @@ function (Fields,
 		},
 		getTraverse: (function ()
 		{
-			var base = X3DTransformNode .prototype .getTraverse ();
+			const base = X3DTransformNode .prototype .getTraverse ();
 
 			function traverse (type, renderObject)
 			{
@@ -178,7 +176,7 @@ function (Fields,
 		})(),
 		getGroupTraverse: (function ()
 		{
-			var base = X3DTransformNode .prototype .getGroupTraverse ();
+			const base = X3DTransformNode .prototype .getGroupTraverse ();
 
 			function traverse (type, renderObject)
 			{

@@ -155,7 +155,7 @@ function (Fields,
 		},
 		traverse: (function ()
 		{
-			var viewVolume = new ViewVolume ();
+			const viewVolume = new ViewVolume ();
 
 			viewVolume .intersectsSphere = function () { return true; };
 
@@ -174,7 +174,7 @@ function (Fields,
 						{
 							//console .log ("Rebuilding StaticGroup collisionShapes");
 
-							var
+							const
 								viewVolumes         = renderObject .getViewVolumes (),
 								viewport            = renderObject .getViewport (),
 								projectionMatrix    = renderObject .getProjectionMatrix (),
@@ -191,20 +191,20 @@ function (Fields,
 							modelViewMatrix .pop ();
 							viewVolumes     .pop ();
 
-							var lastCollisionShape = renderObject .getNumCollisionShapes ();
+							const lastCollisionShape = renderObject .getNumCollisionShapes ();
 
 							this .collisionShapes = renderObject .getCollisionShapes () .splice (firstCollisionShape, lastCollisionShape - firstCollisionShape);
 
 							renderObject .setNumCollisionShapes (firstCollisionShape);
 						}
 
-						var
+						const
 							collisionShapes = this .collisionShapes,
 							modelViewMatrix = renderObject .getModelViewMatrix ();
 
 						for (var i = 0, length = collisionShapes .length; i < length; ++ i)
 						{
-							var collisionShape = collisionShapes [i];
+							const collisionShape = collisionShapes [i];
 
 							modelViewMatrix .push ();
 							modelViewMatrix .multLeft (collisionShape .modelViewMatrix);
@@ -220,7 +220,7 @@ function (Fields,
 						{
 							//console .log ("Rebuilding StaticGroup depthShapes");
 
-							var
+							const
 								viewVolumes      = renderObject .getViewVolumes (),
 								viewport         = renderObject .getViewport (),
 								projectionMatrix = renderObject .getProjectionMatrix (),
@@ -237,20 +237,20 @@ function (Fields,
 							modelViewMatrix .pop ();
 							viewVolumes     .pop ();
 
-							var lastDepthShape = renderObject .getNumDepthShapes ();
+							const lastDepthShape = renderObject .getNumDepthShapes ();
 
 							this .depthShapes = renderObject .getDepthShapes () .splice (firstDepthShape, lastDepthShape - firstDepthShape);
 
 							renderObject .setNumDepthShapes (firstDepthShape);
 						}
 
-						var
+						const
 							depthShapes     = this .depthShapes,
 							modelViewMatrix = renderObject .getModelViewMatrix ();
 
 						for (var i = 0, length = depthShapes .length; i < length; ++ i)
 						{
-							var depthShape = depthShapes [i];
+							const depthShape = depthShapes [i];
 
 							modelViewMatrix .push ();
 							modelViewMatrix .multLeft (depthShape .modelViewMatrix);
@@ -266,7 +266,7 @@ function (Fields,
 						{
 							//console .log ("Rebuilding StaticGroup opaqueShapes and transparentShapes");
 
-							var
+							const
 								viewVolumes           = renderObject .getViewVolumes (),
 								viewport              = renderObject .getViewport (),
 								projectionMatrix      = renderObject .getProjectionMatrix (),
@@ -284,7 +284,7 @@ function (Fields,
 							modelViewMatrix .pop ();
 							viewVolumes     .pop ();
 
-							var
+							const
 								lastOpaqueShape      = renderObject .getNumOpaqueShapes (),
 								lastTransparentShape = renderObject .getNumTransparentShapes ();
 
@@ -295,14 +295,14 @@ function (Fields,
 							renderObject .setNumTransparentShapes (firstTransparentShape);
 						}
 
-						var
+						const
 							opaqueShapes      = this .opaqueShapes,
 							transparentShapes = this .transparentShapes,
 							modelViewMatrix   = renderObject .getModelViewMatrix ();
 
 						for (var i = 0, length = opaqueShapes .length; i < length; ++ i)
 						{
-							var opaqueShape = opaqueShapes [i];
+							const opaqueShape = opaqueShapes [i];
 
 							modelViewMatrix .push ();
 							modelViewMatrix .multLeft (opaqueShape .modelViewMatrix);
@@ -312,7 +312,7 @@ function (Fields,
 
 						for (var i = 0, length = transparentShapes .length; i < length; ++ i)
 						{
-							var transparentShape = transparentShapes [i];
+							const transparentShape = transparentShapes [i];
 
 							modelViewMatrix .push ();
 							modelViewMatrix .multLeft (transparentShape .modelViewMatrix);

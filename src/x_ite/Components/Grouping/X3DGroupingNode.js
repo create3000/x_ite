@@ -66,7 +66,7 @@ function (X3DChildNode,
 
 	function remove (array, first, last, range, rfirst, rlast)
 	{
-		var set = { };
+		const set = { };
 
 		for (var i = rfirst; i < rlast; ++ i)
 			set [getId (range [i])] = true;
@@ -120,10 +120,6 @@ function (X3DChildNode,
 		},
 		getBBox: function (bbox, shadow)
 		{
-			return this .getSubBBox (bbox, shadow);
-		},
-		getSubBBox: function (bbox, shadow)
-		{
 			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
 				return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadow);
 
@@ -140,7 +136,7 @@ function (X3DChildNode,
 		},
 		setAllowedTypes: function (type)
 		{
-			var allowedTypes = this .allowedTypes;
+			const allowedTypes = this .allowedTypes;
 
 			allowedTypes .clear ();
 
@@ -163,7 +159,7 @@ function (X3DChildNode,
 				this .children_ .addInterest ("connectChildren", this);
 			}
 
-			var first = this .children_ .length;
+			const first = this .children_ .length;
 
 			this .children_ .insert (this .children_ .length, this .addChildren_, 0, this .addChildren_ .length);
 			this .add (first, this .addChildren_);
@@ -205,7 +201,7 @@ function (X3DChildNode,
 		},
 		clear: function ()
 		{
-			var
+			const
 				maybePickableSensorNodes = this .maybePickableSensorNodes,
 				childNodes               = this .childNodes;
 
@@ -214,7 +210,7 @@ function (X3DChildNode,
 
 			for (var i = 0, length = childNodes .length; i < length; ++ i)
 			{
-				var childNode = childNodes [i];
+				const childNode = childNodes [i];
 
 				childNode .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
 				childNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
@@ -242,13 +238,13 @@ function (X3DChildNode,
 
 			for (var i = 0, v = first, length = children .length; i < length; ++ i, ++ v)
 			{
-				var child = children [i];
+				const child = children [i];
 
 				if (child)
 				{
 					try
 					{
-						var
+						const
 							innerNode = child .getValue () .getInnerNode (),
 							type      = innerNode .getType ();
 
@@ -352,13 +348,13 @@ function (X3DChildNode,
 		{
 			for (var i = 0, length = children .length; i < length; ++ i)
 			{
-				var child = children [i];
+				const child = children [i];
 
 				if (child)
 				{
 					try
 					{
-						var
+						const
 							innerNode = child .getValue () .getInnerNode (),
 							type      = innerNode .getType ();
 
@@ -368,7 +364,7 @@ function (X3DChildNode,
 							{
 								case X3DConstants .X3DPointingDeviceSensorNode:
 								{
-									var index = this .pointingDeviceSensorNodes .indexOf (innerNode);
+									const index = this .pointingDeviceSensorNodes .indexOf (innerNode);
 
 									if (index >= 0)
 										this .pointingDeviceSensorNodes .splice (index, 1);
@@ -377,7 +373,7 @@ function (X3DChildNode,
 								}
 								case X3DConstants .ClipPlane:
 								{
-									var index = this .clipPlaneNodes .indexOf (innerNode);
+									const index = this .clipPlaneNodes .indexOf (innerNode);
 
 									if (index >= 0)
 										this .clipPlaneNodes .splice (index, 1);
@@ -386,7 +382,7 @@ function (X3DChildNode,
 								}
 								case X3DConstants .LocalFog:
 								{
-									var index = this .localFogNodes .indexOf (innerNode);
+									const index = this .localFogNodes .indexOf (innerNode);
 
 									if (index >= 0)
 										this .localFogNodes .splice (index, 1);
@@ -395,7 +391,7 @@ function (X3DChildNode,
 								}
 								case X3DConstants .X3DTextureProjectorNode:
 								{
-									var index = this .textureProjectorNodes .indexOf (innerNode);
+									const index = this .textureProjectorNodes .indexOf (innerNode);
 
 									if (index >= 0)
 										this .textureProjectorNodes .splice (index, 1);
@@ -404,7 +400,7 @@ function (X3DChildNode,
 								}
 								case X3DConstants .X3DLightNode:
 								{
-									var index = this .lightNodes .indexOf (innerNode);
+									const index = this .lightNodes .indexOf (innerNode);
 
 									if (index >= 0)
 										this .lightNodes .splice (index, 1);
@@ -413,7 +409,7 @@ function (X3DChildNode,
 								}
 								case X3DConstants .X3DBindableNode:
 								{
-									var index = this .maybeCameraObjects .indexOf (innerNode);
+									const index = this .maybeCameraObjects .indexOf (innerNode);
 
 									if (index >= 0)
 										this .maybeCameraObjects .splice (index, 1);
@@ -425,7 +421,7 @@ function (X3DChildNode,
 								{
 									innerNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
 
-									var index = this .maybePickableSensorNodes .indexOf (innerNode);
+									const index = this .maybePickableSensorNodes .indexOf (innerNode);
 
 									if (index >= 0)
 										this .maybePickableSensorNodes .splice (index, 1);
@@ -490,7 +486,7 @@ function (X3DChildNode,
 		},
 		set_cameraObjects__: function ()
 		{
-			var
+			const
 				maybeCameraObjects = this .maybeCameraObjects,
 				cameraObjects      = this .cameraObjects;
 
@@ -498,7 +494,7 @@ function (X3DChildNode,
 
 			for (var i = 0, length = maybeCameraObjects .length; i < length; ++ i)
 			{
-				var childNode = maybeCameraObjects [i];
+				const childNode = maybeCameraObjects [i];
 
 				if (childNode .getCameraObject ())
 				{
@@ -520,7 +516,7 @@ function (X3DChildNode,
 		},
 		set_pickableObjects__: function ()
 		{
-			var
+			const
 				maybePickableSensorNodes = this .maybePickableSensorNodes,
 				pickableSensorNodes      = this .pickableSensorNodes,
 				pickableObjects          = this .pickableObjects,
@@ -531,7 +527,7 @@ function (X3DChildNode,
 
 			for (var i = 0, length = maybePickableSensorNodes .length; i < length; ++ i)
 			{
-				var sensorNode = maybePickableSensorNodes [i];
+				const sensorNode = maybePickableSensorNodes [i];
 
 				if (sensorNode .getPickableObject ())
 					pickableSensorNodes .push (sensorNode);
@@ -539,7 +535,7 @@ function (X3DChildNode,
 
 			for (var i = 0, length = childNodes .length; i < length; ++ i)
 			{
-				var childNode = childNodes [i];
+				const childNode = childNodes [i];
 
 				if (childNode .getPickableObject ())
 					pickableObjects .push (childNode);
@@ -553,7 +549,7 @@ function (X3DChildNode,
 		},
 		set_displayNodes__: function ()
 		{
-			var
+			const
 				clipPlaneNodes        = this .clipPlaneNodes,
 				localFogNodes         = this .localFogNodes,
 				lightNodes            = this .lightNodes,
@@ -576,7 +572,7 @@ function (X3DChildNode,
 		},
 		set_visibles__: function ()
 		{
-			var
+			const
 				childNodes   = this .childNodes,
 				visibleNodes = this .visibleNodes;
 
@@ -584,7 +580,7 @@ function (X3DChildNode,
 
 			for (var i = 0, length = childNodes .length; i < length; ++ i)
 			{
-				var childNode = childNodes [i];
+				const childNode = childNodes [i];
 
 				if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
 				{
@@ -603,7 +599,7 @@ function (X3DChildNode,
 		},
 		set_bboxDisplays__: function ()
 		{
-			var
+			const
 				childNodes     = this .childNodes,
 				boundedObjects = this .boundedObjects;
 
@@ -628,14 +624,14 @@ function (X3DChildNode,
 			{
 				case TraverseType .POINTER:
 				{
-					var
+					const
 						pointingDeviceSensorNodes = this .pointingDeviceSensorNodes,
 						clipPlaneNodes            = this .clipPlaneNodes,
 						childNodes                = this .childNodes;
 
 					if (pointingDeviceSensorNodes .length)
 					{
-						var sensors = { };
+						const sensors = { };
 
 						renderObject .getBrowser () .getSensors () .push (sensors);
 
@@ -659,7 +655,7 @@ function (X3DChildNode,
 				}
 				case TraverseType .CAMERA:
 				{
-					var cameraObjects = this .cameraObjects;
+					const cameraObjects = this .cameraObjects;
 
 					for (var i = 0, length = cameraObjects .length; i < length; ++ i)
 						cameraObjects [i] .traverse (type, renderObject);
@@ -670,7 +666,7 @@ function (X3DChildNode,
 				{
 					if (this .getTransformSensors () .size)
 					{
-						var modelMatrix = renderObject .getModelViewMatrix () .get ();
+						const modelMatrix = renderObject .getModelViewMatrix () .get ();
 
 						this .getTransformSensors () .forEach (function (transformSensorNode)
 						{
@@ -678,12 +674,12 @@ function (X3DChildNode,
 						});
 					}
 
-					var pickableSensorNodes = this .pickableSensorNodes;
+					const pickableSensorNodes = this .pickableSensorNodes;
 
 					for (var i = 0, length = pickableSensorNodes .length; i < length; ++ i)
 						pickableSensorNodes [i] .traverse (type, renderObject);
 
-					var
+					const
 						browser          = renderObject .getBrowser (),
 						pickingHierarchy = browser .getPickingHierarchy (),
 						pickableStack    = browser .getPickable ();
@@ -692,14 +688,14 @@ function (X3DChildNode,
 
 					if (pickableStack [pickableStack .length - 1])
 					{
-						var childNodes = this .childNodes;
+						const childNodes = this .childNodes;
 
 						for (var i = 0, length = childNodes .length; i < length; ++ i)
 							childNodes [i] .traverse (type, renderObject);
 					}
 					else
 					{
-						var pickableObjects = this .pickableObjects;
+						const pickableObjects = this .pickableObjects;
 
 						for (var i = 0, length = pickableObjects .length; i < length; ++ i)
 							pickableObjects [i] .traverse (type, renderObject);
@@ -710,7 +706,7 @@ function (X3DChildNode,
 				}
 				case TraverseType .COLLISION:
 				{
-					var
+					const
 						clipPlaneNodes = this .clipPlaneNodes,
 						childNodes     = this .childNodes;
 
@@ -729,7 +725,7 @@ function (X3DChildNode,
 				{
 					// Nodes that are not visible do not cast shadows.
 
-					var
+					const
 						clipPlaneNodes = this .clipPlaneNodes,
 						visibleNodes   = this .visibleNodes;
 
@@ -746,7 +742,7 @@ function (X3DChildNode,
 				}
 				case TraverseType .DISPLAY:
 				{
-					var
+					const
 						displayNodes   = this .displayNodes,
 						visibleNodes   = this .visibleNodes,
 						boundedObjects = this .boundedObjects;
@@ -768,6 +764,8 @@ function (X3DChildNode,
 			}
 		},
 	});
+
+	X3DGroupingNode .prototype .getSubBBox = X3DGroupingNode .prototype .getBBox;
 
 	return X3DGroupingNode;
 });

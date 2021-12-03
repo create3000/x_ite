@@ -148,7 +148,7 @@ function (Fields,
 				this .childNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
 			}
 
-			var whichChoice = this .whichChoice_ .getValue ();
+			const whichChoice = this .whichChoice_ .getValue ();
 
 			if (whichChoice >= 0 && whichChoice < this .children_ .length)
 			{
@@ -164,11 +164,15 @@ function (Fields,
 						this .childNode .visible_     .addInterest ("set_visible__",     this);
 						this .childNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
 					}
+
+					delete this .traverse;
 				}
 			}
 			else
 			{
 				this .childNode = null;
+
+				this .traverse = Function .prototype;
 			}
 
 			this .set_transformSensors__ ();
