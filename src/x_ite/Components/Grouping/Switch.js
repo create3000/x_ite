@@ -137,7 +137,10 @@ function (Fields,
 		set_child__: function ()
 		{
 			if (this .childNode)
-				this .childNode .isCameraObject_ .removeInterest ("set_cameraObject__", this);
+			{
+				this .childNode .isCameraObject_   .removeInterest ("set_cameraObject__",     this);
+				this .childNode .isPickableObject_ .removeInterest ("set_transformSensors__", this);
+			}
 
 			if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
 			{
@@ -153,7 +156,8 @@ function (Fields,
 
 				if (this .childNode)
 				{
-					this .childNode .isCameraObject_ .addInterest ("set_cameraObject__", this);
+					this .childNode .isCameraObject_   .addInterest ("set_cameraObject__",     this);
+					this .childNode .isPickableObject_ .addInterest ("set_transformSensors__", this);
 
 					if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
 					{

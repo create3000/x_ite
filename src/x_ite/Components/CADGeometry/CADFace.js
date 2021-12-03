@@ -130,8 +130,8 @@ function (Fields,
 		{
 			if (this .shapeNode)
 			{
-				this .shapeNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
-				this .shapeNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
+				this .shapeNode .isCameraObject_   .removeInterest ("set_cameraObject__",     this);
+				this .shapeNode .isPickableObject_ .removeInterest ("set_transformSensors__", this);
 
 				this .shapeNode .visible_     .removeInterest ("set_visible__",     this);
 				this .shapeNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
@@ -153,14 +153,11 @@ function (Fields,
 						case X3DConstants .Transform:
 						case X3DConstants .X3DShapeNode:
 						{
-							node .isCameraObject_   .addFieldInterest (this .isCameraObject_);
-							node .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+							node .isCameraObject_   .addInterest ("set_cameraObject__",     this);
+							node .isPickableObject_ .addInterest ("set_transformSensors__", this);
 
 							node .visible_     .addInterest ("set_visible__",     this);
 							node .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
-
-							this .setCameraObject   (node .getCameraObject ());
-							this .setPickableObject (node .getPickableObject ());
 
 							this .shapeNode = node;
 							break;
@@ -168,6 +165,8 @@ function (Fields,
 						default:
 							continue;
 					}
+
+					break;
 				}
 			}
 			catch (error)
@@ -179,12 +178,10 @@ function (Fields,
 			}
 			else
 			{
-				this .setCameraObject   (false);
-				this .setPickableObject (false);
-
 				this .traverse = Function .prototype;
 			}
 
+			this .set_transformSensors__ ();
 			this .set_visible__ ();
 			this .set_bboxDisplay__ ();
 		},
@@ -199,6 +196,10 @@ function (Fields,
 				this .setCameraObject (false);
 			}
 		},
+		set_transformSensors__: function ()
+		{
+			this .setPickableObject (Boolean (this .shapeNode && this .shapeNode .getPickableObject ()));
+		},
 		set_visible__: function ()
 		{
 			if (this .shapeNode)
@@ -207,7 +208,7 @@ function (Fields,
 			}
 			else
 			{
-				this .visibleNode = this .shapeNode;
+				this .visibleNode = null;
 			}
 
 			this .set_cameraObject__ ();
