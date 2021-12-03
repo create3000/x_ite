@@ -222,7 +222,8 @@ msgstr "Téléchargement fini"
 
 #: Browser/X3DBrowser.js:313
 msgid "Failed loading world."
-msgstr "Le chargement des fichiers ayant échoué."
+msgstr "Le chargement des fichiers a échoué."
 
-#~ msgid "Look At"
-#~ msgstr "Regarder un objet de près"
+#: Browser/X3DBrowser.js:313
+msgid "Show World Info"
+msgstr "Afficher World Info"

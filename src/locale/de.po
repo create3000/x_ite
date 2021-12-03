@@ -223,5 +223,6 @@ msgstr "Fertig mit Laden"
 msgid "Failed loading world."
 msgstr "Laden der Dateien fehlgeschlagen."
 
-#~ msgid "Look At"
-#~ msgstr "Auf Objekte zielen"
+#: Browser/X3DBrowser.js:313
+msgid "Show World Info"
+msgstr "World Info anzeigen"
