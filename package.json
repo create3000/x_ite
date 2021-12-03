@@ -58,7 +58,8 @@
 		"requirejs": "^2.3.6",
 		"requirejs-text": "^2.0.15",
 		"sprintf-js": "^1.1.2",
-		"uglify-js-es6": "^2.8.9"
+		"uglify-js-es6": "^2.8.9",
+		"showdown": "^1.9.1"
 	},
 	"scripts": {
 		"lint": "jshint **",
