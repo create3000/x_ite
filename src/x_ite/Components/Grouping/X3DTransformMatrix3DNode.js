@@ -75,6 +75,44 @@ function (X3DGroupingNode,
 	X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
 	{
 		constructor: X3DTransformMatrix3DNode,
+		setMatrix: function (matrix)
+		{
+			if (matrix .equals (Matrix4 .Identity))
+			{
+				this .matrix .identity ();
+
+				this .getBBox  = this .getGetGroupBBox ();
+				this .traverse = this .getGroupTraverse ();
+			}
+			else
+			{
+				this .matrix .assign (matrix);
+
+				this .getBBox  = this .getGetBBox ();
+				this .traverse = this .getTraverse ();
+			}
+		},
+		getMatrix: function ()
+		{
+			return this .matrix;
+		},
+		setTransform: function (t, r, s, so, c)
+		{
+			if (t .equals (Vector3 .Zero) && r .equals (Rotation4 .Identity) && s .equals (Vector3 .One))
+			{
+				this .matrix .identity ();
+
+				this .getBBox  = this .getGetGroupBBox ();
+				this .traverse = this .getGroupTraverse ();
+			}
+			else
+			{
+			   this .matrix .set (t, r, s, so, c);
+
+				this .getBBox  = this .getGetBBox ();
+				this .traverse = this .getTraverse ();
+			}
+		},
 		getGetBBox: (function ()
 		{
 			function getBBox (bbox, shadow)
@@ -90,38 +128,6 @@ function (X3DGroupingNode,
 		getGetGroupBBox: function ()
 		{
 			return X3DGroupingNode .prototype .getBBox;
-		},
-		setMatrix: function (matrix)
-		{
-			if (matrix .equals (Matrix4 .Identity))
-			{
-				this .matrix .identity ();
-				this .traverse = this .getGroupTraverse ();
-			}
-			else
-			{
-				this .matrix .assign (matrix);
-				this .traverse = this .getTraverse ();
-			}
-		},
-		getMatrix: function ()
-		{
-			return this .matrix;
-		},
-		setTransform: function (t, r, s, so, c)
-		{
-			if (t .equals (Vector3 .Zero) && r .equals (Rotation4 .Identity) && s .equals (Vector3 .One))
-			{
-				this .matrix .identity ();
-				this .getBBox  = this .getGetGroupBBox ();
-				this .traverse = this .getGroupTraverse ();
-			}
-			else
-			{
-				this .getBBox  = this .getGetBBox ();
-			   this .matrix .set (t, r, s, so, c);
-				this .traverse = this .getTraverse ();
-			}
 		},
 		getTraverse: (function ()
 		{
