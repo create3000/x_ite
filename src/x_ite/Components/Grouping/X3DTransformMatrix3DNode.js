@@ -87,15 +87,10 @@ function (X3DGroupingNode,
 				return getBBox;
 			};
 		})(),
-		getGetGroupBBox: (function ()
+		getGetGroupBBox: function ()
 		{
-			const getBBox = X3DGroupingNode .prototype .getBBox;
-
-			return function ()
-			{
-				return getBBox;
-			};
-		})(),
+			return X3DGroupingNode .prototype .getBBox;
+		},
 		setMatrix: function (matrix)
 		{
 			if (matrix .equals (Matrix4 .Identity))
