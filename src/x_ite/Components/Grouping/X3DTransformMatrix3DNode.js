@@ -69,6 +69,7 @@ function (X3DGroupingNode,
 		this .addType (X3DConstants .X3DTransformMatrix3DNode);
 
 		this .matrix   = new Matrix4 ();
+		this .getBBox  = this .getGetGroupBBox ();
 		this .traverse = this .getGroupTraverse ();
 	}
 
