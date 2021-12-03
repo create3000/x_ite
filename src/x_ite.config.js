@@ -82,11 +82,6 @@ require .config ({
 			"main": "build/openJPEG-FixedMemory-browser.js"
 		},
 		{
-			"name": "showdown",
-			"location": "../node_modules/showdown/dist",
-			"main": "showdown.js"
-		},
-		{
 			"name": "zlib",
 			"location": "../src",
 			"main": "dummy.js"

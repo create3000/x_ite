@@ -64,6 +64,20 @@ var getScriptURL = (function ()
 	};
 })();
 
+define .show = function ()
+{
+	this   .define = window .define;
+	window .define = this;
+};
+
+define .hide = function ()
+{
+	if (this .define !== undefined)
+		window .define = this .define;
+	else
+		delete window .define;
+};
+
 (function ()
 {
 "use strict";

@@ -51,14 +51,12 @@ define ([
 	"jquery",
 	"x_ite/Basic/X3DBaseNode",
 	"locale/gettext",
-	"showdown",
 	"contextMenu",
 	"lib/jquery.fullscreen-min",
 ],
 function ($,
           X3DBaseNode,
-          _,
-			 showdown)
+          _)
 {
 "use strict";
 
@@ -335,47 +333,54 @@ function ($,
 						className: "context-menu-icon x_ite-private-icon-world-info",
 						callback: function ()
 						{
-							browser .getElement () .find (".x_ite-private-world-info") .remove ();
+							define .show ();
 
-							const
-								converter = new showdown .Converter (),
-								priv      = browser .getElement () .find (".x_ite-private-browser"),
-								div       = $("<div></div>") .addClass ("x_ite-private-world-info") .prependTo (priv),
-								worldInfo = browser .getExecutionContext () .getWorldInfo (),
-								title     = worldInfo .title_ .getValue (),
-								info      = worldInfo .info_;
-
-							converter .setOption ("omitExtraWLInCodeBlocks",            true);
-							converter .setOption ("simplifiedAutoLink",                 true);
-							converter .setOption ("excludeTrailingPunctuationFromURLs", true);
-							converter .setOption ("literalMidWordUnderscores",          true);
-							converter .setOption ("strikethrough",                      true);
-							converter .setOption ("openLinksInNewWindow",               false);
-
-							$("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
-
-							if (title .length)
+							require (["https://cdn.jsdelivr.net/gh/showdownjs/showdown@1.9.1/dist/showdown.min.js"], function (showdown)
 							{
-								$("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
-							}
+								define .hide ();
 
-							for (var i = 0, length = info .length; i < length; ++ i)
-							{
-								$("<div></div>") .addClass ("x_ite-private-world-info-info") .html (converter .makeHtml (info [i])) .appendTo (div);
-							}
+								browser .getElement () .find (".x_ite-private-world-info") .remove ();
 
-							div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
+								const
+									converter = new showdown .Converter (),
+									priv      = browser .getElement () .find (".x_ite-private-browser"),
+									div       = $("<div></div>") .addClass ("x_ite-private-world-info") .prependTo (priv),
+									worldInfo = browser .getExecutionContext () .getWorldInfo (),
+									title     = worldInfo .title_ .getValue (),
+									info      = worldInfo .info_;
 
-							// Open external link in new tab.
-							div .find ("a[href^=http]") .each (function ()
-							{
-								if (this .href .indexOf (location .hostname) !== -1)
-									return;
+								converter .setOption ("omitExtraWLInCodeBlocks",            true);
+								converter .setOption ("simplifiedAutoLink",                 true);
+								converter .setOption ("excludeTrailingPunctuationFromURLs", true);
+								converter .setOption ("literalMidWordUnderscores",          true);
+								converter .setOption ("strikethrough",                      true);
+								converter .setOption ("openLinksInNewWindow",               false);
 
-								$(this) .attr ("target", "_blank");
-							});
+								$("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
 
-							div .on ("click", function () { div .remove (); });
+								if (title .length)
+								{
+									$("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
+								}
+
+								for (var i = 0, length = info .length; i < length; ++ i)
+								{
+									$("<div></div>") .addClass ("x_ite-private-world-info-info") .html (converter .makeHtml (info [i])) .appendTo (div);
+								}
+
+								div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
+
+								// Open external link in new tab.
+								div .find ("a[href^=http]") .each (function ()
+								{
+									if (this .href .indexOf (location .hostname) !== -1)
+										return;
+
+									$(this) .attr ("target", "_blank");
+								});
+
+								div .on ("click", function () { div .remove (); });
+							})
 						},
 					},
 					"about": {
