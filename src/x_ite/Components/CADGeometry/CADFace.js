@@ -73,7 +73,7 @@ function (Fields,
 
 		this .addType (X3DConstants .CADFace);
 
-		this .shapeNode     = null;
+		this .childNode     = null;
 		this .visibleNode   = null;
 		this .boundedObject = null;
 	}
@@ -128,16 +128,16 @@ function (Fields,
 		},
 		set_shape__: function ()
 		{
-			if (this .shapeNode)
+			if (this .childNode)
 			{
-				this .shapeNode .isCameraObject_   .removeInterest ("set_cameraObject__",     this);
-				this .shapeNode .isPickableObject_ .removeInterest ("set_transformSensors__", this);
+				this .childNode .isCameraObject_   .removeInterest ("set_cameraObject__",     this);
+				this .childNode .isPickableObject_ .removeInterest ("set_transformSensors__", this);
 
-				this .shapeNode .visible_     .removeInterest ("set_visible__",     this);
-				this .shapeNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+				this .childNode .visible_     .removeInterest ("set_visible__",     this);
+				this .childNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
 			}
 
-			this .shapeNode = null;
+			this .childNode = null;
 
 			try
 			{
@@ -159,7 +159,7 @@ function (Fields,
 							node .visible_     .addInterest ("set_visible__",     this);
 							node .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
 
-							this .shapeNode = node;
+							this .childNode = node;
 							break;
 						}
 						default:
@@ -172,7 +172,7 @@ function (Fields,
 			catch (error)
 			{ }
 
-			if (this .shapeNode)
+			if (this .childNode)
 			{
 				delete this .traverse;
 			}
@@ -187,9 +187,9 @@ function (Fields,
 		},
 		set_cameraObject__: function ()
 		{
-			if (this .shapeNode && this .shapeNode .getCameraObject ())
+			if (this .childNode && this .childNode .getCameraObject ())
 			{
-				this .setCameraObject (this .shapeNode .visible_ .getValue ());
+				this .setCameraObject (this .childNode .visible_ .getValue ());
 			}
 			else
 			{
@@ -198,13 +198,13 @@ function (Fields,
 		},
 		set_transformSensors__: function ()
 		{
-			this .setPickableObject (Boolean (this .shapeNode && this .shapeNode .getPickableObject ()));
+			this .setPickableObject (Boolean (this .childNode && this .childNode .getPickableObject ()));
 		},
 		set_visible__: function ()
 		{
-			if (this .shapeNode)
+			if (this .childNode)
 			{
-				this .visibleNode = this .shapeNode .visible_ .getValue () ? this .shapeNode : null;
+				this .visibleNode = this .childNode .visible_ .getValue () ? this .childNode : null;
 			}
 			else
 			{
@@ -215,9 +215,9 @@ function (Fields,
 		},
 		set_bboxDisplay__: function ()
 		{
-			if (this .shapeNode)
+			if (this .childNode)
 			{
-				this .boundedObject = this .shapeNode .bboxDisplay_ .getValue () ? this .shapeNode : null;
+				this .boundedObject = this .childNode .bboxDisplay_ .getValue () ? this .childNode : null;
 			}
 			else
 			{
@@ -247,14 +247,14 @@ function (Fields,
 
 					pickingHierarchy .push (this);
 
-					this .shapeNode .traverse (type, renderObject);
+					this .childNode .traverse (type, renderObject);
 
 					pickingHierarchy .pop ();
 					return;
 				}
 				case TraverseType .COLLISION:
 				{
-					this .shapeNode .traverse (type, renderObject);
+					this .childNode .traverse (type, renderObject);
 					return;
 				}
 				case TraverseType .DISPLAY:
