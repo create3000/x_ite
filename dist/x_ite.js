@@ -36516,9 +36516,6 @@ function ($,
 						{
 							browser .getElement () .find (".x_ite-private-world-info") .remove ();
 
-							console .log (showdown)
-							console .log (showdown .Converter)
-
 							const
 								converter = new showdown .Converter (),
 								priv      = browser .getElement () .find (".x_ite-private-browser"),
