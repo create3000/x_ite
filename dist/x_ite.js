@@ -1,4 +1,4 @@
-/* X_ITE v4.6.25a-1075 */
+/* X_ITE v4.6.25a-1076 */
 
 (function () {
 
@@ -13102,13 +13102,13 @@ function ($)
 	{
 		$(function ()
 		{
-		   var elements = $("X3DCanvas");
+		   const elements = $("X3DCanvas");
 
 			Error .fallback (elements, error);
 
 			for (var i = 0; i < fallbacks .length; ++ i)
 			{
-			   var fallback = fallbacks [i];
+			   const fallback = fallbacks [i];
 
 				if (typeof fallback === "function")
 				   fallback (elements, error);
@@ -13122,7 +13122,7 @@ function ($)
 	{
 		console .log (error);
 
-		var consoleElement = $(".x_ite-console");
+		const consoleElement = $(".x_ite-console");
 
 		if (consoleElement .length)
 			consoleElement .append (document .createTextNode (error));
@@ -25524,7 +25524,7 @@ function (SFBool,
 {
 "use strict";
 
-	var Fields = Object .assign (
+	const Fields = Object .assign (
 	{
 		SFBool:      SFBool,
 		SFColor:     SFColor,
@@ -25557,6 +25557,7 @@ function (SFBool,
 
 	return Fields;
 });
+
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -118473,27 +118474,11 @@ function ($,
 	if (! console .warn)  console .warn  = console .log;
 	if (! console .error) console .error = console .log;
 
-	// DEBUG
-	//	function print ()
-	//	{
-	//		var string = "";
-	//
-	//		for (var i = 0; i < arguments .length; ++ i)
-	//			string += arguments [i];
-	//
-	//		$(".x_ite-console") .append (string);
-	//	}
-	//
-	//	console .log   = print;
-	//	console .info  = print;
-	//	console .warn  = print;
-	//	console .error = print;
-
 	// X3D
 
 	function createBrowser (url, parameter)
 	{
-		var element = $("<X3DCanvas></X3DCanvas>");
+		const element = $("<X3DCanvas></X3DCanvas>");
 
 		if (url instanceof Fields .MFString)
 			 element .attr ("url", url .toString ())
@@ -118515,7 +118500,7 @@ function ($,
 		if (dom .find (".x_ite-private-browser") .length)
 			return;
 
-		var browser = new X3DBrowser (dom);
+		const browser = new X3DBrowser (dom);
 
 		dom .data ("browser", browser);
 
@@ -118524,10 +118509,11 @@ function ($,
 		return browser;
 	}
 
-	var
-		initialized = false,
-		callbacks   = $.Deferred (),
-		fallbacks   = $.Deferred ();
+	const
+		callbacks = $.Deferred (),
+		fallbacks = $.Deferred ();
+
+	var initialized = false;
 
 	function X3D (callback, fallback)
 	{
@@ -118544,7 +118530,7 @@ function ($,
 
 		$(function ()
 		{
-			var elements = $("X3DCanvas");
+			const elements = $("X3DCanvas");
 
 			elements .children () .hide ();
 
@@ -118614,7 +118600,7 @@ function ($,
 		SFVec4d:                     Fields .SFVec4d,
 		SFVec4f:                     Fields .SFVec4f,
 		VrmlMatrix:                  Fields .VrmlMatrix,
-							              
+
 		MFBool:                      Fields .MFBool,
 		MFColor:                     Fields .MFColor,
 		MFColorRGBA:                 Fields .MFColorRGBA,
@@ -118689,15 +118675,15 @@ function ($,
  *
  ******************************************************************************/
 
-var module = { };
+const module = { };
 
 require .config ({
 	"waitSeconds": 0,
 });
 
-var getScriptURL = (function ()
+const getScriptURL = (function ()
 {
-	var
+	const
 		scripts = document .getElementsByTagName ('script'),
 		src     = scripts [scripts .length - 1] .src;
 
@@ -118715,10 +118701,12 @@ define .show = function ()
 
 define .hide = function ()
 {
-	if (this .define !== undefined)
-		window .define = this .define;
-	else
+	if (this .define === undefined)
 		delete window .define;
+	else
+		window .define = this .define;
+
+	delete this .define;
 };
 
 (function ()
@@ -118760,9 +118748,9 @@ define .hide = function ()
 		return X_ITE;
 	}
 
-	var
-		X3D_       = window .X3D,
-		PrivateX3D = null;
+	const X3D_ = window .X3D;
+
+	var PrivateX3D = null;
 
 	X_ITE .noConflict = noConflict;
 	X_ITE .require    = require;
@@ -118777,7 +118765,7 @@ define .hide = function ()
 	if (window .Proxy === undefined)
 		return fallback ("Proxy is not defined");
 
-	var
+	const
 		callbacks = [ ],
 		fallbacks = [ ];
 
