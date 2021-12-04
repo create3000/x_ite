@@ -46,15 +46,15 @@
  *
  ******************************************************************************/
 
-var module = { };
+const module = { };
 
 require .config ({
 	"waitSeconds": 0,
 });
 
-var getScriptURL = (function ()
+const getScriptURL = (function ()
 {
-	var
+	const
 		scripts = document .getElementsByTagName ('script'),
 		src     = scripts [scripts .length - 1] .src;
 
@@ -72,10 +72,12 @@ define .show = function ()
 
 define .hide = function ()
 {
-	if (this .define !== undefined)
-		window .define = this .define;
-	else
+	if (this .define === undefined)
 		delete window .define;
+	else
+		window .define = this .define;
+
+	delete this .define;
 };
 
 (function ()
@@ -117,9 +119,9 @@ define .hide = function ()
 		return X_ITE;
 	}
 
-	var
-		X3D_       = window .X3D,
-		PrivateX3D = null;
+	const X3D_ = window .X3D;
+
+	var PrivateX3D = null;
 
 	X_ITE .noConflict = noConflict;
 	X_ITE .require    = require;
@@ -134,7 +136,7 @@ define .hide = function ()
 	if (window .Proxy === undefined)
 		return fallback ("Proxy is not defined");
 
-	var
+	const
 		callbacks = [ ],
 		fallbacks = [ ];
 

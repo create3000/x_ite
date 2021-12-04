@@ -108,27 +108,11 @@ function ($,
 	if (! console .warn)  console .warn  = console .log;
 	if (! console .error) console .error = console .log;
 
-	// DEBUG
-	//	function print ()
-	//	{
-	//		var string = "";
-	//
-	//		for (var i = 0; i < arguments .length; ++ i)
-	//			string += arguments [i];
-	//
-	//		$(".x_ite-console") .append (string);
-	//	}
-	//
-	//	console .log   = print;
-	//	console .info  = print;
-	//	console .warn  = print;
-	//	console .error = print;
-
 	// X3D
 
 	function createBrowser (url, parameter)
 	{
-		var element = $("<X3DCanvas></X3DCanvas>");
+		const element = $("<X3DCanvas></X3DCanvas>");
 
 		if (url instanceof Fields .MFString)
 			 element .attr ("url", url .toString ())
@@ -150,7 +134,7 @@ function ($,
 		if (dom .find (".x_ite-private-browser") .length)
 			return;
 
-		var browser = new X3DBrowser (dom);
+		const browser = new X3DBrowser (dom);
 
 		dom .data ("browser", browser);
 
@@ -159,10 +143,11 @@ function ($,
 		return browser;
 	}
 
-	var
-		initialized = false,
-		callbacks   = $.Deferred (),
-		fallbacks   = $.Deferred ();
+	const
+		callbacks = $.Deferred (),
+		fallbacks = $.Deferred ();
+
+	var initialized = false;
 
 	function X3D (callback, fallback)
 	{
@@ -179,7 +164,7 @@ function ($,
 
 		$(function ()
 		{
-			var elements = $("X3DCanvas");
+			const elements = $("X3DCanvas");
 
 			elements .children () .hide ();
 
@@ -249,7 +234,7 @@ function ($,
 		SFVec4d:                     Fields .SFVec4d,
 		SFVec4f:                     Fields .SFVec4f,
 		VrmlMatrix:                  Fields .VrmlMatrix,
-							              
+
 		MFBool:                      Fields .MFBool,
 		MFColor:                     Fields .MFColor,
 		MFColorRGBA:                 Fields .MFColorRGBA,

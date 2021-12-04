@@ -60,13 +60,13 @@ function ($)
 	{
 		$(function ()
 		{
-		   var elements = $("X3DCanvas");
+		   const elements = $("X3DCanvas");
 
 			Error .fallback (elements, error);
 
 			for (var i = 0; i < fallbacks .length; ++ i)
 			{
-			   var fallback = fallbacks [i];
+			   const fallback = fallbacks [i];
 
 				if (typeof fallback === "function")
 				   fallback (elements, error);
@@ -80,7 +80,7 @@ function ($)
 	{
 		console .log (error);
 
-		var consoleElement = $(".x_ite-console");
+		const consoleElement = $(".x_ite-console");
 
 		if (consoleElement .length)
 			consoleElement .append (document .createTextNode (error));

@@ -86,7 +86,7 @@ function (SFBool,
 {
 "use strict";
 
-	var Fields = Object .assign (
+	const Fields = Object .assign (
 	{
 		SFBool:      SFBool,
 		SFColor:     SFColor,
