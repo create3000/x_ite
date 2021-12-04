@@ -46,7 +46,8 @@
  *
  ******************************************************************************/
 
-const module = { };
+if (typeof module === 'undefined')
+	var module = { };
 
 require .config ({
 	"waitSeconds": 0,
