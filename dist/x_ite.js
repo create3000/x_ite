@@ -1,4 +1,4 @@
-/* X_ITE v4.6.25a-1076 */
+/* X_ITE v4.6.25a-1077 */
 
 (function () {
 
@@ -102160,10 +102160,14 @@ function (Fields,
 				// SCP for the first point:
 				if (closedSpine)
 				{
+					var s = firstSpine;
+
 					// Find first defined Y-axis.
 					for (var i = 1, length = numSpines - 2; i < length; ++ i)
 					{
-						SCPyAxis .assign (spine [i] .getValue ()) .subtract (spine [length] .getValue ()) .normalize ();
+						SCPyAxis .assign (spine [i] .getValue ()) .subtract (s) .normalize ()
+							.subtract (vector3 .assign (spine [length] .getValue ()) .subtract (s) .normalize ())
+							.normalize ();
 
 						if (! SCPyAxis .equals (Vector3 .Zero))
 							break;
@@ -102231,7 +102235,9 @@ function (Fields,
 				{
 					var s = spine [i] .getValue ();
 
-					SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (spine [i - 1] .getValue ()) .normalize ();
+					SCPyAxis .assign (spine [i + 1] .getValue ()) .subtract (s) .normalize ()
+								.subtract (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s) .normalize ())
+								.normalize ();
 					SCPzAxis .assign (spine [i + 1] .getValue ()) .subtract (s)
 					         .cross (vector3 .assign (spine [i - 1] .getValue ()) .subtract (s))
 					         .normalize ();
