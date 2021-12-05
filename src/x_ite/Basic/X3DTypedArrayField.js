@@ -54,7 +54,7 @@ define ([
 	"standard/Math/Algorithm",
 ],
 function (X3DArrayField,
-          X3DConstants, 
+          X3DConstants,
           Generator,
           Algorithm)
 {
@@ -74,7 +74,7 @@ function (X3DArrayField,
 						array      = target .getValue (),
 						components = target .getComponents (),
 						valueType  = target .getValueType ();
-	
+
 					if (index >= target ._length)
 						array = target .resize (index + 1);
 
@@ -86,15 +86,15 @@ function (X3DArrayField,
 					else
 					{
 						// Return reference to index.
-	
+
 						var
 							value         = new (valueType) (),
 							internalValue = value .getValue (),
 							i             = index * components;
-	
+
 						value .addEvent = function () { return addEvent (target, i, internalValue, components); };
 						value .getValue = function () { return getValue (target, i, internalValue, components); };
-	
+
 						return value;
 					}
 				}
@@ -582,7 +582,7 @@ function (X3DArrayField,
 						}
 					}
 				}
-	
+
 				if (! silent)
 					target .addEvent ();
 			}
@@ -656,7 +656,7 @@ function (X3DArrayField,
 					else
 					{
 						for (var c = 0, first = 0; c < components; ++ c, ++ first)
-							value [c] = array [first]; 
+							value [c] = array [first];
 
 						value .toStream (stream);
 					}
@@ -679,10 +679,10 @@ function (X3DArrayField,
 
 							value .set (array [i * components]);
 							value .toStream (stream);
-	
+
 							stream .string += ",\n";
 						}
-	
+
 						stream .string += generator .Indent ();
 						value .set (array [n * components]);
 						value .toStream (stream);
@@ -696,18 +696,18 @@ function (X3DArrayField,
 							stream .string += generator .Indent ();
 
 							for (var c = 0, first = i * components; c < components; ++ c, ++ first)
-								value [c] = array [first]; 
-		
+								value [c] = array [first];
+
 							value .toStream (stream);
-		
+
 							stream .string += ",\n";
 						}
 
 						stream .string += generator .Indent ();
 
 						for (var c = 0, first = n * components; c < components; ++ c, ++ first)
-							value [c] = array [first]; 
-		
+							value [c] = array [first];
+
 						value .toStream (stream);
 						stream .string += "\n";
 					}
@@ -738,7 +738,7 @@ function (X3DArrayField,
 					array      = target .getValue (),
 					components = target .getComponents (),
 					value      = new (target .getSingleType ()) ();
-	
+
 				generator .PushUnitCategory (target .getUnit ());
 
 				if (components === 1)
@@ -760,16 +760,16 @@ function (X3DArrayField,
 					for (var i = 0, n = length - 1; i < n; ++ i)
 					{
 						for (var c = 0, first = i * components; c < components; ++ c, ++ first)
-							value [c] = array [first]; 
-	
+							value [c] = array [first];
+
 						value .toXMLStream (stream);
-	
+
 						stream .string += ", ";
 					}
 
 					for (var c = 0, first = n * components; c < components; ++ c, ++ first)
-						value [c] = array [first]; 
-	
+						value [c] = array [first];
+
 					value .toXMLStream (stream);
 				}
 
