@@ -143,11 +143,11 @@ function (Fields,
 			this .sizeX = this .maximumX - this .minimumX;
 			this .sizeY = this .maximumY - this .minimumY;
 		},
-		transitionStart: function (fromViewpoint)
+		transitionStart: function (layer, fromViewpoint)
 		{
 			this .fromFieldOfViewScale = fromViewpoint .fieldOfViewScale_ .getValue ();
 
-			X3DViewpointNode .prototype .transitionStart .call (this, fromViewpoint);
+			X3DViewpointNode .prototype .transitionStart .call (this, layer, fromViewpoint);
 		},
 		setInterpolators: function (fromViewpoint)
 		{
