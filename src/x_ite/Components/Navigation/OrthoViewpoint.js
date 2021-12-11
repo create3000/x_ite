@@ -143,12 +143,6 @@ function (Fields,
 			this .sizeX = this .maximumX - this .minimumX;
 			this .sizeY = this .maximumY - this .minimumY;
 		},
-		transitionStart: function (layer, fromViewpoint)
-		{
-			this .fromFieldOfViewScale = fromViewpoint .fieldOfViewScale_ .getValue ();
-
-			X3DViewpointNode .prototype .transitionStart .call (this, layer, fromViewpoint);
-		},
 		setInterpolators: function (fromViewpoint)
 		{
 			if (fromViewpoint .getType () .indexOf (X3DConstants .OrthoViewpoint) < 0)
@@ -157,9 +151,9 @@ function (Fields,
 			}
 			else
 			{
-				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (this .fromFieldOfViewScale, this .fieldOfViewScale_ .getValue ());
+				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (fromViewpoint .fieldOfViewScale_ .getValue (), this .fieldOfViewScale_ .getValue ());
 
-				this .fieldOfViewScale_ = this .fromFieldOfViewScale;
+				this .fieldOfViewScale_ = fromViewpoint .fieldOfViewScale_ .getValue ();
 			}
 		},
 		getMinimumX: function ()

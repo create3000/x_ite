@@ -104,13 +104,13 @@ function (X3DBaseNode)
 
 			// Save top node for later use.
 
-			var boundNode = this .top ();
+			const boundNode = this .top ();
 
 			// Remove invisible nodes and unbind them if needed.
 
 			for (var i = 0, length = removedNodes .length; i < length; ++ i)
 			{
-				var
+				const
 					removedNode = removedNodes [i],
 					index       = this .array .indexOf (removedNode);
 
@@ -127,7 +127,7 @@ function (X3DBaseNode)
 
 			// Unbind nodes with set_bind false and pop top node.
 
-			var unbindNodes = changedNodes .filter (node => ! node .set_bind_ .getValue ());
+			const unbindNodes = changedNodes .filter (node => ! node .set_bind_ .getValue ());
 
 			for (var i = 0, length = unbindNodes .length; i < length; ++ i)
 			{
@@ -141,11 +141,11 @@ function (X3DBaseNode)
 
 			// Push nodes with set_bind true to top of stack.
 
-			var bindNodes = changedNodes .filter (node => node .set_bind_ .getValue ());
+			const bindNodes = changedNodes .filter (node => node .set_bind_ .getValue ());
 
 			for (var i = 0, length = bindNodes .length; i < length; ++ i)
 			{
-				var
+				const
 					bindNode = bindNodes [i],
 					index    = this .array .indexOf (bindNode);
 
@@ -159,7 +159,7 @@ function (X3DBaseNode)
 
 			// Bind top node if not bound.
 
-			var top = this .top ();
+			const top = this .top ();
 
 			if (! top .isBound_ .getValue ())
 			{
@@ -170,9 +170,10 @@ function (X3DBaseNode)
 				top .bindTime_ = this .getBrowser () .getCurrentTime ();
 
 				top .transitionStart (layer, boundNode);
-
-				this .addNodeEvent ();
 			}
+
+			if (top !== boundNode)
+				this .addNodeEvent ();
 		},
 	});
 
