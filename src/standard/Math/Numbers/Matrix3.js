@@ -343,9 +343,9 @@ function (Vector2,
 		factor: (function ()
 		{
 			const
-				si   = new Matrix2 (),
-				sosi = new Matrix2 (),
-				b    = new Matrix2 ();
+				si = new Matrix2 (),
+				u  = new Matrix2 (),
+				b  = new Matrix2 ();
 
 			const eigen = { values: [ ], vectors: [[ ], [ ]] };
 
@@ -370,8 +370,8 @@ function (Vector2,
 
 				// Find min / max eigenvalues and do ratio test to determine singularity.
 
-				scaleOrientation .set (e .vectors [0] [0], e .vectors [0] [1],
-				                       e .vectors [1] [0], e .vectors [1] [1]);
+				scaleOrientation .set (e .vectors [0] [0], e .vectors [1] [0],
+				                       e .vectors [0] [1], e .vectors [1] [1]);
 
 				// Compute s = sqrt(evalues), with sign. Set si = s-inverse
 
@@ -382,9 +382,7 @@ function (Vector2,
 				si [3] = 1 / scale .y;
 
 				// (5) Compute U = !R ~S R A.
-				rotation .assign (sosi .assign (scaleOrientation) .multRight (si) .transpose () .multLeft (scaleOrientation) .multRight (a));
-
-				scaleOrientation .transpose ();
+				rotation .assign (u .assign (scaleOrientation) .transpose () .multRight (si) .multRight (scaleOrientation) .multRight (a));
 			};
 		})(),
 		determinant2: function ()

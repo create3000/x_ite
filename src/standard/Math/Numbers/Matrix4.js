@@ -404,9 +404,9 @@ function (Vector3,
 		factor: (function ()
 		{
 			const
-				si   = new Matrix3 (),
-				sosi = new Matrix3 (),
-				b    = new Matrix3 ();
+				si = new Matrix3 (),
+				u  = new Matrix3 (),
+				b  = new Matrix3 ();
 
 			const eigen = { values: [ ], vectors: [[ ], [ ], [ ]] };
 
@@ -431,9 +431,9 @@ function (Vector3,
 
 				// Find min / max eigenvalues and do ratio test to determine singularity.
 
-				scaleOrientation .set (e .vectors [0] [0], e .vectors [0] [1], e .vectors [0] [2],
-				                       e .vectors [1] [0], e .vectors [1] [1], e .vectors [1] [2],
-				                       e .vectors [2] [0], e .vectors [2] [1], e .vectors [2] [2]);
+				scaleOrientation .set (e .vectors [0] [0], e .vectors [1] [0], e .vectors [2] [0],
+				                       e .vectors [0] [1], e .vectors [1] [1], e .vectors [2] [1],
+				                       e .vectors [0] [2], e .vectors [1] [2], e .vectors [2] [2]);
 
 				// Compute s = sqrt(evalues), with sign. Set si = s-inverse
 
@@ -446,10 +446,7 @@ function (Vector3,
 				si [8] = 1 / scale .z;
 
 				// (5) Compute U = !R ~S R A.
-				rotation .assign (sosi .assign (scaleOrientation) .multRight (si) .transpose () .multLeft (scaleOrientation) .multRight (a));
-
-				scaleOrientation .transpose ();
-				return true;
+				rotation .assign (u .assign (scaleOrientation) .transpose () .multRight (si) .multRight (scaleOrientation) .multRight (a));
 			};
 		})(),
 		determinant3: function ()
