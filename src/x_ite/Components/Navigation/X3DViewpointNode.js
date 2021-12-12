@@ -360,14 +360,11 @@ function (Fields,
 		{
 			try
 			{
-				if (! this .getBrowser () .getActiveLayer ())
-					return;
-
 				this .getCameraSpaceMatrix () .multVecMatrix (point);
 
 				Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
 
-				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
+				var minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
 
 				this .lookAt (layerNode, point, minDistance, factor, straighten);
 			}
@@ -380,17 +377,16 @@ function (Fields,
 		{
 			try
 			{
-				if (! this .getBrowser () .getActiveLayer ())
-					return;
-
 				bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
 
-				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
+				var minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
 
-				this .lookAt (layerNode, box .center, minDistance, factor, straighten);
+				this .lookAt (layerNode, bbox .center, minDistance, factor, straighten);
 			}
 			catch (error)
-			{ }
+			{
+				console .log (error);
+			}
 		},
 		lookAt: function (layerNode, point, distance, factor, straighten)
 		{
