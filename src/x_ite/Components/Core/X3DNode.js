@@ -66,70 +66,7 @@ function (X3DBaseNode,
 	X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: X3DNode,
-		getLayers: function ()
-		{
-			return this .findParents (X3DConstants .X3DLayerNode, this);
-		},
-		findParents: function (type, object)
-		{
-			var
-				array = [ ],
-				seen  = new Set ();
-
-			object .getParents () .forEach (function (parent)
-			{
-				this .findParentsImpl (type, parent, array, seen);
-			},
-			this);
-	
-			return array;
-		},
-		findParentsImpl: function (type, object, array, seen)
-		{
-			if (seen .has (object .getId ()))
-				return;
-
-			seen .add (object .getId ());
-
-			if (object instanceof X3DBaseNode)
-			{
-				var types = object .getType ();
-
-				for (var t = types .length - 1; t >= 0; -- t)
-				{
-					switch (types [t])
-					{
-						case X3DConstants .X3DProtoDeclarationNode:
-						case X3DConstants .X3DNode:
-							break;
-						case X3DConstants .LayerSet:
-						case X3DConstants .X3DBaseNode:
-						case X3DConstants .X3DMetadataObject:
-						case X3DConstants .X3DProgrammableShaderObject:
-						case X3DConstants .X3DScriptNode:
-							return;
-						default:
-							continue;
-					}
-		
-					break;
-				}
-
-				if (object .getType () .indexOf (type) !== -1)
-				{
-					array .push (object);
-					return;
-				}
-			}
-
-			object .getParents () .forEach (function (parent)
-			{
-				this .findParentsImpl (type, parent, array, seen);
-			},
-			this);
-		},
 	});
 
 	return X3DNode;
 });
-
