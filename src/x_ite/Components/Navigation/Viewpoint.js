@@ -124,19 +124,21 @@ function (Fields,
 			this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewInterpolator .set_fraction_);
 			this .fieldOfViewInterpolator .value_changed_ .addFieldInterest (this .fieldOfViewScale_);
 		},
-		setInterpolators: function (fromViewpoint)
+		setInterpolators: function (fromViewpointNode, toViewpointNode)
 		{
-			if (fromViewpoint .getType () .indexOf (X3DConstants .Viewpoint) < 0)
+			if (fromViewpointNode .getType () .indexOf (X3DConstants .Viewpoint) >= 0)
 			{
-				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (this .fieldOfViewScale_ .getValue (), this .fieldOfViewScale_ .getValue ());
+				const scale = fromViewpointNode .getFieldOfView () / toViewpointNode .getFieldOfView ();
+
+				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (scale, toViewpointNode .fieldOfViewScale_ .getValue ());
+
+				this .fieldOfViewScale_ = scale;
 			}
 			else
 			{
-				var scale = fromViewpoint .getFieldOfView () / this .getFieldOfView ();
+				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewScale_ .getValue (), toViewpointNode .fieldOfViewScale_ .getValue ());
 
-				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (scale, this .fieldOfViewScale_ .getValue ());
-
-				this .fieldOfViewScale_ = scale;
+				this .fieldOfViewScale_ = toViewpointNode .fieldOfViewScale_ .getValue ();
 			}
 		},
 		getFieldOfView: function ()

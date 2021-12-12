@@ -166,7 +166,7 @@ function (X3DBaseNode,
 
 			var hit = this .getBrowser () .getNearestHit ();
 
-			this .getActiveViewpoint () .lookAtPoint (hit .intersection .point, 2 - 1.618034, straightenHorizon);
+			this .getActiveViewpoint () .lookAtPoint (this .getActiveLayer (), hit .intersection .point, 2 - 1.618034, straightenHorizon);
 		},
 		lookAtBBox: (function ()
 		{
@@ -181,7 +181,7 @@ function (X3DBaseNode,
 
 				hit .shape .getBBox (bbox) .multRight (hit .modelViewMatrix);
 
-				this .getActiveViewpoint () .lookAtBBox (bbox, 2 - 1.618034, straightenHorizon);
+				this .getActiveViewpoint () .lookAtBBox (this .getActiveLayer (), bbox, 2 - 1.618034, straightenHorizon);
 			};
 		})(),
 		touch: function (x, y)

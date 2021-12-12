@@ -130,6 +130,7 @@ function (Fields,
 			this .scaleInterpolator            .setup ();
 			this .scaleOrientationInterpolator .setup ();
 
+			this .timeSensor .isActive_         .addFieldInterest (this .transitionActive_);
 			this .timeSensor .fraction_changed_ .addFieldInterest (this .easeInEaseOut .set_fraction_);
 
 			this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .positionInterpolator         .set_fraction_);
@@ -225,27 +226,34 @@ function (Fields,
 				relativeScale            = new Vector3 (0, 0, 0),
 				relativeScaleOrientation = new Rotation4 (0, 0, 1, 0);
 
-			return function (layer, fromViewpoint)
+			return function (layerNode, fromViewpointNode, toViewpointNode)
 			{
 				try
 				{
-					if (this .jump_ .getValue ())
+					this .to = toViewpointNode;
+
+					if (toViewpointNode .jump_ .getValue ())
 					{
-						var layers = this .getLayers ();
+						if (! toViewpointNode .retainUserOffsets_ .getValue ())
+							toViewpointNode .resetUserOffsets ();
 
-						if (! this .retainUserOffsets_ .getValue ())
-							this .resetUserOffsets ();
+						// Copy from toViewpointNode all fields.
 
-						for (var i = 0; i < layers .length; ++ i)
+						if (this !== toViewpointNode)
 						{
-							var navigationInfo = layers [i] .getNavigationInfo ();
-
-							navigationInfo .transitionStart_ = true;
-
-							var
-								transitionType = navigationInfo .getTransitionType (),
-								transitionTime = navigationInfo .transitionTime_ .getValue ();
+							toViewpointNode .getFields () .forEach (function (field)
+							{
+								this .getFields () .get (field .getName ()) .assign (field);
+							}
+							.bind (this));
 						}
+
+						// Respect NavigationInfo.
+
+						var
+							navigationInfoNode = layerNode .getNavigationInfo (),
+							transitionType     = navigationInfoNode .getTransitionType (),
+							transitionTime     = navigationInfoNode .transitionTime_ .getValue ();
 
 						// VRML behaviour
 
@@ -261,13 +269,14 @@ function (Fields,
 
 						// End VRML behaviour
 
+						if (transitionTime <= 0)
+							transitionType = "TELEPORT";
+
 						switch (transitionType)
 						{
 							case "TELEPORT":
 							{
-								for (var i = 0; i < layers .length; ++ i)
-									layers [i] .getNavigationInfo () .transitionComplete_ = true;
-
+								navigationInfoNode .transitionComplete_ = true;
 								return;
 							}
 							case "ANIMATE":
@@ -286,32 +295,35 @@ function (Fields,
 						this .timeSensor .cycleInterval_ = transitionTime;
 						this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
 						this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
-						this .timeSensor .isActive_ .addInterest ("set_active__", this);
 
-						this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+						this .timeSensor .isActive_ .addInterest ("set_active__", this, navigationInfoNode);
 
-						this .positionInterpolator         .keyValue_ = new Fields .MFVec3f    (relativePosition,         this .positionOffset_);
-						this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (relativeOrientation,      this .orientationOffset_);
-						this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f    (relativeScale,            this .scaleOffset_);
-						this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (relativeScaleOrientation, this .scaleOrientationOffset_);
+						toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+
+						this .positionInterpolator         .keyValue_ = new Fields .MFVec3f    (relativePosition,         toViewpointNode .positionOffset_);
+						this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (relativeOrientation,      toViewpointNode .orientationOffset_);
+						this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f    (relativeScale,            toViewpointNode .scaleOffset_);
+						this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (relativeScaleOrientation, toViewpointNode .scaleOrientationOffset_);
 
 						this .positionOffset_         = relativePosition;
 						this .orientationOffset_      = relativeOrientation;
 						this .scaleOffset_            = relativeScale;
 						this .scaleOrientationOffset_ = relativeScaleOrientation;
 
-						this .setInterpolators (fromViewpoint);
+						this .setInterpolators (fromViewpointNode, toViewpointNode);
+
+						this .transitionActive_ = true;
 					}
 					else
 					{
-						this .getRelativeTransformation (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
+						toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
 
-						this .positionOffset_         = relativePosition;
-						this .orientationOffset_      = relativeOrientation;
-						this .scaleOffset_            = relativeScale;
-						this .scaleOrientationOffset_ = relativeScaleOrientation;
+						toViewpointNode .positionOffset_         = relativePosition;
+						toViewpointNode .orientationOffset_      = relativeOrientation;
+						toViewpointNode .scaleOffset_            = relativeScale;
+						toViewpointNode .scaleOrientationOffset_ = relativeScaleOrientation;
 
-						this .setInterpolators (fromViewpoint);
+						toViewpointNode .setInterpolators (fromViewpointNode, toViewpointNode);
 					}
 				}
 				catch (error)
@@ -334,17 +346,17 @@ function (Fields,
 			this .centerOfRotationOffset_ = Vector3   .Zero;
 			this .fieldOfViewScale_       = 1;
 		},
-		getRelativeTransformation: function (fromViewpoint, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
+		getRelativeTransformation: function (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
 		// throw
 		{
-			var differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpoint .getViewMatrix ()) .inverse ();
+			var differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpointNode .getViewMatrix ()) .inverse ();
 
 			differenceMatrix .get (relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
 
 			relativePosition .subtract (this .getPosition ());
 			relativeOrientation .assign (this .getOrientation () .copy () .inverse () .multRight (relativeOrientation));
 		},
-		lookAtPoint: function (point, factor, straighten)
+		lookAtPoint: function (layerNode, point, factor, straighten)
 		{
 			try
 			{
@@ -357,14 +369,14 @@ function (Fields,
 
 				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
 
-				this .lookAt (point, minDistance, factor, straighten);
+				this .lookAt (layerNode, point, minDistance, factor, straighten);
 			}
 			catch (error)
 			{
 				console .error (error);
 			}
 		},
-		lookAtBBox: function (bbox, factor, straighten)
+		lookAtBBox: function (layerNode, bbox, factor, straighten)
 		{
 			try
 			{
@@ -375,26 +387,23 @@ function (Fields,
 
 				var minDistance = this .getBrowser () .getActiveLayer () .getNavigationInfo () .getNearValue () * 2;
 
-				this .lookAt (bbox .center, minDistance, factor, straighten);
+				this .lookAt (layerNode, box .center, minDistance, factor, straighten);
 			}
 			catch (error)
 			{ }
 		},
-		lookAt: function (point, distance, factor, straighten)
+		lookAt: function (layerNode, point, distance, factor, straighten)
 		{
 			var
-				layers = this .getLayers (),
 				offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
 
-			layers .forEach (function (layer)
-			{
-				layer .getNavigationInfo () .transitionStart_ = true;
-			});
+			layerNode .getNavigationInfo () .transitionStart_ = true;
 
 			this .timeSensor .cycleInterval_ = 0.2;
 			this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
 			this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
-			this .timeSensor .isActive_ .addInterest ("set_active__", this);
+
+			this .timeSensor .isActive_ .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 
 			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
@@ -411,24 +420,20 @@ function (Fields,
 			this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
 			this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
 
-			this .setInterpolators (this);
+			this .setInterpolators (this, this);
 
 			this .centerOfRotationOffset_ = Vector3 .subtract (point, this .getCenterOfRotation ());
 			this .set_bind_               = true;
 		},
-		straighten: function (horizon)
+		straighten: function (layerNode, horizon)
 		{
-			var layers = this .getLayers ();
-
-			layers .forEach (function (layer)
-			{
-				layer .getNavigationInfo () .transitionStart_ = true;
-			});
+			layerNode .getNavigationInfo () .transitionStart_ = true;
 
 			this .timeSensor .cycleInterval_ = 0.4;
 			this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
 			this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
-			this .timeSensor .isActive_ .addInterest ("set_active__", this);
+
+			this .timeSensor .isActive_ .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 
 			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
@@ -439,7 +444,7 @@ function (Fields,
 			this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
 			this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
 
-			this .setInterpolators (this);
+			this .setInterpolators (this, this);
 
 			this .set_bind_ = true;
 		},
@@ -470,18 +475,11 @@ function (Fields,
 				return orientation .multRight (rotation);
 			};
 		})(),
-		set_active__: function (active)
+		set_active__: function (active, navigationInfoNode)
 		{
-			if (! active .getValue () && this .timeSensor .fraction_changed_ .getValue () === 1)
+			if (this .isBound_ .getValue () && ! active .getValue () && this .timeSensor .fraction_changed_ .getValue () === 1)
 			{
-				var layers = this .getLayers ();
-
-				for (var i = 0; i < layers .length; ++ i)
-				{
-					layers [i] .getNavigationInfo () .transitionComplete_ = true;
-				}
-
-				this .easeInEaseOut .set_fraction_ = 1;
+				navigationInfoNode .transitionComplete_ = true;
 			}
 		},
 		set_bound__: function ()
@@ -509,7 +507,7 @@ function (Fields,
 														this .scaleOffset_ .getValue (),
 														this .scaleOrientationOffset_ .getValue ());
 
-				this .cameraSpaceMatrix .multRight (this .modelMatrix);
+				this .cameraSpaceMatrix .multRight ((this .to || this) .modelMatrix);
 
 				this .viewMatrix .assign (this .cameraSpaceMatrix) .inverse ();
 			}

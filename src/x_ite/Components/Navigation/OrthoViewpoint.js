@@ -176,42 +176,45 @@ function (Fields,
 			this .fieldOfViewOffset_ [2] = this .fieldOfViewOffsetInterpolator2 .value_changed_ .getValue ();
 			this .fieldOfViewOffset_ [3] = this .fieldOfViewOffsetInterpolator3 .value_changed_ .getValue ();
 		},
-		setInterpolators: function (fromViewpoint)
+		setInterpolators: function (fromViewpointNode, toViewpointNode)
 		{
-			if (fromViewpoint .getType () .indexOf (X3DConstants .OrthoViewpoint) >= 0)
+			if (fromViewpointNode .getType () .indexOf (X3DConstants .OrthoViewpoint) >= 0)
 			{
 				const
-					length     = this .fieldOfView_ .length,
-					fromLength = fromViewpoint .fieldOfView_ .length;
+					toLength   = toViewpointNode   .fieldOfView_ .length,
+					fromLength = fromViewpointNode .fieldOfView_ .length;
 
 				const
-					offset0 = (fromLength > 0 ? fromViewpoint .fieldOfView_ [0] : -1) - (length > 0 ? this .fieldOfView_ [0] : -1),
-					offset1 = (fromLength > 1 ? fromViewpoint .fieldOfView_ [1] : -1) - (length > 1 ? this .fieldOfView_ [1] : -1),
-					offset2 = (fromLength > 2 ? fromViewpoint .fieldOfView_ [2] :  1) - (length > 2 ? this .fieldOfView_ [2] :  1),
-					offset3 = (fromLength > 3 ? fromViewpoint .fieldOfView_ [3] :  1) - (length > 3 ? this .fieldOfView_ [3] :  1);
+					offset0 = (fromLength > 0 ? fromViewpointNode .fieldOfView_ [0] : -1) - (toLength > 0 ? toViewpointNode .fieldOfView_ [0] : -1),
+					offset1 = (fromLength > 1 ? fromViewpointNode .fieldOfView_ [1] : -1) - (toLength > 1 ? toViewpointNode .fieldOfView_ [1] : -1),
+					offset2 = (fromLength > 2 ? fromViewpointNode .fieldOfView_ [2] :  1) - (toLength > 2 ? toViewpointNode .fieldOfView_ [2] :  1),
+					offset3 = (fromLength > 3 ? fromViewpointNode .fieldOfView_ [3] :  1) - (toLength > 3 ? toViewpointNode .fieldOfView_ [3] :  1);
 
-				this .fieldOfViewOffsetInterpolator0 .keyValue_ = new Fields .MFFloat (offset0, this .fieldOfViewOffset_ [0]);
-				this .fieldOfViewOffsetInterpolator1 .keyValue_ = new Fields .MFFloat (offset1, this .fieldOfViewOffset_ [1]);
-				this .fieldOfViewOffsetInterpolator2 .keyValue_ = new Fields .MFFloat (offset2, this .fieldOfViewOffset_ [2]);
-				this .fieldOfViewOffsetInterpolator3 .keyValue_ = new Fields .MFFloat (offset3, this .fieldOfViewOffset_ [3]);
+				this .fieldOfViewOffsetInterpolator0 .keyValue_ = new Fields .MFFloat (offset0, toViewpointNode .fieldOfViewOffset_ [0]);
+				this .fieldOfViewOffsetInterpolator1 .keyValue_ = new Fields .MFFloat (offset1, toViewpointNode .fieldOfViewOffset_ [1]);
+				this .fieldOfViewOffsetInterpolator2 .keyValue_ = new Fields .MFFloat (offset2, toViewpointNode .fieldOfViewOffset_ [2]);
+				this .fieldOfViewOffsetInterpolator3 .keyValue_ = new Fields .MFFloat (offset3, toViewpointNode .fieldOfViewOffset_ [3]);
 
-				this .fieldOfViewScaleInterpolator .keyValue_ = new Fields .MFFloat (fromViewpoint .fieldOfViewScale_ .getValue (), this .fieldOfViewScale_ .getValue ());
+				this .fieldOfViewScaleInterpolator .keyValue_ = new Fields .MFFloat (fromViewpointNode .fieldOfViewScale_ .getValue (), toViewpointNode .fieldOfViewScale_ .getValue ());
 
 				this .fieldOfViewOffset_ [0] = offset0;
 				this .fieldOfViewOffset_ [1] = offset1;
 				this .fieldOfViewOffset_ [2] = offset2;
 				this .fieldOfViewOffset_ [3] = offset3;
 
-				this .fieldOfViewScale_ = fromViewpoint .fieldOfViewScale_ .getValue ();
+				this .fieldOfViewScale_ = fromViewpointNode .fieldOfViewScale_ .getValue ();
 			}
 			else
 			{
-				this .fieldOfViewOffsetInterpolator0 .keyValue_ = new Fields .MFFloat (this .fieldOfViewOffset_ [0], this .fieldOfViewOffset_ [0]);
-				this .fieldOfViewOffsetInterpolator1 .keyValue_ = new Fields .MFFloat (this .fieldOfViewOffset_ [1], this .fieldOfViewOffset_ [1]);
-				this .fieldOfViewOffsetInterpolator2 .keyValue_ = new Fields .MFFloat (this .fieldOfViewOffset_ [2], this .fieldOfViewOffset_ [2]);
-				this .fieldOfViewOffsetInterpolator3 .keyValue_ = new Fields .MFFloat (this .fieldOfViewOffset_ [3], this .fieldOfViewOffset_ [3]);
+				this .fieldOfViewOffsetInterpolator0 .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewOffset_ [0], toViewpointNode .fieldOfViewOffset_ [0]);
+				this .fieldOfViewOffsetInterpolator1 .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewOffset_ [1], toViewpointNode .fieldOfViewOffset_ [1]);
+				this .fieldOfViewOffsetInterpolator2 .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewOffset_ [2], toViewpointNode .fieldOfViewOffset_ [2]);
+				this .fieldOfViewOffsetInterpolator3 .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewOffset_ [3], toViewpointNode .fieldOfViewOffset_ [3]);
 
-				this .fieldOfViewScaleInterpolator .keyValue_ = new Fields .MFFloat (this .fieldOfViewScale_ .getValue (), this .fieldOfViewScale_ .getValue ());
+				this .fieldOfViewScaleInterpolator .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewScale_ .getValue (), toViewpointNode .fieldOfViewScale_ .getValue ());
+
+				this .fieldOfViewOffset_ = toViewpointNode .fieldOfViewOffset_ .getValue ();
+				this .fieldOfViewScale_  = toViewpointNode .fieldOfViewScale_  .getValue ();
 			}
 		},
 		getMinimumX: function ()

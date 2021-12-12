@@ -54,7 +54,7 @@ function (X3DBaseNode)
 {
 "use strict";
 
-	function BindableList (executionContext, layer, defaultNode)
+	function BindableList (executionContext, defaultNode)
 	{
 		X3DBaseNode .call (this, executionContext);
 
@@ -141,7 +141,7 @@ function (X3DBaseNode)
 		{
 			return this .collected .push (node);
 		},
-		update: function (layer, stack)
+		update: function (layerNode, stack)
 		{
 			var
 				changedNodes = this .collected .filter (node => node .updateTime > this .updateTime),
@@ -175,7 +175,7 @@ function (X3DBaseNode)
 
 			// Update stack.
 
-			stack .update (layer, removedNodes, changedNodes)
+			stack .update (layerNode, removedNodes, changedNodes)
 
 			removedNodes .length = 0;
 

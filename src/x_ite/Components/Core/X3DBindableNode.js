@@ -48,10 +48,12 @@
 
 
 define ([
+	"x_ite/Fields",
 	"x_ite/Components/Core/X3DChildNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DChildNode,
+function (Fields,
+          X3DChildNode,
           X3DConstants)
 {
 "use strict";
@@ -61,6 +63,8 @@ function (X3DChildNode,
 		X3DChildNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DBindableNode);
+
+		this .addChildObjects ("transitionActive", new Fields .SFBool ());
 
 		this .updateTime = 0;
 	}
@@ -82,10 +86,7 @@ function (X3DChildNode,
 		{ },
 		set_bind__: function ()
 		{
-			if (this .set_bind_ .getValue () != this .isBound_ .getValue)
-			{
-				this .updateTime = performance .now () / 1000;
-			}
+			this .updateTime = performance .now () / 1000;
 		},
 	});
 

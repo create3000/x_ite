@@ -54,11 +54,12 @@ function (X3DBaseNode)
 {
 "use strict";
 
-	function BindableStack (executionContext, layer, defaultNode)
+	function BindableStack (executionContext, defaultNode)
 	{
 		X3DBaseNode .call (this, executionContext);
 
-		this .array = [ defaultNode ];
+		this .array          = [ defaultNode ];
+		this .transitionNode = defaultNode .create (executionContext);
 	}
 
 	BindableStack .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -82,7 +83,7 @@ function (X3DBaseNode)
 		},
 		top: function ()
 		{
-			return this .array [this .array .length - 1];
+			return this .transitionNode .transitionActive_ .getValue () ? this .transitionNode : this .array [this .array .length - 1];
 		},
 		pushOnTop: function (node)
 		{
@@ -97,14 +98,16 @@ function (X3DBaseNode)
 
 			this .addNodeEvent ();
 		},
-		update: function (layer, removedNodes, changedNodes)
+		update: function (layerNode, removedNodes, changedNodes)
 		{
 			if (removedNodes .length === 0 && changedNodes .length === 0)
 				return;
 
 			// Save top node for later use.
 
-			const boundNode = this .top ();
+			const
+				fromNode  = this .top (),
+				boundNode = this .array [this .array .length - 1];
 
 			// Remove invisible nodes and unbind them if needed.
 
@@ -131,7 +134,8 @@ function (X3DBaseNode)
 
 			for (var i = 0, length = unbindNodes .length; i < length; ++ i)
 			{
-				unbindNodes [i] .isBound_ = false;
+				if (unbindNodes [i] .isBound_ .getValue ())
+					unbindNodes [i] .isBound_ = false;
 			}
 
 			if (unbindNodes .indexOf (boundNode) > -1)
@@ -159,17 +163,26 @@ function (X3DBaseNode)
 
 			// Bind top node if not bound.
 
-			const top = this .top ();
+			const top = this .array [this .array .length - 1];
 
-			if (! top .isBound_ .getValue ())
+			if ((! top .isBound_ .getValue () || bindNodes .indexOf (top) >= 0) && top !== boundNode)
 			{
-				// Bound node could be the default node, and this node must be unbound here.
-				boundNode .isBound_ = false;
+				// First unbind last bound node.
+
+				boundNode .set_bind_ = false;
+				boundNode .isBound_  = false;
+
+				// Now bind new top node.
 
 				top .isBound_  = true;
 				top .bindTime_ = this .getBrowser () .getCurrentTime ();
 
-				top .transitionStart (layer, boundNode);
+				// Do transition.
+
+				this .transitionNode = top .create (this .getExecutionContext ());
+				this .transitionNode .setup ();
+
+				this .transitionNode .transitionStart (layerNode, fromNode, top);
 			}
 
 			if (top !== boundNode)

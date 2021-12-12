@@ -99,15 +99,15 @@ function (X3DNode,
 		this .defaultBackground     = new Background (executionContext);
 		this .defaultFog            = new Fog (executionContext);
 
-		this .navigationInfoStack = new BindableStack (executionContext, this, this .defaultNavigationInfo);
-		this .viewpointStack      = new BindableStack (executionContext, this, this .defaultViewpoint);
-		this .backgroundStack     = new BindableStack (executionContext, this, this .defaultBackground);
-		this .fogStack            = new BindableStack (executionContext, this, this .defaultFog);
+		this .navigationInfoStack = new BindableStack (executionContext, this .defaultNavigationInfo);
+		this .viewpointStack      = new BindableStack (executionContext, this .defaultViewpoint);
+		this .backgroundStack     = new BindableStack (executionContext, this .defaultBackground);
+		this .fogStack            = new BindableStack (executionContext, this .defaultFog);
 
-		this .navigationInfos = new BindableList (executionContext, this, this .defaultNavigationInfo);
-		this .viewpoints      = new BindableList (executionContext, this, this .defaultViewpoint);
-		this .backgrounds     = new BindableList (executionContext, this, this .defaultBackground);
-		this .fogs            = new BindableList (executionContext, this, this .defaultFog);
+		this .navigationInfos = new BindableList (executionContext, this .defaultNavigationInfo);
+		this .viewpoints      = new BindableList (executionContext, this .defaultViewpoint);
+		this .backgrounds     = new BindableList (executionContext, this .defaultBackground);
+		this .fogs            = new BindableList (executionContext, this .defaultFog);
 
 		this .defaultBackground .setHidden (true);
 		this .defaultFog        .setHidden (true);

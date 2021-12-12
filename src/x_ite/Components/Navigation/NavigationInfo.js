@@ -78,7 +78,6 @@ function (Fields,
 		this .addType (X3DConstants .NavigationInfo);
 
 		this .addChildObjects ("transitionStart",  new Fields .SFBool (),
-		                       "transitionActive", new Fields .SFBool (),
 		                       "availableViewers", new Fields .MFString (),
 		                       "viewer",           new Fields .SFString ("EXAMINE"));
 

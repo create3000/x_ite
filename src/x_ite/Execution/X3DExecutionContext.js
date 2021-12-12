@@ -690,11 +690,7 @@ function (Fields,
 
 				viewpoint .setAnimate (true); // VRML
 
-				if (viewpoint .isBound_ .getValue ())
-					viewpoint .transitionStart (viewpoint);
-
-				else
-					viewpoint .set_bind_ = true;
+				viewpoint .set_bind_ = true;
 			}
 			catch (error)
 			{

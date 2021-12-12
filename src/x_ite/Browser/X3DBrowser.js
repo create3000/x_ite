@@ -648,27 +648,27 @@ function ($,
 		{
 			return this .getRenderingProperties () .getField (name) .getValue ();
 		},
-		firstViewpoint: function (layer)
+		firstViewpoint: function (layerNode)
 		{
-			if (! layer)
-				layer = this .getActiveLayer ();
+			if (! layerNode)
+				layerNode = this .getActiveLayer ();
 
-			if (layer)
+			if (layerNode)
 			{
-				var viewpoints = layer .getUserViewpoints ();
+				var viewpoints = layerNode .getUserViewpoints ();
 
 				if (viewpoints .length)
-					this .bindViewpoint (layer, viewpoints [0]);
+					this .bindViewpoint (layerNode, viewpoints [0]);
 			}
 		},
-		previousViewpoint: function (layer)
+		previousViewpoint: function (layerNode)
 		{
-			if (! layer)
-				layer = this .getActiveLayer ();
+			if (! layerNode)
+				layerNode = this .getActiveLayer ();
 
-			if (layer)
+			if (layerNode)
 			{
-				var viewpoints = layer .getUserViewpoints ();
+				var viewpoints = layerNode .getUserViewpoints ();
 
 				if (viewpoints .length === 0)
 					return;
@@ -686,23 +686,23 @@ function ($,
 				if (index < viewpoints .length)
 				{
 					if (index === 0)
-						this .bindViewpoint (layer, viewpoints [viewpoints .length - 1]);
+						this .bindViewpoint (layerNode, viewpoints [viewpoints .length - 1]);
 
 					else
-						this .bindViewpoint (layer, viewpoints [index - 1]);
+						this .bindViewpoint (layerNode, viewpoints [index - 1]);
 				}
 				else
-					this .bindViewpoint (layer, viewpoints [viewpoints .length - 1]);
+					this .bindViewpoint (layerNode, viewpoints [viewpoints .length - 1]);
 			}
 		},
-		nextViewpoint: function (layer)
+		nextViewpoint: function (layerNode)
 		{
-			if (! layer)
-				layer = this .getActiveLayer ();
+			if (! layerNode)
+				layerNode = this .getActiveLayer ();
 
-			if (layer)
+			if (layerNode)
 			{
-				var viewpoints = layer .getUserViewpoints ();
+				var viewpoints = layerNode .getUserViewpoints ();
 
 				if (viewpoints .length === 0)
 					return;
@@ -720,48 +720,37 @@ function ($,
 				if (index < viewpoints .length)
 				{
 					if (index === viewpoints .length - 1)
-						this .bindViewpoint (layer, viewpoints [0]);
+						this .bindViewpoint (layerNode, viewpoints [0]);
 
 					else
-						this .bindViewpoint (layer, viewpoints [index + 1]);
+						this .bindViewpoint (layerNode, viewpoints [index + 1]);
 				}
 				else
-					this .bindViewpoint (layer, viewpoints [0]);
+					this .bindViewpoint (layerNode, viewpoints [0]);
 			}
 		},
-		lastViewpoint: function (layer)
+		lastViewpoint: function (layerNode)
 		{
-			if (! layer)
-				layer = this .getActiveLayer ();
+			if (! layerNode)
+				layerNode = this .getActiveLayer ();
 
-			if (layer)
+			if (layerNode)
 			{
-				var viewpoints = layer .getUserViewpoints ();
+				var viewpoints = layerNode .getUserViewpoints ();
 
 				if (viewpoints .length)
-					this .bindViewpoint (layer, viewpoints [viewpoints .length - 1]);
+					this .bindViewpoint (layerNode, viewpoints [viewpoints .length - 1]);
 			}
 		},
-		changeViewpoint: function (name)
+		bindViewpoint: function (layerNode, viewpointNode)
 		{
-			try
-			{
-				this .currentScene .changeViewpoint (name);
-			}
-			catch (error)
-			{
-				console .log (error .message);
-			}
-		},
-		bindViewpoint: function (layer, viewpoint)
-		{
-			viewpoint .setAnimate (true); // VRML
+			viewpointNode .setAnimate (true); // VRML
 
-			if (viewpoint .isBound_ .getValue ())
-				viewpoint .transitionStart (layer, viewpoint);
+			if (viewpointNode .isBound_ .getValue ())
+				viewpointNode .transitionStart (layerNode, viewpointNode, viewpointNode);
 
 			else
-				viewpoint .set_bind_ = true;
+				viewpointNode .set_bind_ = true;
 		},
 		addRoute: function (fromNode, fromEventOut, toNode, toEventIn)
 		{

@@ -179,7 +179,7 @@ function ($,
 									const activeViewpoint = browser .getActiveViewpoint ();
 
 									if (activeViewpoint)
-										activeViewpoint .straighten (true);
+										activeViewpoint .straighten (browser .getActiveLayer (), true);
 								}
 								else
 								{
