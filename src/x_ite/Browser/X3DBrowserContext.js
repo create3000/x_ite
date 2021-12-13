@@ -248,7 +248,11 @@ function ($,
 
 			this .changedTime = this .getCurrentTime ();
 
-			requestAnimationFrame (this .renderCallback);
+			this .requestAnimationFrame ();
+		},
+		requestAnimationFrame: function ()
+		{
+			window .requestAnimationFrame (this .renderCallback);
 		},
 		traverse: function (time)
 		{
