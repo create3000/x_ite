@@ -208,15 +208,15 @@ function (Fields,
 		{
 			return 1;
 		},
-		setAnimate: function (value)
+		setVRMLTransition: function (value)
 		{
 			// VRML behaviour support.
-			this .animate = value;
+			this .VRMLTransition = value;
 		},
-		getAnimate: function ()
+		getVRMLTransition: function ()
 		{
 			// VRML behaviour support.
-			return this .animate;
+			return this .VRMLTransition;
 		},
 		transitionStart: (function ()
 		{
@@ -259,13 +259,13 @@ function (Fields,
 
 						if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
 						{
-							if (this .getAnimate ())
+							if (this .getVRMLTransition ())
 								transitionType = "LINEAR";
 							else
 								transitionType = "TELEPORT";
 						}
 
-						this .setAnimate (false); // VRML
+						this .setVRMLTransition (false);
 
 						// End VRML behaviour
 

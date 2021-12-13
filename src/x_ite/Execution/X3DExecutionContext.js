@@ -691,13 +691,13 @@ function (Fields,
 
 					if (layerNode)
 					{
-						viewpointNode .setAnimate (true); // VRML
+						viewpointNode .setVRMLTransition (true);
 						viewpointNode .transitionStart (layerNode, viewpointNode, viewpointNode);
 					}
 				}
 				else
 				{
-					viewpointNode .setAnimate (true); // VRML
+					viewpointNode .setVRMLTransition (true);
 
 					viewpointNode .set_bind_ = true;
 				}

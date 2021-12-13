@@ -755,7 +755,7 @@ function ($,
 		},
 		bindViewpoint: function (layerNode, viewpointNode)
 		{
-			viewpointNode .setAnimate (true); // VRML
+			viewpointNode .setVRMLTransition (true);
 
 			if (viewpointNode .isBound_ .getValue ())
 				viewpointNode .transitionStart (layerNode, viewpointNode, viewpointNode);
