@@ -742,6 +742,17 @@ function ($,
 					this .bindViewpoint (layerNode, viewpoints [viewpoints .length - 1]);
 			}
 		},
+		changeViewpoint: function (name)
+		{
+			try
+			{
+				this .currentScene .changeViewpoint (name);
+			}
+			catch (error)
+			{
+				console .log (error .message);
+			}
+		},
 		bindViewpoint: function (layerNode, viewpointNode)
 		{
 			viewpointNode .setAnimate (true); // VRML

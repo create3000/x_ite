@@ -679,20 +679,30 @@ function (Fields,
 		},
 		changeViewpoint: function (name)
 		{
-			try
+			const
+				namedNode = this .getNamedNode (name),
+				viewpointNode = X3DCast (X3DConstants .X3DViewpointNode, namedNode);
+
+			if (viewpointNode)
 			{
-				var
-					namedNode = this .getNamedNode (name),
-					viewpoint = X3DCast (X3DConstants .X3DViewpointNode, namedNode);
+				if (viewpointNode .isBound_ .getValue ())
+				{
+					const layerNode = this .getBrowser () .getActiveLayer ();
 
-				if (! viewpoint)
-					throw 1;
+					if (layerNode)
+					{
+						viewpointNode .setAnimate (true); // VRML
+						viewpointNode .transitionStart (layerNode, viewpointNode, viewpointNode);
+					}
+				}
+				else
+				{
+					viewpointNode .setAnimate (true); // VRML
 
-				viewpoint .setAnimate (true); // VRML
-
-				viewpoint .set_bind_ = true;
+					viewpointNode .set_bind_ = true;
+				}
 			}
-			catch (error)
+			else
 			{
 				if (! this .isRootContext ())
 					this .getExecutionContext () .changeViewpoint (name);
