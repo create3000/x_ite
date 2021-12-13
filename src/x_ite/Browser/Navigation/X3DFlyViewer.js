@@ -130,6 +130,11 @@ function ($,
 			this .orientationChaser .duration_ = ROTATE_TIME;
 			this .orientationChaser .setPrivate (true);
 			this .orientationChaser .setup ();
+
+			// Preload line shader.
+
+			if (browser .getBrowserOption ("Rubberband"))
+				browser .getLineShader ();
 		},
 		addCollision: function () { },
 		removeCollision: function () { },
