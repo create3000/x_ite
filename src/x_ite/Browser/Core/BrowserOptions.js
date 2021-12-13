@@ -56,6 +56,7 @@ define ([
 	"x_ite/Browser/Core/PrimitiveQuality",
 	"x_ite/Browser/Core/Shading",
 	"x_ite/Browser/Core/TextureQuality",
+	"x_ite/Browser/Navigation/X3DFlyViewer",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,10 +65,11 @@ function (Fields,
           X3DConstants,
           PrimitiveQuality,
           Shading,
-          TextureQuality)
+          TextureQuality,
+          X3DFlyViewer)
 {
 "use strict";
-	
+
 	function toBoolean (value, defaultValue)
 	{
 		if (value === "true" || value === "TRUE")
@@ -125,7 +127,7 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DBaseNode .prototype .initialize .call (this);
-			
+
 			this .SplashScreen_              .addInterest ("set_splashScreen__",           this);
 			this .Rubberband_                .addInterest ("set_rubberband__",             this);
 			this .PrimitiveQuality_          .addInterest ("set_primitiveQuality__",       this);
@@ -223,6 +225,9 @@ function (Fields,
 		set_rubberband__: function (rubberband)
 		{
 			this .getBrowser () .getLocalStorage () ["BrowserOptions.Rubberband"] = rubberband .getValue ();
+
+			if (rubberband .getValue () && this .getBrowser () .getViewer () instanceof X3DFlyViewer)
+				this .getBrowser () .getLineShader ();
 		},
 		set_primitiveQuality__: function (value)
 		{
@@ -326,7 +331,7 @@ function (Fields,
 					textureProperties .minificationFilter_  = "NICEST";
 					textureProperties .textureCompression_  = "NICEST";
 					textureProperties .generateMipMaps_     = true;
-			
+
 					//glHint (GL_GENERATE_MIPMAP_HINT,        GL_NICEST);
 					//glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 					break;
@@ -423,13 +428,13 @@ function (Fields,
 				browser .getGouraudShader () .parts_ [0] .getValue () .url_ .addEvent ();
 				browser .getGouraudShader () .parts_ [1] .getValue () .url_ .addEvent ();
 			}
-	
+
 			if (browser .hasPhongShader ())
 			{
 				browser .getPhongShader () .parts_ [0] .getValue () .url_ .addEvent ();
 				browser .getPhongShader () .parts_ [1] .getValue () .url_ .addEvent ();
 			}
-	
+
 			if (browser .hasShadowShader ())
 			{
 				browser .getShadowShader () .parts_ [0] .getValue () .url_ .addEvent ();

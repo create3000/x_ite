@@ -293,12 +293,11 @@ function ($,
 			event .preventDefault ();
 			event .stopImmediatePropagation ();
 
-			var
+			const
 				element = this .getBrowser () .getSurface (),
 				offset  = element .offset (),
 				x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
 				y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
-;
 
 			this .disconnect ();
 			this .lookAtBBox (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
