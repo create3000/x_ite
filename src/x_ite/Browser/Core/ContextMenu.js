@@ -167,9 +167,9 @@ function ($,
 						type: "checkbox",
 						selected: browser .getBrowserOption ("StraightenHorizon"),
 						events: {
-							click: function ()
+							click: function (event)
 							{
-								const straightenHorizon = ! browser .getBrowserOption ("StraightenHorizon");
+								const straightenHorizon = $(event .target) .is (":checked");
 
 								browser .setBrowserOption ("StraightenHorizon", straightenHorizon);
 
@@ -292,9 +292,9 @@ function ($,
 						type: "checkbox",
 						selected: browser .getBrowserOption ("Rubberband"),
 						events: {
-							click: function ()
+							click: function (event)
 							{
-								const rubberband = ! browser .getBrowserOption ("Rubberband");
+								const rubberband = $(event .target) .is (":checked");
 
 								browser .setBrowserOption ("Rubberband", rubberband);
 
@@ -311,9 +311,9 @@ function ($,
 						type: "checkbox",
 						selected: browser .getBrowserTimings () .getEnabled (),
 						events: {
-							click: function ()
+							click: function (event)
 							{
-								browser .getBrowserTimings () .setEnabled (! browser .getBrowserTimings () .getEnabled ());
+								browser .getBrowserTimings () .setEnabled ($(event .target) .is (":checked"));
 								browser .getSurface () .focus ();
 							}
 							.bind (this),
