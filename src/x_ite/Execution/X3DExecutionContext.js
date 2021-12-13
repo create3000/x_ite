@@ -680,7 +680,7 @@ function (Fields,
 		changeViewpoint: function (name)
 		{
 			const
-				namedNode = this .getNamedNode (name),
+				namedNode     = this .getNamedNode (name),
 				viewpointNode = X3DCast (X3DConstants .X3DViewpointNode, namedNode);
 
 			if (viewpointNode)
