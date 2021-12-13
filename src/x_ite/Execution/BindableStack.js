@@ -165,7 +165,7 @@ function (X3DBaseNode)
 
 			const top = this .array [this .array .length - 1];
 
-			if ((! top .isBound_ .getValue () || bindNodes .indexOf (top) >= 0) && top !== boundNode)
+			if (top !== boundNode)
 			{
 				// First unbind last bound node.
 
@@ -183,10 +183,9 @@ function (X3DBaseNode)
 				this .transitionNode .setup ();
 
 				this .transitionNode .transitionStart (layerNode, fromNode, top);
-			}
 
-			if (top !== boundNode)
 				this .addNodeEvent ();
+			}
 		},
 	});
 
