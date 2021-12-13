@@ -121,44 +121,32 @@ function (X3DBaseNode)
 				{
 					this .array .splice (index, 1);
 				}
-
-				if (removedNode .isBound_ .getValue ())
-				{
-					removedNode .isBound_ = false;
-				}
 			}
 
 			// Unbind nodes with set_bind false and pop top node.
 
-			const unbindNodes = changedNodes .filter (node => ! node .set_bind_ .getValue ());
-
-			for (var i = 0, length = unbindNodes .length; i < length; ++ i)
-			{
-				if (unbindNodes [i] .isBound_ .getValue ())
-					unbindNodes [i] .isBound_ = false;
-			}
-
-			if (unbindNodes .indexOf (boundNode) > -1)
+			if (changedNodes .some (node => ! node .set_bind_ .getValue () && node === boundNode))
 			{
 				this .array .pop ();
 			}
 
 			// Push nodes with set_bind true to top of stack.
 
-			const bindNodes = changedNodes .filter (node => node .set_bind_ .getValue ());
-
-			for (var i = 0, length = bindNodes .length; i < length; ++ i)
+			for (var i = 0, length = changedNodes .length; i < length; ++ i)
 			{
-				const
-					bindNode = bindNodes [i],
-					index    = this .array .indexOf (bindNode);
+				const bindNode = changedNodes [i];
 
-				if (index > -1)
+				if (bindNode .set_bind_ .getValue ())
 				{
-					this .array .splice (index, 1);
-				}
+					const index = this .array .indexOf (bindNode);
 
-				this .array .push (bindNode);
+					if (index > -1)
+					{
+						this .array .splice (index, 1);
+					}
+
+					this .array .push (bindNode);
+				}
 			}
 
 			// Bind top node if not bound.
@@ -174,14 +162,15 @@ function (X3DBaseNode)
 
 				// Now bind new top node.
 
-				top .isBound_  = true;
-				top .bindTime_ = this .getBrowser () .getCurrentTime ();
+				top .set_bind_  = true;
+				top .isBound_   = true;
+				top .bindTime_  = this .getBrowser () .getCurrentTime ();
 
 				// Do transition.
 
 				this .transitionNode = top .create (this .getExecutionContext ());
-				this .transitionNode .setup ();
 
+				this .transitionNode .setup ();
 				this .transitionNode .transitionStart (layerNode, fromNode, top);
 
 				this .addNodeEvent ();
