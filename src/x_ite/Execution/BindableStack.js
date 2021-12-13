@@ -153,28 +153,28 @@ function (X3DBaseNode)
 
 			const top = this .array [this .array .length - 1];
 
-			if (top !== boundNode)
-			{
-				// First unbind last bound node.
+			if (top === boundNode)
+				return;
 
-				boundNode .set_bind_ = false;
-				boundNode .isBound_  = false;
+			// First unbind last bound node.
 
-				// Now bind new top node.
+			boundNode .set_bind_ = false;
+			boundNode .isBound_  = false;
 
-				top .set_bind_  = true;
-				top .isBound_   = true;
-				top .bindTime_  = this .getBrowser () .getCurrentTime ();
+			// Now bind new top node.
 
-				// Do transition.
+			top .set_bind_  = true;
+			top .isBound_   = true;
+			top .bindTime_  = this .getBrowser () .getCurrentTime ();
 
-				this .transitionNode = top .create (this .getExecutionContext ());
+			// Do transition.
 
-				this .transitionNode .setup ();
-				this .transitionNode .transitionStart (layerNode, fromNode, top);
+			this .transitionNode = top .create (this .getExecutionContext ());
 
-				this .addNodeEvent ();
-			}
+			this .transitionNode .setup ();
+			this .transitionNode .transitionStart (layerNode, fromNode, top);
+
+			this .addNodeEvent ();
 		},
 	});
 
