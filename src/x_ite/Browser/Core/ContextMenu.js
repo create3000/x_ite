@@ -120,14 +120,15 @@ function ($,
 		},
 		build: function (trigger, event)
 		{
-			var
+			const
 				browser          = this .getBrowser (),
 				activeLayer      = browser .getActiveLayer (),
 				currentViewpoint = activeLayer ? activeLayer .getViewpoint () : null,
 				currentViewer    = browser .viewer_ .getValue (),
-				fullscreen       = browser .getElement () .fullScreen ();
+				fullscreen       = browser .getElement () .fullScreen (),
+				leftSubMenus     = $(window) .width () - event .pageX < 370;
 
-			var menu = {
+			const menu = {
 				className: "x_ite-private-menu x_ite-private-menu-title",
 				items: {
 					"separator0": "--------",
@@ -393,6 +394,9 @@ function ($,
 					},
 				}
 			};
+
+			if (leftSubMenus)
+				menu .className += " x_ite-private-menu-submenus-left";
 
 			if ($.isEmptyObject (menu .items .viewpoints .items))
 			{

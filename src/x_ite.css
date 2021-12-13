@@ -268,6 +268,7 @@ X3DCanvas .x_ite-private-world-info a {
  * Date: 2015-09-20T18:47:54.927Z
  */
 
+/* fullscreen support */
 X3DCanvas #context-menu-layer {
 	z-index: 0 !important;
 }
@@ -434,6 +435,12 @@ X3DCanvas #context-menu-layer {
 	/* re-positioned by js */
 	right: -5px;
 	display: none;
+}
+
+/* display submenus on left side if there is no space on right side */
+.x_ite-private-menu.x_ite-private-menu-submenus-left .context-menu-item > .context-menu-list {
+	right: 193px !important;
+	left: unset !important;
 }
 
 .x_ite-private-menu .context-menu-item:hover > .context-menu-list {
