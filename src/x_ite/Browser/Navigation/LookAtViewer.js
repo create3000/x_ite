@@ -142,8 +142,6 @@ function ($,
 			if (this .button >= 0)
 				return;
 
-			this .pressTime = performance .now ();
-
 			var
 				offset = this .getBrowser () .getSurface () .offset (),
 				x      = event .pageX - offset .left,

@@ -90,8 +90,6 @@ function ($,
 
 	function X3DBrowser (element)
 	{
-		//this .loadTime = performance .now () / 1000;
-
 		X3DBrowserContext .call (this, element);
 
 		this .currentSpeed     = 0;
@@ -119,8 +117,6 @@ function ($,
 		},
 		initialize: function ()
 		{
-			//console .log (performance .now () / 1000 - this .loadTime);
-
 			X3DBrowserContext .prototype .initialize .call (this);
 
 			var urlCharacters = this .getElement () .attr ("src");
