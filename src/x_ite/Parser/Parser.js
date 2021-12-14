@@ -58,8 +58,7 @@ function (Fields,
           X3DParser,
           X3DExternProtoDeclaration,
           X3DProtoDeclaration,
-          X3DConstants,
-			 microtime)
+          X3DConstants)
 {
 "use strict";
 

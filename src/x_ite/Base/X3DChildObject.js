@@ -50,8 +50,7 @@
 define ([
 	"x_ite/Base/X3DObject",
 ],
-function (X3DObject,
-	       microtime)
+function (X3DObject)
 {
 "use strict";
 

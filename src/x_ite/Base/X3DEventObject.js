@@ -52,8 +52,7 @@ define ([
 	"x_ite/Base/Events",
 ],
 function (X3DChildObject,
-	       Events,
-			 microtime)
+	       Events)
 {
 "use strict";
 
