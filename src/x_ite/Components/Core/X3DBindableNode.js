@@ -65,8 +65,6 @@ function (Fields,
 		this .addType (X3DConstants .X3DBindableNode);
 
 		this .addChildObjects ("transitionActive", new Fields .SFBool ());
-
-		this .updateTime = 0;
 	}
 
 	X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
