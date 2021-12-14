@@ -49,7 +49,6 @@
 
 define ([
 	"x_ite/Base/X3DObject",
-	"standard/Time/MicroTime",
 ],
 function (X3DObject,
 	       microtime)
@@ -86,7 +85,7 @@ function (X3DObject,
 		},
 		addEvent: function ()
 		{
-			this ._modificationTime = microtime .now () / 1e6;
+			this ._modificationTime = performance .now () / 1000;
 
 			this ._parents .forEach (function (parent)
 			{
@@ -96,7 +95,7 @@ function (X3DObject,
 		},
 		addEventObject: function (field, event)
 		{
-			this ._modificationTime = microtime .now () / 1e6;
+			this ._modificationTime = performance .now () / 1000;
 
 			this ._parents .forEach (function (parent)
 			{

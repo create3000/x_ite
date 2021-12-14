@@ -51,22 +51,27 @@ define (function ()
 {
 "use strict";
 
-	var offset = 0;
-
-	const microtime =
+	performance .now = (function ()
 	{
-		reset: function ()
-		{
-			offset = 0;
-		},
-		now: (function ()
-		{
-			return function ()
-			{
-				return performance .now () * 1000 + (offset = (offset + 1) % 1000);
-			}
-		})(),
-	};
+		const now = performance .now;
 
-	return microtime;
+		var
+			offset = 0,
+			last   = 0;
+
+		return function ()
+		{
+			const current = now .call (performance);
+
+			if (current !== last)
+			{
+				offset = 0;
+				last   = current;
+
+				return current;
+			}
+
+			return current + (++ offset / 1000);
+		};
+	})();
 });

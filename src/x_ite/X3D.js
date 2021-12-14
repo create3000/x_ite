@@ -72,6 +72,7 @@ define ([
 	"x_ite/Routing/X3DRoute",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Networking/urls",
+	"standard/Time/MicroTime",
 ],
 function ($,
           Error,
@@ -96,7 +97,8 @@ function ($,
           RouteArray,
           X3DRoute,
           X3DConstants,
-          urls)
+          urls,
+			 microtime)
 {
 "use strict";
 

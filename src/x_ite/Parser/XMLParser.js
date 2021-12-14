@@ -59,7 +59,6 @@ define ([
 	"x_ite/Prototype/X3DExternProtoDeclaration",
 	"x_ite/Prototype/X3DProtoDeclaration",
 	"x_ite/Bits/X3DConstants",
-	"standard/Time/MicroTime",,
 ],
 function ($,
           X3DField,
@@ -922,7 +921,7 @@ function ($,
 				if (field)
 				{
 					field .push (xmlElement .data);
-					field .setModificationTime (microtime .now () / 1e6);
+					field .setModificationTime (performance .now () / 1000);
 				}
 			}
 		},
@@ -1000,7 +999,7 @@ function ($,
 			if (value === null)
 				return;
 
-			field .setModificationTime (microtime .now () / 1e6);
+			field .setModificationTime (performance .now () / 1000);
 
 			this .parser .pushExecutionContext (this .getExecutionContext ());
 
@@ -1025,12 +1024,12 @@ function ($,
 				{
 					case X3DConstants .SFNode:
 						parent .setValue (node);
-						parent .setModificationTime (microtime .now () / 1e6);
+						parent .setModificationTime (performance .now () / 1000);
 						return;
 
 					case X3DConstants .MFNode:
 						parent .push (node);
-						parent .setModificationTime (microtime .now () / 1e6);
+						parent .setModificationTime (performance .now () / 1000);
 						return;
 				}
 
@@ -1057,12 +1056,12 @@ function ($,
 				{
 					case X3DConstants .SFNode:
 						field .setValue (node);
-						field .setModificationTime (microtime .now () / 1e6);
+						field .setModificationTime (performance .now () / 1000);
 						return;
 
 					case X3DConstants .MFNode:
 						field .push (node);
-						field .setModificationTime (microtime .now () / 1e6);
+						field .setModificationTime (performance .now () / 1000);
 						return;
 				}
 			}
