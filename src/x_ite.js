@@ -177,25 +177,18 @@ define .hide = function ()
 		return this[n];
 	}
 
-	if (Array .prototype .at === undefined)
+	const TypedArray = Reflect .getPrototypeOf (Int8Array);
+	for (const C of [Array, String, TypedArray])
 	{
-		Object .defineProperty (Array .prototype, "at",
+		if (C .prototype .at === undefined)
 		{
-			value: at,
-			writable: true,
-			enumerable: false,
-			configurable: true,
-		});
-	}
-
-	if (String .prototype .at === undefined)
-	{
-		Object .defineProperty (String .prototype, "at",
-		{
-			value: at,
-			writable: true,
-			enumerable: false,
-			configurable: true,
-		});
+			Object .defineProperty (C .prototype, "at",
+			{
+				value: at,
+				writable: true,
+				enumerable: false,
+				configurable: true,
+			});
+		}
 	}
 })()
