@@ -89,10 +89,11 @@ function (X3DBaseNode)
 		{
 			if (node !== this .array [0])
 			{
-				this .top () .isBound_ = false;
+				this .array [this .array .length - 1] .isBound_ = false;
 				this .array .push (node);
 			}
 
+			node .set_bind_ = true;
 			node .isBound_  = true;
 			node .bindTime_ = this .getBrowser () .getCurrentTime ();
 

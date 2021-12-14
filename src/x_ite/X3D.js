@@ -100,14 +100,6 @@ function ($,
 {
 "use strict";
 
-	// Console fallback
-
-	if (! console)        console        = { };
-	if (! console .log)   console .log   = function () { };
-	if (! console .info)  console .info  = console .log;
-	if (! console .warn)  console .warn  = console .log;
-	if (! console .error) console .error = console .log;
-
 	// X3D
 
 	function createBrowser (url, parameter)
