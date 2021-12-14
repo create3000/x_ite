@@ -68,8 +68,7 @@ function (X3DObject,
 		_parents: new Set (),
 		setModificationTime: function (value)
 		{
-			// Boolean indication whether the value is set during parse, or undefined.
-			return this ._modificationTime = value;
+			this ._modificationTime = value;
 		},
 		getModificationTime: function ()
 		{

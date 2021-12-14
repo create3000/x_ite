@@ -306,6 +306,8 @@ function (X3DEventObject,
 					{
 						var destfield = copy .getField (sourceField .getName ());
 
+						destfield .setModificationTime (sourceField .getModificationTime ());
+
 						if (sourceField .hasReferences ())
 						{
 							var references = sourceField .getReferences ();
@@ -358,6 +360,8 @@ function (X3DEventObject,
 					                           sourceField .getName (),
 					                           destfield);
 
+					destfield .setModificationTime (sourceField .getModificationTime ());
+
 					if (sourceField .hasReferences ())
 					{
 						// IS relationship
@@ -379,6 +383,7 @@ function (X3DEventObject,
 				});
 
 				executionContext .addUninitializedNode (copy);
+
 				return copy;
 			};
 		})(),
