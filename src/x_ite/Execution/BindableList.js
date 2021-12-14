@@ -87,7 +87,7 @@ function (X3DBaseNode)
 		{
 			if (this .array .length > 1)
 			{
-				var
+				const
 					enableInlineBindables = false,
 					mainScene             = this .getMainScene ();
 
@@ -97,7 +97,7 @@ function (X3DBaseNode)
 
 					for (var i = 1, length = this .array .length; i < length; ++ i)
 					{
-						var node = this .array [i];
+						const node = this .array [i];
 
 						if (! enableInlineBindables && node .getScene () !== mainScene)
 							continue;
@@ -111,7 +111,7 @@ function (X3DBaseNode)
 
 				for (var i = 1, length = this .array .length; i < length; ++ i)
 				{
-					var node = this .array [i];
+					const node = this .array [i];
 
 					if (! enableInlineBindables && node .getScene () !== mainScene)
 						continue;
@@ -124,7 +124,7 @@ function (X3DBaseNode)
 
 				for (var i = 1, length = this .array .length; i < length; ++ i)
 				{
-					var node = this .array [i];
+					const node = this .array [i];
 
 					if (! enableInlineBindables && node .getScene () !== mainScene)
 						continue;
@@ -143,19 +143,17 @@ function (X3DBaseNode)
 		},
 		update: function (layerNode, stack)
 		{
-			var
-				changedNodes = this .collected .filter (node => node .updateTime > this .updateTime),
+			const
+				changedNodes = this .collected .filter (node => node .set_bind_ .getSet () > this .updateTime),
 				removedNodes = this .removedNodes;
 
 			if (! equals (this .collected, this .array))
 			{
 				// Unbind nodes not in current list (collected);
 
-				for (var i = 0, length = this .array .length; i < length; ++ i)
+				for (const node of this .array)
 				{
-					var node = this .array [i];
-
-					if (this .collected .indexOf (node) < 0)
+					if (this .collected .indexOf (node) === -1)
 					{
 						removedNodes .push (node);
 					}
@@ -163,7 +161,7 @@ function (X3DBaseNode)
 
 				// Swap arrays.
 
-				var tmp = this .array;
+				const tmp = this .array;
 
 				this .array     = this .collected;
 				this .collected = tmp;

@@ -306,8 +306,6 @@ function (X3DEventObject,
 					{
 						var destfield = copy .getField (sourceField .getName ());
 
-						destfield .setSet (sourceField .getSet ());
-
 						if (sourceField .hasReferences ())
 						{
 							var references = sourceField .getReferences ();
@@ -359,8 +357,6 @@ function (X3DEventObject,
 					copy .addUserDefinedField (sourceField .getAccessType (),
 					                           sourceField .getName (),
 					                           destfield);
-
-					destfield .setSet (sourceField .getSet ());
 
 					if (sourceField .hasReferences ())
 					{

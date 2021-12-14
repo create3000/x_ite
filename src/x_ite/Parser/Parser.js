@@ -1493,7 +1493,7 @@ function (Fields,
 							if (field .getType () === existingField .getType ())
 							{
 								existingField .set (field .getValue ());
-								existingField .setSet (true);
+								existingField .setSet (performance .now () / 1000);
 								return true;
 							}
 						}
@@ -1626,7 +1626,7 @@ function (Fields,
 		},
 		fieldValue: function (field)
 		{
-			field .setSet (true);
+			field .setSet (performance .now () / 1000);
 
 			return this .fieldTypes [field .getType ()] .call (this, field);
 		},

@@ -72,22 +72,12 @@ function (Fields,
 	X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
 	{
 		constructor: X3DBindableNode,
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
-
-			this .set_bind_ .addInterest ("set_bind__", this);
-		},
 		getCameraObject: function ()
 		{
 		   return true;
 		},
 		transitionStart: function ()
 		{ },
-		set_bind__: function ()
-		{
-			this .updateTime = performance .now () / 1000;
-		},
 	});
 
 	return X3DBindableNode;

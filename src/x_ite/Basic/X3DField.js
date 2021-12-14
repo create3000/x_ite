@@ -77,7 +77,6 @@ function ($,
 		_value: null,
 		_accessType: X3DConstants .initializeOnly,
 		_unit: null,
-		_set: false,
 		_uniformLocation: null,
 		_references: new Map (),
 		_fieldInterests: new Map (),
@@ -149,15 +148,6 @@ function ($,
 		getUnit: function ()
 		{
 			return this ._unit;
-		},
-		setSet: function (value)
-		{
-			// Boolean indication whether the value is set during parse, or undefined.
-			return this ._set = value;
-		},
-		getSet: function ()
-		{
-			return this ._set;
 		},
 		hasReferences: function ()
 		{

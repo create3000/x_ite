@@ -76,8 +76,6 @@ function (X3DChildObject,
 		},
 		addEvent: function (field)
 		{
-			field .setSet (true);
-
 			if (field .getTainted ())
 				return;
 
@@ -87,9 +85,8 @@ function (X3DChildObject,
 		},
 		addEventObject: function (field, event)
 		{
-			var browser = this .getBrowser ();
+			const browser = this .getBrowser ();
 
-			field .setSet (true);
 			browser .addBrowserEvent ();
 
 			// Register for processEvent
@@ -111,7 +108,9 @@ function (X3DChildObject,
 			if (this .getTainted ())
 			   return;
 
-			var browser = this .getBrowser ();
+			this .setSet (performance .now () / 1000);
+
+			const browser = this .getBrowser ();
 
 			this .setTainted (true);
 			browser .addTaintedNode (this);

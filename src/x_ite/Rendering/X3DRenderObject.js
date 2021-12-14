@@ -1031,12 +1031,12 @@ function ($,
 		})(),
 	};
 
-	function assign (d, s)
+	function assign (lhs, rhs)
 	{
-		for (var i = 0, length = s .length; i < length; ++ i)
-			d [i] = s [i];
+		for (var i = 0, length = rhs .length; i < length; ++ i)
+			lhs [i] = rhs [i];
 
-		d .length = length;
+		lhs .length = length;
 	}
 
 	return X3DRenderObject;

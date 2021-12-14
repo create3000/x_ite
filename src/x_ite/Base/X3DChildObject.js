@@ -62,8 +62,18 @@ function (X3DObject)
 	X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: X3DChildObject,
+		_set: 0,
 		_tainted: false,
 		_parents: new Set (),
+		setSet: function (value)
+		{
+			// Boolean indication whether the value is set during parse, or undefined.
+			return this ._set = value;
+		},
+		getSet: function ()
+		{
+			return this ._set;
+		},
 		setTainted: function (value)
 		{
 			this ._tainted = value;
@@ -74,8 +84,7 @@ function (X3DObject)
 		},
 		addEvent: function ()
 		{
-			if (this ._tainted)
-				return;
+			this ._set = performance .now () / 1000;
 
 			this ._parents .forEach (function (parent)
 			{
@@ -85,6 +94,8 @@ function (X3DObject)
 		},
 		addEventObject: function (field, event)
 		{
+			this ._set = performance .now () / 1000;
+
 			this ._parents .forEach (function (parent)
 			{
 				parent .addEventObject (this, event);

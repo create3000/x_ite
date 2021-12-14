@@ -920,7 +920,7 @@ function ($,
 				if (field)
 				{
 					field .push (xmlElement .data);
-					field .setSet (true);
+					field .setSet (performance .now () / 1000);
 				}
 			}
 		},
@@ -998,7 +998,7 @@ function ($,
 			if (value === null)
 				return;
 
-			field .setSet (true);
+			field .setSet (performance .now () / 1000);
 
 			this .parser .pushExecutionContext (this .getExecutionContext ());
 
@@ -1023,12 +1023,12 @@ function ($,
 				{
 					case X3DConstants .SFNode:
 						parent .setValue (node);
-						parent .setSet (true);
+						parent .setSet (performance .now () / 1000);
 						return;
 
 					case X3DConstants .MFNode:
 						parent .push (node);
-						parent .setSet (true);
+						parent .setSet (performance .now () / 1000);
 						return;
 				}
 
@@ -1055,12 +1055,12 @@ function ($,
 				{
 					case X3DConstants .SFNode:
 						field .setValue (node);
-						field .setSet (true);
+						field .setSet (performance .now () / 1000);
 						return;
 
 					case X3DConstants .MFNode:
 						field .push (node);
-						field .setSet (true);
+						field .setSet (performance .now () / 1000);
 						return;
 				}
 			}

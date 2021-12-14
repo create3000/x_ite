@@ -143,7 +143,7 @@ function ($,
 
 			userDefinedFields .forEach (function (field)
 			{
-				field .setSet (false);
+				field .setSet (0);
 			});
 
 			this .set_url__ ();
