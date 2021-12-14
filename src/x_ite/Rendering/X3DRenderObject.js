@@ -172,7 +172,7 @@ function ($,
 		},
 		pushShadow: function (value)
 		{
-			this .shadow .unshift (value || this .shadow [0]);
+			this .shadow .push (value || this .shadow .at (-1));
 		},
 		popShadow: function ()
 		{
@@ -472,25 +472,11 @@ function ($,
 
 					// Collisions
 
-					const
-						sourceCollisions      = this .collisions,
-						destinationCollisions = context .collisions;
-
-					for (var i = 0, length = sourceCollisions .length; i < length; ++ i)
-						destinationCollisions [i] = sourceCollisions [i];
-
-					destinationCollisions .length = length;
+					assign (context .collisions, this .collisions);
 
 					// Clip planes
 
-					const
-						sourceClipPlanes      = this .localObjects,
-						destinationClipPlanes = context .clipPlanes;
-
-					for (var i = 0, length = sourceClipPlanes .length; i < length; ++ i)
-						destinationClipPlanes [i] = sourceClipPlanes [i];
-
-					destinationClipPlanes .length = length;
+					assign (context .clipPlanes, this .localObjects);
 
 					return true;
 				}
@@ -530,14 +516,7 @@ function ($,
 
 					// Clip planes
 
-					const
-						sourceClipPlanes      = this .localObjects,
-						destinationClipPlanes = context .clipPlanes;
-
-					for (var i = 0, length = sourceClipPlanes .length; i < length; ++ i)
-						destinationClipPlanes [i] = sourceClipPlanes [i];
-
-					destinationClipPlanes .length = length;
+					assign (context .clipPlanes, this .localObjects);
 
 					return true;
 				}
@@ -593,18 +572,11 @@ function ($,
 					context .textureNode = null;
 					context .distance    = bboxCenter .z;
 					context .fogNode     = this .localFog;
-					context .shadow      = this .shadow [0];
+					context .shadow      = this .shadow .at (-1);
 
 					// Clip planes and local lights
 
-					const
-						sourceShaderObjects      = this .localObjects,
-						destinationShaderObjects = context .localObjects;
-
-					for (var i = 0, length = sourceShaderObjects .length; i < length; ++ i)
-						destinationShaderObjects [i] = sourceShaderObjects [i];
-
-					destinationShaderObjects .length = length;
+					assign (context .localObjects, this .localObjects);
 
 					return true;
 				}
@@ -1058,6 +1030,14 @@ function ($,
 			};
 		})(),
 	};
+
+	function assign (d, s)
+	{
+		for (var i = 0, length = s .length; i < length; ++ i)
+			d [i] = s [i];
+
+		d .length = length;
+	}
 
 	return X3DRenderObject;
 });
