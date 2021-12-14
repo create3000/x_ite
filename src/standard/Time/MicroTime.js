@@ -63,15 +63,17 @@ define (function ()
 		{
 			const current = now .call (performance);
 
-			if (current !== last)
+			if (current > last)
 			{
 				offset = 0;
 				last   = current;
 
 				return current;
 			}
-
-			return current + (++ offset / 1000);
+			else
+			{
+				return current + (++ offset / 1000);
+			}
 		};
 	})();
 });
