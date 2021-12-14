@@ -183,6 +183,8 @@ function (X3DBaseNode)
 		},
 	});
 
+	// Compares two arrays.
+
 	function equals (lhs, rhs)
 	{
 		if (lhs .length !== rhs .length)
