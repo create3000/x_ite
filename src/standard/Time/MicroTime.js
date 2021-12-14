@@ -72,7 +72,7 @@ define (function ()
 			}
 			else
 			{
-				return current + (++ offset / 1000);
+				return last = current + (++ offset / 1000);
 			}
 		};
 	})();
