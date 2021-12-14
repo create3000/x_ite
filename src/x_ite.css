@@ -439,7 +439,6 @@ X3DCanvas #context-menu-layer {
 
 /* display submenus on left side if there is no space on right side */
 .x_ite-private-menu.x_ite-private-menu-submenus-left .context-menu-item > .context-menu-list {
-	right: 193px !important;
 	left: unset !important;
 }
 

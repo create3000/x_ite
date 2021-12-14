@@ -102,17 +102,26 @@ function ($,
 					{
 						if (browser .getElement () .fullScreen ())
 						{
-							browser .getElement () .append ($(".x_ite-private-menu"));
+							browser .getElement () .append (options .$menu);
 
 							setTimeout (function ()
 							{
-								browser .getElement () .append ($("#context-menu-layer") .css ({
+								browser .getElement () .append (options .$layer .css ({
 									position: "absolute",
 									width: "100%",
 									height: "100%",
 								}));
 							},
 							1);
+						}
+
+						// Display submenus on left side if there is no space on right side.
+
+						if (options .$menu .hasClass ("x_ite-private-menu-submenus-left"))
+						{
+							options .$menu .find (".context-menu-item > .context-menu-list") .css ({
+								"right": options .$menu .width () + "px",
+							});
 						}
 					},
 				},
@@ -126,7 +135,7 @@ function ($,
 				currentViewpoint = activeLayer ? activeLayer .getViewpoint () : null,
 				currentViewer    = browser .viewer_ .getValue (),
 				fullscreen       = browser .getElement () .fullScreen (),
-				leftSubMenus     = $(window) .width () - event .pageX < 370;
+				leftSubMenus     = $(document) .width () - event .pageX < 370;
 
 			const menu = {
 				className: "x_ite-private-menu x_ite-private-menu-title",
