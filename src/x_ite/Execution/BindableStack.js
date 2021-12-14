@@ -83,13 +83,13 @@ function (X3DBaseNode)
 		},
 		top: function ()
 		{
-			return this .transitionNode .transitionActive_ .getValue () ? this .transitionNode : this .array [this .array .length - 1];
+			return this .transitionNode .transitionActive_ .getValue () ? this .transitionNode : this .array .at (-1);
 		},
 		pushOnTop: function (node)
 		{
 			if (node !== this .array [0])
 			{
-				this .array [this .array .length - 1] .isBound_ = false;
+				this .array .at (-1) .isBound_ = false;
 				this .array .push (node);
 			}
 
@@ -108,7 +108,7 @@ function (X3DBaseNode)
 
 			const
 				fromNode  = this .top (),
-				boundNode = this .array [this .array .length - 1];
+				boundNode = this .array .at (-1);
 
 			// Remove invisible nodes and unbind them if needed.
 
@@ -152,7 +152,7 @@ function (X3DBaseNode)
 
 			// Bind top node if not bound.
 
-			const top = this .array [this .array .length - 1];
+			const top = this .array .at (-1);
 
 			if (top === boundNode)
 				return;

@@ -65,13 +65,13 @@ function (Generator)
 		getId: (function ()
 		{
 			var id = 0;
-			
+
 			function getId () { return this ._id; }
 
 			return function ()
 			{
 				this .getId = getId;
-	
+
 				return this ._id = ++ id;
 			};
 		})(),
@@ -97,10 +97,10 @@ function (Generator)
 			if (arguments .length > 2)
 			{
 				var args = Array .prototype .slice .call (arguments, 0);
-	
+
 				args [0] = object;
 				args [1] = this;
-	
+
 				this ._interests .set (object .getId () + callbackName, Function .prototype .bind .apply (callback, args));
 			}
 			else
@@ -118,13 +118,18 @@ function (Generator)
 		{
 			return this ._interests;
 		},
-		processInterests: function ()
+		processInterests: (function ()
 		{
-			this ._interests .forEach (function (interest)
+			function processInterest (interest)
 			{
 				interest ();
-			});
-		},
+			}
+
+			return function ()
+			{
+				this ._interests .forEach (processInterest);
+			};
+		})(),
 		toString: function (scene)
 		{
 			var stream = { string: "" };

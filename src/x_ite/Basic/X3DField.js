@@ -322,7 +322,12 @@ function ($,
 		},
 		processEvent: (function ()
 		{
-			var fieldCallbacks = new Map ();
+			const fieldCallbacks = new Map ();
+
+			function processEvent (fieldCallback)
+			{
+				fieldCallback (this .valueOf ());
+			}
 
 			return function (event)
 			{
@@ -333,7 +338,7 @@ function ($,
 
 				this .setTainted (false);
 
-				var field = event .field;
+				const field = event .field;
 
 				if (field !== this)
 					this .set (field .getValue (), field .length);
@@ -365,11 +370,7 @@ function ($,
 
 				if (this ._fieldCallbacks .size)
 				{
-					MapUtilities .assign (fieldCallbacks, this ._fieldCallbacks) .forEach (function (fieldCallback)
-					{
-						fieldCallback (this .valueOf ());
-					},
-					this);
+					MapUtilities .assign (fieldCallbacks, this ._fieldCallbacks) .forEach (processEvent, this);
 				}
 			};
 		})(),

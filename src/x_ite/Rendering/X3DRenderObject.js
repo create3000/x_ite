@@ -156,7 +156,7 @@ function ($,
 		},
 		getViewVolume: function ()
 		{
-			return this .viewVolumes [this .viewVolumes .length - 1];
+			return this .viewVolumes .at (-1);
 		},
 		getGlobalObjects: function ()
 		{
@@ -202,7 +202,7 @@ function ($,
 		{
 			const localFog = this .localFogs .pop ();
 
-			this .localFog = this .localFogs [this .localFogs .length - 1];
+			this .localFog = this .localFogs .at (-1);
 
 			return localFog;
 		},
@@ -212,7 +212,7 @@ function ($,
 		},
 		getParentLayout: function ()
 		{
-			return this .layouts .length ? this .layouts [this .layouts .length - 1] : null;
+			return this .layouts .length ? this .layouts .at (-1) : null;
 		},
 		getTextureProjectors: function ()
 		{
@@ -455,7 +455,7 @@ function ($,
 
 				const
 					radius     = bboxSize .abs () / 2,
-					viewVolume = this .viewVolumes [this .viewVolumes .length - 1];
+					viewVolume = this .viewVolumes .at (-1);
 
 				if (viewVolume .intersectsSphere (radius, bboxCenter))
 				{
@@ -513,7 +513,7 @@ function ($,
 
 				const
 					radius     = bboxSize .abs () / 2,
-					viewVolume = this .viewVolumes [this .viewVolumes .length - 1];
+					viewVolume = this .viewVolumes .at (-1);
 
 				if (viewVolume .intersectsSphere (radius, bboxCenter))
 				{
@@ -560,7 +560,7 @@ function ($,
 
 				const
 					radius     = bboxSize .abs () / 2,
-					viewVolume = this .viewVolumes [this .viewVolumes .length - 1];
+					viewVolume = this .viewVolumes .at (-1);
 
 				if (viewVolume .intersectsSphere (radius, bboxCenter))
 				{

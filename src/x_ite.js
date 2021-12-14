@@ -160,3 +160,42 @@ define .hide = function ()
 	fallback);
 
 }) ();
+
+(function ()
+{
+	// https://github.com/tc39/proposal-relative-indexing-method#polyfill
+
+	function at (n)
+	{
+		// ToInteger() abstract op
+		n = Math.trunc(n) || 0;
+		// Allow negative indexing from the end
+		if (n < 0) n += this.length;
+		// OOB access is guaranteed to return undefined
+		if (n < 0 || n >= this.length) return undefined;
+		// Otherwise, this is just normal property access
+		return this[n];
+	}
+
+	if (Array .prototype .at === undefined)
+	{
+		Object .defineProperty (Array .prototype, "at",
+		{
+			value: at,
+			writable: true,
+			enumerable: false,
+			configurable: true,
+		});
+	}
+
+	if (String .prototype .at === undefined)
+	{
+		Object .defineProperty (String .prototype, "at",
+		{
+			value: at,
+			writable: true,
+			enumerable: false,
+			configurable: true,
+		});
+	}
+})()
