@@ -47,87 +47,22 @@
  ******************************************************************************/
 
 
-define ([
-	"x_ite/Base/X3DObject",
-	"standard/Time/MicroTime",
-],
-function (X3DObject,
-	       microtime)
+define (function ()
 {
 "use strict";
 
-	function X3DChildObject ()
+	const microtime =
 	{
-		X3DObject .call (this);
-	}
+		now: (function ()
+		{
+			var offset = 0;
 
-	X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
-	{
-		constructor: X3DChildObject,
-		_modificationTime: 0,
-		_tainted: false,
-		_parents: new Set (),
-		setModificationTime: function (value)
-		{
-			// Boolean indication whether the value is set during parse, or undefined.
-			return this ._modificationTime = value;
-		},
-		getModificationTime: function ()
-		{
-			return this ._modificationTime;
-		},
-		setTainted: function (value)
-		{
-			this ._tainted = value;
-		},
-		getTainted: function ()
-		{
-			return this ._tainted;
-		},
-		addEvent: function ()
-		{
-			this ._modificationTime = microtime .now () / 1e6;
-
-			this ._parents .forEach (function (parent)
+			return function ()
 			{
-				parent .addEvent (this);
-			},
-			this);
-		},
-		addEventObject: function (field, event)
-		{
-			this ._modificationTime = microtime .now () / 1e6;
+				return performance .now () * 1000 + (offset = (offset + 1) % 1000);
+			}
+		})(),
+	};
 
-			this ._parents .forEach (function (parent)
-			{
-				parent .addEventObject (this, event);
-			},
-			this);
-		},
-		addParent: function (parent)
-		{
-			if (! this .hasOwnProperty ("_parents"))
-				this ._parents = new Set ();
-
-			this ._parents .add (parent);
-		},
-		removeParent: function (parent)
-		{
-			this ._parents .delete (parent);
-		},
-		getParents: function ()
-		{
-			return this ._parents;
-		},
-		addCloneCount: Function .prototype,
-		removeCloneCount: Function .prototype,
-		dispose: function ()
-		{
-			this ._parents .clear ();
-
-			X3DObject .prototype .dispose .call (this);
-		},
-	});
-
-	return X3DChildObject;
+	return microtime;
 });

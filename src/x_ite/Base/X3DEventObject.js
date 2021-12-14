@@ -50,9 +50,11 @@
 define ([
 	"x_ite/Base/X3DChildObject",
 	"x_ite/Base/Events",
+	"standard/Time/MicroTime",
 ],
 function (X3DChildObject,
-	       Events)
+	       Events,
+			 microtime)
 {
 "use strict";
 
@@ -108,7 +110,7 @@ function (X3DChildObject,
 			if (this .getTainted ())
 			   return;
 
-			this .setModificationTime (microtime .now () / 1000000);
+			this .setModificationTime (microtime .now () / 1e6);
 
 			const browser = this .getBrowser ();
 

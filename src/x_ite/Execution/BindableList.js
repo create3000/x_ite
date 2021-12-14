@@ -49,8 +49,10 @@
 
 define ([
 	"x_ite/Basic/X3DBaseNode",
+	"standard/Time/MicroTime",,
 ],
-function (X3DBaseNode)
+function (X3DBaseNode,
+	       microtime)
 {
 "use strict";
 
@@ -179,7 +181,7 @@ function (X3DBaseNode)
 
 			// Advance update time.
 
-			this .modificationTime = microtime .now () / 1000000;
+			this .modificationTime = microtime .now () / 1e6;
 		},
 	});
 

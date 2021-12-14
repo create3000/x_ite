@@ -81,18 +81,6 @@ const getScriptURL = (function ()
 	};
 })();
 
-const microtime = {
-	now: (function ()
-	{
-		var offset = 0;
-
-		return function ()
-		{
-			return performance .now () * 1000 + (offset = (offset + 1) % 1000);
-		}
-	})(),
-};
-
 (function ()
 {
 "use strict";
