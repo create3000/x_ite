@@ -656,8 +656,8 @@ function ($,
 
 							if (context .shapeNode .intersectsBox (collisionBox, context .clipPlanes, modelViewMatrix .assign (context .modelViewMatrix)))
 							{
-							   for (var c = 0; c < collisions .length; ++ c)
-									activeCollisions [collisions [c] .getId ()] = collisions [c];
+							   for (const collision of collisions)
+									activeCollisions [collision .getId ()] = collision;
 							}
 						}
 					}
@@ -914,13 +914,13 @@ function ($,
 				{
 					// Render shadow maps.
 
-					for (var i = 0, length = lights .length; i < length; ++ i)
-						lights [i] .renderShadowMap (this);
+					for (const light of lights)
+						light .renderShadowMap (this);
 
 					// Render GeneratedCubeMapTextures.
 
-					for (var i = 0, length = generatedCubeMapTextures .length; i < length; ++ i)
-						generatedCubeMapTextures [i] .renderTexture (this);
+					for (const generatedCubeMapTexture of generatedCubeMapTextures)
+						generatedCubeMapTexture .renderTexture (this);
 				}
 
 
@@ -931,11 +931,11 @@ function ($,
 
 				browser .getHeadlight () .setGlobalVariables (this);
 
-				for (var i = 0, length = lights .length; i < length; ++ i)
-					lights [i] .setGlobalVariables (this);
+				for (const light of lights)
+					light .setGlobalVariables (this);
 
-				for (var i = 0, length = textureProjectors .length; i < length; ++ i)
-					textureProjectors [i] .setGlobalVariables (this);
+				for (const textureProjector of textureProjectors)
+					textureProjector .setGlobalVariables (this);
 
 				// Configure viewport and background
 
@@ -1028,31 +1028,30 @@ function ($,
 
 				gl .activeTexture (gl .TEXTURE0);
 
+				const globalObjects = this .globalObjects;
+
 				if (this .isIndependent ())
 				{
 					// Recycle clip planes, local fogs, local lights, and local projective textures.
 
 					const localObjects = browser .getLocalObjects ();
 
-					for (var i = 0, length = localObjects .length; i < length; ++ i)
-						localObjects [i] .dispose ();
+					for (const localObject of localObjects)
+						localObject .dispose ();
 
 					localObjects .length = 0;
 
 					// Recycle global lights and global projective textures.
 
-					const globalObjects = this .globalObjects;
-
-					for (var i = 0, length = globalObjects .length; i < length; ++ i)
-						globalObjects [i] .dispose ();
+					for (const globalObject of globalObjects)
+						globalObject .dispose ();
 				}
 
 				// Reset containers.
 
 				shaders .clear ();
 
-				this .globalObjects .length = 0;
-
+				globalObjects            .length = 0;
 				lights                   .length = 0;
 				textureProjectors        .length = 0;
 				generatedCubeMapTextures .length = 0;
