@@ -85,7 +85,7 @@ function (X3DObject,
 		},
 		addEvent: function ()
 		{
-			this ._modificationTime = performance .now () / 1000;
+			this ._modificationTime = performance .now ();
 
 			this ._parents .forEach (function (parent)
 			{
@@ -95,7 +95,7 @@ function (X3DObject,
 		},
 		addEventObject: function (field, event)
 		{
-			this ._modificationTime = performance .now () / 1000;
+			this ._modificationTime = performance .now ();
 
 			this ._parents .forEach (function (parent)
 			{

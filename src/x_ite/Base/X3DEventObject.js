@@ -109,7 +109,7 @@ function (X3DChildObject,
 			if (this .getTainted ())
 			   return;
 
-			this .setModificationTime (performance .now () / 1000);
+			this .setModificationTime (performance .now ());
 
 			const browser = this .getBrowser ();
 

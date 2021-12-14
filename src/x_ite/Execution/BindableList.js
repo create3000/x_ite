@@ -179,7 +179,7 @@ function (X3DBaseNode)
 
 			// Advance updateTime time.
 
-			this .updateTime = performance .now () / 1000;
+			this .updateTime = performance .now ();
 		},
 	});
 

@@ -921,7 +921,7 @@ function ($,
 				if (field)
 				{
 					field .push (xmlElement .data);
-					field .setModificationTime (performance .now () / 1000);
+					field .setModificationTime (performance .now ());
 				}
 			}
 		},
@@ -999,7 +999,7 @@ function ($,
 			if (value === null)
 				return;
 
-			field .setModificationTime (performance .now () / 1000);
+			field .setModificationTime (performance .now ());
 
 			this .parser .pushExecutionContext (this .getExecutionContext ());
 
@@ -1024,12 +1024,12 @@ function ($,
 				{
 					case X3DConstants .SFNode:
 						parent .setValue (node);
-						parent .setModificationTime (performance .now () / 1000);
+						parent .setModificationTime (performance .now ());
 						return;
 
 					case X3DConstants .MFNode:
 						parent .push (node);
-						parent .setModificationTime (performance .now () / 1000);
+						parent .setModificationTime (performance .now ());
 						return;
 				}
 
@@ -1056,12 +1056,12 @@ function ($,
 				{
 					case X3DConstants .SFNode:
 						field .setValue (node);
-						field .setModificationTime (performance .now () / 1000);
+						field .setModificationTime (performance .now ());
 						return;
 
 					case X3DConstants .MFNode:
 						field .push (node);
-						field .setModificationTime (performance .now () / 1000);
+						field .setModificationTime (performance .now ());
 						return;
 				}
 			}
