@@ -143,7 +143,7 @@ function ($,
 		},
 		setUnit: function (value)
 		{
-			return this ._unit = value;
+			this ._unit = value;
 		},
 		getUnit: function ()
 		{

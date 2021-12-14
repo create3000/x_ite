@@ -105,14 +105,15 @@ function (X3DChildObject,
 		},
 		addNodeEvent: function ()
 		{
+			this .setModificationTime (performance .now ());
+
 			if (this .getTainted ())
 			   return;
-
-			this .setModificationTime (performance .now ());
 
 			const browser = this .getBrowser ();
 
 			this .setTainted (true);
+
 			browser .addTaintedNode (this);
 			browser .addBrowserEvent ();
 		},
