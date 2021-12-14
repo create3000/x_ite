@@ -147,11 +147,6 @@ function (X3DBaseNode)
 				changedNodes = this .collected .filter (node => node .set_bind_ .getModificationTime () > this .modificationTime),
 				removedNodes = this .removedNodes;
 
-			for (const n of changedNodes)
-			{
-				console .log (layerNode .getName (), n .set_bind_ .getModificationTime (), this .modificationTime);
-			}
-
 			if (! equals (this .collected, this .array))
 			{
 				// Unbind nodes not in current list (collected);

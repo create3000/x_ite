@@ -54,8 +54,6 @@ function (Vector3)
 {
 "use strict";
 
-	var lastPosition = new Vector3 (0, 0, 0);
-
 	function X3DTimeContext ()
 	{
 		this .currentPosition = new Vector3 (0, 0, 0);
@@ -71,27 +69,32 @@ function (Vector3)
 		{
 			return this .currentTime;
 		},
-		advanceTime: function (time)
+		advanceTime: (function ()
 		{
-			time = (time + performance .timing .navigationStart) / 1000;
+			const lastPosition = new Vector3 (0, 0, 0);
 
-			var interval = time - this .currentTime;
-
-			this .currentTime      = time;
-			this .currentFrameRate = interval ? 1 / interval : 60;
-
-			if (this .getWorld () && this .getActiveLayer ())
+			return function (time)
 			{
-				var cameraSpaceMatrix = this .getActiveLayer () .getViewpoint () .getCameraSpaceMatrix ();
+				time = (time + performance .timing .navigationStart) / 1000;
 
-				lastPosition .assign (this .currentPosition);
-				this .currentPosition .set (cameraSpaceMatrix [12], cameraSpaceMatrix [13], cameraSpaceMatrix [14]);
+				const interval = time - this .currentTime;
 
-				this .currentSpeed = lastPosition .subtract (this .currentPosition) .abs () * this .currentFrameRate;
-			}
-			else
-				this .currentSpeed = 0;
-		},
+				this .currentTime      = time;
+				this .currentFrameRate = interval ? 1 / interval : 60;
+
+				if (this .getWorld () && this .getActiveLayer ())
+				{
+					const cameraSpaceMatrix = this .getActiveLayer () .getViewpoint () .getCameraSpaceMatrix ();
+
+					lastPosition .assign (this .currentPosition);
+					this .currentPosition .set (cameraSpaceMatrix [12], cameraSpaceMatrix [13], cameraSpaceMatrix [14]);
+
+					this .currentSpeed = lastPosition .subtract (this .currentPosition) .abs () * this .currentFrameRate;
+				}
+				else
+					this .currentSpeed = 0;
+			};
+		})(),
 	};
 
 	return X3DTimeContext;
