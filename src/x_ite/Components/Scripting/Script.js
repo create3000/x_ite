@@ -143,7 +143,7 @@ function ($,
 
 			userDefinedFields .forEach (function (field)
 			{
-				field .setSet (0);
+				field .setModificationTime (0);
 			});
 
 			this .set_url__ ();
@@ -470,7 +470,7 @@ function ($,
 
 			userDefinedFields .forEach (function (field)
 			{
-				if (field .getSet ())
+				if (field .getModificationTime ())
 				{
 					var callback = this .context [field .getName ()];
 

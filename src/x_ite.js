@@ -53,18 +53,6 @@ require .config ({
 	"waitSeconds": 0,
 });
 
-const getScriptURL = (function ()
-{
-	const
-		scripts = document .getElementsByTagName ('script'),
-		src     = scripts [scripts .length - 1] .src;
-
-	return function ()
-	{
-		return src;
-	};
-})();
-
 define .show = function ()
 {
 	this   .define = window .define;
@@ -79,6 +67,30 @@ define .hide = function ()
 		window .define = this .define;
 
 	delete this .define;
+};
+
+const getScriptURL = (function ()
+{
+	const
+		scripts = document .getElementsByTagName ('script'),
+		src     = scripts [scripts .length - 1] .src;
+
+	return function ()
+	{
+		return src;
+	};
+})();
+
+const microtime = {
+	now: (function ()
+	{
+		var offset = 0;
+
+		return function ()
+		{
+			return performance .now () * 1000 + (offset = (offset + 1) % 1000);
+		}
+	})(),
 };
 
 (function ()
@@ -159,7 +171,7 @@ define .hide = function ()
 	},
 	fallback);
 
-}) ();
+})();
 
 (function ()
 {
@@ -191,4 +203,4 @@ define .hide = function ()
 			});
 		}
 	}
-})()
+})();

@@ -58,10 +58,10 @@ function (X3DBaseNode)
 	{
 		X3DBaseNode .call (this, executionContext);
 
-		this .collected    = [ defaultNode ];
-		this .array        = [ defaultNode ];
-		this .updateTime   = 0;
-		this .removedNodes = [ ];
+		this .collected        = [ defaultNode ];
+		this .array            = [ defaultNode ];
+		this .modificationTime = 0;
+		this .removedNodes     = [ ];
 	}
 
 	BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -144,8 +144,13 @@ function (X3DBaseNode)
 		update: function (layerNode, stack)
 		{
 			const
-				changedNodes = this .collected .filter (node => node .set_bind_ .getSet () > this .updateTime),
+				changedNodes = this .collected .filter (node => node .set_bind_ .getModificationTime () > this .modificationTime),
 				removedNodes = this .removedNodes;
+
+			for (const n of changedNodes)
+			{
+				console .log (layerNode .getName (), n .set_bind_ .getModificationTime (), this .modificationTime);
+			}
 
 			if (! equals (this .collected, this .array))
 			{
@@ -179,7 +184,7 @@ function (X3DBaseNode)
 
 			// Advance update time.
 
-			this .updateTime = performance .now () / 1000;
+			this .modificationTime = microtime .now () / 1000000;
 		},
 	});
 

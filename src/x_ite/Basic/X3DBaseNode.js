@@ -592,7 +592,7 @@ function (X3DEventObject,
 			if (fieldDefinition)
 				return fieldDefinition .value .equals (field);
 
-			return ! field .getSet ();
+			return ! field .getModificationTime ();
 		},
 		getFields: function ()
 		{

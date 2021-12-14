@@ -1493,7 +1493,7 @@ function (Fields,
 							if (field .getType () === existingField .getType ())
 							{
 								existingField .set (field .getValue ());
-								existingField .setSet (performance .now () / 1000);
+								existingField .setModificationTime (microtime .now () / 1000000);
 								return true;
 							}
 						}
@@ -1626,7 +1626,7 @@ function (Fields,
 		},
 		fieldValue: function (field)
 		{
-			field .setSet (performance .now () / 1000);
+			field .setModificationTime (microtime .now () / 1000000);
 
 			return this .fieldTypes [field .getType ()] .call (this, field);
 		},

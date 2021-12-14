@@ -119,7 +119,7 @@ function (Fields,
 			{
 				// If there is a proto the externproto is completely loaded.
 
-				if (! this .metadata_ .getSet ())
+				if (! this .metadata_ .getModificationTime ())
 					this .metadata_ = proto .metadata_;
 
 				if (this .protoNode .isExternProto)
@@ -148,7 +148,7 @@ function (Fields,
 								continue;
 
 							// Is set during parse.
-							if (field .getSet ())
+							if (field .getModificationTime ())
 								continue;
 
 							// Has IS references.

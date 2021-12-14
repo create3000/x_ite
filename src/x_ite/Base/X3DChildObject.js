@@ -62,17 +62,17 @@ function (X3DObject)
 	X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: X3DChildObject,
-		_set: 0,
+		_modificationTime: 0,
 		_tainted: false,
 		_parents: new Set (),
-		setSet: function (value)
+		setModificationTime: function (value)
 		{
 			// Boolean indication whether the value is set during parse, or undefined.
-			return this ._set = value;
+			return this ._modificationTime = value;
 		},
-		getSet: function ()
+		getModificationTime: function ()
 		{
-			return this ._set;
+			return this ._modificationTime;
 		},
 		setTainted: function (value)
 		{
@@ -84,7 +84,7 @@ function (X3DObject)
 		},
 		addEvent: function ()
 		{
-			this ._set = performance .now () / 1000;
+			this ._modificationTime = microtime .now () / 1000000;
 
 			this ._parents .forEach (function (parent)
 			{
@@ -94,7 +94,7 @@ function (X3DObject)
 		},
 		addEventObject: function (field, event)
 		{
-			this ._set = performance .now () / 1000;
+			this ._modificationTime = microtime .now () / 1000000;
 
 			this ._parents .forEach (function (parent)
 			{
