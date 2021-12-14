@@ -92,11 +92,11 @@ function (Generator)
 			if (! this .hasOwnProperty ("_interests"))
 				this ._interests = new Map ();
 
-			var callback = object [callbackName];
+			const callback = object [callbackName];
 
 			if (arguments .length > 2)
 			{
-				var args = Array .prototype .slice .call (arguments, 0);
+				const args = Array .prototype .slice .call (arguments, 0);
 
 				args [0] = object;
 				args [1] = this;
@@ -105,7 +105,7 @@ function (Generator)
 			}
 			else
 			{
-				var self = this;
+				const self = this;
 
 				this ._interests .set (object .getId () + callbackName, function () { callback .call (object, self); });
 			}
@@ -132,7 +132,7 @@ function (Generator)
 		})(),
 		toString: function (scene)
 		{
-			var stream = { string: "" };
+			const stream = { string: "" };
 
 			if (scene)
 				Generator .Get (stream) .PushExecutionContext (scene);
@@ -143,7 +143,7 @@ function (Generator)
 		},
 		toVRMLString: function ()
 		{
-			var stream = { string: "" };
+			const stream = { string: "" };
 
 			this .toVRMLStream (stream);
 
@@ -151,7 +151,7 @@ function (Generator)
 		},
 		toXMLString: function ()
 		{
-			var stream = { string: "" };
+			const stream = { string: "" };
 
 			this .toXMLStream (stream);
 

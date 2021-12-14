@@ -112,11 +112,9 @@ function (X3DBaseNode)
 
 			// Remove invisible nodes and unbind them if needed.
 
-			for (var i = 0, length = removedNodes .length; i < length; ++ i)
+			for (const removedNode of removedNodes)
 			{
-				const
-					removedNode = removedNodes [i],
-					index       = this .array .indexOf (removedNode);
+				const index = this .array .indexOf (removedNode);
 
 				if (index > -1)
 				{
@@ -133,10 +131,8 @@ function (X3DBaseNode)
 
 			// Push nodes with set_bind true to top of stack.
 
-			for (var i = 0, length = changedNodes .length; i < length; ++ i)
+			for (const bindNode of changedNodes)
 			{
-				const bindNode = changedNodes [i];
-
 				if (bindNode .set_bind_ .getValue ())
 				{
 					const index = this .array .indexOf (bindNode);

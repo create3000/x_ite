@@ -194,7 +194,7 @@ X3DCanvas .x_ite-private-browser-timings button {
 }
 
 X3DCanvas .x_ite-private-world-info {
-	overflow-y: scroll;
+	overflow-y: auto;
 	z-index: 90;
 	position: absolute;
 	top: 0;
