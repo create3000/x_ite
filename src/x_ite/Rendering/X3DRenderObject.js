@@ -212,7 +212,7 @@ function ($,
 		},
 		getParentLayout: function ()
 		{
-			return this .layouts .length ? this .layouts .at (-1) : null;
+			return this .layouts .at (-1);
 		},
 		getTextureProjectors: function ()
 		{
