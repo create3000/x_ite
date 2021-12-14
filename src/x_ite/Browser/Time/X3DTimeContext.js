@@ -75,7 +75,7 @@ function (Vector3)
 
 			return function (time)
 			{
-				time = (time + performance .timing .navigationStart) / 1000;
+				time = (time + performance .timeOrigin) / 1000;
 
 				const interval = time - this .currentTime;
 
