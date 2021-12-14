@@ -49,8 +49,10 @@
 
 define ([
 	"standard/Math/Numbers/Vector3",
+	"standard/Time/MicroTime",
 ],
-function (Vector3)
+function (Vector3,
+	       microtime)
 {
 "use strict";
 
@@ -75,6 +77,8 @@ function (Vector3)
 
 			return function (time)
 			{
+				microtime .reset ();
+
 				time = (time + performance .timeOrigin) / 1000;
 
 				const interval = time - this .currentTime;

@@ -179,7 +179,7 @@ function (X3DBaseNode,
 
 			removedNodes .length = 0;
 
-			// Advance modification time.
+			// Advance updateTime time.
 
 			this .updateTime = microtime .now () / 1e6;
 		},

@@ -51,12 +51,16 @@ define (function ()
 {
 "use strict";
 
+	var offset = 0;
+
 	const microtime =
 	{
+		reset: function ()
+		{
+			offset = 0;
+		},
 		now: (function ()
 		{
-			var offset = 0;
-
 			return function ()
 			{
 				return performance .now () * 1000 + (offset = (offset + 1) % 1000);
