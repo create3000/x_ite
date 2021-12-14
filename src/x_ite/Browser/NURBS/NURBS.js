@@ -281,7 +281,7 @@ function (Vector2,
 			if (closed)
 			{
 				for (var i = 1, length = order - 1; i < length; ++ i)
-					knots .push (knots [knots .length - 1] + (knots [i] - knots [i - 1]));
+					knots .push (knots .at (-1) + (knots [i] - knots [i - 1]));
 			}
 
 			return knots;

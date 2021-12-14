@@ -404,13 +404,13 @@ function (X3DArrayField,
 		},
 		pop: function ()
 		{
-			var
+			const
 				target = this ._target,
 				length = target ._length;
 
 			if (length)
 			{
-				var
+				const
 					array      = target .getValue (),
 					components = target .getComponents (),
 					valueType  = target .getValueType (),
@@ -418,16 +418,16 @@ function (X3DArrayField,
 
 				if (components === 1)
 				{
-					var value = valueType (array [length - 1]);
+					var value = valueType (array [length - 1]); // Don't use at(-1).
 				}
 				else
 				{
-					var tmp = target ._tmp;
+					const tmp = target ._tmp;
 
 					for (var c = 0, a = newLength * components; c < components; ++ c, ++ a)
 						tmp [c] = array [a];
 
-					var value = Object .create (valueType .prototype);
+					const value = Object .create (valueType .prototype);
 
 					valueType .apply (value, tmp);
 				}

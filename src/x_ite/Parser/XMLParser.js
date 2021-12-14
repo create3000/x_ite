@@ -1075,7 +1075,7 @@ function ($,
 		},
 		getParent: function ()
 		{
-			return this .parents [this .parents .length - 1];
+			return this .parents .at (-1);
 		},
 		pushParent: function (parent)
 		{

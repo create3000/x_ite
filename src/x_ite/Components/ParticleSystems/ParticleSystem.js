@@ -1085,7 +1085,7 @@ function (Fields,
 							{
 								index0 = 0;
 							}
-							else if (fraction >= texCoordKeys [length - 1])
+							else if (fraction >= texCoordKeys .at (-1))
 							{
 								index0 = length - 2;
 							}

@@ -117,7 +117,7 @@ function (Fields,
 
 			this .coordIndex_ .addFieldInterest (this .polylineNode .coordIndex_);
 			this .coord_      .addFieldInterest (this .polylineNode .coord_);
-		
+
 			this .polylineNode .coordIndex_ = this .coordIndex_;
 			this .polylineNode .coord_      = this .coord_;
 
@@ -146,22 +146,22 @@ function (Fields,
 			return function ()
 			{
 				var vertices = this .vertices = this .polylineNode .getVertices () .getValue ();
-	
+
 				if (vertices .length)
 				{
 					delete this .getRandomPosition;
-	
+
 					var
 						lengthSoFar      = 0,
 						lengthSoFarArray = this .lengthSoFarArray;
-			
+
 					lengthSoFarArray .length = 1;
-	
+
 					for (var i = 0, length = vertices .length; i < length; i += 8)
 					{
 						vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
 						vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
-	
+
 						lengthSoFar += vertex2 .subtract (vertex1) .abs ();
 						lengthSoFarArray .push (lengthSoFar);
 					}
@@ -179,7 +179,7 @@ function (Fields,
 			var
 				lengthSoFarArray = this .lengthSoFarArray,
 				length           = lengthSoFarArray .length,
-				fraction         = Math .random () * lengthSoFarArray [length - 1],
+				fraction         = Math .random () * lengthSoFarArray .at (-1),
 				index0           = 0,
 				index1           = 0,
 				weight           = 0;
@@ -189,7 +189,7 @@ function (Fields,
 				index0 = 0;
 				weight = 0;
 			}
-			else if (fraction >= lengthSoFarArray [length - 1])
+			else if (fraction >= lengthSoFarArray .at (-1))
 			{
 				index0 = length - 2;
 				weight = 1;
@@ -202,11 +202,11 @@ function (Fields,
 				{
 					index1 = index;
 					index0 = index - 1;
-			
+
 					var
 						key0 = lengthSoFarArray [index0],
 						key1 = lengthSoFarArray [index1];
-			
+
 					weight = Algorithm .clamp ((fraction - key0) / (key1 - key0), 0, 1);
 				}
 				else
@@ -257,5 +257,3 @@ function (Fields,
 
 	return PolylineEmitter;
 });
-
-

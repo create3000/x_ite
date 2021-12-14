@@ -338,7 +338,7 @@ function (X3DBindableNode,
 
 					var vAngleMax = this .groundColor_ .length > this .groundAngle_ .length ? Math .PI / 2 : Math .PI;
 
-					if (vAngle [vAngle .length - 1] < vAngleMax)
+					if (vAngle .at (-1) < vAngleMax)
 						vAngle .push (vAngleMax);
 
 					this .buildSphere (RADIUS, vAngle, this .skyAngle_, this .skyColor_, alpha, false);
@@ -356,7 +356,7 @@ function (X3DBindableNode,
 					if (vAngle .length === 0 || vAngle [0] < Math .PI / 2)
 						vAngle .unshift (Math .PI / 2);
 
-					if (vAngle [vAngle .length - 1] > 0)
+					if (vAngle .at (-1) > 0)
 						vAngle .push (0);
 
 					this .buildSphere (RADIUS, vAngle, this .groundAngle_, this .groundColor_, alpha, true);

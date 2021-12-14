@@ -686,7 +686,7 @@ function (X3DChildNode,
 
 					pickingHierarchy .push (this);
 
-					if (pickableStack [pickableStack .length - 1])
+					if (pickableStack .at (-1))
 					{
 						const childNodes = this .childNodes;
 

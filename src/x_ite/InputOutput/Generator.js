@@ -123,7 +123,7 @@ function (X3DConstants)
 		},
 		ExecutionContext: function ()
 		{
-			return this .executionContextStack [this .executionContextStack .length - 1];
+			return this .executionContextStack .at (-1);
 		},
 		EnterScope: function ()
 		{
@@ -364,12 +364,10 @@ function (X3DConstants)
 		},
 		Unit: function (category)
 		{
-			var length = this .unitCategories .length;
-
-			if (length == 0)
+			if (this .unitCategories .length == 0)
 				return category;
 
-			return this .unitCategories [length - 1];
+			return this .unitCategories .at (-1);
 		},
 		ToUnit: function (category, value)
 		{

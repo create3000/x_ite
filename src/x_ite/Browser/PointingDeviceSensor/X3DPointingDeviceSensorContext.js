@@ -177,7 +177,7 @@ function ($,
 				pointer:         this .pointer,
 				hitRay:          this .hitRay .copy (),
 				intersection:    intersection,
-				sensors:         this .enabledSensors [this .enabledSensors .length - 1],
+				sensors:         this .enabledSensors .at (-1),
 				layer:           layer,
 				layerNumber:     this .layerNumber,
 				shape:           shape,
@@ -190,7 +190,7 @@ function ($,
 		},
 		getNearestHit: function ()
 		{
-			return this .hits [this .hits .length - 1];
+			return this .hits .at (-1);
 		},
 		buttonPressEvent: function (x, y)
 		{
@@ -228,7 +228,7 @@ function ($,
 
 			this .motion ();
 
-			return this .hits .length && ! $.isEmptyObject (this .hits [this .hits .length - 1] .sensors);
+			return this .hits .length && ! $.isEmptyObject (this .hits .at (-1) .sensors);
 		},
 		leaveNotifyEvent: function ()
 		{
@@ -265,7 +265,7 @@ function ($,
 		{
 			if (this .hits .length)
 			{
-				var nearestHit = this .hits [this .hits .length - 1];
+				var nearestHit = this .hits .at (-1);
 			}
 			else
 			{

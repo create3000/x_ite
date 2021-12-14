@@ -61,7 +61,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DParticleEmitterNode, 
+          X3DParticleEmitterNode,
           X3DConstants,
           X3DCast,
           Triangle3,
@@ -138,26 +138,26 @@ function (Fields,
 			return function ()
 			{
 				if (this .surfaceNode)
-				{		
+				{
 					delete this .getRandomPosition;
 					delete this .getRandomVelocity;
-	
+
 					var
 						areaSoFar      = 0,
 						areaSoFarArray = this .areaSoFarArray,
 						vertices       = this .surfaceNode .getVertices () .getValue ();
-			
+
 					this .normals  = this .surfaceNode .getNormals () .getValue ();
 					this .vertices = vertices;
-	
+
 					areaSoFarArray .length = 1;
-	
+
 					for (var i = 0, length = vertices .length; i < length; i += 12)
 					{
 						vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
 						vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 						vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
-	
+
 						areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
 						areaSoFarArray .push (areaSoFar);
 					}
@@ -176,14 +176,14 @@ function (Fields,
 			var
 				areaSoFarArray = this .areaSoFarArray,
 				length         = areaSoFarArray .length,
-				fraction       = Math .random () * areaSoFarArray [length - 1],
+				fraction       = Math .random () * areaSoFarArray .at (-1),
 				index0         = 0;
 
 			if (length == 1 || fraction <= areaSoFarArray [0])
 			{
 				index0 = 0;
 			}
-			else if (fraction >= areaSoFarArray [length - 1])
+			else if (fraction >= areaSoFarArray .at (-1))
 			{
 				index0 = length - 2;
 			}
@@ -206,7 +206,7 @@ function (Fields,
 			var
 				u = Math .random (),
 				v = Math .random ();
-		
+
 			if (u + v > 1)
 			{
 				u = 1 - u;
@@ -257,5 +257,3 @@ function (Fields,
 
 	return SurfaceEmitter;
 });
-
-

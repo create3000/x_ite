@@ -129,7 +129,7 @@ function (Fields,
 
 			this .coordIndex_ .addFieldInterest (this .volumeNode .coordIndex_);
 			this .coord_      .addFieldInterest (this .volumeNode .coord_);
-	
+
 			this .volumeNode .creaseAngle_ = Math .PI;
 			this .volumeNode .convex_      = false;
 			this .volumeNode .coordIndex_  = this .coordIndex_;
@@ -165,22 +165,22 @@ function (Fields,
 					areaSoFarArray = this .areaSoFarArray,
 					normals        = this .volumeNode .getNormals () .getValue (),
 					vertices       = this .volumeNode .getVertices () .getValue ();
-	
+
 				this .normals  = normals;
 				this .vertices = vertices;
-	
+
 				areaSoFarArray .length = 1;
-	
+
 				for (var i = 0, length = vertices .length; i < length; i += 12)
 				{
 					vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
 					vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 					vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
-	
+
 					areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
 					areaSoFarArray .push (areaSoFar);
 				}
-	
+
 				this .bvh = new BVH (vertices, normals);
 			};
 		})(),
@@ -203,27 +203,27 @@ function (Fields,
 			return function (position)
 			{
 				// Get random point on surface
-	
+
 				// Determine index0.
-	
+
 				var
 					areaSoFarArray = this .areaSoFarArray,
 					length         = areaSoFarArray .length,
-					fraction       = Math .random () * areaSoFarArray [length - 1],
+					fraction       = Math .random () * areaSoFarArray .at (-1),
 					index0         = 0;
-	
+
 				if (length == 1 || fraction <= areaSoFarArray [0])
 				{
 					index0 = 0;
 				}
-				else if (fraction >= areaSoFarArray [length - 1])
+				else if (fraction >= areaSoFarArray .at (-1))
 				{
 					index0 = length - 2;
 				}
 				else
 				{
 					var index = Algorithm .upperBound (areaSoFarArray, 0, length, fraction, Algorithm .less);
-	
+
 					if (index < length)
 					{
 						index0 = index - 1;
@@ -233,78 +233,78 @@ function (Fields,
 						index0 = 0;
 					}
 				}
-	
+
 				// Random barycentric coordinates.
-	
+
 				var
 					u = Math .random (),
 					v = Math .random ();
-			
+
 				if (u + v > 1)
 				{
 					u = 1 - u;
 					v = 1 - v;
 				}
-	
+
 				var t = 1 - u - v;
-	
+
 				// Interpolate and determine random point on surface and normal.
-	
+
 				var
 					i        = index0 * 12,
 					vertices = this .vertices;
-	
+
 				point .x = u * vertices [i]     + v * vertices [i + 4] + t * vertices [i + 8];
 				point .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
 				point .z = u * vertices [i + 2] + v * vertices [i + 6] + t * vertices [i + 10];
-	
+
 				var
 					i       = index0 * 9,
 					normals = this .normals;
-	
+
 				normal .x = u * normals [i]     + v * normals [i + 3] + t * normals [i + 6];
 				normal .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
 				normal .z = u * normals [i + 2] + v * normals [i + 5] + t * normals [i + 8];
-	
+
 				rotation .setFromToVec (Vector3 .zAxis, normal);
 				rotation .multVecRot (this .getRandomSurfaceNormal (normal));
-	
+
 				// Setup random line throu volume for intersection text
 				// and a plane corresponding to the line for intersection sorting.
-	
+
 				line  .set (point, normal);
 				plane .set (point, normal);
-		
+
 				// Find random point in volume.
-	
+
 				var numIntersections = this .bvh .intersectsLine (line, intersections);
-	
+
 				numIntersections -= numIntersections % 2; // We need an even count of intersections.
-	
+
 				if (numIntersections)
 				{
 					// Sort intersections along line with a little help from the plane.
-	
+
 					sorter .sort (0, numIntersections);
-	
+
 					// Select random intersection pair.
-	
+
 					var
 						index  = Math .round (this .getRandomValue (0, numIntersections / 2 - 1)) * 2,
 						point0 = intersections [index],
 						point1 = intersections [index + 1],
 						t      = Math .random ();
-		
+
 					// lerp
 					position .x = point0 .x + (point1 .x - point0 .x) * t;
 					position .y = point0 .y + (point1 .y - point0 .y) * t;
 					position .z = point0 .z + (point1 .z - point0 .z) * t;
-		
+
 					return position;
 				}
-	
+
 				// Discard point.
-	
+
 				return position .set (Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY, Number .POSITIVE_INFINITY);
 			};
 		})(),
@@ -324,5 +324,3 @@ function (Fields,
 
 	return VolumeEmitter;
 });
-
-

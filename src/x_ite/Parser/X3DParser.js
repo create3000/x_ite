@@ -70,7 +70,7 @@ define (function ()
 		},
 		getExecutionContext: function ()
 		{
-			return this .executionContexts [this .executionContexts .length - 1];
+			return this .executionContexts .at (-1);
 		},
 		pushExecutionContext: function (executionContext)
 		{

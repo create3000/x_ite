@@ -152,7 +152,7 @@ function (Fields,
 
 			var
 				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPoint_ .length, this .knot_),
-				scale = knots [knots .length - 1] - knots [0];
+				scale = knots .at (-1) - knots [0];
 
 			// Initialize NURBS tessellator
 

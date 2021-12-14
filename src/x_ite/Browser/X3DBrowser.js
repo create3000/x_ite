@@ -686,13 +686,13 @@ function ($,
 				if (index < viewpoints .length)
 				{
 					if (index === 0)
-						this .bindViewpoint (layerNode, viewpoints [viewpoints .length - 1]);
+						this .bindViewpoint (layerNode, viewpoints .at (-1));
 
 					else
 						this .bindViewpoint (layerNode, viewpoints [index - 1]);
 				}
 				else
-					this .bindViewpoint (layerNode, viewpoints [viewpoints .length - 1]);
+					this .bindViewpoint (layerNode, viewpoints .at (-1));
 			}
 		},
 		nextViewpoint: function (layerNode)
@@ -739,7 +739,7 @@ function ($,
 				var viewpoints = layerNode .getUserViewpoints ();
 
 				if (viewpoints .length)
-					this .bindViewpoint (layerNode, viewpoints [viewpoints .length - 1]);
+					this .bindViewpoint (layerNode, viewpoints .at (-1));
 			}
 		},
 		changeViewpoint: function (name)
@@ -856,7 +856,7 @@ function ($,
 	{
 		get: function ()
 		{
-			return this .getScriptStack () [this .getScriptStack () .length - 1] .getExecutionContext ();
+			return this .getScriptStack () .at (-1) .getExecutionContext ();
 		},
 		enumerable: true,
 		configurable: false

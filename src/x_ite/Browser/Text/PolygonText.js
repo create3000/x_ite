@@ -292,7 +292,7 @@ function (PrimitiveQuality,
 						{
 							if (points .length > 2)
 							{
-								if (points [0] .x === points [points .length - 1] .x && points [0] .y === points [points .length - 1] .y)
+								if (points [0] .x === points .at (-1) .x && points [0] .y === points .at (-1) .y)
 									points .pop ();
 
 								curves .push (points);

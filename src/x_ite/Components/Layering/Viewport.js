@@ -165,7 +165,7 @@ function (Fields,
 			var
 				viewVolumes = renderObject .getViewVolumes (),
 				rectangle   = this .getRectangle (renderObject .getBrowser ()),
-				viewport    = viewVolumes .length ? viewVolumes [viewVolumes .length - 1] .getViewport () : rectangle,
+				viewport    = viewVolumes .length ? viewVolumes .at (-1) .getViewport () : rectangle,
 				viewVolume  = ViewVolumes .pop ();
 
 			viewVolume .set (renderObject .getProjectionMatrix () .get (), viewport, rectangle);

@@ -197,7 +197,7 @@ function (X3DCast,
 
 			var
 				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
-				scale = knots [knots .length - 1] - knots [0];
+				scale = knots .at (-1) - knots [0];
 
 			// Initialize NURBS tessellator
 

@@ -258,7 +258,7 @@ function (Fields,
 
 				pickingHierarchy .push (this);
 
-				pickSensorStack [pickSensorStack .length - 1] .forEach (function (pickSensor)
+				pickSensorStack .at (-1) .forEach (function (pickSensor)
 				{
 					pickSensor .collect (this .getGeometry (), renderObject .getModelViewMatrix () .get (), browser .getPickingHierarchy ());
 				},
