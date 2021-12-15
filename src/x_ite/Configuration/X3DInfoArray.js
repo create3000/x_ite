@@ -78,15 +78,6 @@ define (function ()
 
 			return key in target;
 		},
-		enumerate: function (target)
-		{
-			var indices = [ ];
-
-			for (var i = 0, length = target .array .length; i < length; ++ i)
-				array .push (i);
-
-			return indices [Symbol .iterator] ();
-		},
 	};
 
 	function X3DInfoArray ()

@@ -55,8 +55,8 @@ define (function ()
 	{
 		get: function (target, key)
 		{
-			var value = target [key];
-	
+			const value = target [key];
+
 			if (value !== undefined)
 				return value;
 
@@ -73,21 +73,12 @@ define (function ()
 
 			return key in target;
 		},
-		enumerate: function (target)
-		{
-			var indices = [ ];
-
-			for (var i = 0, length = target .array .length; i < length; ++ i)
-				array .push (i);
-
-			return indices [Symbol .iterator] ();
-		},
 	};
 
 	function RouteArray ()
 	{
 		this .array = [ ];
-		
+
 		return new Proxy (this, handler);
 	}
 
@@ -105,7 +96,7 @@ define (function ()
 				try
 				{
 					route .toVRMLStream (stream);
-	
+
 					stream .string += "\n";
 				}
 				catch (error)
@@ -121,7 +112,7 @@ define (function ()
 				try
 				{
 					route .toXMLStream (stream);
-	
+
 					stream .string += "\n";
 				}
 				catch (error)

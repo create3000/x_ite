@@ -249,21 +249,21 @@ function (X3DChildObject,
 		},
 		importExternProtos: function (externprotos)
 		{
-			for (var i = 0, length = externprotos .length; i < length; ++ i)
-				this .externprotos .add (externprotos [i] .getName (), externprotos [i]);
+			for (const externproto of externprotos)
+				this .externprotos .add (externproto .getName (), externprotos [i]);
 		},
 		importProtos: function (protos)
 		{
-			for (var i = 0, length = protos .length; i < length; ++ i)
-				this .protos .add (protos [i] .getName (), protos [i]);
+			for (const proto of protos)
+				this .protos .add (proto .getName (), protos [i]);
 		},
 		copyRootNodes: function (rootNodes1)
 		{
-			var rootNodes2 = this .getRootNodes ();
+			const rootNodes2 = this .getRootNodes ();
 
-			for (var i = 0, length = rootNodes1 .length; i < length; ++ i)
+			for (const node of rootNodes1)
 			{
-				rootNodes2 .push (rootNodes1 [i] .copy (this));
+				rootNodes2 .push (node .copy (this));
 			}
 		},
 		copyImportedNodes: function (executionContext, importedNodes)
@@ -287,16 +287,14 @@ function (X3DChildObject,
 		},
 		copyRoutes: function (executionContext, routes)
 		{
-			for (var i = 0, length = routes .length; i < length; ++ i)
+			for (const route of routes)
 			{
 				try
 				{
-					var
-						route           = routes [i],
+					const
 						sourceNode      = this .getLocalNode (executionContext .getLocalName (route .sourceNode)),
 						destinationNode = this .getLocalNode (executionContext .getLocalName (route .destinationNode));
 
-					// new Route ... addUninitializedNode ...
 					this .addRoute (sourceNode, route .sourceField, destinationNode, route .destinationField);
 				}
 				catch (error)

@@ -111,17 +111,6 @@ function ($,
 
 			return key in target;
 		},
-		enumerate: function (target)
-		{
-			var
-				indices = [ ],
-				array   = target .getValue ();
-
-			for (var i = 0, length = array .length; i < length; ++ i)
-				array .push (i);
-
-			return indices [Symbol .iterator] ();
-		},
 	};
 
 	function X3DObjectArrayField (value)

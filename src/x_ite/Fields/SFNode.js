@@ -123,20 +123,6 @@ function (X3DField,
 				return key in target;
 			}
 		},
-		enumerate: function (target)
-		{
-			if (! target .getValue ())
-				return [ ] [Symbol .iterator] ();
-
-			var
-				indices          = [ ],
-				fieldDefinitions = target .getValue () .getFieldDefinitions ();
-
-			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
-				array .push (fieldDefinitions [i] .name);
-
-			return indices [Symbol .iterator] ();
-		},
 	};
 
 	function SFNode (value)
