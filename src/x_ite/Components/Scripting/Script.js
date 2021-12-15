@@ -462,7 +462,15 @@ function ($,
 			{
 				if (field .getModificationTime ())
 				{
-					const callback = this .context [field .getName ()];
+					switch (field .getAccessType ())
+					{
+						case X3DConstants .inputOnly:
+							var callback = this .context [field .getName ()];
+							break;
+						case X3DConstants .inputOutput:
+							var callback = this .context ["set_" + field .getName ()];
+							break;
+					}
 
 					if ($.isFunction (callback))
 						this .set_field__ (field, callback);
