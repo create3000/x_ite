@@ -237,7 +237,7 @@ function (X3DArrayField,
 		},
 		assign: function (value)
 		{
-			var target = this ._target;
+			const target = this ._target;
 
 			target .set (value .getValue (), value .length);
 			target .addEvent ();

@@ -82,7 +82,7 @@ function (Fields,
 		this ._encoding             = "SCRIPTED";
 		this ._profile              = null;
 		this ._components           = new ComponentInfoArray (this .getBrowser ());
-		this ._url                  = new URI (window .location);
+		this ._url                  = new URI (window .location .toString ());
 		this ._units                = new UnitInfoArray ();
 
 		this ._units .add ("angle",  new UnitInfo ("angle",  "radian",   1));

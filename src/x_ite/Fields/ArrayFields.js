@@ -92,7 +92,7 @@ function (SFBool,
 {
 "use strict";
 
-	var
+	const
 		SFMatrix3d = SFMatrix3 .SFMatrix3d,
 		SFMatrix3f = SFMatrix3 .SFMatrix3f,
 		SFMatrix4d = SFMatrix4 .SFMatrix4d,
@@ -161,21 +161,17 @@ function (SFBool,
 		},
 		addCloneCount: function (count)
 		{
-			var array = this .getValue ();
-
 			this ._cloneCount += count;
 
-			for (var i = 0, length = array .length; i < length; ++ i)
-				array [i] .addCloneCount (count);
+			for (const element of this .getValue ())
+				element .addCloneCount (count);
 		},
 		removeCloneCount: function (count)
 		{
-			var array = this .getValue ();
-
 			this ._cloneCount += count;
 
-			for (var i = 0, length = array .length; i < length; ++ i)
-				array [i] .removeCloneCount (count);
+			for (const element of this .getValue ())
+				element .removeCloneCount (count);
 		},
 		addChildObject: function (value)
 		{
@@ -191,7 +187,7 @@ function (SFBool,
 		},
 		toStream: function (stream)
 		{
-			var
+			const
 				target    = this ._target,
 				array     = target .getValue (),
 				generator = Generator .Get (stream);
@@ -239,7 +235,7 @@ function (SFBool,
 		{
 			this .addCloneCount (1);
 
-			var string = X3DObjectArrayField .prototype .toVRMLString .call (this);
+			const string = X3DObjectArrayField .prototype .toVRMLString .call (this);
 
 			this .removeCloneCount (1);
 
@@ -247,7 +243,7 @@ function (SFBool,
 		},
 		toVRMLStream: function (stream)
 		{
-			var
+			const
 				target    = this ._target,
 				array     = target .getValue (),
 				generator = Generator .Get (stream);
@@ -275,10 +271,10 @@ function (SFBool,
 					stream .string += "[\n";
 					generator .IncIndent ();
 
-					for (var i = 0, length = array .length; i < length; ++ i)
+					for (const element of array)
 					{
 						stream .string += generator .Indent ();
-						array [i] .toVRMLStream (stream);
+						element .toVRMLStream (stream);
 						stream .string += "\n";
 					}
 
@@ -295,7 +291,7 @@ function (SFBool,
 		{
 			this .addCloneCount (1);
 
-			var string = X3DObjectArrayField .prototype .toXMLString .call (this);
+			const string = X3DObjectArrayField .prototype .toXMLString .call (this);
 
 			this .removeCloneCount (1);
 
@@ -303,7 +299,7 @@ function (SFBool,
 		},
 		toXMLStream: function (stream)
 		{
-			var
+			const
 				generator = Generator .Get (stream),
 				length    = this .length;
 
@@ -311,11 +307,11 @@ function (SFBool,
 			{
 				generator .EnterScope ();
 
-				var value = this .getValue ();
+				const array = this .getValue ();
 
 				for (var i = 0, n = length - 1; i < n; ++ i)
 				{
-					var node = value [i] .getValue ();
+					const node = array [i] .getValue ();
 
 					if (node)
 					{
@@ -328,7 +324,7 @@ function (SFBool,
                   stream .string += "<";
 						stream .string += "NULL";
 
-						var containerField = generator .ContainerField ();
+						const containerField = generator .ContainerField ();
 
                   if (containerField)
                   {
@@ -342,7 +338,7 @@ function (SFBool,
 					}
 				}
 
-				var node = value [n] .getValue ();
+				const node = array [n] .getValue ();
 
 				if (node)
 				{
@@ -354,7 +350,7 @@ function (SFBool,
 					stream .string += "<";
 					stream .string += "NULL";
 
-					var containerField = generator .ContainerField ();
+					const containerField = generator .ContainerField ();
 
 					if (containerField)
 					{
@@ -404,11 +400,11 @@ function (SFBool,
 		},
 		toXMLStream: function (stream)
 		{
-			var length = this .length;
+			const length = this .length;
 
 			if (length)
 			{
-				var value = this .getValue ();
+				const value = this .getValue ();
 
 				for (var i = 0, n = length - 1; i < n; ++ i)
 				{
@@ -505,7 +501,7 @@ function (SFBool,
 
 	function Value (value) { return value; }
 
-	var ArrayFields =
+	const ArrayFields =
 	{
 		MFBool:      TypedArrayTemplate ("MFBool",      X3DConstants .MFBool,      SFBool,      Boolean,     Uint8Array,   1),
 		MFColor:     TypedArrayTemplate ("MFColor",     X3DConstants .MFColor,     SFColor,     SFColor,     Float32Array, 3),

@@ -92,7 +92,6 @@ function (SFNode,
 			this .layerSet .activeLayer_ .addInterest ("set_rootNodes__", this);
 
 			this .getExecutionContext () .getRootNodes () .addInterest ("set_rootNodes__", this);
-			this .getExecutionContext () .setup ();
 
 			this .set_rootNodes__ ();
 

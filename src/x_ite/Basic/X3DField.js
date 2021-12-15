@@ -197,26 +197,6 @@ function ($,
 
 			return this ._references;
 		},
-		updateReferences: function ()
-		{
-			if (this .hasOwnProperty ("_references"))
-			{
-				this ._references .forEach (function (reference)
-				{
-					switch (this .getAccessType () & reference .getAccessType ())
-					{
-						case X3DConstants .inputOnly:
-						case X3DConstants .outputOnly:
-							break;
-						case X3DConstants .initializeOnly:
-						case X3DConstants .inputOutput:
-							this .set (reference .getValue (), reference .length);
-							break;
-					}
-				},
-				this);
-			}
-		},
 		addFieldInterest: function (field)
 		{
 			if (! this .hasOwnProperty ("_fieldInterests"))

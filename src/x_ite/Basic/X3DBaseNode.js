@@ -242,11 +242,7 @@ function (X3DEventObject,
 
 			this ._initialized = true;
 
-			this ._fields .forEach (function (field)
-			{
-				field .updateReferences ();
-				field .setTainted (false);
-			});
+			this ._fields .forEach (field => field .setTainted (false));
 
 			this .initialize ();
 		},

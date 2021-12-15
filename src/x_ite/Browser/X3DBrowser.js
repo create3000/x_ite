@@ -285,7 +285,6 @@ function ($,
 
 			scene .setLive (this .isLive () .getValue ());
 
-			// Scene.setup is done in World.inititalize.
 			this .setExecutionContext (scene);
 
 			this .getWorld () .bind ();
@@ -462,6 +461,7 @@ function ($,
 
 				if (scene)
 				{
+					scene .setup ();
 					this .replaceWorld (scene);
 				}
 				else

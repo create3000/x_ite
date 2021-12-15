@@ -48,15 +48,13 @@
 
 
 define ([
-	"x_ite/Fields",
 	"x_ite/Base/X3DChildObject",
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Execution/X3DExecutionContext",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function (Fields,
-          X3DChildObject,
+function (X3DChildObject,
           X3DNode,
           X3DExecutionContext,
           X3DConstants,
@@ -75,17 +73,15 @@ function (Fields,
 		this .addType (X3DConstants .X3DPrototypeInstance);
 		this .getRootNodes () .setAccessType (X3DConstants .initializeOnly);
 
-		var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
+		const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
 		if (this .getExecutionContext () .constructor !== X3DProtoDeclaration)
 		{
-			this .getScene () .addInitLoadCount (this);
-
 			if (protoNode .isExternProto)
+			{
+				this .getScene () .addInitLoadCount (this);
 				protoNode .requestAsyncLoad (this .construct .bind (this));
-
-			else
-				this .construct ();
+			}
 		}
 	}
 
@@ -113,7 +109,7 @@ function (Fields,
 		{
 			this .getScene () .removeInitLoadCount (this);
 
-			var proto = this .protoNode .getProtoDeclaration ();
+			const proto = this .protoNode .getProtoDeclaration ();
 
 			if (proto)
 			{
@@ -124,13 +120,13 @@ function (Fields,
 
 				if (this .protoNode .isExternProto)
 				{
-					var fieldDefinitions = proto .getFieldDefinitions ();
+					const fieldDefinitions = proto .getFieldDefinitions ();
 
 					for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
 					{
 						try
 						{
-							var
+							const
 								fieldDefinition = fieldDefinitions [i],
                         field           = this .getField (fieldDefinition .name),
 								protoField      = proto .getField (fieldDefinition .name);
@@ -169,19 +165,16 @@ function (Fields,
 					}
 				}
 
-				// Assign metadata.
+				// Copy proto.
 
 				this .importExternProtos (proto .externprotos);
 				this .importProtos       (proto .protos);
 				this .copyRootNodes      (proto .rootNodes);
+				this .copyImportedNodes  (proto, proto .getImportedNodes ());
+				this .copyRoutes         (proto, proto .routes);
 
 				if (this .isInitialized ())
-				{
-					this .setInitialized (false);
-					this .setup ();
-					this .setTainted (false);
 					X3DChildObject .prototype .addEvent .call (this);
-				}
 			}
 		},
 		setup: function ()
@@ -193,15 +186,7 @@ function (Fields,
 		{
 			try
 			{
-				var proto = this .protoNode .getProtoDeclaration ();
-
-				if (proto)
-				{
-					this .copyImportedNodes (proto, proto .getImportedNodes ());
-					this .copyRoutes (proto, proto .routes);
-				}
-
-				// TODO: connect getRootNodes () to X3DChildObject .prototype .addEvent .call (this);
+				this .construct ();
 
 				// Now initialize bases.
 

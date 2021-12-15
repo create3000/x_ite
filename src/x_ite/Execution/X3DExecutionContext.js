@@ -106,7 +106,7 @@ function (Fields,
 		{
 			X3DBaseNode .prototype .setup .call (this);
 
-			var X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
+			const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
 			if (this .constructor !== X3DProtoDeclaration)
 			{
@@ -114,13 +114,15 @@ function (Fields,
 
 				while (this ._uninitializedNodes .length)
 				{
-					var uninitializedNodes = this ._uninitializedNodes;
+					const uninitializedNodes = this ._uninitializedNodes;
 
 					this ._uninitializedNodes  = this ._uninitializedNodes2;
 					this ._uninitializedNodes2 = uninitializedNodes;
 
-					for (var i = 0, length = uninitializedNodes .length; i < length; ++ i)
-						uninitializedNodes [i] .setup ();
+					for (const uninitializedNode of uninitializedNodes)
+					{
+						uninitializedNode .setup ();
+					}
 
 					uninitializedNodes .length = 0;
 				}
