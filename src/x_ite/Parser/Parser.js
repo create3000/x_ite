@@ -1370,7 +1370,9 @@ function (Fields,
 
 					if (Grammar .CloseBrace .parse (this))
 					{
-						this .getExecutionContext () .addUninitializedNode (baseNode);
+						if (! this .isInsideProtoDefinition ())
+							baseNode .setup ();
+
 						return baseNode;
 					}
 

@@ -729,7 +729,10 @@ function ($,
 					this .addNode (xmlElement, node);
 					this .pushParent (node);
 					this .childrenElements (xmlElement);
-					this .getExecutionContext () .addUninitializedNode (node);
+
+					if (! this .isInsideProtoDefinition ())
+						node .setup ();
+
 					this .popParent ();
 				}
 			}
@@ -799,7 +802,10 @@ function ($,
 				this .pushParent (node);
 				this .nodeAttributes (xmlElement, node);
 				this .childrenElements (xmlElement);
-				this .getExecutionContext () .addUninitializedNode (node);
+
+				if (! this .isInsideProtoDefinition ())
+					node .setup ();
+
 				this .popParent ();
 			}
 			catch (error)

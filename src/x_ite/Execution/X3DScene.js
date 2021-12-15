@@ -99,7 +99,7 @@ function (Fields,
 	X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
 	{
 		constructor: X3DScene,
-		isMasterContext: function ()
+		isMainContext: function ()
 		{
 			return this === this .getExecutionContext ();
 		},
@@ -109,7 +109,7 @@ function (Fields,
 		},
 		getScene: function ()
 		{
-			if (this .isMasterContext ())
+			if (this .isMainContext ())
 				return this;
 
 			return this .getExecutionContext () .getScene ();

@@ -122,21 +122,17 @@ function ($,
 		{
 			this .proto = proto;
 
-			if (this .proto)
+			if (!this .proto)
+				return
+
+			const fieldDefinitions = this .getFieldDefinitions ();
+
+			for (const protoFieldDefinition of proto .getFieldDefinitions ())
 			{
-				var
-					fieldDefinitions      = this .getFieldDefinitions (),
-					protoFieldDefinitions = proto .getFieldDefinitions ();
+				const fieldDefinition = fieldDefinitions .get (protoFieldDefinition .name);
 
-				for (var i = 0, length = protoFieldDefinitions .length; i < length; ++ i)
-				{
-					var
-						protoFieldDefinition = protoFieldDefinitions [i],
-						fieldDefinition      = fieldDefinitions .get (protoFieldDefinition .name);
-
-					if (fieldDefinition)
-						fieldDefinition .value .setValue (protoFieldDefinition .value);
-				}
+				if (fieldDefinition)
+					fieldDefinition .value .setValue (protoFieldDefinition .value);
 			}
 		},
 		getProtoDeclaration: function ()
@@ -159,7 +155,7 @@ function ($,
 
 			// Don't create scene cache, due to possible default nodes in proto SFNode fields and complete scenes.
 
-			var FileLoader = require ("x_ite/InputOutput/FileLoader");
+			const FileLoader = require ("x_ite/InputOutput/FileLoader");
 
 			new FileLoader (this) .createX3DFromURL (this .url_, null, this .setInternalSceneAsync .bind (this));
 		},
@@ -175,7 +171,7 @@ function ($,
 		{
 			this .scene = value;
 
-			var
+			const
 				protoName = this .scene .getURL () .fragment || 0,
 				proto     = this .scene .protos [protoName];
 

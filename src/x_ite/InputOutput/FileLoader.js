@@ -55,6 +55,7 @@ define ([
 	"x_ite/Parser/Parser",
 	"x_ite/Parser/XMLParser",
 	"x_ite/Parser/JSONParser",
+	"x_ite/Execution/World",
 	"standard/Networking/URI",
 	"standard/Networking/BinaryTransport",
 	"pako_inflate",
@@ -67,6 +68,7 @@ function ($,
           Parser,
           XMLParser,
           JSONParser,
+          World,
           URI,
           BinaryTransport,
           pako,
@@ -76,20 +78,20 @@ function ($,
 
 	BinaryTransport ($);
 
-	var
+	const
 		TIMEOUT       = 17,
 		ECMAScript    = /^\s*(?:vrmlscript|javascript|ecmascript)\:([^]*)$/,
 		dataURL       = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,([^]*)$/,
 		contentTypeRx = /^(?:(.*?);(.*?)$)/;
 
-	var foreignExtensions = new RegExp ("\.(?:html|xhtml)$");
+	const foreignExtensions = new RegExp ("\.(?:html|xhtml)$");
 
-	var foreign = {
+	const foreign = {
 		"text/html":             true,
 		"application/xhtml+xml": true,
 	};
 
-	var defaultParameter = new Fields .MFString ();
+	const defaultParameter = new Fields .MFString ();
 
 	function FileLoader (node, external)
 	{
@@ -122,7 +124,12 @@ function ($,
 		},
 		createX3DFromString: function (worldURL, string, success, error)
 		{
-			var scene = this .browser .createScene ();
+			const scene = this .browser .createScene ();
+
+			if (this .node instanceof World)
+				scene .loader = this;
+			else
+				scene .setExecutionContext (this .node .getExecutionContext ());
 
 			scene .setURL (this .browser .getLocation () .transform (worldURL));
 
@@ -130,7 +137,7 @@ function ($,
 			{
 				// Async branch.
 
-				var handlers = [
+				const handlers = [
 					function (scene, string, success, error)
 					{
 						// Try parse X3D XML Encoding.
@@ -157,7 +164,7 @@ function ($,
 					},
 				];
 
-				var errors = [ ];
+				const errors = [ ];
 
 				for (var i = 0, length = handlers .length; i < length; ++ i)
 				{
@@ -181,7 +188,7 @@ function ($,
 			{
 				// Sync branch.
 
-				var handlers = [
+				const handlers = [
 					function (scene, string)
 					{
 						// Try parse X3D XML Encoding.
@@ -199,7 +206,7 @@ function ($,
 					},
 				];
 
-				var errors = [ ];
+				const errors = [ ];
 
 				for (var i = 0, length = handlers .length; i < length; ++ i)
 				{
@@ -286,6 +293,8 @@ function ($,
 				return;
 
 			scene .initLoadCount_ .removeInterest ("set_initLoadCount__", this);
+
+			delete scene .loader;
 
 			try
 			{

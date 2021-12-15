@@ -250,12 +250,12 @@ function (X3DChildObject,
 		importExternProtos: function (externprotos)
 		{
 			for (const externproto of externprotos)
-				this .externprotos .add (externproto .getName (), externprotos [i]);
+				this .externprotos .add (externproto .getName (), externproto);
 		},
 		importProtos: function (protos)
 		{
 			for (const proto of protos)
-				this .protos .add (proto .getName (), protos [i]);
+				this .protos .add (proto .getName (), proto);
 		},
 		copyRootNodes: function (rootNodes1)
 		{

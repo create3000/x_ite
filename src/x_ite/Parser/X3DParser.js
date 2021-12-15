@@ -47,7 +47,10 @@
  ******************************************************************************/
 
 
-define (function ()
+define ([
+	"x_ite/Prototype/X3DProtoDeclaration",
+],
+function (X3DProtoDeclaration)
 {
 "use strict";
 
@@ -82,7 +85,7 @@ define (function ()
 		},
 		isInsideProtoDefinition: function ()
 		{
-			return this .executionContexts .length > 1;
+			return this .executionContexts .at (-1) instanceof X3DProtoDeclaration;
 		},
 		addRootNode: function (node)
 		{

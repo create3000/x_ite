@@ -259,12 +259,12 @@ function ($,
 			{
 				// VRML version of replaceWorld has a MFNode value as argument.
 
-				var rootNodes = scene;
+				const rootNodes = scene;
 
 				scene = this .createScene ();
 
-				for (var i = 0, length = rootNodes .length; i < length; ++ i)
-					scene .isLive () .addInterest (rootNodes [i] .getValue () .getExecutionContext () .isLive ());
+				for (const rootNode of rootNodes)
+					scene .isLive () .addInterest (rootNode .getValue () .getExecutionContext () .isLive ());
 
 				scene .setRootNodes (rootNodes);
 			}
@@ -287,7 +287,7 @@ function ($,
 
 			this .setExecutionContext (scene);
 			this .getWorld () .bind ();
-	},
+		},
 		set_loadCount__: function (loadCount)
 		{
 			if (loadCount .getValue ())
@@ -319,7 +319,7 @@ function ($,
 		{
 			if (success)
 			{
-				var
+				const
 					currentScene = this .currentScene,
 					external     = this .isExternal ();
 
@@ -334,8 +334,6 @@ function ($,
 							scene .setLive (true);
 					}
 
-					scene .setup ();
-
 					success (scene);
 				}
 				.bind (null, success);
@@ -344,7 +342,7 @@ function ($,
 			}
 			else
 			{
-				var
+				const
 					currentScene = this .currentScene,
 					external     = this .isExternal (),
 					scene        = new FileLoader (this .getWorld ()) .createX3DFromString (this .currentScene .getURL (), x3dSyntax);
@@ -357,8 +355,6 @@ function ($,
 					if (currentScene .isLive () .getValue ())
 						scene .setLive (true);
 				}
-
-				scene .setup ();
 
 				return scene;
 			}
@@ -379,7 +375,7 @@ function ($,
 			if (field .getType () !== X3DConstants .MFNode)
 				throw new Error ("Browser.createVrmlFromURL: event named '" + event + "' must be of type MFNode.");
 
-			var
+			const
 				currentScene = this .currentScene,
 				external     = this .isExternal (),
 				loader       = new FileLoader (this .getWorld ());
@@ -404,8 +400,6 @@ function ($,
 						   scene .setLive (true);
 					}
 
-					scene .setup ();
-
 					// Wait until scene is completely loaded, scene .loadCount_ must be 0.
 					field .setValue (scene .rootNodes);
 				}
@@ -417,7 +411,7 @@ function ($,
 			if (arguments .length === 3)
 				return this .createVrmlFromURL (url, event, node);
 
-			var
+			const
 				currentScene = this .currentScene,
 				external     = this .isExternal (),
 				scene        = new FileLoader (this .getWorld ()) .createX3DFromURL (url, null);
@@ -430,8 +424,6 @@ function ($,
 				if (currentScene .isLive () .getValue ())
 					scene .setLive (true);
 			}
-
-			scene .setup ();
 
 			return scene;
 		},
@@ -463,7 +455,6 @@ function ($,
 
 				if (scene)
 				{
-					scene .setup ();
 					this .replaceWorld (scene, true);
 					this .removeLoadCount (this);
 				}

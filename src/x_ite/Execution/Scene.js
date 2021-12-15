@@ -75,28 +75,6 @@ function (Fields,
 		{
 			return "Scene";
 		},
-		setExecutionContext: function (value)
-		{
-			if (! this .isMasterContext ())
-			{
-				var scene = this .getScene ();
-
-				this .loadingObjects .forEach (function (object)
-				{
-					scene .removeLoadCount (object);
-				});
-			}
-
-			X3DScene .prototype .setExecutionContext .call (this, value);
-
-			if (! this .isMasterContext ())
-			{
-				var scene = this .getScene ();
-
-				for (var object in this .loadingObjects)
-					scene .addLoadCount (object);
-			}
-		},
 		addInitLoadCount: function (node)
 		{
 			this .initLoadCount_ = this .initLoadCount_ .getValue () + 1;
@@ -114,11 +92,15 @@ function (Fields,
 
 			this .loadCount_ = this .loadingObjects .size;
 
-			if (this === this .getBrowser () .getExecutionContext ())
-				this .getBrowser () .addLoadCount (node);
+			const
+				browser = this .getBrowser (),
+				scene   = this .getScene ();
 
-			if (! this .isMasterContext ())
-				this .getScene () .addLoadCount (node);
+			if (this === browser .getExecutionContext () || this .loader === browser .loader)
+				browser .addLoadCount (node);
+
+			if (! this .isMainContext ())
+				scene .addLoadCount (node);
 		},
 		removeLoadCount: function (node)
 		{
@@ -129,11 +111,15 @@ function (Fields,
 
 			this .loadCount_ = this .loadingObjects .size;
 
-			if (this === this .getBrowser () .getExecutionContext ())
-				this .getBrowser () .removeLoadCount (node);
+			const
+				browser = this .getBrowser (),
+				scene   = this .getScene ();
 
-			if (! this .isMasterContext ())
-				this .getScene () .removeLoadCount (node);
+			if (this === browser .getExecutionContext () || this .loader === browser .loader)
+				browser .removeLoadCount (node);
+
+			if (! this .isMainContext ())
+				scene .removeLoadCount (node);
 		},
 		getLoadingObjects: function ()
 		{

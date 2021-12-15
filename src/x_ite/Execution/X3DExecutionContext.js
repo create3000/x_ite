@@ -49,8 +49,6 @@
 
 define ([
 	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Execution/ImportedNode",
 	"x_ite/Prototype/ExternProtoDeclarationArray",
@@ -64,8 +62,6 @@ define ([
 	"standard/Math/Algorithm",
 ],
 function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
           X3DBaseNode,
           ImportedNode,
           ExternProtoDeclarationArray,
@@ -88,47 +84,19 @@ function (Fields,
 
 		this .rootNodes_ .addCloneCount (1);
 
-		this ._uninitializedNodes   = [ ];
-		this ._uninitializedNodes2  = [ ];
-		this ._namedNodes           = new Map ();
-		this ._importedNodes        = new Map ();
-		this ._protos               = new ProtoDeclarationArray ();
-		this ._externprotos         = new ExternProtoDeclarationArray ();
-		this ._routes               = new RouteArray ();
-		this ._routeIndex           = new Map ();
-		this ._worldInfoNodes       = [ ];
+		this ._namedNodes     = new Map ();
+		this ._importedNodes  = new Map ();
+		this ._protos         = new ProtoDeclarationArray ();
+		this ._externprotos   = new ExternProtoDeclarationArray ();
+		this ._routes         = new RouteArray ();
+		this ._routeIndex     = new Map ();
+		this ._worldInfoNodes = [ ];
 	}
 
 	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: X3DExecutionContext,
-		setup: function ()
-		{
-			X3DBaseNode .prototype .setup .call (this);
-
-			const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
-
-			if (this instanceof X3DProtoDeclaration)
-				return;
-
-			// Setup nodes.
-
-			while (this ._uninitializedNodes .length)
-			{
-				const uninitializedNodes = this ._uninitializedNodes;
-
-				this ._uninitializedNodes  = this ._uninitializedNodes2;
-				this ._uninitializedNodes2 = uninitializedNodes;
-
-				for (const uninitializedNode of uninitializedNodes)
-				{
-					uninitializedNode .setup ();
-				}
-
-				uninitializedNodes .length = 0;
-			}
-		},
-		isMasterContext: function ()
+		isMainContext: function ()
 		{
 			return false;
 		},
@@ -225,10 +193,6 @@ function (Fields,
 				return null;
 			else
 				throw new Error ("Unknown proto or externproto type '" + name + "'.");
-		},
-		addUninitializedNode: function (node)
-		{
-			this ._uninitializedNodes .push (node);
 		},
 		addNamedNode: function (name, node)
 		{

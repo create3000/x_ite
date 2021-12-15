@@ -119,7 +119,7 @@ function (X3DEventObject,
 		{
 			var scene = this ._executionContext .getScene ();
 
-			while (! scene .isMasterContext ())
+			while (! scene .isMainContext ())
 				scene = scene .getScene ();
 
 			return scene;
@@ -367,7 +367,7 @@ function (X3DEventObject,
 					destfield .setModificationTime (sourceField .getModificationTime ());
 				});
 
-				executionContext .addUninitializedNode (copy);
+				copy .setup ();
 
 				return copy;
 			};
