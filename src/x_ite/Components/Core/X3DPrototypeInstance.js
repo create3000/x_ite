@@ -75,14 +75,15 @@ function (X3DChildObject,
 
 		const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
-		if (this .getExecutionContext () .constructor !== X3DProtoDeclaration)
-		{
-			if (protoNode .isExternProto)
-			{
-				this .getScene () .addInitLoadCount (this);
-				protoNode .requestAsyncLoad (this .construct .bind (this));
-			}
-		}
+		if (this .getExecutionContext () instanceof X3DProtoDeclaration)
+			return;
+
+		if (! protoNode .isExternProto)
+			return;
+
+		this .getScene () .addInitLoadCount (this);
+
+		protoNode .requestAsyncLoad (this .construct .bind (this));
 	}
 
 	X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
@@ -107,75 +108,72 @@ function (X3DChildObject,
 		},
 		construct: function ()
 		{
-			this .getScene () .removeInitLoadCount (this);
-
 			const proto = this .protoNode .getProtoDeclaration ();
 
-			if (proto)
+			if (!proto)
+				return;
+
+			// If there is a proto the externproto is completely loaded.
+
+			if (! this .metadata_ .getModificationTime ())
+				this .metadata_ = proto .metadata_;
+
+			if (this .protoNode .isExternProto)
 			{
-				// If there is a proto the externproto is completely loaded.
+				this .getScene () .removeInitLoadCount (this);
 
-				if (! this .metadata_ .getModificationTime ())
-					this .metadata_ = proto .metadata_;
-
-				if (this .protoNode .isExternProto)
+				for (const fieldDefinition of proto .getFieldDefinitions ())
 				{
-					const fieldDefinitions = proto .getFieldDefinitions ();
-
-					for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
+					try
 					{
-						try
-						{
-							const
-								fieldDefinition = fieldDefinitions [i],
-                        field           = this .getField (fieldDefinition .name),
-								protoField      = proto .getField (fieldDefinition .name);
+						const
+							field      = this .getField (fieldDefinition .name),
+							protoField = proto .getField (fieldDefinition .name);
 
-							// Continue if something is wrong.
-							if (field .getAccessType () !== protoField .getAccessType ())
-								continue;
+						// Continue if something is wrong.
+						if (field .getAccessType () !== protoField .getAccessType ())
+							continue;
 
-							// Continue if something is wrong.
-							if (field .getType () !== protoField .getType ())
-								continue;
+						// Continue if something is wrong.
+						if (field .getType () !== protoField .getType ())
+							continue;
 
-							// Continue if field is eventIn or eventOut.
-							if (! (field .getAccessType () & X3DConstants .initializeOnly))
-								continue;
+						// Continue if field is eventIn or eventOut.
+						if (! (field .getAccessType () & X3DConstants .initializeOnly))
+							continue;
 
-							// Is set during parse.
-							if (field .getModificationTime ())
-								continue;
+						// Is set during parse.
+						if (field .getModificationTime ())
+							continue;
 
-							// Has IS references.
-							if (field .hasReferences ())
-								continue;
+						// Has IS references.
+						if (field .hasReferences ())
+							continue;
 
-							if (field .equals (protoField))
-								continue;
+						if (field .equals (protoField))
+							continue;
 
-							// If default value of protoField is different from field update default value for field.
-							field .setValue (protoField);
-						}
-						catch (error)
-						{
-							// Definition exists in proto but does not exist in extern proto.
-							this .addField (fieldDefinition);
-						}
+						// If default value of protoField is different from field update default value for field.
+						field .setValue (protoField);
+					}
+					catch (error)
+					{
+						// Definition exists in proto but does not exist in extern proto.
+						this .addField (fieldDefinition);
 					}
 				}
-
-				// Copy proto.
-
-				this .importExternProtos (proto .externprotos);
-				this .importProtos       (proto .protos);
-				this .copyRootNodes      (proto .rootNodes);
-				this .copyImportedNodes  (proto, proto .getImportedNodes ());
-				this .copyRoutes         (proto, proto .routes);
-
-				if (this .isInitialized ())
-					X3DChildObject .prototype .addEvent .call (this);
 			}
+
+			// Copy proto.
+
+			this .importExternProtos (proto .externprotos);
+			this .importProtos       (proto .protos);
+			this .copyRootNodes      (proto .rootNodes);
+			this .copyImportedNodes  (proto, proto .getImportedNodes ());
+			this .copyRoutes         (proto, proto .routes);
+
+			if (this .isInitialized ())
+				X3DChildObject .prototype .addEvent .call (this);
 		},
 		setup: function ()
 		{
@@ -186,7 +184,8 @@ function (X3DChildObject,
 		{
 			try
 			{
-				this .construct ();
+				if (! this .protoNode .isExternProto)
+					this .construct ();
 
 				// Now initialize bases.
 

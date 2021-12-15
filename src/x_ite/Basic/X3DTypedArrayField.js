@@ -64,30 +64,26 @@ function (X3DArrayField,
 	{
 		get: function (target, key)
 		{
-			try
+			if (typeof key === "symbol")
 			{
-				var index = key * 1;
+				const
+					array      = target .getValue (),
+					components = target .getComponents (),
+					valueType  = target .getValueType (),
+					a          = [ ];
 
-				if (Number .isInteger (index))
+				for (var index = 0, length = target ._length; index < length; ++ index)
 				{
-					var
-						array      = target .getValue (),
-						components = target .getComponents (),
-						valueType  = target .getValueType ();
-
-					if (index >= target ._length)
-						array = target .resize (index + 1);
-
 					if (components === 1)
 					{
 						// Return native JavaScript value.
-						return valueType (array [index]);
+						a .push (valueType (array [index]));
 					}
 					else
 					{
 						// Return reference to index.
 
-						var
+						const
 							value         = new (valueType) (),
 							internalValue = value .getValue (),
 							i             = index * components;
@@ -95,64 +91,81 @@ function (X3DArrayField,
 						value .addEvent = function () { return addEvent (target, i, internalValue, components); };
 						value .getValue = function () { return getValue (target, i, internalValue, components); };
 
-						return value;
+						a .push (value);
 					}
 				}
-				else
-				{
-					return target [key];
-				}
-			}
-			catch (error)
-			{
-				// Don't know what to do with symbols, but it seem not to affect anything.
-				if ((typeof key) === "symbol")
-					return;
 
-				// if target not instance of X3DTypedArrayField, then the constuctor is called as function.
-				console .log (target, typeof key, key, error);
+				return a [key];
 			}
-		},
-		set: function (target, key, value)
-		{
-			try
-			{
-				if (key in target)
-				{
-					target [key] = value;
-					return true;
-				}
 
+			var index = key * 1;
+
+			if (Number .isInteger (index))
+			{
 				var
-					index      = parseInt (key),
 					array      = target .getValue (),
-					components = target .getComponents ();
+					components = target .getComponents (),
+					valueType  = target .getValueType ();
 
 				if (index >= target ._length)
 					array = target .resize (index + 1);
 
 				if (components === 1)
 				{
-					array [index] = value;
+					// Return native JavaScript value.
+					return valueType (array [index]);
 				}
 				else
 				{
-					index *= components;
+					// Return reference to index.
 
-					for (var c = 0; c < components; ++ c, ++ index)
-						array [index] = value [c];
+					const
+						value         = new (valueType) (),
+						internalValue = value .getValue (),
+						i             = index * components;
+
+					value .addEvent = function () { return addEvent (target, i, internalValue, components); };
+					value .getValue = function () { return getValue (target, i, internalValue, components); };
+
+					return value;
 				}
-
-				target .addEvent ();
-
+			}
+			else
+			{
+				return target [key];
+			}
+		},
+		set: function (target, key, value)
+		{
+			if (key in target)
+			{
+				target [key] = value;
 				return true;
 			}
-			catch (error)
+
+			var
+				index      = key * 1,
+				array      = target .getValue (),
+				components = target .getComponents ();
+
+			if (index >= target ._length)
+				array = target .resize (index + 1);
+
+			if (components === 1)
 			{
-				// if target not instance of X3DTypedArrayField, then the constuctor is called as function.
-				console .log (target, key, error);
-				return false;
+				array [index] = value;
 			}
+			else
+			{
+				index *= components;
+
+				for (var c = 0; c < components; ++ c, ++ index)
+					array [index] = value [c];
+			}
+
+			target .addEvent ();
+
+			return true;
 		},
 		has: function (target, key)
 		{

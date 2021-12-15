@@ -85,7 +85,7 @@ function (X3DEventObject,
 		if (this .hasUserDefinedFields ())
 			this .fieldDefinitions = new FieldDefinitionArray (this .fieldDefinitions .getValue () .slice ());
 
-		for (const fieldDefinition of this .fieldDefinitions .getValue ())
+		for (const fieldDefinition of this .fieldDefinitions)
 			this .addField (fieldDefinition);
 	}
 
@@ -134,11 +134,9 @@ function (X3DEventObject,
 		},
 		isType: function (types)
 		{
-			const type = this ._type;
-
-			for (var i = type .length - 1; i >= 0; -- i)
+			for (const type of this ._type)
 			{
-				if (types .has (type [i]))
+				if (types .has (type))
 					return true;
 			}
 
@@ -1199,10 +1197,8 @@ function (X3DEventObject,
 
 				if (cdata)
 				{
-					for (var i = 0, length = cdata .length; i < length; ++ i)
+					for (const value of cdata)
 					{
-						const value = cdata [i];
-
 						stream .string += "<![CDATA[";
 						stream .string += generator .escapeCDATA (value);
 						stream .string += "]]>\n";

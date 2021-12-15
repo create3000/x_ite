@@ -66,60 +66,43 @@ function ($,
 	{
 		get: function (target, key)
 		{
-			try
+			const array = target .getValue ();
+
+			if (typeof key === "symbol")
+				return array [key];
+
+			const index = key * 1;
+
+			if (Number .isInteger (index))
 			{
-				var index = key * 1;
+				if (index >= array .length)
+					target .resize (index + 1);
 
-				if (Number .isInteger (index))
-				{
-					var array = target .getValue ();
-
-					if (index >= array .length)
-						target .resize (index + 1);
-
-					return array [index] .valueOf ();
-				}
-				else
-				{
-					return target [key];
-				}
+				return array [index] .valueOf ();
 			}
-			catch (error)
+			else
 			{
-				// Don't know what to do with symbols, but it seem not to affect anything.
-				if ((typeof key) === "symbol")
-					return;
-
-				// if target not instance of X3DObjectArrayField, then the constuctor is called as function.
-				console .log (target, typeof key, key, error);
+				return target [key];
 			}
 		},
 		set: function (target, key, value)
 		{
-			try
+			if (key in target)
 			{
-				if (key in target)
-				{
-					target [key] = value;
-					return true;
-				}
-
-				var
-					array = target .getValue (),
-					index = parseInt (key);
-
-				if (index >= array .length)
-					target .resize (index + 1);
-
-				array [index] .setValue (value);
+				target [key] = value;
 				return true;
 			}
-			catch (error)
-			{
-				// if target not instance of X3DObjectArrayField, then the constuctor is called as function.
-				console .log (target, key, error);
-				return false;
-			}
+
+			const
+				array = target .getValue (),
+				index = key * 1;
+
+			if (index >= array .length)
+				target .resize (index + 1);
+
+			array [index] .setValue (value);
+
+			return true;
 		},
 		has: function (target, key)
 		{

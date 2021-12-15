@@ -55,7 +55,7 @@ define (function ()
 	{
 		get: function (target, key)
 		{
-			var value = target [key];
+			const value = target [key];
 
 			if (value !== undefined)
 				return value;
