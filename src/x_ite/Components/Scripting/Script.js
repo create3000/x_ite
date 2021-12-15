@@ -198,11 +198,9 @@ function ($,
 		{
 			try
 			{
-				const
-					callbacks         = ["initialize", "prepareEvents", "eventsProcessed", "shutdown"],
-					userDefinedFields = this .getUserDefinedFields ();
+				const callbacks = ["initialize", "prepareEvents", "eventsProcessed", "shutdown"];
 
-				userDefinedFields .forEach (function (field)
+				this .getUserDefinedFields () .forEach (function (field)
 				{
 					switch (field .getAccessType ())
 					{
@@ -342,9 +340,7 @@ function ($,
 				MFVec4f:       { value: Fields .MFVec4f },
 			};
 
-			const userDefinedFields = this .getUserDefinedFields ();
-
-			userDefinedFields .forEach (function (field)
+			this .getUserDefinedFields () .forEach (function (field)
 			{
 				const name = field .getName ();
 
@@ -374,8 +370,6 @@ function ($,
 		},
 		set_live__: function ()
 		{
-			const userDefinedFields = this .getUserDefinedFields ();
-
 			if (this .isLive () .getValue ())
 			{
 				if ($.isFunction (this .context .prepareEvents))
@@ -384,7 +378,7 @@ function ($,
 				if ($.isFunction (this .context .eventsProcessed))
 					this .addInterest ("eventsProcessed__", this);
 
-				userDefinedFields .forEach (function (field)
+				this .getUserDefinedFields () .forEach (function (field)
 				{
 					switch (field .getAccessType ())
 					{
@@ -418,7 +412,7 @@ function ($,
 				if (this .context .eventsProcessed)
 					this .removeInterest ("eventsProcessed__", this);
 
-				userDefinedFields .forEach (function (field)
+				this .getUserDefinedFields () .forEach (function (field)
 				{
 					switch (field .getAccessType ())
 					{
