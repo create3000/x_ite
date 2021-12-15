@@ -235,11 +235,11 @@ function (X3DChildObject,
 		},
 		getInnerNode: function ()
 		{
-			var rootNodes = this .getRootNodes () .getValue ();
+			const rootNodes = this .getRootNodes () .getValue ();
 
 			if (rootNodes .length)
 			{
-				var rootNode = rootNodes [0];
+				const rootNode = rootNodes [0];
 
 				if (rootNode)
 					return rootNode .getValue () .getInnerNode ();

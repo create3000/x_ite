@@ -206,6 +206,7 @@ function ($,
 					try
 					{
 						handlers [i] .call (this, scene, string);
+
 						return scene;
 					}
 					catch (error)
