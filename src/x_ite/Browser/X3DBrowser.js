@@ -450,11 +450,14 @@ function ($,
 			this .setBrowserLoading (true);
 			this .addLoadCount (this);
 
-			this .loader = new FileLoader (this .getWorld ());
+			const loader = this .loader = new FileLoader (this .getWorld ());
 
-			this .loader .createX3DFromURL (url, parameter,
+			loader .createX3DFromURL (url, parameter,
 			function (scene)
 			{
+				if (loader !== this .loader)
+					return;
+
 				if (! this .getBrowserOptions () .getSplashScreen ())
 					this .getCanvas () .fadeIn (0);
 
@@ -475,6 +478,9 @@ function ($,
 			.bind (this),
 			function (fragment)
 			{
+				if (loader !== this .loader)
+					return;
+
 				this .currentScene .changeViewpoint (fragment);
 				this .removeLoadCount (this);
 				this .setBrowserLoading (false);
@@ -482,6 +488,9 @@ function ($,
 			.bind (this),
 			function (url, target)
 			{
+				if (loader !== this .loader)
+					return;
+
 				if (target)
 					window .open (url, target);
 				else
