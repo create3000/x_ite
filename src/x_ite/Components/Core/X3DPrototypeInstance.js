@@ -83,7 +83,7 @@ function (X3DChildObject,
 
 		this .getScene () .addInitLoadCount (this);
 
-		protoNode .requestAsyncLoad (this .construct .bind (this));
+		protoNode .requestImmediateLoad (this .construct .bind (this));
 	}
 
 	X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),

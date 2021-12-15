@@ -62,7 +62,7 @@ function ($,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DUrlObject,
-          X3DProtoDeclarationNode, 
+          X3DProtoDeclarationNode,
           X3DConstants,
           Generator)
 {
@@ -104,7 +104,7 @@ function ($,
 		{
 			X3DProtoDeclarationNode .prototype .initialize .call (this);
 			X3DUrlObject            .prototype .initialize .call (this);
-				
+
 			this .isLive () .addInterest ("set_live__", this);
 		},
 		set_live__: function ()
@@ -127,13 +127,13 @@ function ($,
 				var
 					fieldDefinitions      = this .getFieldDefinitions (),
 					protoFieldDefinitions = proto .getFieldDefinitions ();
-	
+
 				for (var i = 0, length = protoFieldDefinitions .length; i < length; ++ i)
 				{
 					var
 						protoFieldDefinition = protoFieldDefinitions [i],
 						fieldDefinition      = fieldDefinitions .get (protoFieldDefinition .name);
-	
+
 					if (fieldDefinition)
 						fieldDefinition .value .setValue (protoFieldDefinition .value);
 				}
@@ -146,9 +146,9 @@ function ($,
 		loadNow: function (callback)
 		{
 			// 7.73 — ExternProtoDeclaration function, added callback argument.
-			this .requestAsyncLoad (callback || loadNowCallback);
+			this .requestImmediateLoad (callback || loadNowCallback);
 		},
-		requestAsyncLoad: function (callback)
+		requestImmediateLoad: function (callback)
 		{
 			this .deferred .done (callback);
 
@@ -363,4 +363,3 @@ function ($,
 
 	return X3DExternProtoDeclaration;
 });
-

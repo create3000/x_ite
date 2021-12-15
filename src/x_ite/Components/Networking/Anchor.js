@@ -130,10 +130,10 @@ function (Fields,
 				set_active__ .call (this, active, hit);
 
 				if (this .isOver_ .getValue () && ! active)
-					anchor .requestAsyncLoad ();
+					anchor .requestImmediateLoad ();
 			};
 		},
-		requestAsyncLoad: function ()
+		requestImmediateLoad: function ()
 		{
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE, false);
 

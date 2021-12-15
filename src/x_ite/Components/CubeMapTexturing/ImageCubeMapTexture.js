@@ -65,8 +65,8 @@ function ($,
           Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DEnvironmentTextureNode, 
-          X3DUrlObject, 
+          X3DEnvironmentTextureNode,
+          X3DUrlObject,
           X3DConstants,
           urls,
           URI,
@@ -145,15 +145,15 @@ function ($,
 
 			this .image [0] .crossOrigin = "Anonymous";
 
-			this .requestAsyncLoad ();
+			this .requestImmediateLoad ();
 		},
 		set_url__: function ()
 		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
-			this .requestAsyncLoad ();
+			this .requestImmediateLoad ();
 		},
-		requestAsyncLoad: function ()
+		requestImmediateLoad: function ()
 		{
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
 				return;
@@ -253,9 +253,9 @@ function ($,
 				for (var i = 0; i < 6; ++ i)
 				{
 					var data = cx .getImageData (offsets [i] .x * width1_4, offsets [i] .y * height1_3, width1_4, height1_3) .data;
-	
+
 					// Determine image alpha.
-	
+
 					if (opaque)
 					{
 						for (var a = 3; a < data .length; a += 4)
@@ -269,7 +269,7 @@ function ($,
 					}
 
 					// Transfer image.
-	
+
 					gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, false, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (data));
 				}
 
@@ -294,5 +294,3 @@ function ($,
 
 	return ImageCubeMapTexture;
 });
-
-

@@ -131,7 +131,7 @@ function (Fields,
 		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
-			this .requestAsyncLoad ();
+			this .requestImmediateLoad ();
 		},
 		isValid: function ()
 		{
@@ -162,7 +162,7 @@ function (Fields,
 		{
 			return this .shadow;
 		},
-		requestAsyncLoad: function ()
+		requestImmediateLoad: function ()
 		{
 			if (this .checkLoadState () == X3DConstants .COMPLETE_STATE || this .checkLoadState () == X3DConstants .IN_PROGRESS_STATE)
 				return;

@@ -151,7 +151,7 @@ function (Fields,
 			{
 				this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
-				this .requestAsyncLoad ();
+				this .requestImmediateLoad ();
 			}
 			else
 				this .requestUnload ();
@@ -163,26 +163,9 @@ function (Fields,
 
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
-			this .requestAsyncLoad ();
+			this .requestImmediateLoad ();
 		},
 		requestImmediateLoad: function ()
-		{
-			try
-			{
-				if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-					return;
-
-				this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-
-				this .setInternalScene (new FileLoader (this) .createX3DFromURL (this .url_, null));
-			}
-			catch (error)
-			{
-				console .log (error);
-				this .setInternalScene (this .getBrowser () .getDefaultScene ());
-			}
-		},
-		requestAsyncLoad: function ()
 		{
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
 				return;

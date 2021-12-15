@@ -97,7 +97,7 @@ function (Fields,
 		X3DNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DFontStyleNode);
-		
+
 		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 
 		this .familyStack = [ ];
@@ -121,7 +121,7 @@ function (Fields,
 			this .set_justify__ ();
 			this .set_style__ ();
 
-			this .requestAsyncLoad ();
+			this .requestImmediateLoad ();
 		},
 		setLoadState: X3DUrlObject .prototype .setLoadState,
 		checkLoadState: X3DUrlObject .prototype .checkLoadState,
@@ -137,7 +137,7 @@ function (Fields,
 		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
-			this .requestAsyncLoad ();
+			this .requestImmediateLoad ();
 		},
 		set_justify__: function ()
 		{
@@ -182,7 +182,7 @@ function (Fields,
 
 			return index ? TextAlignment .FIRST : TextAlignment .BEGIN;
 		},
-		requestAsyncLoad: function ()
+		requestImmediateLoad: function ()
 		{
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
 				return;
@@ -204,7 +204,7 @@ function (Fields,
 				var
 					familyName  = family [i],
 					defaultFont = this .getDefaultFont (familyName);
-				
+
 				if (defaultFont)
 					this .familyStack .push (defaultFont);
 				else
@@ -274,5 +274,3 @@ function (Fields,
 
 	return X3DFontStyleNode;
 });
-
-
