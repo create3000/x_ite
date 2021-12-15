@@ -779,7 +779,7 @@ function (X3DEventObject,
 			}
 			else
 			{
-				const
+				var
 					index                  = 0,
 					initializableReference = false;
 
