@@ -108,24 +108,24 @@ function (Fields,
 
 			const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
-			if (this .constructor !== X3DProtoDeclaration)
+			if (this instanceof X3DProtoDeclaration)
+				return;
+
+			// Setup nodes.
+
+			while (this ._uninitializedNodes .length)
 			{
-				// Setup nodes.
+				const uninitializedNodes = this ._uninitializedNodes;
 
-				while (this ._uninitializedNodes .length)
+				this ._uninitializedNodes  = this ._uninitializedNodes2;
+				this ._uninitializedNodes2 = uninitializedNodes;
+
+				for (const uninitializedNode of uninitializedNodes)
 				{
-					const uninitializedNodes = this ._uninitializedNodes;
-
-					this ._uninitializedNodes  = this ._uninitializedNodes2;
-					this ._uninitializedNodes2 = uninitializedNodes;
-
-					for (const uninitializedNode of uninitializedNodes)
-					{
-						uninitializedNode .setup ();
-					}
-
-					uninitializedNodes .length = 0;
+					uninitializedNode .setup ();
 				}
+
+				uninitializedNodes .length = 0;
 			}
 		},
 		isMasterContext: function ()
