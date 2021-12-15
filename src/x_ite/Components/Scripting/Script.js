@@ -460,20 +460,29 @@ function ($,
 
 			this .getUserDefinedFields () .forEach (function (field)
 			{
-				if (field .getModificationTime ())
-				{
-					switch (field .getAccessType ())
-					{
-						case X3DConstants .inputOnly:
-							var callback = this .context [field .getName ()];
-							break;
-						case X3DConstants .inputOutput:
-							var callback = this .context ["set_" + field .getName ()];
-							break;
-					}
+				if (!field .getModificationTime ())
+					return;
 
-					if ($.isFunction (callback))
-						this .set_field__ (field, callback);
+				switch (field .getAccessType ())
+				{
+					case X3DConstants .inputOnly:
+					{
+						const callback = this .context [field .getName ()];
+
+						if ($.isFunction (callback))
+							this .set_field__ (field, callback);
+
+						break;
+					}
+					case X3DConstants .inputOutput:
+					{
+						const callback = this .context ["set_" + field .getName ()];
+
+						if ($.isFunction (callback))
+							this .set_field__ (field, callback);
+
+						break;
+					}
 				}
 			},
 			this);
