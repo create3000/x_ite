@@ -1690,13 +1690,13 @@ function (Fields,
 
 			if (Grammar .TRUE .parse (this))
 			{
-				field .set (true);
+				field .setValue (true);
 				return true;
 			}
 
 			if (Grammar .FALSE .parse (this))
 			{
-				field .set (false);
+				field .setValue (false);
 				return true;
 			}
 
@@ -1750,7 +1750,10 @@ function (Fields,
 					{
 						var b = this .value;
 
-						field .getValue () .set (r, g, b);
+						field .r = r;
+						field .g = g;
+						field .b = b;
+
 						return true;
 					}
 				}
@@ -1810,7 +1813,11 @@ function (Fields,
 						{
 							var a = this .value;
 
-							field .getValue () .set (r, g, b, a);
+							field .r = r;
+							field .g = g;
+							field .b = b;
+							field .a = a;
+
 							return true;
 						}
 					}
@@ -1857,7 +1864,7 @@ function (Fields,
 		{
 			if (this .double ())
 			{
-				field .set (this .fromUnit (field .getUnit (), this .value));
+				field .setValue (this .fromUnit (field .getUnit (), this .value));
 				return true;
 			}
 
@@ -2021,7 +2028,7 @@ function (Fields,
 		{
 			if (this .int32 ())
 			{
-				field .set (this .value);
+				field .setValue (this .value);
 				return true;
 			}
 
@@ -2099,9 +2106,16 @@ function (Fields,
 												{
 													var m22 = this .value;
 
-													field .getValue () .set (m00, m01, m02,
-													                         m10, m11, m12,
-													                         m20, m21, m22);
+													field [0] = m00;
+													field [1] = m01;
+													field [2] = m02;
+													field [3] = m10;
+													field [4] = m11;
+													field [5] = m12;
+													field [6] = m20;
+													field [7] = m21;
+													field [8] = m22;
+
 													return true;
 											}
 										}
@@ -2253,10 +2267,23 @@ function (Fields,
 																		{
 																			var m33 = this .value;
 
-																			field .getValue () .set (m00, m01, m02, m03,
-																			                         m10, m11, m12, m13,
-																			                         m20, m21, m22, m23,
-																			                         m30, m31, m32, m33);
+																			field [ 0] = m00;
+																			field [ 1] = m01;
+																			field [ 2] = m02;
+																			field [ 3] = m03;
+																			field [ 4] = m10;
+																			field [ 5] = m11;
+																			field [ 6] = m12;
+																			field [ 7] = m13;
+																			field [ 8] = m20;
+																			field [ 9] = m21;
+																			field [10] = m22;
+																			field [11] = m23;
+																			field [12] = m30;
+																			field [13] = m31;
+																			field [14] = m32;
+																			field [15] = m33;
+
 																			return true;
 																		}
 																	}
@@ -2416,7 +2443,11 @@ function (Fields,
 						{
 							var angle = this .value;
 
-							field .getValue () .set (x, y, z, this .fromUnit ("angle", angle));
+							field .x     = x;
+							field .y     = y;
+							field .z     = z;
+							field .angle = this .fromUnit ("angle", angle);
+
 							return true;
 						}
 					}
@@ -2463,7 +2494,7 @@ function (Fields,
 		{
 			if (this .string ())
 			{
-				field .set (this .value);
+				field .setValue (this .value);
 				return true;
 			}
 
@@ -2553,8 +2584,9 @@ function (Fields,
 						y        = this .value,
 						category = field .getUnit ();
 
-					field .getValue () .set (this .fromUnit (category, x),
-					                         this .fromUnit (category, y));
+					field .x = this .fromUnit (category, x);
+					field .y = this .fromUnit (category, y);
+
 					return true;
 				}
 			}
@@ -2657,9 +2689,10 @@ function (Fields,
 							z        = this .value,
 							category = field .getUnit ();
 
-						field .getValue () .set (this .fromUnit (category, x),
-						                         this .fromUnit (category, y),
-						                         this .fromUnit (category, z));
+						field .x = this .fromUnit (category, x);
+						field .y = this .fromUnit (category, y);
+						field .z = this .fromUnit (category, z);
+
 						return true;
 					}
 				}
@@ -2767,10 +2800,11 @@ function (Fields,
 								w        = this .value,
 								category = field .getUnit ();
 
-							field .getValue () .set (this .fromUnit (category, x),
-							                         this .fromUnit (category, y),
-							                         this .fromUnit (category, z),
-							                         this .fromUnit (category, w));
+							field .x = this .fromUnit (category, x);
+							field .y = this .fromUnit (category, y);
+							field .z = this .fromUnit (category, z);
+							field .w = this .fromUnit (category, w);
+
 							return true;
 						}
 					}

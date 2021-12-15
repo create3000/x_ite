@@ -174,14 +174,14 @@ function (Fields,
 						this .childNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
 					}
 
-					delete this .traverse;
+					//delete this .traverse;
 				}
 			}
 			else
 			{
 				this .childNode = null;
 
-				this .traverse = Function .prototype;
+				//this .traverse = Function .prototype; // Don't do that.
 			}
 
 			this .set_transformSensors__ ();
