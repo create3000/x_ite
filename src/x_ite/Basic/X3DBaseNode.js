@@ -85,10 +85,8 @@ function (X3DEventObject,
 		if (this .hasUserDefinedFields ())
 			this .fieldDefinitions = new FieldDefinitionArray (this .fieldDefinitions .getValue () .slice ());
 
-		var fieldDefinitions = this .fieldDefinitions .getValue ();
-
-		for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
-			this .addField (fieldDefinitions [i]);
+		for (const fieldDefinition of this .fieldDefinitions .getValue ())
+			this .addField (fieldDefinition);
 	}
 
 	X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototype),
@@ -136,7 +134,7 @@ function (X3DEventObject,
 		},
 		isType: function (types)
 		{
-			var type = this ._type;
+			const type = this ._type;
 
 			for (var i = type .length - 1; i >= 0; -- i)
 			{
@@ -208,7 +206,7 @@ function (X3DEventObject,
 		},
 		_set_live__: function ()
 		{
-			var
+			const
 				live   = this .getLiveState (),
 				isLive = this .isLive ();
 
@@ -274,11 +272,11 @@ function (X3DEventObject,
 			{
 				// First try to get a named node with the node's name.
 
-				var name = this .getName ();
+				const name = this .getName ();
 
 				if (name .length)
 				{
-					var namedNode = executionContext .getNamedNodes () .get (name);
+					const namedNode = executionContext .getNamedNodes () .get (name);
 
 					if (namedNode)
 						return namedNode;
@@ -291,29 +289,24 @@ function (X3DEventObject,
 
 				// Create copy.
 
-				var copy = this .create (executionContext);
+				const copy = this .create (executionContext);
 
 				if (name .length)
 					executionContext .updateNamedNode (name, copy);
 
 				// Default fields
 
-				var predefinedFields = this .getPredefinedFields ();
-
-				predefinedFields .forEach (function (sourceField)
+				this .getPredefinedFields () .forEach (function (sourceField)
 				{
 					try
 					{
-						var destfield = copy .getField (sourceField .getName ());
-
-						destfield .setModificationTime (sourceField .getModificationTime ());
+						const destfield = copy .getField (sourceField .getName ());
 
 						if (sourceField .hasReferences ())
 						{
-							var references = sourceField .getReferences ();
-
 							// IS relationship
-							references .forEach (function (originalReference)
+
+							sourceField .getReferences () .forEach (function (originalReference)
 							{
 								try
 								{
@@ -333,14 +326,16 @@ function (X3DEventObject,
 								{
 									case X3DConstants .SFNode:
 									case X3DConstants .MFNode:
-										destfield .setValue (sourceField .copy (executionContext));
+										destfield .set (sourceField .copy (executionContext) .getValue ());
 										break;
 									default:
-										destfield .setValue (sourceField);
+										destfield .set (sourceField .getValue (), sourceField .length);
 										break;
 								}
 							}
 						}
+
+						destfield .setModificationTime (sourceField .getModificationTime ());
 					}
 					catch (error)
 					{
@@ -350,25 +345,19 @@ function (X3DEventObject,
 
 				// User-defined fields
 
-				var userDefinedFields = this .getUserDefinedFields ();
-
-				userDefinedFields .forEach (function (sourceField)
+				this .getUserDefinedFields () .forEach (function (sourceField)
 				{
-					var destfield = sourceField .copy (executionContext);
+					const destfield = sourceField .copy (executionContext);
 
 					copy .addUserDefinedField (sourceField .getAccessType (),
 					                           sourceField .getName (),
 					                           destfield);
 
-					destfield .setModificationTime (sourceField .getModificationTime ());
-
 					if (sourceField .hasReferences ())
 					{
 						// IS relationship
 
-						var references = sourceField .getReferences ();
-
-						references .forEach (function (originalReference)
+						sourceField .getReferences () .forEach (function (originalReference)
 						{
 							try
 							{
@@ -380,6 +369,8 @@ function (X3DEventObject,
 							}
 						});
 					}
+
+					destfield .setModificationTime (sourceField .getModificationTime ());
 				});
 
 				executionContext .addUninitializedNode (copy);
@@ -389,7 +380,7 @@ function (X3DEventObject,
 		})(),
 		flatCopy: function (executionContext)
 		{
-			var copy = this .create (executionContext || this .getExecutionContext ());
+			const copy = this .create (executionContext || this .getExecutionContext ());
 
 			this ._fields .forEach (function (field)
 			{
@@ -420,7 +411,7 @@ function (X3DEventObject,
 		},
 		addField: function (fieldDefinition)
 		{
-			var
+			const
 				accessType = fieldDefinition .accessType,
 				name       = fieldDefinition .name,
 				field      = fieldDefinition .value .clone ();
@@ -458,14 +449,14 @@ function (X3DEventObject,
 		},
 		removeField: function (name)
 		{
-			var field = this ._fields .get (name);
+			const field = this ._fields .get (name);
 
 			if (field)
 			{
 				this ._fields            .delete (name);
 				this ._userDefinedFields .delete (name);
 
-				var fieldDefinitions = this .fieldDefinitions .getValue ();
+				const fieldDefinitions = this .fieldDefinitions .getValue ();
 
 				for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
 				{
@@ -482,7 +473,7 @@ function (X3DEventObject,
 		},
 		getField: (function ()
 		{
-			var
+			const
 				set_re     = /^set_(.*?)$/,
 				changed_re = /^(.*?)_changed$/;
 
@@ -550,13 +541,13 @@ function (X3DEventObject,
 		{
 			/* param routes: also returen fields with routes */
 
-			var
+			const
 				changedFields    = [ ],
 				predefinedFields = this .getPredefinedFields ();
 
 			if (extented)
 			{
-				var userDefinedFields = this .getUserDefinedFields ();
+				const userDefinedFields = this .getUserDefinedFields ();
 
 				userDefinedFields .forEach (function (field)
 				{
@@ -592,7 +583,7 @@ function (X3DEventObject,
 		},
 		isDefaultValue: function (field)
 		{
-			var fieldDefinition = this .getFieldDefinitions () .get (field .getName ());
+			const fieldDefinition = this .getFieldDefinitions () .get (field .getName ());
 
 			if (fieldDefinition)
 				return fieldDefinition .value .equals (field);
@@ -611,7 +602,7 @@ function (X3DEventObject,
 		{
 			///  Returns true if there are any routes from or to fields of this node otherwise false.
 
-			for (var field of this ._fields .values ())
+			for (const field of this ._fields .values ())
 			{
 				if (field .getInputRoutes () .size)
 					return true;
@@ -670,7 +661,7 @@ function (X3DEventObject,
 		},
 		toVRMLStream: function (stream)
 		{
-			var generator = Generator .Get (stream);
+			const generator = Generator .Get (stream);
 
 			if (generator .IsSharedNode (this))
 			{
@@ -680,7 +671,7 @@ function (X3DEventObject,
 
 			generator .EnterScope ();
 
-			var name = generator .Name (this);
+			const name = generator .Name (this);
 
 			if (name .length)
 			{
@@ -709,11 +700,13 @@ function (X3DEventObject,
 			stream .string += " ";
 			stream .string += "{";
 
-			var
+			const
 				fields            = this .getChangedFields (),
-				userDefinedFields = this .getUserDefinedFields (),
-				fieldTypeLength   = 0,
-				accessTypeLength  = 0;
+				userDefinedFields = this .getUserDefinedFields ();
+
+			var
+				fieldTypeLength  = 0,
+				accessTypeLength = 0;
 
 			if (this .hasUserDefinedFields ())
 			{
@@ -775,7 +768,7 @@ function (X3DEventObject,
 		},
 		toVRMLStreamField: function (stream, field, fieldTypeLength, accessTypeLength)
 		{
-			var generator = Generator .Get (stream);
+			const generator = Generator .Get (stream);
 
 			if (field .getReferences () .size === 0 || ! generator .ExecutionContext ())
 			{
@@ -790,7 +783,7 @@ function (X3DEventObject,
 			}
 			else
 			{
-				var
+				const
 					index                  = 0,
 					initializableReference = false;
 
@@ -828,7 +821,7 @@ function (X3DEventObject,
 		},
 		toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
 		{
-			var generator = Generator .Get (stream);
+			const generator = Generator .Get (stream);
 
 			if (field .getReferences () .size === 0 || ! generator .ExecutionContext ())
 			{
@@ -896,7 +889,7 @@ function (X3DEventObject,
 		},
 		toXMLStream: function (stream)
 		{
-			var generator = Generator .Get (stream);
+			const generator = Generator .Get (stream);
 
 			if (generator .IsSharedNode (this))
 			{
@@ -907,7 +900,7 @@ function (X3DEventObject,
 
 			generator .EnterScope ();
 
-			var name = generator .Name (this);
+			const name = generator .Name (this);
 
 			if (name .length)
 			{
@@ -921,7 +914,7 @@ function (X3DEventObject,
 					stream .string += generator .XMLEncode (name);
 					stream .string += "'";
 
-					var containerField = generator .ContainerField ();
+					const containerField = generator .ContainerField ();
 
 					if (containerField)
 					{
@@ -955,7 +948,7 @@ function (X3DEventObject,
 				stream .string += "'";
 			}
 
-			var containerField = generator .ContainerField ();
+			const containerField = generator .ContainerField ();
 
 			if (containerField)
 			{
@@ -968,15 +961,15 @@ function (X3DEventObject,
 				}
 			}
 
-			var
+			const
 				fields            = this .getChangedFields (),
 				userDefinedFields = this .getUserDefinedFields ();
 
-			var
+			const
 				references = [ ],
 				childNodes = [ ];
 
-			var cdata = this .getSourceText ();
+			const cdata = this .getSourceText ();
 
 			if (cdata && cdata .length === 0)
 				cdata = null;
@@ -984,10 +977,8 @@ function (X3DEventObject,
 			generator .IncIndent ();
 			generator .IncIndent ();
 
-			for (var i = 0, length = fields .length; i < length; ++ i)
+			for (const field of fields)
 			{
-				var field = fields [i];
-
 				// If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
 				// for this field.
 
@@ -1173,11 +1164,9 @@ function (X3DEventObject,
 
 					generator .IncIndent ();
 
-					for (var i = 0, length = references .length; i < length; ++ i)
+					for (const field of references)
 					{
-						var
-							field       = references [i],
-							protoFields = field .getReferences ();
+						const protoFields = field .getReferences ();
 
 						protoFields .forEach (function (protoField)
 						{
@@ -1201,10 +1190,8 @@ function (X3DEventObject,
 					stream .string += "</IS>\n";
 				}
 
-				for (var i = 0, length = childNodes .length; i < length; ++ i)
+				for (const field of childNodes)
 				{
-					var field = childNodes [i];
-
 					generator .PushContainerField (field);
 
 					field .toXMLStream (stream);
@@ -1218,7 +1205,7 @@ function (X3DEventObject,
 				{
 					for (var i = 0, length = cdata .length; i < length; ++ i)
 					{
-						var value = cdata [i];
+						const value = cdata [i];
 
 						stream .string += "<![CDATA[";
 						stream .string += generator .escapeCDATA (value);
@@ -1243,7 +1230,7 @@ function (X3DEventObject,
 			// TODO: remove exported node if any. (do this in ExportedNode)
 			// TODO: remove routes from and to node if any. (do this in Route)
 
-			var
+			const
 				predefinedFields  = this .getPredefinedFields (),
 				userDefinedFields = this .getUserDefinedFields ();
 
@@ -1259,19 +1246,19 @@ function (X3DEventObject,
 
 			// Remove node from entire scene graph.
 
-			var firstParents = new Set (this .getParents ());
+			const firstParents = new Set (this .getParents ());
 
 			firstParents .forEach (function (firstParent)
 			{
 				if (firstParent instanceof Fields .SFNode)
 				{
-					var secondParents = new Set (firstParent .getParents ());
+					const secondParents = new Set (firstParent .getParents ());
 
 					secondParents .forEach (function (secondParent)
 					{
 						if (secondParent instanceof Fields .MFNode)
 						{
-							var length = secondParent .length;
+							const length = secondParent .length;
 
 							secondParent .erase (secondParent .remove (0, length, firstParent), length);
 						}

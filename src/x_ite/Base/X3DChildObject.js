@@ -83,8 +83,7 @@ function (X3DObject)
 		},
 		addEvent: function ()
 		{
-			if (this ._tainted)
-				return;
+			this .setModificationTime (performance .now ());
 
 			this ._parents .forEach (function (parent)
 			{
@@ -94,6 +93,8 @@ function (X3DObject)
 		},
 		addEventObject: function (field, event)
 		{
+			this .setModificationTime (performance .now ());
+
 			this ._parents .forEach (function (parent)
 			{
 				parent .addEventObject (this, event);

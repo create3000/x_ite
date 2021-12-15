@@ -76,8 +76,6 @@ function (X3DChildObject,
 		},
 		addEvent: function (field)
 		{
-			field .setModificationTime (performance .now ());
-
 			if (field .getTainted ())
 				return;
 
@@ -88,8 +86,6 @@ function (X3DChildObject,
 		addEventObject: function (field, event)
 		{
 			const browser = this .getBrowser ();
-
-			field .setModificationTime (performance .now ());
 
 			// Register for processEvent
 

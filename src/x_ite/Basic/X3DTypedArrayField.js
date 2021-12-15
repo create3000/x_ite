@@ -197,7 +197,7 @@ function (X3DArrayField,
 		},
 		copy: function ()
 		{
-			var
+			const
 				target     = this ._target,
 				array      = target .getValue (),
 				copy       = new (target .constructor) (),
@@ -206,6 +206,8 @@ function (X3DArrayField,
 			copy ._length = target ._length;
 
 			X3DArrayField .prototype .set .call (copy, copyArray, target ._length);
+
+			copy .setModificationTime (0);
 
 			return copy;
 		},

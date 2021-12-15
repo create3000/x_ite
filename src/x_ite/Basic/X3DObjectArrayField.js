@@ -57,7 +57,7 @@ define ([
 function ($,
           X3DField,
           X3DArrayField,
-          X3DConstants, 
+          X3DConstants,
           Generator)
 {
 "use strict";
@@ -73,10 +73,10 @@ function ($,
 				if (Number .isInteger (index))
 				{
 					var array = target .getValue ();
-	
+
 					if (index >= array .length)
 						target .resize (index + 1);
-	
+
 					return array [index] .valueOf ();
 				}
 				else
@@ -144,7 +144,7 @@ function ($,
 	function X3DObjectArrayField (value)
 	{
 		X3DArrayField .call (this, [ ]);
-		
+
 		this ._target = this;
 
 		if (value [0] instanceof Array)
@@ -164,12 +164,14 @@ function ($,
 		},
 		copy: function ()
 		{
-			var
+			const
 				target = this ._target,
 				copy   = new (target .constructor) (),
 				array  = target .getValue ();
 
 			X3DObjectArrayField .prototype .push .apply (copy, array);
+
+			copy .setModificationTime (0);
 
 			return copy;
 		},
@@ -328,13 +330,13 @@ function ($,
 			if ($.isFunction (value))
 			{
 				var values = target .getValue ();
-	
+
 				for (var i = first; i < last; ++ i)
 				{
 					if (value (values [i] .valueOf ()))
 						return i;
 				}
-	
+
 				return last;
 			}
 
@@ -355,9 +357,9 @@ function ($,
 			if ($.isFunction (value))
 			{
 				var values = target .getValue ();
-	
+
 				first = target .find (first, last, value);
-	
+
 				if (first !== last)
 				{
 					for (var i = first; ++ i < last; )
@@ -367,13 +369,13 @@ function ($,
 						if (! value (current .valueOf ()))
 						{
 							var tmp = values [first];
-	
+
 							values [first ++] = current;
 							values [i]        = tmp;
 						}
 					}
 				}
-		
+
 				if (first !== last)
 					target .addEvent ();
 
@@ -410,10 +412,10 @@ function ($,
 			var
 				target = this ._target,
 				values = target .getValue () .splice (first, last - first);
-				
+
 			for (var i = 0, length = values .length; i < length; ++ i)
 				target .removeChildObject (values [i]);
-			
+
 			target .addEvent ();
 
 			return new (target .constructor) (values);
@@ -423,7 +425,7 @@ function ($,
 			var
 				target = this ._target,
 				array  = target .getValue ();
-		
+
 			if (size < array .length)
 			{
 				for (var i = size, length = array .length; i < length; ++ i)
@@ -488,7 +490,7 @@ function ($,
 
 					stream .string += "[\n";
 					generator .IncIndent ();
-				
+
 					for (var i = 0, length = array .length - 1; i < length; ++ i)
 					{
 						stream .string += generator .Indent ();

@@ -1492,8 +1492,7 @@ function (Fields,
 						{
 							if (field .getType () === existingField .getType ())
 							{
-								existingField .set (field .getValue ());
-								existingField .setModificationTime (performance .now ());
+								existingField .setValue (field);
 								return true;
 							}
 						}
@@ -1626,8 +1625,6 @@ function (Fields,
 		},
 		fieldValue: function (field)
 		{
-			field .setModificationTime (performance .now ());
-
 			return this .fieldTypes [field .getType ()] .call (this, field);
 		},
 		double: function ()

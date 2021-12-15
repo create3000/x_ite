@@ -143,18 +143,19 @@ function (SFBool,
 		},
 		clone: function ()
 		{
-			var clone = new MFNode ();
+			const clone = new MFNode ();
 			clone .setValue (this);
+			clone .setModificationTime (0);
 			return clone;
 		},
 		copy: function (executionContext)
 		{
-			var
-				copy  = new MFNode (),
-				array = this .getValue ();
+			const copy = new MFNode ();
 
-			for (var i = 0, length = array .length; i < length; ++ i)
-				copy .push (array [i] .copy (executionContext));
+			for (const node of this .getValue ())
+				copy .push (node .copy (executionContext));
+
+			copy .setModificationTime (0);
 
 			return copy;
 		},
