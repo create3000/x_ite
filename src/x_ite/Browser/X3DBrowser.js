@@ -276,19 +276,18 @@ function ($,
 			this .description = "";
 
 			this .getBrowserOptions () .configure ();
-			this .setBrowserLoading (true);
+			//if (!arguments [1]) this .setBrowserLoading (true);
 			this .loadCount_ .addInterest ("set_loadCount__", this);
 			this .prepareEvents () .removeInterest ("bind", this);
 
-			for (var id in scene .getLoadingObjects ())
-				this .addLoadCount (scene .getLoadingObjects () [id]);
+			for (const object of scene .getLoadingObjects ())
+				this .addLoadCount (object);
 
 			scene .setLive (this .isLive () .getValue ());
 
 			this .setExecutionContext (scene);
-
 			this .getWorld () .bind ();
-		},
+	},
 		set_loadCount__: function (loadCount)
 		{
 			if (loadCount .getValue ())
@@ -462,7 +461,8 @@ function ($,
 				if (scene)
 				{
 					scene .setup ();
-					this .replaceWorld (scene);
+					this .replaceWorld (scene, true);
+					this .removeLoadCount (this);
 				}
 				else
 				{
@@ -471,9 +471,6 @@ function ($,
 
 					setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
 				}
-
-				// Must not remove load count, replaceWorld does a resetLoadCount when it sets setBrowserLoading to true.
-				// Don't set browser loading to false.
 			}
 			.bind (this),
 			function (fragment)
