@@ -1,4 +1,8 @@
-#theme: jekyll-theme-cayman
+
+#Theme docs
+#https://github.com/mmistakes/minimal-mistakes
+#https://github.com/mluerig/personal-homepage
+
 remote_theme: "mmistakes/minimal-mistakes"
 minimal_mistakes_skin: "air" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise", "default"
 
@@ -11,18 +15,10 @@ name: &name "Holger Seelig"
 description: *name
 words_per_minute: 200
 github: [metadata]
-search: true
 
-plugins:
-  - jekyll-paginate
-  - jekyll-sitemap
-  - jekyll-gist
-  - jekyll-feed
-  - jekyll-include-cache
-  - jekyll-titles-from-headings
-  - jekyll-remote-theme
-  - jekyll-seo-tag
-  - jekyll-relative-links
+# Search
+search: true
+search_full_content: true
 
 # Site Author
 author:
@@ -40,14 +36,64 @@ footer:
       icon: "fab fa-fw fa-github-square"
       url: "https://github.com/create3000/x_ite"
 
-relative_links:
-  enabled: true
-  collections: true
-
 titles_from_headings:
   enabled: false
   strip_title: true
   collections: true
+
+relative_links:
+  enabled: true
+  collections: true
+
+plugins:
+  - jekyll-paginate
+  - jekyll-sitemap
+  - jekyll-gist
+  - jekyll-feed
+  - jekyll-include-cache
+  - jekyll-titles-from-headings
+  - jekyll-remote-theme
+  - jekyll-seo-tag
+  - jekyll-relative-links
+
+# markdown_ext: "markdown,mkdown,mkdn,mkd,md"
+
+# # Conversion
+encoding: "utf-8"
+markdown: GFM
+# markdown: kramdown
+# highlighter: rouge
+# lsi: false
+# excerpt_separator: "\n\n"
+# incremental: false
+
+# # Markdown Processing
+# kramdown:
+#   input: GFM
+#   hard_wrap: false
+#   auto_ids: true
+#   footnote_nr: 1
+#   entity_output: as_char
+#   toc_levels: 1..6
+#   smart_quotes: lsquo,rsquo,ldquo,rdquo
+#   enable_coderay: false
+
+# Sass/SCSS
+sass:
+  sass_dir: _sass
+  style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
+
+## defaults
+defaults:
+  - scope:
+      path: ""
+      type: pages
+    values:
+      layout: single
+      classes: wide
+      author_profile: true
+      sidebar:
+        nav: pages
 
 include:
   - Accessing-the-External-Browser.md
@@ -102,46 +148,3 @@ include:
   - Writing-program-scripts-with-ECMAScript.md
   - XHTML-DOM-Integration.md
   - index.md
-
-# markdown_ext: "markdown,mkdown,mkdn,mkd,md"
-
-# # Conversion
-encoding: "utf-8"
-markdown: GFM
-# markdown: kramdown
-# highlighter: rouge
-# lsi: false
-# excerpt_separator: "\n\n"
-# incremental: false
-
-# # Markdown Processing
-# kramdown:
-#   input: GFM
-#   hard_wrap: false
-#   auto_ids: true
-#   footnote_nr: 1
-#   entity_output: as_char
-#   toc_levels: 1..6
-#   smart_quotes: lsquo,rsquo,ldquo,rdquo
-#   enable_coderay: false
-
-# Sass/SCSS
-sass:
-  sass_dir: _sass
-  style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
-
-## defaults
-defaults:
-  - scope:
-      path: ""
-      type: pages
-    values:
-      layout: single
-      classes: wide
-      author_profile: true
-      sidebar:
-        nav: pages
-
-#Theme docs
-#https://github.com/mmistakes/minimal-mistakes
-#https://github.com/mluerig/personal-homepage
