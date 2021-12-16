@@ -924,13 +924,12 @@ For example, we could provide a text description of the X3D element or provide a
 <X3DCanvas src="world.x3d">
   <p>Current stock price: $3.15 +0.15</p>
 </X3DCanvas>
-
 ```
 
 ```html
 <X3DCanvas src="world.x3dv">
   <img src="images/clock.png"/>
-</X3DCanvas></span>
+</X3DCanvas>
 ```
 
 Attributes of the X3DCanvas Tag
