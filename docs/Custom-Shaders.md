@@ -75,7 +75,7 @@ precision mediump float;
 uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];
 uniform mat4 x3d_ModelViewMatrix;
 uniform mat4 x3d_ProjectionMatrix;
- 
+
 in vec4 x3d_TexCoord;
 in vec4 x3d_Vertex;
 
@@ -440,6 +440,15 @@ A ComposedShader defines a number of special variables for the various shader st
          <td>uniform x3d_LightSourceParameters</td>
          <td>x3d_LightSource [x3d_MaxLights]</td>
          <td>see table »Uniform Struct x3d_LightSourceParameters«</td>
+      </tr>
+      <tr>
+         <td colspan="3"><hr/>
+         </td>
+      </tr>
+      <tr>
+         <td>uniform float</td>
+         <td>x3d_AlphaCutoff</td>
+         <td>alphaCutoff value from Appearance</td>
       </tr>
       <tr>
          <td colspan="3"><hr/>
