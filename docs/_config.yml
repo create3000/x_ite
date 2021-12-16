@@ -26,10 +26,9 @@ plugins:
 # Site Author
 author:
   name: X_ITE
-  avatar: x_ite.png
+  avatar: logo.png
   bio:
     Version 4.0.1
-
   links:
     - label: "GitHub"
       icon: "fab fa-2x fa-fw fa-github"
@@ -43,6 +42,11 @@ footer:
 
 relative_links:
   enabled: true
+  collections: true
+
+titles_from_headings:
+  enabled: false
+  strip_title: true
   collections: true
 
 include:
