@@ -66,13 +66,13 @@ function (X3DArrayField,
 		{
 			if (key === Symbol .iterator)
 			{
-				const
-					array      = target .getValue (),
-					components = target .getComponents (),
-					valueType  = target .getValueType ();
-
 				return function* ()
 				{
+					const
+						array      = target .getValue (),
+						components = target .getComponents (),
+						valueType  = target .getValueType ();
+
 					if (components === 1)
 					{
 						// Return native JavaScript value.
@@ -104,10 +104,11 @@ function (X3DArrayField,
 
 			if (Number .isInteger (index))
 			{
-				var
-					array      = target .getValue (),
+				const
 					components = target .getComponents (),
 					valueType  = target .getValueType ();
+
+				let array = target .getValue ();
 
 				if (index >= target ._length)
 					array = target .resize (index + 1);
