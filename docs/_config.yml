@@ -4,11 +4,11 @@ minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon
 
 # Site Settings
 locale: "en-US"
-title: "X_ITE X3D Browser"
+title: &title "X_ITE X3D Browser"
 title_separator: "-"
 subtitle: "One Step Ahead"
-name: "Holger Seelig"
-description: "Holger Seelig"
+name: &name "Holger Seelig"
+description: *name
 words_per_minute: 200
 github: [metadata]
 
@@ -25,9 +25,9 @@ plugins:
 
 # Site Author
 author:
-  name: X_ITE X3D Browser
-  avatar: logo.png
-  bio: Version 4.0.1
+  name: *title
+  avatar: "logo.png"
+  bio: "Version 4.0.1"
   links:
     - label: "GitHub"
       icon: "fab fa-2x fa-fw fa-github"
