@@ -801,7 +801,7 @@ Download X\_ITE
 
 There is a ZIP archive available to locally install X\_ITE on your server. Compressed and uncompressed copies of X\_ITE files are available. The uncompressed file (x\_ite.js) is best used during development or debugging; the compressed file (x\_ite.min.js) saves bandwidth and improves performance in production.
 
-[Download X\_ITE ZIP archive](https://github.com/create3000/x_ite/raw/latest/dist/x_ite.zip)
+[Download X\_ITE ZIP archive](https://create3000.github.io/code/x_ite/latest/dist/x_ite.zip)
 
 Using X\_ITE with a CDN
 -----------------------
