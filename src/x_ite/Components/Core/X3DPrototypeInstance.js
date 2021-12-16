@@ -81,8 +81,6 @@ function (X3DChildObject,
 		if (! protoNode .isExternProto)
 			return;
 
-		this .getScene () .addInitLoadCount (this);
-
 		protoNode .requestImmediateLoad (this .construct .bind (this));
 	}
 
@@ -120,8 +118,6 @@ function (X3DChildObject,
 
 			if (this .protoNode .isExternProto)
 			{
-				this .getScene () .removeInitLoadCount (this);
-
 				for (const fieldDefinition of proto .getFieldDefinitions ())
 				{
 					try

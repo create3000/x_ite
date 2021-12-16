@@ -68,9 +68,6 @@ function ($,
 {
 "use strict";
 
-	// Dummy callback function
-	function loadNowCallback () { }
-
 	function X3DExternProtoDeclaration (executionContext)
 	{
 		X3DProtoDeclarationNode .call (this, executionContext);
@@ -142,11 +139,12 @@ function ($,
 		loadNow: function (callback)
 		{
 			// 7.73 — ExternProtoDeclaration function, added callback argument.
-			this .requestImmediateLoad (callback || loadNowCallback);
+			this .requestImmediateLoad (callback);
 		},
 		requestImmediateLoad: function (callback)
 		{
-			this .deferred .done (callback);
+			if ($.isFunction (callback))
+				this .deferred .done (callback);
 
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
 				return;
@@ -183,7 +181,6 @@ function ($,
 			this .scene .setExecutionContext (this .getExecutionContext ());
 
 			this .setLoadState (X3DConstants .COMPLETE_STATE);
-
 			this .setProtoDeclaration (proto);
 
 			this .deferred .resolve ();
@@ -198,10 +195,9 @@ function ($,
 		{
 			console .error ("Error loading extern prototype:", error);
 
-			this .setLoadState (X3DConstants .FAILED_STATE);
-
 			this .scene = this .getBrowser () .getPrivateScene ();
 
+			this .setLoadState (X3DConstants .FAILED_STATE);
 			this .setProtoDeclaration (null);
 
 			this .deferred .resolve ();

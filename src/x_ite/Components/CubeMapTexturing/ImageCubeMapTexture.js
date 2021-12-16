@@ -55,7 +55,6 @@ define ([
 	"x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Networking/urls",
 	"standard/Networking/URI",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Algorithm",
@@ -68,7 +67,6 @@ function ($,
           X3DEnvironmentTextureNode,
           X3DUrlObject,
           X3DConstants,
-          urls,
           URI,
           Vector2,
           Algorithm,
@@ -182,17 +180,6 @@ function ($,
 		},
 		setError: function ()
 		{
-			var URL = this .URL .toString ();
-
-			if (DEBUG)
-			{
-				if (! (this .URL .isLocal () || this .URL .host === "localhost"))
-				{
-					if (! URL .match (urls .getFallbackExpression ()))
-						this .urlStack .unshift (urls .getFallbackUrl (URL));
-				}
-			}
-
 			if (this .URL .scheme !== "data")
 				console .warn ("Error loading image:", this .URL .toString ());
 

@@ -478,7 +478,7 @@ function ($,
 						data = unescape (data);
 
 					if (this .target .length && this .target !== "_self" && this .foreign)
-						return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
+						return this .foreign (this .URL .toString (), this .target);
 
 					this .callback (data);
 					return;
@@ -493,7 +493,7 @@ function ($,
 			// Handle target
 
 			if (this .target .length && this .target !== "_self" && this .foreign)
-				return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
+				return this .foreign (this .URL .toString (), this .target);
 
 			// Handle well known foreign content depending on extension or if path looks like directory.
 
@@ -501,7 +501,7 @@ function ($,
 			{
 				if (this .URL .extension .match (foreignExtensions))
 				{
-					return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
+					return this .foreign (this .URL .toString (), this .target);
 				}
 			}
 
@@ -522,7 +522,7 @@ function ($,
 						//console .log (this .getContentType (xhr));
 
 						if (foreign [this .getContentType (xhr)])
-							return this .foreign (this .URL .toString () .replace (urls .getFallbackExpression (), ""), this .target);
+							return this .foreign (this .URL .toString (), this .target);
 					}
 
 					if (this .text)
@@ -610,14 +610,6 @@ function ($,
 			if (URL .isLocal () || URL .host === "localhost")
 			{
 				URL = this .browser .getLocation () .getRelativePath (URL);
-			}
-			else
-			{
-				if (DEBUG)
-				{
-					if (! sURL .match (urls .getFallbackExpression ()))
-						this .url .unshift (urls .getFallbackUrl (URL));
-				}
 			}
 
 			return URL;

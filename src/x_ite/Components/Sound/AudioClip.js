@@ -55,7 +55,6 @@ define ([
 	"x_ite/Components/Sound/X3DSoundSourceNode",
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Networking/urls",
 	"standard/Networking/URI",
 	"x_ite/DEBUG",
 ],
@@ -66,7 +65,6 @@ function ($,
           X3DSoundSourceNode,
           X3DUrlObject,
           X3DConstants,
-          urls,
           URI,
           DEBUG)
 {
@@ -179,17 +177,6 @@ function ($,
 		},
 		setError: function ()
 		{
-			var URL = this .URL .toString ();
-
-			if (DEBUG)
-			{
-				if (! (this .URL .isLocal () || this .URL .host === "localhost"))
-				{
-					if (! URL .match (urls .getFallbackExpression ()))
-						this .urlStack .unshift (urls .getFallbackUrl (URL));
-				}
-			}
-
 			if (this .URL .scheme !== "data")
 				console .warn ("Error loading audio:", this .URL .toString ());
 

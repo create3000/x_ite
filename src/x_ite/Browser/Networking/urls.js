@@ -48,17 +48,14 @@
 
 define ([
 	"standard/Networking/URI",
-	"x_ite/DEBUG",
 ],
-function (URI,
-          DEBUG)
+function (URI)
 {
 "use strict";
 
 	function URLs ()
 	{
-		this .scriptUrl          = new URI (getScriptURL ())
-		this .fallbackExpression = new RegExp ("^http://cors.create3000.de/");
+		this .scriptUrl = new URI (getScriptURL ());
 	}
 
 	URLs .prototype =
@@ -94,10 +91,6 @@ function (URI,
 		getFallbackUrl: function (url)
 		{
 			return "http://cors.create3000.de/?url=" + url;
-		},
-		getFallbackExpression: function ()
-		{
-			return this .fallbackExpression;
 		},
 	};
 
