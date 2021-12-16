@@ -51,10 +51,10 @@ titles_from_headings:
 include:
   - index.md
 
-# encoding: "utf-8"
 # markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 
 # # Conversion
+encoding: "utf-8"
 markdown: GFM
 # markdown: kramdown
 # highlighter: rouge
