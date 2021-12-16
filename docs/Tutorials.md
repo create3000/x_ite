@@ -10,65 +10,65 @@ Let’s See What We Can Do…
 
 Simple, fast and efficient, our X3D tutorials give you all the tips and tricks to advance in the construction of your project.
 
-- [Hello, World](https://github.com/create3000/x_ite/wiki/Hello,-World!)
+- [Hello, World](/Hello,-World!.html)
   - First let's go over to the »Hello World« tutorial, which displays a simple earth and the text »Hello World!«.
-- [A quick overview: basic nodes](https://github.com/create3000/x_ite/wiki/Basic-Nodes)
+- [A quick overview: basic nodes](/Basic-Nodes.html)
   - Here are the basic nodes described, which are often used in an X3D world.
 
 Shapes, geometry, and appearance
 
-- [Introducing X3D](https://github.com/create3000/x_ite/wiki/Introducing-X3D)
-- [Building a X3D world](https://github.com/create3000/x_ite/wiki/Building-a-X3D-world)
-- [Building primitive shapes ](https://github.com/create3000/x_ite/wiki/Building-primitive-shapes)
-- [Transforming Shapes](https://github.com/create3000/x_ite/wiki/Transforming-Shapes)
-- [Controlling appearance with materials ](https://github.com/create3000/x_ite/wiki/Controlling-appearance-with-materials)
-- [Grouping nodes ](https://github.com/create3000/x_ite/wiki/Grouping-nodes)
-- [Naming nodes](https://github.com/create3000/x_ite/wiki/Naming-nodes)
+- [Introducing X3D](/Introducing-X3D.html)
+- [Building a X3D world](/Building-a-X3D-world.html)
+- [Building primitive shapes ](/Building-primitive-shapes.html)
+- [Transforming Shapes](/Transforming-Shapes.html)
+- [Controlling appearance with materials ](/Controlling-appearance-with-materials.html)
+- [Grouping nodes ](/Grouping-nodes.html)
+- [Naming nodes](/Naming-nodes.html)
 
 Animation, sensors, and geometry
 
-- [Introducing animation](https://github.com/create3000/x_ite/wiki/Introducing-animation)
-- [Animating transforms](https://github.com/create3000/x_ite/wiki/Animating-transforms)
-- [Sensing viewer actions](https://github.com/create3000/x_ite/wiki/Sensing-viewer-actions)
-- [Building shapes out of points, lines, and faces](https://github.com/create3000/x_ite/wiki/Building-shapes-out-of-points,-lines,-and-faces)
-- [Building elevation grids](https://github.com/create3000/x_ite/wiki/Building-elevation-grids)
-- [Building extruded shapes](https://github.com/create3000/x_ite/wiki/Building-extruded-shapes)
-- [Controlling color on coordinate-based geometry](https://github.com/create3000/x_ite/wiki/Controlling-color-on-coordinate-based-geometry)
-- [Controlling shading on coordinate-based geometry](https://github.com/create3000/x_ite/wiki/Controlling-shading-on-coordinate-based-geometry)
+- [Introducing animation](/Introducing-animation.html)
+- [Animating transforms](/Animating-transforms.html)
+- [Sensing viewer actions](/Sensing-viewer-actions.html)
+- [Building shapes out of points, lines, and faces](/Building-shapes-out-of-points,-lines,-and-faces.html)
+- [Building elevation grids](/Building-elevation-grids.html)
+- [Building extruded shapes](/Building-extruded-shapes.html)
+- [Controlling color on coordinate-based geometry](/Controlling-color-on-coordinate-based-geometry.html)
+- [Controlling shading on coordinate-based geometry](/Controlling-shading-on-coordinate-based-geometry.html)
 
 Textures, lights, and environment
 
-- [Mapping textures](https://github.com/create3000/x_ite/wiki/Mapping-textures)
-- [Controlling how textures are mapped](https://github.com/create3000/x_ite/wiki/Controlling-how-textures-are-mapped)
-- [Lighting your world](https://github.com/create3000/x_ite/wiki/Lighting-your-world)
-- [Adding backgrounds](https://github.com/create3000/x_ite/wiki/Adding-backgrounds)
-- [Adding fog](https://github.com/create3000/x_ite/wiki/Adding-fog)
-- [Adding sound](https://github.com/create3000/x_ite/wiki/Adding-sound)
-- [Controlling the viewpoint](https://github.com/create3000/x_ite/wiki/Controlling-the-viewpoint)
-- [Controlling navigation](https://github.com/create3000/x_ite/wiki/Controlling-navigation)
-- [Sensing the viewer](https://github.com/create3000/x_ite/wiki/Sensing-the-viewer)
+- [Mapping textures](/Mapping-textures.html)
+- [Controlling how textures are mapped](/Controlling-how-textures-are-mapped.html)
+- [Lighting your world](/Lighting-your-world.html)
+- [Adding backgrounds](/Adding-backgrounds.html)
+- [Adding fog](/Adding-fog.html)
+- [Adding sound](/Adding-sound.html)
+- [Controlling the viewpoint](/Controlling-the-viewpoint.html)
+- [Controlling navigation](/Controlling-navigation.html)
+- [Sensing the viewer](/Sensing-the-viewer.html)
 
 Scripts and prototypes
 
-- [Controlling detail](https://github.com/create3000/x_ite/wiki/Controlling-detail)
-- [Introducing script use](https://github.com/create3000/x_ite/wiki/Introducing-script-use)
-- [Writing program scripts with ECMAScript](https://github.com/create3000/x_ite/wiki/Writing-program-scripts-with-ECMAScript)
-- [Creating new node types](https://github.com/create3000/x_ite/wiki/Creating-new-node-types)
-- [Providing information about your world](https://github.com/create3000/x_ite/wiki/Providing-information-about-your-world)
+- [Controlling detail](/Controlling-detail.html)
+- [Introducing script use](/Introducing-script-use.html)
+- [Writing program scripts with ECMAScript](/Writing-program-scripts-with-ECMAScript.html)
+- [Creating new node types](/Creating-new-node-types.html)
+- [Providing information about your world](/Providing-information-about-your-world.html)
 
 Some words about optimizing a scene
 
-- [Improve Performance](https://github.com/create3000/x_ite/wiki/Improving-Performance)
+- [Improve Performance](/Improving-Performance.html)
   - To optimize a scene is an important task when creating an X3D scene. There are several ways to improve performance.
-- [Increasing Rendering Speed](https://github.com/create3000/x_ite/wiki/Increasing-Rendering-Speed)
+- [Increasing Rendering Speed](/Increasing-Rendering-Speed.html)
   - Using WebGL and JavaScript needs to look at speed all the time. Learn ways to increase rendering speed.
 
 See Also
 --------
 
-- [Script Node Authoring Interface](https://github.com/create3000/x_ite/wiki/Script-Node-Authoring-Interface)
-- [ECMAScript Object and Function Definitions](https://github.com/create3000/x_ite/wiki/ECMAScript-Object-and-Function-Definitions)
-- [Custom Shaders](https://github.com/create3000/x_ite/wiki/Custom-Shaders)
+- [Script Node Authoring Interface](/Script-Node-Authoring-Interface.html)
+- [ECMAScript Object and Function Definitions](/ECMAScript-Object-and-Function-Definitions.html)
+- [Custom Shaders](/Custom-Shaders.html)
 
 There are also Books for Further Reading
 ========================================

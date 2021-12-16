@@ -904,7 +904,7 @@ Additionally files can be compressed using GZip compression.
 | Classic VRML | .x3dv, .x3dvz  | model/x3d+vrml |
 | VRML         | .wrl, .wrz     | model/vrml     |
 
-For more information see [How to Configure Your Web Server](https://github.com/create3000/x_ite/wiki/How-To-Configure-Your-Web-Server).
+For more information see [How to Configure Your Web Server](/How-To-Configure-Your-Web-Server.html).
 
 Fallback Content
 ----------------
@@ -986,21 +986,21 @@ Example
 More Options
 ------------
 
-More options can be adjusted using [the Browser object](https://github.com/create3000/x_ite/wiki/Browser-Services#browser-object) and Browser Options for scene specific adjustments.
+More options can be adjusted using [the Browser object](/Browser-Services#browser-object.html) and Browser Options for scene specific adjustments.
 
 Accessing the External Browser
 ==============================
 
 X\_ITE is designed to provide access to a browser and its contained scene graph via JavaScript, either within an internal X3D Script node or an external HTML script.
 
-[Learn more how to access the external browser.](https://github.com/create3000/x_ite/wiki/Accessing-the-External-Browser)
+[Learn more how to access the external browser.](/Accessing-the-External-Browser.html)
 
 XHTML DOM Integration
 =====================
 
 XHTML DOM integration allows you to integrate 3D content seamlessly into your webpage, with just a JavaScript file included the scene can be written directly into the XHTML markup. There are no further plug-ins needed anymore.
 
-[Learn more about how XHTML and X3D can operate together.](https://github.com/create3000/x_ite/wiki/XHTML-DOM-Integration)
+[Learn more about how XHTML and X3D can operate together.](/XHTML-DOM-Integration.html)
 
 We show you a simple example how you can manipulate the X3D DOM in JavaScript like you would do it with any HTML.
 

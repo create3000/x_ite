@@ -181,7 +181,7 @@ var
 Function Reference
 ==================
 
-A complete function reference for the X3DBrowser object and all other X3D JavaScript objects can be found [here](https://github.com/create3000/x_ite/wiki/ECMAScript-Object-and-Function-Definitions).
+A complete function reference for the X3DBrowser object and all other X3D JavaScript objects can be found [here](/ECMAScript-Object-and-Function-Definitions.html).
 
 Example
 =======
@@ -202,14 +202,14 @@ function init ()
     Browser = X3D .getBrowser ("X3DCanvas"),              // Get the browser instance.
     scene   = Browser .currentScene,                      // Get the scene.
     timer   = scene .getNamedNode ("SpinAnimationTimer"); // Get box TouchSensor node.
-	
+
   // Add field callback to get informed when cycleTime is fired. "time" is an arbitrary
   // string to identify the callback, for intance if you later want to remove the callback.
   timer .addFieldCallback ("cycleTime", "time", function (value)
   {
     console .log ("cycleTime: " + value);
   });
-	
+
   changeStyle ();
   changeBackground ();
 };

@@ -3,12 +3,12 @@ ECMAScript Object and Function Definitions
 
 There are a fixed set of objects in ECMAScript, each of which have a fixed set of properties (i.e. values) and methods (i.e. functions). For all object types except Math, there are functions to create an instance of the object. The supported set of objects are:
 
-* [Browser Services](https://github.com/create3000/x_ite/wiki/Browser-Services)
-* [Scene Services](https://github.com/create3000/x_ite/wiki/Scene-Services)
-* [Field Services and Objects](https://github.com/create3000/x_ite/wiki/Field-Services-and-Objects) 
-* [Route Services](https://github.com/create3000/x_ite/wiki/Route-services)
-* [Prototype Services](https://github.com/create3000/x_ite/wiki/Prototype-Services)
-* [Constants Services](https://github.com/create3000/x_ite/wiki/Constants-Service)
+* [Browser Services](/Browser-Services.html)
+* [Scene Services](/Scene-Services.html)
+* [Field Services and Objects](/Field-Services-and-Objects.html)
+* [Route Services](/Route-services.html)
+* [Prototype Services](/Prototype-Services.html)
+* [Constants Services](/Constants-Service.html)
 
 parseInt and parseFloat Functions
 ---------------------------------
