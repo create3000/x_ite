@@ -91,8 +91,8 @@ function (X3DArrayField,
 								internalValue = value .getValue (),
 								i             = index * components;
 
-							value .addEvent = function () { return addEvent (target, i, internalValue, components); };
-							value .getValue = function () { return getValue (target, i, internalValue, components); };
+							value .addEvent = addEvent .bind (target, i, internalValue, components);
+							value .getValue = getValue .bind (target, i, internalValue, components);
 
 							yield value;
 						}
@@ -146,11 +146,11 @@ function (X3DArrayField,
 				return true;
 			}
 
-			const
-				index      = key * 1,
-				components = target .getComponents ();
+			const components = target .getComponents ();
 
-			let array = target .getValue ();
+			let
+				index = key * 1,
+				array = target .getValue ();
 
 			if (index >= target ._length)
 				array = target .resize (index + 1);
