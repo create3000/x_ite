@@ -1,6 +1,6 @@
 # theme settings
-#remote_theme: "mmistakes/minimal-mistakes"
-#minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise", "default"
+remote_theme: "mmistakes/minimal-mistakes"
+minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise", "default"
 
 # Build settings
 plugins:
@@ -12,18 +12,3 @@ relative_links:
   collections: true
 include:
   - Home.md
-
-## defaults
-defaults:
-  # _pages
-  - scope:
-      path: ""
-      type: pages
-    values:
-      layout: single
-      classes: wide
-      author_profile: false
-      sidebar:
-        nav: pages # _posts
-
-theme: jekyll-theme-cayman
