@@ -64,7 +64,7 @@ function (X3DArrayField,
 	{
 		get: function (target, key)
 		{
-			if (key === Symbol .iterator)
+			if (key .constructor === Symbol)
 			{
 				return function* ()
 				{
