@@ -49,7 +49,7 @@ titles_from_headings:
   collections: true
 
 include:
-  - Home.md
+  - index.md
 
 # encoding: "utf-8"
 # markdown_ext: "markdown,mkdown,mkdn,mkd,md"
