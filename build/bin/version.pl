@@ -70,6 +70,19 @@ sub upload
 	system "git", "push", "origin";
 }
 
+sub docs
+{
+	my $VERSION = shift;
+
+	my $config = `cat '$CWD/docs/_config.yml'`;
+
+	$config =~ s|/bio:\s*"Version .*?"|/bio: "Version $VERSION"|sgo;
+
+	open CONFIG, ">", "$CWD/docs/_config.yml";
+	print CONFIG $config;
+	close CONFIG;
+}
+
 sub wiki
 {
 	my $VERSION = shift;
@@ -120,6 +133,10 @@ if ($result == 0)
 	}
 
 	upload;
+
+	# docs
+
+	docs ($VERSION) unless $ALPHA;
 
 	# Wiki
 
