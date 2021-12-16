@@ -68,7 +68,7 @@ function ($,
 		{
 			const array = target .getValue ();
 
-			if (typeof key === "symbol")
+			if (key === Symbol .iterator)
 				return array [key];
 
 			const index = key * 1;

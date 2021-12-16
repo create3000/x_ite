@@ -60,45 +60,47 @@ function (X3DArrayField,
 {
 "use strict";
 
-	var handler =
+	const handler =
 	{
 		get: function (target, key)
 		{
-			if (typeof key === "symbol")
+			if (key === Symbol .iterator)
 			{
 				const
 					array      = target .getValue (),
 					components = target .getComponents (),
-					valueType  = target .getValueType (),
-					a          = [ ];
+					valueType  = target .getValueType ();
 
-				for (var index = 0, length = target ._length; index < length; ++ index)
+				return function* ()
 				{
 					if (components === 1)
 					{
 						// Return native JavaScript value.
-						a .push (valueType (array [index]));
+
+						for (let index = 0; index < target ._length; ++ index)
+							yield valueType (array [index]);
 					}
 					else
 					{
 						// Return reference to index.
 
-						const
-							value         = new (valueType) (),
-							internalValue = value .getValue (),
-							i             = index * components;
+						for (let index = 0; index < target ._length; ++ index)
+						{
+							const
+								value         = new (valueType) (),
+								internalValue = value .getValue (),
+								i             = index * components;
 
-						value .addEvent = function () { return addEvent (target, i, internalValue, components); };
-						value .getValue = function () { return getValue (target, i, internalValue, components); };
+							value .addEvent = function () { return addEvent (target, i, internalValue, components); };
+							value .getValue = function () { return getValue (target, i, internalValue, components); };
 
-						a .push (value);
+							yield value;
+						}
 					}
-				}
-
-				return a [key];
+			  	};
 			}
 
-			var index = key * 1;
+			const index = key * 1;
 
 			if (Number .isInteger (index))
 			{
@@ -143,10 +145,11 @@ function (X3DArrayField,
 				return true;
 			}
 
-			var
+			const
 				index      = key * 1,
-				array      = target .getValue (),
 				components = target .getComponents ();
+
+			let array = target .getValue ();
 
 			if (index >= target ._length)
 				array = target .resize (index + 1);
@@ -159,7 +162,7 @@ function (X3DArrayField,
 			{
 				index *= components;
 
-				for (var c = 0; c < components; ++ c, ++ index)
+				for (let c = 0; c < components; ++ c, ++ index)
 					array [index] = value [c];
 			}
 
