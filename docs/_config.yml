@@ -27,8 +27,7 @@ plugins:
 author:
   name: X_ITE
   avatar: logo.png
-  bio:
-    Version 4.0.1
+  bio: Version 4.0.1
   links:
     - label: "GitHub"
       icon: "fab fa-2x fa-fw fa-github"
@@ -87,4 +86,4 @@ defaults:
     values:
       layout: single
       classes: wide
-      author_profile: false
+      author_profile: true
