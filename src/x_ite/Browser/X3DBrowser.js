@@ -276,7 +276,7 @@ function ($,
 			this .description = "";
 
 			this .getBrowserOptions () .configure ();
-			//if (!arguments [1]) this .setBrowserLoading (true);
+			this .setBrowserLoading (true);
 			this .loadCount_ .addInterest ("set_loadCount__", this);
 			this .prepareEvents () .removeInterest ("bind", this);
 
@@ -455,7 +455,7 @@ function ($,
 
 				if (scene)
 				{
-					this .replaceWorld (scene, true);
+					this .replaceWorld (scene);
 					this .removeLoadCount (this);
 				}
 				else
