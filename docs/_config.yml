@@ -1,12 +1,5 @@
-# theme settings
-remote_theme: "mmistakes/minimal-mistakes"
-minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise", "default"
-
-# Build settings
 plugins:
-  - jekyll-remote-theme
   - jekyll-relative-links
-
 relative_links:
   enabled: true
   collections: true
