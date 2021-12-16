@@ -50,6 +50,7 @@ titles_from_headings:
 
 include:
   - index.md
+  - What's-New.md
 
 # markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 
@@ -88,3 +89,5 @@ defaults:
       layout: single
       classes: wide
       author_profile: true
+      sidebar:
+        nav: "pages"
