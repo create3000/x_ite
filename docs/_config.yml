@@ -13,7 +13,6 @@ words_per_minute: 200
 github: [metadata]
 
 # Build settings
-=======
 plugins:
   - jekyll-relative-links
 
@@ -34,4 +33,4 @@ defaults:
       classes: wide
       author_profile: false
       sidebar:
-        nav: pages  # _posts
+        nav: pages # _posts
