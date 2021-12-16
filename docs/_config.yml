@@ -1,9 +1,12 @@
+#theme: jekyll-theme-cayman
+remote_theme: "mmistakes/minimal-mistakes"
+minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise", "default"
+
 plugins:
+  - jekyll-remote-theme
   - jekyll-relative-links
 relative_links:
   enabled: true
   collections: true
 include:
   - Home.md
-
-theme: jekyll-theme-cayman
