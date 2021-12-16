@@ -787,30 +787,30 @@ function ($,
 		},
 		print: function ()
 		{
-			var string = "";
+			let string = "";
 
-			for (var i = 0; i < arguments .length; ++ i)
-				string += arguments [i];
+			for (const argument of arguments)
+				string += argument .toString ();
 
 			console .log (string);
 
-			var consoleElement = $(".x_ite-console");
+			const element = $(".x_ite-console");
 
-			if (consoleElement .length)
-				consoleElement .append (document .createTextNode (string));
+			if (element .length)
+				element .append (document .createTextNode (string));
 		},
 		println: function ()
 		{
-			var string = "";
+			let string = "";
 
-			for (var i = 0; i < arguments .length; ++ i)
-				string += arguments [i];
+			for (const argument of arguments)
+				string += argument .toString ();
 
 			console .log (string);
 
 			string += "\n";
 
-			var element = $(".x_ite-console");
+			const element = $(".x_ite-console");
 
 			if (element .length)
 				element .append (document .createTextNode (string));
