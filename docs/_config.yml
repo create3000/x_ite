@@ -79,7 +79,7 @@ sass:
   sass_dir: _sass
   style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
 
-# documentation links
+# Sidebar links
 pages:
   - title: "Quick-Start Guide"
     children:
@@ -104,13 +104,12 @@ pages:
 
 ## defaults
 defaults:
-  # _pages
   - scope:
       path: ""
       type: pages
     values:
       layout: single
       classes: wide
-      author_profile: true
+      author_profile: false
       sidebar:
         nav: "pages"
