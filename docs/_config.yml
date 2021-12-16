@@ -1,6 +1,6 @@
 #theme: jekyll-theme-cayman
 remote_theme: "mmistakes/minimal-mistakes"
-minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise", "default"
+minimal_mistakes_skin: "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise", "default"
 
 # Site Settings
 locale: "en-US"
