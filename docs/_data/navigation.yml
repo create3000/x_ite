@@ -1,0 +1,9 @@
+
+# Sidebar links
+pages:
+  - title: "Quick-Start Guide"
+    children:
+      - title: "Getting Started"
+        url: /
+      - title: "What's New"
+        url: /What's-New.html
