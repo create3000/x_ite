@@ -129,7 +129,7 @@ function ($,
 			if (this .node instanceof World)
 				scene .loader = this;
 			else
-				scene .setExecutionContext (this .node .getExecutionContext ());
+				scene .setExecutionContext (this .executionContext);
 
 			scene .setURL (this .browser .getLocation () .transform (worldURL));
 
@@ -233,13 +233,7 @@ function ($,
 			try
 			{
 				if (success)
-				{
-					success = function (scene, success, error)
-					{
-						this .setScene (scene, success, error);
-					}
-					.bind (this, scene, success, error);
-				}
+					success = this .setScene .bind (this, scene, success, error);
 
 				new XMLParser (scene) .parseIntoScene (dom, success, error);
 
@@ -261,13 +255,7 @@ function ($,
 			try
 			{
 				if (success)
-				{
-					success = function (scene, success, error)
-					{
-						this .setScene (scene, success, error);
-					}
-					.bind (this, scene, success, error);
-				}
+					success = this .setScene .bind (this, scene, success, error);
 
 				//AP: add reference to dom for later access.
 				this .node .dom = new JSONParser (scene) .parseJavaScript (jsobj, success, error);
