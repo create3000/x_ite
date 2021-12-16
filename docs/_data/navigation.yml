@@ -46,81 +46,81 @@ pages:
     children:
       - title: "Overview"
         url: /Tutorials.html
-      - title: "Basic tutorials"
-        children:
-          - title: "Hello, World!"
-            url: /Hello,-World!.html
-          - title: "Basic Nodes"
-            url: /Basic-Nodes.html
-      - title: "Shapes, geometry, and appearance"
-        children:
-          - title: "Introducing X3D"
-            url: /Introducing-X3D.html
-          - title: "Building a X3D world"
-            url: /Building-a-X3D-world.html
-          - title: "Building primitive shapes"
-            url: /Building-primitive-shapes.html
-          - title: "Transforming Shapes"
-            url: /Transforming-Shapes.html
-          - title: "Controlling appearance with materials"
-            url: /Controlling-appearance-with-materials.html
-          - title: "Grouping nodes"
-            url: /Grouping-nodes.html
-          - title: "Naming nodes"
-            url: /Naming-nodes.html
-      - title: "Animation, sensors, and geometry"
-        children:
-          - title: "Introducing animation"
-            url: /Introducing-animation.html
-          - title: "Animating transforms"
-            url: /Animating-transforms.html
-          - title: "Sensing viewer actions"
-            url: /Sensing-viewer-actions.html
-          - title: "Building shapes out of points, lines, and faces"
-            url: /Building-shapes-out-of-points,-lines,-and-faces.html
-          - title: "Building elevation grids"
-            url: /Building-elevation-grids.html
-          - title: "Building extruded shapes"
-            url: /Building-extruded-shapes.html
-          - title: "Controlling color on coordinate-based geometry"
-            url: /Controlling-color-on-coordinate-based-geometry.html
-          - title: "Controlling shading on coordinate-based geometry"
-            url: /Controlling-shading-on-coordinate-based-geometry.html
-      - title: "Textures, lights, and environment"
-        children:
-          - title: "Mapping textures"
-            url: /Mapping-textures.html
-          - title: "Controlling how textures are mapped"
-            url: /Controlling-how-textures-are-mapped.html
-          - title: "Lighting your world"
-            url: /Lighting-your-world.html
-          - title: "Adding backgrounds"
-            url: /Adding-backgrounds.html
-          - title: "Adding fog"
-            url: /Adding-fog.html
-          - title: "Adding sound"
-            url: /Adding-sound.html
-          - title: "Controlling the viewpoint"
-            url: /Controlling-the-viewpoint.html
-          - title: "Controlling navigation"
-            url: /Controlling-navigation.html
-          - title: "Sensing the viewer"
-            url: /Sensing-the-viewer.html
-      - title: "Scripts and prototypes"
-        children:
-          - title: "Controlling detail"
-            url: /Controlling-detail.html
-          - title: "Introducing script use"
-            url: /Introducing-script-use.html
-          - title: "Writing program scripts with ECMAScript"
-            url: /Writing-program-scripts-with-ECMAScript.html
-          - title: "Creating new node types"
-            url: /Creating-new-node-types.html
-          - title: "Providing information about your world"
-            url: /Providing-information-about-your-world.html
-      - title: "Optimize your scene"
-        children:
-          - title: "Improving Performance"
-            url: /Improving-Performance.html
-          - title: "Increasing Rendering Speed"
-            url: /Increasing-Rendering-Speed.html
+  - title: "Basic tutorials"
+    children:
+      - title: "Hello, World!"
+        url: /Hello,-World!.html
+      - title: "Basic Nodes"
+        url: /Basic-Nodes.html
+  - title: "Shapes, geometry, and appearance"
+    children:
+      - title: "Introducing X3D"
+        url: /Introducing-X3D.html
+      - title: "Building a X3D world"
+        url: /Building-a-X3D-world.html
+      - title: "Building primitive shapes"
+        url: /Building-primitive-shapes.html
+      - title: "Transforming Shapes"
+        url: /Transforming-Shapes.html
+      - title: "Controlling appearance with materials"
+        url: /Controlling-appearance-with-materials.html
+      - title: "Grouping nodes"
+        url: /Grouping-nodes.html
+      - title: "Naming nodes"
+        url: /Naming-nodes.html
+  - title: "Animation, sensors, and geometry"
+    children:
+      - title: "Introducing animation"
+        url: /Introducing-animation.html
+      - title: "Animating transforms"
+        url: /Animating-transforms.html
+      - title: "Sensing viewer actions"
+        url: /Sensing-viewer-actions.html
+      - title: "Building shapes out of points, lines, and faces"
+        url: /Building-shapes-out-of-points,-lines,-and-faces.html
+      - title: "Building elevation grids"
+        url: /Building-elevation-grids.html
+      - title: "Building extruded shapes"
+        url: /Building-extruded-shapes.html
+      - title: "Controlling color on coordinate-based geometry"
+        url: /Controlling-color-on-coordinate-based-geometry.html
+      - title: "Controlling shading on coordinate-based geometry"
+        url: /Controlling-shading-on-coordinate-based-geometry.html
+  - title: "Textures, lights, and environment"
+    children:
+      - title: "Mapping textures"
+        url: /Mapping-textures.html
+      - title: "Controlling how textures are mapped"
+        url: /Controlling-how-textures-are-mapped.html
+      - title: "Lighting your world"
+        url: /Lighting-your-world.html
+      - title: "Adding backgrounds"
+        url: /Adding-backgrounds.html
+      - title: "Adding fog"
+        url: /Adding-fog.html
+      - title: "Adding sound"
+        url: /Adding-sound.html
+      - title: "Controlling the viewpoint"
+        url: /Controlling-the-viewpoint.html
+      - title: "Controlling navigation"
+        url: /Controlling-navigation.html
+      - title: "Sensing the viewer"
+        url: /Sensing-the-viewer.html
+  - title: "Scripts and prototypes"
+    children:
+      - title: "Controlling detail"
+        url: /Controlling-detail.html
+      - title: "Introducing script use"
+        url: /Introducing-script-use.html
+      - title: "Writing program scripts with ECMAScript"
+        url: /Writing-program-scripts-with-ECMAScript.html
+      - title: "Creating new node types"
+        url: /Creating-new-node-types.html
+      - title: "Providing information about your world"
+        url: /Providing-information-about-your-world.html
+  - title: "Optimize your scene"
+    children:
+      - title: "Improving Performance"
+        url: /Improving-Performance.html
+      - title: "Increasing Rendering Speed"
+        url: /Increasing-Rendering-Speed.html
