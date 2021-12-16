@@ -79,6 +79,29 @@ sass:
   sass_dir: _sass
   style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
 
+# documentation links
+pages:
+  - title: "Quick-Start Guide"
+    children:
+      - title: "Getting Started"
+        url: /
+      - title: "What's New"
+        url: /What's-New.html
+  - title: Customization
+    children:
+      - title: "Configuration"
+        url: /docs/configuration/
+      - title: "Overriding Theme Defaults"
+        url: /docs/overriding-theme-defaults/
+      - title: "Navigation"
+        url: /docs/navigation/
+      - title: "UI Text"
+        url: /docs/ui-text/
+      - title: "Authors"
+        url: /docs/authors/
+      - title: "Layouts"
+        url: /docs/layouts/
+
 ## defaults
 defaults:
   # _pages
