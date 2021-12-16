@@ -4,7 +4,7 @@
 🛑 Attention!
 --------------------------------------
 
-👉 X_ITE is now hosted on create3000.github.io, see https://github.com/create3000/x_ite/wiki#download-x_ite. The domain http://create3000.de will be shutdown 2022 in May 😱.
+👉 X_ITE is now hosted on create3000.github.io, see https://github.com/create3000/x_ite/wiki#using-xite-with-a-cdn. The domain http://create3000.de will be shutdown 2022 in May 😱.
 
 Introduction
 --------------------------------------
