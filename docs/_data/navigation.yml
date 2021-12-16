@@ -107,17 +107,17 @@ pages:
             - title: "Sensing the viewer"
             url: /Sensing-the-viewer.html
         - title: "Scripts and prototypes"
-            children:
-              - title: "Controlling detail"
-              url: /Controlling-detail.html
-              - title: "Introducing script use"
-              url: /Introducing-script-use.html
-              - title: "Writing program scripts with ECMAScript"
-              url: /Writing-program-scripts-with-ECMAScript.html
-              - title: "Creating new node types"
-              url: /Creating-new-node-types.html
-              - title: "Providing information about your world"
-              url: /Providing-information-about-your-world.html
+          children:
+            - title: "Controlling detail"
+            url: /Controlling-detail.html
+            - title: "Introducing script use"
+            url: /Introducing-script-use.html
+            - title: "Writing program scripts with ECMAScript"
+            url: /Writing-program-scripts-with-ECMAScript.html
+            - title: "Creating new node types"
+            url: /Creating-new-node-types.html
+            - title: "Providing information about your world"
+            url: /Providing-information-about-your-world.html
         - title: "Optimize your scene"
           children:
             - title: "Improving Performance"
