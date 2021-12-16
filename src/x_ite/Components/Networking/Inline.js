@@ -210,7 +210,6 @@ function (Fields,
 			this .scene = scene;
 			this .scene .setExecutionContext (this .getExecutionContext ());
 			this .scene .setPrivate (this .getExecutionContext () .getPrivate ());
-			this .scene .setup ();
 
 			this .scene .rootNodes .addFieldInterest (this .group .children_);
 			this .group .children_ = this .scene .rootNodes;

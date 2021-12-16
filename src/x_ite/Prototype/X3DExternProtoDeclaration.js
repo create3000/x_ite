@@ -181,7 +181,6 @@ function ($,
 			this .scene .setLive (this .isLive () .getValue ());
 			this .scene .setPrivate (this .getScene () .getPrivate ());
 			this .scene .setExecutionContext (this .getExecutionContext ());
-			this .scene .setup ();
 
 			this .setLoadState (X3DConstants .COMPLETE_STATE);
 
