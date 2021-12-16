@@ -35,3 +35,5 @@ defaults:
       author_profile: false
       sidebar:
         nav: pages # _posts
+
+theme: jekyll-theme-cayman
