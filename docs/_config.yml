@@ -11,6 +11,7 @@ name: &name "Holger Seelig"
 description: *name
 words_per_minute: 200
 github: [metadata]
+search: true
 
 plugins:
   - jekyll-paginate
