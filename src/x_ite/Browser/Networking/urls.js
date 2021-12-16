@@ -88,10 +88,6 @@ function (URI)
 		{
 			return this .scriptUrl .transform ("assets/hatching/" + index + ".png") .toString ();
 		},
-		getFallbackUrl: function (url)
-		{
-			return "http://cors.create3000.de/?url=" + url;
-		},
 	};
 
 	return new URLs ();

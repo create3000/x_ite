@@ -268,7 +268,7 @@ function (X3DChildObject,
 			{
 				try
 				{
-					var
+					const
 						inlineNode   = this .getNamedNode (importedNode .getInlineNode () .getName ()),
 						exportedName = importedNode .getExportedName ();
 
@@ -305,7 +305,7 @@ function (X3DChildObject,
 		},
 		toXMLStream: function (stream)
 		{
-			var generator = Generator .Get (stream);
+			const generator = Generator .Get (stream);
 
 			if (generator .IsSharedNode (this))
 			{
@@ -316,7 +316,7 @@ function (X3DChildObject,
 
 			generator .EnterScope ();
 
-			var name = generator .Name (this);
+			const name = generator .Name (this);
 
 			if (name .length)
 			{
@@ -333,7 +333,7 @@ function (X3DChildObject,
 					stream .string += generator .XMLEncode (name);
 					stream .string += "'";
 
-					var containerField = generator .ContainerField ();
+					const containerField = generator .ContainerField ();
 
 					if (containerField)
 					{
@@ -370,7 +370,7 @@ function (X3DChildObject,
 				stream .string += "'";
 			}
 
-			var containerField = generator .ContainerField ();
+			const containerField = generator .ContainerField ();
 
 			if (containerField)
 			{
@@ -383,7 +383,7 @@ function (X3DChildObject,
 				}
 			}
 
-			var fields = this .getChangedFields ();
+			const fields = this .getChangedFields ();
 
 			if (fields .length === 0)
 			{
@@ -395,22 +395,20 @@ function (X3DChildObject,
 
 				generator .IncIndent ();
 
-				var references = [ ];
+				const references = [ ];
 
-				for (var i = 0, length = fields .length; i < length; ++ i)
+				for (const field of fields)
 				{
-					var field = fields [i];
-
 					// If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
 					// for this field.
 
-					var mustOutputValue = false;
+					let mustOutputValue = false;
 
 					if (generator .ExecutionContext ())
 					{
 						if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
 						{
-							var
+							let
 								initializableReference = false,
 								fieldReferences        = field .getReferences ();
 
@@ -533,11 +531,9 @@ function (X3DChildObject,
 
 					generator .IncIndent ();
 
-					for (var i = 0, length = references .length; i < length; ++ i)
+					for (const field of references)
 					{
-						var
-							field       = references [i],
-							protoFields = field .getReferences ();
+						const protoFields = field .getReferences ();
 
 						protoFields .forEach (function (protoField)
 						{
