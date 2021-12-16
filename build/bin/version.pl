@@ -76,7 +76,7 @@ sub docs
 
 	my $config = `cat '$CWD/docs/_config.yml'`;
 
-	$config =~ s|/bio:\s*"Version .*?"|/bio: "Version $VERSION"|sgo;
+	$config =~ s|/"Version .*?"|/"Version $VERSION"|sgo;
 
 	open CONFIG, ">", "$CWD/docs/_config.yml";
 	print CONFIG $config;
