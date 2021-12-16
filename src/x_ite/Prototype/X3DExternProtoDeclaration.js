@@ -213,7 +213,7 @@ function ($,
 		},
 		toVRMLStream: function (stream)
 		{
-			var generator = Generator .Get (stream);
+			const generator = Generator .Get (stream);
 
 			stream .string += generator .Indent ();
 			stream .string += "EXTERNPROTO";
@@ -222,10 +222,11 @@ function ($,
 			stream .string += " ";
 			stream .string += "[";
 
+			const userDefinedFields = this .getUserDefinedFields ();
+
 			var
 				fieldTypeLength   = 0,
-				accessTypeLength  = 0,
-				userDefinedFields = this .getUserDefinedFields ();
+				accessTypeLength  = 0;
 
 			if (userDefinedFields .size === 0)
 			{
@@ -264,7 +265,7 @@ function ($,
 		},
 		toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
 		{
-			var generator = Generator .Get (stream);
+			const generator = Generator .Get (stream);
 
 			stream .string += generator .Indent ();
 			stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
@@ -275,7 +276,7 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			var generator = Generator .Get (stream);
+			const generator = Generator .Get (stream);
 
 			stream .string += generator .Indent ();
 			stream .string += "<ExternProtoDeclare";
@@ -293,7 +294,7 @@ function ($,
 
 			generator .IncIndent ();
 
-			var userDefinedFields = this .getUserDefinedFields ();
+			const userDefinedFields = this .getUserDefinedFields ();
 
 			userDefinedFields .forEach (function (field)
 			{
