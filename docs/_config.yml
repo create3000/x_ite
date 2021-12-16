@@ -19,6 +19,9 @@ github: [metadata]
 # Search
 search: true
 search_full_content: true
+search_provider: google
+google:
+  search_engine_id: 36920ccf3f21ca6d5
 
 # Site Author
 author:
