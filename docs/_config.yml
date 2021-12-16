@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # theme settings
 remote_theme: "mmistakes/minimal-mistakes"
 minimal_mistakes_skin: "dark" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise", "default"
@@ -15,8 +14,6 @@ github: [metadata]
 
 # Build settings
 =======
-theme: jekyll-theme-architect
->>>>>>> ddf8a91c638ee5831a2e3cd2da453e574c2235b7
 plugins:
   - jekyll-relative-links
 
