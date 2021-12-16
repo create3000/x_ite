@@ -27,7 +27,7 @@ plugins:
 author:
   name: *title
   avatar: "logo.png"
-  bio: "Version 4.7.0"
+  bio: "Version 4.7.0a"
   links:
     - label: "GitHub"
       icon: "fab fa-2x fa-fw fa-github"
