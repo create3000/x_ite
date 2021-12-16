@@ -75,6 +75,26 @@ function (Fields,
 		{
 			return "Scene";
 		},
+		setExecutionContext: function (value)
+		{
+			if (! this .isMainContext ())
+			{
+				const scene = this .getScene ();
+
+				for (const object of this .loadingObjects)
+					scene .removeLoadCount (object);
+			}
+
+			X3DScene .prototype .setExecutionContext .call (this, value);
+
+			if (! this .isMainContext ())
+			{
+				const scene = this .getScene ();
+
+				for (const object of this .loadingObjects)
+					scene .addLoadCount (object);
+			}
+		},
 		addInitLoadCount: function (node)
 		{
 			this .initLoadCount_ = this .initLoadCount_ .getValue () + 1;
