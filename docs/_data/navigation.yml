@@ -29,19 +29,18 @@ pages:
         url: /Script-Node-Authoring-Interface.html
       - title: "ECMAScript Object and Function Definitions"
         url: /ECMAScript-Object-and-Function-Definitions.html
-        children:
-          - title: "Browser Services"
-            url: /Browser-Services.html
-          - title: "Scene Services"
-            url: /Scene-Services.html
-          - title: "Field Services and Objects"
-            url: /Field-Services-and-Objects.html
-          - title: "Route Services"
-            url: /Route-services.html
-          - title: "Prototype Services"
-            url: /Prototype-Services.html
-          - title: "Constants Services"
-            url: /Constants-Service.html
+      - title: "Browser Services"
+        url: /Browser-Services.html
+      - title: "Scene Services"
+        url: /Scene-Services.html
+      - title: "Field Services and Objects"
+        url: /Field-Services-and-Objects.html
+      - title: "Route Services"
+        url: /Route-services.html
+      - title: "Prototype Services"
+        url: /Prototype-Services.html
+      - title: "Constants Services"
+        url: /Constants-Service.html
   - title: "Tutorials"
     children:
       - title: "Overview"
