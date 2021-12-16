@@ -70,7 +70,7 @@ function (URI)
 				return this .scriptUrl .transform ("assets/components/" + file + ".js") .toString ();
 			}
 
-			return "https://create3000.github.io/x_ite/";
+			return "https://github.com/create3000/x_ite/wiki";
 		},
 		getShaderUrl: function (file)
 		{
