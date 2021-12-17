@@ -39,7 +39,7 @@ footer:
       icon: "fab fa-fw fa-github-square"
       url: "https://github.com/create3000/x_ite"
     - label: "Web3D.org"
-      icon: "fab fa-fw fa-link"
+      icon: "fas fa-fw fa-link"
       url: "https://www.web3d.org"
 
 titles_from_headings:
