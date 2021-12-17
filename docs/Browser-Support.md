@@ -30,7 +30,7 @@ All stock browser on **Android** 4.0+ support WebGL and JavaScript ES 6 natively
 iOS has good support since **Safari** on iOS 7+. Simplify your scenes and test them extensively to achieve the best results how you would like it to be.
 <https://www.apple.com/ios/>
 
-Any problem with X\_ITE in the above browsers should be reported as a bug in X\_ITE. See [Report a Bug](https://github.com/create3000/x_ite/issues).
+**Any problem with X\_ITE in the above browsers should be reported as a bug in X\_ITE. See [Report a Bug](https://github.com/create3000/x_ite/issues).**
 {: .notice--info}
 
 We do not support older browsers like Internet Explorer 6-9, Opera 12.1x or Safari 5.1+.
