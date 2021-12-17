@@ -5,6 +5,7 @@ X\_ITE v4.7.0 Released
 
 This release also increased pure rendering speed (without routing and scripting) of up to 30%, that is a huge amount, especially when there are many nodes (300 and more).
 
+<div class="notice--info">
 New Features
 --------------------------
 
@@ -15,13 +16,14 @@ New Features
 - Added X3DBoundedBox.visible and X3DBoundedBox.bboxDisplay field.
 - Updated access type of WorldInfo.title and WorldInfo.info field to match X3Dv4.
 - Add context menu "Show World Info" menu item, if an WorldInfo node exists.
-{: .notice--success}
+</div>
 
+<div class="notice--info">
 Bug fixes
 --------------------------
 
 - Changed Extrusion SCPyAxis calculation.
-{: .notice--success}
+</div>
 
 X\_ITE v4.6.24 Released
 =======================
