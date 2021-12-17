@@ -62,7 +62,7 @@ The string may be any valid X3D content in any language supported by the browser
 
 Async version of `createX3DFromString`. The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
 
-success: function (scene) { ... },
+success: function (scene) { ... }<br/>
 error: function (error) { ... }
 
 ### void **createX3DFromURL** (*MFString url, String event, Node node*)
