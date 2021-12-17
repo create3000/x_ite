@@ -971,7 +971,7 @@ A Boolean value (`true` or `false`). If the value is true the drawing buffers wi
 
 **splashScreen**
 
-A Boolean value (`true` or `false`) to indicate whether the splash screen should be displayed. The default value for the splashScreen attribute is true. The display of Learn more about how HTML and X3D can operate together.the splash screen can also be toggled via the browser option »SplashScreen« in JavaScript. Call Browser.setBrowserOption("SplashScreen", booleanValue) to toggle the display of the splash screen.
+A Boolean value (`true` or `false`) to indicate whether the splash screen should be displayed. The default value for the splashScreen attribute is true. The display of the splash screen can also be toggled via the browser option »SplashScreen« in JavaScript. Call Browser.setBrowserOption("SplashScreen", booleanValue) to toggle the display of the splash screen.
 {: .notice}
 
 **src**
