@@ -102,6 +102,11 @@ function ($,
 
 	// X3D
 
+	function getComponentUrl (name)
+	{
+		return urls .getProviderUrl (name);
+	}
+
 	function createBrowser (url, parameter)
 	{
 		const element = $("<X3DCanvas></X3DCanvas>");
@@ -186,11 +191,6 @@ function ($,
 				fallbacks .resolve (error);
 			}
 		});
-	}
-
-	function getComponentUrl (name)
-	{
-		return urls .getProviderUrl (name);
 	}
 
 	Object .assign (X3D,

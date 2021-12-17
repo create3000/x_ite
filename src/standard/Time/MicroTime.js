@@ -55,7 +55,7 @@ define (function ()
 	{
 		const now = performance .now;
 
-		var
+		let
 			offset = 0,
 			last   = 0;
 
