@@ -62,7 +62,7 @@ Syntax: Switch
 The [Switch](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Switch) group node creates a switched group
 
 - Only one child node in the group is displayed
-- You select which child 
+- You select which child
   - Children implicitly numbered from 0
   - A -1 selects no children
 
@@ -217,7 +217,7 @@ Classic Encoding
 ----------------
 
 ```js
-<pre class="lang:x3d decode:true ">Anchor {
+Anchor {
   url "stairwy.wrl"
   description "Twisty Stairs"
   children [ ... ]
@@ -256,6 +256,6 @@ Summary
 - The [Switch](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Switch) node creates a group with 1 choice used
 - The [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform) node creates a group with a new coordinate system
 - The [Billboard](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Billboard) node creates a group with a coordinate system that rotates to face the viewer
-- The [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Anchor) node creates a clickable group 
+- The [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Anchor) node creates a clickable group
   - Clicking any child in the group loads a URL
 - The [Inline](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Inline) node creates a special group loaded from another X3D file

@@ -290,7 +290,7 @@ Classic Encoding
 ----------------
 
 ```js
-<pre class="lang:x3d decode:true ">CoordinateInterpolator {
+CoordinateInterpolator {
   key [ 0.0, ... ]
   keyValue [ 0.0 1.0 0.0, ... ]
 }

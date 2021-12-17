@@ -2,7 +2,7 @@ Motivation
 ==========
 
 - By default, all shapes are built at the center of the world
-- A Transform enables you to 
+- A Transform enables you to
   - Position shapes
   - Rotate shapes
   - Scale shapes
@@ -215,7 +215,7 @@ XML Encoding
 ------------
 
 ```xml
-<pre class="lang:xhtml decode:true "><Transform
+<Transform
     translation='2.0 0.0 0.0'
     rotation='0.0 0.0 1.0 0.52'
     scale='0.5 0.5 0.5'>
@@ -289,7 +289,7 @@ Summary
 
 - All shapes are built in a coordinate system
 - The [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform) node creates a new coordinate system relative to its parent
-- [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform) node fields do 
+- [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform) node fields do
   - *translation*
   - *rotation*
   - *scale*

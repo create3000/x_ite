@@ -1,7 +1,7 @@
 X\_ITE v4.7.0 Released
 =======================
 
-*Leipzig, 5th December 2021*: This release implements some of the new X3Dv4 features. X3Dv4 Draft is available at https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/Architecture.html.
+*Leipzig, 5th December 2021*: This release implements some of the new X3Dv4 features. X3Dv4 Draft is available at <https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/Architecture.html>.
 
 This release also increased pure rendering speed (without routing and scripting) of up to 30%, that is a huge amount, especially when there are many nodes (300 and more).
 
@@ -543,7 +543,7 @@ Bug fixes
 X\_ITE v4.2.14 released
 =======================
 
-*Leipzig, 16th December 2018:* This version implements the StringSensor from the KeyDeviceSensor component and we found a really phat bug in X3DComposedGeometryNode normal generation, which affects TriangleSet, IndexedTriangleSet, QuadSet, and so on. We also tested X\_ITE against http://x3dgraphics.com/examples/X3dForWebAuthors/index.html/index.html and fixed all bugs found.
+*Leipzig, 16th December 2018:* This version implements the StringSensor from the KeyDeviceSensor component and we found a really phat bug in X3DComposedGeometryNode normal generation, which affects TriangleSet, IndexedTriangleSet, QuadSet, and so on. We also tested X\_ITE against <http://x3dgraphics.com/examples/X3dForWebAuthors/index.html/index.html> and fixed all bugs found.
 
 New features
 ------------
@@ -641,7 +641,7 @@ X\_ITE v4.2.8 released
 *Leipzig, 31th Oktober 2018:* The X3DCanvas element has now the onload, onshutdown, and onerror attributes and properties. There is also jQuery support for these event handler when calling jQuery.fn.on and jQuery.fn.off:
 
 ```
-<pre class="lang:js decode:true">var element = $("X3DCanvas");
+var element = $("X3DCanvas");
 element .on ("load", function () { console .log ("load, yeah"); });
 ```
 
@@ -771,8 +771,8 @@ X\_ITE v4.2.0 released
 
 DirectionalLight, SpotLight, and PointLight are now able to cast shadows. Let’s details them. A directional light is when light rays are parallel. A bit like when you look at the sun rays on the left. It mostly behaves like a light source very far from us. A spot light is when light rays seems to originate from a single point, and spreads outward in a coned direction, like in a dance club. To enable the shadow casting on a light, just adjust *shadowIntensity* of the light.
 
-```
-<pre class="lang:x3d decode:true">X3DLightNode {
+```js
+X3DLightNode {
   ...
   shadowIntensity 0
   shadowColor 0 0 0
@@ -804,8 +804,8 @@ X\_ITE v4.1.6 released
 
 *Leipzig, 24th May 2018:* Thank's to Ammo (Bullet) physics engine we have implemented a lot of new nodes of the RigidBodyPhysics component. Most of the documentation pages of this component have a live example for this node. The component is realized as plug-in which can be include right after the x\_ite.js script tag.
 
-```
-<pre class="lang:xhtml decode:true"><link rel="stylesheet" type="text/css" href="http://code.create3000.de/x_ite/4.1.6/dist/x_ite.css"/>
+```html
+<link rel="stylesheet" type="text/css" href="http://code.create3000.de/x_ite/4.1.6/dist/x_ite.css"/>
 <script type="text/javascript" src="http://code.create3000.de/x_ite/4.1.6/dist/x_ite.min.js"></script>
 <!-- Include the following plug-ins if you wish support for this component -->
 <script type="text/javascript" src="http://code.create3000.de/x_ite/4.1.6/dist/rigid-body-physics.min.js"></script>
@@ -843,12 +843,12 @@ Bug Fixes
 X\_ITE v4.1.4 released
 ======================
 
-*Leipzig, 11th January 2018:* We finally released version 4.1.4 now. X\_ITE has become a huge change in the shader specification. It is now even more like GLSL. There are new uniform variables *x3d\_LightSourceParameters, x3d\_MaterialParameters,* and *x3d\_FogParameters.* Old shaders are fully compatible with this version, although old shader light and material uniforms are depreciated. For more information have a look at http://create3000.de/x\_ite/custom-shaders/.
+*Leipzig, 11th January 2018:* We finally released version 4.1.4 now. X\_ITE has become a huge change in the shader specification. It is now even more like GLSL. There are new uniform variables *x3d\_LightSourceParameters, x3d\_MaterialParameters,* and *x3d\_FogParameters.* Old shaders are fully compatible with this version, although old shader light and material uniforms are depreciated. For more information have a look at </x_ite/Custom-Shaders.html>.
 
 X\_ITE v4.1.3 released
 ======================
 
-*Leipzig, 25th December 2017:* There is now the new BlendMode node in X\_ITE available, which gives X3D authors the ability to specify the WebGL blend modes for a node. The node is a X3DAppearance child node and can be assigned the the new *blendMode* field of a Appearance node. Shader authors have now more control over particle systems, there are three new build in variables available in shaders: *x3d\_ParticleId, x3d\_ParticleLife, x3d\_ParticleElapsedTime, x3d\_ParticlePosition.* For more information have a look at http://create3000.de/x\_ite/custom-shaders/.
+*Leipzig, 25th December 2017:* There is now the new BlendMode node in X\_ITE available, which gives X3D authors the ability to specify the WebGL blend modes for a node. The node is a X3DAppearance child node and can be assigned the the new *blendMode* field of a Appearance node. Shader authors have now more control over particle systems, there are three new build in variables available in shaders: *x3d\_ParticleId, x3d\_ParticleLife, x3d\_ParticleElapsedTime, x3d\_ParticlePosition.* For more information have a look at </x_ite/Custom-Shaders.html>.
 
 X\_ITE v4.1.2 released
 ======================
@@ -892,8 +892,8 @@ Cobweb is now X\_ITE
 
 X\_ITE is now available from our own server at code.create3000.de. Just include the following URL's into your HTML and you are up to date again:
 
-```
-<pre class="lang:default decode:true "><link rel="stylesheet" type="text/css" href="http://code.create3000.de/x_ite/4.0.7/dist/x_ite.css"/>
+```html
+<link rel="stylesheet" type="text/css" href="http://code.create3000.de/x_ite/4.0.7/dist/x_ite.css"/>
 <script type="text/javascript" src="http://code.create3000.de/x_ite/4.0.7/dist/x_ite.min.js"></script>
 ```
 
@@ -925,8 +925,8 @@ Cobweb 3.3 Released
 
 There are new URL's for cobweb.min.js and cobweb.css. Use the following locations now.
 
-```
-<pre class="lang:default decode:true"><link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/create3000/cobweb/3.3/dist/cobweb.css"/>
+```html
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/create3000/cobweb/3.3/dist/cobweb.css"/>
 <script type="text/javascript" src="https://cdn.rawgit.com/create3000/cobweb/3.3/dist/cobweb.min.js"></script>
 ```
 
@@ -935,7 +935,7 @@ Important
 
 If you still use an old stable version from Cobweb you must changed the URL for the stable folder to:
 
-https://cdn.rawgit.com/create3000/cobweb/releases/
+<https://cdn.rawgit.com/create3000/cobweb/releases/>
 
 New Features and Bug Fixes
 --------------------------
@@ -973,7 +973,7 @@ Cobweb 3.0 Released
 *Leipzig, 12th April 2017:* We finally released version 3.0 now. All fields derived from X3DArrayField have now two new functions *»push«* and *»unshift«* which operate like the corresponding JavaScript Array functions. All fields derived from X3DField have now a new function *»equals«* which makes it easy to compare two field values. The XMLParser was reworked and is now more secure and several issues are fixed. And last but not least we are proud to announce that prototypes do completely work now with XMTML DOM Integration.
 
 ![Mountains Shader Example](https://create3000.github.io/media/images/mountains.jpg)
-  
+
 <small>New Shader Example »Mountains«</small>
 
 New Features and Bug Fixes
