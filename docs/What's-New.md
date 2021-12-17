@@ -15,13 +15,13 @@ New Features
 - Added X3DBoundedBox.visible and X3DBoundedBox.bboxDisplay field.
 - Updated access type of WorldInfo.title and WorldInfo.info field to match X3Dv4.
 - Add context menu "Show World Info" menu item, if an WorldInfo node exists.
-{: .notice--info}
+{: .notice--success}
 
 Bug fixes
 --------------------------
 
 - Changed Extrusion SCPyAxis calculation.
-{: .notice--info}
+{: .notice--success}
 
 X\_ITE v4.6.24 Released
 =======================
