@@ -675,8 +675,6 @@ X\_ITE v4.2.13 released
 - SFVec2f/d Object
 - SFVec3f/d Object
 - SFVec4f/d Object
-{% endcapture %}
-<div class="notice--success">{{ notice-text | markdownify }}</div>
 
 for more information. Additionally we tested X\_ITE against <http://www.web3d.org/x3d/content/examples/Basic/index.html> and fixed the bugs we found.
 
@@ -764,8 +762,8 @@ X\_ITE v4.2.8 released
 
 *Leipzig, 31th Oktober 2018:* The X3DCanvas element has now the onload, onshutdown, and onerror attributes and properties. There is also jQuery support for these event handler when calling jQuery.fn.on and jQuery.fn.off:
 
-```
-var element = $("X3DCanvas");
+```js
+const element = $("X3DCanvas");
 element .on ("load", function () { console .log ("load, yeah"); });
 ```
 
@@ -990,8 +988,7 @@ X\_ITE v4.1.5 released
 
 - Less memory footprint
 - Fixed IndexedTriangleSet attribute handling
-- and more {% capture notice-text %}
-#### Bug Fixes
+- and more bug fixes
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
