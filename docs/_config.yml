@@ -16,13 +16,6 @@ description: *name
 words_per_minute: 200
 github: [metadata]
 
-# Search
-search: true
-search_full_content: true
-search_provider: google
-google:
-  search_engine_id: 36920ccf3f21ca6d5
-
 # Site Author
 author:
   name: *title
@@ -47,6 +40,13 @@ footer:
     - label: "Web3D.org"
       icon: "fas fa-fw fa-link"
       url: "https://www.web3d.org"
+
+# Search
+search: true
+search_full_content: true
+search_provider: google
+google:
+  search_engine_id: 36920ccf3f21ca6d5
 
 titles_from_headings:
   enabled: false
