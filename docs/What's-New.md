@@ -16,7 +16,7 @@ New Features
 - Updated access type of WorldInfo.title and WorldInfo.info field to match X3Dv4.
 - Add context menu "Show World Info" menu item, if an WorldInfo node exists.
 {% endcapture %}
-{{ notice-text | markdownify }}
+{{ notice-text | markdownify }}{: .notice--info}
 
 {% capture notice-text %}
 Bug fixes
@@ -24,7 +24,7 @@ Bug fixes
 
 - Changed Extrusion SCPyAxis calculation.
 {% endcapture %}
-{{ notice-text | markdownify }}
+{{ notice-text | markdownify }}{: .notice--info}
 
 X\_ITE v4.6.24 Released
 =======================
