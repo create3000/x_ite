@@ -213,7 +213,7 @@ function init ()
 
   changeStyle ();
   changeBackground ();
-};
+}
 
 function center ()
 {

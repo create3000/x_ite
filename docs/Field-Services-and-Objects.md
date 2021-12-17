@@ -218,9 +218,9 @@ Instance Creation Method(s)
 
 ### *sfImageObjectName =* **new SFRotation** (*width, height, components\[, MFInt32 array\])*
 
-*width* is the width in pixels of the image.  
-*height* is the height in pixels of the image.  
-*components* are the number of components of the image (0-4).  
+*width* is the width in pixels of the image.
+*height* is the height in pixels of the image.
+*components* are the number of components of the image (0-4).
 *array* is a MFInt32 array with pixel data.
 
 Properties
@@ -435,17 +435,17 @@ Instance Creation Method(s)
 
 ### *sfRotationObjectName =* **new SFRotation** (*x, y, z, angle)*
 
-*x*, *y*, and *z* are the axis of the rotation.  
+*x*, *y*, and *z* are the axis of the rotation.
 *angle* is the angle of the rotation (in radians). All values are scalar.
 
 ### *sfRotationObjectName* = **new SFRotation** (*axis, angle*)
 
-*axis* is a SFVec3f object whose value is the axis of rotation.  
+*axis* is a SFVec3f object whose value is the axis of rotation.
 *angle* is the scalar angle of the rotation (in radians).
 
 ### *sfRotationObjectName* = new SFRotation (*fromVector, toVector*)
 
-*fromVector* and *toVector* are SFVec3f valued objects. These vectors are normalized and the rotation value that would rotate from the  
+*fromVector* and *toVector* are SFVec3f valued objects. These vectors are normalized and the rotation value that would rotate from the
 *fromVector* to the *toVector* is stored in the object.
 
 Properties
@@ -758,15 +758,15 @@ Returns true if the passed MF\*l *array* of the same type is equals to this obje
 
 ### SF\* **pop** ()
 
-The <span class="lang:js decode:true crayon-inline ">pop</span> method removes the last element from an array and returns that value to the caller. The return value is the removed element from the array; <span class="lang:js decode:true crayon-inline ">undefined</span> if the array is empty.
+The `pop` method removes the last element from an array and returns that value to the caller. The return value is the removed element from the array; `undefined` if the array is empty.
 
 ### Number **push** (*element1 \[, ..., elementN\]*)
 
-The push method appends values to an array. The return value is the new length of the object upon which the method was called.
+The `push` method appends values to an array. The return value is the new length of the object upon which the method was called.
 
 ### SF\* **shift** ()
 
-The <span class="lang:js decode:true crayon-inline ">shift</span> method removes the first element from an array and returns that value to the caller. The return value is the removed element from the array; <span class="lang:js decode:true crayon-inline ">undefined</span> if the array is empty.
+The `shift` method removes the first element from an array and returns that value to the caller. The return value is the removed element from the array; `undefined` if the array is empty.
 
 ### MF\* **splice** (*start \[, deleteCount, \[item1, item2, ...\]\]*)
 
@@ -782,7 +782,7 @@ If *deleteCount* is omitted, or if its value is larger than array.length - start
 
 #### item1, item2, ... <small class="small">optional</small>
 
-The elements to add to the array, beginning at the start index. If you don't specify any elements, <span class="lang:js decode:true crayon-inline ">splice ()</span> will only remove elements from the array.
+The elements to add to the array, beginning at the start index. If you don't specify any elements, `splice ()` will only remove elements from the array.
 
 #### Return value
 
@@ -790,7 +790,7 @@ An MF\* array containing the deleted elements. If only one element is removed, a
 
 ### Number **unshift** (*element1 \[, ..., elementN\]*)
 
-The <span class="lang:js decode:true crayon-inline ">unshift</span> method inserts the given values to the beginning of an X3DArrayField object. The return value is the new length of the object upon which the method was called.
+The `unshift` method inserts the given values to the beginning of an X3DArrayField object. The return value is the new length of the object upon which the method was called.
 
 MFBool Object
 =============
