@@ -246,11 +246,11 @@ Returns a browser option with the corresponding name.
 
 ### void **setBrowserOption** (*String name, Object value*)
 
-Sets a browser option with the corresponding name to the given value.
+Sets a browser option with the corresponding *name* to the given value.
 
 ### String **getRenderingProperty** (*String name*)
 
-Returns a rendering property with the corresponding name.
+Returns a rendering property with the corresponding *name*.
 
 #### Rendering Properties
 
@@ -303,7 +303,7 @@ Returns a rendering property with the corresponding name.
 
 ### void **addBrowserCallback** (*Any key, Function callback*)
 
-Adds a browser *callback* function associated with *key,* where key can be of any type. The callback function is called when a browser event has been occurred. The signature of the callback function is *function (browserEvent)*, where browserEvent can be any value listed below:
+Adds a browser *callback* function associated with *key,* where *key* can be of any type. The callback function is called when a browser event has been occurred. The signature of the callback function is *function (browserEvent)*, where browserEvent can be any value listed below:
 
 - X3DConstants .CONNECTION_ERROR
 - X3DConstants .BROWSER_EVENT
@@ -317,39 +317,39 @@ Removes a browser callback function associated with *key*.
 
 ### void **nextViewpoint** (*[SFNode layerNode]*)
 
-Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of layerNode. If layerNode is omitted, the active layer is used.
+Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
 
 ### void **previousViewpoint** (*[SFNode layerNode]*)
 
-Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of layerNode. If layerNode is omitted, the active layer is used.
+Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
 
 ### void **firstViewpoint** (*[SFNode layerNode]*)
 
-Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of layerNode. If layerNode is omitted, the active layer is used.
+Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
 
 ### void **lastViewpoint** (*[SFNode layerNode]*)
 
-Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of layerNode. If layerNode is omitted, the active layer is used.
+Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
 
 ### void **changeViewpoint** (*[SFNode layerNode,] name String*)
 
-Changes the bound viewpoint node to the viewpoint named name. The viewpoint must be available in layerNode. If layerNode is omitted, the active layer is used.
+Changes the bound viewpoint node to the viewpoint named name. The viewpoint must be available in *layerNode*. If *layerNode* is omitted, the active layer is used.
 
 ### void **print** (*Object object*)
 
-Prints the object to the browser's console without a newline character. Successive calls to this function append the descriptions on the same line. The output is the implicit call to the object's toString () function.
+Prints *object* to the browser's console without a newline character. Successive calls to this function append the descriptions on the same line. The output is the implicit call to the object's `toString ()` function.
 
 ### void **println** (*Object object*)
 
-Prints the object to the browser's console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object's toString () function.
+Prints *object* to the browser's console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object's `toString ()` function.
 
 More Methods
 ------------
 
 ### void **addRoute** (*SFNode sourceNode, String sourceField, SFNode destinationNode, String destinationField*)
 
-Add a route from the passed sourceField to the passed destinationField.
+Add a route from the passed *sourceField* to the passed *destinationField*.
 
 ### void **deleteRoute** (*SFNode sourceNode, String sourceField, SFNode destinationNode, String destinationField*)
 
-Remove the route between the passed sourceField and passed destinationField, if one exists.
+Remove the route between the passed *sourceField* and passed *destinationField*, if one exists.
