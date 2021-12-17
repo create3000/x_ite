@@ -6,7 +6,7 @@ X\_ITE v4.7.0 Released
 This release also increased pure rendering speed (without routing and scripting) of up to 30%, that is a huge amount, especially when there are many nodes (300 and more).
 
 {% capture notice-text %}
-####New Features
+#### New Features
 
 - Added X3DLightNode.shadows field.
 - Updated range of X3DLightNode.intensity.
@@ -19,7 +19,7 @@ This release also increased pure rendering speed (without routing and scripting)
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-####Bug fixes
+#### Bug fixes
 
 - Changed Extrusion SCPyAxis calculation.
 {% endcapture %}
