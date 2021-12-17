@@ -814,15 +814,6 @@ GitHub CDN
 
 GitCDN serves raw files directly from GitHub with proper Content-Type headers and a super fast CDN!
 
-### Latest Stable Version
-
-If you are a developer and you always wanna be up to date:
-
-```html
-<link rel="stylesheet" type="text/css" href="https://create3000.github.io/code/x_ite/latest/dist/x_ite.css"/>
-<script type="text/javascript" src="https://create3000.github.io/code/x_ite/latest/dist/x_ite.min.js"></script>
-```
-
 **Snipped:**
 
 If you are on production and everything works fine, then use a numbered version.
@@ -830,6 +821,15 @@ If you are on production and everything works fine, then use a numbered version.
 ```html
 <link rel="stylesheet" type="text/css" href="https://create3000.github.io/code/x_ite/4.7.0/dist/x_ite.css"/>
 <script type="text/javascript" src="https://create3000.github.io/code/x_ite/4.7.0/dist/x_ite.min.js"></script>
+```
+
+### Latest Stable Version
+
+If you are a developer and you always wanna be up to date:
+
+```html
+<link rel="stylesheet" type="text/css" href="https://create3000.github.io/code/x_ite/latest/dist/x_ite.css"/>
+<script type="text/javascript" src="https://create3000.github.io/code/x_ite/latest/dist/x_ite.min.js"></script>
 ```
 
 jsDelivr CDN
