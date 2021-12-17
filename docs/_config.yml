@@ -117,49 +117,16 @@ defaults:
 
 # Fiels and folders
 include:
+  - 404.md
   - Accessing-the-External-Browser.md
-  - Adding-backgrounds.md
-  - Adding-fog.md
-  - Adding-sound.md
-  - Animating-transforms.md
-  - Basic-Nodes.md
   - Browser-Support.md
-  - Building-a-X3D-world.md
-  - Building-elevation-grids.md
-  - Building-extruded-shapes.md
-  - Building-primitive-shapes.md
-  - Building-shapes-out-of-points,-lines,-and-faces.md
-  - Controlling-appearance-with-materials.md
-  - Controlling-color-on-coordinate-based-geometry.md
-  - Controlling-detail.md
-  - Controlling-how-textures-are-mapped.md
-  - Controlling-navigation.md
-  - Controlling-shading-on-coordinate-based-geometry.md
-  - Controlling-the-viewpoint.md
-  - Creating-new-node-types.md
   - Custom-Shaders.md
   - Features.md
   - Glossary.md
-  - Grouping-nodes.md
-  - Hello,-World!.md
   - How-To-Configure-Your-Web-Server.md
-  - Improving-Performance.md
-  - Increasing-Rendering-Speed.md
-  - Introducing-X3D.md
-  - Introducing-animation.md
-  - Introducing-script-use.md
-  - Lighting-your-world.md
-  - Mapping-textures.md
-  - Naming-nodes.md
-  - Providing-information-about-your-world.md
-  - Sensing-the-viewer.md
-  - Sensing-viewer-actions.md
   - Supported-Nodes.md
-  - Transforming-Shapes.md
-  - Tutorials.md
   - What's-New.md
-  - Writing-program-scripts-with-ECMAScript.md
   - XHTML-DOM-Integration.md
   - index.md
-  - home
   - reference
+  - tutorials
