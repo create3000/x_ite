@@ -1,12 +1,12 @@
 X\_ITE v4.7.0 Released
 =======================
 
-*Leipzig, 5th December 2021*: This release implements some of the new X3Dv4 features. X3Dv4 Draft is available at <https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/Architecture.html>.
+*Leipzig, 5th December 2021*: This release implements some of the new X3Dv4 Features. X3Dv4 Draft is available at <https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/Architecture.html>.
 
 This release also increased pure rendering speed (without routing and scripting) of up to 30%, that is a huge amount, especially when there are many nodes (300 and more).
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Added X3DLightNode.shadows field.
 - Updated range of X3DLightNode.intensity.
@@ -19,7 +19,7 @@ This release also increased pure rendering speed (without routing and scripting)
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Changed Extrusion SCPyAxis calculation.
 {% endcapture %}
@@ -31,7 +31,7 @@ X\_ITE v4.6.24 Released
 *Leipzig, 12th November 2021*: This release is a bug fix release.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed TransformSensor handling.
 - Fixed X3DBindableNode handling when child of a Switch or LOD node.
@@ -49,7 +49,7 @@ X\_ITE v4.6.22 Released
 *Leipzig, 2nd July 2021*: This release is a bug fix release.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Changed ComposedCubMapTexture field names.
 - Modified finiteRotationAxis default value.
@@ -63,7 +63,7 @@ X\_ITE v4.6.21 Released
 *Leipzig, 30th June 2021*: This release is a bug fix release.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Hide Shape node of GeneratedCubeMapTexture when generating texture itself.
 {% endcapture %}
@@ -75,7 +75,7 @@ X\_ITE v4.6.20 Released
 *Leipzig, 15th June 2021*: This release is a bug fix release.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed bug in X3DBrowser.importDocument and X3DBrowser.importJS.
 {% endcapture %}
@@ -87,7 +87,7 @@ X\_ITE v4.6.19 Released
 *Leipzig, 27th May 2021*: This release is a bug fix release.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed handling of negative radius values in Disk2D.
 - Fixed handling of caps of Extrusion in rare cases.
@@ -101,7 +101,7 @@ X\_ITE v4.6.18 Released
 *Leipzig, 13th April 2021*: This release is a bug fix release.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed bug with pointing device when padding is applied to X3DCanvas.
 {% endcapture %}
@@ -113,7 +113,7 @@ X\_ITE v4.6.17 Released
 *Leipzig, 22nd December 2020*: This release is a bug fix release. It fixed a minor bug in X3DViewpointNode when the viewpoint is animated.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed a bug in X3DViepointNode when the viewpoint is animated.
 {% endcapture %}
@@ -125,7 +125,7 @@ X\_ITE v4.6.15 Released
 *Leipzig, 24th October 2020*: This release fixes a bug with OrthoViewpoint which has encountered in the last release, and some other bugs.
 
 {% capture notice-text %}
-#### Bug fixes and enhancements
+#### Bug Fixes and Enhancements
 
 - Fixed OrthoViewpoint.
 - Fixed Layout component level.
@@ -140,7 +140,7 @@ X\_ITE v4.6.14 Released
 *Leipzig, 24th October 2020*: This release fixes some subtle bug in XML parser when parsing fieldValue element of proto instance.
 
 {% capture notice-text %}
-#### Bug fixes and enhancements
+#### Bug Fixes and Enhancements
 
 - Fixed XML parser parse MFNode fieldValue element.
 {% endcapture %}
@@ -152,7 +152,7 @@ X\_ITE v4.6.12 released
 *Leipzig, 15th October 2020*: With this release we could fix a lot of small but critical bugs and also had some optimizations for you and better support for macOS.
 
 {% capture notice-text %}
-#### Bug fixes and enhancements
+#### Bug Fixes and Enhancements
 
 - Better control of navigation with mouse and trackpad on macOS and tablet devices.
 - Fixed examine viewer rotation when multiple layer with viewport are present.
@@ -171,7 +171,7 @@ X\_ITE v4.6.11 released
 *Leipzig, 22nd August 2020*: With this release we introduce our new web site, it is now hosted on GitHub and has a clean and slick layout now. We also moved the code hosting to create3000.github.io, so make sure to update your X\_ITE urls for CSS and JavaScript.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Updated dependencies.
 - Fixed bug with Geometry2D in Safari.
@@ -186,7 +186,7 @@ X\_ITE v4.6.10 released
 *Leipzig, 21st March 2020*: This is primarily a bug fix release.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed CSS.
 {% endcapture %}
@@ -198,7 +198,7 @@ X\_ITE v4.6.9 released
 *Leipzig, 30th November 2019*: Fixed bugs.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Added missing fields for HTML/DOM support.
 - Fixed projective texture mapping in conjunction with generated cube map.
@@ -211,7 +211,7 @@ X\_ITE v4.6.8 released
 *Leipzig, 20th November 2019*: With this version we implement the TextureProjectorParallel and TextureProjectorPerspective node, from the upcoming X3D V4 standard, which will be available next year. We also have now better hardware support, we made *maxLights* and *maxTextures* dynamic, depending on the hardware of the user's system, this gives better support of older hardware and mobile systems.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Implemented TextureProjectorParallel.
 - Implemented TextureProjectorPerspective.
@@ -219,7 +219,7 @@ X\_ITE v4.6.8 released
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed special case in TimeSensor when *cycleInterval* is 0.
 {% endcapture %}
@@ -231,7 +231,7 @@ X\_ITE v4.6.7 released
 *Leipzig, 10th November 2019*: With this version we implement the PointProperties node, the first node from the upcoming X3D V4 standard, which will be available next year.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Implemented PointProperties node.
 {% endcapture %}
@@ -243,7 +243,7 @@ X\_ITE v4.6.6 released
 *Leipzig, 4th November 2019*: This is primarily a bug fix release.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed texture 3d orientation.
 {% endcapture %}
@@ -255,7 +255,7 @@ X\_ITE v4.6.4 released
 *Leipzig, 2nd November 2019*: This is primarily a bug fix release.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Updated external library dependencies.
 - Improved Gouraud and Phong shader.
@@ -266,7 +266,7 @@ X\_ITE v4.6.4 released
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed bug in Script node in rare cases.
 {% endcapture %}
@@ -278,7 +278,7 @@ X\_ITE v4.6.3 released
 *Leipzig, 26th October 2019*: This is primarily a bug fix release.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Support for NRRD types signed/unsigned byte, signed/unsigned short, signed/unsigned int, float, and double.
 - Implemented NRRD ASCII, RAW, HEX, and GZIP encoding.
@@ -286,7 +286,7 @@ X\_ITE v4.6.3 released
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed CylinderSensor minAngle/maxAngle handling.
 - Fixed wrong SilhouetteEnhancementVolumeStyle rendering in rare cases.
@@ -301,7 +301,7 @@ X\_ITE v4.6.2 released
 *Leipzig, 20th October 2019*: With this release we implement full support for VolumeRendering component and full support for Texturing3D component, ie. we switch to WebGL 2 with this release, if available.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Basic support for VolumeRendering component.
 - Full support for Texturing3D component.
@@ -309,7 +309,7 @@ X\_ITE v4.6.2 released
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed missing Browser properties *supportedProfiles* and *supportedComponents*.
 - Optimized NURBS weight handling when no weights present.
@@ -324,7 +324,7 @@ X\_ITE v4.5.14 released
 *Leipzig, 5th October 2019*: This is primarily a bug fix release.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Better NURBS normals.
 - Fixed X3DNurbsSurfaceGeometryNode *closed* field handling.
@@ -338,7 +338,7 @@ X\_ITE v4.5.12 released
 *Leipzig, 23rd September 2019*: This is primarily a bug fix release.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed bug in Matrix transpose.
 - Better parser errors when node type is not known.
@@ -351,7 +351,7 @@ X\_ITE v4.5.10 released
 *Leipzig, 17th July 2019*: This is primarily a bug fix release.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed sound rendering.
 {% endcapture %}
@@ -363,7 +363,7 @@ X\_ITE v4.5.9 released
 *Leipzig, 10th July 2019*: This is primarily a bug fix release.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed bug with browser event handler, for instance »onload«, if jQuery is present.
 - Fixed bug with FogCoordinate calculation handling.
@@ -376,7 +376,7 @@ X\_ITE v4.5.8 released
 *Leipzig, 3rd July 2019*: Fixed some bugs.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed bug when parsing Classic VRML Encoded files.
 {% endcapture %}
@@ -388,14 +388,14 @@ X\_ITE v4.5.7 released
 *Leipzig, 26th June 2019*: We could again fix some bugs which will make X\_ITE again more stable. Additionally we removed the non-standard fields from AudioClip and MovieTexture, they are now fully specification conform.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Updated splash screen.
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed TimeSensor wrong *cycleTime* event at startup.
 - Fixed BrowserTimings button type.
@@ -410,14 +410,14 @@ X\_ITE v4.5.6 released
 *Leipzig, 19th June 2019*: We could optimize CoordinateChaser/Damper and TexCoordChaser2D/Damper2D, which runs now significantly faster.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Optimized CoordinateChaser/Damper and TexCoordChaser2D/Damper2D.
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed bug in TimeSensor *fraction\_changed* calculation if *loop* is true.
 {% endcapture %}
@@ -429,14 +429,14 @@ X\_ITE v4.5.4 released
 *Leipzig, 9th June 2019:* We could fix some minor bugs.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Added MFNode.toVRML/XMLString.
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed sound playing when Browser.endUpdate was called.
 - Fixed Switch node when children are changed.
@@ -455,7 +455,7 @@ X\_ITE v4.5.0 released
 *Leipzig, 14th April 2019:* With this version we implemented MultiTexture, MultiTextureTransform, and MultiTextureCoordinate and also FillProperties is now working.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Implemented MultiTexture, MultiTextureTransform, and MultiTextureCoordinate.
 - Implemented FillProperties.
@@ -465,7 +465,7 @@ X\_ITE v4.5.0 released
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fix bug in Browser Options when switching texture quality.
 - Fixed picking and Layout node.
@@ -481,7 +481,7 @@ X\_ITE v4.4.7 released
 *Leipzig, 3rd April 2019:* This version comes with a fresh implementation of the TextureCoordinateGenerator node and we could make the VisibilitySensor more precise.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Implemented TextureCoordinateGenerator.
 - More precise VisibilitySensor.
@@ -494,7 +494,7 @@ X\_ITE v4.4.6 released
 *Leipzig, 25th March 2019:* This version comes with the first nodes from the Picking component. We implemented LinePickSensor, PickableGroup, PointPickSensor, PrimitivePickSensor, and VolumePickSensor, which are fully implemented.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Implemented Picking component.
 {% endcapture %}
@@ -504,7 +504,7 @@ X\_ITE v4.4.5 released
 ======================
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed bug in LOD traverse.
 {% endcapture %}
@@ -516,7 +516,7 @@ X\_ITE v4.4.4 released
 *Leipzig, 18th March 2019:* We finally implemented *toVRMLString* for SFNode, X3DProtoDeclaration, X3DExternProtoDeclaration, and X3DScene. There is a new X3DCanvas attribute *preserveDrawingBuffer,* set this to true if you want to save the image from the canvas.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Implemented toVRMLString.
 - New X3DCanvas attribute preserveDrawingBuffer.
@@ -524,7 +524,7 @@ X\_ITE v4.4.4 released
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed bug in toXMLString of X3DScene.
 - Fixed bug when parsing SFMatrix3d/f values.
@@ -540,7 +540,7 @@ X\_ITE v4.4.3 released
 *Leipzig, 11th March 2019:* Fixed a bug in BlendMode and there is a new page where you can online edit the BlendMode.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed bug in BlendMode.
 {% endcapture %}
@@ -552,7 +552,7 @@ X\_ITE v4.4.2 released
 *Leipzig, 24th February 2019:* We could fix some small bugs and now the TransformSensor is fully implemented. The version number is now displayed in the Context Menu.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Show version number in context menu.
 - Fully implemented TransformSensor.
@@ -562,7 +562,7 @@ X\_ITE v4.4.2 released
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed GeoLOD when a ProximitySensor or Viewpoint is in the root node or children.
 - Fixed fatal bug in IndexedFaceSet if there are degenerated polygons.
@@ -575,7 +575,7 @@ X\_ITE v4.4.1 released
 *Leipzig, 24th February 2019:* Fixed some small bugs.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed Browser.createX3DFromString console output.
 - Fixed X3DExternProtoDeclaration, X3DProtoDeclaration, X3DRoute toString output.
@@ -586,18 +586,17 @@ X\_ITE v4.4.1 released
 X\_ITE v4.4.0 released
 ======================
 
-*Leipzig, 4th February 2019:* Small {% capture notice-text %}
-#### Bug fixes and small optimizations makes this version as stable as ever before. We also could now implement the FogCoordinate node.
+*Leipzig, 4th February 2019:* Small bug fixes and small optimizations makes this version as stable as ever before. We also could now implement the FogCoordinate node.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Implemented FogCoordinate.
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Pass current time stamp to Script.prepareEvents function.
 - X3DConstants have now browser event constants for browser callbacks.
@@ -610,7 +609,7 @@ X\_ITE v4.2.17 released
 *Leipzig, 26th January 2019:* With this version we release the first version of the H-Anim component. The H-Anim component is automatically included when a profile or component statement matches »H-Anim«.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Implemented »H-Anim« component.
 {% endcapture %}
@@ -622,7 +621,7 @@ X\_ITE v4.2.16 released
 *Leipzig, 16th January 2019:* With this version we release the first version of the NURBS component. The NURBS component is automatically included when a profile or component statement matches »NURBS«.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Implemented »NURBS« component.
 {% endcapture %}
@@ -634,7 +633,7 @@ X\_ITE v4.2.15 released
 *Leipzig, 23th December 2018:* Beside OrthoViewpoint node, the Layout node is now able to handle Viewpoint node and GeoViewpoint node and we could fix again some bugs.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Implemented Layout for Viewpoint and GeoViewpoint.
 - Fixed Browser.getRenderingProperty.
@@ -651,14 +650,14 @@ X\_ITE v4.2.14 released
 *Leipzig, 16th December 2018:* This version implements the StringSensor from the KeyDeviceSensor component and we found a really phat bug in X3DComposedGeometryNode normal generation, which affects TriangleSet, IndexedTriangleSet, QuadSet, and so on. We also tested X\_ITE against <http://x3dgraphics.com/examples/X3dForWebAuthors/index.html/index.html> and fixed all bugs found.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Implemented StringSensor
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed X3DKeyDeviceSensorNode.enabled field handling.
 - Fixed bug with KeySensor.isActive.
@@ -682,14 +681,14 @@ X\_ITE v4.2.13 released
 for more information. Additionally we tested X\_ITE against <http://www.web3d.org/x3d/content/examples/Basic/index.html> and fixed the bugs we found.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Added new vector functions to SFVec2f/d, SFVec3f/d, SFVec4f/d.
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed progress bar CSS in some cases.
 - Fixed X3DBackground rendering if a GeoViewpoint is bound.
@@ -702,7 +701,7 @@ X\_ITE v4.2.12 released
 *Leipzig, 4th December 2018:* Fixed a bugs in Text node and BrowserOptions.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed fatal bug in Text node when vertical text is rendered with empty lines.
 - Fixed bug in Text.lineBounds when vertical text is rendered with empty lines.
@@ -716,14 +715,14 @@ X\_ITE v4.2.11 released
 *Leipzig, 29th November 2018:* Fixed some bugs.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Small optimizations
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed a bug in event handling.
 - Fixed a bug in GeoLOD.
@@ -737,7 +736,7 @@ X\_ITE v4.2.10 released
 *Leipzig, 13th November 2018:* We tested X\_ITE against <http://www.web3d.org/x3d/content/ConformanceNist/index.html> and fixed the bugs we found.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed LOD level calculation when range is empty.
 - Fixed LocalFog calculation.
@@ -751,7 +750,7 @@ X\_ITE v4.2.9 released
 ======================
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Switch sounds off when not visible.
 - Fixed fatal bug when setting audio/video volume.
@@ -771,7 +770,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 ```
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - The X3DCanvas element has now the onload, onshutdown, and onerror attributes with jQuery support.
 - The X3DCanvas element has now the onload, onshutdown, onerror, src, and url properties.
@@ -780,7 +779,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed bug in Extrusion orientation handling.
 - Better support for Extrusion with coincident spine points.
@@ -793,7 +792,7 @@ X\_ITE v4.2.7 released
 *Leipzig, 29th Oktober 2018:* This version fixes some important bugs and makes X\_ITE more specification conform.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed a bug in proto instances loaded from extern prototypes.
 - Also parse and output XML IMPORT attribute importedDEF beside old attribute exportedDEF.
@@ -808,7 +807,7 @@ X\_ITE v4.2.6 released
 *Leipzig, 14th Oktober 2018:* With this version, X\_ITE includes a new polygon tessellator, ie. X\_ITE can better render concave polygons witch also affects polygon font support, which is now even better.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Better polygon support for concave polygons.
 - Better polygon font rendering.
@@ -817,7 +816,7 @@ X\_ITE v4.2.6 released
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed bug when parsing XML field values.
 - Fixed SFRotation handling of unnormalized values.
@@ -827,10 +826,10 @@ X\_ITE v4.2.6 released
 X\_ITE v4.2.5 released
 ======================
 
-*Leipzig, 1st Oktober 2018:* This version fixes loads of bugs and added loads of small features.
+*Leipzig, 1st Oktober 2018:* This version fixes loads of bugs and added loads of small Features.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - Added »Straighten Horizon« option to context menu when EXAMINE viewer is active.
 - Optimized XML parser, it is now up to 60 % faster especially for large geometries.
@@ -843,7 +842,7 @@ X\_ITE v4.2.5 released
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed bug of XML output of proto with cloned root nodes.
 - Fixed bug when parsing JSON encoded files containing script source code.
@@ -864,7 +863,7 @@ X\_ITE v4.2.4 released
 *Leipzig, 9th July 2018:* This version is primarily a bug fix version. There are also new examples online for ScalarChaser, and IndexedTriangleFanSet.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed fatal bug in X3DProgrammableShaderObject.
 - Small optimizations in X3DField objects.
@@ -877,7 +876,7 @@ X\_ITE v4.2.3 released
 *Leipzig, 7th July 2018:* This version is primarily a bug fix version. There are also new examples online for PointSet, and IndexedLineSet.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed bug in PROTO setup.
 - Small optimizations in X3DArrayField.
@@ -892,7 +891,7 @@ X\_ITE v4.2.2 released
 *Leipzig, 23th June 2018:* We are proud to announce that code.create3000.de is now accessible via https.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - code.create3000.de is now accessible via https
 {% endcapture %}
@@ -904,7 +903,7 @@ X\_ITE v4.2.1 released
 *Leipzig, 17th June 2018:* This version is primarily a bug fix version.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - A real depth buffer is now used in shadow calculations.
 - Fixed Chrome glitches of X3DBackground node.
@@ -940,7 +939,7 @@ X\_ITE v4.1.7 released
 *Leipzig, 27th May 2018:* This version is primarily a bug fix version.
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Fixed fatal bug in Classic VRML parser.
 - Fixed LOD.level\_changed event handling.
@@ -961,7 +960,7 @@ X\_ITE v4.1.6 released
 ```
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - RigidBodyPhysics component
 {% endcapture %}
@@ -970,11 +969,10 @@ X\_ITE v4.1.6 released
 X\_ITE v4.1.5 released
 ======================
 
-*Leipzig, 14th March 2018:* We finally released version 4.1.5 now. With this version it is now possible to load X3D JSON encoded files. We implemented touch device support for all viewers and nodes derived form X3DPointingDeviceSensorNode and Anchor. This means tablets and smart phones are now fully supported. There are also a lot of other {% capture notice-text %}
-#### New features:
+*Leipzig, 14th March 2018:* We finally released version 4.1.5 now. With this version it is now possible to load X3D JSON encoded files. We implemented touch device support for all viewers and nodes derived form X3DPointingDeviceSensorNode and Anchor. This means tablets and smart phones are now fully supported. There are also a lot of other bug fixes.
 
 {% capture notice-text %}
-#### New features
+#### New Features
 
 - JSON file loader
 - Touch device support for all Viewers and TouchSensor nodes
@@ -988,12 +986,12 @@ X\_ITE v4.1.5 released
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 
 - Less memory footprint
 - Fixed IndexedTriangleSet attribute handling
 - and more {% capture notice-text %}
-#### Bug fixes
+#### Bug Fixes
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -1013,11 +1011,9 @@ X\_ITE v4.1.2 released
 *Leipzig, 8th December 2017:* Titania supports now the whole ParticleSystem component with the default graphics card driver Nouveau. During the implementation we found some optimization to speed up the ParticleSystem node in X\_ITE. Additionally we could fix three bug.
 
 {% capture notice-text %}
-#### New features and {% capture notice-text %}
-#### Bug fixes
+#### New Features Bug Fixes
 
-- Small optimizations and {% capture notice-text %}
-#### Bug fixes in ParticleSystem node.
+- Small optimizations Bug Fixes in ParticleSystem node.
 - Added x3d\_CameraSpaceMatrix to ComposedShader build-in variables.
 - Fixed a bug in X3DBackground node when displayed with GeneratedCubeMapTexture node.
 - Fixed fatal bug in MFImage.
@@ -1030,8 +1026,7 @@ X\_ITE v4.1.1 released
 *Leipzig, 23rd November 2017:* We fixed a bug in load count handling of the splash screen, ie. if the *splashScreen* attribute of the X3DCanvas element is true, the scene is first displayed if all objects and textures are completely loaded. An examination of the source code has revealed this mistake in the networking nodes.
 
 {% capture notice-text %}
-#### New features and {% capture notice-text %}
-#### Bug fixes
+#### New Features Bug Fixes
 
 - Fixed a bug in load count handling of the splash screen
 {% endcapture %}
@@ -1043,8 +1038,7 @@ X\_ITE v4.1.0 released
 *Leipzig, 22nd November 2017:* This completely implements the unit statement. Now units are parsed and all field values are converted. Additionally we could optimize X3DGroupingNode.removeChildren. It is now up to 20 % faster, especially if there are many children.
 
 {% capture notice-text %}
-#### New features and {% capture notice-text %}
-#### Bug fixes
+#### New Features Bug Fixes
 
 - Fixed bug in CADLayer.addChildren
 - Optimized X3DGroupingNode.removeChildren
@@ -1067,8 +1061,7 @@ X\_ITE is now available from our own server at code.create3000.de. Just include 
 Additionally X\_ITE is now available via GitHub CDN and jsDelivr CDN.
 
 {% capture notice-text %}
-#### New features and {% capture notice-text %}
-#### Bug fixes
+#### New Features Bug Fixes
 
 - Better font support for polygon text.
 - Fixed fog rendering with Gouraud shading in some cases.
@@ -1108,8 +1101,7 @@ If you still use an old stable version from Cobweb you must changed the URL for 
 <https://cdn.rawgit.com/create3000/cobweb/releases/>
 
 {% capture notice-text %}
-#### New features and {% capture notice-text %}
-#### Bug fixes
+#### New Features Bug Fixes
 
 - Changed external browser access.
 - Fixed default values of certain nodes (IntegerTrigger, ArcClose2D, Disk2D, Rectangle2D, TriangleSet2D, GeoViewpoint, DirectionalLight, Viewpoint, ConeEmitter, CylinderSensor).
@@ -1126,8 +1118,7 @@ Cobweb 3.2 Released
 *Leipzig, 29th April 2017:* The X3DCanvas element becomes a major change in its CSS styles, it is now similar to the HTML5 canvas element a display *inline-block* element instead of *block* with a default width and height of 300 × 150 pixels. Additionally there are four new attributes *splashScreen, notifications, timings,* and *contextMenu*, these attribute are especially useful if the X3DCanvas element is very small. Have a look at »Attributes of the X3DCanvas Element« to see how these attributes work. Additionally we changed the data type mapping of SF/MFRotation in custom shaders from *uniform vec4* quaternion representation to *uniform mat3* 3×3 rotation matrix representation, which are easier to operate with.
 
 {% capture notice-text %}
-#### New features and {% capture notice-text %}
-#### Bug fixes
+#### New Features Bug Fixes
 
 - Changed default CSS style display of X3DCanvas element to *inline-block.*
 - Changed default width and height of X3DCanvas element to 300 × 150 pixels.
@@ -1153,8 +1144,7 @@ Cobweb 3.0 Released
 <small>New Shader Example »Mountains«</small>
 
 {% capture notice-text %}
-#### New features and {% capture notice-text %}
-#### Bug fixes
+#### New Features Bug Fixes
 
 - New shader uniform x3d\_ViewportPrototypes do completely work now with XHTML DOM Integration.
 - Implemented X3DArrayField push and unshift
