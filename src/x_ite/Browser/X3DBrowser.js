@@ -648,7 +648,7 @@ function ($,
 
 			if (layerNode)
 			{
-				var viewpoints = layerNode .getUserViewpoints ();
+				let viewpoints = layerNode .getUserViewpoints ();
 
 				if (viewpoints .length)
 					this .bindViewpoint (layerNode, viewpoints [0]);
@@ -661,28 +661,24 @@ function ($,
 
 			if (layerNode)
 			{
-				var viewpoints = layerNode .getUserViewpoints ();
+				let viewpoints = layerNode .getUserViewpoints ();
 
 				if (viewpoints .length === 0)
 					return;
-
-				var index = 0;
 
 				for (var i = 0; i < viewpoints .length; ++ i)
 				{
 					if (viewpoints [i] .isBound_ .getValue ())
 						break;
-
-					++ index;
 				}
 
-				if (index < viewpoints .length)
+				if (i < viewpoints .length)
 				{
-					if (index === 0)
+					if (i === 0)
 						this .bindViewpoint (layerNode, viewpoints .at (-1));
 
 					else
-						this .bindViewpoint (layerNode, viewpoints [index - 1]);
+						this .bindViewpoint (layerNode, viewpoints [i - 1]);
 				}
 				else
 					this .bindViewpoint (layerNode, viewpoints .at (-1));
@@ -695,28 +691,24 @@ function ($,
 
 			if (layerNode)
 			{
-				var viewpoints = layerNode .getUserViewpoints ();
+				let viewpoints = layerNode .getUserViewpoints ();
 
 				if (viewpoints .length === 0)
 					return;
-
-				var index = 0;
 
 				for (var i = 0; i < viewpoints .length; ++ i)
 				{
 					if (viewpoints [i] .isBound_ .getValue ())
 						break;
-
-					++ index;
 				}
 
-				if (index < viewpoints .length)
+				if (i < viewpoints .length)
 				{
-					if (index === viewpoints .length - 1)
+					if (i === viewpoints .length - 1)
 						this .bindViewpoint (layerNode, viewpoints [0]);
 
 					else
-						this .bindViewpoint (layerNode, viewpoints [index + 1]);
+						this .bindViewpoint (layerNode, viewpoints [i + 1]);
 				}
 				else
 					this .bindViewpoint (layerNode, viewpoints [0]);
@@ -729,21 +721,30 @@ function ($,
 
 			if (layerNode)
 			{
-				var viewpoints = layerNode .getUserViewpoints ();
+				let viewpoints = layerNode .getUserViewpoints ();
 
 				if (viewpoints .length)
 					this .bindViewpoint (layerNode, viewpoints .at (-1));
 			}
 		},
-		changeViewpoint: function (name)
+		changeViewpoint: function (layerNode, name)
 		{
-			try
+			if (arguments .length === 1)
 			{
-				this .currentScene .changeViewpoint (name);
+				name      = layerNode;
+				layerNode = this .getActiveLayer ();
 			}
-			catch (error)
+
+			if (layerNode)
 			{
-				console .log (error .message);
+				for (const viewpointNode of layerNode .getUserViewpoints ())
+				{
+					if (viewpointNode .getName () === name)
+					{
+						this .bindViewpoint (layerNode, viewpointNode);
+						break;
+					}
+				}
 			}
 		},
 		bindViewpoint: function (layerNode, viewpointNode)
