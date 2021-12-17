@@ -225,26 +225,24 @@ Returns a browser option with the corresponding name.
       </tr>
       <tr>
          <td>Gravity</td>
-         <td>Default is gravity of Earth.</td>
+         <td>Default is gravity of Earth. (non standard)</td>
          <td>Number</td>
          <td>9.80665</td>
       </tr>
       <tr>
          <td>LogarithmicDepthBuffer</td>
-         <td>Whether to use a logarithmic depth buffer. It may be neccesary to use this if dealing with huge differences in scale in a single scene.</td>
+         <td>Whether to use a logarithmic depth buffer. It may be neccesary to use this if dealing with huge differences in scale in a single scene. (non standard)</td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
       <tr>
          <td>StraightenHorizon</td>
-         <td>Whether the Examine viewer should straighten the horizon when navigating.</td>
+         <td>Whether the Examine viewer should straighten the horizon when navigating. (non standard)</td>
          <td>Boolean</td>
          <td>false</td>
       </tr>
    </tbody>
 </table>
-
-<small class="small">non standard</small>
 
 ### void **setBrowserOption** (*String name, Object value*)
 
