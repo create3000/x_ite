@@ -3,7 +3,7 @@ X3DExecutionContext
 
 This section lists the methods available in the X3DExecutionContext object, which allows scripts to get access to the scene graph.
 
-Instance Creation Method(s)
+Instance Creation Method\(s\)
 ---------------------------
 
 None. This object cannot be instantiated by the user.
@@ -17,7 +17,7 @@ The string represent the basic specification version used by the parsed file in 
 
 ### **encoding**
 
-Category Initial base unit  
+Category Initial base unit
 The encoding is represented as a string that describes the data encoding used. Valid values are "ASCII", "VRML", "XML", "BINARY", "SCRIPTED", "BIFS", "NONE". This property is read only.
 
 ### **profile**
@@ -100,7 +100,7 @@ X3DScene
 
 A scene is an extension of the execution context services with additional services provided.
 
-Instance Creation Method(s)
+Instance Creation Method\(s\)
 ---------------------------
 
 None. This object cannot be instantiated by the user.
@@ -158,7 +158,7 @@ ProfileInfo
 
 This object stores information about a particular X3D profile.
 
-Instance Creation Method(s)
+Instance Creation Method\(s\)
 ---------------------------
 
 None. This object cannot be instantiated by the user.
@@ -196,7 +196,7 @@ ComponentInfo
 
 The ComponentInfo object stores information about a particular X3D component. The object consists solely of read-only properties. It does not define any additional functions.
 
-Instance Creation Method(s)
+Instance Creation Method\(s\)
 ---------------------------
 
 None. This object cannot be instantiated by the user.
@@ -230,7 +230,7 @@ UnitInfo
 
 The UnitInfo object stores information about a particular unit declaration. The object consists solely of read-only properties. It does not define any additional functions.
 
-Instance Creation Method(s)
+Instance Creation Method\(s\)
 ---------------------------
 
 None. This object cannot be instantiated by the user.
@@ -328,7 +328,7 @@ ProfileInfoArray
 
 ProfileInfoArray is an object that represents an array of ProfileInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *profileInfoArrayName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array).
 
-Instance Creation Method(s)
+Instance Creation Method\(s\)
 ---------------------------
 
 None. This object cannot be instantiated by the user.
@@ -350,7 +350,7 @@ ComponentInfoArray
 
 ComponentInfoArray is an object that represents an array of ComponentInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *componentInfoArrayName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array).
 
-Instance Creation Method(s)
+Instance Creation Method\(s\)
 ---------------------------
 
 None. This object cannot be instantiated by the user.
@@ -372,7 +372,7 @@ UnitInfoArray
 
 UnitInfoArray is an object that represents an array of UnitInfo objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *unitInfoArrayName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array).
 
-Instance Creation Method(s)
+Instance Creation Method\(s\)
 ---------------------------
 
 None. This object cannot be instantiated by the user.

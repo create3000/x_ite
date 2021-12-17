@@ -3,7 +3,7 @@ Browser Object
 
 This section lists the methods available in the *browser* object, which allows scripts to get and set browser information.
 
-Instance Creation Method(s)
+Instance Creation Method\(s\)
 ---------------------------
 
 None. This object cannot be instantiated by the user. One global instance of the object is available. The name of the instance is Browser.

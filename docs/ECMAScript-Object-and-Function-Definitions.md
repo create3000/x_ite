@@ -28,7 +28,7 @@ Math Object
 
 The Math object is unique in ECMAScript in that there is exactly one globally available instance of the object, named Math. Properties can be accessed using the syntax Math.&lt;property-name&gt;. Methods can be invoked using the syntax Math.&lt;function-name&gt; ( &lt;argument-list&gt; ).
 
-Instance Creation Method(s)
+Instance Creation Method\(s\)
 ---------------------------
 
 None. One global instance of the object is available. The name of the instance is Math.

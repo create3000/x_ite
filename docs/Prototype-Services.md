@@ -3,7 +3,7 @@ X3DProtoDeclaration
 
 A PROTO declaration is represented by the X3DProtoDeclaration object. This object can only be fetched using the X3DExecutionContext object.
 
-Instance Creation Method(s)
+Instance Creation Method\(s\)
 ---------------------------
 
 None. This object cannot be instantiated by the user.
@@ -43,7 +43,7 @@ X3DExternProtoDeclaration
 
 An EXTERNPROTO declaration is represented by the X3DExternProtoDeclaration object. EXTERNPROTO declarations can only be fetched using the X3DExecutionContext object.
 
-Instance Creation Method(s)
+Instance Creation Method\(s\)
 ---------------------------
 
 None. This object cannot be instantiated by the user.
@@ -95,7 +95,7 @@ ProtoDeclarationArray
 
 ProtoDeclarationArray is an object that represents an array of X3DProtoDeclaration objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *protoDeclarationArrayName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array).
 
-Instance Creation Method(s)
+Instance Creation Method\(s\)
 ---------------------------
 
 None. This object cannot be instantiated by the user.
@@ -117,7 +117,7 @@ ExternProtoDeclarationArray
 
 ExternProtoDeclarationArray is an object that represents an array of X3DExternProtoDeclaration objects. This is a read-only object. Individual elements of the array can be referenced using the standard C-style dereferencing operator (e.g. *externProtoDeclarationArrayName*\[*index*\], where *index* is an integer-valued expression with 0&lt;=*index*&lt;length and length is the number of elements in the array).
 
-Instance Creation Method(s)
+Instance Creation Method\(s\)
 ---------------------------
 
 None. This object cannot be instantiated by the user.
