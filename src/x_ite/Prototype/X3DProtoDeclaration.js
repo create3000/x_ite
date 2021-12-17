@@ -62,7 +62,7 @@ function ($,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DExecutionContext,
-          X3DProtoDeclarationNode, 
+          X3DProtoDeclarationNode,
           X3DConstants,
           Generator)
 {
@@ -102,6 +102,10 @@ function ($,
 			X3DProtoDeclarationNode .prototype .initialize .call (this);
 
 			this .loadState_ = X3DConstants .COMPLETE_STATE;
+		},
+		getBody: function ()
+		{
+			return this;
 		},
 		getProtoDeclaration: function ()
 		{
@@ -216,11 +220,11 @@ function ($,
 			stream .string += "'";
 			stream .string += ">";
 			stream .string += "\n";
-		
+
 			// <ProtoInterface>
 
 			generator .EnterScope ();
-		
+
 			var userDefinedFields = this .getUserDefinedFields ();
 
 			if (userDefinedFields .size !== 0)
@@ -261,7 +265,7 @@ function ($,
 							case X3DConstants .MFNode:
 							{
 								generator .PushContainerField (field);
-		
+
 								stream .string += ">\n";
 
 								generator .IncIndent ();
@@ -292,7 +296,7 @@ function ($,
 						}
 					}
 				});
-		
+
 				generator .DecIndent ();
 
 				stream .string += generator .Indent ();
@@ -300,13 +304,13 @@ function ($,
 
 				generator .DecIndent ();
 			}
-		
+
 			generator .LeaveScope ();
-		
+
 			// </ProtoInterface>
 
 			// <ProtoBody>
-		
+
 			generator .IncIndent ();
 
 			stream .string += generator .Indent ();
@@ -322,7 +326,7 @@ function ($,
 			stream .string += "</ProtoBody>\n";
 
 			generator .DecIndent ();
-		
+
 			// </ProtoBody>
 
 			stream .string += generator .Indent ();
@@ -353,4 +357,3 @@ function ($,
 
 	return X3DProtoDeclaration;
 });
-

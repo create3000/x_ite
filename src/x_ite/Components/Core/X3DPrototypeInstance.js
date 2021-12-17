@@ -229,6 +229,10 @@ function (X3DChildObject,
 		{
 			return this .protoNode .getProtoDeclaration () .getUnits ();
 		},
+		getBody: function ()
+		{
+			return this;
+		},
 		getInnerNode: function ()
 		{
 			const rootNodes = this .getRootNodes () .getValue ();
