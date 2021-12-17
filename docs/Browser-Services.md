@@ -81,7 +81,7 @@ Imports a X3D XML DOM document or fragment, converts it, and returns the resulti
 
 Async version of `importDocument`. Imports a X3D XML DOM document or fragment, converts it, and calls the success function with scene argument, or error on error.
 
-success: function (scene) { ... },
+success: function (scene) { ... }<br/>
 error: function (error) { ... }
 
 ### X3DScene **importJS** (*Object json*)
@@ -92,7 +92,7 @@ Imports a X3D JSON document or fragment, converts it, and returns the resulting 
 
 Async version of `importJS`. Imports a X3D JSON document or fragment, converts it, and calls the success function with scene argument, or error on error.
 
-success: function (scene) { ... },
+success: function (scene) { ... }<br/>
 error: function (error) { ... }
 
 ### String **getBrowserProperty** (*String name*)
