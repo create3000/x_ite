@@ -101,7 +101,7 @@ include:
 collections:
   pages:
     output: true
-    permalink: /:path.html
+    permalink: /:path
 
 # Defaults
 defaults:
