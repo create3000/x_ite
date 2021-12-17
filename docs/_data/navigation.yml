@@ -1,3 +1,11 @@
+# Main menu
+main:
+  - title: "Home"
+    url: /
+  - title: "Reference"
+    url: /ECMAScript-Object-and-Function-Definitions.html
+  - title: "Tutorials"
+    url: /Tutorials.html
 
 # Sidebar links
 pages:
