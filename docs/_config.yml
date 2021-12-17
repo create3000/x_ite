@@ -105,6 +105,15 @@ defaults:
       author_profile: true
       sidebar:
         nav: pages
+  - scope:
+      path: ""
+      type: reference
+    values:
+      layout: single
+      classes: wide
+      author_profile: true
+      sidebar:
+        nav: reference
 
 # Fiels and folders
 include:

@@ -3,7 +3,7 @@ main:
   - title: "Home"
     url: /
   - title: "Reference"
-    url: /ECMAScript-Object-and-Function-Definitions.html
+    url: /reference/ECMAScript-Object-and-Function-Definitions.html
   - title: "Tutorials"
     url: /Tutorials.html
 
@@ -31,24 +31,6 @@ pages:
         url: /How-To-Configure-Your-Web-Server.html
       - title: "Glossary"
         url: /Glossary.html
-  - title: "X3D Reference"
-    children:
-      - title: "Script Node Authoring Interface"
-        url: /Script-Node-Authoring-Interface.html
-      - title: "ECMAScript Object and Function Definitions"
-        url: /ECMAScript-Object-and-Function-Definitions.html
-      - title: "Browser Services"
-        url: /Browser-Services.html
-      - title: "Scene Services"
-        url: /Scene-Services.html
-      - title: "Field Services and Objects"
-        url: /Field-Services-and-Objects.html
-      - title: "Route Services"
-        url: /Route-services.html
-      - title: "Prototype Services"
-        url: /Prototype-Services.html
-      - title: "Constants Services"
-        url: /Constants-Service.html
   - title: "Tutorials"
     children:
       - title: "Overview"
@@ -131,3 +113,23 @@ pages:
         url: /Improving-Performance.html
       - title: "Increasing Rendering Speed"
         url: /Increasing-Rendering-Speed.html
+
+reference:
+  - title: "X3D Reference"
+    children:
+      - title: "Script Node Authoring Interface"
+        url: /reference/Script-Node-Authoring-Interface.html
+      - title: "ECMAScript Object and Function Definitions"
+        url: /reference/ECMAScript-Object-and-Function-Definitions.html
+      - title: "Browser Services"
+        url: /reference/Browser-Services.html
+      - title: "Scene Services"
+        url: /reference/Scene-Services.html
+      - title: "Field Services and Objects"
+        url: /reference/Field-Services-and-Objects.html
+      - title: "Route Services"
+        url: /reference/Route-services.html
+      - title: "Prototype Services"
+        url: /reference/Prototype-Services.html
+      - title: "Constants Services"
+        url: /reference/Constants-Service.html
