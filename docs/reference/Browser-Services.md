@@ -335,11 +335,11 @@ Changes the bound viewpoint node to the last viewpoint in the list of user viewp
 
 Changes the bound viewpoint node to the viewpoint named name. The viewpoint must be available in layerNode. If layerNode is omitted, the active layer is used.
 
-### void **print** (*Object*)
+### void **print** (*Object object*)
 
 Prints the object to the browser's console without a newline character. Successive calls to this function append the descriptions on the same line. The output is the implicit call to the object's toString () function.
 
-### void **println** (*Object*)
+### void **println** (*Object object*)
 
 Prints the object to the browser's console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object's toString () function.
 
