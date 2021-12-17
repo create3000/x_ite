@@ -96,6 +96,7 @@ sass:
 
 # Defaults
 defaults:
+  # _pages
   - scope:
       path: ""
       type: pages
@@ -107,55 +108,4 @@ defaults:
         nav: pages
 
 include:
-  - Accessing-the-External-Browser.md
-  - Adding-backgrounds.md
-  - Adding-fog.md
-  - Adding-sound.md
-  - Animating-transforms.md
-  - Basic-Nodes.md
-  - Browser-Services.md
-  - Browser-Support.md
-  - Building-a-X3D-world.md
-  - Building-elevation-grids.md
-  - Building-extruded-shapes.md
-  - Building-primitive-shapes.md
-  - Building-shapes-out-of-points,-lines,-and-faces.md
-  - Constants-Service.md
-  - Controlling-appearance-with-materials.md
-  - Controlling-color-on-coordinate-based-geometry.md
-  - Controlling-detail.md
-  - Controlling-how-textures-are-mapped.md
-  - Controlling-navigation.md
-  - Controlling-shading-on-coordinate-based-geometry.md
-  - Controlling-the-viewpoint.md
-  - Creating-new-node-types.md
-  - Custom-Shaders.md
-  - ECMAScript-Object-and-Function-Definitions.md
-  - Features.md
-  - Field-Services-and-Objects.md
-  - Glossary.md
-  - Grouping-nodes.md
-  - Hello,-World!.md
-  - How-To-Configure-Your-Web-Server.md
-  - Improving-Performance.md
-  - Increasing-Rendering-Speed.md
-  - Introducing-X3D.md
-  - Introducing-animation.md
-  - Introducing-script-use.md
-  - Lighting-your-world.md
-  - Mapping-textures.md
-  - Naming-nodes.md
-  - Prototype-Services.md
-  - Providing-information-about-your-world.md
-  - Route-services.md
-  - Scene-Services.md
-  - Script-Node-Authoring-Interface.md
-  - Sensing-the-viewer.md
-  - Sensing-viewer-actions.md
-  - Supported-Nodes.md
-  - Transforming-Shapes.md
-  - Tutorials.md
-  - What's-New.md
-  - Writing-program-scripts-with-ECMAScript.md
-  - XHTML-DOM-Integration.md
-  - index.md
+  - _pages
