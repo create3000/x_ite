@@ -890,6 +890,7 @@ X3DCanvas {
 To get X\_ITE working you must include the CSS file »x\_ite.css« and the JavaScript file »x\_ite.min.js«. After x\_ite is successfully loaded a new HTML tag &lt;X3DCanvas&gt; is available on your page.
 
 You can style the &lt;X3DCanvas&gt; tag as every HTML tag with CSS as well as you can place it everywhere within the DOM tree.
+{: .notice--info}
 
 Supported File Formats
 ----------------------
@@ -1022,5 +1023,6 @@ If you run into any bugs or encounter any other abnormal issues with X\_ITE, let
 Here's an example of a helpful bug report:
 
 *I fell through a hole on the Resistance map. I was running along the wall near the pool of water and fell through a black hole in the wall. I got stuck and had to leave the match. This happened while playing Search and Destroy.*
+{: .notice--danger}
 
 [X\_ITE Feedback Survey and Bug Report](https://github.com/create3000/x_ite/issues)
