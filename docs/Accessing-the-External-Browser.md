@@ -271,6 +271,7 @@ HTML:
 
 ```html
 <X3DCanvas src="external-browser.x3d" onload="init ()"/>
+
 <div class="buttons">
   <button id="center" class="button" onclick="center ()">Center</button>
   <select id="change-style" class="button" onchange="changeStyle ()">
