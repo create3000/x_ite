@@ -81,6 +81,14 @@ sub docs
 	open CONFIG, ">", "$CWD/docs/_config.yml";
 	print CONFIG $config;
 	close CONFIG;
+
+	my $home = `cat '$CWD/docs/index.md'`;
+
+	$home =~ s|/x_ite/\d+\.\d+\.\d+/dist/|/x_ite/$VERSION/dist/|sgo;
+
+	open HOME, ">", "index.md";
+	print HOME $home;
+	close HOME;
 }
 
 sub wiki
