@@ -4,9 +4,9 @@ X\_ITE v4.7.0 Released
 *Leipzig, 5th December 2021*: This release implements some of the new X3Dv4 features. X3Dv4 Draft is available at <https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/Architecture.html>.
 
 This release also increased pure rendering speed (without routing and scripting) of up to 30%, that is a huge amount, especially when there are many nodes (300 and more).
+
 {% capture notice-text %}
-New Features
---------------------------
+####New Features
 
 - Added X3DLightNode.shadows field.
 - Updated range of X3DLightNode.intensity.
@@ -16,15 +16,14 @@ New Features
 - Updated access type of WorldInfo.title and WorldInfo.info field to match X3Dv4.
 - Add context menu "Show World Info" menu item, if an WorldInfo node exists.
 {% endcapture %}
-<div class="notice--info">{{ notice-text | markdownify }}</div>
+<div class="notice--success">{{ notice-text | markdownify }}</div>
 
 {% capture notice-text %}
-Bug fixes
---------------------------
+####Bug fixes
 
 - Changed Extrusion SCPyAxis calculation.
 {% endcapture %}
-<div class="notice--info">{{ notice-text | markdownify }}</div>
+<div class="notice--success">{{ notice-text | markdownify }}</div>
 
 X\_ITE v4.6.24 Released
 =======================
