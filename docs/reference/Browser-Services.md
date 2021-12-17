@@ -88,7 +88,7 @@ error: function (error) { ... }
 
 Imports a X3D JSON document or fragment, converts it, and returns the resulting scene object.
 
-### void **importJS** (*DOMObject dom, Function success[, Function error]*)
+### void **importJS** (*Object json, Function success[, Function error]*)
 
 Async version of `importJS`. Imports a X3D JSON document or fragment, converts it, and calls the success function with scene argument, or error on error.
 
@@ -301,7 +301,7 @@ Returns a rendering property with the corresponding name.
    </tbody>
 </table>
 
-### void **addBrowserCallback** (*key, callback*)
+### void **addBrowserCallback** (*Any key, Function callback*)
 
 Adds a browser *callback* function associated with *key,* where key can be of any type. The callback function is called when a browser event has been occurred. The signature of the callback function is *function (browserEvent)*, where browserEvent can be any value listed below:
 
@@ -311,9 +311,29 @@ Adds a browser *callback* function associated with *key,* where key can be of an
 - X3DConstants .SHUTDOWN_EVENT
 - X3DConstants .INITIALIZED_ERROR
 
-### void **removeBrowserCallback** (*key*)
+### void **removeBrowserCallback** (*Any key*)
 
 Removes a browser callback function associated with *key*.
+
+### void **nextViewpoint** (*[SFNode layerNode]*)
+
+Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of layerNode. If layerNode is omitted, the active layer is used.
+
+### void **previousViewpoint** (*[SFNode layerNode]*)
+
+Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of layerNode. If layerNode is omitted, the active layer is used.
+
+### void **firstViewpoint** (*[SFNode layerNode]*)
+
+Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of layerNode. If layerNode is omitted, the active layer is used.
+
+### void **lastViewpoint** (*[SFNode layerNode]*)
+
+Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of layerNode. If layerNode is omitted, the active layer is used.
+
+### void **changeViewpoint** (*[SFNode layerNode,] name String*)
+
+Changes the bound viewpoint node to the viewpoint named name. The viewpoint must be available in layerNode. If layerNode is omitted, the active layer is used.
 
 ### void **print** (*Object*)
 
