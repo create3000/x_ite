@@ -88,7 +88,6 @@ function (
 			this.ConvertToX3DOM(jsobj, "", child);
 			// call the DOM parser
 			this.parseIntoScene(child, success, error);
-			return child;
 		};
 
 		// 'http://www.web3d.org/specifications/x3d-namespace'

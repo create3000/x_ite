@@ -85,13 +85,13 @@ function (DEBUG,
 		{
 			if (component .types)
 			{
-				for (var typeName in component .types)
-					SupportedNodes .addType (typeName, component .types [typeName]); 
+				for (const typeName in component .types)
+					SupportedNodes .addType (typeName, component .types [typeName]);
 			}
 
 			if (component .abstractTypes)
 			{
-				for (var typeName in component .abstractTypes)
+				for (const typeName in component .abstractTypes)
 					SupportedNodes .addAbstractType (typeName, component .abstractTypes [typeName]);
 			}
 

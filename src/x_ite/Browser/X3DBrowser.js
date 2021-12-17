@@ -119,7 +119,7 @@ function ($,
 		{
 			X3DBrowserContext .prototype .initialize .call (this);
 
-			var urlCharacters = this .getElement () .attr ("src");
+			let urlCharacters = this .getElement () .attr ("src");
 
 			if (urlCharacters)
 				urlCharacters = '"' + urlCharacters + '"';
@@ -186,7 +186,7 @@ function ($,
 		},
 		getProfile: function (name)
 		{
-			var profile = SupportedProfiles .get (name);
+			const profile = SupportedProfiles .get (name);
 
 			if (profile)
 				return profile;
@@ -195,7 +195,7 @@ function ($,
 		},
 		getComponent: function (name, level)
 		{
-			var component = SupportedComponents .get (name);
+			const component = SupportedComponents .get (name);
 
 			if (component)
 			{
@@ -211,13 +211,13 @@ function ($,
 		},
 		createScene: function (profile, component1 /*, ...*/)
 		{
-		   var scene = new Scene (this);
+		   const scene = new Scene (this);
 
 			if (arguments .length)
 			{
 				scene .setProfile (profile);
 
-				for (var i = 1, length = arguments .length; i < length; ++ i)
+				for (let i = 1, length = arguments .length; i < length; ++ i)
 					scene .addComponent (arguments [i]);
 			}
 
@@ -367,7 +367,7 @@ function ($,
 			if (! node .getValue ())
 				throw new Error ("Browser.createVrmlFromURL: node IS NULL.");
 
-			var field = node .getValue () .getField (event);
+			const field = node .getValue () .getField (event);
 
 			if (! field .isInput ())
 				throw new Error ("Browser.createVrmlFromURL: event named '" + event + "' must be a input field.");
@@ -514,7 +514,7 @@ function ($,
 		},
 		callBrowserCallbacks: (function ()
 		{
-			var browserCallbacks = new Map ();
+			const browserCallbacks = new Map ();
 
 			return function (browserEvent)
 			{
@@ -532,7 +532,7 @@ function ($,
 			if (! dom)
 				return;
 
-			var
+			const
 				scene        = this .createScene (),
 				currentScene = this .currentScene,
 				external     = this .isExternal ();
@@ -541,8 +541,7 @@ function ($,
 
 			if (success)
 			{
-				new XMLParser (scene) .parseIntoScene (dom,
-				function ()
+				new XMLParser (scene) .parseIntoScene (dom, function ()
 				{
 					if (! external)
 					{
@@ -582,15 +581,14 @@ function ($,
 			if (! jsobj)
 				return;
 
-			var
+			const
 				scene        = this .createScene (),
 				currentScene = this .currentScene,
 				external     = this .isExternal ();
 
 			if (success)
 			{
-				scene .dom = new JSONParser (scene) .parseJavaScript (jsobj,
-				function ()
+				scene .dom = new JSONParser (scene) .parseJavaScript (jsobj, function ()
 				{
 					if (! external)
 					{
@@ -648,7 +646,7 @@ function ($,
 
 			if (layerNode)
 			{
-				let viewpoints = layerNode .getUserViewpoints ();
+				const viewpoints = layerNode .getUserViewpoints ();
 
 				if (viewpoints .length)
 					this .bindViewpoint (layerNode, viewpoints [0]);
@@ -661,7 +659,7 @@ function ($,
 
 			if (layerNode)
 			{
-				let viewpoints = layerNode .getUserViewpoints ();
+				const viewpoints = layerNode .getUserViewpoints ();
 
 				if (viewpoints .length === 0)
 					return;
@@ -691,7 +689,7 @@ function ($,
 
 			if (layerNode)
 			{
-				let viewpoints = layerNode .getUserViewpoints ();
+				const viewpoints = layerNode .getUserViewpoints ();
 
 				if (viewpoints .length === 0)
 					return;
@@ -721,7 +719,7 @@ function ($,
 
 			if (layerNode)
 			{
-				let viewpoints = layerNode .getUserViewpoints ();
+				const viewpoints = layerNode .getUserViewpoints ();
 
 				if (viewpoints .length)
 					this .bindViewpoint (layerNode, viewpoints .at (-1));
@@ -765,7 +763,7 @@ function ($,
 		{
 			try
 			{
-				var route = this .currentScene .getRoute (fromNode, fromEventOut, toNode, toEventIn);
+				const route = this .currentScene .getRoute (fromNode, fromEventOut, toNode, toEventIn);
 
 				if (route)
 					this .currentScene .deleteRoute (route);

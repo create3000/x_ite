@@ -49,7 +49,6 @@
 
 define ([
 	"jquery",
-	"x_ite/Error",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Basic/X3DField",
@@ -75,7 +74,6 @@ define ([
 	"standard/Time/MicroTime",
 ],
 function ($,
-          Error,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DField,
@@ -137,11 +135,26 @@ function ($,
 		return browser;
 	}
 
+	function showFallback (elements, error)
+	{
+		console .log (error);
+
+		const consoleElement = $(".x_ite-console");
+
+		if (consoleElement .length)
+			consoleElement .append (document .createTextNode (error));
+
+		elements .addClass ("x_ite-browser-fallback");
+		elements .children (".x_ite-private-browser") .hide ();
+		elements .children (":not(.x_ite-private-browser)") .addClass ("x_ite-fallback");
+		elements .children (":not(.x_ite-private-browser)") .show ();
+	}
+
 	const
 		callbacks = $.Deferred (),
 		fallbacks = $.Deferred ();
 
-	var initialized = false;
+	let initialized = false;
 
 	function X3D (callback, fallback)
 	{
@@ -169,7 +182,7 @@ function ($,
 			}
 			catch (error)
 			{
-				Error .fallback (elements, error);
+				showFallback (elements, error);
 				fallbacks .resolve (error);
 			}
 		});

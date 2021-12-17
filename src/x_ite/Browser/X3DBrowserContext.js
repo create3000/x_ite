@@ -100,7 +100,7 @@ function ($,
 {
 "use strict";
 
-	var contexts = [ ];
+	const contexts = [ ];
 
 	function X3DBrowserContext (element)
 	{
@@ -256,9 +256,9 @@ function ($,
 		},
 		traverse: function (time)
 		{
-			var gl = this .getContext ();
+			const gl = this .getContext ();
 
-			var t0 = performance .now ();
+			const t0 = performance .now ();
 			this .systemTime = t0 - this .systemStartTime;
 			this .advanceTime (time);
 
@@ -268,11 +268,11 @@ function ($,
 			this .timeEvents_ .processInterests ();
 			this .processEvents ();
 
-			var t1 = performance .now ();
+			const t1 = performance .now ();
 			this .world .traverse (TraverseType .CAMERA, null);
 			this .cameraTime = performance .now () - t1;
 
-			var t2 = performance .now ();
+			const t2 = performance .now ();
 			if (this .getCollisionCount ())
 				this .world .traverse (TraverseType .COLLISION, null);
 			this .collisionTime = performance .now () - t2;
@@ -283,7 +283,7 @@ function ($,
 			// XXX: The depth buffer must be cleared here, although it is cleared in each layer, otherwise there is a
 			// XXX: phantom image in the depth buffer at least in Firefox.
 
-			var t3 = performance .now ();
+			const t3 = performance .now ();
 			gl .clearColor (0, 0, 0, 0);
 			gl .clear (gl .COLOR_BUFFER_BIT);
 			this .world .traverse (TraverseType .DISPLAY, null);
@@ -304,7 +304,7 @@ function ($,
 	{
 		addContext: function (context)
 		{
-			var X3D = require ("x_ite/X3D");
+			const X3D = require ("x_ite/X3D");
 
 			contexts .push (context);
 
@@ -312,7 +312,7 @@ function ($,
 
 			$("X3DCanvas") .each (function (i, canvas)
 			{
-				var browser = X3D .getBrowser (canvas);
+				const browser = X3D .getBrowser (canvas);
 
 				context .call (browser);
 

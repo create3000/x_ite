@@ -122,7 +122,7 @@ const getScriptURL = (function ()
 
 	const X3D_ = window .X3D;
 
-	var PrivateX3D = null;
+	let PrivateX3D = null;
 
 	X_ITE .noConflict = noConflict;
 	X_ITE .require    = require;
@@ -141,8 +141,7 @@ const getScriptURL = (function ()
 		callbacks = [ ],
 		fallbacks = [ ];
 
-	require (["jquery", "x_ite/X3D"],
-	function ($, X3D)
+	require (["jquery", "x_ite/X3D"], function ($, X3D)
 	{
 		$ .noConflict (true);
 
@@ -154,7 +153,7 @@ const getScriptURL = (function ()
 		// Initialize all X3DCanvas tags.
 		X3D ();
 
-		for (var i = 0; i < callbacks .length; ++ i)
+		for (let i = 0; i < callbacks .length; ++ i)
 		   X3D (callbacks [i], fallbacks [i]);
 	},
 	fallback);
