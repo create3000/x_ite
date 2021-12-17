@@ -10,7 +10,7 @@ minimal_mistakes_skin: "air" # "air", "aqua", "contrast", "dark", "dirt", "neon"
 locale: "en-US"
 title: &title "X_ITE X3D Browser"
 title_separator: "-"
-subtitle: "One Step Ahead"
+subtitle: "Shaping the Future of Space and Time"
 name: &name "Holger Seelig"
 description: *name
 words_per_minute: 200
