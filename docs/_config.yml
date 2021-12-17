@@ -107,7 +107,7 @@ defaults:
         nav: pages
   - scope:
       path: "reference"
-      type: reference
+      type: pages
     values:
       layout: single
       classes: wide
