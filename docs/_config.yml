@@ -61,13 +61,16 @@ plugins:
 
 # markdown_ext: "markdown,mkdown,mkdn,mkd,md"
 
-# # Conversion
+# Conversion
 encoding: "utf-8"
 markdown: kramdown
 highlighter: rouge
 lsi: false
 excerpt_separator: "\n\n"
 incremental: false
+commonmark:
+   extensions:
+   - autolink
 
 # Markdown Processing
 kramdown:
@@ -85,7 +88,7 @@ sass:
   sass_dir: _sass
   style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
 
-## defaults
+# Defaults
 defaults:
   - scope:
       path: ""
