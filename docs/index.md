@@ -889,7 +889,7 @@ X3DCanvas {
 
 To get X\_ITE working you must include the CSS file »x\_ite.css« and the JavaScript file »x\_ite.min.js«. After x\_ite is successfully loaded a new HTML tag &lt;X3DCanvas&gt; is available on your page.
 
-You can style the &lt;X3DCanvas&gt; tag as every HTML tag with CSS as well as you can place it everywhere within the DOM tree.
+**Note:** You can style the &lt;X3DCanvas&gt; tag as every HTML tag with CSS as well as you can place it everywhere within the DOM tree.
 {: .notice--info}
 
 Supported File Formats
