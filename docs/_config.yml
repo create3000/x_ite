@@ -20,7 +20,7 @@ github: [metadata]
 author:
   name: *title
   avatar: "assets/images/logo.png"
-  bio: "Version 4.7.0"
+  bio: "Version 4.7.0a"
   links:
     - label: "GitHub"
       icon: "fab fa-2x fa-fw fa-github"
@@ -94,6 +94,10 @@ sass:
   sass_dir: _sass
   style: compressed # https://sass-lang.com/documentation/file.SASS_REFERENCE.html#output_style
 
+# Fiels and Folders
+include:
+  - _pages
+
 # Defaults
 defaults:
   # _pages
@@ -106,6 +110,3 @@ defaults:
       author_profile: true
       sidebar:
         nav: pages
-
-include:
-  - _pages
