@@ -62,7 +62,7 @@ The string may be any valid X3D content in any language supported by the browser
 
 Async version of `createX3DFromString`. The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
 
-success: function (scene) { ... }<br/>
+success: function (scene) { ... }
 error: function (error) { ... }
 
 ### void **createX3DFromURL** (*MFString url, String event, Node node*)
@@ -81,7 +81,7 @@ Imports a X3D XML DOM document or fragment, converts it, and returns the resulti
 
 Async version of `importDocument`. Imports a X3D XML DOM document or fragment, converts it, and calls the success function with scene argument, or error on error.
 
-success: function (scene) { ... }<br/>
+success: function (scene) { ... }
 error: function (error) { ... }
 
 ### X3DScene **importJS** (*Object json*)
@@ -92,7 +92,7 @@ Imports a X3D JSON document or fragment, converts it, and returns the resulting 
 
 Async version of `importJS`. Imports a X3D JSON document or fragment, converts it, and calls the success function with scene argument, or error on error.
 
-success: function (scene) { ... }<br/>
+success: function (scene) { ... }
 error: function (error) { ... }
 
 ### String **getBrowserProperty** (*String name*)
