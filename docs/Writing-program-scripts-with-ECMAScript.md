@@ -132,8 +132,8 @@ Each interface output field is a ECMAScript variable
 if (!enabled)
    return;
 
-lastval          = value_changed[0];  // get last event
-value_changed[0] = newval;            // send new event
+lastval           = value_changed [0];  // get last event
+value_changed [0] = newval;             // send new event
 ```
 
 A sample JavaScript script
@@ -291,9 +291,9 @@ function set_fraction (fraction, time)
 {
    if (!enabled)
       return;
- 
+
    var y = 4.0 * bounceHeight * fraction * (1.0 - fraction);
- 
+
    value_changed [0] = 0.0;
    value_changed [1] = y;
    value_changed [2] = 0.0;
@@ -317,9 +317,9 @@ function set_fraction (fraction, time)
 {
    if (!enabled)
       return;
- 
-   var y = 4.0 * bounceHeight * fraction * (1.0 - fraction);
- 
+
+   const y = 4.0 * bounceHeight * fraction * (1.0 - fraction);
+
    value_changed [0] = 0.0;
    value_changed [1] = y;
    value_changed [2] = 0.0;
@@ -452,7 +452,7 @@ function set_fraction (fraction, time)
    if (!enabled)
       return;
 
-   var y = 4.0 * bounceHeight * fraction * (1.0 - fraction);
+   const y = 4.0 * bounceHeight * fraction * (1.0 - fraction);
 
    value_changed [0] = 0.0;
    value_changed [1] = y;

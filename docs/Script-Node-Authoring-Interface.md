@@ -55,7 +55,7 @@ Script {
 
 function anInputField (value, time)
 {
-  var a = false;
+  let a = false;
 
   if (aField == 1.5)
   {
@@ -69,13 +69,13 @@ function anInputField (value, time)
 
   aField = anOutputField;  // SFInt32 converted to SFFloat
 
-  var s = 'Two\nLines';    // 's' contains a String
-  var b = aField;          // 'b' contains a number
+  let s = 'Two\nLines';    // 's' contains a String
+  let b = aField;          // 'b' contains a number
 
   b      = anOutputField;  // 'b' now contains a different number
   aField = aVector;        // ERROR, can't assign SFVec3f to SFFloat!
 
-  var currentScene = Browser .currentScene; // Get current scene from browser.
+  let currentScene = Browser .currentScene; // Get current scene from browser.
 }"
 }
 ```
@@ -92,9 +92,9 @@ Every object has a set of *properties* and *methods*. Properties are names on th
 ```js
 function someFunction ()
 {
-  a = new SFColor (0.5, 0.5, 0.5);
-  b = a .r;                         // 'b' contains 0.5
-  a .setHSV (0.1, 0.1, 0.1);        // 'a' now contains new properties
+  let a = new SFColor (0.5, 0.5, 0.5);
+  let b = a .r;                        // 'b' contains 0.5
+  a .setHSV (0.1, 0.1, 0.1);           // 'a' now contains new properties
 }
 ```
 
@@ -106,8 +106,8 @@ Object Construction
 For each object type there is a corresponding constructor. Constructors typically take a flexible set of parameters to allow construction of objects with any initial value. MF objects are essentially arrays so they always take 0 or more parameters of the corresponding SF object type. A value of a given data type is created using the *new* keyword with the data type name. For instance:
 
 ```js
-a = new SFVec3f (0, 1, 0);   // 'a' has a SFVec3f containing 0, 1, 0
-b = new MFFloat (1, 2, 3, 4) // 'b' has a MFFloat containing 4 floats
+let a = new SFVec3f (0, 1, 0);   // 'a' has a SFVec3f containing 0, 1, 0
+let b = new MFFloat (1, 2, 3, 4) // 'b' has a MFFloat containing 4 floats
 ```
 
 Data Conversion
@@ -135,19 +135,19 @@ Combining objects of different types in a single expression or assignment statem
          </td>
       </tr>
       <tr>
-         <td><b>Vector types</b><br>  
-            SFColor<br>  
-            SFColorRGBA<br>  
-            SFMatrix3d<br>  
-            SFMatrix3f<br>  
-            SFMatrix4d<br>  
+         <td><b>Vector types</b><br>
+            SFColor<br>
+            SFColorRGBA<br>
+            SFMatrix3d<br>
+            SFMatrix3f<br>
+            SFMatrix4d<br>
             SFMatrix4f<br>
-            SFRotation<br>  
-            SFVec2d<br>  
-            SFVec2f<br>  
-            SFVec3d<br>  
-            SFVec3f<br>  
-            SFVec3d<br>  
+            SFRotation<br>
+            SFVec2d<br>
+            SFVec2f<br>
+            SFVec3d<br>
+            SFVec3f<br>
+            SFVec3d<br>
             SFVec4f
          </td>
          <td>Only combine with like types.<br>
@@ -168,25 +168,25 @@ Combining objects of different types in a single expression or assignment statem
       </tr>
       <tr>
          <td><b>MF types</b><br>
-            MFBool<br>  
-            MFColor<br>  
-            MFColorRGBA<br>  
-            MFDouble<br>  
-            MFFloat<br>  
-            MFImage<br>  
-            MFInt32<br>  
-            MFMatrix3d<br>  
-            MFMatrix3f<br>  
-            MFMatrix4d<br>  
-            MFMatrix4f<br>  
-            MFNode<br>  
-            MFRotation<br>  
-            MFString<br>  
-            MFTime<br>  
-            MFVec2d<br>  
-            MFVec2f<br>  
-            MFVec3d<br>  
-            MFVec3f<br>  
+            MFBool<br>
+            MFColor<br>
+            MFColorRGBA<br>
+            MFDouble<br>
+            MFFloat<br>
+            MFImage<br>
+            MFInt32<br>
+            MFMatrix3d<br>
+            MFMatrix3f<br>
+            MFMatrix4d<br>
+            MFMatrix4f<br>
+            MFNode<br>
+            MFRotation<br>
+            MFString<br>
+            MFTime<br>
+            MFVec2d<br>
+            MFVec2f<br>
+            MFVec3d<br>
+            MFVec3f<br>
             MFVec4d<br>
             MFVec4f
          </td>
@@ -257,7 +257,7 @@ InputOnly Field Handling
 
 Events sent to the Script node are passed to the corresponding ECMAScript function in the script. It is necessary to specify the script in the *url* field of the Script node. The function's name is the same as the inputOnly field and is passed two arguments, the event value and its timestamp. If there isn't a corresponding ECMAScript function in the script, the browser's behavior is undefined.
 
-For example, the following Script node has one inputOnly field whose name is  
+For example, the following Script node has one inputOnly field whose name is
 *start*:
 
 ```js
@@ -295,7 +295,7 @@ Authors may define a prepareEvents () method that is called only once per frame.
 eventsProcessed () Method
 -------------------------
 
-Authors may define a function named *eventsProcessed* which will be called after some set of events has been received. Some implementations will call this function after the return from each inputOnly field function, while others will call it only after processing a number of inputOnly field functions. In the latter case an author can improve performance by placing lengthy processing algorithms which do not need to be executed for every event received into the  
+Authors may define a function named *eventsProcessed* which will be called after some set of events has been received. Some implementations will call this function after the return from each inputOnly field function, while others will call it only after processing a number of inputOnly field functions. In the latter case an author can improve performance by placing lengthy processing algorithms which do not need to be executed for every event received into the
 *eventsProcessed* function.
 
 **Example:**
@@ -337,7 +337,7 @@ Script {
 
 function pos (value)
 {
-  node.set_translation = value;
+  node .set_translation = value;
 }
   "
   directOutput TRUE

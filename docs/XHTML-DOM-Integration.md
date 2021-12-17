@@ -64,13 +64,13 @@ function moveHouse ()
 {
   // Constants
 
-  var RANGE = 5;
+  const RANGE = 5;
 
   // Query the Transform with the name »pilzhaus«, get the values of the translation
   // field, apply some random values to the components of the vector and assign this
-  // modified value again to the translation field of the Transform node. 
+  // modified value again to the translation field of the Transform node.
 
-  var
+  const
     houseTransform = document .querySelector ("[DEF='pilzhaus']"),              // Unique DEF inside inlined inlines.
     translation    = houseTransform .getAttribute ("translation") .split (" "), // Poor man's parse.
     x              = 1.0 * translation [0] + RANGE * (Math .random () - 0.5),

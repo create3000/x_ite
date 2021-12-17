@@ -1,9 +1,9 @@
 Motivation
 ==========
 
-- Sounds can be triggered by viewer actions 
+- Sounds can be triggered by viewer actions
   - Clicks, horn honks, door latch noises
-- Sounds can be continuous in the background 
+- Sounds can be continuous in the background
   - Wind, crowd noises, elevator music
 - Sounds emit from a location, in a direction, within an area
 
@@ -12,9 +12,9 @@ Creating sounds
 
 Sounds have two components:
 
-- A sound source providing a sound signal 
+- A sound source providing a sound signal
   - Like a stereo component
-- A sound emitter converts a signal to virtual sound 
+- A sound emitter converts a signal to virtual sound
   - Like a stereo speaker
 
 Syntax: AudioClip
@@ -98,12 +98,12 @@ Selecting sound source types
 
 Supported by the [AudioClip](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/sound.html#AudioClip) node:
 
-- MP3 or WAV - digital sound files  
+- MP3 or WAV - digital sound files
   Good for sound effects
 
 Supported by the [MovieTexture](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#MovieTexture) node:
 
-- MP4 - movie file with sound  
+- MP4 - movie file with sound
   Good for virtual TVs
 
 Syntax: Sound
@@ -174,7 +174,7 @@ A [Sound](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/com
 Setting the sound range
 =======================
 
-- The sound range fields specify two ellipsoids 
+- The sound range fields specify two ellipsoids
   - *minFront* and *minBack* control an inner ellipsoid
   - *maxFront* and *maxBack* control an outer ellipsoid
 - Sound has a constant volume inside the inner ellipsoid
@@ -225,7 +225,7 @@ Classic Encoding
 ----------------
 
 ```js
-<pre class="lang:x3d decode:true ">Group {
+Group {
   children [
     Shape {
       appearance Appearance {
