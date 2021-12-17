@@ -97,7 +97,7 @@ sass:
 # Defaults
 defaults:
   - scope:
-      path: "home"
+      path: ""
       type: pages
     values:
       layout: single
