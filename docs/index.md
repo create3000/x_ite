@@ -796,6 +796,7 @@ X3D Examples
 </table>
 
 The VolumeRendering examples are only working if your browser supports WebGL 2, otherwise the examples left black.
+{: .notice}
 
 Download X\_ITE
 ====================================
