@@ -1,0 +1,137 @@
+# Main menu
+main:
+  - title: "Home"
+    url: /
+  - title: "Reference"
+    url: /reference/ECMAScript-Object-and-Function-Definitions.html
+  - title: "Tutorials"
+    url: /tutorials/
+
+# Sidebar links
+pages:
+  - title: "Quick-Start Guide"
+    children:
+      - title: "Getting Started"
+        url: /
+      - title: "What's New"
+        url: /What's-New.html
+      - title: "Features"
+        url: /Features.html
+      - title: "Browser Support"
+        url: /Browser-Support.html
+      - title: "Supported Nodes"
+        url: /Supported-Nodes.html
+      - title: "Accessing the External Browser"
+        url: /Accessing-the-External-Browser.html
+      - title: "XHTML DOM Integration"
+        url: /XHTML-DOM-Integration.html
+      - title: "Custom Shaders"
+        url: /Custom-Shaders.html
+      - title: "How To Configure Your Web Server"
+        url: /How-To-Configure-Your-Web-Server.html
+      - title: "Glossary"
+        url: /Glossary.html
+
+reference:
+  - title: "X3D Reference"
+    children:
+      - title: "Script Node Authoring Interface"
+        url: /reference/Script-Node-Authoring-Interface.html
+      - title: "ECMAScript Object and Function Definitions"
+        url: /reference/ECMAScript-Object-and-Function-Definitions.html
+      - title: "Browser Services"
+        url: /reference/Browser-Services.html
+      - title: "Scene Services"
+        url: /reference/Scene-Services.html
+      - title: "Field Services and Objects"
+        url: /reference/Field-Services-and-Objects.html
+      - title: "Route Services"
+        url: /reference/Route-Services.html
+      - title: "Prototype Services"
+        url: /reference/Prototype-Services.html
+      - title: "Constants Services"
+        url: /reference/Constants-Services.html
+
+tutorials:
+  - title: "Tutorials"
+    children:
+      - title: "Overview"
+        url: /tutorials/
+  - title: "Basic tutorials"
+    children:
+      - title: "Hello, World!"
+        url: /tutorials/Hello,-World!.html
+      - title: "Basic Nodes"
+        url: /tutorials/Basic-Nodes.html
+  - title: "Shapes, geometry, and appearance"
+    children:
+      - title: "Introducing X3D"
+        url: /tutorials/Introducing-X3D.html
+      - title: "Building a X3D world"
+        url: /tutorials/Building-a-X3D-world.html
+      - title: "Building primitive shapes"
+        url: /tutorials/Building-primitive-shapes.html
+      - title: "Transforming Shapes"
+        url: /tutorials/Transforming-Shapes.html
+      - title: "Controlling appearance with materials"
+        url: /tutorials/Controlling-appearance-with-materials.html
+      - title: "Grouping nodes"
+        url: /tutorials/Grouping-nodes.html
+      - title: "Naming nodes"
+        url: /tutorials/Naming-nodes.html
+  - title: "Animation, sensors, and geometry"
+    children:
+      - title: "Introducing animation"
+        url: /tutorials/Introducing-animation.html
+      - title: "Animating transforms"
+        url: /tutorials/Animating-transforms.html
+      - title: "Sensing viewer actions"
+        url: /tutorials/Sensing-viewer-actions.html
+      - title: "Building shapes out of points, lines, and faces"
+        url: /tutorials/Building-shapes-out-of-points,-lines,-and-faces.html
+      - title: "Building elevation grids"
+        url: /tutorials/Building-elevation-grids.html
+      - title: "Building extruded shapes"
+        url: /tutorials/Building-extruded-shapes.html
+      - title: "Controlling color on coordinate-based geometry"
+        url: /tutorials/Controlling-color-on-coordinate-based-geometry.html
+      - title: "Controlling shading on coordinate-based geometry"
+        url: /tutorials/Controlling-shading-on-coordinate-based-geometry.html
+  - title: "Textures, lights, and environment"
+    children:
+      - title: "Mapping textures"
+        url: /tutorials/Mapping-textures.html
+      - title: "Controlling how textures are mapped"
+        url: /tutorials/Controlling-how-textures-are-mapped.html
+      - title: "Lighting your world"
+        url: /tutorials/Lighting-your-world.html
+      - title: "Adding backgrounds"
+        url: /tutorials/Adding-backgrounds.html
+      - title: "Adding fog"
+        url: /tutorials/Adding-fog.html
+      - title: "Adding sound"
+        url: /tutorials/Adding-sound.html
+      - title: "Controlling the viewpoint"
+        url: /tutorials/Controlling-the-viewpoint.html
+      - title: "Controlling navigation"
+        url: /tutorials/Controlling-navigation.html
+      - title: "Sensing the viewer"
+        url: /tutorials/Sensing-the-viewer.html
+  - title: "Scripts and prototypes"
+    children:
+      - title: "Controlling detail"
+        url: /tutorials/Controlling-detail.html
+      - title: "Introducing script use"
+        url: /tutorials/Introducing-script-use.html
+      - title: "Writing program scripts with ECMAScript"
+        url: /tutorials/Writing-program-scripts-with-ECMAScript.html
+      - title: "Creating new node types"
+        url: /tutorials/Creating-new-node-types.html
+      - title: "Providing information about your world"
+        url: /tutorials/Providing-information-about-your-world.html
+  - title: "Optimize your scene"
+    children:
+      - title: "Improving Performance"
+        url: /tutorials/Improving-Performance.html
+      - title: "Increasing Rendering Speed"
+        url: /tutorials/Increasing-Rendering-Speed.html
