@@ -97,7 +97,7 @@ sass:
 # Defaults
 defaults:
   - scope:
-      path: ""
+      path: "home"
       type: pages
     values:
       layout: single
@@ -161,4 +161,5 @@ include:
   - Writing-program-scripts-with-ECMAScript.md
   - XHTML-DOM-Integration.md
   - index.md
+  - home
   - reference
