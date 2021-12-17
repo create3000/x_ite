@@ -8,7 +8,7 @@ There are a fixed set of objects in ECMAScript, each of which have a fixed set o
 * [Field Services and Objects](/x_ite/reference/Field-Services-and-Objects.html)
 * [Route Services](/x_ite/reference/Route-Services.html)
 * [Prototype Services](/x_ite/reference/Prototype-Services.html)
-* [Constants Services](/x_ite/reference/Constants-Service.html)
+* [Constants Services](/x_ite/reference/Constants-Services.html)
 
 parseInt and parseFloat Functions
 ---------------------------------
