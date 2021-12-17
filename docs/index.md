@@ -8,6 +8,7 @@ X3D is an ISO-ratified, royalty-free open standards file format and run-time arc
 X\_ITE supports custom shaders, clip planes, reflection mapping, script nodes, prototyping capabilities and event driven programming to provide you with an improved quality level of virtual effects and tools ready for the Internet.
 
 **Developer note:** X\_ITE runs best in fresh installs of Google Chrome, Chromium, Firefox, Safari, Opera, and Microsoft Edge. X\_ITE uses the latest JavaScript standard, but is also compatible with older browser, and is either now available on your desktop computer or on your modern smart-phone.
+{: .notice--info}
 
 If you ever get in trouble, please [file a bug](https://github.com/create3000/x_ite/issues).
 
