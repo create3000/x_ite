@@ -151,13 +151,7 @@ function (Fields,
 			.bind (this),
 			function (fragment)
 			{
-			   try
-			   {
-					this .getExecutionContext () .changeViewpoint (fragment);
-				}
-				catch (error)
-				{ }
-
+			   this .getBrowser () .changeViewpoint (fragment);
 				this .setLoadState (X3DConstants .COMPLETE_STATE, false);
 			}
 			.bind (this),

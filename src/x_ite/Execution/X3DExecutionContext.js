@@ -643,39 +643,6 @@ function (Fields,
 		{
 			this ._worldInfoNodes = this ._worldInfoNodes .filter (function (node) { return node !== worldInfoNode; });
 		},
-		changeViewpoint: function (name)
-		{
-			const
-				namedNode     = this .getNamedNode (name),
-				viewpointNode = X3DCast (X3DConstants .X3DViewpointNode, namedNode);
-
-			if (viewpointNode)
-			{
-				if (viewpointNode .isBound_ .getValue ())
-				{
-					const layerNode = this .getBrowser () .getActiveLayer ();
-
-					if (layerNode)
-					{
-						viewpointNode .setVRMLTransition (true);
-						viewpointNode .transitionStart (layerNode, viewpointNode, viewpointNode);
-					}
-				}
-				else
-				{
-					viewpointNode .setVRMLTransition (true);
-
-					viewpointNode .set_bind_ = true;
-				}
-			}
-			else
-			{
-				if (! this .isRootContext ())
-					this .getExecutionContext () .changeViewpoint (name);
-				else
-					throw new Error ("Viewpoint named '" + name + "' not found.");
-			}
-		},
 		toVRMLStream: function (stream)
 		{
 			var generator = Generator .Get (stream);

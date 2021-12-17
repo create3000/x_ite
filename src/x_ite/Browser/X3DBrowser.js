@@ -737,7 +737,7 @@ function ($,
 
 			if (layerNode)
 			{
-				for (const viewpointNode of layerNode .getUserViewpoints ())
+				for (const viewpointNode of layerNode .getViewpoints () .get ())
 				{
 					if (viewpointNode .getName () === name)
 					{
