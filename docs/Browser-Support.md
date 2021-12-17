@@ -6,31 +6,32 @@ To enjoy the best and most secure experience, we recommend you keep your browser
 Desktop
 -------
 
-Since April 2016 **Chrome** supports all WebGL and JavaScript ES 6 features required by X\_ITE. We support the current version and the previous version of Chrome, although X\_ITE also runs fine in older versions.  
+Since April 2016 **Chrome** supports all WebGL and JavaScript ES 6 features required by X\_ITE. We support the current version and the previous version of Chrome, although X\_ITE also runs fine in older versions.
 <https://www.google.com/chrome>
 
-**Firefox** as the first browser that supports everything X\_ITE needs and is extensively tested since years. We have full support for Firefox.  
+**Firefox** as the first browser that supports everything X\_ITE needs and is extensively tested since years. We have full support for Firefox.
 <https://www.mozilla.org/firefox/products/>
 
-**Safari** has excellent support for WebGL and JavaScript ES 6 and is as much popular as other browsers especially on MacOS X. Keep your Mac up to date to have the best experience we can give.  
+**Safari** has excellent support for WebGL and JavaScript ES 6 and is as much popular as other browsers especially on MacOS X. Keep your Mac up to date to have the best experience we can give.
 <https://www.apple.com/safari/>
 
-**Opera** uses the same rendering engine used by Safari and Chrome and is therefore fully supported since April 2016. Always use the latest version of Opera to make your Internet experience more secure and enjoyable.  
-<https://www.opera.com/>  
+**Opera** uses the same rendering engine used by Safari and Chrome and is therefore fully supported since April 2016. Always use the latest version of Opera to make your Internet experience more secure and enjoyable.
+<https://www.opera.com/>
 
-Starting with Windows 10 X\_ITE runs fine in **Microsoft Edge** and is fully supported. Microsoft Edge provides everything X\_ITE needs to give you the best performance.  
+Starting with Windows 10 X\_ITE runs fine in **Microsoft Edge** and is fully supported. Microsoft Edge provides everything X\_ITE needs to give you the best performance.
 <https://www.microsoft.com/windows/microsoft-edge>
 
 Mobile
 ------
 
-All stock browser on **Android** 4.0+ support WebGL and JavaScript ES 6 natively. Always keep in mind to keep your files small in size and always consider to optimize for performance.  
+All stock browser on **Android** 4.0+ support WebGL and JavaScript ES 6 natively. Always keep in mind to keep your files small in size and always consider to optimize for performance.
 <https://www.android.com/>
 
-iOS has good support since **Safari** on iOS 7+. Simplify your scenes and test them extensively to achieve the best results how you would like it to be.  
+iOS has good support since **Safari** on iOS 7+. Simplify your scenes and test them extensively to achieve the best results how you would like it to be.
 <https://www.apple.com/ios/>
 
-**Any problem with X\_ITE in the above browsers should be reported as a bug in X\_ITE. See [Report a Bug](https://github.com/create3000/x_ite/issues).**
+Any problem with X\_ITE in the above browsers should be reported as a bug in X\_ITE. See [Report a Bug](https://github.com/create3000/x_ite/issues).
+{: .notice--info}
 
 We do not support older browsers like Internet Explorer 6-9, Opera 12.1x or Safari 5.1+.
 
