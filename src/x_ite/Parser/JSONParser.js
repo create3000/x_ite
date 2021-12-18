@@ -60,7 +60,8 @@ function (XMLParser,
 
 	function JSONParser (scene)
 	{
-		this .scene     = scene;
+		X3DParser .call (this, scene);
+
 		this .x3djsonNS = "http://www.web3d.org/specifications/x3d-namespace";
 	}
 

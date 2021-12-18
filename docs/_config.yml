@@ -20,7 +20,7 @@ github: [metadata]
 author:
   name: *title
   avatar: "assets/images/logo.png"
-  bio: "Version 4.7.0"
+  bio: "Version 4.7.0a"
   links:
     - label: "GitHub"
       icon: "fab fa-2x fa-fw fa-github"
@@ -60,6 +60,7 @@ relative_links:
 plugins:
   - jekyll-paginate
   - jekyll-sitemap
+  - jekyll-last-modified-at
   - jekyll-gist
   - jekyll-feed
   - jekyll-include-cache
