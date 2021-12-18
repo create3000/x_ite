@@ -1,8 +1,8 @@
 {
 	"name": "x_ite",
-	"version": "4.7.1a",
-	"revision": "1083",
-	"description": "X_ITE X3D Browser, a framework for integrating and manipulating X3D and VRML scenes in HTML5.",
+	"version": "4.7.1",
+	"revision": "1084",
+	"description": "X_ITE X3D Browser, a framework for integrating and manipulating X3D and VRML scenes in HTML.",
 	"main": "src/x_ite.js",
 	"repository": {
 		"type": "git",
@@ -16,20 +16,22 @@
 	],
 	"author": "Holger Seelig <holger.seelig@yahoo.de>",
 	"license": "GPL-3.0",
-	"homepage": "http://create3000.de/x_ite/getting-started/",
+	"homepage": "https://create3000.github.io/x_ite/",
 	"contributors": [
 		{
 			"name": "Holger Seelig",
 			"email": "holger.seelig@gmail.com",
-			"url": "http://create3000.de"
+			"url": "https://github.com/create3000"
 		},
 		{
 			"name": "Andreas Plesch",
-			"email": "andreasplesch@gmail.com"
+			"email": "andreasplesch@gmail.com",
+			"url": "https://github.com/andreasplesch"
 		},
 		{
 			"name": "John Carlson",
-			"email": "yottzumm@gmail.com"
+			"email": "yottzumm@gmail.com",
+			"url": "https://github.com/coderextreme"
 		},
 		{
 			"name": "Simon Place",
