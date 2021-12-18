@@ -99,7 +99,7 @@ tutorials:
         url: /tutorials/Controlling-shading-on-coordinate-based-geometry.html
   - title: "Textures, Lights, and Environment"
     children:
-      - title: "Mapping textures"
+      - title: "Mapping Textures"
         url: /tutorials/Mapping-textures.html
       - title: "Controlling How Textures are Mapped"
         url: /tutorials/Controlling-how-textures-are-mapped.html
