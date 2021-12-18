@@ -18,43 +18,43 @@ Simple, fast and efficient, our X3D tutorials give you all the tips and tricks t
 Shapes, geometry, and appearance
 
 - [Introducing X3D](/x_ite/tutorials/Introducing-X3D.html)
-- [Building a X3D world](/x_ite/tutorials/Building-a-X3D-world.html)
-- [Building primitive shapes ](/x_ite/tutorials/Building-primitive-shapes.html)
+- [Building a X3D World](/x_ite/tutorials/Building-a-X3D-world.html)
+- [Building Primitive Shapes ](/x_ite/tutorials/Building-primitive-shapes.html)
 - [Transforming Shapes](/x_ite/tutorials/Transforming-Shapes.html)
-- [Controlling appearance with materials ](/x_ite/tutorials/Controlling-appearance-with-materials.html)
-- [Grouping nodes ](/x_ite/tutorials/Grouping-nodes.html)
-- [Naming nodes](/x_ite/tutorials/Naming-nodes.html)
+- [Controlling Appearance with Materials ](/x_ite/tutorials/Controlling-appearance-with-materials.html)
+- [Grouping Nodes ](/x_ite/tutorials/Grouping-nodes.html)
+- [Naming Nodes](/x_ite/tutorials/Naming-nodes.html)
 
 Animation, sensors, and geometry
 
-- [Introducing animation](/x_ite/tutorials/Introducing-animation.html)
+- [Introducing Animation](/x_ite/tutorials/Introducing-animation.html)
 - [Animating transforms](/x_ite/tutorials/Animating-transforms.html)
-- [Sensing viewer actions](/x_ite/tutorials/Sensing-viewer-actions.html)
-- [Building shapes out of points, lines, and faces](/x_ite/tutorials/Building-shapes-out-of-points,-lines,-and-faces.html)
-- [Building elevation grids](/x_ite/tutorials/Building-elevation-grids.html)
-- [Building extruded shapes](/x_ite/tutorials/Building-extruded-shapes.html)
-- [Controlling color on coordinate-based geometry](/x_ite/tutorials/Controlling-color-on-coordinate-based-geometry.html)
-- [Controlling shading on coordinate-based geometry](/x_ite/tutorials/Controlling-shading-on-coordinate-based-geometry.html)
+- [Sensing Viewer Actions](/x_ite/tutorials/Sensing-viewer-actions.html)
+- [Building Ahapes out of Points, Lines, and Faces](/x_ite/tutorials/Building-shapes-out-of-points,-lines,-and-faces.html)
+- [Building Elevation Grids](/x_ite/tutorials/Building-elevation-grids.html)
+- [Building Extruded Shapes](/x_ite/tutorials/Building-extruded-shapes.html)
+- [Controlling Color on Coordinate-Based Geometry](/x_ite/tutorials/Controlling-color-on-coordinate-based-geometry.html)
+- [Controlling Shading on Coordinate-Based Geometry](/x_ite/tutorials/Controlling-shading-on-coordinate-based-geometry.html)
 
 Textures, lights, and environment
 
-- [Mapping textures](/x_ite/tutorials/Mapping-textures.html)
-- [Controlling how textures are mapped](/x_ite/tutorials/Controlling-how-textures-are-mapped.html)
-- [Lighting your world](/x_ite/tutorials/Lighting-your-world.html)
-- [Adding backgrounds](/x_ite/tutorials/Adding-backgrounds.html)
-- [Adding fog](/x_ite/tutorials/Adding-fog.html)
-- [Adding sound](/x_ite/tutorials/Adding-sound.html)
-- [Controlling the viewpoint](/x_ite/tutorials/Controlling-the-viewpoint.html)
-- [Controlling navigation](/x_ite/tutorials/Controlling-navigation.html)
-- [Sensing the viewer](/x_ite/tutorials/Sensing-the-viewer.html)
+- [Mapping Textures](/x_ite/tutorials/Mapping-textures.html)
+- [Controlling How Textures are Mapped](/x_ite/tutorials/Controlling-how-textures-are-mapped.html)
+- [Lighting Your World](/x_ite/tutorials/Lighting-your-world.html)
+- [Adding Backgrounds](/x_ite/tutorials/Adding-backgrounds.html)
+- [Adding Fog](/x_ite/tutorials/Adding-fog.html)
+- [Adding Sound](/x_ite/tutorials/Adding-sound.html)
+- [Controlling the Viewpoint](/x_ite/tutorials/Controlling-the-viewpoint.html)
+- [Controlling Navigation](/x_ite/tutorials/Controlling-navigation.html)
+- [Sensing the Viewer](/x_ite/tutorials/Sensing-the-viewer.html)
 
 Scripts and prototypes
 
-- [Controlling detail](/x_ite/tutorials/Controlling-detail.html)
-- [Introducing script use](/x_ite/tutorials/Introducing-script-use.html)
-- [Writing program scripts with ECMAScript](/x_ite/tutorials/Writing-program-scripts-with-ECMAScript.html)
-- [Creating new node types](/x_ite/tutorials/Creating-new-node-types.html)
-- [Providing information about your world](/x_ite/tutorials/Providing-information-about-your-world.html)
+- [Controlling Detail](/x_ite/tutorials/Controlling-detail.html)
+- [Introducing Script Use](/x_ite/tutorials/Introducing-script-use.html)
+- [Writing Program Scripts with ECMAScript](/x_ite/tutorials/Writing-program-scripts-with-ECMAScript.html)
+- [Creating New Node Types](/x_ite/tutorials/Creating-new-node-types.html)
+- [Providing Tnformation About Your wWorld](/x_ite/tutorials/Providing-information-about-your-world.html)
 
 Some words about optimizing a scene
 

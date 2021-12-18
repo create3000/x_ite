@@ -1,5 +1,5 @@
 
-# Building Shapes out of Points, lines, and Faces
+# Building Shapes out of Points, Lines, and Faces
 
 ## Motivation
 

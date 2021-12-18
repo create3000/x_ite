@@ -1,4 +1,4 @@
-# Controlling Shading on Coordinate Based Geometry
+# Controlling Shading on Coordinate-Based Geometry
 
 ## Motivation
 

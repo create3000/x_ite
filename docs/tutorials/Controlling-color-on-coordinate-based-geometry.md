@@ -1,4 +1,4 @@
-# Controlling Color on Coordinate Based Geometry
+# Controlling Color on Coordinate-Based Geometry
 
 ## Motivation
 
