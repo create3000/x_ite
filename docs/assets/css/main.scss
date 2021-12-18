@@ -15,7 +15,7 @@ $link-color: #b3531a !default;
 
 .author__avatar {
    position: relative;
-   top: -69px;
+   top: -108px;
 }
 
 .author__content a {
@@ -35,6 +35,20 @@ $link-color: #b3531a !default;
 
 .h-card {
    height: 0px;
+}
+
+@media (min-width: 339px)
+{
+   .author__avatar {
+      top: -83px;
+   }
+}
+
+@media (min-width: 382px)
+{
+   .author__avatar {
+      top: -69px;
+   }
 }
 
 @media (min-width: 48em)
