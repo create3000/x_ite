@@ -177,7 +177,7 @@ function (XMLParser,
 				if (str !== y)
 					console .log ("CDATA Replacing", str, "with", y);
 			}
-			while (y != str);
+			while (y !== str);
 
 			const
 				domParser = new DOMParser(),

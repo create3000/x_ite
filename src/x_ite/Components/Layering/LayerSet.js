@@ -167,7 +167,7 @@ function (Fields,
 
 				if (index === 0)
 					this .layerNodes .push (this .layerNode0);
-					
+
 				else
 				{
 					-- index;
@@ -186,13 +186,13 @@ function (Fields,
 		},
 		bind: function (viewpointName)
 		{
-			var layers = this .layers_ .getValue ();
+			const layers = this .layers_ .getValue ();
 
 			this .layerNode0 .bind (viewpointName);
 
-			for (var i = 0, length = layers .length; i < length; ++ i)
+			for (let i = 0, length = layers .length; i < length; ++ i)
 			{
-				var layerNode = X3DCast (X3DConstants .X3DLayerNode, layers [i]);
+				const layerNode = X3DCast (X3DConstants .X3DLayerNode, layers [i]);
 
 				if (layerNode)
 					layerNode .bind (viewpointName);
@@ -222,5 +222,3 @@ function (Fields,
 
 	return LayerSet;
 });
-
-

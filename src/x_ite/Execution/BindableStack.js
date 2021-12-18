@@ -93,7 +93,7 @@ function (X3DBaseNode)
 				this .array .push (node);
 			}
 
-			node .set_bind_ = true;
+			// Don't do set_bind.
 			node .isBound_  = true;
 			node .bindTime_ = this .getBrowser () .getCurrentTime ();
 

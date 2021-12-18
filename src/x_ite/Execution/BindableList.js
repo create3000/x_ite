@@ -95,7 +95,7 @@ function (X3DBaseNode)
 				{
 					// Return first viewpoint with @name.
 
-					for (var i = 1, length = this .array .length; i < length; ++ i)
+					for (let i = 1, length = this .array .length; i < length; ++ i)
 					{
 						const node = this .array [i];
 
@@ -109,7 +109,7 @@ function (X3DBaseNode)
 
 				// Return first bound viewpoint in scene.
 
-				for (var i = 1, length = this .array .length; i < length; ++ i)
+				for (let i = 1, length = this .array .length; i < length; ++ i)
 				{
 					const node = this .array [i];
 
@@ -122,7 +122,7 @@ function (X3DBaseNode)
 
 				// Return first viewpoint in scene.
 
-				for (var i = 1, length = this .array .length; i < length; ++ i)
+				for (let i = 1, length = this .array .length; i < length; ++ i)
 				{
 					const node = this .array [i];
 
@@ -190,7 +190,7 @@ function (X3DBaseNode)
 		if (lhs .length !== rhs .length)
 			return false;
 
-		for (var i = 0; i < lhs .length; ++ i)
+		for (let i = 0; i < lhs .length; ++ i)
 		{
 			if (lhs [i] !== rhs [i])
 				return false

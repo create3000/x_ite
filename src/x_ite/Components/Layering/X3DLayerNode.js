@@ -244,18 +244,18 @@ function (X3DNode,
 
 			// Bind first viewpoint in viewpoint list.
 
-			var
-				navigationInfo = this .navigationInfos .getBound (),
-				background     = this .backgrounds     .getBound (),
-				fog            = this .fogs            .getBound (),
-				viewpoint      = this .viewpoints      .getBound (viewpointName);
+			const
+				navigationInfoNode = this .navigationInfos .getBound (),
+				backgroundNode     = this .backgrounds     .getBound (),
+				fogNode            = this .fogs            .getBound (),
+				viewpointNode      = this .viewpoints      .getBound (viewpointName);
 
-			this .navigationInfoStack .pushOnTop (navigationInfo);
-			this .viewpointStack      .pushOnTop (viewpoint);
-			this .backgroundStack     .pushOnTop (background);
-			this .fogStack            .pushOnTop (fog);
+			this .navigationInfoStack .pushOnTop (navigationInfoNode);
+			this .viewpointStack      .pushOnTop (viewpointNode);
+			this .backgroundStack     .pushOnTop (backgroundNode);
+			this .fogStack            .pushOnTop (fogNode);
 
-			viewpoint .resetUserOffsets ();
+			viewpointNode .resetUserOffsets ();
 		},
 		traverse: function (type, renderObject)
 		{
