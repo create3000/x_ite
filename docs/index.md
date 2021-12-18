@@ -851,7 +851,7 @@ WordPress users can use our plug-in to embed X\_ITE into their web page.
 
 1. Unzip package and put it into the *plugins* folder of your WordPress installation.
 2. Install and activate the plugin on the Plugins page.
-3. Add shortcode `[X3DCanvas src="https://cdn.rawgit.com/create3000/Library/master/Examples/X_ITE/info.x3d" class="x_ite-browser"]` to page or post content.
+3. Add shortcode `[X3DCanvas src="https://cdn.rawgit.com/create3000/Library/main/Examples/X_ITE/info.x3d" class="x_ite-browser"]` to page or post content.
 4. Modify "src" and "class" attribute.
 
 ## Embedding X\_ITE within a Web Page
