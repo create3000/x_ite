@@ -3463,7 +3463,7 @@ define ('x_ite/Components/Geospatial/GeoViewpoint',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DViewpointNode, 
+          X3DViewpointNode,
           X3DGeospatialObject,
           ScalarInterpolator,
           NavigationInfo,
@@ -3553,9 +3553,9 @@ function (Fields,
 			this .positionOffset_ .addInterest ("set_position__", this);
 			this .navType_        .addFieldInterest (this .navigationInfoNode .type_);
 			this .headlight_      .addFieldInterest (this .navigationInfoNode .headlight_);
-		
+
 			this .navigationInfoNode .setup ();
-		
+
 			this .set_position__ ();
 
 			// Setup interpolators
@@ -3566,19 +3566,21 @@ function (Fields,
 			this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewInterpolator .set_fraction_);
 			this .fieldOfViewInterpolator .value_changed_ .addFieldInterest (this .fieldOfViewScale_);
 		},
-		setInterpolators: function (fromViewpoint)
+		setInterpolators: function (fromViewpointNode, toViewpointNode)
 		{
-			if (fromViewpoint .getType () .indexOf (X3DConstants .GeoViewpoint) < 0)
+			if (fromViewpointNode .getType () .indexOf (X3DConstants .Viewpoint) >= 0)
 			{
-				this .fieldOfViewInterpolator .keyValue_ = [ this .fieldOfViewScale_ .getValue (), this .fieldOfViewScale_ .getValue () ];
+				const scale = fromViewpointNode .getFieldOfView () / toViewpointNode .getFieldOfView ();
+
+				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (scale, toViewpointNode .fieldOfViewScale_ .getValue ());
+
+				this .fieldOfViewScale_ = scale;
 			}
 			else
 			{
-				var scale = fromViewpoint .getFieldOfView () / this .fieldOfView_ .getValue ();
-	
-				this .fieldOfViewInterpolator .keyValue_ = [ scale, this .fieldOfViewScale_ .getValue () ];
-	
-				this .fieldOfViewScale_ = scale;
+				this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewScale_ .getValue (), toViewpointNode .fieldOfViewScale_ .getValue ());
+
+				this .fieldOfViewScale_ = toViewpointNode .fieldOfViewScale_ .getValue ();
 			}
 		},
 		setPosition: (function ()
@@ -3594,7 +3596,7 @@ function (Fields,
 		{
 			var position = new Vector3 (0, 0, 0);
 
-			return function () 
+			return function ()
 			{
 				return this .getCoord (this .position_ .getValue (), position);
 			};
@@ -3606,7 +3608,7 @@ function (Fields,
 			return function ()
 			{
 				this .getCoord (this .position_ .getValue (), position);
-	
+
 				this .elevation = this .getGeoElevation (position .add (this .positionOffset_ .getValue ()));
 			};
 		})(),
@@ -3619,11 +3621,11 @@ function (Fields,
 			return function (value)
 			{
 				///  Returns the resulting orientation for this viewpoint.
-	
+
 				var rotationMatrix = this .getLocationMatrix (this .position_ .getValue (), locationMatrix) .submatrix;
-	
+
 				geoOrientation .setMatrix (rotationMatrix);
-	
+
 				this .orientation_ .setValue (geoOrientation .inverse () .multLeft (value));
 			};
 		})(),
@@ -3636,11 +3638,11 @@ function (Fields,
 			return function ()
 			{
 				///  Returns the resulting orientation for this viewpoint.
-	
+
 				var rotationMatrix = this .getLocationMatrix (this .position_ .getValue (), locationMatrix) .submatrix;
-	
+
 				orientation .setMatrix (rotationMatrix);
-			
+
 				return orientation .multLeft (this .orientation_ .getValue ());
 			};
 		})(),
@@ -3687,17 +3689,17 @@ function (Fields,
 			return function (point, viewport)
 			{
 			   // Returns the screen scale in meter/pixel for on pixel.
-	
+
 				var
 					width  = viewport [2],
 					height = viewport [3],
 					size   = Math .abs (point .z) * Math .tan (this .getFieldOfView () / 2) * 2;
-	
+
 				if (width > height)
 					size /= height;
 				else
 					size /= width;
-	
+
 				return screenScale .set (size, size, size);
 			};
 		})(),
@@ -3712,10 +3714,10 @@ function (Fields,
 					height = viewport [3],
 					size   = nearValue * Math .tan (this .getFieldOfView () / 2) * 2,
 					aspect = width / height;
-			
+
 				if (aspect > 1)
 					return viewportSize .set (size * aspect, size);
-	
+
 				return viewportSize .set (size, size / aspect);
 			};
 		})(),
@@ -3727,7 +3729,7 @@ function (Fields,
 		{
 			if (limit || this .getBrowser () .getRenderingProperty ("LogarithmicDepthBuffer"))
 				return Camera .perspective (this .getFieldOfView (), nearValue, farValue, viewport [2], viewport [3], this .projectionMatrix);
-				
+
 			// Linear interpolate nearValue and farValue
 
 			var
@@ -3740,8 +3742,6 @@ function (Fields,
 
 	return GeoViewpoint;
 });
-
-
 
 /*******************************************************************************
  *

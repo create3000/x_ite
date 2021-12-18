@@ -765,7 +765,7 @@ function (Vector2,
 			if (closed)
 			{
 				for (var i = 1, length = order - 1; i < length; ++ i)
-					knots .push (knots [knots .length - 1] + (knots [i] - knots [i - 1]));
+					knots .push (knots .at (-1) + (knots [i] - knots [i - 1]));
 			}
 
 			return knots;
@@ -2917,7 +2917,7 @@ function (X3DCast,
 
 			var
 				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
-				scale = knots [knots .length - 1] - knots [0];
+				scale = knots .at (-1) - knots [0];
 
 			// Initialize NURBS tessellator
 
@@ -3106,7 +3106,7 @@ function (Fields,
 
 			var
 				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPoint_ .length, this .knot_),
-				scale = knots [knots .length - 1] - knots [0];
+				scale = knots .at (-1) - knots [0];
 
 			// Initialize NURBS tessellator
 
@@ -3353,7 +3353,7 @@ function (Fields,
 
 			var
 				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
-				scale = knots [knots .length - 1] - knots [0];
+				scale = knots .at (-1) - knots [0];
 
 			// Initialize NURBS tessellator
 
@@ -3607,8 +3607,8 @@ function (X3DParametricGeometryNode,
 			var
 				uKnots = this .getKnots (this .uKnots, uClosed, this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .uKnot_),
 				vKnots = this .getKnots (this .vKnots, vClosed, this .vOrder_ .getValue (), this .vDimension_ .getValue (), this .vKnot_),
-				uScale = uKnots [uKnots .length - 1] - uKnots [0],
-				vScale = vKnots [vKnots .length - 1] - vKnots [0];
+				uScale = uKnots .at (-1) - uKnots [0],
+				vScale = vKnots .at (-1) - vKnots [0];
 
 			// Initialize NURBS tessellator
 
@@ -3662,7 +3662,7 @@ function (X3DParametricGeometryNode,
 			function getDefaultTexKnots (result, knots)
 			{
 				result [0] = result [1] = knots [0];
-				result [2] = result [3] = knots [knots .length - 1];
+				result [2] = result [3] = knots .at (-1);
 				return result;
 			}
 
@@ -4095,7 +4095,7 @@ function (Fields,
 
 			var
 				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
-				scale = knots [knots .length - 1] - knots [0];
+				scale = knots .at (-1) - knots [0];
 
 			// Initialize NURBS tessellator
 

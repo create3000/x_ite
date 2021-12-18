@@ -71,6 +71,7 @@ define ([
 	"x_ite/Routing/X3DRoute",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Networking/urls",
+	"x_ite/Fallback",
 	"standard/Time/MicroTime",
 ],
 function ($,
@@ -96,6 +97,7 @@ function ($,
           X3DRoute,
           X3DConstants,
           urls,
+          Fallback,
 			 microtime)
 {
 "use strict";
@@ -140,21 +142,6 @@ function ($,
 		return browser;
 	}
 
-	function showFallback (elements, error)
-	{
-		console .log (error);
-
-		const consoleElement = $(".x_ite-console");
-
-		if (consoleElement .length)
-			consoleElement .append (document .createTextNode (error));
-
-		elements .addClass ("x_ite-browser-fallback");
-		elements .children (".x_ite-private-browser") .hide ();
-		elements .children (":not(.x_ite-private-browser)") .addClass ("x_ite-fallback");
-		elements .children (":not(.x_ite-private-browser)") .show ();
-	}
-
 	const
 		callbacks = $.Deferred (),
 		fallbacks = $.Deferred ();
@@ -187,7 +174,7 @@ function ($,
 			}
 			catch (error)
 			{
-				showFallback (elements, error);
+				Fallback .show (elements, error);
 				fallbacks .resolve (error);
 			}
 		});

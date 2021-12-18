@@ -1245,7 +1245,7 @@ function (Fields,
 
 							const pickSensorStack = browser .getPickSensors ();
 
-							pickSensorStack [pickSensorStack .length - 1] .forEach (function (pickSensorNode)
+							pickSensorStack .at (-1) .forEach (function (pickSensorNode)
 							{
 								if (! pickSensorNode .getObjectType () .has ("ALL"))
 								{

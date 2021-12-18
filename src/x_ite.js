@@ -100,10 +100,10 @@ const getScriptURL = (function ()
 
 	function fallback (error)
 	{
-		require (["x_ite/Error"],
-		function (Error)
+		require (["x_ite/Fallback"],
+		function (Fallback)
 		{
-			Error (error, fallbacks);
+			Fallback .error (error, fallbacks);
 		});
 	}
 

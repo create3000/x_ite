@@ -1,4 +1,4 @@
-/* X_ITE v4.7.0-1081 */
+/* X_ITE v4.7.1a-1082 */
 @charset "utf-8";
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
 X3DCanvas .x_ite-private-splash-screen {
@@ -233,7 +233,7 @@ X3DCanvas .x_ite-private-browser-timings button {
 	cursor: pointer;
 }
 X3DCanvas .x_ite-private-world-info {
-	overflow-y: scroll;
+	overflow-y: auto;
 	z-index: 90;
 	position: absolute;
 	top: 0;
@@ -303,7 +303,7 @@ X3DCanvas #context-menu-layer {
 	z-index: 0 !important;
 }
 .x_ite-private-menu.x_ite-private-menu-title:before {
-    content: "X_ITE Browser v4.7.0";
+    content: "X_ITE Browser v4.7.1a";
     display: block;
     padding: 4px 32px 4px 8px;
     font-weight: bold;
@@ -436,6 +436,9 @@ X3DCanvas #context-menu-layer {
 	
 	right: -5px;
 	display: none;
+}
+.x_ite-private-menu.x_ite-private-menu-submenus-left .context-menu-item > .context-menu-list {
+	left: unset !important;
 }
 .x_ite-private-menu .context-menu-item:hover > .context-menu-list {
 	display: block;

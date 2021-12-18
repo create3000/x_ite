@@ -284,11 +284,9 @@ function ($,
 			this .url_    .addInterest ("set_url__",    this);
 			this .buffer_ .addInterest ("set_buffer__", this);
 
-			var userDefinedFields = this .getUserDefinedFields ();
-
-			userDefinedFields .forEach (function (field)
+			this .getUserDefinedFields () .forEach (function (field)
 			{
-				field .setSet (false);
+				field .setModificationTime (0);
 			});
 
 			this .set_url__ ();
@@ -297,7 +295,7 @@ function ($,
 		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
-			this .requestAsyncLoad ();
+			this .requestImmediateLoad ();
 		},
 		getExtendedEventHandling: function ()
 		{
@@ -311,7 +309,7 @@ function ($,
 		{
 			return this .url_;
 		},
-		requestAsyncLoad: function ()
+		requestImmediateLoad: function ()
 		{
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
 				return;
@@ -345,11 +343,9 @@ function ($,
 		{
 			try
 			{
-				var
-					callbacks         = ["initialize", "prepareEvents", "eventsProcessed", "shutdown"],
-					userDefinedFields = this .getUserDefinedFields ();
+				const callbacks = ["initialize", "prepareEvents", "eventsProcessed", "shutdown"];
 
-				userDefinedFields .forEach (function (field)
+				this .getUserDefinedFields () .forEach (function (field)
 				{
 					switch (field .getAccessType ())
 					{
@@ -365,7 +361,7 @@ function ($,
 				text += "\n;var " + callbacks .join (",") + ";";
 				text += "\n[" + callbacks .join (",") + "];";
 
-				var
+				const
 					global  = this .getGlobal (),
 					result  = evaluate (global, text),
 					context = { };
@@ -389,14 +385,14 @@ function ($,
 		},
 		getGlobal: function ()
 		{
-			var
+			const
 				browser          = this .getBrowser (),
 				executionContext = this .getExecutionContext (),
 				live             = this .isLive ();
 
 			function SFNode (vrmlSyntax)
 			{
-				var
+				const
 					scene     = browser .createX3DFromString (String (vrmlSyntax)),
 					rootNodes = scene .getRootNodes ();
 
@@ -416,7 +412,7 @@ function ($,
 
 			SFNode .prototype = Fields .SFNode .prototype;
 
-			var global =
+			const global =
 			{
 				NULL:  { value: null },
 				FALSE: { value: false },
@@ -489,11 +485,9 @@ function ($,
 				MFVec4f:       { value: Fields .MFVec4f },
 			};
 
-			var userDefinedFields = this .getUserDefinedFields ();
-
-			userDefinedFields .forEach (function (field)
+			this .getUserDefinedFields () .forEach (function (field)
 			{
-				var name = field .getName ();
+				const name = field .getName ();
 
 				if (field .getAccessType () === X3DConstants .inputOnly)
 					return;
@@ -521,8 +515,6 @@ function ($,
 		},
 		set_live__: function ()
 		{
-			var userDefinedFields = this .getUserDefinedFields ();
-
 			if (this .isLive () .getValue ())
 			{
 				if ($.isFunction (this .context .prepareEvents))
@@ -531,13 +523,13 @@ function ($,
 				if ($.isFunction (this .context .eventsProcessed))
 					this .addInterest ("eventsProcessed__", this);
 
-				userDefinedFields .forEach (function (field)
+				this .getUserDefinedFields () .forEach (function (field)
 				{
 					switch (field .getAccessType ())
 					{
 						case X3DConstants .inputOnly:
 						{
-							var callback = this .context [field .getName ()];
+							const callback = this .context [field .getName ()];
 
 							if ($.isFunction (callback))
 								field .addInterest ("set_field__", this, callback);
@@ -546,7 +538,7 @@ function ($,
 						}
 						case X3DConstants .inputOutput:
 						{
-							var callback = this .context ["set_" + field .getName ()];
+							const callback = this .context ["set_" + field .getName ()];
 
 							if ($.isFunction (callback))
 								field .addInterest ("set_field__", this, callback);
@@ -565,7 +557,7 @@ function ($,
 				if (this .context .eventsProcessed)
 					this .removeInterest ("eventsProcessed__", this);
 
-				userDefinedFields .forEach (function (field)
+				this .getUserDefinedFields () .forEach (function (field)
 				{
 					switch (field .getAccessType ())
 					{
@@ -590,7 +582,7 @@ function ($,
 
 			if ($.isFunction (this .context .initialize))
 			{
-				var browser = this .getBrowser ();
+				const browser = this .getBrowser ();
 
 				browser .getScriptStack () .push (this);
 
@@ -611,23 +603,38 @@ function ($,
 
 			// Call outstanding events.
 
-			var userDefinedFields = this .getUserDefinedFields ();
-
-			userDefinedFields .forEach (function (field)
+			this .getUserDefinedFields () .forEach (function (field)
 			{
-				if (field .getSet ())
-				{
-					var callback = this .context [field .getName ()];
+				if (!field .getModificationTime ())
+					return;
 
-					if ($.isFunction (callback))
-						this .set_field__ (field, callback);
+				switch (field .getAccessType ())
+				{
+					case X3DConstants .inputOnly:
+					{
+						const callback = this .context [field .getName ()];
+
+						if ($.isFunction (callback))
+							this .set_field__ (field, callback);
+
+						break;
+					}
+					case X3DConstants .inputOutput:
+					{
+						const callback = this .context ["set_" + field .getName ()];
+
+						if ($.isFunction (callback))
+							this .set_field__ (field, callback);
+
+						break;
+					}
 				}
 			},
 			this);
 		},
 		prepareEvents__: function ()
 		{
-			var browser = this .getBrowser ();
+			const browser = this .getBrowser ();
 
 			browser .getScriptStack () .push (this);
 
@@ -645,7 +652,7 @@ function ($,
 		},
 		set_field__: function (field, callback)
 		{
-			var browser = this .getBrowser ();
+			const browser = this .getBrowser ();
 
 			field .setTainted (true);
 			browser .getScriptStack () .push (this);
@@ -664,7 +671,7 @@ function ($,
 		},
 		eventsProcessed__: function ()
 		{
-			var browser = this .getBrowser ();
+			const browser = this .getBrowser ();
 
 			browser .getScriptStack () .push (this);
 
@@ -681,7 +688,7 @@ function ($,
 		},
 		shutdown__: function ()
 		{
-			var browser = this .getBrowser ();
+			const browser = this .getBrowser ();
 
 			browser .getScriptStack () .push (this);
 
