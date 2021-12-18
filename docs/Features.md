@@ -34,11 +34,11 @@ Complex routing graphs can be created. The event model of X3D allows the creatio
 
 Collision detection is also considered, it is unbreakable. In virtual reality environments, collision detection is a algorithm that determines how close a user is to a real physical objects and will stop their movement before colliding with the object. If you wish there is terrain following support. Terrain following works by determining the floor under the avatar and let him go over plains and mountains. Use the NavigationInfo node to enable it.
 
-To add special effects and environment sound to your scenes there is support for MovieTexture and Sound node with a standardized. These are easy to use. They use HTML5 &lt;video&gt; and &lt;audio&gt; elements internally, you don't need to worry about it.
+To add special effects and environment sound to your scenes there is support for MovieTexture and Sound node with a standardized set of functions. These are easy to use. They use HTML5 &lt;video&gt; and &lt;audio&gt; elements internally, you don't need to worry about it.
 
 You can create text quick and easy. Use the Text node which can load remote font files in TrueType and OpenType format but there are also build in fonts.
 
-If this is not enough for you have a look at [Supported Nodes](/x_ite/Supported-Nodes.html) there is sure what you need.
+If this is not enough for you have a look at [Supported Nodes](/x_ite/Supported-Nodes.html) there's sure to be something there for you.
 
 ## Code Features
 
