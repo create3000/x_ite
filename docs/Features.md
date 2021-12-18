@@ -1,4 +1,6 @@
-## Features
+# Features
+
+## Overview
 
 X\_ITE is a fast, small, and feature-rich JavaScript library for displaying and executing X3D files. It makes things like WebGL programming, document access and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
 

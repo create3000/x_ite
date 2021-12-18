@@ -1,9 +1,8 @@
-## Glossary
+# Glossary
 
 X3D technologies contain long lists of jargon and abbreviations that are used in documentation and coding. This glossary provides definitions of words and abbreviations you need to know to successfully understand and build for the web.
 
-A
-=
+## A
 
 ### API
 
@@ -21,8 +20,7 @@ A software application, such as Titania, used by content creators to build X3D w
 
 Geometry within the scene that represents the user. The location of the avatar corresponds to the user's viewing position.
 
-B
-=
+## B
 
 ### backface culling
 
@@ -52,8 +50,7 @@ A value that is either TRUE or FALSE.
 
 The smallest rectangular box that encloses a graphical object.
 
-C
-=
+## C
 
 ### clamping
 
@@ -83,8 +80,7 @@ Selecting objects to be ignored during rendering. Most browsers cull the view be
 
 Adding the the previous value. In X3D, transformations accumulate from parent to child (that is, they add to each other).
 
-D
-=
+## D
 
 ### default
 
@@ -94,15 +90,13 @@ Build-in value used when you do not explicitly specify a value.
 
 Sensor that generates events when the user moves a pointing device while holding down the device's button.
 
-E
-=
+## E
 
 ### event
 
 An indication that something has happened. Outgoing events send their values to incoming events, which receive values. The connection between two events is called a *route*.
 
-F
-=
+## F
 
 ### flat shading
 
@@ -120,15 +114,13 @@ An angle, in radians, that together with the *orientation* and *position* of the
 
 An animation created by displaying a series of texture maps onto a piece of geometry.
 
-G
-=
+## G
 
 ### Gouraud shading
 
 A method of interpolating colors for sophisticated shading of an object. The colors assigned to each vertex are interpolated linearly between the vertices and across each face of the polygon to achieve smooth gradations of color.
 
-I
-=
+## I
 
 ### index
 
@@ -138,22 +130,19 @@ A number associated with an element in a list. Indexed lists in X3D start with 0
 
 A node that uses a mathematical formual to »fill in« the values between two specified values, transitioning smoothly from one to the other. The values can be color, position, size, orientation, or normal values.
 
-J
-=
+## J
 
 ### JPEG
 
 Joint Photographic Experts Group. JPEG is a form of lossy image compression designed by this group. X3D browsers must support JPEG compression.
 
-K
-=
+## K
 
 ### keyframes
 
 Key poses at particular points in time, used to create an animation sequence. The animation defines the keyframes and then uses interpolators to create in-between values to transition smoothly from one keyframe to the next.
 
-L
-=
+## L
 
 ### light
 
@@ -179,8 +168,7 @@ Level of Detail. An LOD node specifies alternative representations for an object
 
 Refers to image compression techniques where some information from the original image is lost during compression. Reconstructing an image that was processed from the original, uncompressed file. By contrast, with *loosless* compression techniques, there is an exact match between the original data and the data reconstructed from the compressed original.
 
-M
-=
+## M
 
 ### marker
 
@@ -194,8 +182,7 @@ Motion Picture Experts Group. MPEG refers to the standard video format designed 
 
 A field that can contain more than one value of a particular type. Multiple-valued fields have names begin with MF. SF indicates a single-valued field.
 
-N
-=
+## N
 
 ### name
 
@@ -213,15 +200,13 @@ The basic unit of a X3D file. A node contains data for the scene in the form of 
 
 A directional line perpendicular to a surface, with length 1. A vector starts at the origin and passes through the given point.
 
-O
-=
+## O
 
 ### origin
 
 The point (0, 0, 0), where all simple geometry nodes are initially created.
 
-P
-=
+## P
 
 ### panorama
 
@@ -259,8 +244,7 @@ A template for a new node type, which defines the fields and events that form th
 
 A computer that routes packets between an internal computer network and the outside world. The proxy server is security measure, since it prevents direct interaction between the internal and external networks.
 
-R
-=
+## R
 
 ### RGB
 
@@ -274,8 +258,7 @@ Used to describe a coordinate system in which if the *+x* axis points to the rig
 
 Connection from an outgoing event to an incoming event of the same type.
 
-S
-=
+## S
 
 ### scene
 
@@ -309,8 +292,7 @@ Nodes that are children of the same parent node.
 
 A list of nodes, ordered from bottom to top, with the most recently added node on top. The usual analogy is to compare a stack to a nested collection of cafeteria trays in spring-loaded container. When a tray is removed from the top of the stack, the springs at the bottom of the container *pop* the remaining trays up to fill the emptied space. When a tray is added to the top of the stack, the others are *pushed* down.
 
-T
-=
+## T
 
 ### texture map
 
@@ -328,15 +310,13 @@ Moving an object in any or all directions (*x, y, z*).
 
 Degree to which light passes through an object. Transparency is specified in the Material node. Some textures also contain a transparency element.
 
-U
-=
+## U
 
 ### UTF-8
 
 The 8-bit character encoding scheme used by X3D. An acronym within an acronym; 8-bit USC Transformation Format (UTF). USC stands for Universal Coded Character Set. The ISO/IEC 10646 standard specifies the Universal Multiple-Octet Coded Character Set. This character set is used for the representation, transmission, interchange, processing, storage, input, and presentation of the written form of the language of the world, as well as additionally symbols.
 
-V
-=
+## V
 
 ### vertex-based
 
@@ -346,8 +326,7 @@ Refers to shapes that are defined as a series of *x, y, z* coordinates, one for 
 
 The position, orientation, and »lens angle« that defines how the user sees the scene.
 
-W
-=
+## W
 
 ### white space
 

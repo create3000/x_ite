@@ -1,4 +1,6 @@
-## Getting Started
+# Getting Started
+
+## Overview
 
 X\_ITE is a new 3D JavaScript library entirely written in JavaScript and uses WebGL for 3D rendering. Authors can publish X3D and VRML source online within an HTML5 page with X\_ITE that works with Web browsers **without** prior plugin installation. This gives X3D authors the ability to displays content in 3D, using WebGL 3D graphics technology to display X3D content in several different browsers across several different operating systems. Since X3D is backwardly compatible, X\_ITE can also be used as a VRML viewer.
 

@@ -1,4 +1,4 @@
-## Accessing the External Browser
+# Accessing the External Browser
 
 X\_ITE is designed to provide access to the internal X3D browser and its contained scene graph via JavaScript, either within an internal X3D Script node or an external HTML script.
 

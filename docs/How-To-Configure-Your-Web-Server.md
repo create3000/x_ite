@@ -1,3 +1,5 @@
+# How to Configure Your Web Server
+
 ## X3D MIME Types and File Extensions
 
 The MIME Type is used to indicate the media type of a file that is to be displayed over the Internet. The web server typically uses the file extension as the indicator of the media type of the file. The MIME type is the key that a web browser uses to correctly interpret the bytes in a file so it is critical that the MIME type correctly reflect the media and encoding of the file.

@@ -1,4 +1,4 @@
-## Custom Shaders
+# Custom Shaders
 
 When you display your 3D models with X\_ITE, by default it will use the Gouraud shader. This is a versatile shader that can cover a lot of your rendering needs. If this is not enough there is also a Phong shader available, adjustable with the browser shading option per scripting.
 

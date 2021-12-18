@@ -1,8 +1,8 @@
-## Browser Support
+# Browser Support
 
 To enjoy the best and most secure experience, we recommend you keep your browser and operating system updated. X\_ITE will support the current and previous major releases of:
 
-### Desktop
+## Desktop
 
 Since April 2016 **Chrome** supports all WebGL and JavaScript ES 6 features required by X\_ITE. We support the current version and the previous version of Chrome, although X\_ITE also runs fine in older versions.
 <https://www.google.com/chrome>
@@ -19,7 +19,7 @@ Since April 2016 **Chrome** supports all WebGL and JavaScript ES 6 features requ
 Starting with Windows 10 X\_ITE runs fine in **Microsoft Edge** and is fully supported. Microsoft Edge provides everything X\_ITE needs to give you the best performance.
 <https://www.microsoft.com/windows/microsoft-edge>
 
-### Mobile
+## Mobile
 
 All stock browser on **Android** 4.0+ support WebGL and JavaScript ES 6 natively. Always keep in mind to keep your files small in size and always consider to optimize for performance.
 <https://www.android.com/>
