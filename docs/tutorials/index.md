@@ -15,7 +15,7 @@ Simple, fast and efficient, our X3D tutorials give you all the tips and tricks t
 - [A quick overview: basic nodes](/x_ite/tutorials/Basic-Nodes.html)
   - Here are the basic nodes described, which are often used in an X3D world.
 
-Shapes, geometry, and appearance
+Shapes, Geometry, and Appearance
 
 - [Introducing X3D](/x_ite/tutorials/Introducing-X3D.html)
 - [Building a X3D World](/x_ite/tutorials/Building-a-X3D-world.html)
@@ -25,10 +25,10 @@ Shapes, geometry, and appearance
 - [Grouping Nodes ](/x_ite/tutorials/Grouping-nodes.html)
 - [Naming Nodes](/x_ite/tutorials/Naming-nodes.html)
 
-Animation, sensors, and geometry
+Animation, Sensors, and Geometry
 
 - [Introducing Animation](/x_ite/tutorials/Introducing-animation.html)
-- [Animating transforms](/x_ite/tutorials/Animating-transforms.html)
+- [Animating Transforms](/x_ite/tutorials/Animating-transforms.html)
 - [Sensing Viewer Actions](/x_ite/tutorials/Sensing-viewer-actions.html)
 - [Building Ahapes out of Points, Lines, and Faces](/x_ite/tutorials/Building-shapes-out-of-points,-lines,-and-faces.html)
 - [Building Elevation Grids](/x_ite/tutorials/Building-elevation-grids.html)
@@ -36,7 +36,7 @@ Animation, sensors, and geometry
 - [Controlling Color on Coordinate-Based Geometry](/x_ite/tutorials/Controlling-color-on-coordinate-based-geometry.html)
 - [Controlling Shading on Coordinate-Based Geometry](/x_ite/tutorials/Controlling-shading-on-coordinate-based-geometry.html)
 
-Textures, lights, and environment
+Textures, Lights, and Environment
 
 - [Mapping Textures](/x_ite/tutorials/Mapping-textures.html)
 - [Controlling How Textures are Mapped](/x_ite/tutorials/Controlling-how-textures-are-mapped.html)
@@ -48,7 +48,7 @@ Textures, lights, and environment
 - [Controlling Navigation](/x_ite/tutorials/Controlling-navigation.html)
 - [Sensing the Viewer](/x_ite/tutorials/Sensing-the-viewer.html)
 
-Scripts and prototypes
+Scripts and Prototypes
 
 - [Controlling Detail](/x_ite/tutorials/Controlling-detail.html)
 - [Introducing Script Use](/x_ite/tutorials/Introducing-script-use.html)

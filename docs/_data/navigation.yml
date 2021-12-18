@@ -57,13 +57,13 @@ tutorials:
     children:
       - title: "Overview"
         url: /tutorials/
-  - title: "Basic tutorials"
+  - title: "Basic Tutorials"
     children:
       - title: "Hello, World!"
         url: /tutorials/Hello,-World!.html
       - title: "Basic Nodes"
         url: /tutorials/Basic-Nodes.html
-  - title: "Shapes, geometry, and appearance"
+  - title: "Shapes, Geometry, and Appearance"
     children:
       - title: "Introducing X3D"
         url: /tutorials/Introducing-X3D.html
@@ -129,7 +129,7 @@ tutorials:
         url: /tutorials/Creating-new-node-types.html
       - title: "Providing Information About Your World"
         url: /tutorials/Providing-information-about-your-world.html
-  - title: "Optimize your scene"
+  - title: "Optimize Your Scene"
     children:
       - title: "Improving Performance"
         url: /tutorials/Improving-Performance.html
