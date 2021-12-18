@@ -1,8 +1,8 @@
 # Main menu
 main:
-  - title: "Home"
+  - title: "Quick Start"
     url: /
-  - title: "Reference"
+  - title: "Scripting Reference"
     url: /reference/ECMAScript-Object-and-Function-Definitions.html
   - title: "Tutorials"
     url: /tutorials/
