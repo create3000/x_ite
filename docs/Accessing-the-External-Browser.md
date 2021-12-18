@@ -21,7 +21,7 @@ function callback ()
 function errorCallback (error)
 ```
 
-The external browser can be accessed by calling the **X3D.getBrowser(*selector*)** function, *selector* can be any CSS selector:
+The external browser can be accessed by calling the `X3D .getBrowser (selector)` function, *selector* can be any CSS selector, if you have only one &lt;X3DCanvas&gt; element on your page, you can omit the selector argument:
 
 ```html
 <script type="text/javascript">
@@ -79,14 +79,14 @@ If for some reason two versions of X\_ITE are loaded (which is not recommended),
 <script src="other_lib.js"></script>
 <script src="x_ite.js"></script>
 <script>
-const XITE = X3D .noConflict ();
+const X_ITE = X3D .noConflict ();
 // Code that uses other library's X3D can follow here.
 </script>
 ```
 
 The following services can be used to establish a session and obtain the X3DBrowser object.
 
-#### X3DBrowser **getBrowser** (\[*selector : String\]*)
+#### X3DBrowser **getBrowser** (*\[selector : String\]*)
 
 The *selector* argument must be a string containing a valid CSS selector expression to match elements against. If no selector was given, »X3DCanvas« is used as selector string. The return value is the appropriate X3DBrowser object.
 
@@ -103,10 +103,10 @@ Given a DOM element that represents a X3DCanvas element, the getBrowser function
 // Query all X3DCanvas elements within the HTML page.
 const x3dcanvases = document .querySelectorAll ("X3DCanvas");
 
-for (const x3dcanvase of x3dcanvases)
+for (const x3dcanvas of x3dcanvases)
 {
   // Obtain X3DBrowser object of element i.
-  const Browser = X3D .getBrowser (x3dcanvase);
+  const Browser = X3D .getBrowser (x3dcanvas);
   ...
 }
 ```
