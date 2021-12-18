@@ -1,5 +1,7 @@
 # Supported Nodes
 
+## Overview
+
 X\_ITE supports a certain number of X3D nodes. Objects in a X3D scene are also called nodes. These nodes are grouped into components and the components are grouped in profiles.
 
 The following lists outlines the profiles and nodes that are supported in X\_ITE.

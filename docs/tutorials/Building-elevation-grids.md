@@ -1,3 +1,5 @@
+# Building Elevation Grids
+
 ## Motivation
 
 - Building terrains is very common

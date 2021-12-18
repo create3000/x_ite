@@ -1,3 +1,5 @@
+# Building Primitive Shapes
+
 ## Motivation
 
 Shapes are the building blocks of a X3D world. Primitive Shapes are standard building blocks:

@@ -1,3 +1,5 @@
+# Creating New Node Types
+
 ## Motivation
 
 You can create new node types that encapsulate:

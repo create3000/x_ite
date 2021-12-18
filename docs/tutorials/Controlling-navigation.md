@@ -1,3 +1,5 @@
+# Controlling Navigation
+
 ## Motivation
 
 - Different types of worlds require different styles of navigation

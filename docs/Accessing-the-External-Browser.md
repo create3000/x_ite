@@ -1,5 +1,7 @@
 # Accessing the External Browser
 
+## Overview
+
 X\_ITE is designed to provide access to the internal X3D browser and its contained scene graph via JavaScript, either within an internal X3D Script node or an external HTML script.
 
 If you want combine DOM access with X3D access in your JavaScript functions then you probably want to access the external browser object if you want include an external JavaScript file in your HTML page and you don't wanna do it directly a in Script node.

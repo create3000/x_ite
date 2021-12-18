@@ -1,4 +1,6 @@
-## ECMAScript Object and Function Definitions
+# ECMAScript Object and Function Definitions
+
+## Overview
 
 There are a fixed set of objects in ECMAScript, each of which have a fixed set of properties (i.e. values) and methods (i.e. functions). For all object types except Math, there are functions to create an instance of the object. The supported set of objects are:
 

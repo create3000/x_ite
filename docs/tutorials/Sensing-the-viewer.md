@@ -1,3 +1,5 @@
+# Sensing the Viewer
+
 ## Motivation
 
 Sensing the viewer enables you to trigger animations:

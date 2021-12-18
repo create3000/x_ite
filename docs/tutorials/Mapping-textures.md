@@ -1,3 +1,5 @@
+# Mapping Textures
+
 ## Motivation
 
 You can model every tiny texture detail of a world using a vast number of colored faces:

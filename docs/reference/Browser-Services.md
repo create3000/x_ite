@@ -1,3 +1,5 @@
+# Browser Services
+
 ## Browser Object
 
 This section lists the methods available in the *browser* object, which allows scripts to get and set browser information.

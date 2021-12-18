@@ -1,3 +1,5 @@
+# Transforming Shapes
+
 ## Motivation
 
 - By default, all shapes are built at the center of the world

@@ -1,3 +1,6 @@
+
+# Building Shapes out of Points, lines, and Faces
+
 ## Motivation
 
 Complex shapes are hard to build with primitive shapes:

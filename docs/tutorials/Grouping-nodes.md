@@ -1,3 +1,5 @@
+# Grouping Nodes
+
 ## Motivation
 
 You can group shapes to compose complex shapes

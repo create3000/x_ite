@@ -1,3 +1,5 @@
+# Adding Fog
+
 ## Motivation
 
 Fog increases realism:

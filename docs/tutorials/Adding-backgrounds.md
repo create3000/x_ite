@@ -1,3 +1,5 @@
+# Adding Backgrounds
+
 ## Motivation
 
 - Shapes form the foreground of your scene

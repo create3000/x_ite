@@ -1,3 +1,5 @@
+# Controlling How Textures are Mapped
+
 ## Motivation
 
 - By default, an entire texture image is mapped once around the shape

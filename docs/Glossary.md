@@ -1,5 +1,7 @@
 # Glossary
 
+## Overview
+
 X3D technologies contain long lists of jargon and abbreviations that are used in documentation and coding. This glossary provides definitions of words and abbreviations you need to know to successfully understand and build for the web.
 
 ## A

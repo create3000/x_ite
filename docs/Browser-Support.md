@@ -1,5 +1,7 @@
 # Browser Support
 
+## Overview
+
 To enjoy the best and most secure experience, we recommend you keep your browser and operating system updated. X\_ITE will support the current and previous major releases of:
 
 ## Desktop

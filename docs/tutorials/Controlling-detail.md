@@ -1,3 +1,5 @@
+# Controlling Detail
+
 ## Motivation
 
 The further the viewer can see, the more there is to draw.

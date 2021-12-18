@@ -1,4 +1,6 @@
-## XHTML DOM Integration
+# XHTML DOM Integration
+
+## Overview
 
 XHTML DOM integration allows you to integrate 3D content seamlessly into your web page, with just a JavaScript file included the scene can be written directly into the XHTML or HTML markup.
 

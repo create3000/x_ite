@@ -1,3 +1,5 @@
+# Naming Nodes
+
 ## Motivation
 
 - If several shapes have the same geometry or appearance, you must use multiple duplicate nodes, one for each use

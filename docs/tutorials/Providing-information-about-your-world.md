@@ -1,3 +1,5 @@
+# Providing Information About Your World
+
 ## Motivation
 
 - After you've created a great world, sign it!

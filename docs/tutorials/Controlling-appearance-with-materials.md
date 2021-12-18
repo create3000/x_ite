@@ -1,3 +1,5 @@
+# Controlling Appearance whith Materials
+
 ## Motivation
 
 The primitive shapes have a default emissive (glowing) white appearance

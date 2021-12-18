@@ -1,3 +1,5 @@
+# Sensing Viewer Actions
+
 ## Motivation
 
 You can sense when the viewer's cursor:

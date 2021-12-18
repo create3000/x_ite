@@ -1,3 +1,5 @@
+# Lighting Your World
+
 ## Motivation
 
 - By default, you have one light in the scene, attached to your head

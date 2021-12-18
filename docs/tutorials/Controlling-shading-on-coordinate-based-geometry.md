@@ -1,3 +1,5 @@
+# Controlling Shading on Coordinate Based Geometry
+
 ## Motivation
 
 - When shaded, the faces on a shape are obvious

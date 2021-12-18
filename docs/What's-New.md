@@ -9,12 +9,12 @@ This release also increased pure rendering speed (without routing and scripting)
 {% capture notice-text %}
 #### New Features
 
-- Added X3DLightNode.shadows field.
-- Updated range of X3DLightNode.intensity.
-- Added X3DShapeNode.castShadow field.
-- Added Appearance.alphaMode and Apprearance.alphaCutoff field.
-- Added X3DBoundedBox.visible and X3DBoundedBox.bboxDisplay field.
-- Updated access type of WorldInfo.title and WorldInfo.info field to match X3Dv4.
+- Added X3DLightNode *shadows* field.
+- Updated range of X3DLightNode *intensity* field.
+- Added X3DShapeNode *castShadow* field.
+- Added Appearance *alphaMode* and *alphaCutoff* field.
+- Added X3DBoundedBox *visible* and X3DBoundedBox *bboxDisplay* field.
+- Updated access type of WorldInfo *title* and *info* field to match X3Dv4.
 - Add context menu "Show World Info" menu item, if an WorldInfo node exists.
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>

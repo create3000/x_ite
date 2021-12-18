@@ -1,3 +1,5 @@
+# Controlling the Viewpoint
+
 ## Motivation
 
 - By default, the viewer enters a world at (0.0, 0.0, 10.0)
