@@ -845,7 +845,7 @@ Open Source CDN, free, fast, and reliable.
 
 WordPress users can use our plug-in to embed X\_ITE into their web page.
 
-[Download WordPress plug-in](https://github.com/create3000/x_ite-wordpress/raw/master/dist/x_ite.zip)
+[Download WordPress plug-in](https://github.com/create3000/x_ite-wordpress/raw/main/dist/x_ite.zip)
 
 ### Installation
 

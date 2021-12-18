@@ -47,7 +47,7 @@ X3DCanvas {
         <Scene>
           <Viewpoint position='-2 1 -15' orientation='0 1 0 3.14' description='start'></Viewpoint>
           <NavigationInfo type='"FLY", "ANY"'></NavigationInfo>
-          <Inline DEF='ExampleWorld' url='"https://cdn.rawgit.com/create3000/Library/master/Examples/Mushrooms/index.x3d"'></Inline>
+          <Inline DEF='ExampleWorld' url='"https://cdn.rawgit.com/create3000/Library/main/Examples/Mushrooms/index.x3d"'></Inline>
         </Scene>
       </X3D>
       <p class="fallback">Your browser may not support all features required by X_ITE!</p>
