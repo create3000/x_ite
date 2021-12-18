@@ -1,12 +1,10 @@
-Tutorials
-=========
+## Tutorials
 
 We offer here a couple of introductory X3D tutorials on X3D concepts. It serves as background material for Titania and X\_ITE.
 
 The only hardware and software requirement for most of the tutorials is a computer with the latest version of Titania or your favorite text editor and X\_ITE. Titania has extensive documentation. It is the perfect environment to get started in creating sensational X3D scenes.
 
-Let’s See What We Can Do…
-=========================
+## Let’s See What We Can Do…
 
 Simple, fast and efficient, our X3D tutorials give you all the tips and tricks to advance in the construction of your project.
 
@@ -63,19 +61,16 @@ Some words about optimizing a scene
 - [Increasing Rendering Speed](/x_ite/tutorials/Increasing-Rendering-Speed.html)
   - Using WebGL and JavaScript needs to look at speed all the time. Learn ways to increase rendering speed.
 
-See Also
---------
+### See Also
 
 - [Script Node Authoring Interface](/x_ite/reference/Script-Node-Authoring-Interface.html)
 - [ECMAScript Object and Function Definitions](/x_ite/reference/ECMAScript-Object-and-Function-Definitions.html)
 - [Custom Shaders](/x_ite/Custom-Shaders.html)
 
-There are also Books for Further Reading
-========================================
+## There are also Books for Further Reading
 
 [X3D: Extensible 3D Graphics for Web Authors](http://www.amazon.com/gp/product/012088500X?ie=UTF8&tag=x3dext3dgrafo-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=012088500X) by Don Brutzman and Leonard Daly
 
-Don't Compromise on Development Experience
-==========================================
+## Don't Compromise on Development Experience
 
 Use the full power of the modern X3D ecosystem – Titania’s got you covered! Enjoy the intelligent build system, powerful navigation and support for JavaScript, on-the-fly error detection, integrated Route Graph Editor, and X\_ITE compatibility.

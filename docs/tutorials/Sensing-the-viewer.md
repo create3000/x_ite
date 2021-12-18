@@ -1,5 +1,4 @@
-Motivation
-==========
+## Motivation
 
 Sensing the viewer enables you to trigger animations:
 
@@ -9,8 +8,7 @@ Sensing the viewer enables you to trigger animations:
 
 The [LOD](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#LOD) and [Billboard](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Billboard) nodes are special-purpose viewer sensors with built-in responses.
 
-Sensing the viewer
-==================
+## Sensing the viewer
 
 There are three types of viewer sensors:
 
@@ -18,8 +16,7 @@ There are three types of viewer sensors:
 - A [ProximitySensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/envsensor.html#ProximitySensor) node senses if the viewer is within a region
 - A [Collision](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Collision) node senses if the viewer has collided with shapes
 
-Using visibility and proximity sensors
-======================================
+## Using visibility and proximity sensors
 
 [VisibilitySensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/envsensor.html#VisibilitySensor) and [ProximitySensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/envsensor.html#ProximitySensor) nodes sense a box-shaped region:
 
@@ -32,8 +29,7 @@ Both nodes have similar outputs:
 - *exitTime* - sends time on not visible or region exit
 - *isActive* - sends true on entry, false on exit
 
-Syntax: VisibilitySensor
-========================
+## Syntax: VisibilitySensor
 
 A [VisibilitySensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/envsensor.html#VisibilitySensor) node senses if the viewer sees or stops seeing a region:
 
@@ -41,8 +37,7 @@ A [VisibilitySensor](https://www.web3d.org/documents/specifications/19775-1/V3.3
 - *enterTime* and *exitTime* - sends time on entry/exit
 - *isActive* - sends true/false on entry/exit
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <VisibilitySensor DEF='Sensor'
@@ -52,8 +47,7 @@ XML Encoding
 <ROUTE fromNode='Sensor' fromField='enterTime' toNode='Clock' toField='set_startTime'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Sensor VisibilitySensor {
@@ -64,8 +58,7 @@ DEF Sensor VisibilitySensor {
 ROUTE Sensor.enterTime TO Clock.set_startTime
 ```
 
-Syntax: ProximitySensor
-=======================
+## Syntax: ProximitySensor
 
 A [ProximitySensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/envsensor.html#ProximitySensor) node senses if the viewer enters or leaves a region:
 
@@ -73,8 +66,7 @@ A [ProximitySensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/
 - *enterTime* and *exitTime* - sends time on entry/exit
 - *isActive* - sends true/false on entry/exit
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <ProximitySensor DEF='Sensor'
@@ -84,8 +76,7 @@ XML Encoding
 <ROUTE fromNode='Sensor' fromField='enterTime' toNode='Clock' toField='set_startTime'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Sensor ProximitySensor {
@@ -100,8 +91,7 @@ A [ProximitySensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/
 
 - *position* and *orientation* - sends position and orientation while viewer is in the region
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <ProximitySensor DEF='Sensor' ... />
@@ -109,8 +99,7 @@ XML Encoding
 <ROUTE fromNode='Sensor' fromField='position_changed' toNode='PetRobotFollower' toField='set_translation'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Sensor ProximitySensor { ... }
@@ -118,8 +107,7 @@ DEF Sensor ProximitySensor { ... }
 ROUTE Sensor.position_changed TO PetRobotFollower.set_translation
 ```
 
-Detecting viewer-shape collision
-================================
+## Detecting viewer-shape collision
 
 A [Collision](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Collision) grouping node senses shapes within the group:
 
@@ -130,8 +118,7 @@ Collision occurs when the viewer's avatar gets close to a shape:
 
 - Collision distance is controlled by the avatar size in the [NavigationInfo](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#NavigationInfo) node
 
-Creating collision groups
-=========================
+## Creating collision groups
 
 Collision checking is expensive so, check for collision with a proxy shape instead:
 
@@ -143,8 +130,7 @@ A collision group with a proxy shape, but no children, creates an invisible coll
 - Windows and invisible railings
 - Invisible world limits
 
-Syntax: Collision
-=================
+## Syntax: Collision
 
 A [Collision](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Collision) grouping node senses if the viewer collides with group shapes:
 
@@ -153,8 +139,7 @@ A [Collision](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01
 - *children* - children to sense
 - *collideTime* - sends time on collision
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Collision DEF='Collide'
@@ -168,8 +153,7 @@ XML Encoding
 <ROUTE fromNode='Collide' fromField='collideTime' toNode='OuchSound' toField='set_startTime'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Collide Collision {
@@ -183,16 +167,14 @@ DEF Collide Collision {
 ROUTE Collide.collideTime TO OuchSound.set_startTime
 ```
 
-Optimizing collision detection
-==============================
+## Optimizing collision detection
 
-- Collision is on by default 
+- Collision is on by default
   - Turn it off whenever possible!
 - However, once a parent turns off collision, a child can't turn it back on!
 - Collision results from viewer colliding with a shape, but not from a shape colliding with a viewer
 
-Using multiple sensors
-======================
+## Using multiple sensors
 
 Any number of sensors can sense at the same time:
 
@@ -200,8 +182,7 @@ Any number of sensors can sense at the same time:
 - Sensor areas can overlap
 - If multiple sensors should trigger, they do
 
-Summary
-=======
+## Summary
 
 A [VisibilitySensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/envsensor.html#VisibilitySensor) node checks if a region is visible to the viewer:
 

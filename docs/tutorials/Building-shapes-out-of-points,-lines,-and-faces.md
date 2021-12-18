@@ -1,5 +1,4 @@
-Motivation
-==========
+## Motivation
 
 Complex shapes are hard to build with primitive shapes:
 
@@ -11,8 +10,7 @@ Instead, build shapes out of atomic components:
 
 - Points, lines, and faces
 
-Building shapes using coordinates
-=================================
+## Building shapes using coordinates
 
 Shape building is like a 3-D connect-the-dots game:
 
@@ -21,13 +19,11 @@ Shape building is like a 3-D connect-the-dots game:
 
 A coordinate specifies a 3-D dot location. Measured relative to a coordinate system origin. A geometry node specifies how to connect the dots.
 
-Syntax: Coordinate
-==================
+## Syntax: Coordinate
 
 A [Coordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Coordinate) node contains a list of coordinates for use in building a shape.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <!-- X Y Z -->
@@ -35,8 +31,7 @@ XML Encoding
     point='2.0 1.0 3.0, 4.0 2.5 5.3, ...'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Coordinate {
@@ -49,8 +44,7 @@ Coordinate {
 }
 ```
 
-Using geometry coordinates
-==========================
+## Using geometry coordinates
 
 Build coordinate-based shapes using geometry nodes:
 
@@ -60,15 +54,13 @@ Build coordinate-based shapes using geometry nodes:
 
 For all three nodes, use a [Coordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Coordinate) node as the value of the coord field.
 
-Syntax: PointSet
-================
+## Syntax: PointSet
 
 A [PointSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#PointSet) geometry node creates geometry out of points:
 
 - One point (a dot) is placed at each coordinate
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -80,8 +72,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -94,15 +85,13 @@ Shape {
 }
 ```
 
-Syntax: IndexedLineSet
-======================
+## Syntax: IndexedLineSet
 
 An [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#IndexedLineSet) geometry node creates geometry out of lines:
 
 - A straight line is drawn between pairs of selected coordinates
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -115,8 +104,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -130,8 +118,7 @@ Shape {
 }
 ```
 
-Using line set coordinate indexes
-=================================
+## Using line set coordinate indexes
 
 Each coordinate in a [Coordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Coordinate) node is implicitly numbered
 
@@ -155,15 +142,13 @@ A line is drawn between pairs of coordinate indexes:
 | -1,                                            | End line, start next            |
 | 5, 9, 0                                        | Draw line from 5 to 9 to 0      |
 
-Syntax: IndexedFaceSet
-======================
+## Syntax: IndexedFaceSet
 
 An [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet) geometry node creates geometry out of faces:
 
 - A flat face (polygon) is drawn using an outline specified by coordinate indexes
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -176,8 +161,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -191,8 +175,7 @@ Shape {
 }
 ```
 
-Using face set coordinate index lists
-=====================================
+## Using face set coordinate index lists
 
 To build a face shape
 
@@ -212,8 +195,7 @@ A triangle is drawn connecting sequences of coordinate indexes:
 | 5, 9, 0                                        | Draw face from 5 to 9 to 0 to 5      |
 | -1                                             | End face                             |
 
-Syntax: IndexedFaceSet
-======================
+## Syntax: IndexedFaceSet
 
 An [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet) geometry node creates geometry out of faces:
 
@@ -221,8 +203,7 @@ An [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/
 - *ccw* - faces are counter-clockwise
 - *convex* - faces are convex
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -237,8 +218,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -253,8 +233,7 @@ Shape {
 }
 ```
 
-Using shape control
-===================
+## Using shape control
 
 A solid shape is one where the insides are never seen:
 
@@ -269,16 +248,14 @@ Faces are assumed to be convex
 
 - When *convex* **FALSE,** concave faces are automatically broken into multiple convex faces
 
-Syntax: CoordinateInterpolator
-==============================
+## Syntax: CoordinateInterpolator
 
 A [CoordinateInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#CoordinateInterpolator) node describes a coordinate path:
 
 - *keys* - key fractions
 - *keyValues* - key coordinate lists (X, Y, Z lists)
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <CoordinateInterpolator
@@ -286,8 +263,7 @@ XML Encoding
     keyValue='0.0 1.0 0.0, ...'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 CoordinateInterpolator {
@@ -298,8 +274,7 @@ CoordinateInterpolator {
 
 Typically route into a [Coordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Coordinate) node's set\_point input.
 
-Interpolating coordinate lists
-==============================
+## Interpolating coordinate lists
 
 A [CoordinateInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#CoordinateInterpolator) node interpolates lists of coordinates:
 
@@ -309,8 +284,7 @@ If n output coordinates are needed for t fractional times:
 
 - n × t coordinates are needed in the key value list
 
-Summary
-=======
+## Summary
 
 - Shapes are built by connecting together coordinates
 - Coordinates are listed in a [Coordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Coordinate) node

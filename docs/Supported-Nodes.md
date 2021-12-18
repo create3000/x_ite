@@ -1,12 +1,10 @@
-Supported Nodes
-===============
+## Supported Nodes
 
 X\_ITE supports a certain number of X3D nodes. Objects in a X3D scene are also called nodes. These nodes are grouped into components and the components are grouped in profiles.
 
 The following lists outlines the profiles and nodes that are supported in X\_ITE.
 
-Supported Statements
-====================
+## Supported Statements
 
 - component
 - connect
@@ -27,20 +25,17 @@ Supported Statements
 - UNIT
 - X3D
 
-Supported Profiles
-==================
+## Supported Profiles
 
 X\_ITE has achieved the [X3D Immersive Profile](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/immersive.html) support (which matches the VRML97 palette) verified by the X3D consortium at [web3d.org](https://www.web3d.org).
 
-Supported Components
-====================
+## Supported Components
 
 This section documents all of supported nodes by X\_ITE.
 
 X\_ITE supports a limited set of nodes defined by the X3D specification. There are currently 223 of 236 nodes (94 %) implemented. The implementation of these nodes is complete in that that the nodes will support all the required fields and features for that implementation unless otherwise stated.
 
-CADGeometry
------------
+### CADGeometry
 
 - [CADAssembly](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/CADGeometry.html#CADAssembly)
 - [CADFace](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/CADGeometry.html#CADFace)
@@ -49,8 +44,7 @@ CADGeometry
 - [IndexedQuadSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/CADGeometry.html#IndexedQuadSet)
 - [QuadSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/CADGeometry.html#QuadSet)
 
-Core
-----
+### Core
 
 - [MetadataBoolean](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/core.html#MetadataBoolean)
 - [MetadataDouble](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/core.html#MetadataDouble)
@@ -60,15 +54,13 @@ Core
 - [MetadataString](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/core.html#MetadataString)
 - [WorldInfo](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/core.html#WorldInfo)
 
-CubeMapTexturing
-----------------
+### CubeMapTexturing
 
 - [ComposedCubeMapTexture](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/env_texture.html#ComposedCubeMapTexture)
 - [GeneratedCubeMapTexture](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/env_texture.html#GeneratedCubeMapTexture)
 - [ImageCubeMapTexture](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/env_texture.html#ImageCubeMapTexture)
 
-EnvironmentalEffects
---------------------
+### EnvironmentalEffects
 
 - [Background](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/enveffects.html#Background)
 - [Fog](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/enveffects.html#Fog)
@@ -76,15 +68,13 @@ EnvironmentalEffects
 - [LocalFog](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/enveffects.html#LocalFog)
 - [TextureBackground](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/enveffects.html#TextureBackground)
 
-EnvironmentalSensor
--------------------
+### EnvironmentalSensor
 
 - [ProximitySensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/envsensor.html#ProximitySensor)
 - [TransformSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/envsensor.html#TransformSensor)
 - [VisibilitySensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/envsensor.html#VisibilitySensor)
 
-EventUtilities
---------------
+### EventUtilities
 
 - [BooleanFilter](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/utils.html#BooleanFilter)
 - [BooleanSequencer](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/utils.html#BooleanSequencer)
@@ -94,8 +84,7 @@ EventUtilities
 - [IntegerTrigger](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/utils.html#IntegerTrigger)
 - [TimeTrigger](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/utils.html#TimeTrigger)
 
-Followers
----------
+### Followers
 
 - [ColorChaser](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/followers.html#ColorChaser)
 - [ColorDamper](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/followers.html#ColorDamper)
@@ -112,8 +101,7 @@ Followers
 - [TexCoordChaser2D](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/followers.html#TexCoordChaser2D)
 - [TexCoordDamper2D](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/followers.html#TexCoordDamper2D)
 
-Geometry2D
-----------
+### Geometry2D
 
 - [Arc2D](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry2D.html#Arc2D)
 - [ArcClose2D](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry2D.html#ArcClose2D)
@@ -124,8 +112,7 @@ Geometry2D
 - [Rectangle2D](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry2D.html#Rectangle2D)
 - [TriangleSet2D](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry2D.html#TriangleSet2D)
 
-Geometry3D
-----------
+### Geometry3D
 
 - [Box](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Box)
 - [Cone](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Cone)
@@ -135,8 +122,7 @@ Geometry3D
 - [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet)
 - [Sphere](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Sphere)
 
-Geospatial
-----------
+### Geospatial
 
 - [GeoCoordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geodata.html#GeoCoordinate)
 - [GeoElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geodata.html#GeoElevationGrid)
@@ -150,16 +136,14 @@ Geospatial
 - [GeoTransform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geodata.html#GeoTransform)
 - [GeoViewpoint](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geodata.html#GeoViewpoint)
 
-Grouping
---------
+### Grouping
 
 - [Group](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Group)
 - [StaticGroup](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#StaticGroup)
 - [Switch](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Switch)
 - [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform)
 
-H-Anim
-------
+### H-Anim
 
 - [HAnimDisplacer](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/hanim.html#HAnimDisplacer)
 - [HAnimHumanoid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/hanim.html#HAnimHumanoid)
@@ -167,8 +151,7 @@ H-Anim
 - [HAnimSegment](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/hanim.html#HAnimSegment)
 - [HAnimSite](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/hanim.html#HAnimSite)
 
-Interpolation
--------------
+### Interpolation
 
 - [ColorInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#ColorInterpolator)
 - [CoordinateInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#CoordinateInterpolator)
@@ -184,21 +167,18 @@ Interpolation
 - [SplineScalarInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#SplineScalarInterpolator)
 - [SquadOrientationInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#SquadOrientationInterpolator)
 
-KeyDeviceSensor
----------------
+### KeyDeviceSensor
 
 - [KeySensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/keyboard.html#KeySensor)
 - [StringSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/keyboard.html#StringSensor)
 
-Layering
---------
+### Layering
 
 - [Layer](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/layering.html#Layer)
 - [LayerSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/layering.html#LayerSet)
 - [Viewport](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/layering.html#Viewport)
 
-Layout
-------
+### Layout
 
 - [Layout](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/layout.html#Layout)
 - [LayoutGroup](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/layout.html#LayoutGroup)
@@ -206,15 +186,13 @@ Layout
 - [ScreenFontStyle](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/layout.html#ScreenFontStyle)
 - [ScreenGroup](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/layout.html#ScreenGroup)
 
-Lighting
---------
+### Lighting
 
 - [DirectionalLight](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/lighting.html#DirectionalLight)
 - [PointLight](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/lighting.html#PointLight)
 - [SpotLight](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/lighting.html#SpotLight)
 
-Navigation
-----------
+### Navigation
 
 - [Billboard](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Billboard)
 - [Collision](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Collision)
@@ -224,15 +202,13 @@ Navigation
 - [Viewpoint](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Viewpoint)
 - [ViewpointGroup](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#ViewpointGroup)
 
-Networking
-----------
+### Networking
 
 - [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Anchor)
 - [Inline](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Inline)
 - [LoadSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#LoadSensor)
 
-NURBS
------
+### NURBS
 
 - [ContourPolyline2D](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/nurbs.html#ContourPolyline2D)
 - [CoordinateDouble](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/nurbs.html#CoordinateDouble)
@@ -247,8 +223,7 @@ NURBS
 - [NurbsSwungSurface](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/nurbs.html#NurbsSwungSurface)
 - [NurbsTextureCoordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/nurbs.html#NurbsTextureCoordinate)
 
-ParticleSystems
----------------
+### ParticleSystems
 
 - [BoundedPhysicsModel](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/particle_systems.html#BoundedPhysicsModel)
 - [ConeEmitter](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/particle_systems.html#ConeEmitter)
@@ -261,8 +236,7 @@ ParticleSystems
 - [VolumeEmitter](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/particle_systems.html#VolumeEmitter)
 - [WindPhysicsModel](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/particle_systems.html#WindPhysicsModel)
 
-Picking
--------
+### Picking
 
 - [LinePickSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/picking.html#LinePickSensor)
 - [PickableGroup](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/picking.html#PickableGroup)
@@ -270,22 +244,19 @@ Picking
 - [PrimitivePickSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/picking.html#PrimitivePickSensor)
 - [VolumePickSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/picking.html#VolumePickSensor)
 
-PointingDeviceSensor
---------------------
+### PointingDeviceSensor
 
 - [CylinderSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#CylinderSensor)
 - [PlaneSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#PlaneSensor)
 - [SphereSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#SphereSensor)
 - [TouchSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#TouchSensor)
 
-ProjectiveTextureMapping
-------------------------
+### ProjectiveTextureMapping
 
 - [TextureProjectorParallel](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/projectivetexturemapping.html#TextureProjectorParallel)
 - [TextureProjectorPerspective](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/projectivetexturemapping.html#TextureProjectorPerspective)
 
-Rendering
----------
+### Rendering
 
 - [ClipPlane](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#ClipPlane)
 - [Color](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Color)
@@ -302,8 +273,7 @@ Rendering
 - [TriangleSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#TriangleSet)
 - [TriangleStripSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#TriangleStripSet)
 
-RigidBodyCollection
--------------------
+### RigidBodyCollection
 
 - [BallJoint](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rigid_physics.html#BallJoint)
 - [CollidableOffset](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rigid_physics.html#CollidableOffset)
@@ -318,13 +288,11 @@ RigidBodyCollection
 - [SingleAxisHingeJoint](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rigid_physics.html#SingleAxisHingeJoint)
 - [SliderJoint](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rigid_physics.html#SliderJoint)
 
-Scripting
----------
+### Scripting
 
 - [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script)
 
-Shaders
--------
+### Shaders
 
 - [ComposedShader](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shaders.html#ComposedShader)
 - [FloatVertexAttribute](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shaders.html#FloatVertexAttribute)
@@ -332,8 +300,7 @@ Shaders
 - [Matrix4VertexAttribute](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shaders.html#Matrix4VertexAttribute)
 - [ShaderPart](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shaders.html#ShaderPart)
 
-Shape
------
+### Shape
 
 - [Appearance](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Appearance)
 - [FillProperties](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#FillProperties)
@@ -343,20 +310,17 @@ Shape
 - [Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape)
 - [TwoSidedMaterial](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#TwoSidedMaterial)
 
-Sound
------
+### Sound
 
 - [AudioClip](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/sound.html#AudioClip)
 - [Sound](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/sound.html#Sound)
 
-Text
-----
+### Text
 
 - [FontStyle](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/text.html#FontStyle)
 - [Text](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/text.html#Text)
 
-Texturing
----------
+### Texturing
 
 - [ImageTexture](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#ImageTexture)
 - [MovieTexture](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#MovieTexture)
@@ -369,8 +333,7 @@ Texturing
 - [TextureProperties](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#TextureProperties)
 - [TextureTransform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#TextureTransform)
 
-Texturing3D
------------
+### Texturing3D
 
 - [ComposedTexture3D](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texture3D.html#ComposedTexture3D)
 - [ImageTexture3D](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texture3D.html#ImageTexture3D)
@@ -380,13 +343,11 @@ Texturing3D
 - [TextureTransform3D](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texture3D.html#TextureTransform3D)
 - [TextureTransformMatrix3D](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texture3D.html#TextureTransformMatrix3D)
 
-Time
-----
+### Time
 
 - [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/time.html#TimeSensor)
 
-VolumeRendering
----------------
+### VolumeRendering
 
 - [BlendedVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/volume.html#BlendedVolumeStyle)
 - [BoundaryEnhancementVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/volume.html#BoundaryEnhancementVolumeStyle)
@@ -402,7 +363,6 @@ VolumeRendering
 - [ToneMappedVolumeStyle](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/volume.html#ToneMappedVolumeStyle)
 - [VolumeData](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/volume.html#VolumeData)
 
-X\_ITE
-------
+### X\_ITE
 
 - BlendMode

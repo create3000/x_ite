@@ -1,5 +1,4 @@
-Hello, World!
-============
+## Hello, World!
 
 In this tutorial, you will learn how to create a simple hello world scene with X3D. Firstly, let explains some of the X3D basics.
 
@@ -11,8 +10,7 @@ In this tutorial, you will learn how to create a simple hello world scene with X
 6. X3D file is case sensitive. *Transform, transform* or *tRansForm* are not the same.
 7. X3D file can be edit with any text editor like GEdit or Emacs for Linux or Unix, Notepad++ or Wordpad for Windows, and Coda or Simple Text for Mac.
 
-Example
--------
+### Example
 
 [![Hello World Image](https://create3000.github.io/media/tutorials/hello-world/screenshot.png)](https://create3000.github.io/media/tutorials/hello-world/example.html)
 
@@ -22,8 +20,7 @@ Example
 
 As first a very easy example, we will create a sphere with a texture and a text below the sphere. Let's start with the sphere:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -39,8 +36,7 @@ XML Encoding
 </X3D>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 #X3D V3.3 utf8
@@ -56,8 +52,7 @@ The Sphere has a radius field, which which is by default 1. The units in X3D are
 
 Now we have a sphere, but we don't see if it is rotating, let's assign a texture:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -77,8 +72,7 @@ XML Encoding
 </X3D>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 #X3D V3.3 utf8
@@ -101,15 +95,13 @@ Outline Editor view
 
 We take a Appearance node and assign it to the *appearance* field of the Shape node. For the texture we take an ImageTexture node. It would be possible a MovieTexture as texture too. But this later. The ImageTexture has a field *url*. Here we say the ImageTexture should fetch the image from ".earth.png". We could assign multiple urls:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 url='"earth.png", "http://example.com/earth.png"'
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 url [
@@ -122,8 +114,7 @@ If one image from the *url* field is not found or something went wrong the next 
 
 Now the sphere looks like an earth and you are very curious how the text will be made:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -161,8 +152,7 @@ XML Encoding
 </X3D>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 #X3D V3.3 utf8
@@ -207,7 +197,6 @@ Transform {
 
 We position the text below the sphere by a translation of about 1 Meter along the y-axis. We want a blue colored text, so we assign a Material node to the *material* field of the Appearance node and set the *diffuseColor* field to 1 0 0. As geometry we take a Text node and set the *string* field to "Hello World!".
 
-Hello World in Titania
-======================
+## Hello World in Titania
 
 ![Hello World in Titania](https://create3000.github.io/media/tutorials/hello-world/hello-world-titania.png)

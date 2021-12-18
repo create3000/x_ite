@@ -1,5 +1,4 @@
-Motivation
-==========
+## Motivation
 
 You can sense when the viewer's cursor:
 
@@ -12,8 +11,7 @@ What can you do:
 - You can trigger animations on a viewer's touch
 - You can enable the viewer to move and rotate shapes
 
-Using action sensors
-====================
+## Using action sensors
 
 There are four main action sensor types:
 
@@ -24,14 +22,12 @@ There are four main action sensor types:
 
 The [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Anchor) node is a special-purpose action sensor with a built-in response.
 
-Sensing shapes
-==============
+## Sensing shapes
 
 - All action sensors sense all shapes in the same group
 - Sensors trigger when the viewer's cursor touches a sensed shape
 
-Syntax: TouchSensor
-===================
+## Syntax: TouchSensor
 
 A [TouchSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#TouchSensor) node senses the cursor's touch:
 
@@ -39,8 +35,7 @@ A [TouchSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part
 - *isActive* - send true/false when mouse button pressed/released
 - *touchTime* - send time when mouse button released
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Transform>
@@ -50,8 +45,7 @@ XML Encoding
 </Transform>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Transform {
@@ -63,11 +57,9 @@ Transform {
 }
 ```
 
-A sample use of a TouchSensor node
-==================================
+## A sample use of a TouchSensor node
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <TouchSensor DEF='Touch'/>
@@ -85,8 +77,7 @@ XML Encoding
 <ROUTE fromNode='Rot1' fromField='value_changed' toNode='Frame1' toField='set_rotation'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Touch TouchSensor { }
@@ -106,16 +97,14 @@ ROUTE Timer1.fraction_changed TO Rot1.set_fraction
 ROUTE Rot1.value_changed      TO Frame1.set_rotation
 ```
 
-Syntax: SphereSensor
-====================
+## Syntax: SphereSensor
 
 A [SphereSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#SphereSensor) node senses a cursor drag and generates rotations as if rotating a ball:
 
 - *isActive* - sends true/false when mouse button pressed/released
 - *rotation\_changed* - sends rotation during a drag
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Transform>
@@ -125,8 +114,7 @@ XML Encoding
 <ROUTE fromNode='Rotator' fromField='rotation_changed' toNode='RotateMe' toField='set_rotation'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Transform {
@@ -138,16 +126,14 @@ Transform {
 ROUTE Rotator.rotation_changed TO RotateMe.set_rotation
 ```
 
-Syntax: CylinderSensor
-======================
+## Syntax: CylinderSensor
 
 A [CylinderSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#CylinderSensor) node senses a cursor drag and generates rotations as if rotating a cylinder:
 
 - *isActive* - sends true/false when mouse button pressed/released
 - *rotation\_changed* - sends rotation during a drag
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Transform>
@@ -157,8 +143,7 @@ XML Encoding
 <ROUTE fromNode='Rotator' fromField='rotation_changed' toNode='RotateMe' toField='set_rotation'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Transform {
@@ -170,16 +155,14 @@ Transform {
 ROUTE Rotator.rotation_changed TO RotateMe.set_rotation
 ```
 
-Syntax: PlaneSensor
-===================
+## Syntax: PlaneSensor
 
 A [PlaneSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#PlaneSensor) node senses a cursor drag and generates translations as if sliding on a plane:
 
 - *isActive* - sends true/false when mouse button pressed/released
 - *translation\_changed* - sends translations during a drag
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Transform>
@@ -189,8 +172,7 @@ XML Encoding
 <ROUTE fromNode='Mover' fromField='translation_changed' toNode='MoveMe' toField='set_translation'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Transform {
@@ -202,8 +184,7 @@ Transform {
 ROUTE Mover.translation_changed TO MoveMe.set_translation
 ```
 
-Using multiple sensors
-======================
+## Using multiple sensors
 
 Multiple sensors can sense the same shape but ...
 
@@ -216,8 +197,7 @@ If sensors are at different depths in the hierarchy:
 - The deepest sensor responds
 - The other sensors do not respond
 
-Summary
-=======
+## Summary
 
 Action sensors sense when the viewer's cursor:
 

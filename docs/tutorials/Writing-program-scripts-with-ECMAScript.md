@@ -1,5 +1,4 @@
-Motivation
-==========
+## Motivation
 
 A program script implements the [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script) node using values from the interface:
 
@@ -10,13 +9,11 @@ A program script can be written in JavaScript, ECMAScript, and other languages
 - JavaScript is easier to program
 - ECMAScript is essentially JavaScript
 
-Declaring a program script interface
-====================================
+## Declaring a program script interface
 
 For a JavaScript program script, typically give the script in the Script node's url field:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Script DEF='Bouncer'>
@@ -30,8 +27,7 @@ XML Encoding
 </Script>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Bouncer Script {
@@ -43,8 +39,7 @@ DEF Bouncer Script {
 }
 ```
 
-Initializing a program script
-=============================
+## Initializing a program script
 
 The optional **initialize** function is called when the script is loaded:
 
@@ -59,8 +54,7 @@ Initialization occurs when:
 
 - the [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script) node is created (typically when the browser loads the world)
 
-Shutting down a program script
-==============================
+## Shutting down a program script
 
 The optional **shutdown** function is called when the script is unloaded:
 
@@ -76,8 +70,7 @@ Shutdown occurs when:
 - the [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script) node is deleted
 - the browser loads a new world
 
-Responding to events
-====================
+## Responding to events
 
 An input function can be declared for each input.
 
@@ -93,8 +86,7 @@ function set_fraction (value, time)
 }
 ```
 
-Processing events in JavaScript
-===============================
+## Processing events in JavaScript
 
 If multiple events arrive at once, then multiple input functions are called.
 
@@ -107,8 +99,7 @@ function eventsProcessed ()
 }
 ```
 
-Accessing fields from JavaScript
-================================
+## Accessing fields from JavaScript
 
 Each interface field is a ECMAScript variable:
 
@@ -120,8 +111,7 @@ lastval      = bounceHeight; // get field
 bounceHeight = newval;       // set field
 ```
 
-Accessing outputs from ECMAScript
-=================================
+## Accessing outputs from ECMAScript
 
 Each interface output field is a ECMAScript variable
 
@@ -136,15 +126,13 @@ lastval           = value_changed [0];  // get last event
 value_changed [0] = newval;             // send new event
 ```
 
-A sample JavaScript script
-==========================
+## A sample JavaScript script
 
 Create a Bouncing ball interpolator that computes a gravity-like vertical bouncing motion from a fractional time input.
 
 Nodes needed:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Transform DEF='Ball'>
@@ -156,8 +144,7 @@ XML Encoding
 <Script DEF='Bouncer ... />
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Ball Transform {
@@ -177,8 +164,7 @@ Script fields needed:
 
 - Bounce height
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Script DEF='Bouncer'>
@@ -187,8 +173,7 @@ XML Encoding
 </Script>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Bouncer Script {
@@ -203,8 +188,7 @@ Inputs and outputs needed:
 - Position value output
 - Enabled input/output
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Script DEF='Bouncer'>
@@ -216,8 +200,7 @@ XML Encoding
 </Script>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Bouncer Script {
@@ -238,8 +221,7 @@ Event processing actions needed:
 - *set\_fraction* input function
 - No need for *eventsProcessed* function
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Script DEF='Bouncer'>
@@ -253,8 +235,7 @@ function set_fraction (fraction, time)
 </Script>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Bouncer Script {
@@ -277,8 +258,7 @@ Use a ball position equation roughly based upon Physics:
 
 - See comments in the X3D file for the derivation of the equation
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Script DEF='Bouncer'>
@@ -302,8 +282,7 @@ function set_fraction (fraction, time)
 </Script>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Bouncer Script {
@@ -333,24 +312,21 @@ Routes needed:
 - Clock into script's *set\_fraction*
 - Script's *value\_changed* into transform
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <ROUTE fromNode='Clock' fromField='fraction_changed' toNode='Bouncer' toField='set_fraction'/>
 <ROUTE fromNode='Bouncer' fromField='value_changed' toNode='Ball' toField='set_translation'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 ROUTE Clock.fraction_changed TO Bouncer.set_fraction
 ROUTE Bouncer.value_changed  TO Ball.set_translation
 ```
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -405,8 +381,7 @@ function set_fraction (fraction, time)
 </X3D>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 #X3D V3.3 utf8 Titania V4.3.0
@@ -471,8 +446,7 @@ ROUTE Bouncer.value_changed  TO Ball.set_translation
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/bouncer/bouncer.zip)
 
-Building user interfaces
-========================
+## Building user interfaces
 
 Program scripts can be used to help create 3D user interface widgets:
 
@@ -483,15 +457,13 @@ Program scripts can be used to help create 3D user interface widgets:
 - Text prompts
 - Debug message text
 
-Building a toggle switch
-========================
+## Building a toggle switch
 
 A toggle script turns on at 1st touch, off at 2nd:
 
 - A [TouchSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/pointingsensor.html#TouchSensor) node can supply touch events
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Script DEF='Toggle'>
@@ -515,8 +487,7 @@ function set_active (value, time)
 </Script>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Toggle Script {
@@ -541,13 +512,11 @@ function set_active (value, time)
 }
 ```
 
-Using a toggle switch
----------------------
+### Using a toggle switch
 
 Use the toggle switch to make a lamp turn on and off
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <TouchSensor DEF='LightSwitch'/>
@@ -559,8 +528,7 @@ XML Encoding
 <ROUTE fromNode='Toggle' fromField='on_changed' toNode='LampLight' toField='set_on'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF LightSwitch TouchSensor { }
@@ -572,15 +540,13 @@ ROUTE LightSwitch.isActive TO Toggle.set_active
 ROUTE Toggle.on_changed    TO LampLight.set_on
 ```
 
-Building a color selector
-=========================
+## Building a color selector
 
 The lamp on and off, but the light bulb doesn't change color!
 
 A color selector script sends an on color on a **TRUE** input, and an off color on a **FALSE** input.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Script DEF='ColorSelector'>
@@ -598,8 +564,7 @@ function set_selection (value, time)
 </Script>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF ColorSelector Script {
@@ -618,11 +583,9 @@ function set_selection (value, time)
 }
 ```
 
-Using a color selector
-----------------------
+### Using a color selector
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <TouchSensor DEF='LightSwitch'/>
@@ -640,8 +603,7 @@ XML Encoding
 <ROUTE fromNode='ColorSelector' fromField='color_changed' toNode='BulbMaterial' toField='set_emissiveColor'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF LightSwitch TouchSensor { }
@@ -659,8 +621,7 @@ ROUTE Toggle.on_changed    TO ColorSelector.set_selection
 ROUTE ColorSelector.color_changed TO BulbMaterial.set_emissiveColor
 ```
 
-Summary
-=======
+## Summary
 
 - The **initialize** and **shutdown** functions are called at load and unload
 - An input function is called when an event is received

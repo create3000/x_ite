@@ -1,23 +1,20 @@
-Motivation
-==========
+## Motivation
 
 - By default, an entire texture image is mapped once around the shape
-- You can also: 
+- You can also:
   - Extract only pieces of interest
   - Create repeating patterns
 
-Working through the texturing process
-=====================================
+## Working through the texturing process
 
 - Imagine the texture image is a big piece of rubbery cookie dough
-- Select a texture image piece 
+- Select a texture image piece
   - Define the shape of a cookie cutter
   - Position and orient the cookie cutter
   - Stamp out a piece of texture dough
 - Stretch the rubbery texture cookie to fit a face
 
-Using texture coordinate system
-===============================
+## Using texture coordinate system
 
 Texture images (the dough) are in a texture coordinate system:
 
@@ -26,8 +23,7 @@ Texture images (the dough) are in a texture coordinate system:
 - (0,0) at lower-left
 - (1,1) at upper-right
 
-Specifying texture coordinates
-==============================
+## Specifying texture coordinates
 
 Texture coordinates and texture coordinate indexes specify a texture piece shape (the cookie cutter):
 
@@ -37,8 +33,7 @@ Texture coordinates and texture coordinate indexes specify a texture piece shape
 
   [Texture Mapping 1]: https://create3000.github.io/media/tutorials/images/texture-mapping-1.png
 
-Applying texture transforms
-===========================
+## Applying texture transforms
 
 Texture transforms translate, rotate, and scale the texture coordinates (placing the cookie cutter):
 
@@ -49,8 +44,7 @@ Texture transforms translate, rotate, and scale the texture coordinates (placing
   [Texture Mapping 2]: https://create3000.github.io/media/tutorials/images/texture-mapping-2.png
   [Texture Mapping 3]: https://create3000.github.io/media/tutorials/images/texture-mapping-3.png
 
-Texturing a face
-================
+## Texturing a face
 
 Bind the texture to a face (stretch the cookie and stick it):
 
@@ -61,32 +55,28 @@ Bind the texture to a face (stretch the cookie and stick it):
   [Cookie 1]: https://create3000.github.io/media/tutorials/images/cookie-1.png
   [Cookie 2]: https://create3000.github.io/media/tutorials/images/cookie-2.png
 
-Working through the texturing process
-=====================================
+## Working through the texturing process
 
-- Select piece with texture coordinates and indexes 
+- Select piece with texture coordinates and indexes
   - Create a cookie cutter
-- Transform the texture coordinates 
+- Transform the texture coordinates
   - Position and orient the cookie cutter
-- Bind the texture to a face 
+- Bind the texture to a face
   - Stamp out the texture and stick it on a face
 - The process is very similar to creating faces!
 
-Syntax: TextureCoordinate
-=========================
+## Syntax: TextureCoordinate
 
 A [TextureCoordinate](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#TextureCoordinate) node contains a list of texture coordinates:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <TextureCoordinate
     point='0.2 0.2, 0.8 0.2, ...'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 TextureCoordinate {
@@ -96,15 +86,13 @@ TextureCoordinate {
 
 Used as the *texCoord* field value of [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet) or [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid) nodes.
 
-Syntax: IndexedFaceSet
-======================
+## Syntax: IndexedFaceSet
 
 An [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet) geometry node creates geometry out of faces:
 
 - texCoord and texCoordIndex - specify texture pieces
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -118,8 +106,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -133,16 +120,14 @@ Shape {
 }
 ```
 
-Syntax: ElevationGrid
-=====================
+## Syntax: ElevationGrid
 
 An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid) geometry node creates terrains:
 
 - *texCoord* - specify texture pieces
 - Automatically generated texture coordinate indexes
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -154,8 +139,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -167,15 +151,13 @@ Shape {
 }
 ```
 
-Syntax: Appearance
-==================
+## Syntax: Appearance
 
 An [Appearance](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Appearance) node describes overall shape appearance:
 
 - *textureTransform* - transform
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -188,8 +170,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -202,8 +183,7 @@ Shape {
 }
 ```
 
-Syntax: TextureTransform
-========================
+## Syntax: TextureTransform
 
 A [TextureTransform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#TextureTransform) node transforms texture coordinates:
 
@@ -211,8 +191,7 @@ A [TextureTransform](https://www.web3d.org/documents/specifications/19775-1/V3.3
 - *rotation* - orientation
 - *scale* - size
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -228,8 +207,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -246,13 +224,11 @@ Shape {
 }
 ```
 
-Scaling, rotating, and translating
-==================================
+## Scaling, rotating, and translating
 
 Scale, Rotate, and Translate a texture cookie cutter one after the other:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -268,8 +244,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -288,12 +263,11 @@ Shape {
 
 Read texture transform operations top-down:
 
-- The cookie cutter is translated, rotated, then scaled  
+- The cookie cutter is translated, rotated, then scaled
   Order is fixed, independent of field order
 - This is the reverse of a Transform node
 
-Summary
-=======
+## Summary
 
 - Texture images are in a texture coordinate system
 - Texture coordinates and indexes describe a texture cookie cutter

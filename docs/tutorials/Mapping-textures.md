@@ -1,5 +1,4 @@
-Motivation
-==========
+## Motivation
 
 You can model every tiny texture detail of a world using a vast number of colored faces:
 
@@ -13,8 +12,7 @@ Use a trick instead:
 
 This technique is called Texture Mapping
 
-Using image textures
-====================
+## Using image textures
 
 Image texture:
 
@@ -26,36 +24,32 @@ Image texture:
 | JPEG | Usually a poor choice for texture mapping 8-bit thru 24-bit lossy compressed images No transparency support                  |
 | PNG  | An adequate choice for texture mapping 8-bit thru 24-bit lossless compressed images 8-bit transparency per pixel Best choice |
 
-Using pixel textures
-====================
+## Using pixel textures
 
 Pixel texture:
 
 - A single image, given in the VRML file itself
-- The image is encoded using hex 
+- The image is encoded using hex
   - Up to 10 bytes per pixel
   - Very inefficient
   - Only useful for very small textures
   - Stripes
   - Checkerboard patterns
 
-Using movie textures
-====================
+## Using movie textures
 
 Movie texture:
 
 - A movie from an MP4 file
 - The movie plays back on the textured shape
 
-Syntax: Appearance
-==================
+## Syntax: Appearance
 
 An [Appearance](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Appearance) node describes overall shape appearance:
 
 - *texture* - texture source
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -67,8 +61,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -80,15 +73,13 @@ Shape {
 }
 ```
 
-Syntax: ImageTexture
-====================
+## Syntax: ImageTexture
 
 An [ImageTexture](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#ImageTexture) node selects a texture image for texture mapping:
 
 - *url* - texture image file URL
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -101,8 +92,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -116,16 +106,14 @@ Shape {
 }
 ```
 
-Syntax: PixelTexture
-====================
+## Syntax: PixelTexture
 
 A [PixelTexture](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#PixelTexture) node specifies texture image pixels for texture mapping:
 
 - *image* - texture image pixels
 - Image data - width, height, bytes/pixel, pixel values
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -139,8 +127,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -155,16 +142,14 @@ Shape {
 }
 ```
 
-Syntax: MovieTexture
-====================
+## Syntax: MovieTexture
 
 A [MovieTexture](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#MovieTexture) node selects a texture movie for texture mapping:
 
 - *url* - texture movie file URL
 - When to play the movie, and how quickly (like a TimeSensor node)
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -181,8 +166,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -200,16 +184,14 @@ Shape {
 }
 ```
 
-Using materials with textures
-=============================
+## Using materials with textures
 
 - Color textures override the color in a [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material) node
-- Grayscale textures multiply with the Material node color 
+- Grayscale textures multiply with the Material node color
   - Good for colorizing grayscale textures
 - If there is no Material node, the texture is applied emissively
 
-Using transparent textures
-==========================
+## Using transparent textures
 
 Texture images can include color and transparency values for each pixel:
 
@@ -220,8 +202,7 @@ Pixel transparency enables you to make parts of a shape transparent:
 - Windows, grillwork, holes
 - Trees, clouds
 
-Summary
-=======
+## Summary
 
 - A texture is like a decal pasted to a shape
 - Specify the texture using an [ImageTexture](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#ImageTexture), [PixelTexture](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#PixelTexture), or [MovieTexture](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#MovieTexture) node in an [Appearance](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Appearance) node

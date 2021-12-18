@@ -1,15 +1,13 @@
-Motivation
-==========
+## Motivation
 
 - By default, you have one light in the scene, attached to your head
-- For more realism, you can add multiple lights 
+- For more realism, you can add multiple lights
   - Suns, light bulbs, candles
   - Flashlights, spotlights, firelight
 - Lights can be positioned, oriented, and colored
 - Lights do not cast shadows
 
-Using types of lights
-=====================
+## Using types of lights
 
 There are three types of X3D lights:
 
@@ -17,8 +15,7 @@ There are three types of X3D lights:
 - Directional lights - aim in one direction from infinitely far away
 - Spot lights - aim in one direction from a point, radiating in a cone
 
-Using common lighting features
-==============================
+## Using common lighting features
 
 All lights have several common fields:
 
@@ -37,13 +34,11 @@ Directional lights and spot lights also have:
 
 - *direction* - aim direction
 
-Syntax: PointLight
-==================
+## Syntax: PointLight
 
 A [PointLight](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/lighting.html#PointLight) node illuminates radially from a point:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <PointLight
@@ -52,8 +47,7 @@ XML Encoding
     color='1.0 1.0 1.0'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 PointLight {
@@ -63,13 +57,11 @@ PointLight {
 }
 ```
 
-Syntax: DirectionalLight
-========================
+## Syntax: DirectionalLight
 
 A [DirectionalLight](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/lighting.html#DirectionalLight) node illuminates in one direction from infinitely far away:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <DirectionalLight
@@ -78,8 +70,7 @@ XML Encoding
     color='1.0 1.0 1.0'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DirectionalLight {
@@ -89,13 +80,11 @@ DirectionalLight {
 }
 ```
 
-Syntax: SpotLight
-=================
+## Syntax: SpotLight
 
 A [SpotLight](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/lighting.html#SpotLight) node illuminates from a point, in one direction, within a cone:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <SpotLight
@@ -106,8 +95,7 @@ XML Encoding
     cutOffAngle='0.785'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 SpotLight {
@@ -122,8 +110,7 @@ SpotLight {
 - The maximum width of a spot light's cone is controlled by the cutOffAngle field
 - An inner cone region with constant brightness is controlled by the beamWidth field
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <SpotLight
@@ -132,8 +119,7 @@ XML Encoding
     beamWidth='0.52'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 SpotLight {
@@ -143,8 +129,7 @@ SpotLight {
 }
 ```
 
-Summary
-=======
+## Summary
 
 - There are three types of lights: point, directional, and spot
 - All lights have an on/off, intensity, ambient effect, and color

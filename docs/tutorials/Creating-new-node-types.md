@@ -1,5 +1,4 @@
-Motivation
-==========
+## Motivation
 
 You can create new node types that encapsulate:
 
@@ -13,16 +12,14 @@ This creates high-level nodes:
 
 - Robots, menus, new shapes, etc.
 
-Syntax: PROTO
-=============
+## Syntax: PROTO
 
 A PROTO statement declares a new node type (a prototype):
 
 - name - the new node type name
 - fields, inputs, and outputs - interface to the prototype
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <ProtoDeclare name='BouncingBall'>
@@ -36,8 +33,7 @@ XML Encoding
 </ProtoDeclare>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 PROTO BouncingBall [
@@ -49,15 +45,13 @@ PROTO BouncingBall [
 }
 ```
 
-Defining prototype bodies
-=========================
+## Defining prototype bodies
 
 **PROTO** defines:
 
 - body - nodes and routes for the new node type
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <ProtoDeclare name='BouncingBall'>
@@ -72,8 +66,7 @@ XML Encoding
 </ProtoDeclare>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 PROTO BouncingBall [
@@ -87,8 +80,7 @@ PROTO BouncingBall [
 }
 ```
 
-Syntax: IS
-==========
+## Syntax: IS
 
 The IS syntax connects a prototype interface field, input, or output to the body:
 
@@ -98,8 +90,7 @@ The IS syntax connects a prototype interface field, input, or output to the body
 
 Interface items connected by IS need not have the same name as an item in the body, but often do:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <ProtoDeclare name='BouncingBall'>
@@ -120,8 +111,7 @@ XML Encoding
 </ProtoDeclare>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 PROTO BouncingBall [
@@ -138,8 +128,7 @@ PROTO BouncingBall [
 }
 ```
 
-Using IS
-========
+## Using IS
 
 May **IS** to ...
 
@@ -150,13 +139,11 @@ May **IS** to ...
 | outputOnly     | no             | no        | yes        | yes         |
 | inputOutput    | no             | no        | no         | yes         |
 
-Using prototyped nodes
-======================
+## Using prototyped nodes
 
 The new node type can be used like any other type.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <ProtoInstance name='BouncingBall'>
@@ -165,8 +152,7 @@ XML Encoding
 </ProtoInstance>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 BouncingBall {
@@ -175,8 +161,7 @@ BouncingBall {
 }
 ```
 
-Controlling usage rules
-=======================
+## Controlling usage rules
 
 Recall that node use must be appropriate for the context:
 
@@ -192,15 +177,14 @@ For example, if the first node is a geometry node:
 
 The new node type can be used wherever the first node of the prototype body can be used.
 
-A sample prototype use
-======================
+## A sample prototype use
 
 Create a **BouncingBall** node type that:
 
-- Builds a beachball 
+- Builds a beachball
   - Creates an animation clock
   - Using a **PROTO** field to select the cycle interval
-- Bounces the beachball 
+- Bounces the beachball
   - Using the bouncing ball program script
   - Using a **PROTO** field to select the bounce height
 
@@ -209,8 +193,7 @@ Fields needed:
 - Bounce height
 - Cycle interval
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <ProtoDeclare name='BouncingBall'>
@@ -224,8 +207,7 @@ XML Encoding
 </ProtoDeclare>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 PROTO BouncingBall [
@@ -248,8 +230,7 @@ Body needed:
 - A bouncing ball program script
 - Routes connecting it all together
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <ProtoDeclare name='BouncingBall'>
@@ -267,8 +248,7 @@ XML Encoding
 </ProtoDeclare>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 PROTO BouncingBall [
@@ -286,8 +266,7 @@ PROTO BouncingBall [
 }
 ```
 
-Changing a prototype
-====================
+## Changing a prototype
 
 If you change a prototype, all uses of that prototype change as well
 
@@ -296,8 +275,7 @@ If you change a prototype, all uses of that prototype change as well
 
 For the **BouncingBall** prototype, adding a shadow to the prototype makes all balls have a shadow.
 
-Syntax: EXTERNPROTO
-===================
+## Syntax: EXTERNPROTO
 
 Prototypes are typically in a separate external file, referenced by an **EXTERNPROTO**
 
@@ -305,8 +283,7 @@ Prototypes are typically in a separate external file, referenced by an **EXTERNP
 - url - the URL of the prototype file
 - \#name - name of **PROTO** in file
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <ExternProtoDeclare name='BouncingBall' url='"bounce.x3dv#BouncingBall", "bounce.x3d#BouncingBall"'>
@@ -315,8 +292,7 @@ XML Encoding
 </ExternProtoDeclare>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 EXTERNPROTO BouncingBall [
@@ -329,8 +305,7 @@ EXTERNPROTO BouncingBall [
 ]
 ```
 
-Summary
-=======
+## Summary
 
 - **PROTO** declares a new node type and defines its node body
 - **EXTERNPROTO** declares a new node type, specified by URL

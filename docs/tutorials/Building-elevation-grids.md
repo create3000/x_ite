@@ -1,22 +1,19 @@
-Motivation
-==========
+## Motivation
 
-- Building terrains is very common 
+- Building terrains is very common
   - Hills, valleys, mountains
   - Other tricky uses...
 - You can build a terrain using an [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet) node
 - You can build terrains more efficiently using an [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid) node
 
-Syntax: ElevationGrid
-=====================
+## Syntax: ElevationGrid
 
 An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid) geometry node creates terrains:
 
 - *xDimension* and *zDimension* - grid size
 - *xSpacing* and *zSpacing* - row and column distances
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -30,8 +27,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -50,8 +46,7 @@ An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/P
 
 - *height* - elevations at grid points
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -63,8 +58,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -84,8 +78,7 @@ An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/P
 - *solid* - shape is solid
 - *ccw* - faces are counter-clockwise
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -97,8 +90,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -111,11 +103,9 @@ Shape {
 }
 ```
 
-A sample elevation grid
-=======================
+## A sample elevation grid
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -138,8 +128,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -150,7 +139,7 @@ Shape {
     xSpacing   1.0
     zSpacing   1.0
     solid FALSE
-    height [ 
+    height [
       0.0, 0.0, 0.5, 1.0, 0.5, 0.0, 0.0, 0.0, 0.0,
       0.0, 0.0, 0.0, 0.0, 2.5, 0.5, 0.0, 0.0, 0.0,
       0.0, 0.0, 0.5, 0.5, 3.0, 1.0, 0.5, 0.0, 1.0,
@@ -171,8 +160,7 @@ Shape {
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/elevation-grid/elevation-grid.zip)
 
-Summary
-=======
+## Summary
 
 - An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid) node efficiently creates a terrain
 - Grid size is specified in the *xDimension* and *zDimension* fields

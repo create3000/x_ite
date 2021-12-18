@@ -1,5 +1,4 @@
-Motivation
-==========
+## Motivation
 
 - Shapes form the foreground of your scene
 - You can add a background to provide context
@@ -11,8 +10,7 @@ Backgrounds describe:
 
 Backgrounds are faster to draw than if you used shapes to build them.
 
-Using the background components
-===============================
+## Using the background components
 
 A background creates three special shapes:
 
@@ -29,16 +27,14 @@ How does the background look like:
 - The viewer can look up, down, and side-to-side to see different parts of the background
 - The viewer can never get closer to the background
 
-Syntax: Background
-==================
+## Syntax: Background
 
 A [Background](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/enveffects.html#Background) node describes background colors;
 
 - *skyColor* and *skyAngle* - sky gradation
 - *groundColor* and *groundAngle* - ground gradation
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Background
@@ -48,8 +44,7 @@ XML Encoding
     groundAngle='1.309, 1.571, ...'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Background {
@@ -60,27 +55,23 @@ Background {
 }
 ```
 
-Using sky angles and colors
-===========================
+## Using sky angles and colors
 
 - The first sky color is at the north pole
-- The remaining sky colors are at given sky angles 
+- The remaining sky colors are at given sky angles
   - The maximum angle is 180 degrees = 3.1415 radians (π)
 - The last color smears on down to the south pole
 
-Using ground angles and colors
-==============================
+## Using ground angles and colors
 
 - The first ground color is at the south pole
-- The remaining ground colors are at given ground angles 
+- The remaining ground colors are at given ground angles
   - The maximum angle is 90 degrees = 1.5708 radians (π/2)
 - After the last color, the rest of the hemisphere is transparent
 
-A sample background
-===================
+## A sample background
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Background DEF='Summer'
@@ -104,8 +95,7 @@ XML Encoding
                  0.39471 0.522059 0.669'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Summer Background {
@@ -138,8 +128,7 @@ DEF Summer Background {
 }
 ```
 
-Example
--------
+### Example
 
 [![Background 1](https://create3000.github.io/media/tutorials/scenes/background1/screenshot.png)](https://create3000.github.io/media/tutorials/scenes/background1/example.html)
 
@@ -147,15 +136,13 @@ Example
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/background1/background1.zip)
 
-Syntax: Background
-==================
+## Syntax: Background
 
 A [Background](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/enveffects.html#Background) node describes background images:
 
 - *frontUrl,* etc - texture image URLs for box
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Background
@@ -168,8 +155,7 @@ XML Encoding
     bottomUrl='"ground.png"'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Background {
@@ -183,8 +169,7 @@ Background {
 }
 ```
 
-A sample background image
-=========================
+## A sample background image
 
 |                                 |                                        |
 |---------------------------------|----------------------------------------|
@@ -194,11 +179,9 @@ A sample background image
   [1]: https://create3000.github.io/media/tutorials/images/background-cloud1-color.png
   [2]: https://create3000.github.io/media/tutorials/images/background-cloud1-alpha.png
 
-A sample background
-===================
+## A sample background
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <!-- no top or bottom images -->
@@ -227,8 +210,7 @@ XML Encoding
                  0.39471 0.522059 0.669'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Summer Background {
@@ -266,8 +248,7 @@ DEF Summer Background {
 }
 ```
 
-Example
--------
+### Example
 
 [![Background 2](https://create3000.github.io/media/tutorials/scenes/background2/screenshot.png)](https://create3000.github.io/media/tutorials/scenes/background2/example.html)
 
@@ -275,8 +256,7 @@ Example
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/background2/background2.zip)
 
-Summary
-=======
+## Summary
 
 Backgrounds describe:
 

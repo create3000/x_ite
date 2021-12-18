@@ -1,10 +1,9 @@
-What is X3D?
-============
+## What is X3D?
 
 X3D is:
 
 - A simple text language for describing 3-D shapes and interactive environments
-- X3D text files use a .x3d, x3dj, x3dv, or .x3db extension 
+- X3D text files use a .x3d, x3dj, x3dv, or .x3db extension
   - .x3d (XML) - save to parse
   - .x3dj (JSON) - good for scripting
   - .x3dv (VRML) - easy to learn
@@ -12,8 +11,7 @@ X3D is:
 
 **Note:** all examples are in X3D Classic Encoded file format (.x3dv).
 
-What do I need to use X3D?
-==========================
+## What do I need to use X3D?
 
 You can view X3D files using a X3D browser:
 
@@ -22,8 +20,7 @@ You can view X3D files using a X3D browser:
 
 You can view X3D files from your local hard disk, or from the Internet.
 
-How can X3D be used on a Web page?
-==================================
+## How can X3D be used on a Web page?
 
 - Fill Web page
 - Embed into Web page
@@ -31,8 +28,7 @@ How can X3D be used on a Web page?
 - Embed into Web page frame
 - Embed multiple times
 
-What do I need to develop in X3D?
-=================================
+## What do I need to develop in X3D?
 
 You can construct X3D files using:
 
@@ -41,8 +37,7 @@ You can construct X3D files using:
 - A 3D modeler and format translator
 - A shape generator (like a Python, or Perl script)
 
-Should I use a text editor?
-===========================
+## Should I use a text editor?
 
 Pros:
 
@@ -55,8 +50,7 @@ Cons:
 - Hard to author complex 3D shapes
 - Requires knowledge of X3D syntax
 
-Should I use a authoring tool?
-==============================
+## Should I use a authoring tool?
 
 Pros:
 
@@ -68,8 +62,7 @@ Cons:
 - May not support all X3D features
 - May not produce most efficient X3D
 
-Should I use a 3D modeler and format translator?
-================================================
+## Should I use a 3D modeler and format translator?
 
 Pros:
 
@@ -84,8 +77,7 @@ Cons:
 - Often a one-way path from 3D modeler into X3D
 - Easy to make shapes that are too complex
 
-Should I use a shape generator?
-===============================
+## Should I use a shape generator?
 
 Pros:
 

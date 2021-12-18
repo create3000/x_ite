@@ -1,5 +1,4 @@
-Motivation
-==========
+## Motivation
 
 Shapes are the building blocks of a X3D world. Primitive Shapes are standard building blocks:
 
@@ -10,15 +9,13 @@ Shapes are the building blocks of a X3D world. Primitive Shapes are standard bui
 - [Text](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/text.html#Text)
 - and more from the [CADGeometry](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/CADGeometry.html)**,** [Geometry2D](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry2D.html)**,** and [Rendering](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html) component
 
-Syntax: Shape
-=============
+## Syntax: Shape
 
-- A [Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape) node builds a shape 
+- A [Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape) node builds a shape
   - *appearance* - color and texture
   - *geometry* - form, or structure
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -27,8 +24,7 @@ XML Encoding
 <Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -37,14 +33,12 @@ Shape {
 }
 ```
 
-Specifying appearance
-=====================
+## Specifying appearance
 
 - [Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape) appearance is described by appearance nodes
 - For now, we'll use nodes to create a shaded white appearance:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -55,8 +49,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -67,13 +60,11 @@ Shape {
 }
 ```
 
-Specifying geometry
-===================
+## Specifying geometry
 
 [Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape) geometry is built with geometry nodes:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Box ... />
@@ -83,8 +74,7 @@ XML Encoding
 <Text ... />
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Box { ... }
@@ -94,14 +84,12 @@ Sphere { ... }
 Text { ... }
 ```
 
-- Geometry node fields control dimensions 
+- Geometry node fields control dimensions
   - Dimensions usually in meters, but can be anything
 
-A sample primitive shape
-========================
+## A sample primitive shape
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -119,8 +107,7 @@ XML Encoding
 </X3D>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 #X3D V3.3 utf8
@@ -142,18 +129,15 @@ Shape {
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.zip)
 
-Building multiple shapes
-========================
+## Building multiple shapes
 
 - Shapes are built centered in the world
 - A X3D file can contain multiple shapes
 - Shapes overlap when built at the same location
 
-A sample file with multiple shapes
-==================================
+## A sample file with multiple shapes
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -179,8 +163,7 @@ XML Encoding
 </X3D>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 #X3D V3.3 utf8
@@ -212,8 +195,7 @@ Shape {
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/multiple-shapes/multiple-shapes.zip)
 
-Summary
-=======
+## Summary
 
 - Shapes are built using a [Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape) node
 - [Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape) geometry is built using geometry nodes, such as [Box](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Box), [Cone](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Cone), [Cylinder](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Cylinder), [Sphere](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Sphere), and [Text](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/text.html#Text)

@@ -1,101 +1,97 @@
-Browser Object
-==============
+## Browser Object
 
 This section lists the methods available in the *browser* object, which allows scripts to get and set browser information.
 
-Instance Creation Method\(s\)
----------------------------
+### Instance Creation Method\(s\)
 
 None. This object cannot be instantiated by the user. One global instance of the object is available. The name of the instance is Browser.
 
-Properties
-----------
+### Properties
 
-### **name**
+#### **name**
 
 A browser-implementation specific string describing the browser.
 
-### **version**
+#### **version**
 
 A browser-implementation specific string describing the browser version.
 
-### **currentSpeed**
+#### **currentSpeed**
 
 The current speed of the avatar in m/s.
 
-### **currentFrameRate**
+#### **currentFrameRate**
 
 The current frame rate in frames per second.
 
-### **description**
+#### **description**
 
 A user-defined string which can be read and written.
 
-### **supportedComponents**
+#### **supportedComponents**
 
 The property value cannot be changed, but the properties of the ComponentInfoArray can be.
 
-### **supportedProfiles**
+#### **supportedProfiles**
 
 The property value cannot be changed, but the properties of the ProfileInfoArray can be.
 
-### **currentScene**
+#### **currentScene**
 
 The real type of this class is dependent on whether the user code is inside a prototype instance or not. If the user code is inside a prototype instance the property represent a X3DExecutionContext otherwise it represent a X3DScene.
 
-Methods
--------
+### Methods
 
-### X3DScene **createScene** (\[*ProfileInfo profile, ComponentInfo component1, ...*\])
+#### X3DScene **createScene** (\[*ProfileInfo profile, ComponentInfo component1, ...*\])
 
 Creates a new scene with the given profile and components.
 
-### void **replaceWorld** (*X3DScene*)
+#### void **replaceWorld** (*X3DScene*)
 
 Replace the current world with this new scene that has been loaded or constructed from somewhere.
 
-### X3DScene **createX3DFromString** (*String x3dSyntax*)
+#### X3DScene **createX3DFromString** (*String x3dSyntax*)
 
 The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
 
-### X3DScene **createX3DFromString** (*String x3dSyntax, Function success[, Function error]*)
+#### X3DScene **createX3DFromString** (*String x3dSyntax, Function success[, Function error]*)
 
 Async version of `createX3DFromString`. The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
 
 success: function (scene) { ... }<br/>
 error: function (error) { ... }
 
-### void **createX3DFromURL** (*MFString url, String event, Node node*)
+#### void **createX3DFromURL** (*MFString url, String event, Node node*)
 
 Parse the passed URL into a X3D scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field the passed node.
 
-### void **loadURL** (*MFString url, MFString parameter*)
+#### void **loadURL** (*MFString url, MFString parameter*)
 
 Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return.
 
-### X3DScene **importDocument** (*DOMObject dom*)
+#### X3DScene **importDocument** (*DOMObject dom*)
 
 Imports a X3D XML DOM document or fragment, converts it, and returns the resulting scene object.
 
-### void **importDocument** (*DOMObject dom, Function success[, Function error]*)
+#### void **importDocument** (*DOMObject dom, Function success[, Function error]*)
 
 Async version of `importDocument`. Imports a X3D XML DOM document or fragment, converts it, and calls the success function with scene argument, or error on error.
 
 success: function (scene) { ... }<br/>
 error: function (error) { ... }
 
-### X3DScene **importJS** (*Object json*)
+#### X3DScene **importJS** (*Object json*)
 
 Imports a X3D JSON document or fragment, converts it, and returns the resulting scene object.
 
-### void **importJS** (*Object json, Function success[, Function error]*)
+#### void **importJS** (*Object json, Function success[, Function error]*)
 
 Async version of `importJS`. Imports a X3D JSON document or fragment, converts it, and calls the success function with scene argument, or error on error.
 
 success: function (scene) { ... }<br/>
 error: function (error) { ... }
 
-### String **getBrowserProperty** (*String name*)
+#### String **getBrowserProperty** (*String name*)
 
 Returns a browser property with the corresponding name.
 
@@ -153,7 +149,7 @@ Returns a browser property with the corresponding name.
    </tbody>
 </table>
 
-### String **getBrowserOption** (*String name*)
+#### String **getBrowserOption** (*String name*)
 
 Returns a browser option with the corresponding name.
 
@@ -244,11 +240,11 @@ Returns a browser option with the corresponding name.
    </tbody>
 </table>
 
-### void **setBrowserOption** (*String name, Object value*)
+#### void **setBrowserOption** (*String name, Object value*)
 
 Sets a browser option with the corresponding *name* to the given value.
 
-### String **getRenderingProperty** (*String name*)
+#### String **getRenderingProperty** (*String name*)
 
 Returns a rendering property with the corresponding *name*.
 
@@ -301,7 +297,7 @@ Returns a rendering property with the corresponding *name*.
    </tbody>
 </table>
 
-### void **addBrowserCallback** (*Any key, Function callback*)
+#### void **addBrowserCallback** (*Any key, Function callback*)
 
 Adds a browser *callback* function associated with *key,* where *key* can be of any type. The callback function is called when a browser event has been occurred. The signature of the callback function is *function (browserEvent)*, where browserEvent can be any value listed below:
 
@@ -311,45 +307,44 @@ Adds a browser *callback* function associated with *key,* where *key* can be of 
 - X3DConstants .SHUTDOWN_EVENT
 - X3DConstants .INITIALIZED_ERROR
 
-### void **removeBrowserCallback** (*Any key*)
+#### void **removeBrowserCallback** (*Any key*)
 
 Removes a browser callback function associated with *key*.
 
-### void **nextViewpoint** (*[SFNode layerNode]*)
+#### void **nextViewpoint** (*[SFNode layerNode]*)
 
 Changes the bound viewpoint node to the next viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
 
-### void **previousViewpoint** (*[SFNode layerNode]*)
+#### void **previousViewpoint** (*[SFNode layerNode]*)
 
 Changes the bound viewpoint node to the previous viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
 
-### void **firstViewpoint** (*[SFNode layerNode]*)
+#### void **firstViewpoint** (*[SFNode layerNode]*)
 
 Changes the bound viewpoint node to the first viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
 
-### void **lastViewpoint** (*[SFNode layerNode]*)
+#### void **lastViewpoint** (*[SFNode layerNode]*)
 
 Changes the bound viewpoint node to the last viewpoint in the list of user viewpoints of *layerNode*. If *layerNode* is omitted, the active layer is used.
 
-### void **changeViewpoint** (*[SFNode layerNode,] name String*)
+#### void **changeViewpoint** (*[SFNode layerNode,] name String*)
 
 Changes the bound viewpoint node to the viewpoint named name. The viewpoint must be available in *layerNode*. If *layerNode* is omitted, the active layer is used.
 
-### void **print** (*Object object*)
+#### void **print** (*Object object*)
 
 Prints *object* to the browser's console without a newline character. Successive calls to this function append the descriptions on the same line. The output is the implicit call to the object's `toString ()` function.
 
-### void **println** (*Object object*)
+#### void **println** (*Object object*)
 
 Prints *object* to the browser's console, inserting a newline character after the output. Successive calls to this function will result in each output presented on separate lines. The output is the implicit call to the object's `toString ()` function.
 
-More Methods
-------------
+### More Methods
 
-### void **addRoute** (*SFNode sourceNode, String sourceField, SFNode destinationNode, String destinationField*)
+#### void **addRoute** (*SFNode sourceNode, String sourceField, SFNode destinationNode, String destinationField*)
 
 Add a route from the passed *sourceField* to the passed *destinationField*.
 
-### void **deleteRoute** (*SFNode sourceNode, String sourceField, SFNode destinationNode, String destinationField*)
+#### void **deleteRoute** (*SFNode sourceNode, String sourceField, SFNode destinationNode, String destinationField*)
 
 Remove the route between the passed *sourceField* and passed *destinationField*, if one exists.

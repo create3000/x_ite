@@ -1,5 +1,4 @@
-Motivation
-==========
+## Motivation
 
 An animation changes something over time:
 
@@ -12,41 +11,36 @@ Animation requires control over time:
 - When to start and stop
 - How fast to go
 
-Controlling time
-================
+## Controlling time
 
-- A [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/time.html#TimeSensor) node is similar to a stop watch 
+- A [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/time.html#TimeSensor) node is similar to a stop watch
   - You control the start and stop time
 - The sensor generates time events while it is running
 - To animate, route time events into other nodes
 
-Using absolute time
-===================
+## Using absolute time
 
 - A [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/time.html#TimeSensor) node generates absolute and fractional time events
-- Absolute time events give the wall-clock time 
+- Absolute time events give the wall-clock time
   - Absolute time is measured in seconds since 12:00am January 1, 1970!
   - Useful for triggering events at specific dates and times
 
-Using fractional time
-=====================
+## Using fractional time
 
-- Fractional time events give a number from 0.0 to 1.0 
+- Fractional time events give a number from 0.0 to 1.0
   - When the sensor starts, it outputs a 0.0
   - At the end of a cycle, it outputs a 1.0
   - The number of seconds between 0.0 and 1.0 is controlled by the cycle interval
 - The sensor can loop forever, or run through only one cycle and stop
 
-Syntax: TimeSensor
-==================
+## Syntax: TimeSensor
 
-- A [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/time.html#TimeSensor) node generates events based upon time 
+- A [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/time.html#TimeSensor) node generates events based upon time
   - *startTime* and *stopTime* - when to run
   - *cycleInterval* - how long a cycle is
   - *loop* - whether or not to repeat cycles
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <TimeSensor
@@ -56,8 +50,7 @@ XML Encoding
     stopTime='0.0'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 TimeSensor {
@@ -68,8 +61,7 @@ TimeSensor {
 }
 ```
 
-Using timers
-============
+## Using timers
 
 To create a continuously running timer:
 
@@ -96,8 +88,7 @@ The *set\_stopTime* input event:
 
 - Sets when the timer should stop
 
-Using timer outputs
-===================
+## Using timer outputs
 
 The isActive output event:
 
@@ -113,11 +104,9 @@ The fraction\_changed output event:
 - Outputs values from 0.0 to 1.0 during a cycle
 - Resets to 0.0 at the start of each cycle
 
-A sample time sensor
-====================
+## A sample time sensor
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -137,8 +126,7 @@ XML Encoding
 <ROUTE fromNode='Monolith1Timer' fromField='fraction_changed' toNode='Monolith1Facade' toField='set_transparency'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -160,8 +148,7 @@ ROUTE Monolith1Touch.touchTime TO Monolith1Timer.set_startTime
 ROUTE Monolith1Timer.fraction_changed TO Monolith1Facade.set_transparency
 ```
 
-Converting time to position
-===========================
+## Converting time to position
 
 To animate the position of a shape you provide:
 
@@ -172,8 +159,7 @@ An interpolator node converts an input time to an output position
 
 - When a time is in between two key positions, the interpolator computes an intermediate position
 
-Interpolating positions
-=======================
+## Interpolating positions
 
 Each key position along a path has:
 
@@ -191,16 +177,14 @@ Interpolation fills in values between your key values:
 | 0.5             | 4.0 1.0 0.0   |
 | *...*           | *...*         |
 
-Syntax: PositionInterpolator
-============================
+## Syntax: PositionInterpolator
 
 A [PositionInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#PositionInterpolator) node describes a position path
 
 - *key* - key fractional times
 - *keyValue* - key positions
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <PositionInterpolator
@@ -208,8 +192,7 @@ XML Encoding
     keyValue='0.0 0.0 0.0, ...'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 PositionInterpolator {
@@ -220,8 +203,7 @@ PositionInterpolator {
 
 Typically route into a [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform) node's *set\_translation* input
 
-Using position interpolator inputs and outputs
-==============================================
+## Using position interpolator inputs and outputs
 
 The *set\_fraction* input:
 
@@ -231,11 +213,9 @@ The *value\_changed* output:
 
 - Outputs the position along the path each time the fraction is set
 
-A sample using position interpolators
-=====================================
+## A sample using position interpolators
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Transform DEF='Particle1'
@@ -256,8 +236,7 @@ XML Encoding
 <ROUTE fromNode='Position1' fromField='value_changed' toNode='Particle1' toField='set_translation'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Particle1 Transform {
@@ -282,8 +261,7 @@ ROUTE Timer1.fraction_changed TO Position1.set_fraction
 ROUTE Position1.value_changed TO Particle1.set_translation
 ```
 
-Using other types of interpolators
-==================================
+## Using other types of interpolators
 
 |                      |                             |
 |----------------------|-----------------------------|
@@ -298,16 +276,14 @@ Using other types of interpolators
   [ColorInterpolator]: https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#ColorInterpolator
   [ScalarInterpolator]: https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#ScalarInterpolator
 
-Syntax: OrientationInterpolator
-===============================
+## Syntax: OrientationInterpolator
 
 A [OrientationInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#OrientationInterpolator) node describes an orientation path
 
 - *key* - key fractional times
 - *keyValue* - key rotations (axis and angle)
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <OrientationInterpolator
@@ -315,8 +291,7 @@ XML Encoding
     keyValue='0.0 1.0 0.0 0.0, ...'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 OrientationInterpolator {
@@ -327,16 +302,14 @@ OrientationInterpolator {
 
 Typically route into a [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform) node's *set\_rotation* input
 
-Syntax: ColorInterpolator
-=========================
+## Syntax: ColorInterpolator
 
 [ColorInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#ColorInterpolator) node describes a color path
 
 - *key* - key fractional times
 - *keyValue* - key colors (red, green, blue)
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <ColorInterpolator
@@ -344,8 +317,7 @@ XML Encoding
     keyValue='1.0 1.0 0.0, ...'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 ColorInterpolator {
@@ -356,16 +328,14 @@ ColorInterpolator {
 
 Typically route into a [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material) node's *set\_diffuseColor* or *set\_emissiveColor* inputs
 
-Syntax: ScalarInterpolator
-==========================
+## Syntax: ScalarInterpolator
 
 [ScalarInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#ScalarInterpolator) node describes a scalar path
 
 - *key* - key fractional times
 - *keyValue* - key scalars (used for anything)
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <ScalarInterpolator
@@ -373,8 +343,7 @@ XML Encoding
     keyValue='4.5, ...'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 ScalarInterpolator {
@@ -385,8 +354,7 @@ ScalarInterpolator {
 
 Often route into a [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material) node's *set\_transparency* input
 
-Summary
-=======
+## Summary
 
 The [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/time.html#TimeSensor) node's fields control:
 

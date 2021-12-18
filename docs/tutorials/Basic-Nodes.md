@@ -1,16 +1,14 @@
-Basic Nodes
-===========
+## Basic Nodes
 
 X3D is capable of representing static and animated objects and it can have hyperlinks to other media such as sound, movies, and image. X\_ITE is a browsers for X3D and available for many different platforms as well as Titania is an authoring tools for the creation X3D files. For programmers there is an JavaScript API interface to access X3D nodes and commonly used 3D application programmer interface features.
 
-Let The Games Begin…
-====================
+## Let The Games Begin…
 
 A X3D file has four basic elements:
 
 1. A header which tells the browser that the file is X3D and which version also. A header line is mandatory.
 2. Comments are preceded by a #.
-3. Nodes: Most everything else are nodes. Nodes generally contain: 
+3. Nodes: Most everything else are nodes. Nodes generally contain:
   1. The type of node (required). Nodes always are in Capital letters.
   2. A set of curly braces {.....} (required)
   3. A number of fields, all or some of which are optional. Note that there is no mandatory ordering of fields.
@@ -19,8 +17,7 @@ A X3D file has four basic elements:
 
 Here is a typical X3D Classic Encoded file with a single node:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -49,8 +46,7 @@ XML Encoding
 </X3D>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 #X3D V3.3 utf8
@@ -77,13 +73,11 @@ ROUTE Sensor.translation_changed TO XForm.set_translation
 
 Be careful! X3D is a case sensitive language.
 
-Key Concept
-===========
+## Key Concept
 
 Now we can start to add information to the file. The first node to deal with is the [WorldInfo](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/core.html#WorldInfo) node. This node contains general information about the world, such as a *title* for the world. [WorldInfo](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/core.html#WorldInfo) can also contain an *info* field, which contain other information about the file such as copyright information. You can put what you like in it. A sample [WorldInfo](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/core.html#WorldInfo) node is shown below:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <WorldInfo
@@ -91,8 +85,7 @@ XML Encoding
     info='"Basic Nodes", "create3000.de"'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 WorldInfo {
@@ -106,13 +99,11 @@ WorldInfo {
 
 You can have multiple strings in the *info* field, by putting them all inside square brackets. The *title* must not have square brackets, as it is only a single string.
 
-Shape
-=====
+## Shape
 
 A [Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape) node is the node to specify material and geometry properties. We add a Shape node to the world now, as shown below.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -123,8 +114,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -135,8 +125,7 @@ Shape {
 }
 ```
 
-Geometry Nodes
-==============
+## Geometry Nodes
 
 There are a lot geometry nodes defined in X3D. The basic geometry nodes are:
 
@@ -151,13 +140,11 @@ There are a lot geometry nodes defined in X3D. The basic geometry nodes are:
 
 The most important to define various geometries is probably the [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet) node.
 
-Transform
-=========
+## Transform
 
 In order to make our world any use at all, we need to be able to transform objects. X3D has three types of transformations we can apply to objects. These are *translation, rotation, and scale.* These are used in a [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform) node. A Transform node doesn't have to have all three in it. You can just have a *rotation,* for instance. The transformations within a Transform apply to the children of the node. This is called nesting, where a node can have any number of child nodes. The syntax for this is shown in the example below, along with the syntax for a Transform node.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Transform
@@ -168,8 +155,7 @@ XML Encoding
 </Transform>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Transform {
@@ -184,13 +170,11 @@ Transform {
 
 A Transform node can have another Transform nested inside it as a child, which allows you to do sequences of transformations. Remember, the order of transformations matters. A rotation followed by a translation is not the same as a translation followed by a rotation. Within a single Transform node, the transformations are carried out in strict order: scale, then rotate, the translate. So, if you want a translation followed by a rotation, you need to nest Transform nodes inside one another.
 
-Anchor
-======
+## Anchor
 
 In X3D, you navigate between pages the same way as in HTML. You have an object that, when the user clicks on it, links to another page. Exactly what you're all used to. In X3D, this is done with the [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Anchor) node.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Anchor
@@ -200,8 +184,7 @@ XML Encoding
 </Anchor>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Anchor {
@@ -217,35 +200,30 @@ The Anchor node is activated whenever one of its children is clicked, and opens 
 
 There are a couple of extra fields not shown above. One of these is *parameter* field, which can take extra information, such as a window name.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 parameter='"target=_blank"'
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 parameter [ "target=_blank" ]
 ```
 
-Background
-==========
+## Background
 
 There are two ways we can change the background of our scene. One is to specify colors for the [Background](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/enveffects.html#Background), and the other is to provide images to be mapped onto the background. Both of these are implemented with the Background node. First of all, I'll describe how to add color to the background of your scene.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Background
     skyColor='0.5 0.5 0.5'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Background {
@@ -255,13 +233,11 @@ Background {
 
 This will display a gray background. You can also make the background transparent by setting the *transparency* field to some value.
 
-Viewpoint
-=========
+## Viewpoint
 
 To give the world camera another position or orientation there is a [Viewpoint](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Viewpoint) node. The viewpoint node can be placed anywhere within the scene graph.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Viewpoint DEF='LookAtHouse'
@@ -269,8 +245,7 @@ XML Encoding
     orientation='0 1 0 3.14'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF LookAtHouse Viewpoint {
@@ -283,16 +258,14 @@ Beside the Viewpoint node there is also an [OrthoViewpoint](https://www.web3d.or
 
 If you define more than once viewpoint in a X3D file, the first viewpoint defined will be bound if the world is loaded. To bind one of the other viewpoints send a *set\_bind* event with the value TRUE to the viewpoint. You must use a [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script) node for that or use a Anchor node with the name of the viewpoint in the *url* field preceded by '#'.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Anchor
     url='"#LookAtHouse"'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Anchor {
@@ -300,23 +273,20 @@ Anchor {
 }
 ```
 
-Lighting in X3D
-===============
+## Lighting in X3D
 
 The first thing to mention is the way that the X3D lighting model works. All lights have the following fields: *color, ambientIntensity,* and *intensity.* Each light has an intensity, which a value between 0 and 1 corresponding to its brightness. It also has an ambient intensity, also between 0 and 1, which is how much light it contributes to the general ambient light in the scene. Because of this, the more lights in the scene, the brighter the ambient illumination, which makes sense. Ambient light is light that shines on every surface in the scene, simulating light scattered from other objects. Each light also has a *color* field associated with it, which is the color of the light it emits. The direct light emitted by a light source is calculated by *intensity × color.* The ambient light contributed to the scene is *ambientIntensity × color.* Each light source also has an area of effect, so as to keep X3D worlds enclosed and scalable. The method of doing this varies between the different types.
 
 When using Gouraud shading browsers calculate lighting by working it out for each corner of a face, and interpolating the shading between these vertices. By default, X3D worlds will have the user's headlight ON. Remember to turn it off if you feel it necessary. Use a [NavigationInfo](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#NavigationInfo) node to do that.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <NavigationInfo
     headlight='false'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 NavigationInfo {
@@ -332,8 +302,7 @@ There are three different light nodes that can be used within a scene.
 
 You can place any light node within a grouping node (e.g. [Group](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Group), [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform), [Switch](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Switch)) and set the global field to **FALSE** to define a local light.
 
-Grouping Nodes
-==============
+## Grouping Nodes
 
 The following nodes are the most important grouping nodes (there are much more in X3D) which means that they can contain other nodes in their children field.
 

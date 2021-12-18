@@ -1,12 +1,10 @@
-Accessing the External Browser
-==============================
+## Accessing the External Browser
 
 X\_ITE is designed to provide access to the internal X3D browser and its contained scene graph via JavaScript, either within an internal X3D Script node or an external HTML script.
 
 If you want combine DOM access with X3D access in your JavaScript functions then you probably want to access the external browser object if you want include an external JavaScript file in your HTML page and you don't wanna do it directly a in Script node.
 
-Introduction
-============
+## Introduction
 
 There is the X3D object which is always available, it expects at least one function handler that is called when the browsers (&lt;X3DCanvas&gt; elements) are ready, or the second function handler is called if an error occurred.
 
@@ -65,13 +63,11 @@ function (error)
 </script>
 ```
 
-X3D Object
-==========
+## X3D Object
 
-Functions
----------
+### Functions
 
-### X3D **noConflict** ()
+#### X3D **noConflict** ()
 
 In X\_ITE's case, the `X3D` function object is the main entry function. If you need to use another JavaScript library alongside X\_ITE, return control of the `X3D` function object back to the other library with a call to `X3D .noConflict ()`. Old references of `X3D` function object are saved during X\_ITE initialization; `X3D .noConflict ()` simply restores them. The return value is the `X3D` function object itself.
 
@@ -88,7 +84,7 @@ const XITE = X3D .noConflict ();
 
 The following services can be used to establish a session and obtain the X3DBrowser object.
 
-### X3DBrowser **getBrowser** (\[*selector : String\]*)
+#### X3DBrowser **getBrowser** (\[*selector : String\]*)
 
 The *selector* argument must be a string containing a valid CSS selector expression to match elements against. If no selector was given, »X3DCanvas« is used as selector string. The return value is the appropriate X3DBrowser object.
 
@@ -97,7 +93,7 @@ The *selector* argument must be a string containing a valid CSS selector express
 const Browser = X3D .getBrowser ("X3DCanvas#browser");
 ```
 
-### X3DBrowser **getBrowser** (*element : Object*)
+#### X3DBrowser **getBrowser** (*element : Object*)
 
 Given a DOM element that represents a X3DCanvas element, the getBrowser function returns the appropriate X3DBrowser object.
 
@@ -113,7 +109,7 @@ for (const x3dcanvase of x3dcanvases)
 }
 ```
 
-### Object **createBrowser** ()
+#### Object **createBrowser** ()
 
 Creates a new X3DCanvas DOM element, initializes it and returns it. Throws an exception if the browser object cannot be created.
 
@@ -129,12 +125,11 @@ function addBrowser (parent)
 }
 ```
 
-Objects
--------
+### Objects
 
 The X3D object has several properties, you can use any of the properties below.
 
-### **X3DConstants**
+#### **X3DConstants**
 
 The X3DConstants object defines values that can be useful for scripting.
 
@@ -166,7 +161,7 @@ function foo (node)
 }
 ```
 
-### **X3DFields**
+#### **X3DFields**
 
 All X3DFields (SFColor, ..., MFBool, MFColor, and so on). The fields can be created using the object as construtor. **Note:** Scalar objects like SFBool, SFDouble, SFFloat, SFInt32, SFString, and SFTime have no constructor, just use the built-in JavaScript types Boolean, Number, and String.
 
@@ -179,13 +174,11 @@ const
   length      = translation .length ();
 ```
 
-Function Reference
-==================
+## Function Reference
 
 A complete function reference for the X3DBrowser object and all other X3D JavaScript objects can be found [here](/x_ite/ECMAScript-Object-and-Function-Definitions.html).
 
-Example
-=======
+## Example
 
 [![Adrenaline Molecule in 3D](https://create3000.github.io/media/x_ite/external-browser/external-browser.png)](https://create3000.github.io/media/x_ite/external-browser/external-browser.html)
 

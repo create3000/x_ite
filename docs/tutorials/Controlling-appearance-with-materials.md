@@ -1,5 +1,4 @@
-Motivation
-==========
+## Motivation
 
 The primitive shapes have a default emissive (glowing) white appearance
 
@@ -11,16 +10,14 @@ You can control a shape's
 - Shininess
 - Ambient intensity
 
-Syntax: Shape
-=============
+## Syntax: Shape
 
 Recall that [Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape) nodes describe:
 
 - *appearance* - color and texture
 - *geometry* - form, or structure
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -29,8 +26,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -39,15 +35,13 @@ Shape {
 }
 ```
 
-Syntax: Appearance
-==================
+## Syntax: Appearance
 
 An [Appearance](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Appearance) node describes overall shape appearance
 
 - *material* properties - color, transparency, etc.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -58,8 +52,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -70,8 +63,7 @@ Shape {
 }
 ```
 
-Syntax: Material
-================
+## Syntax: Material
 
 A [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material) node controls shape material attributes
 
@@ -79,8 +71,7 @@ A [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/
 - *emissiveColor* - glowing color
 - *transparency* - opaque or not
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -94,8 +85,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -110,8 +100,7 @@ Shape {
 }
 ```
 
-Specifying colors
-=================
+## Specifying colors
 
 Colors specify:
 
@@ -132,8 +121,7 @@ Colors specify:
   [cyan]: https://via.placeholder.com/15/00ffff/000000?text=+
   [brown]: https://via.placeholder.com/15/692929/000000?text=+
 
-Syntax: Material
-================
+## Syntax: Material
 
 A [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material) node also controls shape shininess
 
@@ -141,11 +129,9 @@ A [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/
 - *shininess* - highlightsize
 - *ambientIntensity* - ambient lighting effects
 
-A sample world using appearance
-===============================
+## A sample world using appearance
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -161,8 +147,7 @@ XML Encoding
 <!-- ... -->
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -186,8 +171,7 @@ Shape {
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/box1/box1.zip)
 
-Summary
-=======
+## Summary
 
 The [Appearance](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Appearance) node controls overall shape appearance
 

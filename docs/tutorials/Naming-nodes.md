@@ -1,17 +1,14 @@
-Motivation
-==========
+## Motivation
 
 - If several shapes have the same geometry or appearance, you must use multiple duplicate nodes, one for each use
 - Instead, define a name for the first occurrence of a node
 - Later, use that name to share the same node in a new context
 
-Syntax: DEF
-===========
+## Syntax: DEF
 
 The **DEF** syntax gives a name to a node.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -23,8 +20,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -37,21 +33,18 @@ Shape {
 }
 ```
 
-Using DEF
-=========
+## Using DEF
 
 - **DEF** must be in upper-case
 - You can name any node
-- Names can be most any sequence of letters and numbers 
+- Names can be most any sequence of letters and numbers
   - Names must be unique within a file
 
-Syntax: USE
-===========
+## Syntax: USE
 
 The **USE** syntax uses a previously named node
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -62,8 +55,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -74,17 +66,15 @@ Shape {
 }
 ```
 
-Using USE
-=========
+## Using USE
 
 - **USE** must be in upper-case
 - A re-use of a named node is called an instance
-- A named node can have any number of instances 
+- A named node can have any number of instances
   - Each instance shares the same node description
   - You can only instance names defined in the same file
 
-Using named nodes
-=================
+## Using named nodes
 
 Naming and using nodes:
 
@@ -95,11 +85,9 @@ Naming and using nodes:
 
 Names are also necessary for animation ...
 
-A sample use of node names
-==========================
+## A sample use of node names
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Inline
@@ -126,8 +114,7 @@ XML Encoding
 </Transform>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Inline {
@@ -166,8 +153,7 @@ Transform {
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/dinette/dinette.zip)
 
-Summary
-=======
+## Summary
 
 - **DEF** names a node
 - **USE** uses a named node

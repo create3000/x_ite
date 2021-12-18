@@ -1,5 +1,4 @@
-Features
-========
+## Features
 
 X\_ITE is a fast, small, and feature-rich JavaScript library for displaying and executing X3D files. It makes things like WebGL programming, document access and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers.
 
@@ -15,8 +14,7 @@ X\_ITE is designed for optimal performance with event driven programming. The fl
 
 All code is held by CREATE3000 and all contributors are selected and all contributions become verified.
 
-Core Features
-=============
+## Core Features
 
 Although WebGL acts behind the scenes you do not need any special knowledge about that. There are many of ready to use [X3D nodes](/x_ite/Supported-Nodes.html) that will make life easier. X\_ITE provides comprehensive X3D support, which is complete and standard compliant.
 
@@ -40,8 +38,7 @@ You can create text quick and easy. Use the Text node which can load remote font
 
 If this is not enough for you have a look at [Supported Nodes](/x_ite/Supported-Nodes.html) there is sure what you need.
 
-Code Features
-=============
+## Code Features
 
 X\_ITE provides meaningful error messages for syntax and scripting problems if you use a Script node. The output goes to the developer console of your browser.
 

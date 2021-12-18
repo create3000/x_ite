@@ -1,5 +1,4 @@
-Motivation
-==========
+## Motivation
 
 Fog increases realism:
 
@@ -9,8 +8,7 @@ Fog increases realism:
 
 The further the viewer can see, the more you have to model and draw. To reduce development time and drawing time, limit the viewer's sight by using fog.
 
-Using fog visibility controls
-=============================
+## Using fog visibility controls
 
 The fog type selects linear or exponential visibility reduction with distance:
 
@@ -21,17 +19,15 @@ The visibility range selects the distance where the fog reaches maximum thicknes
 
 - Fog is »clear« at the viewer, and gradually reduces visibility
 
-Selecting a fog color
-=====================
+## Selecting a fog color
 
-- Fog has a fog color 
+- Fog has a fog color
   - White is typical, but black, red, etc. also possible
 - Shapes are faded to the fog color with distance
-- The background is unaffected 
+- The background is unaffected
   - For the best effect, make the background the fog color
 
-Syntax: Fog
-===========
+## Syntax: Fog
 
 A [Fog](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/enveffects.html#Fog) node creates colored fog
 
@@ -39,8 +35,7 @@ A [Fog](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/compo
 - *fogType* - **LINEAR** or **EXPONENTIAL**
 - *visibilityRange* - maximum visibility limit
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Fog
@@ -49,8 +44,7 @@ XML Encoding
     visibilityRange='10.0'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Fog {
@@ -60,8 +54,7 @@ Fog {
 }
 ```
 
-Summary
-=======
+## Summary
 
 - Fog has a color, a type, and a visibility range
 - Fog can be used to set a mood, even indoors

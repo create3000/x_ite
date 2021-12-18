@@ -1,5 +1,4 @@
-X3DConstants
-============
+## X3DConstants
 
 The X3DConstants object is used to define constants values used throughout this language binding. Each property is defined as a numeric, read-only value. The individual values are not specified; these are implementation-dependent. These constants can be used anywhere that a service request wishes to return some fixed value such as if or switch statements. The list of known values are defined in the table below.
 
@@ -7,31 +6,30 @@ The X3DConstants object is unique in ECMAScript in that there is exactly one glo
 
 The object consists solely of read-only properties. It does not define any additional functions.
 
-X3DConstant values
-------------------
+### X3DConstant values
 
-### Browser Event Constants
+#### Browser Event Constants
 
 - INITIALIZED\_EVENT
 - SHUTDOWN\_EVENT
 - CONNECTION\_ERROR
 - INITIALIZED\_ERROR
 
-### Load State Constants
+#### Load State Constants
 
 - NOT\_STARTED\_STATE
 - IN\_PROGRESS\_STATE
 - COMPLETE\_STATE
 - FAILED\_STATE
 
-### Access Type Constants
+#### Access Type Constants
 
 - initializeOnly
 - inputOnly
 - outputOnly
 - inputOutput
 
-### Field Type Constants
+#### Field Type Constants
 
 - SFBool
 - SFColor
@@ -76,7 +74,7 @@ X3DConstant values
 - MFVec4d
 - MFVec4f
 
-### Concrete Node Types
+#### Concrete Node Types
 
 All concrete node types from *Anchor, Appearance, …*  to *WorldInfo.*
 
@@ -302,7 +300,7 @@ All concrete node types from *Anchor, Appearance, …*  to *WorldInfo.*
 - WindPhysicsModel
 - WorldInfo
 
-### Abstract Node Types
+#### Abstract Node Types
 
 All abstract node types from *X3DAppearanceChildNode, X3DAppearanceNode,* … to *X3DViewportNode.*
 

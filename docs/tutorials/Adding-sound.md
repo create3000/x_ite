@@ -1,5 +1,4 @@
-Motivation
-==========
+## Motivation
 
 - Sounds can be triggered by viewer actions
   - Clicks, horn honks, door latch noises
@@ -7,8 +6,7 @@ Motivation
   - Wind, crowd noises, elevator music
 - Sounds emit from a location, in a direction, within an area
 
-Creating sounds
-===============
+## Creating sounds
 
 Sounds have two components:
 
@@ -17,8 +15,7 @@ Sounds have two components:
 - A sound emitter converts a signal to virtual sound
   - Like a stereo speaker
 
-Syntax: AudioClip
-=================
+## Syntax: AudioClip
 
 An [AudioClip](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/sound.html#AudioClip) node creates a digital sound source:
 
@@ -26,8 +23,7 @@ An [AudioClip](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part0
 - *pitch* - playback speed
 - playback controls, like a [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/time.html#TimeSensor) node
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Sound>
@@ -40,8 +36,7 @@ XML Encoding
 </Sound>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Sound {
@@ -55,8 +50,7 @@ Sound {
 }
 ```
 
-Syntax: MovieTexture
-====================
+## Syntax: MovieTexture
 
 A [MovieTexture](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#MovieTexture) node creates a movie sound source:
 
@@ -64,8 +58,7 @@ A [MovieTexture](https://www.web3d.org/documents/specifications/19775-1/V3.3/Par
 - *speed* - playback speed
 - playback controls, like a [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/time.html#TimeSensor) node
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Sound>
@@ -78,8 +71,7 @@ XML Encoding
 </Sound>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Sound {
@@ -93,8 +85,7 @@ Sound {
 }
 ```
 
-Selecting sound source types
-============================
+## Selecting sound source types
 
 Supported by the [AudioClip](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/sound.html#AudioClip) node:
 
@@ -106,16 +97,14 @@ Supported by the [MovieTexture](https://www.web3d.org/documents/specifications/1
 - MP4 - movie file with sound
   Good for virtual TVs
 
-Syntax: Sound
-=============
+## Syntax: Sound
 
 A [Sound](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/sound.html#Sound) node describes a sound emitter:
 
 - *source* - [AudioClip](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/sound.html#AudioClip) or [MovieTexture](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#MovieTexture) node
 - *location* and *direction* - emitter placement
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Sound
@@ -125,8 +114,7 @@ XML Encoding
 </Sound>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Sound {
@@ -142,8 +130,7 @@ A [Sound](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/com
 - *spatialize* - use spatialize processing
 - *priority* - prioritize the sound
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Sound
@@ -154,8 +141,7 @@ XML Encoding
 </Sound>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Sound {
@@ -171,8 +157,7 @@ A [Sound](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/com
 - *minFront, minBack* - inner ellipsoid
 - *maxFront, maxBack* - outer ellipsoid
 
-Setting the sound range
-=======================
+## Setting the sound range
 
 - The sound range fields specify two ellipsoids
   - *minFront* and *minBack* control an inner ellipsoid
@@ -180,8 +165,7 @@ Setting the sound range
 - Sound has a constant volume inside the inner ellipsoid
 - Sound drops to zero volume from the inner to the outer ellipsoid
 
-Creating triggered sounds
-=========================
+## Creating triggered sounds
 
 [AudioClip](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/sound.html#AudioClip) node:
 
@@ -194,11 +178,9 @@ Creating triggered sounds
 - *minFront* etc. with small values
 - *priority* 1.0
 
-A sample using triggered sound
-==============================
+## A sample using triggered sound
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Group>
@@ -221,8 +203,7 @@ XML Encoding
 <ROUTE fromNode='C4' fromField='touchTime' toNode='PitchC4' toField='set_startTime'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Group {
@@ -257,8 +238,7 @@ ROUTE C4.touchTime TO PitchC4.set_startTime
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/sound/sound.zip)
 
-Creating continuous localized sounds
-====================================
+## Creating continuous localized sounds
 
 [AudioClip](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/sound.html#AudioClip) node:
 
@@ -272,11 +252,9 @@ Creating continuous localized sounds
 - *minFront* etc. with medium values
 - *priority* 0.0 (default)
 
-A sample using continuous localized sound
-=========================================
+## A sample using continuous localized sound
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Sound
@@ -294,8 +272,7 @@ XML Encoding
 </Transform>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Sound {
@@ -320,8 +297,7 @@ Transform {
 }
 ```
 
-Creating continuous background sounds
-=====================================
+## Creating continuous background sounds
 
 [AudioClip](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/sound.html#AudioClip) node:
 
@@ -335,8 +311,7 @@ Creating continuous background sounds
 - *minFront* etc. with large values
 - *priority* 0.0 (default)
 
-Summary
-=======
+## Summary
 
 An [AudioClip](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/sound.html#AudioClip) node or a [MovieTexture](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/texturing.html#MovieTexture) node describe a sound source:
 

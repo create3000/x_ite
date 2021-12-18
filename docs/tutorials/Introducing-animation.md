@@ -1,12 +1,10 @@
-Motivation
-==========
+## Motivation
 
 - Nodes like [Billboard](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Billboard) and [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Anchor) have built-in behavior
 - You can create your own behaviors to make shapes move, rotate, scale, blink, and more
 - We need a means to trigger, time, and respond to a sequence of events in order to provide better user/world interactions
 
-Building animation circuits
-===========================
+## Building animation circuits
 
 Almost every node can be a component in an animation circuit
 
@@ -19,8 +17,7 @@ An event is a message sent between nodes
 - A data value (such as a translation)
 - A time stamp (when did the event get sent)
 
-Examples
-========
+## Examples
 
 To spin a shape:
 
@@ -30,19 +27,17 @@ To blink a shape:
 
 - Connect a node that sends color events to a [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material) node's *diffuseColor* field
 
-Routing events
-==============
+## Routing events
 
 To set up an animation circuit, you need three things:
 
-1. A node which sends events 
+1. A node which sends events
   - The node must be named with **DEF**
-2. A node which receives events 
+2. A node which receives events
   - The node must be named with **DEF**
 3. A route connecting them
 
-Using node inputs and outputs
-=============================
+## Using node inputs and outputs
 
 Every node has fields, inputs, and outputs:
 
@@ -52,8 +47,7 @@ Every node has fields, inputs, and outputs:
 
 An inputOutput field is a short-hand for a initializeOnly, inputOnly, and outputOnly
 
-Sample inputs
-=============
+## Sample inputs
 
 A [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform) node has these input fields:
 
@@ -67,8 +61,7 @@ A [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/
 - *set\_emissiveColor*
 - *set\_transparency*
 
-Sample outputs
-==============
+## Sample outputs
 
 An [OrientationInterpolator](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/interp.html#OrientationInterpolator) node has this output field:
 
@@ -82,23 +75,20 @@ A [TimeSensor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part0
 
 - *time* to send time values
 
-Syntax: ROUTE
-=============
+## Syntax: ROUTE
 
 A **ROUTE** statement connects two nodes together using
 
 - The sender's node name and output field name
 - The receiver's node name and input field name
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <ROUTE fromNode='MySender' fromField='rotation_changed' toNode='MyReceiver' toField='set_rotation'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 ROUTE MySender.rotation_changed TO MyReceiver.set_rotation
@@ -106,8 +96,7 @@ ROUTE MySender.rotation_changed TO MyReceiver.set_rotation
 
 **ROUTE** and **TO** must be in upper-case
 
-Field data types
-================
+## Field data types
 
 Sender and receiver field data types must match!
 
@@ -145,8 +134,7 @@ Data types have names with a standard format, such as:
 | SFVec4d, MFVec4d         | XYZW floating point value, double precision |
 | SFVec4f, MFVec4f         | XYZW floating point value                   |
 
-Following naming conventions
-============================
+## Following naming conventions
 
 Most nodes have inputOutput fields.
 
@@ -162,11 +150,9 @@ The [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part
 - *set\_rotation* input
 - *rotation\_changed* output
 
-A sample animation
-==================
+## A sample animation
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <TouchSensor DEF='Touch'/>
@@ -184,8 +170,7 @@ XML Encoding
 <ROUTE fromNode='Rot1' fromField='value_changed' toNode='Frame1' toField='set_rotation'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Touch TouchSensor { }
@@ -205,8 +190,7 @@ ROUTE Timer1.fraction_changed TO Rot1.set_fraction
 ROUTE Rot1.value_changed      TO Frame1.set_rotation
 ```
 
-Using multiple routes
-=====================
+## Using multiple routes
 
 You can have **fan-out**
 
@@ -216,11 +200,10 @@ You can have **fan-in**
 
 - Multiple routes into the same receiver
 
-Summary
-=======
+## Summary
 
 - Connect senders to receivers using routes
 - input fields are inputs, and output fields are outputs
-- A route names the sender.output, and the receiver.input 
+- A route names the sender.output, and the receiver.input
   - Data types must match
 - You can have multiple routes into or out of a node

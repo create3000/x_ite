@@ -1,24 +1,20 @@
-Motivation
-==========
+## Motivation
 
 - The [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material) node gives an entire shape the same color
 - You can provide colors for individual parts of a shape using a [Color](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Color) node
 
-Syntax: Color
-=============
+## Syntax: Color
 
 A [Color](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Color) node contains a list of RGB values (similar to a Coordinate node):
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Color
     color='1.0 0.0 0.0, ...'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Color {
@@ -28,24 +24,21 @@ Color {
 
 Used as the color field value of [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet), [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#IndexedLineSet), [PointSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#PointSet) or [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid) nodes.
 
-Binding colors
-==============
+## Binding colors
 
 - Colors in the Color node override those in the Material node
-- You can bind colors 
+- You can bind colors
   - To each point, line, or face
   - To each coordinate in a line, or face
 
-Syntax: PointSet
-================
+## Syntax: PointSet
 
 A [PointSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#PointSet) geometry node creates geometry out of points:
 
 - *color* - provides a list of colors
 - Always binds one color to each point, in order
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -57,8 +50,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -70,8 +62,7 @@ Shape {
 }
 ```
 
-Syntax: IndexedLineSet
-======================
+## Syntax: IndexedLineSet
 
 An [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#IndexedLineSet) geometry node creates geometry out of lines:
 
@@ -79,8 +70,7 @@ An [IndexedLineSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/
 - *colorIndex* - selects colors from list
 - *colorPerVertex* - control color binding
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -95,8 +85,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -111,16 +100,14 @@ Shape {
 }
 ```
 
-Controlling color binding for line sets
-=======================================
+## Controlling color binding for line sets
 
 The *colorPerVertex* field controls how color indexes are used:
 
 - **FALSE:** one color index to each line (ending at -1 coordinate indexes)
 - **TRUE:** one color index to each coordinate index of each line (including -1 coordinate indexes)
 
-Syntax: IndexedFaceSet
-======================
+## Syntax: IndexedFaceSet
 
 An [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet) geometry node creates geometry out of faces:
 
@@ -128,8 +115,7 @@ An [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/
 - *colorIndex* - selects colors from list
 - *colorPerVertex* - control color binding
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -144,8 +130,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -160,16 +145,14 @@ Shape {
 }
 ```
 
-Controlling color binding for face sets
-=======================================
+## Controlling color binding for face sets
 
 The *colorPerVertex* field controls how color indexes are used (similar to line sets):
 
 - **FALSE:** one color index to each face (ending at -1 coordinate indexes)
 - **TRUE:** one color index to each coordinate index of each face (including -1 coordinate indexes)
 
-Syntax: ElevationGrid
-=====================
+## Syntax: ElevationGrid
 
 An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#ElevationGrid) geometry node creates terrains:
 
@@ -177,8 +160,7 @@ An [ElevationGrid](https://www.web3d.org/documents/specifications/19775-1/V3.3/P
 - *colorPerVertex* - control color binding
 - Always binds one color to each grid point or square, in order
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -192,8 +174,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -207,16 +188,14 @@ Shape {
 }
 ```
 
-Controlling color binding for elevation grids
-=============================================
+## Controlling color binding for elevation grids
 
 The *colorPerVertex* field controls how color indexes are used (similar to line and face sets):
 
 - **FALSE:** one color to each grid square
 - **TRUE:** one color to each height for each grid square
 
-Summary
-=======
+## Summary
 
 The [Color](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/rendering.html#Color) node lists colors to use for parts of a shape:
 

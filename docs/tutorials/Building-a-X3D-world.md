@@ -1,5 +1,4 @@
-X3D file structure
-==================
+## X3D file structure
 
 X3D files contain:
 
@@ -11,11 +10,9 @@ X3D files contain:
 - Routes - connections between fields
 - more ...
 
-A sample X3D file
-=================
+## A sample X3D file
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -35,8 +32,7 @@ XML Encoding
 </X3D>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 #X3D V3.3 utf8
@@ -58,8 +54,7 @@ Shape {
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/cylinder1/cylinder1.zip)
 
-Understanding the header
-========================
+## Understanding the header
 
 **\#X3D V3.3 utf8**
 
@@ -67,17 +62,15 @@ Understanding the header
 - **V3.3 :** Text conforms to version 3.3 syntax
 - **utf8 :** Text uses UTF8 character set
 
-Understanding UTF8
-==================
+## Understanding UTF8
 
 - utf8 is an international character set standard
-- utf8 stands for: 
+- utf8 stands for:
   - UCS (Universal Character Set) Transformation Format, 8-bit
   - Encodes 24,000+ characters for many languages
   - ASCII is a subset
 
-Using comments
-==============
+## Using comments
 
 ```js
 # A Cylinder
@@ -85,18 +78,15 @@ Using comments
 
 - Comments start with a number-sign (**\#**) and extend to the end of the line
 
-Using nodes
-===========
+## Using nodes
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Cylinder/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Cylinder {
@@ -104,13 +94,12 @@ Cylinder {
 ```
 
 - Nodes describe shapes, lights, sounds, etc.
-- Every node has: 
+- Every node has:
   - A node type ([Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape), [Cylinder](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Cylinder), etc.)
   - A pair of curly-braces
   - Zero or more fields inside the curly-braces
 
-Using node type names
-=====================
+## Using node type names
 
 Node type names are case sensitive:
 
@@ -121,11 +110,9 @@ Some examples:
 
 [Appearance](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Appearance), [Cylinder](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Cylinder), [Material](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Material), [Shape](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shape.html#Shape)
 
-Using fields and values
-=======================
+## Using fields and values
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Cylinder
@@ -133,8 +120,7 @@ XML Encoding
     radius='1.5'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Cylinder {
@@ -151,13 +137,12 @@ Every field has:
 - A data type (float, integer, etc.)
 - A default value
 - Different node types have different fields
-- Fields are optional 
+- Fields are optional
   - A default value is used if a field is not given
-- Fields can be listed in any order 
+- Fields can be listed in any order
   - The order doesn't affect the node
 
-Summary
-=======
+## Summary
 
 - The file header gives the version and encoding
 - Nodes describe scene content

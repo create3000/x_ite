@@ -1,5 +1,4 @@
-Improving Performance
-=====================
+## Improving Performance
 
 By this time, you may have spend weeks creating complex and interesting X3D scenes. You've refined the models until they're lifelike and perfected their colors and texturing. You've experimented with lighting, and now you're ready to share your creation with the world.
 
@@ -12,8 +11,7 @@ This tutorial is divided into two parts:
 - Reducing file size (to speed up transmission time)
 - Increasing rendering speed, with the goal of achieving a minimum frame rate of 25 frames per second, which is the frame rate required to simulate the visual continuity of moving through the real world
 
-Reducing File Size
-==================
+## Reducing File Size
 
 The larger the file size, the more time required to transmit it over the World Wide Web. If it takes too long to fetch the data for your scene, many users lose patience and move on to another site. The moral of the story is: Reduce file size when you can. Techniques for making files smaller include the following:
 
@@ -28,15 +26,13 @@ The larger the file size, the more time required to transmit it over the World W
 
 The following sections describe each of these techniques in more detail.
 
-Use Cloned Objects
-==================
+## Use Cloned Objects
 
 If the same object is used more than once in the scene, it's most efficient to give the object a name the first time it's used (with DEF) and then refer to the object by name (with USE) in subsequent uses. For example, if you use a tree more then once you can define them in this manner. The tree if it has a reasonable size can be represented as Inline node. Here is an example of defining a tree and then using that object at another place with a simple translation.
 
 **Example:** Using multiple instances of the same object.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Transform DEF='Tree1'>
@@ -49,8 +45,7 @@ XML Encoding
 </Transform>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Tree1 Transform {
@@ -64,15 +59,13 @@ DEF Tree2 Transform {
 }
 ```
 
-Use Prototypes
-==============
+## Use Prototypes
 
 Prototyping objects that are used frequently with a few modifications is another way to reduce file size. As with DEF/USE, the object is defined once, and only the public interface that changes needs to be specified. In addition, because prototypes expose which parts of the scene hierarchy are changeable, the browser is free to optimize the parts that remain the same.
 
 **Example:** Defining a prototype.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -148,8 +141,7 @@ function set_whichChoice (value)
 </X3D>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 #X3D V3.3 utf8 Titania V4.3.0
@@ -212,23 +204,19 @@ DEF Button BooleanSwitch {
 ROUTE Touch.isOver TO Button.set_whichChoice
 ```
 
-Use the Text node
-=================
+## Use the Text node
 
 Be sure to use the Text node for text. Some translators convert text to polygons, resulting in very large numbers of polygons for a simple string of text. Using the Text node reduces polygon count and allows the browser to optimize for rendering performance, using cached versions of glyphs.
 
-Use Space-Efficient Geometry Nodes
-==================================
+## Use Space-Efficient Geometry Nodes
 
 Nodes such as Box, Cone, Cylinder, Sphere, Extrusion, and ElevationGrid provide a compact way of describing objects with many polygons. Using these nodes saves transmission time. X\_ITE provides optimizations for these shapes.
 
-Use Automatic Normals
-=====================
+## Use Automatic Normals
 
 Rely on automatic normal generation when possible instead of supplying your own normals for each shape. Many geometry nodes have a *creaseAngle* field which controls the normal generation.
 
-Compress Files
-==============
+## Compress Files
 
 Use JPEG or PNG format for textures. GIF is also acceptable in some cases. JPEG is a lossy form of compression (that is, when the file is compressed originally, some of the information is lost), but it can achieve a compression in the range of 100 to one. Utilities for JPEG compression allow you to control the tradeoff between compression and image quality. This form of image compression is generally very effective and results in little noticeable degradation of the image.
 

@@ -1,10 +1,8 @@
-Browser Support
-===============
+## Browser Support
 
 To enjoy the best and most secure experience, we recommend you keep your browser and operating system updated. X\_ITE will support the current and previous major releases of:
 
-Desktop
--------
+### Desktop
 
 Since April 2016 **Chrome** supports all WebGL and JavaScript ES 6 features required by X\_ITE. We support the current version and the previous version of Chrome, although X\_ITE also runs fine in older versions.
 <https://www.google.com/chrome>
@@ -21,8 +19,7 @@ Since April 2016 **Chrome** supports all WebGL and JavaScript ES 6 features requ
 Starting with Windows 10 X\_ITE runs fine in **Microsoft Edge** and is fully supported. Microsoft Edge provides everything X\_ITE needs to give you the best performance.
 <https://www.microsoft.com/windows/microsoft-edge>
 
-Mobile
-------
+### Mobile
 
 All stock browser on **Android** 4.0+ support WebGL and JavaScript ES 6 natively. Always keep in mind to keep your files small in size and always consider to optimize for performance.
 <https://www.android.com/>
@@ -35,15 +32,13 @@ iOS has good support since **Safari** on iOS 7+. Simplify your scenes and test t
 
 We do not support older browsers like Internet Explorer 6-9, Opera 12.1x or Safari 5.1+.
 
-Unsupported Browsers
-====================
+## Unsupported Browsers
 
 While X\_ITE *might* run without major issues in older browser versions, we do not actively test X\_ITE in them and generally do not fix bugs that may appear in them.
 
 Similarly, X\_ITE does not fix bugs in pre-release versions of browsers, such as beta or dev releases. If you find a bug with X\_ITE in a pre-release of a browser, you should report the bug to the browser vendor.
 
-About Browser Support
-=====================
+## About Browser Support
 
 X\_ITE is constantly tested with all of its supported browsers via unit tests. However, a web page using X\_ITE may not work in the same set of browsers if its own code takes advantage of (or falls prey to) browser-specific behaviors. Testing is essential to fully support a browser. The Microsoft Edge Developer site makes available [virtual machines](https://dev.windows.com/en-us/microsoft-edge/tools/vms/) for testing many different versions of Internet Explorer. Older versions of other browsers can be found at [oldversion.com](http://oldversion.com/).
 

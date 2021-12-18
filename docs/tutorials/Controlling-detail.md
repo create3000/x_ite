@@ -1,5 +1,4 @@
-Motivation
-==========
+## Motivation
 
 The further the viewer can see, the more there is to draw.
 
@@ -11,8 +10,7 @@ If a shape is distant:
 
 Varying detail with distance reduces upfront download time, and increases drawing speed.
 
-Creating multiple shape versions
-================================
+## Creating multiple shape versions
 
 To control detail, model the same shape several times:
 
@@ -22,16 +20,14 @@ To control detail, model the same shape several times:
 
 Usually, two or three different versions is enough, but you can have as many as you want.
 
-Controlling level of detail
-===========================
+## Controlling level of detail
 
 Group the shape versions as levels in an [LOD](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#LOD) grouping node:
 
 - LOD is short for Level of Detail
 - List them from highest to lowest detail
 
-Syntax: LOD
-===========
+## Syntax: LOD
 
 An [LOD](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#LOD) grouping node creates a group of shapes describing different levels (versions) of the same shape:
 
@@ -39,8 +35,7 @@ An [LOD](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/comp
 - *range* - a list of level switch ranges
 - *children* - a list of shape levels
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <LOD
@@ -50,8 +45,7 @@ XML Encoding
 </LOD>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 LOD {
@@ -61,8 +55,7 @@ LOD {
 }
 ```
 
-Choosing detail ranges
-======================
+## Choosing detail ranges
 
 Use a list of ranges for level switch points:
 
@@ -73,8 +66,7 @@ Use a list of ranges for level switch points:
 
 ![lod-level](https://create3000.github.io/media/tutorials/images/lod-level.png)
 
-Optimizing a shape
-==================
+## Optimizing a shape
 
 Suggested procedure to make different levels (versions):
 
@@ -86,11 +78,9 @@ Suggested procedure to make different levels (versions):
 
 Lower detail levels should use simpler geometry, fewer textures, and no text.
 
-A sample LOD
-============
+## A sample LOD
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <LOD
@@ -105,8 +95,7 @@ XML Encoding
 </LOD>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 LOD {
@@ -126,8 +115,7 @@ LOD {
 
 [Download ZIP Archive](https://create3000.github.io/media/tutorials/scenes/lod/lod.zip)
 
-Summary
-=======
+## Summary
 
 Increase performance by making multiple levels of shapes:
 

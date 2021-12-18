@@ -1,21 +1,18 @@
-Motivation
-==========
+## Motivation
 
 - By default, the viewer enters a world at (0.0, 0.0, 10.0)
-- You can provide your own preferred view points 
+- You can provide your own preferred view points
   - Select the entry point position
   - Select favorite views for the viewer
   - Name the views for a browser menu
 
-Creating viewpoints
-===================
+## Creating viewpoints
 
 - Viewpoints specify a desired location, an orientation, and a camera field of view lens angle
 - Viewpoints can be transformed using a Transform node
 - The first viewpoint found in a file is the entry point
 
-Syntax: Viewpoint
-=================
+## Syntax: Viewpoint
 
 A [Viewpoint](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Viewpoint) node specifies a named viewing location:
 
@@ -23,8 +20,7 @@ A [Viewpoint](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01
 - *fieldOfView* - camera lens angle
 - *description* - description for viewpoint menu
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Viewpoint
@@ -34,8 +30,7 @@ XML Encoding
     description='Entry View'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Viewpoint {
@@ -46,8 +41,7 @@ Viewpoint {
 }
 ```
 
-Summary
-=======
+## Summary
 
 - Specify favorite viewpoints in [Viewpoint](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Viewpoint) nodes
 - The first viewpoint in the file is the entry viewpoint

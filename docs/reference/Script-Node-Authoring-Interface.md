@@ -1,5 +1,4 @@
-Script Node Authoring Interface
-===============================
+## Script Node Authoring Interface
 
 This is a reference for ECMAScript, a scripting language for X3D Script nodes. ECMAScript grew out of the need for a lightweight script language in X3D. It is a subset of the JavaScript language, with X3D data types supported as JavaScript built-in objects.
 
@@ -13,13 +12,11 @@ ECMAScript has many advantages:
 - Constructors are available for most data types to ease creation and conversion of data.
 - A full set of JavaScript compatible math, date and string objects is available. The full set of JavaScript string methods and properties are available. Scalar values automatically convert to strings when concatenated. This makes construction of URL's and X3D strings (for use in createX3DFromString) easy.
 
-Objects and Variables
-=====================
+## Objects and Variables
 
 Data in ECMAScript is represented as objects. The object types correspond to the X3D field types. A variable contains an instance of an object, and can be predefined (appearing in the Script node) or defined locally.
 
-Values, Names and Literals
---------------------------
+### Values, Names and Literals
 
 A ECMAScript variable holds an instance of an object. If a name is defined as a field or output field of the Script node containing the script then there is a variable with that same name available globally to the script. The type of this variable is always the type of the field or output field. Assignment to this variable converts the expression to its type or generates a run-time error if a conversion is not possible.
 
@@ -80,8 +77,7 @@ function anInputField (value, time)
 }
 ```
 
-Objects and Fields
-------------------
+### Objects and Fields
 
 For each field and outputOnly fields in the Script node containing the script there is a corresponding global variable with the same name. Field variables are persistant; they keep their last stored value across function calls. Local variables, on the other hand, are destroyed on exit from the block in which they were defined. Local variables defined in the outermost block of a function are destroyed when the function exits so they do not persist across function calls.
 
@@ -100,8 +96,7 @@ function someFunction ()
 
 The value *a.r* selects the property which corresponds to the red component of the color. The value *a .setHSV ()* selects the method which sets the color in HSV space.
 
-Object Construction
--------------------
+### Object Construction
 
 For each object type there is a corresponding constructor. Constructors typically take a flexible set of parameters to allow construction of objects with any initial value. MF objects are essentially arrays so they always take 0 or more parameters of the corresponding SF object type. A value of a given data type is created using the *new* keyword with the data type name. For instance:
 
@@ -110,8 +105,7 @@ let a = new SFVec3f (0, 1, 0);   // 'a' has a SFVec3f containing 0, 1, 0
 let b = new MFFloat (1, 2, 3, 4) // 'b' has a MFFloat containing 4 floats
 ```
 
-Data Conversion
----------------
+### Data Conversion
 
 Combining objects of different types in a single expression or assignment statement will often perform implicit type conversion. Rules for this conversion are described in the following table:
 
@@ -198,15 +192,13 @@ Combining objects of different types in a single expression or assignment statem
    </tbody>
 </table>
 
-MF Objects
-----------
+### MF Objects
 
 Most SF objects in ECMAScript have a corresponding MF object. An MFObject is essentially an array of objects, with each element of the array having the type of the corresponding SF object. All MF objects have a *length* property which returns or sets the number of elements in the MF object. Array indexes start at 0. If *vecArray* is an MFVec3f object then *vecArray\[0\]* is the first SFVec3f object in the array.
 
 Dereferencing an MF object creates a new object of the corresponding SF object type with the contents of the dereferenced element. Assigning an SF object to a dereferenced MF object (which must be of the corresponding type) copies the contents of the SF object into the dereferenced element.
 
-Supported Protocol in the Script Node's *url* Field
-===================================================
+## Supported Protocol in the Script Node's *url* Field
 
 The *url* field of the Script node may contain a URL that references ECMAScript code:
 
@@ -238,13 +230,11 @@ Script {
 }
 ```
 
-File Extension
---------------
+### File Extension
 
 The file extension for ECMAScript source code is **.js**.
 
-MIME Type
----------
+### MIME Type
 
 The MIME type for ECMAScript source code is defined as follows:
 
@@ -252,8 +242,7 @@ The MIME type for ECMAScript source code is defined as follows:
 application/javascript
 ```
 
-InputOnly Field Handling
-========================
+## InputOnly Field Handling
 
 Events sent to the Script node are passed to the corresponding ECMAScript function in the script. It is necessary to specify the script in the *url* field of the Script node. The function's name is the same as the inputOnly field and is passed two arguments, the event value and its timestamp. If there isn't a corresponding ECMAScript function in the script, the browser's behavior is undefined.
 
@@ -275,25 +264,21 @@ function start (value, time)
 
 In the above example, when the *start* inputOnly field is sent the start () function is executed.
 
-Parameter Passing and the InputOnly Field Function
---------------------------------------------------
+### Parameter Passing and the InputOnly Field Function
 
 When a Script node receives an inputOnly field, a corresponding method in the file specified in the *url* field of the Script node is called, which has two arguments. The value of the inputOnly field is passed as the first argument and timestamp of the inputOnly field is passed as the second argument. The type of the value is the same as the type of the inputOnly field and the type of the timestamp is **SFTime**.
 
-initialize () Method
---------------------
+### initialize () Method
 
 Authors may define a function named *initialize* which is called when the corresponding Script node has been loaded and before any events are processed. This can be used to prepare for processing before events are received, such as constructing geometry or initializing external mechanisms.
 
 The *initialize* function takes no parameters. Events generated from it are given the timestamp of when the Script node was loaded.
 
-prepareEvents () Method
------------------------
+### prepareEvents () Method
 
 Authors may define a prepareEvents () method that is called only once per frame. prepareEvents () is called before any ROUTE processing and allows a Script to collect any asynchronously generated data, such as input from a network queue or the results of calling field listeners, and generate events to be handled by the browser's normal event processing sequence as if it were a built-in sensor node.
 
-eventsProcessed () Method
--------------------------
+### eventsProcessed () Method
 
 Authors may define a function named *eventsProcessed* which will be called after some set of events has been received. Some implementations will call this function after the return from each inputOnly field function, while others will call it only after processing a number of inputOnly field functions. In the latter case an author can improve performance by placing lengthy processing algorithms which do not need to be executed for every event received into the
 *eventsProcessed* function.
@@ -304,25 +289,21 @@ The author needs to compute a complex inverse kinematics operation at each time 
 
 The *eventsProcessed* function takes no parameters. Events generated from it are given the timestamp of the last event processed.
 
-shutdown () Method
-------------------
+### shutdown () Method
 
 Authors may define a function named *shutdown* which is called when the corresponding Script node is deleted or the world containing the Script node is unloaded or replaced by another world. This can be used to send events informing external mechanisms that the Script node is being deleted so they can clean up files, etc.
 
 The *shutdown* function takes no parameters. Events generated from it are given the timestamp of when the Script node was deleted.
 
-Accessing Fields
-================
+## Accessing Fields
 
 The initializeOnly fields, inputOnly fields, outputOnly fields, and inputOutput fields of a Script node are accessible from its ECMAScript functions. As in all other nodes the fields are accessible only within the Script. The Script's inputOnly fields can be routed to and its outputOnly fields can be routed from. Another Script node with a pointer to this node can access its inputOnly fields and outputOnly fields just like any other node.
 
-Accessing InitializeOnly and OutputOnly Fields of the Script
-------------------------------------------------------------
+### Accessing InitializeOnly and OutputOnly Fields of the Script
 
 Fields defined in the Script node are available to the script by using its name. It's value can be read or written. This value is persistent across function calls. outputOnly fields defined in the script node can also be read. The value is the last value sent.
 
-Accessing InitializeOnly Fields and OutputOnly Fields of Other Nodes
---------------------------------------------------------------------
+### Accessing InitializeOnly Fields and OutputOnly Fields of Other Nodes
 
 The script can access any inputOutput field, inputOnly fields or outputOnly fields of any node to which it has a pointer:
 
@@ -346,7 +327,6 @@ function pos (value)
 
 This sends a set\_translation inputOnly field to the Transform node. An inputOnly field on a passed node can appear only on the left side of the assignment. An outputOnly fields or inputOutput field in the passed node can appear only on the right side, which reads the last value sent out. Fields in the passed node cannot be accessed, but inputOutput fields can either send an event to the »set\_...« inputOnly field, or read the current value of the »...\_changed« outputOnly fields. This follows the routing model of the rest of X3D.
 
-Sending OutputOnly Fields
--------------------------
+### Sending OutputOnly Fields
 
 Assigning to an outputOnly fields or inputOutput field sends that event at the completion of the currently executing function. This implies that assigning to the outputOnly field or inputOutput field multiple times during one execution of the function still only sends one event and that event is the last value assigned.

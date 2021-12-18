@@ -1,5 +1,4 @@
-Motivation
-==========
+## Motivation
 
 - By default, all shapes are built at the center of the world
 - A Transform enables you to
@@ -7,15 +6,13 @@ Motivation
   - Rotate shapes
   - Scale shapes
 
-Using coordinate systems
-========================
+## Using coordinate systems
 
 - A X3D file builds components for a world
 - A file's world components are built in the file's world coordinate system
 - By default, all shapes are built at the origin of the world coordinate system
 
-Transforming a coordinate system
-================================
+## Transforming a coordinate system
 
 A transform creates a coordinate system that is
 
@@ -27,8 +24,7 @@ relative to a parent coordinate system
 
 Shapes built in the new coordinate system are positioned, rotated, and scaled along with it
 
-Syntax: Transform
-=================
+## Syntax: Transform
 
 The [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform) group node creates a group with its own coordinate system
 
@@ -37,8 +33,7 @@ The [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part
 - *scale* - size
 - *children* - shapes to build
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Transform
@@ -49,8 +44,7 @@ XML Encoding
 </Transform>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Transform {
@@ -61,13 +55,11 @@ Transform {
 }
 ```
 
-Including children
-==================
+## Including children
 
 The *children* field includes a list of one or more nodes
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Transform ...>
@@ -79,8 +71,7 @@ XML Encoding
 </Transform>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Transform {
@@ -95,13 +86,11 @@ Transform {
 }
 ```
 
-Translating
-===========
+## Translating
 
 Translation positions a coordinate system in X, Y, and Z.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <!-- X Y Z -->
@@ -111,8 +100,7 @@ XML Encoding
 </Transform>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Transform {
@@ -122,16 +110,14 @@ Transform {
 }
 ```
 
-Rotating
-========
+## Rotating
 
 Rotation orients a coordinate system about a rotation axis by a rotation angle
 
 - Angles are measured in radians
 - radians = degrees / 180.0 \* 3.1415927
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <!-- X Y Z Angle -->
@@ -141,8 +127,7 @@ XML Encoding
 </Transform>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Transform {
@@ -152,8 +137,7 @@ Transform {
 }
 ```
 
-Specifying rotation axes
-========================
+## Specifying rotation axes
 
 - A rotation axis defines a pole to rotate around
 - Like the Earth's North-South pole
@@ -166,8 +150,7 @@ Typical rotations are about the X, Y, or Z axes:
 | Y-Axis       | 0.0 1.0 0.0 |
 | Z-Axis       | 0.0 0.0 1.0 |
 
-Using the Right-Hand Rule
-=========================
+## Using the Right-Hand Rule
 
 Positive rotations are counter-clockwise
 
@@ -179,13 +162,11 @@ To help remember positive and negative rotation directions:
 - Curl your fingers around the axis
 - The curl direction is a positive rotation
 
-Scaling
-=======
+## Scaling
 
 Scale grows or shrinks a coordinate system by a scaling factor in X, Y, and Z.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <!-- X Y Z  -->
@@ -195,8 +176,7 @@ XML Encoding
 </Transform>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Transform {
@@ -206,13 +186,11 @@ Transform {
 }
 ```
 
-Scaling, rotating, and translating
-==================================
+## Scaling, rotating, and translating
 
 Scale, Rotate, and Translate a coordinate system, one after the other.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Transform
@@ -223,8 +201,7 @@ XML Encoding
 </Transform>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Transform {
@@ -240,11 +217,9 @@ Read operations bottom-up:
 - The children are scaled, rotated, then translated
 - Order is fixed, independent of field order
 
-A sample transform group
-========================
+## A sample transform group
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Transform
@@ -262,8 +237,7 @@ XML Encoding
 <!-- ... -->
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Transform {
@@ -284,8 +258,7 @@ Transform {
 ...
 ```
 
-Summary
-=======
+## Summary
 
 - All shapes are built in a coordinate system
 - The [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform) node creates a new coordinate system relative to its parent

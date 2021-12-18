@@ -1,24 +1,20 @@
-Custom Shaders
-==============
+## Custom Shaders
 
 When you display your 3D models with X\_ITE, by default it will use the Gouraud shader. This is a versatile shader that can cover a lot of your rendering needs. If this is not enough there is also a Phong shader available, adjustable with the browser shading option per scripting.
 
 However, you will often want to perform special effects or special cases for your materials. To do this you will need to write a custom shader.
 
-Example
-=======
+## Example
 
 [![Shader Example](https://create3000.github.io/media/images/water-quality.png)](https://create3000.github.io/media/examples/X3D/WaterQuality/example.html)
 
 [View scene in this window.](https://create3000.github.io/media/examples/X3D/WaterQuality/example.html)
 
-Shaders and Shader Definition
-=============================
+## Shaders and Shader Definition
 
 WebGL uses the GLSL language to write shaders that can be run across all browsers. With X\_ITE you create your own shader using ComposedShader and ShaderPart nodes and than attach the ComposedShader to the *shader* field of an Appearance node and that is a child''s play with Titania.
 
-X3D
----
+### X3D
 
 ```js
 #X3D V3.3 utf8
@@ -64,8 +60,7 @@ ROUTE Timer.time TO Shader.set_time
 
 Once the X3D is defined we can now write the vertex and the fragment shader source. This is a simple example where a texture is applied to the geometry.
 
-Vertex Shader
--------------
+### Vertex Shader
 
 ```c
 #version 300 es
@@ -90,8 +85,7 @@ main ()
 }
 ```
 
-Fragment Shader
----------------
+### Fragment Shader
 
 ```c
 #version 300 es
@@ -111,26 +105,22 @@ main ()
 }
 ```
 
-Lighting and Transparency
-=========================
+## Lighting and Transparency
 
 Lighting is enabled if a Material node is available. If a transparent Material node is attached to the Appearance of the Shape node, the Shape is treated as transparent and thus the shader.
 
-Data Type Mapping
-=================
+## Data Type Mapping
 
 A ComposedShader node provides the capability to define custom fields like the Script node it does, these fields are then mapped to GLSL uniform variables. They are automatically updated and can be of any access type (initializeOnly, inputOnly, outputOnly or inputOutput).
 
-Node fields
------------
+### Node fields
 
 | X3D texture type          | GLSL variable type |
 |---------------------------|--------------------|
 | X3DTexture2DNode          | sampler2D          |
 | X3DEnvironmentTextureNode | samplerCube        |
 
-X3D field types to GLSL data types
-----------------------------------
+### X3D field types to GLSL data types
 
 <table class=" table">
    <thead>
@@ -358,8 +348,7 @@ X3D field types to GLSL data types
    </tbody>
 </table>
 
-Built-in Variables
-==================
+## Built-in Variables
 
 A ComposedShader defines a number of special variables for the various shader stages. These built-in variables have special properties. They are usually for communicating with certain fixed-functionality. By convention, all predefined variables start with »x3d\_«; no user-defined variables may start with this.
 
@@ -569,8 +558,7 @@ A ComposedShader defines a number of special variables for the various shader st
    </tbody>
 </table>
 
-Uniform Struct x3d\_FogParameters
----------------------------------
+### Uniform Struct x3d\_FogParameters
 
 | Type  | Name            | Comment                                                 |
 |-------|-----------------|---------------------------------------------------------|
@@ -580,8 +568,7 @@ Uniform Struct x3d\_FogParameters
 | mat3  | matrix          | inverse fog space matrix, rotation and scale components |
 | bool  | fogCoord        | true if FogCoordinate is attached, otherwise false      |
 
-Uniform Struct x3d\_LightSourceParameters
------------------------------------------
+### Uniform Struct x3d\_LightSourceParameters
 
 | Type  | Name             | Comment                                                   |
 |-------|------------------|-----------------------------------------------------------|
@@ -597,8 +584,7 @@ Uniform Struct x3d\_LightSourceParameters
 | float | radius           |                                                           |
 | mat3  | matrix           | inverse light space matrix, rotation and scale components |
 
-Uniform Struct x3d\_MaterialParameters
---------------------------------------
+### Uniform Struct x3d\_MaterialParameters
 
 | Type  | Name             |
 |-------|------------------|
@@ -609,8 +595,7 @@ Uniform Struct x3d\_MaterialParameters
 | float | shininess        |
 | float | transparency     |
 
-Uniform Struct x3d\_PointPropertiesParameters
----------------------------------------------
+### Uniform Struct x3d\_PointPropertiesParameters
 
 | Type  | Name                 | Comment                                                       |
 |-------|----------------------|---------------------------------------------------------------|
@@ -620,8 +605,7 @@ Uniform Struct x3d\_PointPropertiesParameters
 | vec3  | pointSizeAttenuation |                                                               |
 | int   | colorMode            | x3d\_PointColor, x3d\_TextureColor, x3d\_TextureAndPointColor |
 
-Uniform Struct x3d\_LinePropertiesParameters
---------------------------------------------
+### Uniform Struct x3d\_LinePropertiesParameters
 
 | Type      | Name                 |
 |-----------|----------------------|
@@ -629,8 +613,7 @@ Uniform Struct x3d\_LinePropertiesParameters
 | float     | linewidthScaleFactor |
 | sampler2D | linetype             |
 
-Uniform Struct x3d\_FillPropertiesParameters
---------------------------------------------
+### Uniform Struct x3d\_FillPropertiesParameters
 
 | Type      | Name       |
 |-----------|------------|
@@ -639,16 +622,14 @@ Uniform Struct x3d\_FillPropertiesParameters
 | vec3      | hatchColor |
 | sampler2D | hatchStyle |
 
-Uniform Struct x3d\_TextureCoordinateGeneratorParameters
---------------------------------------------------------
+### Uniform Struct x3d\_TextureCoordinateGeneratorParameters
 
 | Type  | Name            |
 |-------|-----------------|
 | int   | mode            |
 | float | parameter \[6\] |
 
-ParticleSystem
---------------
+### ParticleSystem
 
 If the shader node is part of a ParticleSystem node the following attributes are available if ParticleSystem.*geometryType* is POINT, LINE, TRIANGLE, QUAD, or SPRITE.
 
@@ -665,7 +646,7 @@ If the ParticleSystem.*geometryType* is GEOMETRY the following uniforms are avai
 |---------------------------------|---------------|----------------------------------------------------|
 | uniform x3d\_ParticleParameters | x3d\_Particle | See table »Uniform Struct x3d\_ParticleParameters« |
 
-### Uniform Struct x3d\_ParticleParameters
+#### Uniform Struct x3d\_ParticleParameters
 
 | Type  | Name        | Comment                                       |
 |-------|-------------|-----------------------------------------------|
@@ -673,8 +654,7 @@ If the ParticleSystem.*geometryType* is GEOMETRY the following uniforms are avai
 | int   | life        | integer number of current life                |
 | float | elapsedTime | elapsed time normalized in the range \[0, 1\] |
 
-Built-in Constants
-==================
+## Built-in Constants
 
 Some built-in variables are enumerated and have special values and meanings. The following table list all of them and their corresponding values. Note: as of version 1.27 these constant are buit-in.
 
@@ -867,8 +847,7 @@ Some built-in variables are enumerated and have special values and meanings. The
    </tbody>
 </table>
 
-Logarithmic Depth Buffer
-========================
+## Logarithmic Depth Buffer
 
 I assume pretty much every 3D programmer runs into Z-buffer issues sooner or later. Especially when doing planetary rendering; the distant stuff can be a thousand kilometers away but you still would like to see fine details right in front of the camera. First enable the logarithmic depth buffer:
 
@@ -928,8 +907,7 @@ main ()
 }
 ```
 
-See Also
-========
+## See Also
 
 - [ComposedShader](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shaders.html#ComposedShader)
 - [ShaderPart](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/shaders.html#ShaderPart)

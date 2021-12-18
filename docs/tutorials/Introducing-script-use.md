@@ -1,5 +1,4 @@
-Motivation
-==========
+## Motivation
 
 Many actions are too complex for animation nodes:
 
@@ -12,15 +11,13 @@ You can create new sensors, interpolators, etc., using program scripts written i
 - JavaScript - easy-to-learn language
 - ECMAScript - same as JavaScript
 
-Syntax: Script
-==============
+## Syntax: Script
 
 A [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script) node selects a program script to run:
 
 - *url* - choice of program script
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Script DEF='Bouncer'>
@@ -35,8 +32,7 @@ XML Encoding
     url='"bouncer.js"'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Bouncer Script {
@@ -46,17 +42,15 @@ DEF Bouncer Script {
 }
 ```
 
-Defining the program script interface
-=====================================
+## Defining the program script interface
 
 A Script node also declares the program script interface:
 
-- **initializeOnly, inputOnly, outputOnly, inputOutput** - inputs and outputs 
+- **initializeOnly, inputOnly, outputOnly, inputOutput** - inputs and outputs
   - Each has a name and data type
   - Fields have an initial value
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Script DEF='Bouncer'>
@@ -67,8 +61,7 @@ XML Encoding
 </Script>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Bouncer Script {
@@ -79,11 +72,9 @@ DEF Bouncer Script {
 }
 ```
 
-A sample using a program script
-===============================
+## A sample using a program script
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <TimeSensor DEF='Clock' ... />
@@ -104,8 +95,7 @@ XML Encoding
 <ROUTE fromNode='Bouncer' fromField='value_changed' toNode='Ball' toField='set_translation'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 DEF Clock TimeSensor { ... }
@@ -124,8 +114,7 @@ ROUTE Clock.fraction_changed TO Bouncer.set_fraction
 ROUTE Bouncer.value_changed  TO Ball.set_translation
 ```
 
-Summary
-=======
+## Summary
 
 The [Script](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/scripting.html#Script) node selects a program script, specified by a URL.
 

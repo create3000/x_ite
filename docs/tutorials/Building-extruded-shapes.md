@@ -1,5 +1,4 @@
-Motivation
-==========
+## Motivation
 
 Extruded shapes are very common
 
@@ -11,8 +10,7 @@ How can you do it:
 - You can build extruded shapes using an [IndexedFaceSet](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#IndexedFaceSet) node.
 - You can build extruded shapes more easily and efficiently using an [Extrusion](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Extrusion) node.
 
-Creating extruded shapes
-========================
+## Creating extruded shapes
 
 Extruded shapes are described by:
 
@@ -24,8 +22,7 @@ Extruded shapes are like long bubbles created with a bubble wand:
 - The bubble wand's outline is the cross-section
 - The path along which you swing the wand is the spine
 
-Syntax: Extrusion
-=================
+## Syntax: Extrusion
 
 An [Extrusion](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Extrusion) geometry node creates extruded geometry:
 
@@ -33,8 +30,7 @@ An [Extrusion](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part0
 - *spine* - 3-D sweep path
 - *endCap* and *beginCap* - cap ends
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -48,8 +44,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -70,8 +65,7 @@ An [Extrusion](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part0
 - *ccw* - faces are counter-clockwise
 - *convex* - faces are convex
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -84,8 +78,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -99,8 +92,7 @@ Shape {
 }
 ```
 
-Squishing and twisting extruded shapes
-======================================
+## Squishing and twisting extruded shapes
 
 You can scale the cross-section along the spine:
 
@@ -111,16 +103,14 @@ You can rotate the cross-section along the spine
 
 - Twisting ribbons
 
-Syntax: Extrusion
-=================
+## Syntax: Extrusion
 
 An [Extrusion](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Extrusion) geometry node creates geometry using:
 
 - *scale* - cross-section scaling per spine point
 - *orientation* - cross-section rotation per spine point
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Shape>
@@ -132,8 +122,7 @@ XML Encoding
 </Shape>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Shape {
@@ -146,8 +135,7 @@ Shape {
 }
 ```
 
-Summary
-=======
+## Summary
 
 - An [Extrusion](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/geometry3D.html#Extrusion) node efficiently creates extruded shapes
 - The *crossSection* field specifies the cross-section

@@ -1,12 +1,10 @@
-Motivation
-==========
+## Motivation
 
 You can group shapes to compose complex shapes
 
 X3D has several grouping nodes, including:
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Group><!-- ... --></Group>
@@ -18,8 +16,7 @@ XML Encoding
 <!-- and more -->
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Group       { ... }
@@ -31,15 +28,13 @@ Inline      { ... }
 and more
 ```
 
-Syntax: Group
-=============
+## Syntax: Group
 
 The [Group](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Group) node creates a basic group.
 
 - Every child node in the group is displayed.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Group>
@@ -47,8 +42,7 @@ XML Encoding
 </Group>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Group {
@@ -56,8 +50,7 @@ Group {
 }
 ```
 
-Syntax: Switch
-==============
+## Syntax: Switch
 
 The [Switch](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Switch) group node creates a switched group
 
@@ -66,8 +59,7 @@ The [Switch](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/
   - Children implicitly numbered from 0
   - A -1 selects no children
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Switch
@@ -76,8 +68,7 @@ XML Encoding
 </Switch>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Switch {
@@ -86,15 +77,13 @@ Switch {
 }
 ```
 
-Syntax: Transform
-=================
+## Syntax: Transform
 
 The [Transform](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Transform) group node creates a group with its own coordinate system.
 
 - Every child node in the group is displayed.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Transform
@@ -105,8 +94,7 @@ XML Encoding
 </Transform>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Transform {
@@ -117,16 +105,14 @@ Transform {
 }
 ```
 
-Syntax: Billboard
-=================
+## Syntax: Billboard
 
 The [Billboard](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/navigation.html#Billboard) group node creates a group with a special coordinate system.
 
 - Every child node in the group is displayed.
 - The coordinate system is turned to face viewer.
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Billboard
@@ -135,8 +121,7 @@ XML Encoding
 </Billboard>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Billboard {
@@ -145,8 +130,7 @@ Billboard {
 }
 ```
 
-Billboard rotation axes
-=======================
+## Billboard rotation axes
 
 - A rotation axis defines a pole to rotate round
 - Similar to a Transform node's rotation field, but no angle (auto computed)
@@ -160,11 +144,9 @@ Billboard rotation axes
 | Z-Axis       | 0.0 0.0 1.0 |
 | Any Axis     | 0.0 0.0 0.0 |
 
-A sample billboard group
-========================
+## A sample billboard group
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <!-- Y-axis -->
@@ -177,8 +159,7 @@ XML Encoding
 </Billboard>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Billboard {
@@ -193,8 +174,7 @@ Billboard {
 }
 ```
 
-Syntax: Anchor
-==============
+## Syntax: Anchor
 
 An [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Anchor) node creates a group that acts as a clickable anchor
 
@@ -202,8 +182,7 @@ An [Anchor](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/c
 - Clicking any child follows a URL
 - A description names the anchor
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Anchor
@@ -213,8 +192,7 @@ XML Encoding
 </Anchor>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Anchor {
@@ -224,24 +202,21 @@ Anchor {
 }
 ```
 
-Syntax: Inline
-==============
+## Syntax: Inline
 
 An [Inline](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/networking.html#Inline) node creates a special group from another X3D file's contents
 
 - Children read from file selected by a URL
 - Every child node in group is displayed
 
-XML Encoding
-------------
+### XML Encoding
 
 ```xml
 <Inline
   url='"table.wrl"'/>
 ```
 
-Classic Encoding
-----------------
+### Classic Encoding
 
 ```js
 Inline {
@@ -249,8 +224,7 @@ Inline {
 }
 ```
 
-Summary
-=======
+## Summary
 
 - The [Group](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Group) node creates a basic group
 - The [Switch](https://www.web3d.org/documents/specifications/19775-1/V3.3/Part01/components/group.html#Switch) node creates a group with 1 choice used
