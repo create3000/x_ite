@@ -18,14 +18,14 @@ $link-color: #b3531a !default;
    top: -69px;
 }
 
+.author__content a {
+   display: none;
+}
+
 .author__bio {
    position: relative;
    top: -42px;
    font-size: 9pt;
-}
-
-.author__content a {
-   display: none;
 }
 
 .author__urls-wrapper {
@@ -35,6 +35,22 @@ $link-color: #b3531a !default;
 
 .h-card {
    height: 0px;
+}
+
+@media (min-width: 48em)
+{
+   .author__avatar {
+      top: -76px;
+   }
+
+   .author__bio {
+      top: -46px;
+   }
+
+   .author__urls-wrapper {
+      left: 8px;
+      top: 18px;
+   }
 }
 
 @media (min-width: 64em)
@@ -48,14 +64,14 @@ $link-color: #b3531a !default;
       top: unset;
    }
 
+   .author__content a {
+      display: unset;
+   }
+
    .author__bio {
       position: unset;
       top: unset;
       font-size: unset;
-   }
-
-   .author__content a {
-      display: unset;
    }
 
    .author__urls-wrapper {
