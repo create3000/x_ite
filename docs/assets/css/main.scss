@@ -57,7 +57,7 @@ $link-color: #b3531a !default;
 @media (min-width: 64em)
 {
    .masthead__inner-wrap {
-      padding-left: 0px;
+      padding-left: unset;
    }
 
    .author__avatar {
