@@ -606,7 +606,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 ## X\_ITE v4.2.14 Released
 
-*Leipzig, 16th December 2018:* This version implements the StringSensor from the KeyDeviceSensor component and we found a really phat bug in X3DComposedGeometryNode normal generation, which affects TriangleSet, IndexedTriangleSet, QuadSet, and so on. We also tested X\_ITE against <http://x3dgraphics.com/examples/X3dForWebAuthors/index.html/index.html> and fixed all bugs found.
+*Leipzig, 16th December 2018:* This version implements the StringSensor from the KeyDeviceSensor component and we found a really phat bug in X3DComposedGeometryNode normal generation, which affects TriangleSet, IndexedTriangleSet, QuadSet, and so on. We also tested X\_ITE against <http://x3dgraphics.com/examples/X3dForWebAuthors/index.html> and fixed all bugs found.
 
 {% capture notice-text %}
 #### New Features

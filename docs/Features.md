@@ -22,7 +22,7 @@ Although WebGL acts behind the scenes you do not need any special knowledge abou
 
 X\_ITE comes with a high performance JavaScript rendering engine, ie. developers may be completely free of worry about performance optimizations in their code.
 
-We offer full [X3D ECMAScript](/x_ite/ECMAScript-Object-and-Function-Definitions.html) support to give you the best scripting tools you can get.
+We offer full [X3D ECMAScript](/x_ite/reference/ECMAScript-Object-and-Function-Definitions.html) support to give you the best scripting tools you can get.
 
 X3D comes with a fixed set of objects, called *nodes,* which will cover most of your needs. But it's creators have also planned ahead, knowing that you'll sometimes have to create your own objects. The prototyping feature lets you create complex objects that you can reuse, changing certain characteristics of the objects when desired.
 
