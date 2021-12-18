@@ -812,7 +812,7 @@ CDNs can offer a performance benefit by hosting X\_ITE on servers spread across 
 
 GitCDN serves raw files directly from GitHub with proper Content-Type headers and a super fast CDN!
 
-#### Snipped:
+#### Snipped
 
 If you are on production and everything works fine, then use a numbered version.
 
@@ -834,7 +834,7 @@ If you are a developer or you always wanna be up to date:
 
 Open Source CDN, free, fast, and reliable.
 
-#### Snipped:
+#### Snipped
 
 ```html
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/create3000/x_ite@latest/dist/x_ite.css"/>
