@@ -927,57 +927,57 @@ For example, we could provide a text description of the X3D element or provide a
 
 The HTML **&lt;X3DCanvas&gt;** tag defines the main content of the X3D document. The &lt;X3DCanvas&gt; tag has three attributes that define different behaviours. All of these attributes are optional.
 
-**cache**
+### cache
 
 A Boolean value (`true` or `false`) to indicate whether files transferred over the internet should be cached on the local computer. The default value for the cache attribute is true. It works by appending "\_={timestamp}" to the GET parameters of every request.
 {: .notice}
 
-**contextMenu**
+### contextMenu
 
 A Boolean value (`true` or `false`) to indicate whether a context menu should be displayed on right click. The default value for the contextMenu attribute is true.
 {: .notice}
 
-**notifications**
+### notifications
 
 A Boolean value (`true` or `false`) to indicate whether the notification bubble should be displayed. The default value for the notifications attribute is true.
 {: .notice}
 
-**onerror**
+### onerror
 
 Type: script code. This event is sent to an X3DCanvas element when an error occurs loading a scene.
 {: .notice}
 
-**onload**
+### onload
 
 Type: script code. This event handler will be called on the X3DCanvas element when a scene has finished loading. This applies whether the scene is applied via the src attribute or when a scene is loaded or replaced by another world. If you change the scene, the event will fire again when the new scene loads. This event will not bubble up the element tree.
 {: .notice}
 
-**onshutdown**
+### onshutdown
 
 Type: script code. This event handler will be called on the X3DCanvas element when a scene is unloaded or replaced by another world.
 {: .notice}
 
-**preserveDrawingBuffer**
+### preserveDrawingBuffer
 
 A Boolean value (`true` or `false`). If the value is true the drawing buffers will not be cleared and will preserve their values. The default value for preserveDrawingBuffer is false. Set preserveDrawingBuffer to true if you want to save the image from the canvas. Keep in mind setting preserveDrawingBuffer to true can have performance implications.
 {: .notice}
 
-**splashScreen**
+### splashScreen
 
 A Boolean value (`true` or `false`) to indicate whether the splash screen should be displayed. The default value for the splashScreen attribute is true. The display of the splash screen can also be toggled via the browser option »SplashScreen« in JavaScript. Call `Browser .setBrowserOption ("SplashScreen", booleanValue)` to toggle the display of the splash screen.
 {: .notice}
 
-**src**
+### src
 
 A String value with the URL that should be loaded on page load. If no src attribute is specified or the src attribute is empty an empty scene is displayed.
 {: .notice}
 
-**timings**
+### timings
 
 A Boolean value (`true` or `false`) to indicate whether the browser timings bubble should be displayed if the context menu option is enabled. The default value for the timings attribute is true. This attribute changes the facility whether browsers timings can be displayed, if browser timings are really displayed is in the hand of the user if he toggles the context menu option to true.
 {: .notice}
 
-**url**
+### url
 
 A MFString value with urls that should be loaded on page load. If no url attribute is specified or the attribute is empty an empty scene is displayed. If both src and url attribute are specified the src attribute takes precedence.
 {: .notice}
