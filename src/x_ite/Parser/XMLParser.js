@@ -105,8 +105,9 @@ function ($,
 		constructor: XMLParser,
 		parseIntoScene: function (xmlElement, success, error)
 		{
-			this .success = success;
-			this .error   = error;
+			this .scene .dom = xmlElement;
+			this .success    = success;
+			this .error      = error;
 
 			this .getScene () .setEncoding ("XML");
 			this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));

@@ -242,8 +242,6 @@ function ($,
 			}
 			catch (exception)
 			{
-				delete this .node .dom;
-
 				if (error)
 					error (exception);
 				else
@@ -258,12 +256,10 @@ function ($,
 					success = this .setScene .bind (this, scene, success, error);
 
 				//AP: add reference to dom for later access.
-				this .node .dom = new JSONParser (scene) .parseJavaScript (jsobj, success, error);
+				this .node .dom = new JSONParser (scene) .parseIntoScene (jsobj, success, error);
 			}
 			catch (exception)
 			{
-				delete this .node .dom;
-
 				if (error)
 					error (exception);
 				else
