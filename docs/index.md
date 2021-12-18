@@ -990,7 +990,7 @@ A MFString value with urls that should be loaded on page load. If no url attribu
 
 ### More Options
 
-More options can be adjusted using the [Browser Object](/x_ite/reference/Browser-Services.html#browser-object) and Browser Options for scene specific adjustments.
+More options can be adjusted using the [Browser Object](/x_ite/reference/Browser-Services.html#browser-object) and [Browser Options](/x_ite/reference/Browser-Services.html#browser-options) for scene specific adjustments.
 
 ## Accessing the External Browser
 
