@@ -76,7 +76,7 @@ sub docs
 
 	my $config = `cat '$CWD/docs/_config.yml'`;
 
-	$config =~ s|/"Version .*?"|/"Version $VERSION"|sgo;
+	$config =~ s|/"Version\s+.*?"|/"Version $VERSION"|sgo;
 
 	open CONFIG, ">", "$CWD/docs/_config.yml";
 	print CONFIG $config;
@@ -86,7 +86,7 @@ sub docs
 
 	$home =~ s|/x_ite/\d+\.\d+\.\d+/dist/|/x_ite/$VERSION/dist/|sgo;
 
-	open HOME, ">", "index.md";
+	open HOME, ">", "$CWD/docs/index.md";
 	print HOME $home;
 	close HOME;
 }
