@@ -91,26 +91,6 @@ sub docs
 	close HOME;
 }
 
-sub wiki
-{
-	my $VERSION = shift;
-
-	chdir "$CWD/../x_ite.wiki/";
-
-	my $home = `cat 'Home.md'`;
-
-	$home =~ s|/x_ite/\d+\.\d+\.\d+/dist/|/x_ite/$VERSION/dist/|sgo;
-
-	open HOME, ">", "Home.md";
-	print HOME $home;
-	close HOME;
-
-	system "git", "add", "-A";
-	system "git", "commit", "-am", "Updated Home.md because of new version '$VERSION'";
-	system "git", "push";
-	system "git", "push", "origin";
-}
-
 my $result = system "zenity", "--question", "--text=Do you really want to publish X_ITE X3D v$VERSION-$REVISION now?", "--ok-label=Yes", "--cancel-label=No";
 
 if ($result == 0)
@@ -119,6 +99,10 @@ if ($result == 0)
 
 	# Increment revision number.
 	system "perl", "-pi", "-e", "s|\"revision\":\\s*\"(.*?)\"|\"revision\": \"$REVISION\"|sg", "package.json";
+
+	# docs
+
+	docs ($VERSION) unless $ALPHA;
 
 	# GitHub
 
@@ -141,12 +125,4 @@ if ($result == 0)
 	}
 
 	upload;
-
-	# docs
-
-	docs ($VERSION) unless $ALPHA;
-
-	# Wiki
-
-	wiki ($VERSION) unless $ALPHA;
 }
