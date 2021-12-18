@@ -186,7 +186,7 @@ A complete function reference for the X3DBrowser object and all other X3D JavaSc
 
 Adding HTML controls to your scene is no rocket science. We have added some HTML buttons below the X3DCanvas, which on click call a callback function.
 
-JavaScript:
+### The JavaScript
 
 ```js
 <script type="text/javascript">
@@ -260,7 +260,7 @@ function spin ()
 </script>
 ```
 
-HTML:
+### The HTML
 
 ```html
 <X3DCanvas src="external-browser.x3d" onload="init ()"/>
@@ -283,6 +283,6 @@ HTML:
 
 The init function is called when the scene is loaded and installs a field callback that is called when the models are clicked. The various callback functions first obtains the different nodes and then alter a field of the nodes.
 
-X3D:
+### The X3D
 
 The scene defines different named nodes with the »DEF« attribute, which can be accessed later. Download [adrenaline.x3d](https://create3000.github.io/media/x_ite/external-browser/adrenaline.x3d).
