@@ -8,3 +8,62 @@ $link-color: #b3531a !default;
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+
+.masthead__inner-wrap {
+   padding-left: 67px;
+}
+
+.author__avatar {
+   position: relative;
+   top: -69px;
+}
+
+.author__bio {
+   position: relative;
+   top: -42px;
+   font-size: 9pt;
+}
+
+.author__content a {
+   display: none;
+}
+
+.author__urls-wrapper {
+   position: relative;
+   top: 13px;
+}
+
+.h-card {
+   height: 0px;
+}
+
+@media (min-width: 80em)
+{
+   .masthead__inner-wrap {
+      padding-left: 0px;
+   }
+
+   .author__avatar {
+      position: unset;
+      top: unset;
+   }
+
+   .author__bio {
+      position: unset;
+      top: unset;
+      font-size: unset;
+   }
+
+   .author__content a {
+      display: unset;
+   }
+
+   .author__urls-wrapper {
+      position: unset;
+      top: unset;
+   }
+
+   .h-card {
+      height: unset;
+   }
+}
