@@ -1,5 +1,31 @@
 # What's New
 
+## X\_ITE v4.7.1 Released
+
+*Leipzig, 19th December 2021*: This release fixed a lot of bugs, but also implements new features. Especially MF* fields can now be used within `for of` loops. X3DBindableNode nodes do work now proper when cloned in multiple layers.
+
+{% capture notice-text %}
+#### New Features
+  - Added layerNode argument to `Browser.changeViewpoint([layerNode,] name)`.
+  - Implemented Symbol.iteratol for MF* fields. This enabled `for of` loops.
+  - Improved X3DBindableNode handling when cloned in multiple layers.
+{% endcapture %}
+<div class="notice--success">{{ notice-text | markdownify }}</div>
+
+{% capture notice-text %}
+#### Bug Fixes
+
+- Abort loading if loadURL is called more than once.
+- Fixed load count handling.
+- Fixed LOD.
+- Fixed call outstanding events of inputOutput's of Script node when initialized.
+- Preload line shader when WALK/FLY viewer becomes active.
+- Prevent bug in Firefox that event loop is broken when pressing special keys. (#86)
+- Display submenus of context menu on left side if there is no space on right side. (#86)
+- Fixed fatal bug in OrthoViewpoint (#84).
+{% endcapture %}
+<div class="notice--success">{{ notice-text | markdownify }}</div>
+
 ## X\_ITE v4.7.0 Released
 
 *Leipzig, 5th December 2021*: This release implements some of the new X3Dv4 Features. X3Dv4 Draft is available at <https://www.web3d.org/specifications/X3Dv4Draft/ISO-IEC19775-1v4-CD1/Part01/Architecture.html>.
