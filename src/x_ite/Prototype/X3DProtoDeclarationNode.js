@@ -50,12 +50,10 @@
 define ([
 	"x_ite/Components/Core/X3DNode",
 	"x_ite/Components/Core/X3DPrototypeInstance",
-	"x_ite/Bits/X3DConstants",
 	"x_ite/Fields/SFNodeCache",
 ],
 function (X3DNode,
           X3DPrototypeInstance,
-          X3DConstants,
           SFNodeCache)
 {
 "use strict";
@@ -80,10 +78,10 @@ function (X3DNode,
 			}
 			else
 			{
-				var instance = new X3DPrototypeInstance (executionContext, this);
-	
+				const instance = new X3DPrototypeInstance (executionContext, this);
+
 				instance .setup ();
-	
+
 				return SFNodeCache .add (instance);
 			}
 		},

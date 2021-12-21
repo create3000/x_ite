@@ -93,6 +93,8 @@ function (Fields,
 		this ._metadata      = new Map ();
 		this ._exportedNodes = new Map ();
 
+		this .rootNodes_ .setAccessType (X3DConstants .inputOutput);
+
 		this .setLive (false);
 	}
 

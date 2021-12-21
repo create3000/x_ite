@@ -97,9 +97,12 @@ function (X3DBaseNode)
 
 					for (let i = 1, length = this .array .length; i < length; ++ i)
 					{
-						const node = this .array [i];
+						const
+							node     = this .array [i],
+							instance = node .getExecutionContext () .getInstance (),
+							scene    = instance ?  instance .getScene () : node .getScene ();
 
-						if (! enableInlineBindables && node .getScene () !== mainScene)
+						if (! enableInlineBindables && scene !== mainScene)
 							continue;
 
 						if (node .getName () == name)
@@ -111,9 +114,12 @@ function (X3DBaseNode)
 
 				for (let i = 1, length = this .array .length; i < length; ++ i)
 				{
-					const node = this .array [i];
+					const
+						node     = this .array [i],
+						instance = node .getExecutionContext () .getInstance (),
+						scene    = instance ?  instance .getScene () : node .getScene ();
 
-					if (! enableInlineBindables && node .getScene () !== mainScene)
+					if (! enableInlineBindables && scene !== mainScene)
 						continue;
 
 					if (node .isBound_ .getValue ())
@@ -124,9 +130,12 @@ function (X3DBaseNode)
 
 				for (let i = 1, length = this .array .length; i < length; ++ i)
 				{
-					const node = this .array [i];
+					const
+						node     = this .array [i],
+						instance = node .getExecutionContext () .getInstance (),
+						scene    = instance ?  instance .getScene () : node .getScene ();
 
-					if (! enableInlineBindables && node .getScene () !== mainScene)
+					if (! enableInlineBindables && scene !== mainScene)
 						continue;
 
 					return node;

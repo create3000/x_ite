@@ -148,12 +148,12 @@ function (SFBool,
 			clone .setModificationTime (0);
 			return clone;
 		},
-		copy: function (executionContext)
+		copy: function (instance)
 		{
 			const copy = new MFNode ();
 
 			for (const node of this .getValue ())
-				copy .push (node .copy (executionContext));
+				copy .push (node .copy (instance));
 
 			copy .setModificationTime (0);
 

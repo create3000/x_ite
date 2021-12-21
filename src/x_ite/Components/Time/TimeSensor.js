@@ -165,11 +165,11 @@ function (Fields,
 				currentTime   = this .getBrowser () .getCurrentTime (),
 				startTime     = this .startTime_ .getValue ();
 
-			this .setRange (Algorithm .fract (this .fraction - (currentTime - startTime) / this .interval), this .range_ [1], this .range_ [2]);
+			this .setRange (this .interval ? Algorithm .fract (this .fraction - (currentTime - startTime) / this .interval) : 0, this .range_ [1], this .range_ [2]);
 		},
 		set_fraction: function (time)
 		{
-			this .fraction_changed_ = this .fraction = this .first + Algorithm .fract ((time - this .cycle) / this .interval) * this .scale;
+			this .fraction_changed_ = this .fraction = this .first + (this .interval ? Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
 		},
 		set_time: function ()
 		{

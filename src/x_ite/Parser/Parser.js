@@ -859,11 +859,13 @@ function (Fields,
 									proto .addUserDefinedField (field .getAccessType (), field .getName (), field);
 								}
 
-								this .pushExecutionContext (proto);
+								this .pushPrototype (proto);
+								this .pushExecutionContext (proto .getBody ());
 
 								this .protoBody ();
 
 								this .popExecutionContext ();
+								this .popPrototype ();
 
 								this .comments ();
 
@@ -1425,11 +1427,11 @@ function (Fields,
 
 										try
 										{
-											var reference = this .getExecutionContext () .getField (isId);
+											var reference = this .getPrototype () .getField (isId);
 										}
 										catch (error)
 										{
-											this .exception ("No such event or field '" + isId + "' inside PROTO " + this .getExecutionContext () .getName () + " interface declaration.");
+											this .exception ("No such event or field '" + isId + "' inside PROTO " + this .getPrototype () .getName () + " interface declaration.");
 
 											return true;
 										}
@@ -1458,10 +1460,10 @@ function (Fields,
 												return true;
 											}
 
-											throw new Error ("Field '" + fieldId + "' and '" + reference .getName () + "' in PROTO '" + this .getExecutionContext () .getName () + "' are incompatible as an IS mapping.");
+											throw new Error ("Field '" + fieldId + "' and '" + reference .getName () + "' in PROTO '" + this .getPrototype () .getName () + "' are incompatible as an IS mapping.");
 										}
 
-										throw new Error ("Field '" + fieldId + "' and '" + reference .getName () + "' in PROTO '" + this .getExecutionContext () .getName () + "' have different types.");
+										throw new Error ("Field '" + fieldId + "' and '" + reference .getName () + "' in PROTO '" + this .getPrototype () .getName () + "' have different types.");
 									}
 
 									throw new Error ("No name give after IS statement.");
@@ -1555,11 +1557,11 @@ function (Fields,
 
 							try
 							{
-								var reference = this .getExecutionContext () .getField (isId);
+								var reference = this .getPrototype () .getField (isId);
 							}
 							catch (error)
 							{
-								this .exception ("No such event or field '" + isId + "' inside PROTO " + this .getExecutionContext () .getName ());
+								this .exception ("No such event or field '" + isId + "' inside PROTO " + this .getPrototype () .getName ());
 
 								return true;
 							}
@@ -1572,10 +1574,10 @@ function (Fields,
 									return true;
 								}
 
-								throw new Error ("Field '" + field .getName () + "' and '" + reference .getName () + "' in PROTO " + this .getExecutionContext () . getName () + " are incompatible as an IS mapping.");
+								throw new Error ("Field '" + field .getName () + "' and '" + reference .getName () + "' in PROTO " + this .getPrototype () . getName () + " are incompatible as an IS mapping.");
 							}
 
-							throw new Error ("Field '" + field .getName () + "' and '" + reference .getName () + "' in PROTO " + this .getExecutionContext () .getName () + " have different types.");
+							throw new Error ("Field '" + field .getName () + "' and '" + reference .getName () + "' in PROTO " + this .getPrototype () .getName () + " have different types.");
 						}
 
 						throw new Error("No name give after IS statement.");

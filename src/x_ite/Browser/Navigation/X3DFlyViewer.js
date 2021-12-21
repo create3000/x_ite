@@ -110,7 +110,7 @@ function ($,
 		{
 			X3DViewer .prototype .initialize .call (this);
 
-			var
+			const
 			   browser = this .getBrowser (),
 			   element = browser .getSurface ();
 
@@ -133,8 +133,18 @@ function ($,
 
 			// Preload line shader.
 
-			if (browser .getBrowserOption ("Rubberband"))
-				browser .getLineShader ();
+
+				this .initShaders ()
+		},
+		initShaders: function ()
+		{
+			const browser = this .getBrowser ();
+
+			if (!browser .getBrowserOption ("Rubberband"))
+				return;
+
+			browser .getLineShader ();
+			browser .getDepthShader ();
 		},
 		addCollision: function () { },
 		removeCollision: function () { },

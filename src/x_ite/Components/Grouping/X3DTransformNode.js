@@ -51,7 +51,7 @@ define ([
 	"x_ite/Components/Grouping/X3DTransformMatrix3DNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DTransformMatrix3DNode, 
+function (X3DTransformMatrix3DNode,
           X3DConstants)
 {
 "use strict";
@@ -72,7 +72,7 @@ function (X3DTransformMatrix3DNode,
 		initialize: function ()
 		{
 			X3DTransformMatrix3DNode .prototype .initialize .call (this);
-			
+
 			this .addInterest ("eventsProcessed", this);
 
 			this .eventsProcessed ();
@@ -93,5 +93,3 @@ function (X3DTransformMatrix3DNode,
 
 	return X3DTransformNode;
 });
-
-

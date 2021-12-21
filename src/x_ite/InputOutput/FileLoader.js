@@ -51,7 +51,6 @@ define ([
 	"jquery",
 	"x_ite/Base/X3DObject",
 	"x_ite/Fields",
-	"x_ite/Browser/Networking/urls",
 	"x_ite/Parser/Parser",
 	"x_ite/Parser/XMLParser",
 	"x_ite/Parser/JSONParser",
@@ -64,7 +63,6 @@ define ([
 function ($,
           X3DObject,
           Fields,
-          urls,
           Parser,
           XMLParser,
           JSONParser,
@@ -141,12 +139,12 @@ function ($,
 					function (scene, string, success, error)
 					{
 						// Try parse X3D XML Encoding.
-						setTimeout (this .importDocument .bind (this, scene, $.parseXML (string), success, error), TIMEOUT);
+						this .importDocument (scene, $.parseXML (string), success, error);
 					},
 					function (scene, string, success, error)
 					{
 						// Try parse X3D JSON Encoding.
-						setTimeout (this .importJS .bind (this, scene, JSON .parse (string), success, error), TIMEOUT);
+						this .importJS (scene, JSON .parse (string), success, error);
 					},
 					function (scene, string, success, error)
 					{

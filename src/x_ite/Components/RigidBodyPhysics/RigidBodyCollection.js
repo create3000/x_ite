@@ -318,8 +318,12 @@ function (Fields,
 			for (var i = 0, length = this .jointNodes .length; i < length; ++ i)
 				this .jointNodes [i] .setCollection (null);
 
+			this .jointNodes .length = 0;
+
 			for (var i = 0, length = this .otherJointNodes .length; i < length; ++ i)
 				this .otherJointNodes [i] .collection_ .removeInterest ("set_joints__", this);
+
+			this .otherJointNodes .length = 0;
 
 			for (var i = 0, length = this .joints_ .length; i < length; ++ i)
 			{

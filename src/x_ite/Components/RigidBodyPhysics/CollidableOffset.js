@@ -129,6 +129,7 @@ function (Fields,
 			if (this .collidableNode)
 			{
 				this .collidableNode .removeInterest ("addNodeEvent", this);
+				this .collidableNode .compoundShape_changed_ .removeFieldInterest (this .compoundShape_changed_);
 
 				this .collidableNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
 				this .collidableNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
@@ -142,6 +143,7 @@ function (Fields,
 			if (this .collidableNode)
 			{
 				this .collidableNode .addInterest ("addNodeEvent", this);
+				this .collidableNode .compoundShape_changed_ .addFieldInterest (this .compoundShape_changed_);
 
 				this .collidableNode .isCameraObject_   .addFieldInterest (this .isCameraObject_);
 				this .collidableNode .isPickableObject_ .addFieldInterest (this .isPickableObject_);
@@ -208,6 +210,8 @@ function (Fields,
 
 			if (this .collidableNode && this .enabled_ .getValue ())
 				this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collidableNode .getCompoundShape ());
+
+			this .compoundShape_changed_ = this .getBrowser () .getCurrentTime ();
 		},
 		traverse: function (type, renderObject)
 		{

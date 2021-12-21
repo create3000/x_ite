@@ -82,6 +82,7 @@ function (Fields,
 
 		this .addChildObjects ("rootNodes", new Fields .MFNode ());
 
+		this .rootNodes_ .setAccessType (X3DConstants .initializeOnly);
 		this .rootNodes_ .addCloneCount (1);
 
 		this ._namedNodes     = new Map ();
@@ -103,6 +104,18 @@ function (Fields,
 		isRootContext: function ()
 		{
 			return false;
+		},
+		getInstance: function ()
+		{
+			const X3DPrototypeInstance = require ("x_ite/Components/Core/X3DPrototypeInstance");
+
+			for (const node of this .getParents ())
+			{
+				if (node instanceof X3DPrototypeInstance)
+					return node;
+			}
+
+			return null;
 		},
 		getSpecificationVersion: function ()
 		{

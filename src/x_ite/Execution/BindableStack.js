@@ -116,17 +116,18 @@ function (X3DBaseNode)
 			{
 				const index = this .array .indexOf (removedNode);
 
-				if (index > -1)
-				{
+				if (index > 0)
 					this .array .splice (index, 1);
-				}
 			}
 
 			// Unbind nodes with set_bind false and pop top node.
 
-			if (changedNodes .some (node => ! node .set_bind_ .getValue () && node === boundNode))
+			if (boundNode !== this .array [0])
 			{
-				this .array .pop ();
+				if (changedNodes .some (node => ! node .set_bind_ .getValue () && node === boundNode))
+				{
+					this .array .pop ();
+				}
 			}
 
 			// Push nodes with set_bind true to top of stack.

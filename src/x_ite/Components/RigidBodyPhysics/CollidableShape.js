@@ -420,6 +420,7 @@ function (Fields,
 				this .getCompoundShape () .setLocalScaling (localScaling);
 
 				this .addNodeEvent ();
+				this .compoundShape_changed_ = this .getBrowser () .getCurrentTime ();
 			};
 		})(),
 		removeCollidableGeometry: function ()

@@ -225,9 +225,7 @@ function (Fields,
 		set_rubberband__: function (rubberband)
 		{
 			this .getBrowser () .getLocalStorage () ["BrowserOptions.Rubberband"] = rubberband .getValue ();
-
-			if (rubberband .getValue () && this .getBrowser () .getViewer () instanceof X3DFlyViewer)
-				this .getBrowser () .getLineShader ();
+			this .getBrowser () .getViewer () .initShaders ();
 		},
 		set_primitiveQuality__: function (value)
 		{

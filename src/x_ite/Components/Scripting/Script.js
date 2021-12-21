@@ -370,7 +370,7 @@ function ($,
 		},
 		set_live__: function ()
 		{
-			if (this .isLive () .getValue ())
+			if (true || this .isLive () .getValue ())
 			{
 				if ($.isFunction (this .context .prepareEvents))
 					this .getBrowser () .prepareEvents () .addInterest ("prepareEvents__", this);

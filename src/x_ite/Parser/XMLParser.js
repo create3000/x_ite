@@ -146,7 +146,11 @@ function ($,
 							{
 								try
 								{
+									console.log();
+									const live = this .getScene () .isLive () .getValue ();
+									this .getScene () .setLive (true);
 									this .childrenElements (xmlElement);
+									this .getScene () .setLive (live);
 
 									this .success (this);
 								}
@@ -555,11 +559,13 @@ function ($,
 						case "ProtoBody":
 						case "PROTOBODY":
 						{
-							this .pushExecutionContext (proto);
+							this .pushPrototype (proto);
+							this .pushExecutionContext (proto .getBody ());
 							this .pushParent (proto);
 							this .protoBodyElement (child);
 							this .popParent ();
 							this .popExecutionContext ();
+							this .popPrototype ();
 							break;
 						}
 						default:
@@ -646,7 +652,7 @@ function ($,
 		},
 		isElement: function (xmlElement)
 		{
-			if (this .getExecutionContext () instanceof X3DProtoDeclaration)
+			if (this .isInsideProtoDefinition ())
 			{
 				var childNodes = xmlElement .childNodes;
 
@@ -683,7 +689,7 @@ function ($,
 
 				var
 					node  = this .getParent (),
-					proto = this .getExecutionContext ();
+					proto = this .getPrototype ();
 
 				if (! (node instanceof X3DBaseNode))
 					return;
@@ -697,10 +703,10 @@ function ($,
 					if (protoField .isReference (nodeField .getAccessType ()))
 						nodeField .addReference (protoField);
 					else
-						throw new Error ("Field '" + nodeField .getName () + "' and '" + protoField .getName () + "' in PROTO " + this .getExecutionContext () . getName () + " are incompatible as an IS mapping.");
+						throw new Error ("Field '" + nodeField .getName () + "' and '" + protoField .getName () + "' in PROTO " + proto .getName () + " are incompatible as an IS mapping.");
 				}
 				else
-					throw new Error ("Field '" + nodeField .getName () + "' and '" + protoField .getName () + "' in PROTO " + this .getExecutionContext () .getName () + " have different types.");
+					throw new Error ("Field '" + nodeField .getName () + "' and '" + protoField .getName () + "' in PROTO " + this .proto .getName () + " have different types.");
 			}
 			catch (error)
 			{
@@ -1114,9 +1120,9 @@ function ($,
 	XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix3d]  = Parser .prototype .sfmatrix3fValue;
 	XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix4f]  = Parser .prototype .sfmatrix4dValue;
 	XMLParser .prototype .fieldTypes [X3DConstants .SFMatrix4d]  = Parser .prototype .sfmatrix4fValue;
-	XMLParser .prototype .fieldTypes [X3DConstants .SFNode]      = function (field) { field .set (null); };
+	XMLParser .prototype .fieldTypes [X3DConstants .SFNode]      = function (field) { field .setValue (null); };
 	XMLParser .prototype .fieldTypes [X3DConstants .SFRotation]  = Parser .prototype .sfrotationValue;
-	XMLParser .prototype .fieldTypes [X3DConstants .SFString]    = function (field) { field .set (Fields .SFString .unescape (this .input)); };
+	XMLParser .prototype .fieldTypes [X3DConstants .SFString]    = function (field) { field .setValue (Fields .SFString .unescape (this .input)); };
 	XMLParser .prototype .fieldTypes [X3DConstants .SFTime]      = Parser .prototype .sftimeValue;
 	XMLParser .prototype .fieldTypes [X3DConstants .SFVec2d]     = Parser .prototype .sfvec2dValue;
 	XMLParser .prototype .fieldTypes [X3DConstants .SFVec2f]     = Parser .prototype .sfvec2fValue;

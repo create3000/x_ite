@@ -73,7 +73,8 @@ function (Fields,
 
 		this .addType (X3DConstants .X3DNBodyCollidableNode);
 
-		this .addChildObjects ("body", new Fields .SFNode ());
+		this .addChildObjects ("body",                  new Fields .SFNode (),
+		                       "compoundShape_changed", new Fields .SFTime ());
 
 		// Units
 

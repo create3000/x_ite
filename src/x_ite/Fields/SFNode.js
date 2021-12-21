@@ -149,12 +149,12 @@ function (X3DField,
 		{
 			return new SFNode (this .getValue ());
 		},
-		copy: function (executionContext)
+		copy: function (instance)
 		{
 			var value = this .getValue ();
 
 			if (value)
-				return new SFNode (value .copy (executionContext));
+				return new SFNode (value .copy (instance));
 
 			return new SFNode ();
 		},

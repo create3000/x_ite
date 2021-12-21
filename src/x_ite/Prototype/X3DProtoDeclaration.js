@@ -48,7 +48,6 @@
 
 
 define ([
-	"jquery",
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
@@ -57,8 +56,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function ($,
-          Fields,
+function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DExecutionContext,
@@ -71,15 +69,15 @@ function ($,
 	function X3DProtoDeclaration (executionContext)
 	{
 		X3DProtoDeclarationNode .call (this, executionContext);
-		X3DExecutionContext     .call (this, executionContext);
 
 		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 
 		this .setLive (false);
+
+		this .body = new X3DExecutionContext (executionContext);
 	}
 
-	X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
-		X3DProtoDeclarationNode .prototype,
+	X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
 	{
 		constructor: X3DProtoDeclaration,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -101,18 +99,17 @@ function ($,
 		{
 			X3DProtoDeclarationNode .prototype .initialize .call (this);
 
+			this .body .setup ();
+
 			this .loadState_ = X3DConstants .COMPLETE_STATE;
-		},
-		getBody: function ()
-		{
-			return this;
 		},
 		getProtoDeclaration: function ()
 		{
-			if (arguments .length)
-				return X3DExecutionContext .prototype .getProtoDeclaration .apply (this, arguments);
-
 			return this;
+		},
+		getBody: function ()
+		{
+			return this .body;
 		},
 		checkLoadState: function ()
 		{
@@ -128,7 +125,7 @@ function ($,
 		},
 		toVRMLStream: function (stream)
 		{
-			var generator = Generator .Get (stream);
+			const generator = Generator .Get (stream);
 
 			stream .string += generator .Indent ();
 			stream .string += "PROTO";
@@ -139,10 +136,11 @@ function ($,
 
 			generator .EnterScope ();
 
-			var
-				fieldTypeLength   = 0,
-				accessTypeLength  = 0,
-				userDefinedFields = this .getUserDefinedFields ();
+			const userDefinedFields = this .getUserDefinedFields ();
+
+			let
+				fieldTypeLength  = 0,
+				accessTypeLength = 0;
 
 			if (userDefinedFields .size === 0)
 			{
@@ -183,7 +181,7 @@ function ($,
 
 			generator .IncIndent ();
 
-			X3DExecutionContext .prototype .toVRMLStream .call (this, stream);
+			this .body .toVRMLStream (stream);
 
 			generator .DecIndent ();
 
@@ -192,7 +190,7 @@ function ($,
 		},
 		toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
 		{
-			var generator = Generator .Get (stream);
+			const generator = Generator .Get (stream);
 
 			stream .string += generator .Indent ();
 			stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
@@ -210,7 +208,7 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			var generator = Generator .Get (stream);
+			const generator = Generator .Get (stream);
 
 			stream .string += generator .Indent ();
 			stream .string += "<ProtoDeclare";
@@ -225,7 +223,7 @@ function ($,
 
 			generator .EnterScope ();
 
-			var userDefinedFields = this .getUserDefinedFields ();
+			const userDefinedFields = this .getUserDefinedFields ();
 
 			if (userDefinedFields .size !== 0)
 			{
@@ -318,7 +316,7 @@ function ($,
 
 			generator .IncIndent ();
 
-			X3DExecutionContext .prototype .toXMLStream .call (this, stream);
+			this .body .toXMLStream .call (stream);
 
 			generator .DecIndent ();
 

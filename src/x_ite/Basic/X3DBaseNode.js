@@ -249,103 +249,36 @@ function (X3DEventObject,
 		{
 			return new (this .constructor) (executionContext);
 		},
-		copy: (function ()
+		copy: function (instance)
 		{
-			function needsName (baseNode)
+			const executionContext = instance .getBody ();
+
+			// First try to get a named node with the node's name.
+
+			const name = this .getName ();
+
+			if (name .length)
 			{
-				if (baseNode .getCloneCount () > 1)
-					return true;
+				const namedNode = executionContext .getNamedNodes () .get (name);
 
-				if (baseNode .hasRoutes ())
-					return true;
-
-				return false;
+				if (namedNode)
+					return namedNode;
 			}
 
-			return function (executionContext)
+			// Create copy.
+
+			const copy = this .create (executionContext);
+
+			if (name .length)
+				executionContext .updateNamedNode (name, copy);
+
+			// Default fields
+
+			this .getPredefinedFields () .forEach (function (sourceField)
 			{
-				// First try to get a named node with the node's name.
-
-				const name = this .getName ();
-
-				if (name .length)
+				try
 				{
-					const namedNode = executionContext .getNamedNodes () .get (name);
-
-					if (namedNode)
-						return namedNode;
-				}
-				else
-				{
-					if (needsName (this))
-						this .getExecutionContext () .updateNamedNode (this .getExecutionContext () .getUniqueName (name), this);
-				}
-
-				// Create copy.
-
-				const copy = this .create (executionContext);
-
-				if (name .length)
-					executionContext .updateNamedNode (name, copy);
-
-				// Default fields
-
-				this .getPredefinedFields () .forEach (function (sourceField)
-				{
-					try
-					{
-						const destfield = copy .getField (sourceField .getName ());
-
-						if (sourceField .hasReferences ())
-						{
-							// IS relationship
-
-							sourceField .getReferences () .forEach (function (originalReference)
-							{
-								try
-								{
-									destfield .addReference (executionContext .getField (originalReference .getName ()));
-								}
-								catch (error)
-								{
-									console .error (error .message);
-								}
-							});
-						}
-						else
-						{
-							if (sourceField .getAccessType () & X3DConstants .initializeOnly)
-							{
-								switch (sourceField .getType ())
-								{
-									case X3DConstants .SFNode:
-									case X3DConstants .MFNode:
-										destfield .set (sourceField .copy (executionContext) .getValue ());
-										break;
-									default:
-										destfield .set (sourceField .getValue (), sourceField .length);
-										break;
-								}
-							}
-						}
-
-						destfield .setModificationTime (sourceField .getModificationTime ());
-					}
-					catch (error)
-					{
-						console .log (error .message);
-					}
-				});
-
-				// User-defined fields
-
-				this .getUserDefinedFields () .forEach (function (sourceField)
-				{
-					const destfield = sourceField .copy (executionContext);
-
-					copy .addUserDefinedField (sourceField .getAccessType (),
-					                           sourceField .getName (),
-					                           destfield);
+					const destfield = copy .getField (sourceField .getName ());
 
 					if (sourceField .hasReferences ())
 					{
@@ -355,23 +288,73 @@ function (X3DEventObject,
 						{
 							try
 							{
-								destfield .addReference (executionContext .getField (originalReference .getName ()));
+								destfield .addReference (instance .getField (originalReference .getName ()));
 							}
 							catch (error)
 							{
-								console .error ("No reference '" + originalReference .getName () + "' inside execution context " + executionContext .getTypeName () + " '" + executionContext .getName () + "'.");
+								console .error (error .message);
 							}
 						});
 					}
+					else
+					{
+						if (sourceField .getAccessType () & X3DConstants .initializeOnly)
+						{
+							switch (sourceField .getType ())
+							{
+								case X3DConstants .SFNode:
+								case X3DConstants .MFNode:
+									destfield .set (sourceField .copy (instance) .getValue ());
+									break;
+								default:
+									destfield .set (sourceField .getValue (), sourceField .length);
+									break;
+							}
+						}
+					}
 
 					destfield .setModificationTime (sourceField .getModificationTime ());
-				});
+				}
+				catch (error)
+				{
+					console .log (error .message);
+				}
+			});
 
-				copy .setup ();
+			// User-defined fields
 
-				return copy;
-			};
-		})(),
+			this .getUserDefinedFields () .forEach (function (sourceField)
+			{
+				const destfield = sourceField .copy (instance);
+
+				copy .addUserDefinedField (sourceField .getAccessType (),
+													sourceField .getName (),
+													destfield);
+
+				if (sourceField .hasReferences ())
+				{
+					// IS relationship
+
+					sourceField .getReferences () .forEach (function (originalReference)
+					{
+						try
+						{
+							destfield .addReference (instance .getField (originalReference .getName ()));
+						}
+						catch (error)
+						{
+							console .error ("No reference '" + originalReference .getName () + "' inside execution context " + instance .getTypeName () + " '" + instance .getName () + "'.");
+						}
+					});
+				}
+
+				destfield .setModificationTime (sourceField .getModificationTime ());
+			});
+
+			copy .setup ();
+
+			return copy;
+		},
 		flatCopy: function (executionContext)
 		{
 			const copy = this .create (executionContext || this .getExecutionContext ());

@@ -82,8 +82,9 @@ function (X3DBaseNode,
 			return "X3DViewer";
 		},
 		initialize: function ()
-		{
-		},
+		{ },
+		initShaders: function ()
+		{ },
 		getActiveLayer: function ()
 		{
 			return this .getBrowser () .getActiveLayer ();

@@ -149,6 +149,7 @@ function ($,
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
 				return;
 
+			this .getScene () .addInitLoadCount (this);
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
 			// Don't create scene cache, due to possible default nodes in proto SFNode fields and complete scenes.
@@ -164,6 +165,8 @@ function ($,
 
 			else
 				this .setError ();
+
+			this .getScene () .removeInitLoadCount (this);
 		},
 		setInternalScene: function (value)
 		{

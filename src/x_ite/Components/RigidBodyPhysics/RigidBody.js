@@ -56,7 +56,6 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
-	"standard/Math/Numbers/Quaternion",
 	"standard/Math/Numbers/Matrix4",
 	"lib/ammojs/AmmoJS",
 ],
@@ -68,7 +67,6 @@ function (Fields,
           X3DCast,
           Vector3,
           Rotation4,
-          Quaternion,
           Matrix4,
           Ammo)
 {
@@ -371,6 +369,7 @@ function (Fields,
 				var geometryNode = geometryNodes [i];
 
 				geometryNode .removeInterest ("addEvent", this .transform_);
+				geometryNode .compoundShape_changed_ .removeInterest ("set_compoundShape__", this);
 
 				geometryNode .setBody (null);
 
@@ -410,6 +409,7 @@ function (Fields,
 				var geometryNode = geometryNodes [i];
 
 				geometryNode .addInterest ("addEvent", this .transform_);
+				geometryNode .compoundShape_changed_ .addInterest ("set_compoundShape__", this);
 
 				geometryNode .translation_ .addFieldInterest (this .position_);
 				geometryNode .rotation_    .addFieldInterest (this .orientation_);

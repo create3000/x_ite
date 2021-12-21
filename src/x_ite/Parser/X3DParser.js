@@ -47,10 +47,7 @@
  ******************************************************************************/
 
 
-define ([
-	"x_ite/Prototype/X3DProtoDeclaration",
-],
-function (X3DProtoDeclaration)
+define (function ()
 {
 "use strict";
 
@@ -58,6 +55,7 @@ function (X3DProtoDeclaration)
 	{
 		this .scene             = scene;
 		this .executionContexts = [ scene ];
+		this .prototypes        = [ ];
 		this .units             = true;
 	}
 
@@ -83,9 +81,21 @@ function (X3DProtoDeclaration)
 		{
 			this .executionContexts .pop ();
 		},
+		getPrototype: function ()
+		{
+			return this .prototypes .at (-1);
+		},
+		pushPrototype: function (prototype)
+		{
+			return this .prototypes .push (prototype);
+		},
+		popPrototype: function ()
+		{
+			this .prototypes .pop ();
+		},
 		isInsideProtoDefinition: function ()
 		{
-			return this .executionContexts .at (-1) instanceof X3DProtoDeclaration;
+			return Boolean (this .prototypes .length);
 		},
 		addRootNode: function (node)
 		{
@@ -93,28 +103,28 @@ function (X3DProtoDeclaration)
 		},
 		getProviderUrls: (function ()
 		{
-			var componentsUrl = /\.js$/;
+			const componentsUrl = /\.js$/;
 
 			return function ()
 			{
-				var
+				const
 					scene             = this .getScene (),
 					profile           = scene .getProfile () ? scene .getProfile () : scene .getBrowser () .getProfile ("Full"),
 					profileComponents = profile .components,
 					components        = scene .getComponents (),
 					providerUrls      = new Set ();
 
-				for (var i = 0, length = profileComponents .length; i < length; ++ i)
+				for (const component of profileComponents)
 				{
-					var providerUrl = profileComponents [i] .providerUrl;
+					const providerUrl = component .providerUrl;
 
 					if (providerUrl .match (componentsUrl))
 						providerUrls .add (providerUrl);
 				}
 
-				for (var i = 0, length = components .length; i < length; ++ i)
+				for (const component of components)
 				{
-					var providerUrl = components [i] .providerUrl;
+					const providerUrl = component .providerUrl;
 
 					if (providerUrl .match (componentsUrl))
 						providerUrls .add (providerUrl);
@@ -125,19 +135,19 @@ function (X3DProtoDeclaration)
 		})(),
 		setUnits: function (generator)
 		{
-			if ((typeof arguments [0]) == "boolean")
+			if (typeof arguments [0] == "boolean")
 			{
 				this .units = arguments [0];
 				return;
 			}
 
-			var
+			const
 				version = /Titania\s+V(\d+).*/,
 				match   = generator .match (version);
 
 			if (match)
 			{
-				var major = parseInt (match [1]);
+				const major = parseInt (match [1]);
 
 				// Before version 4 units are wrongly implemented.
 				if (major < 4)
