@@ -3579,7 +3579,6 @@ function (Fields,
 			X3DChildNode .prototype .initialize .call (this);
 
 			this .isLive () .addInterest ("set_enabled__", this);
-			this .getExecutionContext () .isLive () .addInterest ("set_enabled__", this);
 
 			this .enabled_                 .addInterest ("set_enabled__",                 this);
 			this .set_contacts_            .addInterest ("set_contacts__",                this);
@@ -3610,7 +3609,7 @@ function (Fields,
 		},
 		set_enabled__: function ()
 		{
-			if (this .getExecutionContext () .isLive () .getValue () && this .isLive () .getValue () && this .enabled_ .getValue ())
+			if (this .isLive () .getValue () && this .enabled_ .getValue ())
 				this .getBrowser () .sensorEvents () .addInterest ("update", this);
 			else
 				this .getBrowser () .sensorEvents () .removeInterest ("update", this);
