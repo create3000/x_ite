@@ -7,7 +7,7 @@
 {% capture notice-text %}
 #### New Features
   - Added layerNode argument to `Browser.changeViewpoint([layerNode,] name)`.
-  - Implemented Symbol.iteratol for MF* fields. This enabled `for of` loops.
+  - Implemented Symbol.iteratol for MF* fields. This enables `for of` loops.
   - Improved X3DBindableNode handling when cloned in multiple layers.
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
