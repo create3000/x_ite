@@ -9,6 +9,7 @@
   - Added layerNode argument to `Browser.changeViewpoint([layerNode,] name)`.
   - Implemented Symbol.iteratol for MF* fields. This enables `for of` loops.
   - Improved X3DBindableNode handling when cloned in multiple layers.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -24,6 +25,7 @@
 - Display submenus of context menu on left side if there is no space on right side. (#86)
 - Fixed fatal bug in OrthoViewpoint (#84).
 - Fixed bugs in RigidBodyPhysics when nodes are changed.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -43,6 +45,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Added X3DBoundedBox *visible* and X3DBoundedBox *bboxDisplay* field.
 - Updated access type of WorldInfo *title* and *info* field to match X3Dv4.
 - Add context menu "Show World Info" menu item, if an WorldInfo node exists.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -50,6 +53,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### Bug Fixes
 
 - Changed Extrusion SCPyAxis calculation.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -62,6 +66,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 - Fixed TransformSensor handling.
 - Fixed X3DBindableNode handling when child of a Switch or LOD node.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -79,6 +84,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Changed ComposedCubMapTexture field names.
 - Modified finiteRotationAxis default value.
 - Improved loading of X3DBackgroundNode nodes and ComposedCubeMap nodes.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -90,6 +96,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### Bug Fixes
 
 - Hide Shape node of GeneratedCubeMapTexture when generating texture itself.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -101,6 +108,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### Bug Fixes
 
 - Fixed bug in X3DBrowser.importDocument and X3DBrowser.importJS.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -114,6 +122,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Fixed handling of negative radius values in Disk2D.
 - Fixed handling of caps of Extrusion in rare cases.
 - Use negated normal for back faces in TextureCoordinateGenerator.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -125,6 +134,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### Bug Fixes
 
 - Fixed bug with pointing device when padding is applied to X3DCanvas.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -136,6 +146,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### Bug Fixes
 
 - Fixed a bug in X3DViepointNode when the viewpoint is animated.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -150,6 +161,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Fixed Layout component level.
 - Fixed shader select.
 - Implemented shader _activate_ field.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -161,6 +173,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### Bug Fixes and Enhancements
 
 - Fixed XML parser parse MFNode fieldValue element.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -179,6 +192,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Fix bug in rotation axis/angle calculation.
 - Very small optimization of transparent shapes.
 - Reworked bindable nodes bind handling.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -193,6 +207,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Fixed bug with Geometry2D in Safari.
 - Fixed Background rendering on iOS Safari.
 - Fixed bug with sound loading on iOS Safari.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -204,6 +219,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### Bug Fixes
 
 - Fixed CSS.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -216,6 +232,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 - Added missing fields for HTML/DOM support.
 - Fixed projective texture mapping in conjunction with generated cube map.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -228,6 +245,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 - Implemented TextureProjectorParallel.
 - Implemented TextureProjectorPerspective.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -235,6 +253,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### Bug Fixes
 
 - Fixed special case in TimeSensor when *cycleInterval* is 0.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -246,6 +265,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### New Features
 
 - Implemented PointProperties node.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -257,6 +277,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### Bug Fixes
 
 - Fixed texture 3d orientation.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -272,6 +293,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Implemented DICOM image parser for ImageTexture3D.
 - Support for X3DTexture3DNode in OpacityMapVolumeStyle node's *transferFunction* field.
 - Implemented Script node *shutdown* function.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -279,6 +301,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### Bug Fixes
 
 - Fixed bug in Script node in rare cases.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -291,6 +314,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 - Support for NRRD types signed/unsigned byte, signed/unsigned short, signed/unsigned int, float, and double.
 - Implemented NRRD ASCII, RAW, HEX, and GZIP encoding.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -301,6 +325,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Fixed wrong SilhouetteEnhancementVolumeStyle rendering in rare cases.
 - Fixed wrong BoundaryEnhancementVolumeStyle rendering.
 - Fixed Background rendering on mobile devices.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -313,6 +338,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 - Basic support for VolumeRendering component.
 - Full support for Texturing3D component.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -323,6 +349,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Optimized NURBS weight handling when no weights present.
 - Fixed bug in TextureTransformMatrix3D.
 - Fixed double load of URL in some cases of X3DUrlObject nodes.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -336,6 +363,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Better NURBS normals.
 - Fixed X3DNurbsSurfaceGeometryNode *closed* field handling.
 - Fix NURBS *weight* field handling.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -348,6 +376,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 - Fixed bug in Matrix transpose.
 - Better parser errors when node type is not known.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -359,6 +388,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### Bug Fixes
 
 - Fixed sound rendering.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -371,6 +401,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 - Fixed bug with browser event handler, for instance »onload«, if jQuery is present.
 - Fixed bug with FogCoordinate calculation handling.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -382,6 +413,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### Bug Fixes
 
 - Fixed bug when parsing Classic VRML Encoded files.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -393,6 +425,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### New Features
 
 - Updated splash screen.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -403,6 +436,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Fixed BrowserTimings button type.
 - Removed non-standard fields from X3DSoundSourceNode nodes.
 - Fixed geometry nodes index fields access type.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -414,6 +448,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### New Features
 
 - Optimized CoordinateChaser/Damper and TexCoordChaser2D/Damper2D.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -421,6 +456,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### Bug Fixes
 
 - Fixed bug in TimeSensor *fraction\_changed* calculation if *loop* is true.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -432,6 +468,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### New Features
 
 - Added MFNode.toVRML/XMLString.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -441,6 +478,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Fixed sound playing when Browser.endUpdate was called.
 - Fixed Switch node when children are changed.
 - Fixed a bug with Inline nodes in conjunction with XHTML DOM integration.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -459,6 +497,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Implemented FillProperties.
 - Faster startup of browser.
 - Better transitions with OthoViewpoint.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -470,6 +509,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Fixed bug with composite glyphs in Text node.
 - Fixed bug with data URLs.
 - Fixed bug in toXMLString and toVRMLString when outputing protos.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -482,6 +522,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 - Implemented TextureCoordinateGenerator.
 - More precise VisibilitySensor.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -493,6 +534,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### New Features
 
 - Implemented Picking component.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -502,6 +544,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### Bug Fixes
 
 - Fixed bug in LOD traverse.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -514,6 +557,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 - Implemented toVRMLString.
 - New X3DCanvas attribute preserveDrawingBuffer.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -525,6 +569,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Fixed bug when parsing data URLs.
 - Fixed shadow handling.
 - Fixed bug in MF\* fields pop and shift.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -536,6 +581,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### Bug Fixes
 
 - Fixed bug in BlendMode.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -550,6 +596,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Fully implemented TransformSensor.
 - Optimized proto instance creation, especially when you use proto instances within another proto.
 - Small improvements.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -558,6 +605,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 - Fixed GeoLOD when a ProximitySensor or Viewpoint is in the root node or children.
 - Fixed fatal bug in IndexedFaceSet if there are degenerated polygons.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -571,6 +619,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Fixed Browser.createX3DFromString console output.
 - Fixed X3DExternProtoDeclaration, X3DProtoDeclaration, X3DRoute toString output.
 - Fixed H-Anim units.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -582,6 +631,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### New Features
 
 - Implemented FogCoordinate.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -590,6 +640,7 @@ This release also increased pure rendering speed (without routing and scripting)
 
 - Pass current time stamp to Script.prepareEvents function.
 - X3DConstants have now browser event constants for browser callbacks.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -601,6 +652,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### New Features
 
 - Implemented »H-Anim« component.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -612,6 +664,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### New Features
 
 - Implemented »NURBS« component.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -628,6 +681,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Fixed bug in ECMAScript SFVec2/3d handling.
 - Fixed bug in XML generator when generating nodes.
 - Fixed bug with audio/video playback when url changes.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -639,6 +693,7 @@ This release also increased pure rendering speed (without routing and scripting)
 #### New Features
 
 - Implemented StringSensor
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -650,6 +705,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Fixed bug in X3DComposedGeometryNode normal generation.
 - Fog.visibilityRange is now affected by scaling.
 - SpotLight.radius and PointLight.radius are now affected by scaling.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -667,6 +723,7 @@ for more information. Additionally we tested X\_ITE against <http://www.web3d.or
 #### New Features
 
 - Added new vector functions to SFVec2f/d, SFVec3f/d, SFVec4f/d.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -675,6 +732,7 @@ for more information. Additionally we tested X\_ITE against <http://www.web3d.or
 
 - Fixed progress bar CSS in some cases.
 - Fixed X3DBackground rendering if a GeoViewpoint is bound.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -688,6 +746,7 @@ for more information. Additionally we tested X\_ITE against <http://www.web3d.or
 - Fixed fatal bug in Text node when vertical text is rendered with empty lines.
 - Fixed bug in Text.lineBounds when vertical text is rendered with empty lines.
 - Fixed wrong initialization of BrowserOptions.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -699,6 +758,7 @@ for more information. Additionally we tested X\_ITE against <http://www.web3d.or
 #### New Features
 
 - Small optimizations
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -708,6 +768,7 @@ for more information. Additionally we tested X\_ITE against <http://www.web3d.or
 - Fixed a bug in event handling.
 - Fixed a bug in GeoLOD.
 - Fixed fatal bug in ImageCubeMapTexture.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -723,6 +784,7 @@ for more information. Additionally we tested X\_ITE against <http://www.web3d.or
 - Fixed fog calculation when visibilityRange is 0.
 - Disable collision detection when viewpoint transition is active.
 - Use specified precision for default struct types in shader source.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -735,6 +797,7 @@ for more information. Additionally we tested X\_ITE against <http://www.web3d.or
 - Fixed fatal bug when setting audio/video volume.
 - Fixed Sound node volume calculation.
 - Better interpolation from saturated color to black, white, or gray.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -753,6 +816,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 - The X3DCanvas element has now the onload, onshutdown, and onerror attributes with jQuery support.
 - The X3DCanvas element has now the onload, onshutdown, onerror, src, and url properties.
 - X\_ITE now respects the tabindex setting from the X3DCanvas element.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -761,6 +825,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 - Fixed bug in Extrusion orientation handling.
 - Better support for Extrusion with coincident spine points.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -775,6 +840,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 - Also parse and output XML IMPORT attribute importedDEF beside old attribute exportedDEF.
 - ScreenGroup and ScreenFontStyle are now respecting a scaleOrientation in the transformation hierarchy.
 - Fixed normal calculation of bounding boxes, it handles now special cases.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -788,6 +854,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 - Better polygon support for concave polygons.
 - Better polygon font rendering.
 - »Straighten Horizon« is now the default for EXAMINE viewer.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -796,6 +863,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 - Fixed bug when parsing XML field values.
 - Fixed SFRotation handling of unnormalized values.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -813,6 +881,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 - Implemented X3DBrowser.add/removeBrowserCallback functions.
 - Changed X3DCanvas element focus handling, the element itself is now the focus element.
 - New and optimized resize handling of X3DCanvas element.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -829,6 +898,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 - Fixed rendering of PointSet with GeoCoordinate.
 - Fixed KeyDeviceSensor in some cases.
 - Fixed spinning of viewpoint carries over after viewpoint change.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -841,6 +911,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 - Fixed fatal bug in X3DProgrammableShaderObject.
 - Small optimizations in X3DField objects.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -855,6 +926,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 - Small optimizations in X3DArrayField.
 - Small optimizations in event handling.
 - Fixed bug in name handling when copy node.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -866,6 +938,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 #### New Features
 
 - code.create3000.de is now accessible via https
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -880,6 +953,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 - Fixed Chrome glitches of X3DBackground node.
 - Fixed CSS issue.
 - Fixed ImageTexture issue when the texture is reused multiple times.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -913,6 +987,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 - Fixed fatal bug in Classic VRML parser.
 - Fixed LOD.level\_changed event handling.
 - Fixed bug when rendering opaque objects.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -931,6 +1006,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 #### New Features
 
 - RigidBodyPhysics component
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -949,6 +1025,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 - Support for more textures for custom shaders
 - New »StraigtenHorizon« browser option
 - Better rendering of Text in some cases
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -958,6 +1035,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 - Less memory footprint
 - Fixed IndexedTriangleSet attribute handling
 - and more bug fixes
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -980,6 +1058,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 - Added x3d\_CameraSpaceMatrix to ComposedShader build-in variables.
 - Fixed a bug in X3DBackground node when displayed with GeneratedCubeMapTexture node.
 - Fixed fatal bug in MFImage.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -991,6 +1070,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 #### New Features Bug Fixes
 
 - Fixed a bug in load count handling of the splash screen
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -1004,6 +1084,7 @@ You can tune the *shadowIntensity*. It is the intensity of the shadow. 0 means n
 - Fixed bug in CADLayer.addChildren
 - Optimized X3DGroupingNode.removeChildren
 - Implemented units handling
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -1038,6 +1119,7 @@ Additionally X\_ITE is now available via GitHub CDN and jsDelivr CDN.
 - Changed handling of fallback css attribute display.
 - Package is now available via code.create3000.de and jsDelivr.
 - NPM is now the package management system.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -1067,6 +1149,7 @@ If you still use an old stable version from Cobweb you must changed the URL for 
 - Enable propagate events to HTML browser if in NONE viewer.
 - X3DExecutionContext.getImportedNode operates now correct if importedName is undefined.
 - SFBool.valueOf return now a native JavaScript value.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -1083,6 +1166,7 @@ If you still use an old stable version from Cobweb you must changed the URL for 
 - Implemented JavaScript browser option *SplashScreen.*
 - Implemented SFColorRGBA.prototype.set/getHSVA.
 - Use *uniform mat3* in custom shaders for SF/MFRotation fields.
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
@@ -1108,6 +1192,7 @@ If you still use an old stable version from Cobweb you must changed the URL for 
 - Fixed ScreenFontStyle text picking
 - Fixed issue with touch sensibility of Disk2D
 - Fixed an issue of X3DPrototypeInstance in toXMLString
+
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
