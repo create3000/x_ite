@@ -614,7 +614,8 @@ function (Fields,
 
 		this .addType (X3DConstants .X3DNBodyCollidableNode);
 
-		this .addChildObjects ("body", new Fields .SFNode ());
+		this .addChildObjects ("body",                  new Fields .SFNode (),
+		                       "compoundShape_changed", new Fields .SFTime ());
 
 		// Units
 
@@ -833,6 +834,7 @@ function (Fields,
 			if (this .collidableNode)
 			{
 				this .collidableNode .removeInterest ("addNodeEvent", this);
+				this .collidableNode .compoundShape_changed_ .removeFieldInterest (this .compoundShape_changed_);
 
 				this .collidableNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
 				this .collidableNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
@@ -846,6 +848,7 @@ function (Fields,
 			if (this .collidableNode)
 			{
 				this .collidableNode .addInterest ("addNodeEvent", this);
+				this .collidableNode .compoundShape_changed_ .addFieldInterest (this .compoundShape_changed_);
 
 				this .collidableNode .isCameraObject_   .addFieldInterest (this .isCameraObject_);
 				this .collidableNode .isPickableObject_ .addFieldInterest (this .isPickableObject_);
@@ -912,6 +915,8 @@ function (Fields,
 
 			if (this .collidableNode && this .enabled_ .getValue ())
 				this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collidableNode .getCompoundShape ());
+
+			this .compoundShape_changed_ = this .getBrowser () .getCurrentTime ();
 		},
 		traverse: function (type, renderObject)
 		{
@@ -1412,6 +1417,7 @@ function (Fields,
 				this .getCompoundShape () .setLocalScaling (localScaling);
 
 				this .addNodeEvent ();
+				this .compoundShape_changed_ = this .getBrowser () .getCurrentTime ();
 			};
 		})(),
 		removeCollidableGeometry: function ()
@@ -2972,7 +2978,6 @@ define ('x_ite/Components/RigidBodyPhysics/RigidBody',[
 	"x_ite/Bits/X3DCast",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
-	"standard/Math/Numbers/Quaternion",
 	"standard/Math/Numbers/Matrix4",
 	"lib/ammojs/AmmoJS",
 ],
@@ -2984,7 +2989,6 @@ function (Fields,
           X3DCast,
           Vector3,
           Rotation4,
-          Quaternion,
           Matrix4,
           Ammo)
 {
@@ -3287,6 +3291,7 @@ function (Fields,
 				var geometryNode = geometryNodes [i];
 
 				geometryNode .removeInterest ("addEvent", this .transform_);
+				geometryNode .compoundShape_changed_ .removeInterest ("set_compoundShape__", this);
 
 				geometryNode .setBody (null);
 
@@ -3326,6 +3331,7 @@ function (Fields,
 				var geometryNode = geometryNodes [i];
 
 				geometryNode .addInterest ("addEvent", this .transform_);
+				geometryNode .compoundShape_changed_ .addInterest ("set_compoundShape__", this);
 
 				geometryNode .translation_ .addFieldInterest (this .position_);
 				geometryNode .rotation_    .addFieldInterest (this .orientation_);
@@ -3753,8 +3759,12 @@ function (Fields,
 			for (var i = 0, length = this .jointNodes .length; i < length; ++ i)
 				this .jointNodes [i] .setCollection (null);
 
+			this .jointNodes .length = 0;
+
 			for (var i = 0, length = this .otherJointNodes .length; i < length; ++ i)
 				this .otherJointNodes [i] .collection_ .removeInterest ("set_joints__", this);
+
+			this .otherJointNodes .length = 0;
 
 			for (var i = 0, length = this .joints_ .length; i < length; ++ i)
 			{
