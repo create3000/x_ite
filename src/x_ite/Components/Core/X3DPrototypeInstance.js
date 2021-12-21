@@ -108,7 +108,6 @@ function (X3DChildObject,
 				this .body = new X3DExecutionContext (this .getExecutionContext ());
 				this .body .addParent (this);
 				this .body .setup ();
-				this .set_live__ ();
 
 				if (this .isInitialized ())
 					X3DChildObject .prototype .addEvent .call (this);

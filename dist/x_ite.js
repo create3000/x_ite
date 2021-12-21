@@ -1,4 +1,4 @@
-/* X_ITE v4.7.1-1092 */
+/* X_ITE v4.7.1-1093 */
 
 (function () {
 
@@ -46698,7 +46698,6 @@ function (X3DChildObject,
 				this .body = new X3DExecutionContext (this .getExecutionContext ());
 				this .body .addParent (this);
 				this .body .setup ();
-				this .set_live__ ();
 
 				if (this .isInitialized ())
 					X3DChildObject .prototype .addEvent .call (this);
