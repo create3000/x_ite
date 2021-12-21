@@ -166,7 +166,6 @@ function (X3DChildObject,
 
 			this .body = new X3DExecutionContext (proto .getExecutionContext ());
 			this .body .addParent (this);
-			this .set_live__ ();
 
 			// Copy proto.
 
@@ -187,8 +186,6 @@ function (X3DChildObject,
 			{
 				X3DNode .prototype .initialize .call (this);
 
-				this .isLive () .addInterest ("set_live__", this);
-
 				if (! this .protoNode .isExternProto)
 					this .construct ();
 			}
@@ -196,10 +193,6 @@ function (X3DChildObject,
 			{
 				console .error (error .message);
 			}
-		},
-		set_live__: function ()
-		{
-			this .body .setLive (this .isLive () .getValue ());
 		},
 		getExtendedEventHandling: function ()
 		{
