@@ -99,6 +99,7 @@ function (Fields,
 		{
 			X3DProtoDeclarationNode .prototype .initialize .call (this);
 
+			this .body .addParent (this);
 			this .body .setup ();
 
 			this .loadState_ = X3DConstants .COMPLETE_STATE;

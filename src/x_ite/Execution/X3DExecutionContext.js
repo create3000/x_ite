@@ -105,6 +105,18 @@ function (Fields,
 		{
 			return false;
 		},
+		getPrototype: function ()
+		{
+			const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
+
+			for (const node of this .getParents ())
+			{
+				if (node instanceof X3DProtoDeclaration)
+					return node;
+			}
+
+			return null;
+		},
 		getInstance: function ()
 		{
 			const X3DPrototypeInstance = require ("x_ite/Components/Core/X3DPrototypeInstance");
