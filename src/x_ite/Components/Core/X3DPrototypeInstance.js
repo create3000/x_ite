@@ -71,13 +71,8 @@ function (X3DChildObject,
 
 		this .addType (X3DConstants .X3DPrototypeInstance);
 
-		const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
-
-		for (const node of executionContext .getParents ())
-		{
-			if (node instanceof X3DProtoDeclaration)
-				return;
-		}
+		if (executionContext .getPrototype ())
+			return;
 
 		if (! protoNode .isExternProto)
 			return;

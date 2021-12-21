@@ -1,4 +1,4 @@
-/* X_ITE v4.7.1-1089 */
+/* X_ITE v4.7.1-1090 */
 
 (function () {
 
@@ -28632,15 +28632,15 @@ function (Fields,
 			{
 				try
 				{
+					// Both values can change in slerp.
 					keyValue0 .assign (this .keyValue_ [index0] .getValue ());
 					keyValue1 .assign (this .keyValue_ [index1] .getValue ());
 
 					this .value_changed_ = keyValue0 .slerp (keyValue1, weight);
-
 				}
 				catch (error)
 				{
-					console .log (error);
+					//console .log (error);
 				}
 			};
 		}) (),
@@ -43534,6 +43534,18 @@ function (Fields,
 		{
 			return false;
 		},
+		getPrototype: function ()
+		{
+			const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
+
+			for (const node of this .getParents ())
+			{
+				if (node instanceof X3DProtoDeclaration)
+					return node;
+			}
+
+			return null;
+		},
 		getInstance: function ()
 		{
 			const X3DPrototypeInstance = require ("x_ite/Components/Core/X3DPrototypeInstance");
@@ -46649,13 +46661,8 @@ function (X3DChildObject,
 
 		this .addType (X3DConstants .X3DPrototypeInstance);
 
-		const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
-
-		for (const node of executionContext .getParents ())
-		{
-			if (node instanceof X3DProtoDeclaration)
-				return;
-		}
+		if (executionContext .getPrototype ())
+			return;
 
 		if (! protoNode .isExternProto)
 			return;
@@ -47689,6 +47696,7 @@ function (Fields,
 		{
 			X3DProtoDeclarationNode .prototype .initialize .call (this);
 
+			this .body .addParent (this);
 			this .body .setup ();
 
 			this .loadState_ = X3DConstants .COMPLETE_STATE;

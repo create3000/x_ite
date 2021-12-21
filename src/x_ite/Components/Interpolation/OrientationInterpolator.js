@@ -121,15 +121,15 @@ function (Fields,
 			{
 				try
 				{
+					// Both values can change in slerp.
 					keyValue0 .assign (this .keyValue_ [index0] .getValue ());
 					keyValue1 .assign (this .keyValue_ [index1] .getValue ());
 
 					this .value_changed_ = keyValue0 .slerp (keyValue1, weight);
-
 				}
 				catch (error)
 				{
-					console .log (error);
+					//console .log (error);
 				}
 			};
 		}) (),
