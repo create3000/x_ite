@@ -23,6 +23,7 @@
 - Prevent bug in Firefox that event loop is broken when pressing special keys. (#86)
 - Display submenus of context menu on left side if there is no space on right side. (#86)
 - Fixed fatal bug in OrthoViewpoint (#84).
+- Fixed bugs in RigidBodyPhysics when nodes are changed.
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
 
