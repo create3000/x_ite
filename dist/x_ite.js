@@ -1,4 +1,4 @@
-/* X_ITE v4.7.1-1088 */
+/* X_ITE v4.7.1-1089 */
 
 (function () {
 
@@ -28615,7 +28615,7 @@ function (Fields,
 		},
 		set_keyValue__: function ()
 		{
-			var
+			const
 				key      = this .key_,
 				keyValue = this .keyValue_;
 
@@ -28624,13 +28624,19 @@ function (Fields,
 		},
 		interpolate: (function ()
 		{
-			const keyValue = new Rotation4 (0, 0, 1, 0);
+			const
+				keyValue0 = new Rotation4 (0, 0, 1, 0),
+				keyValue1 = new Rotation4 (0, 0, 1, 0);
 
 			return function (index0, index1, weight)
 			{
 				try
 				{
-					this .value_changed_ = keyValue .assign (this .keyValue_ [index0] .getValue ()) .slerp (this .keyValue_ [index1] .getValue (), weight);
+					keyValue0 .assign (this .keyValue_ [index0] .getValue ());
+					keyValue1 .assign (this .keyValue_ [index1] .getValue ());
+
+					this .value_changed_ = keyValue0 .slerp (keyValue1, weight);
+
 				}
 				catch (error)
 				{
