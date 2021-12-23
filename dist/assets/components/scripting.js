@@ -254,6 +254,8 @@ function ($,
 		this .addChildObjects ("buffer", new Fields .MFString ());
 
 		this .addType (X3DConstants .Script);
+
+		this .pauseTime = 0;
 	}
 
 	Script .prototype = Object .assign (Object .create (X3DScriptNode .prototype),
@@ -505,7 +507,7 @@ function ($,
 				{
 					global [name + "_changed"] =
 					{
-						get: field .valueOf .bind (field),
+						get: field .valueOf  .bind (field),
 						set: field .setValue .bind (field),
 					};
 				}
@@ -513,10 +515,77 @@ function ($,
 
 			return Object .create (Object .prototype, global);
 		},
+		processOutstandingEvents: function ()
+		{
+			this .getUserDefinedFields () .forEach (function (field)
+			{
+				if (field .getModificationTime () < this .pauseTime)
+					return;
+
+				switch (field .getAccessType ())
+				{
+					case X3DConstants .inputOnly:
+					{
+						const callback = this .context [field .getName ()];
+
+						if ($.isFunction (callback))
+							this .set_field__ (field, callback);
+
+						break;
+					}
+					case X3DConstants .inputOutput:
+					{
+						const callback = this .context ["set_" + field .getName ()];
+
+						if ($.isFunction (callback))
+							this .set_field__ (field, callback);
+
+						break;
+					}
+				}
+			},
+			this);
+		},
+		initialize__: function (text)
+		{
+			this .context = this .getContext (text);
+
+			this .isLive () .addInterest ("set_live__", this);
+
+			this .set_live__ ();
+		},
 		set_live__: function ()
 		{
-			if (true || this .isLive () .getValue ())
+			if (this .isLive () .getValue ())
 			{
+				if (!this .initialized)
+				{
+					this .initialized = true;
+
+					// Call initialize function.
+
+					if ($.isFunction (this .context .initialize))
+					{
+						const browser = this .getBrowser ();
+
+						browser .getScriptStack () .push (this);
+
+						try
+						{
+							this .context .initialize ();
+						}
+						catch (error)
+						{
+							this .setError ("in function 'initialize'", error);
+						}
+
+						browser .getScriptStack () .pop ();
+					}
+
+					if ($.isFunction (this .context .shutdown))
+						$(window) .on ("unload", this .shutdown__ .bind (this));
+				}
+
 				if ($.isFunction (this .context .prepareEvents))
 					this .getBrowser () .prepareEvents () .addInterest ("prepareEvents__", this);
 
@@ -548,6 +617,8 @@ function ($,
 					}
 				},
 				this);
+
+				this .processOutstandingEvents ();
 			}
 			else
 			{
@@ -568,69 +639,9 @@ function ($,
 					}
 				},
 				this);
+
+				this .pauseTime = performance .now ();
 			}
-		},
-		initialize__: function (text)
-		{
-			this .context = this .getContext (text);
-
-			this .isLive () .addInterest ("set_live__", this);
-
-			this .set_live__ ();
-
-			// Call initialize function.
-
-			if ($.isFunction (this .context .initialize))
-			{
-				const browser = this .getBrowser ();
-
-				browser .getScriptStack () .push (this);
-
-				try
-				{
-					this .context .initialize ();
-				}
-				catch (error)
-				{
-					this .setError ("in function 'initialize'", error);
-				}
-
-				browser .getScriptStack () .pop ();
-			}
-
-			if ($.isFunction (this .context .shutdown))
-				$(window) .on ("unload", this .shutdown__ .bind (this));
-
-			// Call outstanding events.
-
-			this .getUserDefinedFields () .forEach (function (field)
-			{
-				if (!field .getModificationTime ())
-					return;
-
-				switch (field .getAccessType ())
-				{
-					case X3DConstants .inputOnly:
-					{
-						const callback = this .context [field .getName ()];
-
-						if ($.isFunction (callback))
-							this .set_field__ (field, callback);
-
-						break;
-					}
-					case X3DConstants .inputOutput:
-					{
-						const callback = this .context ["set_" + field .getName ()];
-
-						if ($.isFunction (callback))
-							this .set_field__ (field, callback);
-
-						break;
-					}
-				}
-			},
-			this);
 		},
 		prepareEvents__: function ()
 		{
