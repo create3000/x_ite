@@ -640,7 +640,8 @@ function ($,
 				},
 				this);
 
-				this .pauseTime = performance .now ();
+				if (this .initialized)
+					this .pauseTime = performance .now ();
 			}
 		},
 		prepareEvents__: function ()
