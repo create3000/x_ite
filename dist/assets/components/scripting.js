@@ -519,7 +519,7 @@ function ($,
 		{
 			this .getUserDefinedFields () .forEach (function (field)
 			{
-				if (field .getModificationTime () < this .pauseTime)
+				if (field .getModificationTime () <= this .pauseTime)
 					return;
 
 				switch (field .getAccessType ())
