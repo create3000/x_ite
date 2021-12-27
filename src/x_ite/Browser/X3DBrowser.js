@@ -53,6 +53,7 @@ define ([
 	"x_ite/Base/Events",
 	"x_ite/Fields",
 	"x_ite/Components",
+	"x_ite/Components/Layering/X3DLayerNode",
 	"x_ite/Browser/X3DBrowserContext",
 	"x_ite/Configuration/ComponentInfo",
 	"x_ite/Configuration/SupportedProfiles",
@@ -72,6 +73,7 @@ function ($,
           Events,
           Fields,
           Components,
+          X3DLayerNode,
           X3DBrowserContext,
           ComponentInfo,
           SupportedProfiles,
@@ -639,10 +641,13 @@ function ($,
 		},
 		firstViewpoint: function (layerNode)
 		{
+			if (layerNode instanceof Fields .SFNode)
+				layerNode = layerNode .getValue ()
+
 			if (! layerNode)
 				layerNode = this .getActiveLayer ();
 
-			if (layerNode)
+			if (layerNode instanceof X3DLayerNode)
 			{
 				const viewpoints = layerNode .getUserViewpoints ();
 
@@ -652,10 +657,13 @@ function ($,
 		},
 		previousViewpoint: function (layerNode)
 		{
+			if (layerNode instanceof Fields .SFNode)
+				layerNode = layerNode .getValue ()
+
 			if (! layerNode)
 				layerNode = this .getActiveLayer ();
 
-			if (layerNode)
+			if (layerNode instanceof X3DLayerNode)
 			{
 				const viewpoints = layerNode .getUserViewpoints ();
 
@@ -682,10 +690,13 @@ function ($,
 		},
 		nextViewpoint: function (layerNode)
 		{
+			if (layerNode instanceof Fields .SFNode)
+				layerNode = layerNode .getValue ()
+
 			if (! layerNode)
 				layerNode = this .getActiveLayer ();
 
-			if (layerNode)
+			if (layerNode instanceof X3DLayerNode)
 			{
 				const viewpoints = layerNode .getUserViewpoints ();
 
@@ -712,10 +723,13 @@ function ($,
 		},
 		lastViewpoint: function (layerNode)
 		{
+			if (layerNode instanceof Fields .SFNode)
+				layerNode = layerNode .getValue ()
+
 			if (! layerNode)
 				layerNode = this .getActiveLayer ();
 
-			if (layerNode)
+			if (layerNode instanceof X3DLayerNode)
 			{
 				const viewpoints = layerNode .getUserViewpoints ();
 
@@ -725,13 +739,16 @@ function ($,
 		},
 		changeViewpoint: function (layerNode, name)
 		{
+			if (layerNode instanceof Fields .SFNode)
+				layerNode = layerNode .getValue ()
+
 			if (arguments .length === 1)
 			{
 				name      = layerNode;
 				layerNode = this .getActiveLayer ();
 			}
 
-			if (layerNode)
+			if (layerNode instanceof X3DLayerNode)
 			{
 				for (const viewpointNode of layerNode .getViewpoints () .get ())
 				{
