@@ -472,7 +472,7 @@ function ($,
 				if (loader !== this .loader)
 					return;
 
-				this .currentScene .changeViewpoint (fragment);
+				this .changeViewpoint (fragment);
 				this .removeLoadCount (this);
 				this .setBrowserLoading (false);
 			}
@@ -787,7 +787,7 @@ function ($,
 			let string = "";
 
 			for (const argument of arguments)
-				string += argument .toString ();
+				string += argument;
 
 			console .log (string);
 
@@ -801,7 +801,7 @@ function ($,
 			let string = "";
 
 			for (const argument of arguments)
-				string += argument .toString ();
+				string += argument;
 
 			console .log (string);
 

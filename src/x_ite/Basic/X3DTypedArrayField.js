@@ -64,7 +64,53 @@ function (X3DArrayField,
 	{
 		get: function (target, key)
 		{
-			if (key .constructor === Symbol)
+			const value = target [key];
+
+			if (value !== undefined)
+				return value;
+
+			if (typeof key === "string")
+			{
+				const index = key * 1;
+
+				if (Number .isInteger (index))
+				{
+					const
+						components = target .getComponents (),
+						valueType  = target .getValueType ();
+
+					let array = target .getValue ();
+
+					if (index >= target ._length)
+						array = target .resize (index + 1);
+
+					if (components === 1)
+					{
+						// Return native JavaScript value.
+						return valueType (array [index]);
+					}
+					else
+					{
+						// Return reference to index.
+
+						const
+							value         = new (valueType) (),
+							internalValue = value .getValue (),
+							i             = index * components;
+
+						value .addEvent = addEvent .bind (target, i, internalValue, components);
+						value .getValue = getValue .bind (target, i, internalValue, components);
+
+						return value;
+					}
+				}
+				else
+				{
+					return target [key];
+				}
+			}
+
+			if (key === Symbol .iterator)
 			{
 				return function* ()
 				{
@@ -98,44 +144,6 @@ function (X3DArrayField,
 						}
 					}
 			  	};
-			}
-
-			const index = key * 1;
-
-			if (Number .isInteger (index))
-			{
-				const
-					components = target .getComponents (),
-					valueType  = target .getValueType ();
-
-				let array = target .getValue ();
-
-				if (index >= target ._length)
-					array = target .resize (index + 1);
-
-				if (components === 1)
-				{
-					// Return native JavaScript value.
-					return valueType (array [index]);
-				}
-				else
-				{
-					// Return reference to index.
-
-					const
-						value         = new (valueType) (),
-						internalValue = value .getValue (),
-						i             = index * components;
-
-					value .addEvent = addEvent .bind (target, i, internalValue, components);
-					value .getValue = getValue .bind (target, i, internalValue, components);
-
-					return value;
-				}
-			}
-			else
-			{
-				return target [key];
 			}
 		},
 		set: function (target, key, value)

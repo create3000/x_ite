@@ -66,24 +66,34 @@ function ($,
 	{
 		get: function (target, key)
 		{
+			const value = target [key];
+
+			if (value !== undefined)
+				return value;
+
+			if (typeof key === "string")
+			{
+				const
+					array = target .getValue (),
+					index = key * 1;
+
+				if (Number .isInteger (index))
+				{
+					if (index >= array .length)
+						target .resize (index + 1);
+
+					return array [index] .valueOf ();
+				}
+				else
+				{
+					return target [key];
+				}
+			}
+
 			const array = target .getValue ();
 
-			if (key .constructor === Symbol)
+			if (key === Symbol .iterator)
 				return array [key];
-
-			const index = key * 1;
-
-			if (Number .isInteger (index))
-			{
-				if (index >= array .length)
-					target .resize (index + 1);
-
-				return array [index] .valueOf ();
-			}
-			else
-			{
-				return target [key];
-			}
 		},
 		set: function (target, key, value)
 		{
