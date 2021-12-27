@@ -56,7 +56,6 @@ define ([
 	"x_ite/Components/Interpolation/OrientationInterpolator",
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
@@ -69,7 +68,6 @@ function (Fields,
           OrientationInterpolator,
           TraverseType,
           X3DConstants,
-          Vector2,
           Vector3,
           Rotation4,
           Matrix4)
@@ -259,13 +257,13 @@ function (Fields,
 
 						if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
 						{
-							if (this .getVRMLTransition ())
+							if (toViewpointNode .getVRMLTransition ())
 								transitionType = "LINEAR";
 							else
 								transitionType = "TELEPORT";
 						}
 
-						this .setVRMLTransition (false);
+						toViewpointNode .setVRMLTransition (false);
 
 						// End VRML behaviour
 
