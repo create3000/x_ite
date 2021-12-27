@@ -121,7 +121,7 @@ function (Fields,
 
 			// Modify set_active__ to get immediate response to user action (click event), otherwise links are not opened in this window.
 
-			var
+			const
 				anchor       = this,
 				set_active__ = this .touchSensorNode .set_active__;
 
@@ -170,9 +170,10 @@ function (Fields,
 		{
 			if (type === TraverseType .POINTER)
 			{
-			   var sensors = { };
+			   const sensors = { };
 
 				renderObject .getBrowser () .getSensors () .push (sensors);
+
 				this .touchSensorNode .push (renderObject, sensors);
 
 				X3DGroupingNode .prototype .traverse .call (this, type, renderObject);

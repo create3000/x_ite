@@ -59,7 +59,7 @@ function (Fields,
 	function X3DUrlObject (executionContext)
 	{
 		this .addType (X3DConstants .X3DUrlObject);
-		
+
 		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 	}
 
@@ -72,10 +72,26 @@ function (Fields,
 		{
 			this .loadState_ = value;
 
-			this .getScene () .removeLoadCount (this);
+			switch (value)
+			{
+				case X3DConstants .NOT_STARTED_STATE:
+					break;
+				case X3DConstants .IN_PROGRESS_STATE:
+				{
+					if (notify !== false)
+						this .getScene () .addLoadCount (this);
 
-			if (notify !== false && value === X3DConstants .IN_PROGRESS_STATE)
-				this .getScene () .addLoadCount (this);
+					break;
+				}
+				case X3DConstants .COMPLETE_STATE:
+				case X3DConstants .FAILED_STATE:
+				{
+					if (notify !== false)
+						this .getScene () .removeLoadCount (this);
+
+					break;
+				}
+			}
 		},
 		checkLoadState: function ()
 		{
@@ -89,5 +105,3 @@ function (Fields,
 
 	return X3DUrlObject;
 });
-
-
