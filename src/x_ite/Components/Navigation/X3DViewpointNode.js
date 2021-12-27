@@ -266,7 +266,7 @@ function (Fields,
 
 						toViewpointNode .setVRMLTransition (false);
 
-						// End VRML behaviour
+						// End VRML behavior
 
 						if (transitionTime <= 0)
 							transitionType = "TELEPORT";
