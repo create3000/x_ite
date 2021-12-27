@@ -94,7 +94,7 @@ function (Fields,
 		this .cameraSpaceMatrix    = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0,  10, 1);
 		this .viewMatrix           = new Matrix4 (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -10, 1);
 
-		var browser = this .getBrowser ();
+		const browser = this .getBrowser ();
 
 		this .timeSensor                   = new TimeSensor              (browser .getPrivateScene ());
 		this .easeInEaseOut                = new EaseInEaseOut           (browser .getPrivateScene ());
@@ -174,7 +174,7 @@ function (Fields,
 		},
 		getProjectionMatrix: function (renderObject)
 		{
-			var navigationInfo = renderObject .getNavigationInfo ();
+			const navigationInfo = renderObject .getNavigationInfo ();
 
 			return this .getProjectionMatrixWithLimits (navigationInfo .getNearValue (),
                                                      navigationInfo .getFarValue (this),
@@ -218,7 +218,7 @@ function (Fields,
 		},
 		transitionStart: (function ()
 		{
-			var
+			const
 				relativePosition         = new Vector3 (0, 0, 0),
 				relativeOrientation      = new Rotation4 (0, 0, 1, 0),
 				relativeScale            = new Vector3 (0, 0, 0),
@@ -248,12 +248,13 @@ function (Fields,
 
 						// Respect NavigationInfo.
 
-						var
+						const
 							navigationInfoNode = layerNode .getNavigationInfo (),
-							transitionType     = navigationInfoNode .getTransitionType (),
 							transitionTime     = navigationInfoNode .transitionTime_ .getValue ();
 
-						// VRML behaviour
+						let transitionType = navigationInfoNode .getTransitionType ();
+
+						// VRML behavior
 
 						if (this .getExecutionContext () .getSpecificationVersion () == "2.0")
 						{
@@ -347,7 +348,7 @@ function (Fields,
 		getRelativeTransformation: function (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
 		// throw
 		{
-			var differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpointNode .getViewMatrix ()) .inverse ();
+			const differenceMatrix = this .modelMatrix .copy () .multRight (fromViewpointNode .getViewMatrix ()) .inverse ();
 
 			differenceMatrix .get (relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
 
@@ -362,7 +363,7 @@ function (Fields,
 
 				Matrix4 .inverse (this .getModelMatrix ()) .multVecMatrix (point);
 
-				var minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+				const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
 
 				this .lookAt (layerNode, point, minDistance, factor, straighten);
 			}
@@ -377,7 +378,7 @@ function (Fields,
 			{
 				bbox = bbox .copy () .multRight (Matrix4 .inverse (this .getModelMatrix ()));
 
-				var minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
+				const minDistance = layerNode .getNavigationInfo () .getNearValue () * 2;
 
 				this .lookAt (layerNode, bbox .center, minDistance, factor, straighten);
 			}
@@ -388,7 +389,7 @@ function (Fields,
 		},
 		lookAt: function (layerNode, point, distance, factor, straighten)
 		{
-			var
+			const
 				offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
 
 			layerNode .getNavigationInfo () .transitionStart_ = true;
@@ -401,13 +402,16 @@ function (Fields,
 
 			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
-			var
+			const
 				translation = Vector3 .lerp (this .positionOffset_ .getValue (), offset, factor),
-				direction   = Vector3 .add (this .getPosition (), translation) .subtract (point),
-				rotation    = Rotation4 .multRight (this .orientationOffset_ .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
+				direction   = Vector3 .add (this .getPosition (), translation) .subtract (point);
+
+			let rotation = Rotation4 .multRight (this .orientationOffset_ .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
 
 			if (straighten)
+			{
 				rotation = Rotation4 .inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Rotation4 .multRight (this .getOrientation (), rotation)));
+			}
 
 			this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, translation);
 			this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
@@ -431,7 +435,7 @@ function (Fields,
 
 			this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
-			var rotation = Rotation4 .multRight (Rotation4 .inverse (this .getOrientation ()), this .straightenHorizon (this .getUserOrientation ()));
+			const rotation = Rotation4 .multRight (Rotation4 .inverse (this .getOrientation ()), this .straightenHorizon (this .getUserOrientation ()));
 
 			this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, this .positionOffset_);
 			this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
@@ -444,7 +448,7 @@ function (Fields,
 		},
 		straightenHorizon: (function ()
 		{
-			var
+			const
 				localXAxis  = new Vector3 (0, 0, 0),
 				localZAxis  = new Vector3 (0, 0, 0),
 				rotation    = new Rotation4 (0, 0, 1, 0);
@@ -454,8 +458,9 @@ function (Fields,
 				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
 				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
 
-				var upVector = this .getUpVector ();
-				var vector   = localZAxis .cross (upVector);
+				const
+				 	upVector = this .getUpVector (),
+					vector   = localZAxis .cross (upVector);
 
 				// If viewer looks along the up vector.
 				if (Math .abs (localZAxis .dot (upVector)) >= 1)
