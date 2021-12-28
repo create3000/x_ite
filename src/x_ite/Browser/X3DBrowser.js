@@ -225,11 +225,6 @@ function ($,
 
 			scene .setup ();
 
-			if (this .isExternal ())
-			   return scene;
-
-			scene .setLive (true);
-
 			return scene;
 		},
 		replaceWorld: function (scene)
