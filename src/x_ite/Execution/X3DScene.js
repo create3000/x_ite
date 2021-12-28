@@ -81,7 +81,7 @@ function (Fields,
 		this ._specificationVersion = "3.3";
 		this ._encoding             = "SCRIPTED";
 		this ._profile              = null;
-		this ._components           = new ComponentInfoArray (this .getBrowser ());
+		this ._components           = new ComponentInfoArray ([ ]);
 		this ._url                  = new URI (window .location .toString ());
 		this ._units                = new UnitInfoArray ();
 

@@ -51,11 +51,11 @@ define (function ()
 {
 "use strict";
 
-	var handler =
+	const handler =
 	{
 		get: function (target, key)
 		{
-			var value = target [key];
+			let value = target [key];
 
 			if (value !== undefined)
 				return value;

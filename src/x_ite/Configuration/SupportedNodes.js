@@ -56,7 +56,7 @@ function (X3DConstants,
 {
 "use strict";
 
-	var nodeType = 0;
+	let nodeType = 0;
 
 	function SupportedNodes ()
 	{
@@ -75,14 +75,11 @@ function (X3DConstants,
 
 			// HTMLSupport
 
-			var fieldDefinitions = Type .prototype .fieldDefinitions;
-
-			for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
+			for (const fieldDefinition of Type .prototype .fieldDefinitions)
 			{
-				var
-					fieldDefinition = fieldDefinitions [i],
-					name            = fieldDefinition .name,
-					accessType      = fieldDefinition .accessType;
+				const
+					name       = fieldDefinition .name,
+					accessType = fieldDefinition .accessType;
 
 				if (accessType & X3DConstants .initializeOnly)
 				{

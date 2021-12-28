@@ -85,7 +85,7 @@ function (Fields,
 		},
 		toXMLStream: function (stream)
 		{
-			var generator = Generator .Get (stream);
+			const generator = Generator .Get (stream);
 
 			stream .string += generator .Indent ();
 			stream .string += "<component";

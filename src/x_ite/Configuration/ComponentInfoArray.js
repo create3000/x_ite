@@ -58,13 +58,10 @@ function (ComponentInfo,
 
 	function ComponentInfoArray (array)
 	{
-		var proxy = X3DInfoArray .call (this);
+		const proxy = X3DInfoArray .call (this);
 
-		if (array)
-		{
-			for (var i = 0, length = array .length; i < length; ++ i)
-				this .add (array [i] .name, array [i]);
-		}
+		for (const componentInfo of array)
+			this .add (componentInfo .name, componentInfo);
 
 		return proxy;
 	}

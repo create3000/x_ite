@@ -56,7 +56,7 @@ function (ComponentInfoArray,
 {
 "use strict";
 
-	var SupportedComponents = new ComponentInfoArray ();
+	const SupportedComponents = new ComponentInfoArray ([ ]);
 
 	SupportedComponents .addBaseComponent (
 	{

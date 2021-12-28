@@ -71,7 +71,8 @@ function ($)
 					if (typeof fallback === "function")
 						fallback (elements, error);
 				}
-			});
+			}
+			.bind (this));
 		},
 		show: function (elements, error)
 		{

@@ -62,7 +62,7 @@ function (ProfileInfo,
 {
 "use strict";
 
-	var SupportedProfiles = new ProfileInfoArray ();
+	const SupportedProfiles = new ProfileInfoArray ();
 
 	SupportedProfiles .addProfile ({
 		title: "Computer-Aided Design (CAD) interchange",
