@@ -51,7 +51,7 @@ define (function ()
 {
 "use strict";
 
-	var handler =
+	const handler =
 	{
 		get: function (target, key)
 		{

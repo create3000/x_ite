@@ -121,7 +121,7 @@ function (Fields,
 		},
 		toVRMLStream: function (stream)
 		{
-			var
+			const
 				generator           = Generator .Get (stream),
 				sourceNodeName      = generator .LocalName (this ._sourceNode .getValue ()),
 				destinationNodeName = generator .LocalName (this ._destinationNode .getValue ());
@@ -149,7 +149,7 @@ function (Fields,
 		},
 		toXMLStream: function (stream)
 		{
-			var
+			const
 				generator           = Generator .Get (stream),
 				sourceNodeName      = generator .LocalName (this ._sourceNode .getValue ()),
 				destinationNodeName = generator .LocalName (this ._destinationNode .getValue ());
@@ -234,4 +234,3 @@ function (Fields,
 
 	return X3DRoute;
 });
-

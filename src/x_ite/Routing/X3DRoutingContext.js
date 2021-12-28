@@ -80,13 +80,13 @@ function ()
 				// Process field events
 				do
 				{
-					var taintedFields = this .taintedFields;
+					const taintedFields = this .taintedFields;
 
 					// Swap tainted fields.
 					this .taintedFields         = this .taintedFieldsTemp;
 					this .taintedFields .length = 0;
 
-					for (var i = 0, length = taintedFields .length; i < length; i += 2)
+					for (let i = 0, length = taintedFields .length; i < length; i += 2)
 						taintedFields [i] .processEvent (taintedFields [i + 1]);
 
 					// Don't know why this must be done after the for loop, otherwise a fatal error could be thrown.
@@ -97,15 +97,15 @@ function ()
 				// Process node events
 				do
 				{
-					var taintedNodes = this .taintedNodes;
+					const taintedNodes = this .taintedNodes;
 
 					// Swap tainted nodes.
 					this .taintedNodes         = this .taintedNodesTemp;
 					this .taintedNodes .length = 0;
 
-					for (var i = 0, length = taintedNodes .length; i < length; ++ i)
-						taintedNodes [i] .processEvents ();
-					
+					for (const taintedNode of taintedNodes)
+						taintedNode .processEvents ();
+
 					// Don't know why this must be done after the for loop, otherwise a fatal error could be thrown.
 					this .taintedNodesTemp = taintedNodes;
 				}
