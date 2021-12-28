@@ -165,45 +165,43 @@ function (Fields,
 		{
 			return this .getExecutionContext () .getUnits ();
 		},
-		createNode: function (typeName, setup)
+		createNode: function (typeName, setup = true)
 		{
 			if (setup === false)
 			{
-				var Type = this .getBrowser () .getSupportedNode (typeName);
+				const Type = this .getBrowser () .getSupportedNode (typeName);
 
 				if (! Type)
 					return null;
 
-				var baseNode = new Type (this);
-
-				return baseNode;
+				return new Type (this);
 			}
 			else
 			{
-				var Type = this .getBrowser () .getSupportedNode (typeName);
+				const Type = this .getBrowser () .getSupportedNode (typeName);
 
 				if (! Type)
 					throw new Error ("Unknown node type '" + typeName + "'.");
 
-				var baseNode = new Type (this);
+				const baseNode = new Type (this);
 
 				baseNode .setup ();
 
 				return SFNodeCache .add (baseNode);
 			}
 		},
-		createProto: function (name, setup)
+		createProto: function (name, setup = true)
 		{
-			var executionContext = this;
+			let executionContext = this;
 
 			for (;;)
 			{
-				var proto = executionContext .protos .get (name);
+				const proto = executionContext .protos .get (name);
 
 				if (proto)
 					return proto .createInstance (this, setup);
 
-				var externproto = executionContext .externprotos .get (name);
+				const externproto = executionContext .externprotos .get (name);
 
 				if (externproto)
 					return externproto .createInstance (this, setup);
@@ -233,7 +231,7 @@ function (Fields,
 
 			name = String (name);
 
-			var baseNode = node instanceof Fields .SFNode ? node .getValue () : node;
+			const baseNode = node instanceof Fields .SFNode ? node .getValue () : node;
 
 			if (! baseNode)
 				throw new Error ("Couldn't update named node: node IS NULL.");
@@ -261,7 +259,7 @@ function (Fields,
 		},
 		getNamedNode: function (name)
 		{
-			var baseNode = this ._namedNodes .get (name);
+			const baseNode = this ._namedNodes .get (name);
 
 			if (baseNode)
 				return SFNodeCache .get (baseNode);
@@ -274,11 +272,11 @@ function (Fields,
 		},
 		getUniqueName: function (name)
 		{
-			var _TrailingNumbers = /(_\d+$)/;
+			const _TrailingNumbers = /(_\d+$)/;
 
 			name = name .replace (_TrailingNumbers, "");
 
-			var
+			let
 				newName = name,
 				i       = 64;
 
@@ -286,7 +284,7 @@ function (Fields,
 			{
 				if (this ._namedNodes .has (newName) || newName .length === 0)
 				{
-					var
+					const
 						min = i,
 						max = i <<= 1;
 
@@ -332,7 +330,7 @@ function (Fields,
 
 			this .removeImportedNode (importedName);
 
-			var importedNode = new ImportedNode (this, inlineNode, exportedName, importedName);
+			const importedNode = new ImportedNode (this, inlineNode, exportedName, importedName);
 
 			this ._importedNodes .set (importedName, importedNode);
 
@@ -340,7 +338,7 @@ function (Fields,
 		},
 		removeImportedNode: function (importedName)
 		{
-			var importedNode = this ._importedNodes .get (importedName);
+			const importedNode = this ._importedNodes .get (importedName);
 
 			if (! importedNode)
 				return;
@@ -351,7 +349,7 @@ function (Fields,
 		},
 		getImportedNode: function (importedName)
 		{
-			var importedNode = this ._importedNodes .get (importedName);
+			const importedNode = this ._importedNodes .get (importedName);
 
 			if (importedNode)
 				return importedNode .getExportedNode () .valueOf ();
@@ -370,7 +368,7 @@ function (Fields,
 			}
 			catch (error)
 			{
-				var importedNode = this ._importedNodes .get (name);
+				const importedNode = this ._importedNodes .get (name);
 
 				if (importedNode)
 					return SFNodeCache .get (importedNode);
@@ -386,7 +384,7 @@ function (Fields,
 			if (node .getValue () .getExecutionContext () === this)
 				return node .getValue () .getName ();
 
-			for (var importedNode of this ._importedNodes .values ())
+			for (const importedNode of this ._importedNodes .values ())
 			{
 				try
 				{
@@ -408,7 +406,7 @@ function (Fields,
 		},
 		getProtoDeclaration: function (name)
 		{
-			var proto = this ._protos .get (name);
+			const proto = this ._protos .get (name);
 
 			if (proto)
 				return proto;
@@ -421,7 +419,7 @@ function (Fields,
 		},
 		getExternProtoDeclaration: function (name)
 		{
-			var externproto = this ._externprotos .get (name);
+			const externproto = this ._externprotos .get (name);
 
 			if (externproto)
 				return externproto;
@@ -449,7 +447,7 @@ function (Fields,
 			if (! destinationNode .getValue ())
 				throw new Error ("Bad ROUTE specification: destination node is NULL.");
 
-			var
+			const
 				sourceNodeValue      = sourceNode      .getValue (),
 				destinationNodeValue = destinationNode .getValue ();
 
@@ -461,7 +459,7 @@ function (Fields,
 
 			// Imported nodes handling.
 
-			var
+			let
 				importedSourceNode      = sourceNodeValue      instanceof ImportedNode ? sourceNodeValue      : null,
 				importedDestinationNode = destinationNodeValue instanceof ImportedNode ? destinationNodeValue : null;
 
@@ -530,14 +528,14 @@ function (Fields,
 				if (sourceField .getType () !== destinationField .getType ())
 					throw new Error ("ROUTE types " + sourceField .getTypeName () + " and " + destinationField .getTypeName () + " do not match.");
 
-				var
-					id    = sourceField .getId () + "." + destinationField .getId (),
-					route = this ._routeIndex .get (id);
+				const id = sourceField .getId () + "." + destinationField .getId ();
+
+				let route = this ._routeIndex .get (id);
 
 				if (route)
 					return route;
 
-				var route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
+				route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
 
 				this ._routes .getValue () .push (route);
 				this ._routeIndex .set (id, route);
@@ -567,7 +565,7 @@ function (Fields,
 		{
 			try
 			{
-				var
+				const
 					sourceField      = route ._sourceField,
 					destinationField = route ._destinationField,
 					id               = sourceField .getId () + "." + destinationField .getId (),
@@ -592,7 +590,7 @@ function (Fields,
 		{
 			// Imported nodes handling.
 
-			var
+			let
 				importedSourceNode      = null,
 				importedDestinationNode = null;
 
@@ -640,10 +638,10 @@ function (Fields,
 			if (! destinationNode .getValue ())
 				throw new Error ("Bad ROUTE specification: destinationNode is NULL.");
 
-			var
-				sourceField      = sourceNode .getValue () .getField (sourceField),
-				destinationField = destinationNode .getValue () .getField (destinationField),
-				id               = sourceField .getId () + "." + destinationField .getId ();
+			sourceField      = sourceNode .getValue () .getField (sourceField);
+			destinationField = destinationNode .getValue () .getField (destinationField);
+
+			const id = sourceField .getId () + "." + destinationField .getId ();
 
 			return this ._routeIndex .get (id);
 		},
@@ -670,7 +668,7 @@ function (Fields,
 		},
 		toVRMLStream: function (stream)
 		{
-			var generator = Generator .Get (stream);
+			const generator = Generator .Get (stream);
 
 			generator .PushExecutionContext (this);
 			generator .EnterScope ();
@@ -686,11 +684,11 @@ function (Fields,
 
 			// Output root nodes
 
-			var rootNodes = this .getRootNodes ();
+			const rootNodes = this .getRootNodes ();
 
-			for (var i = 0, length = rootNodes .length; i < length; ++ i)
+			for (let i = 0, length = rootNodes .length; i < length; ++ i)
 			{
-				var rootNode = rootNodes [i];
+				const rootNode = rootNodes [i];
 
 				stream .string += generator .Indent ();
 
@@ -707,7 +705,7 @@ function (Fields,
 
 			// Output imported nodes
 
-			var importedNodes = this .getImportedNodes ();
+			const importedNodes = this .getImportedNodes ();
 
 			if (importedNodes .size)
 			{
@@ -728,7 +726,7 @@ function (Fields,
 
 			// Output routes
 
-			var routes = this .getRoutes ();
+			const routes = this .getRoutes ();
 
 			if (routes .length)
 			{
@@ -742,7 +740,7 @@ function (Fields,
 		},
 		toXMLStream: function (stream)
 		{
-			var generator = Generator .Get (stream);
+			const generator = Generator .Get (stream);
 
 			generator .PushExecutionContext (this);
 			generator .EnterScope ();
@@ -758,7 +756,7 @@ function (Fields,
 
 			// Output root nodes
 
-			var rootNodes = this .getRootNodes ();
+			const rootNodes = this .getRootNodes ();
 
 			if (rootNodes .length)
 			{
@@ -769,7 +767,7 @@ function (Fields,
 
 			// Output imported nodes
 
-			var importedNodes = this .getImportedNodes ();
+			const importedNodes = this .getImportedNodes ();
 
 			importedNodes .forEach (function (importedNode)
 			{

@@ -111,7 +111,7 @@ function (Fields,
 		{
 			// Add route.
 
-			var id = sourceNode .getId () + "." + sourceField + " " + destinationNode .getId () + "." + destinationField;
+			const id = sourceNode .getId () + "." + sourceField + " " + destinationNode .getId () + "." + destinationField;
 
 			this .routes .set (id,
 			{
@@ -130,12 +130,14 @@ function (Fields,
 		{
 			try
 			{
-				var
+				const
 					route            = this .routes .get (id),
-					sourceNode       = route .sourceNode,
 					sourceField      = route .sourceField,
-					destinationNode  = route .destinationNode,
 					destinationField = route .destinationField;
+
+				let
+					sourceNode      = route .sourceNode,
+					destinationNode = route .destinationNode;
 
 				if (route ._route)
 					route ._route .dispose ();
@@ -159,13 +161,13 @@ function (Fields,
 			{
 				if (route ._route === real)
 				{
-					var
+					const
 						sourceNode       = route .sourceNode,
 						sourceField      = route .sourceField,
 						destinationNode  = route .destinationNode,
 						destinationField = route .destinationField;
 
-					var id = sourceNode .getId () + "." + sourceField + " " + destinationNode .getId () + "." + destinationField;
+					const id = sourceNode .getId () + "." + sourceField + " " + destinationNode .getId () + "." + destinationField;
 
 					this .routes .delete (id);
 				}
@@ -176,7 +178,7 @@ function (Fields,
 		{
 			this .routes .forEach (function (route)
 			{
-				var real = route ._route
+				const real = route ._route
 
 				if (real)
 				{
@@ -212,7 +214,7 @@ function (Fields,
 		},
 		toVRMLStream: function (stream)
 		{
-			var generator = Generator .Get (stream);
+			const generator = Generator .Get (stream);
 
 			if (generator .ExistsNode (this .getInlineNode ()))
 			{
@@ -242,7 +244,7 @@ function (Fields,
 
 					this .routes .forEach (function (route)
 					{
-						var
+						const
 							sourceNode       = route .sourceNode,
 							sourceField      = route .sourceField,
 							destinationNode  = route .destinationNode,
@@ -250,15 +252,13 @@ function (Fields,
 
 						if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
 						{
-							if (sourceNode instanceof ImportedNode)
-								var sourceNodeName = sourceNode .getImportedName ();
-							else
-								var sourceNodeName = generator .Name (sourceNode);
+							const sourceNodeName = sourceNode instanceof ImportedNode
+								? sourceNode .getImportedName ()
+								: generator .Name (sourceNode);
 
-							if (destinationNode instanceof ImportedNode)
-								var destinationNodeName = destinationNode .getImportedName ();
-							else
-								var destinationNodeName = generator .Name (destinationNode);
+							const destinationNodeName = destinationNode instanceof ImportedNode
+								? destinationNode .getImportedName ()
+								: generator .Name (destinationNode);
 
 							stream .string += "\n";
 							stream .string += "\n";
@@ -283,7 +283,7 @@ function (Fields,
 		},
 		toXMLStream: function (stream)
 		{
-			var generator = Generator .Get (stream);
+			const generator = Generator .Get (stream);
 
 			if (generator .ExistsNode (this .getInlineNode ()))
 			{
@@ -319,7 +319,7 @@ function (Fields,
 
 					this .routes .forEach (function (route)
 					{
-						var
+						const
 							sourceNode       = route .sourceNode,
 							sourceField      = route .sourceField,
 							destinationNode  = route .destinationNode,
@@ -327,15 +327,13 @@ function (Fields,
 
 						if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
 						{
-							if (sourceNode instanceof ImportedNode)
-								var sourceNodeName = sourceNode .getImportedName ();
-							else
-								var sourceNodeName = generator .Name (sourceNode);
+							const sourceNodeName = sourceNode instanceof ImportedNode
+								? sourceNode .getImportedName ()
+								: generator .Name (sourceNode);
 
-							if (destinationNode instanceof ImportedNode)
-								var destinationNodeName = destinationNode .getImportedName ();
-							else
-								var destinationNodeName = generator .Name (destinationNode);
+							const destinationNodeName = destinationNode instanceof ImportedNode
+								? destinationNode .getImportedName ()
+								: generator .Name (destinationNode);
 
 							stream .string += "\n";
 							stream .string += "\n";

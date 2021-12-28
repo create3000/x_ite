@@ -83,7 +83,7 @@ function (Fields,
 		},
 		toVRMLStream: function (stream)
 		{
-			var
+			const
 				generator = Generator .Get (stream),
 				localName = generator .LocalName (this .localNode);
 
@@ -102,7 +102,7 @@ function (Fields,
 		},
 		toXMLStream: function (stream)
 		{
-			var
+			const
 				generator = Generator .Get (stream),
 				localName = generator .LocalName (this .localNode);
 

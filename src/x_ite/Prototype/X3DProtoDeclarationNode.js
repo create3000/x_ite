@@ -70,7 +70,7 @@ function (X3DNode,
 		{
 			return true;
 		},
-		createInstance: function (executionContext, setup)
+		createInstance: function (executionContext, setup = true)
 		{
 			if (setup === false)
 			{

@@ -160,7 +160,7 @@ function (Fields,
 		{
 			// Private function.
 
-			var unit = this ._units .get (category);
+			const unit = this ._units .get (category);
 
 			if (! unit)
 				return;
@@ -270,7 +270,7 @@ function (Fields,
 			//if (node .getValue () .getExecutionContext () !== this)
 			//	throw new Error ("Couldn't update exported node: node does not belong to this execution context.");
 
-			var exportedNode = new ExportedNode (exportedName, node .getValue ());
+			const exportedNode = new ExportedNode (exportedName, node .getValue ());
 
 			this ._exportedNodes .set (exportedName, exportedNode);
 		},
@@ -280,7 +280,7 @@ function (Fields,
 		},
 		getExportedNode: function (exportedName)
 		{
-			var exportedNode = this ._exportedNodes .get (exportedName);
+			const exportedNode = this ._exportedNodes .get (exportedName);
 
 			if (exportedNode)
 				return SFNodeCache .get (exportedNode .getLocalNode ());
@@ -299,9 +299,9 @@ function (Fields,
 			if (! (node instanceof Fields .SFNode))
 				throw new Error ("Couldn't add root node: node must be of type SFNode.");
 
-			var rootNodes = this .getRootNodes ();
+			const rootNodes = this .getRootNodes ();
 
-			for (var i = 0, length = rootNodes .length; i < length; ++ i)
+			for (let i = 0, length = rootNodes .length; i < length; ++ i)
 			{
 				if (rootNodes [i] .equals (node))
 					return;
@@ -317,7 +317,7 @@ function (Fields,
 			if (! (node instanceof Fields .SFNode))
 				throw new Error ("Couldn't remove root node: node must be of type SFNode.");
 
-			var
+			const
 				rootNodes = this .getRootNodes (),
 				length    = rootNodes .length;
 
@@ -333,9 +333,9 @@ function (Fields,
 		},
 		toVRMLStream: function (stream)
 		{
-			var
-				generator            = Generator .Get (stream),
-				specificationVersion = this .getSpecificationVersion ();
+			const generator = Generator .Get (stream);
+
+			let specificationVersion = this .getSpecificationVersion ();
 
 			if (specificationVersion === "2.0")
 				specificationVersion = "3.3";
@@ -352,7 +352,7 @@ function (Fields,
 			stream .string += "\n";
 			stream .string += "\n";
 
-			var profile = this .getProfile ();
+			const profile = this .getProfile ();
 
 			if (profile)
 			{
@@ -362,7 +362,7 @@ function (Fields,
 				stream .string += "\n";
 			}
 
-			var components = this .getComponents ();
+			const components = this .getComponents ();
 
 			if (components .length)
 			{
@@ -373,14 +373,10 @@ function (Fields,
 
 			// Units
 			{
-				var
-					empty = true,
-					units = this .getUnits ();
+				let empty = true;
 
-				for (var i = 0, length = units .length; i < length; ++ i)
+				for (const unit of this .getUnits ())
 				{
-					var unit = units [i];
-
 					if (unit .conversionFactor !== 1)
 					{
 						empty = false;
@@ -395,7 +391,7 @@ function (Fields,
 					stream .string += "\n";
 			}
 
-			var metadata = this .getMetaDatas ();
+			const metadata = this .getMetaDatas ();
 
 			if (metadata .size)
 			{
@@ -412,7 +408,7 @@ function (Fields,
 				stream .string += "\n";
 			}
 
-			var exportedNodes = this .getExportedNodes ();
+			const exportedNodes = this .getExportedNodes ();
 
 			generator .PushExecutionContext (this);
 			generator .EnterScope ();
@@ -444,9 +440,9 @@ function (Fields,
 		},
 		toXMLStream: function (stream)
 		{
-			var
-				generator            = Generator .Get (stream),
-				specificationVersion = this .getSpecificationVersion ();
+			const generator = Generator .Get (stream);
+
+			let specificationVersion = this .getSpecificationVersion ();
 
 			if (specificationVersion === "2.0")
 				specificationVersion = "3.3";
@@ -485,12 +481,8 @@ function (Fields,
 
 			this .getComponents () .toXMLStream (stream);
 
-			var units = this .getUnits ();
-
-			for (var i = 0, length = units .length; i < length; ++ i)
+			for (const unit of this .getUnits ())
 			{
-				var unit = units [i];
-
 				if (unit .conversionFactor !== 1)
 				{
 					unit .toXMLStream (stream);
@@ -527,7 +519,7 @@ function (Fields,
 
 			// <Scene>
 
-			var exportedNodes = this .getExportedNodes ();
+			const exportedNodes = this .getExportedNodes ();
 
 			generator .PushExecutionContext (this);
 			generator .EnterScope ();
