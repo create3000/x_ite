@@ -68,9 +68,12 @@ function (Fields,
 		constructor: X3DUrlObject,
 		initialize: function ()
 		{ },
-		setLoadState: function (value, notify)
+		setLoadState: function (value, notify = true)
 		{
 			this .loadState_ = value;
+
+			if (notify === false)
+				return;
 
 			switch (value)
 			{
@@ -78,17 +81,13 @@ function (Fields,
 					break;
 				case X3DConstants .IN_PROGRESS_STATE:
 				{
-					if (notify !== false)
-						this .getScene () .addLoadCount (this);
-
+					this .getScene () .addLoadCount (this);
 					break;
 				}
 				case X3DConstants .COMPLETE_STATE:
 				case X3DConstants .FAILED_STATE:
 				{
-					if (notify !== false)
-						this .getScene () .removeLoadCount (this);
-
+					this .getScene () .removeLoadCount (this);
 					break;
 				}
 			}
