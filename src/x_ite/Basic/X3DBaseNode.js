@@ -278,7 +278,7 @@ function (X3DEventObject,
 			{
 				try
 				{
-					const destfield = copy .getField (sourceField .getName ());
+					const destinationField = copy .getField (sourceField .getName ());
 
 					if (sourceField .hasReferences ())
 					{
@@ -288,7 +288,7 @@ function (X3DEventObject,
 						{
 							try
 							{
-								destfield .addReference (instance .getField (originalReference .getName ()));
+								destinationField .addReference (instance .getField (originalReference .getName ()));
 							}
 							catch (error)
 							{
@@ -304,16 +304,16 @@ function (X3DEventObject,
 							{
 								case X3DConstants .SFNode:
 								case X3DConstants .MFNode:
-									destfield .set (sourceField .copy (instance) .getValue ());
+									destinationField .set (sourceField .copy (instance) .getValue ());
 									break;
 								default:
-									destfield .set (sourceField .getValue (), sourceField .length);
+									destinationField .set (sourceField .getValue (), sourceField .length);
 									break;
 							}
 						}
 					}
 
-					destfield .setModificationTime (sourceField .getModificationTime ());
+					destinationField .setModificationTime (sourceField .getModificationTime ());
 				}
 				catch (error)
 				{
@@ -325,11 +325,11 @@ function (X3DEventObject,
 
 			this .getUserDefinedFields () .forEach (function (sourceField)
 			{
-				const destfield = sourceField .copy (instance);
+				const destinationField = sourceField .copy (instance);
 
 				copy .addUserDefinedField (sourceField .getAccessType (),
 													sourceField .getName (),
-													destfield);
+													destinationField);
 
 				if (sourceField .hasReferences ())
 				{
@@ -339,7 +339,7 @@ function (X3DEventObject,
 					{
 						try
 						{
-							destfield .addReference (instance .getField (originalReference .getName ()));
+							destinationField .addReference (instance .getField (originalReference .getName ()));
 						}
 						catch (error)
 						{
@@ -348,7 +348,7 @@ function (X3DEventObject,
 					});
 				}
 
-				destfield .setModificationTime (sourceField .getModificationTime ());
+				destinationField .setModificationTime (sourceField .getModificationTime ());
 			});
 
 			copy .setup ();
