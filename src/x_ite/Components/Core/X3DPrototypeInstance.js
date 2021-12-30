@@ -384,7 +384,7 @@ function (X3DChildObject,
 
 							fieldReferences .forEach (function (fieldReference)
 							{
-								initializableReference |= fieldReference .isInitializable ();
+								initializableReference ||= fieldReference .isInitializable ();
 							});
 
 							if (! initializableReference)

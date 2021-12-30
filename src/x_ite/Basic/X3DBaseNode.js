@@ -108,7 +108,7 @@ function (X3DEventObject,
 		},
 		getScene: function ()
 		{
-			var executionContext = this ._executionContext;
+			let executionContext = this ._executionContext;
 
 			while (! executionContext .isRootContext ())
 				executionContext = executionContext .getExecutionContext ();
@@ -117,7 +117,7 @@ function (X3DEventObject,
 		},
 		getMainScene: function ()
 		{
-			var scene = this ._executionContext .getScene ();
+			let scene = this ._executionContext .getScene ();
 
 			while (! scene .isMainContext ())
 				scene = scene .getScene ();
@@ -370,7 +370,7 @@ function (X3DEventObject,
 		},
 		addChildObjects: function (name, field)
 		{
-			for (var i = 0, length = arguments .length; i < length; i += 2)
+			for (let i = 0, length = arguments .length; i < length; i += 2)
 				this .addChildObject (arguments [i], arguments [i + 1]);
 		},
 		addChildObject: function (name, field)
@@ -435,7 +435,7 @@ function (X3DEventObject,
 
 				const fieldDefinitions = this .fieldDefinitions .getValue ();
 
-				for (var i = 0, length = fieldDefinitions .length; i < length; ++ i)
+				for (let i = 0, length = fieldDefinitions .length; i < length; ++ i)
 				{
 					if (fieldDefinitions [i] .name === name)
 					{
@@ -451,17 +451,17 @@ function (X3DEventObject,
 		getField: (function ()
 		{
 			const
-				set_re     = /^set_(.*?)$/,
-				changed_re = /^(.*?)_changed$/;
+				set_field     = /^set_(.*?)$/,
+				field_changed = /^(.*?)_changed$/;
 
 			return function (name)
 			{
-				var field = this ._fields .get (name);
+				let field = this ._fields .get (name);
 
 				if (field)
 					return field;
 
-				var match = name .match (set_re);
+				let match = name .match (set_field);
 
 				if (match)
 				{
@@ -470,18 +470,20 @@ function (X3DEventObject,
 					if (field && field .getAccessType () === X3DConstants .inputOutput)
 						return field;
 				}
-
-				var match = name .match (changed_re);
-
-				if (match)
+				else
 				{
-					field = this ._fields .get (match [1]);
+					let match = name .match (field_changed);
 
-					if (field && field .getAccessType () === X3DConstants .inputOutput)
-						return field;
+					if (match)
+					{
+						field = this ._fields .get (match [1]);
+
+						if (field && field .getAccessType () === X3DConstants .inputOutput)
+							return field;
+					}
+
+					throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
 				}
-
-				throw new Error ("Unkown field '" + name + "' in node class " + this .getTypeName () + ".");
 			};
 		})(),
 		getFieldDefinitions: function ()
@@ -681,7 +683,7 @@ function (X3DEventObject,
 				fields            = this .getChangedFields (),
 				userDefinedFields = this .getUserDefinedFields ();
 
-			var
+			let
 				fieldTypeLength  = 0,
 				accessTypeLength = 0;
 
@@ -760,13 +762,13 @@ function (X3DEventObject,
 			}
 			else
 			{
-				var
+				let
 					index                  = 0,
 					initializableReference = false;
 
 				field .getReferences () .forEach (function (reference)
 				{
-					initializableReference |= reference .isInitializable ();
+					initializableReference ||= reference .isInitializable ();
 
 					// Output build in reference field
 
@@ -818,13 +820,13 @@ function (X3DEventObject,
 			}
 			else
 			{
-				var
+				let
 					index                  = 0,
 					initializableReference = false;
 
 				field .getReferences () .forEach (function (reference)
 				{
-					initializableReference |= reference .isInitializable ();
+					initializableReference ||= reference .isInitializable ();
 
 					// Output user defined reference field
 
@@ -959,19 +961,19 @@ function (X3DEventObject,
 				// If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
 				// for this field.
 
-				var mustOutputValue = false;
+				let mustOutputValue = false;
 
 				if (generator .ExecutionContext ())
 				{
 					if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
 					{
-						var
+						let
 							initializableReference = false,
 							fieldReferences        = field .getReferences ();
 
 						fieldReferences .forEach (function (fieldReference)
 						{
-							initializableReference |= fieldReference .isInitializable ();
+							initializableReference ||= fieldReference .isInitializable ();
 						});
 
 						if (! initializableReference)
@@ -1056,17 +1058,17 @@ function (X3DEventObject,
 						// If the field is a inputOutput and we have as reference only inputOnly or outputOnly we must output the value
 						// for this field.
 
-						var mustOutputValue = false;
+						let mustOutputValue = false;
 
 						if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
 						{
-							var
+							let
 								initializableReference = false,
 								fieldReferences        = field .getReferences ();
 
 							fieldReferences .forEach (function (fieldReference)
 							{
-								initializableReference |= fieldReference .isInitializable ();
+								initializableReference ||= fieldReference .isInitializable ();
 							});
 
 							if (! initializableReference)
