@@ -80,9 +80,7 @@ function (Fields,
 	X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
 	{
 		constructor: X3DProtoDeclaration,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-		]),
+		fieldDefinitions: new FieldDefinitionArray ([ ]),
 		getTypeName: function ()
 		{
 			return "PROTO";

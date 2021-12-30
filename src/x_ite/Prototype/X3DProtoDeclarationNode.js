@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Components/Core/X3DNode",
+	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Core/X3DPrototypeInstance",
 	"x_ite/Fields/SFNodeCache",
 ],
-function (X3DNode,
+function (X3DBaseNode,
           X3DPrototypeInstance,
           SFNodeCache)
 {
@@ -60,10 +60,10 @@ function (X3DNode,
 
 	function X3DProtoDeclarationNode (executionContext)
 	{
-		X3DNode .call (this, executionContext);
+		X3DBaseNode .call (this, executionContext);
 	}
 
-	X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+	X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: X3DProtoDeclarationNode,
 		hasUserDefinedFields: function ()

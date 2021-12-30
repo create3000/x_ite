@@ -82,9 +82,7 @@ function ($,
 		X3DUrlObject .prototype,
 	{
 		constructor: X3DExternProtoDeclaration,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-		]),
+		fieldDefinitions: new FieldDefinitionArray ([ ]),
 		getTypeName: function ()
 		{
 			return "EXTERNPROTO";

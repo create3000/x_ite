@@ -80,8 +80,8 @@ define (function ()
 		this .array = value;
 		this .index = { };
 
-		for (var i = 0, length = value .length; i < length; ++ i)
-			this .index [value [i] .name] = value [i];
+		for (const fieldDefinition of value)
+			this .index [fieldDefinition .name] = fieldDefinition;
 
 		return new Proxy (this, handler);
 	}
