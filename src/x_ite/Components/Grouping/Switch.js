@@ -55,7 +55,6 @@ define ([
 	"x_ite/Bits/TraverseType",
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Geometry/Box3",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -63,8 +62,7 @@ function (Fields,
           X3DGroupingNode,
           TraverseType,
           X3DCast,
-          X3DConstants,
-          Box3)
+          X3DConstants)
 {
 "use strict";
 
