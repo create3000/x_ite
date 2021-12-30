@@ -98,7 +98,7 @@ function (X3DEventObject,
 		_initialized: false,
 		setExecutionContext: function (value)
 		{
-			// Currently only usefull for Sene.
+			// Currently only useful for Sene.
 
 			this ._executionContext = value;
 		},
@@ -420,7 +420,7 @@ function (X3DEventObject,
 					get: function () { return field; },
 					set: function (value) { field .setValue (value); },
 					enumerable: true,
-					configurable: true, // false : non deleteable
+					configurable: true, // false : non deletable
 				});
 			}
 		},
@@ -516,15 +516,15 @@ function (X3DEventObject,
 		{
 			return this ._predefinedFields;
 		},
-		getChangedFields: function (extented)
+		getChangedFields: function (extended)
 		{
-			/* param routes: also returen fields with routes */
+			/* param routes: also return fields with routes */
 
 			const
 				changedFields    = [ ],
 				predefinedFields = this .getPredefinedFields ();
 
-			if (extented)
+			if (extended)
 			{
 				const userDefinedFields = this .getUserDefinedFields ();
 
@@ -536,7 +536,7 @@ function (X3DEventObject,
 
 			predefinedFields .forEach (function (field)
 			{
-				if (extented)
+				if (extended)
 				{
 					if (field .getInputRoutes () .size || field .getOutputRoutes () .size)
 					{
@@ -1203,7 +1203,7 @@ function (X3DEventObject,
 		dispose: function ()
 		{
 			// TODO: remove named node if any. (do this in NamedNode)
-			// TODO: remove improted node if any. (do this in ImportedNode)
+			// TODO: remove imported node if any. (do this in ImportedNode)
 			// TODO: remove exported node if any. (do this in ExportedNode)
 			// TODO: remove routes from and to node if any. (do this in Route)
 
