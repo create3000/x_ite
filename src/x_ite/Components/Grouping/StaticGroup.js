@@ -198,14 +198,10 @@ function (Fields,
 							renderObject .setNumCollisionShapes (firstCollisionShape);
 						}
 
-						const
-							collisionShapes = this .collisionShapes,
-							modelViewMatrix = renderObject .getModelViewMatrix ();
+						const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-						for (var i = 0, length = collisionShapes .length; i < length; ++ i)
+						for (const collisionShape of this .collisionShapes)
 						{
-							const collisionShape = collisionShapes [i];
-
 							modelViewMatrix .push ();
 							modelViewMatrix .multLeft (collisionShape .modelViewMatrix);
 							collisionShape .shapeNode .traverse (type, renderObject);
@@ -244,14 +240,10 @@ function (Fields,
 							renderObject .setNumDepthShapes (firstDepthShape);
 						}
 
-						const
-							depthShapes     = this .depthShapes,
-							modelViewMatrix = renderObject .getModelViewMatrix ();
+						const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-						for (var i = 0, length = depthShapes .length; i < length; ++ i)
+						for (const depthShape of this .depthShapes)
 						{
-							const depthShape = depthShapes [i];
-
 							modelViewMatrix .push ();
 							modelViewMatrix .multLeft (depthShape .modelViewMatrix);
 							depthShape .shapeNode .traverse (type, renderObject);
@@ -295,25 +287,18 @@ function (Fields,
 							renderObject .setNumTransparentShapes (firstTransparentShape);
 						}
 
-						const
-							opaqueShapes      = this .opaqueShapes,
-							transparentShapes = this .transparentShapes,
-							modelViewMatrix   = renderObject .getModelViewMatrix ();
+						const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-						for (var i = 0, length = opaqueShapes .length; i < length; ++ i)
+						for (const opaqueShape of this .opaqueShapes)
 						{
-							const opaqueShape = opaqueShapes [i];
-
 							modelViewMatrix .push ();
 							modelViewMatrix .multLeft (opaqueShape .modelViewMatrix);
 							opaqueShape .shapeNode .traverse (type, renderObject);
 							modelViewMatrix .pop ();
 						}
 
-						for (var i = 0, length = transparentShapes .length; i < length; ++ i)
+						for (const transparentShape of this .transparentShapes)
 						{
-							const transparentShape = transparentShapes [i];
-
 							modelViewMatrix .push ();
 							modelViewMatrix .multLeft (transparentShape .modelViewMatrix);
 							transparentShape .shapeNode .traverse (type, renderObject);
