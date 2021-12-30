@@ -85,21 +85,15 @@ function (X3DObject)
 		{
 			this .setModificationTime (performance .now ());
 
-			this ._parents .forEach (function (parent)
-			{
+			for (const parent of this ._parents)
 				parent .addEvent (this);
-			},
-			this);
 		},
 		addEventObject: function (field, event)
 		{
 			this .setModificationTime (performance .now ());
 
-			this ._parents .forEach (function (parent)
-			{
+			for (const parent of this ._parents)
 				parent .addEventObject (this, event);
-			},
-			this);
 		},
 		addParent: function (parent)
 		{

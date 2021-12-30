@@ -51,22 +51,22 @@ define (function ()
 {
 "use strict";
 
-	var Events =
+	const Events =
 	{
 		stack: [ ],
 		create: function (field)
 		{
 			if (this .stack .length)
 			{
-				var event = this .stack .pop ();
+				const event = this .stack .pop ();
 
 				event .field = field;
 				event .clear ();
 
 				return event;
 			}
- 
-			var event = new Set ();
+
+			const event = new Set ();
 
 			event .field = field;
 
@@ -76,21 +76,20 @@ define (function ()
 	   {
 			if (this .stack .length)
 			{
-				var copy = this .stack .pop ();
+				const copy = this .stack .pop ();
 
 				copy .field = event .field;
 				copy .clear ();
 
-				event .forEach (function (source)
+				for (const source of event)
 				{
-					this .add (source);
-				},
-				copy);
+					copy .add (source);
+				}
 
 				return copy;
 	      }
 
-			var copy = new Set (event);
+			const copy = new Set (event);
 
 			copy .field = event .field;
 
