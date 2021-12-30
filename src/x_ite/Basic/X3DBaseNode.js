@@ -967,11 +967,9 @@ function (X3DEventObject,
 				{
 					if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
 					{
-						let
-							initializableReference = false,
-							fieldReferences        = field .getReferences ();
+						let initializableReference = false;
 
-						fieldReferences .forEach (function (fieldReference)
+						field .getReferences () .forEach (function (fieldReference)
 						{
 							initializableReference ||= fieldReference .isInitializable ();
 						});
@@ -1062,11 +1060,9 @@ function (X3DEventObject,
 
 						if (field .getAccessType () === X3DConstants .inputOutput && field .getReferences () .size !== 0)
 						{
-							let
-								initializableReference = false,
-								fieldReferences        = field .getReferences ();
+							let initializableReference = false;
 
-							fieldReferences .forEach (function (fieldReference)
+							field .getReferences () .forEach (function (fieldReference)
 							{
 								initializableReference ||= fieldReference .isInitializable ();
 							});
