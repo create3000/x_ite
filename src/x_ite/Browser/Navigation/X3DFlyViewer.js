@@ -101,6 +101,7 @@ function ($,
 		this .event             = null;
 		this .lookAround        = false;
 		this .orientationChaser = new OrientationChaser (executionContext);
+		this .straightenHorizon = true;
 	}
 
 	X3DFlyViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
@@ -132,9 +133,7 @@ function ($,
 			this .orientationChaser .setup ();
 
 			// Preload line shader.
-
-
-				this .initShaders ()
+			this .initShaders ()
 		},
 		initShaders: function ()
 		{
@@ -148,6 +147,10 @@ function ($,
 		},
 		addCollision: function () { },
 		removeCollision: function () { },
+		setStraightenHorizon: function (value)
+		{
+			this .straightenHorizon = value;
+		},
 		set_controlKey_: function ()
 		{
 			if (this .event && this .event .button === 0)
@@ -482,8 +485,8 @@ function ($,
 
 				// Straighten horizon of userOrientation.
 
-				if (viewpoint .getTypeName () !== "GeoViewpoint")
-						viewpoint .straightenHorizon (userOrientation);
+				if (viewpoint .getTypeName () !== "GeoViewpoint" && this .straightenHorizon)
+					viewpoint .straightenHorizon (userOrientation);
 
 				// Determine orientationOffset.
 
@@ -621,7 +624,7 @@ function ($,
 						.multRight (viewpoint .getOrientation ())
 						.multRight (this .orientationChaser .set_destination_ .getValue ());
 
-					if (viewpoint .getTypeName () !== "GeoViewpoint")
+					if (viewpoint .getTypeName () !== "GeoViewpoint" && this .straightenHorizon)
 						viewpoint .straightenHorizon (userOrientation);
 
 					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
@@ -634,7 +637,7 @@ function ($,
 						.setFromToVec (toVector, fromVector)
 						.multRight (viewpoint .getUserOrientation ());
 
-					if (viewpoint .getTypeName () !== "GeoViewpoint")
+					if (viewpoint .getTypeName () !== "GeoViewpoint" && this .straightenHorizon)
 						viewpoint .straightenHorizon (userOrientation);
 
 					orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
