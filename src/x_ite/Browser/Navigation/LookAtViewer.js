@@ -210,7 +210,7 @@ function ($,
 				y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 
 			this .disconnect ();
-			this .lookAtPoint (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
+			this .lookAtPoint (x, y, this .getStraightenHorizon ());
 		},
 		mousemove: function (event)
 		{

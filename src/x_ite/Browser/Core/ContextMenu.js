@@ -418,7 +418,7 @@ function ($,
 				delete menu .items ["available-viewers"];
 			}
 
-			if (browser .getCurrentViewer () !== "EXAMINE" || browser .getActiveViewpoint () .getTypeName () === "GeoViewpoint")
+			if (!browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/) || browser .getActiveViewpoint () .getTypeName () === "GeoViewpoint")
 			{
 				delete menu .items ["straighten-horizon"];
 			}

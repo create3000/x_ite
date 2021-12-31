@@ -69,8 +69,6 @@ function (Fields,
 	function FlyViewer (executionContext)
 	{
 		X3DFlyViewer .call (this, executionContext);
-
-		this .setStraightenHorizon (false);
 	}
 
 	FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),

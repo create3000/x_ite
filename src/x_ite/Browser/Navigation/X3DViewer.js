@@ -101,6 +101,10 @@ function (X3DBaseNode,
 		{
 			return this .getBrowser () .getActiveLayer () .getViewpoint ();
 		},
+		getStraightenHorizon: function ()
+		{
+			return this .getBrowser () .getBrowserOption ("StraightenHorizon");
+		},
 		getButton: function (button)
 		{
 			// If Alt key is pressed and button 0, then emulate button 1 (middle).

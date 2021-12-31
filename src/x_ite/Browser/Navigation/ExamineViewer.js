@@ -161,7 +161,7 @@ function ($,
 		},
 		set_activeViewpoint__: function ()
 		{
-			if (this .getBrowser () .getBrowserOption ("StraightenHorizon"))
+			if (this .getStraightenHorizon ())
 			{
 				var viewpoint = this .getActiveViewpoint ();
 
@@ -263,7 +263,7 @@ function ($,
 
 					if (Math .abs (this .rotation .angle) > SPIN_ANGLE && performance .now () - this .motionTime < SPIN_RELEASE_TIME)
 					{
-						if (this .getBrowser () .getBrowserOption ("StraightenHorizon") && viewpoint .getTypeName () !== "GeoViewpoint")
+						if (this .getStraightenHorizon () && viewpoint .getTypeName () !== "GeoViewpoint")
 							this .rotation = this .getHorizonRotation (this .rotation);
 
 						this .addSpinning (this .rotation);
@@ -300,7 +300,7 @@ function ($,
 				y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 
 			this .disconnect ();
-			this .lookAtBBox (x, y, this .getBrowser () .getBrowserOption ("StraightenHorizon"));
+			this .lookAtBBox (x, y, this .getStraightenHorizon ());
 		},
 		mousemove: (function ()
 		{
@@ -742,7 +742,7 @@ function ($,
 			{
 				var
 					viewpoint         = this .getActiveViewpoint (),
-					straightenHorizon = this .getBrowser () .getBrowserOption ("StraightenHorizon");
+					straightenHorizon = this .getStraightenHorizon ();
 
 				userOrientation
 					.assign (rotation)
