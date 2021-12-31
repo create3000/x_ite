@@ -65,10 +65,12 @@ function (Fields,
           Rotation4)
 {
 "use strict";
-	
+
 	function FlyViewer (executionContext)
 	{
 		X3DFlyViewer .call (this, executionContext);
+
+		this .setStraightenHorizon (false);
 	}
 
 	FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
@@ -87,13 +89,7 @@ function (Fields,
 		},
 		getFlyDirection: function (fromVector, toVector, direction)
 		{
-			direction .assign (toVector) .subtract (fromVector);
-
-			direction .x =  direction .x / 20;
-			direction .y = -direction .z / 20;
-			direction .z = -50;
-
-			return direction;
+			return direction .assign (toVector) .subtract (fromVector);
 		},
 		getTranslationOffset: function (velocity)
 		{
