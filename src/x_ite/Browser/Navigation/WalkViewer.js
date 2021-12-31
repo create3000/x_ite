@@ -65,7 +65,7 @@ function (Fields,
           Rotation4)
 {
 "use strict";
-	
+
 	function WalkViewer (executionContext)
 	{
 		X3DFlyViewer .call (this, executionContext);
@@ -80,8 +80,12 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DFlyViewer .prototype .initialize .call (this);
-			
+
 			this .getBrowser () .addCollision (this);
+		},
+		getStraightenHorizon: function ()
+		{
+			return true;
 		},
 		getFlyDirection: function (fromVector, toVector, direction)
 		{
@@ -99,13 +103,13 @@ function (Fields,
 				var
 					viewpoint = this .getActiveViewpoint (),
 					upVector  = viewpoint .getUpVector ();
-	
+
 				userOrientation .assign (viewpoint .getUserOrientation ());
 				userOrientation .multVecRot (localYAxis .assign (Vector3 .yAxis));
 				rotation        .setFromToVec (localYAxis, upVector);
 
 				var orientation = userOrientation .multRight (rotation);
-	
+
 				return orientation .multVecRot (velocity);
 			};
 		})(),
@@ -119,7 +123,7 @@ function (Fields,
 		dispose: function ()
 		{
 			this .getBrowser () .removeCollision (this);
-			
+
 			X3DFlyViewer .prototype .dispose .call (this);
 		},
 	});
