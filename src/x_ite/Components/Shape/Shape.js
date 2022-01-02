@@ -235,38 +235,30 @@ function (Fields,
 				}
 			};
 		})(),
-		picking: (function ()
+		picking: function (renderObject)
 		{
-			const bbox = new Box3 ();
-
-			return function (renderObject)
+			if (this .getTransformSensors () .size)
 			{
-				if (this .getTransformSensors () .size)
-				{
-					const modelMatrix = renderObject .getModelViewMatrix () .get ();
+				const modelMatrix = renderObject .getModelViewMatrix () .get ();
 
-					this .getTransformSensors () .forEach (function (transformSensorNode)
-					{
-						transformSensorNode .collect (modelMatrix);
-					});
-				}
+				for (const transformSensorNode of this .getTransformSensors ())
+					transformSensorNode .collect (modelMatrix);
+			}
 
-				const
-					browser          = renderObject .getBrowser (),
-					pickSensorStack  = browser .getPickSensors (),
-					pickingHierarchy = browser .getPickingHierarchy ();
+			const
+				browser          = renderObject .getBrowser (),
+				pickSensorStack  = browser .getPickSensors (),
+				pickingHierarchy = browser .getPickingHierarchy ();
 
-				pickingHierarchy .push (this);
+			pickingHierarchy .push (this);
 
-				pickSensorStack .at (-1) .forEach (function (pickSensor)
-				{
-					pickSensor .collect (this .getGeometry (), renderObject .getModelViewMatrix () .get (), browser .getPickingHierarchy ());
-				},
-				this);
+			for (const pickSensor of pickSensorStack .at (-1))
+			{
+				pickSensor .collect (this .getGeometry (), renderObject .getModelViewMatrix () .get (), browser .getPickingHierarchy ());
+			}
 
-				pickingHierarchy .pop ();
-			};
-		})(),
+			pickingHierarchy .pop ();
+		}
 		depth: function (gl, context, shaderNode)
 		{
 			this .getGeometry () .depth (gl, context, shaderNode);

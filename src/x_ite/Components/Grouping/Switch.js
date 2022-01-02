@@ -244,10 +244,8 @@ function (Fields,
 					{
 						const modelMatrix = renderObject .getModelViewMatrix () .get ();
 
-						this .getTransformSensors () .forEach (function (transformSensorNode)
-						{
+						for (const transformSensorNode of this .getTransformSensors ())
 							transformSensorNode .collect (modelMatrix);
-						});
 					}
 
 					const childNode = this .childNode;
