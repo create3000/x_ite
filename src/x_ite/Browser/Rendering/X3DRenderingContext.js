@@ -62,8 +62,7 @@ function ($,
 
 	function X3DRenderingContext ()
 	{
-		this .addChildObjects ("viewport", new Fields .MFInt32 (0, 0, 300, 150));
-
+		this .viewport     = [0, 0, 300, 150];
 		this .localObjects = [ ]; // shader objects dumpster
 	}
 
@@ -73,7 +72,7 @@ function ($,
 		{
 			// Configure context.
 
-			var gl = this .getContext ();
+			const gl = this .getContext ();
 
 			gl .enable (gl .SCISSOR_TEST);
 			gl .cullFace (gl .BACK);
@@ -95,7 +94,7 @@ function ($,
 		},
 		getRenderer: function ()
 		{
-			var dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
+			const dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
 
 			if (dbgRenderInfo)
 				return this .getContext () .getParameter (dbgRenderInfo .UNMASKED_RENDERER_WEBGL);
@@ -104,7 +103,7 @@ function ($,
 		},
 		getVendor: function ()
 		{
-			var dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
+			const dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
 
 			if (dbgRenderInfo)
 				return this .getContext () .getParameter (dbgRenderInfo .UNMASKED_VENDOR_WEBGL);
@@ -125,25 +124,22 @@ function ($,
 		},
 		getDepthSize: function ()
 		{
-			var gl = this .context;
+			const gl = this .context;
 
 			return gl .getParameter (gl .DEPTH_BITS);
 		},
 		getColorDepth: function ()
 		{
-			var gl = this .context;
+			const gl = this .context;
 
-			var colorDepth = 0;
-			colorDepth += gl .getParameter (gl .RED_BITS);
-			colorDepth += gl .getParameter (gl .BLUE_BITS);
-			colorDepth += gl .getParameter (gl .GREEN_BITS);
-			colorDepth += gl .getParameter (gl .ALPHA_BITS);
-
-			return colorDepth;
+			return (gl .getParameter (gl .RED_BITS) +
+			        gl .getParameter (gl .BLUE_BITS) +
+			        gl .getParameter (gl .GREEN_BITS) +
+			        gl .getParameter (gl .ALPHA_BITS));
 		},
 		getViewport: function ()
 		{
-			return this .viewport_;
+			return this .viewport;
 		},
 		getLocalObjects: function ()
 		{
@@ -151,19 +147,18 @@ function ($,
 		},
 		reshape: function ()
 		{
-			var
-				gl     = this .getContext (),
-				canvas = this .getCanvas (),
-				width  = canvas .width (),
-				height = canvas .height ();
-
-			canvas = canvas [0];
+			const
+				gl      = this .getContext (),
+				jCanvas = this .getCanvas (),
+				width   = jCanvas .width (),
+				height  = jCanvas .height (),
+				canvas  = jCanvas [0];
 
 			canvas .width  = width;
 			canvas .height = height;
 
-			this .viewport_ [2] = width;
-			this .viewport_ [3] = height;
+			this .viewport [2] = width;
+			this .viewport [3] = height;
 
 			gl .viewport (0, 0, width, height);
 			gl .scissor  (0, 0, width, height);

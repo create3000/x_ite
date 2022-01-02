@@ -64,11 +64,6 @@ function (X3DBaseNode,
 {
 "use strict";
 
-	var
-		axis     = new Vector3 (0, 0, 0),
-		distance = new Vector3 (0, 0, 0),
-		far      = new Vector3 (0, 0, 0);
-
 	function X3DViewer (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
@@ -118,35 +113,43 @@ function (X3DBaseNode,
 
 			return button;
 		},
-		getPointOnCenterPlane: function (x, y, result)
+		getPointOnCenterPlane: (function ()
 		{
-			try
+			const
+				axis     = new Vector3 (0, 0, -1),
+				distance = new Vector3 (0, 0, 0),
+				far      = new Vector3 (0, 0, 0);
+
+			return function (x, y, result)
 			{
-				var
-					navigationInfo   = this .getNavigationInfo (),
-					viewpoint        = this .getActiveViewpoint (),
-					viewport         = this .getViewport () .getRectangle (this .getBrowser ()),
-					projectionMatrix = viewpoint .getProjectionMatrixWithLimits (navigationInfo .getNearValue (), navigationInfo .getFarValue (viewpoint), viewport);
+				try
+				{
+					const
+						navigationInfo   = this .getNavigationInfo (),
+						viewpoint        = this .getActiveViewpoint (),
+						viewport         = this .getViewport () .getRectangle (this .getBrowser ()),
+						projectionMatrix = viewpoint .getProjectionMatrixWithLimits (navigationInfo .getNearValue (), navigationInfo .getFarValue (viewpoint), viewport);
 
-				// Far plane point
-				ViewVolume .unProjectPoint (x, this .getBrowser () .getViewport () [3] - y, 0.9, Matrix4 .Identity, projectionMatrix, viewport, far);
+					// Far plane point
+					ViewVolume .unProjectPoint (x, this .getBrowser () .getViewport () [3] - y, 0.9, Matrix4 .Identity, projectionMatrix, viewport, far);
 
-				if (viewpoint instanceof OrthoViewpoint)
-					return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .abs ());
+					if (viewpoint instanceof OrthoViewpoint)
+						return result .set (far .x, far .y, -this .getDistanceToCenter (distance) .abs ());
 
-				var direction = far .normalize ();
+					const direction = far .normalize ();
 
-				return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .abs () / direction .dot (axis .set (0, 0, -1)));
-			}
-			catch (error)
-			{
-				console .log (error);
-				return result .set (0, 0, 0);
-			}
-		},
+					return result .assign (direction) .multiply (this .getDistanceToCenter (distance) .abs () / direction .dot (axis));
+				}
+				catch (error)
+				{
+					console .log (error);
+					return result .set (0, 0, 0);
+				}
+			};
+		})(),
 		getDistanceToCenter: function (distance, positionOffset)
 		{
-			var viewpoint = this .getActiveViewpoint ();
+			const viewpoint = this .getActiveViewpoint ();
 
 			return (distance
 				.assign (viewpoint .getPosition ())
@@ -155,7 +158,7 @@ function (X3DBaseNode,
 		},
 		trackballProjectToSphere: function (x, y, vector)
 		{
-			var viewport = this .getViewport () .getRectangle (this .getBrowser ());
+			const viewport = this .getViewport () .getRectangle (this .getBrowser ());
 
 			y = this .getBrowser () .getViewport () [3] - y;
 
@@ -169,20 +172,20 @@ function (X3DBaseNode,
 			if (! this .touch (x, y))
 				return;
 
-			var hit = this .getBrowser () .getNearestHit ();
+			const hit = this .getBrowser () .getNearestHit ();
 
 			this .getActiveViewpoint () .lookAtPoint (this .getActiveLayer (), hit .intersection .point, 2 - 1.618034, straightenHorizon);
 		},
 		lookAtBBox: (function ()
 		{
-			var bbox = new Box3 ();
+			const bbox = new Box3 ();
 
 			return function (x, y, straightenHorizon)
 			{
 				if (! this .touch (x, y))
 					return;
 
-				var hit = this .getBrowser () .getNearestHit ();
+				const hit = this .getBrowser () .getNearestHit ();
 
 				hit .shape .getBBox (bbox) .multRight (hit .modelViewMatrix);
 
@@ -200,7 +203,7 @@ function (X3DBaseNode,
 
 	function tbProjectToSphere (r, x, y)
 	{
-		var d = Math .sqrt (x * x + y * y);
+		const d = Math .sqrt (x * x + y * y);
 
 		if (d < r * Math .sqrt (0.5)) // Inside sphere
 		{
@@ -209,7 +212,8 @@ function (X3DBaseNode,
 
 		// On hyperbola
 
-		var t = r / Math .sqrt (2);
+		const t = r / Math .sqrt (2);
+
 		return t * t / d;
 	}
 

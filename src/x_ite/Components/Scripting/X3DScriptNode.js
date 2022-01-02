@@ -52,8 +52,8 @@ define ([
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DChildNode, 
-          X3DUrlObject, 
+function (X3DChildNode,
+          X3DUrlObject,
           X3DConstants)
 {
 "use strict";
@@ -74,5 +74,3 @@ function (X3DChildNode,
 
 	return X3DScriptNode;
 });
-
-

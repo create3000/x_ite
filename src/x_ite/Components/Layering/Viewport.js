@@ -70,7 +70,7 @@ function (Fields,
 {
 "use strict";
 
-	var ViewVolumes = ObjectCache (ViewVolume);
+	const ViewVolumes = ObjectCache (ViewVolume);
 
 	function Viewport (executionContext)
 	{
@@ -109,9 +109,9 @@ function (Fields,
 		},
 		getRectangle: function (browser)
 		{
-			var viewport = browser .getViewport ();
+			const viewport = browser .getViewport ();
 
-			var
+			const
 				left   = Math .floor (viewport [2] * this .getLeft ()),
 				right  = Math .floor (viewport [2] * this .getRight ()),
 				bottom = Math .floor (viewport [3] * this .getBottom ()),
@@ -162,7 +162,7 @@ function (Fields,
 		},
 		push: function (renderObject)
 		{
-			var
+			const
 				viewVolumes = renderObject .getViewVolumes (),
 				rectangle   = this .getRectangle (renderObject .getBrowser ()),
 				viewport    = viewVolumes .length ? viewVolumes .at (-1) .getViewport () : rectangle,
