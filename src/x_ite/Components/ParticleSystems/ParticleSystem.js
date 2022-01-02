@@ -1413,11 +1413,7 @@ function (Fields,
 					const geometryNode = this .getGeometry ();
 
 					if (geometryNode)
-					{
-						context .geometryContext = null;
-
 						geometryNode .displayParticles (gl, context, this .particles, this .numParticles);
-					}
 				}
 				else
 				{
@@ -1487,6 +1483,8 @@ function (Fields,
 
 						if (blendModeNode)
 							blendModeNode .disable (gl);
+
+						context .geometryContext = null;
 					}
 				}
 			}
