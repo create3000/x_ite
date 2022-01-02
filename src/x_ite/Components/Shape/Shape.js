@@ -258,7 +258,7 @@ function (Fields,
 			}
 
 			pickingHierarchy .pop ();
-		}
+		},
 		depth: function (gl, context, shaderNode)
 		{
 			this .getGeometry () .depth (gl, context, shaderNode);

@@ -194,13 +194,13 @@ function (Fields,
 								pickSensorNodes .add (pickSensorNode);
 							}
 
-							pickableStack .push (true);
+							pickableStack   .push (true);
 							pickSensorStack .push (pickSensorNodes);
 
 							X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
 							pickSensorStack .pop ();
-							pickableStack .pop ();
+							pickableStack   .pop ();
 
 							pickSensorNodes .clear ();
 						}
