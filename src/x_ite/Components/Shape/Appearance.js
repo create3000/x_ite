@@ -235,27 +235,24 @@ function (Fields,
 		},
 		set_shaders__: function ()
 		{
-			const
-				shaders     = this .shaders_ .getValue (),
-				shaderNodes = this .shaderNodes;
+			const shaderNodes = this .shaderNodes;
 
-			for (var i = 0, length = shaderNodes .length; i < length; ++ i)
+			for (const shaderNode of shaderNodes)
 			{
-				const shaderNode = shaderNodes [i];
-
 				shaderNode .isValid_        .removeInterest ("set_shader__", this);
 				shaderNode .activationTime_ .removeInterest ("set_shader__", this);
 			}
 
 			shaderNodes .length = 0;
 
-			for (var i = 0, length = shaders .length; i < length; ++ i)
+			for (const node of this .shaders_)
 			{
-				const shaderNode = X3DCast (X3DConstants .X3DShaderNode, shaders [i]);
+				const shaderNode = X3DCast (X3DConstants .X3DShaderNode, node);
 
 				if (shaderNode)
 				{
 					shaderNodes .push (shaderNode);
+
 					shaderNode .isValid_        .addInterest ("set_shader__", this);
 					shaderNode .activationTime_ .addInterest ("set_shader__", this);
 				}
@@ -275,10 +272,8 @@ function (Fields,
 
 			this .shaderNode = null;
 
-			for (var i = 0, length = shaderNodes .length; i < length; ++ i)
+			for (const shaderNode of shaderNodes)
 			{
-				const shaderNode = shaderNodes [i];
-
 				if (shaderNode .isValid_ .getValue ())
 				{
 					if (shaderNode .activationTime_ .getValue () === this .getBrowser () .getCurrentTime ())
@@ -291,10 +286,8 @@ function (Fields,
 
 			if (!this .shaderNode)
 			{
-				for (var i = 0, length = shaderNodes .length; i < length; ++ i)
+				for (const shaderNode of shaderNodes)
 				{
-					const shaderNode = shaderNodes [i];
-
 					if (shaderNode .isValid_ .getValue ())
 					{
 						this .shaderNode = shaderNode;
