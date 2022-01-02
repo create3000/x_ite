@@ -193,7 +193,7 @@ function (Fields,
 
 			if (this .geometryType > 1)
 			{
-				for (var i = 0; i < 5; ++ i)
+				for (let i = 0; i < 5; ++ i)
 					this .planes [i] = new Plane3 (Vector3 .Zero, boxNormals [0]);
 			}
 
@@ -234,7 +234,7 @@ function (Fields,
 
 			this .bbox .assign (bbox);
 
-			for (var i = 0; i < 5; ++ i)
+			for (let i = 0; i < 5; ++ i)
 				this .planes [i] .set (i % 2 ? this .min : this .max, boxNormals [i]);
 
 			this .bbox_changed_ .addEvent ();
@@ -349,7 +349,7 @@ function (Fields,
 					T         = min [Tindex],
 					vertices  = this .vertices .getValue ();
 
-				for (var i = 0, length = vertices .length; i < length; i += 4)
+				for (let i = 0, length = vertices .length; i < length; i += 4)
 				{
 					texCoords .push ((vertices [i + Sindex] - S) / Ssize,
 					                 (vertices [i + Tindex] - T) / Ssize,
@@ -420,26 +420,25 @@ function (Fields,
 				cosCreaseAngle = Math .cos (Algorithm .clamp (creaseAngle, 0, Math .PI)),
 				normals_       = [ ];
 
-			for (var i in normalIndex) // Don't use forEach
+			for (const i in normalIndex) // Don't use forEach
 			{
 				const vertex = normalIndex [i];
 
-				for (var p = 0, length = vertex .length; p < length; ++ p)
+				for (const p of vertex)
 				{
 					const
-						P = vertex [p],
-						m = normals [P],
-						n = new Vector3 (0, 0, 0);
+						P = normals [p],
+						N = new Vector3 (0, 0, 0);
 
-					for (var q = 0; q < length; ++ q)
+					for (const q of vertex)
 					{
-						const Q = normals [vertex [q]];
+						const Q = normals [q];
 
-						if (Q .dot (m) >= cosCreaseAngle)
-							n .add (Q);
+						if (Q .dot (P) >= cosCreaseAngle)
+							N .add (Q);
 					}
 
-					normals_ [P] = n .normalize ();
+					normals_ [p] = N .normalize ();
 				}
 			}
 
@@ -484,7 +483,7 @@ function (Fields,
 							normals    = this .normals .getValue (),
 							vertices   = this .vertices .getValue ();
 
-						for (var i = 0, length = this .vertexCount; i < length; i += 3)
+						for (let i = 0, length = this .vertexCount; i < length; i += 3)
 						{
 							const i4 = i * 4;
 
@@ -614,7 +613,7 @@ function (Fields,
 
 						const vertices = this .vertices .getValue ();
 
-						for (var i = 0, length = this .vertexCount; i < length; i += 3)
+						for (let i = 0, length = this .vertexCount; i < length; i += 3)
 						{
 							const i4 = i * 4;
 
@@ -690,7 +689,7 @@ function (Fields,
 							flatNormals = this .flatNormals,
 							vertices    = this .vertices .getValue ();
 
-						for (var i = 0, length = vertices .length; i < length; i += 12)
+						for (let i = 0, length = vertices .length; i < length; i += 12)
 						{
 						   Triangle3 .normal (v0 .set (vertices [i],     vertices [i + 1], vertices [i + 2]),
 						                      v1 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]),
@@ -730,11 +729,11 @@ function (Fields,
 
 				// Shrink arrays before transfer to graphics card.
 
-				for (var i = 0, length = this .attribs .length; i < length; ++ i)
-					this .attribs [i] .shrinkToFit ();
+				for (const attrib of this .attribs)
+					attrib .shrinkToFit ();
 
-				for (var i = 0, length = this .multiTexCoords .length; i < length; ++ i)
-					this .multiTexCoords [i] .shrinkToFit ();
+				for (const multiTexCoord of this .multiTexCoords)
+					multiTexCoord .shrinkToFit ();
 
 				this .fogDepths .shrinkToFit ();
 				this .colors    .shrinkToFit ();
@@ -752,7 +751,7 @@ function (Fields,
 				{
 					if (min .x === Number .POSITIVE_INFINITY)
 					{
-						for (var i = 0, length = vertices .length; i < length; i += 4)
+						for (let i = 0, length = vertices .length; i < length; i += 4)
 						{
 							point .set (vertices [i], vertices [i + 1], vertices [i + 2]);
 
@@ -774,7 +773,7 @@ function (Fields,
 
 				if (this .geometryType > 1)
 				{
-					for (var i = 0; i < 5; ++ i)
+					for (let i = 0; i < 5; ++ i)
 						this .planes [i] .set (i % 2 ? min : max, boxNormals [i]);
 
 					if (this .multiTexCoords .length === 0)
@@ -836,10 +835,10 @@ function (Fields,
 
 			// Transfer attribs.
 
-			for (var i = this .attribBuffers .length, length = this .attribs .length; i < length; ++ i)
+			for (let i = this .attribBuffers .length, length = this .attribs .length; i < length; ++ i)
 				this .attribBuffers .push (gl .createBuffer ());
 
-			for (var i = 0, length = this .attribs .length; i < length; ++ i)
+			for (let i = 0, length = this .attribs .length; i < length; ++ i)
 			{
 				gl .bindBuffer (gl .ARRAY_BUFFER, this .attribBuffers [i]);
 				gl .bufferData (gl .ARRAY_BUFFER, this .attribs [i] .getValue (), gl .STATIC_DRAW);
@@ -858,10 +857,10 @@ function (Fields,
 
 			// Transfer multiTexCoords.
 
-			for (var i = this .texCoordBuffers .length, length = this .multiTexCoords .length; i < length; ++ i)
+			for (let i = this .texCoordBuffers .length, length = this .multiTexCoords .length; i < length; ++ i)
 				this .texCoordBuffers .push (gl .createBuffer ());
 
-			for (var i = 0, length = this .multiTexCoords .length; i < length; ++ i)
+			for (let i = 0, length = this .multiTexCoords .length; i < length; ++ i)
 			{
 				gl .bindBuffer (gl .ARRAY_BUFFER, this .texCoordBuffers [i]);
 				gl .bufferData (gl .ARRAY_BUFFER, this .multiTexCoords [i] .getValue (), gl .STATIC_DRAW);
@@ -932,7 +931,7 @@ function (Fields,
 
 					// Setup vertex attributes.
 
-					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+					for (let i = 0, length = attribNodes .length; i < length; ++ i)
 						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
 					if (this .fogCoords)
@@ -951,7 +950,7 @@ function (Fields,
 					{
 						// Wireframes are always solid so only one drawing call is needed.
 
-						for (var i = 0, length = this .vertexCount; i < length; i += 3)
+						for (let i = 0, length = this .vertexCount; i < length; i += 3)
 							gl .drawArrays (shaderNode .primitiveMode, i, 3);
 					}
 					else
@@ -984,7 +983,7 @@ function (Fields,
 						}
 					}
 
-					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+					for (let i = 0, length = attribNodes .length; i < length; ++ i)
 						attribNodes [i] .disable (gl, shaderNode);
 
 					if (this .fogCoords)
@@ -1023,7 +1022,7 @@ function (Fields,
 				y               = modelViewMatrix [13],
 				z               = modelViewMatrix [14];
 
-			for (var p = 0; p < numParticles; ++ p)
+			for (let p = 0; p < numParticles; ++ p)
 			{
 				const particle = particles [p];
 
@@ -1038,7 +1037,7 @@ function (Fields,
 				gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 			}
 
-			//for (var i = 0, length = attribNodes .length; i < length; ++ i)
+			//for (let i = 0, length = attribNodes .length; i < length; ++ i)
 			//	attribNodes [i] .disable (gl, shaderNode);
 		},
 		displayParticles: function (gl, context, particles, numParticles)
@@ -1066,7 +1065,7 @@ function (Fields,
 
 					// Setup vertex attributes.
 
-					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+					for (let i = 0, length = attribNodes .length; i < length; ++ i)
 						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
 					if (this .fogCoords)
@@ -1093,7 +1092,7 @@ function (Fields,
 					{
 						// Wireframes are always solid so only one drawing call is needed.
 
-						for (var p = 0; p < numParticles; ++ p)
+						for (let p = 0; p < numParticles; ++ p)
 						{
 							const particle = particles [p];
 
@@ -1105,7 +1104,7 @@ function (Fields,
 
 							shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
 
-							for (var i = 0, length = this .vertexCount; i < length; i += 3)
+							for (let i = 0, length = this .vertexCount; i < length; i += 3)
 								gl .drawArrays (shaderNode .primitiveMode, i, 3);
 						}
 					}
@@ -1117,7 +1116,7 @@ function (Fields,
 
 						if (context .transparent && ! this .solid)
 						{
-							for (var p = 0; p < numParticles; ++ p)
+							for (let p = 0; p < numParticles; ++ p)
 							{
 								const particle = particles [p];
 
@@ -1144,7 +1143,7 @@ function (Fields,
 							else
 								gl .disable (gl .CULL_FACE);
 
-							for (var p = 0; p < numParticles; ++ p)
+							for (let p = 0; p < numParticles; ++ p)
 							{
 								const particle = particles [p];
 
@@ -1161,7 +1160,7 @@ function (Fields,
 						}
 					}
 
-					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+					for (let i = 0, length = attribNodes .length; i < length; ++ i)
 						attribNodes [i] .disable (gl, shaderNode);
 
 					if (this .fogCoords)
