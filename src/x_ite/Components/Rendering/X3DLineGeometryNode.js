@@ -90,7 +90,7 @@ function (X3DGeometryNode,
 
 				this .getMultiTexCoords () .push (texCoords);
 
-				for (var i = 0, length = vertices .length; i < length; i += 8)
+				for (let i = 0, length = vertices .length; i < length; i += 8)
 				{
 					texCoords .push (vertices [i],
 					                 vertices [i + 1],
@@ -133,7 +133,7 @@ function (X3DGeometryNode,
 
 					// Setup vertex attributes.
 
-					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+					for (let i = 0, length = attribNodes .length; i < length; ++ i)
 						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
 					if (this .fogCoords)
@@ -151,8 +151,8 @@ function (X3DGeometryNode,
 
 					gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
 
-					for (var i = 0, length = attribNodes .length; i < length; ++ i)
-						attribNodes [i] .disable (gl, shaderNode);
+					for (const attribNode of attribNodes)
+						attribNode .disable (gl, shaderNode);
 
 					if (this .fogCoords)
 						shaderNode .disableFogDepthAttribute (gl);
@@ -199,7 +199,7 @@ function (X3DGeometryNode,
 
 					// Setup vertex attributes.
 
-					for (var i = 0, length = attribNodes .length; i < length; ++ i)
+					for (let i = 0, length = attribNodes .length; i < length; ++ i)
 						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
 					if (this .fogCoords)
@@ -222,21 +222,23 @@ function (X3DGeometryNode,
 						z               = modelViewMatrix [14],
 						primitiveMode   = shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode;
 
-					for (var p = 0; p < numParticles; ++ p)
+					for (let p = 0; p < numParticles; ++ p)
 					{
+						const particle = particles [p];
+
 						modelViewMatrix [12] = x;
 						modelViewMatrix [13] = y;
 						modelViewMatrix [14] = z;
 
-						Matrix4 .prototype .translate .call (modelViewMatrix, particles [p] .position);
+						Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-						gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix, false, modelViewMatrix);
+						shaderNode .setParticle (gl, particle, modelViewMatrix, false);
 
 						gl .drawArrays (primitiveMode, 0, this .vertexCount);
 					}
 
-					for (var i = 0, length = attribNodes .length; i < length; ++ i)
-						attribNodes [i] .disable (gl, shaderNode);
+					for (const attribNode of attribNodes)
+						attribNode .disable (gl, shaderNode);
 
 					if (this .fogCoords)
 						shaderNode .disableFogDepthAttribute (gl);

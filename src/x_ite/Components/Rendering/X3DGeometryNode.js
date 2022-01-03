@@ -1032,7 +1032,7 @@ function (Fields,
 
 				Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-				shaderNode .setParticle (gl, p, particle, modelViewMatrix, false);
+				shaderNode .setParticle (gl, particle, modelViewMatrix, false);
 
 				gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 			}
@@ -1102,7 +1102,7 @@ function (Fields,
 
 							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-							shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
+							shaderNode .setParticle (gl, particle, modelViewMatrix, normalMatrix);
 
 							for (let i = 0, length = this .vertexCount; i < length; i += 3)
 								gl .drawArrays (shaderNode .primitiveMode, i, 3);
@@ -1126,7 +1126,7 @@ function (Fields,
 
 								Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-								shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
+								shaderNode .setParticle (gl, particle, modelViewMatrix, normalMatrix);
 
 								gl .enable (gl .CULL_FACE);
 								gl .cullFace (gl .FRONT);
@@ -1153,7 +1153,7 @@ function (Fields,
 
 								Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-								shaderNode .setParticle (gl, p, particle, modelViewMatrix, normalMatrix);
+								shaderNode .setParticle (gl, particle, modelViewMatrix, normalMatrix);
 
 								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 							}
