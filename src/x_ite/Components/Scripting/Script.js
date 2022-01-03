@@ -223,13 +223,8 @@ function ($,
 					result  = evaluate (global, text),
 					context = { };
 
-				for (var i = 0; i < callbacks .length; ++ i)
-				{
-					if (typeof result [i] === "function")
-						context [callbacks [i]] = result [i];
-					else
-						context [callbacks [i]] = null;
-				}
+				for (let i = 0; i < callbacks .length; ++ i)
+					context [callbacks [i]] = result [i];
 
 				return context;
 			}
