@@ -173,7 +173,7 @@ function (ViewVolume,
 						width  = this .width,
 						height = this .height;
 
-					var
+					let
 						winx = 0,
 						winy = 0,
 						winz = Number .POSITIVE_INFINITY;
@@ -182,9 +182,9 @@ function (ViewVolume,
 
 					gl .readPixels (0, 0, width, height, gl .RGBA, gl .UNSIGNED_BYTE, array);
 
-					for (var wy = 0, i = 0; wy < height; ++ wy)
+					for (let wy = 0, i = 0; wy < height; ++ wy)
 					{
-						for (var wx = 0; wx < width; ++ wx, i += 4)
+						for (let wx = 0; wx < width; ++ wx, i += 4)
 						{
 							const wz = array [i] / 255 + array [i + 1] / (255 * 255) + array [i + 2] / (255 * 255 * 255) + array [i + 3] / (255 * 255 * 255 * 255);
 
