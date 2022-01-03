@@ -1425,12 +1425,12 @@ function (Fields,
 
 					if (shaderNode .getValid ())
 					{
+						context .geometryContext = this .geometryContext;
+
 						const blendModeNode = appearanceNode .blendModeNode;
 
 						if (blendModeNode)
 							blendModeNode .enable (gl);
-
-						context .geometryContext = this .geometryContext;
 
 						shaderNode .enable (gl);
 						shaderNode .setLocalUniforms (gl, context);
