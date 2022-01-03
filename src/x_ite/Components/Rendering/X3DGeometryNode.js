@@ -983,8 +983,8 @@ function (Fields,
 						}
 					}
 
-					for (let i = 0, length = attribNodes .length; i < length; ++ i)
-						attribNodes [i] .disable (gl, shaderNode);
+					for (const attribNode of attribNodes)
+						attribNode .disable (gl, shaderNode);
 
 					if (this .fogCoords)
 						shaderNode .disableFogDepthAttribute (gl);
@@ -1160,8 +1160,8 @@ function (Fields,
 						}
 					}
 
-					for (let i = 0, length = attribNodes .length; i < length; ++ i)
-						attribNodes [i] .disable (gl, shaderNode);
+					for (const attribNode of attribNodes)
+						attribNode .disable (gl, shaderNode);
 
 					if (this .fogCoords)
 						shaderNode .disableFogDepthAttribute (gl);
