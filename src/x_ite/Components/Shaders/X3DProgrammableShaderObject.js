@@ -145,8 +145,8 @@ function (X3DCast,
 
 			this .x3d_ClipPlanes = gl .getUniformLocation (program, "x3d_ClipPlane");
 
-			for (var i = 0; i < this .x3d_MaxClipPlanes; ++ i)
-				this .x3d_ClipPlane [i]  = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
+			for (let i = 0; i < this .x3d_MaxClipPlanes; ++ i)
+				this .x3d_ClipPlane [i] = gl .getUniformLocation (program, "x3d_ClipPlane[" + i + "]");
 
 			this .x3d_FogType            = this .getUniformLocation (gl, program, "x3d_Fog.type",            "x3d_FogType");
 			this .x3d_FogColor           = this .getUniformLocation (gl, program, "x3d_Fog.color",           "x3d_FogColor");
@@ -175,7 +175,7 @@ function (X3DCast,
 			this .x3d_ColorMaterial = gl .getUniformLocation (program, "x3d_ColorMaterial");
 			this .x3d_NumLights     = gl .getUniformLocation (program, "x3d_NumLights");
 
-			for (var i = 0; i < this .x3d_MaxLights; ++ i)
+			for (let i = 0; i < this .x3d_MaxLights; ++ i)
 			{
 				this .x3d_LightType [i]             = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].type",             "x3d_LightType[" + i + "]");
 				this .x3d_LightColor [i]            = this .getUniformLocation (gl, program, "x3d_LightSource[" + i + "].color",            "x3d_LightColor[" + i + "]");
@@ -217,7 +217,7 @@ function (X3DCast,
 			this .x3d_NumProjectiveTextures = gl .getUniformLocation (program, "x3d_NumProjectiveTextures");
 			this .x3d_MultiTextureColor     = gl .getUniformLocation (program, "x3d_MultiTextureColor");
 
-			for (var i = 0; i < this .x3d_MaxTextures; ++ i)
+			for (let i = 0; i < this .x3d_MaxTextures; ++ i)
 			{
 				this .x3d_TextureType [i]    = gl .getUniformLocation (program, "x3d_TextureType[" + i + "]");
 				this .x3d_Texture2D [i]      = gl .getUniformLocation (program, "x3d_Texture2D[" + i + "]");
@@ -332,7 +332,7 @@ function (X3DCast,
 		{
 			// Legacy function to get uniform location.
 
-			var location = gl .getUniformLocation (program, name);
+			let location = gl .getUniformLocation (program, name);
 
 			if (location)
 				return location;
@@ -344,7 +344,9 @@ function (X3DCast,
 				location = gl .getUniformLocation (program, depreciated);
 
 				if (location)
-					console .error (this .getTypeName (), this .getName (), "Using uniform location name »" + depreciated + "« is depreciated, use »" + name + "«. See http://create3000.de/x_ite/custom-shaders/.");
+				{
+					console .error (this .getTypeName (), this .getName (), "Using uniform location name »" + depreciated + "« is depreciated, use »" + name + "«. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
+				}
 
 				return location;
 			}
@@ -355,7 +357,7 @@ function (X3DCast,
 		{
 			// Legacy function to get uniform location.
 
-			var location = gl .getAttribLocation (program, name);
+			let location = gl .getAttribLocation (program, name);
 
 			if (location >= 0)
 				return location;
@@ -367,7 +369,9 @@ function (X3DCast,
 				location = gl .getAttribLocation (program, depreciated);
 
 				if (location >= 0)
-					console .error (this .getTypeName (), this .getName (), "Using attribute location name »" + depreciated + "« is depreciated, use »" + name + "«. See http://create3000.de/x_ite/custom-shaders/.");
+				{
+					console .error (this .getTypeName (), this .getName (), "Using attribute location name »" + depreciated + "« is depreciated, use »" + name + "«. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
+				}
 
 				return location;
 			}
@@ -452,7 +456,7 @@ function (X3DCast,
 						{
 							const locations = location .locations = [ ];
 
-							for (var i = 0;; ++ i)
+							for (let i = 0;; ++ i)
 							{
 								const l = gl .getUniformLocation (program, field .getName () + "[" + i + "]");
 
@@ -542,7 +546,7 @@ function (X3DCast,
 						}
 						case X3DConstants .SFImage:
 						{
-							var array = location .array;
+							let array = location .array;
 
 							const
 								pixels = field .array,
@@ -555,7 +559,7 @@ function (X3DCast,
 							array [1] = field .height;
 							array [2] = field .comp;
 
-							for (var a = 3, p = 0, pl = pixels .length; p < pl; ++ p, ++ a)
+							for (let a = 3, p = 0, pl = pixels .length; p < pl; ++ p, ++ a)
 								array [a] = pixels [p];
 
 							gl .uniform1iv (location, array);
@@ -630,7 +634,7 @@ function (X3DCast,
 							for (var i = 0, length = field .length; i < length; ++ i)
 								array [i] = field [i];
 
-							for (var length = array .length; i < length; ++ i)
+							for (let length = array .length; i < length; ++ i)
 								array [i] = 0;
 
 							gl .uniform1iv (location, array);
@@ -649,7 +653,7 @@ function (X3DCast,
 								array [k++] = color .b;
 							}
 
-							for (var length = array .length; k < length; ++ k)
+							for (let length = array .length; k < length; ++ k)
 								array [k] = 0;
 
 							gl .uniform3fv (location, array);
@@ -669,7 +673,7 @@ function (X3DCast,
 								array [k++] = color .a;
 							}
 
-							for (var length = array .length; k < length; ++ k)
+							for (let length = array .length; k < length; ++ k)
 								array [k] = 0;
 
 							gl .uniform4fv (location, array);
@@ -684,7 +688,7 @@ function (X3DCast,
 							for (var i = 0, length = field .length; i < length; ++ i)
 								array [i] = field [i];
 
-							for (var length = array .length; i < length; ++ i)
+							for (let length = array .length; i < length; ++ i)
 								array [i] = 0;
 
 							gl .uniform1fv (location, array);
@@ -692,14 +696,14 @@ function (X3DCast,
 						}
 						case X3DConstants .MFImage:
 						{
-							var array = location .array;
+							let array = location .array;
 
 							const numImages = this .getImagesLength (field);
 
 							if (numImages !== array .length)
 								array = location .array = new Int32Array (numImages);
 
-							for (var i = 0, a = 0, length = field .length; i < length; ++ i)
+							for (let i = 0, a = 0, length = field .length; i < length; ++ i)
 							{
 								const
 									value  = field [i],
@@ -709,7 +713,7 @@ function (X3DCast,
 								array [a ++] = value .height;
 								array [a ++] = value .comp;
 
-								for (var p = 0, pl = pixels .length; p < pl; ++ p)
+								for (let p = 0, pl = pixels .length; p < pl; ++ p)
 									array [a ++] = pixels [p];
 							}
 
@@ -725,11 +729,11 @@ function (X3DCast,
 							{
 								const matrix = field [i];
 
-								for (var m = 0; m < 9; ++ m)
+								for (let m = 0; m < 9; ++ m)
 									array [k++] = matrix [m];
 							}
 
-							for (var length = array .length; k < length; ++ k)
+							for (let length = array .length; k < length; ++ k)
 								array [k] = 0;
 
 							gl .uniformMatrix3fv (location, false, array);
@@ -744,11 +748,11 @@ function (X3DCast,
 							{
 								const matrix = field [i];
 
-								for (var m = 0; m < 16; ++ m)
+								for (let m = 0; m < 16; ++ m)
 									array [k++] = matrix [m];
 							}
 
-							for (var length = array .length; k < length; ++ k)
+							for (let length = array .length; k < length; ++ k)
 								array [k] = 0;
 
 							gl .uniformMatrix4fv (location, false, array);
@@ -758,7 +762,7 @@ function (X3DCast,
 						{
 							const locations = location .locations;
 
-							for (var i = 0, length = field .length; i < length; ++ i)
+							for (let i = 0, length = field .length; i < length; ++ i)
 							{
 								const texture = X3DCast (X3DConstants .X3DTextureNode, field [i]);
 
@@ -790,7 +794,7 @@ function (X3DCast,
 								array [k++] = matrix [8];
 							}
 
-							for (var length = array .length; k < length; ++ k)
+							for (let length = array .length; k < length; ++ k)
 								array [k] = 0;
 
 							gl .uniformMatrix3fv (location, false, array);
@@ -813,7 +817,7 @@ function (X3DCast,
 								array [k++] = vector .y;
 							}
 
-							for (var length = array .length; k < length; ++ k)
+							for (let length = array .length; k < length; ++ k)
 								array [k] = 0;
 
 							gl .uniform2fv (location, array);
@@ -833,7 +837,7 @@ function (X3DCast,
 								array [k++] = vector .z;
 							}
 
-							for (var length = array .length; k < length; ++ k)
+							for (let length = array .length; k < length; ++ k)
 								array [k] = 0;
 
 							gl .uniform3fv (location, array);
@@ -854,7 +858,7 @@ function (X3DCast,
 								array [k++] = vector .w;
 							}
 
-							for (var length = array .length; k < length; ++ k)
+							for (let length = array .length; k < length; ++ k)
 								array [k] = 0;
 
 							gl .uniform4fv (location, array);
@@ -868,9 +872,9 @@ function (X3DCast,
 		{
 			const images = field .getValue ();
 
-			var length = 3 * images .length;
+			let length = 3 * images .length;
 
-			for (var i = 0, l = images .length; i < l; ++ i)
+			for (let i = 0, l = images .length; i < l; ++ i)
 				length += images [i] .array .length;
 
 			return length;
@@ -879,15 +883,13 @@ function (X3DCast,
 		{
 			const name = field .getName ();
 
-			for (var i = 0; ; ++ i)
+			for (let i = 0; ; ++ i)
 			{
 				const location = gl .getUniformLocation (program, name + "[" + i + "]");
 
 				if (! location)
-					break;
+					return i;
 			}
-
-			return i;
 		},
 		hasFog: function (fogNode)
 		{
@@ -926,8 +928,8 @@ function (X3DCast,
 			this .lightNodes .length             = 0;
 			this .projectiveTextureNodes .length = 0;
 
-			for (var i = 0, length = localObjects .length; i < length; ++ i)
-				localObjects [i] .setShaderUniforms (gl, this);
+			for (const localObject of localObjects)
+				localObject .setShaderUniforms (gl, this);
 
 			gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
 			gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
@@ -957,8 +959,8 @@ function (X3DCast,
 			this .lightNodes .length             = 0;
 			this .projectiveTextureNodes .length = 0;
 
-			for (var i = 0, length = globalObjects .length; i < length; ++ i)
-				globalObjects [i] .setShaderUniforms (gl, this);
+			for (const globalObject of globalObjects)
+				globalObject .setShaderUniforms (gl, this);
 
 			this .numGlobalLights             = this .numLights;
 			this .numGlobalProjectiveTextures = this .numProjectiveTextures;
@@ -1003,8 +1005,8 @@ function (X3DCast,
 			this .numLights             = this .numGlobalLights;
 			this .numProjectiveTextures = this .numGlobalProjectiveTextures;
 
-			for (var i = 0, length = localObjects .length; i < length; ++ i)
-				localObjects [i] .setShaderUniforms (gl, this);
+			for (const localObject of localObjects)
+				localObject .setShaderUniforms (gl, this);
 
 			gl .uniform1i (this .x3d_NumClipPlanes,         Math .min (this .numClipPlanes,         this .x3d_MaxClipPlanes));
 			gl .uniform1i (this .x3d_NumLights,             Math .min (this .numLights,             this .x3d_MaxLights));
@@ -1238,7 +1240,7 @@ function (X3DCast,
 		{
 			const length = Math .min (this .x3d_MaxTextures, texCoordBuffers .length);
 
-			for (var i = 0; i < length; ++ i)
+			for (let i = 0; i < length; ++ i)
 			{
 				const x3d_TexCoord = this .x3d_TexCoord [i];
 
@@ -1252,7 +1254,7 @@ function (X3DCast,
 		},
 		disableTexCoordAttribute: function (gl)
 		{
-			for (var i = 0, length = this .x3d_MaxTextures; i < length; ++ i)
+			for (let i = 0, length = this .x3d_MaxTextures; i < length; ++ i)
 			{
 				const x3d_TexCoord = this .x3d_TexCoord [i];
 
@@ -1339,7 +1341,7 @@ function (X3DCast,
 			};
 
 			// Loop through active uniforms
-			for (var i = 0; i < activeUniforms; ++ i)
+			for (let i = 0; i < activeUniforms; ++ i)
 			{
 				const uniform = gl .getActiveUniform (program, i);
 				uniform .typeName = enums [uniform.type];
@@ -1348,7 +1350,7 @@ function (X3DCast,
 			}
 
 			// Loop through active attributes
-			for (var i = 0; i < activeAttributes; ++ i)
+			for (let i = 0; i < activeAttributes; ++ i)
 			{
 				const attribute = gl .getActiveAttrib (program, i);
 				attribute .typeName = enums [attribute .type];
