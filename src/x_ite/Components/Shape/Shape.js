@@ -205,8 +205,8 @@ function (Fields,
 						// Finally we have intersections and must now find the closest hit in front of the camera.
 
 						// Transform hitPoints to absolute space.
-						for (var i = 0; i < intersections .length; ++ i)
-							modelViewMatrix .multVecMatrix (intersections [i] .point);
+						for (const intersection of intersections)
+							modelViewMatrix .multVecMatrix (intersection .point);
 
 						intersectionSorter .sort (0, intersections .length);
 
