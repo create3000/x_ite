@@ -459,12 +459,14 @@ function ($,
 
 				if (viewVolume .intersectsSphere (radius, bboxCenter))
 				{
-					if (this .numCollisionShapes === this .collisionShapes .length)
+					const num = this .numCollisionShapes ++;
+
+					if (num === this .collisionShapes .length)
+					{
 						this .collisionShapes .push ({ renderer: this, browser: this .getBrowser (), modelViewMatrix: new Float32Array (16), collisions: [ ], clipPlanes: [ ] });
+					}
 
-					const context = this .collisionShapes [this .numCollisionShapes];
-
-					++ this .numCollisionShapes;
+					const context = this .collisionShapes [num];
 
 					context .modelViewMatrix .set (modelViewMatrix);
 					context .shapeNode = shapeNode;
@@ -503,12 +505,14 @@ function ($,
 
 				if (viewVolume .intersectsSphere (radius, bboxCenter))
 				{
-					if (this .numDepthShapes === this .depthShapes .length)
+					const num = this .numDepthShapes ++;
+
+					if (num === this .depthShapes .length)
+					{
 						this .depthShapes .push ({ renderer: this, browser: this .getBrowser (), modelViewMatrix: new Float32Array (16), clipPlanes: [ ] });
+					}
 
-					const context = this .depthShapes [this .numDepthShapes];
-
-					++ this .numDepthShapes;
+					const context = this .depthShapes [num];
 
 					context .modelViewMatrix .set (modelViewMatrix);
 					context .shapeNode = shapeNode;
@@ -545,25 +549,21 @@ function ($,
 				{
 					if (shapeNode .getTransparent ())
 					{
-						const num = this .numTransparentShapes;
+						const num = this .numTransparentShapes ++;
 
 						if (num === this .transparentShapes .length)
 							this .transparentShapes .push (this .createShapeContext (true));
 
 						var context = this .transparentShapes [num];
-
-						++ this .numTransparentShapes;
 					}
 					else
 					{
-						const num = this .numOpaqueShapes;
+						const num = this .numOpaqueShapes ++;
 
 						if (num === this .opaqueShapes .length)
 							this .opaqueShapes .push (this .createShapeContext (false));
 
 						var context = this .opaqueShapes [num];
-
-						++ this .numOpaqueShapes;
 					}
 
 					context .modelViewMatrix .set (modelViewMatrix);
@@ -613,7 +613,7 @@ function ($,
 
 				collisionSize .set (collisionRadius2, collisionRadius2, collisionRadius2);
 
-				for (var i = 0, length = this .numCollisionShapes; i < length; ++ i)
+				for (let i = 0, length = this .numCollisionShapes; i < length; ++ i)
 				{
 					try
 					{
@@ -647,7 +647,7 @@ function ($,
 					                           ? this .activeCollisions
 					                           : Algorithm .set_difference (this .activeCollisions, activeCollisions, { });
 
-					for (var key in inActiveCollisions)
+					for (const key in inActiveCollisions)
 						inActiveCollisions [key] .set_active (false);
 				}
 
@@ -655,7 +655,7 @@ function ($,
 
 				this .activeCollisions = activeCollisions;
 
-				for (var key in activeCollisions)
+				for (const key in activeCollisions)
 					activeCollisions [key] .set_active (true);
 			};
 		})(),
@@ -723,7 +723,7 @@ function ($,
 
 						this .getProjectionMatrix () .pushMatrix (cameraSpaceProjectionMatrix);
 
-						var distance = -this .getDepth (projectionMatrix);
+						let distance = -this .getDepth (projectionMatrix);
 
 						this .getProjectionMatrix () .pop ();
 
@@ -741,7 +741,7 @@ function ($,
 
 							this .speed -= browser .getBrowserOptions () .Gravity_ .getValue () / currentFrameRate;
 
-							var y = this .speed / currentFrameRate;
+							let y = this .speed / currentFrameRate;
 
 							if (y < -distance)
 							{
@@ -831,7 +831,7 @@ function ($,
 					gl .disable (gl .BLEND);
 					gl .disable (gl .CULL_FACE);
 
-					for (var s = 0; s < numShapes; ++ s)
+					for (let s = 0; s < numShapes; ++ s)
 					{
 						const
 							context = shapes [s],
@@ -954,7 +954,7 @@ function ($,
 
 				const opaqueShapes = this .opaqueShapes;
 
-				for (var i = 0, length = this .numOpaqueShapes; i < length; ++ i)
+				for (let i = 0, length = this .numOpaqueShapes; i < length; ++ i)
 				{
 					const
 						context = opaqueShapes [i],
@@ -977,7 +977,7 @@ function ($,
 
 				this .transparencySorter .sort (0, this .numTransparentShapes);
 
-				for (var i = 0, length = this .numTransparentShapes; i < length; ++ i)
+				for (let i = 0, length = this .numTransparentShapes; i < length; ++ i)
 				{
 					const
 						context = transparentShapes [i],
