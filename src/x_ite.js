@@ -71,9 +71,7 @@ define .hide = function ()
 
 const getScriptURL = (function ()
 {
-	const
-		scripts = document .getElementsByTagName ('script'),
-		src     = scripts [scripts .length - 1] .src;
+	const src = document .currentScript .src;
 
 	return function ()
 	{
