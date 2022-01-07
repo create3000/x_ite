@@ -538,10 +538,8 @@ function (X3DBaseNode,
 
 					X3DRenderObject .prototype .render .call (this, type, callback, group);
 
-					const lights = this .renderObject .getLights ();
-
-					for (var i = 0, length = lights .length; i < length; ++ i)
-						lights [i] .getModelViewMatrix () .pop ();
+					for (const light of this .renderObject .getLights ())
+						light .getModelViewMatrix () .pop ();
 
 					break;
 				}

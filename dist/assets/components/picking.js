@@ -1218,7 +1218,7 @@ function (Fields,
 		},
 		traverse: (function ()
 		{
-			var pickSensorNodes = new Set ();
+			const pickSensorNodes = new Set ();
 
 			return function (type, renderObject)
 			{
@@ -1245,13 +1245,13 @@ function (Fields,
 
 							const pickSensorStack = browser .getPickSensors ();
 
-							pickSensorStack .at (-1) .forEach (function (pickSensorNode)
+							for (const pickSensorNode of pickSensorStack .at (-1))
 							{
 								if (! pickSensorNode .getObjectType () .has ("ALL"))
 								{
-									var intersection = 0;
+									let intersection = 0;
 
-									for (var objectType of this .getObjectType ())
+									for (const objectType of this .getObjectType ())
 									{
 										if (pickSensorNode .getObjectType () .has (objectType))
 										{
@@ -1265,21 +1265,21 @@ function (Fields,
 										case MatchCriterion .MATCH_ANY:
 										{
 											if (intersection === 0)
-												return;
+												continue;
 
 											break;
 										}
 										case MatchCriterion .MATCH_EVERY:
 										{
 											if (intersection !== pickSensor .getObjectType () .size)
-												return;
+												continue;
 
 											break;
 										}
 										case MatchCriterion .MATCH_ONLY_ONE:
 										{
 											if (intersection !== 1)
-												return;
+												continue;
 
 											break;
 										}
@@ -1287,16 +1287,15 @@ function (Fields,
 								}
 
 								pickSensorNodes .add (pickSensorNode);
-							},
-							this);
+							}
 
-							pickableStack .push (true);
+							pickableStack   .push (true);
 							pickSensorStack .push (pickSensorNodes);
 
 							X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
 							pickSensorStack .pop ();
-							pickableStack .pop ();
+							pickableStack   .pop ();
 
 							pickSensorNodes .clear ();
 						}

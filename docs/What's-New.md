@@ -1,14 +1,37 @@
 # What's New
 
+## X\_ITE v4.7.2 Released
+
+*Leipzig, 7th January 2022*: This release fixes bugs, and a lot of code clean up has been done.
+
+{% capture notice-text %}
+#### New Features
+
+- Changed behavior of FLY viewer.
+- Added particle uniforms to line geometry.
+
+{% endcapture %}
+<div class="notice--success">{{ notice-text | markdownify }}</div>
+
+{% capture notice-text %}
+#### Bug Fixes
+
+- Fixes script url determination.
+- Fixed bug when particle systems are used.
+
+{% endcapture %}
+<div class="notice--success">{{ notice-text | markdownify }}</div>
+
 ## X\_ITE v4.7.1 Released
 
 *Leipzig, 19th December 2021*: This release fixed a lot of bugs, but also implements new features. Especially MF* fields can now be used within `for of` loops. X3DBindableNode nodes do work now proper when cloned in multiple layers.
 
 {% capture notice-text %}
 #### New Features
-  - Added layerNode argument to `Browser.changeViewpoint([layerNode,] name)`.
-  - Implemented Symbol.iterator for MF* fields. This enables `for of` loops.
-  - Improved X3DBindableNode handling when cloned in multiple layers.
+
+- Added layerNode argument to `Browser.changeViewpoint([layerNode,] name)`.
+- Implemented Symbol.iterator for MF* fields. This enables `for of` loops.
+- Improved X3DBindableNode handling when cloned in multiple layers.
 
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>

@@ -2166,12 +2166,13 @@ function (Fields,
 			for (var i = particles .length, length = maxParticles; i < length; ++ i)
 			{
 				particles [i] = {
+					id: i,
 					life: 1,
 					lifetime: -1,
 					elapsedTime: 0,
 					position: new Vector3 (0, 0, 0),
 					velocity: new Vector3 (0, 0, 0),
-					color:    new Vector4 (1, 1, 1, 1),
+					color: new Vector4 (1, 1, 1, 1),
 					distance: 0,
 				};
 			}
@@ -3015,11 +3016,7 @@ function (Fields,
 					const geometryNode = this .getGeometry ();
 
 					if (geometryNode)
-					{
-						context .geometryContext = null;
-
 						geometryNode .displayParticles (gl, context, this .particles, this .numParticles);
-					}
 				}
 				else
 				{
@@ -3031,12 +3028,12 @@ function (Fields,
 
 					if (shaderNode .getValid ())
 					{
+						context .geometryContext = this .geometryContext;
+
 						const blendModeNode = appearanceNode .blendModeNode;
 
 						if (blendModeNode)
 							blendModeNode .enable (gl);
-
-						context .geometryContext = this .geometryContext;
 
 						shaderNode .enable (gl);
 						shaderNode .setLocalUniforms (gl, context);
@@ -3089,6 +3086,8 @@ function (Fields,
 
 						if (blendModeNode)
 							blendModeNode .disable (gl);
+
+						context .geometryContext = null;
 					}
 				}
 			}

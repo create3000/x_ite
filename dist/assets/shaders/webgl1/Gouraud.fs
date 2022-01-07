@@ -192,7 +192,7 @@ break;
 vec4 texCoord = getTextureCoordinate (x3d_TextureCoordinateGenerator [i], i);
 vec4 textureColor = vec4 (1.0);
 texCoord .stp /= texCoord .q;
-if ((x3d_GeometryType == x3d_Geometry2D) && gl_FrontFacing == false)
+if ((x3d_GeometryType == x3d_Geometry2D) && (gl_FrontFacing == false))
 texCoord .s = 1.0 - texCoord .s;
 if (x3d_TextureType [i] == x3d_TextureType2D)
 {

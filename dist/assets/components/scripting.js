@@ -118,8 +118,8 @@ define ('x_ite/Components/Scripting/X3DScriptNode',[
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DChildNode, 
-          X3DUrlObject, 
+function (X3DChildNode,
+          X3DUrlObject,
           X3DConstants)
 {
 "use strict";
@@ -140,8 +140,6 @@ function (X3DChildNode,
 
 	return X3DScriptNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -368,13 +366,8 @@ function ($,
 					result  = evaluate (global, text),
 					context = { };
 
-				for (var i = 0; i < callbacks .length; ++ i)
-				{
-					if (typeof result [i] === "function")
-						context [callbacks [i]] = result [i];
-					else
-						context [callbacks [i]] = null;
-				}
+				for (let i = 0; i < callbacks .length; ++ i)
+					context [callbacks [i]] = result [i];
 
 				return context;
 			}
