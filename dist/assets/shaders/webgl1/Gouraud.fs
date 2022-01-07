@@ -517,24 +517,8 @@ main ()
 {
 clip ();
 vec4 finalColor = gl_FrontFacing ? frontColor : backColor;
-if (x3d_NumTextures > 0)
-{
-if (x3d_Lighting)
-{
-finalColor = getTextureColor (finalColor, vec4 (1.0));
-}
-else
-{
-if (x3d_ColorMaterial)
-{
-finalColor = getTextureColor (finalColor, vec4 (1.0));
-}
-else
-{
-finalColor = getTextureColor (vec4 (1.0), vec4 (1.0));
-}
-}
-}
+vec4 diffuseColor = x3d_Lighting || x3d_ColorMaterial ? finalColor : vec4 (1.0);
+finalColor = getTextureColor (diffuseColor, vec4 (1.0));
 finalColor = getProjectiveTextureColor (finalColor);
 finalColor = getHatchColor (finalColor);
 finalColor .rgb = getFogColor (finalColor .rgb);

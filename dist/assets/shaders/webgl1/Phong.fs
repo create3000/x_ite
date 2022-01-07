@@ -779,29 +779,10 @@ vec3 V = normalize (-vertex);
 float dV = length (vertex);
 vec3 diffuseFactor = vec3 (1.0);
 float alpha = 1.0 - material .transparency;
-if (x3d_ColorMaterial)
-{
-if (x3d_NumTextures > 0)
-{
-vec4 T = getTextureColor (vec4 (color .rgb, color .a * alpha), vec4 (material .specularColor, alpha));
+vec4 D = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (material .diffuseColor, alpha);
+vec4 T = getTextureColor (D, vec4 (material .specularColor, alpha));
 diffuseFactor = T .rgb;
 alpha = T .a;
-}
-else
-diffuseFactor = color .rgb;
-alpha *= color .a;
-}
-else
-{
-if (x3d_NumTextures > 0)
-{
-vec4 T = getTextureColor (vec4 (material .diffuseColor, alpha), vec4 (material .specularColor, alpha));
-diffuseFactor = T .rgb;
-alpha = T .a;
-}
-else
-diffuseFactor = material .diffuseColor;
-}
 vec4 P = getProjectiveTextureColor (vec4 (1.0));
 diffuseFactor *= P .rgb;
 alpha *= P .a;
@@ -842,24 +823,7 @@ return vec4 (finalColor, alpha);
 }
 else
 {
-vec4 finalColor = vec4 (1.0);
-if (x3d_ColorMaterial)
-{
-if (x3d_NumTextures > 0)
-{
-finalColor = getTextureColor (color, vec4 (1.0));
-}
-else
-{
-finalColor = color;
-}
-}
-else
-{
-if (x3d_NumTextures > 0)
-finalColor = getTextureColor (vec4 (1.0), vec4 (1.0));
-}
-return finalColor;
+return getTextureColor (x3d_ColorMaterial ? color : vec4 (1.0), vec4 (1.0));
 }
 }
 void

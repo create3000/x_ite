@@ -1,4 +1,4 @@
-/* X_ITE v4.7.2-1102 */
+/* X_ITE v4.7.2-1103 */
 
 (function () {
 
@@ -67933,6 +67933,8 @@ function (Shading,
 			console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
 
 			this .phongShader = this .getGouraudShader ();
+
+			this .setShading (this .getBrowserOptions () .getShading ());
 		},
 		set_shadow_shader_valid__: function (valid)
 		{
