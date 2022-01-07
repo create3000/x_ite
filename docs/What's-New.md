@@ -16,6 +16,7 @@
 {% capture notice-text %}
 #### Bug Fixes
 
+- Fixed rendering issue of Gouraud shader in Safari.
 - Fixes script url determination.
 - Fixed bug when particle systems are used.
 
