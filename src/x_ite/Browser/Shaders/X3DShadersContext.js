@@ -262,6 +262,8 @@ function (Shading,
 			console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
 
 			this .phongShader = this .getGouraudShader ();
+
+			this .setShading (this .getBrowserOptions () .getShading ());
 		},
 		set_shadow_shader_valid__: function (valid)
 		{

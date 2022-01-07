@@ -16,9 +16,10 @@
 {% capture notice-text %}
 #### Bug Fixes
 
-- Fixed rendering issue of Gouraud shader in Safari.
 - Fixes script url determination.
 - Fixed bug when particle systems are used.
+- Fixed rendering issue of Gouraud shader in Safari.
+- Reduced compile time of PHONG shader.
 
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
