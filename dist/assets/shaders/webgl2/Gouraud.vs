@@ -59,17 +59,8 @@ const in vec3 vertex,
 const in x3d_MaterialParameters material)
 {
 vec3 V = normalize (-vertex); 
-vec3 diffuseFactor = vec3 (0.0);
-float alpha = 1.0 - material .transparency;
-if (x3d_ColorMaterial)
-{
-diffuseFactor = x3d_Color .rgb;
-alpha *= x3d_Color .a;
-}
-else
-{
-diffuseFactor = material .diffuseColor;
-}
+vec3 diffuseFactor = x3d_ColorMaterial ? x3d_Color .rgb : material .diffuseColor;
+float alpha = (1.0 - material .transparency) * (x3d_ColorMaterial ? x3d_Color .a : 1.0);
 vec3 ambientTerm = diffuseFactor * material .ambientIntensity;
 vec3 finalColor = vec3 (0.0);
 for (int i = 0; i < x3d_MaxLights; ++ i)

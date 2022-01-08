@@ -1,4 +1,4 @@
-/* X_ITE v4.7.2-1103 */
+/* X_ITE v4.7.2-1104 */
 
 (function () {
 
@@ -51108,11 +51108,9 @@ function ($,
 {
 "use strict";
 
-	var WEBGL_LATEST_VERSION = 2;
+	const WEBGL_LATEST_VERSION = 2;
 
-	var browserNumber = 0;
-
-	var extensions = [
+	const extensions = [
 		"ANGLE_instanced_arrays",
 		"EXT_blend_minmax",
 		"EXT_frag_depth",
@@ -51212,18 +51210,21 @@ function ($,
 		return gl;
 	}
 
+	let browserId = 0;
+
 	function X3DCoreContext (element)
 	{
-		this .number  = ++ browserNumber;
+		this .number  = ++ browserId;
 		this .element = element;
 
 		// Get canvas & context.
 
-		var browser      = $("<div></div>") .addClass ("x_ite-private-browser x_ite-private-browser-" + this .getId ()) .prependTo (this .element);
-		var splashScreen = $("<div></div>") .addClass ("x_ite-private-splash-screen") .appendTo (browser);
-		var spinner      = $("<div></div>") .addClass ("x_ite-private-spinner")  .appendTo (splashScreen);
-		var progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen);
-		var surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
+		const
+		 	browser      = $("<div></div>") .addClass ("x_ite-private-browser x_ite-private-browser-" + this .getId ()) .prependTo (this .element),
+			splashScreen = $("<div></div>") .addClass ("x_ite-private-splash-screen") .appendTo (browser),
+			spinner      = $("<div></div>") .addClass ("x_ite-private-spinner")  .appendTo (splashScreen),
+			progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen),
+			surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
 
 		$("<div></div>") .addClass ("x_ite-private-x_ite") .html ("X_ITE<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
 		$("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
@@ -51235,7 +51236,7 @@ function ($,
 		this .context      = getContext (this .canvas [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
 		this .extensions   = { };
 
-		var gl = this .getContext ();
+		const gl = this .getContext ();
 
 		extensions .forEach (function (name)
 		{
@@ -51302,7 +51303,7 @@ function ($,
 			{
 				get: (function ()
 				{
-					var worldURL = this .getExecutionContext () .getWorldURL ();
+					const worldURL = this .getExecutionContext () .getWorldURL ();
 
 					if (worldURL)
 						return new Fields .MFString (worldURL);
@@ -51417,7 +51418,7 @@ function ($,
 		},
 		processMutation: function (mutation)
 		{
-			var element = mutation .target;
+			const element = mutation .target;
 
 			switch (mutation .type)
 			{
@@ -51430,7 +51431,7 @@ function ($,
 		},
 		processAttribute: function (mutation, element)
 		{
-			var attributeName = mutation .attributeName;
+			const attributeName = mutation .attributeName;
 
 			switch (attributeName .toLowerCase ())
 			{
@@ -51456,7 +51457,7 @@ function ($,
 				}
 				case "src":
 				{
-					var urlCharacters = this .getElement () .attr ("src");
+					const urlCharacters = this .getElement () .attr ("src");
 
 					this .load ('"' + urlCharacters + '"');
 					break;
@@ -51472,7 +51473,7 @@ function ($,
 		{
 			if (urlCharacters)
 			{
-			   var
+			   const
 					parser    = new Parser (this .getExecutionContext ()),
 					url       = new Fields .MFString (),
 					parameter = new Fields .MFString ();
@@ -51491,7 +51492,7 @@ function ($,
 		},
 		setBrowserEventHandler: function (name)
 		{
-			var
+			const
 				element      = this .getElement () .get (0),
 				browserEvent = this .getElement () .attr (name);
 
@@ -51502,7 +51503,7 @@ function ($,
 		},
 		callBrowserEventHandler: function (name)
 		{
-			var
+			const
 				element             = this .getElement () .get (0),
 				browserEventHandler = element [name];
 
@@ -51693,22 +51694,22 @@ function ($,
 					{
 						event .preventDefault ();
 
-						var viewpoint = this .getActiveViewpoint ();
+						const viewpoint = this .getActiveViewpoint ();
 
 						if (! viewpoint)
 							break;
 
-						var text = "";
+						let text = "";
 
 						text += "Viewpoint {\n";
-						text += "  position " + viewpoint .getUserPosition () .toString () + "\n";
-						text += "  orientation " + viewpoint .getUserOrientation () .toString () + "\n";
-						text += "  centerOfRotation " + viewpoint .getUserCenterOfRotation () .toString () + "\n";
-						text += "}\n";
+						text += "  position " + viewpoint .getUserPosition () + "\n";
+						text += "  orientation " + viewpoint .getUserOrientation () + "\n";
+						text += "  centerOfRotation " + viewpoint .getUserCenterOfRotation () + "\n";
+						text += "}";
 
 						console .log (text);
+						copyToClipboard (text);
 
-						this .copyToClipboard (text);
 						this .getNotification () .string_ = "Copied viewpoint to clipboard.";
 					}
 
@@ -51753,16 +51754,17 @@ function ($,
 				}
 			}
 		},
-		copyToClipboard: function (text)
-		{
-			var $temp = $("<input>");
-
-			$("body") .append($temp);
-			$temp .val (text) .select ();
-			document .execCommand ("copy");
-			$temp .remove ();
-		},
 	};
+
+	function copyToClipboard (text)
+	{
+		const $temp = $("<textarea>");
+
+		$("body") .append ($temp);
+		$temp .val (text) .select ();
+		document .execCommand ("copy");
+		$temp .remove ();
+	}
 
 	return X3DCoreContext;
 });
@@ -67742,7 +67744,7 @@ function (Shading,
 	{
 		initialize: function ()
 		{
-			this .setShading (Shading .GOURAUD);
+			this .setShading (this .getBrowserOptions () .getShading ());
 		},
 		getShadingLanguageVersion: function ()
 		{
@@ -67874,7 +67876,7 @@ function (Shading,
 
 			// Configure shaders.
 
-			for (var shader of this .getShaders ())
+			for (const shader of this .getShaders ())
 				shader .setShading (type);
 		},
 		createShader: function (name, file, shadow)
@@ -67882,22 +67884,22 @@ function (Shading,
 			if (this .getDebug ())
 				console .log ("Initializing " + name);
 
-			var version = this .getContext () .getVersion ();
+			const version = this .getContext () .getVersion ();
 
-			var vertexShader = new ShaderPart (this .getPrivateScene ());
+			const vertexShader = new ShaderPart (this .getPrivateScene ());
 			vertexShader .setName (name + "Vertex");
 			vertexShader .url_ .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".vs"));
 			vertexShader .setShadow (shadow);
 			vertexShader .setup ();
 
-			var fragmentShader = new ShaderPart (this .getPrivateScene ());
+			const fragmentShader = new ShaderPart (this .getPrivateScene ());
 			fragmentShader .setName (name + "Fragment");
 			fragmentShader .type_  = "FRAGMENT";
 			fragmentShader .url_ .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".fs"));
 			fragmentShader .setShadow (shadow);
 			fragmentShader .setup ();
 
-			var shader = new ComposedShader (this .getPrivateScene ());
+			const shader = new ComposedShader (this .getPrivateScene ());
 			shader .setName (name);
 			shader .language_ = "GLSL";
 			shader .parts_ .push (vertexShader);
