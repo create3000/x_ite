@@ -197,9 +197,16 @@ X3DCanvas .x_ite-private-browser-timings button {
 	cursor: pointer;
 }
 
+X3DCanvas .x_ite-private-world-info-overlay {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
 X3DCanvas .x_ite-private-world-info {
 	overflow-y: auto;
-	z-index: 90;
 	position: absolute;
 	top: 0;
 	right: 0;

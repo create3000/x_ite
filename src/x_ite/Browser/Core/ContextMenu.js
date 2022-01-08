@@ -352,7 +352,8 @@ function ($,
 								const
 									converter = new showdown .Converter (),
 									priv      = browser .getElement () .find (".x_ite-private-browser"),
-									div       = $("<div></div>") .addClass ("x_ite-private-world-info") .prependTo (priv),
+									overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
+									div       = $("<div></div>") .addClass ("x_ite-private-world-info") .appendTo (overlay),
 									worldInfo = browser .getExecutionContext () .getWorldInfo (),
 									title     = worldInfo .title_ .getValue (),
 									info      = worldInfo .info_;
@@ -387,11 +388,7 @@ function ($,
 									$(this) .attr ("target", "_blank");
 								});
 
-								priv .on ("click.WorldInfo", function ()
-								{
-									priv .off ("click.WorldInfo");
-									div .remove ();
-								});
+								overlay .on ("click", function () { overlay .remove (); });
 							})
 						},
 					},
