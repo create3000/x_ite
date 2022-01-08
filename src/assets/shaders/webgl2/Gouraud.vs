@@ -154,7 +154,13 @@ main ()
 	if (x3d_Lighting)
 	{
 		frontColor = getGouraudColor (normal, vertex, x3d_FrontMaterial);
-		backColor  = x3d_SeparateBackColor ? getGouraudColor (-normal, vertex, x3d_BackMaterial) : frontColor;
+
+		x3d_MaterialParameters backMaterial = x3d_FrontMaterial;
+
+		if (x3d_SeparateBackColor)
+			backMaterial = x3d_BackMaterial;
+
+		backColor = getGouraudColor (-normal, vertex, backMaterial);
 	}
 	else
 	{

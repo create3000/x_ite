@@ -137,12 +137,23 @@ getPhongColor (const in x3d_MaterialParameters material)
 	return vec4 (finalColor, alpha);
 }
 
+x3d_MaterialParameters
+getMaterial ()
+{
+	bool frontColor = gl_FrontFacing || x3d_SeparateBackColor == false;
+
+	if (frontColor)
+		return x3d_FrontMaterial;
+
+	return x3d_BackMaterial;
+}
+
 vec4
-getMaterialColor (const in x3d_MaterialParameters material)
+getMaterialColor ()
 {
 	if (x3d_Lighting)
 	{
-		return getPhongColor (material);
+		return getPhongColor (getMaterial ());
 	}
 	else
 	{
@@ -159,9 +170,8 @@ main ()
 	clip ();
 
 	vec4 finalColor = vec4 (0.0);
-	bool frontColor = gl_FrontFacing || x3d_SeparateBackColor == false;
 
-	finalColor      = frontColor ? getMaterialColor (x3d_FrontMaterial) : getMaterialColor (x3d_BackMaterial);
+	finalColor      = getMaterialColor ();
 	finalColor      = getHatchColor (finalColor);
 	finalColor .rgb = getFogColor (finalColor .rgb);
 
