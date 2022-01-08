@@ -1,4 +1,4 @@
-/* X_ITE v4.7.2-1106 */
+/* X_ITE v4.7.2-1107 */
 
 (function () {
 
@@ -41828,8 +41828,6 @@ function ($,
           _)
 {
 "use strict";
-
-	$("head") .append ('<style>.x_ite-private-menu-title:before { content: "' + _("X_ITE Browser") + '" }</style>');
 
 	function ContextMenu (executionContext)
 	{
