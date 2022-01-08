@@ -387,7 +387,11 @@ function ($,
 									$(this) .attr ("target", "_blank");
 								});
 
-								div .on ("click", function () { div .remove (); });
+								priv .on ("click.WorldInfo", function ()
+								{
+									priv .off ("click.WorldInfo");
+									div .remove ();
+								});
 							})
 						},
 					},
