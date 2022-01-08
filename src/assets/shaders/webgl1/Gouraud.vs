@@ -76,18 +76,10 @@ getMaterialColor (const in vec3 N,
 
 	// Calculate diffuseFactor & alpha
 
-	vec3  diffuseFactor = vec3 (0.0);
-	float alpha         = 1.0 - material .transparency;
+	vec3  diffuseFactor = x3d_ColorMaterial ? x3d_Color .rgb : material .diffuseColor;
+	float alpha         = (1.0 - material .transparency) * (x3d_ColorMaterial ? x3d_Color .a : 1.0);
 
-	if (x3d_ColorMaterial)
-	{
-		diffuseFactor  = x3d_Color .rgb;
-		alpha         *= x3d_Color .a;
-	}
-	else
-	{
-		diffuseFactor = material .diffuseColor;
-	}
+	// Ambient intensity
 
 	vec3 ambientTerm = diffuseFactor * material .ambientIntensity;
 
