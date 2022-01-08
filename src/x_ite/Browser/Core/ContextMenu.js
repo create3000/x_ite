@@ -60,8 +60,6 @@ function ($,
 {
 "use strict";
 
-	$("head") .append ('<style>.x_ite-private-menu-title:before { content: "' + _("X_ITE Browser") + '" }</style>');
-
 	function ContextMenu (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
