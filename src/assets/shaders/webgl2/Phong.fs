@@ -61,80 +61,87 @@ getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in ve
 }
 
 vec4
-getPhongColor (const in x3d_MaterialParameters material)
+getMaterialColor (const in x3d_MaterialParameters material)
 {
-	vec3 N = normalize (gl_FrontFacing ? normal : -normal);
-	vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position
-
-	// Calculate diffuseFactor & alpha
-
-	vec3  diffuseFactor = vec3 (1.0);
-	float alpha         = 1.0 - material .transparency;
-
-	// Texture
-
-	vec4 D = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (material .diffuseColor, alpha);
-	vec4 T = getTextureColor (D, vec4 (material .specularColor, alpha));
-
-	diffuseFactor = T .rgb;
-	alpha         = T .a;
-
-	// Projective texture
-
-	vec4 P = getProjectiveTextureColor (vec4 (1.0));
-
-	diffuseFactor *= P .rgb;
-	alpha         *= P .a;
-
-	// Ambient intensity
-
-	vec3 ambientTerm = diffuseFactor * material .ambientIntensity;
-
-	// Apply light sources
-
-	vec3 finalColor = vec3 (0.0);
-
-	for (int i = 0; i < x3d_MaxLights; i ++)
+	if (x3d_Lighting)
 	{
-		if (i == x3d_NumLights)
-			break;
+		vec3 N = normalize (gl_FrontFacing ? normal : -normal);
+		vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position
 
-		x3d_LightSourceParameters light = x3d_LightSource [i];
+		// Calculate diffuseFactor & alpha
 
-		vec3  vL = light .location - vertex; // Light to fragment
-		float dL = length (light .matrix * vL);
-		bool  di = light .type == x3d_DirectionalLight;
+		vec3  diffuseFactor = vec3 (1.0);
+		float alpha         = 1.0 - material .transparency;
 
-		if (di || dL <= light .radius)
+		// Texture
+
+		vec4 D = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (material .diffuseColor, alpha);
+		vec4 T = getTextureColor (D, vec4 (material .specularColor, alpha));
+
+		diffuseFactor = T .rgb;
+		alpha         = T .a;
+
+		// Projective texture
+
+		vec4 P = getProjectiveTextureColor (vec4 (1.0));
+
+		diffuseFactor *= P .rgb;
+		alpha         *= P .a;
+
+		// Ambient intensity
+
+		vec3 ambientTerm = diffuseFactor * material .ambientIntensity;
+
+		// Apply light sources
+
+		vec3 finalColor = vec3 (0.0);
+
+		for (int i = 0; i < x3d_MaxLights; i ++)
 		{
-			vec3 d = light .direction;
-			vec3 c = light .attenuation;
-			vec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.
-			vec3 H = normalize (L + V);             // Specular term
+			if (i == x3d_NumLights)
+				break;
 
-			float lightAngle     = max (dot (N, L), 0.0);      // Angle between normal and light ray.
-			vec3  diffuseTerm    = diffuseFactor * lightAngle;
-			float specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;
-			vec3  specularTerm   = material .specularColor * specularFactor;
+			x3d_LightSourceParameters light = x3d_LightSource [i];
 
-			float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
-			float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
-			float attenuationSpotFactor = attenuationFactor * spotFactor;
-			vec3  ambientColor          = light .ambientIntensity * ambientTerm;
-			vec3  diffuseSpecularColor  = light .intensity * (diffuseTerm + specularTerm);
+			vec3  vL = light .location - vertex; // Light to fragment
+			float dL = length (light .matrix * vL);
+			bool  di = light .type == x3d_DirectionalLight;
 
-			#ifdef X3D_SHADOWS
-				if (lightAngle > 0.0)
-					diffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, light));
-			#endif
+			if (di || dL <= light .radius)
+			{
+				vec3 d = light .direction;
+				vec3 c = light .attenuation;
+				vec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.
+				vec3 H = normalize (L + V);             // Specular term
 
-			finalColor += attenuationSpotFactor * light .color * (ambientColor + diffuseSpecularColor);
+				float lightAngle     = max (dot (N, L), 0.0);      // Angle between normal and light ray.
+				vec3  diffuseTerm    = diffuseFactor * lightAngle;
+				float specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;
+				vec3  specularTerm   = material .specularColor * specularFactor;
+
+				float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
+				float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
+				float attenuationSpotFactor = attenuationFactor * spotFactor;
+				vec3  ambientColor          = light .ambientIntensity * ambientTerm;
+				vec3  diffuseSpecularColor  = light .intensity * (diffuseTerm + specularTerm);
+
+				#ifdef X3D_SHADOWS
+					if (lightAngle > 0.0)
+						diffuseSpecularColor = mix (diffuseSpecularColor, light .shadowColor, getShadowIntensity (i, light));
+				#endif
+
+				finalColor += attenuationSpotFactor * light .color * (ambientColor + diffuseSpecularColor);
+			}
 		}
+
+		finalColor += material .emissiveColor;
+
+		return vec4 (finalColor, alpha);
 	}
-
-	finalColor += material .emissiveColor;
-
-	return vec4 (finalColor, alpha);
+	else
+	{
+		return getTextureColor (x3d_ColorMaterial ? color : vec4 (1.0), vec4 (1.0));
+	}
 }
 
 x3d_MaterialParameters
@@ -148,19 +155,6 @@ getMaterial ()
 	return x3d_BackMaterial;
 }
 
-vec4
-getMaterialColor ()
-{
-	if (x3d_Lighting)
-	{
-		return getPhongColor (getMaterial ());
-	}
-	else
-	{
-		return getTextureColor (x3d_ColorMaterial ? color : vec4 (1.0), vec4 (1.0));
-	}
-}
-
 // DEBUG
 //uniform ivec4 x3d_Viewport;
 
@@ -171,7 +165,7 @@ main ()
 
 	vec4 finalColor = vec4 (0.0);
 
-	finalColor      = getMaterialColor ();
+	finalColor      = getMaterialColor (getMaterial ());
 	finalColor      = getHatchColor (finalColor);
 	finalColor .rgb = getFogColor (finalColor .rgb);
 

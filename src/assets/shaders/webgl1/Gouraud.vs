@@ -68,9 +68,9 @@ getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in ve
 }
 
 vec4
-getGouraudColor (const in vec3 N,
-                 const in vec3 vertex,
-                 const in x3d_MaterialParameters material)
+getMaterialColor (const in vec3 N,
+                  const in vec3 vertex,
+                  const in x3d_MaterialParameters material)
 {
 	vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position
 
@@ -152,14 +152,14 @@ main ()
 
 	if (x3d_Lighting)
 	{
-		frontColor = getGouraudColor (normal, vertex, x3d_FrontMaterial);
+		frontColor = getMaterialColor (normal, vertex, x3d_FrontMaterial);
 
 		x3d_MaterialParameters backMaterial = x3d_FrontMaterial;
 
 		if (x3d_SeparateBackColor)
 			backMaterial = x3d_BackMaterial;
 
-		backColor = getGouraudColor (-normal, vertex, backMaterial);
+		backColor = getMaterialColor (-normal, vertex, backMaterial);
 	}
 	else
 	{
