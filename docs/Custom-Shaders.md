@@ -393,6 +393,11 @@ A ComposedShader defines a number of special variables for the various shader st
          <td>see table »Uniform Struct x3d_FogParameters«</td>
       </tr>
       <tr>
+         <td>uniform float</td>
+         <td>x3d_AlphaCutoff</td>
+         <td>alphaCutoff value from Appearance</td>
+      </tr>
+      <tr>
          <td>uniform x3d_PointPropertiesParameters</td>
          <td>x3d_PointProperties</td>
          <td>see table »Uniform Struct x3d_PointPropertiesParameters«</td>
