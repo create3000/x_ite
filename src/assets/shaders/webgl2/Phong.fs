@@ -60,11 +60,24 @@ getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in ve
 	return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);
 }
 
+x3d_MaterialParameters
+getMaterial ()
+{
+	bool frontColor = gl_FrontFacing || x3d_SeparateBackColor == false;
+
+	if (frontColor)
+		return x3d_FrontMaterial;
+
+	return x3d_BackMaterial;
+}
+
 vec4
-getMaterialColor (const in x3d_MaterialParameters material)
+getMaterialColor ()
 {
 	if (x3d_Lighting)
 	{
+		x3d_MaterialParameters material = getMaterial ();
+
 		vec3 N = normalize (gl_FrontFacing ? normal : -normal);
 		vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position
 
@@ -144,17 +157,6 @@ getMaterialColor (const in x3d_MaterialParameters material)
 	}
 }
 
-x3d_MaterialParameters
-getMaterial ()
-{
-	bool frontColor = gl_FrontFacing || x3d_SeparateBackColor == false;
-
-	if (frontColor)
-		return x3d_FrontMaterial;
-
-	return x3d_BackMaterial;
-}
-
 // DEBUG
 //uniform ivec4 x3d_Viewport;
 
@@ -165,7 +167,7 @@ main ()
 
 	vec4 finalColor = vec4 (0.0);
 
-	finalColor      = getMaterialColor (getMaterial ());
+	finalColor      = getMaterialColor ();
 	finalColor      = getHatchColor (finalColor);
 	finalColor .rgb = getFogColor (finalColor .rgb);
 

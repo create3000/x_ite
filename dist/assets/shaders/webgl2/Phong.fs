@@ -950,11 +950,20 @@ else if (spotAngle <= beamWidth)
 return 1.0;
 return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);
 }
+x3d_MaterialParameters
+getMaterial ()
+{
+bool frontColor = gl_FrontFacing || x3d_SeparateBackColor == false;
+if (frontColor)
+return x3d_FrontMaterial;
+return x3d_BackMaterial;
+}
 vec4
-getMaterialColor (const in x3d_MaterialParameters material)
+getMaterialColor ()
 {
 if (x3d_Lighting)
 {
+x3d_MaterialParameters material = getMaterial ();
 vec3 N = normalize (gl_FrontFacing ? normal : -normal);
 vec3 V = normalize (-vertex); 
 vec3 diffuseFactor = vec3 (1.0);
@@ -1006,20 +1015,12 @@ else
 return getTextureColor (x3d_ColorMaterial ? color : vec4 (1.0), vec4 (1.0));
 }
 }
-x3d_MaterialParameters
-getMaterial ()
-{
-bool frontColor = gl_FrontFacing || x3d_SeparateBackColor == false;
-if (frontColor)
-return x3d_FrontMaterial;
-return x3d_BackMaterial;
-}
 void
 main ()
 {
 clip ();
 vec4 finalColor = vec4 (0.0);
-finalColor = getMaterialColor (getMaterial ());
+finalColor = getMaterialColor ();
 finalColor = getHatchColor (finalColor);
 finalColor .rgb = getFogColor (finalColor .rgb);
 if (finalColor .a < x3d_AlphaCutoff)
