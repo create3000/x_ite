@@ -71,7 +71,7 @@ function (Shading,
 	{
 		initialize: function ()
 		{
-			this .setShading (Shading .GOURAUD);
+			this .setShading (this .getBrowserOptions () .getShading ());
 		},
 		getShadingLanguageVersion: function ()
 		{
@@ -203,7 +203,7 @@ function (Shading,
 
 			// Configure shaders.
 
-			for (var shader of this .getShaders ())
+			for (const shader of this .getShaders ())
 				shader .setShading (type);
 		},
 		createShader: function (name, file, shadow)
@@ -211,22 +211,22 @@ function (Shading,
 			if (this .getDebug ())
 				console .log ("Initializing " + name);
 
-			var version = this .getContext () .getVersion ();
+			const version = this .getContext () .getVersion ();
 
-			var vertexShader = new ShaderPart (this .getPrivateScene ());
+			const vertexShader = new ShaderPart (this .getPrivateScene ());
 			vertexShader .setName (name + "Vertex");
 			vertexShader .url_ .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".vs"));
 			vertexShader .setShadow (shadow);
 			vertexShader .setup ();
 
-			var fragmentShader = new ShaderPart (this .getPrivateScene ());
+			const fragmentShader = new ShaderPart (this .getPrivateScene ());
 			fragmentShader .setName (name + "Fragment");
 			fragmentShader .type_  = "FRAGMENT";
 			fragmentShader .url_ .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".fs"));
 			fragmentShader .setShadow (shadow);
 			fragmentShader .setup ();
 
-			var shader = new ComposedShader (this .getPrivateScene ());
+			const shader = new ComposedShader (this .getPrivateScene ());
 			shader .setName (name);
 			shader .language_ = "GLSL";
 			shader .parts_ .push (vertexShader);
