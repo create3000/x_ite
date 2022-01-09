@@ -52,15 +52,33 @@ Creates a new scene with the given profile and components.
 
 Replace the current world with this new scene that has been loaded or constructed from somewhere.
 
-#### X3DScene **createX3DFromString** (*String x3dSyntax*)
+#### Promise **createX3DFromString** (*String x3dSyntax*)
 
 The string may be any valid X3D content in any language supported by the browser implementation. If the browser does not support the content encoding the appropriate exception will be thrown.
 
-#### void **createX3DFromURL** (*MFString url \[, String event, Node node\]*)
+A Promise object is returned and a X3DScene object is passed as result to it.
+
+```js
+// Example
+function foo ()
+{
+   Browser .createX3DFromString ("Shape { geometry Box { }}")
+      .then (function (scene)
+      {
+         // Do something with scene.
+      })
+      .catch (function (error)
+      {
+         // Optional error callback.
+      });
+}
+```
+
+#### void|Promise **createX3DFromURL** (*MFString url \[, Node node, String event\]*)
 
 Parse the passed URL into a X3D scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.
 
-If event and node are omitted then a X3DScene object is returned.
+If event and node are omitted then a Promise object is returned and a X3DScene object is passed as result to it.
 
 #### void **loadURL** (*MFString url, MFString parameter*)
 
@@ -68,7 +86,7 @@ Load the passed URL, using the passed parameter string to possibly redirect it t
 
 #### Promise **importDocument** (*DOMObject dom*)
 
-Imports a X3D XML DOM document or fragment, converts it, and returns the resulting scene object.
+Imports a X3D XML DOM document or fragment, converts it, and a Promise object is returned and a X3DScene object is passed as result to it.
 
 ```js
 // Example
@@ -88,7 +106,7 @@ function foo (dom)
 
 #### Promise **importJS** (*Object json*)
 
-Imports a X3D JSON document or fragment, converts it, and returns the resulting scene object.
+Imports a X3D JSON document or fragment, converts it, and a Promise object is returned and a X3DScene object is passed as result to it.
 
 #### String **getBrowserProperty** (*String name*)
 

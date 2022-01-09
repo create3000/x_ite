@@ -184,7 +184,7 @@ function ($,
 		},
 		getWorldURL: function ()
 		{
-			return this .currentScene .worldURL;
+			return this .getExecutionContext () .worldURL;
 		},
 		getProfile: function (name)
 		{
@@ -269,7 +269,6 @@ function ($,
 			if (! (scene instanceof X3DScene))
 				scene = this .createScene ();
 
-			// bindWorld
 			this .description = "";
 
 			this .getBrowserOptions () .configure ();
@@ -280,10 +279,10 @@ function ($,
 			for (const object of scene .getLoadingObjects ())
 				this .addLoadCount (object);
 
-			scene .setLive (this .isLive () .getValue ());
-
 			this .setExecutionContext (scene);
 			this .getWorld () .bind ();
+
+			scene .setLive (this .getLive ());
 		},
 		set_loadCount__: function (loadCount)
 		{
@@ -314,47 +313,34 @@ function ($,
 		},
 		createX3DFromString: function (x3dSyntax, success, error)
 		{
-			if (success)
-			{
-				const
-					currentScene = this .currentScene,
-					external     = this .isExternal ();
+			const
+				currentScene = this .getExecutionContext (),
+				external     = this .isExternal (),
+				fileLoader   = new FileLoader (this .getWorld ());
 
-				success = function (success, scene)
+			const promise = new Promise (function (resolve, reject)
+			{
+				fileLoader .createX3DFromString (currentScene .getURL (), x3dSyntax, function (scene)
 				{
 					if (! external)
 					{
-						scene .setExecutionContext (currentScene);
 						currentScene .isLive () .addInterest ("setLive", scene);
-
-						if (currentScene .isLive () .getValue ())
-							scene .setLive (true);
+						scene .setExecutionContext (currentScene);
+						scene .setLive (currentScene .getLive ());
 					}
 
-					success (scene);
-				}
-				.bind (null, success);
+					resolve (scene);
+				},
+				reject);
+			});
 
-				new FileLoader (this .getWorld ()) .createX3DFromString (this .currentScene .getURL (), x3dSyntax, success, error);
-			}
-			else
-			{
-				const
-					currentScene = this .currentScene,
-					external     = this .isExternal (),
-					scene        = new FileLoader (this .getWorld ()) .createX3DFromString (this .currentScene .getURL (), x3dSyntax);
+			if (success)
+				promise .then (success);
 
-				if (! external)
-				{
-					scene .setExecutionContext (currentScene);
-					currentScene .isLive () .addInterest ("setLive", scene);
+			if (error)
+				promise .catch (error);
 
-					if (currentScene .isLive () .getValue ())
-						scene .setLive (true);
-				}
-
-				return scene;
-			}
+			return promise;
 		},
 		createVrmlFromURL: function (url, node, event)
 		{
@@ -373,7 +359,7 @@ function ($,
 				throw new Error ("Browser.createVrmlFromURL: event named '" + event + "' must be of type MFNode.");
 
 			const
-				currentScene = this .currentScene,
+				currentScene = this .getExecutionContext (),
 				external     = this .isExternal (),
 				loader       = new FileLoader (this .getWorld ());
 
@@ -390,11 +376,9 @@ function ($,
 
 				   if (! external)
 				   {
+						currentScene .isLive () .addInterest ("setLive", scene);
 						scene .setExecutionContext (currentScene);
-				      currentScene .isLive () .addInterest ("setLive", scene);
-
-						if (currentScene .isLive () .getValue ())
-						   scene .setLive (true);
+						scene .setLive (currentScene .getLive ());
 					}
 
 					// Wait until scene is completely loaded, scene .loadCount_ must be 0.
@@ -403,26 +387,39 @@ function ($,
 			}
 			.bind (this));
 		},
-		createX3DFromURL: function (url, event, node)
+		createX3DFromURL: function (url, node, event)
 		{
 			if (arguments .length === 3)
-				return this .createVrmlFromURL (url, event, node);
+				return this .createVrmlFromURL (url, node, event);
 
 			const
-				currentScene = this .currentScene,
+				currentScene = this .getExecutionContext (),
 				external     = this .isExternal (),
-				scene        = new FileLoader (this .getWorld ()) .createX3DFromURL (url, null);
+				fileLoader   = new FileLoader (this .getWorld ());
 
-			if (! external)
+			const promise = new Promise (function (resolve, reject)
 			{
-				scene .setExecutionContext (currentScene);
-				currentScene .isLive () .addInterest ("setLive", scene);
+				fileLoader .createX3DFromURL (url, null, function (scene)
+				{
+					if (scene)
+					{
+						if (! external)
+						{
+							currentScene .isLive () .addInterest ("setLive", scene);
+							scene .setExecutionContext (currentScene);
+							scene .setLive (currentScene .getLive ());
+						}
 
-				if (currentScene .isLive () .getValue ())
-					scene .setLive (true);
-			}
+						resolve (scene);
+					}
+					else
+					{
+						reject (new Error ("Couldn't load any URL of '" + Array .prototype .join .call (url, "', ") + "'."));
+					}
+				});
+			});
 
-			return scene;
+			return promise;
 		},
 		loadURL: function (url, parameter)
 		{
@@ -527,17 +524,15 @@ function ($,
 		importDocument: function (dom, success, error)
 		{
 			const
-				currentScene = this .currentScene,
+				currentScene = this .getExecutionContext (),
 				scene        = this .createScene (),
 				external     = this .isExternal ();
 
 			if (!external)
 			{
-				scene .setExecutionContext (currentScene);
 				currentScene .isLive () .addInterest ("setLive", scene);
-
-				if (currentScene .isLive () .getValue ())
-					scene .setLive (true);
+				scene .setExecutionContext (currentScene);
+				scene .setLive (currentScene .getLive ());
 			}
 
 			const promise = new Promise (function (resolve, reject)
@@ -556,17 +551,15 @@ function ($,
 		importJS: function (jsobj, success, error)
 		{
 			const
-				currentScene = this .currentScene,
+				currentScene = this .getExecutionContext (),
 				scene        = this .createScene (),
 				external     = this .isExternal ();
 
 			if (!external)
 			{
-				scene .setExecutionContext (currentScene);
 				currentScene .isLive () .addInterest ("setLive", scene);
-
-				if (currentScene .isLive () .getValue ())
-					scene .setLive (true);
+				scene .setExecutionContext (currentScene);
+				scene .setLive (currentScene .getLive ());
 			}
 
 			const promise = new Promise (function (resolve, reject)
@@ -731,16 +724,16 @@ function ($,
 		},
 		addRoute: function (fromNode, fromEventOut, toNode, toEventIn)
 		{
-			this .currentScene .addRoute (fromNode, fromEventOut, toNode, toEventIn);
+			this .getExecutionContext () .addRoute (fromNode, fromEventOut, toNode, toEventIn);
 		},
 		deleteRoute: function (fromNode, fromEventOut, toNode, toEventIn)
 		{
 			try
 			{
-				const route = this .currentScene .getRoute (fromNode, fromEventOut, toNode, toEventIn);
+				const route = this .getExecutionContext () .getRoute (fromNode, fromEventOut, toNode, toEventIn);
 
 				if (route)
-					this .currentScene .deleteRoute (route);
+					this .getExecutionContext () .deleteRoute (route);
 			}
 			catch (error)
 			{

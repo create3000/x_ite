@@ -51,7 +51,7 @@ define ([
 	"x_ite/Components/Core/X3DSensorNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DSensorNode, 
+function (X3DSensorNode,
           X3DConstants)
 {
 "use strict";
@@ -76,7 +76,7 @@ function (X3DSensorNode,
 		},
 		set_live__: function ()
 		{
-			if (this .isLive () .getValue ())
+			if (this .getLive ())
 			{
 				this .enabled_ .addInterest ("set_enabled__", this);
 
@@ -114,5 +114,3 @@ function (X3DSensorNode,
 
 	return X3DKeyDeviceSensorNode;
 });
-
-

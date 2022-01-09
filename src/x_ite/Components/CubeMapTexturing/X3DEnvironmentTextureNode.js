@@ -85,7 +85,7 @@ function (X3DTextureNode,
 		},
 		set_live__: function ()
 		{
-			if (this .isLive () .getValue ())
+			if (this .getLive ())
 			{
 				this .getBrowser () .getBrowserOptions () .TextureQuality_ .addInterest ("set_textureQuality__", this);
 

@@ -60,7 +60,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGeometryNode, 
+          X3DGeometryNode,
           X3DConstants,
           Complex,
           Vector2,
@@ -105,7 +105,7 @@ function (Fields,
 		{
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .isLive () .getValue ())
+			if (this .getLive ())
 				this .getBrowser () .getConeOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getConeOptions () .removeInterest ("requestRebuild", this);
@@ -248,5 +248,3 @@ function (Fields,
 
 	return Cone;
 });
-
-

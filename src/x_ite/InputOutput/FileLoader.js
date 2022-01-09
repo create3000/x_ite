@@ -77,7 +77,6 @@ function ($,
 	BinaryTransport ($);
 
 	const
-		TIMEOUT       = 17,
 		ECMAScript    = /^\s*(?:vrmlscript|javascript|ecmascript)\:([^]*)$/,
 		dataURL       = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,([^]*)$/,
 		contentTypeRx = /^(?:(.*?);(.*?)$)/;
@@ -149,13 +148,7 @@ function ($,
 					function (scene, string, success, error)
 					{
 						if (success)
-						{
-							success = function (scene, success, error)
-							{
-								this .setScene (scene, success, error);
-							}
-							.bind (this, scene, success, error);
-						}
+							success = this .setScene .bind (this, scene, success, error);
 
 						// Try parse X3D Classic Encoding.
 						new Parser (scene) .parseIntoScene (string, success, error);

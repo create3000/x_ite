@@ -57,7 +57,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGeometryNode, 
+          X3DGeometryNode,
           X3DConstants)
 {
 "use strict";
@@ -94,8 +94,8 @@ function (Fields,
 		set_live__: function ()
 		{
 			X3DGeometryNode .prototype .set_live__ .call (this);
-		   
-			if (this .isLive () .getValue ())
+
+			if (this .getLive ())
 				this .getBrowser () .getSphereOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getSphereOptions () .removeInterest ("requestRebuild", this);
@@ -113,7 +113,7 @@ function (Fields,
 			if (radius === 1)
 			{
 				this .setVertices (geometry .getVertices ());
-	
+
 				this .getMin () .assign (geometry .getMin ());
 				this .getMax () .assign (geometry .getMax ());
 			}
@@ -143,5 +143,3 @@ function (Fields,
 
 	return Sphere;
 });
-
-

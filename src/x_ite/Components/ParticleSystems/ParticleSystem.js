@@ -298,7 +298,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (this .isLive () .getValue ())
+			if (this .getLive ())
 			{
 				if (this .isActive_ .getValue () && this .maxParticles_ .getValue ())
 				{
@@ -328,7 +328,7 @@ function (Fields,
 			{
 				if (! this .isActive_ .getValue ())
 				{
-					if (this .isLive () .getValue ())
+					if (this .getLive ())
 					{
 						this .getBrowser () .sensorEvents () .addInterest ("animateParticles", this);
 
@@ -344,7 +344,7 @@ function (Fields,
 			{
 				if (this .isActive_ .getValue ())
 				{
-					if (this .isLive () .getValue ())
+					if (this .getLive ())
 					{
 						this .getBrowser () .sensorEvents () .removeInterest ("animateParticles", this);
 					}

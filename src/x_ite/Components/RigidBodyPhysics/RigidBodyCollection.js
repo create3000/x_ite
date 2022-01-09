@@ -168,7 +168,7 @@ function (Fields,
 		},
 		set_enabled__: function ()
 		{
-			if (this .isLive () .getValue () && this .enabled_ .getValue ())
+			if (this .getLive () && this .enabled_ .getValue ())
 				this .getBrowser () .sensorEvents () .addInterest ("update", this);
 			else
 				this .getBrowser () .sensorEvents () .removeInterest ("update", this);

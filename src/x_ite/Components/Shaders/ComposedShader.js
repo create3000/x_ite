@@ -131,7 +131,7 @@ function (Fields,
 		{
 			var gl = this .getBrowser () .getContext ();
 
-			if (this .isLive () .getValue ())
+			if (this .getLive ())
 			{
 				if (this .getValid ())
 				{

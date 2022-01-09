@@ -60,7 +60,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGeometryNode, 
+          X3DGeometryNode,
           X3DConstants,
           Complex,
           Vector2,
@@ -106,7 +106,7 @@ function (Fields,
 		{
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .isLive () .getValue ())
+			if (this .getLive ())
 				this .getBrowser () .getCylinderOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getCylinderOptions () .removeInterest ("requestRebuild", this);
@@ -242,11 +242,11 @@ function (Fields,
 					texCoord .push (new Vector2 ((t .imag + 1) / 2, (t .real + 1) / 2));
 					points   .push (new Vector3 (t .imag * radius, y2, t .real * radius));
 				}
-			
+
 				var
 					t0 = texCoord [0],
 					p0 = points [0];
-				
+
 				for (var i = 1, length = points .length - 1; i < length; ++ i)
 				{
 					var
@@ -307,5 +307,3 @@ function (Fields,
 
 	return Cylinder;
 });
-
-

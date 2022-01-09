@@ -124,7 +124,7 @@ function (X3DChildNode,
 		},
 		set_live__: function ()
 		{
-			if ((this .isLive () .getValue () || this .getPrivate ()) && this .isActive_ .getValue ())
+			if ((this .getLive () || this .getPrivate ()) && this .isActive_ .getValue ())
 			{
 				this .getBrowser () .prepareEvents () .addInterest ("prepareEvents", this);
 				this .getBrowser () .addBrowserEvent ();

@@ -605,12 +605,12 @@ function ($,
 						{
 							event .preventDefault ();
 
-							if (this .isLive () .getValue ())
+							if (this .getLive ())
 								this .endUpdate ();
 							else
 								this .beginUpdate ();
 
-							this .getNotification () .string_ = this .isLive () .getValue () ? "Begin Update" : "End Update";
+							this .getNotification () .string_ = this .getLive () ? "Begin Update" : "End Update";
 						}
 					}
 

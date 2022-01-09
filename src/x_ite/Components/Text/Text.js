@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGeometryNode, 
+          X3DGeometryNode,
           X3DCast,
           X3DConstants)
 {
@@ -108,7 +108,7 @@ function (Fields,
 			X3DGeometryNode .prototype .initialize .call (this);
 
 			this .fontStyle_ .addInterest ("set_fontStyle__", this);
-	
+
 			this .set_fontStyle__ ();
 		},
 		getMatrix: function ()
@@ -126,7 +126,7 @@ function (Fields,
 		{
 		    X3DGeometryNode .prototype .set_live__ .call (this);
 
-		   if (this .isLive () .getValue ())
+		   if (this .getLive ())
 				this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .addInterest ("requestRebuild", this);
 		   else
 				this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .removeInterest ("requestRebuild", this);
@@ -194,5 +194,3 @@ function (Fields,
 
 	return Text;
 });
-
-

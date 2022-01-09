@@ -106,7 +106,7 @@ function ($,
 		{
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE)
 			{
-				this .scene .setLive (this .isLive () .getValue ());
+				this .scene .setLive (this .getLive ());
 			}
 		},
 		hasUserDefinedFields: function ()
@@ -177,7 +177,7 @@ function ($,
 			if (! proto)
 				throw new Error ("PROTO not found");
 
-			this .scene .setLive (this .isLive () .getValue ());
+			this .scene .setLive (this .getLive ());
 			this .scene .setPrivate (this .getScene () .getPrivate ());
 			this .scene .setExecutionContext (this .getExecutionContext ());
 

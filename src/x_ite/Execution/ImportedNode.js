@@ -48,13 +48,11 @@
 
 
 define ([
-	"x_ite/Fields",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function (Fields,
-          X3DBaseNode,
+function (X3DBaseNode,
           X3DConstants,
           Generator)
 {

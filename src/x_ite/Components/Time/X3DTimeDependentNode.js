@@ -126,7 +126,9 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (this .isLive () .getValue ())
+			console .log (this .getLive ());
+
+			if (this .getLive ())
 			{
 				if (this .disabled)
 				{
@@ -249,7 +251,7 @@ function (Fields,
 
 				this .set_start ();
 
-				if (this .isLive () .getValue ())
+				if (this .getLive ())
 				{
 					this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
 				}
@@ -271,7 +273,7 @@ function (Fields,
 				if (this .pauseTimeValue !== this .getBrowser () .getCurrentTime ())
 					this .pauseTimeValue = this .getBrowser () .getCurrentTime ();
 
-				if (this .isLive () .getValue ())
+				if (this .getLive ())
 					this .real_pause ();
 			}
 		},
@@ -292,7 +294,7 @@ function (Fields,
 				if (this .resumeTimeValue !== this .getBrowser () .getCurrentTime ())
 					this .resumeTimeValue = this .getBrowser () .getCurrentTime ();
 
-				if (this .isLive () .getValue ())
+				if (this .getLive ())
 					this .real_resume ();
 			}
 		},
@@ -326,7 +328,7 @@ function (Fields,
 
 				this .isActive_ = false;
 
-				if (this .isLive () .getValue ())
+				if (this .getLive ())
 					this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
 			}
 		},

@@ -334,7 +334,7 @@ function (Fields,
 			if (this .getBrowser () .isStrict ())
 				throw new Error (string);
 
-			this .getBrowser () .println (string);
+			console .warn (string);
 		},
 		parseIntoScene: function (input, success, error)
 		{

@@ -441,12 +441,6 @@ function (Fields,
 			if (! (destinationNode instanceof Fields .SFNode))
 				throw new Error ("Bad ROUTE specification: destination node must be of type SFNode.");
 
-			if (! sourceNode .getValue ())
-				throw new Error ("Bad ROUTE specification: source node is NULL.");
-
-			if (! destinationNode .getValue ())
-				throw new Error ("Bad ROUTE specification: destination node is NULL.");
-
 			const
 				sourceNodeValue      = sourceNode      .getValue (),
 				destinationNodeValue = destinationNode .getValue ();

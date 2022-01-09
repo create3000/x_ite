@@ -406,7 +406,7 @@ function ($,
 		},
 		set_live__: function ()
 		{
-			if (this .isLive () .getValue ())
+			if (this .getLive ())
 			{
 				if (!this .initialized)
 				{

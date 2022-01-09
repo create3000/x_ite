@@ -20,6 +20,7 @@
 - Fixed bug when particle systems are used.
 - Fixed rendering issue of Gouraud and Phong shader in Safari.
 - Reduced compile time of Phong shader.
+- Fixed bug in live handling.
 
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>

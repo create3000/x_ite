@@ -57,7 +57,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DLineGeometryNode, 
+          X3DLineGeometryNode,
           X3DConstants)
 {
 "use strict";
@@ -102,7 +102,7 @@ function (Fields,
 		{
 			X3DLineGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .isLive () .getValue ())
+			if (this .getLive ())
 				this .getBrowser () .getCircle2DOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getCircle2DOptions () .removeInterest ("requestRebuild", this);
@@ -133,5 +133,3 @@ function (Fields,
 
 	return Circle2D;
 });
-
-

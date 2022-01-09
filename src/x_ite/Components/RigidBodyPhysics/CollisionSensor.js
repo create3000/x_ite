@@ -59,7 +59,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DSensorNode, 
+          X3DSensorNode,
           X3DConstants,
           X3DCast,
           Vector3)
@@ -111,7 +111,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (this .isLive () .getValue () && this .enabled_ .getValue () && this .colliderNode)
+			if (this .getLive () && this .enabled_ .getValue () && this .colliderNode)
 			{
 				this .getBrowser () .sensorEvents () .addInterest ("update", this);
 			}
@@ -135,40 +135,40 @@ function (Fields,
 				contactNodes         = [ ],
 				position             = new Vector3 (0, 0, 0),
 				contactNormal        = new Vector3 (0, 0, 0);
-	
+
 			return function ()
 			{
 				var
 					colliderNode    = this .colliderNode,
 					collidableNodes = colliderNode .getCollidables ();
-	
+
 				collidableNodesIndex .clear ();
 				collisionWorlds      .clear ();
-	
+
 				for (var i = 0, length = collidableNodes .length; i < length; ++ i)
 				{
 					var
 						collidableNode = collidableNodes [i],
 						bodyNode       = collidableNodes [i] .getBody ();
-	
+
 					if (bodyNode)
 					{
 						collidableNodesIndex .set (bodyNode .getRigidBody () .ptr, collidableNode);
-	
+
 						var collection = bodyNode .getCollection ();
-	
+
 						if (collection)
 							collisionWorlds .add (collection .getDynamicsWorld ());
 					}
 				}
-	
+
 				intersectionNodes .clear ();
 				contactNodes .length = 0;
 
 				collisionWorlds .forEach (function (collisionWorld)
 				{
 					//collisionWorld .performDiscreteCollisionDetection ();
-		
+
 					var
 						dispatcher   = collisionWorld .getDispatcher (),
 						numManifolds = dispatcher .getNumManifolds ();
@@ -182,7 +182,7 @@ function (Fields,
 						for (var j = 0; j < numContacts; ++ j)
 						{
 							var pt = contactManifold .getContactPoint (j);
-		
+
 							if (pt .getDistance () <= 0)
 							{
 								var
@@ -274,7 +274,7 @@ function (Fields,
 				return contactNode;
 
 			contactNode = this .contactCache [index] = this .getExecutionContext () .createNode ("Contact", false);
-			
+
 			contactNode .setup ();
 
 			return contactNode;
@@ -283,5 +283,3 @@ function (Fields,
 
 	return CollisionSensor;
 });
-
-

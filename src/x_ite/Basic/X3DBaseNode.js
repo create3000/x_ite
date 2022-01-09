@@ -481,9 +481,9 @@ function (X3DEventObject,
 						if (field && field .getAccessType () === X3DConstants .inputOutput)
 							return field;
 					}
-
-					throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
 				}
+
+				throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
 			};
 		})(),
 		getFieldDefinitions: function ()
