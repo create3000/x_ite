@@ -71,27 +71,13 @@ Parse the passed URL into a X3D scene. When complete send the passed event to th
 
 Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return.
 
-#### X3DScene **importDocument** (*DOMObject dom*)
+#### Promise **importDocument** (*DOMObject dom*)
 
 Imports a X3D XML DOM document or fragment, converts it, and returns the resulting scene object.
 
-#### void **importDocument** (*DOMObject dom, Function success[, Function error]*)
-
-Async version of `importDocument`. Imports a X3D XML DOM document or fragment, converts it, and calls the success function with scene argument, or error on error.
-
-success: function (scene) { ... }<br/>
-error: function (error) { ... }
-
-#### X3DScene **importJS** (*Object json*)
+#### Promise **importJS** (*Object json)
 
 Imports a X3D JSON document or fragment, converts it, and returns the resulting scene object.
-
-#### void **importJS** (*Object json, Function success[, Function error]*)
-
-Async version of `importJS`. Imports a X3D JSON document or fragment, converts it, and calls the success function with scene argument, or error on error.
-
-success: function (scene) { ... }<br/>
-error: function (error) { ... }
 
 #### String **getBrowserProperty** (*String name*)
 

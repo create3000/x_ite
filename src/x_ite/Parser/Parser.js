@@ -484,7 +484,7 @@ function (Fields,
 						if (this .lastIndex < this .input .length)
 							throw new Error ("Unknown statement.");
 
-						this .success (this);
+						this .success (this .getScene ());
 					}
 					catch (error)
 					{

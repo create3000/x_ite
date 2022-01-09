@@ -1,4 +1,4 @@
-/* X_ITE v4.7.2-1109 */
+/* X_ITE v4.7.2-1110 */
 
 (function () {
 
@@ -48441,7 +48441,7 @@ function (Fields,
 						if (this .lastIndex < this .input .length)
 							throw new Error ("Unknown statement.");
 
-						this .success (this);
+						this .success (this .getScene ());
 					}
 					catch (error)
 					{
@@ -55227,13 +55227,8 @@ function ($,
 							{
 								try
 								{
-									console.log();
-									const live = this .getScene () .isLive () .getValue ();
-									this .getScene () .setLive (true);
 									this .childrenElements (xmlElement);
-									this .getScene () .setLive (live);
-
-									this .success (this);
+									this .success (this .getScene ());
 								}
 								catch (error)
 								{
@@ -55273,8 +55268,7 @@ function ($,
 							try
 							{
 								this .sceneElement (xmlElement);
-
-								this .success (this);
+								this .success (this .getScene ());
 							}
 							catch (error)
 							{
@@ -55307,8 +55301,7 @@ function ($,
 							try
 							{
 								this .childrenElements (xmlElement);
-
-								this .success (this);
+								this .success (this .getScene ());
 							}
 							catch (error)
 							{
@@ -55374,7 +55367,7 @@ function ($,
 						for (var i = 0; i < childNodes .length; ++ i)
 							this .x3dElementChildScene (childNodes [i])
 
-						this .success (this);
+						this .success (this .getScene ());
 					}
 					catch (error)
 					{
@@ -117790,97 +117783,61 @@ function ($,
 		})(),
 		importDocument: function (dom, success, error)
 		{
-			if (! dom)
-				return;
-
 			const
-				scene        = this .createScene (),
 				currentScene = this .currentScene,
+				scene        = this .createScene (),
 				external     = this .isExternal ();
 
+			if (!external)
+			{
+				scene .setExecutionContext (currentScene);
+				currentScene .isLive () .addInterest ("setLive", scene);
+
+				if (currentScene .isLive () .getValue ())
+					scene .setLive (true);
+			}
+
+			const promise = new Promise (function (resolve, reject)
+			{
+				new XMLParser (scene) .parseIntoScene (dom, resolve, reject);
+			});
+
 			if (success)
-			{
-				new XMLParser (scene) .parseIntoScene (dom, function ()
-				{
-					if (! external)
-					{
-						scene .setExecutionContext (currentScene);
-						currentScene .isLive () .addInterest ("setLive", scene);
+				promise .then (success);
 
-						if (currentScene .isLive () .getValue ())
-							scene .setLive (true);
-					}
+			if (error)
+				promise .catch (error);
 
-					success (scene);
-				},
-				function (message)
-				{
-					if (error)
-						error (message);
-				});
-			}
-			else
-			{
-				new XMLParser (scene) .parseIntoScene (dom);
-
-				if (! external)
-				{
-					scene .setExecutionContext (currentScene);
-					currentScene .isLive () .addInterest ("setLive", scene);
-
-					if (currentScene .isLive () .getValue ())
-						scene .setLive (true);
-				}
-
-				return scene;
-			}
+			return promise;
 		},
 		importJS: function (jsobj, success, error)
 		{
-			if (! jsobj)
-				return;
-
 			const
-				scene        = this .createScene (),
 				currentScene = this .currentScene,
+				scene        = this .createScene (),
 				external     = this .isExternal ();
 
+			if (!external)
+			{
+				scene .setExecutionContext (currentScene);
+				currentScene .isLive () .addInterest ("setLive", scene);
+
+				if (currentScene .isLive () .getValue ())
+					scene .setLive (true);
+			}
+
+			const promise = new Promise (function (resolve, reject)
+			{
+				new JSONParser (scene) .parseIntoScene (jsobj, resolve, reject);
+			});
+
 			if (success)
-			{
-				new JSONParser (scene) .parseIntoScene (jsobj, function ()
-				{
-					if (! external)
-					{
-						scene .setExecutionContext (currentScene);
-						currentScene .isLive () .addInterest ("setLive", scene);
+				promise .then (success);
 
-						if (currentScene .isLive () .getValue ())
-							scene .setLive (true);
-					}
+			if (error)
+				promise .catch (error);
 
-					success (scene);
-				},
-				function (message)
-				{
-					if (error)
-						error (message);
-				});
-			}
-			else
-			{
-				new JSONParser (scene) .parseIntoScene (jsobj);
-
-				if (! external)
-				{
-					scene .setExecutionContext (currentScene);
-					currentScene .isLive () .addInterest ("setLive", scene);
-
-					if (currentScene .isLive () .getValue ())
-						scene .setLive (true);
-				}
-
-				return scene;
-			}
+			return promise;
 		},
 		getBrowserProperty: function (name)
 		{

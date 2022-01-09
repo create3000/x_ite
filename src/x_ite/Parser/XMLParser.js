@@ -146,13 +146,8 @@ function ($,
 							{
 								try
 								{
-									console.log();
-									const live = this .getScene () .isLive () .getValue ();
-									this .getScene () .setLive (true);
 									this .childrenElements (xmlElement);
-									this .getScene () .setLive (live);
-
-									this .success (this);
+									this .success (this .getScene ());
 								}
 								catch (error)
 								{
@@ -192,8 +187,7 @@ function ($,
 							try
 							{
 								this .sceneElement (xmlElement);
-
-								this .success (this);
+								this .success (this .getScene ());
 							}
 							catch (error)
 							{
@@ -226,8 +220,7 @@ function ($,
 							try
 							{
 								this .childrenElements (xmlElement);
-
-								this .success (this);
+								this .success (this .getScene ());
 							}
 							catch (error)
 							{
@@ -293,7 +286,7 @@ function ($,
 						for (var i = 0; i < childNodes .length; ++ i)
 							this .x3dElementChildScene (childNodes [i])
 
-						this .success (this);
+						this .success (this .getScene ());
 					}
 					catch (error)
 					{
