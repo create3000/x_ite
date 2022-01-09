@@ -126,8 +126,6 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			console .log (this .getLive ());
-
 			if (this .getLive ())
 			{
 				if (this .disabled)

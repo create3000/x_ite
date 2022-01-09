@@ -1,4 +1,4 @@
-/* X_ITE v4.7.2-1112 */
+/* X_ITE v4.7.2-1113 */
 
 (function () {
 
@@ -27662,8 +27662,6 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			console .log (this .getLive ());
-
 			if (this .getLive ())
 			{
 				if (this .disabled)
