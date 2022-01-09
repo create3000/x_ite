@@ -75,7 +75,7 @@ Load the passed URL, using the passed parameter string to possibly redirect it t
 
 Imports a X3D XML DOM document or fragment, converts it, and returns the resulting scene object.
 
-#### Promise **importJS** (*Object json)
+#### Promise **importJS** (*Object json*)
 
 Imports a X3D JSON document or fragment, converts it, and returns the resulting scene object.
 
