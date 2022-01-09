@@ -309,7 +309,20 @@ function ($,
 		},
 		createVrmlFromString: function (vrmlSyntax)
 		{
-			return this .createX3DFromString (vrmlSyntax) .rootNodes;
+			const
+				currentScene = this .getExecutionContext (),
+				external     = this .isExternal (),
+				fileLoader   = new FileLoader (this .getWorld ()),
+				scene        = fileLoader .createX3DFromString (currentScene .getURL (), vrmlSyntax);
+
+			if (! external)
+			{
+				currentScene .isLive () .addInterest ("setLive", scene);
+				scene .setExecutionContext (currentScene);
+				scene .setLive (currentScene .getLive ());
+			}
+
+			return scene .rootNodes;
 		},
 		createX3DFromString: function (x3dSyntax, success, error)
 		{
