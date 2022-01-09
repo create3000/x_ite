@@ -853,7 +853,7 @@ function (Fields,
 		{
 			X3DLineGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .isLive () .getValue ())
+			if (this .getLive ())
 				this .getBrowser () .getArc2DOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getArc2DOptions () .removeInterest ("requestRebuild", this);
@@ -1033,7 +1033,7 @@ function (Fields,
 		{
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .isLive () .getValue ())
+			if (this .getLive ())
 				this .getBrowser () .getArcClose2DOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getArcClose2DOptions () .removeInterest ("requestRebuild", this);
@@ -1211,7 +1211,7 @@ define ('x_ite/Components/Geometry2D/Circle2D',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DLineGeometryNode, 
+          X3DLineGeometryNode,
           X3DConstants)
 {
 "use strict";
@@ -1256,7 +1256,7 @@ function (Fields,
 		{
 			X3DLineGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .isLive () .getValue ())
+			if (this .getLive ())
 				this .getBrowser () .getCircle2DOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getCircle2DOptions () .removeInterest ("requestRebuild", this);
@@ -1287,8 +1287,6 @@ function (Fields,
 
 	return Circle2D;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -1412,7 +1410,7 @@ function (Fields,
 		{
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .isLive () .getValue ())
+			if (this .getLive ())
 				this .getBrowser () .getDisk2DOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);

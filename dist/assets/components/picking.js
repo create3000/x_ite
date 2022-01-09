@@ -261,7 +261,7 @@ define ('x_ite/Components/Picking/X3DPickSensorNode',[
 	"standard/Utility/ObjectCache",
 ],
 function (Fields,
-          X3DSensorNode, 
+          X3DSensorNode,
           TraverseType,
           X3DConstants,
           MatchCriterion,
@@ -465,9 +465,9 @@ function (Fields,
 
 				if (node .getExecutionContext () === executionContext)
 					return node;
-	
+
 				var instance = node .getExecutionContext ();
-	
+
 				if (instance .getType () .indexOf (X3DConstants .X3DPrototypeInstance) !== -1 && instance .getExecutionContext () === executionContext)
 					return instance;
 			}
@@ -480,7 +480,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (this .isLive () .getValue () && this .enabled_ .getValue () && ! this .objectType .has ("NONE"))
+			if (this .getLive () && this .enabled_ .getValue () && ! this .objectType .has ("NONE"))
 			{
 				this .getBrowser () .addPickSensor (this);
 				this .setPickableObject (true);
@@ -561,7 +561,7 @@ function (Fields,
 					var
 						node = this .pickTarget_ [i] .getValue () .getInnerNode (),
 						type = node .getType ();
-		
+
 					for (var t = type .length - 1; t >= 0; -- t)
 					{
 						switch (type [t])
@@ -646,8 +646,6 @@ function (Fields,
 
 	return X3DPickSensorNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
