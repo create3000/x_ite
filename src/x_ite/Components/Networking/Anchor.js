@@ -149,9 +149,9 @@ function (Fields,
 					this .setLoadState (X3DConstants .FAILED_STATE, false);
 			}
 			.bind (this),
-			function (fragment)
+			function (viewpointName)
 			{
-			   this .getBrowser () .changeViewpoint (fragment);
+			   this .getBrowser () .changeViewpoint (viewpointName);
 				this .setLoadState (X3DConstants .COMPLETE_STATE, false);
 			}
 			.bind (this),

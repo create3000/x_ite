@@ -145,7 +145,7 @@ function (SFNode,
 		{
 			// Bind first X3DBindableNodes found in each layer.
 
-			this .layerSet .bind (this .getExecutionContext () .getURL () .fragment);
+			this .layerSet .bind (new URL (this .getExecutionContext () .getWorldURL ()) .hash);
 		},
 		traverse: function (type, renderObject)
 		{

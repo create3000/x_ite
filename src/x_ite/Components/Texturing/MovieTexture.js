@@ -179,7 +179,7 @@ function ($,
 
 			// Get URL.
 
-			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getURL ());
+			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
 			this .video .attr ("src", this .URL .href);
 			this .video .get (0) .load ();

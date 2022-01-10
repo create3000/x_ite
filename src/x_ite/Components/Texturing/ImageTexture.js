@@ -155,7 +155,7 @@ function ($,
 
 			// Get URL.
 
-			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getURL ());
+			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
 			this .image .attr ("src", this .URL .href);
 		},

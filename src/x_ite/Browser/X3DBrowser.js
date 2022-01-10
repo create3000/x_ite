@@ -324,7 +324,7 @@ function ($,
 				currentScene = this .currentScene,
 				external     = this .isExternal (),
 				fileLoader   = new FileLoader (this .getWorld ()),
-				scene        = fileLoader .createX3DFromString (currentScene .getURL (), x3dSyntax);
+				scene        = fileLoader .createX3DFromString (currentScene .getWorldURL (), x3dSyntax);
 
 			if (!external)
 			{

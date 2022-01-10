@@ -126,7 +126,7 @@ function ($,
 			else
 				scene .setExecutionContext (this .executionContext);
 
-			scene .setURL (new URL (worldURL, this .getReferer ()));
+			scene .setWorldURL (new URL (worldURL, this .getReferer ()) .href);
 
 			if (success)
 			{
@@ -594,7 +594,7 @@ function ($,
 					return this .browser .getLocation ();
 			}
 
-			return this .executionContext .getURL ();
+			return this .executionContext .getWorldURL ();
 		},
 		getContentType: function (xhr)
 		{

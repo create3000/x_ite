@@ -139,11 +139,7 @@ function (Fields,
 		},
 		getWorldURL: function ()
 		{
-			return this .getURL () .href;
-		},
-		getURL: function ()
-		{
-			return this .getExecutionContext () .getURL ();
+			return this .getExecutionContext () .getWorldURL ();
 		},
 		getProfile: function ()
 		{

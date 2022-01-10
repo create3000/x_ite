@@ -167,7 +167,7 @@ function ($,
 
 			// Get URL.
 
-			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getURL ());
+			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
 			this .audio .attr ("src", this .URL .href);
 			this .audio .get (0) .load ();

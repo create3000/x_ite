@@ -220,10 +220,6 @@ function ($,
 		{
 			return this .finished_;
 		},
-		getURL: function ()
-		{
-			return this .getExecutionContext () .getURL ();
-		},
 		getBrowser: function ()
 		{
 			return this;

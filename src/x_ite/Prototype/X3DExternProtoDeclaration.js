@@ -171,7 +171,7 @@ function ($,
 			this .scene = value;
 
 			const
-				protoName = this .scene .getURL () .fragment || 0,
+				protoName = new URL (this .scene .getWorldURL ()) .hash .substr (1) || 0,
 				proto     = this .scene .protos [protoName];
 
 			if (! proto)

@@ -380,7 +380,7 @@ function (Fields,
 			var message = "\n"
 				+ "********************************************************************************" + "\n"
 				+ "Parser error at line " + this .lineNumber + ":" + linePos  + "\n"
-				+ "in '" + this .getScene () .getURL () + "'" + "\n"
+				+ "in '" + this .getScene () .getWorldURL () + "'" + "\n"
 				+ "\n"
 				+ lastLine + "\n"
 				+ line + "\n"

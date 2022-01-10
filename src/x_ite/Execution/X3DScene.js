@@ -80,7 +80,7 @@ function (Fields,
 		this ._encoding             = "SCRIPTED";
 		this ._profile              = null;
 		this ._components           = new ComponentInfoArray ([ ]);
-		this ._url                  = new URL (location, location);
+		this ._worldURL             = location .toString ();
 		this ._units                = new UnitInfoArray ();
 
 		this ._units .add ("angle",  new UnitInfo ("angle",  "radian",   1));
@@ -130,13 +130,13 @@ function (Fields,
 		{
 			return this ._encoding;
 		},
-		setURL: function (url)
+		setWorldURL: function (url)
 		{
-			this ._url = url;
+			this ._worldURL = url;
 		},
-		getURL: function ()
+		getWorldURL: function ()
 		{
-			return this ._url;
+			return this ._worldURL;
 		},
 		setProfile: function (profile)
 		{
