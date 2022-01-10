@@ -60,7 +60,7 @@ The string may be any valid X3D content in any language supported by the browser
 
 Parse the passed URL into a X3D scene. When complete send the passed event to the passed node. The event is a string with the name of an MFNode inputOnly field of the passed node.
 
-If event and node are omitted then a X3DScene object.
+If event and node are omitted a X3DScene object is returned.
 
 #### void **loadURL** (*MFString url, MFString parameter*)
 
@@ -70,7 +70,7 @@ Load the passed URL, using the passed parameter string to possibly redirect it t
 
 Imports a X3D XML DOM document or fragment, converts it, and returns a X3DScene object.
 
-#### Promise **importJS** (*Object json*)
+#### X3DScene **importJS** (*Object json*)
 
 Imports a X3D JSON document or fragment, converts it, and returns a X3DScene object.
 
