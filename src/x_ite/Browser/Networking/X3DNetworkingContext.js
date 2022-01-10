@@ -50,13 +50,11 @@
 define ([
 	"x_ite/Fields",
 	"x_ite/Browser/Networking/urls",
-	"standard/Networking/URI",
 	"sprintf",
 	"locale/gettext",
 ],
 function (Fields,
           urls,
-          URI,
           sprintf,
           _)
 {
@@ -64,13 +62,13 @@ function (Fields,
 
 	function getBaseURI (element)
 	{
-		var baseURI = element .baseURI;
+		let baseURI = element .baseURI;
 
 		// Fix for Edge.
 		if (baseURI .startsWith ("about:"))
 			baseURI = document .baseURI;
 
-		return new URI (baseURI);
+		return new URL (baseURI, baseURI);
 	}
 
 	function X3DNetworkingContext ()

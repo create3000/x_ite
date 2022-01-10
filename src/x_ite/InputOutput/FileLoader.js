@@ -55,7 +55,6 @@ define ([
 	"x_ite/Parser/XMLParser",
 	"x_ite/Parser/JSONParser",
 	"x_ite/Execution/World",
-	"standard/Networking/URI",
 	"standard/Networking/BinaryTransport",
 	"pako_inflate",
 	"x_ite/DEBUG",
@@ -67,7 +66,6 @@ function ($,
           XMLParser,
           JSONParser,
           World,
-          URI,
           BinaryTransport,
           pako,
           DEBUG)
@@ -101,7 +99,7 @@ function ($,
 		this .userAgent        = this .browser .getName () + "/" + this .browser .getVersion () + " (X3D Browser; +" + this .browser .getProviderUrl () + ")";
 		this .target           = "";
 		this .url              = [ ];
-		this .URL              = new URI ();
+		this .URL              = this .browser .getLocation ();
 		this .fileReader       = new FileReader ();
 		this .text             = true;
 	}
@@ -128,7 +126,7 @@ function ($,
 			else
 				scene .setExecutionContext (this .executionContext);
 
-			scene .setURL (this .browser .getLocation () .transform (worldURL));
+			scene .setURL (new URL (worldURL, this .getReferer ()));
 
 			if (success)
 			{
@@ -285,8 +283,8 @@ function ($,
 
 			if (DEBUG)
 			{
-				if (this .URL .length && this .URL .scheme !== "data")
-					console .info ("Done loading scene " + this .URL);
+				if (this .URL .protocol !== "data:")
+					console .info ("Done loading scene " + this .URL .href);
 			}
 		},
 		createX3DFromURL: function (url, parameter, callback, bindViewpoint, foreign)
@@ -318,10 +316,10 @@ function ($,
 
 			for (var i = 0; i < url .length; ++ i)
 			{
-				this .URL = this .transform (url [i]);
+				this .URL = new URL (url [i], this .getReferer ());
 
 				$.ajax ({
-					url: this .URL .escape (),
+					url: this .URL .href,
 					dataType: "text",
 					async: false,
 					cache: this .browser .getBrowserOptions () .getCache (),
@@ -342,7 +340,7 @@ function ($,
 					},
 					error: function (jqXHR, textStatus, errorThrown)
 					{
-						//console .warn ("Couldn't load URL '" + this .URL .toString () + "': " + errorThrown + ".");
+						//console .warn ("Couldn't load URL '" + this .URL .href + "': " + errorThrown + ".");
 					},
 				});
 
@@ -397,23 +395,23 @@ function ($,
 
 			return "";
 		},
-		loadDocumentAsync: function (URL)
+		loadDocumentAsync: function (url)
 		{
-			var uri = new URI (URL);
-
-			if (URL .length == 0)
+			if (url .length === 0)
 			{
 				this .loadDocumentError (new Error ("URL is empty."));
 				return;
 			}
 
+			this .URL = new URL (url, this .getReferer ());
+
 			try
 			{
 				if (this .bindViewpoint)
 				{
-					if (uri .filename .toString () .length === 0 && uri .query .length === 0)
+					if (this .URL .href .substr (0, this .getReferer () .href .length) === this .getReferer () .href)
 					{
-						this .bindViewpoint (uri .fragment);
+						this .bindViewpoint (this .URL .hash .substr (1));
 						return;
 					}
 				}
@@ -428,7 +426,7 @@ function ($,
 			{
 				try
 				{
-					var result = ECMAScript .exec (URL);
+					var result = ECMAScript .exec (url);
 
 					if (result)
 					{
@@ -445,11 +443,9 @@ function ($,
 
 			// Test for data URL here.
 
-			this .URL = this .transform (URL);
-
 			try
 			{
-				var result = dataURL .exec (URL);
+				var result = dataURL .exec (url);
 
 				if (result)
 				{
@@ -465,7 +461,7 @@ function ($,
 						data = unescape (data);
 
 					if (this .target .length && this .target !== "_self" && this .foreign)
-						return this .foreign (this .URL .toString (), this .target);
+						return this .foreign (this .URL .href, this .target);
 
 					this .callback (data);
 					return;
@@ -480,22 +476,22 @@ function ($,
 			// Handle target
 
 			if (this .target .length && this .target !== "_self" && this .foreign)
-				return this .foreign (this .URL .toString (), this .target);
+				return this .foreign (this .URL .href, this .target);
 
 			// Handle well known foreign content depending on extension or if path looks like directory.
 
 			if (this .foreign)
 			{
-				if (this .URL .extension .match (foreignExtensions))
+				if (this .URL .href .match (foreignExtensions))
 				{
-					return this .foreign (this .URL .toString (), this .target);
+					return this .foreign (this .URL .href, this .target);
 				}
 			}
 
 			// Load URL async
 
 			$.ajax ({
-				url: this .URL .escape (),
+				url: this .URL .href,
 				dataType: "binary",
 				async: true,
 				cache: this .browser .getBrowserOptions () .getCache (),
@@ -509,7 +505,7 @@ function ($,
 						//console .log (this .getContentType (xhr));
 
 						if (foreign [this .getContentType (xhr)])
-							return this .foreign (this .URL .toString (), this .target);
+							return this .foreign (this .URL .href, this .target);
 					}
 
 					if (this .text)
@@ -582,24 +578,13 @@ function ($,
 		},
 		error: function (exception)
 		{
-			if (this .URL .scheme === "data")
+			if (this .URL .protocol === "data:")
 				console .warn ("Couldn't load URL 'data':", exception .message);
 			else
-				console .warn ("Couldn't load URL '" + this .URL + "':", exception .message);
+				console .warn ("Couldn't load URL '" + this .URL .href + "':", exception .message);
 
 			if (DEBUG)
 				console .log (exception);
-		},
-		transform: function (sURL)
-		{
-			var URL = this .getReferer () .transform (new URI (sURL));
-
-			if (URL .isLocal () || URL .host === "localhost")
-			{
-				URL = this .browser .getLocation () .getRelativePath (URL);
-			}
-
-			return URL;
 		},
 		getReferer: function ()
 		{

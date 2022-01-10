@@ -55,7 +55,6 @@ define ([
 	"x_ite/Components/Sound/X3DSoundSourceNode",
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
-	"standard/Networking/URI",
 	"x_ite/DEBUG",
 ],
 function ($,
@@ -65,7 +64,6 @@ function ($,
           X3DSoundSourceNode,
           X3DUrlObject,
           X3DConstants,
-          URI,
           DEBUG)
 {
 "use strict";
@@ -169,16 +167,15 @@ function ($,
 
 			// Get URL.
 
-			this .URL = new URI (this .urlStack .shift ());
-			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
+			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getURL ());
 
-			this .audio .attr ("src", this .URL);
+			this .audio .attr ("src", this .URL .href);
 			this .audio .get (0) .load ();
 		},
 		setError: function ()
 		{
-			if (this .URL .scheme !== "data")
-				console .warn ("Error loading audio:", this .URL .toString ());
+			if (this .URL .protocol !== "data:")
+				console .warn ("Error loading audio:", this .URL .href);
 
 			this .loadNext ();
 		},
@@ -186,8 +183,8 @@ function ($,
 		{
 			if (DEBUG)
 			{
-				if (this .URL .scheme !== "data")
-					console .info ("Done loading audio:", this .URL .toString ());
+				if (this .URL .protocol !== "data:")
+					console .info ("Done loading audio:", this .URL .href);
 			}
 
 			this .audio .unbind ("canplaythrough");

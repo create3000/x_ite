@@ -55,7 +55,6 @@ define ([
 	"x_ite/Components/Texturing/X3DTexture2DNode",
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
-	"standard/Networking/URI",
 	"standard/Math/Algorithm",
 	"x_ite/DEBUG",
 ],
@@ -66,7 +65,6 @@ function ($,
           X3DTexture2DNode,
           X3DUrlObject,
           X3DConstants,
-          URI,
           Algorithm,
           DEBUG)
 {
@@ -157,16 +155,14 @@ function ($,
 
 			// Get URL.
 
-			this .URL = new URI (this .urlStack .shift ());
-			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
-			// In Firefox we don't need getRelativePath if file scheme, do we in Chrome???
+			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getURL ());
 
-			this .image .attr ("src", this .URL .toString ());
+			this .image .attr ("src", this .URL .href);
 		},
 		setError: function ()
 		{
-			if (this .URL .scheme !== "data")
-				console .warn ("Error loading image:", this .URL .toString ());
+			if (this .URL .protocol !== "data:")
+				console .warn ("Error loading image:", this .URL .href);
 
 			this .loadNext ();
 		},
@@ -174,21 +170,21 @@ function ($,
 		{
 			if (DEBUG)
 			{
-				 if (this .URL .scheme !== "data")
-			   	console .info ("Done loading image:", this .URL .toString ());
+				 if (this .URL .protocol !== "data:")
+			   	console .info ("Done loading image:", this .URL .href);
 			}
 
 			try
 			{
-				var
+				const
 					gl     = this .getBrowser () .getContext (),
-				   image  = this .image [0],
-					width  = image .width,
-					height = image .height;
-
-				var
+					image  = this .image [0],
 					canvas = this .canvas [0],
 					cx     = canvas .getContext ("2d");
+
+				let
+					width  = image .width,
+					height = image .height;
 
 				// Scale image if needed and flip vertically.
 
@@ -226,11 +222,11 @@ function ($,
 
 				// Determine image alpha.
 
-				var
-					data        = cx .getImageData (0, 0, width, height) .data,
-					transparent = false;
+				const data = cx .getImageData (0, 0, width, height) .data;
 
-				for (var i = 3; i < data .length; i += 4)
+				let transparent = false;
+
+				for (let i = 3; i < data .length; i += 4)
 				{
 					if (data [i] !== 255)
 					{

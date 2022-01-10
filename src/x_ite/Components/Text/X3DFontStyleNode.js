@@ -241,7 +241,7 @@ function (Fields,
 				}
 
 				this .family = this .familyStack .shift ();
-				this .URL    = this .loader .transform (this .family);
+				this .URL    = new URL (this .family, this .loader .getReferer ());
 
 				this .getBrowser () .getFont (this .URL)
 					.done (this .setFont .bind (this))
@@ -254,7 +254,7 @@ function (Fields,
 		},
 		setError: function (error)
 		{
-			if (this .URL .scheme !== "data")
+			if (this .URL .protocol !== "data:")
 				console .warn ("Error loading font '" + this .URL .toString () + "':", error);
 
 			this .loadNext ();

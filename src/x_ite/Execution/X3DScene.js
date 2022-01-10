@@ -57,7 +57,6 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 	"x_ite/Fields/SFNodeCache",
-	"standard/Networking/URI",
 ],
 function (Fields,
           X3DExecutionContext,
@@ -67,8 +66,7 @@ function (Fields,
           ExportedNode,
           X3DConstants,
           Generator,
-          SFNodeCache,
-          URI)
+          SFNodeCache)
 {
 "use strict";
 
@@ -82,7 +80,7 @@ function (Fields,
 		this ._encoding             = "SCRIPTED";
 		this ._profile              = null;
 		this ._components           = new ComponentInfoArray ([ ]);
-		this ._url                  = new URI (window .location .toString ());
+		this ._url                  = new URL (location, location);
 		this ._units                = new UnitInfoArray ();
 
 		this ._units .add ("angle",  new UnitInfo ("angle",  "radian",   1));

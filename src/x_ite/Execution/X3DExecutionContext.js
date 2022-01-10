@@ -139,7 +139,7 @@ function (Fields,
 		},
 		getWorldURL: function ()
 		{
-			return this .getURL () .location;
+			return this .getURL () .href;
 		},
 		getURL: function ()
 		{

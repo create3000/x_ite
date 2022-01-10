@@ -56,7 +56,6 @@ define ([
 	"x_ite/Components/Sound/X3DSoundSourceNode",
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
-	"standard/Networking/URI",
 	"standard/Math/Algorithm",
 	"x_ite/DEBUG",
 ],
@@ -68,7 +67,6 @@ function ($,
           X3DSoundSourceNode,
           X3DUrlObject,
           X3DConstants,
-          URI,
           Algorithm,
           DEBUG)
 {
@@ -181,16 +179,15 @@ function ($,
 
 			// Get URL.
 
-			this .URL = new URI (this .urlStack .shift ());
-			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
+			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getURL ());
 
-			this .video .attr ("src", this .URL);
+			this .video .attr ("src", this .URL .href);
 			this .video .get (0) .load ();
 		},
 		setError: function ()
 		{
-			if (this .URL .scheme !== "data")
-				console .warn ("Error loading movie:", this .URL .toString ());
+			if (this .URL .protocol !== "data:")
+				console .warn ("Error loading movie:", this .URL .href);
 
 			this .loadNext ();
 		},
@@ -198,15 +195,15 @@ function ($,
 		{
 			if (DEBUG)
 			{
-				if (this .URL .scheme !== "data")
-					console .info ("Done loading movie:", this .URL .toString ());
+				if (this .URL .protocol !== "data:")
+					console .info ("Done loading movie:", this .URL .href);
 			}
 
 			try
 			{
 				this .video .unbind ("canplaythrough");
 
-				var
+				const
 			      video  = this .video [0],
 					width  = video .videoWidth,
 					height = video .videoHeight,
@@ -221,7 +218,7 @@ function ($,
 
 				cx .drawImage (video, 0, 0);
 
-				var data = cx .getImageData (0, 0, width, height) .data;
+				const data = cx .getImageData (0, 0, width, height) .data;
 
 				setTimeout (function ()
 				{

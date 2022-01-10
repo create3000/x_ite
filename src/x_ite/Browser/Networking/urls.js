@@ -46,17 +46,11 @@
  *
  ******************************************************************************/
 
-define ([
-	"standard/Networking/URI",
-],
-function (URI)
+define (function ()
 {
 "use strict";
 
-	function URLs ()
-	{
-		this .scriptUrl = new URI (getScriptURL ());
-	}
+	function URLs () { }
 
 	URLs .prototype =
 	{
@@ -67,26 +61,26 @@ function (URI)
 				if (getScriptURL () .match (/\.min\.js$/))
 					file += ".min";
 
-				return this .scriptUrl .transform ("assets/components/" + file + ".js") .toString ();
+				return new URL ("assets/components/" + file + ".js", getScriptURL ()) .href;
 			}
 
 			return "https://create3000.github.io/x_ite/";
 		},
 		getShaderUrl: function (file)
 		{
-			return this .scriptUrl .transform ("assets/shaders/" + file) .toString ();
+			return new URL ("assets/shaders/" + file, getScriptURL ()) .href;
 		},
 		getFontsUrl: function (file)
 		{
-			return this .scriptUrl .transform ("assets/fonts/" + file) .toString ();
+			return new URL ("assets/fonts/" + file, getScriptURL ()) .href;
 		},
 		getLinetypeUrl: function (index)
 		{
-			return this .scriptUrl .transform ("assets/linetype/" + index + ".png") .toString ();
+			return new URL ("assets/linetype/" + index + ".png", getScriptURL ()) .href;
 		},
 		getHatchingUrl: function (index)
 		{
-			return this .scriptUrl .transform ("assets/hatching/" + index + ".png") .toString ();
+			return new URL ("assets/hatching/" + index + ".png", getScriptURL ()) .href;
 		},
 	};
 
