@@ -853,7 +853,7 @@ function (Fields,
 		{
 			X3DLineGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 				this .getBrowser () .getArc2DOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getArc2DOptions () .removeInterest ("requestRebuild", this);
@@ -1033,7 +1033,7 @@ function (Fields,
 		{
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 				this .getBrowser () .getArcClose2DOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getArcClose2DOptions () .removeInterest ("requestRebuild", this);
@@ -1256,7 +1256,7 @@ function (Fields,
 		{
 			X3DLineGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 				this .getBrowser () .getCircle2DOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getCircle2DOptions () .removeInterest ("requestRebuild", this);
@@ -1410,7 +1410,7 @@ function (Fields,
 		{
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 				this .getBrowser () .getDisk2DOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);

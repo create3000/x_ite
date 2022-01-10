@@ -139,7 +139,7 @@ function (Fields,
 		{ },
 		set_enabled__: function ()
 		{
-			if (this .getLive () && this .targetObjectNode && this .enabled_ .getValue () && ! this .size_. getValue () .equals (Vector3 .Zero))
+			if (this .isLive () .getValue () && this .targetObjectNode && this .enabled_ .getValue () && ! this .size_. getValue () .equals (Vector3 .Zero))
 			{
 				this .setPickableObject (true);
 				this .getBrowser () .addTransformSensor (this);

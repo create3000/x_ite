@@ -142,7 +142,7 @@ function (Fields,
 		{
 			if (! this .getPrivate ())
 			{
-				this .scene .setLive (this .getLive ());
+				this .scene .setLive (this .isLive () .getValue ());
 			}
 		},
 		set_load__: function ()

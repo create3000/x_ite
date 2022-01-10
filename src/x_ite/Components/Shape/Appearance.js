@@ -150,7 +150,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 			{
 				this .getBrowser () .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
 
@@ -296,7 +296,7 @@ function (Fields,
 				}
 			}
 
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 			{
 				if (this .shaderNode)
 				{

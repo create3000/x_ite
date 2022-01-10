@@ -126,7 +126,7 @@ function (Fields,
 		{
 		    X3DGeometryNode .prototype .set_live__ .call (this);
 
-		   if (this .getLive ())
+		   if (this .isLive () .getValue ())
 				this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .addInterest ("requestRebuild", this);
 		   else
 				this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .removeInterest ("requestRebuild", this);

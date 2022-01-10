@@ -185,7 +185,7 @@ function (X3DSensorNode,
 		},
 		set_live__: function ()
 		{
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 			{
 				this .enabled_ .addInterest ("set_enabled__", this);
 

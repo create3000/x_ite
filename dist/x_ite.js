@@ -1,4 +1,4 @@
-/* X_ITE v4.7.2-1113 */
+/* X_ITE v4.7.2-1114 */
 
 (function () {
 
@@ -27662,7 +27662,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 			{
 				if (this .disabled)
 				{
@@ -27785,7 +27785,7 @@ function (Fields,
 
 				this .set_start ();
 
-				if (this .getLive ())
+				if (this .isLive () .getValue ())
 				{
 					this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
 				}
@@ -27807,7 +27807,7 @@ function (Fields,
 				if (this .pauseTimeValue !== this .getBrowser () .getCurrentTime ())
 					this .pauseTimeValue = this .getBrowser () .getCurrentTime ();
 
-				if (this .getLive ())
+				if (this .isLive () .getValue ())
 					this .real_pause ();
 			}
 		},
@@ -27828,7 +27828,7 @@ function (Fields,
 				if (this .resumeTimeValue !== this .getBrowser () .getCurrentTime ())
 					this .resumeTimeValue = this .getBrowser () .getCurrentTime ();
 
-				if (this .getLive ())
+				if (this .isLive () .getValue ())
 					this .real_resume ();
 			}
 		},
@@ -27862,7 +27862,7 @@ function (Fields,
 
 				this .isActive_ = false;
 
-				if (this .getLive ())
+				if (this .isLive () .getValue ())
 					this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
 			}
 		},
@@ -36626,7 +36626,7 @@ function (X3DChildNode,
 		},
 		set_live__: function ()
 		{
-			if ((this .getLive () || this .getPrivate ()) && this .isActive_ .getValue ())
+			if ((this .isLive () .getValue () || this .getPrivate ()) && this .isActive_ .getValue ())
 			{
 				this .getBrowser () .prepareEvents () .addInterest ("prepareEvents", this);
 				this .getBrowser () .addBrowserEvent ();
@@ -47339,7 +47339,7 @@ function ($,
 		{
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE)
 			{
-				this .scene .setLive (this .getLive ());
+				this .scene .setLive (this .isLive () .getValue ());
 			}
 		},
 		hasUserDefinedFields: function ()
@@ -47410,7 +47410,7 @@ function ($,
 			if (! proto)
 				throw new Error ("PROTO not found");
 
-			this .scene .setLive (this .getLive ());
+			this .scene .setLive (this .isLive () .getValue ());
 			this .scene .setPrivate (this .getScene () .getPrivate ());
 			this .scene .setExecutionContext (this .getExecutionContext ());
 
@@ -51628,12 +51628,12 @@ function ($,
 						{
 							event .preventDefault ();
 
-							if (this .getLive ())
+							if (this .isLive () .getValue ())
 								this .endUpdate ();
 							else
 								this .beginUpdate ();
 
-							this .getNotification () .string_ = this .getLive () ? "Begin Update" : "End Update";
+							this .getNotification () .string_ = this .isLive () .getValue () ? "Begin Update" : "End Update";
 						}
 					}
 
@@ -54351,7 +54351,7 @@ function (Fields,
 		{
 			var gl = this .getBrowser () .getContext ();
 
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 			{
 				if (this .getValid ())
 				{
@@ -68786,7 +68786,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 			{
 				this .getBrowser () .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
 
@@ -68932,7 +68932,7 @@ function (Fields,
 				}
 			}
 
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 			{
 				if (this .shaderNode)
 				{
@@ -71293,7 +71293,7 @@ function (Fields,
 		})(),
 		set_live__: function ()
 		{
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 				this .getBrowser () .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
 			else
 				this .getBrowser () .getBrowserOptions () .Shading_ .removeInterest ("set_shading__", this);
@@ -97643,7 +97643,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (this .traversed_ .getValue () && this .getLive () && this .enabled_ .getValue () && ! (this .zeroTest && this .size_. getValue () .equals (Vector3 .Zero)))
+			if (this .traversed_ .getValue () && this .isLive () .getValue () && this .enabled_ .getValue () && ! (this .zeroTest && this .size_. getValue () .equals (Vector3 .Zero)))
 			{
 				this .getBrowser () .sensorEvents () .addInterest ("update", this);
 			}
@@ -98126,7 +98126,7 @@ function (Fields,
 		{ },
 		set_enabled__: function ()
 		{
-			if (this .getLive () && this .targetObjectNode && this .enabled_ .getValue () && ! this .size_. getValue () .equals (Vector3 .Zero))
+			if (this .isLive () .getValue () && this .targetObjectNode && this .enabled_ .getValue () && ! this .size_. getValue () .equals (Vector3 .Zero))
 			{
 				this .setPickableObject (true);
 				this .getBrowser () .addTransformSensor (this);
@@ -100855,7 +100855,7 @@ function (Fields,
 		{
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 				this .getBrowser () .getConeOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getConeOptions () .removeInterest ("requestRebuild", this);
@@ -101107,7 +101107,7 @@ function (Fields,
 		{
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 				this .getBrowser () .getCylinderOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getCylinderOptions () .removeInterest ("requestRebuild", this);
@@ -102568,7 +102568,7 @@ function (Fields,
 		{
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 				this .getBrowser () .getSphereOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getSphereOptions () .removeInterest ("requestRebuild", this);
@@ -107055,7 +107055,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-		   if (this .getLive () && this .enabled_ .getValue ())
+		   if (this .isLive () .getValue () && this .enabled_ .getValue ())
 		      this .getBrowser () .addCollision (this);
 
 		   else
@@ -108606,7 +108606,7 @@ function (Fields,
 		{
 			if (! this .getPrivate ())
 			{
-				this .scene .setLive (this .getLive ());
+				this .scene .setLive (this .isLive () .getValue ());
 			}
 		},
 		set_load__: function ()
@@ -114253,7 +114253,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (this .getLive () && this .traversed_ .getValue ())
+			if (this .isLive () .getValue () && this .traversed_ .getValue ())
 			{
 				this .getBrowser () .sensorEvents () .addInterest ("update", this);
 			}
@@ -114621,7 +114621,7 @@ function (Fields,
 		{
 		    X3DGeometryNode .prototype .set_live__ .call (this);
 
-		   if (this .getLive ())
+		   if (this .isLive () .getValue ())
 				this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .addInterest ("requestRebuild", this);
 		   else
 				this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .removeInterest ("requestRebuild", this);
@@ -117416,7 +117416,7 @@ function ($,
 		},
 		getWorldURL: function ()
 		{
-			return this .getExecutionContext () .worldURL;
+			return this .currentScene .worldURL;
 		},
 		getProfile: function (name)
 		{
@@ -117501,6 +117501,13 @@ function ($,
 			if (! (scene instanceof X3DScene))
 				scene = this .createScene ();
 
+			// Detach scene from parent.
+
+			scene .getExecutionContext () .isLive () .removeInterest ("setLive", scene);
+			scene .setExecutionContext (scene);
+
+			// Replace.
+
 			this .description = "";
 
 			this .getBrowserOptions () .configure ();
@@ -117514,7 +117521,7 @@ function ($,
 			this .setExecutionContext (scene);
 			this .getWorld () .bind ();
 
-			scene .setLive (this .getLive ());
+			scene .setLive (this .isLive () .getValue ());
 		},
 		set_loadCount__: function (loadCount)
 		{
@@ -117541,51 +117548,24 @@ function ($,
 		},
 		createVrmlFromString: function (vrmlSyntax)
 		{
+			return this .createX3DFromString (vrmlSyntax) .rootNodes;
+		},
+		createX3DFromString: function (x3dSyntax)
+		{
 			const
-				currentScene = this .getExecutionContext (),
+				currentScene = this .currentScene,
 				external     = this .isExternal (),
 				fileLoader   = new FileLoader (this .getWorld ()),
-				scene        = fileLoader .createX3DFromString (currentScene .getURL (), vrmlSyntax);
+				scene        = fileLoader .createX3DFromString (currentScene .getURL (), x3dSyntax);
 
-			if (! external)
+			if (!external)
 			{
 				currentScene .isLive () .addInterest ("setLive", scene);
 				scene .setExecutionContext (currentScene);
 				scene .setLive (currentScene .getLive ());
 			}
 
-			return scene .rootNodes;
-		},
-		createX3DFromString: function (x3dSyntax, success, error)
-		{
-			const
-				currentScene = this .getExecutionContext (),
-				external     = this .isExternal (),
-				fileLoader   = new FileLoader (this .getWorld ());
-
-			const promise = new Promise (function (resolve, reject)
-			{
-				fileLoader .createX3DFromString (currentScene .getURL (), x3dSyntax, function (scene)
-				{
-					if (! external)
-					{
-						currentScene .isLive () .addInterest ("setLive", scene);
-						scene .setExecutionContext (currentScene);
-						scene .setLive (currentScene .getLive ());
-					}
-
-					resolve (scene);
-				},
-				reject);
-			});
-
-			if (success)
-				promise .then (success);
-
-			if (error)
-				promise .catch (error);
-
-			return promise;
+			return scene;
 		},
 		createVrmlFromURL: function (url, node, event)
 		{
@@ -117604,7 +117584,7 @@ function ($,
 				throw new Error ("Browser.createVrmlFromURL: event named '" + event + "' must be of type MFNode.");
 
 			const
-				currentScene = this .getExecutionContext (),
+				currentScene = this .currentScene,
 				external     = this .isExternal (),
 				loader       = new FileLoader (this .getWorld ());
 
@@ -117638,33 +117618,19 @@ function ($,
 				return this .createVrmlFromURL (url, node, event);
 
 			const
-				currentScene = this .getExecutionContext (),
+				currentScene = this .currentScene,
 				external     = this .isExternal (),
-				fileLoader   = new FileLoader (this .getWorld ());
+				fileLoader   = new FileLoader (this .getWorld ()),
+				scene        = fileLoader .createX3DFromURL (url, null);
 
-			const promise = new Promise (function (resolve, reject)
+			if (! external)
 			{
-				fileLoader .createX3DFromURL (url, null, function (scene)
-				{
-					if (scene)
-					{
-						if (! external)
-						{
-							currentScene .isLive () .addInterest ("setLive", scene);
-							scene .setExecutionContext (currentScene);
-							scene .setLive (currentScene .getLive ());
-						}
+				currentScene .isLive () .addInterest ("setLive", scene);
+				scene .setExecutionContext (currentScene);
+				scene .setLive (currentScene .getLive ());
+			}
 
-						resolve (scene);
-					}
-					else
-					{
-						reject (new Error ("Couldn't load any URL of '" + Array .prototype .join .call (url, "', ") + "'."));
-					}
-				});
-			});
-
-			return promise;
+			return scene;
 		},
 		loadURL: function (url, parameter)
 		{
@@ -117769,7 +117735,7 @@ function ($,
 		importDocument: function (dom, success, error)
 		{
 			const
-				currentScene = this .getExecutionContext (),
+				currentScene = this .currentScene,
 				scene        = this .createScene (),
 				external     = this .isExternal ();
 
@@ -117780,23 +117746,15 @@ function ($,
 				scene .setLive (currentScene .getLive ());
 			}
 
-			const promise = new Promise (function (resolve, reject)
-			{
-				new XMLParser (scene) .parseIntoScene (dom, resolve, reject);
-			});
+			new XMLParser (scene) .parseIntoScene (dom, success, error);
 
-			if (success)
-				promise .then (success);
-
-			if (error)
-				promise .catch (error);
-
-			return promise;
+			if (arguments .length === 1)
+				return scene;
 		},
-		importJS: function (jsobj, success, error)
+		importJS: function (json, success, error)
 		{
 			const
-				currentScene = this .getExecutionContext (),
+				currentScene = this .currentScene,
 				scene        = this .createScene (),
 				external     = this .isExternal ();
 
@@ -117807,18 +117765,10 @@ function ($,
 				scene .setLive (currentScene .getLive ());
 			}
 
-			const promise = new Promise (function (resolve, reject)
-			{
-				new JSONParser (scene) .parseIntoScene (jsobj, resolve, reject);
-			});
+			new JSONParser (scene) .parseIntoScene (json, success, error);
 
-			if (success)
-				promise .then (success);
-
-			if (error)
-				promise .catch (error);
-
-			return promise;
+			if (arguments .length === 1)
+				return scene;
 		},
 		getBrowserProperty: function (name)
 		{
@@ -117969,16 +117919,16 @@ function ($,
 		},
 		addRoute: function (fromNode, fromEventOut, toNode, toEventIn)
 		{
-			this .getExecutionContext () .addRoute (fromNode, fromEventOut, toNode, toEventIn);
+			this .currentScene .addRoute (fromNode, fromEventOut, toNode, toEventIn);
 		},
 		deleteRoute: function (fromNode, fromEventOut, toNode, toEventIn)
 		{
 			try
 			{
-				const route = this .getExecutionContext () .getRoute (fromNode, fromEventOut, toNode, toEventIn);
+				const route = this .currentScene .getRoute (fromNode, fromEventOut, toNode, toEventIn);
 
 				if (route)
-					this .getExecutionContext () .deleteRoute (route);
+					this .currentScene .deleteRoute (route);
 			}
 			catch (error)
 			{

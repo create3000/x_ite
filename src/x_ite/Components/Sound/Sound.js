@@ -156,7 +156,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (this .getLive () && this .traversed_ .getValue ())
+			if (this .isLive () .getValue () && this .traversed_ .getValue ())
 			{
 				this .getBrowser () .sensorEvents () .addInterest ("update", this);
 			}

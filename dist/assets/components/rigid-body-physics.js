@@ -1924,7 +1924,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (this .getLive () && this .enabled_ .getValue () && this .colliderNode)
+			if (this .isLive () .getValue () && this .enabled_ .getValue () && this .colliderNode)
 			{
 				this .getBrowser () .sensorEvents () .addInterest ("update", this);
 			}
@@ -3607,7 +3607,7 @@ function (Fields,
 		},
 		set_enabled__: function ()
 		{
-			if (this .getLive () && this .enabled_ .getValue ())
+			if (this .isLive () .getValue () && this .enabled_ .getValue ())
 				this .getBrowser () .sensorEvents () .addInterest ("update", this);
 			else
 				this .getBrowser () .sensorEvents () .removeInterest ("update", this);

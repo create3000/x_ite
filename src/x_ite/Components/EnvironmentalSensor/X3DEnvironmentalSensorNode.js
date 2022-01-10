@@ -92,7 +92,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (this .traversed_ .getValue () && this .getLive () && this .enabled_ .getValue () && ! (this .zeroTest && this .size_. getValue () .equals (Vector3 .Zero)))
+			if (this .traversed_ .getValue () && this .isLive () .getValue () && this .enabled_ .getValue () && ! (this .zeroTest && this .size_. getValue () .equals (Vector3 .Zero)))
 			{
 				this .getBrowser () .sensorEvents () .addInterest ("update", this);
 			}

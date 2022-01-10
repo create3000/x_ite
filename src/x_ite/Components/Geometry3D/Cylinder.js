@@ -106,7 +106,7 @@ function (Fields,
 		{
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 				this .getBrowser () .getCylinderOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getCylinderOptions () .removeInterest ("requestRebuild", this);

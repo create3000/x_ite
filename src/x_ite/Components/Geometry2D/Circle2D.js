@@ -102,7 +102,7 @@ function (Fields,
 		{
 			X3DLineGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 				this .getBrowser () .getCircle2DOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getCircle2DOptions () .removeInterest ("requestRebuild", this);

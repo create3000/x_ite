@@ -123,7 +123,7 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-		   if (this .getLive () && this .enabled_ .getValue ())
+		   if (this .isLive () .getValue () && this .enabled_ .getValue ())
 		      this .getBrowser () .addCollision (this);
 
 		   else

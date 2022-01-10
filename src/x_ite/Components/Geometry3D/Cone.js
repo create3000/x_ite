@@ -105,7 +105,7 @@ function (Fields,
 		{
 			X3DGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .getLive ())
+			if (this .isLive () .getValue ())
 				this .getBrowser () .getConeOptions () .addInterest ("requestRebuild", this);
 			else
 				this .getBrowser () .getConeOptions () .removeInterest ("requestRebuild", this);
