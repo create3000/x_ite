@@ -203,7 +203,7 @@ function (X3DBaseNode,
 
 	function tbProjectToSphere (r, x, y)
 	{
-		const d = Math .sqrt (x * x + y * y);
+		const d = Math .hypot (x, y);
 
 		if (d < r * Math .sqrt (0.5)) // Inside sphere
 		{

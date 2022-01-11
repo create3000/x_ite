@@ -184,7 +184,7 @@ function (Fields,
 		},
 		traverse: (function ()
 		{
-			var
+			const
 				min = { distance: 0, intersection: new Vector3 (0, 0, 0) },
 				max = { distance: 0, intersection: new Vector3 (0, 0, 0) };
 
@@ -203,7 +203,7 @@ function (Fields,
 
 					this .setTraversed (true);
 
-					var modelViewMatrix = renderObject .getModelViewMatrix () .get ();
+					const modelViewMatrix = renderObject .getModelViewMatrix () .get ();
 
 					this .getEllipsoidParameter (modelViewMatrix,
 					                             Math .max (this .maxBack_  .getValue (), 0),
@@ -223,7 +223,7 @@ function (Fields,
 						}
 						else
 						{
-							var
+							const
 								d1        = max .intersection .abs (), // Viewer is here at (0, 0, 0)
 								d2        = max .intersection .distance (min .intersection),
 								d         = Math .min (d1 / d2, 1),
@@ -249,7 +249,7 @@ function (Fields,
 		})(),
 		getEllipsoidParameter: (function ()
 		{
-			var
+			const
 				location        = new Vector3 (0, 0, 0),
 				sphereMatrix    = new Matrix4 (),
 				invSphereMatrix = new Matrix4 (),
@@ -279,7 +279,7 @@ function (Fields,
 					return;
 				}
 
-				var
+				const
 					a = (back + front) / 2,
 					e = a - back,
 					b = Math .sqrt (a * a - e * e);
@@ -297,7 +297,7 @@ function (Fields,
 
 				invSphereMatrix .assign (sphereMatrix) .inverse ();
 
-				var viewer = invSphereMatrix .origin;
+				const viewer = invSphereMatrix .origin;
 				location .negate () .divVec (scale);
 
 				normal .assign (location) .subtract (viewer) .normalize ();
