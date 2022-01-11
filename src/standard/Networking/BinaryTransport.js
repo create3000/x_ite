@@ -70,7 +70,7 @@ define (function ()
 						// Apply custom fields if provided
 						if ( options.xhrFields )
 						{
-							for (var i in options .xhrFields)
+							for (const i in options .xhrFields)
 								xhr [i] = options .xhrFields [i];
 						}
 
@@ -79,7 +79,7 @@ define (function ()
 							xhr .overrideMimeType (options .mimeType);
 
 						// Setup custom headers
-						for (var i in headers)
+						for (const i in headers)
 							xhr .setRequestHeader (i, headers [i]);
 
 						// Setup onload callback

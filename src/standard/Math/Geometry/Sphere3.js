@@ -90,13 +90,13 @@ function (Vector3)
 
 			if (core >= 0)
 			{
-				var
+				let
 					t1 = (-b + Math .sqrt (core)) / 2,
 					t2 = (-b - Math .sqrt (core)) / 2;
 
 				if (t1 > t2)
 				{
-					var tmp = t1;
+					const tmp = t1;
 					t1 = t2;
 					t2 = tmp;
 				}

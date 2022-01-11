@@ -95,7 +95,7 @@ define (function ()
 		},
 		slerp: function (source, destination, t)
 		{
-			var cosom = source .dot (destination);
+			let cosom = source .dot (destination);
 
 			if (cosom <= -1)
 				throw new Error ("slerp is not possible: vectors are inverse collinear.");
@@ -158,7 +158,7 @@ define (function ()
 
 			-- n;
 
-			for (var k = 1; ! (k & (1 << (4 + 1))); k <<= 1)
+			for (let k = 1; ! (k & (1 << (4 + 1))); k <<= 1)
 				n |= n >> k;
 
 			return ++ n;
@@ -171,7 +171,7 @@ define (function ()
 		},
 		decimalPlaces: function (n)
 		{
-			var
+			let
 				a = Math.abs(n),
 				c = a, count = 1;
 
@@ -197,7 +197,7 @@ define (function ()
 		{
 		   // http://en.cppreference.com/w/cpp/algorithm/lower_bound
 
-			var
+			let
 				index = 0,
 				step  = 0,
 				count = last - first;
@@ -222,7 +222,7 @@ define (function ()
 		{
 		   // http://en.cppreference.com/w/cpp/algorithm/upper_bound
 
-			var
+			let
 				index = 0,
 				step  = 0,
 				count = last - first;
@@ -246,7 +246,7 @@ define (function ()
 		},
 		set_difference: function (lhs, rhs, result)
 		{
-			for (var key in lhs)
+			for (const key in lhs)
 			{
 				if (key in rhs)
 					continue;

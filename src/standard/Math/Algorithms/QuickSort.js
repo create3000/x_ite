@@ -72,7 +72,7 @@ define (function ()
 		},
 		quicksort: function (lo, hi)
 		{
-			var
+			let
 				i = lo,
 				j = hi;
 

@@ -64,7 +64,7 @@ define (function ()
 			values  = result .values,
 			vectors = result .vectors;
 
-		var
+		let
 			sm,                // smallest entry
 			theta,             // angle for Jacobi rotation
 			c, s, t,           // cosine, sine, tangent of theta

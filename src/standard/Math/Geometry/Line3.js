@@ -120,7 +120,7 @@ function (Vector3)
 					d1 = this .direction,
 					d2 = line .direction;
 
-				var t = Vector3 .dot (d1, d2);
+				let t = Vector3 .dot (d1, d2);
 
 				if (Math .abs (t) >= 1)
 					return false;  // lines are parallel
@@ -183,7 +183,7 @@ function (Vector3)
 				if (v < 0 || u + v > 1)
 					return false;
 
-				//var t = edge2 .dot (qvec) * inv_det;
+				//let t = edge2 .dot (qvec) * inv_det;
 
 				uvt .u = u;
 				uvt .v = v;
@@ -200,7 +200,7 @@ function (Vector3)
 
 	Line3 .Points = function (point1, point2)
 	{
-		var line = Object .create (Line3 .prototype);
+		const line = Object .create (Line3 .prototype);
 		line .point     = point1 .copy ();
 		line .direction = Vector3 .subtract (point2, point1) .normalize ();
 		return line;

@@ -94,7 +94,7 @@ function (Vector3, Algorithm)
 		},
 		setMatrix: function (matrix)
 		{
-			var i;
+			let i;
 
 			// First, find largest diagonal in matrix:
 			if (matrix [0] > matrix [4])
@@ -290,7 +290,7 @@ function (Vector3, Algorithm)
 		},
 		normalize: function ()
 		{
-			var length = Math .sqrt (this .x * this .x +
+			let length = Math .sqrt (this .x * this .x +
 			                         this .y * this .y +
 			                         this .z * this .z +
 			                      	 this .w * this .w);

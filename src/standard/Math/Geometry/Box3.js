@@ -328,7 +328,7 @@ function (Triangle3,
 
 						if (x .norm () == 0)
 						{
-							for (var i = 0; i < 3; ++ i)
+							for (let i = 0; i < 3; ++ i)
 							{
 								x .assign (axes [i]) .cross (y);
 
@@ -341,7 +341,7 @@ function (Triangle3,
 
 						if (x .norm () == 0)
 						{
-							for (var i = 0; i < 3; ++ i)
+							for (let i = 0; i < 3; ++ i)
 							{
 								x .assign (axes [i]) .cross (z);
 
@@ -364,7 +364,7 @@ function (Triangle3,
 
 						if (y .norm () == 0)
 						{
-							for (var i = 0; i < 3; ++ i)
+							for (let i = 0; i < 3; ++ i)
 							{
 								y .assign (axes [i]) .cross (z);
 
@@ -377,7 +377,7 @@ function (Triangle3,
 
 						if (y .norm () == 0)
 						{
-							for (var i = 0; i < 3; ++ i)
+							for (let i = 0; i < 3; ++ i)
 							{
 								y .assign (axes [i]) .cross (x);
 
@@ -400,7 +400,7 @@ function (Triangle3,
 
 						if (z .norm () == 0)
 						{
-							for (var i = 0; i < 3; ++ i)
+							for (let i = 0; i < 3; ++ i)
 							{
 								z .assign (axes [i]) .cross (x);
 
@@ -413,7 +413,7 @@ function (Triangle3,
 
 						if (z .norm () == 0)
 						{
-							for (var i = 0; i < 3; ++ i)
+							for (let i = 0; i < 3; ++ i)
 							{
 								z .assign (axes [i]) .cross (y);
 
@@ -580,9 +580,9 @@ function (Triangle3,
 				this  .getAxes (axes1);
 				other .getAxes (axes2);
 
-				for (var i1 = 0; i1 < 3; ++ i1)
+				for (let i1 = 0; i1 < 3; ++ i1)
 				{
-					for (var i2 = 0; i2 < 3; ++ i2)
+					for (let i2 = 0; i2 < 3; ++ i2)
 						axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (axes2 [i2]);
 				}
 
@@ -679,9 +679,9 @@ function (Triangle3,
 				triangleEdges [1] .assign (b) .subtract (c);
 				triangleEdges [2] .assign (c) .subtract (a);
 
-				for (var i1 = 0; i1 < 3; ++ i1)
+				for (let i1 = 0; i1 < 3; ++ i1)
 				{
-					for (var i2 = 0; i2 < 3; ++ i2)
+					for (let i2 = 0; i2 < 3; ++ i2)
 						axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (triangleEdges [i2]);
 				}
 

@@ -145,17 +145,17 @@ function (Vector3,
 			if (P == 0)
 				return result .set (Math .PI, 0, z - this .c);
 
-			var
+			let
 				latitude  = 0,
 				longitude = Math .atan2 (y, x),
 				elevation = 0;
 
-			var
+			let
 				a    = this .a,
 				N    = a,
 				ecc2 = this .ecc2;
 
-			for (var i = 0; i < IMAX; ++ i)
+			for (let i = 0; i < IMAX; ++ i)
 			{
 				const
 					h0 = elevation,

@@ -64,10 +64,8 @@ define (function ()
 	{
 		// http://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
 
-		for (var i = 0, length = axes .length; i < length; ++ i)
+		for (const axis of axes)
 		{
-			const axis = axes [i];
-
 			project (points1, axis, extents1);
 			project (points2, axis, extents2);
 
@@ -86,10 +84,8 @@ define (function ()
 		extents .min = Number .POSITIVE_INFINITY;
 		extents .max = Number .NEGATIVE_INFINITY;
 
-		for (var i = 0, length = points .length; i < length; ++ i)
+		for (const point of points)
 		{
-			const point = points [i];
-
 			// Just dot it to get the min and max along this axis.
 			// NOTE: the axis must be normalized to get accurate projections to calculate the MTV, but if it is only needed to
 			// know whether it overlaps, every axis can be used.

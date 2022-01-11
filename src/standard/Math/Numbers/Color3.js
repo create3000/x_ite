@@ -104,7 +104,7 @@ function (Algorithm)
 		},
 		getHSV: function (result)
 		{
-			var h, s, v;
+			let h, s, v;
 
 			const min = Math .min (this .r_, this .g_, this .b_);
 			const max = Math .max (this .r_, this .g_, this .b_);
@@ -224,7 +224,7 @@ function (Algorithm)
 			// Linearely interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.
 			// Source and destination color must be in HSV space. The resulting HSV color is stored in @a r.
 
-			var
+			let
 				ha = a [0], hb = b [0];
 
 			const
@@ -251,7 +251,7 @@ function (Algorithm)
 				PI2  = Math .PI * 2,
 				step = (PI2 - range) * t;
 
-			var h = ha < hb ? ha - step : ha + step;
+			let h = ha < hb ? ha - step : ha + step;
 
 			if (h < 0)
 				h += PI2;

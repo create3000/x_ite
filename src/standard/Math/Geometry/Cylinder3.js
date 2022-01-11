@@ -124,7 +124,7 @@ function (Vector3,
 		},
 		unitCylinderIntersectsLine: function (line, enter, exit)
 		{
-			var t0, t1;
+			let t0, t1;
 
 			const
 				pos = line .point,

@@ -72,7 +72,7 @@ function (Vector3,
 		constructor: Plane3,
 		copy: function ()
 		{
-			var copy = Object .create (Plane3 .prototype);
+			const copy = Object .create (Plane3 .prototype);
 			copy .normal             = this .normal .copy ();
 			copy .distanceFromOrigin = this .distanceFromOrigin;
 			return copy;

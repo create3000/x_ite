@@ -82,7 +82,7 @@ define (function ()
 		},
 		merge: function (lo, m, hi)
 		{
-			var i, j, k;
+			let i, j, k;
 
 			i = 0, j = lo;
 			// Copy first half of array a to auxiliary array b.

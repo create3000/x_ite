@@ -89,7 +89,7 @@ function (Algorithm)
 			{
 				case 2:
 				{
-					for (var i = 0, d = dimension - 1; i < dimension; ++ i)
+					for (let i = 0, d = dimension - 1; i < dimension; ++ i)
 					{
 						lut .push (quadric (x0, y0, x1, y1, x2, y2, i / d));
 					}
@@ -98,7 +98,7 @@ function (Algorithm)
 				}
 				case 3:
 				{
-					for (var i = 0, d = dimension - 1; i < dimension; ++ i)
+					for (let i = 0, d = dimension - 1; i < dimension; ++ i)
 					{
 						lut .push (cubic (x0, y0, x1, y1, x2, y2, x3, y3, i / d));
 					}

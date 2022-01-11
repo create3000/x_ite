@@ -136,7 +136,7 @@ function (Algorithm)
 				x = this .x,
 				y = this .y;
 
-			var length = Math .sqrt (x * x +
+			let length = Math .sqrt (x * x +
 			                         y * y);
 
 			if (length)
@@ -193,11 +193,11 @@ function (Algorithm)
 		},
 		min: function (vector)
 		{
-			var
+			let
 				x = this .x,
 				y = this .y;
 
-			for (var i = 0, length = arguments .length; i < length; ++ i)
+			for (let i = 0, length = arguments .length; i < length; ++ i)
 			{
 				const vector = arguments [i];
 
@@ -211,11 +211,11 @@ function (Algorithm)
 		},
 		max: function (vector)
 		{
-			var
+			let
 				x = this .x,
 				y = this .y;
 
-			for (var i = 0, length = arguments .length; i < length; ++ i)
+			for (let i = 0, length = arguments .length; i < length; ++ i)
 			{
 				const vector = arguments [i];
 

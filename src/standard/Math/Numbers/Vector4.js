@@ -168,7 +168,7 @@ function (Algorithm)
 				z = this .z,
 				w = this .w;
 
-			var length = Math .sqrt (x * x +
+			let length = Math .sqrt (x * x +
 			                         y * y +
 			                         z * z +
 			                         w * w);
@@ -247,13 +247,13 @@ function (Algorithm)
 		},
 		min: function (vector)
 		{
-			var
+			let
 				x = this .x,
 				y = this .y,
 				z = this .z,
 				w = this .w;
 
-			for (var i = 0, length = arguments .length; i < length; ++ i)
+			for (let i = 0, length = arguments .length; i < length; ++ i)
 			{
 				const vector = arguments [i];
 
@@ -271,13 +271,13 @@ function (Algorithm)
 		},
 		max: function (vector)
 		{
-			var
+			let
 				x = this .x,
 				y = this .y,
 				z = this .z,
 				w = this .w;
 
-			for (var i = 0, length = arguments .length; i < length; ++ i)
+			for (let i = 0, length = arguments .length; i < length; ++ i)
 			{
 				const vector = arguments [i];
 

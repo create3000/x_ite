@@ -290,7 +290,7 @@ function (Plane3,
 
 			const axes = [ ];
 
-			for (var i = 0; i < 3 * 8; ++ i)
+			for (let i = 0; i < 3 * 8; ++ i)
 				axes .push (new Vector3 (0, 0, 0));
 
 			return function (box)
@@ -317,9 +317,9 @@ function (Plane3,
 
 				const edges = this .getEdges ();
 
-				for (var i1 = 0; i1 < 3; ++ i1)
+				for (let i1 = 0; i1 < 3; ++ i1)
 				{
-					for (var i2 = 0; i2 < 8; ++ i2)
+					for (let i2 = 0; i2 < 8; ++ i2)
 						axes [i1 * 3 + i2] .assign (axes1 [i1]) .cross (edges [i2]);
 				}
 

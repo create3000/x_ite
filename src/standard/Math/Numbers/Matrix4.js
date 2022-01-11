@@ -500,7 +500,7 @@ function (Vector3,
 		},
 		transpose: function ()
 		{
-			var tmp;
+			let tmp;
 
 			tmp = this [ 1]; this [ 1] = this [ 4]; this [ 4] = tmp;
 			tmp = this [ 2]; this [ 2] = this [ 8]; this [ 8] = tmp;
@@ -559,7 +559,7 @@ function (Vector3,
 				J = d * m01 + i * m05 + r * m13 - ((e * m01) + (h * m05) + (x * m13)),
 				K = g * m01 + j * m05 + x * m09 - ((f * m01) + (o * m05) + (r * m09));
 
-			var B = m00 * H + m04 * I + m08 * J + m12 * K;
+			let B = m00 * H + m04 * I + m08 * J + m12 * K;
 
 			if (B === 0)
 				throw new Error ("Matrix4 .inverse: determinant is 0.");

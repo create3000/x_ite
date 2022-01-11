@@ -53,7 +53,7 @@ define (function ()
 
    return function shuffle (array)
 	{
-		var i = array .length;
+		let i = array .length;
 
 		while (i > 1)
 		{

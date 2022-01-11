@@ -156,15 +156,13 @@ function (Vector3,
 
 				tessy .gluTessBeginPolygon (triangles);
 
-				for (var i = 0, length = arguments .length - 1; i < length; ++ i)
+				for (let i = 0, length = arguments .length - 1; i < length; ++ i)
 				{
 					tessy .gluTessBeginContour ();
 
-					const contour = arguments [i];
-
-					for (var j = 0; j < contour .length; ++ j)
+					for (const contour of arguments [i])
 					{
-						tessy .gluTessVertex (contour [j], contour [j]);
+						tessy .gluTessVertex (contour, contour);
 					}
 
 					tessy .gluTessEndContour ();
@@ -178,7 +176,7 @@ function (Vector3,
 		triangulateConvexPolygon: function (vertices, triangles)
 		{
 			// Fallback: Very simple triangulation for convex polygons.
-			for (var i = 1, length = vertices .length - 1; i < length; ++ i)
+			for (let i = 1, length = vertices .length - 1; i < length; ++ i)
 				triangles .push (vertices [0], vertices [i], vertices [i + 1]);
 		},
 		getPolygonNormal: function (vertices, normal)
@@ -190,7 +188,7 @@ function (Vector3,
 
 			var next = vertices [0];
 
-			for (var i = 0, length = vertices .length; i < length; ++ i)
+			for (let i = 0, length = vertices .length; i < length; ++ i)
 			{
 				var
 					current = next,
