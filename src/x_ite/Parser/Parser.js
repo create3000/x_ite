@@ -251,10 +251,6 @@ function (Fields,
 	for (var key in Grammar)
 		Grammar [key] .parse = parse;
 
-	Object .preventExtensions (Grammar);
-	Object .freeze (Grammar);
-	Object .seal (Grammar);
-
 	/*
 	 *  Parser
 	 */

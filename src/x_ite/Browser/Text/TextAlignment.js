@@ -50,20 +50,16 @@
 define (function ()
 {
 "use strict";
-	
-	var i = 0;
 
-	var TextAlignment =
+	let i = 0;
+
+	const TextAlignment =
 	{
 	   BEGIN:  ++ i,
 	   FIRST:  ++ i,
 	   MIDDLE: ++ i,
 	   END:    ++ i,
 	};
-
-	Object .preventExtensions (TextAlignment);
-	Object .freeze (TextAlignment);
-	Object .seal (TextAlignment);
 
 	return TextAlignment;
 });

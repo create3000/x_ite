@@ -148,6 +148,7 @@ define (function ()
 		{
 			return ((n - 1) & n) === 0;
 		},
+		/*
 		nextPowerOfTwo: function (n)
 		{
 			///  Returns the next power of two of @a n. If n is a power of two, n is returned.
@@ -159,12 +160,17 @@ define (function ()
 
 			return ++ n;
 		},
-		/*
-		isInt: function(n)
+		*/
+		nextPowerOfTwo: function (n)
 		{
-			return typeof n === 'number' &&
-			       parseFloat (n) == parseInt (n, 10) && ! isNaN (n);
+			///  Returns the next power of two of @a n. If n is a power of two, n is returned.
+
+			if (this .isPowerOfTwo (n))
+				return n;
+
+			return 1 << 32 - Math .clz32 (n);
 		},
+		/*
 		decimalPlaces: function (n)
 		{
 			let
@@ -253,10 +259,6 @@ define (function ()
 			return result;
 		},
 	};
-
-	Object .preventExtensions (Algorithm);
-	Object .freeze (Algorithm);
-	Object .seal (Algorithm);
 
 	return Algorithm;
 });

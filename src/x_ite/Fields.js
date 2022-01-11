@@ -113,9 +113,5 @@ function (SFBool,
 	},
 	ArrayFields);
 
-	Object .preventExtensions (Fields);
-	Object .freeze (Fields);
-	Object .seal (Fields);
-
 	return Fields;
 });

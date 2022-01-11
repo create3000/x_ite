@@ -36,15 +36,11 @@ define (function ()
 {
 "use strict";
 
-	var HTMLSupport =
+	const HTMLSupport =
 	{
 		// Fields are set when component is registered.
 		fields: new Map (),
 	};
-
-	Object .preventExtensions (HTMLSupport);
-	Object .freeze (HTMLSupport);
-	Object .seal (HTMLSupport);
 
 	return HTMLSupport;
 });

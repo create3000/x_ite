@@ -526,9 +526,5 @@ function (SFBool,
 		MFVec4f:     TypedArrayTemplate ("MFVec4f",     X3DConstants .MFVec4f,     SFVec4f,     SFVec4f,     Float32Array, 4),
 	};
 
-	Object .preventExtensions (ArrayFields);
-	Object .freeze (ArrayFields);
-	Object .seal (ArrayFields);
-
 	return ArrayFields;
 });

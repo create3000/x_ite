@@ -57,10 +57,6 @@ define (function ()
 		this .title       = title;
 		this .providerUrl = providerUrl;
 		this .components  = components;
-
-		Object .preventExtensions (this);
-		Object .freeze (this);
-		Object .seal (this);
 	}
 
 	Object .assign (ProfileInfo .prototype,

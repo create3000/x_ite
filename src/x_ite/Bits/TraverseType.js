@@ -63,9 +63,5 @@ define (function ()
 		DISPLAY:   i ++,
 	};
 
-	Object .preventExtensions (TraverseType);
-	Object .freeze (TraverseType);
-	Object .seal (TraverseType);
-
 	return TraverseType;
 });

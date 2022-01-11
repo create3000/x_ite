@@ -64,10 +64,6 @@ function (Fields,
 		this .level       = level;
 		this .title       = title;
 		this .providerUrl = providerUrl;
-
-		Object .preventExtensions (this);
-		Object .freeze (this);
-		Object .seal (this);
 	}
 
 	Object .assign (ComponentInfo .prototype,

@@ -57,10 +57,6 @@ define (function ()
 		this .dataType    = value .getType ();
 		this .name        = name;
 		this .value       = value;
-
-		Object .preventExtensions (this);
-		Object .freeze (this);
-		Object .seal (this);
 	}
 
 	X3DFieldDefinition .prototype .constructor = X3DFieldDefinition;

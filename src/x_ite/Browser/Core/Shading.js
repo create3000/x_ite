@@ -50,10 +50,10 @@
 define (function ()
 {
 "use strict";
-	
-	var i = 0;
 
-	var Shading =
+	let i = 0;
+
+	const Shading =
 	{
 		POINT:     i ++,
 		WIREFRAME: i ++,
@@ -61,10 +61,6 @@ define (function ()
 		GOURAUD:   i ++,
 		PHONG:     i ++,
 	};
-
-	Object .preventExtensions (Shading);
-	Object .freeze (Shading);
-	Object .seal (Shading);
 
 	return Shading;
 });
