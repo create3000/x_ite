@@ -51,7 +51,7 @@ define (function ()
 {
 "use strict";
 
-	const shrinkFactor = 1 - Math .pow (Math .E, -Math .PHI); // 0.801711847137793
+	const shrinkFactor = 1 - Math .exp (-Math .PHI); // 0.801711847137793
 
 	function PartialSort (array, compare)
 	{
