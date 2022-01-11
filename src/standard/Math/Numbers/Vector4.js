@@ -162,25 +162,16 @@ function (Algorithm)
 		},
 		normalize: function ()
 		{
-			const
-				x = this .x,
-				y = this .y,
-				z = this .z,
-				w = this .w;
-
-			let length = Math .sqrt (x * x +
-			                         y * y +
-			                         z * z +
-			                         w * w);
+			let length = Math .hypot (this .x, this .y, this .z, this .w);
 
 			if (length)
 			{
 				length = 1 / length;
 
-				this .x = x * length;
-				this .y = y * length;
-				this .z = z * length;
-				this .w = w * length;
+				this .x *= length;
+				this .y *= length;
+				this .z *= length;
+				this .w *= length;
 			}
 
 			return this;
@@ -207,29 +198,14 @@ function (Algorithm)
 		},
 		abs: function ()
 		{
-			const
-				x = this .x,
-				y = this .y,
-				z = this .z,
-				w = this .w;
-
-			return Math .sqrt (x * x +
-			                   y * y +
-			                   z * z +
-			                   w * w);
+			return Math .hypot (this .x, this .y, this .z, this .w);
 		},
 		distance: function (vector)
 		{
-			const
-				x = this .x - vector .x,
-				y = this .y - vector .y,
-				z = this .z - vector .z,
-				w = this .w - vector .w;
-
-			return Math .sqrt (x * x +
-			                   y * y +
-			                   z * z +
-			                   w * w);
+			return Math .hypot (this .x - vector .x,
+			                    this .y - vector .y,
+			                    this .z - vector .z,
+			                    this .w - vector .w);
 		},
 		lerp: function (destination, t)
 		{

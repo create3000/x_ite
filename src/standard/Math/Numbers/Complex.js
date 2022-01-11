@@ -87,7 +87,7 @@ define (function ()
 			if (this .real)
 			{
 				if (this .imag)
-					return Math .sqrt (this .real * this .real + this .imag * this .imag);
+					return Math .hypot (this .real, this .imag);
 
 				return Math .abs (this .real);
 			}

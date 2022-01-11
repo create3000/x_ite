@@ -132,19 +132,14 @@ function (Algorithm)
 		},
 		normalize: function ()
 		{
-			const
-				x = this .x,
-				y = this .y;
-
-			let length = Math .sqrt (x * x +
-			                         y * y);
+			let length = Math .hypot (this .x, this .y);
 
 			if (length)
 			{
 				length = 1 / length;
 
-				this .x = x * length;
-				this .y = y * length;
+				this .x *= length;
+				this .y *= length;
 			}
 
 			return this;
@@ -165,21 +160,12 @@ function (Algorithm)
 		},
 		abs: function ()
 		{
-			const
-				x = this .x,
-				y = this .y;
-
-			return Math .sqrt (x * x +
-			                   y * y);
+			return Math .hypot (this .x, this .y);
 		},
 		distance: function (vector)
 		{
-			const
-				x = this .x - vector .x,
-				y = this .y - vector .y;
-
-			return Math .sqrt (x * x +
-			                   y * y);
+			return Math .hypot (this .x - vector .x,
+			                    this .y - vector .y);
 		},
 		lerp: function (destination, t)
 		{

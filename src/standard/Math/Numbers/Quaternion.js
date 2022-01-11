@@ -290,10 +290,7 @@ function (Vector3, Algorithm)
 		},
 		normalize: function ()
 		{
-			let length = Math .sqrt (this .x * this .x +
-			                         this .y * this .y +
-			                         this .z * this .z +
-			                      	 this .w * this .w);
+			let length = Math .hypot (this .x, this .y, this .z, this .w);
 
 			if (length)
 			{
@@ -323,10 +320,7 @@ function (Vector3, Algorithm)
 		},
 		abs: function ()
 		{
-			return Math .sqrt (this .x * this .x +
-			                   this .y * this .y +
-			                   this .z * this .z +
-			                   this .w * this .w);
+			return Math .hypot (this .x, this .y, this .z, this .w);
 		},
 		pow: function (exponent)
 		{

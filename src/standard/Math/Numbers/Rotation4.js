@@ -153,7 +153,7 @@ function (Quaternion,
 			this .z_     = z;
 			this .angle_ = angle;
 
-			const scale = Math .sqrt (x * x + y * y + z * z);
+			const scale = Math .hypot (x, y, z);
 
 			if (scale === 0)
 			{
