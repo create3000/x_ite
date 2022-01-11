@@ -53,10 +53,6 @@ define (function ()
 
 	const Algorithm =
 	{
-		signum: function (value)
-		{
-			return (0 < value) - (value < 0);
-		},
 		radians: function (value)
 		{
 			return value * (Math .PI / 180);
