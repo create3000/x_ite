@@ -181,14 +181,14 @@ function (Algorithm)
 			return Math .sqrt (x * x +
 			                   y * y);
 		},
-		lerp: function (dest, t)
+		lerp: function (destination, t)
 		{
 			const
 				x = this .x,
 				y = this .y;
 
-			this .x = x + t * (dest .x - x);
-			this .y = y + t * (dest .y - y);
+			this .x = x + t * (destination .x - x);
+			this .y = y + t * (destination .y - y);
 			return this;
 		},
 		min: function (vector)
@@ -256,121 +256,51 @@ function (Algorithm)
 		One: new Vector2 (1, 1),
 		negate: function (vector)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = -vector .x;
-			copy .y = -vector .y;
-			return copy;
+			return vector .copy () .negate ();
 		},
 		add: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x + rhs .x;
-			copy .y = lhs .y + rhs .y;
-			return copy;
+			return lhs .copy () .add (rhs);
 		},
 		subtract: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x - rhs .x;
-			copy .y = lhs .y - rhs .y;
-			return copy;
+			return lhs .copy () .subtract (rhs);
 		},
 		multiply: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x * rhs;
-			copy .y = lhs .y * rhs;
-			return copy;
+			return lhs .copy () .multiply (rhs);
 		},
 		multVec: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x * rhs .x;
-			copy .y = lhs .y * rhs .y;
-			return copy;
+			return lhs .copy () .multVec (rhs);
 		},
 		divide: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x / rhs;
-			copy .y = lhs .y / rhs;
-			return copy;
+			return lhs .copy () .divide (rhs);
 		},
 		divVec: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x / rhs .x;
-			copy .y = lhs .y / rhs .y;
-			return copy;
+			return lhs .copy () .divVec (rhs);
 		},
 		normalize: function (vector)
 		{
-			const
-				copy   = Object .create (this .prototype),
-				x      = vector .x,
-				y      = vector .y;
-
-			var length = Math .sqrt (x * x + y * y);
-
-			if (length)
-			{
-				length = 1 / length;
-
-				copy .x = x * length;
-				copy .y = y * length;
-			}
-			else
-			{
-				copy .x = 0;
-				copy .y = 0;
-			}
-
-			return copy;
+			return vector .copy () .normalize ();
 		},
 		dot: function (lhs, rhs)
 		{
-			return lhs .dot (rhs);
+			return lhs .copy () .dot (rhs);
 		},
-		lerp: function (source, dest, t)
+		lerp: function (source, destination, t)
 		{
-			const
-				x = source .x,
-				y = source .y;
-
-			return new Vector2 (x + t * (dest .x - x),
-			                    y + t * (dest .y - y));
+			return source .copy () .lerp (destination, t);
 		},
 		min: function (lhs, rhs)
 		{
-			var
-				x = lhs .x,
-				y = lhs .y;
-
-			for (var i = 1, length = arguments .length; i < length; ++ i)
-			{
-				const vector = arguments [i];
-
-				x = Math .min (x, vector .x);
-				y = Math .min (y, vector .y);
-			}
-
-			return new Vector2 (x, y);
+			return Vector2 .prototype .min .apply (lhs .copy (), arguments);
 		},
 		max: function (lhs, rhs)
 		{
-			var
-				x = lhs .x,
-				y = lhs .y;
-
-			for (var i = 1, length = arguments .length; i < length; ++ i)
-			{
-				const vector = arguments [i];
-
-				x = Math .max (x, vector .x);
-				y = Math .max (y, vector .y);
-			}
-
-			return new Vector2 (x, y);
+			return Vector2 .prototype .max .apply (lhs .copy (), arguments);
 		},
 	});
 

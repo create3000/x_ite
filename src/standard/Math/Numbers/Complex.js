@@ -191,17 +191,11 @@ define (function ()
 		},
 		multiply: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .real = lhs .real * rhs;
-			copy .imag = lhs .imag * rhs;
-			return copy;
+			return lhs .copy () .multiply (rhs);
 		},
 		multComp: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .real = lhs .real * rhs .real - lsh .imag * rhs .imag;
-			copy .imag = lhs .real * rhs .imag + lsh .imag * rhs .real;
-			return copy;
+			return lhs .copy () .multComp (rhs);
 		},
 	});
 

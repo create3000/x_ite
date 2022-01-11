@@ -390,9 +390,9 @@ function (Vector3, Algorithm)
 			this .w = w;
 			return this;
 		},
-		slerp: function (dest, t)
+		slerp: function (destination, t)
 		{
-			return Algorithm .slerp (this, t1 .assign (dest), t);
+			return Algorithm .slerp (this, t1 .assign (destination), t);
 		},
 		squad: function (a, b, destination, t)
 		{
@@ -469,138 +469,54 @@ function (Vector3, Algorithm)
 
 	Object .assign (Quaternion,
 	{
-		negate: function (vector)
+		negate: function (quat)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = -this .x;
-			copy .y = -this .y;
-			copy .z = -this .z;
-			copy .w = -this .w;
-			return copy;
+			return quat .copy () .negate ();
 		},
-		inverse: function (vector)
+		inverse: function (quat)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = -vector .x;
-			copy .y = -vector .y;
-			copy .z = -vector .z;
-			copy .w =  vector .w;
-			return copy;
+			return quat .copy () .inverse ();
 		},
 		add: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x + rhs .x;
-			copy .y = lhs .y + rhs .y;
-			copy .z = lhs .z + rhs .z;
-			copy .w = lhs .w + rhs .w;
-			return copy;
+			return lhs .copy () .add (rhs);
 		},
 		subtract: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x - rhs .x;
-			copy .y = lhs .y - rhs .y;
-			copy .z = lhs .z - rhs .z;
-			copy .w = lhs .w - rhs .w;
-			return copy;
+			return lhs .copy () .subtract (rhs);
 		},
 		multiply: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x * rhs;
-			copy .y = lhs .y * rhs;
-			copy .z = lhs .z * rhs;
-			copy .w = lhs .w * rhs;
-			return copy;
+			return lhs .copy () .multiply (rhs);
 		},
 		multLeft: function (lhs, rhs)
 		{
-			const
-				copy = Object .create (this .prototype),
-				ax = lhs .x, ay = lhs .y, az = lhs .z, aw = lhs .w,
-				bx = rhs .x, by = rhs .y, bz = rhs .z, bw = rhs .w;
-
-			copy .x = aw * bx + ax * bw + ay * bz - az * by;
-			copy .y = aw * by + ay * bw + az * bx - ax * bz;
-			copy .z = aw * bz + az * bw + ax * by - ay * bx;
-			copy .w = aw * bw - ax * bx - ay * by - az * bz;
-
-			return copy;
+			return lhs .copy () .multLeft (rhs);
 		},
 		multRight: function (lhs, rhs)
 		{
-			const
-				copy = Object .create (this .prototype),
-				ax = lhs .x, ay = lhs .y, az = lhs .z, aw = lhs .w,
-				bx = rhs .x, by = rhs .y, bz = rhs .z, bw = rhs .w;
-
-			copy .x = bw * ax + bx * aw + by * az - bz * ay;
-			copy .y = bw * ay + by * aw + bz * ax - bx * az;
-			copy .z = bw * az + bz * aw + bx * ay - by * ax;
-			copy .w = bw * aw - bx * ax - by * ay - bz * az;
-
-			return copy;
+			return lhs .copy () .multRight (rhs);
 		},
 		divide: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x / rhs;
-			copy .y = lhs .y / rhs;
-			copy .z = lhs .z / rhs;
-			copy .w = lhs .w / rhs;
-			return copy;
+			return lhs .copy () .divide (rhs);
 		},
 		normalize: function (quat)
 		{
-			const
-				copy   = Object .create (this .prototype),
-				x      = quat .x,
-				y      = quat .y,
-				z      = quat .z,
-				w      = quat .w;
-
-			var length = Math .sqrt (x * x + y * y + z * z + w * w);
-
-			if (length)
-			{
-				length = 1 / length;
-
-				copy .x = x * length;
-				copy .y = y * length;
-				copy .z = z * length;
-				copy .w = w * length;
-			}
-			else
-			{
-				copy .x = 0;
-				copy .y = 0;
-				copy .z = 0;
-				copy .w = 0;
-			}
-
-			return copy;
+			return quat .copy () .normalize ();
 		},
-		slerp: function (source, dest, t)
+		slerp: function (source, destination, t)
 		{
-			return Algorithm .slerp (source .copy (), t2 .assign (dest), t);
+			return source .copy () .slerp (destination, t);
 		},
 		squad: function (source, a, b, destination, t)
 		{
-			// We must use shortest path slerp to prevent flipping.  Also see spline.
-
-			return Algorithm .slerp (Algorithm .slerp (source .copy (), t1 .assign (destination), t),
-                                  Algorithm .slerp (t2 .assign (a), t3 .assign (b), t),
-                                  2 * t * (1 - t));
+			return source .copy () .squad (a, b, destination, t);
 		},
 		/*
 		bezier: function (q0, a, b, q1, t)
 		{
-			const q11 = Algorithm .slerp (q0,  a, t);
-			const q12 = Algorithm .slerp ( a,  b, t);
-			const q13 = Algorithm .slerp ( b, q1, t);
-
-			return Algorithm .slerp (Algorithm .slerp (q11, q12, t), Algorithm .slerp (q12, q13, t), t);
+			return q0 .copy () .squad (a, b, q1, t);
 		},
 		*/
 		spline: function (Q0, Q1, Q2)

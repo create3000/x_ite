@@ -718,104 +718,19 @@ function (Vector2,
 		},
 		transpose: function (matrix)
 		{
-			const copy = Object .create (this .prototype);
-			copy [0] = matrix [0]; copy [1] = matrix [3]; copy [2] = matrix [6];
-			copy [3] = matrix [1]; copy [4] = matrix [4]; copy [5] = matrix [7];
-			copy [6] = matrix [2]; copy [7] = matrix [5]; copy [8] = matrix [8];
-			return copy;
+			return matrix .copy () .transpose ();
 		},
 		inverse: function (matrix)
 		{
-			const
-				copy = Object .create (this .prototype),
-				m0  = matrix [0],
-				m1  = matrix [1],
-				m2  = matrix [2],
-				m3  = matrix [3],
-				m4  = matrix [4],
-				m5  = matrix [5],
-				m6  = matrix [6],
-				m7  = matrix [7],
-				m8  = matrix [8],
-				t4  = m0 * m4,
-				t6  = m0 * m7,
-				t8  = m3 * m1,
-				t10 = m3 * m7,
-				t12 = m6 * m1,
-				t14 = m6 * m4;
-
-			var d = (t4 * m8 - t6 * m5 - t8 * m8 + t10 * m2 + t12 * m5 - t14 * m2);
-
-			if (d === 0)
-				throw new Error ("Matrix3 .inverse: determinant is 0.");
-
-			d = 1 / d;
-
-			const
-				b0 =  (m4 * m8 - m7 * m5) * d,
-				b1 = -(m1 * m8 - m7 * m2) * d,
-				b2 =  (m1 * m5 - m4 * m2) * d,
-				b3 = -(m3 * m8 - m6 * m5) * d,
-				b4 =  (m0 * m8 - m6 * m2) * d,
-				b5 = -(m0 * m5 - m3 * m2) * d;
-
-			copy [0] = b0;
-			copy [1] = b1;
-			copy [2] = b2;
-			copy [3] = b3;
-			copy [4] = b4;
-			copy [5] = b5;
-			copy [6] =  (t10 - t14) * d;
-			copy [7] = -(t6 - t12) * d;
-			copy [8] =  (t4 - t8) * d;
-
-			return copy;
+			return matrix .copy () .inverse ();
 		},
 		multLeft: function (lhs, rhs)
 		{
-			const
-				copy = Object .create (this .prototype),
-				a0 = lhs [0], a1 = lhs [1], a2 = lhs [2],
-				a3 = lhs [3], a4 = lhs [4], a5 = lhs [5],
-				a6 = lhs [6], a7 = lhs [7], a8 = lhs [8],
-				b0 = rhs [0], b1 = rhs [1], b2 = rhs [2],
-				b3 = rhs [3], b4 = rhs [4], b5 = rhs [5],
-				b6 = rhs [6], b7 = rhs [7], b8 = rhs [8];
-
-			copy [0] = a0 * b0 + a3 * b1 + a6 * b2;
-			copy [1] = a1 * b0 + a4 * b1 + a7 * b2;
-			copy [2] = a2 * b0 + a5 * b1 + a8 * b2;
-			copy [3] = a0 * b3 + a3 * b4 + a6 * b5;
-			copy [4] = a1 * b3 + a4 * b4 + a7 * b5;
-			copy [5] = a2 * b3 + a5 * b4 + a8 * b5;
-			copy [6] = a0 * b6 + a3 * b7 + a6 * b8;
-			copy [7] = a1 * b6 + a4 * b7 + a7 * b8;
-			copy [8] = a2 * b6 + a5 * b7 + a8 * b8;
-
-			return copy;
+			return lhs .copy () .multLeft (rhs);
 		},
 		multRight: function (lhs, rhs)
 		{
-			const
-				copy = Object .create (this .prototype),
-				a0 = lhs [0], a1 = lhs [1], a2 = lhs [2],
-				a3 = lhs [3], a4 = lhs [4], a5 = lhs [5],
-				a6 = lhs [6], a7 = lhs [7], a8 = lhs [8],
-				b0 = rhs [0], b1 = rhs [1], b2 = rhs [2],
-				b3 = rhs [3], b4 = rhs [4], b5 = rhs [5],
-				b6 = rhs [6], b7 = rhs [7], b8 = rhs [8];
-
-			copy [0] = a0 * b0 + a1 * b3 + a2 * b6;
-			copy [1] = a0 * b1 + a1 * b4 + a2 * b7;
-			copy [2] = a0 * b2 + a1 * b5 + a2 * b8;
-			copy [3] = a3 * b0 + a4 * b3 + a5 * b6;
-			copy [4] = a3 * b1 + a4 * b4 + a5 * b7;
-			copy [5] = a3 * b2 + a4 * b5 + a5 * b8;
-			copy [6] = a6 * b0 + a7 * b3 + a8 * b6;
-			copy [7] = a6 * b1 + a7 * b4 + a8 * b7;
-			copy [8] = a6 * b2 + a7 * b5 + a8 * b8;
-
-			return copy;
+			return lhs .copy () .multRight (rhs);
 		},
 	});
 

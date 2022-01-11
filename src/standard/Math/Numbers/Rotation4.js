@@ -434,39 +434,25 @@ function (Quaternion,
 		Identity: new Rotation4 (),
 		inverse: function (rotation)
 		{
-			const copy = Object .create (this .prototype);
-			copy .value = Quaternion .inverse (rotation .value);
-			copy .update ();
-			return copy;
+			return rotation .copy () .inverse ();
 		},
 		multRight: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .value = Quaternion .multRight (lhs .value, rhs .value);
-			copy .update ();
-			return copy;
+			return lhs .copy () .multRight (rhs);
 		},
-		normalize: function ()
+		normalize: function (rotation)
 		{
-			const copy = Object .create (this .prototype);
-			copy .value = rotation .value .copy ();
-			copy .update ();
-			return copy;
+			return rotation .copy () .normalize ();
 		},
 		slerp: function (source, destination, t)
 		{
-			const copy = Object .create (this .prototype);
-			copy .value = Quaternion .slerp (source .value, destination .value, t);
-			copy .update ();
-			return copy;
+			return source .copy () .slerp (destination, t);
 		},
 		squad: function (source, a, b, destination, t)
 		{
-			const copy = Object .create (this .prototype);
-			copy .value = Quaternion .squad (source .value, a, b, destination .value, t);
-			copy .update ();
-			return copy;
+			return source .copy () .squad (a, b, destination, t);
 		},
+		/*
 		bezier: function (source, a, b, destination, t)
 		{
 			const copy = Object .create (this .prototype);
@@ -474,6 +460,7 @@ function (Quaternion,
 			copy .update ();
 			return copy;
 		},
+		*/
 		spline: function (q0, q1, q2)
 		{
 			const copy = Object .create (this .prototype);

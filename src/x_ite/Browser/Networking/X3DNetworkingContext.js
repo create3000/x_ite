@@ -68,7 +68,7 @@ function (Fields,
 		if (baseURI .startsWith ("about:"))
 			baseURI = document .baseURI;
 
-		return new URL (baseURI, baseURI);
+		return baseURI;
 	}
 
 	function X3DNetworkingContext ()

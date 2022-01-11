@@ -213,16 +213,16 @@ function (Algorithm)
 			                   y * y +
 			                   z * z);
 		},
-		lerp: function (dest, t)
+		lerp: function (destination, t)
 		{
 			const
 				x = this .x,
 				y = this .y,
 				z = this .z;
 
-			this .x = x + t * (dest .x - x);
-			this .y = y + t * (dest .y - y);
-			this .z = z + t * (dest .z - z);
+			this .x = x + t * (destination .x - x);
+			this .y = y + t * (destination .y - y);
+			this .z = z + t * (destination .z - z);
 			return this;
 		},
 		slerp: (function ()
@@ -317,154 +317,59 @@ function (Algorithm)
 		zAxis: new Vector3 (0, 0, 1),
 		negate: function (vector)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = -vector .x;
-			copy .y = -vector .y;
-			copy .z = -vector .z;
-			return copy;
+			return vector .copy () .negate ();
 		},
 		add: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x + rhs .x;
-			copy .y = lhs .y + rhs .y;
-			copy .z = lhs .z + rhs .z;
-			return copy;
+			return lhs .copy () .add (rhs);
 		},
 		subtract: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x - rhs .x;
-			copy .y = lhs .y - rhs .y;
-			copy .z = lhs .z - rhs .z;
-			return copy;
+			return lhs .copy () .subtract (rhs);
 		},
 		multiply: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x * rhs;
-			copy .y = lhs .y * rhs;
-			copy .z = lhs .z * rhs;
-			return copy;
+			return lhs .copy () .multiply (rhs);
 		},
 		multVec: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x * rhs .x;
-			copy .y = lhs .y * rhs .y;
-			copy .z = lhs .z * rhs .z;
-			return copy;
+			return lhs .copy () .multVec (rhs);
 		},
 		divide: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x / rhs;
-			copy .y = lhs .y / rhs;
-			copy .z = lhs .z / rhs;
-			return copy;
+			return lhs .copy () .divide (rhs);
 		},
 		divVec: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x / rhs .x;
-			copy .y = lhs .y / rhs .y;
-			copy .z = lhs .z / rhs .z;
-			return copy;
+			return lhs .copy () .divVec (rhs);
 		},
 		cross: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .y * rhs .z - lhs .z * rhs .y;
-			copy .y = lhs .z * rhs .x - lhs .x * rhs .z;
-			copy .z = lhs .x * rhs .y - lhs .y * rhs .x;
-			return copy;
+			return lhs .copy () .cross (rhs);
 		},
 		normalize: function (vector)
 		{
-			const
-				copy   = Object .create (this .prototype),
-				x      = vector .x,
-				y      = vector .y,
-				z      = vector .z;
-
-			var length = Math .sqrt (x * x + y * y + z * z);
-
-			if (length)
-			{
-				length = 1 / length;
-
-				copy .x = x * length;
-				copy .y = y * length;
-				copy .z = z * length;
-			}
-			else
-			{
-				copy .x = 0;
-				copy .y = 0;
-				copy .z = 0;
-			}
-
-			return copy;
+			return vector .copy () .normalize ();
 		},
 		dot: function (lhs, rhs)
 		{
-			return lhs .dot (rhs);
+			return lhs .copy () .dot (rhs);
 		},
-		lerp: function (source, dest, t)
+		lerp: function (source, destination, t)
 		{
-			const
-				x = source .x,
-				y = source .y,
-				z = source .z;
-
-			return new Vector3 (x + t * (dest .x - x),
-			                    y + t * (dest .y - y),
-			                    z + t * (dest .z - z));
+			return source .copy () .lerp (destination, t);
 		},
-		slerp: (function ()
+		slerp: function (source, destination, t)
 		{
-			const tmp = new Vector3 (0, 0, 0);
-
-			return function (source, destination, t)
-			{
-				return Algorithm .simpleSlerp (source .copy (), tmp .assign (destination), t);
-			};
-		})(),
+			return source .copy () .slerp (destination, t);
+		},
 		min: function (lhs, rhs)
 		{
-			var
-				x = lhs .x,
-				y = lhs .y,
-				z = lhs .z;
-
-			for (var i = 1, length = arguments .length; i < length; ++ i)
-			{
-				const vector = arguments [i];
-
-				x = Math .min (x, vector .x);
-				y = Math .min (y, vector .y);
-				z = Math .min (z, vector .z);
-			}
-
-			return new Vector3 (x, y, z);
+			return Vector3 .prototype .min .apply (lhs .copy (), arguments);
 		},
 		max: function (lhs, rhs)
 		{
-			var
-				x = lhs .x,
-				y = lhs .y,
-				z = lhs .z;
-
-			for (var i = 1, length = arguments .length; i < length; ++ i)
-			{
-				const vector = arguments [i];
-
-				x = Math .max (x, vector .x);
-				y = Math .max (y, vector .y);
-				z = Math .max (z, vector .z);
-			}
-
-			return new Vector3 (x, y, z);
+			return Vector3 .prototype .max .apply (lhs .copy (), arguments);
 		},
 	});
 

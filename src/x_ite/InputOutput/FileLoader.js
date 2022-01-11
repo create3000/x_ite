@@ -99,7 +99,7 @@ function ($,
 		this .userAgent        = this .browser .getName () + "/" + this .browser .getVersion () + " (X3D Browser; +" + this .browser .getProviderUrl () + ")";
 		this .target           = "";
 		this .url              = [ ];
-		this .URL              = this .browser .getLocation ();
+		this .URL              = new URL (this .getReferer (), this .getReferer ());
 		this .fileReader       = new FileReader ();
 		this .text             = true;
 	}
@@ -409,7 +409,7 @@ function ($,
 			{
 				if (this .bindViewpoint)
 				{
-					if (this .URL .href .substr (0, this .getReferer () .href .length) === this .getReferer () .href)
+					if (this .URL .href .substr (0, this .getReferer () .length) === this .getReferer ())
 					{
 						this .bindViewpoint (this .URL .hash .substr (1));
 						return;
