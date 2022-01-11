@@ -241,10 +241,8 @@ function (Algorithm)
 				y = this .y,
 				z = this .z;
 
-			for (let i = 0, length = arguments .length; i < length; ++ i)
+			for (const vector of arguments)
 			{
-				const vector = arguments [i];
-
 				x = Math .min (x, vector .x);
 				y = Math .min (y, vector .y);
 				z = Math .min (z, vector .z);
@@ -262,10 +260,8 @@ function (Algorithm)
 				y = this .y,
 				z = this .z;
 
-			for (let i = 0, length = arguments .length; i < length; ++ i)
+			for (const vector of arguments)
 			{
-				const vector = arguments [i];
-
 				x = Math .max (x, vector .x);
 				y = Math .max (y, vector .y);
 				z = Math .max (z, vector .z);
