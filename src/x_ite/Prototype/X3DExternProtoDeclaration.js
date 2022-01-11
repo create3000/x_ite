@@ -221,7 +221,7 @@ function ($,
 
 			const userDefinedFields = this .getUserDefinedFields ();
 
-			var
+			let
 				fieldTypeLength   = 0,
 				accessTypeLength  = 0;
 

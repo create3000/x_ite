@@ -70,7 +70,7 @@ function (Fields,
 	 * Font paths for default SERIF, SANS and TYPWRITER families.
 	 */
 
-	var Fonts =
+	const Fonts =
 	{
 		SERIF: {
 			PLAIN:      urls .getFontsUrl ("DroidSerif-Regular.ttf"),
@@ -141,13 +141,13 @@ function (Fields,
 		},
 		set_justify__: function ()
 		{
-			var majorNormal = this .horizontal_ .getValue () ? this .leftToRight_ .getValue () : this .topToBottom_ .getValue ();
+			const majorNormal = this .horizontal_ .getValue () ? this .leftToRight_ .getValue () : this .topToBottom_ .getValue ();
 
 			this .alignments [0] = this .justify_ .length > 0
 			                       ? this .getAlignment (0, majorNormal)
 			                       : majorNormal ? TextAlignment .BEGIN : TextAlignment .END;
 
-			var minorNormal = this .horizontal_ .getValue () ? this .topToBottom_ .getValue () : this .leftToRight_ .getValue ();
+			const minorNormal = this .horizontal_ .getValue () ? this .topToBottom_ .getValue () : this .leftToRight_ .getValue ();
 
 			this .alignments [1] = this .justify_ .length > 1
 			                       ? this .getAlignment (1, minorNormal)
@@ -191,7 +191,7 @@ function (Fields,
 
 			// Add default font to family array.
 
-			var family = this .family_ .copy ();
+			const family = this .family_ .copy ();
 
 			family .push ("SERIF");
 
@@ -199,33 +199,17 @@ function (Fields,
 
 			this .familyStack .length = 0;
 
-			for (var i = 0, length = family .length; i < length; ++ i)
-			{
-				var
-					familyName  = family [i],
-					defaultFont = this .getDefaultFont (familyName);
-
-				if (defaultFont)
-					this .familyStack .push (defaultFont);
-				else
-					this .familyStack .push (familyName);
-			}
+			for (const familyName of family)
+				this .familyStack .push (this .getDefaultFont (familyName) || familyName);
 
 			this .loadNext ();
 		},
 		getDefaultFont: function (familyName)
 		{
-			var family = Fonts [familyName];
+			const family = Fonts [familyName];
 
 			if (family)
-			{
-				var style = family [this .style_ .getValue ()];
-
-				if (style)
-					return style;
-
-				return family .PLAIN;
-			}
+				return family [this .style_ .getValue ()] || family .PLAIN;
 
 			return;
 		},

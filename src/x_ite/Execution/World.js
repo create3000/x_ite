@@ -111,31 +111,30 @@ function (SFNode,
 		},
 		set_rootNodes__: function ()
 		{
-			var oldLayerSet = this .layerSet;
-			this .layerSet  = this .defaultLayerSet;
+			const
+				oldLayerSet = this .layerSet,
+				rootNodes   = this .getExecutionContext () .getRootNodes ();
 
-			var rootNodes = this .getExecutionContext () .getRootNodes ();
-
+			this .layerSet          = this .defaultLayerSet;
 			this .layer0 .children_ = rootNodes;
 
-			for (var i = 0; i < rootNodes .length; ++ i)
+			for (const rootNode of rootNodes)
 			{
-				var rootLayerSet = X3DCast (X3DConstants .LayerSet, rootNodes [i]);
+				const rootLayerSet = X3DCast (X3DConstants .LayerSet, rootNode);
 
 				if (rootLayerSet)
-				{
-					rootLayerSet .setLayer0 (this .layer0);
 					this .layerSet = rootLayerSet;
-				}
 			}
 
-			if (this .layerSet !== oldLayerSet)
-			{
-				oldLayerSet    .activeLayer_ .removeInterest ("set_activeLayer__", this);
-				this .layerSet .activeLayer_ .addInterest ("set_activeLayer__", this);
+			this .layerSet .setLayer0 (this .layer0);
 
-				this .set_activeLayer__ ();
-			}
+			if (this .layerSet === oldLayerSet)
+				return;
+
+			oldLayerSet    .activeLayer_ .removeInterest ("set_activeLayer__", this);
+			this .layerSet .activeLayer_ .addInterest ("set_activeLayer__", this);
+
+			this .set_activeLayer__ ();
 		},
 		set_activeLayer__: function ()
 		{

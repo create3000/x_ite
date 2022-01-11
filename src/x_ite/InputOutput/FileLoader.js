@@ -155,11 +155,11 @@ function ($,
 
 				const errors = [ ];
 
-				for (var i = 0, length = handlers .length; i < length; ++ i)
+				for (const handler of handlers)
 				{
 					try
 					{
-						handlers [i] .call (this, scene, string, success, error);
+						handler .call (this, scene, string, success, error);
 						return;
 					}
 					catch (error)
@@ -197,11 +197,11 @@ function ($,
 
 				const errors = [ ];
 
-				for (var i = 0, length = handlers .length; i < length; ++ i)
+				for (const handler of handlers)
 				{
 					try
 					{
-						handlers [i] .call (this, scene, string);
+						handler .call (this, scene, string);
 
 						return scene;
 					}
@@ -305,18 +305,18 @@ function ($,
 			else
 				this .createX3DFromString (this .URL, data, callback, this .loadDocumentError .bind (this));
 		},
-		createX3DFromURLSync: function (url)
+		createX3DFromURLSync: function (urls)
 		{
-			if (url .length === 0)
+			if (urls .length === 0)
 				throw new Error ("No URL given.");
 
-			var
+			let
 				scene   = null,
 				success = false;
 
-			for (var i = 0; i < url .length; ++ i)
+			for (const url of urls)
 			{
-				this .URL = new URL (url [i], this .getReferer ());
+				this .URL = new URL (url, this .getReferer ());
 
 				$.ajax ({
 					url: this .URL .href,
@@ -345,13 +345,10 @@ function ($,
 				});
 
 				if (success)
-					break;
+					return scene;
 			}
 
-			if (success)
-				return scene;
-
-			throw new Error ("Couldn't load any url of '" + url .getValue () .join (", ") + "'.");
+			throw new Error ("Couldn't load any url of '" + Array .prototype .join .call (urls, ", ") + "'.");
 		},
 		loadScript: function (url, callback)
 		{
@@ -380,11 +377,11 @@ function ($,
 
 			this .loadDocumentAsync (this .url .shift ());
 		},
-		getTarget: function (parameter)
+		getTarget: function (parameters)
 		{
-			for (var i = 0, length = parameter .length; i < length; ++ i)
+			for (const parameter of parameters)
 			{
-				var pair = parameter [i] .split ("=");
+				const pair = parameter .split ("=");
 
 				if (pair .length !== 2)
 					continue;
@@ -426,7 +423,7 @@ function ($,
 			{
 				try
 				{
-					var result = ECMAScript .exec (url);
+					const result = ECMAScript .exec (url);
 
 					if (result)
 					{
@@ -445,15 +442,15 @@ function ($,
 
 			try
 			{
-				var result = dataURL .exec (url);
+				const result = dataURL .exec (url);
 
 				if (result)
 				{
-					//var mimeType = result [1];
+					//const mimeType = result [1];
 
 					// ??? If called from loadURL and mime type is text/html do a window.open or window.location=URL and return; ???
 
-					var data = result [4];
+					let data = result [4];
 
 					if (result [3] === "base64")
 						data = atob (data);
@@ -598,7 +595,7 @@ function ($,
 		},
 		getContentType: function (xhr)
 		{
-			var
+			const
 				contentType = xhr .getResponseHeader ("Content-Type"),
 				result      = contentTypeRx .exec (contentType);
 
