@@ -51,8 +51,11 @@ define (function ()
 {
 "use strict";
 
-	const Algorithm =
+	function Algorithm () { }
+
+	Algorithm .prototype =
 	{
+		constructor: Algorithm,
 		radians: function (value)
 		{
 			return value * (Math .PI / 180);
@@ -148,19 +151,6 @@ define (function ()
 		{
 			return ((n - 1) & n) === 0;
 		},
-		/*
-		nextPowerOfTwo: function (n)
-		{
-			///  Returns the next power of two of @a n. If n is a power of two, n is returned.
-
-			-- n;
-
-			for (let k = 1; ! (k & (1 << (4 + 1))); k <<= 1)
-				n |= n >> k;
-
-			return ++ n;
-		},
-		*/
 		nextPowerOfTwo: function (n)
 		{
 			///  Returns the next power of two of @a n. If n is a power of two, n is returned.
@@ -170,19 +160,6 @@ define (function ()
 
 			return 1 << 32 - Math .clz32 (n);
 		},
-		/*
-		decimalPlaces: function (n)
-		{
-			let
-				a = Math.abs(n),
-				c = a, count = 1;
-
-			while(! Algorithm .isInt (c) && isFinite (c))
-				c = a * Math .pow (10, count ++);
-
-			return count-1;
-		},
-		*/
 		cmp: function (lhs, rhs)
 		{
 			return lhs > rhs ? 1 : lhs < rhs ? -1 : 0;
@@ -260,5 +237,5 @@ define (function ()
 		},
 	};
 
-	return Algorithm;
+	return new Algorithm ();
 });
