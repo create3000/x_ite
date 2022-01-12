@@ -402,11 +402,6 @@ function ($,
 					return;
 				}
 
-				// Handle target
-
-				if (this .target .length && this .target !== "_self" && this .foreign)
-					return this .foreign (url, this .target);
-
 				// Script
 
 				if (this .script)
@@ -454,14 +449,17 @@ function ($,
 					}
 				}
 
-				// Handle well known foreign content depending on extension or if path looks like directory.
-
 				if (this .foreign)
 				{
-					if (this .URL .href .match (foreignExtensions))
-					{
+					// Handle target
+
+					if (this .target .length && this .target !== "_self")
 						return this .foreign (this .URL .href, this .target);
-					}
+
+					// Handle well known foreign content depending on extension or if path looks like directory.
+
+					if (this .URL .href .match (foreignExtensions))
+						return this .foreign (this .URL .href, this .target);
 				}
 
 				// Load URL async
