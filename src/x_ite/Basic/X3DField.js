@@ -162,7 +162,7 @@ function ($,
 		},
 		addReference: function (reference)
 		{
-			var references = this .getReferences ();
+			const references = this .getReferences ();
 
 			if (references .has (reference .getId ()))
 				return; // throw ???
@@ -319,7 +319,7 @@ function ($,
 
 				// Process routes
 
-				var first = true;
+				let first = true;
 
 				this ._fieldInterests .forEach (function (fieldInterest)
 				{
@@ -350,7 +350,7 @@ function ($,
 		},
 		fromString: function (string, scene)
 		{
-			var
+			const
 				Parser = require ("x_ite/Parser/Parser"),
 				parser = new Parser (scene);
 

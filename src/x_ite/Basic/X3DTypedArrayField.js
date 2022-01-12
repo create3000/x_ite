@@ -232,18 +232,18 @@ function (X3DArrayField,
 			if (this === other)
 				return true;
 
-			var
+			const
 				target = this ._target,
 				length = target ._length;
 
 			if (length !== other ._length)
 				return false;
 
-			var
+			const
 				a = target  .getValue (),
 				b = other .getValue ();
 
-			for (var i = 0, l = length * target .getComponents (); i < l; ++ i)
+			for (let i = 0, l = length * target .getComponents (); i < l; ++ i)
 			{
 				if (a [i] !== b [i])
 					return false;
@@ -260,13 +260,17 @@ function (X3DArrayField,
 		},
 		set: function (otherArray /* value of field */, l /* length of field */)
 		{
-			var
+			const
 				target      = this ._target,
 				components  = target .getComponents (),
+				length      = target ._length;
+
+			let
 				array       = target .getValue (),
-				length      = target ._length,
-				otherLength = l !== undefined ? l * components : otherArray .length,
-				rest        = otherLength % components;
+				otherLength = l !== undefined ? l * components : otherArray .length;
+
+			const
+				rest = otherLength % components;
 
 			if (rest)
 			{
@@ -280,6 +284,7 @@ function (X3DArrayField,
 			if (array .length < otherArray .length)
 			{
 				array = target .grow (otherArray .length);
+
 				array .set (otherArray);
 
 				if (rest)
@@ -301,7 +306,7 @@ function (X3DArrayField,
 		},
 		setValue: function (value)
 		{
-			var target = this ._target;
+			const target = this ._target;
 
 			if (value instanceof target .constructor)
 			{
@@ -315,13 +320,12 @@ function (X3DArrayField,
 		},
 		unshift: function (value)
 		{
-			var
+			const
 				target          = this ._target,
 				components      = target .getComponents (),
 				length          = target ._length,
-				argumentsLength = arguments .length;
-
-			var array = target .grow ((length + argumentsLength) * components);
+				argumentsLength = arguments .length,
+				array           = target .grow ((length + argumentsLength) * components);
 
 			array .copyWithin (argumentsLength * components, 0, length * components);
 
@@ -331,11 +335,11 @@ function (X3DArrayField,
 			}
 			else
 			{
-				for (var i = 0, a = 0; a < argumentsLength; ++ a)
+				for (let i = 0, a = 0; a < argumentsLength; ++ a)
 				{
-					var argument = arguments [a];
+					const argument = arguments [a];
 
-					for (var c = 0; c < components; ++ c, ++ i)
+					for (let c = 0; c < components; ++ c, ++ i)
 					{
 						array [i] = argument [c];
 					}
@@ -350,13 +354,13 @@ function (X3DArrayField,
 		},
 		shift: function ()
 		{
-			var
+			const
 				target = this ._target,
 				length = target ._length;
 
 			if (length)
 			{
-				var
+				const
 					array      = target .getValue (),
 					components = target .getComponents (),
 					valueType  = target .getValueType (),
@@ -368,9 +372,9 @@ function (X3DArrayField,
 				}
 				else
 				{
-					var tmp = target ._tmp;
+					const tmp = target ._tmp;
 
-					for (var c = 0; c < components; ++ c)
+					for (let c = 0; c < components; ++ c)
 						tmp [c] = array [c];
 
 					var value = Object .create (valueType .prototype);
@@ -389,13 +393,12 @@ function (X3DArrayField,
 		},
 		push: function (value)
 		{
-			var
+			const
 				target          = this ._target,
 				components      = target .getComponents (),
 				length          = target ._length,
-				argumentsLength = arguments .length;
-
-			var array = target .grow ((length + argumentsLength) * components);
+				argumentsLength = arguments .length,
+				array           = target .grow ((length + argumentsLength) * components);
 
 			if (components === 1)
 			{
@@ -403,11 +406,11 @@ function (X3DArrayField,
 			}
 			else
 			{
-				for (var i = length * components, a = 0; a < argumentsLength; ++ a)
+				for (let i = length * components, a = 0; a < argumentsLength; ++ a)
 				{
-					var argument = arguments [a];
+					const argument = arguments [a];
 
-					for (var c = 0; c < components; ++ c,  ++ i)
+					for (let c = 0; c < components; ++ c,  ++ i)
 					{
 						array [i] = argument [c];
 					}
@@ -442,10 +445,10 @@ function (X3DArrayField,
 				{
 					const tmp = target ._tmp;
 
-					for (var c = 0, a = newLength * components; c < components; ++ c, ++ a)
+					for (let c = 0, a = newLength * components; c < components; ++ c, ++ a)
 						tmp [c] = array [a];
 
-					const value = Object .create (valueType .prototype);
+					var value = Object .create (valueType .prototype);
 
 					valueType .apply (value, tmp);
 				}
@@ -461,7 +464,7 @@ function (X3DArrayField,
 		},
 		splice: function (index, deleteCount)
 		{
-			var
+			const
 				target = this ._target,
 				length = target ._length;
 
@@ -471,7 +474,7 @@ function (X3DArrayField,
 			if (index + deleteCount > length)
 				deleteCount = length - index;
 
-			var result = target .erase (index, index + deleteCount);
+			const result = target .erase (index, index + deleteCount);
 
 			if (arguments .length > 2)
 				target .spliceInsert (index, Array .prototype .splice .call (arguments, 2));
@@ -482,15 +485,14 @@ function (X3DArrayField,
 		},
 		spliceInsert: function (index, other)
 		{
-			var
+			const
 				target      = this ._target,
 				components  = target .getComponents (),
 				length      = target ._length,
-				otherLength = other .length;
+				otherLength = other .length,
+				array       = target .grow ((length + otherLength) * components);
 
 			index *= components;
-
-			var array = target .grow ((length + otherLength) * components);
 
 			array .copyWithin (index + otherLength * components, index, length * components);
 
@@ -500,11 +502,11 @@ function (X3DArrayField,
 			}
 			else
 			{
-				for (var i = 0, a = index; i < otherLength; ++ i)
+				for (let i = 0, a = index; i < otherLength; ++ i)
 				{
-					var value = other [i];
+					const value = other [i];
 
-					for (var c = 0; c < components; ++ c, ++ a)
+					for (let c = 0; c < components; ++ c, ++ a)
 						array [a] = value [c];
 				}
 			}
@@ -513,18 +515,17 @@ function (X3DArrayField,
 		},
 		insert: function (index, other, first, last)
 		{
-			var
+			const
 				target     = this ._target,
 				length     = target ._length,
 				otherArray = other .getValue (),
 				components = target .getComponents (),
-				difference = last - first;
+				difference = last - first,
+				array      = target .grow ((length + difference) * components);
 
 			index *= components;
 			first *= components;
 			last  *= components;
-
-			var array = target .grow ((length + difference) * components);
 
 			array .copyWithin (index + difference * components, index, length * components);
 
@@ -537,21 +538,20 @@ function (X3DArrayField,
 		},
 		erase: function (first, last)
 		{
-			var
-				target     = this ._target,
-				array      = target .getValue (),
-				components = target .getComponents (),
-				difference = last - first,
-				length     = target ._length,
-				newLength  = length - difference,
-				values     = new (target .constructor) ();
+			const
+				target      = this ._target,
+				array       = target .getValue (),
+				components  = target .getComponents (),
+				difference  = last - first,
+				length      = target ._length,
+				newLength   = length - difference,
+				values      = new (target .constructor) (),
+				valuesArray = values .grow (difference * components);
 
 			first *= components;
 			last  *= components;
 
-			var valuesArray = values .grow (difference * components);
-
-			for (var v = 0, f = first; f < last; ++ v, ++ f)
+			for (let v = 0, f = first; f < last; ++ v, ++ f)
 				valuesArray [v] = array [f];
 
 			array .copyWithin (first, last, length * components);
@@ -566,11 +566,12 @@ function (X3DArrayField,
 		},
 		resize: function (newLength, value, silent)
 		{
-			var
+			const
 				target     = this ._target,
 				length     = target ._length,
-				array      = target .getValue (),
 				components = target .getComponents ();
+
+			let array = target .getValue ();
 
 			if (newLength < length)
 			{
@@ -591,9 +592,9 @@ function (X3DArrayField,
 					}
 					else
 					{
-						for (var i = length * components, il = newLength * components; i < il; )
+						for (let i = length * components, il = newLength * components; i < il; )
 						{
-							for (var c = 0; c < components; ++ c, ++ i)
+							for (let c = 0; c < components; ++ c, ++ i)
 							{
 								array [i] = value [c];
 							}
@@ -611,14 +612,14 @@ function (X3DArrayField,
 		},
 		grow: function (length)
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue ();
 
 			if (length < array .length)
 				return array;
 
-			var
+			const
 				maxLength = Algorithm .nextPowerOfTwo (length),
 				newArray  = new (target .getArrayType ()) (maxLength);
 
@@ -630,7 +631,7 @@ function (X3DArrayField,
 		},
 		shrinkToFit: function ()
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue (),
 				length = target ._length * target .getComponents ();
@@ -638,7 +639,7 @@ function (X3DArrayField,
 			if (array .length == length)
 				return array;
 
-			var newArray = array .subarray (0, length);
+			const newArray = array .subarray (0, length);
 
 			X3DArrayField .prototype .set .call (target, newArray);
 
@@ -646,7 +647,7 @@ function (X3DArrayField,
 		},
 		toStream: function (stream)
 		{
-			var
+			const
 				target     = this ._target,
 				generator  = Generator .Get (stream),
 				array      = target .getValue (),
@@ -673,7 +674,7 @@ function (X3DArrayField,
 					}
 					else
 					{
-						for (var c = 0, first = 0; c < components; ++ c, ++ first)
+						for (let c = 0, first = 0; c < components; ++ c, ++ first)
 							value [c] = array [first];
 
 						value .toStream (stream);
@@ -691,7 +692,7 @@ function (X3DArrayField,
 
 					if (components === 1)
 					{
-						for (var i = 0, n = length - 1; i < n; ++ i)
+						for (let i = 0, n = length - 1; i < n; ++ i)
 						{
 							stream .string += generator .Indent ();
 
@@ -709,11 +710,11 @@ function (X3DArrayField,
 					}
 					else
 					{
-						for (var i = 0, n = length - 1; i < n; ++ i)
+						for (let i = 0, n = length - 1; i < n; ++ i)
 						{
 							stream .string += generator .Indent ();
 
-							for (var c = 0, first = i * components; c < components; ++ c, ++ first)
+							for (let c = 0, first = i * components; c < components; ++ c, ++ first)
 								value [c] = array [first];
 
 							value .toStream (stream);
@@ -723,7 +724,7 @@ function (X3DArrayField,
 
 						stream .string += generator .Indent ();
 
-						for (var c = 0, first = n * components; c < components; ++ c, ++ first)
+						for (let c = 0, first = n * components; c < components; ++ c, ++ first)
 							value [c] = array [first];
 
 						value .toStream (stream);
@@ -745,13 +746,13 @@ function (X3DArrayField,
 		},
 		toXMLStream: function (stream)
 		{
-			var
+			const
 				target = this ._target,
 				length = target ._length;
 
 			if (length)
 			{
-				var
+				const
 					generator  = Generator .Get (stream),
 					array      = target .getValue (),
 					components = target .getComponents (),
@@ -761,7 +762,7 @@ function (X3DArrayField,
 
 				if (components === 1)
 				{
-					for (var i = 0, n = length - 1; i < n; ++ i)
+					for (let i = 0, n = length - 1; i < n; ++ i)
 					{
 						value .set (array [i * components]);
 						value .toXMLStream (stream);
@@ -775,9 +776,9 @@ function (X3DArrayField,
 				}
 				else
 				{
-					for (var i = 0, n = length - 1; i < n; ++ i)
+					for (let i = 0, n = length - 1; i < n; ++ i)
 					{
-						for (var c = 0, first = i * components; c < components; ++ c, ++ first)
+						for (let c = 0, first = i * components; c < components; ++ c, ++ first)
 							value [c] = array [first];
 
 						value .toXMLStream (stream);
@@ -785,7 +786,7 @@ function (X3DArrayField,
 						stream .string += ", ";
 					}
 
-					for (var c = 0, first = n * components; c < components; ++ c, ++ first)
+					for (let c = 0, first = n * components; c < components; ++ c, ++ first)
 						value [c] = array [first];
 
 					value .toXMLStream (stream);
@@ -816,7 +817,7 @@ function (X3DArrayField,
 			array = this .getValue (),
 			tmp   = this ._tmp;
 
-		for (var c = 0; c < components; ++ c, ++ index)
+		for (let c = 0; c < components; ++ c, ++ index)
 			tmp [c] = array [index];
 
 		value .set .apply (value, tmp);
@@ -828,7 +829,7 @@ function (X3DArrayField,
 	{
 		const array = this .getValue ();
 
-		for (var c = 0; c < components; ++ c, ++ index)
+		for (let c = 0; c < components; ++ c, ++ index)
 			array [index] = value [c];
 
 		this .addEvent ();

@@ -62,7 +62,7 @@ function ($,
 {
 "use strict";
 
-	var handler =
+	const handler =
 	{
 		get: function (target, key)
 		{
@@ -159,7 +159,7 @@ function ($,
 		},
 		equals: function (array)
 		{
-			var
+			const
 				target = this ._target,
 				a      = target .getValue (),
 				b      = array .getValue (),
@@ -171,7 +171,7 @@ function ($,
 			if (length !== b .length)
 				return false;
 
-			for (var i = 0; i < length; ++ i)
+			for (let i = 0; i < length; ++ i)
 			{
 				if (! a [i] .equals (b [i]))
 					return false;
@@ -181,13 +181,13 @@ function ($,
 		},
 		set: function (value)
 		{
-			var target = this ._target;
+			const target = this ._target;
 
 			target .resize (value .length, undefined, true);
 
-			var array = target .getValue ();
+			const array = target .getValue ();
 
-			for (var i = 0, length = value .length; i < length; ++ i)
+			for (let i = 0, length = value .length; i < length; ++ i)
 				array [i] .set (value [i] instanceof X3DField ? value [i] .getValue () : value [i]);
 		},
 		isDefaultValue: function ()
@@ -196,20 +196,20 @@ function ($,
 		},
 		setValue: function (value)
 		{
-			var target = this ._target;
+			const target = this ._target;
 
 			target .set (value instanceof X3DObjectArrayField ? value .getValue () : value);
 			target .addEvent ();
 		},
 		unshift: function (value)
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue ();
 
-			for (var i = arguments .length - 1; i >= 0; -- i)
+			for (let i = arguments .length - 1; i >= 0; -- i)
 			{
-				var field = new (target .getSingleType ()) ();
+				const field = new (target .getSingleType ()) ();
 
 				field .setValue (arguments [i]);
 				target .addChildObject (field);
@@ -222,13 +222,13 @@ function ($,
 		},
 		shift: function ()
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue ();
 
 			if (array .length)
 			{
-				var field = array .shift ();
+				const field = array .shift ();
 				target .removeChildObject (field);
 				target .addEvent ();
 				return field .valueOf ();
@@ -236,15 +236,15 @@ function ($,
 		},
 		push: function (value)
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue ();
 
-			for (var i = 0, length = arguments .length; i < length; ++ i)
+			for (const argument of arguments)
 			{
-				var field = new (target .getSingleType ()) ();
+				const field = new (target .getSingleType ()) ();
 
-				field .setValue (arguments [i]);
+				field .setValue (argument);
 				target .addChildObject (field);
 				array .push (field);
 			}
@@ -255,13 +255,13 @@ function ($,
 		},
 		pop: function ()
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue ();
 
 			if (array .length)
 			{
-				var field = array .pop ();
+				const field = array .pop ();
 				target .removeChildObject (field);
 				target .addEvent ();
 				return field .valueOf ();
@@ -269,7 +269,7 @@ function ($,
 		},
 		splice: function (index, deleteCount)
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue ();
 
@@ -279,7 +279,7 @@ function ($,
 			if (index + deleteCount > array .length)
 				deleteCount = array .length - index;
 
-			var result = target .erase (index, index + deleteCount);
+			const result = target .erase (index, index + deleteCount);
 
 			if (arguments .length > 2)
 				target .insert (index, arguments, 2, arguments .length);
@@ -288,13 +288,13 @@ function ($,
 		},
 		insert: function (index, array, first, last)
 		{
-			var
+			const
 				target = this ._target,
 				args   = [index, 0];
 
-			for (var i = first; i < last; ++ i)
+			for (let i = first; i < last; ++ i)
 			{
-				var field = new (target .getSingleType ()) ();
+				const field = new (target .getSingleType ()) ();
 
 				field .setValue (array [i]);
 				target .addChildObject (field);
@@ -307,13 +307,13 @@ function ($,
 		},
 		find: function (first, last, value)
 		{
-			var target = this ._target;
+			const
+				target = this ._target,
+				values = target .getValue ();;
 
 			if ($.isFunction (value))
 			{
-				var values = target .getValue ();
-
-				for (var i = first; i < last; ++ i)
+				for (let i = first; i < last; ++ i)
 				{
 					if (value (values [i] .valueOf ()))
 						return i;
@@ -322,9 +322,7 @@ function ($,
 				return last;
 			}
 
-			var values = target .getValue ();
-
-			for (var i = first; i < last; ++ i)
+			for (let i = first; i < last; ++ i)
 			{
 				if (values [i] .equals (value))
 					return i;
@@ -334,23 +332,23 @@ function ($,
 		},
 		remove: function (first, last, value)
 		{
-			var target = this ._target;
+			const
+				target = this ._target,
+				values = target .getValue ();
 
 			if ($.isFunction (value))
 			{
-				var values = target .getValue ();
-
 				first = target .find (first, last, value);
 
 				if (first !== last)
 				{
-					for (var i = first; ++ i < last; )
+					for (let i = first; ++ i < last; )
 					{
-						var current = values [i];
+						const current = values [i];
 
 						if (! value (current .valueOf ()))
 						{
-							var tmp = values [first];
+							const tmp = values [first];
 
 							values [first ++] = current;
 							values [i]        = tmp;
@@ -364,19 +362,17 @@ function ($,
 				return first;
 			}
 
-			var values = target .getValue ();
-
 			first = target .find (first, last, value);
 
 			if (first !== last)
 			{
-				for (var i = first; ++ i < last; )
+				for (let i = first; ++ i < last; )
 				{
-					var current = values [i];
+					const current = values [i];
 
 					if (! current .equals (value))
 					{
-						var tmp = values [first];
+						const tmp = values [first];
 
 						values [first ++] = current;
 						values [i]        = tmp;
@@ -391,12 +387,12 @@ function ($,
 		},
 		erase: function (first, last)
 		{
-			var
+			const
 				target = this ._target,
 				values = target .getValue () .splice (first, last - first);
 
-			for (var i = 0, length = values .length; i < length; ++ i)
-				target .removeChildObject (values [i]);
+			for (const value of values)
+				target .removeChildObject (value);
 
 			target .addEvent ();
 
@@ -404,13 +400,13 @@ function ($,
 		},
 		resize: function (size, value, silent)
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue ();
 
 			if (size < array .length)
 			{
-				for (var i = size, length = array .length; i < length; ++ i)
+				for (let i = size, length = array .length; i < length; ++ i)
 					target .removeChildObject (array [i]);
 
 				array .length = size;
@@ -420,9 +416,9 @@ function ($,
 			}
 			else if (size > array .length)
 			{
-				for (var i = array .length; i < size; ++ i)
+				for (let i = array .length; i < size; ++ i)
 				{
-					var field = new (target .getSingleType ()) ();
+					const field = new (target .getSingleType ()) ();
 
 					if (value !== undefined)
 						field .setValue (value);
@@ -445,7 +441,7 @@ function ($,
 		},
 		toStream: function (stream)
 		{
-			var
+			const
 				target    = this ._target,
 				array     = target .getValue (),
 				generator = Generator .Get (stream);
@@ -473,7 +469,7 @@ function ($,
 					stream .string += "[\n";
 					generator .IncIndent ();
 
-					for (var i = 0, length = array .length - 1; i < length; ++ i)
+					for (let i = 0, length = array .length - 1; i < length; ++ i)
 					{
 						stream .string += generator .Indent ();
 						array [i] .toStream (stream);
@@ -499,19 +495,19 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			var
+			const
 				target = this ._target,
 				length = target .length;
 
 			if (length)
 			{
-				var
+				const
 					generator = Generator .Get (stream),
 					array     = target .getValue ();
 
 				generator .PushUnitCategory (target .getUnit ());
 
-				for (var i = 0, n = length - 1; i < n; ++ i)
+				for (let i = 0, n = length - 1; i < n; ++ i)
 				{
 					array [i] .toXMLStream (stream);
 					stream .string += ", ";
@@ -524,12 +520,12 @@ function ($,
 		},
 		dispose: function ()
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue ();
 
-			for (var i = 0, length = target .length; i < length; ++ i)
-				target .removeChildObject (array [i]);
+			for (const value of array)
+				target .removeChildObject (value);
 
 			array .length = 0;
 

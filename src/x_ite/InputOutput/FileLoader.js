@@ -400,25 +400,6 @@ function ($,
 				return;
 			}
 
-			this .URL = new URL (url, this .getReferer ());
-
-			try
-			{
-				if (this .bindViewpoint)
-				{
-					if (this .URL .href .substr (0, this .getReferer () .length) === this .getReferer ())
-					{
-						this .bindViewpoint (this .URL .hash .substr (1));
-						return;
-					}
-				}
-			}
-			catch (exception)
-			{
-				this .loadDocumentError (exception);
-				return;
-			}
-
 			if (this .script)
 			{
 				try
@@ -436,6 +417,25 @@ function ($,
 					this .loadDocumentError (exception);
 					return;
 				}
+			}
+
+			this .URL = new URL (url, this .getReferer ());
+
+			try
+			{
+				if (this .bindViewpoint)
+				{
+					if (this .URL .href .substr (0, this .getReferer () .length) === this .getReferer ())
+					{
+						this .bindViewpoint (this .URL .hash .substr (1));
+						return;
+					}
+				}
+			}
+			catch (exception)
+			{
+				this .loadDocumentError (exception);
+				return;
 			}
 
 			// Test for data URL here.
