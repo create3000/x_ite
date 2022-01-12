@@ -135,6 +135,22 @@ var Bookmarks = (function ()
 		},
 		loadURL: function (url)
 		{
+			const base = url .replace (/\.[^\.]+$/, "");
+
+			$(".file") .text (url)
+				.append ($("<a/>")
+				.attr ('href', base + ".x3d")
+				.click (this .loadURL .bind (this, url))
+				.text (".x3d"))
+				.append ($("<a/>")
+				.attr ('href', base + ".x3dv")
+				.click (this .loadURL .bind (this, url))
+				.text (".x3dv"))
+				.append ($("<a/>")
+				.attr ('href', base + ".x3dj")
+				.click (this .loadURL .bind (this, url))
+				.text (".x3dj"));
+
 			this .browser .getLocalStorage () ["Bookmarks.url"] = url;
 			this .browser .loadURL (new X3D .MFString (url), new X3D .MFString ());
 			return false;

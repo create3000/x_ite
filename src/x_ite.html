@@ -75,6 +75,16 @@ main.color-management .browser {
 	font-size: 52px;
 }
 
+.file {
+	margin: 10px 40px 10px 20px;
+}
+
+.file a {
+	margin-left: 10px;
+	padding-left: 10px;
+	border-left: 1px solid white;
+}
+
 .browser {
 	display: block;
 	margin: 10px 0px;
@@ -240,10 +250,10 @@ main.color-management .browser {
 	<script type="text/javascript">
 X3D (function ()
 {
+	const Browser = X3D .getBrowser ();
+
 	function loadURL ()
 	{
-		var Browser = X3D .getBrowser ("#browser");
-
 		bookmarks .loadURL ($(".location-entry") .val ());
 	}
 
@@ -257,9 +267,7 @@ X3D (function ()
 		console .log (X3D .getBrowser ("#browser") .currentScene .toVRMLString ());
 	}
 
-	var
-		Browser   = X3D .getBrowser ("#browser"),
-		bookmarks = new Bookmarks (Browser, $(".examples-box"));
+	const bookmarks = new Bookmarks (Browser, $(".examples-box"));
 
 	bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
 	bookmarks .restore ("https://rawgit.com/create3000/Library/main/Tests/Components/Layout/info.x3d");
@@ -272,7 +280,7 @@ X3D (function ()
 
 	// Restore location entry.
 
-	var defaultLocaton = "http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d";
+	const defaultLocaton = "http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d";
 
 	$(".location-entry") .val (Browser .getLocalStorage () ["Bookmarks.location"] || defaultLocaton)
 
@@ -292,6 +300,7 @@ function (error)
 		<header>
 			<div>
 				<h1 class="version"></h1>
+				<p class="file"></p>
 			</div>
 		</header>
 		<main>
