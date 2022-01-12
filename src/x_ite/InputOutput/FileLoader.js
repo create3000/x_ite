@@ -394,15 +394,22 @@ function ($,
 		},
 		loadDocumentAsync: function (url)
 		{
-			if (url .length === 0)
+			try
 			{
-				this .loadDocumentError (new Error ("URL is empty."));
-				return;
-			}
+				if (url .length === 0)
+				{
+					this .loadDocumentError (new Error ("URL is empty."));
+					return;
+				}
 
-			if (this .script)
-			{
-				try
+				// Handle target
+
+				if (this .target .length && this .target !== "_self" && this .foreign)
+					return this .foreign (url, this .target);
+
+				// Script
+
+				if (this .script)
 				{
 					const result = ECMAScript .exec (url);
 
@@ -412,17 +419,32 @@ function ($,
 						return;
 					}
 				}
-				catch (exception)
+
+				// Test for data URL here.
+
 				{
-					this .loadDocumentError (exception);
-					return;
+					const result = dataURL .exec (url);
+
+					if (result)
+					{
+						//const mimeType = result [1];
+
+						// ??? If called from loadURL and mime type is text/html do a window.open or window.location=URL and return; ???
+
+						let data = result [4];
+
+						if (result [3] === "base64")
+							data = atob (data);
+						else
+							data = unescape (data);
+
+						this .callback (data);
+						return;
+					}
 				}
-			}
 
-			this .URL = new URL (url, this .getReferer ());
+				this .URL = new URL (url, this .getReferer ());
 
-			try
-			{
 				if (this .bindViewpoint)
 				{
 					if (this .URL .href .substr (0, this .getReferer () .length) === this .getReferer ())
@@ -431,98 +453,61 @@ function ($,
 						return;
 					}
 				}
-			}
-			catch (exception)
-			{
-				this .loadDocumentError (exception);
-				return;
-			}
 
-			// Test for data URL here.
+				// Handle well known foreign content depending on extension or if path looks like directory.
 
-			try
-			{
-				const result = dataURL .exec (url);
-
-				if (result)
+				if (this .foreign)
 				{
-					//const mimeType = result [1];
-
-					// ??? If called from loadURL and mime type is text/html do a window.open or window.location=URL and return; ???
-
-					let data = result [4];
-
-					if (result [3] === "base64")
-						data = atob (data);
-					else
-						data = unescape (data);
-
-					if (this .target .length && this .target !== "_self" && this .foreign)
+					if (this .URL .href .match (foreignExtensions))
+					{
 						return this .foreign (this .URL .href, this .target);
-
-					this .callback (data);
-					return;
+					}
 				}
+
+				// Load URL async
+
+				$.ajax ({
+					url: this .URL .href,
+					dataType: "binary",
+					async: true,
+					cache: this .browser .getBrowserOptions () .getCache (),
+					//timeout: 15000,
+					global: false,
+					context: this,
+					success: function (blob, status, xhr)
+					{
+						if (this .foreign)
+						{
+							//console .log (this .getContentType (xhr));
+
+							if (foreign [this .getContentType (xhr)])
+								return this .foreign (this .URL .href, this .target);
+						}
+
+						if (this .text)
+						{
+							this .fileReader .onload = this .readAsArrayBuffer .bind (this, blob);
+
+							this .fileReader .readAsArrayBuffer (blob);
+						}
+						else
+						{
+							this .fileReader .onload = this .readAsBinaryString .bind (this);
+
+							this .fileReader .readAsBinaryString (blob);
+						}
+					},
+					error: function (xhr, textStatus, exception)
+					{
+						this .loadDocumentError (new Error (exception));
+					},
+				});
 			}
 			catch (exception)
 			{
 				this .loadDocumentError (exception);
 				return;
 			}
-
-			// Handle target
-
-			if (this .target .length && this .target !== "_self" && this .foreign)
-				return this .foreign (this .URL .href, this .target);
-
-			// Handle well known foreign content depending on extension or if path looks like directory.
-
-			if (this .foreign)
-			{
-				if (this .URL .href .match (foreignExtensions))
-				{
-					return this .foreign (this .URL .href, this .target);
-				}
-			}
-
-			// Load URL async
-
-			$.ajax ({
-				url: this .URL .href,
-				dataType: "binary",
-				async: true,
-				cache: this .browser .getBrowserOptions () .getCache (),
-				//timeout: 15000,
-				global: false,
-				context: this,
-				success: function (blob, status, xhr)
-				{
-					if (this .foreign)
-					{
-						//console .log (this .getContentType (xhr));
-
-						if (foreign [this .getContentType (xhr)])
-							return this .foreign (this .URL .href, this .target);
-					}
-
-					if (this .text)
-					{
-						this .fileReader .onload = this .readAsArrayBuffer .bind (this, blob);
-
-						this .fileReader .readAsArrayBuffer (blob);
-					}
-					else
-					{
-						this .fileReader .onload = this .readAsBinaryString .bind (this);
-
-						this .fileReader .readAsBinaryString (blob);
-					}
-				},
-				error: function (xhr, textStatus, exception)
-				{
-					this .loadDocumentError (new Error (exception));
-				},
-			});
 		},
 		readAsArrayBuffer: function (blob)
 		{
