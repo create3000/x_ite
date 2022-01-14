@@ -72,7 +72,7 @@ function (Fields,
 {
 "use strict";
 
-	var
+	const
 		ModelMatrixCache  = ObjectCache (Matrix4),
 		TargetMatrixCache = ObjectCache (Matrix4);
 
@@ -162,7 +162,7 @@ function (Fields,
 		},
 		set_extents__: function ()
 		{
-			var
+			const
 				s  = this .size_ .getValue (),
 				c  = this .center_ .getValue (),
 				sx = s .x / 2,
@@ -181,11 +181,11 @@ function (Fields,
 
 			try
 			{
-				var
+				const
 					node = this .targetObject_ .getValue () .getInnerNode (),
 					type = node .getType ();
 
-				for (var t = type .length - 1; t >= 0; -- t)
+				for (let t = type .length - 1; t >= 0; -- t)
 				{
 					switch (type [t])
 					{
@@ -223,13 +223,13 @@ function (Fields,
 		},
 		process: (function ()
 		{
-			var
+			const
 				position    = new Vector3 (0, 0, 0),
 				orientation = new Rotation4 (0, 0, 1, 0);
 
 			return function ()
 			{
-				var
+				const
 					modelMatrices  = this .modelMatrices,
 					targetMatrices = this .targetMatrices,
 					matrix         = this .intersects ();
@@ -263,11 +263,11 @@ function (Fields,
 					}
 				}
 
-				for (var i = 0, length = modelMatrices .length; i < length; ++ i)
-					ModelMatrixCache .push (modelMatrices [i]);
+				for (const modelMatrix of modelMatrices)
+					ModelMatrixCache .push (modelMatrix);
 
-				for (var i = 0, length = targetMatrices .length; i < length; ++ i)
-					TargetMatrixCache .push (targetMatrices [i]);
+				for (const targetMatrix of targetMatrices)
+					TargetMatrixCache .push (targetMatrix);
 
 				modelMatrices  .length = 0;
 				targetMatrices .length = 0;
@@ -275,22 +275,22 @@ function (Fields,
 		})(),
 		intersects: (function ()
 		{
-			var infinity = new Vector3 (-1, -1, -1);
+			const infinity = new Vector3 (-1, -1, -1);
 
 			return function ()
 			{
-				var
+				const
 					modelMatrices  = this .modelMatrices,
 					targetMatrices = this .targetMatrices,
 					always         = this .size_ .getValue () .equals (infinity);
 
-				for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+				for (const modelMatrix of modelMatrices)
 				{
-					var invModelMatrix = modelMatrices [m] .inverse ();
+					const invModelMatrix = modelMatrix .inverse ();
 
-					for (var t = 0, tLength = targetMatrices .length; t < tLength; ++ t)
+					for (const targetMatrix of targetMatrices)
 					{
-						var matrix = targetMatrices [t] .multRight (invModelMatrix);
+						const matrix = targetMatrix .multRight (invModelMatrix);
 
 						if (always || this .containsPoint (matrix .origin))
 						{
@@ -304,7 +304,7 @@ function (Fields,
 		})(),
 		containsPoint: function (point)
 		{
-			var
+			const
 				min = this .min,
 				max = this .max;
 

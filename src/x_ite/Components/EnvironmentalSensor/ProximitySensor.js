@@ -141,7 +141,7 @@ function (Fields,
 		},
 		set_extents__: function ()
 		{
-			var
+			const
 				s  = this .size_ .getValue (),
 				c  = this .center_ .getValue (),
 				sx = s .x / 2,
@@ -156,7 +156,7 @@ function (Fields,
 		},
 		update: (function ()
 		{
-			var
+			const
 				invModelMatrix         = new Matrix4 (),
 				centerOfRotationMatrix = new Matrix4 (),
 				position               = new Vector3 (0, 0, 0),
@@ -171,7 +171,7 @@ function (Fields,
 					{
 						if (this .viewpointNode)
 						{
-							var modelMatrix = this .modelMatrix;
+							const modelMatrix = this .modelMatrix;
 
 							centerOfRotationMatrix .assign (this .viewpointNode .getModelMatrix ());
 							centerOfRotationMatrix .translate (this .viewpointNode .getUserCenterOfRotation ());
@@ -230,7 +230,7 @@ function (Fields,
 		})(),
 		traverse: (function ()
 		{
-			var
+			const
 				invModelViewMatrix = new Matrix4 (),
 				infinity           = new Vector3 (-1, -1, -1);
 
@@ -276,7 +276,7 @@ function (Fields,
 		})(),
 		containsPoint: function (point)
 		{
-			var
+			const
 				min = this .min,
 				max = this .max;
 

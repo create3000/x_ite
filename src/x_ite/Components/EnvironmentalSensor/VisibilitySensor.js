@@ -138,12 +138,12 @@ function (Fields,
 					this .exitTime_ = this .getBrowser () .getCurrentTime ();
 				}
 			}
-				
+
 			this .setTraversed (false);
 		},
 		traverse: (function ()
 		{
-			var
+			const
 				bbox     = new Box3 (),
 				infinity = new Vector3 (-1, -1, -1);
 
@@ -151,12 +151,12 @@ function (Fields,
 			{
 				if (type !== TraverseType .DISPLAY)
 					return;
-	
+
 				this .setTraversed (true);
-	
+
 				if (this .visible)
 					return;
-	
+
 				if (this .size_ .getValue () .equals (infinity))
 				{
 					this .visible = true;
@@ -172,8 +172,6 @@ function (Fields,
 			};
 		})(),
 	});
-		
+
 	return VisibilitySensor;
 });
-
-
