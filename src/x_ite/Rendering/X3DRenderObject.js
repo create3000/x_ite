@@ -435,7 +435,7 @@ function ($,
 					this .setGlobalFog (this .getFog ());
 
 					callback .call (group, type, this);
-					this .draw (group);
+					this .draw ();
 					break;
 				}
 			}
@@ -867,7 +867,7 @@ function ($,
 				projectionMatrixArray  = new Float32Array (16),
 				cameraSpaceMatrixArray = new Float32Array (16);
 
-			return function (group)
+			return function ()
 			{
 				const
 					browser                  = this .getBrowser (),
