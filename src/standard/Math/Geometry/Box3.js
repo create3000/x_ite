@@ -328,9 +328,9 @@ function (Triangle3,
 
 						if (x .norm () === 0)
 						{
-							for (let i = 0; i < 3; ++ i)
+							for (const axis of axes)
 							{
-								x .assign (axes [i]) .cross (y);
+								x .assign (axis) .cross (y);
 
 								if (x .norm () !== 0)
 									break;
@@ -338,9 +338,9 @@ function (Triangle3,
 
 							if (x .norm () === 0)
 							{
-								for (let i = 0; i < 3; ++ i)
+								for (const axis of axes)
 								{
-									x .assign (axes [i]) .cross (z);
+									x .assign (axis) .cross (z);
 
 									if (x .norm () !== 0)
 										break;
@@ -358,9 +358,9 @@ function (Triangle3,
 
 						if (y .norm () === 0)
 						{
-							for (let i = 0; i < 3; ++ i)
+							for (const axis of axes)
 							{
-								y .assign (axes [i]) .cross (z);
+								y .assign (axis) .cross (z);
 
 								if (y .norm () !== 0)
 									break;
@@ -368,9 +368,9 @@ function (Triangle3,
 
 							if (y .norm () === 0)
 							{
-								for (let i = 0; i < 3; ++ i)
+								for (const axis of axes)
 								{
-									y .assign (axes [i]) .cross (x);
+									y .assign (axis) .cross (x);
 
 									if (y .norm () !== 0)
 										break;
@@ -388,9 +388,9 @@ function (Triangle3,
 
 						if (z .norm () === 0)
 						{
-							for (let i = 0; i < 3; ++ i)
+							for (const axis of axes)
 							{
-								z .assign (axes [i]) .cross (x);
+								z .assign (axis) .cross (x);
 
 								if (z .norm () !== 0)
 									break;
@@ -398,9 +398,9 @@ function (Triangle3,
 
 							if (z .norm () === 0)
 							{
-								for (let i = 0; i < 3; ++ i)
+								for (const axis of axes)
 								{
-									z .assign (axes [i]) .cross (y);
+									z .assign (axis) .cross (y);
 
 									if (z .norm () !== 0)
 										break;
