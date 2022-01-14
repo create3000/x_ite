@@ -314,108 +314,99 @@ function (Triangle3,
 				y .assign (m .yAxis);
 				z .assign (m .zAxis);
 
-				if (x .norm () === 0 && y .norm () === 0 && z .norm () === 0)
+				if (x .norm () === 0)
 				{
-					x .assign (Vector3 .xAxis);
-					y .assign (Vector3 .yAxis);
-					z .assign (Vector3 .zAxis);
-				}
-				else
-				{
+					x .assign (y) .cross (z);
+
 					if (x .norm () === 0)
 					{
-						x .assign (y) .cross (z);
+						for (const axis of axes)
+						{
+							x .assign (axis) .cross (y);
+
+							if (x .norm () !== 0)
+								break;
+						}
 
 						if (x .norm () === 0)
 						{
 							for (const axis of axes)
 							{
-								x .assign (axis) .cross (y);
+								x .assign (axis) .cross (z);
 
 								if (x .norm () !== 0)
 									break;
 							}
 
 							if (x .norm () === 0)
-							{
-								for (const axis of axes)
-								{
-									x .assign (axis) .cross (z);
-
-									if (x .norm () !== 0)
-										break;
-								}
-
-								if (x .norm () === 0)
-									x .assign (Vector3 .xAxis);
-							}
+								x .assign (Vector3 .xAxis);
 						}
 					}
+				}
+
+				if (y .norm () === 0)
+				{
+					y .assign (z) .cross (x);
 
 					if (y .norm () === 0)
 					{
-						y .assign (z) .cross (x);
+						for (const axis of axes)
+						{
+							y .assign (axis) .cross (z);
+
+							if (y .norm () !== 0)
+								break;
+						}
 
 						if (y .norm () === 0)
 						{
 							for (const axis of axes)
 							{
-								y .assign (axis) .cross (z);
+								y .assign (axis) .cross (x);
 
 								if (y .norm () !== 0)
 									break;
 							}
 
 							if (y .norm () === 0)
-							{
-								for (const axis of axes)
-								{
-									y .assign (axis) .cross (x);
-
-									if (y .norm () !== 0)
-										break;
-								}
-
-								if (y .norm () === 0)
-									y .assign (Vector3 .yAxis);
-							}
+								y .assign (Vector3 .yAxis);
 						}
 					}
+				}
+
+				if (z .norm () === 0)
+				{
+					z .assign (x) .cross (y);
 
 					if (z .norm () === 0)
 					{
-						z .assign (x) .cross (y);
+						for (const axis of axes)
+						{
+							z .assign (axis) .cross (x);
+
+							if (z .norm () !== 0)
+								break;
+						}
 
 						if (z .norm () === 0)
 						{
 							for (const axis of axes)
 							{
-								z .assign (axis) .cross (x);
+								z .assign (axis) .cross (y);
 
 								if (z .norm () !== 0)
 									break;
 							}
 
 							if (z .norm () === 0)
-							{
-								for (const axis of axes)
-								{
-									z .assign (axis) .cross (y);
-
-									if (z .norm () !== 0)
-										break;
-								}
-
-								if (z .norm () === 0)
-									z .assign (Vector3 .zAxis);
-							}
+								z .assign (Vector3 .zAxis);
 						}
 					}
-
-					x .normalize ();
-					y .normalize ();
-					z .normalize ();
 				}
+
+				x .normalize ();
+				y .normalize ();
+				z .normalize ();
 
 				planes [0] .assign (y) .cross (z) .normalize ();
 				planes [1] .assign (z) .cross (x) .normalize ();
