@@ -404,10 +404,6 @@ function (Triangle3,
 					}
 				}
 
-				x .normalize ();
-				y .normalize ();
-				z .normalize ();
-
 				planes [0] .assign (y) .cross (z) .normalize ();
 				planes [1] .assign (z) .cross (x) .normalize ();
 				planes [2] .assign (x) .cross (y) .normalize ();
