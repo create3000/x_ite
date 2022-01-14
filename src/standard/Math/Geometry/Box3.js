@@ -314,7 +314,7 @@ function (Triangle3,
 				y .assign (m .yAxis);
 				z .assign (m .zAxis);
 
-				if (x .norm () == 0 && y .norm () == 0 && z .norm () == 0)
+				if (x .norm () === 0 && y .norm () === 0 && z .norm () === 0)
 				{
 					x .assign (Vector3 .xAxis);
 					y .assign (Vector3 .yAxis);
@@ -322,103 +322,91 @@ function (Triangle3,
 				}
 				else
 				{
-					if (x .norm () == 0)
+					if (x .norm () === 0)
 					{
 						x .assign (y) .cross (z);
 
-						if (x .norm () == 0)
+						if (x .norm () === 0)
 						{
 							for (let i = 0; i < 3; ++ i)
 							{
 								x .assign (axes [i]) .cross (y);
 
-								if (x .norm () == 0)
-									continue;
-
-								break;
+								if (x .norm () !== 0)
+									break;
 							}
 
-							if (x .norm () == 0)
+							if (x .norm () === 0)
 							{
 								for (let i = 0; i < 3; ++ i)
 								{
 									x .assign (axes [i]) .cross (z);
 
-									if (x .norm () == 0)
-										continue;
-
-									break;
+									if (x .norm () !== 0)
+										break;
 								}
 
-								if (x .norm () == 0)
+								if (x .norm () === 0)
 									x .assign (Vector3 .xAxis);
 							}
 						}
 					}
 
-					if (y .norm () == 0)
+					if (y .norm () === 0)
 					{
 						y .assign (z) .cross (x);
 
-						if (y .norm () == 0)
+						if (y .norm () === 0)
 						{
 							for (let i = 0; i < 3; ++ i)
 							{
 								y .assign (axes [i]) .cross (z);
 
-								if (y .norm () == 0)
-									continue;
-
-								break;
+								if (y .norm () !== 0)
+									break;
 							}
 
-							if (y .norm () == 0)
+							if (y .norm () === 0)
 							{
 								for (let i = 0; i < 3; ++ i)
 								{
 									y .assign (axes [i]) .cross (x);
 
-									if (y .norm () == 0)
-										continue;
-
-									break;
+									if (y .norm () !== 0)
+										break;
 								}
 
-								if (y .norm () == 0)
+								if (y .norm () === 0)
 									y .assign (Vector3 .yAxis);
 							}
 						}
 					}
 
-					if (z .norm () == 0)
+					if (z .norm () === 0)
 					{
 						z .assign (x) .cross (y);
 
-						if (z .norm () == 0)
+						if (z .norm () === 0)
 						{
 							for (let i = 0; i < 3; ++ i)
 							{
 								z .assign (axes [i]) .cross (x);
 
-								if (z .norm () == 0)
-									continue;
-
-								break;
+								if (z .norm () !== 0)
+									break;
 							}
 
-							if (z .norm () == 0)
+							if (z .norm () === 0)
 							{
 								for (let i = 0; i < 3; ++ i)
 								{
 									z .assign (axes [i]) .cross (y);
 
-									if (z .norm () == 0)
-										continue;
-
-									break;
+									if (z .norm () !== 0)
+										break;
 								}
 
-								if (z .norm () == 0)
+								if (z .norm () === 0)
 									z .assign (Vector3 .zAxis);
 							}
 						}
