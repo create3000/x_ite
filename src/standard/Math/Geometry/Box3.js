@@ -337,25 +337,23 @@ function (Triangle3,
 
 								break;
 							}
-						}
 
-						if (x .norm () == 0)
-						{
-							for (let i = 0; i < 3; ++ i)
+							if (x .norm () == 0)
 							{
-								x .assign (axes [i]) .cross (z);
+								for (let i = 0; i < 3; ++ i)
+								{
+									x .assign (axes [i]) .cross (z);
+
+									if (x .norm () == 0)
+										continue;
+
+									break;
+								}
 
 								if (x .norm () == 0)
-									continue;
-
-								break;
+									x .assign (Vector3 .xAxis);
 							}
 						}
-
-						if (x .norm () == 0)
-							x .assign (Vector3 .xAxis);
-						else
-							x .normalize ();
 					}
 
 					if (y .norm () == 0)
@@ -373,25 +371,23 @@ function (Triangle3,
 
 								break;
 							}
-						}
 
-						if (y .norm () == 0)
-						{
-							for (let i = 0; i < 3; ++ i)
+							if (y .norm () == 0)
 							{
-								y .assign (axes [i]) .cross (x);
+								for (let i = 0; i < 3; ++ i)
+								{
+									y .assign (axes [i]) .cross (x);
+
+									if (y .norm () == 0)
+										continue;
+
+									break;
+								}
 
 								if (y .norm () == 0)
-									continue;
-
-								break;
+									y .assign (Vector3 .yAxis);
 							}
 						}
-
-						if (y .norm () == 0)
-							y .assign (Vector3 .yAxis);
-						else
-							y .normalize ();
 					}
 
 					if (z .norm () == 0)
@@ -409,26 +405,28 @@ function (Triangle3,
 
 								break;
 							}
-						}
 
-						if (z .norm () == 0)
-						{
-							for (let i = 0; i < 3; ++ i)
+							if (z .norm () == 0)
 							{
-								z .assign (axes [i]) .cross (y);
+								for (let i = 0; i < 3; ++ i)
+								{
+									z .assign (axes [i]) .cross (y);
+
+									if (z .norm () == 0)
+										continue;
+
+									break;
+								}
 
 								if (z .norm () == 0)
-									continue;
-
-								break;
+									z .assign (Vector3 .zAxis);
 							}
 						}
-
-						if (z .norm () == 0)
-							z .assign (Vector3 .zAxis);
-						else
-							z .normalize ();
 					}
+
+					x .normalize ();
+					y .normalize ();
+					z .normalize ();
 				}
 
 				planes [0] .assign (y) .cross (z) .normalize ();
