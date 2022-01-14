@@ -306,7 +306,7 @@ function (Triangle3,
 
 			const axes = [ Vector3 .xAxis, Vector3 .yAxis, Vector3 .zAxis ];
 
-			return function (planes)
+			return function (normals)
 			{
 				const m = this .matrix;
 
@@ -404,11 +404,11 @@ function (Triangle3,
 					}
 				}
 
-				planes [0] .assign (y) .cross (z) .normalize ();
-				planes [1] .assign (z) .cross (x) .normalize ();
-				planes [2] .assign (x) .cross (y) .normalize ();
+				normals [0] .assign (y) .cross (z) .normalize ();
+				normals [1] .assign (z) .cross (x) .normalize ();
+				normals [2] .assign (x) .cross (y) .normalize ();
 
-				return planes;
+				return normals;
 			};
 		})(),
 		isEmpty: function ()
@@ -517,7 +517,7 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 			];
 
-			const planes = [
+			const normals = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -540,12 +540,12 @@ function (Triangle3,
 
 				// Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
 
-				if (SAT .isSeparated (this .getNormals (planes), points1, points2))
+				if (SAT .isSeparated (this .getNormals (normals), points1, points2))
 					return false;
 
 				// Test the three planes spanned by the normal vectors of the faces of the second parallelepiped.
 
-				if (SAT .isSeparated (other .getNormals (planes), points1, points2))
+				if (SAT .isSeparated (other .getNormals (normals), points1, points2))
 					return false;
 
 				// Test the nine other planes spanned by the edges of each parallelepiped.
@@ -601,7 +601,7 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 			];
 
-			const planes = [
+			const normals = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -634,7 +634,7 @@ function (Triangle3,
 
 				// Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
 
-				if (SAT .isSeparated (this .getNormals (planes), points1, triangle))
+				if (SAT .isSeparated (this .getNormals (normals), points1, triangle))
 					return false;
 
 				// Test the normal of the triangle.
