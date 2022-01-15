@@ -213,7 +213,7 @@ function (XMLParser,
 						element .appendChild (child);
 					}
 				}
-				else if (key === "#sourceText")
+				else if (key === "#sourceCode" || key === "#sourceText")
 				{
 					this .createCDATA (document, element, object [key] .join ("\r\n") + "\r\n");
 				}
