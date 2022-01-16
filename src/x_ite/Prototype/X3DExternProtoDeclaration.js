@@ -73,7 +73,9 @@ function ($,
 		X3DProtoDeclarationNode .call (this, executionContext);
 		X3DUrlObject            .call (this, executionContext);
 
-		this .addChildObjects ("url", new Fields .MFString ());
+		this .addChildObjects ("url",                  new Fields .MFString (),
+		                       "autoRefresh",          new Fields .SFTime (),
+									  "autoRefreshTimeLimit", new Fields .SFTime (3600));
 
 		this .deferred = $.Deferred ();
 	}

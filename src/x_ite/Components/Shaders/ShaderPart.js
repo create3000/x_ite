@@ -97,9 +97,11 @@ function (Fields,
 	{
 		constructor: ShaderPart,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "type",     new Fields .SFString ("VERTEX")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",      new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
 		]),
 		getTypeName: function ()
 		{
