@@ -1,4 +1,4 @@
-/* X_ITE v4.7.3-1115 */
+/* X_ITE v4.7.3-1116 */
 
 (function () {
 
@@ -41441,7 +41441,7 @@ function ($,
 				delete menu .items ["available-viewers"];
 			}
 
-			if (!browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/) || browser .getActiveViewpoint () .getTypeName () === "GeoViewpoint")
+			if (!browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/) || (currentViewpoint && currentViewpoint .getTypeName () === "GeoViewpoint"))
 			{
 				delete menu .items ["straighten-horizon"];
 			}
