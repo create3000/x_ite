@@ -81,7 +81,7 @@ function (Fields,
 
 			if (value === X3DConstants .COMPLETE_STATE)
 			{
-				this .autoRefreshTime = performance .now ();
+				this .autoRefreshCompleteTime = performance .now ();
 				this .setAutoRefreshTimer (this .autoRefresh_ .getValue ());
 			}
 
@@ -148,7 +148,7 @@ function (Fields,
 				return;
 
 			const
-				elapsedTime = (performance .now () - this .autoRefreshTime) / 1000,
+				elapsedTime = (performance .now () - this .autoRefreshCompleteTime) / 1000,
 				autoRefresh = this .autoRefresh_ .getValue ();
 
 			let autoRefreshInterval = autoRefresh - elapsedTime;
