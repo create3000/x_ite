@@ -1357,16 +1357,8 @@ function ($,
 
 				// Scale canvas.
 
-				if (! Algorithm .isPowerOfTwo (width) || ! Algorithm .isPowerOfTwo (height))
-				{
-					canvas .width  = Algorithm .nextPowerOfTwo (width),
-					canvas .height = Algorithm .nextPowerOfTwo (height);
-				}
-				else
-				{
-					canvas .width  = width;
-					canvas .height = height;
-				}
+				canvas .width  = Algorithm .nextPowerOfTwo (width),
+				canvas .height = Algorithm .nextPowerOfTwo (height);
 
 				var
 				   w = width  / canvas .width,

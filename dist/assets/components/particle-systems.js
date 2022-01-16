@@ -1400,14 +1400,14 @@ function (Vector3,
 			max      = this .max,
 			last     = first + size;
 
-		var t = triangles [first] * 12;
+		let t = triangles [first] * 12;
 
 		// Calculate bbox
 
 		min .set (vertices [t], vertices [t + 1], vertices [t + 2]);
 		max .assign (min);
 
-		for (var i = first; i < last; ++ i)
+		for (let i = first; i < last; ++ i)
 		{
 			t = triangles [i] * 12;
 
@@ -1419,7 +1419,7 @@ function (Vector3,
 			max .max (v0, v1, v2);
 		}
 
-		for (var i = 0; i < 5; ++ i)
+		for (let i = 0; i < 5; ++ i)
 			this .planes [i] = new Plane3 (i % 2 ? min : max, boxNormals [i]);
 
 		// Sort and split array
@@ -1568,7 +1568,7 @@ function (Vector3,
 			{
 				const triangles = [ ];
 
-				for (var i = 0; i < numTriangles; ++ i)
+				for (let i = 0; i < numTriangles; ++ i)
 					triangles .push (i);
 
 				this .sorter = new QuickSort (triangles, SortComparator (vertices, 0));

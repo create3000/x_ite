@@ -915,7 +915,6 @@ define ('x_ite/Components/CubeMapTexturing/ImageCubeMapTexture',[
 	"x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
-	"standard/Networking/URI",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Algorithm",
 	"x_ite/DEBUG",
@@ -927,16 +926,15 @@ function ($,
           X3DEnvironmentTextureNode,
           X3DUrlObject,
           X3DConstants,
-          URI,
           Vector2,
           Algorithm,
           DEBUG)
 {
 "use strict";
 
-   var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+   const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
-	var offsets = [
+	const offsets = [
 		new Vector2 (1, 1), // Front
 		new Vector2 (3, 1), // Back
 		new Vector2 (0, 1), // Left
@@ -983,11 +981,11 @@ function ($,
 
 			// Upload default data.
 
-			var gl = this .getBrowser () .getContext ();
+			const gl = this .getBrowser () .getContext ();
 
 			gl .bindTexture (this .getTarget (), this .getTexture ());
 
-			for (var i = 0; i < 6; ++ i)
+			for (let i = 0; i < 6; ++ i)
 				gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
 			// Initialize.
@@ -1032,16 +1030,14 @@ function ($,
 
 			// Get URL.
 
-			this .URL = new URI (this .urlStack .shift ());
-			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
-			// In Firefox we don't need getRelativePath if file scheme, do we in Chrome???
+			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
-			this .image .attr ("src", this .URL);
+			this .image .attr ("src", this .URL .href);
 		},
 		setError: function ()
 		{
-			if (this .URL .scheme !== "data")
-				console .warn ("Error loading image:", this .URL .toString ());
+			if (this .URL .protocol !== "data:")
+				console .warn ("Error loading image:", this .URL .href);
 
 			this .loadNext ();
 		},
@@ -1049,22 +1045,22 @@ function ($,
 		{
 			if (DEBUG)
 			{
-				 if (this .URL .scheme !== "data")
-			   	console .info ("Done loading image cube map texture:", this .URL .toString ());
+				 if (this .URL .protocol !== "data:")
+			   	console .info ("Done loading image cube map texture:", this .URL .href);
 			}
 
 			try
 			{
-				var
-				   image     = this .image [0],
+				const
+					image  = this .image [0],
+					canvas = this .canvas [0],
+					cx     = canvas .getContext ("2d");
+
+				let
 					width     = image .width,
 					height    = image .height,
 					width1_4  = Math .floor (width / 4),
 					height1_3 = Math .floor (height / 3);
-
-				var
-					canvas = this .canvas [0],
-					cx     = canvas .getContext ("2d");
 
 				// Scale image.
 
@@ -1090,22 +1086,22 @@ function ($,
 
 				// Extract images.
 
-				var
-					gl     = this .getBrowser () .getContext (),
-					opaque = true;
+				const gl = this .getBrowser () .getContext ();
+
+				let opaque = true;
 
 				gl .bindTexture (this .getTarget (), this .getTexture ());
 				gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
-				for (var i = 0; i < 6; ++ i)
+				for (let i = 0; i < 6; ++ i)
 				{
-					var data = cx .getImageData (offsets [i] .x * width1_4, offsets [i] .y * height1_3, width1_4, height1_3) .data;
+					const data = cx .getImageData (offsets [i] .x * width1_4, offsets [i] .y * height1_3, width1_4, height1_3) .data;
 
 					// Determine image alpha.
 
 					if (opaque)
 					{
-						for (var a = 3; a < data .length; a += 4)
+						for (let a = 3; a < data .length; a += 4)
 						{
 							if (data [a] !== 255)
 							{

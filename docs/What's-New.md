@@ -1,5 +1,18 @@
 # What's New
 
+## X\_ITE v4.7.3 Released
+
+*Leipzig, 16th January 2022*: This release fixes bugs, and a lot of code clean up has been done.
+
+{% capture notice-text %}
+#### New Features
+
+- Parse JSON encoding "#sourceCode" objects.
+- Use JavaScript URL objects internally now.
+
+{% endcapture %}
+<div class="notice--success">{{ notice-text | markdownify }}</div>
+
 ## X\_ITE v4.7.2 Released
 
 *Leipzig, 7th January 2022*: This release fixes bugs, and a lot of code clean up has been done.

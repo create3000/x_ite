@@ -1,4 +1,4 @@
-/* X_ITE v4.7.2-1114 */
+/* X_ITE v4.7.3-1115 */
 
 (function () {
 
@@ -13194,10 +13194,6 @@ define ('x_ite/Basic/X3DFieldDefinition',[],function ()
 		this .dataType    = value .getType ();
 		this .name        = name;
 		this .value       = value;
-
-		Object .preventExtensions (this);
-		Object .freeze (this);
-		Object .seal (this);
 	}
 
 	X3DFieldDefinition .prototype .constructor = X3DFieldDefinition;
@@ -13258,7 +13254,7 @@ define ('x_ite/Basic/FieldDefinitionArray',[],function ()
 {
 "use strict";
 
-	var handler =
+	const handler =
 	{
 		get: function (target, key)
 		{
@@ -14508,7 +14504,7 @@ function ($,
 		},
 		addReference: function (reference)
 		{
-			var references = this .getReferences ();
+			const references = this .getReferences ();
 
 			if (references .has (reference .getId ()))
 				return; // throw ???
@@ -14665,7 +14661,7 @@ function ($,
 
 				// Process routes
 
-				var first = true;
+				let first = true;
 
 				this ._fieldInterests .forEach (function (fieldInterest)
 				{
@@ -14696,7 +14692,7 @@ function ($,
 		},
 		fromString: function (string, scene)
 		{
-			var
+			const
 				Parser = require ("x_ite/Parser/Parser"),
 				parser = new Parser (scene);
 
@@ -14939,12 +14935,11 @@ define ('standard/Math/Algorithm',[],function ()
 {
 "use strict";
 
-	const Algorithm =
+	function Algorithm () { }
+
+	Algorithm .prototype =
 	{
-		signum: function (value)
-		{
-			return (0 < value) - (value < 0);
-		},
+		constructor: Algorithm,
 		radians: function (value)
 		{
 			return value * (Math .PI / 180);
@@ -14983,7 +14978,7 @@ define ('standard/Math/Algorithm',[],function ()
 		},
 		slerp: function (source, destination, t)
 		{
-			var cosom = source .dot (destination);
+			let cosom = source .dot (destination);
 
 			if (cosom <= -1)
 				throw new Error ("slerp is not possible: vectors are inverse collinear.");
@@ -15044,31 +15039,11 @@ define ('standard/Math/Algorithm',[],function ()
 		{
 			///  Returns the next power of two of @a n. If n is a power of two, n is returned.
 
-			-- n;
+			if (this .isPowerOfTwo (n))
+				return n;
 
-			for (var k = 1; ! (k & (1 << (4 + 1))); k <<= 1)
-				n |= n >> k;
-
-			return ++ n;
+			return 1 << 32 - Math .clz32 (n);
 		},
-		/*
-		isInt: function(n)
-		{
-			return typeof n === 'number' &&
-			       parseFloat (n) == parseInt (n, 10) && ! isNaN (n);
-		},
-		decimalPlaces: function (n)
-		{
-			var
-				a = Math.abs(n),
-				c = a, count = 1;
-
-			while(! Algorithm .isInt (c) && isFinite (c))
-				c = a * Math .pow (10, count ++);
-
-			return count-1;
-		},
-		*/
 		cmp: function (lhs, rhs)
 		{
 			return lhs > rhs ? 1 : lhs < rhs ? -1 : 0;
@@ -15085,7 +15060,7 @@ define ('standard/Math/Algorithm',[],function ()
 		{
 		   // http://en.cppreference.com/w/cpp/algorithm/lower_bound
 
-			var
+			let
 				index = 0,
 				step  = 0,
 				count = last - first;
@@ -15110,7 +15085,7 @@ define ('standard/Math/Algorithm',[],function ()
 		{
 		   // http://en.cppreference.com/w/cpp/algorithm/upper_bound
 
-			var
+			let
 				index = 0,
 				step  = 0,
 				count = last - first;
@@ -15134,7 +15109,7 @@ define ('standard/Math/Algorithm',[],function ()
 		},
 		set_difference: function (lhs, rhs, result)
 		{
-			for (var key in lhs)
+			for (const key in lhs)
 			{
 				if (key in rhs)
 					continue;
@@ -15146,11 +15121,7 @@ define ('standard/Math/Algorithm',[],function ()
 		},
 	};
 
-	Object .preventExtensions (Algorithm);
-	Object .freeze (Algorithm);
-	Object .seal (Algorithm);
-
-	return Algorithm;
+	return new Algorithm ();
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -15259,7 +15230,7 @@ function (Algorithm)
 		},
 		getHSV: function (result)
 		{
-			var h, s, v;
+			let h, s, v;
 
 			const min = Math .min (this .r_, this .g_, this .b_);
 			const max = Math .max (this .r_, this .g_, this .b_);
@@ -15379,7 +15350,7 @@ function (Algorithm)
 			// Linearely interpolate in HSV space between source color @a a and destination color @a b by an amount of @a t.
 			// Source and destination color must be in HSV space. The resulting HSV color is stored in @a r.
 
-			var
+			let
 				ha = a [0], hb = b [0];
 
 			const
@@ -15406,7 +15377,7 @@ function (Algorithm)
 				PI2  = Math .PI * 2,
 				step = (PI2 - range) * t;
 
-			var h = ha < hb ? ha - step : ha + step;
+			let h = ha < hb ? ha - step : ha + step;
 
 			if (h < 0)
 				h += PI2;
@@ -17092,19 +17063,14 @@ function (Algorithm)
 		},
 		normalize: function ()
 		{
-			const
-				x = this .x,
-				y = this .y;
-
-			var length = Math .sqrt (x * x +
-			                         y * y);
+			let length = Math .hypot (this .x, this .y);
 
 			if (length)
 			{
 				length = 1 / length;
 
-				this .x = x * length;
-				this .y = y * length;
+				this .x *= length;
+				this .y *= length;
 			}
 
 			return this;
@@ -17125,42 +17091,31 @@ function (Algorithm)
 		},
 		abs: function ()
 		{
-			const
-				x = this .x,
-				y = this .y;
-
-			return Math .sqrt (x * x +
-			                   y * y);
+			return Math .hypot (this .x, this .y);
 		},
 		distance: function (vector)
 		{
-			const
-				x = this .x - vector .x,
-				y = this .y - vector .y;
-
-			return Math .sqrt (x * x +
-			                   y * y);
+			return Math .hypot (this .x - vector .x,
+			                    this .y - vector .y);
 		},
-		lerp: function (dest, t)
+		lerp: function (destination, t)
 		{
 			const
 				x = this .x,
 				y = this .y;
 
-			this .x = x + t * (dest .x - x);
-			this .y = y + t * (dest .y - y);
+			this .x = x + t * (destination .x - x);
+			this .y = y + t * (destination .y - y);
 			return this;
 		},
 		min: function (vector)
 		{
-			var
+			let
 				x = this .x,
 				y = this .y;
 
-			for (var i = 0, length = arguments .length; i < length; ++ i)
+			for (const vector of arguments)
 			{
-				const vector = arguments [i];
-
 				x = Math .min (x, vector .x);
 				y = Math .min (y, vector .y);
 			}
@@ -17171,14 +17126,12 @@ function (Algorithm)
 		},
 		max: function (vector)
 		{
-			var
+			let
 				x = this .x,
 				y = this .y;
 
-			for (var i = 0, length = arguments .length; i < length; ++ i)
+			for (const vector of arguments)
 			{
-				const vector = arguments [i];
-
 				x = Math .max (x, vector .x);
 				y = Math .max (y, vector .y);
 			}
@@ -17216,121 +17169,51 @@ function (Algorithm)
 		One: new Vector2 (1, 1),
 		negate: function (vector)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = -vector .x;
-			copy .y = -vector .y;
-			return copy;
+			return vector .copy () .negate ();
 		},
 		add: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x + rhs .x;
-			copy .y = lhs .y + rhs .y;
-			return copy;
+			return lhs .copy () .add (rhs);
 		},
 		subtract: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x - rhs .x;
-			copy .y = lhs .y - rhs .y;
-			return copy;
+			return lhs .copy () .subtract (rhs);
 		},
 		multiply: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x * rhs;
-			copy .y = lhs .y * rhs;
-			return copy;
+			return lhs .copy () .multiply (rhs);
 		},
 		multVec: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x * rhs .x;
-			copy .y = lhs .y * rhs .y;
-			return copy;
+			return lhs .copy () .multVec (rhs);
 		},
 		divide: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x / rhs;
-			copy .y = lhs .y / rhs;
-			return copy;
+			return lhs .copy () .divide (rhs);
 		},
 		divVec: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x / rhs .x;
-			copy .y = lhs .y / rhs .y;
-			return copy;
+			return lhs .copy () .divVec (rhs);
 		},
 		normalize: function (vector)
 		{
-			const
-				copy   = Object .create (this .prototype),
-				x      = vector .x,
-				y      = vector .y;
-
-			var length = Math .sqrt (x * x + y * y);
-
-			if (length)
-			{
-				length = 1 / length;
-
-				copy .x = x * length;
-				copy .y = y * length;
-			}
-			else
-			{
-				copy .x = 0;
-				copy .y = 0;
-			}
-
-			return copy;
+			return vector .copy () .normalize ();
 		},
 		dot: function (lhs, rhs)
 		{
-			return lhs .dot (rhs);
+			return lhs .copy () .dot (rhs);
 		},
-		lerp: function (source, dest, t)
+		lerp: function (source, destination, t)
 		{
-			const
-				x = source .x,
-				y = source .y;
-
-			return new Vector2 (x + t * (dest .x - x),
-			                    y + t * (dest .y - y));
+			return source .copy () .lerp (destination, t);
 		},
 		min: function (lhs, rhs)
 		{
-			var
-				x = lhs .x,
-				y = lhs .y;
-
-			for (var i = 1, length = arguments .length; i < length; ++ i)
-			{
-				const vector = arguments [i];
-
-				x = Math .min (x, vector .x);
-				y = Math .min (y, vector .y);
-			}
-
-			return new Vector2 (x, y);
+			return Vector2 .prototype .min .apply (lhs .copy (), arguments);
 		},
 		max: function (lhs, rhs)
 		{
-			var
-				x = lhs .x,
-				y = lhs .y;
-
-			for (var i = 1, length = arguments .length; i < length; ++ i)
-			{
-				const vector = arguments [i];
-
-				x = Math .max (x, vector .x);
-				y = Math .max (y, vector .y);
-			}
-
-			return new Vector2 (x, y);
+			return Vector2 .prototype .max .apply (lhs .copy (), arguments);
 		},
 	});
 
@@ -17631,22 +17514,15 @@ function (Algorithm)
 		},
 		normalize: function ()
 		{
-			const
-				x = this .x,
-				y = this .y,
-				z = this .z;
-
-			var length = Math .sqrt (x * x +
-			                         y * y +
-			                         z * z);
+			let length = Math .hypot (this .x, this .y, this .z);
 
 			if (length)
 			{
 				length = 1 / length;
 
-				this .x = x * length;
-				this .y = y * length;
-				this .z = z * length;
+				this .x *= length;
+				this .y *= length;
+				this .z *= length;
 			}
 
 			return this;
@@ -17659,7 +17535,7 @@ function (Algorithm)
 		},
 		norm: function ()
 		{
-			var
+			let
 				x = this .x,
 				y = this .y,
 				z = this .z;
@@ -17670,36 +17546,24 @@ function (Algorithm)
 		},
 		abs: function ()
 		{
-			const
-				x = this .x,
-				y = this .y,
-				z = this .z;
-
-			return Math .sqrt (x * x +
-			                   y * y +
-			                   z * z);
+			return Math .hypot (this .x, this .y, this .z);
 		},
 		distance: function (vector)
 		{
-			const
-				x = this .x - vector .x,
-				y = this .y - vector .y,
-				z = this .z - vector .z;
-
-			return Math .sqrt (x * x +
-			                   y * y +
-			                   z * z);
+			return Math .hypot (this .x - vector .x,
+			                    this .y - vector .y,
+			                    this .z - vector .z);
 		},
-		lerp: function (dest, t)
+		lerp: function (destination, t)
 		{
 			const
 				x = this .x,
 				y = this .y,
 				z = this .z;
 
-			this .x = x + t * (dest .x - x);
-			this .y = y + t * (dest .y - y);
-			this .z = z + t * (dest .z - z);
+			this .x = x + t * (destination .x - x);
+			this .y = y + t * (destination .y - y);
+			this .z = z + t * (destination .z - z);
 			return this;
 		},
 		slerp: (function ()
@@ -17713,15 +17577,13 @@ function (Algorithm)
 		})(),
 		min: function (vector)
 		{
-			var
+			let
 				x = this .x,
 				y = this .y,
 				z = this .z;
 
-			for (var i = 0, length = arguments .length; i < length; ++ i)
+			for (const vector of arguments)
 			{
-				const vector = arguments [i];
-
 				x = Math .min (x, vector .x);
 				y = Math .min (y, vector .y);
 				z = Math .min (z, vector .z);
@@ -17734,15 +17596,13 @@ function (Algorithm)
 		},
 		max: function (vector)
 		{
-			var
+			let
 				x = this .x,
 				y = this .y,
 				z = this .z;
 
-			for (var i = 0, length = arguments .length; i < length; ++ i)
+			for (const vector of arguments)
 			{
-				const vector = arguments [i];
-
 				x = Math .max (x, vector .x);
 				y = Math .max (y, vector .y);
 				z = Math .max (z, vector .z);
@@ -17794,154 +17654,59 @@ function (Algorithm)
 		zAxis: new Vector3 (0, 0, 1),
 		negate: function (vector)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = -vector .x;
-			copy .y = -vector .y;
-			copy .z = -vector .z;
-			return copy;
+			return vector .copy () .negate ();
 		},
 		add: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x + rhs .x;
-			copy .y = lhs .y + rhs .y;
-			copy .z = lhs .z + rhs .z;
-			return copy;
+			return lhs .copy () .add (rhs);
 		},
 		subtract: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x - rhs .x;
-			copy .y = lhs .y - rhs .y;
-			copy .z = lhs .z - rhs .z;
-			return copy;
+			return lhs .copy () .subtract (rhs);
 		},
 		multiply: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x * rhs;
-			copy .y = lhs .y * rhs;
-			copy .z = lhs .z * rhs;
-			return copy;
+			return lhs .copy () .multiply (rhs);
 		},
 		multVec: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x * rhs .x;
-			copy .y = lhs .y * rhs .y;
-			copy .z = lhs .z * rhs .z;
-			return copy;
+			return lhs .copy () .multVec (rhs);
 		},
 		divide: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x / rhs;
-			copy .y = lhs .y / rhs;
-			copy .z = lhs .z / rhs;
-			return copy;
+			return lhs .copy () .divide (rhs);
 		},
 		divVec: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x / rhs .x;
-			copy .y = lhs .y / rhs .y;
-			copy .z = lhs .z / rhs .z;
-			return copy;
+			return lhs .copy () .divVec (rhs);
 		},
 		cross: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .y * rhs .z - lhs .z * rhs .y;
-			copy .y = lhs .z * rhs .x - lhs .x * rhs .z;
-			copy .z = lhs .x * rhs .y - lhs .y * rhs .x;
-			return copy;
+			return lhs .copy () .cross (rhs);
 		},
 		normalize: function (vector)
 		{
-			const
-				copy   = Object .create (this .prototype),
-				x      = vector .x,
-				y      = vector .y,
-				z      = vector .z;
-
-			var length = Math .sqrt (x * x + y * y + z * z);
-
-			if (length)
-			{
-				length = 1 / length;
-
-				copy .x = x * length;
-				copy .y = y * length;
-				copy .z = z * length;
-			}
-			else
-			{
-				copy .x = 0;
-				copy .y = 0;
-				copy .z = 0;
-			}
-
-			return copy;
+			return vector .copy () .normalize ();
 		},
 		dot: function (lhs, rhs)
 		{
-			return lhs .dot (rhs);
+			return lhs .copy () .dot (rhs);
 		},
-		lerp: function (source, dest, t)
+		lerp: function (source, destination, t)
 		{
-			const
-				x = source .x,
-				y = source .y,
-				z = source .z;
-
-			return new Vector3 (x + t * (dest .x - x),
-			                    y + t * (dest .y - y),
-			                    z + t * (dest .z - z));
+			return source .copy () .lerp (destination, t);
 		},
-		slerp: (function ()
+		slerp: function (source, destination, t)
 		{
-			const tmp = new Vector3 (0, 0, 0);
-
-			return function (source, destination, t)
-			{
-				return Algorithm .simpleSlerp (source .copy (), tmp .assign (destination), t);
-			};
-		})(),
+			return source .copy () .slerp (destination, t);
+		},
 		min: function (lhs, rhs)
 		{
-			var
-				x = lhs .x,
-				y = lhs .y,
-				z = lhs .z;
-
-			for (var i = 1, length = arguments .length; i < length; ++ i)
-			{
-				const vector = arguments [i];
-
-				x = Math .min (x, vector .x);
-				y = Math .min (y, vector .y);
-				z = Math .min (z, vector .z);
-			}
-
-			return new Vector3 (x, y, z);
+			return Vector3 .prototype .min .apply (lhs .copy (), arguments);
 		},
 		max: function (lhs, rhs)
 		{
-			var
-				x = lhs .x,
-				y = lhs .y,
-				z = lhs .z;
-
-			for (var i = 1, length = arguments .length; i < length; ++ i)
-			{
-				const vector = arguments [i];
-
-				x = Math .max (x, vector .x);
-				y = Math .max (y, vector .y);
-				z = Math .max (z, vector .z);
-			}
-
-			return new Vector3 (x, y, z);
+			return Vector3 .prototype .max .apply (lhs .copy (), arguments);
 		},
 	});
 
@@ -18265,7 +18030,7 @@ define ('standard/Math/Algorithms/eigendecomposition',[],function ()
 			values  = result .values,
 			vectors = result .vectors;
 
-		var
+		let
 			sm,                // smallest entry
 			theta,             // angle for Jacobi rotation
 			c, s, t,           // cosine, sine, tangent of theta
@@ -18800,7 +18565,7 @@ function (Vector2,
 		},
 		transpose: function ()
 		{
-			var tmp;
+			let tmp;
 
 			tmp = this [1]; this [1] = this [3]; this [3] = tmp;
 			tmp = this [2]; this [2] = this [6]; this [6] = tmp;
@@ -18827,7 +18592,7 @@ function (Vector2,
 				t12 = m6 * m1,
 				t14 = m6 * m4;
 
-			var d = (t4 * m8 - t6 * m5 - t8 * m8 + t10 * m2 + t12 * m5 - t14 * m2);
+			let d = (t4 * m8 - t6 * m5 - t8 * m8 + t10 * m2 + t12 * m5 - t14 * m2);
 
 			if (d === 0)
 				throw new Error ("Matrix3 .inverse: determinant is 0.");
@@ -19115,104 +18880,19 @@ function (Vector2,
 		},
 		transpose: function (matrix)
 		{
-			const copy = Object .create (this .prototype);
-			copy [0] = matrix [0]; copy [1] = matrix [3]; copy [2] = matrix [6];
-			copy [3] = matrix [1]; copy [4] = matrix [4]; copy [5] = matrix [7];
-			copy [6] = matrix [2]; copy [7] = matrix [5]; copy [8] = matrix [8];
-			return copy;
+			return matrix .copy () .transpose ();
 		},
 		inverse: function (matrix)
 		{
-			const
-				copy = Object .create (this .prototype),
-				m0  = matrix [0],
-				m1  = matrix [1],
-				m2  = matrix [2],
-				m3  = matrix [3],
-				m4  = matrix [4],
-				m5  = matrix [5],
-				m6  = matrix [6],
-				m7  = matrix [7],
-				m8  = matrix [8],
-				t4  = m0 * m4,
-				t6  = m0 * m7,
-				t8  = m3 * m1,
-				t10 = m3 * m7,
-				t12 = m6 * m1,
-				t14 = m6 * m4;
-
-			var d = (t4 * m8 - t6 * m5 - t8 * m8 + t10 * m2 + t12 * m5 - t14 * m2);
-
-			if (d === 0)
-				throw new Error ("Matrix3 .inverse: determinant is 0.");
-
-			d = 1 / d;
-
-			const
-				b0 =  (m4 * m8 - m7 * m5) * d,
-				b1 = -(m1 * m8 - m7 * m2) * d,
-				b2 =  (m1 * m5 - m4 * m2) * d,
-				b3 = -(m3 * m8 - m6 * m5) * d,
-				b4 =  (m0 * m8 - m6 * m2) * d,
-				b5 = -(m0 * m5 - m3 * m2) * d;
-
-			copy [0] = b0;
-			copy [1] = b1;
-			copy [2] = b2;
-			copy [3] = b3;
-			copy [4] = b4;
-			copy [5] = b5;
-			copy [6] =  (t10 - t14) * d;
-			copy [7] = -(t6 - t12) * d;
-			copy [8] =  (t4 - t8) * d;
-
-			return copy;
+			return matrix .copy () .inverse ();
 		},
 		multLeft: function (lhs, rhs)
 		{
-			const
-				copy = Object .create (this .prototype),
-				a0 = lhs [0], a1 = lhs [1], a2 = lhs [2],
-				a3 = lhs [3], a4 = lhs [4], a5 = lhs [5],
-				a6 = lhs [6], a7 = lhs [7], a8 = lhs [8],
-				b0 = rhs [0], b1 = rhs [1], b2 = rhs [2],
-				b3 = rhs [3], b4 = rhs [4], b5 = rhs [5],
-				b6 = rhs [6], b7 = rhs [7], b8 = rhs [8];
-
-			copy [0] = a0 * b0 + a3 * b1 + a6 * b2;
-			copy [1] = a1 * b0 + a4 * b1 + a7 * b2;
-			copy [2] = a2 * b0 + a5 * b1 + a8 * b2;
-			copy [3] = a0 * b3 + a3 * b4 + a6 * b5;
-			copy [4] = a1 * b3 + a4 * b4 + a7 * b5;
-			copy [5] = a2 * b3 + a5 * b4 + a8 * b5;
-			copy [6] = a0 * b6 + a3 * b7 + a6 * b8;
-			copy [7] = a1 * b6 + a4 * b7 + a7 * b8;
-			copy [8] = a2 * b6 + a5 * b7 + a8 * b8;
-
-			return copy;
+			return lhs .copy () .multLeft (rhs);
 		},
 		multRight: function (lhs, rhs)
 		{
-			const
-				copy = Object .create (this .prototype),
-				a0 = lhs [0], a1 = lhs [1], a2 = lhs [2],
-				a3 = lhs [3], a4 = lhs [4], a5 = lhs [5],
-				a6 = lhs [6], a7 = lhs [7], a8 = lhs [8],
-				b0 = rhs [0], b1 = rhs [1], b2 = rhs [2],
-				b3 = rhs [3], b4 = rhs [4], b5 = rhs [5],
-				b6 = rhs [6], b7 = rhs [7], b8 = rhs [8];
-
-			copy [0] = a0 * b0 + a1 * b3 + a2 * b6;
-			copy [1] = a0 * b1 + a1 * b4 + a2 * b7;
-			copy [2] = a0 * b2 + a1 * b5 + a2 * b8;
-			copy [3] = a3 * b0 + a4 * b3 + a5 * b6;
-			copy [4] = a3 * b1 + a4 * b4 + a5 * b7;
-			copy [5] = a3 * b2 + a4 * b5 + a5 * b8;
-			copy [6] = a6 * b0 + a7 * b3 + a8 * b6;
-			copy [7] = a6 * b1 + a7 * b4 + a8 * b7;
-			copy [8] = a6 * b2 + a7 * b5 + a8 * b8;
-
-			return copy;
+			return lhs .copy () .multRight (rhs);
 		},
 	});
 
@@ -19687,25 +19367,16 @@ function (Algorithm)
 		},
 		normalize: function ()
 		{
-			const
-				x = this .x,
-				y = this .y,
-				z = this .z,
-				w = this .w;
-
-			var length = Math .sqrt (x * x +
-			                         y * y +
-			                         z * z +
-			                         w * w);
+			let length = Math .hypot (this .x, this .y, this .z, this .w);
 
 			if (length)
 			{
 				length = 1 / length;
 
-				this .x = x * length;
-				this .y = y * length;
-				this .z = z * length;
-				this .w = w * length;
+				this .x *= length;
+				this .y *= length;
+				this .z *= length;
+				this .w *= length;
 			}
 
 			return this;
@@ -19732,31 +19403,16 @@ function (Algorithm)
 		},
 		abs: function ()
 		{
-			const
-				x = this .x,
-				y = this .y,
-				z = this .z,
-				w = this .w;
-
-			return Math .sqrt (x * x +
-			                   y * y +
-			                   z * z +
-			                   w * w);
+			return Math .hypot (this .x, this .y, this .z, this .w);
 		},
 		distance: function (vector)
 		{
-			const
-				x = this .x - vector .x,
-				y = this .y - vector .y,
-				z = this .z - vector .z,
-				w = this .w - vector .w;
-
-			return Math .sqrt (x * x +
-			                   y * y +
-			                   z * z +
-			                   w * w);
+			return Math .hypot (this .x - vector .x,
+			                    this .y - vector .y,
+			                    this .z - vector .z,
+			                    this .w - vector .w);
 		},
-		lerp: function (dest, t)
+		lerp: function (destination, t)
 		{
 			const
 				x = this .x,
@@ -19764,24 +19420,22 @@ function (Algorithm)
 				z = this .z,
 				w = this .w;
 
-			this .x = x + t * (dest .x - x);
-			this .y = y + t * (dest .y - y);
-			this .z = z + t * (dest .z - z);
-			this .w = w + t * (dest .w - w);
+			this .x = x + t * (destination .x - x);
+			this .y = y + t * (destination .y - y);
+			this .z = z + t * (destination .z - z);
+			this .w = w + t * (destination .w - w);
 			return this;
 		},
 		min: function (vector)
 		{
-			var
+			let
 				x = this .x,
 				y = this .y,
 				z = this .z,
 				w = this .w;
 
-			for (var i = 0, length = arguments .length; i < length; ++ i)
+			for (const vector of arguments)
 			{
-				const vector = arguments [i];
-
 				x = Math .min (x, vector .x);
 				y = Math .min (y, vector .y);
 				z = Math .min (z, vector .z);
@@ -19796,16 +19450,14 @@ function (Algorithm)
 		},
 		max: function (vector)
 		{
-			var
+			let
 				x = this .x,
 				y = this .y,
 				z = this .z,
 				w = this .w;
 
-			for (var i = 0, length = arguments .length; i < length; ++ i)
+			for (const vector of arguments)
 			{
-				const vector = arguments [i];
-
 				x = Math .max (x, vector .x);
 				y = Math .max (y, vector .y);
 				z = Math .max (z, vector .z);
@@ -19869,153 +19521,51 @@ function (Algorithm)
 		wAxis: new Vector4 (0, 0, 0, 1),
 		negate: function (vector)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = -vector .x;
-			copy .y = -vector .y;
-			copy .z = -vector .z;
-			copy .w = -vector .w;
-			return copy;
+			return vector .copy () .negate ();
 		},
 		add: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x + rhs .x;
-			copy .y = lhs .y + rhs .y;
-			copy .z = lhs .z + rhs .z;
-			copy .w = lhs .w + rhs .w;
-			return copy;
+			return lhs .copy () .add (rhs);
 		},
 		subtract: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x - rhs .x;
-			copy .y = lhs .y - rhs .y;
-			copy .z = lhs .z - rhs .z;
-			copy .w = lhs .w - rhs .w;
-			return copy;
+			return lhs .copy () .subtract (rhs);
 		},
 		multiply: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x * rhs;
-			copy .y = lhs .y * rhs;
-			copy .z = lhs .z * rhs;
-			copy .w = lhs .w * rhs;
-			return copy;
+			return lhs .copy () .multiply (rhs);
 		},
 		multVec: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x * rhs .x;
-			copy .y = lhs .y * rhs .y;
-			copy .z = lhs .z * rhs .z;
-			copy .w = lhs .w * rhs .w;
-			return copy;
+			return lhs .copy () .multVec (rhs);
 		},
 		divide: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x / rhs;
-			copy .y = lhs .y / rhs;
-			copy .z = lhs .z / rhs;
-			copy .w = lhs .w / rhs;
-			return copy;
+			return lhs .copy () .divide (rhs);
 		},
 		divVec: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x / rhs .x;
-			copy .y = lhs .y / rhs .y;
-			copy .z = lhs .z / rhs .z;
-			copy .w = lhs .w / rhs .w;
-			return copy;
+			return lhs .copy () .divVec (rhs);
 		},
 		normalize: function (vector)
 		{
-			const
-				copy   = Object .create (this .prototype),
-				x      = vector .x,
-				y      = vector .y,
-				z      = vector .z,
-				w      = vector .w;
-
-			var length = Math .sqrt (x * x + y * y + z * z + w * w);
-
-			if (length)
-			{
-				length = 1 / length;
-
-				copy .x = x * length;
-				copy .y = y * length;
-				copy .z = z * length;
-				copy .w = w * length;
-			}
-			else
-			{
-				copy .x = 0;
-				copy .y = 0;
-				copy .z = 0;
-				copy .w = 0;
-			}
-
-			return copy;
+			return vector .copy () .normalize ();
 		},
 		dot: function (lhs, rhs)
 		{
-			return lhs .dot (rhs);
+			return lhs .copy () .dot (rhs);
 		},
-		lerp: function (source, dest, t)
+		lerp: function (source, destination, t)
 		{
-			const
-				x = source .x,
-				y = source .y,
-				z = source .z,
-				w = source .w;
-
-			return new Vector4 (x + t * (dest .x - x),
-			                    y + t * (dest .y - y),
-			                    z + t * (dest .z - z),
-			                    w + t * (dest .w - w));
+			return source .copy () .lerp (destination, t);
 		},
 		min: function (lhs, rhs)
 		{
-			var
-				x = lhs .x,
-				y = lhs .y,
-				z = lhs .z,
-				w = lhs .w;
-
-			for (var i = 1, length = arguments .length; i < length; ++ i)
-			{
-				const vector = arguments [i];
-
-				x = Math .min (x, vector .x);
-				y = Math .min (y, vector .y);
-				z = Math .min (z, vector .z);
-				w = Math .min (w, vector .w);
-			}
-
-			return new Vector4 (x, y, z, w);
+			return Vector4 .prototype .min .apply (lhs .copy (), arguments);
 		},
 		max: function (lhs, rhs)
 		{
-			var
-				x = lhs .x,
-				y = lhs .y,
-				z = lhs .z,
-				w = lhs .w;
-
-			for (var i = 1, length = arguments .length; i < length; ++ i)
-			{
-				const vector = arguments [i];
-
-				x = Math .max (x, vector .x);
-				y = Math .max (y, vector .y);
-				z = Math .max (z, vector .z);
-				w = Math .max (w, vector .w);
-			}
-
-			return new Vector4 (x, y, z, w);
+			return Vector4 .prototype .max .apply (lhs .copy (), arguments);
 		},
 	});
 
@@ -20118,7 +19668,7 @@ function (Vector3, Algorithm)
 		},
 		setMatrix: function (matrix)
 		{
-			var i;
+			let i;
 
 			// First, find largest diagonal in matrix:
 			if (matrix [0] > matrix [4])
@@ -20314,10 +19864,7 @@ function (Vector3, Algorithm)
 		},
 		normalize: function ()
 		{
-			var length = Math .sqrt (this .x * this .x +
-			                         this .y * this .y +
-			                         this .z * this .z +
-			                      	 this .w * this .w);
+			let length = Math .hypot (this .x, this .y, this .z, this .w);
 
 			if (length)
 			{
@@ -20347,10 +19894,7 @@ function (Vector3, Algorithm)
 		},
 		abs: function ()
 		{
-			return Math .sqrt (this .x * this .x +
-			                   this .y * this .y +
-			                   this .z * this .z +
-			                   this .w * this .w);
+			return Math .hypot (this .x, this .y, this .z, this .w);
 		},
 		pow: function (exponent)
 		{
@@ -20414,9 +19958,9 @@ function (Vector3, Algorithm)
 			this .w = w;
 			return this;
 		},
-		slerp: function (dest, t)
+		slerp: function (destination, t)
 		{
-			return Algorithm .slerp (this, t1 .assign (dest), t);
+			return Algorithm .slerp (this, t1 .assign (destination), t);
 		},
 		squad: function (a, b, destination, t)
 		{
@@ -20493,138 +20037,54 @@ function (Vector3, Algorithm)
 
 	Object .assign (Quaternion,
 	{
-		negate: function (vector)
+		negate: function (quat)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = -this .x;
-			copy .y = -this .y;
-			copy .z = -this .z;
-			copy .w = -this .w;
-			return copy;
+			return quat .copy () .negate ();
 		},
-		inverse: function (vector)
+		inverse: function (quat)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = -vector .x;
-			copy .y = -vector .y;
-			copy .z = -vector .z;
-			copy .w =  vector .w;
-			return copy;
+			return quat .copy () .inverse ();
 		},
 		add: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x + rhs .x;
-			copy .y = lhs .y + rhs .y;
-			copy .z = lhs .z + rhs .z;
-			copy .w = lhs .w + rhs .w;
-			return copy;
+			return lhs .copy () .add (rhs);
 		},
 		subtract: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x - rhs .x;
-			copy .y = lhs .y - rhs .y;
-			copy .z = lhs .z - rhs .z;
-			copy .w = lhs .w - rhs .w;
-			return copy;
+			return lhs .copy () .subtract (rhs);
 		},
 		multiply: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x * rhs;
-			copy .y = lhs .y * rhs;
-			copy .z = lhs .z * rhs;
-			copy .w = lhs .w * rhs;
-			return copy;
+			return lhs .copy () .multiply (rhs);
 		},
 		multLeft: function (lhs, rhs)
 		{
-			const
-				copy = Object .create (this .prototype),
-				ax = lhs .x, ay = lhs .y, az = lhs .z, aw = lhs .w,
-				bx = rhs .x, by = rhs .y, bz = rhs .z, bw = rhs .w;
-
-			copy .x = aw * bx + ax * bw + ay * bz - az * by;
-			copy .y = aw * by + ay * bw + az * bx - ax * bz;
-			copy .z = aw * bz + az * bw + ax * by - ay * bx;
-			copy .w = aw * bw - ax * bx - ay * by - az * bz;
-
-			return copy;
+			return lhs .copy () .multLeft (rhs);
 		},
 		multRight: function (lhs, rhs)
 		{
-			const
-				copy = Object .create (this .prototype),
-				ax = lhs .x, ay = lhs .y, az = lhs .z, aw = lhs .w,
-				bx = rhs .x, by = rhs .y, bz = rhs .z, bw = rhs .w;
-
-			copy .x = bw * ax + bx * aw + by * az - bz * ay;
-			copy .y = bw * ay + by * aw + bz * ax - bx * az;
-			copy .z = bw * az + bz * aw + bx * ay - by * ax;
-			copy .w = bw * aw - bx * ax - by * ay - bz * az;
-
-			return copy;
+			return lhs .copy () .multRight (rhs);
 		},
 		divide: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .x = lhs .x / rhs;
-			copy .y = lhs .y / rhs;
-			copy .z = lhs .z / rhs;
-			copy .w = lhs .w / rhs;
-			return copy;
+			return lhs .copy () .divide (rhs);
 		},
 		normalize: function (quat)
 		{
-			const
-				copy   = Object .create (this .prototype),
-				x      = quat .x,
-				y      = quat .y,
-				z      = quat .z,
-				w      = quat .w;
-
-			var length = Math .sqrt (x * x + y * y + z * z + w * w);
-
-			if (length)
-			{
-				length = 1 / length;
-
-				copy .x = x * length;
-				copy .y = y * length;
-				copy .z = z * length;
-				copy .w = w * length;
-			}
-			else
-			{
-				copy .x = 0;
-				copy .y = 0;
-				copy .z = 0;
-				copy .w = 0;
-			}
-
-			return copy;
+			return quat .copy () .normalize ();
 		},
-		slerp: function (source, dest, t)
+		slerp: function (source, destination, t)
 		{
-			return Algorithm .slerp (source .copy (), t2 .assign (dest), t);
+			return source .copy () .slerp (destination, t);
 		},
 		squad: function (source, a, b, destination, t)
 		{
-			// We must use shortest path slerp to prevent flipping.  Also see spline.
-
-			return Algorithm .slerp (Algorithm .slerp (source .copy (), t1 .assign (destination), t),
-                                  Algorithm .slerp (t2 .assign (a), t3 .assign (b), t),
-                                  2 * t * (1 - t));
+			return source .copy () .squad (a, b, destination, t);
 		},
 		/*
 		bezier: function (q0, a, b, q1, t)
 		{
-			const q11 = Algorithm .slerp (q0,  a, t);
-			const q12 = Algorithm .slerp ( a,  b, t);
-			const q13 = Algorithm .slerp ( b, q1, t);
-
-			return Algorithm .slerp (Algorithm .slerp (q11, q12, t), Algorithm .slerp (q12, q13, t), t);
+			return q0 .copy () .squad (a, b, q1, t);
 		},
 		*/
 		spline: function (Q0, Q1, Q2)
@@ -20822,7 +20282,7 @@ function (Quaternion,
 			this .z_     = z;
 			this .angle_ = angle;
 
-			const scale = Math .sqrt (x * x + y * y + z * z);
+			const scale = Math .hypot (x, y, z);
 
 			if (scale === 0)
 			{
@@ -21103,39 +20563,25 @@ function (Quaternion,
 		Identity: new Rotation4 (),
 		inverse: function (rotation)
 		{
-			const copy = Object .create (this .prototype);
-			copy .value = Quaternion .inverse (rotation .value);
-			copy .update ();
-			return copy;
+			return rotation .copy () .inverse ();
 		},
 		multRight: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .value = Quaternion .multRight (lhs .value, rhs .value);
-			copy .update ();
-			return copy;
+			return lhs .copy () .multRight (rhs);
 		},
-		normalize: function ()
+		normalize: function (rotation)
 		{
-			const copy = Object .create (this .prototype);
-			copy .value = rotation .value .copy ();
-			copy .update ();
-			return copy;
+			return rotation .copy () .normalize ();
 		},
 		slerp: function (source, destination, t)
 		{
-			const copy = Object .create (this .prototype);
-			copy .value = Quaternion .slerp (source .value, destination .value, t);
-			copy .update ();
-			return copy;
+			return source .copy () .slerp (destination, t);
 		},
 		squad: function (source, a, b, destination, t)
 		{
-			const copy = Object .create (this .prototype);
-			copy .value = Quaternion .squad (source .value, a, b, destination .value, t);
-			copy .update ();
-			return copy;
+			return source .copy () .squad (a, b, destination, t);
 		},
+		/*
 		bezier: function (source, a, b, destination, t)
 		{
 			const copy = Object .create (this .prototype);
@@ -21143,6 +20589,7 @@ function (Quaternion,
 			copy .update ();
 			return copy;
 		},
+		*/
 		spline: function (q0, q1, q2)
 		{
 			const copy = Object .create (this .prototype);
@@ -21657,7 +21104,7 @@ function (Vector3,
 		},
 		transpose: function ()
 		{
-			var tmp;
+			let tmp;
 
 			tmp = this [ 1]; this [ 1] = this [ 4]; this [ 4] = tmp;
 			tmp = this [ 2]; this [ 2] = this [ 8]; this [ 8] = tmp;
@@ -21716,7 +21163,7 @@ function (Vector3,
 				J = d * m01 + i * m05 + r * m13 - ((e * m01) + (h * m05) + (x * m13)),
 				K = g * m01 + j * m05 + x * m09 - ((f * m01) + (o * m05) + (r * m09));
 
-			var B = m00 * H + m04 * I + m08 * J + m12 * K;
+			let B = m00 * H + m04 * I + m08 * J + m12 * K;
 
 			if (B === 0)
 				throw new Error ("Matrix4 .inverse: determinant is 0.");
@@ -22078,151 +21525,19 @@ function (Vector3,
 		},
 		transpose: function (matrix)
 		{
-			const copy = Object .create (this .prototype);
-			copy [ 0] = matrix [ 0]; copy [ 1] = matrix [ 4]; copy [ 2] = matrix [ 8]; copy [ 3] = matrix [12];
-			copy [ 4] = matrix [ 1]; copy [ 5] = matrix [ 5]; copy [ 6] = matrix [ 9]; copy [ 7] = matrix [13];
-			copy [ 8] = matrix [ 2]; copy [ 9] = matrix [ 6]; copy [10] = matrix [10]; copy [11] = matrix [14];
-			copy [12] = matrix [ 3]; copy [13] = matrix [ 7]; copy [14] = matrix [11]; copy [15] = matrix [15];
-			return copy;
+			return matrix .copy () .transpose ();
 		},
 		inverse: function (matrix)
 		{
-			const
-				copy = Object .create (this .prototype),
-				m00 = matrix [ 0],
-				m01 = matrix [ 1],
-				m02 = matrix [ 2],
-				m03 = matrix [ 3],
-				m04 = matrix [ 4],
-				m05 = matrix [ 5],
-				m06 = matrix [ 6],
-				m07 = matrix [ 7],
-				m08 = matrix [ 8],
-				m09 = matrix [ 9],
-				m10 = matrix [10],
-				m11 = matrix [11],
-				m12 = matrix [12],
-				m13 = matrix [13],
-				m14 = matrix [14],
-				m15 = matrix [15],
-				b = m10 * m15,
-				c = m14 * m11,
-				d = m06 * m15,
-				e = m14 * m07,
-				f = m06 * m11,
-				g = m10 * m07,
-				h = m02 * m15,
-				i = m14 * m03,
-				j = m02 * m11,
-				o = m10 * m03,
-				r = m02 * m07,
-				x = m06 * m03,
-				t = m08 * m13,
-				p = m12 * m09,
-				v = m04 * m13,
-				s = m12 * m05,
-				y = m04 * m09,
-				z = m08 * m05,
-				A = m00 * m13,
-				C = m12 * m01,
-				D = m00 * m09,
-				E = m08 * m01,
-				F = m00 * m05,
-				G = m04 * m01,
-				H = b * m05 + e * m09 + f * m13 - ((c * m05) + (d * m09) + (g * m13)),
-				I = c * m01 + h * m09 + o * m13 - ((b * m01) + (i * m09) + (j * m13)),
-				J = d * m01 + i * m05 + r * m13 - ((e * m01) + (h * m05) + (x * m13)),
-				K = g * m01 + j * m05 + x * m09 - ((f * m01) + (o * m05) + (r * m09));
-
-			var B = m00 * H + m04 * I + m08 * J + m12 * K;
-
-			if (B == 0)
-				throw new Error ("Matrix4 .inverse: determinant is 0.");
-
-			B = 1 / B;
-
-			copy [ 0] = B * H;
-			copy [ 1] = B * I;
-			copy [ 2] = B * J;
-			copy [ 3] = B * K;
-			copy [ 4] = B * (c * m04 + d * m08 + g * m12 - (b * m04) - (e * m08) - (f * m12));
-			copy [ 5] = B * (b * m00 + i * m08 + j * m12 - (c * m00) - (h * m08) - (o * m12));
-			copy [ 6] = B * (e * m00 + h * m04 + x * m12 - (d * m00) - (i * m04) - (r * m12));
-			copy [ 7] = B * (f * m00 + o * m04 + r * m08 - (g * m00) - (j * m04) - (x * m08));
-			copy [ 8] = B * (t * m07 + s * m11 + y * m15 - (p * m07) - (v * m11) - (z * m15));
-			copy [ 9] = B * (p * m03 + A * m11 + E * m15 - (t * m03) - (C * m11) - (D * m15));
-			copy [10] = B * (v * m03 + C * m07 + F * m15 - (s * m03) - (A * m07) - (G * m15));
-			copy [11] = B * (z * m03 + D * m07 + G * m11 - (y * m03) - (E * m07) - (F * m11));
-			copy [12] = B * (v * m10 + z * m14 + p * m06 - (y * m14) - (t * m06) - (s * m10));
-			copy [13] = B * (D * m14 + t * m02 + C * m10 - (A * m10) - (E * m14) - (p * m02));
-			copy [14] = B * (A * m06 + G * m14 + s * m02 - (F * m14) - (v * m02) - (C * m06));
-			copy [15] = B * (F * m10 + y * m02 + E * m06 - (D * m06) - (G * m10) - (z * m02));
-
-			return copy;
+			return matrix .copy () .inverse ();
 		},
 		multLeft: function (lhs, rhs)
 		{
-			const
-				copy = Object .create (this .prototype),
-				a00 = lhs [ 0], a01 = lhs [ 1], a02 = lhs [ 2], a03 = lhs [ 3],
-				a04 = lhs [ 4], a05 = lhs [ 5], a06 = lhs [ 6], a07 = lhs [ 7],
-				a08 = lhs [ 8], a09 = lhs [ 9], a10 = lhs [10], a11 = lhs [11],
-				a12 = lhs [12], a13 = lhs [13], a14 = lhs [14], a15 = lhs [15],
-				b00 = rhs [ 0], b01 = rhs [ 1], b02 = rhs [ 2], b03 = rhs [ 3],
-				b04 = rhs [ 4], b05 = rhs [ 5], b06 = rhs [ 6], b07 = rhs [ 7],
-				b08 = rhs [ 8], b09 = rhs [ 9], b10 = rhs [10], b11 = rhs [11],
-				b12 = rhs [12], b13 = rhs [13], b14 = rhs [14], b15 = rhs [15];
-
-			copy [ 0] = a00 * b00 + a04 * b01 + a08 * b02 + a12 * b03;
-			copy [ 1] = a01 * b00 + a05 * b01 + a09 * b02 + a13 * b03;
-			copy [ 2] = a02 * b00 + a06 * b01 + a10 * b02 + a14 * b03;
-			copy [ 3] = a03 * b00 + a07 * b01 + a11 * b02 + a15 * b03;
-			copy [ 4] = a00 * b04 + a04 * b05 + a08 * b06 + a12 * b07;
-			copy [ 5] = a01 * b04 + a05 * b05 + a09 * b06 + a13 * b07;
-			copy [ 6] = a02 * b04 + a06 * b05 + a10 * b06 + a14 * b07;
-			copy [ 7] = a03 * b04 + a07 * b05 + a11 * b06 + a15 * b07;
-			copy [ 8] = a00 * b08 + a04 * b09 + a08 * b10 + a12 * b11;
-			copy [ 9] = a01 * b08 + a05 * b09 + a09 * b10 + a13 * b11;
-			copy [10] = a02 * b08 + a06 * b09 + a10 * b10 + a14 * b11;
-			copy [11] = a03 * b08 + a07 * b09 + a11 * b10 + a15 * b11;
-			copy [12] = a00 * b12 + a04 * b13 + a08 * b14 + a12 * b15;
-			copy [13] = a01 * b12 + a05 * b13 + a09 * b14 + a13 * b15;
-			copy [14] = a02 * b12 + a06 * b13 + a10 * b14 + a14 * b15;
-			copy [15] = a03 * b12 + a07 * b13 + a11 * b14 + a15 * b15;
-
-			return copy;
+			return lhs .copy () .multLeft (rhs);
 		},
 		multRight: function (lhs, rhs)
 		{
-			const
-				copy = Object .create (this .prototype),
-				a00 = lhs [ 0], a01 = lhs [ 1], a02 = lhs [ 2], a03 = lhs [ 3],
-				a04 = lhs [ 4], a05 = lhs [ 5], a06 = lhs [ 6], a07 = lhs [ 7],
-				a08 = lhs [ 8], a09 = lhs [ 9], a10 = lhs [10], a11 = lhs [11],
-				a12 = lhs [12], a13 = lhs [13], a14 = lhs [14], a15 = lhs [15],
-				b00 = rhs [ 0], b01 = rhs [ 1], b02 = rhs [ 2], b03 = rhs [ 3],
-				b04 = rhs [ 4], b05 = rhs [ 5], b06 = rhs [ 6], b07 = rhs [ 7],
-				b08 = rhs [ 8], b09 = rhs [ 9], b10 = rhs [10], b11 = rhs [11],
-				b12 = rhs [12], b13 = rhs [13], b14 = rhs [14], b15 = rhs [15];
-
-			copy [ 0] = a00 * b00 + a01 * b04 + a02 * b08 + a03 * b12;
-			copy [ 1] = a00 * b01 + a01 * b05 + a02 * b09 + a03 * b13;
-			copy [ 2] = a00 * b02 + a01 * b06 + a02 * b10 + a03 * b14;
-			copy [ 3] = a00 * b03 + a01 * b07 + a02 * b11 + a03 * b15;
-			copy [ 4] = a04 * b00 + a05 * b04 + a06 * b08 + a07 * b12;
-			copy [ 5] = a04 * b01 + a05 * b05 + a06 * b09 + a07 * b13;
-			copy [ 6] = a04 * b02 + a05 * b06 + a06 * b10 + a07 * b14;
-			copy [ 7] = a04 * b03 + a05 * b07 + a06 * b11 + a07 * b15;
-			copy [ 8] = a08 * b00 + a09 * b04 + a10 * b08 + a11 * b12;
-			copy [ 9] = a08 * b01 + a09 * b05 + a10 * b09 + a11 * b13;
-			copy [10] = a08 * b02 + a09 * b06 + a10 * b10 + a11 * b14;
-			copy [11] = a08 * b03 + a09 * b07 + a10 * b11 + a11 * b15;
-			copy [12] = a12 * b00 + a13 * b04 + a14 * b08 + a15 * b12;
-			copy [13] = a12 * b01 + a13 * b05 + a14 * b09 + a15 * b13;
-			copy [14] = a12 * b02 + a13 * b06 + a14 * b10 + a15 * b14;
-			copy [15] = a12 * b03 + a13 * b07 + a14 * b11 + a15 * b15;
-
-			return copy;
+			return lhs .copy () .multRight (rhs);
 		},
 	});
 
@@ -23521,7 +22836,7 @@ function ($,
 {
 "use strict";
 
-	var handler =
+	const handler =
 	{
 		get: function (target, key)
 		{
@@ -23618,7 +22933,7 @@ function ($,
 		},
 		equals: function (array)
 		{
-			var
+			const
 				target = this ._target,
 				a      = target .getValue (),
 				b      = array .getValue (),
@@ -23630,7 +22945,7 @@ function ($,
 			if (length !== b .length)
 				return false;
 
-			for (var i = 0; i < length; ++ i)
+			for (let i = 0; i < length; ++ i)
 			{
 				if (! a [i] .equals (b [i]))
 					return false;
@@ -23640,13 +22955,13 @@ function ($,
 		},
 		set: function (value)
 		{
-			var target = this ._target;
+			const target = this ._target;
 
 			target .resize (value .length, undefined, true);
 
-			var array = target .getValue ();
+			const array = target .getValue ();
 
-			for (var i = 0, length = value .length; i < length; ++ i)
+			for (let i = 0, length = value .length; i < length; ++ i)
 				array [i] .set (value [i] instanceof X3DField ? value [i] .getValue () : value [i]);
 		},
 		isDefaultValue: function ()
@@ -23655,20 +22970,20 @@ function ($,
 		},
 		setValue: function (value)
 		{
-			var target = this ._target;
+			const target = this ._target;
 
 			target .set (value instanceof X3DObjectArrayField ? value .getValue () : value);
 			target .addEvent ();
 		},
 		unshift: function (value)
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue ();
 
-			for (var i = arguments .length - 1; i >= 0; -- i)
+			for (let i = arguments .length - 1; i >= 0; -- i)
 			{
-				var field = new (target .getSingleType ()) ();
+				const field = new (target .getSingleType ()) ();
 
 				field .setValue (arguments [i]);
 				target .addChildObject (field);
@@ -23681,13 +22996,13 @@ function ($,
 		},
 		shift: function ()
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue ();
 
 			if (array .length)
 			{
-				var field = array .shift ();
+				const field = array .shift ();
 				target .removeChildObject (field);
 				target .addEvent ();
 				return field .valueOf ();
@@ -23695,15 +23010,15 @@ function ($,
 		},
 		push: function (value)
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue ();
 
-			for (var i = 0, length = arguments .length; i < length; ++ i)
+			for (const argument of arguments)
 			{
-				var field = new (target .getSingleType ()) ();
+				const field = new (target .getSingleType ()) ();
 
-				field .setValue (arguments [i]);
+				field .setValue (argument);
 				target .addChildObject (field);
 				array .push (field);
 			}
@@ -23714,13 +23029,13 @@ function ($,
 		},
 		pop: function ()
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue ();
 
 			if (array .length)
 			{
-				var field = array .pop ();
+				const field = array .pop ();
 				target .removeChildObject (field);
 				target .addEvent ();
 				return field .valueOf ();
@@ -23728,7 +23043,7 @@ function ($,
 		},
 		splice: function (index, deleteCount)
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue ();
 
@@ -23738,7 +23053,7 @@ function ($,
 			if (index + deleteCount > array .length)
 				deleteCount = array .length - index;
 
-			var result = target .erase (index, index + deleteCount);
+			const result = target .erase (index, index + deleteCount);
 
 			if (arguments .length > 2)
 				target .insert (index, arguments, 2, arguments .length);
@@ -23747,13 +23062,13 @@ function ($,
 		},
 		insert: function (index, array, first, last)
 		{
-			var
+			const
 				target = this ._target,
 				args   = [index, 0];
 
-			for (var i = first; i < last; ++ i)
+			for (let i = first; i < last; ++ i)
 			{
-				var field = new (target .getSingleType ()) ();
+				const field = new (target .getSingleType ()) ();
 
 				field .setValue (array [i]);
 				target .addChildObject (field);
@@ -23766,13 +23081,13 @@ function ($,
 		},
 		find: function (first, last, value)
 		{
-			var target = this ._target;
+			const
+				target = this ._target,
+				values = target .getValue ();;
 
 			if ($.isFunction (value))
 			{
-				var values = target .getValue ();
-
-				for (var i = first; i < last; ++ i)
+				for (let i = first; i < last; ++ i)
 				{
 					if (value (values [i] .valueOf ()))
 						return i;
@@ -23781,9 +23096,7 @@ function ($,
 				return last;
 			}
 
-			var values = target .getValue ();
-
-			for (var i = first; i < last; ++ i)
+			for (let i = first; i < last; ++ i)
 			{
 				if (values [i] .equals (value))
 					return i;
@@ -23793,23 +23106,23 @@ function ($,
 		},
 		remove: function (first, last, value)
 		{
-			var target = this ._target;
+			const
+				target = this ._target,
+				values = target .getValue ();
 
 			if ($.isFunction (value))
 			{
-				var values = target .getValue ();
-
 				first = target .find (first, last, value);
 
 				if (first !== last)
 				{
-					for (var i = first; ++ i < last; )
+					for (let i = first; ++ i < last; )
 					{
-						var current = values [i];
+						const current = values [i];
 
 						if (! value (current .valueOf ()))
 						{
-							var tmp = values [first];
+							const tmp = values [first];
 
 							values [first ++] = current;
 							values [i]        = tmp;
@@ -23823,19 +23136,17 @@ function ($,
 				return first;
 			}
 
-			var values = target .getValue ();
-
 			first = target .find (first, last, value);
 
 			if (first !== last)
 			{
-				for (var i = first; ++ i < last; )
+				for (let i = first; ++ i < last; )
 				{
-					var current = values [i];
+					const current = values [i];
 
 					if (! current .equals (value))
 					{
-						var tmp = values [first];
+						const tmp = values [first];
 
 						values [first ++] = current;
 						values [i]        = tmp;
@@ -23850,12 +23161,12 @@ function ($,
 		},
 		erase: function (first, last)
 		{
-			var
+			const
 				target = this ._target,
 				values = target .getValue () .splice (first, last - first);
 
-			for (var i = 0, length = values .length; i < length; ++ i)
-				target .removeChildObject (values [i]);
+			for (const value of values)
+				target .removeChildObject (value);
 
 			target .addEvent ();
 
@@ -23863,13 +23174,13 @@ function ($,
 		},
 		resize: function (size, value, silent)
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue ();
 
 			if (size < array .length)
 			{
-				for (var i = size, length = array .length; i < length; ++ i)
+				for (let i = size, length = array .length; i < length; ++ i)
 					target .removeChildObject (array [i]);
 
 				array .length = size;
@@ -23879,9 +23190,9 @@ function ($,
 			}
 			else if (size > array .length)
 			{
-				for (var i = array .length; i < size; ++ i)
+				for (let i = array .length; i < size; ++ i)
 				{
-					var field = new (target .getSingleType ()) ();
+					const field = new (target .getSingleType ()) ();
 
 					if (value !== undefined)
 						field .setValue (value);
@@ -23904,7 +23215,7 @@ function ($,
 		},
 		toStream: function (stream)
 		{
-			var
+			const
 				target    = this ._target,
 				array     = target .getValue (),
 				generator = Generator .Get (stream);
@@ -23932,7 +23243,7 @@ function ($,
 					stream .string += "[\n";
 					generator .IncIndent ();
 
-					for (var i = 0, length = array .length - 1; i < length; ++ i)
+					for (let i = 0, length = array .length - 1; i < length; ++ i)
 					{
 						stream .string += generator .Indent ();
 						array [i] .toStream (stream);
@@ -23958,19 +23269,19 @@ function ($,
 		},
 		toXMLStream: function (stream)
 		{
-			var
+			const
 				target = this ._target,
 				length = target .length;
 
 			if (length)
 			{
-				var
+				const
 					generator = Generator .Get (stream),
 					array     = target .getValue ();
 
 				generator .PushUnitCategory (target .getUnit ());
 
-				for (var i = 0, n = length - 1; i < n; ++ i)
+				for (let i = 0, n = length - 1; i < n; ++ i)
 				{
 					array [i] .toXMLStream (stream);
 					stream .string += ", ";
@@ -23983,12 +23294,12 @@ function ($,
 		},
 		dispose: function ()
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue ();
 
-			for (var i = 0, length = target .length; i < length; ++ i)
-				target .removeChildObject (array [i]);
+			for (const value of array)
+				target .removeChildObject (value);
 
 			array .length = 0;
 
@@ -24241,18 +23552,18 @@ function (X3DArrayField,
 			if (this === other)
 				return true;
 
-			var
+			const
 				target = this ._target,
 				length = target ._length;
 
 			if (length !== other ._length)
 				return false;
 
-			var
+			const
 				a = target  .getValue (),
 				b = other .getValue ();
 
-			for (var i = 0, l = length * target .getComponents (); i < l; ++ i)
+			for (let i = 0, l = length * target .getComponents (); i < l; ++ i)
 			{
 				if (a [i] !== b [i])
 					return false;
@@ -24269,13 +23580,17 @@ function (X3DArrayField,
 		},
 		set: function (otherArray /* value of field */, l /* length of field */)
 		{
-			var
+			const
 				target      = this ._target,
 				components  = target .getComponents (),
+				length      = target ._length;
+
+			let
 				array       = target .getValue (),
-				length      = target ._length,
-				otherLength = l !== undefined ? l * components : otherArray .length,
-				rest        = otherLength % components;
+				otherLength = l !== undefined ? l * components : otherArray .length;
+
+			const
+				rest = otherLength % components;
 
 			if (rest)
 			{
@@ -24289,6 +23604,7 @@ function (X3DArrayField,
 			if (array .length < otherArray .length)
 			{
 				array = target .grow (otherArray .length);
+
 				array .set (otherArray);
 
 				if (rest)
@@ -24310,7 +23626,7 @@ function (X3DArrayField,
 		},
 		setValue: function (value)
 		{
-			var target = this ._target;
+			const target = this ._target;
 
 			if (value instanceof target .constructor)
 			{
@@ -24324,13 +23640,12 @@ function (X3DArrayField,
 		},
 		unshift: function (value)
 		{
-			var
+			const
 				target          = this ._target,
 				components      = target .getComponents (),
 				length          = target ._length,
-				argumentsLength = arguments .length;
-
-			var array = target .grow ((length + argumentsLength) * components);
+				argumentsLength = arguments .length,
+				array           = target .grow ((length + argumentsLength) * components);
 
 			array .copyWithin (argumentsLength * components, 0, length * components);
 
@@ -24340,11 +23655,11 @@ function (X3DArrayField,
 			}
 			else
 			{
-				for (var i = 0, a = 0; a < argumentsLength; ++ a)
+				for (let i = 0, a = 0; a < argumentsLength; ++ a)
 				{
-					var argument = arguments [a];
+					const argument = arguments [a];
 
-					for (var c = 0; c < components; ++ c, ++ i)
+					for (let c = 0; c < components; ++ c, ++ i)
 					{
 						array [i] = argument [c];
 					}
@@ -24359,13 +23674,13 @@ function (X3DArrayField,
 		},
 		shift: function ()
 		{
-			var
+			const
 				target = this ._target,
 				length = target ._length;
 
 			if (length)
 			{
-				var
+				const
 					array      = target .getValue (),
 					components = target .getComponents (),
 					valueType  = target .getValueType (),
@@ -24377,9 +23692,9 @@ function (X3DArrayField,
 				}
 				else
 				{
-					var tmp = target ._tmp;
+					const tmp = target ._tmp;
 
-					for (var c = 0; c < components; ++ c)
+					for (let c = 0; c < components; ++ c)
 						tmp [c] = array [c];
 
 					var value = Object .create (valueType .prototype);
@@ -24398,13 +23713,12 @@ function (X3DArrayField,
 		},
 		push: function (value)
 		{
-			var
+			const
 				target          = this ._target,
 				components      = target .getComponents (),
 				length          = target ._length,
-				argumentsLength = arguments .length;
-
-			var array = target .grow ((length + argumentsLength) * components);
+				argumentsLength = arguments .length,
+				array           = target .grow ((length + argumentsLength) * components);
 
 			if (components === 1)
 			{
@@ -24412,11 +23726,11 @@ function (X3DArrayField,
 			}
 			else
 			{
-				for (var i = length * components, a = 0; a < argumentsLength; ++ a)
+				for (let i = length * components, a = 0; a < argumentsLength; ++ a)
 				{
-					var argument = arguments [a];
+					const argument = arguments [a];
 
-					for (var c = 0; c < components; ++ c,  ++ i)
+					for (let c = 0; c < components; ++ c,  ++ i)
 					{
 						array [i] = argument [c];
 					}
@@ -24451,10 +23765,10 @@ function (X3DArrayField,
 				{
 					const tmp = target ._tmp;
 
-					for (var c = 0, a = newLength * components; c < components; ++ c, ++ a)
+					for (let c = 0, a = newLength * components; c < components; ++ c, ++ a)
 						tmp [c] = array [a];
 
-					const value = Object .create (valueType .prototype);
+					var value = Object .create (valueType .prototype);
 
 					valueType .apply (value, tmp);
 				}
@@ -24470,7 +23784,7 @@ function (X3DArrayField,
 		},
 		splice: function (index, deleteCount)
 		{
-			var
+			const
 				target = this ._target,
 				length = target ._length;
 
@@ -24480,7 +23794,7 @@ function (X3DArrayField,
 			if (index + deleteCount > length)
 				deleteCount = length - index;
 
-			var result = target .erase (index, index + deleteCount);
+			const result = target .erase (index, index + deleteCount);
 
 			if (arguments .length > 2)
 				target .spliceInsert (index, Array .prototype .splice .call (arguments, 2));
@@ -24491,15 +23805,14 @@ function (X3DArrayField,
 		},
 		spliceInsert: function (index, other)
 		{
-			var
+			const
 				target      = this ._target,
 				components  = target .getComponents (),
 				length      = target ._length,
-				otherLength = other .length;
+				otherLength = other .length,
+				array       = target .grow ((length + otherLength) * components);
 
 			index *= components;
-
-			var array = target .grow ((length + otherLength) * components);
 
 			array .copyWithin (index + otherLength * components, index, length * components);
 
@@ -24509,11 +23822,11 @@ function (X3DArrayField,
 			}
 			else
 			{
-				for (var i = 0, a = index; i < otherLength; ++ i)
+				for (let i = 0, a = index; i < otherLength; ++ i)
 				{
-					var value = other [i];
+					const value = other [i];
 
-					for (var c = 0; c < components; ++ c, ++ a)
+					for (let c = 0; c < components; ++ c, ++ a)
 						array [a] = value [c];
 				}
 			}
@@ -24522,18 +23835,17 @@ function (X3DArrayField,
 		},
 		insert: function (index, other, first, last)
 		{
-			var
+			const
 				target     = this ._target,
 				length     = target ._length,
 				otherArray = other .getValue (),
 				components = target .getComponents (),
-				difference = last - first;
+				difference = last - first,
+				array      = target .grow ((length + difference) * components);
 
 			index *= components;
 			first *= components;
 			last  *= components;
-
-			var array = target .grow ((length + difference) * components);
 
 			array .copyWithin (index + difference * components, index, length * components);
 
@@ -24546,21 +23858,20 @@ function (X3DArrayField,
 		},
 		erase: function (first, last)
 		{
-			var
-				target     = this ._target,
-				array      = target .getValue (),
-				components = target .getComponents (),
-				difference = last - first,
-				length     = target ._length,
-				newLength  = length - difference,
-				values     = new (target .constructor) ();
+			const
+				target      = this ._target,
+				array       = target .getValue (),
+				components  = target .getComponents (),
+				difference  = last - first,
+				length      = target ._length,
+				newLength   = length - difference,
+				values      = new (target .constructor) (),
+				valuesArray = values .grow (difference * components);
 
 			first *= components;
 			last  *= components;
 
-			var valuesArray = values .grow (difference * components);
-
-			for (var v = 0, f = first; f < last; ++ v, ++ f)
+			for (let v = 0, f = first; f < last; ++ v, ++ f)
 				valuesArray [v] = array [f];
 
 			array .copyWithin (first, last, length * components);
@@ -24575,11 +23886,12 @@ function (X3DArrayField,
 		},
 		resize: function (newLength, value, silent)
 		{
-			var
+			const
 				target     = this ._target,
 				length     = target ._length,
-				array      = target .getValue (),
 				components = target .getComponents ();
+
+			let array = target .getValue ();
 
 			if (newLength < length)
 			{
@@ -24600,9 +23912,9 @@ function (X3DArrayField,
 					}
 					else
 					{
-						for (var i = length * components, il = newLength * components; i < il; )
+						for (let i = length * components, il = newLength * components; i < il; )
 						{
-							for (var c = 0; c < components; ++ c, ++ i)
+							for (let c = 0; c < components; ++ c, ++ i)
 							{
 								array [i] = value [c];
 							}
@@ -24620,14 +23932,14 @@ function (X3DArrayField,
 		},
 		grow: function (length)
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue ();
 
 			if (length < array .length)
 				return array;
 
-			var
+			const
 				maxLength = Algorithm .nextPowerOfTwo (length),
 				newArray  = new (target .getArrayType ()) (maxLength);
 
@@ -24639,7 +23951,7 @@ function (X3DArrayField,
 		},
 		shrinkToFit: function ()
 		{
-			var
+			const
 				target = this ._target,
 				array  = target .getValue (),
 				length = target ._length * target .getComponents ();
@@ -24647,7 +23959,7 @@ function (X3DArrayField,
 			if (array .length == length)
 				return array;
 
-			var newArray = array .subarray (0, length);
+			const newArray = array .subarray (0, length);
 
 			X3DArrayField .prototype .set .call (target, newArray);
 
@@ -24655,7 +23967,7 @@ function (X3DArrayField,
 		},
 		toStream: function (stream)
 		{
-			var
+			const
 				target     = this ._target,
 				generator  = Generator .Get (stream),
 				array      = target .getValue (),
@@ -24682,7 +23994,7 @@ function (X3DArrayField,
 					}
 					else
 					{
-						for (var c = 0, first = 0; c < components; ++ c, ++ first)
+						for (let c = 0, first = 0; c < components; ++ c, ++ first)
 							value [c] = array [first];
 
 						value .toStream (stream);
@@ -24700,7 +24012,7 @@ function (X3DArrayField,
 
 					if (components === 1)
 					{
-						for (var i = 0, n = length - 1; i < n; ++ i)
+						for (let i = 0, n = length - 1; i < n; ++ i)
 						{
 							stream .string += generator .Indent ();
 
@@ -24718,11 +24030,11 @@ function (X3DArrayField,
 					}
 					else
 					{
-						for (var i = 0, n = length - 1; i < n; ++ i)
+						for (let i = 0, n = length - 1; i < n; ++ i)
 						{
 							stream .string += generator .Indent ();
 
-							for (var c = 0, first = i * components; c < components; ++ c, ++ first)
+							for (let c = 0, first = i * components; c < components; ++ c, ++ first)
 								value [c] = array [first];
 
 							value .toStream (stream);
@@ -24732,7 +24044,7 @@ function (X3DArrayField,
 
 						stream .string += generator .Indent ();
 
-						for (var c = 0, first = n * components; c < components; ++ c, ++ first)
+						for (let c = 0, first = n * components; c < components; ++ c, ++ first)
 							value [c] = array [first];
 
 						value .toStream (stream);
@@ -24754,13 +24066,13 @@ function (X3DArrayField,
 		},
 		toXMLStream: function (stream)
 		{
-			var
+			const
 				target = this ._target,
 				length = target ._length;
 
 			if (length)
 			{
-				var
+				const
 					generator  = Generator .Get (stream),
 					array      = target .getValue (),
 					components = target .getComponents (),
@@ -24770,7 +24082,7 @@ function (X3DArrayField,
 
 				if (components === 1)
 				{
-					for (var i = 0, n = length - 1; i < n; ++ i)
+					for (let i = 0, n = length - 1; i < n; ++ i)
 					{
 						value .set (array [i * components]);
 						value .toXMLStream (stream);
@@ -24784,9 +24096,9 @@ function (X3DArrayField,
 				}
 				else
 				{
-					for (var i = 0, n = length - 1; i < n; ++ i)
+					for (let i = 0, n = length - 1; i < n; ++ i)
 					{
-						for (var c = 0, first = i * components; c < components; ++ c, ++ first)
+						for (let c = 0, first = i * components; c < components; ++ c, ++ first)
 							value [c] = array [first];
 
 						value .toXMLStream (stream);
@@ -24794,7 +24106,7 @@ function (X3DArrayField,
 						stream .string += ", ";
 					}
 
-					for (var c = 0, first = n * components; c < components; ++ c, ++ first)
+					for (let c = 0, first = n * components; c < components; ++ c, ++ first)
 						value [c] = array [first];
 
 					value .toXMLStream (stream);
@@ -24825,7 +24137,7 @@ function (X3DArrayField,
 			array = this .getValue (),
 			tmp   = this ._tmp;
 
-		for (var c = 0; c < components; ++ c, ++ index)
+		for (let c = 0; c < components; ++ c, ++ index)
 			tmp [c] = array [index];
 
 		value .set .apply (value, tmp);
@@ -24837,7 +24149,7 @@ function (X3DArrayField,
 	{
 		const array = this .getValue ();
 
-		for (var c = 0; c < components; ++ c, ++ index)
+		for (let c = 0; c < components; ++ c, ++ index)
 			array [index] = value [c];
 
 		this .addEvent ();
@@ -25374,10 +24686,6 @@ function (SFBool,
 		MFVec4f:     TypedArrayTemplate ("MFVec4f",     X3DConstants .MFVec4f,     SFVec4f,     SFVec4f,     Float32Array, 4),
 	};
 
-	Object .preventExtensions (ArrayFields);
-	Object .freeze (ArrayFields);
-	Object .seal (ArrayFields);
-
 	return ArrayFields;
 });
 
@@ -25496,10 +24804,6 @@ function (SFBool,
 	},
 	ArrayFields);
 
-	Object .preventExtensions (Fields);
-	Object .freeze (Fields);
-	Object .seal (Fields);
-
 	return Fields;
 });
 
@@ -25554,7 +24858,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.7.2";
+	return "4.7.3";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -27042,19 +26346,15 @@ function (X3DEventObject,
 define ('x_ite/Browser/Core/PrimitiveQuality',[],function ()
 {
 "use strict";
-	
-	var i = 0;
 
-	var PrimitiveQuality =
+	let i = 0;
+
+	const PrimitiveQuality =
 	{
 		LOW:    i ++,
 		MEDIUM: i ++,
 		HIGH:   i ++,
 	};
-
-	Object .preventExtensions (PrimitiveQuality);
-	Object .freeze (PrimitiveQuality);
-	Object .seal (PrimitiveQuality);
 
 	return PrimitiveQuality;
 });
@@ -27111,10 +26411,10 @@ define ('x_ite/Browser/Core/PrimitiveQuality',[],function ()
 define ('x_ite/Browser/Core/Shading',[],function ()
 {
 "use strict";
-	
-	var i = 0;
 
-	var Shading =
+	let i = 0;
+
+	const Shading =
 	{
 		POINT:     i ++,
 		WIREFRAME: i ++,
@@ -27122,10 +26422,6 @@ define ('x_ite/Browser/Core/Shading',[],function ()
 		GOURAUD:   i ++,
 		PHONG:     i ++,
 	};
-
-	Object .preventExtensions (Shading);
-	Object .freeze (Shading);
-	Object .seal (Shading);
 
 	return Shading;
 });
@@ -27182,19 +26478,15 @@ define ('x_ite/Browser/Core/Shading',[],function ()
 define ('x_ite/Browser/Core/TextureQuality',[],function ()
 {
 "use strict";
-	
-	var i = 0;
 
-	var TextureQuality =
+	let i = 0;
+
+	const TextureQuality =
 	{
 		LOW:    i ++,
 		MEDIUM: i ++,
 		HIGH:   i ++,
 	};
-
-	Object .preventExtensions (TextureQuality);
-	Object .freeze (TextureQuality);
-	Object .seal (TextureQuality);
 
 	return TextureQuality;
 });
@@ -28723,10 +28015,6 @@ define ('x_ite/Bits/TraverseType',[],function ()
 		SHADOW:    i ++,
 		DISPLAY:   i ++,
 	};
-
-	Object .preventExtensions (TraverseType);
-	Object .freeze (TraverseType);
-	Object .seal (TraverseType);
 
 	return TraverseType;
 });
@@ -34766,15 +34054,13 @@ function (Vector3,
 
 				tessy .gluTessBeginPolygon (triangles);
 
-				for (var i = 0, length = arguments .length - 1; i < length; ++ i)
+				for (let i = 0, length = arguments .length - 1; i < length; ++ i)
 				{
 					tessy .gluTessBeginContour ();
 
-					const contour = arguments [i];
-
-					for (var j = 0; j < contour .length; ++ j)
+					for (const contour of arguments [i])
 					{
-						tessy .gluTessVertex (contour [j], contour [j]);
+						tessy .gluTessVertex (contour, contour);
 					}
 
 					tessy .gluTessEndContour ();
@@ -34788,7 +34074,7 @@ function (Vector3,
 		triangulateConvexPolygon: function (vertices, triangles)
 		{
 			// Fallback: Very simple triangulation for convex polygons.
-			for (var i = 1, length = vertices .length - 1; i < length; ++ i)
+			for (let i = 1, length = vertices .length - 1; i < length; ++ i)
 				triangles .push (vertices [0], vertices [i], vertices [i + 1]);
 		},
 		getPolygonNormal: function (vertices, normal)
@@ -34800,7 +34086,7 @@ function (Vector3,
 
 			var next = vertices [0];
 
-			for (var i = 0, length = vertices .length; i < length; ++ i)
+			for (let i = 0, length = vertices .length; i < length; ++ i)
 			{
 				var
 					current = next,
@@ -34882,10 +34168,8 @@ define ('standard/Math/Algorithms/SAT',[],function ()
 	{
 		// http://gamedev.stackexchange.com/questions/25397/obb-vs-obb-collision-detection
 
-		for (var i = 0, length = axes .length; i < length; ++ i)
+		for (const axis of axes)
 		{
-			const axis = axes [i];
-
 			project (points1, axis, extents1);
 			project (points2, axis, extents2);
 
@@ -34904,10 +34188,8 @@ define ('standard/Math/Algorithms/SAT',[],function ()
 		extents .min = Number .POSITIVE_INFINITY;
 		extents .max = Number .NEGATIVE_INFINITY;
 
-		for (var i = 0, length = points .length; i < length; ++ i)
+		for (const point of points)
 		{
-			const point = points [i];
-
 			// Just dot it to get the min and max along this axis.
 			// NOTE: the axis must be normalized to get accurate projections to calculate the MTV, but if it is only needed to
 			// know whether it overlaps, every axis can be used.
@@ -35245,7 +34527,7 @@ function (Triangle3,
 
 			const axes = [ Vector3 .xAxis, Vector3 .yAxis, Vector3 .zAxis ];
 
-			return function (planes)
+			return function (normals)
 			{
 				const m = this .matrix;
 
@@ -35253,128 +34535,101 @@ function (Triangle3,
 				y .assign (m .yAxis);
 				z .assign (m .zAxis);
 
-				if (x .norm () == 0 && y .norm () == 0 && z .norm () == 0)
+				if (x .norm () === 0)
 				{
-					x .assign (Vector3 .xAxis);
-					y .assign (Vector3 .yAxis);
-					z .assign (Vector3 .zAxis);
-				}
-				else
-				{
-					if (x .norm () == 0)
+					x .assign (y) .cross (z);
+
+					if (x .norm () === 0)
 					{
-						x .assign (y) .cross (z);
-
-						if (x .norm () == 0)
+						for (const axis of axes)
 						{
-							for (var i = 0; i < 3; ++ i)
-							{
-								x .assign (axes [i]) .cross (y);
+							x .assign (axis) .cross (y);
 
-								if (x .norm () == 0)
-									continue;
-
+							if (x .norm () !== 0)
 								break;
-							}
 						}
 
-						if (x .norm () == 0)
+						if (x .norm () === 0)
 						{
-							for (var i = 0; i < 3; ++ i)
+							for (const axis of axes)
 							{
-								x .assign (axes [i]) .cross (z);
+								x .assign (axis) .cross (z);
 
-								if (x .norm () == 0)
-									continue;
-
-								break;
+								if (x .norm () !== 0)
+									break;
 							}
+
+							if (x .norm () === 0)
+								x .assign (Vector3 .xAxis);
 						}
-
-						if (x .norm () == 0)
-							x .assign (Vector3 .xAxis);
-						else
-							x .normalize ();
-					}
-
-					if (y .norm () == 0)
-					{
-						y .assign (z) .cross (x);
-
-						if (y .norm () == 0)
-						{
-							for (var i = 0; i < 3; ++ i)
-							{
-								y .assign (axes [i]) .cross (z);
-
-								if (y .norm () == 0)
-									continue;
-
-								break;
-							}
-						}
-
-						if (y .norm () == 0)
-						{
-							for (var i = 0; i < 3; ++ i)
-							{
-								y .assign (axes [i]) .cross (x);
-
-								if (y .norm () == 0)
-									continue;
-
-								break;
-							}
-						}
-
-						if (y .norm () == 0)
-							y .assign (Vector3 .yAxis);
-						else
-							y .normalize ();
-					}
-
-					if (z .norm () == 0)
-					{
-						z .assign (x) .cross (y);
-
-						if (z .norm () == 0)
-						{
-							for (var i = 0; i < 3; ++ i)
-							{
-								z .assign (axes [i]) .cross (x);
-
-								if (z .norm () == 0)
-									continue;
-
-								break;
-							}
-						}
-
-						if (z .norm () == 0)
-						{
-							for (var i = 0; i < 3; ++ i)
-							{
-								z .assign (axes [i]) .cross (y);
-
-								if (z .norm () == 0)
-									continue;
-
-								break;
-							}
-						}
-
-						if (z .norm () == 0)
-							z .assign (Vector3 .zAxis);
-						else
-							z .normalize ();
 					}
 				}
 
-				planes [0] .assign (y) .cross (z) .normalize ();
-				planes [1] .assign (z) .cross (x) .normalize ();
-				planes [2] .assign (x) .cross (y) .normalize ();
+				if (y .norm () === 0)
+				{
+					y .assign (z) .cross (x);
 
-				return planes;
+					if (y .norm () === 0)
+					{
+						for (const axis of axes)
+						{
+							y .assign (axis) .cross (z);
+
+							if (y .norm () !== 0)
+								break;
+						}
+
+						if (y .norm () === 0)
+						{
+							for (const axis of axes)
+							{
+								y .assign (axis) .cross (x);
+
+								if (y .norm () !== 0)
+									break;
+							}
+
+							if (y .norm () === 0)
+								y .assign (Vector3 .yAxis);
+						}
+					}
+				}
+
+				if (z .norm () === 0)
+				{
+					z .assign (x) .cross (y);
+
+					if (z .norm () === 0)
+					{
+						for (const axis of axes)
+						{
+							z .assign (axis) .cross (x);
+
+							if (z .norm () !== 0)
+								break;
+						}
+
+						if (z .norm () === 0)
+						{
+							for (const axis of axes)
+							{
+								z .assign (axis) .cross (y);
+
+								if (z .norm () !== 0)
+									break;
+							}
+
+							if (z .norm () === 0)
+								z .assign (Vector3 .zAxis);
+						}
+					}
+				}
+
+				normals [0] .assign (y) .cross (z) .normalize ();
+				normals [1] .assign (z) .cross (x) .normalize ();
+				normals [2] .assign (x) .cross (y) .normalize ();
+
+				return normals;
 			};
 		})(),
 		isEmpty: function ()
@@ -35483,7 +34738,7 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 			];
 
-			const planes = [
+			const normals = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -35506,12 +34761,12 @@ function (Triangle3,
 
 				// Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
 
-				if (SAT .isSeparated (this .getNormals (planes), points1, points2))
+				if (SAT .isSeparated (this .getNormals (normals), points1, points2))
 					return false;
 
 				// Test the three planes spanned by the normal vectors of the faces of the second parallelepiped.
 
-				if (SAT .isSeparated (other .getNormals (planes), points1, points2))
+				if (SAT .isSeparated (other .getNormals (normals), points1, points2))
 					return false;
 
 				// Test the nine other planes spanned by the edges of each parallelepiped.
@@ -35519,9 +34774,9 @@ function (Triangle3,
 				this  .getAxes (axes1);
 				other .getAxes (axes2);
 
-				for (var i1 = 0; i1 < 3; ++ i1)
+				for (let i1 = 0; i1 < 3; ++ i1)
 				{
-					for (var i2 = 0; i2 < 3; ++ i2)
+					for (let i2 = 0; i2 < 3; ++ i2)
 						axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (axes2 [i2]);
 				}
 
@@ -35567,7 +34822,7 @@ function (Triangle3,
 				new Vector3 (0, 0, 0),
 			];
 
-			const planes = [
+			const normals = [
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
 				new Vector3 (0, 0, 0),
@@ -35600,7 +34855,7 @@ function (Triangle3,
 
 				// Test the three planes spanned by the normal vectors of the faces of the first parallelepiped.
 
-				if (SAT .isSeparated (this .getNormals (planes), points1, triangle))
+				if (SAT .isSeparated (this .getNormals (normals), points1, triangle))
 					return false;
 
 				// Test the normal of the triangle.
@@ -35618,9 +34873,9 @@ function (Triangle3,
 				triangleEdges [1] .assign (b) .subtract (c);
 				triangleEdges [2] .assign (c) .subtract (a);
 
-				for (var i1 = 0; i1 < 3; ++ i1)
+				for (let i1 = 0; i1 < 3; ++ i1)
 				{
-					for (var i2 = 0; i2 < 3; ++ i2)
+					for (let i2 = 0; i2 < 3; ++ i2)
 						axes9 [i1 * 3 + i2] .assign (axes1 [i1]) .cross (triangleEdges [i2]);
 				}
 
@@ -35744,7 +34999,7 @@ function (Vector3,
 		constructor: Plane3,
 		copy: function ()
 		{
-			var copy = Object .create (Plane3 .prototype);
+			const copy = Object .create (Plane3 .prototype);
 			copy .normal             = this .normal .copy ();
 			copy .distanceFromOrigin = this .distanceFromOrigin;
 			return copy;
@@ -36140,7 +35395,7 @@ function (Plane3,
 
 			const axes = [ ];
 
-			for (var i = 0; i < 3 * 8; ++ i)
+			for (let i = 0; i < 3 * 8; ++ i)
 				axes .push (new Vector3 (0, 0, 0));
 
 			return function (box)
@@ -36167,9 +35422,9 @@ function (Plane3,
 
 				const edges = this .getEdges ();
 
-				for (var i1 = 0; i1 < 3; ++ i1)
+				for (let i1 = 0; i1 < 3; ++ i1)
 				{
-					for (var i2 = 0; i2 < 8; ++ i2)
+					for (let i2 = 0; i2 < 8; ++ i2)
 						axes [i1 * 3 + i2] .assign (axes1 [i1]) .cross (edges [i2]);
 				}
 
@@ -36483,7 +35738,7 @@ function (X3DBaseNode,
 
 	function tbProjectToSphere (r, x, y)
 	{
-		const d = Math .sqrt (x * x + y * y);
+		const d = Math .hypot (x, y);
 
 		if (d < r * Math .sqrt (0.5)) // Inside sphere
 		{
@@ -43581,11 +42836,7 @@ function (Fields,
 		},
 		getWorldURL: function ()
 		{
-			return this .getURL () .location;
-		},
-		getURL: function ()
-		{
-			return this .getExecutionContext () .getURL ();
+			return this .getExecutionContext () .getWorldURL ();
 		},
 		getProfile: function ()
 		{
@@ -44366,10 +43617,6 @@ function (Fields,
 		this .level       = level;
 		this .title       = title;
 		this .providerUrl = providerUrl;
-
-		Object .preventExtensions (this);
-		Object .freeze (this);
-		Object .seal (this);
 	}
 
 	Object .assign (ComponentInfo .prototype,
@@ -44846,806 +44093,6 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('standard/Networking/URI',[],function ()
-{
-"use strict";
-
-	/*
-	 *  Path
-	 */
-
-	function Path (path, separator)
-	{
-		switch (arguments .length)
-		{
-			case 2:
-			{
-				const value = this .value = path ? path .split (separator) : [];
-
-				value .separator         = separator;
-				value .leadingSeparator  = false;
-				value .trailingSeparator = false;
-
-				if (value .length)
-				{
-					if (value [0] .length === 0)
-					{
-						value .shift ();
-						value .leadingSeparator = true;
-					}
-				}
-
-				if (value .length)
-				{
-					if (value [value .length - 1] .length === 0)
-					{
-						value .pop ();
-						value .trailingSeparator = true;
-					}
-				}
-
-				break;
-			}
-			case 4:
-			{
-				const value = this .value = arguments [0];
-
-				value .separator         = arguments [1];
-				value .leadingSeparator  = arguments [2];
-				value .trailingSeparator = arguments [3];
-				break;
-			}
-		}
-	}
-
-	Path .prototype =
-	{
-		copy: function ()
-		{
-			const value = this .value;
-
-			return new Path (value .slice (0, value .length),
-			                 value .separator,
-			                 value .leadingSeparator,
-			                 value .trailingSeparator);
-		},
-		get length ()
-		{
-			return this .value .length;
-		},
-		get leadingSeparator ()
-		{
-			return this .value .leadingSeparator;
-		},
-		get trailingSeparator ()
-		{
-			return this .value .trailingSeparator;
-		},
-		get root ()
-		{
-			return new Path ([ ],
-			                this .value .separator,
-			                true,
-			                true);
-		},
-		get base ()
-		{
-			if (this .value .trailingSeparator)
-				return this .copy ();
-
-			return this .parent;
-		},
-		get parent ()
-		{
-			const value = this .value;
-
-			switch (value .length)
-			{
-				case 0:
-				case 1:
-				{
-					if (value .leadingSeparator)
-						return this .root;
-
-					return new Path ([ ".." ], value .separator, false, false);
-				}
-				default:
-				{
-					return new Path (value .slice (0, value .length - 1),
-				                     value .separator,
-				                     value .leadingSeparator,
-				                     true);
-				}
-			}
-
-		},
-		get basename ()
-		{
-			const
-				value  = this .value,
-				length = value .length;
-
-			if (length)
-				return value [length - 1];
-
-			return "";
-		},
-		get stem ()
-		{
-			const basename = this .basename;
-
-			if (this .trailingSeparator && basename .length)
-			{
-				const extension = this .extension;
-
-				if (extension .length)
-					return basename .substr (0, basename .length - extension .length);
-			}
-
-			return basename;
-		},
-		get extension ()
-		{
-			const
-				basename = this .basename,
-				dot      = basename .lastIndexOf (".");
-
-			if (dot > 0)
-				return basename .substr (dot);
-
-			return "";
-		},
-		getRelativePath: function (descendant)
-		{
-			if (! descendant .leadingSeparator)
-				return descendant;
-
-			const
-				path           = new Path ([ ], "/", false, descendant .value .trailingSeparator),
-				basePath       = this .removeDotSegments () .base,
-				descendantPath = descendant .removeDotSegments ();
-
-			var i, j, l;
-
-			for (i = 0, l = Math .min (basePath .value .length, descendantPath .value .length); i < l ; ++ i)
-			{
-				if (basePath .value [i] !== descendantPath .value [i])
-					break;
-			}
-
-			for (j = i, l = basePath .value .length; j < l; ++ j)
-				path .value .push ("..");
-
-			for (j = i, l = descendantPath .value .length; j < l; ++ j)
-				path .value .push (descendantPath .value [j]);
-
-			if (path .value .length === 0)
-				path .value .push (".");
-
-			return path;
-		},
-		removeDotSegments: function ()
-		{
-			const
-				value = this .value,
-				path  = new Path ([ ], value .separator, value .leadingSeparator, value .trailingSeparator);
-
-			if (value .length)
-			{
-				for (var i = 0; i < value .length; ++ i)
-				{
-					const segment = value [i];
-
-					switch (segment)
-					{
-						case "":
-						{
-							break;
-						}
-						case ".":
-						{
-							path .value .trailingSeparator = true;
-							break;
-						}
-						case "..":
-						{
-							path .value .trailingSeparator = true;
-
-							if (path .value .length)
-								path .value .pop ();
-
-							break;
-						}
-						default:
-						{
-							path .value .trailingSeparator = false;
-							path .value .push (segment);
-						}
-					}
-				}
-
-				path .value .trailingSeparator = path .value .trailingSeparator || value .trailingSeparator;
-			}
-
-			return path;
-		},
-		escape: function ()
-		{
-			const
-				copy  = this .copy (),
-				value = copy .value;
-
-			for (var i = 0, length = value .length; i < length; ++ i)
-				value [i] = encodeURI (value [i]);
-
-			return copy;
-		},
-		unescape: function ()
-		{
-			const
-				copy  = this .copy (),
-				value = copy .value;
-
-			for (var i = 0, length = value .length; i < length; ++ i)
-				value [i] = unescape (value [i]);
-
-			return copy;
-		},
-		toString: function ()
-		{
-			const value = this .value;
-
-			var string = "";
-
-			if (value .leadingSeparator)
-				string += value .separator;
-
-			string += value .join (value .separator);
-
-			if (value .leadingSeparator && value .length === 0)
-				return string;
-
-			if (value .trailingSeparator)
-				string += value .separator;
-
-			return string;
-		},
-	};
-
-	/*
-	 *  URI
-	 *  https://tools.ietf.org/html/rfc3986
-	 */
-
-	const wellKnownPorts =
-	{
-		ftp:   21,
-		http:  80,
-		https: 443,
-		ftps:  990,
-	};
-
-	const
-		address   = /^(?:([^:\/?#]*?):)?(?:(\/\/)([^\/?#]*))?([^?#]*)(?:\?([^#]*))?(?:#(.*))?$/,
-		authority = /^(.*?)(?:\:([^:]*))?$/;
-
-	function parse (uri, string)
-	{
-		var result = address .exec (string);
-
-		if (result)
-		{
-			uri .scheme    = result [1] || "";
-			uri .slashs    = result [2] || "";
-			uri .path      = new Path (unescape (result [4] || ""), "/");
-			uri .query     = result [5] || "";
-			uri .fragment  = unescape (result [6] || "");
-
-			var result = authority .exec (result [3] || "");
-
-			if (result)
-			{
-				uri .host = unescape (result [1] || "");
-				uri .port = result [2] ? parseInt (result [2]) : 0;
-			}
-
-			uri .absolute = !! uri .slashs .length || uri .path [0] === "/";
-			uri .local    = /^(?:file|data)$/ .test (uri .scheme) || (! uri .scheme && ! (uri .host || uri .port));
-		}
-		else
-			uri .path = new Path ("", "/");
-
-		uri .string = string;
-	}
-
-	function removeDotSegments (path)
-	{
-		return new Path (path, "/") .removeDotSegments ();
-	}
-
-	function URI (uri)
-	{
-		const value = this .value =
-		{
-			local:     true,
-			absolute:  true,
-			scheme:    "",
-			slashs:    "",
-			host:      "",
-			port:      0,
-			path:      null,
-			query:     "",
-			fragment:  "",
-			string:    "",
-		};
-
-		switch (arguments .length)
-		{
-			case 0:
-				value .path = new Path ("", "/");
-				break;
-			case 1:
-			{
-				parse (value, uri);
-				break;
-			}
-			case 9:
-			{
-				value .local     = arguments [0];
-				value .absolute  = arguments [1];
-				value .scheme    = arguments [2];
-				value .slashs    = arguments [3];
-				value .host      = arguments [4];
-				value .port      = arguments [5];
-				value .path      = arguments [6];
-				value .query     = arguments [7];
-				value .fragment  = arguments [8];
-				value .string    = this .createString ();
-				break;
-			}
-		}
-	};
-
-	URI .prototype =
-	{
-		copy: function ()
-		{
-			const value = this .value;
-
-			return new URI (value .local,
-			                value .absolute,
-			                value .scheme,
-			                value .slashs,
-			                value .host,
-			                value .port,
-			                value .path .copy (),
-			                value .query,
-			                value .fragment);
-		},
-		get length ()
-		{
-			return this .value .string .length;
-		},
-		isRelative: function ()
-		{
-			return ! this .value .absolute;
-		},
-		isAbsolute: function ()
-		{
-			return ! this .value .absolute;
-		},
-		isLocal: function ()
-		{
-			return this .value .local;
-		},
-		isNetwork: function ()
-		{
-			return ! this .value .local;
-		},
-		isDirectory: function ()
-		{
-			const value = this .value;
-
-			if (value .path .length)
-				return value .path .trailingSeparator;
-
-			return this .isNetwork ();
-		},
-		isFile: function ()
-		{
-			return ! this .isDirectory ();
-		},
-		get hierarchy ()
-		{
-			const value = this .value;
-
-			var hierarchy = "";
-
-			hierarchy += value .slashs;
-			hierarchy += this .authority;
-			hierarchy += this .path;
-
-			return hierarchy;
-		},
-		get authority ()
-		{
-			const value = this .value;
-
-			var authority = value .host;
-
-			if (value .port)
-			{
-				authority += ":";
-				authority += value .port;
-			}
-
-			return authority;
-		},
-		get scheme ()
-		{
-			return this .value .scheme;
-		},
-		get host ()
-		{
-			return this .value .host;
-		},
-		get port ()
-		{
-			return this .value .port;
-		},
-		get wellKnownPort ()
-		{
-			const wellKnownPort = wellKnownPorts [this .value .scheme];
-
-			if (wellKnownPort !== undefined)
-				return wellKnownPort;
-
-			return 0;
-		},
-		get path ()
-		{
-			return this .value .path .toString ();
-		},
-		set query (value)
-		{
-			this .value .query = value;
-		},
-		get query ()
-		{
-			return this .value .query;
-		},
-		set fragment (value)
-		{
-			this .value .fragment = value;
-		},
-		get fragment ()
-		{
-			return this .value .fragment;
-		},
-		get location ()
-		{
-			return this .toString ();
-		},
-		get root ()
-		{
-			const value = this .value;
-
-			return new URI (value .local,
-			                value .absolute,
-			                value .scheme,
-			                value .slashs,
-			                value .host,
-			                value .port,
-			                new Path ("/", "/"),
-			                "",
-			                "");
-		},
-		get base ()
-		{
-			const value = this .value;
-
-			if (this .isDirectory ())
-			{
-				return new URI (value .local,
-				                value .absolute,
-				                value .scheme,
-				                value .slashs,
-				                value .host,
-				                value .port,
-				                value .path .copy (),
-				                "",
-				                "");
-			}
-
-			return this .parent;
-		},
-		get parent ()
-		{
-			const value = this .value;
-
-			return new URI (value .local,
-			                value .absolute,
-			                value .scheme,
-			                value .slashs,
-			                value .host,
-			                value .port,
-			                value .path .parent,
-			                "",
-			                "");
-		},
-		get filename ()
-		{
-			const value = this .value;
-
-			return new URI (value .local,
-			                value .absolute,
-			                value .scheme,
-			                value .slashs,
-			                value .host,
-			                value .port,
-			                value .path .copy (),
-			                "",
-			                "");
-		},
-		get basename ()
-		{
-			return this .value .path .basename;
-		},
-		get stem ()
-		{
-			return this .value .path .stem;
-		},
-		get extension ()
-		{
-			return this .value .path .extension;
-		},
-		transform: function (reference)
-		{
-			if (! (reference instanceof URI))
-				reference = new URI (reference .toString ());
-
-			if (reference .scheme == "data")
-				return new URI (reference .toString ());
-
-			const value = this .value;
-
-			var
-				T_local     = false,
-				T_absolute  = false,
-				T_scheme    = "",
-				T_slashs    = "",
-				T_host      = "",
-				T_port      = 0,
-				T_path      = "",
-				T_query     = "",
-				T_fragment  = "";
-
-			if (reference .scheme)
-			{
-				T_local    = reference .isLocal ();
-				T_absolute = reference .isAbsolute ();
-				T_scheme   = reference .scheme;
-				T_slashs   = reference .value .slashs;
-				T_host     = reference .host;
-				T_port     = reference .port;
-				T_path     = reference .path;
-				T_query    = reference .query;
-			}
-			else
-			{
-				if (reference .authority)
-				{
-					T_local    = reference .isLocal ();
-					T_absolute = reference .isAbsolute ();
-					T_host     = reference .host;
-					T_port     = reference .port;
-					T_path     = reference .path;
-					T_query    = reference .query;
-				}
-				else
-				{
-					if (reference .path .length === 0)
-					{
-						T_path = this .path;
-
-						if (reference .query)
-							T_query = reference .query;
-						else
-							T_query = value .query;
-					}
-					else
-					{
-						if (reference .path [0] === "/")
-						{
-							T_path = reference .path;
-						}
-						else
-						{
-							// merge (Base .path (), reference .path ());
-
-							const base = this .base;
-
-							if (base .path)
-								T_path += base .path;
-							else
-								T_path = "/";
-
-							T_path += reference .path;
-						}
-
-						T_query = reference .query;
-					}
-
-					T_local    = this .isLocal ();
-					T_absolute = this .isAbsolute () || reference .isAbsolute ();
-					T_host     = value .host;
-					T_port     = value .port;
-				}
-
-				T_scheme = value .scheme;
-				T_slashs = value .slashs;
-			}
-
-			T_fragment = reference .fragment;
-
-			return new URI (T_local,
-			                T_absolute,
-			                T_scheme,
-			                T_slashs,
-			                T_host,
-			                T_port,
-			                removeDotSegments (T_path),
-			                T_query,
-			                T_fragment);
-		},
-		removeDotSegments: function ()
-		{
-			const value = this .value;
-
-			return new URI (value .local,
-			                value .absolute,
-			                value .scheme,
-			                value .slashs,
-			                value .host,
-			                value .port,
-			                value .path .removeDotSegments (),
-			                value .query,
-			                value .fragment);
-		},
-		getRelativePath: function (descendant)
-		{
-			if (! (descendant instanceof URI))
-				descendant = new URI (descendant .toString ());
-
-			const value = this .value;
-
-			if (value .scheme !== descendant .scheme)
-				return descendant;
-
-			if (this .authority !== descendant .authority)
-				return descendant;
-
-			return new URI (true,
-			                false,
-			                "",
-			                "",
-			                "",
-			                0,
-			                value .path .getRelativePath (descendant .value .path),
-			                descendant .query,
-			                descendant .fragment);
-		},
-		escape: function ()
-		{
-			const value = this .value;
-
-			if (value .scheme === "data")
-				return new URI (value .string);
-
-			return new URI (value .local,
-			                value .absolute,
-			                value .scheme,
-			                value .slashs,
-			                value .host,
-			                value .port,
-			                value .path .escape (),
-			                value .query,
-			                escape (value .fragment));
-		},
-		unescape: function ()
-		{
-			const value = this .value;
-
-			if (value .scheme === "data")
-				return new URI (value .string);
-
-			return new URI (value .local,
-			                value .absolute,
-			                value .scheme,
-			                value .slashs,
-			                value .host,
-			                value .port,
-			                value .path .unescape (),
-			                value .query,
-			                unescape (value .fragment));
-		},
-		toString: function ()
-		{
-			return this .value .string;
-		},
-		createString: function ()
-		{
-			const value = this .value;
-
-			var string = this .value .scheme;
-
-			if (value .scheme)
-				string += ":";
-
-			string += this .hierarchy;
-
-			if (value .query)
-				string += "?" + value .query;
-
-			if (value .fragment)
-				string += "#" + value .fragment;
-
-			return string;
-		},
-	};
-
-	return URI;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Execution/X3DScene',[
 	"x_ite/Fields",
 	"x_ite/Execution/X3DExecutionContext",
@@ -45656,7 +44103,6 @@ define ('x_ite/Execution/X3DScene',[
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 	"x_ite/Fields/SFNodeCache",
-	"standard/Networking/URI",
 ],
 function (Fields,
           X3DExecutionContext,
@@ -45666,8 +44112,7 @@ function (Fields,
           ExportedNode,
           X3DConstants,
           Generator,
-          SFNodeCache,
-          URI)
+          SFNodeCache)
 {
 "use strict";
 
@@ -45681,7 +44126,7 @@ function (Fields,
 		this ._encoding             = "SCRIPTED";
 		this ._profile              = null;
 		this ._components           = new ComponentInfoArray ([ ]);
-		this ._url                  = new URI (window .location .toString ());
+		this ._worldURL             = location .toString ();
 		this ._units                = new UnitInfoArray ();
 
 		this ._units .add ("angle",  new UnitInfo ("angle",  "radian",   1));
@@ -45731,13 +44176,13 @@ function (Fields,
 		{
 			return this ._encoding;
 		},
-		setURL: function (url)
+		setWorldURL: function (url)
 		{
-			this ._url = url;
+			this ._worldURL = url;
 		},
-		getURL: function ()
+		getWorldURL: function ()
 		{
-			return this ._url;
+			return this ._worldURL;
 		},
 		setProfile: function (profile)
 		{
@@ -47404,7 +45849,7 @@ function ($,
 			this .scene = value;
 
 			const
-				protoName = this .scene .getURL () .fragment || 0,
+				protoName = new URL (this .scene .getWorldURL ()) .hash .substr (1) || 0,
 				proto     = this .scene .protos [protoName];
 
 			if (! proto)
@@ -47454,7 +45899,7 @@ function ($,
 
 			const userDefinedFields = this .getUserDefinedFields ();
 
-			var
+			let
 				fieldTypeLength   = 0,
 				accessTypeLength  = 0;
 
@@ -48200,10 +46645,6 @@ function (Fields,
 	for (var key in Grammar)
 		Grammar [key] .parse = parse;
 
-	Object .preventExtensions (Grammar);
-	Object .freeze (Grammar);
-	Object .seal (Grammar);
-
 	/*
 	 *  Parser
 	 */
@@ -48329,7 +46770,7 @@ function (Fields,
 			var message = "\n"
 				+ "********************************************************************************" + "\n"
 				+ "Parser error at line " + this .lineNumber + ":" + linePos  + "\n"
-				+ "in '" + this .getScene () .getURL () + "'" + "\n"
+				+ "in '" + this .getScene () .getWorldURL () + "'" + "\n"
 				+ "\n"
 				+ lastLine + "\n"
 				+ line + "\n"
@@ -52006,17 +50447,11 @@ function ()
  *
  ******************************************************************************/
 
-define ('x_ite/Browser/Networking/urls',[
-	"standard/Networking/URI",
-],
-function (URI)
+define ('x_ite/Browser/Networking/urls',[],function ()
 {
 "use strict";
 
-	function URLs ()
-	{
-		this .scriptUrl = new URI (getScriptURL ());
-	}
+	function URLs () { }
 
 	URLs .prototype =
 	{
@@ -52027,26 +50462,26 @@ function (URI)
 				if (getScriptURL () .match (/\.min\.js$/))
 					file += ".min";
 
-				return this .scriptUrl .transform ("assets/components/" + file + ".js") .toString ();
+				return new URL ("assets/components/" + file + ".js", getScriptURL ()) .href;
 			}
 
 			return "https://create3000.github.io/x_ite/";
 		},
 		getShaderUrl: function (file)
 		{
-			return this .scriptUrl .transform ("assets/shaders/" + file) .toString ();
+			return new URL ("assets/shaders/" + file, getScriptURL ()) .href;
 		},
 		getFontsUrl: function (file)
 		{
-			return this .scriptUrl .transform ("assets/fonts/" + file) .toString ();
+			return new URL ("assets/fonts/" + file, getScriptURL ()) .href;
 		},
 		getLinetypeUrl: function (index)
 		{
-			return this .scriptUrl .transform ("assets/linetype/" + index + ".png") .toString ();
+			return new URL ("assets/linetype/" + index + ".png", getScriptURL ()) .href;
 		},
 		getHatchingUrl: function (index)
 		{
-			return this .scriptUrl .transform ("assets/hatching/" + index + ".png") .toString ();
+			return new URL ("assets/hatching/" + index + ".png", getScriptURL ()) .href;
 		},
 	};
 
@@ -52111,13 +50546,11 @@ define('sprintf', ['sprintf/dist/sprintf.min'], function (main) { return main; }
 define ('x_ite/Browser/Networking/X3DNetworkingContext',[
 	"x_ite/Fields",
 	"x_ite/Browser/Networking/urls",
-	"standard/Networking/URI",
 	"sprintf",
 	"locale/gettext",
 ],
 function (Fields,
           urls,
-          URI,
           sprintf,
           _)
 {
@@ -52125,13 +50558,13 @@ function (Fields,
 
 	function getBaseURI (element)
 	{
-		var baseURI = element .baseURI;
+		let baseURI = element .baseURI;
 
 		// Fix for Edge.
 		if (baseURI .startsWith ("about:"))
 			baseURI = document .baseURI;
 
-		return new URI (baseURI);
+		return baseURI;
 	}
 
 	function X3DNetworkingContext ()
@@ -55058,15 +53491,11 @@ define ('x_ite/Parser/HTMLSupport',[],function ()
 {
 "use strict";
 
-	var HTMLSupport =
+	const HTMLSupport =
 	{
 		// Fields are set when component is registered.
 		fields: new Map (),
 	};
-
-	Object .preventExtensions (HTMLSupport);
-	Object .freeze (HTMLSupport);
-	Object .seal (HTMLSupport);
 
 	return HTMLSupport;
 });
@@ -56538,7 +54967,7 @@ function (XMLParser,
 						element .appendChild (child);
 					}
 				}
-				else if (key === "#sourceText")
+				else if (key === "#sourceCode" || key === "#sourceText")
 				{
 					this .createCDATA (document, element, object [key] .join ("\r\n") + "\r\n");
 				}
@@ -57081,7 +55510,7 @@ define ('standard/Math/Algorithms/MergeSort',[],function ()
 		},
 		merge: function (lo, m, hi)
 		{
-			var i, j, k;
+			let i, j, k;
 
 			i = 0, j = lo;
 			// Copy first half of array a to auxiliary array b.
@@ -57666,7 +56095,7 @@ function ($,
 					this .setGlobalFog (this .getFog ());
 
 					callback .call (group, type, this);
-					this .draw (group);
+					this .draw ();
 					break;
 				}
 			}
@@ -58098,7 +56527,7 @@ function ($,
 				projectionMatrixArray  = new Float32Array (16),
 				cameraSpaceMatrixArray = new Float32Array (16);
 
-			return function (group)
+			return function ()
 			{
 				const
 					browser                  = this .getBrowser (),
@@ -60427,7 +58856,7 @@ define ('standard/Math/Numbers/Complex',[],function ()
 			if (this .real)
 			{
 				if (this .imag)
-					return Math .sqrt (this .real * this .real + this .imag * this .imag);
+					return Math .hypot (this .real, this .imag);
 
 				return Math .abs (this .real);
 			}
@@ -60531,17 +58960,11 @@ define ('standard/Math/Numbers/Complex',[],function ()
 		},
 		multiply: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .real = lhs .real * rhs;
-			copy .imag = lhs .imag * rhs;
-			return copy;
+			return lhs .copy () .multiply (rhs);
 		},
 		multComp: function (lhs, rhs)
 		{
-			const copy = Object .create (this .prototype);
-			copy .real = lhs .real * rhs .real - lsh .imag * rhs .imag;
-			copy .imag = lhs .real * rhs .imag + lsh .imag * rhs .real;
-			return copy;
+			return lhs .copy () .multComp (rhs);
 		},
 	});
 
@@ -61667,7 +60090,6 @@ define ('x_ite/Components/Texturing/ImageTexture',[
 	"x_ite/Components/Texturing/X3DTexture2DNode",
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
-	"standard/Networking/URI",
 	"standard/Math/Algorithm",
 	"x_ite/DEBUG",
 ],
@@ -61678,7 +60100,6 @@ function ($,
           X3DTexture2DNode,
           X3DUrlObject,
           X3DConstants,
-          URI,
           Algorithm,
           DEBUG)
 {
@@ -61769,16 +60190,14 @@ function ($,
 
 			// Get URL.
 
-			this .URL = new URI (this .urlStack .shift ());
-			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
-			// In Firefox we don't need getRelativePath if file scheme, do we in Chrome???
+			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
-			this .image .attr ("src", this .URL .toString ());
+			this .image .attr ("src", this .URL .href);
 		},
 		setError: function ()
 		{
-			if (this .URL .scheme !== "data")
-				console .warn ("Error loading image:", this .URL .toString ());
+			if (this .URL .protocol !== "data:")
+				console .warn ("Error loading image:", this .URL .href);
 
 			this .loadNext ();
 		},
@@ -61786,21 +60205,21 @@ function ($,
 		{
 			if (DEBUG)
 			{
-				 if (this .URL .scheme !== "data")
-			   	console .info ("Done loading image:", this .URL .toString ());
+				 if (this .URL .protocol !== "data:")
+			   	console .info ("Done loading image:", this .URL .href);
 			}
 
 			try
 			{
-				var
+				const
 					gl     = this .getBrowser () .getContext (),
-				   image  = this .image [0],
-					width  = image .width,
-					height = image .height;
-
-				var
+					image  = this .image [0],
 					canvas = this .canvas [0],
 					cx     = canvas .getContext ("2d");
+
+				let
+					width  = image .width,
+					height = image .height;
 
 				// Scale image if needed and flip vertically.
 
@@ -61838,11 +60257,11 @@ function ($,
 
 				// Determine image alpha.
 
-				var
-					data        = cx .getImageData (0, 0, width, height) .data,
-					transparent = false;
+				const data = cx .getImageData (0, 0, width, height) .data;
 
-				for (var i = 3; i < data .length; i += 4)
+				let transparent = false;
+
+				for (let i = 3; i < data .length; i += 4)
 				{
 					if (data [i] !== 255)
 					{
@@ -63179,31 +61598,30 @@ function (SFNode,
 		},
 		set_rootNodes__: function ()
 		{
-			var oldLayerSet = this .layerSet;
-			this .layerSet  = this .defaultLayerSet;
+			const
+				oldLayerSet = this .layerSet,
+				rootNodes   = this .getExecutionContext () .getRootNodes ();
 
-			var rootNodes = this .getExecutionContext () .getRootNodes ();
-
+			this .layerSet          = this .defaultLayerSet;
 			this .layer0 .children_ = rootNodes;
 
-			for (var i = 0; i < rootNodes .length; ++ i)
+			for (const rootNode of rootNodes)
 			{
-				var rootLayerSet = X3DCast (X3DConstants .LayerSet, rootNodes [i]);
+				const rootLayerSet = X3DCast (X3DConstants .LayerSet, rootNode);
 
 				if (rootLayerSet)
-				{
-					rootLayerSet .setLayer0 (this .layer0);
 					this .layerSet = rootLayerSet;
-				}
 			}
 
-			if (this .layerSet !== oldLayerSet)
-			{
-				oldLayerSet    .activeLayer_ .removeInterest ("set_activeLayer__", this);
-				this .layerSet .activeLayer_ .addInterest ("set_activeLayer__", this);
+			this .layerSet .setLayer0 (this .layer0);
 
-				this .set_activeLayer__ ();
-			}
+			if (this .layerSet === oldLayerSet)
+				return;
+
+			oldLayerSet    .activeLayer_ .removeInterest ("set_activeLayer__", this);
+			this .layerSet .activeLayer_ .addInterest ("set_activeLayer__", this);
+
+			this .set_activeLayer__ ();
 		},
 		set_activeLayer__: function ()
 		{
@@ -63213,7 +61631,9 @@ function (SFNode,
 		{
 			// Bind first X3DBindableNodes found in each layer.
 
-			this .layerSet .bind (this .getExecutionContext () .getURL () .fragment);
+			const worldURL = this .getExecutionContext () .getWorldURL ();
+
+			this .layerSet .bind (new URL (worldURL, worldURL) .hash .substr (1));
 		},
 		traverse: function (type, renderObject)
 		{
@@ -63296,7 +61716,7 @@ define ('standard/Networking/BinaryTransport',[],function ()
 						// Apply custom fields if provided
 						if ( options.xhrFields )
 						{
-							for (var i in options .xhrFields)
+							for (const i in options .xhrFields)
 								xhr [i] = options .xhrFields [i];
 						}
 
@@ -63305,7 +61725,7 @@ define ('standard/Networking/BinaryTransport',[],function ()
 							xhr .overrideMimeType (options .mimeType);
 
 						// Setup custom headers
-						for (var i in headers)
+						for (const i in headers)
 							xhr .setRequestHeader (i, headers [i]);
 
 						// Setup onload callback
@@ -66706,7 +65126,6 @@ define ('x_ite/InputOutput/FileLoader',[
 	"x_ite/Parser/XMLParser",
 	"x_ite/Parser/JSONParser",
 	"x_ite/Execution/World",
-	"standard/Networking/URI",
 	"standard/Networking/BinaryTransport",
 	"pako_inflate",
 	"x_ite/DEBUG",
@@ -66718,7 +65137,6 @@ function ($,
           XMLParser,
           JSONParser,
           World,
-          URI,
           BinaryTransport,
           pako,
           DEBUG)
@@ -66752,7 +65170,7 @@ function ($,
 		this .userAgent        = this .browser .getName () + "/" + this .browser .getVersion () + " (X3D Browser; +" + this .browser .getProviderUrl () + ")";
 		this .target           = "";
 		this .url              = [ ];
-		this .URL              = new URI ();
+		this .URL              = new URL (this .getReferer (), this .getReferer ());
 		this .fileReader       = new FileReader ();
 		this .text             = true;
 	}
@@ -66779,7 +65197,7 @@ function ($,
 			else
 				scene .setExecutionContext (this .executionContext);
 
-			scene .setURL (this .browser .getLocation () .transform (worldURL));
+			scene .setWorldURL (new URL (worldURL, this .getReferer ()) .href);
 
 			if (success)
 			{
@@ -66808,11 +65226,11 @@ function ($,
 
 				const errors = [ ];
 
-				for (var i = 0, length = handlers .length; i < length; ++ i)
+				for (const handler of handlers)
 				{
 					try
 					{
-						handlers [i] .call (this, scene, string, success, error);
+						handler .call (this, scene, string, success, error);
 						return;
 					}
 					catch (error)
@@ -66850,11 +65268,11 @@ function ($,
 
 				const errors = [ ];
 
-				for (var i = 0, length = handlers .length; i < length; ++ i)
+				for (const handler of handlers)
 				{
 					try
 					{
-						handlers [i] .call (this, scene, string);
+						handler .call (this, scene, string);
 
 						return scene;
 					}
@@ -66936,8 +65354,8 @@ function ($,
 
 			if (DEBUG)
 			{
-				if (this .URL .length && this .URL .scheme !== "data")
-					console .info ("Done loading scene " + this .URL);
+				if (this .URL .protocol !== "data:")
+					console .info ("Done loading scene " + this .URL .href);
 			}
 		},
 		createX3DFromURL: function (url, parameter, callback, bindViewpoint, foreign)
@@ -66958,21 +65376,21 @@ function ($,
 			else
 				this .createX3DFromString (this .URL, data, callback, this .loadDocumentError .bind (this));
 		},
-		createX3DFromURLSync: function (url)
+		createX3DFromURLSync: function (urls)
 		{
-			if (url .length === 0)
+			if (urls .length === 0)
 				throw new Error ("No URL given.");
 
-			var
+			let
 				scene   = null,
 				success = false;
 
-			for (var i = 0; i < url .length; ++ i)
+			for (const url of urls)
 			{
-				this .URL = this .transform (url [i]);
+				this .URL = new URL (url, this .getReferer ());
 
 				$.ajax ({
-					url: this .URL .escape (),
+					url: this .URL .href,
 					dataType: "text",
 					async: false,
 					cache: this .browser .getBrowserOptions () .getCache (),
@@ -66993,18 +65411,15 @@ function ($,
 					},
 					error: function (jqXHR, textStatus, errorThrown)
 					{
-						//console .warn ("Couldn't load URL '" + this .URL .toString () + "': " + errorThrown + ".");
+						//console .warn ("Couldn't load URL '" + this .URL .href + "': " + errorThrown + ".");
 					},
 				});
 
 				if (success)
-					break;
+					return scene;
 			}
 
-			if (success)
-				return scene;
-
-			throw new Error ("Couldn't load any url of '" + url .getValue () .join (", ") + "'.");
+			throw new Error ("Couldn't load any url of '" + Array .prototype .join .call (urls, ", ") + "'.");
 		},
 		loadScript: function (url, callback)
 		{
@@ -67033,11 +65448,11 @@ function ($,
 
 			this .loadDocumentAsync (this .url .shift ());
 		},
-		getTarget: function (parameter)
+		getTarget: function (parameters)
 		{
-			for (var i = 0, length = parameter .length; i < length; ++ i)
+			for (const parameter of parameters)
 			{
-				var pair = parameter [i] .split ("=");
+				const pair = parameter .split ("=");
 
 				if (pair .length !== 2)
 					continue;
@@ -67048,38 +65463,21 @@ function ($,
 
 			return "";
 		},
-		loadDocumentAsync: function (URL)
+		loadDocumentAsync: function (url)
 		{
-			var uri = new URI (URL);
-
-			if (URL .length == 0)
-			{
-				this .loadDocumentError (new Error ("URL is empty."));
-				return;
-			}
-
 			try
 			{
-				if (this .bindViewpoint)
+				if (url .length === 0)
 				{
-					if (uri .filename .toString () .length === 0 && uri .query .length === 0)
-					{
-						this .bindViewpoint (uri .fragment);
-						return;
-					}
+					this .loadDocumentError (new Error ("URL is empty."));
+					return;
 				}
-			}
-			catch (exception)
-			{
-				this .loadDocumentError (exception);
-				return;
-			}
 
-			if (this .script)
-			{
-				try
+				// Script
+
+				if (this .script)
 				{
-					var result = ECMAScript .exec (URL);
+					const result = ECMAScript .exec (url);
 
 					if (result)
 					{
@@ -67087,100 +65485,98 @@ function ($,
 						return;
 					}
 				}
-				catch (exception)
+
+				// Test for data URL here.
+
 				{
-					this .loadDocumentError (exception);
-					return;
+					const result = dataURL .exec (url);
+
+					if (result)
+					{
+						//const mimeType = result [1];
+
+						// ??? If called from loadURL and mime type is text/html do a window.open or window.location=URL and return; ???
+
+						let data = result [4];
+
+						if (result [3] === "base64")
+							data = atob (data);
+						else
+							data = unescape (data);
+
+						this .callback (data);
+						return;
+					}
 				}
-			}
 
-			// Test for data URL here.
+				this .URL = new URL (url, this .getReferer ());
 
-			this .URL = this .transform (URL);
-
-			try
-			{
-				var result = dataURL .exec (URL);
-
-				if (result)
+				if (this .bindViewpoint)
 				{
-					//var mimeType = result [1];
-
-					// ??? If called from loadURL and mime type is text/html do a window.open or window.location=URL and return; ???
-
-					var data = result [4];
-
-					if (result [3] === "base64")
-						data = atob (data);
-					else
-						data = unescape (data);
-
-					if (this .target .length && this .target !== "_self" && this .foreign)
-						return this .foreign (this .URL .toString (), this .target);
-
-					this .callback (data);
-					return;
+					if (this .URL .href .substr (0, this .getReferer () .length) === this .getReferer ())
+					{
+						this .bindViewpoint (this .URL .hash .substr (1));
+						return;
+					}
 				}
+
+				if (this .foreign)
+				{
+					// Handle target
+
+					if (this .target .length && this .target !== "_self")
+						return this .foreign (this .URL .href, this .target);
+
+					// Handle well known foreign content depending on extension or if path looks like directory.
+
+					if (this .URL .href .match (foreignExtensions))
+						return this .foreign (this .URL .href, this .target);
+				}
+
+				// Load URL async
+
+				$.ajax ({
+					url: this .URL .href,
+					dataType: "binary",
+					async: true,
+					cache: this .browser .getBrowserOptions () .getCache (),
+					//timeout: 15000,
+					global: false,
+					context: this,
+					success: function (blob, status, xhr)
+					{
+						if (this .foreign)
+						{
+							//console .log (this .getContentType (xhr));
+
+							if (foreign [this .getContentType (xhr)])
+								return this .foreign (this .URL .href, this .target);
+						}
+
+						if (this .text)
+						{
+							this .fileReader .onload = this .readAsArrayBuffer .bind (this, blob);
+
+							this .fileReader .readAsArrayBuffer (blob);
+						}
+						else
+						{
+							this .fileReader .onload = this .readAsBinaryString .bind (this);
+
+							this .fileReader .readAsBinaryString (blob);
+						}
+					},
+					error: function (xhr, textStatus, exception)
+					{
+						this .loadDocumentError (new Error (exception));
+					},
+				});
 			}
 			catch (exception)
 			{
 				this .loadDocumentError (exception);
 				return;
 			}
-
-			// Handle target
-
-			if (this .target .length && this .target !== "_self" && this .foreign)
-				return this .foreign (this .URL .toString (), this .target);
-
-			// Handle well known foreign content depending on extension or if path looks like directory.
-
-			if (this .foreign)
-			{
-				if (this .URL .extension .match (foreignExtensions))
-				{
-					return this .foreign (this .URL .toString (), this .target);
-				}
-			}
-
-			// Load URL async
-
-			$.ajax ({
-				url: this .URL .escape (),
-				dataType: "binary",
-				async: true,
-				cache: this .browser .getBrowserOptions () .getCache (),
-				//timeout: 15000,
-				global: false,
-				context: this,
-				success: function (blob, status, xhr)
-				{
-					if (this .foreign)
-					{
-						//console .log (this .getContentType (xhr));
-
-						if (foreign [this .getContentType (xhr)])
-							return this .foreign (this .URL .toString (), this .target);
-					}
-
-					if (this .text)
-					{
-						this .fileReader .onload = this .readAsArrayBuffer .bind (this, blob);
-
-						this .fileReader .readAsArrayBuffer (blob);
-					}
-					else
-					{
-						this .fileReader .onload = this .readAsBinaryString .bind (this);
-
-						this .fileReader .readAsBinaryString (blob);
-					}
-				},
-				error: function (xhr, textStatus, exception)
-				{
-					this .loadDocumentError (new Error (exception));
-				},
-			});
 		},
 		readAsArrayBuffer: function (blob)
 		{
@@ -67233,24 +65629,13 @@ function ($,
 		},
 		error: function (exception)
 		{
-			if (this .URL .scheme === "data")
+			if (this .URL .protocol === "data:")
 				console .warn ("Couldn't load URL 'data':", exception .message);
 			else
-				console .warn ("Couldn't load URL '" + this .URL + "':", exception .message);
+				console .warn ("Couldn't load URL '" + this .URL .href + "':", exception .message);
 
 			if (DEBUG)
 				console .log (exception);
-		},
-		transform: function (sURL)
-		{
-			var URL = this .getReferer () .transform (new URI (sURL));
-
-			if (URL .isLocal () || URL .host === "localhost")
-			{
-				URL = this .browser .getLocation () .getRelativePath (URL);
-			}
-
-			return URL;
 		},
 		getReferer: function ()
 		{
@@ -67260,11 +65645,11 @@ function ($,
 					return this .browser .getLocation ();
 			}
 
-			return this .executionContext .getURL ();
+			return this .executionContext .getWorldURL ();
 		},
 		getContentType: function (xhr)
 		{
-			var
+			const
 				contentType = xhr .getResponseHeader ("Content-Type"),
 				result      = contentTypeRx .exec (contentType);
 
@@ -70161,7 +68546,7 @@ function (Vector3)
 					d1 = this .direction,
 					d2 = line .direction;
 
-				var t = Vector3 .dot (d1, d2);
+				let t = Vector3 .dot (d1, d2);
 
 				if (Math .abs (t) >= 1)
 					return false;  // lines are parallel
@@ -70224,7 +68609,7 @@ function (Vector3)
 				if (v < 0 || u + v > 1)
 					return false;
 
-				//var t = edge2 .dot (qvec) * inv_det;
+				//let t = edge2 .dot (qvec) * inv_det;
 
 				uvt .u = u;
 				uvt .v = v;
@@ -70241,7 +68626,7 @@ function (Vector3)
 
 	Line3 .Points = function (point1, point2)
 	{
-		var line = Object .create (Line3 .prototype);
+		const line = Object .create (Line3 .prototype);
 		line .point     = point1 .copy ();
 		line .direction = Vector3 .subtract (point2, point1) .normalize ();
 		return line;
@@ -70324,7 +68709,7 @@ define ('standard/Math/Algorithms/QuickSort',[],function ()
 		},
 		quicksort: function (lo, hi)
 		{
-			var
+			let
 				i = lo,
 				j = hi;
 
@@ -79116,20 +77501,16 @@ function (Fields)
 define ('x_ite/Browser/Text/TextAlignment',[],function ()
 {
 "use strict";
-	
-	var i = 0;
 
-	var TextAlignment =
+	let i = 0;
+
+	const TextAlignment =
 	{
 	   BEGIN:  ++ i,
 	   FIRST:  ++ i,
 	   MIDDLE: ++ i,
 	   END:    ++ i,
 	};
-
-	Object .preventExtensions (TextAlignment);
-	Object .freeze (TextAlignment);
-	Object .seal (TextAlignment);
 
 	return TextAlignment;
 });
@@ -79206,7 +77587,7 @@ function (Fields,
 	 * Font paths for default SERIF, SANS and TYPWRITER families.
 	 */
 
-	var Fonts =
+	const Fonts =
 	{
 		SERIF: {
 			PLAIN:      urls .getFontsUrl ("DroidSerif-Regular.ttf"),
@@ -79277,13 +77658,13 @@ function (Fields,
 		},
 		set_justify__: function ()
 		{
-			var majorNormal = this .horizontal_ .getValue () ? this .leftToRight_ .getValue () : this .topToBottom_ .getValue ();
+			const majorNormal = this .horizontal_ .getValue () ? this .leftToRight_ .getValue () : this .topToBottom_ .getValue ();
 
 			this .alignments [0] = this .justify_ .length > 0
 			                       ? this .getAlignment (0, majorNormal)
 			                       : majorNormal ? TextAlignment .BEGIN : TextAlignment .END;
 
-			var minorNormal = this .horizontal_ .getValue () ? this .topToBottom_ .getValue () : this .leftToRight_ .getValue ();
+			const minorNormal = this .horizontal_ .getValue () ? this .topToBottom_ .getValue () : this .leftToRight_ .getValue ();
 
 			this .alignments [1] = this .justify_ .length > 1
 			                       ? this .getAlignment (1, minorNormal)
@@ -79327,7 +77708,7 @@ function (Fields,
 
 			// Add default font to family array.
 
-			var family = this .family_ .copy ();
+			const family = this .family_ .copy ();
 
 			family .push ("SERIF");
 
@@ -79335,33 +77716,17 @@ function (Fields,
 
 			this .familyStack .length = 0;
 
-			for (var i = 0, length = family .length; i < length; ++ i)
-			{
-				var
-					familyName  = family [i],
-					defaultFont = this .getDefaultFont (familyName);
-
-				if (defaultFont)
-					this .familyStack .push (defaultFont);
-				else
-					this .familyStack .push (familyName);
-			}
+			for (const familyName of family)
+				this .familyStack .push (this .getDefaultFont (familyName) || familyName);
 
 			this .loadNext ();
 		},
 		getDefaultFont: function (familyName)
 		{
-			var family = Fonts [familyName];
+			const family = Fonts [familyName];
 
 			if (family)
-			{
-				var style = family [this .style_ .getValue ()];
-
-				if (style)
-					return style;
-
-				return family .PLAIN;
-			}
+				return family [this .style_ .getValue ()] || family .PLAIN;
 
 			return;
 		},
@@ -79377,7 +77742,7 @@ function (Fields,
 				}
 
 				this .family = this .familyStack .shift ();
-				this .URL    = this .loader .transform (this .family);
+				this .URL    = new URL (this .family, this .loader .getReferer ());
 
 				this .getBrowser () .getFont (this .URL)
 					.done (this .setFont .bind (this))
@@ -79390,7 +77755,7 @@ function (Fields,
 		},
 		setError: function (error)
 		{
-			if (this .URL .scheme !== "data")
+			if (this .URL .protocol !== "data:")
 				console .warn ("Error loading font '" + this .URL .toString () + "':", error);
 
 			this .loadNext ();
@@ -80415,7 +78780,7 @@ function (Algorithm)
 			{
 				case 2:
 				{
-					for (var i = 0, d = dimension - 1; i < dimension; ++ i)
+					for (let i = 0, d = dimension - 1; i < dimension; ++ i)
 					{
 						lut .push (quadric (x0, y0, x1, y1, x2, y2, i / d));
 					}
@@ -80424,7 +78789,7 @@ function (Algorithm)
 				}
 				case 3:
 				{
-					for (var i = 0, d = dimension - 1; i < dimension; ++ i)
+					for (let i = 0, d = dimension - 1; i < dimension; ++ i)
 					{
 						lut .push (cubic (x0, y0, x1, y1, x2, y2, x3, y3, i / d));
 					}
@@ -95835,10 +94200,6 @@ function ($,
 		{
 			return this .finished_;
 		},
-		getURL: function ()
-		{
-			return this .getExecutionContext () .getURL ();
-		},
 		getBrowser: function ()
 		{
 			return this;
@@ -97834,7 +96195,7 @@ function (Fields,
 		},
 		set_extents__: function ()
 		{
-			var
+			const
 				s  = this .size_ .getValue (),
 				c  = this .center_ .getValue (),
 				sx = s .x / 2,
@@ -97849,7 +96210,7 @@ function (Fields,
 		},
 		update: (function ()
 		{
-			var
+			const
 				invModelMatrix         = new Matrix4 (),
 				centerOfRotationMatrix = new Matrix4 (),
 				position               = new Vector3 (0, 0, 0),
@@ -97864,7 +96225,7 @@ function (Fields,
 					{
 						if (this .viewpointNode)
 						{
-							var modelMatrix = this .modelMatrix;
+							const modelMatrix = this .modelMatrix;
 
 							centerOfRotationMatrix .assign (this .viewpointNode .getModelMatrix ());
 							centerOfRotationMatrix .translate (this .viewpointNode .getUserCenterOfRotation ());
@@ -97923,7 +96284,7 @@ function (Fields,
 		})(),
 		traverse: (function ()
 		{
-			var
+			const
 				invModelViewMatrix = new Matrix4 (),
 				infinity           = new Vector3 (-1, -1, -1);
 
@@ -97969,7 +96330,7 @@ function (Fields,
 		})(),
 		containsPoint: function (point)
 		{
-			var
+			const
 				min = this .min,
 				max = this .max;
 
@@ -98059,7 +96420,7 @@ function (Fields,
 {
 "use strict";
 
-	var
+	const
 		ModelMatrixCache  = ObjectCache (Matrix4),
 		TargetMatrixCache = ObjectCache (Matrix4);
 
@@ -98149,7 +96510,7 @@ function (Fields,
 		},
 		set_extents__: function ()
 		{
-			var
+			const
 				s  = this .size_ .getValue (),
 				c  = this .center_ .getValue (),
 				sx = s .x / 2,
@@ -98168,11 +96529,11 @@ function (Fields,
 
 			try
 			{
-				var
+				const
 					node = this .targetObject_ .getValue () .getInnerNode (),
 					type = node .getType ();
 
-				for (var t = type .length - 1; t >= 0; -- t)
+				for (let t = type .length - 1; t >= 0; -- t)
 				{
 					switch (type [t])
 					{
@@ -98210,13 +96571,13 @@ function (Fields,
 		},
 		process: (function ()
 		{
-			var
+			const
 				position    = new Vector3 (0, 0, 0),
 				orientation = new Rotation4 (0, 0, 1, 0);
 
 			return function ()
 			{
-				var
+				const
 					modelMatrices  = this .modelMatrices,
 					targetMatrices = this .targetMatrices,
 					matrix         = this .intersects ();
@@ -98250,11 +96611,11 @@ function (Fields,
 					}
 				}
 
-				for (var i = 0, length = modelMatrices .length; i < length; ++ i)
-					ModelMatrixCache .push (modelMatrices [i]);
+				for (const modelMatrix of modelMatrices)
+					ModelMatrixCache .push (modelMatrix);
 
-				for (var i = 0, length = targetMatrices .length; i < length; ++ i)
-					TargetMatrixCache .push (targetMatrices [i]);
+				for (const targetMatrix of targetMatrices)
+					TargetMatrixCache .push (targetMatrix);
 
 				modelMatrices  .length = 0;
 				targetMatrices .length = 0;
@@ -98262,22 +96623,22 @@ function (Fields,
 		})(),
 		intersects: (function ()
 		{
-			var infinity = new Vector3 (-1, -1, -1);
+			const infinity = new Vector3 (-1, -1, -1);
 
 			return function ()
 			{
-				var
+				const
 					modelMatrices  = this .modelMatrices,
 					targetMatrices = this .targetMatrices,
 					always         = this .size_ .getValue () .equals (infinity);
 
-				for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+				for (const modelMatrix of modelMatrices)
 				{
-					var invModelMatrix = modelMatrices [m] .inverse ();
+					const invModelMatrix = modelMatrix .inverse ();
 
-					for (var t = 0, tLength = targetMatrices .length; t < tLength; ++ t)
+					for (const targetMatrix of targetMatrices)
 					{
-						var matrix = targetMatrices [t] .multRight (invModelMatrix);
+						const matrix = targetMatrix .multRight (invModelMatrix);
 
 						if (always || this .containsPoint (matrix .origin))
 						{
@@ -98291,7 +96652,7 @@ function (Fields,
 		})(),
 		containsPoint: function (point)
 		{
-			var
+			const
 				min = this .min,
 				max = this .max;
 
@@ -98447,12 +96808,12 @@ function (Fields,
 					this .exitTime_ = this .getBrowser () .getCurrentTime ();
 				}
 			}
-				
+
 			this .setTraversed (false);
 		},
 		traverse: (function ()
 		{
-			var
+			const
 				bbox     = new Box3 (),
 				infinity = new Vector3 (-1, -1, -1);
 
@@ -98460,12 +96821,12 @@ function (Fields,
 			{
 				if (type !== TraverseType .DISPLAY)
 					return;
-	
+
 				this .setTraversed (true);
-	
+
 				if (this .visible)
 					return;
-	
+
 				if (this .size_ .getValue () .equals (infinity))
 				{
 					this .visible = true;
@@ -98481,11 +96842,9 @@ function (Fields,
 			};
 		})(),
 	});
-		
+
 	return VisibilitySensor;
 });
-
-
 
 /*******************************************************************************
  *
@@ -108423,9 +106782,9 @@ function (Fields,
 					this .setLoadState (X3DConstants .FAILED_STATE, false);
 			}
 			.bind (this),
-			function (fragment)
+			function (viewpointName)
 			{
-			   this .getBrowser () .changeViewpoint (fragment);
+			   this .getBrowser () .changeViewpoint (viewpointName);
 				this .setLoadState (X3DConstants .COMPLETE_STATE, false);
 			}
 			.bind (this),
@@ -109008,7 +107367,7 @@ function (Vector3,
 		},
 		unitCylinderIntersectsLine: function (line, enter, exit)
 		{
-			var t0, t1;
+			let t0, t1;
 
 			const
 				pos = line .point,
@@ -109790,13 +108149,13 @@ function (Vector3)
 
 			if (core >= 0)
 			{
-				var
+				let
 					t1 = (-b + Math .sqrt (core)) / 2,
 					t2 = (-b - Math .sqrt (core)) / 2;
 
 				if (t1 > t2)
 				{
-					var tmp = t1;
+					const tmp = t1;
 					t1 = t2;
 					t2 = tmp;
 				}
@@ -113876,7 +112235,6 @@ define ('x_ite/Components/Sound/AudioClip',[
 	"x_ite/Components/Sound/X3DSoundSourceNode",
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
-	"standard/Networking/URI",
 	"x_ite/DEBUG",
 ],
 function ($,
@@ -113886,7 +112244,6 @@ function ($,
           X3DSoundSourceNode,
           X3DUrlObject,
           X3DConstants,
-          URI,
           DEBUG)
 {
 "use strict";
@@ -113990,16 +112347,15 @@ function ($,
 
 			// Get URL.
 
-			this .URL = new URI (this .urlStack .shift ());
-			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
+			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
-			this .audio .attr ("src", this .URL);
+			this .audio .attr ("src", this .URL .href);
 			this .audio .get (0) .load ();
 		},
 		setError: function ()
 		{
-			if (this .URL .scheme !== "data")
-				console .warn ("Error loading audio:", this .URL .toString ());
+			if (this .URL .protocol !== "data:")
+				console .warn ("Error loading audio:", this .URL .href);
 
 			this .loadNext ();
 		},
@@ -114007,8 +112363,8 @@ function ($,
 		{
 			if (DEBUG)
 			{
-				if (this .URL .scheme !== "data")
-					console .info ("Done loading audio:", this .URL .toString ());
+				if (this .URL .protocol !== "data:")
+					console .info ("Done loading audio:", this .URL .href);
 			}
 
 			this .audio .unbind ("canplaythrough");
@@ -114281,7 +112637,7 @@ function (Fields,
 		},
 		traverse: (function ()
 		{
-			var
+			const
 				min = { distance: 0, intersection: new Vector3 (0, 0, 0) },
 				max = { distance: 0, intersection: new Vector3 (0, 0, 0) };
 
@@ -114300,7 +112656,7 @@ function (Fields,
 
 					this .setTraversed (true);
 
-					var modelViewMatrix = renderObject .getModelViewMatrix () .get ();
+					const modelViewMatrix = renderObject .getModelViewMatrix () .get ();
 
 					this .getEllipsoidParameter (modelViewMatrix,
 					                             Math .max (this .maxBack_  .getValue (), 0),
@@ -114320,7 +112676,7 @@ function (Fields,
 						}
 						else
 						{
-							var
+							const
 								d1        = max .intersection .abs (), // Viewer is here at (0, 0, 0)
 								d2        = max .intersection .distance (min .intersection),
 								d         = Math .min (d1 / d2, 1),
@@ -114346,7 +112702,7 @@ function (Fields,
 		})(),
 		getEllipsoidParameter: (function ()
 		{
-			var
+			const
 				location        = new Vector3 (0, 0, 0),
 				sphereMatrix    = new Matrix4 (),
 				invSphereMatrix = new Matrix4 (),
@@ -114376,7 +112732,7 @@ function (Fields,
 					return;
 				}
 
-				var
+				const
 					a = (back + front) / 2,
 					e = a - back,
 					b = Math .sqrt (a * a - e * e);
@@ -114394,7 +112750,7 @@ function (Fields,
 
 				invSphereMatrix .assign (sphereMatrix) .inverse ();
 
-				var viewer = invSphereMatrix .origin;
+				const viewer = invSphereMatrix .origin;
 				location .negate () .divVec (scale);
 
 				normal .assign (location) .subtract (viewer) .normalize ();
@@ -114828,7 +113184,6 @@ define ('x_ite/Components/Texturing/MovieTexture',[
 	"x_ite/Components/Sound/X3DSoundSourceNode",
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
-	"standard/Networking/URI",
 	"standard/Math/Algorithm",
 	"x_ite/DEBUG",
 ],
@@ -114840,7 +113195,6 @@ function ($,
           X3DSoundSourceNode,
           X3DUrlObject,
           X3DConstants,
-          URI,
           Algorithm,
           DEBUG)
 {
@@ -114953,16 +113307,15 @@ function ($,
 
 			// Get URL.
 
-			this .URL = new URI (this .urlStack .shift ());
-			this .URL = this .getExecutionContext () .getURL () .transform (this .URL);
+			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
-			this .video .attr ("src", this .URL);
+			this .video .attr ("src", this .URL .href);
 			this .video .get (0) .load ();
 		},
 		setError: function ()
 		{
-			if (this .URL .scheme !== "data")
-				console .warn ("Error loading movie:", this .URL .toString ());
+			if (this .URL .protocol !== "data:")
+				console .warn ("Error loading movie:", this .URL .href);
 
 			this .loadNext ();
 		},
@@ -114970,15 +113323,15 @@ function ($,
 		{
 			if (DEBUG)
 			{
-				if (this .URL .scheme !== "data")
-					console .info ("Done loading movie:", this .URL .toString ());
+				if (this .URL .protocol !== "data:")
+					console .info ("Done loading movie:", this .URL .href);
 			}
 
 			try
 			{
 				this .video .unbind ("canplaythrough");
 
-				var
+				const
 			      video  = this .video [0],
 					width  = video .videoWidth,
 					height = video .videoHeight,
@@ -114993,7 +113346,7 @@ function ($,
 
 				cx .drawImage (video, 0, 0);
 
-				var data = cx .getImageData (0, 0, width, height) .data;
+				const data = cx .getImageData (0, 0, width, height) .data;
 
 				setTimeout (function ()
 				{
@@ -116501,10 +114854,6 @@ define ('x_ite/Configuration/ProfileInfo',[],function ()
 		this .title       = title;
 		this .providerUrl = providerUrl;
 		this .components  = components;
-
-		Object .preventExtensions (this);
-		Object .freeze (this);
-		Object .seal (this);
 	}
 
 	Object .assign (ProfileInfo .prototype,
@@ -116524,6 +114873,7 @@ define ('x_ite/Configuration/ProfileInfo',[],function ()
 
 	return ProfileInfo;
 });
+
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -117556,7 +115906,7 @@ function ($,
 				currentScene = this .currentScene,
 				external     = this .isExternal (),
 				fileLoader   = new FileLoader (this .getWorld ()),
-				scene        = fileLoader .createX3DFromString (currentScene .getURL (), x3dSyntax);
+				scene        = fileLoader .createX3DFromString (currentScene .getWorldURL (), x3dSyntax);
 
 			if (!external)
 			{

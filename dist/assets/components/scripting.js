@@ -710,7 +710,7 @@ function ($,
 		},
 		setError: function (reason, error)
 		{
-			console .error ("JavaScript Error in Script '" + this .getName () + "', " + reason + "\nworld url is '" + this .getExecutionContext () .getURL () + "':");
+			console .error ("JavaScript Error in Script '" + this .getName () + "', " + reason + "\nworld url is '" + this .getExecutionContext () .getWorldURL () + "':");
 			console .error (error);
 		},
 	});
