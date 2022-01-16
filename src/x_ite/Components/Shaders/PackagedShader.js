@@ -106,6 +106,8 @@ function (Fields,
 		{
 			return this .url_;
 		},
+		requestImmediateLoad: function ()
+		{ },
 	});
 
 	return PackagedShader;

@@ -183,6 +183,9 @@ function ($,
 
 			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
+			if (!this .getBrowser () .getBrowserOptions () .getCache ())
+				this .URL .searchParams .set ("_", Date .now ());
+
 			this .video .attr ("src", this .URL .href);
 			this .video .get (0) .load ();
 		},

@@ -61,16 +61,29 @@ function (Fields,
 		this .addType (X3DConstants .X3DUrlObject);
 
 		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+
+		this .autoRefreshStartTime = performance .now ();
 	}
 
 	X3DUrlObject .prototype =
 	{
 		constructor: X3DUrlObject,
 		initialize: function ()
-		{ },
+		{
+			this .isLive () .addInterest ("set_live__", this);
+
+			this .autoRefresh_          .addInterest ("set_autoRefresh__", this);
+			this .autoRefreshTimeLimit_ .addInterest ("set_autoRefresh__", this);
+		},
 		setLoadState: function (value, notify = true)
 		{
 			this .loadState_ = value;
+
+			if (value === X3DConstants .COMPLETE_STATE)
+			{
+				this .autoRefreshTime = performance .now ();
+				this .setAutoRefreshTimer (this .autoRefresh_ .getValue ());
+			}
 
 			if (notify === false)
 				return;
@@ -100,6 +113,48 @@ function (Fields,
 		{
 			return this .loadState_;
 		},
+		setAutoRefreshTimer: function (autoRefreshInterval)
+		{
+			clearTimeout (this .autoRefreshId);
+
+			if (this .autoRefresh_ .getValue () <= 0)
+				return;
+
+			const autoRefreshTimeLimit = this .autoRefreshTimeLimit_ .getValue ();
+
+			if ((performance .now () - this .autoRefreshStartTime) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
+				return;
+
+			this .autoRefreshId = setTimeout (this .performAutoRefresh .bind (this), autoRefreshInterval * 1000);
+		},
+		performAutoRefresh: function ()
+		{
+			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+			this .requestImmediateLoad ();
+		},
+		set_live__: function ()
+		{
+			if (this .isLive () .getValue ())
+				this .set_autoRefresh__ ();
+			else
+				clearTimeout (this .autoRefreshId);
+		},
+		set_autoRefresh__: function ()
+		{
+			if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
+				return;
+
+			const
+				elapsedTime = (performance .now () - this .autoRefreshTime) / 1000,
+				autoRefresh = this .autoRefresh_ .getValue ();
+
+			let autoRefreshInterval = autoRefresh - elapsedTime;
+
+			if (autoRefreshInterval < 0)
+				autoRefreshInterval = Math .ceil (elapsedTime / autoRefresh) * autoRefresh - elapsedTime;
+
+			this .setAutoRefreshTimer (autoRefreshInterval);
+		}
 	};
 
 	return X3DUrlObject;

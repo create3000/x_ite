@@ -94,11 +94,14 @@ function (Fields,
 
 	function X3DFontStyleNode (executionContext)
 	{
-		X3DNode .call (this, executionContext);
+		X3DNode      .call (this, executionContext);
+		X3DUrlObject .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DFontStyleNode);
 
-		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+		this .addChildObjects ("url",                  new Fields .MFString (),
+		                       "autoRefresh",          new Fields .SFTime (),
+									  "autoRefreshTimeLimit", new Fields .SFTime (3600));
 
 		this .familyStack = [ ];
 		this .alignments  = [ ];
@@ -106,11 +109,13 @@ function (Fields,
 	}
 
 	X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+		X3DUrlObject .prototype,
 	{
 		constructor: X3DFontStyleNode,
 		initialize: function ()
 		{
-			X3DNode .prototype .initialize .call (this);
+			X3DNode      .prototype .initialize .call (this);
+			X3DUrlObject .prototype .initialize .call (this);
 
 			this .style_   .addInterest ("set_style__", this);
 			this .justify_ .addInterest ("set_justify__", this);
@@ -123,8 +128,6 @@ function (Fields,
 
 			this .requestImmediateLoad ();
 		},
-		setLoadState: X3DUrlObject .prototype .setLoadState,
-		checkLoadState: X3DUrlObject .prototype .checkLoadState,
 		getMajorAlignment: function ()
 		{
 			return this .alignments [0];
@@ -226,6 +229,9 @@ function (Fields,
 
 				this .family = this .familyStack .shift ();
 				this .URL    = new URL (this .family, this .loader .getReferer ());
+
+				if (!this .getBrowser () .getBrowserOptions () .getCache ())
+					this .URL .searchParams .set ("_", Date .now ());
 
 				this .getBrowser () .getFont (this .URL)
 					.done (this .setFont .bind (this))

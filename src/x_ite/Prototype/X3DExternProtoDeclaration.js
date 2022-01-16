@@ -101,15 +101,15 @@ function ($,
 		{
 			X3DProtoDeclarationNode .prototype .initialize .call (this);
 			X3DUrlObject            .prototype .initialize .call (this);
-
-			this .isLive () .addInterest ("set_live__", this);
 		},
 		set_live__: function ()
 		{
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE)
-			{
-				this .scene .setLive (this .isLive () .getValue ());
-			}
+			X3DUrlObject .prototype .set_live__ .call (this);
+
+			if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
+				return;
+
+			this .scene .setLive (this .isLive () .getValue ());
 		},
 		hasUserDefinedFields: function ()
 		{

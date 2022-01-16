@@ -122,8 +122,6 @@ function (Fields,
 			X3DUrlObject     .prototype .initialize .call (this);
 			X3DBoundedObject .prototype .initialize .call (this);
 
-			this .isLive () .addInterest ("set_live__", this);
-
 			this .group .setPrivate (true);
 			this .group .setup ();
 
@@ -142,10 +140,12 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (! this .getPrivate ())
-			{
-				this .scene .setLive (this .isLive () .getValue ());
-			}
+			X3DUrlObject .prototype .set_live__ .call (this);
+
+			if (this .getPrivate ())
+				return
+
+			this .scene .setLive (this .isLive () .getValue ());
 		},
 		set_load__: function ()
 		{
@@ -169,6 +169,9 @@ function (Fields,
 		},
 		requestImmediateLoad: function ()
 		{
+			if (! this .load_ .getValue ())
+				return;
+
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
 				return;
 

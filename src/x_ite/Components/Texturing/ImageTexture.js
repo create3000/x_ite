@@ -159,6 +159,9 @@ function ($,
 
 			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
+			if (!this .getBrowser () .getBrowserOptions () .getCache ())
+				this .URL .searchParams .set ("_", Date .now ());
+
 			this .image .attr ("src", this .URL .href);
 		},
 		setError: function ()
