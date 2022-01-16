@@ -66,7 +66,7 @@ function (Fields,
 
 	// Anisotropic Filtering in WebGL is handled by an extension, use one of getExtension depending on browser:
 
-	var ANISOTROPIC_EXT = [
+	const ANISOTROPIC_EXT = [
 		"EXT_texture_filter_anisotropic",
 		"MOZ_EXT_texture_filter_anisotropic",
 		"WEBKIT_EXT_texture_filter_anisotropic",
@@ -90,7 +90,7 @@ function (Fields,
 		{
 			X3DAppearanceChildNode .prototype .initialize .call (this);
 
-			var gl = this .getBrowser () .getContext ();
+			const gl = this .getBrowser () .getContext ();
 
 			this .texture = gl .createTexture ();
 		},
@@ -109,7 +109,7 @@ function (Fields,
 		},
 		updateTextureProperties: function (target, haveTextureProperties, textureProperties, width, height, repeatS, repeatT, repeatR)
 		{
-			var gl = this .getBrowser () .getContext ();
+			const gl = this .getBrowser () .getContext ();
 
 			gl .bindTexture (target, this .getTexture ());
 
@@ -148,9 +148,9 @@ function (Fields,
 			//gl .texParameterfv (target, gl .TEXTURE_BORDER_COLOR, textureProperties .borderColor_ .getValue ());
 			//gl .texParameterf  (target, gl .TEXTURE_PRIORITY,     textureProperties .texturePriority_ .getValue ());
 
-			for (var i = 0; i < ANISOTROPIC_EXT .length; ++ i)
+			for (const extension of ANISOTROPIC_EXT)
 			{
-				var ext = gl .getExtension (ANISOTROPIC_EXT [i]);
+				const ext = gl .getExtension (extension);
 
 				if (ext)
 				{
