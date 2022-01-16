@@ -122,11 +122,8 @@ function (Fields,
 
 			const autoRefreshTimeLimit = this .autoRefreshTimeLimit_ .getValue ();
 
-			if (autoRefreshTimeLimit !== 0)
-			{
-				if ((performance .now () - this .autoRefreshStartTime) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
-					return;
-			}
+			if ((performance .now () - this .autoRefreshStartTime) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
+				return;
 
 			this .autoRefreshId = setTimeout (this .performAutoRefresh .bind (this), autoRefreshInterval * 1000);
 		},
