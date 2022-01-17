@@ -1,4 +1,4 @@
-/* X_ITE v4.7.3-1116 */
+/* X_ITE v4.7.3-1117 */
 
 (function () {
 
@@ -23251,7 +23251,7 @@ function ($,
 					}
 
 					stream .string += generator .Indent ();
-					array [length] .toStream (stream);
+					array .at (-1) .toStream (stream);
 					stream .string += "\n";
 
 					generator .DecIndent ();
@@ -23281,13 +23281,13 @@ function ($,
 
 				generator .PushUnitCategory (target .getUnit ());
 
-				for (let i = 0, n = length - 1; i < n; ++ i)
+				for (const element of array)
 				{
-					array [i] .toXMLStream (stream);
+					element .toXMLStream (stream);
 					stream .string += ", ";
 				}
 
-				array [n] .toXMLStream (stream);
+				array .at (-1) .toXMLStream (stream);
 
 				generator .PopUnitCategory ();
 			}
@@ -24023,7 +24023,7 @@ function (X3DArrayField,
 						}
 
 						stream .string += generator .Indent ();
-						value .set (array [n * components]);
+						value .set (array [(length - 1) * components]);
 						value .toStream (stream);
 
 						stream .string += "\n";
@@ -24044,7 +24044,7 @@ function (X3DArrayField,
 
 						stream .string += generator .Indent ();
 
-						for (let c = 0, first = n * components; c < components; ++ c, ++ first)
+						for (let c = 0, first = (length - 1) * components; c < components; ++ c, ++ first)
 							value [c] = array [first];
 
 						value .toStream (stream);
@@ -24090,7 +24090,7 @@ function (X3DArrayField,
 						stream .string += ", ";
 					}
 
-					value .set (array [n * components]);
+					value .set (array [(length - 1) * components]);
 
 					value .toXMLStream (stream);
 				}
@@ -24106,7 +24106,7 @@ function (X3DArrayField,
 						stream .string += ", ";
 					}
 
-					for (let c = 0, first = n * components; c < components; ++ c, ++ first)
+					for (let c = 0, first = (length - 1) * components; c < components; ++ c, ++ first)
 						value [c] = array [first];
 
 					value .toXMLStream (stream);
@@ -24375,7 +24375,7 @@ function (SFBool,
 					stream .string += "[\n";
 					generator .IncIndent ();
 
-					for (var i = 0, length = array .length; i < length; ++ i)
+					for (let i = 0, length = array .length; i < length; ++ i)
 					{
 						stream .string += generator .Indent ();
 						array [i] .toStream (stream);
@@ -24469,7 +24469,7 @@ function (SFBool,
 
 				const array = this .getValue ();
 
-				for (var i = 0, n = length - 1; i < n; ++ i)
+				for (let i = 0, n = length - 1; i < n; ++ i)
 				{
 					const node = array [i] .getValue ();
 
@@ -24498,7 +24498,7 @@ function (SFBool,
 					}
 				}
 
-				const node = array [n] .getValue ();
+				const node = array .at (-1) .getValue ();
 
 				if (node)
 				{
@@ -24566,7 +24566,7 @@ function (SFBool,
 			{
 				const value = this .getValue ();
 
-				for (var i = 0, n = length - 1; i < n; ++ i)
+				for (let i = 0, n = length - 1; i < n; ++ i)
 				{
 					stream .string += "\"";
 					value [i] .toXMLStream (stream);
@@ -24575,7 +24575,7 @@ function (SFBool,
 				}
 
 				stream .string += "\"";
-				value [n] .toXMLStream (stream);
+				value .at (-1) .toXMLStream (stream);
 				stream .string += "\"";
 			}
 		},
@@ -44996,16 +44996,30 @@ function (Fields,
 		this .addType (X3DConstants .X3DUrlObject);
 
 		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+
+		this .cache                = true;
+		this .autoRefreshStartTime = performance .now ();
 	}
 
 	X3DUrlObject .prototype =
 	{
 		constructor: X3DUrlObject,
 		initialize: function ()
-		{ },
+		{
+			this .isLive () .addInterest ("set_live__", this);
+
+			this .autoRefresh_          .addInterest ("set_autoRefresh__", this);
+			this .autoRefreshTimeLimit_ .addInterest ("set_autoRefresh__", this);
+		},
 		setLoadState: function (value, notify = true)
 		{
 			this .loadState_ = value;
+
+			// if (value === X3DConstants .COMPLETE_STATE)
+			// {
+			// 	this .autoRefreshCompleteTime = performance .now ();
+			// 	this .setAutoRefreshTimer (this .autoRefresh_ .getValue ());
+			// }
 
 			if (notify === false)
 				return;
@@ -45035,6 +45049,59 @@ function (Fields,
 		{
 			return this .loadState_;
 		},
+		setCache: function (value)
+		{
+			this .cache = value;
+		},
+		getCache: function ()
+		{
+			return this .cache;
+		},
+		setAutoRefreshTimer: function (autoRefreshInterval)
+		{
+			clearTimeout (this .autoRefreshId);
+
+			if (this .autoRefresh_ .getValue () <= 0)
+				return;
+
+			const autoRefreshTimeLimit = this .autoRefreshTimeLimit_ .getValue ();
+
+			if (autoRefreshTimeLimit !== 0)
+			{
+				if ((performance .now () - this .autoRefreshStartTime) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
+					return;
+			}
+
+			this .autoRefreshId = setTimeout (this .performAutoRefresh .bind (this), autoRefreshInterval * 1000);
+		},
+		performAutoRefresh: function ()
+		{
+			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+			this .requestImmediateLoad (false);
+		},
+		set_live__: function ()
+		{
+			if (this .isLive () .getValue ())
+				this .set_autoRefresh__ ();
+			else
+				clearTimeout (this .autoRefreshId);
+		},
+		set_autoRefresh__: function ()
+		{
+			if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
+				return;
+
+			const
+				elapsedTime = (performance .now () - this .autoRefreshCompleteTime) / 1000,
+				autoRefresh = this .autoRefresh_ .getValue ();
+
+			let autoRefreshInterval = autoRefresh - elapsedTime;
+
+			if (autoRefreshInterval < 0)
+				autoRefreshInterval = Math .ceil (elapsedTime / autoRefresh) * autoRefresh - elapsedTime;
+
+			this .setAutoRefreshTimer (autoRefreshInterval);
+		}
 	};
 
 	return X3DUrlObject;
@@ -45751,7 +45818,9 @@ function ($,
 		X3DProtoDeclarationNode .call (this, executionContext);
 		X3DUrlObject            .call (this, executionContext);
 
-		this .addChildObjects ("url", new Fields .MFString ());
+		this .addChildObjects ("url",                  new Fields .MFString (),
+		                       "autoRefresh",          new Fields .SFTime (),
+									  "autoRefreshTimeLimit", new Fields .SFTime (3600));
 
 		this .deferred = $.Deferred ();
 	}
@@ -45777,15 +45846,15 @@ function ($,
 		{
 			X3DProtoDeclarationNode .prototype .initialize .call (this);
 			X3DUrlObject            .prototype .initialize .call (this);
-
-			this .isLive () .addInterest ("set_live__", this);
 		},
 		set_live__: function ()
 		{
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE)
-			{
-				this .scene .setLive (this .isLive () .getValue ());
-			}
+			X3DUrlObject .prototype .set_live__ .call (this);
+
+			if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
+				return;
+
+			this .scene .setLive (this .isLive () .getValue ());
 		},
 		hasUserDefinedFields: function ()
 		{
@@ -59721,7 +59790,7 @@ function (Fields,
 
 	// Anisotropic Filtering in WebGL is handled by an extension, use one of getExtension depending on browser:
 
-	var ANISOTROPIC_EXT = [
+	const ANISOTROPIC_EXT = [
 		"EXT_texture_filter_anisotropic",
 		"MOZ_EXT_texture_filter_anisotropic",
 		"WEBKIT_EXT_texture_filter_anisotropic",
@@ -59745,7 +59814,7 @@ function (Fields,
 		{
 			X3DAppearanceChildNode .prototype .initialize .call (this);
 
-			var gl = this .getBrowser () .getContext ();
+			const gl = this .getBrowser () .getContext ();
 
 			this .texture = gl .createTexture ();
 		},
@@ -59764,7 +59833,7 @@ function (Fields,
 		},
 		updateTextureProperties: function (target, haveTextureProperties, textureProperties, width, height, repeatS, repeatT, repeatR)
 		{
-			var gl = this .getBrowser () .getContext ();
+			const gl = this .getBrowser () .getContext ();
 
 			gl .bindTexture (target, this .getTexture ());
 
@@ -59803,9 +59872,9 @@ function (Fields,
 			//gl .texParameterfv (target, gl .TEXTURE_BORDER_COLOR, textureProperties .borderColor_ .getValue ());
 			//gl .texParameterf  (target, gl .TEXTURE_PRIORITY,     textureProperties .texturePriority_ .getValue ());
 
-			for (var i = 0; i < ANISOTROPIC_EXT .length; ++ i)
+			for (const extension of ANISOTROPIC_EXT)
 			{
-				var ext = gl .getExtension (ANISOTROPIC_EXT [i]);
+				const ext = gl .getExtension (extension);
 
 				if (ext)
 				{
@@ -60122,11 +60191,13 @@ function ($,
 	{
 		constructor: ImageTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",               new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -60165,11 +60236,12 @@ function ($,
 
 			this .requestImmediateLoad ();
 		},
-		requestImmediateLoad: function ()
+		requestImmediateLoad: function (cache = true)
 		{
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
 				return;
 
+			this .setCache (cache);
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
 			this .buffer_ = this .url_;
@@ -60191,6 +60263,9 @@ function ($,
 			// Get URL.
 
 			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
+
+			if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
+				this .URL .searchParams .set ("_", Date .now ());
 
 			this .image .attr ("src", this .URL .href);
 		},
@@ -61588,6 +61663,10 @@ function (SFNode,
 
 			this .set_activeLayer__ ();
 		},
+		getCache: function ()
+		{
+			return true;
+		},
 		getLayerSet: function ()
 		{
 			return this .layerSet;
@@ -61714,7 +61793,7 @@ define ('standard/Networking/BinaryTransport',[],function ()
 						xhr .open (options .type, options .url, options .async, options .username, options .password);
 
 						// Apply custom fields if provided
-						if ( options.xhrFields )
+						if (options .xhrFields)
 						{
 							for (const i in options .xhrFields)
 								xhr [i] = options .xhrFields [i];
@@ -65393,7 +65472,7 @@ function ($,
 					url: this .URL .href,
 					dataType: "text",
 					async: false,
-					cache: this .browser .getBrowserOptions () .getCache (),
+					cache: this .browser .getBrowserOptions () .getCache () && this .node .getCache (),
 					//timeout: 15000,
 					global: false,
 					context: this,
@@ -65539,7 +65618,7 @@ function ($,
 					url: this .URL .href,
 					dataType: "binary",
 					async: true,
-					cache: this .browser .getBrowserOptions () .getCache (),
+					cache: this .browser .getBrowserOptions () .getCache () && this .node .getCache (),
 					//timeout: 15000,
 					global: false,
 					context: this,
@@ -65762,9 +65841,11 @@ function (Fields,
 	{
 		constructor: ShaderPart,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "type",     new Fields .SFString ("VERTEX")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",      new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
 		]),
 		getTypeName: function ()
 		{
@@ -65827,11 +65908,12 @@ function (Fields,
 		{
 			return this .shadow;
 		},
-		requestImmediateLoad: function ()
+		requestImmediateLoad: function (cache = true)
 		{
 			if (this .checkLoadState () == X3DConstants .COMPLETE_STATE || this .checkLoadState () == X3DConstants .IN_PROGRESS_STATE)
 				return;
 
+			this .setCache (cache);
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
 			this .buffer_ = this .url_;
@@ -77611,11 +77693,14 @@ function (Fields,
 
 	function X3DFontStyleNode (executionContext)
 	{
-		X3DNode .call (this, executionContext);
+		X3DNode      .call (this, executionContext);
+		X3DUrlObject .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DFontStyleNode);
 
-		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+		this .addChildObjects ("url",                  new Fields .MFString (),
+		                       "autoRefresh",          new Fields .SFTime (),
+									  "autoRefreshTimeLimit", new Fields .SFTime (3600));
 
 		this .familyStack = [ ];
 		this .alignments  = [ ];
@@ -77623,11 +77708,13 @@ function (Fields,
 	}
 
 	X3DFontStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+		X3DUrlObject .prototype,
 	{
 		constructor: X3DFontStyleNode,
 		initialize: function ()
 		{
-			X3DNode .prototype .initialize .call (this);
+			X3DNode      .prototype .initialize .call (this);
+			X3DUrlObject .prototype .initialize .call (this);
 
 			this .style_   .addInterest ("set_style__", this);
 			this .justify_ .addInterest ("set_justify__", this);
@@ -77640,8 +77727,6 @@ function (Fields,
 
 			this .requestImmediateLoad ();
 		},
-		setLoadState: X3DUrlObject .prototype .setLoadState,
-		checkLoadState: X3DUrlObject .prototype .checkLoadState,
 		getMajorAlignment: function ()
 		{
 			return this .alignments [0];
@@ -77699,11 +77784,12 @@ function (Fields,
 
 			return index ? TextAlignment .FIRST : TextAlignment .BEGIN;
 		},
-		requestImmediateLoad: function ()
+		requestImmediateLoad: function (cache = true)
 		{
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
 				return;
 
+			this .setCache (cache);
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
 			// Add default font to family array.
@@ -77743,6 +77829,9 @@ function (Fields,
 
 				this .family = this .familyStack .shift ();
 				this .URL    = new URL (this .family, this .loader .getReferer ());
+
+				if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
+					this .URL .searchParams .set ("_", Date .now ());
 
 				this .getBrowser () .getFont (this .URL)
 					.done (this .setFont .bind (this))
@@ -106718,17 +106807,19 @@ function (Fields,
 	{
 		constructor: Anchor,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",    new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",            new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "parameter",      new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "parameter",            new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",              new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",          new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",             new Fields .SFVec3f (-1, -1, -1)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",           new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",          new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",       new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",             new Fields .MFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -106766,8 +106857,9 @@ function (Fields,
 					anchor .requestImmediateLoad ();
 			};
 		},
-		requestImmediateLoad: function ()
+		requestImmediateLoad: function (cache = true)
 		{
+			this .setCache (cache);
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE, false);
 
 			new FileLoader (this) .createX3DFromURL (this .url_, this .parameter_,
@@ -106917,13 +107009,15 @@ function (Fields,
 	{
 		constructor: Inline,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",        new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",         new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",              new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",          new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",             new Fields .SFVec3f (-1, -1, -1)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",           new Fields .SFVec3f ()),
 		]),
 		getTypeName: function ()
 		{
@@ -106943,8 +107037,6 @@ function (Fields,
 			X3DUrlObject     .prototype .initialize .call (this);
 			X3DBoundedObject .prototype .initialize .call (this);
 
-			this .isLive () .addInterest ("set_live__", this);
-
 			this .group .setPrivate (true);
 			this .group .setup ();
 
@@ -106963,10 +107055,12 @@ function (Fields,
 		},
 		set_live__: function ()
 		{
-			if (! this .getPrivate ())
-			{
-				this .scene .setLive (this .isLive () .getValue ());
-			}
+			X3DUrlObject .prototype .set_live__ .call (this);
+
+			if (this .getPrivate ())
+				return
+
+			this .scene .setLive (this .isLive () .getValue ());
 		},
 		set_load__: function ()
 		{
@@ -106988,11 +107082,15 @@ function (Fields,
 
 			this .requestImmediateLoad ();
 		},
-		requestImmediateLoad: function ()
+		requestImmediateLoad: function (cache = true)
 		{
+			if (! this .load_ .getValue ())
+				return;
+
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
 				return;
 
+			this .setCache (cache);
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
 			// buffer prevents double load of the scene if load and url field are set at the same time.
@@ -112267,19 +112365,21 @@ function ($,
 	{
 		constructor: AudioClip,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "description",      new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "url",              new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "pitch",            new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "loop",             new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",        new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",       new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",        new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",         new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",         new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",         new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",      new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "duration_changed", new Fields .SFTime (-1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "pitch",                new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "loop",                 new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",            new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "resumeTime",           new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "pauseTime",            new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "stopTime",             new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "isPaused",             new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",             new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "elapsedTime",          new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,  "duration_changed",     new Fields .SFTime (-1)),
 		]),
 		getTypeName: function ()
 		{
@@ -112319,11 +112419,12 @@ function ($,
 
 			this .requestImmediateLoad ();
 		},
-		requestImmediateLoad: function ()
+		requestImmediateLoad: function (cache = true)
 		{
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
 				return;
 
+			this .setCache (cache);
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
 			this .buffer_ = this .url_;
@@ -112348,6 +112449,9 @@ function ($,
 			// Get URL.
 
 			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
+
+			if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
+				this .URL .searchParams .set ("_", Date .now ());
 
 			this .audio .attr ("src", this .URL .href);
 			this .audio .get (0) .load ();
@@ -113221,23 +113325,25 @@ function ($,
 	{
 		constructor: MovieTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",               new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",             new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "pitch",             new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "loop",              new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "startTime",         new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "resumeTime",        new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "pauseTime",         new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "stopTime",          new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "isPaused",          new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",          new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "elapsedTime",       new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "duration_changed",  new Fields .SFTime (-1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",                new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "pitch",                new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "loop",                 new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "startTime",            new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "resumeTime",           new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "pauseTime",            new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "stopTime",             new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,     "isPaused",             new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",             new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,     "elapsedTime",          new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly,     "duration_changed",     new Fields .SFTime (-1)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -113278,11 +113384,12 @@ function ($,
 
 			this .requestImmediateLoad ();
 		},
-		requestImmediateLoad: function ()
+		requestImmediateLoad: function (cache = true)
 		{
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
 				return;
 
+			this .setCache (cache);
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
 			this .buffer_ = this .url_;
@@ -113308,6 +113415,9 @@ function ($,
 			// Get URL.
 
 			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
+
+			if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
+				this .URL .searchParams .set ("_", Date .now ());
 
 			this .video .attr ("src", this .URL .href);
 			this .video .get (0) .load ();

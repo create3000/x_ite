@@ -958,9 +958,11 @@ function ($,
 	{
 		constructor: ImageCubeMapTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",               new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -1009,11 +1011,12 @@ function ($,
 
 			this .requestImmediateLoad ();
 		},
-		requestImmediateLoad: function ()
+		requestImmediateLoad: function (cache = true)
 		{
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
 				return;
 
+			this .setCache (cache);
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
 			this .urlStack .setValue (this .url_);
@@ -1031,6 +1034,9 @@ function ($,
 			// Get URL.
 
 			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
+
+			if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
+				this .URL .searchParams .set ("_", Date .now ());
 
 			this .image .attr ("src", this .URL .href);
 		},
