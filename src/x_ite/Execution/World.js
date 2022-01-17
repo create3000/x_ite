@@ -101,6 +101,10 @@ function (SFNode,
 
 			this .set_activeLayer__ ();
 		},
+		getCache: function ()
+		{
+			return true;
+		},
 		getLayerSet: function ()
 		{
 			return this .layerSet;

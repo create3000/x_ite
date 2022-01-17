@@ -168,7 +168,7 @@ function ($,
 		{
 			return this .url_;
 		},
-		requestImmediateLoad: function ()
+		requestImmediateLoad: function (cache = true)
 		{
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
 				return;
@@ -176,6 +176,7 @@ function ($,
 			if (this .url_ .length === 0)
 				return;
 
+			this .setCache (cache);
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
 			this .buffer_ = this .url_;

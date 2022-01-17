@@ -135,8 +135,9 @@ function (Fields,
 					anchor .requestImmediateLoad ();
 			};
 		},
-		requestImmediateLoad: function ()
+		requestImmediateLoad: function (cache = true)
 		{
+			this .setCache (cache);
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE, false);
 
 			new FileLoader (this) .createX3DFromURL (this .url_, this .parameter_,

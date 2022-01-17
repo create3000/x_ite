@@ -102,7 +102,7 @@ function (Fields,
 			X3DAnnotationNode .prototype .initialize .call (this);
 			X3DUrlObject      .prototype .initialize .call (this);
 		},
-		requestImmediateLoad: function ()
+		requestImmediateLoad: function (cache = true)
 		{ },
 	});
 

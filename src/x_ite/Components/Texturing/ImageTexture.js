@@ -132,11 +132,12 @@ function ($,
 
 			this .requestImmediateLoad ();
 		},
-		requestImmediateLoad: function ()
+		requestImmediateLoad: function (cache = true)
 		{
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
 				return;
 
+			this .setCache (cache);
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
 			this .buffer_ = this .url_;
@@ -159,7 +160,7 @@ function ($,
 
 			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
-			if (!this .getBrowser () .getBrowserOptions () .getCache ())
+			if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
 				this .URL .searchParams .set ("_", Date .now ());
 
 			this .image .attr ("src", this .URL .href);

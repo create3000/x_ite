@@ -62,6 +62,7 @@ function (Fields,
 
 		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 
+		this .cache                = true;
 		this .autoRefreshStartTime = performance .now ();
 	}
 
@@ -113,6 +114,14 @@ function (Fields,
 		{
 			return this .loadState_;
 		},
+		setCache: function (value)
+		{
+			this .cache = value;
+		},
+		getCache: function ()
+		{
+			return this .cache;
+		},
 		setAutoRefreshTimer: function (autoRefreshInterval)
 		{
 			clearTimeout (this .autoRefreshId);
@@ -122,15 +131,18 @@ function (Fields,
 
 			const autoRefreshTimeLimit = this .autoRefreshTimeLimit_ .getValue ();
 
-			if ((performance .now () - this .autoRefreshStartTime) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
-				return;
+			if (autoRefreshTimeLimit !== 0)
+			{
+				if ((performance .now () - this .autoRefreshStartTime) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
+					return;
+			}
 
 			this .autoRefreshId = setTimeout (this .performAutoRefresh .bind (this), autoRefreshInterval * 1000);
 		},
 		performAutoRefresh: function ()
 		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-			this .requestImmediateLoad ();
+			this .requestImmediateLoad (false);
 		},
 		set_live__: function ()
 		{

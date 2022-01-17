@@ -185,11 +185,12 @@ function (Fields,
 
 			return index ? TextAlignment .FIRST : TextAlignment .BEGIN;
 		},
-		requestImmediateLoad: function ()
+		requestImmediateLoad: function (cache = true)
 		{
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
 				return;
 
+			this .setCache (cache);
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
 			// Add default font to family array.
@@ -230,7 +231,7 @@ function (Fields,
 				this .family = this .familyStack .shift ();
 				this .URL    = new URL (this .family, this .loader .getReferer ());
 
-				if (!this .getBrowser () .getBrowserOptions () .getCache ())
+				if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
 					this .URL .searchParams .set ("_", Date .now ());
 
 				this .getBrowser () .getFont (this .URL)

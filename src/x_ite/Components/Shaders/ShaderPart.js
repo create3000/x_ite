@@ -164,11 +164,12 @@ function (Fields,
 		{
 			return this .shadow;
 		},
-		requestImmediateLoad: function ()
+		requestImmediateLoad: function (cache = true)
 		{
 			if (this .checkLoadState () == X3DConstants .COMPLETE_STATE || this .checkLoadState () == X3DConstants .IN_PROGRESS_STATE)
 				return;
 
+			this .setCache (cache);
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
 			this .buffer_ = this .url_;

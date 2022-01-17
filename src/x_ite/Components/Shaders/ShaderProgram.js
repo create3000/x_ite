@@ -103,7 +103,7 @@ function (Fields,
 		{
 			return this .url_;
 		},
-		requestImmediateLoad: function ()
+		requestImmediateLoad: function (cache = true)
 		{ },
 	});
 
