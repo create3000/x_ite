@@ -215,7 +215,7 @@ function (SFBool,
 					stream .string += "[\n";
 					generator .IncIndent ();
 
-					for (var i = 0, length = array .length; i < length; ++ i)
+					for (let i = 0, length = array .length; i < length; ++ i)
 					{
 						stream .string += generator .Indent ();
 						array [i] .toStream (stream);
@@ -309,7 +309,7 @@ function (SFBool,
 
 				const array = this .getValue ();
 
-				for (var i = 0, n = length - 1; i < n; ++ i)
+				for (let i = 0, n = length - 1; i < n; ++ i)
 				{
 					const node = array [i] .getValue ();
 
@@ -338,7 +338,7 @@ function (SFBool,
 					}
 				}
 
-				const node = array [n] .getValue ();
+				const node = array .at (-1) .getValue ();
 
 				if (node)
 				{
@@ -406,7 +406,7 @@ function (SFBool,
 			{
 				const value = this .getValue ();
 
-				for (var i = 0, n = length - 1; i < n; ++ i)
+				for (let i = 0, n = length - 1; i < n; ++ i)
 				{
 					stream .string += "\"";
 					value [i] .toXMLStream (stream);
@@ -415,7 +415,7 @@ function (SFBool,
 				}
 
 				stream .string += "\"";
-				value [n] .toXMLStream (stream);
+				value .at (-1) .toXMLStream (stream);
 				stream .string += "\"";
 			}
 		},

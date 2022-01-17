@@ -409,6 +409,9 @@ function ($,
 		},
 		set_live__: function ()
 		{
+			if (!this .context)
+				return;
+
 			if (this .isLive () .getValue ())
 			{
 				if (!this .initialized)

@@ -477,7 +477,7 @@ function ($,
 					}
 
 					stream .string += generator .Indent ();
-					array [length] .toStream (stream);
+					array .at (-1) .toStream (stream);
 					stream .string += "\n";
 
 					generator .DecIndent ();
@@ -507,13 +507,13 @@ function ($,
 
 				generator .PushUnitCategory (target .getUnit ());
 
-				for (let i = 0, n = length - 1; i < n; ++ i)
+				for (const element of array)
 				{
-					array [i] .toXMLStream (stream);
+					element .toXMLStream (stream);
 					stream .string += ", ";
 				}
 
-				array [n] .toXMLStream (stream);
+				array .at (-1) .toXMLStream (stream);
 
 				generator .PopUnitCategory ();
 			}

@@ -68,7 +68,7 @@ define (function ()
 						xhr .open (options .type, options .url, options .async, options .username, options .password);
 
 						// Apply custom fields if provided
-						if ( options.xhrFields )
+						if (options .xhrFields)
 						{
 							for (const i in options .xhrFields)
 								xhr [i] = options .xhrFields [i];

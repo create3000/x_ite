@@ -703,7 +703,7 @@ function (X3DArrayField,
 						}
 
 						stream .string += generator .Indent ();
-						value .set (array [n * components]);
+						value .set (array [(length - 1) * components]);
 						value .toStream (stream);
 
 						stream .string += "\n";
@@ -724,7 +724,7 @@ function (X3DArrayField,
 
 						stream .string += generator .Indent ();
 
-						for (let c = 0, first = n * components; c < components; ++ c, ++ first)
+						for (let c = 0, first = (length - 1) * components; c < components; ++ c, ++ first)
 							value [c] = array [first];
 
 						value .toStream (stream);
@@ -770,7 +770,7 @@ function (X3DArrayField,
 						stream .string += ", ";
 					}
 
-					value .set (array [n * components]);
+					value .set (array [(length - 1) * components]);
 
 					value .toXMLStream (stream);
 				}
@@ -786,7 +786,7 @@ function (X3DArrayField,
 						stream .string += ", ";
 					}
 
-					for (let c = 0, first = n * components; c < components; ++ c, ++ first)
+					for (let c = 0, first = (length - 1) * components; c < components; ++ c, ++ first)
 						value [c] = array [first];
 
 					value .toXMLStream (stream);
