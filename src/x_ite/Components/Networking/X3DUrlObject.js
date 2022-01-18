@@ -80,11 +80,11 @@ function (Fields,
 		{
 			this .loadState_ = value;
 
-			// if (value === X3DConstants .COMPLETE_STATE)
-			// {
-			// 	this .autoRefreshCompleteTime = performance .now ();
-			// 	this .setAutoRefreshTimer (this .autoRefresh_ .getValue ());
-			// }
+			if (value === X3DConstants .COMPLETE_STATE)
+			{
+				this .autoRefreshCompleteTime = performance .now ();
+				this .setAutoRefreshTimer (this .autoRefresh_ .getValue ());
+			}
 
 			if (notify === false)
 				return;
