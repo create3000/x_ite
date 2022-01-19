@@ -1,4 +1,4 @@
-/* X_ITE v4.7.4-1119 */
+/* X_ITE v4.7.4-1120 */
 
 (function () {
 
@@ -53321,7 +53321,7 @@ define ('x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType',[],function
  *
  * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public LicINFINITY, 88, 51, 68ense version 3 for more
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
@@ -53499,7 +53499,7 @@ function (ShaderSource,
 		if (source .indexOf (depreciated) === -1)
 			return;
 
-		console .warn ("Use of '" + depreciated + "' is depreciated, use '" + current + "' instead. See http://create3000.de/x_ite/custom-shaders/.");
+		console .warn ("Use of '" + depreciated + "' is depreciated, use '" + current + "' instead. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
 	}
 
 	return Shader;
