@@ -467,7 +467,7 @@ function (X3DEventObject,
 
 				if (match)
 				{
-					const field = this ._fields .get (match [1]);
+					const field = this ._fields .get (match [1]) || this ._aliases .get (match [1]);
 
 					if (field && field .getAccessType () === X3DConstants .inputOutput)
 						return field;
@@ -478,7 +478,7 @@ function (X3DEventObject,
 
 					if (match)
 					{
-						const field = this ._fields .get (match [1]);
+						const field = this ._fields .get (match [1]) || this ._aliases .get (match [1]);
 
 						if (field && field .getAccessType () === X3DConstants .inputOutput)
 							return field;
