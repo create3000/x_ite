@@ -86,7 +86,7 @@ function (Fields,
 				this .setAutoRefreshTimer (this .autoRefresh_ .getValue ());
 			}
 
-			if (notify === false)
+			if (!notify)
 				return;
 
 			switch (value)

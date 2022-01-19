@@ -77,6 +77,7 @@ function (X3DEventObject,
 		this ._type              = [ X3DConstants .X3DBaseNode ];
 		this ._fields            = new Map ();
 		this ._predefinedFields  = new Map ();
+		this ._aliases           = new Map ();
 		this ._userDefinedFields = new Map ();
 		this ._cloneCount        = 0;
 
@@ -319,7 +320,8 @@ function (X3DEventObject,
 				{
 					console .log (error .message);
 				}
-			});
+			},
+			this);
 
 			// User-defined fields
 
@@ -456,27 +458,27 @@ function (X3DEventObject,
 
 			return function (name)
 			{
-				let field = this ._fields .get (name);
+				const field = this ._fields .get (name) || this ._aliases .get (name);
 
 				if (field)
 					return field;
 
-				let match = name .match (set_field);
+				const match = name .match (set_field);
 
 				if (match)
 				{
-					field = this ._fields .get (match [1]);
+					const field = this ._fields .get (match [1]);
 
 					if (field && field .getAccessType () === X3DConstants .inputOutput)
 						return field;
 				}
 				else
 				{
-					let match = name .match (field_changed);
+					const match = name .match (field_changed);
 
 					if (match)
 					{
-						field = this ._fields .get (match [1]);
+						const field = this ._fields .get (match [1]);
 
 						if (field && field .getAccessType () === X3DConstants .inputOutput)
 							return field;
@@ -486,6 +488,10 @@ function (X3DEventObject,
 				throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
 			};
 		})(),
+		addAlias: function (alias, field)
+		{
+			this ._aliases .set (alias, field);
+		},
 		getFieldDefinitions: function ()
 		{
 			return this .fieldDefinitions;
@@ -1242,8 +1248,6 @@ function (X3DEventObject,
 			});
 		},
 	});
-
-	X3DBaseNode .prototype .addAlias = X3DBaseNode .prototype .setField;
 
 	return X3DBaseNode;
 });

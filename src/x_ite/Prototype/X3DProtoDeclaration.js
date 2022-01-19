@@ -75,6 +75,7 @@ function (Fields,
 		this .setLive (false);
 
 		this .body = new X3DExecutionContext (executionContext);
+		this .body .addParent (this);
 	}
 
 	X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
@@ -97,7 +98,6 @@ function (Fields,
 		{
 			X3DProtoDeclarationNode .prototype .initialize .call (this);
 
-			this .body .addParent (this);
 			this .body .setup ();
 
 			this .loadState_ = X3DConstants .COMPLETE_STATE;
