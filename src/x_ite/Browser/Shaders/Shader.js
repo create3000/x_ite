@@ -35,7 +35,7 @@
  *
  * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public LicINFINITY, 88, 51, 68ense version 3 for more
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
  * details (a copy is included in the LICENSE file that accompanied this code).
  *
  * You should have received a copy of the GNU General Public License version 3
@@ -64,43 +64,27 @@ function (ShaderSource,
 {
 "use strict";
 
-	var Shader =
+	const Shader =
 	{
 		getShaderSource: function (browser, name, source, shadow)
 		{
-			var gl = browser .getContext ();
+			const gl = browser .getContext ();
 
 			source = ShaderSource .get (gl, source);
 
-			var
-				COMMENTS     = "\\s+|/\\*[^]*?\\*/|//.*?\\n",
-				LINE         = "#line\\s+.*?\\n",
-				IF           = "#if\\s+.*?\\n",
-				ELIF         = "#elif\\s+.*?\\n",
-				IFDEF        = "#ifdef\\s+.*?\\n",
-				IFNDEF       = "#ifndef\\s+.*?\\n",
-				ELSE         = "#else.*?\\n",
-				ENDIF        = "#endif.*?\\n",
-				DEFINE       = "#define\\s+(?:[^\\n\\\\]|\\\\[^\\r\\n]|\\\\\\r?\\n)*\\n",
-				UNDEF        = "#undef\\s+.*?\\n",
-				PRAGMA       = "#pragma\\s+.*?\\n",
-				PREPROCESSOR =  LINE + "|" + IF + "|" + ELIF + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + UNDEF + "|" + PRAGMA,
-				VERSION      = "#version\\s+.*?\\n",
-				EXTENSION    = "#extension\\s+.*?\\n",
-				ANY          = "[^]*";
+			const
+				COMMENTS = "\\s+|/\\*[^]*?\\*/|//.*?\\n",
+				VERSION  = "#version\\s+.*?\\n",
+				ANY      = "[^]*";
 
-			var
-				GLSL  = new RegExp ("^((?:" + VERSION + ")?)((?:" + COMMENTS + "|" + PREPROCESSOR + "|" + EXTENSION + ")*)(" + ANY + ")$"),
+			const
+				GLSL  = new RegExp ("^((?:" + COMMENTS + ")?(?:" + VERSION + ")?)(" + ANY + ")$"),
 				match = source .match (GLSL);
 
 			if (! match)
 				return source;
 
-			var
-				lines1 = (match [1] .match (/\n/g) || []) .length,
-				lines2 = (match [1] .match (/\n/g) || []) .length;
-
-			var constants = "";
+			let constants = "";
 
 			constants += "#define X_ITE\n";
 
@@ -122,9 +106,7 @@ function (ShaderSource,
 				constants += "#define X3D_PCF_FILTERING\n";
 			}
 
-			constants += "#line " + (lines1 + 1) + "\n";
-
-			var definitions = "";
+			let definitions = "";
 
 			definitions += "#define x3d_None 0\n";
 
@@ -210,22 +192,19 @@ function (ShaderSource,
 
 			// Adjust precision of struct types;
 
-			var
-				sourceNoComments = source .replace (/\/\*[\s\S]*?\*\/|\/\/.*?\n/g, ""),
-				types            = Types,
-				mf               = sourceNoComments .match (/\s*precision\s+(lowp|mediump|highp)\s+float\s*;/),
-				mi               = sourceNoComments .match (/\s*precision\s+(lowp|mediump|highp)\s+int\s*;/),
-				pf               = mf ? mf [1] : "mediump",
-				pi               = mi ? mi [1] : "mediump";
+			const
+				matchFloat       = source .match (/\s*precision\s+(lowp|mediump|highp)\s+float\s*;/),
+				matchInt         = source .match (/\s*precision\s+(lowp|mediump|highp)\s+int\s*;/),
+				precisionFloat   = matchFloat ? matchFloat [1] : "mediump",
+				precisionInt     = matchInt   ? matchInt   [1] : "mediump";
 
-			types = types .replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, pf + " $1");
-			types = types .replace (/mediump\s+(int)/g, pi + " $1");
+			const types = Types
+				.replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, precisionFloat + " $1")
+				.replace (/mediump\s+(int)/g,                       precisionInt   + " $1");
 
-			types += "#line " + (lines1 + lines2 + 1) + "\n";
+			const lines = (match [1] .match (/\n/g) || [ ]) .length + 1;
 
-			var source = match [1] + constants + match [2] + definitions + types + match [3];
-
-			return source;
+			return match [1] + constants + definitions + types + "#line " + lines + "\n" + match [2];
 		},
 	};
 

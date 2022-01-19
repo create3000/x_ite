@@ -1,4 +1,4 @@
-/* X_ITE v4.7.3-1118 */
+/* X_ITE v4.7.4-1119 */
 
 (function () {
 
@@ -24858,7 +24858,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.7.3";
+	return "4.7.4";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -25123,6 +25123,7 @@ function (X3DEventObject,
 		this ._type              = [ X3DConstants .X3DBaseNode ];
 		this ._fields            = new Map ();
 		this ._predefinedFields  = new Map ();
+		this ._aliases           = new Map ();
 		this ._userDefinedFields = new Map ();
 		this ._cloneCount        = 0;
 
@@ -25365,7 +25366,8 @@ function (X3DEventObject,
 				{
 					console .log (error .message);
 				}
-			});
+			},
+			this);
 
 			// User-defined fields
 
@@ -25502,27 +25504,27 @@ function (X3DEventObject,
 
 			return function (name)
 			{
-				let field = this ._fields .get (name);
+				const field = this ._fields .get (name) || this ._aliases .get (name);
 
 				if (field)
 					return field;
 
-				let match = name .match (set_field);
+				const match = name .match (set_field);
 
 				if (match)
 				{
-					field = this ._fields .get (match [1]);
+					const field = this ._fields .get (match [1]) || this ._aliases .get (match [1]);
 
 					if (field && field .getAccessType () === X3DConstants .inputOutput)
 						return field;
 				}
 				else
 				{
-					let match = name .match (field_changed);
+					const match = name .match (field_changed);
 
 					if (match)
 					{
-						field = this ._fields .get (match [1]);
+						const field = this ._fields .get (match [1]) || this ._aliases .get (match [1]);
 
 						if (field && field .getAccessType () === X3DConstants .inputOutput)
 							return field;
@@ -25532,6 +25534,10 @@ function (X3DEventObject,
 				throw new Error ("Unknown field '" + name + "' in node class " + this .getTypeName () + ".");
 			};
 		})(),
+		addAlias: function (alias, field)
+		{
+			this ._aliases .set (alias, field);
+		},
 		getFieldDefinitions: function ()
 		{
 			return this .fieldDefinitions;
@@ -26288,8 +26294,6 @@ function (X3DEventObject,
 			});
 		},
 	});
-
-	X3DBaseNode .prototype .addAlias = X3DBaseNode .prototype .setField;
 
 	return X3DBaseNode;
 });
@@ -45015,13 +45019,13 @@ function (Fields,
 		{
 			this .loadState_ = value;
 
-			// if (value === X3DConstants .COMPLETE_STATE)
-			// {
-			// 	this .autoRefreshCompleteTime = performance .now ();
-			// 	this .setAutoRefreshTimer (this .autoRefresh_ .getValue ());
-			// }
+			if (value === X3DConstants .COMPLETE_STATE)
+			{
+				this .autoRefreshCompleteTime = performance .now ();
+				this .setAutoRefreshTimer (this .autoRefresh_ .getValue ());
+			}
 
-			if (notify === false)
+			if (!notify)
 				return;
 
 			switch (value)
@@ -46181,6 +46185,7 @@ function (Fields,
 		this .setLive (false);
 
 		this .body = new X3DExecutionContext (executionContext);
+		this .body .addParent (this);
 	}
 
 	X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
@@ -46203,7 +46208,6 @@ function (Fields,
 		{
 			X3DProtoDeclarationNode .prototype .initialize .call (this);
 
-			this .body .addParent (this);
 			this .body .setup ();
 
 			this .loadState_ = X3DConstants .COMPLETE_STATE;
@@ -53346,43 +53350,27 @@ function (ShaderSource,
 {
 "use strict";
 
-	var Shader =
+	const Shader =
 	{
 		getShaderSource: function (browser, name, source, shadow)
 		{
-			var gl = browser .getContext ();
+			const gl = browser .getContext ();
 
 			source = ShaderSource .get (gl, source);
 
-			var
-				COMMENTS     = "\\s+|/\\*[^]*?\\*/|//.*?\\n",
-				LINE         = "#line\\s+.*?\\n",
-				IF           = "#if\\s+.*?\\n",
-				ELIF         = "#elif\\s+.*?\\n",
-				IFDEF        = "#ifdef\\s+.*?\\n",
-				IFNDEF       = "#ifndef\\s+.*?\\n",
-				ELSE         = "#else.*?\\n",
-				ENDIF        = "#endif.*?\\n",
-				DEFINE       = "#define\\s+(?:[^\\n\\\\]|\\\\[^\\r\\n]|\\\\\\r?\\n)*\\n",
-				UNDEF        = "#undef\\s+.*?\\n",
-				PRAGMA       = "#pragma\\s+.*?\\n",
-				PREPROCESSOR =  LINE + "|" + IF + "|" + ELIF + "|" + IFDEF + "|" + IFNDEF + "|" + ELSE + "|" + ENDIF + "|" + DEFINE + "|" + UNDEF + "|" + PRAGMA,
-				VERSION      = "#version\\s+.*?\\n",
-				EXTENSION    = "#extension\\s+.*?\\n",
-				ANY          = "[^]*";
+			const
+				COMMENTS = "\\s+|/\\*[^]*?\\*/|//.*?\\n",
+				VERSION  = "#version\\s+.*?\\n",
+				ANY      = "[^]*";
 
-			var
-				GLSL  = new RegExp ("^((?:" + VERSION + ")?)((?:" + COMMENTS + "|" + PREPROCESSOR + "|" + EXTENSION + ")*)(" + ANY + ")$"),
+			const
+				GLSL  = new RegExp ("^((?:" + COMMENTS + ")?(?:" + VERSION + ")?)(" + ANY + ")$"),
 				match = source .match (GLSL);
 
 			if (! match)
 				return source;
 
-			var
-				lines1 = (match [1] .match (/\n/g) || []) .length,
-				lines2 = (match [1] .match (/\n/g) || []) .length;
-
-			var constants = "";
+			let constants = "";
 
 			constants += "#define X_ITE\n";
 
@@ -53404,9 +53392,7 @@ function (ShaderSource,
 				constants += "#define X3D_PCF_FILTERING\n";
 			}
 
-			constants += "#line " + (lines1 + 1) + "\n";
-
-			var definitions = "";
+			let definitions = "";
 
 			definitions += "#define x3d_None 0\n";
 
@@ -53492,22 +53478,19 @@ function (ShaderSource,
 
 			// Adjust precision of struct types;
 
-			var
-				sourceNoComments = source .replace (/\/\*[\s\S]*?\*\/|\/\/.*?\n/g, ""),
-				types            = Types,
-				mf               = sourceNoComments .match (/\s*precision\s+(lowp|mediump|highp)\s+float\s*;/),
-				mi               = sourceNoComments .match (/\s*precision\s+(lowp|mediump|highp)\s+int\s*;/),
-				pf               = mf ? mf [1] : "mediump",
-				pi               = mi ? mi [1] : "mediump";
+			const
+				matchFloat       = source .match (/\s*precision\s+(lowp|mediump|highp)\s+float\s*;/),
+				matchInt         = source .match (/\s*precision\s+(lowp|mediump|highp)\s+int\s*;/),
+				precisionFloat   = matchFloat ? matchFloat [1] : "mediump",
+				precisionInt     = matchInt   ? matchInt   [1] : "mediump";
 
-			types = types .replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, pf + " $1");
-			types = types .replace (/mediump\s+(int)/g, pi + " $1");
+			const types = Types
+				.replace (/mediump\s+(float|vec2|vec3|mat3|mat4)/g, precisionFloat + " $1")
+				.replace (/mediump\s+(int)/g,                       precisionInt   + " $1");
 
-			types += "#line " + (lines1 + lines2 + 1) + "\n";
+			const lines = (match [1] .match (/\n/g) || [ ]) .length + 1;
 
-			var source = match [1] + constants + match [2] + definitions + types + match [3];
-
-			return source;
+			return match [1] + constants + definitions + types + "#line " + lines + "\n" + match [2];
 		},
 	};
 
