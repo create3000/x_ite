@@ -66,6 +66,9 @@ function (X3DSingleTextureNode,
 
 		this .addType (X3DConstants .X3DTexture3DNode);
 
+		const gl = this .getBrowser () .getContext ();
+
+		this .target = gl .TEXTURE_3D;
 		this .width  = 0;
 		this .height = 0;
 		this .depth  = 0;
@@ -79,36 +82,17 @@ function (X3DSingleTextureNode,
 		{
 			X3DSingleTextureNode .prototype .initialize .call (this);
 
-			var gl = this .getBrowser () .getContext ();
+			this .repeatS_ .addInterest ("updateTextureProperties", this);
+			this .repeatT_ .addInterest ("updateTextureProperties", this);
+			this .repeatR_ .addInterest ("updateTextureProperties", this);
+
+			const gl = this .getBrowser () .getContext ();
 
 			if (gl .getVersion () < 2)
 				return;
 
-			this .target = gl .TEXTURE_3D;
-
-			this .repeatS_           .addInterest ("updateTextureProperties", this);
-			this .repeatT_           .addInterest ("updateTextureProperties", this);
-			this .repeatR_           .addInterest ("updateTextureProperties", this);
-			this .textureProperties_ .addInterest ("set_textureProperties__", this);
-
 			gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
 			gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-
-			this .set_textureProperties__ ();
-		},
-		set_textureProperties__: function ()
-		{
-			if (this .texturePropertiesNode)
-				this .texturePropertiesNode .removeInterest ("updateTextureProperties", this);
-
-			this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this .textureProperties_);
-
-			if (! this .texturePropertiesNode)
-				this .texturePropertiesNode = this .getBrowser () .getDefaultTextureProperties ();
-
-			this .texturePropertiesNode .addInterest ("updateTextureProperties", this);
-
-			this .updateTextureProperties ();
 		},
 		getTarget: function ()
 		{
@@ -170,10 +154,8 @@ function (X3DSingleTextureNode,
 		},
 		updateTextureProperties: function ()
 		{
-			var gl = this .getBrowser () .getContext ();
-
 			X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
-			                                                                gl .TEXTURE_3D,
+			                                                                this .target,
 			                                                                this .textureProperties_ .getValue (),
 			                                                                this .texturePropertiesNode,
 			                                                                this .width,

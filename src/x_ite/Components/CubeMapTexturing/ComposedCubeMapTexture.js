@@ -85,13 +85,15 @@ function (Fields,
 	{
 		constructor: ComposedCubeMapTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "frontTexture",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "backTexture",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "leftTexture",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "rightTexture",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "bottomTexture",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "topTexture",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "frontTexture",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "backTexture",       new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "leftTexture",       new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "rightTexture",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bottomTexture",     new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "topTexture",        new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -115,8 +117,6 @@ function (Fields,
 
 			// Initialize.
 
-			this .isLive () .addInterest ("set_live__", this);
-
 			this .frontTexture_  .addInterest ("set_texture__", this, 0);
 			this .backTexture_   .addInterest ("set_texture__", this, 1);
 			this .leftTexture_   .addInterest ("set_texture__", this, 2);
@@ -130,8 +130,6 @@ function (Fields,
 			this .set_texture__ (this .rightTexture_,  3);
 			this .set_texture__ (this .topTexture_,    4);
 			this .set_texture__ (this .bottomTexture_, 5);
-
-			this .set_live__ ();
 		},
 		set_texture__: function (node, index)
 		{
@@ -228,7 +226,7 @@ function (Fields,
 					}
 				}
 
-				this .set_textureQuality__ ();
+				this .updateTextureProperties ();
 			}
 			else
 			{

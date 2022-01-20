@@ -123,6 +123,7 @@ function (Fields,
 		constructor: GeneratedCubeMapTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "update",            new Fields .SFString ("NONE")),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "size",              new Fields .SFInt32 (128)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
@@ -168,12 +169,6 @@ function (Fields,
 
 				this .viewport    = new Vector4 (0, 0, size, size);
 				this .frameBuffer = new TextureBuffer (this .getBrowser (), size, size);
-
-				// Apply texture properties.
-
-				this .isLive () .addInterest ("set_live__", this);
-
-				this .set_live__ ();
 			}
 		},
 		traverse: function (type, renderObject)
@@ -279,7 +274,7 @@ function (Fields,
 				gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, false, gl .RGBA, gl .UNSIGNED_BYTE, data);
 			}
 
-			this .set_textureQuality__ ();
+			this .updateTextureProperties ();
 
 			renderer .getProjectionMatrix () .pop ();
 			renderer .getViewVolumes      () .pop ();

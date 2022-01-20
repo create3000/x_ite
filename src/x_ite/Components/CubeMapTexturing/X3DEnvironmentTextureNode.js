@@ -61,45 +61,24 @@ function (X3DSingleTextureNode,
 		X3DSingleTextureNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DEnvironmentTextureNode);
-	}
+
+		const gl = this .getBrowser () .getContext ();
+
+		this .target = gl .TEXTURE_CUBE_MAP;
+
+		this .targets = [
+			gl .TEXTURE_CUBE_MAP_POSITIVE_Z, // Front
+			gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, // Back
+			gl .TEXTURE_CUBE_MAP_NEGATIVE_X, // Left
+			gl .TEXTURE_CUBE_MAP_POSITIVE_X, // Right
+			gl .TEXTURE_CUBE_MAP_POSITIVE_Y, // Top
+			gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, // Bottom
+		];
+}
 
 	X3DEnvironmentTextureNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
 	{
 		constructor: X3DEnvironmentTextureNode,
-		initialize: function ()
-		{
-			X3DSingleTextureNode .prototype .initialize .call (this);
-
-			var gl = this .getBrowser () .getContext ();
-
-			this .target = gl .TEXTURE_CUBE_MAP;
-
-			this .targets = [
-				gl .TEXTURE_CUBE_MAP_POSITIVE_Z, // Front
-				gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, // Back
-				gl .TEXTURE_CUBE_MAP_NEGATIVE_X, // Left
-				gl .TEXTURE_CUBE_MAP_POSITIVE_X, // Right
-				gl .TEXTURE_CUBE_MAP_POSITIVE_Y, // Top
-				gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, // Bottom
-			];
-		},
-		set_live__: function ()
-		{
-			if (this .isLive () .getValue ())
-			{
-				this .getBrowser () .getBrowserOptions () .TextureQuality_ .addInterest ("set_textureQuality__", this);
-
-				this .set_textureQuality__ ();
-			}
-			else
-				this .getBrowser () .getBrowserOptions () .TextureQuality_ .removeInterest ("set_textureQuality__", this);
-		},
-		set_textureQuality__: function ()
-		{
-			var textureProperties = this .getBrowser () .getDefaultTextureProperties ();
-
-			this .updateTextureProperties (this .target, false, textureProperties, 128, 128, false, false, false);
-		},
 		getTarget: function ()
 		{
 			return this .target;
@@ -124,6 +103,18 @@ function (X3DSingleTextureNode,
 					gl .texImage2D (targets [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 			};
 		})(),
+		updateTextureProperties: function ()
+		{
+			X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
+			                                                                this .target,
+			                                                                this .textureProperties_ .getValue (),
+			                                                                this .texturePropertiesNode,
+			                                                                128,
+			                                                                128,
+			                                                                false,
+			                                                                false,
+			                                                                false);
+		},
 		setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
 		{
 			gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getCubeMapTextureUnits () [i]);

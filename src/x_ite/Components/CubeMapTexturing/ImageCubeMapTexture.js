@@ -99,6 +99,7 @@ function ($,
 		constructor: ImageCubeMapTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
@@ -262,7 +263,7 @@ function ($,
 					gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, false, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (data));
 				}
 
-				this .set_textureQuality__ ();
+				this .updateTextureProperties ();
 
 				// Update transparent field.
 

@@ -72,10 +72,6 @@ function (Fields,
 	X3DTextureNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: X3DTextureNode,
-		initialize: function ()
-		{
-			X3DAppearanceChildNode .prototype .initialize .call (this);
-		},
 		setTransparent: function (value)
 		{
 			if (value !== this .transparent_ .getValue ())

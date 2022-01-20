@@ -50,12 +50,14 @@
  define ([
 	"x_ite/Components/Texturing/X3DTextureNode",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/Bits/X3DCast",
 	"x_ite/Browser/Texturing/MultiTextureModeType",
 	"x_ite/Browser/Texturing/MultiTextureSourceType",
 	"x_ite/Browser/Texturing/MultiTextureFunctionType",
 ],
 function (X3DTextureNode,
           X3DConstants,
+          X3DCast,
           ModeType,
           SourceType,
           FunctionType)
@@ -76,9 +78,27 @@ function (X3DTextureNode,
 		{
 			X3DTextureNode .prototype .initialize .call (this);
 
+			this .textureProperties_ .addInterest ("set_textureProperties__", this);
+
 			const gl = this .getBrowser () .getContext ();
 
 			this .texture = gl .createTexture ();
+
+			this .set_textureProperties__ ();
+		},
+		set_textureProperties__: function ()
+		{
+			if (this .texturePropertiesNode)
+				this .texturePropertiesNode .removeInterest ("updateTextureProperties", this);
+
+			this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this .textureProperties_);
+
+			if (! this .texturePropertiesNode)
+				this .texturePropertiesNode = this .getBrowser () .getDefaultTextureProperties ();
+
+			this .texturePropertiesNode .addInterest ("updateTextureProperties", this);
+
+			this .updateTextureProperties ();
 		},
 		getTexture: function ()
 		{

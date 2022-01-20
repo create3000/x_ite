@@ -90,13 +90,14 @@ function (Fields,
 	{
 		constructor: MultiTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .SFColor (1, 1, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "alpha",    new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "mode",     new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "source",   new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "function", new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "texture",  new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "description", new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "color",       new Fields .SFColor (1, 1, 1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "alpha",       new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "mode",        new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "source",      new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "function",    new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "texture",     new Fields .MFNode ()),
 		]),
 		getTypeName: function ()
 		{

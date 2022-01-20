@@ -50,11 +50,9 @@
 define ([
 	"x_ite/Components/Texturing/X3DSingleTextureNode",
 	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
 ],
 function (X3DSingleTextureNode,
-          X3DConstants,
-          X3DCast)
+          X3DConstants)
 {
 "use strict";
 
@@ -66,6 +64,9 @@ function (X3DSingleTextureNode,
 
 		this .addType (X3DConstants .X3DTexture2DNode);
 
+		const gl = this .getBrowser () .getContext ();
+
+		this .target = gl .TEXTURE_2D;
 		this .width  = 0;
 		this .height = 0;
 		this .flipY  = false;
@@ -79,32 +80,13 @@ function (X3DSingleTextureNode,
 		{
 			X3DSingleTextureNode .prototype .initialize .call (this);
 
-			var gl = this .getBrowser () .getContext ();
+			this .repeatS_ .addInterest ("updateTextureProperties", this);
+			this .repeatT_ .addInterest ("updateTextureProperties", this);
 
-			this .target = gl .TEXTURE_2D;
-
-			this .repeatS_           .addInterest ("updateTextureProperties", this);
-			this .repeatT_           .addInterest ("updateTextureProperties", this);
-			this .textureProperties_ .addInterest ("set_textureProperties__", this);
+			const gl = this .getBrowser () .getContext ();
 
 			gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
 			gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-
-			this .set_textureProperties__ ();
-		},
-		set_textureProperties__: function ()
-		{
-			if (this .texturePropertiesNode)
-				this .texturePropertiesNode .removeInterest ("updateTextureProperties", this);
-
-			this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this .textureProperties_);
-
-			if (! this .texturePropertiesNode)
-				this .texturePropertiesNode = this .getBrowser () .getDefaultTextureProperties ();
-
-			this .texturePropertiesNode .addInterest ("updateTextureProperties", this);
-
-			this .updateTextureProperties ();
 		},
 		getTarget: function ()
 		{
@@ -177,10 +159,8 @@ function (X3DSingleTextureNode,
 		},
 		updateTextureProperties: function ()
 		{
-			var gl = this .getBrowser () .getContext ();
-
 			X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
-			                                                                gl .TEXTURE_2D,
+			                                                                this .target,
 			                                                                this .textureProperties_ .getValue (),
 			                                                                this .texturePropertiesNode,
 			                                                                this .width,
