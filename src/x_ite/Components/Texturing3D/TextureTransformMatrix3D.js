@@ -74,6 +74,7 @@ function (Fields,
 		constructor: TextureTransformMatrix3D,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "matrix",   new Fields .SFMatrix4f ()),
 		]),
 		getTypeName: function ()
