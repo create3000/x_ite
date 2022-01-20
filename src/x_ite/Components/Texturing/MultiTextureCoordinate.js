@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureCoordinateNode, 
+          X3DTextureCoordinateNode,
           X3DConstants,
           X3DCast)
 {
@@ -102,28 +102,26 @@ function (Fields,
 		},
 		set_texCoord__: function ()
 		{
-			var textureCoordinateNodes = this .textureCoordinateNodes;
+			const textureCoordinateNodes = this .textureCoordinateNodes;
 
-			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
-				textureCoordinateNodes [i] .removeInterest ("addNodeEvent", this);
+			for (const textureCoordinateNode of textureCoordinateNodes)
+				textureCoordinateNode .removeInterest ("addNodeEvent", this);
 
 			textureCoordinateNodes .length = 0;
 
-			for (var i = 0, length = this .texCoord_ .length; i < length; ++ i)
+			for (const node of this .texCoord_)
 			{
-				var node = this .texCoord_ [i];
-
 				if (X3DCast (X3DConstants .MultiTextureCoordinate, node))
 					continue;
 
-				var textureCoordinateNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, node);
+				const textureCoordinateNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, node);
 
 				if (textureCoordinateNode)
 					textureCoordinateNodes .push (textureCoordinateNode);
 			}
 
-			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
-				textureCoordinateNodes [i] .addInterest ("addNodeEvent", this);
+			for (const textureCoordinateNode of textureCoordinateNodes)
+				textureCoordinateNode .addInterest ("addNodeEvent", this);
 		},
 		isEmpty: function ()
 		{
@@ -135,63 +133,47 @@ function (Fields,
 		},
 		get1Point: function (index, vector)
 		{
-			var textureCoordinateNodes = this .textureCoordinateNodes;
-
-			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
-				return textureCoordinateNodes [i] .get1Point (index, vector);
+			for (const textureCoordinateNode of this .textureCoordinateNodes)
+				return textureCoordinateNode .get1Point (index, vector);
 
 			return vector .set (0, 0, 0, 1);
 		},
 		init: function (multiArray)
 		{
-			var textureCoordinateNodes = this .textureCoordinateNodes;
-
-			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
-				textureCoordinateNodes [i] .init (multiArray);
+			for (const textureCoordinateNode of this .textureCoordinateNodes)
+				textureCoordinateNode .init (multiArray);
 		},
 		addTexCoord: function (index, multiArray)
 		{
-			var textureCoordinateNodes = this .textureCoordinateNodes;
+			const textureCoordinateNodes = this .textureCoordinateNodes;
 
-			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
+			for (let i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
 				textureCoordinateNodes [i] .addTexCoordToChannel (index, multiArray [i]);
 		},
 		addTexCoordToChannel: function (index, array)
 		{ },
 		getTexCoord: function (array)
 		{
-			var textureCoordinateNodes = this .textureCoordinateNodes;
-
-			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
-				return textureCoordinateNodes [i] .getTexCoord (array);
+			for (const textureCoordinateNode of this .textureCoordinateNodes)
+				return textureCoordinateNode .getTexCoord (array);
 
 			return array;
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			var
+			const
 				textureCoordinateNodes = this .textureCoordinateNodes,
 				length                 = Math .min (shaderObject .x3d_MaxTextures, textureCoordinateNodes .length);
 
-			for (var i = 0; i < length; ++ i)
+			for (let i = 0; i < length; ++ i)
 				textureCoordinateNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
 
-			if (length)
-			{
-				var last = length - 1;
-	
-				for (var i = length, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
-					textureCoordinateNodes [last] .setShaderUniformsToChannel (gl, shaderObject, i);
-			}
-			else
-			{
-				for (var i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
-					this .setShaderUniformsToChannel (gl, shaderObject, i);
-			}
+			const last = length ? textureCoordinateNodes [length - 1] : this;
+
+			for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
+				textureCoordinateNodes [last] .setShaderUniformsToChannel (gl, shaderObject, i);
 		},
 	});
 
 	return MultiTextureCoordinate;
 });
-
-

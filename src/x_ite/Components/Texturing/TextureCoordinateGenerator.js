@@ -51,14 +51,14 @@ define ([
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
+	"x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureCoordinateNode,
+          X3DSingleTextureCoordinateNode,
           X3DConstants,
           ModeType)
 {
@@ -66,7 +66,7 @@ function (Fields,
 
 	function TextureCoordinateGenerator (executionContext)
 	{
-		X3DTextureCoordinateNode .call (this, executionContext);
+		X3DSingleTextureCoordinateNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TextureCoordinateGenerator);
 
@@ -74,11 +74,12 @@ function (Fields,
 		this .parameter = new Float32Array (6);
 	}
 
-	TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
+	TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
 	{
 		constructor: TextureCoordinateGenerator,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",   new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "mode",      new Fields .SFString ("SPHERE")),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "parameter", new Fields .MFFloat ()),
 		]),
@@ -96,7 +97,7 @@ function (Fields,
 		},
 		initialize: function ()
 		{
-			X3DTextureCoordinateNode .prototype .initialize .call (this);
+			X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
 			this .mode_      .addInterest ("set_mode__",      this);
 			this .parameter_ .addInterest ("set_parameter__", this);
@@ -106,7 +107,7 @@ function (Fields,
 		},
 		set_mode__: (function ()
 		{
-			var modes = new Map ([
+			const modes = new Map ([
 				["SPHERE",                      ModeType .SPHERE],
 				["CAMERASPACENORMAL",           ModeType .CAMERASPACENORMAL],
 				["CAMERASPACEPOSITION",         ModeType .CAMERASPACEPOSITION],
@@ -130,7 +131,9 @@ function (Fields,
 		})(),
 		set_parameter__: function ()
 		{
-			for (var i = 0, length = Math .min (this .parameter .length, this .parameter_ .length); i < length; ++ i)
+			const length = Math .min (this .parameter .length, this .parameter_ .length)
+
+			for (let i = 0; i < length; ++ i)
 				this .parameter [i] = this .parameter_ [i];
 
 			this .parameter .fill (0, length);

@@ -51,14 +51,14 @@ define ([
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
+	"x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector4",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureCoordinateNode,
+          X3DSingleTextureCoordinateNode,
           X3DConstants,
           Vector4)
 {
@@ -66,16 +66,17 @@ function (Fields,
 
 	function TextureCoordinate (executionContext)
 	{
-		X3DTextureCoordinateNode .call (this, executionContext);
+		X3DSingleTextureCoordinateNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TextureCoordinate);
 	}
 
-	TextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
+	TextureCoordinate .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
 	{
 		constructor: TextureCoordinate,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec2f ()),
 		]),
 		getTypeName: function ()
@@ -92,7 +93,7 @@ function (Fields,
 		},
 		initialize: function ()
 		{
-			X3DTextureCoordinateNode .prototype .initialize .call (this);
+			X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
 			this .point_ .addInterest ("set_point__", this);
 
@@ -139,7 +140,7 @@ function (Fields,
 		{
 			if (index >= 0 && index < this .length)
 			{
-				var point = this .point;
+				const point = this .point;
 
 				index *= 2;
 
@@ -147,7 +148,7 @@ function (Fields,
 			}
 			else if (index >= 0 && this .length)
 			{
-				var point = this .point;
+				const point = this .point;
 
 				index %= this .length;
 				index *= 2;
@@ -161,16 +162,16 @@ function (Fields,
 		},
 		getTexCoord: function (array)
 		{
-			var point = this .point_;
+			const point = this .point_;
 
-			for (var i = 0, length = point .length; i < length; ++ i)
+			for (let i = 0, length = point .length; i < length; ++ i)
 			{
-				var p = point [i];
+				const p = point [i];
 
 				array [i] = new Vector4 (p .x, p .y, 0, 1);
 			}
 
-			array .length = length;
+			array .length = point .length;
 
 			return array;
 		},

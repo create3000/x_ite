@@ -47,32 +47,45 @@
  ******************************************************************************/
 
 
-define ([
-	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
+ define ([
+	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DGeometricPropertyNode,
+function (X3DTextureCoordinateNode,
           X3DGeometryNode,
           X3DConstants)
 {
 "use strict";
 
-	function X3DTextureCoordinateNode (executionContext)
+	function X3DSingleTextureCoordinateNode (executionContext)
 	{
-		X3DGeometricPropertyNode .call (this, executionContext);
+		X3DTextureCoordinateNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DTextureCoordinateNode);
+		this .addType (X3DConstants .X3DSingleTextureCoordinateNode);
+
+		this .texCoordArray = X3DGeometryNode .createArray ();
 	}
 
-	X3DTextureCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+	X3DSingleTextureCoordinateNode .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
 	{
-		constructor: X3DTextureCoordinateNode,
-		setShaderUniformsToChannel: function (gl, shaderObject, i)
+		constructor: X3DSingleTextureCoordinateNode,
+		init: function (multiArray)
 		{
-			gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [i], 0);
+			this .texCoordArray .length = 0;
+
+			multiArray .push (this .texCoordArray);
+		},
+		addTexCoord: function (index, multiArray)
+		{
+			this .addTexCoordToChannel (index, multiArray [0]);
+		},
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			for (var i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+				this .setShaderUniformsToChannel (gl, shaderObject, i);
 		},
 	});
 
-	return X3DTextureCoordinateNode;
+	return X3DSingleTextureCoordinateNode;
 });
