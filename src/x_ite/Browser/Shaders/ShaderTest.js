@@ -62,11 +62,11 @@ function (TextureBuffer,
 {
 "use strict";
 
-	var ShaderTest =
+	const ShaderTest =
 	{
 		verify: (function ()
 		{
-			var normals = [
+			const normals = [
 				0, 0, 1,
 				0, 0, 1,
 				0, 0, 1,
@@ -75,7 +75,7 @@ function (TextureBuffer,
 				0, 0, 1,
 			];
 
-			var vertices = [
+			const vertices = [
 				 2,  2, 0, 1,
 				-2,  2, 0, 1,
 				-2, -2, 0, 1,
@@ -86,7 +86,7 @@ function (TextureBuffer,
 
 			return function (browser, shaderNode)
 			{
-				var
+				const
 					gl           = browser .getContext (),
 					frameBuffer  = new TextureBuffer (browser, 16, 16),
 		         normalBuffer = gl .createBuffer (),
@@ -147,7 +147,7 @@ function (TextureBuffer,
 				shaderNode .disableNormalAttribute (gl, normalBuffer);
 				shaderNode .disable                (gl);
 
-				var data = frameBuffer .readPixels ();
+				const data = frameBuffer .readPixels ();
 
 				frameBuffer .unbind ();
 

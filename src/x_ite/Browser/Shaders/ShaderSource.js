@@ -80,48 +80,45 @@ function (ClipPlanes1,
 {
 "use strict";
 
-	var include = /^#pragma\s+X3D\s+include\s+".*?([^\/]+)\.glsl"\s*$/;
+	const include = /^#pragma\s+X3D\s+include\s+".*?([^\/]+)\.glsl"\s*$/;
 
-	var ShaderSource =
+	const includes1 = {
+		ClipPlanes: ClipPlanes1,
+		Fog: Fog1,
+		Hatch: Hatch1,
+		Pack: Pack1,
+		Perlin: Perlin1,
+		Shadow: Shadow1,
+		Texture: Texture1,
+	};
+
+	const includes2 = {
+		ClipPlanes: ClipPlanes2,
+		Fog: Fog2,
+		Hatch: Hatch2,
+		Pack: Pack2,
+		Perlin: Perlin2,
+		Shadow: Shadow2,
+		Texture: Texture2,
+	};
+
+	const ShaderSource =
 	{
 		get: function (gl, source)
 		{
-			if (gl .getVersion () <= 1)
-			{
-				var includes = {
-					ClipPlanes: ClipPlanes1,
-					Fog: Fog1,
-					Hatch: Hatch1,
-					Pack: Pack1,
-					Perlin: Perlin1,
-					Shadow: Shadow1,
-					Texture: Texture1,
-				};
-			}
-			else
-			{
-				var includes = {
-					ClipPlanes: ClipPlanes2,
-					Fog: Fog2,
-					Hatch: Hatch2,
-					Pack: Pack2,
-					Perlin: Perlin2,
-					Shadow: Shadow2,
-					Texture: Texture2,
-				};
-			}
-
-			var
-				lines = source .split ("\n"),
-				match = null;
+			const
+				includes = gl .getVersion () <= 1 ? includes1 : includes2,
+				lines    = source .split ("\n");
 
 			source = "";
 
-			for (var i = 0, length = lines .length; i < length; ++ i)
+			for (let i = 0, length = lines .length; i < length; ++ i)
 			{
-				var line = lines [i];
+				const
+					line  = lines [i],
+					match = line .match (include);
 
-				if (match = line .match (include))
+				if (match)
 				{
 					source += "#line 1\n";
 					source += this .get (gl, includes [match [1]]);
