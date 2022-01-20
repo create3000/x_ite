@@ -52,7 +52,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
-function (X3DAppearanceChildNode, 
+function (X3DAppearanceChildNode,
           X3DConstants,
           Matrix4)
 {
@@ -79,11 +79,6 @@ function (X3DAppearanceChildNode,
 		{
 			return this .matrix;
 		},
-		setShaderUniforms: function (gl, shaderObject)
-		{
-			for (var i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
-				this .setShaderUniformsToChannel (gl, shaderObject, i);
-		},
 		setShaderUniformsToChannel: function (gl, shaderObject, i)
 		{
 			gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [i], false, this .matrixArray);
@@ -92,5 +87,3 @@ function (X3DAppearanceChildNode,
 
 	return X3DTextureTransformNode;
 });
-
-

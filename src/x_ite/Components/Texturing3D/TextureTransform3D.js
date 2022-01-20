@@ -51,7 +51,7 @@ define ([
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DTextureTransformNode",
+	"x_ite/Components/Texturing/X3DSingleTextureTransformNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
@@ -59,7 +59,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureTransformNode, 
+          X3DSingleTextureTransformNode,
           X3DConstants,
           Vector3,
           Rotation4)
@@ -70,12 +70,12 @@ function (Fields,
 
 	function TextureTransform3D (executionContext)
 	{
-		X3DTextureTransformNode .call (this, executionContext);
+		X3DSingleTextureTransformNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TextureTransform3D);
 	}
 
-	TextureTransform3D .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
+	TextureTransform3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
 	{
 		constructor: TextureTransform3D,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -99,8 +99,8 @@ function (Fields,
 		},
 		initialize: function ()
 		{
-			X3DTextureTransformNode .prototype .initialize .call (this);
-			
+			X3DSingleTextureTransformNode .prototype .initialize .call (this);
+
 			this .addInterest ("eventsProcessed", this);
 
 			this .eventsProcessed ();
@@ -137,5 +137,3 @@ function (Fields,
 
 	return TextureTransform3D;
 });
-
-

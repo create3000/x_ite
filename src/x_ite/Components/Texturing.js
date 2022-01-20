@@ -59,6 +59,7 @@ define ([
 	"x_ite/Components/Texturing/TextureProperties",
 	"x_ite/Components/Texturing/TextureTransform",
 	"x_ite/Components/Texturing/X3DSingleTextureNode",
+	"x_ite/Components/Texturing/X3DSingleTextureTransformNode",
 	"x_ite/Components/Texturing/X3DTexture2DNode",
 	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
 	"x_ite/Components/Texturing/X3DTextureNode",
@@ -76,6 +77,7 @@ function (SupportedNodes,
           TextureProperties,
           TextureTransform,
           X3DSingleTextureNode,
+          X3DSingleTextureTransformNode,
           X3DTexture2DNode,
           X3DTextureCoordinateNode,
           X3DTextureNode,
@@ -99,11 +101,12 @@ function (SupportedNodes,
 
 	const AbstractTypes =
 	{
-		X3DSingleTextureNode:     X3DSingleTextureNode,
-		X3DTexture2DNode:         X3DTexture2DNode,
-		X3DTextureCoordinateNode: X3DTextureCoordinateNode,
-		X3DTextureNode:           X3DTextureNode,
-		X3DTextureTransformNode:  X3DTextureTransformNode,
+		X3DSingleTextureNode:          X3DSingleTextureNode,
+		X3DSingleTextureTransformNode: X3DSingleTextureTransformNode,
+		X3DTexture2DNode:              X3DTexture2DNode,
+		X3DTextureCoordinateNode:      X3DTextureCoordinateNode,
+		X3DTextureNode:                X3DTextureNode,
+		X3DTextureTransformNode:       X3DTextureTransformNode,
 	};
 
 	for (const typeName in Types)
