@@ -55,6 +55,7 @@ define ([
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Matrix3",
+	"standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -62,11 +63,10 @@ function (Fields,
           X3DSingleTextureTransformNode,
           X3DConstants,
           Vector2,
-          Matrix3)
+          Matrix3,
+          Matrix4)
 {
 "use strict";
-
-	var vector = new Vector2 (0, 0);
 
 	function TextureTransform (executionContext)
 	{
@@ -76,7 +76,7 @@ function (Fields,
 
 		this .rotation_ .setUnit ("angle");
 
-		this .matrix3 = new Matrix3 ();
+		this .matrix = new Matrix4 ();
 	}
 
 	TextureTransform .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
@@ -109,43 +109,52 @@ function (Fields,
 
 			this .eventsProcessed ();
 		},
-		eventsProcessed: function ()
+		getMatrix: function ()
 		{
-			var
-				translation = this .translation_ .getValue (),
-				rotation    = this .rotation_ .getValue (),
-				scale       = this .scale_ .getValue (),
-				center      = this .center_ .getValue (),
-				matrix3     = this .matrix3;
-
-			matrix3 .identity ();
-
-			if (! center .equals (Vector2 .Zero))
-				matrix3 .translate (vector .assign (center) .negate ());
-
-			if (! scale .equals (Vector2 .One))
-				matrix3 .scale (scale);
-
-			if (rotation !== 0)
-				matrix3 .rotate (rotation);
-
-			if (! center .equals (Vector2 .Zero))
-				matrix3 .translate (center);
-
-			if (! translation .equals (Vector2 .Zero))
-				matrix3 .translate (translation);
-
-			var matrix4 = this .getMatrix ();
-
-			matrix4 [ 0] = matrix3 [0];
-			matrix4 [ 1] = matrix3 [1];
-			matrix4 [ 4] = matrix3 [3];
-			matrix4 [ 5] = matrix3 [4];
-			matrix4 [12] = matrix3 [6];
-			matrix4 [13] = matrix3 [7];
-
-			this .setMatrix (matrix4);
+			return this .matrix;
 		},
+		eventsProcessed: (function ()
+		{
+			const
+				vector  = new Vector2 (0, 0),
+				matrix3 = new Matrix3 ();
+
+			return function ()
+			{
+				const
+					translation = this .translation_ .getValue (),
+					rotation    = this .rotation_ .getValue (),
+					scale       = this .scale_ .getValue (),
+					center      = this .center_ .getValue (),
+					matrix4     = this .matrix;
+
+				matrix3 .identity ();
+
+				if (! center .equals (Vector2 .Zero))
+					matrix3 .translate (vector .assign (center) .negate ());
+
+				if (! scale .equals (Vector2 .One))
+					matrix3 .scale (scale);
+
+				if (rotation !== 0)
+					matrix3 .rotate (rotation);
+
+				if (! center .equals (Vector2 .Zero))
+					matrix3 .translate (center);
+
+				if (! translation .equals (Vector2 .Zero))
+					matrix3 .translate (translation);
+
+				matrix4 [ 0] = matrix3 [0];
+				matrix4 [ 1] = matrix3 [1];
+				matrix4 [ 4] = matrix3 [3];
+				matrix4 [ 5] = matrix3 [4];
+				matrix4 [12] = matrix3 [6];
+				matrix4 [13] = matrix3 [7];
+
+				this .setMatrix (matrix4);
+			};
+		})(),
 	});
 
 	return TextureTransform;

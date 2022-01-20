@@ -64,8 +64,7 @@ function (X3DAppearanceChildNode,
 
 		this .addType (X3DConstants .X3DTextureTransformNode);
 
-		this .matrix      = new Matrix4 ();
-		this .matrixArray = new Float32Array (this .matrix);
+		this .matrixArray = new Float32Array (Matrix4 .Identity);
 	}
 
 	X3DTextureTransformNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -74,10 +73,6 @@ function (X3DAppearanceChildNode,
 		setMatrix: function (value)
 		{
 			this .matrixArray .set (value);
-		},
-		getMatrix: function ()
-		{
-			return this .matrix;
 		},
 		setShaderUniformsToChannel: function (gl, shaderObject, i)
 		{

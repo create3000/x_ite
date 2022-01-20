@@ -88,21 +88,21 @@ function (Fields,
 		{
 			return "textureTransform";
 		},
-		ininitialize: function ()
+		initialize: function ()
 		{
-			X3DSingleTextureTransformNode .prototype .ininitialize .call (this);
+			X3DSingleTextureTransformNode .prototype .initialize .call (this);
 
 			this .addInterest ("eventsProcessed", this);
 
 			this .eventsProcessed ();
 		},
+		getMatrix: function ()
+		{
+			return this .matrix_ .getValue ();
+		},
 		eventsProcessed: function ()
 		{
-			var matrix4 = this .getMatrix ();
-
-			matrix4 .assign (this .matrix_ .getValue ());
-
-			this .setMatrix (matrix4);
+			this .setMatrix (this .matrix_ .getValue ());
 		},
 	});
 

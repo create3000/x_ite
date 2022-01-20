@@ -58,7 +58,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureTransformNode, 
+          X3DTextureTransformNode,
           X3DConstants,
           X3DCast)
 {
@@ -102,18 +102,16 @@ function (Fields,
 		},
 		set_textureTransform__: function ()
 		{
-			var textureTransformNodes = this .textureTransformNodes;
+			const textureTransformNodes = this .textureTransformNodes;
 
 			textureTransformNodes .length = 0;
 
-			for (var i = 0, length = this .textureTransform_ .length; i < length; ++ i)
+			for (const node of this .textureTransform_)
 			{
-				var node = this .textureTransform_ [i];
-
 				if (X3DCast (X3DConstants .MultiTextureTransform, node))
 					continue;
 
-				var textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, node);
+				const textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, node);
 
 				if (textureTransformNode)
 					textureTransformNodes .push (textureTransformNode);
@@ -121,29 +119,19 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			var
+			const
 				textureTransformNodes = this .textureTransformNodes,
 				length                = Math .min (shaderObject .x3d_MaxTextures, textureTransformNodes .length);
 
-			for (var i = 0; i < length; ++ i)
+			for (let i = 0; i < length; ++ i)
 				textureTransformNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
 
-			if (length)
-			{
-				var last = length - 1;
+			const last = length ? textureTransformNodes .at (-1) : this;
 
-				for (var i = length, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
-					textureTransformNodes [last] .setShaderUniformsToChannel (gl, shaderObject, i);
-			}
-			else
-			{
-				for (var i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
-					this .setShaderUniformsToChannel (gl, shaderObject, i);
-			}
+			for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
+				last .setShaderUniformsToChannel (gl, shaderObject, i);
 		},
 	});
 
 	return MultiTextureTransform;
 });
-
-
