@@ -63,23 +63,22 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		Anchor:     Anchor,
 		Inline:     Inline,
 		LoadSensor: LoadSensor,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DNetworkSensorNode: X3DNetworkSensorNode,
 		X3DUrlObject:         X3DUrlObject,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-

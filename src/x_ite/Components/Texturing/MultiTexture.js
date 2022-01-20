@@ -84,8 +84,6 @@ function (Fields,
 		this .sources      = [ ];
 		this .functions    = [ ];
 		this .textureNodes = [ ];
-
-		this .setTransparent (false);
 	}
 
 	MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .prototype),

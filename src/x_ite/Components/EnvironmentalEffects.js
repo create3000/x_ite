@@ -67,7 +67,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		Background:        Background,
 		Fog:               Fog,
@@ -76,16 +76,15 @@ function (SupportedNodes,
 		TextureBackground: TextureBackground,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DBackgroundNode: X3DBackgroundNode,
 		X3DFogObject:      X3DFogObject,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-

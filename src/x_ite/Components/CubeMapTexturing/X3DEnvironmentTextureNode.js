@@ -48,27 +48,27 @@
 
 
 define ([
-	"x_ite/Components/Texturing/X3DTextureNode",
+	"x_ite/Components/Texturing/X3DSingleTextureNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DTextureNode,
+function (X3DSingleTextureNode,
           X3DConstants)
 {
 "use strict";
 
 	function X3DEnvironmentTextureNode (executionContext)
 	{
-		X3DTextureNode .call (this, executionContext);
+		X3DSingleTextureNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DEnvironmentTextureNode);
 	}
 
-	X3DEnvironmentTextureNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
+	X3DEnvironmentTextureNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
 	{
 		constructor: X3DEnvironmentTextureNode,
 		initialize: function ()
 		{
-			X3DTextureNode .prototype .initialize .call (this);
+			X3DSingleTextureNode .prototype .initialize .call (this);
 
 			var gl = this .getBrowser () .getContext ();
 

@@ -75,7 +75,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		Appearance:       Appearance,
 		FillProperties:   FillProperties,
@@ -86,7 +86,7 @@ function (SupportedNodes,
 		TwoSidedMaterial: TwoSidedMaterial,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DAppearanceChildNode: X3DAppearanceChildNode,
 		X3DAppearanceNode:      X3DAppearanceNode,
@@ -94,9 +94,9 @@ function (SupportedNodes,
 		X3DShapeNode:           X3DShapeNode,
 	};
 
-	for (var typeName in Types)
+	for (const typeName in Types)
 		SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (var typeName in AbstractTypes)
+	for (const typeName in AbstractTypes)
 		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

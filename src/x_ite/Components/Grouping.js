@@ -69,7 +69,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		Group:       Group,
 		StaticGroup: StaticGroup,
@@ -77,18 +77,17 @@ function (SupportedNodes,
 		Transform:   Transform,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DBoundedObject:         X3DBoundedObject,
 		X3DGroupingNode:          X3DGroupingNode,
 		X3DTransformMatrix3DNode: X3DTransformMatrix3DNode,
 		X3DTransformNode:         X3DTransformNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-

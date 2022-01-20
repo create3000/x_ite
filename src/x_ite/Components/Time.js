@@ -57,20 +57,19 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		TimeSensor: TimeSensor,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DTimeDependentNode: X3DTimeDependentNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-

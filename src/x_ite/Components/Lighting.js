@@ -61,22 +61,21 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		DirectionalLight: DirectionalLight,
 		PointLight:       PointLight,
 		SpotLight:        SpotLight,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DLightNode: X3DLightNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-

@@ -51,26 +51,12 @@ define ([
 	"x_ite/Fields",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Texturing/MultiTextureModeType",
-	"x_ite/Browser/Texturing/MultiTextureSourceType",
-	"x_ite/Browser/Texturing/MultiTextureFunctionType",
 ],
 function (Fields,
           X3DAppearanceChildNode,
-          X3DConstants,
-          ModeType,
-          SourceType,
-          FunctionType)
+          X3DConstants)
 {
 "use strict";
-
-	// Anisotropic Filtering in WebGL is handled by an extension, use one of getExtension depending on browser:
-
-	const ANISOTROPIC_EXT = [
-		"EXT_texture_filter_anisotropic",
-		"MOZ_EXT_texture_filter_anisotropic",
-		"WEBKIT_EXT_texture_filter_anisotropic",
-	];
 
 	function X3DTextureNode (executionContext)
 	{
@@ -89,10 +75,6 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DAppearanceChildNode .prototype .initialize .call (this);
-
-			const gl = this .getBrowser () .getContext ();
-
-			this .texture = gl .createTexture ();
 		},
 		setTransparent: function (value)
 		{
@@ -102,72 +84,6 @@ function (Fields,
 		getTransparent: function ()
 		{
 			return this .transparent_ .getValue ();
-		},
-		getTexture: function ()
-		{
-			return this .texture;
-		},
-		updateTextureProperties: function (target, haveTextureProperties, textureProperties, width, height, repeatS, repeatT, repeatR)
-		{
-			const gl = this .getBrowser () .getContext ();
-
-			gl .bindTexture (target, this .getTexture ());
-
-			if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! haveTextureProperties)
-			{
-				// Dont generate mipmaps.
-				gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
-				gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
-			}
-			else
-			{
-				if (textureProperties .generateMipMaps_ .getValue ())
-					gl .generateMipmap (target);
-
-				gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl [textureProperties .getMinificationFilter ()]);
-				gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl [textureProperties .getMagnificationFilter ()]);
-			}
-
-			if (haveTextureProperties)
-			{
-				gl .texParameteri (target, gl .TEXTURE_WRAP_S, gl [textureProperties .getBoundaryModeS ()]);
-				gl .texParameteri (target, gl .TEXTURE_WRAP_T, gl [textureProperties .getBoundaryModeT ()]);
-
-				if (gl .getVersion () >= 2)
-					gl .texParameteri (target, gl .TEXTURE_WRAP_R, gl [textureProperties .getBoundaryModeR ()]);
-			}
-			else
-			{
-				gl .texParameteri (target, gl .TEXTURE_WRAP_S, repeatS ? gl .REPEAT : gl .CLAMP_TO_EDGE);
-				gl .texParameteri (target, gl .TEXTURE_WRAP_T, repeatT ? gl .REPEAT : gl .CLAMP_TO_EDGE);
-
-				if (gl .getVersion () >= 2)
-					gl .texParameteri (target, gl .TEXTURE_WRAP_R, repeatR ? gl .REPEAT : gl .CLAMP_TO_EDGE);
-			}
-
-			//gl .texParameterfv (target, gl .TEXTURE_BORDER_COLOR, textureProperties .borderColor_ .getValue ());
-			//gl .texParameterf  (target, gl .TEXTURE_PRIORITY,     textureProperties .texturePriority_ .getValue ());
-
-			for (const extension of ANISOTROPIC_EXT)
-			{
-				const ext = gl .getExtension (extension);
-
-				if (ext)
-				{
-					gl .texParameterf (target, ext .TEXTURE_MAX_ANISOTROPY_EXT, textureProperties .anisotropicDegree_ .getValue ());
-					break;
-				}
-			}
-		},
-		setShaderUniforms: function (gl, shaderObject, renderObject)
-		{
-			this .setShaderUniformsToChannel (gl, shaderObject, renderObject, 0);
-
-			gl .uniform1i (shaderObject .x3d_NumTextures, 1);
-			gl .uniform1i (shaderObject .x3d_MultiTextureMode [0],      ModeType .MODULATE);
-			gl .uniform1i (shaderObject .x3d_MultiTextureAlphaMode [0], ModeType .MODULATE);
-			gl .uniform1i (shaderObject .x3d_MultiTextureSource [0],    SourceType .DEFAULT);
-			gl .uniform1i (shaderObject .x3d_MultiTextureFunction [0],  FunctionType .DEFAULT);
 		},
 	});
 

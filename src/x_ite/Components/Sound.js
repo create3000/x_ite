@@ -61,22 +61,21 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		AudioClip: AudioClip,
 		Sound:     Sound,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DSoundNode:       X3DSoundNode,
 		X3DSoundSourceNode: X3DSoundSourceNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-

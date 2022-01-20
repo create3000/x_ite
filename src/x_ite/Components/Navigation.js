@@ -69,7 +69,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		Billboard:      Billboard,
 		Collision:      Collision,
@@ -80,15 +80,14 @@ function (SupportedNodes,
 		ViewpointGroup: ViewpointGroup,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DViewpointNode: X3DViewpointNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-

@@ -75,7 +75,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		ComposedShader:         ComposedShader,
 		FloatVertexAttribute:   FloatVertexAttribute,
@@ -87,17 +87,16 @@ function (SupportedNodes,
 //		ShaderProgram:          ShaderProgram,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DProgrammableShaderObject: X3DProgrammableShaderObject,
 		X3DShaderNode:               X3DShaderNode,
 		X3DVertexAttributeNode:      X3DVertexAttributeNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-

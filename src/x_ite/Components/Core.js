@@ -81,7 +81,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		MetadataBoolean: MetadataBoolean,
 		MetadataDouble:  MetadataDouble,
@@ -92,7 +92,7 @@ function (SupportedNodes,
 		WorldInfo:       WorldInfo,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DBindableNode:      X3DBindableNode,
 		X3DChildNode:         X3DChildNode,
@@ -102,11 +102,10 @@ function (SupportedNodes,
 		X3DPrototypeInstance: X3DPrototypeInstance,
 		X3DSensorNode:        X3DSensorNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-

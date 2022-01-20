@@ -95,7 +95,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		ClipPlane:               ClipPlane,
 		Color:                   Color,
@@ -113,7 +113,7 @@ function (SupportedNodes,
 		TriangleStripSet:        TriangleStripSet,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DColorNode:             X3DColorNode,
 		X3DComposedGeometryNode:  X3DComposedGeometryNode,
@@ -123,11 +123,10 @@ function (SupportedNodes,
 		X3DLineGeometryNode:      X3DLineGeometryNode,
 		X3DNormalNode:            X3DNormalNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-

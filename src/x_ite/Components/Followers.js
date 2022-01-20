@@ -87,7 +87,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		ColorChaser:       ColorChaser,
 		ColorDamper:       ColorDamper,
@@ -105,17 +105,16 @@ function (SupportedNodes,
 		TexCoordDamper2D:  TexCoordDamper2D,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DChaserNode: X3DChaserNode,
 		X3DDamperNode: X3DDamperNode,
 		X3DFollowerNode: X3DFollowerNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-

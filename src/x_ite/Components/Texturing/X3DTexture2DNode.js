@@ -48,13 +48,11 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Components/Texturing/X3DTextureNode",
+	"x_ite/Components/Texturing/X3DSingleTextureNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
 ],
-function (Fields,
-          X3DTextureNode,
+function (X3DSingleTextureNode,
           X3DConstants,
           X3DCast)
 {
@@ -64,7 +62,7 @@ function (Fields,
 
 	function X3DTexture2DNode (executionContext)
 	{
-		X3DTextureNode .call (this, executionContext);
+		X3DSingleTextureNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DTexture2DNode);
 
@@ -74,12 +72,12 @@ function (Fields,
 		this .data   = null;
 	}
 
-	X3DTexture2DNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
+	X3DTexture2DNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
 	{
 		constructor: X3DTexture2DNode,
 		initialize: function ()
 		{
-			X3DTextureNode .prototype .initialize .call (this);
+			X3DSingleTextureNode .prototype .initialize .call (this);
 
 			var gl = this .getBrowser () .getContext ();
 
@@ -181,15 +179,15 @@ function (Fields,
 		{
 			var gl = this .getBrowser () .getContext ();
 
-			X3DTextureNode .prototype .updateTextureProperties .call (this,
-			                                                          gl .TEXTURE_2D,
-			                                                          this .textureProperties_ .getValue (),
-			                                                          this .texturePropertiesNode,
-			                                                          this .width,
-			                                                          this .height,
-			                                                          this .repeatS_ .getValue (),
-			                                                          this .repeatT_ .getValue (),
-			                                                          false);
+			X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
+			                                                                gl .TEXTURE_2D,
+			                                                                this .textureProperties_ .getValue (),
+			                                                                this .texturePropertiesNode,
+			                                                                this .width,
+			                                                                this .height,
+			                                                                this .repeatS_ .getValue (),
+			                                                                this .repeatT_ .getValue (),
+			                                                                false);
 		},
 		setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
 		{
