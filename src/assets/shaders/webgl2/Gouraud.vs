@@ -34,7 +34,8 @@ in vec4 x3d_TexCoord1;
 #endif
 
 out float fogDepth;    // fog depth
-out vec4  color;       // color
+out vec4  frontColor;  // color
+out vec4  backColor;   // color
 out vec3  normal;      // normal vector at this point on geometry
 out vec3  vertex;      // point on geometry
 out vec3  localNormal; // normal vector at this point on geometry in local coordinates
@@ -148,5 +149,6 @@ main ()
 	depth = 1.0 + gl_Position .w;
 	#endif
 
-	color = getMaterialColor (normal, vertex, x3d_Material);
+	frontColor = getMaterialColor ( normal, vertex, x3d_Material);
+	backColor  = getMaterialColor (-normal, vertex, x3d_Material);
 }

@@ -17,7 +17,8 @@ uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwis
 uniform float x3d_AlphaCutoff;
 
 varying float fogDepth;    // fog depth
-varying vec4  color;       // color
+varying vec4  frontColor;  // color
+varying vec4  backColor;   // color
 varying vec3  normal;      // normal vector at this point on geometry
 varying vec3  vertex;      // point on geometry
 varying vec3  localNormal; // normal vector at this point on geometry in local coordinates
@@ -46,7 +47,7 @@ main ()
 {
  	clip ();
 
-	vec4 finalColor = color;
+	vec4 finalColor = gl_FrontFacing ? frontColor : backColor;
 
 	finalColor      = getTextureColor (finalColor, vec4 (1.0));
 	finalColor      = getProjectiveTextureColor (finalColor);

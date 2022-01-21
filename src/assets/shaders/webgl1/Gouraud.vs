@@ -33,7 +33,8 @@ attribute vec4  x3d_TexCoord1;
 #endif
 
 varying float fogDepth;    // fog depth
-varying vec4  color;       // color
+varying vec4  frontColor;  // color
+varying vec4  backColor;   // color
 varying vec3  normal;      // normal vector at this point on geometry
 varying vec3  vertex;      // point on geometry
 varying vec3  localNormal; // normal vector at this point on geometry in local coordinates
@@ -147,5 +148,6 @@ main ()
 	depth = 1.0 + gl_Position .w;
 	#endif
 
-	color = getMaterialColor (normal, vertex, x3d_Material);
+	frontColor = getMaterialColor ( normal, vertex, x3d_Material);
+	backColor  = getMaterialColor (-normal, vertex, x3d_Material);
 }
