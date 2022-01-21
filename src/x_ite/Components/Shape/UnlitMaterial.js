@@ -47,48 +47,44 @@
  ******************************************************************************/
 
 
-define ([
+ define ([
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Shape/X3DOneSidedMaterialNode",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DOneSidedMaterialNode,
-          X3DConstants,
-          Algorithm)
+          X3DConstants)
 {
 "use strict";
 
-	function Material (executionContext)
+	function UnlitMaterial (executionContext)
 	{
 		X3DOneSidedMaterialNode .call (this, executionContext);
 
-		this .addType (X3DConstants .Material);
-
-		this .diffuseColor  = new Float32Array (3);
-		this .specularColor = new Float32Array (3);
+		this .addType (X3DConstants .UnlitMaterial);
 	}
 
-	Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
+	UnlitMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
 	{
-		constructor: Material,
+		constructor: UnlitMaterial,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "ambientIntensity", new Fields .SFFloat (0.2)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "diffuseColor",     new Fields .SFColor (0.8, 0.8, 0.8)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "specularColor",    new Fields .SFColor ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",    new Fields .SFColor ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "shininess",        new Fields .SFFloat (0.2)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",     new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",               new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",          new Fields .SFColor (1, 1, 1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",        new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTextureMapping", new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "normalScale",            new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",   new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",           new Fields .SFFloat ()),
 		]),
 		getTypeName: function ()
 		{
-			return "Material";
+			return "UnlitMaterial";
 		},
 		getComponentName: function ()
 		{
@@ -98,65 +94,20 @@ function (Fields,
 		{
 			return "material";
 		},
-		initialize: function ()
-		{
-			X3DOneSidedMaterialNode .prototype .initialize .call (this);
-
-			this .ambientIntensity_ .addInterest ("set_ambientIntensity__", this);
-			this .diffuseColor_     .addInterest ("set_diffuseColor__",     this);
-			this .specularColor_    .addInterest ("set_specularColor__",    this);
-			this .shininess_        .addInterest ("set_shininess__",        this);
-
-			this .set_ambientIntensity__ ();
-			this .set_diffuseColor__ ();
-			this .set_specularColor__ ();
-			this .set_shininess__ ();
-		},
-		set_ambientIntensity__: function ()
-		{
-			this .ambientIntensity = Math .max (this .ambientIntensity_ .getValue (), 0);
-		},
-		set_diffuseColor__: function ()
-		{
-			//We cannot use this in Windows Edge:
-			//this .diffuseColor .set (this .diffuseColor_ .getValue ());
-
-			const
-				diffuseColor  = this .diffuseColor,
-				diffuseColor_ = this .diffuseColor_ .getValue ();
-
-			diffuseColor [0] = diffuseColor_ .r;
-			diffuseColor [1] = diffuseColor_ .g;
-			diffuseColor [2] = diffuseColor_ .b;
-		},
-		set_specularColor__: function ()
-		{
-			//We cannot use this in Windows Edge:
-			//this .specularColor .set (this .specularColor_ .getValue ());
-
-			const
-				specularColor  = this .specularColor,
-				specularColor_ = this .specularColor_ .getValue ();
-
-			specularColor [0] = specularColor_ .r;
-			specularColor [1] = specularColor_ .g;
-			specularColor [2] = specularColor_ .b;
-		},
-		set_shininess__: function ()
-		{
-			this .shininess = Algorithm .clamp (this .shininess_ .getValue (), 0, 1);
-		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
 			gl .uniform1i  (shaderObject .x3d_SeparateBackColor, false);
-			gl .uniform1f  (shaderObject .x3d_AmbientIntensity,  this .ambientIntensity);
-			gl .uniform3fv (shaderObject .x3d_DiffuseColor,      this .diffuseColor);
-			gl .uniform3fv (shaderObject .x3d_SpecularColor,     this .specularColor);
 			gl .uniform3fv (shaderObject .x3d_EmissiveColor,     this .emissiveColor);
-			gl .uniform1f  (shaderObject .x3d_Shininess,         this .shininess);
 			gl .uniform1f  (shaderObject .x3d_Transparency,      this .transparency);
+
+			gl .uniform1f  (shaderObject .x3d_AmbientIntensity,  0);
+			gl .uniform3fv (shaderObject .x3d_DiffuseColor,      zeroColor);
+			gl .uniform3fv (shaderObject .x3d_SpecularColor,     zeroColor);
+			gl .uniform1f  (shaderObject .x3d_Shininess,         0);
 		},
 	});
 
-	return Material;
+   const zeroColor = new Float32Array (3); // XXX: Test
+
+	return UnlitMaterial;
 });

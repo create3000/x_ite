@@ -74,6 +74,7 @@ function (Fields,
 
 		this .stylePropertiesNode  = [ ];
 		this .materialNode         = null;
+		this .backMaterialNode     = null;
 		this .textureNode          = null;
 		this .textureTransformNode = null;
 		this .shaderNodes          = [ ];
@@ -92,6 +93,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "lineProperties",   new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "fillProperties",   new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "material",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "backMaterial",     new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "texture",          new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "shaders",          new Fields .MFNode ()),
@@ -121,6 +123,7 @@ function (Fields,
 			this .lineProperties_   .addInterest ("set_lineProperties__",   this);
 			this .fillProperties_   .addInterest ("set_fillProperties__",   this);
 			this .material_         .addInterest ("set_material__",         this);
+			this .backMaterial_     .addInterest ("set_backMaterial__",     this);
 			this .texture_          .addInterest ("set_texture__",          this);
 			this .textureTransform_ .addInterest ("set_textureTransform__", this);
 			this .shaders_          .addInterest ("set_shaders__",          this);
@@ -138,6 +141,7 @@ function (Fields,
 			this .set_lineProperties__ ();
 			this .set_fillProperties__ ();
 			this .set_material__ ();
+			this .set_backMaterial__ ();
 			this .set_texture__ ();
 			this .set_textureTransform__ ();
 			this .set_shaders__ ();
@@ -213,6 +217,16 @@ function (Fields,
 
 			if (this .materialNode)
 				this .materialNode .transparent_ .addInterest ("set_transparent__", this);
+		},
+		set_backMaterial__: function ()
+		{
+			if (this .backMaterialNode)
+				this .backMaterialNode .transparent_ .removeInterest ("set_transparent__", this);
+
+			this .backMaterialNode = X3DCast (X3DConstants .X3DOneSidedMaterialNode, this .backMaterial_);
+
+			if (this .backMaterialNode)
+				this .backMaterialNode .transparent_ .addInterest ("set_transparent__", this);
 		},
 		set_texture__: function ()
 		{
@@ -320,7 +334,8 @@ function (Fields,
 				case AlphaMode .AUTO:
 					this .setTransparent (Boolean (this .stylePropertiesNode [3] .getTransparent () ||
 												 (this .materialNode && this .materialNode .getTransparent ()) ||
-												 (this .textureNode  && this .textureNode  .getTransparent ()) ||
+												 (this .backMaterialNode && this .backMaterialNode .getTransparent ()) ||
+												 (this .textureNode && this .textureNode .getTransparent ()) ||
 												 this .blendModeNode));
 					break;
 				case AlphaMode .OPAQUE:

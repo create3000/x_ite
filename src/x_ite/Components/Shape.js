@@ -55,9 +55,11 @@ define ([
 	"x_ite/Components/Shape/PointProperties",
 	"x_ite/Components/Shape/Shape",
 	"x_ite/Components/Shape/TwoSidedMaterial",
+	"x_ite/Components/Shape/UnlitMaterial",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Components/Shape/X3DAppearanceNode",
 	"x_ite/Components/Shape/X3DMaterialNode",
+	"x_ite/Components/Shape/X3DOneSidedMaterialNode",
 	"x_ite/Components/Shape/X3DShapeNode",
 ],
 function (SupportedNodes,
@@ -68,9 +70,11 @@ function (SupportedNodes,
           PointProperties,
           Shape,
           TwoSidedMaterial,
+          UnlitMaterial,
           X3DAppearanceChildNode,
           X3DAppearanceNode,
           X3DMaterialNode,
+          X3DOneSidedMaterialNode,
           X3DShapeNode)
 {
 "use strict";
@@ -84,14 +88,16 @@ function (SupportedNodes,
 		PointProperties:  PointProperties,
 		Shape:            Shape,
 		TwoSidedMaterial: TwoSidedMaterial,
+		UnlitMaterial:    UnlitMaterial,
 	};
 
 	const AbstractTypes =
 	{
-		X3DAppearanceChildNode: X3DAppearanceChildNode,
-		X3DAppearanceNode:      X3DAppearanceNode,
-		X3DMaterialNode:        X3DMaterialNode,
-		X3DShapeNode:           X3DShapeNode,
+		X3DAppearanceChildNode:  X3DAppearanceChildNode,
+		X3DAppearanceNode:       X3DAppearanceNode,
+		X3DMaterialNode:         X3DMaterialNode,
+		X3DOneSidedMaterialNode: X3DOneSidedMaterialNode,
+		X3DShapeNode:            X3DShapeNode,
 	};
 
 	for (const typeName in Types)
