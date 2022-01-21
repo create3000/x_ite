@@ -50,11 +50,9 @@
 define ([
 	"x_ite/Components/Texturing/X3DSingleTextureNode",
 	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
 ],
 function (X3DSingleTextureNode,
-          X3DConstants,
-          X3DCast)
+          X3DConstants)
 {
 "use strict";
 

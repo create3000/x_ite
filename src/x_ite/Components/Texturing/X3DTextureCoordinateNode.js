@@ -49,11 +49,9 @@
 
 define ([
 	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
-	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
 function (X3DGeometricPropertyNode,
-          X3DGeometryNode,
           X3DConstants)
 {
 "use strict";

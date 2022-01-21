@@ -168,7 +168,7 @@ function (Fields,
 			for (let i = 0; i < length; ++ i)
 				textureCoordinateNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
 
-			const last = length ? textureCoordinateNodes [length - 1] : this;
+			const last = length ? textureCoordinateNodes .at (-1) : this;
 
 			for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
 				textureCoordinateNodes [last] .setShaderUniformsToChannel (gl, shaderObject, i);

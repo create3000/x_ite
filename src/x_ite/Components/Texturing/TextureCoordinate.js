@@ -162,16 +162,12 @@ function (Fields,
 		},
 		getTexCoord: function (array)
 		{
-			const point = this .point_;
+			const point = this .point;
 
-			for (let i = 0, length = point .length; i < length; ++ i)
-			{
-				const p = point [i];
+			for (let i = 0, p = 0, length = this .length; i < length; ++ i, p += 2)
+				array [i] = new Vector4 (point [p], point [p + 1], 0, 1);
 
-				array [i] = new Vector4 (p .x, p .y, 0, 1);
-			}
-
-			array .length = point .length;
+			array .length = this .length;
 
 			return array;
 		},

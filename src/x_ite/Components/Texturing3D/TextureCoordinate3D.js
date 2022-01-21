@@ -53,12 +53,14 @@ define ([
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Vector4",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DSingleTextureCoordinateNode,
-          X3DConstants)
+          X3DConstants,
+          Vector4)
 {
 "use strict";
 
@@ -160,16 +162,12 @@ function (Fields,
 		},
 		getTexCoord: function (array)
 		{
-			const point = this .point_;
+			const point = this .point;
 
-			for (let i = 0, length = point .length; i < length; ++ i)
-			{
-				const p = point [i];
+			for (let i = 0, p = 0, length = this .length; i < length; ++ i, p += 3)
+				array [i] = new Vector4 (point [p], point [p + 1], point [p + 2], 1);
 
-				array [i] = new Vector4 (p .x, p .y, p .z, 1);
-			}
-
-			array .length = point .length;
+			array .length = this .length;
 
 			return array;
 		},
