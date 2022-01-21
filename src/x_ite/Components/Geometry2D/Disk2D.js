@@ -104,7 +104,7 @@ function (Fields,
 
 			this .setPrimitiveMode (this .getBrowser () .getContext () .LINE_LOOP);
 		},
-		getShader: function (browser, shadow)
+		getShader: function (browser, shadow, materialNode)
 		{
 			if (this .getGeometryType () < 2)
 			{
@@ -113,7 +113,7 @@ function (Fields,
 			}
 			else
 			{
-				return X3DGeometryNode .prototype .getShader .call (this, browser, shadow);
+				return materialNode .getShader (browser, shadow);
 			}
 		},
 		set_live__: function ()
