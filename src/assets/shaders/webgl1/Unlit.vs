@@ -12,8 +12,6 @@ uniform mat3 x3d_NormalMatrix;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
-uniform bool x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise false
-
 attribute float x3d_FogDepth;
 attribute vec4  x3d_Color;
 attribute vec3  x3d_Normal;

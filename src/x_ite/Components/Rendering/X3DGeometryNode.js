@@ -1100,7 +1100,7 @@ function (Fields,
 				// Setup shader.
 
 				shaderNode .enable (gl);
-				shaderNode .setLocalUniforms (gl, context);
+				shaderNode .setLocalUniforms (gl, context, front);
 
 				// Setup vertex attributes.
 

@@ -9,7 +9,6 @@ precision mediump int;
 #endif
 
 uniform bool  x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false
-uniform bool  x3d_Lighting;        // true if a X3DMaterialNode is attached, otherwise false
 uniform x3d_MaterialParameters x3d_Material;
 
 uniform mat4 x3d_ProjectionMatrix;
@@ -55,26 +54,16 @@ main ()
 	depth = 1.0 + gl_Position .w;
 	#endif
 
-	if (x3d_Lighting)
-	{
-		float alpha = 1.0 - x3d_Material .transparency;
+	float alpha = 1.0 - x3d_Material .transparency;
 
-		if (x3d_ColorMaterial)
-		{
-			color .rgb = x3d_Color .rgb;
-			color .a   = x3d_Color .a * alpha;
-		}
-		else
-		{
-			color .rgb = x3d_Material .emissiveColor;
-			color .a   = alpha;
-		}
+	if (x3d_ColorMaterial)
+	{
+		color .rgb = x3d_Color .rgb;
+		color .a   = x3d_Color .a * alpha;
 	}
 	else
 	{
-		if (x3d_ColorMaterial)
-			color = x3d_Color;
-		else
-			color = vec4 (1.0);
+		color .rgb = x3d_Material .emissiveColor;
+		color .a   = alpha;
 	}
 }
