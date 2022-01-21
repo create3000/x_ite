@@ -72,8 +72,9 @@ struct x3d_MaterialParameters
 	mediump float transparency;
 };
 
-//uniform x3d_MaterialParameters x3d_FrontMaterial;
-//uniform x3d_MaterialParameters x3d_BackMaterial;
+//uniform x3d_MaterialParameters x3d_Material;
+
+#define x3d_FrontMaterial x3d_Material
 
 struct x3d_MultiTextureParameters
 {

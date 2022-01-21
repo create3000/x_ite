@@ -197,12 +197,12 @@ function (X3DCast,
 				this .x3d_ShadowMap [i]       = gl .getUniformLocation (program, "x3d_ShadowMap[" + i + "]");
 			}
 
-			this .x3d_AmbientIntensity = this .getUniformLocation (gl, program, "x3d_FrontMaterial.ambientIntensity", "x3d_AmbientIntensity");
-			this .x3d_DiffuseColor     = this .getUniformLocation (gl, program, "x3d_FrontMaterial.diffuseColor",     "x3d_DiffuseColor");
-			this .x3d_SpecularColor    = this .getUniformLocation (gl, program, "x3d_FrontMaterial.specularColor",    "x3d_SpecularColor");
-			this .x3d_EmissiveColor    = this .getUniformLocation (gl, program, "x3d_FrontMaterial.emissiveColor",    "x3d_EmissiveColor");
-			this .x3d_Shininess        = this .getUniformLocation (gl, program, "x3d_FrontMaterial.shininess",        "x3d_Shininess");
-			this .x3d_Transparency     = this .getUniformLocation (gl, program, "x3d_FrontMaterial.transparency",     "x3d_Transparency");
+			this .x3d_AmbientIntensity = this .getUniformLocation (gl, program, "x3d_Material.ambientIntensity", "x3d_AmbientIntensity");
+			this .x3d_DiffuseColor     = this .getUniformLocation (gl, program, "x3d_Material.diffuseColor",     "x3d_DiffuseColor");
+			this .x3d_SpecularColor    = this .getUniformLocation (gl, program, "x3d_Material.specularColor",    "x3d_SpecularColor");
+			this .x3d_EmissiveColor    = this .getUniformLocation (gl, program, "x3d_Material.emissiveColor",    "x3d_EmissiveColor");
+			this .x3d_Shininess        = this .getUniformLocation (gl, program, "x3d_Material.shininess",        "x3d_Shininess");
+			this .x3d_Transparency     = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_Transparency");
 
 			this .x3d_NumTextures           = gl .getUniformLocation (program, "x3d_NumTextures");
 			this .x3d_NumProjectiveTextures = gl .getUniformLocation (program, "x3d_NumProjectiveTextures");

@@ -18,8 +18,7 @@ uniform bool x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform bool x3d_SeparateBackColor;
-uniform x3d_MaterialParameters x3d_FrontMaterial;
-uniform x3d_MaterialParameters x3d_BackMaterial;
+uniform x3d_MaterialParameters x3d_Material;
 
 in float x3d_FogDepth;
 in vec4  x3d_Color;
@@ -35,8 +34,7 @@ in vec4 x3d_TexCoord1;
 #endif
 
 out float fogDepth;    // fog depth
-out vec4  frontColor;  // color
-out vec4  backColor;   // color
+out vec4  color;       // color
 out vec3  normal;      // normal vector at this point on geometry
 out vec3  vertex;      // point on geometry
 out vec3  localNormal; // normal vector at this point on geometry in local coordinates
@@ -150,12 +148,5 @@ main ()
 	depth = 1.0 + gl_Position .w;
 	#endif
 
-	frontColor = getMaterialColor (normal, vertex, x3d_FrontMaterial);
-
-	x3d_MaterialParameters backMaterial = x3d_FrontMaterial;
-
-	if (x3d_SeparateBackColor)
-		backMaterial = x3d_BackMaterial;
-
-	backColor = getMaterialColor (-normal, vertex, backMaterial);
+	color = getMaterialColor (normal, vertex, x3d_Material);
 }

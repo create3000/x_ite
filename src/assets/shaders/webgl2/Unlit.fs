@@ -15,8 +15,7 @@ uniform float x3d_AlphaCutoff;
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform bool x3d_SeparateBackColor;
-uniform x3d_MaterialParameters x3d_FrontMaterial;
-uniform x3d_MaterialParameters x3d_BackMaterial;
+uniform x3d_MaterialParameters x3d_Material;
 
 in float fogDepth;    // fog depth
 in vec4  color;       // color
@@ -59,23 +58,10 @@ getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in ve
 	return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);
 }
 
-x3d_MaterialParameters
-getMaterial ()
-{
-	bool frontColor = gl_FrontFacing || x3d_SeparateBackColor == false;
-
-	if (frontColor)
-		return x3d_FrontMaterial;
-
-	return x3d_BackMaterial;
-}
-
 vec4
 getMaterialColor ()
 {
-	x3d_MaterialParameters material = getMaterial ();
-
-	return getTextureColor (x3d_ColorMaterial ? color : vec4 (material .emissiveColor, 1.0 - material .transparency), vec4 (1.0));
+	return getTextureColor (x3d_ColorMaterial ? color : vec4 (x3d_Material .emissiveColor, 1.0 - x3d_Material .transparency), vec4 (1.0));
 }
 
 // DEBUG

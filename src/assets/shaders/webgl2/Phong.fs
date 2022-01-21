@@ -15,8 +15,7 @@ uniform float x3d_AlphaCutoff;
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform bool x3d_SeparateBackColor;
-uniform x3d_MaterialParameters x3d_FrontMaterial;
-uniform x3d_MaterialParameters x3d_BackMaterial;
+uniform x3d_MaterialParameters x3d_Material;
 
 in float fogDepth;    // fog depth
 in vec4  color;       // color
@@ -59,34 +58,21 @@ getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in ve
 	return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);
 }
 
-x3d_MaterialParameters
-getMaterial ()
-{
-	bool frontColor = gl_FrontFacing || x3d_SeparateBackColor == false;
-
-	if (frontColor)
-		return x3d_FrontMaterial;
-
-	return x3d_BackMaterial;
-}
-
 vec4
 getMaterialColor ()
 {
-	x3d_MaterialParameters material = getMaterial ();
-
 	vec3 N = normalize (gl_FrontFacing ? normal : -normal);
 	vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position
 
 	// Calculate diffuseFactor & alpha
 
 	vec3  diffuseFactor = vec3 (1.0);
-	float alpha         = 1.0 - material .transparency;
+	float alpha         = 1.0 - x3d_Material .transparency;
 
 	// Texture
 
-	vec4 D = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (material .diffuseColor, alpha);
-	vec4 T = getTextureColor (D, vec4 (material .specularColor, alpha));
+	vec4 D = x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .diffuseColor, alpha);
+	vec4 T = getTextureColor (D, vec4 (x3d_Material .specularColor, alpha));
 
 	diffuseFactor = T .rgb;
 	alpha         = T .a;
@@ -100,7 +86,7 @@ getMaterialColor ()
 
 	// Ambient intensity
 
-	vec3 ambientTerm = diffuseFactor * material .ambientIntensity;
+	vec3 ambientTerm = diffuseFactor * x3d_Material .ambientIntensity;
 
 	// Apply light sources
 
@@ -126,8 +112,8 @@ getMaterialColor ()
 
 			float lightAngle     = max (dot (N, L), 0.0);      // Angle between normal and light ray.
 			vec3  diffuseTerm    = diffuseFactor * lightAngle;
-			float specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;
-			vec3  specularTerm   = material .specularColor * specularFactor;
+			float specularFactor = x3d_Material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), x3d_Material .shininess * 128.0) : 1.0;
+			vec3  specularTerm   = x3d_Material .specularColor * specularFactor;
 
 			float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
 			float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
@@ -144,7 +130,7 @@ getMaterialColor ()
 		}
 	}
 
-	finalColor += material .emissiveColor;
+	finalColor += x3d_Material .emissiveColor;
 
 	return vec4 (finalColor, alpha);
 }
