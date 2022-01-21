@@ -451,19 +451,9 @@ A ComposedShader defines a number of special variables for the various shader st
          </td>
       </tr>
       <tr>
-         <td>uniform bool</td>
-         <td>x3d_SeparateBackColor</td>
-         <td>if true back colors are available</td>
-      </tr>
-      <tr>
          <td>uniform x3d_MaterialParameters</td>
-         <td>x3d_FrontMaterial</td>
+         <td>x3d_tMaterial</td>
          <td>see table »Uniform Struct x3d_MaterialParameters«</td>
-      </tr>
-      <tr>
-         <td>uniform x3d_MaterialParameters</td>
-         <td>x3d_BackMaterial</td>
-         <td>set if x3d_SeparateBackColor is true</td>
       </tr>
       <tr>
          <td colspan="3"><hr/>
