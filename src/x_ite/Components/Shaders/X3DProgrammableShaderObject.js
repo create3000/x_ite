@@ -197,21 +197,12 @@ function (X3DCast,
 				this .x3d_ShadowMap [i]       = gl .getUniformLocation (program, "x3d_ShadowMap[" + i + "]");
 			}
 
-			this .x3d_SeparateBackColor = gl .getUniformLocation (program, "x3d_SeparateBackColor");
-
 			this .x3d_AmbientIntensity = this .getUniformLocation (gl, program, "x3d_FrontMaterial.ambientIntensity", "x3d_AmbientIntensity");
 			this .x3d_DiffuseColor     = this .getUniformLocation (gl, program, "x3d_FrontMaterial.diffuseColor",     "x3d_DiffuseColor");
 			this .x3d_SpecularColor    = this .getUniformLocation (gl, program, "x3d_FrontMaterial.specularColor",    "x3d_SpecularColor");
 			this .x3d_EmissiveColor    = this .getUniformLocation (gl, program, "x3d_FrontMaterial.emissiveColor",    "x3d_EmissiveColor");
 			this .x3d_Shininess        = this .getUniformLocation (gl, program, "x3d_FrontMaterial.shininess",        "x3d_Shininess");
 			this .x3d_Transparency     = this .getUniformLocation (gl, program, "x3d_FrontMaterial.transparency",     "x3d_Transparency");
-
-			this .x3d_BackAmbientIntensity = this .getUniformLocation (gl, program, "x3d_BackMaterial.ambientIntensity", "x3d_BackAmbientIntensity");
-			this .x3d_BackDiffuseColor     = this .getUniformLocation (gl, program, "x3d_BackMaterial.diffuseColor",     "x3d_BackDiffuseColor");
-			this .x3d_BackSpecularColor    = this .getUniformLocation (gl, program, "x3d_BackMaterial.specularColor",    "x3d_BackSpecularColor");
-			this .x3d_BackEmissiveColor    = this .getUniformLocation (gl, program, "x3d_BackMaterial.emissiveColor",    "x3d_BackEmissiveColor");
-			this .x3d_BackShininess        = this .getUniformLocation (gl, program, "x3d_BackMaterial.shininess",        "x3d_BackShininess");
-			this .x3d_BackTransparency     = this .getUniformLocation (gl, program, "x3d_BackMaterial.transparency",     "x3d_BackTransparency");
 
 			this .x3d_NumTextures           = gl .getUniformLocation (program, "x3d_NumTextures");
 			this .x3d_NumProjectiveTextures = gl .getUniformLocation (program, "x3d_NumProjectiveTextures");
@@ -976,7 +967,7 @@ function (X3DCast,
 			else
 				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
 		},
-		setLocalUniforms: function (gl, context)
+		setLocalUniforms: function (gl, context, front = true)
 		{
 			const
 				shapeNode             = context .shapeNode,
@@ -985,7 +976,7 @@ function (X3DCast,
 				textureCoordinateNode = geometryNode .textureCoordinateNode,
 				appearanceNode        = shapeNode .getAppearance (),
 				stylePropertiesNode   = appearanceNode .stylePropertiesNode [geometryType],
-				materialNode          = appearanceNode .materialNode,
+				materialNode          = front ? appearanceNode .materialNode : appearanceNode .backMaterialNode,
 				textureNode           = context .textureNode || appearanceNode .textureNode,
 				textureTransformNode  = appearanceNode .textureTransformNode,
 				modelViewMatrix       = context .modelViewMatrix,
@@ -1028,10 +1019,7 @@ function (X3DCast,
 			// Material
 
 			gl .uniform1i (this .x3d_ColorMaterial, geometryNode .colorMaterial);
-
-			// Material
-
-			materialNode .setShaderUniforms (gl, this);
+			materialNode .setShaderUniforms (gl, this, front);
 
 			// Normal matrix
 

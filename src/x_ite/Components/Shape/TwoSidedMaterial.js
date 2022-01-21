@@ -261,29 +261,27 @@ function (Fields,
       {
          return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
       },
-		setShaderUniforms: function (gl, shaderObject)
+		setShaderUniforms: function (gl, shaderObject, side)
 		{
-			gl .uniform1i  (shaderObject .x3d_Lighting,         true);
-			gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
-			gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColor);
-			gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColor);
-			gl .uniform3fv (shaderObject .x3d_EmissiveColor,    this .emissiveColor);
-			gl .uniform1f  (shaderObject .x3d_Shininess,        this .shininess);
-			gl .uniform1f  (shaderObject .x3d_Transparency,     this .transparency);
-
-			if (this .separateBackColor_ .getValue ())
+			if (side == 0 && this .separateBackColor_ .getValue ())
 			{
-				gl .uniform1i  (shaderObject .x3d_SeparateBackColor,    true);
-				gl .uniform1f  (shaderObject .x3d_BackAmbientIntensity, this .backAmbientIntensity);
-				gl .uniform3fv (shaderObject .x3d_BackDiffuseColor,     this .backDiffuseColor);
-				gl .uniform3fv (shaderObject .x3d_BackSpecularColor,    this .backSpecularColor);
-				gl .uniform3fv (shaderObject .x3d_BackEmissiveColor,    this .backEmissiveColor);
-				gl .uniform1f  (shaderObject .x3d_BackShininess,        this .backShininess);
-				gl .uniform1f  (shaderObject .x3d_BackTransparency,     this .backTransparency);
+				gl .uniform1i  (shaderObject .x3d_Lighting,         true);
+				gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .backAmbientIntensity);
+				gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .backDiffuseColor);
+				gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .backSpecularColor);
+				gl .uniform3fv (shaderObject .x3d_EmissiveColor,    this .backEmissiveColor);
+				gl .uniform1f  (shaderObject .x3d_Shininess,        this .backShininess);
+				gl .uniform1f  (shaderObject .x3d_Transparency,     this .backTransparency);
 			}
 			else
 			{
-				gl .uniform1i (shaderObject .x3d_SeparateBackColor, false);
+				gl .uniform1i  (shaderObject .x3d_Lighting,         true);
+				gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
+				gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColor);
+				gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColor);
+				gl .uniform3fv (shaderObject .x3d_EmissiveColor,    this .emissiveColor);
+				gl .uniform1f  (shaderObject .x3d_Shininess,        this .shininess);
+				gl .uniform1f  (shaderObject .x3d_Transparency,     this .transparency);
 			}
 		},
 	});

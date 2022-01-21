@@ -220,6 +220,14 @@ function (Fields,
 
 			if (this .materialNode)
 				this .materialNode .transparent_ .addInterest ("set_transparent__", this);
+
+			// Depreciated warning.
+
+			if (this .materialNode .getTypeName () === "TwoSidedMaterial")
+			{
+				console .warn ("TwoSidedMaterial is depreciated, please use Appearance.backMaterial field.");
+				this .set_backMaterial__ ();
+			}
 		},
 		set_backMaterial__: function ()
 		{
@@ -230,6 +238,9 @@ function (Fields,
 
 			if (this .backMaterialNode)
 				this .backMaterialNode .transparent_ .addInterest ("set_transparent__", this);
+
+			if (!this .backMaterialNode && this .materialNode .getTypeName () === "TwoSidedMaterial")
+				this .backMaterialNode = this .materialNode;
 		},
 		set_texture__: function ()
 		{

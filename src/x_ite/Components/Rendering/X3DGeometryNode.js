@@ -911,99 +911,118 @@ function (Fields,
 			try
 			{
 				const
-					appearanceNode = context .shapeNode .getAppearance (),
-					shaderNode     = appearanceNode .shaderNode || this .getShader (context .browser, context .shadow, appearanceNode .materialNode);
+					appearanceNode  = context .shapeNode .getAppearance (),
+					frontShaderNode = appearanceNode .shaderNode || this .getShader (context .browser, context .shadow, appearanceNode .materialNode);
 
-				// Setup shader.
-
-				if (shaderNode .getValid ())
+				if (this .solid || !appearanceNode .backMaterialNode || context .wireframe)
 				{
-					const
-						blendModeNode = appearanceNode .blendModeNode,
-						attribNodes   = this .attribNodes,
-						attribBuffers = this .attribBuffers;
+					this .displayGeometry (gl, context, appearanceNode, frontShaderNode, true, true);
+				}
+				else
+				{
+					const backShaderNode = appearanceNode .shaderNode || this .getShader (context .browser, context .shadow, appearanceNode .backMaterialNode)
 
-					if (blendModeNode)
-						blendModeNode .enable (gl);
-
-					shaderNode .enable (gl);
-					shaderNode .setLocalUniforms (gl, context);
-
-					// Setup vertex attributes.
-
-					for (let i = 0, length = attribNodes .length; i < length; ++ i)
-						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-					if (this .fogCoords)
-						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
-
-					if (this .colorMaterial)
-						shaderNode .enableColorAttribute (gl, this .colorBuffer);
-
-					shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-					shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
-					shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
-
-					// Draw depending on wireframe, solid and transparent.
-
-					if (shaderNode .wireframe)
-					{
-						// Wireframes are always solid so only one drawing call is needed.
-
-						for (let i = 0, length = this .vertexCount; i < length; i += 3)
-							gl .drawArrays (shaderNode .primitiveMode, i, 3);
-					}
-					else
-					{
-						const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
-
-						gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
-
-						if (context .transparent)
-						{
-							gl .enable (gl .CULL_FACE);
-
-							if (!this .solid)
-							{
-								gl .cullFace (gl .FRONT);
-								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-							}
-
-							gl .cullFace (gl .BACK);
-							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-						}
-						else
-						{
-							if (this .solid)
-								gl .enable (gl .CULL_FACE);
-							else
-								gl .disable (gl .CULL_FACE);
-
-							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-						}
-					}
-
-					for (const attribNode of attribNodes)
-						attribNode .disable (gl, shaderNode);
-
-					if (this .fogCoords)
-						shaderNode .disableFogDepthAttribute (gl);
-
-					if (this .colorMaterial)
-						shaderNode .disableColorAttribute (gl);
-
-					shaderNode .disableTexCoordAttribute (gl);
-					shaderNode .disableNormalAttribute   (gl);
-					shaderNode .disable                  (gl);
-
-					if (blendModeNode)
-						blendModeNode .disable (gl);
+					this .displayGeometry (gl, context, appearanceNode, backShaderNode,  true,  false);
+					this .displayGeometry (gl, context, appearanceNode, frontShaderNode, false, true);
 				}
 			}
 			catch (error)
 			{
 				// Catch error from setLocalUniforms.
 				console .log (error);
+			}
+		},
+		displayGeometry: function (gl, context, appearanceNode, shaderNode, back, front)
+		{
+			if (shaderNode .getValid ())
+			{
+				const
+					blendModeNode = appearanceNode .blendModeNode,
+					attribNodes   = this .attribNodes,
+					attribBuffers = this .attribBuffers;
+
+				if (blendModeNode)
+					blendModeNode .enable (gl);
+
+				shaderNode .enable (gl);
+				shaderNode .setLocalUniforms (gl, context, front);
+
+				// Setup vertex attributes.
+
+				for (let i = 0, length = attribNodes .length; i < length; ++ i)
+					attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+				if (this .fogCoords)
+					shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+
+				if (this .colorMaterial)
+					shaderNode .enableColorAttribute (gl, this .colorBuffer);
+
+				shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+				shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
+				shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+
+				// Draw depending on wireframe, solid and transparent.
+
+				if (context .wireframe)
+				{
+					// Wireframes are always solid so only one drawing call is needed.
+
+					for (let i = 0, length = this .vertexCount; i < length; i += 3)
+						gl .drawArrays (shaderNode .primitiveMode, i, 3);
+				}
+				else
+				{
+					const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+
+					gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
+
+					if (context .transparent || back !== front)
+					{
+						gl .enable (gl .CULL_FACE);
+
+						// Render back.
+
+						if (back)
+						{
+							gl .cullFace (gl .FRONT);
+							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+						}
+
+						// Render front.
+
+						if (front)
+						{
+							gl .cullFace (gl .BACK);
+							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+						}
+					}
+					else
+					{
+						if (this .solid)
+							gl .enable (gl .CULL_FACE);
+						else
+							gl .disable (gl .CULL_FACE);
+
+						gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+					}
+				}
+
+				for (const attribNode of attribNodes)
+					attribNode .disable (gl, shaderNode);
+
+				if (this .fogCoords)
+					shaderNode .disableFogDepthAttribute (gl);
+
+				if (this .colorMaterial)
+					shaderNode .disableColorAttribute (gl);
+
+				shaderNode .disableTexCoordAttribute (gl);
+				shaderNode .disableNormalAttribute   (gl);
+				shaderNode .disable                  (gl);
+
+				if (blendModeNode)
+					blendModeNode .disable (gl);
 			}
 		},
 		displayParticlesDepth: function (gl, context, shaderNode, particles, numParticles)
@@ -1045,52 +1064,130 @@ function (Fields,
 			try
 			{
 				const
-					appearanceNode = context .shapeNode .getAppearance (),
-					shaderNode     = appearanceNode .shaderNode || this .getShader (context .browser, context .shadow);
+					appearanceNode  = context .shapeNode .getAppearance (),
+					frontShaderNode = appearanceNode .shaderNode || this .getShader (context .browser, context .shadow, appearanceNode .materialNode);
 
-				if (shaderNode .getValid ())
+				if (this .solid || !appearanceNode .backMaterialNode || context .wireframe)
 				{
-					const
-						blendModeNode = appearanceNode .blendModeNode,
-						attribNodes   = this .attribNodes,
-						attribBuffers = this .attribBuffers;
+					this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particles, numParticles);
+				}
+				else
+				{
+					const backShaderNode = appearanceNode .shaderNode || this .getShader (context .browser, context .shadow, appearanceNode .backMaterialNode)
 
-					if (blendModeNode)
-						blendModeNode .enable (gl);
+					this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode,  true,  false, particles, numParticles);
+					this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, false, true,  particles, numParticles);
+				}
+			}
+			catch (error)
+			{
+				// Catch error from setLocalUniforms.
+				console .log (error);
+			}
+		},
+		displayParticlesGeometry: function (gl, context, appearanceNode, shaderNode, back, front, particles, numParticles)
+		{
+			if (shaderNode .getValid ())
+			{
+				const
+					blendModeNode = appearanceNode .blendModeNode,
+					attribNodes   = this .attribNodes,
+					attribBuffers = this .attribBuffers;
 
-					// Setup shader.
+				if (blendModeNode)
+					blendModeNode .enable (gl);
 
-					shaderNode .enable (gl);
-					shaderNode .setLocalUniforms (gl, context);
+				// Setup shader.
 
-					// Setup vertex attributes.
+				shaderNode .enable (gl);
+				shaderNode .setLocalUniforms (gl, context);
 
-					for (let i = 0, length = attribNodes .length; i < length; ++ i)
-						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+				// Setup vertex attributes.
 
-					if (this .fogCoords)
-						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+				for (let i = 0, length = attribNodes .length; i < length; ++ i)
+					attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-					if (this .colorMaterial)
-						shaderNode .enableColorAttribute (gl, this .colorBuffer);
+				if (this .fogCoords)
+					shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
 
-					shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-					shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
-					shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+				if (this .colorMaterial)
+					shaderNode .enableColorAttribute (gl, this .colorBuffer);
 
-					// Draw depending on wireframe, solid and transparent.
+				shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+				shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
+				shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
 
-					const
-						materialNode    = context .materialNode,
-						normalMatrix    = materialNode || shaderNode .getCustom (),
-						modelViewMatrix = context .modelViewMatrix,
-						x               = modelViewMatrix [12],
-						y               = modelViewMatrix [13],
-						z               = modelViewMatrix [14];
+				// Draw depending on wireframe, solid and transparent.
 
-					if (shaderNode .wireframe)
+				const
+					materialNode    = context .materialNode,
+					normalMatrix    = materialNode || shaderNode .getCustom (),
+					modelViewMatrix = context .modelViewMatrix,
+					x               = modelViewMatrix [12],
+					y               = modelViewMatrix [13],
+					z               = modelViewMatrix [14];
+
+				if (shaderNode .wireframe)
+				{
+					// Wireframes are always solid so only one drawing call is needed.
+
+					for (let p = 0; p < numParticles; ++ p)
 					{
-						// Wireframes are always solid so only one drawing call is needed.
+						const particle = particles [p];
+
+						modelViewMatrix [12] = x;
+						modelViewMatrix [13] = y;
+						modelViewMatrix [14] = z;
+
+						Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
+
+						shaderNode .setParticle (gl, particle, modelViewMatrix, normalMatrix);
+
+						for (let i = 0, length = this .vertexCount; i < length; i += 3)
+							gl .drawArrays (shaderNode .primitiveMode, i, 3);
+					}
+				}
+				else
+				{
+					const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+
+					gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
+
+					if (context .transparent || back !== front)
+					{
+						for (let p = 0; p < numParticles; ++ p)
+						{
+							const particle = particles [p];
+
+							modelViewMatrix [12] = x;
+							modelViewMatrix [13] = y;
+							modelViewMatrix [14] = z;
+
+							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
+
+							shaderNode .setParticle (gl, particle, modelViewMatrix, normalMatrix);
+
+							gl .enable (gl .CULL_FACE);
+
+							if (back)
+							{
+								gl .cullFace (gl .FRONT);
+								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+							}
+
+							if (front)
+							{
+								gl .cullFace (gl .BACK);
+								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+							}
+						}
+					}
+					else
+					{
+						if (this .solid)
+							gl .enable (gl .CULL_FACE);
+						else
+							gl .disable (gl .CULL_FACE);
 
 						for (let p = 0; p < numParticles; ++ p)
 						{
@@ -1104,83 +1201,26 @@ function (Fields,
 
 							shaderNode .setParticle (gl, particle, modelViewMatrix, normalMatrix);
 
-							for (let i = 0, length = this .vertexCount; i < length; i += 3)
-								gl .drawArrays (shaderNode .primitiveMode, i, 3);
+							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 						}
 					}
-					else
-					{
-						const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
-
-						gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
-
-						if (context .transparent && ! this .solid)
-						{
-							for (let p = 0; p < numParticles; ++ p)
-							{
-								const particle = particles [p];
-
-								modelViewMatrix [12] = x;
-								modelViewMatrix [13] = y;
-								modelViewMatrix [14] = z;
-
-								Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-
-								shaderNode .setParticle (gl, particle, modelViewMatrix, normalMatrix);
-
-								gl .enable (gl .CULL_FACE);
-								gl .cullFace (gl .FRONT);
-								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-
-								gl .cullFace (gl .BACK);
-								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-							}
-						}
-						else
-						{
-							if (this .solid)
-								gl .enable (gl .CULL_FACE);
-							else
-								gl .disable (gl .CULL_FACE);
-
-							for (let p = 0; p < numParticles; ++ p)
-							{
-								const particle = particles [p];
-
-								modelViewMatrix [12] = x;
-								modelViewMatrix [13] = y;
-								modelViewMatrix [14] = z;
-
-								Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-
-								shaderNode .setParticle (gl, particle, modelViewMatrix, normalMatrix);
-
-								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-							}
-						}
-					}
-
-					for (const attribNode of attribNodes)
-						attribNode .disable (gl, shaderNode);
-
-					if (this .fogCoords)
-						shaderNode .disableFogDepthAttribute (gl);
-
-					if (this .colorMaterial)
-						shaderNode .disableColorAttribute (gl);
-
-					shaderNode .disableTexCoordAttribute (gl);
-					shaderNode .disableNormalAttribute   (gl);
-					shaderNode .disable                  (gl);
-
-					if (blendModeNode)
-						blendModeNode .disable (gl);
 				}
-			}
-			catch (error)
-			{
-				// Catch error from setLocalUniforms.
-				console .log (error);
+
+				for (const attribNode of attribNodes)
+					attribNode .disable (gl, shaderNode);
+
+				if (this .fogCoords)
+					shaderNode .disableFogDepthAttribute (gl);
+
+				if (this .colorMaterial)
+					shaderNode .disableColorAttribute (gl);
+
+				shaderNode .disableTexCoordAttribute (gl);
+				shaderNode .disableNormalAttribute   (gl);
+				shaderNode .disable                  (gl);
+
+				if (blendModeNode)
+					blendModeNode .disable (gl);
 			}
 		},
 	});

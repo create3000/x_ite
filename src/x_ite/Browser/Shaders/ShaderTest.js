@@ -120,13 +120,12 @@ function (TextureBuffer,
 				gl .uniform1i (shaderNode .x3d_NumProjectiveTextures, 0);
 				gl .uniform1i (shaderNode .x3d_NumClipPlanes,         0);
 
-				gl .uniform1i (shaderNode .x3d_SeparateBackColor, false);
-				gl .uniform1f (shaderNode .x3d_AmbientIntensity,  0);
-				gl .uniform3f (shaderNode .x3d_DiffuseColor,      1, 0, 0);
-				gl .uniform3f (shaderNode .x3d_SpecularColor,     1, 0, 0);
-				gl .uniform3f (shaderNode .x3d_EmissiveColor,     1, 0, 0);
-				gl .uniform1f (shaderNode .x3d_Shininess,         0);
-				gl .uniform1f (shaderNode .x3d_Transparency,      0);
+				gl .uniform1f (shaderNode .x3d_AmbientIntensity, 0);
+				gl .uniform3f (shaderNode .x3d_DiffuseColor,     1, 0, 0);
+				gl .uniform3f (shaderNode .x3d_SpecularColor,    1, 0, 0);
+				gl .uniform3f (shaderNode .x3d_EmissiveColor,    1, 0, 0);
+				gl .uniform1f (shaderNode .x3d_Shininess,        0);
+				gl .uniform1f (shaderNode .x3d_Transparency,     0);
 
 				gl .viewport (0, 0, 16, 16);
 				gl .clearColor (0, 0, 0, 0);
