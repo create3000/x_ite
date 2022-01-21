@@ -100,7 +100,6 @@ function (Fields,
       },
 		setShaderUniforms: function (gl, shaderObject)
 		{
-         gl .uniform1i  (shaderObject .x3d_Lighting,      false);
 			gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
 			gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
 		},

@@ -423,11 +423,6 @@ A ComposedShader defines a number of special variables for the various shader st
          <td>true if X3DColorNode attached</td>
       </tr>
       <tr>
-         <td>uniform bool</td>
-         <td>x3d_Lighting</td>
-         <td>true if X3DMaterialNode attached</td>
-      </tr>
-      <tr>
          <td>uniform int</td>
          <td>x3d_NumLights</td>
          <td>Number of lights in x3d_LightSource</td>

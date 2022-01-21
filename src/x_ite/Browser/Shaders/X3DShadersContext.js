@@ -113,7 +113,7 @@ function (Shading,
 		},
 		getPointShader: function ()
 		{
-			this .pointShader = this .createShader ("PointShader", "PointSet", false);
+			this .pointShader = this .createShader ("PointShader", "PointSet");
 
 			this .getPointShader = function () { return this .pointShader; };
 
@@ -125,7 +125,7 @@ function (Shading,
 		},
 		getLineShader: function ()
 		{
-			this .lineShader = this .createShader ("WireframeShader", "Wireframe", false);
+			this .lineShader = this .createShader ("WireframeShader", "Wireframe");
 
 			this .getLineShader = function () { return this .lineShader; };
 
@@ -137,7 +137,7 @@ function (Shading,
 		},
 		getUnlitShader: function ()
 		{
-			this .unlitShader = this .createShader ("UnlitShader", "Unlit", false);
+			this .unlitShader = this .createShader ("UnlitShader", "Unlit");
 
 			this .unlitShader .isValid_ .addInterest ("set_unlit_shader_valid__", this);
 
@@ -193,7 +193,7 @@ function (Shading,
 		},
 		getDepthShader: function ()
 		{
-			this .depthShader = this .createShader ("DepthShader", "Depth", false);
+			this .depthShader = this .createShader ("DepthShader", "Depth");
 
 			this .getDepthShader = function () { return this .depthShader; };
 
@@ -220,7 +220,7 @@ function (Shading,
 			for (const shader of this .getShaders ())
 				shader .setShading (type);
 		},
-		createShader: function (name, file, shadow)
+		createShader: function (name, file, shadow = false)
 		{
 			if (this .getDebug ())
 				console .log ("Initializing " + name);

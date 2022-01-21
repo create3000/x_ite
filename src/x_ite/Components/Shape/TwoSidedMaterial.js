@@ -265,7 +265,6 @@ function (Fields,
 		{
 			if (side == 0 && this .separateBackColor_ .getValue ())
 			{
-				gl .uniform1i  (shaderObject .x3d_Lighting,         true);
 				gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .backAmbientIntensity);
 				gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .backDiffuseColor);
 				gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .backSpecularColor);
@@ -275,7 +274,6 @@ function (Fields,
 			}
 			else
 			{
-				gl .uniform1i  (shaderObject .x3d_Lighting,         true);
 				gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
 				gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColor);
 				gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColor);

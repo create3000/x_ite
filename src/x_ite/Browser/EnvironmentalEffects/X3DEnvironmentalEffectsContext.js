@@ -61,7 +61,7 @@ function (TextureProperties)
 		initialize: function () { },
 		getBackgroundSphereShader: function ()
 		{
-			this .backgroundSphereShader = this .createShader ("BackgroundSphereShader", "Background", false);
+			this .backgroundSphereShader = this .createShader ("BackgroundSphereShader", "Background");
 
 			this .getBackgroundSphereShader = function () { return this .backgroundSphereShader; };
 
