@@ -1029,27 +1029,15 @@ function (X3DCast,
 
 			gl .uniform1i (this .x3d_ColorMaterial, geometryNode .colorMaterial);
 
-			if (materialNode)
-			{
-				// Lights
+			// Material
 
-				gl .uniform1i  (this .x3d_Lighting, true);
+			materialNode .setShaderUniforms (gl, this);
 
-				// Material
+			// Normal matrix
 
-				materialNode .setShaderUniforms (gl, this);
+			gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
 
-				// Normal matrix
-
-				gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
-			}
-			else
-			{
-				gl .uniform1i (this .x3d_Lighting, false);
-
-				if (this .getCustom ())
-					gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
-			}
+			// Texture
 
 			if (textureNode)
 			{

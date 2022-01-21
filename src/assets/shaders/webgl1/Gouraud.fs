@@ -13,7 +13,6 @@ precision mediump int;
 
 uniform int x3d_GeometryType;
 
-uniform bool  x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
 uniform bool  x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 uniform float x3d_AlphaCutoff;
 
@@ -48,10 +47,9 @@ main ()
 {
  	clip ();
 
-	vec4 finalColor   = gl_FrontFacing ? frontColor : backColor;
-	vec4 diffuseColor = x3d_Lighting || x3d_ColorMaterial ? finalColor : vec4 (1.0);
+	vec4 finalColor = gl_FrontFacing ? frontColor : backColor;
 
-	finalColor      = getTextureColor (diffuseColor, vec4 (1.0));
+	finalColor      = getTextureColor (finalColor, vec4 (1.0));
 	finalColor      = getProjectiveTextureColor (finalColor);
 	finalColor      = getHatchColor (finalColor);
 	finalColor .rgb = getFogColor (finalColor .rgb);

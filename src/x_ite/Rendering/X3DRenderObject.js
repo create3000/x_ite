@@ -935,6 +935,7 @@ function ($,
 
 				if (browser .hasPointShader ())  shaders .add (browser .getPointShader ());
 				if (browser .hasLineShader ())   shaders .add (browser .getLineShader ());
+				if (browser .hasUnlitShader ())  shaders .add (browser .getUnlitShader ());
 				if (browser .hasShadowShader ()) shaders .add (browser .getShadowShader ());
 				shaders .add (browser .getDefaultShader ());
 

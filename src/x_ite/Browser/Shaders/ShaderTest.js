@@ -115,7 +115,6 @@ function (TextureBuffer,
 				gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,  true);
 				gl .uniform1i (shaderNode .x3d_FillPropertiesHatched, false);
 				gl .uniform1i (shaderNode .x3d_ColorMaterial,         false);
-				gl .uniform1i (shaderNode .x3d_Lighting,              true);
 				gl .uniform1i (shaderNode .x3d_NumLights,             0);
 				gl .uniform1i (shaderNode .x3d_NumTextures,           0);
 				gl .uniform1i (shaderNode .x3d_NumProjectiveTextures, 0);

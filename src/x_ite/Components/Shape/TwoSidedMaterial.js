@@ -257,8 +257,13 @@ function (Fields,
 		{
 			this .setTransparent (Boolean (this .transparency_ .getValue () || (this .separateBackColor_ .getValue () && this .backTransparency_ .getValue ())));
 		},
+      getShader: function (browser, shadow)
+      {
+         return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
+      },
 		setShaderUniforms: function (gl, shaderObject)
 		{
+			gl .uniform1i  (shaderObject .x3d_Lighting,         true);
 			gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
 			gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColor);
 			gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColor);
@@ -278,7 +283,7 @@ function (Fields,
 			}
 			else
 			{
-				gl .uniform1i  (shaderObject .x3d_SeparateBackColor, false);
+				gl .uniform1i (shaderObject .x3d_SeparateBackColor, false);
 			}
 		},
 	});

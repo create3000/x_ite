@@ -1,4 +1,3 @@
-#version 300 es
 
 #ifdef GL_FRAGMENT_PRECISION_HIGH
 precision highp float;
@@ -13,36 +12,38 @@ uniform mat3 x3d_NormalMatrix;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
-in float x3d_FogDepth;
-in vec4  x3d_Color;
-in vec3  x3d_Normal;
-in vec4  x3d_Vertex;
+uniform bool x3d_Lighting;  // true if a X3DMaterialNode is attached, otherwise false
+
+attribute float x3d_FogDepth;
+attribute vec4  x3d_Color;
+attribute vec3  x3d_Normal;
+attribute vec4  x3d_Vertex;
 
 #if x3d_MaxTextures > 0
-in vec4 x3d_TexCoord0;
+attribute vec4  x3d_TexCoord0;
 #endif
 
 #if x3d_MaxTextures > 1
-in vec4 x3d_TexCoord1;
+attribute vec4  x3d_TexCoord1;
 #endif
 
-out float fogDepth;    // fog depth
-out vec4  color;       // color
-out vec3  normal;      // normalized normal vector at this point on geometry
-out vec3  vertex;      // point on geometry
-out vec3  localNormal; // normal vector at this point on geometry in local coordinates
-out vec3  localVertex; // point on geometry in local coordinates
+varying float fogDepth;    // fog depth
+varying vec4  color;       // color
+varying vec3  normal;      // normalized normal vector at this point on geometry
+varying vec3  vertex;      // point on geometry
+varying vec3  localNormal; // normal vector at this point on geometry in local coordinates
+varying vec3  localVertex; // point on geometry in local coordinates
 
 #if x3d_MaxTextures > 0
-out vec4  texCoord0;   // texCoord0
+varying vec4 texCoord0; // texCoord0
 #endif
 
 #if x3d_MaxTextures > 1
-out vec4  texCoord1;   // texCoord1
+varying vec4 texCoord1; // texCoord1
 #endif
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-out float depth;
+varying float depth;
 #endif
 
 void

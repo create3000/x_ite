@@ -194,14 +194,14 @@ function (Fields,
 			if (this .geometryType > 1)
 			{
 				for (let i = 0; i < 5; ++ i)
-					this .planes [i] = new Plane3 (Vector3 .Zero, boxNormals [0]);
+					this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
 			}
 
 			this .set_live__ ();
 		},
-		getShader: function (browser, shadow)
+		getShader: function (browser, shadow, materialNode)
 		{
-			return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
+			return materialNode .getShader (browser, shadow);
 		},
 		setGeometryType: function (value)
 		{
@@ -912,7 +912,7 @@ function (Fields,
 			{
 				const
 					appearanceNode = context .shapeNode .getAppearance (),
-					shaderNode     = appearanceNode .shaderNode || this .getShader (context .browser, context .shadow);
+					shaderNode     = appearanceNode .shaderNode || this .getShader (context .browser, context .shadow, appearanceNode .materialNode);
 
 				// Setup shader.
 

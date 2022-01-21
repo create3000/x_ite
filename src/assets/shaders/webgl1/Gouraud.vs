@@ -12,7 +12,6 @@ uniform mat3 x3d_NormalMatrix;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 
-uniform bool x3d_Lighting;      // true if a X3DMaterialNode is attached, otherwise false
 uniform bool x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise false
 
 uniform int x3d_NumLights;
@@ -150,19 +149,12 @@ main ()
 	depth = 1.0 + gl_Position .w;
 	#endif
 
-	if (x3d_Lighting)
-	{
-		frontColor = getMaterialColor (normal, vertex, x3d_FrontMaterial);
+	frontColor = getMaterialColor (normal, vertex, x3d_FrontMaterial);
 
-		x3d_MaterialParameters backMaterial = x3d_FrontMaterial;
+	x3d_MaterialParameters backMaterial = x3d_FrontMaterial;
 
-		if (x3d_SeparateBackColor)
-			backMaterial = x3d_BackMaterial;
+	if (x3d_SeparateBackColor)
+		backMaterial = x3d_BackMaterial;
 
-		backColor = getMaterialColor (-normal, vertex, backMaterial);
-	}
-	else
-	{
-	   frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0);
-	}
+	backColor = getMaterialColor (-normal, vertex, backMaterial);
 }

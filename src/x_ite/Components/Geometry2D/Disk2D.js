@@ -113,7 +113,7 @@ function (Fields,
 			}
 			else
 			{
-				return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
+				return X3DGeometryNode .prototype .getShader .call (this, browser, shadow);
 			}
 		},
 		set_live__: function ()

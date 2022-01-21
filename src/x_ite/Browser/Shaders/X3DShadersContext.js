@@ -131,6 +131,20 @@ function (Shading,
 
 			return this .lineShader;
 		},
+		hasUnlitShader: function ()
+		{
+			return !! this .unlitShader;
+		},
+		getUnlitShader: function ()
+		{
+			this .unlitShader = this .createShader ("UnlitShader", "Unlit", false);
+
+			this .unlitShader .isValid_ .addInterest ("set_unlit_shader_valid__", this);
+
+			this .getUnlitShader = function () { return this .unlitShader; };
+
+			return this .unlitShader;
+		},
 		hasGouraudShader: function ()
 		{
 			return !! this .gouraudShader;
@@ -238,6 +252,15 @@ function (Shading,
 			this .addShader (shader);
 
 			return shader;
+		},
+		set_unlit_shader_valid__: function (valid)
+		{
+			this .unlitShader .isValid_ .removeInterest ("set_unlit_shader_valid__", this);
+
+			if (valid .getValue () && ShaderTest .verify (this, this .unlitShader))
+				return;
+
+			console .error ("X_ITE: Unlit shading is not available.");
 		},
 		set_gouraud_shader_valid__: function (valid)
 		{

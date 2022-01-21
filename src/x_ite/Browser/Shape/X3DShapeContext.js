@@ -52,6 +52,7 @@ define ([
 	"x_ite/Components/Shape/PointProperties",
 	"x_ite/Components/Shape/LineProperties",
 	"x_ite/Components/Shape/FillProperties",
+	"x_ite/Components/Shape/UnlitMaterial",
 	"x_ite/Components/Texturing/ImageTexture",
 	"x_ite/Components/Texturing/TextureProperties",
 	"x_ite/Browser/Networking/urls",
@@ -60,6 +61,7 @@ function (Appearance,
           PointProperties,
           LineProperties,
           FillProperties,
+          UnlitMaterial,
           ImageTexture,
           TextureProperties,
           urls)
@@ -115,6 +117,16 @@ function (Appearance,
 			this .getDefaultFillProperties = function () { return this .defaultFillProperties; };
 
 			return this .defaultFillProperties;
+		},
+		getDefaultMaterial: function ()
+		{
+			this .defaultMaterial = new UnlitMaterial (this .getPrivateScene ());
+
+			this .defaultMaterial .setup ();
+
+			this .getDefaultMaterial = function () { return this .defaultMaterial; };
+
+			return this .defaultMaterial;
 		},
 		getLinetype: function (index)
 		{

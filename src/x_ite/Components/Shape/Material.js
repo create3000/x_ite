@@ -162,8 +162,13 @@ function (Fields,
 		{
 			this .shininess = Algorithm .clamp (this .shininess_ .getValue (), 0, 1);
 		},
+      getShader: function (browser, shadow)
+      {
+         return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
+      },
 		setShaderUniforms: function (gl, shaderObject)
 		{
+			gl .uniform1i  (shaderObject .x3d_Lighting,          true);
 			gl .uniform1i  (shaderObject .x3d_SeparateBackColor, false);
 			gl .uniform1f  (shaderObject .x3d_AmbientIntensity,  this .ambientIntensity);
 			gl .uniform3fv (shaderObject .x3d_DiffuseColor,      this .diffuseColor);

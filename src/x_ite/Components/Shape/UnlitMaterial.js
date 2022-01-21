@@ -94,20 +94,18 @@ function (Fields,
 		{
 			return "material";
 		},
+      getShader: function (browser, shadow)
+      {
+         return browser .getUnlitShader ();
+      },
 		setShaderUniforms: function (gl, shaderObject)
 		{
+         gl .uniform1i  (shaderObject .x3d_Lighting,          false);
 			gl .uniform1i  (shaderObject .x3d_SeparateBackColor, false);
 			gl .uniform3fv (shaderObject .x3d_EmissiveColor,     this .emissiveColor);
 			gl .uniform1f  (shaderObject .x3d_Transparency,      this .transparency);
-
-			gl .uniform1f  (shaderObject .x3d_AmbientIntensity,  0);
-			gl .uniform3fv (shaderObject .x3d_DiffuseColor,      zeroColor);
-			gl .uniform3fv (shaderObject .x3d_SpecularColor,     zeroColor);
-			gl .uniform1f  (shaderObject .x3d_Shininess,         0);
 		},
 	});
-
-   const zeroColor = new Float32Array (3); // XXX: Test
 
 	return UnlitMaterial;
 });

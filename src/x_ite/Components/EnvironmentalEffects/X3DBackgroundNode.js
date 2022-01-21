@@ -604,14 +604,16 @@ function (X3DBindableNode,
 		},
 		drawCube: (function ()
 		{
-			var textureMatrixArray = new Float32Array (new Matrix4 ());
+			const
+				textureMatrixArray = new Float32Array (new Matrix4 ()),
+				white              = new Float32Array ([1, 1, 1]);
 
 			return function (renderObject)
 			{
 				var
 					browser    = renderObject .getBrowser (),
 					gl         = browser .getContext (),
-					shaderNode = browser .getGouraudShader ();
+					shaderNode = browser .getUnlitShader ();
 
 				if (shaderNode .getValid ())
 				{
@@ -627,15 +629,16 @@ function (X3DBindableNode,
 
 					// Uniforms
 
-					gl .uniform1i (shaderNode .x3d_FogType,                            0);
-					gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,               true);
-					gl .uniform1i (shaderNode .x3d_FillPropertiesHatched,              false);
-					gl .uniform1i (shaderNode .x3d_ColorMaterial,                      false);
-					gl .uniform1i (shaderNode .x3d_Lighting,                           false);
-					gl .uniform1i (shaderNode .x3d_NumTextures,                        1);
-					gl .uniform1i (shaderNode .x3d_TextureType [0],                    2);
-					gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-					gl .uniform1i (shaderNode .x3d_NumProjectiveTextures,              0);
+					gl .uniform1i  (shaderNode .x3d_FogType,                            0);
+					gl .uniform1i  (shaderNode .x3d_FillPropertiesFilled,               true);
+					gl .uniform1i  (shaderNode .x3d_FillPropertiesHatched,              false);
+					gl .uniform1i  (shaderNode .x3d_ColorMaterial,                      false);
+					gl .uniform3fv (shaderNode .x3d_EmissiveColor,                      white)
+					gl .uniform1f  (shaderNode .x3d_Transparency,                       0)
+					gl .uniform1i  (shaderNode .x3d_NumTextures,                        1);
+					gl .uniform1i  (shaderNode .x3d_TextureType [0],                    2);
+					gl .uniform1i  (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
+					gl .uniform1i  (shaderNode .x3d_NumProjectiveTextures,              0);
 
 					gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
 					gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);

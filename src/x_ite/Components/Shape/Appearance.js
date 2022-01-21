@@ -215,6 +215,9 @@ function (Fields,
 
 			this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this .material_);
 
+			if (! this .materialNode)
+				this .materialNode = this .getBrowser () .getDefaultMaterial ();
+
 			if (this .materialNode)
 				this .materialNode .transparent_ .addInterest ("set_transparent__", this);
 		},
