@@ -104,18 +104,6 @@ function (Fields,
 
 			this .setPrimitiveMode (this .getBrowser () .getContext () .LINE_LOOP);
 		},
-		getShader: function (browser, shadow, materialNode)
-		{
-			if (this .getGeometryType () < 2)
-			{
-				// For circle support.
-				return browser .getLineShader ();
-			}
-			else
-			{
-				return materialNode .getShader (browser, shadow);
-			}
-		},
 		set_live__: function ()
 		{
 			X3DGeometryNode .prototype .set_live__ .call (this);
@@ -141,7 +129,7 @@ function (Fields,
 				if (outerRadius === 0)
 				{
 					// vertexArray .push (0, 0, 0, 1);
-					// this .setGeometryType (GeometryType .GEOMETRY_POINTS);
+					// this .setGeometryType (0);
 					return;
 				}
 

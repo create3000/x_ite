@@ -261,9 +261,9 @@ function (Fields,
       {
          return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
       },
-		setShaderUniforms: function (gl, shaderObject, side)
+		setShaderUniforms: function (gl, shaderObject, front)
 		{
-			if (side == 0 && this .separateBackColor_ .getValue ())
+			if (!front && this .separateBackColor_ .getValue ())
 			{
 				gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .backAmbientIntensity);
 				gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .backDiffuseColor);

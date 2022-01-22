@@ -40,29 +40,17 @@ uniform float x3d_LogarithmicFarFactor1_2;
 varying float depth;
 #endif
 
-#pragma X3D include "include/Shadow.glsl"
 #pragma X3D include "include/Texture.glsl"
 #pragma X3D include "include/Hatch.glsl"
 #pragma X3D include "include/Fog.glsl"
 #pragma X3D include "include/ClipPlanes.glsl"
 
-float
-getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)
-{
-	float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));
-
-	if (spotAngle >= cutOffAngle)
-		return 0.0;
-	else if (spotAngle <= beamWidth)
-		return 1.0;
-
-	return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);
-}
-
 vec4
 getMaterialColor ()
 {
-	return getTextureColor (x3d_ColorMaterial ? color : vec4 (x3d_Material .emissiveColor, 1.0 - x3d_Material .transparency), vec4 (1.0));
+	float alpha = 1.0 - x3d_Material .transparency;
+
+	return getTextureColor (x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .emissiveColor, alpha), vec4 (1.0));
 }
 
 // DEBUG

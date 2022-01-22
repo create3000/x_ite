@@ -80,33 +80,6 @@ function (X3DGeometryNode,
 		{
 			return false;
 		},
-		transfer: function ()
-		{
-			if (this .getGeometryType () === 1)
-			{
-				const
-					texCoords = this .getTexCoords (),
-					vertices  = this .getVertices ();
-
-				this .getMultiTexCoords () .push (texCoords);
-
-				for (let i = 0, length = vertices .length; i < length; i += 8)
-				{
-					texCoords .push (vertices [i],
-					                 vertices [i + 1],
-					                 vertices [i + 2],
-					                 vertices [i + 3],
-					                 vertices [i],
-					                 vertices [i + 1],
-					                 vertices [i + 2],
-					                 vertices [i + 3]);
-				}
-
-				texCoords .shrinkToFit ();
-			}
-
-			X3DGeometryNode .prototype .transfer .call (this);
-		},
 		display: function (gl, context)
 		{
 			try
@@ -141,9 +114,6 @@ function (X3DGeometryNode,
 
 					if (this .colorMaterial)
 						shaderNode .enableColorAttribute (gl, this .colorBuffer);
-
-					if (this .getMultiTexCoords () .length)
-						shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, true);
 
 					shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
