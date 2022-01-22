@@ -113,6 +113,7 @@ function (Fields,
 			else
 				this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);
 		},
+		getShader: X3DLineGeometryNode .prototype .getShader,
 		build: function ()
 		{
 			const
