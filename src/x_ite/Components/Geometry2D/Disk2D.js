@@ -54,15 +54,13 @@ define ([
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Components/Rendering/X3DLineGeometryNode",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode,
           X3DLineGeometryNode,
-          X3DConstants,
-          Vector3)
+          X3DConstants)
 {
 "use strict";
 

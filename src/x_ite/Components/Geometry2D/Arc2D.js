@@ -54,7 +54,6 @@ define ([
 	"x_ite/Components/Rendering/X3DLineGeometryNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Complex",
-	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
 function (Fields,
@@ -63,7 +62,6 @@ function (Fields,
           X3DLineGeometryNode,
           X3DConstants,
           Complex,
-          Vector3,
           Algorithm)
 {
 "use strict";
