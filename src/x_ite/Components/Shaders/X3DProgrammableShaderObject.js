@@ -335,7 +335,7 @@ function (X3DCast,
 
 				if (location)
 				{
-					console .error (this .getTypeName (), this .getName (), "Using uniform location name »" + depreciated + "« is depreciated, use »" + name + "«. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
+					console .warn (this .getTypeName (), this .getName (), "Using uniform location name »" + depreciated + "« is depreciated, use »" + name + "«. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
 				}
 
 				return location;
@@ -360,7 +360,7 @@ function (X3DCast,
 
 				if (location >= 0)
 				{
-					console .error (this .getTypeName (), this .getName (), "Using attribute location name »" + depreciated + "« is depreciated, use »" + name + "«. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
+					console .warn (this .getTypeName (), this .getName (), "Using attribute location name »" + depreciated + "« is depreciated, use »" + name + "«. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
 				}
 
 				return location;
