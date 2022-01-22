@@ -74,8 +74,6 @@ struct x3d_MaterialParameters
 
 //uniform x3d_MaterialParameters x3d_Material;
 
-#define x3d_FrontMaterial x3d_Material
-
 struct x3d_MultiTextureParameters
 {
 	mediump int mode;
