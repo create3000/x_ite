@@ -115,14 +115,14 @@ function (Fields,
 		},
 		build: function ()
 		{
-			var
+			const
 				options     = this .getBrowser () .getDisk2DOptions (),
 				innerRadius = Math .min (Math .abs (this .innerRadius_ .getValue ()), Math .abs (this .outerRadius_ .getValue ())),
 				outerRadius = Math .max (Math .abs (this .innerRadius_ .getValue ()), Math .abs (this .outerRadius_ .getValue ()));
 
 			if (innerRadius === outerRadius)
 			{
-				var vertexArray = this .getVertices ();
+				const vertexArray = this .getVertices ();
 
 				// Point
 
@@ -141,9 +141,9 @@ function (Fields,
 				}
 				else
 				{
-					var defaultVertices = options .getCircleVertices () .getValue ();
+					const defaultVertices = options .getCircleVertices () .getValue ();
 
-					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
+					for (let i = 0, length = defaultVertices .length; i < length; i += 4)
 						vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
 				}
 
@@ -167,11 +167,11 @@ function (Fields,
 				}
 				else
 				{
-					var
+					const
 						defaultVertices = options .getDiskVertices () .getValue (),
 						vertexArray     = this .getVertices ();
 
-					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
+					for (let i = 0, length = defaultVertices .length; i < length; i += 4)
 						vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
 				}
 
@@ -186,7 +186,7 @@ function (Fields,
 
 			// Disk with hole
 
-			var
+			const
 				scale            = innerRadius / outerRadius,
 				offset           = (1 - scale) / 2,
 				defaultTexCoords = options .getDiskTexCoords () .getValue (),
@@ -197,7 +197,7 @@ function (Fields,
 
 			this .getMultiTexCoords () .push (texCoordArray);
 
-			for (var i = 0, length = defaultVertices .length; i < length; i += 12)
+			for (let i = 0, length = defaultVertices .length; i < length; i += 12)
 			{
 				texCoordArray .push (defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
 				                     defaultTexCoords [i + 4], defaultTexCoords [i + 5], 0, 1,
