@@ -1,14 +1,8 @@
 #version 300 es
 
-#ifdef GL_FRAGMENT_PRECISION_HIGH
 precision highp float;
 precision highp int;
 precision highp sampler3D;
-#else
-precision mediump float;
-precision mediump int;
-precision mediump sampler3D;
-#endif
 
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];

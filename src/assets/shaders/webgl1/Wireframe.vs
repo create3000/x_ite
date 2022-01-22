@@ -1,11 +1,6 @@
 
-#ifdef GL_FRAGMENT_PRECISION_HIGH
 precision highp float;
 precision highp int;
-#else
-precision mediump float;
-precision mediump int;
-#endif
 
 uniform bool x3d_ColorMaterial;   // true if a X3DColorNode is attached, otherwise false
 uniform x3d_MaterialParameters x3d_Material;
