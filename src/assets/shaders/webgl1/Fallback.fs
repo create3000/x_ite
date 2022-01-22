@@ -6,7 +6,6 @@ precision mediump float;
 precision mediump int;
 #endif
 
-uniform x3d_LinePropertiesParameters x3d_LineProperties;
 uniform x3d_MaterialParameters x3d_Material;
 
 uniform int       x3d_NumTextures;

@@ -260,7 +260,11 @@ function (Shading,
 			if (valid .getValue () && ShaderTest .verify (this, this .unlitShader))
 				return;
 
-			console .error ("X_ITE: Unlit shading is not available.");
+			console .error ("X_ITE: Unlit shading is not available, using fallback VRML shader.");
+
+			// Recompile shader.
+			this .unlitShader .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.vs") ];
+			this .unlitShader .parts_ [1] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.fs") ];
 		},
 		set_gouraud_shader_valid__: function (valid)
 		{
