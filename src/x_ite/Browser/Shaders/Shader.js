@@ -49,7 +49,7 @@
 
 define ([
 	"x_ite/Browser/Shaders/ShaderSource",
-	"text!assets/shaders/Types.h",
+	"text!assets/shaders/Types.glsl",
 	"x_ite/Browser/Texturing/MultiTextureModeType",
 	"x_ite/Browser/Texturing/MultiTextureSourceType",
 	"x_ite/Browser/Texturing/MultiTextureFunctionType",
