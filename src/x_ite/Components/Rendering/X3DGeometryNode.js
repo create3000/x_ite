@@ -964,10 +964,17 @@ function (Fields,
 
 				if (shaderNode .wireframe)
 				{
-					// Wireframes.
+					// Points and Wireframes.
 
-					for (let i = 0, length = this .vertexCount; i < length; i += 3)
-						gl .drawArrays (shaderNode .primitiveMode, i, 3);
+					if (shaderNode .primitiveMode === gl .POINTS)
+					{
+						gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+					}
+					else
+					{
+						for (let i = 0, length = this .vertexCount; i < length; i += 3)
+							gl .drawArrays (shaderNode .primitiveMode, i, 3);
+					}
 				}
 				else
 				{
@@ -1145,8 +1152,15 @@ function (Fields,
 
 						shaderNode .setParticle (gl, particle, modelViewMatrix);
 
-						for (let i = 0, length = this .vertexCount; i < length; i += 3)
-							gl .drawArrays (shaderNode .primitiveMode, i, 3);
+						if (shaderNode .primitiveMode === gl .POINTS)
+						{
+							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+						}
+						else
+						{
+							for (let i = 0, length = this .vertexCount; i < length; i += 3)
+								gl .drawArrays (shaderNode .primitiveMode, i, 3);
+						}
 					}
 				}
 				else
