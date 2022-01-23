@@ -188,9 +188,9 @@ function (Fields,
 			{
 				try
 				{
-					const geometry = this .getGeometry ();
+					const geometryNode = this .getGeometry ();
 
-					if (geometry .getGeometryType () < 2)
+					if (geometryNode .getGeometryType () < 2)
 						return;
 
 					const browser = renderObject .getBrowser ();
@@ -200,7 +200,7 @@ function (Fields,
 
 					hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
 
-					if (geometry .intersectsLine (hitRay, renderObject .getLocalObjects (), modelViewMatrix, intersections))
+					if (geometryNode .intersectsLine (hitRay, renderObject .getLocalObjects (), modelViewMatrix, intersections))
 					{
 						// Finally we have intersections and must now find the closest hit in front of the camera.
 

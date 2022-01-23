@@ -977,6 +977,8 @@ function (Fields,
 
 					if (context .transparent || back !== front)
 					{
+						// Render transparent or back or front.
+
 						gl .enable (gl .CULL_FACE);
 
 						// Render back.
@@ -997,6 +999,8 @@ function (Fields,
 					}
 					else
 					{
+						// Render solid or both sides.
+
 						if (this .solid)
 							gl .enable (gl .CULL_FACE);
 						else
@@ -1153,6 +1157,8 @@ function (Fields,
 
 					if (context .transparent || back !== front)
 					{
+						// Render transparent or back or front.
+
 						for (let p = 0; p < numParticles; ++ p)
 						{
 							const particle = particles [p];
@@ -1182,6 +1188,8 @@ function (Fields,
 					}
 					else
 					{
+						// Render solid or both sides.
+
 						if (this .solid)
 							gl .enable (gl .CULL_FACE);
 						else
