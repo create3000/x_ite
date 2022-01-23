@@ -1,5 +1,35 @@
 # What's New
 
+## X\_ITE v4.7.5 Released
+
+*Leipzig, 23th January 2022*: This release implements the new X3Dv4 UnlitMaterial. This also means that the custom shader interface has changed:
+
+- Depreciated x3d_FrontMaterial in favor of x3d_Material uniform.
+- Removed x3d_BackMaterial uniform.
+- Removed x3d_Lighting uniform.
+- Removed x3d_SeparateBackColors uniform.
+
+{% capture notice-text %}
+#### New Features
+
+- Added X3DSingleTextureNode class.
+- Added X3DSingleTextureTransformNode class.
+- Added X3DSingleTextureCoordinateNode class.
+- Added UnlitMaterial class.
+- Implemented Appearance *backMaterial* field.
+
+{% endcapture %}
+<div class="notice--success">{{ notice-text | markdownify }}</div>
+
+{% capture notice-text %}
+#### Bug Fixes
+
+- Fixed bug in aliases handling and proto nodes setup.
+- Fixed bug in initialization of TextureTransformMatrix3D.
+
+{% endcapture %}
+<div class="notice--success">{{ notice-text | markdownify }}</div>
+
 ## X\_ITE v4.7.3 Released
 
 *Leipzig, 16th January 2022*: This release fixes bugs, and a lot of code clean up has been done.
