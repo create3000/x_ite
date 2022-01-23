@@ -64,7 +64,7 @@ Once the X3D is defined we can now write the vertex and the fragment shader sour
 
 ### Vertex Shader
 
-```c
+```glsl
 #version 300 es
 
 precision mediump float;
@@ -89,7 +89,7 @@ main ()
 
 ### Fragment Shader
 
-```c
+```glsl
 #version 300 es
 
 precision mediump float;
@@ -847,7 +847,7 @@ function initialize ()
 
 To address the issue of the depth not being interpolated in perspectively-correct way, output the following interpolant to the vertex shader:
 
-```c
+```glsl
 #version 300 es
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
@@ -867,7 +867,7 @@ main ()
 
 and then in the fragment shader add:
 
-```c
+```glsl
 #version 300 es
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
