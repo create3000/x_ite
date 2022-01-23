@@ -1120,8 +1120,6 @@ function (Fields,
 				// Draw depending on wireframe, solid and transparent.
 
 				const
-					materialNode    = context .materialNode,
-					normalMatrix    = materialNode || shaderNode .getCustom (),
 					modelViewMatrix = context .modelViewMatrix,
 					x               = modelViewMatrix [12],
 					y               = modelViewMatrix [13],
@@ -1141,7 +1139,7 @@ function (Fields,
 
 						Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-						shaderNode .setParticle (gl, particle, modelViewMatrix, normalMatrix);
+						shaderNode .setParticle (gl, particle, modelViewMatrix, true);
 
 						for (let i = 0, length = this .vertexCount; i < length; i += 3)
 							gl .drawArrays (shaderNode .primitiveMode, i, 3);
@@ -1165,7 +1163,7 @@ function (Fields,
 
 							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-							shaderNode .setParticle (gl, particle, modelViewMatrix, normalMatrix);
+							shaderNode .setParticle (gl, particle, modelViewMatrix, true);
 
 							gl .enable (gl .CULL_FACE);
 
@@ -1199,7 +1197,7 @@ function (Fields,
 
 							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-							shaderNode .setParticle (gl, particle, modelViewMatrix, normalMatrix);
+							shaderNode .setParticle (gl, particle, modelViewMatrix, true);
 
 							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 						}
