@@ -374,8 +374,7 @@ A ComposedShader defines a number of special variables for the various shader st
          <td>x3d_Points, x3d_Lines, x3d_Geometry2D, x3d_Geometry3D</td>
       </tr>
       <tr>
-         <td colspan="3"><hr/>
-         </td>
+         <td colspan="3"><hr/></td>
       </tr>
       <tr>
          <td>uniform int</td>
@@ -391,6 +390,22 @@ A ComposedShader defines a number of special variables for the various shader st
          <td>uniform x3d_FogParameters</td>
          <td>x3d_Fog</td>
          <td>see table »Uniform Struct x3d_FogParameters«</td>
+      </tr>
+      <tr>
+         <td colspan="3"><hr/></td>
+      </tr>
+      <tr>
+         <td>uniform int</td>
+         <td>x3d_NumLights</td>
+         <td>Number of lights in x3d_LightSource</td>
+      </tr>
+      <tr>
+         <td>uniform x3d_LightSourceParameters</td>
+         <td>x3d_LightSource [x3d_MaxLights]</td>
+         <td>see table »Uniform Struct x3d_LightSourceParameters«</td>
+      </tr>
+      <tr>
+         <td colspan="3"><hr/></td>
       </tr>
       <tr>
          <td>uniform float</td>
@@ -413,9 +428,7 @@ A ComposedShader defines a number of special variables for the various shader st
          <td>see table »Uniform Struct x3d_FillPropertiesParameters«</td>
       </tr>
       <tr>
-         <td></td>
-         <td></td>
-         <td></td>
+         <td colspan="3"><hr/></td>
       </tr>
       <tr>
          <td>uniform bool</td>
@@ -423,27 +436,7 @@ A ComposedShader defines a number of special variables for the various shader st
          <td>true if X3DColorNode attached</td>
       </tr>
       <tr>
-         <td>uniform int</td>
-         <td>x3d_NumLights</td>
-         <td>Number of lights in x3d_LightSource</td>
-      </tr>
-      <tr>
-         <td>uniform x3d_LightSourceParameters</td>
-         <td>x3d_LightSource [x3d_MaxLights]</td>
-         <td>see table »Uniform Struct x3d_LightSourceParameters«</td>
-      </tr>
-      <tr>
-         <td colspan="3"><hr/>
-         </td>
-      </tr>
-      <tr>
-         <td>uniform float</td>
-         <td>x3d_AlphaCutoff</td>
-         <td>alphaCutoff value from Appearance</td>
-      </tr>
-      <tr>
-         <td colspan="3"><hr/>
-         </td>
+         <td colspan="3"><hr/></td>
       </tr>
       <tr>
          <td>uniform x3d_MaterialParameters</td>
@@ -451,8 +444,7 @@ A ComposedShader defines a number of special variables for the various shader st
          <td>see table »Uniform Struct x3d_MaterialParameters«</td>
       </tr>
       <tr>
-         <td colspan="3"><hr/>
-         </td>
+         <td colspan="3"><hr/></td>
       </tr>
       <tr>
          <td>uniform int</td>
@@ -480,8 +472,7 @@ A ComposedShader defines a number of special variables for the various shader st
          <td>see table »Uniform Struct x3d_TextureCoordinateGeneratorParameters«</td>
       </tr>
       <tr>
-         <td colspan="3"><hr/>
-         </td>
+         <td colspan="3"><hr/></td>
       </tr>
       <tr>
          <td>uniform ivec4</td>
@@ -514,8 +505,7 @@ A ComposedShader defines a number of special variables for the various shader st
          <td>transformation matrix of the camera</td>
       </tr>
       <tr>
-         <td colspan="3"><hr/>
-         </td>
+         <td colspan="3"><hr/></td>
       </tr>
       <tr>
          <td>attribute float</td>
