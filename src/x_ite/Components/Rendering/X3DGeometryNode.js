@@ -962,7 +962,7 @@ function (Fields,
 
 				// Draw depending on wireframe, solid and transparent.
 
-				if (context .wireframe)
+				if (shaderNode .wireframe)
 				{
 					// Wireframes are always solid so only one drawing call is needed.
 
