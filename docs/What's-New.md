@@ -216,7 +216,7 @@ This release also increased pure rendering speed (without routing and scripting)
 {% capture notice-text %}
 #### Bug Fixes
 
-- Fixed a bug in X3DViepointNode when the viewpoint is animated.
+- Fixed a bug in X3DViewpointNode when the viewpoint is animated.
 
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
@@ -567,7 +567,7 @@ This release also increased pure rendering speed (without routing and scripting)
 - Implemented MultiTexture, MultiTextureTransform, and MultiTextureCoordinate.
 - Implemented FillProperties.
 - Faster startup of browser.
-- Better transitions with OthoViewpoint.
+- Better transitions with OrthoViewpoint.
 
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
@@ -874,7 +874,7 @@ for more information. Additionally we tested X\_ITE against <http://www.web3d.or
 
 ## X\_ITE v4.2.8 Released
 
-*Leipzig, 31th Oktober 2018:* The X3DCanvas element has now the onload, onshutdown, and onerror attributes and properties. There is also jQuery support for these event handler when calling jQuery.fn.on and jQuery.fn.off:
+*Leipzig, 31th October 2018:* The X3DCanvas element has now the onload, onshutdown, and onerror attributes and properties. There is also jQuery support for these event handler when calling jQuery.fn.on and jQuery.fn.off:
 
 ```js
 const element = $("X3DCanvas");
@@ -902,7 +902,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 ## X\_ITE v4.2.7 Released
 
-*Leipzig, 29th Oktober 2018:* This version fixes some important bugs and makes X\_ITE more specification conform.
+*Leipzig, 29th October 2018:* This version fixes some important bugs and makes X\_ITE more specification conform.
 
 {% capture notice-text %}
 #### Bug Fixes
@@ -917,7 +917,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 ## X\_ITE v4.2.6 Released
 
-*Leipzig, 14th Oktober 2018:* With this version, X\_ITE includes a new polygon tessellator, ie. X\_ITE can better render concave polygons witch also affects polygon font support, which is now even better.
+*Leipzig, 14th October 2018:* With this version, X\_ITE includes a new polygon tessellator, ie. X\_ITE can better render concave polygons witch also affects polygon font support, which is now even better.
 
 {% capture notice-text %}
 #### New Features
@@ -940,7 +940,7 @@ element .on ("load", function () { console .log ("load, yeah"); });
 
 ## X\_ITE v4.2.5 Released
 
-*Leipzig, 1st Oktober 2018:* This version fixes loads of bugs and added loads of small Features.
+*Leipzig, 1st October 2018:* This version fixes loads of bugs and added loads of small Features.
 
 {% capture notice-text %}
 #### New Features

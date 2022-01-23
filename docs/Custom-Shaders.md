@@ -638,7 +638,7 @@ If the ParticleSystem.*geometryType* is GEOMETRY the following uniforms are avai
 
 ## Built-in Constants
 
-Some built-in variables are enumerated and have special values and meanings. The following table list all of them and their corresponding values. Note: as of version 1.27 these constant are buit-in.
+Some built-in variables are enumerated and have special values and meanings. The following table list all of them and their corresponding values. Note: as of version 1.27 these constant are built-in.
 
 <table class=" table">
    <thead>
