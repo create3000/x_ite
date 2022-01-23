@@ -202,7 +202,7 @@ function (X3DGeometryNode,
 
 						Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-						shaderNode .setParticle (gl, particle, modelViewMatrix, false);
+						shaderNode .setParticle (gl, particle, modelViewMatrix);
 
 						gl .drawArrays (primitiveMode, 0, this .vertexCount);
 					}

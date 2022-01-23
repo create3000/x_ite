@@ -1049,7 +1049,7 @@ function (Fields,
 
 				Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-				shaderNode .setParticle (gl, particle, modelViewMatrix, false);
+				shaderNode .setParticle (gl, particle, modelViewMatrix);
 
 				gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 			}
@@ -1125,6 +1125,8 @@ function (Fields,
 					y               = modelViewMatrix [13],
 					z               = modelViewMatrix [14];
 
+				shaderNode .setNormalMatrix (gl, modelViewMatrix)
+
 				if (shaderNode .wireframe)
 				{
 					// Wireframes are always solid so only one drawing call is needed.
@@ -1139,7 +1141,7 @@ function (Fields,
 
 						Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-						shaderNode .setParticle (gl, particle, modelViewMatrix, true);
+						shaderNode .setParticle (gl, particle, modelViewMatrix);
 
 						for (let i = 0, length = this .vertexCount; i < length; i += 3)
 							gl .drawArrays (shaderNode .primitiveMode, i, 3);
@@ -1163,7 +1165,7 @@ function (Fields,
 
 							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-							shaderNode .setParticle (gl, particle, modelViewMatrix, true);
+							shaderNode .setParticle (gl, particle, modelViewMatrix);
 
 							gl .enable (gl .CULL_FACE);
 
@@ -1197,7 +1199,7 @@ function (Fields,
 
 							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-							shaderNode .setParticle (gl, particle, modelViewMatrix, true);
+							shaderNode .setParticle (gl, particle, modelViewMatrix);
 
 							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 						}

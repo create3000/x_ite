@@ -1259,11 +1259,12 @@ function (X3DCast,
 		{
 			gl .disableVertexAttribArray (this .x3d_Vertex);
 		},
-		setParticle: function (gl, particle, modelViewMatrix, normalMatrix)
+		setNormalMatrix: function (gl, modelViewMatrix)
 		{
-			if (normalMatrix)
-				gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
-
+			gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
+		},
+		setParticle: function (gl, particle, modelViewMatrix)
+		{
 			gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
 
 			gl .uniform1i (this .x3d_ParticleId,          particle .id);
