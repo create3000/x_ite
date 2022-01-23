@@ -1,4 +1,4 @@
-/* X_ITE v4.7.5-1123 */
+/* X_ITE v4.7.5-1124 */
 
 (function () {
 
@@ -50961,7 +50961,7 @@ function (Fields,
 				case Shading .POINT:
 				{
 					this .primitiveMode = gl .POINTS;
-					this .wireframe     = true;
+					this .wireframe     = false;
 					break;
 				}
 				case Shading .WIREFRAME:
@@ -70351,7 +70351,7 @@ function (Fields,
 					backMaterialNode = appearanceNode .backMaterialNode,
 					frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
 
-				if (this .solid || !backMaterialNode || context .wireframe)
+				if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
 				{
 					this .displayGeometry (gl, context, appearanceNode, frontShaderNode, true, true);
 				}
@@ -70401,9 +70401,9 @@ function (Fields,
 
 				// Draw depending on wireframe, solid and transparent.
 
-				if (context .wireframe)
+				if (shaderNode .wireframe)
 				{
-					// Wireframes are always solid so only one drawing call is needed.
+					// Wireframes.
 
 					for (let i = 0, length = this .vertexCount; i < length; i += 3)
 						gl .drawArrays (shaderNode .primitiveMode, i, 3);
@@ -70510,7 +70510,7 @@ function (Fields,
 					backMaterialNode = appearanceNode .backMaterialNode,
 					frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
 
-				if (this .solid || !backMaterialNode || context .wireframe)
+				if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
 				{
 					this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particles, numParticles);
 				}

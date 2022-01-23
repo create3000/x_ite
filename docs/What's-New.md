@@ -26,6 +26,7 @@
 
 - Fixed bug in aliases handling and proto nodes setup.
 - Fixed bug in initialization of TextureTransformMatrix3D.
+- Fixed wireframe mode for geometry.
 
 {% endcapture %}
 <div class="notice--success">{{ notice-text | markdownify }}</div>
