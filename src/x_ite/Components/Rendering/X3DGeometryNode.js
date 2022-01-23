@@ -1138,7 +1138,7 @@ function (Fields,
 
 				if (shaderNode .wireframe)
 				{
-					// Wireframes are always solid so only one drawing call is needed.
+					// Points and Wireframes.
 
 					for (let p = 0; p < numParticles; ++ p)
 					{

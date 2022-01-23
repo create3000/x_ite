@@ -1,4 +1,4 @@
-/* X_ITE v4.7.5-1124 */
+/* X_ITE v4.7.5-1125 */
 
 (function () {
 
@@ -50961,7 +50961,7 @@ function (Fields,
 				case Shading .POINT:
 				{
 					this .primitiveMode = gl .POINTS;
-					this .wireframe     = false;
+					this .wireframe     = true;
 					break;
 				}
 				case Shading .WIREFRAME:
@@ -70403,10 +70403,17 @@ function (Fields,
 
 				if (shaderNode .wireframe)
 				{
-					// Wireframes.
+					// Points and Wireframes.
 
-					for (let i = 0, length = this .vertexCount; i < length; i += 3)
-						gl .drawArrays (shaderNode .primitiveMode, i, 3);
+					if (shaderNode .primitiveMode === gl .POINTS)
+					{
+						gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+					}
+					else
+					{
+						for (let i = 0, length = this .vertexCount; i < length; i += 3)
+							gl .drawArrays (shaderNode .primitiveMode, i, 3);
+					}
 				}
 				else
 				{
@@ -70570,7 +70577,7 @@ function (Fields,
 
 				if (shaderNode .wireframe)
 				{
-					// Wireframes are always solid so only one drawing call is needed.
+					// Points and Wireframes.
 
 					for (let p = 0; p < numParticles; ++ p)
 					{
@@ -70584,8 +70591,15 @@ function (Fields,
 
 						shaderNode .setParticle (gl, particle, modelViewMatrix);
 
-						for (let i = 0, length = this .vertexCount; i < length; i += 3)
-							gl .drawArrays (shaderNode .primitiveMode, i, 3);
+						if (shaderNode .primitiveMode === gl .POINTS)
+						{
+							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+						}
+						else
+						{
+							for (let i = 0, length = this .vertexCount; i < length; i += 3)
+								gl .drawArrays (shaderNode .primitiveMode, i, 3);
+						}
 					}
 				}
 				else

@@ -113,7 +113,7 @@ function (Fields,
 				case Shading .POINT:
 				{
 					this .primitiveMode = gl .POINTS;
-					this .wireframe     = false;
+					this .wireframe     = true;
 					break;
 				}
 				case Shading .WIREFRAME:
