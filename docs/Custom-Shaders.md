@@ -397,7 +397,7 @@ A ComposedShader defines a number of special variables for the various shader st
       <tr>
          <td>uniform int</td>
          <td>x3d_NumLights</td>
-         <td>Number of lights in x3d_LightSource</td>
+         <td>number of lights in x3d_LightSource</td>
       </tr>
       <tr>
          <td>uniform x3d_LightSourceParameters</td>
