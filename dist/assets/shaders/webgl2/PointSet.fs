@@ -1,11 +1,6 @@
 #version 300 es
-#ifdef GL_FRAGMENT_PRECISION_HIGH
 precision highp float;
 precision highp int;
-#else
-precision mediump float;
-precision mediump int;
-#endif
 uniform int x3d_GeometryType;
 uniform float x3d_AlphaCutoff;
 uniform x3d_PointPropertiesParameters x3d_PointProperties;
@@ -71,11 +66,7 @@ if (dot (vertex, x3d_ClipPlane [i] .xyz) - x3d_ClipPlane [i] .w < 0.0)
 discard;
 }
 }
-#ifdef GL_FRAGMENT_PRECISION_HIGH
 precision highp sampler3D;
-#else
-precision mediump sampler3D;
-#endif
 uniform int x3d_NumTextures;
 uniform int x3d_TextureType [x3d_MaxTextures]; 
 uniform sampler2D x3d_Texture2D [x3d_MaxTextures];

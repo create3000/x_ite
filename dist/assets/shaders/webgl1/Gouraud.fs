@@ -1,15 +1,9 @@
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 #extension GL_EXT_frag_depth : enable
 #endif
-#ifdef GL_FRAGMENT_PRECISION_HIGH
 precision highp float;
 precision highp int;
-#else
-precision mediump float;
-precision mediump int;
-#endif
 uniform int x3d_GeometryType;
-uniform bool x3d_Lighting; 
 uniform bool x3d_ColorMaterial; 
 uniform float x3d_AlphaCutoff;
 varying float fogDepth; 
@@ -517,8 +511,7 @@ main ()
 {
 clip ();
 vec4 finalColor = gl_FrontFacing ? frontColor : backColor;
-vec4 diffuseColor = x3d_Lighting || x3d_ColorMaterial ? finalColor : vec4 (1.0);
-finalColor = getTextureColor (diffuseColor, vec4 (1.0));
+finalColor = getTextureColor (finalColor, vec4 (1.0));
 finalColor = getProjectiveTextureColor (finalColor);
 finalColor = getHatchColor (finalColor);
 finalColor .rgb = getFogColor (finalColor .rgb);

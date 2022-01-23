@@ -801,7 +801,6 @@ define ('x_ite/Components/Geometry2D/Arc2D',[
 	"x_ite/Components/Rendering/X3DLineGeometryNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Complex",
-	"standard/Math/Numbers/Vector3",
 	"standard/Math/Algorithm",
 ],
 function (Fields,
@@ -810,7 +809,6 @@ function (Fields,
           X3DLineGeometryNode,
           X3DConstants,
           Complex,
-          Vector3,
           Algorithm)
 {
 "use strict";
@@ -1344,15 +1342,13 @@ define ('x_ite/Components/Geometry2D/Disk2D',[
 	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Components/Rendering/X3DLineGeometryNode",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DGeometryNode,
           X3DLineGeometryNode,
-          X3DConstants,
-          Vector3)
+          X3DConstants)
 {
 "use strict";
 
@@ -1394,18 +1390,6 @@ function (Fields,
 
 			this .setPrimitiveMode (this .getBrowser () .getContext () .LINE_LOOP);
 		},
-		getShader: function (browser, shadow)
-		{
-			if (this .getGeometryType () < 2)
-			{
-				// For circle support.
-				return browser .getLineShader ();
-			}
-			else
-			{
-				return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
-			}
-		},
 		set_live__: function ()
 		{
 			X3DGeometryNode .prototype .set_live__ .call (this);
@@ -1415,23 +1399,24 @@ function (Fields,
 			else
 				this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);
 		},
+		getShader: X3DLineGeometryNode .prototype .getShader,
 		build: function ()
 		{
-			var
+			const
 				options     = this .getBrowser () .getDisk2DOptions (),
 				innerRadius = Math .min (Math .abs (this .innerRadius_ .getValue ()), Math .abs (this .outerRadius_ .getValue ())),
 				outerRadius = Math .max (Math .abs (this .innerRadius_ .getValue ()), Math .abs (this .outerRadius_ .getValue ()));
 
 			if (innerRadius === outerRadius)
 			{
-				var vertexArray = this .getVertices ();
+				const vertexArray = this .getVertices ();
 
 				// Point
 
 				if (outerRadius === 0)
 				{
 					// vertexArray .push (0, 0, 0, 1);
-					// this .setGeometryType (GeometryType .GEOMETRY_POINTS);
+					// this .setGeometryType (0);
 					return;
 				}
 
@@ -1443,9 +1428,9 @@ function (Fields,
 				}
 				else
 				{
-					var defaultVertices = options .getCircleVertices () .getValue ();
+					const defaultVertices = options .getCircleVertices () .getValue ();
 
-					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
+					for (let i = 0, length = defaultVertices .length; i < length; i += 4)
 						vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
 				}
 
@@ -1469,11 +1454,11 @@ function (Fields,
 				}
 				else
 				{
-					var
+					const
 						defaultVertices = options .getDiskVertices () .getValue (),
 						vertexArray     = this .getVertices ();
 
-					for (var i = 0, length = defaultVertices .length; i < length; i += 4)
+					for (let i = 0, length = defaultVertices .length; i < length; i += 4)
 						vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
 				}
 
@@ -1488,7 +1473,7 @@ function (Fields,
 
 			// Disk with hole
 
-			var
+			const
 				scale            = innerRadius / outerRadius,
 				offset           = (1 - scale) / 2,
 				defaultTexCoords = options .getDiskTexCoords () .getValue (),
@@ -1499,7 +1484,7 @@ function (Fields,
 
 			this .getMultiTexCoords () .push (texCoordArray);
 
-			for (var i = 0, length = defaultVertices .length; i < length; i += 12)
+			for (let i = 0, length = defaultVertices .length; i < length; i += 12)
 			{
 				texCoordArray .push (defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
 				                     defaultTexCoords [i + 4], defaultTexCoords [i + 5], 0, 1,
@@ -1631,14 +1616,12 @@ define ('x_ite/Components/Geometry2D/Polyline2D',[
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DLineGeometryNode",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DLineGeometryNode,
-          X3DConstants,
-          Vector3)
+          X3DConstants)
 {
 "use strict";
 
@@ -1751,14 +1734,12 @@ define ('x_ite/Components/Geometry2D/Polypoint2D',[
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Rendering/X3DLineGeometryNode",
 	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DLineGeometryNode, 
-          X3DConstants,
-          Vector3)
+          X3DLineGeometryNode,
+          X3DConstants)
 {
 "use strict";
 

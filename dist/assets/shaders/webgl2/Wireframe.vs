@@ -1,14 +1,8 @@
 #version 300 es
-#ifdef GL_FRAGMENT_PRECISION_HIGH
 precision highp float;
 precision highp int;
-#else
-precision mediump float;
-precision mediump int;
-#endif
 uniform bool x3d_ColorMaterial; 
-uniform bool x3d_Lighting; 
-uniform x3d_MaterialParameters x3d_FrontMaterial;
+uniform x3d_MaterialParameters x3d_Material;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
 in float x3d_FogDepth;
@@ -40,9 +34,7 @@ vertexPosition = gl_Position .xyz / gl_Position .w;
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 depth = 1.0 + gl_Position .w;
 #endif
-if (x3d_Lighting)
-{
-float alpha = 1.0 - x3d_FrontMaterial .transparency;
+float alpha = 1.0 - x3d_Material .transparency;
 if (x3d_ColorMaterial)
 {
 color .rgb = x3d_Color .rgb;
@@ -50,15 +42,7 @@ color .a = x3d_Color .a * alpha;
 }
 else
 {
-color .rgb = x3d_FrontMaterial .emissiveColor;
+color .rgb = x3d_Material .emissiveColor;
 color .a = alpha;
-}
-}
-else
-{
-if (x3d_ColorMaterial)
-color = x3d_Color;
-else
-color = vec4 (1.0);
 }
 }

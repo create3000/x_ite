@@ -1,21 +1,14 @@
-#ifdef GL_FRAGMENT_PRECISION_HIGH
 precision highp float;
 precision highp int;
-#else
-precision mediump float;
-precision mediump int;
-#endif
 uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];
 uniform mat3 x3d_NormalMatrix;
 uniform mat4 x3d_ProjectionMatrix;
 uniform mat4 x3d_ModelViewMatrix;
-uniform bool x3d_Lighting; 
 uniform bool x3d_ColorMaterial; 
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
 uniform bool x3d_SeparateBackColor;
-uniform x3d_MaterialParameters x3d_FrontMaterial;
-uniform x3d_MaterialParameters x3d_BackMaterial;
+uniform x3d_MaterialParameters x3d_Material;
 attribute float x3d_FogDepth;
 attribute vec4 x3d_Color;
 attribute vec3 x3d_Normal;
@@ -110,16 +103,6 @@ gl_Position = x3d_ProjectionMatrix * position;
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 depth = 1.0 + gl_Position .w;
 #endif
-if (x3d_Lighting)
-{
-frontColor = getMaterialColor (normal, vertex, x3d_FrontMaterial);
-x3d_MaterialParameters backMaterial = x3d_FrontMaterial;
-if (x3d_SeparateBackColor)
-backMaterial = x3d_BackMaterial;
-backColor = getMaterialColor (-normal, vertex, backMaterial);
-}
-else
-{
-frontColor = backColor = x3d_ColorMaterial ? x3d_Color : vec4 (1.0);
-}
+frontColor = getMaterialColor ( normal, vertex, x3d_Material);
+backColor = getMaterialColor (-normal, vertex, x3d_Material);
 }

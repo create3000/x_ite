@@ -54,58 +54,37 @@
 
 
 define ('x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode',[
-	"x_ite/Components/Texturing/X3DTextureNode",
+	"x_ite/Components/Texturing/X3DSingleTextureNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (X3DTextureNode,
+function (X3DSingleTextureNode,
           X3DConstants)
 {
 "use strict";
 
 	function X3DEnvironmentTextureNode (executionContext)
 	{
-		X3DTextureNode .call (this, executionContext);
+		X3DSingleTextureNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DEnvironmentTextureNode);
-	}
 
-	X3DEnvironmentTextureNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
+		const gl = this .getBrowser () .getContext ();
+
+		this .target = gl .TEXTURE_CUBE_MAP;
+
+		this .targets = [
+			gl .TEXTURE_CUBE_MAP_POSITIVE_Z, // Front
+			gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, // Back
+			gl .TEXTURE_CUBE_MAP_NEGATIVE_X, // Left
+			gl .TEXTURE_CUBE_MAP_POSITIVE_X, // Right
+			gl .TEXTURE_CUBE_MAP_POSITIVE_Y, // Top
+			gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, // Bottom
+		];
+}
+
+	X3DEnvironmentTextureNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
 	{
 		constructor: X3DEnvironmentTextureNode,
-		initialize: function ()
-		{
-			X3DTextureNode .prototype .initialize .call (this);
-
-			var gl = this .getBrowser () .getContext ();
-
-			this .target = gl .TEXTURE_CUBE_MAP;
-
-			this .targets = [
-				gl .TEXTURE_CUBE_MAP_POSITIVE_Z, // Front
-				gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, // Back
-				gl .TEXTURE_CUBE_MAP_NEGATIVE_X, // Left
-				gl .TEXTURE_CUBE_MAP_POSITIVE_X, // Right
-				gl .TEXTURE_CUBE_MAP_POSITIVE_Y, // Top
-				gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, // Bottom
-			];
-		},
-		set_live__: function ()
-		{
-			if (this .isLive () .getValue ())
-			{
-				this .getBrowser () .getBrowserOptions () .TextureQuality_ .addInterest ("set_textureQuality__", this);
-
-				this .set_textureQuality__ ();
-			}
-			else
-				this .getBrowser () .getBrowserOptions () .TextureQuality_ .removeInterest ("set_textureQuality__", this);
-		},
-		set_textureQuality__: function ()
-		{
-			var textureProperties = this .getBrowser () .getDefaultTextureProperties ();
-
-			this .updateTextureProperties (this .target, false, textureProperties, 128, 128, false, false, false);
-		},
 		getTarget: function ()
 		{
 			return this .target;
@@ -130,6 +109,18 @@ function (X3DTextureNode,
 					gl .texImage2D (targets [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 			};
 		})(),
+		updateTextureProperties: function ()
+		{
+			X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
+			                                                                this .target,
+			                                                                this .textureProperties_ .getValue (),
+			                                                                this .texturePropertiesNode,
+			                                                                128,
+			                                                                128,
+			                                                                false,
+			                                                                false,
+			                                                                false);
+		},
 		setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
 		{
 			gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getCubeMapTextureUnits () [i]);
@@ -228,13 +219,15 @@ function (Fields,
 	{
 		constructor: ComposedCubeMapTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "frontTexture",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "backTexture",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "leftTexture",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "rightTexture",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "bottomTexture",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "topTexture",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "frontTexture",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "backTexture",       new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "leftTexture",       new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "rightTexture",      new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "bottomTexture",     new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "topTexture",        new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -258,8 +251,6 @@ function (Fields,
 
 			// Initialize.
 
-			this .isLive () .addInterest ("set_live__", this);
-
 			this .frontTexture_  .addInterest ("set_texture__", this, 0);
 			this .backTexture_   .addInterest ("set_texture__", this, 1);
 			this .leftTexture_   .addInterest ("set_texture__", this, 2);
@@ -273,8 +264,6 @@ function (Fields,
 			this .set_texture__ (this .rightTexture_,  3);
 			this .set_texture__ (this .topTexture_,    4);
 			this .set_texture__ (this .bottomTexture_, 5);
-
-			this .set_live__ ();
 		},
 		set_texture__: function (node, index)
 		{
@@ -371,7 +360,7 @@ function (Fields,
 					}
 				}
 
-				this .set_textureQuality__ ();
+				this .updateTextureProperties ();
 			}
 			else
 			{
@@ -675,6 +664,7 @@ function (Fields,
 		constructor: GeneratedCubeMapTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "update",            new Fields .SFString ("NONE")),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "size",              new Fields .SFInt32 (128)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
@@ -720,12 +710,6 @@ function (Fields,
 
 				this .viewport    = new Vector4 (0, 0, size, size);
 				this .frameBuffer = new TextureBuffer (this .getBrowser (), size, size);
-
-				// Apply texture properties.
-
-				this .isLive () .addInterest ("set_live__", this);
-
-				this .set_live__ ();
 			}
 		},
 		traverse: function (type, renderObject)
@@ -831,7 +815,7 @@ function (Fields,
 				gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, false, gl .RGBA, gl .UNSIGNED_BYTE, data);
 			}
 
-			this .set_textureQuality__ ();
+			this .updateTextureProperties ();
 
 			renderer .getProjectionMatrix () .pop ();
 			renderer .getViewVolumes      () .pop ();
@@ -959,6 +943,7 @@ function ($,
 		constructor: ImageCubeMapTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
@@ -1122,7 +1107,7 @@ function ($,
 					gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, false, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (data));
 				}
 
-				this .set_textureQuality__ ();
+				this .updateTextureProperties ();
 
 				// Update transparent field.
 

@@ -54,13 +54,11 @@
 
 
 define ('x_ite/Components/Texturing3D/X3DTexture3DNode',[
-	"x_ite/Components/Texturing/X3DTextureNode",
+	"x_ite/Components/Texturing/X3DSingleTextureNode",
 	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
 ],
-function (X3DTextureNode,
-          X3DConstants,
-          X3DCast)
+function (X3DSingleTextureNode,
+          X3DConstants)
 {
 "use strict";
 
@@ -68,53 +66,37 @@ function (X3DTextureNode,
 
 	function X3DTexture3DNode (executionContext)
 	{
-		X3DTextureNode .call (this, executionContext);
+		X3DSingleTextureNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DTexture3DNode);
 
+		const gl = this .getBrowser () .getContext ();
+
+		this .target = gl .TEXTURE_3D;
 		this .width  = 0;
 		this .height = 0;
 		this .depth  = 0;
 		this .data   = null;
 	}
 
-	X3DTexture3DNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
+	X3DTexture3DNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
 	{
 		constructor: X3DTexture3DNode,
 		initialize: function ()
 		{
-			X3DTextureNode .prototype .initialize .call (this);
+			X3DSingleTextureNode .prototype .initialize .call (this);
 
-			var gl = this .getBrowser () .getContext ();
+			this .repeatS_ .addInterest ("updateTextureProperties", this);
+			this .repeatT_ .addInterest ("updateTextureProperties", this);
+			this .repeatR_ .addInterest ("updateTextureProperties", this);
+
+			const gl = this .getBrowser () .getContext ();
 
 			if (gl .getVersion () < 2)
 				return;
 
-			this .target = gl .TEXTURE_3D;
-
-			this .repeatS_           .addInterest ("updateTextureProperties", this);
-			this .repeatT_           .addInterest ("updateTextureProperties", this);
-			this .repeatR_           .addInterest ("updateTextureProperties", this);
-			this .textureProperties_ .addInterest ("set_textureProperties__", this);
-
 			gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
 			gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-
-			this .set_textureProperties__ ();
-		},
-		set_textureProperties__: function ()
-		{
-			if (this .texturePropertiesNode)
-				this .texturePropertiesNode .removeInterest ("updateTextureProperties", this);
-
-			this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this .textureProperties_);
-
-			if (! this .texturePropertiesNode)
-				this .texturePropertiesNode = this .getBrowser () .getDefaultTextureProperties ();
-
-			this .texturePropertiesNode .addInterest ("updateTextureProperties", this);
-
-			this .updateTextureProperties ();
 		},
 		getTarget: function ()
 		{
@@ -176,17 +158,15 @@ function (X3DTextureNode,
 		},
 		updateTextureProperties: function ()
 		{
-			var gl = this .getBrowser () .getContext ();
-
-			X3DTextureNode .prototype .updateTextureProperties .call (this,
-			                                                          gl .TEXTURE_3D,
-			                                                          this .textureProperties_ .getValue (),
-			                                                          this .texturePropertiesNode,
-			                                                          this .width,
-			                                                          this .height,
-			                                                          this .repeatS_ .getValue (),
-			                                                          this .repeatT_ .getValue (),
-			                                                          this .repeatR_ .getValue ());
+			X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
+			                                                                this .target,
+			                                                                this .textureProperties_ .getValue (),
+			                                                                this .texturePropertiesNode,
+			                                                                this .width,
+			                                                                this .height,
+			                                                                this .repeatS_ .getValue (),
+			                                                                this .repeatT_ .getValue (),
+			                                                                this .repeatR_ .getValue ());
 		},
 		setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
 		{
@@ -285,6 +265,7 @@ function (Fields,
 		constructor: ComposedTexture3D,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
@@ -9028,6 +9009,7 @@ function (Fields,
 		constructor: ImageTexture3D,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
@@ -9213,6 +9195,7 @@ function (Fields,
 		constructor: PixelTexture3D,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .MFInt32 (0, 0, 0, 0)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
@@ -9408,29 +9391,32 @@ define ('x_ite/Components/Texturing3D/TextureCoordinate3D',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
+	"x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Vector4",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureCoordinateNode,
-          X3DConstants)
+          X3DSingleTextureCoordinateNode,
+          X3DConstants,
+          Vector4)
 {
 "use strict";
 
 	function TextureCoordinate3D (executionContext)
 	{
-		X3DTextureCoordinateNode .call (this, executionContext);
+		X3DSingleTextureCoordinateNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TextureCoordinate3D);
 	}
 
-	TextureCoordinate3D .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
+	TextureCoordinate3D .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
 	{
 		constructor: TextureCoordinate3D,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3f ()),
 		]),
 		getTypeName: function ()
@@ -9447,7 +9433,7 @@ function (Fields,
 		},
 		initialize: function ()
 		{
-			X3DTextureCoordinateNode .prototype .initialize .call (this);
+			X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
 			this .point_ .addInterest ("set_point__", this);
 
@@ -9494,7 +9480,7 @@ function (Fields,
 		{
 			if (index >= 0 && index < this .length)
 			{
-				var point = this .point;
+				const point = this .point;
 
 				index *= 3;
 
@@ -9502,7 +9488,7 @@ function (Fields,
 			}
 			else if (index >= 0 && this .length)
 			{
-				var point = this .point;
+				const point = this .point;
 
 				index %= this .length;
 				index *= 3;
@@ -9516,16 +9502,12 @@ function (Fields,
 		},
 		getTexCoord: function (array)
 		{
-			var point = this .point_;
+			const point = this .point;
 
-			for (var i = 0, length = point .length; i < length; ++ i)
-			{
-				var p = point [i];
+			for (let i = 0, p = 0, length = this .length; i < length; ++ i, p += 3)
+				array [i] = new Vector4 (point [p], point [p + 1], point [p + 2], 1);
 
-				array [i] = new Vector4 (p .x, p .y, p .z, 1);
-			}
-
-			array .length = length;
+			array .length = this .length;
 
 			return array;
 		},
@@ -9587,29 +9569,32 @@ define ('x_ite/Components/Texturing3D/TextureCoordinate4D',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
+	"x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
 	"x_ite/Bits/X3DConstants",
+	"standard/Math/Numbers/Vector4",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureCoordinateNode,
-          X3DConstants)
+          X3DSingleTextureCoordinateNode,
+          X3DConstants,
+          Vector4)
 {
 "use strict";
 
 	function TextureCoordinate4D (executionContext)
 	{
-		X3DTextureCoordinateNode .call (this, executionContext);
+		X3DSingleTextureCoordinateNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TextureCoordinate4D);
 	}
 
-	TextureCoordinate4D .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
+	TextureCoordinate4D .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
 	{
 		constructor: TextureCoordinate4D,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec4f ()),
 		]),
 		getTypeName: function ()
@@ -9626,7 +9611,7 @@ function (Fields,
 		},
 		initialize: function ()
 		{
-			X3DTextureCoordinateNode .prototype .initialize .call (this);
+			X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
 			this .point_ .addInterest ("set_point__", this);
 
@@ -9673,7 +9658,7 @@ function (Fields,
 		{
 			if (index >= 0 && index < this .length)
 			{
-				var point = this .point;
+				const point = this .point;
 
 				index *= 4;
 
@@ -9681,7 +9666,7 @@ function (Fields,
 			}
 			else if (index >= 0 && this .length)
 			{
-				var point = this .point;
+				const point = this .point;
 
 				index %= this .length;
 				index *= 4;
@@ -9695,16 +9680,12 @@ function (Fields,
 		},
 		getTexCoord: function (array)
 		{
-			var point = this .point_;
+			const point = this .point;
 
-			for (var i = 0, length = point .length; i < length; ++ i)
-			{
-				var p = point [i];
+			for (let i = 0, p = 0, length = this .length; i < length; ++ i, p += 4)
+				array [i] = new Vector4 (point [p], point [p + 1], point [p + 2], point [p + 3]);
 
-				array [i] = new Vector4 (p .x, p .y, p .z, p .w);
-			}
-
-			array .length = length;
+			array .length = this .length;
 
 			return array;
 		},
@@ -9766,35 +9747,38 @@ define ('x_ite/Components/Texturing3D/TextureTransform3D',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DTextureTransformNode",
+	"x_ite/Components/Texturing/X3DSingleTextureTransformNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
+	"standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureTransformNode, 
+          X3DSingleTextureTransformNode,
           X3DConstants,
           Vector3,
-          Rotation4)
+          Rotation4,
+          Matrix4)
 {
 "use strict";
 
-	var vector = new Vector3 (0, 0, 0);
-
 	function TextureTransform3D (executionContext)
 	{
-		X3DTextureTransformNode .call (this, executionContext);
+		X3DSingleTextureTransformNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TextureTransform3D);
+
+		this .matrix = new Matrix4 ();
 	}
 
-	TextureTransform3D .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
+	TextureTransform3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
 	{
 		constructor: TextureTransform3D,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",     new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "translation", new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "rotation",    new Fields .SFRotation ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "scale",       new Fields .SFVec3f (1, 1, 1)),
@@ -9814,46 +9798,53 @@ function (Fields,
 		},
 		initialize: function ()
 		{
-			X3DTextureTransformNode .prototype .initialize .call (this);
-			
+			X3DSingleTextureTransformNode .prototype .initialize .call (this);
+
 			this .addInterest ("eventsProcessed", this);
 
 			this .eventsProcessed ();
 		},
-		eventsProcessed: function ()
+		getMatrix: function ()
 		{
-			var
-				translation = this .translation_ .getValue (),
-				rotation    = this .rotation_ .getValue (),
-				scale       = this .scale_ .getValue (),
-				center      = this .center_ .getValue (),
-				matrix4     = this .getMatrix ();
-
-			matrix4 .identity ();
-
-			if (! center .equals (Vector3 .Zero))
-				matrix4 .translate (vector .assign (center) .negate ());
-
-			if (! scale .equals (Vector3 .One))
-				matrix4 .scale (scale);
-
-			if (! rotation .equals (Rotation4 .Identity))
-				matrix4 .rotate (rotation);
-
-			if (! center .equals (Vector3 .Zero))
-				matrix4 .translate (center);
-
-			if (! translation .equals (Vector3 .Zero))
-				matrix4 .translate (translation);
-
-			this .setMatrix (matrix4);
+			return this .matrix;
 		},
+		eventsProcessed: (function ()
+		{
+			const vector = new Vector3 (0, 0, 0);
+
+			return function ()
+			{
+				const
+					translation = this .translation_ .getValue (),
+					rotation    = this .rotation_ .getValue (),
+					scale       = this .scale_ .getValue (),
+					center      = this .center_ .getValue (),
+					matrix4     = this .matrix;
+
+				matrix4 .identity ();
+
+				if (! center .equals (Vector3 .Zero))
+					matrix4 .translate (vector .assign (center) .negate ());
+
+				if (! scale .equals (Vector3 .One))
+					matrix4 .scale (scale);
+
+				if (! rotation .equals (Rotation4 .Identity))
+					matrix4 .rotate (rotation);
+
+				if (! center .equals (Vector3 .Zero))
+					matrix4 .translate (center);
+
+				if (! translation .equals (Vector3 .Zero))
+					matrix4 .translate (translation);
+
+				this .setMatrix (matrix4);
+			};
+		})(),
 	});
 
 	return TextureTransform3D;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -9908,30 +9899,31 @@ define ('x_ite/Components/Texturing3D/TextureTransformMatrix3D',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DTextureTransformNode",
+	"x_ite/Components/Texturing/X3DSingleTextureTransformNode",
 	"x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureTransformNode,
+          X3DSingleTextureTransformNode,
           X3DConstants)
 {
 "use strict";
 
 	function TextureTransformMatrix3D (executionContext)
 	{
-		X3DTextureTransformNode .call (this, executionContext);
+		X3DSingleTextureTransformNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TextureTransformMatrix3D);
 	}
 
-	TextureTransformMatrix3D .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
+	TextureTransformMatrix3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
 	{
 		constructor: TextureTransformMatrix3D,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "matrix",   new Fields .SFMatrix4f (1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "matrix",   new Fields .SFMatrix4f ()),
 		]),
 		getTypeName: function ()
 		{
@@ -9945,21 +9937,21 @@ function (Fields,
 		{
 			return "textureTransform";
 		},
-		ininitialize: function ()
+		initialize: function ()
 		{
-			X3DTextureTransformNode .prototype .ininitialize .call (this);
+			X3DSingleTextureTransformNode .prototype .initialize .call (this);
 
 			this .addInterest ("eventsProcessed", this);
 
 			this .eventsProcessed ();
 		},
+		getMatrix: function ()
+		{
+			return this .matrix_ .getValue ();
+		},
 		eventsProcessed: function ()
 		{
-			var matrix4 = this .getMatrix ();
-
-			matrix4 .assign (this .matrix_ .getValue ());
-
-			this .setMatrix (matrix4);
+			this .setMatrix (this .matrix_ .getValue ());
 		},
 	});
 

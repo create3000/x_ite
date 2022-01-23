@@ -1,13 +1,7 @@
 #version 300 es
-#ifdef GL_FRAGMENT_PRECISION_HIGH
 precision highp float;
 precision highp int;
-#else
-precision mediump float;
-precision mediump int;
-#endif
-uniform int x3d_GeometryType;
-uniform bool x3d_Lighting; 
+uniform int x3d_GeometryType; 
 uniform bool x3d_ColorMaterial; 
 uniform float x3d_AlphaCutoff;
 in float fogDepth; 
@@ -28,11 +22,7 @@ uniform float x3d_LogarithmicFarFactor1_2;
 in float depth;
 #endif
 out vec4 x3d_FragColor;
-#ifdef GL_FRAGMENT_PRECISION_HIGH
 precision highp sampler3D;
-#else
-precision mediump sampler3D;
-#endif
 uniform int x3d_NumTextures;
 uniform int x3d_TextureType [x3d_MaxTextures]; 
 uniform sampler2D x3d_Texture2D [x3d_MaxTextures];
@@ -676,8 +666,7 @@ main ()
 {
 clip ();
 vec4 finalColor = gl_FrontFacing ? frontColor : backColor;
-vec4 diffuseColor = x3d_Lighting || x3d_ColorMaterial ? finalColor : vec4 (1.0);
-finalColor = getTextureColor (diffuseColor, vec4 (1.0));
+finalColor = getTextureColor (finalColor, vec4 (1.0));
 finalColor = getProjectiveTextureColor (finalColor);
 finalColor = getHatchColor (finalColor);
 finalColor .rgb = getFogColor (finalColor .rgb);

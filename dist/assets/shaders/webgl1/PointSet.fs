@@ -1,13 +1,8 @@
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
 #extension GL_EXT_frag_depth : enable
 #endif
-#ifdef GL_FRAGMENT_PRECISION_HIGH
 precision highp float;
 precision highp int;
-#else
-precision mediump float;
-precision mediump int;
-#endif
 uniform int x3d_GeometryType;
 uniform float x3d_AlphaCutoff;
 uniform x3d_PointPropertiesParameters x3d_PointProperties;

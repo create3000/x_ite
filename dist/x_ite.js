@@ -1,4 +1,4 @@
-/* X_ITE v4.7.4-1120 */
+/* X_ITE v4.7.5-1121 */
 
 (function () {
 
@@ -24858,7 +24858,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.7.4";
+	return "4.7.5";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -51184,7 +51184,6 @@ function (X3DCast,
 			this .x3d_FillPropertiesHatchColor = gl .getUniformLocation (program, "x3d_FillProperties.hatchColor");
 			this .x3d_FillPropertiesHatchStyle = gl .getUniformLocation (program, "x3d_FillProperties.hatchStyle");
 
-			this .x3d_Lighting      = gl .getUniformLocation (program, "x3d_Lighting");
 			this .x3d_ColorMaterial = gl .getUniformLocation (program, "x3d_ColorMaterial");
 			this .x3d_NumLights     = gl .getUniformLocation (program, "x3d_NumLights");
 
@@ -51210,21 +51209,12 @@ function (X3DCast,
 				this .x3d_ShadowMap [i]       = gl .getUniformLocation (program, "x3d_ShadowMap[" + i + "]");
 			}
 
-			this .x3d_SeparateBackColor = gl .getUniformLocation (program, "x3d_SeparateBackColor");
-
-			this .x3d_AmbientIntensity = this .getUniformLocation (gl, program, "x3d_FrontMaterial.ambientIntensity", "x3d_AmbientIntensity");
-			this .x3d_DiffuseColor     = this .getUniformLocation (gl, program, "x3d_FrontMaterial.diffuseColor",     "x3d_DiffuseColor");
-			this .x3d_SpecularColor    = this .getUniformLocation (gl, program, "x3d_FrontMaterial.specularColor",    "x3d_SpecularColor");
-			this .x3d_EmissiveColor    = this .getUniformLocation (gl, program, "x3d_FrontMaterial.emissiveColor",    "x3d_EmissiveColor");
-			this .x3d_Shininess        = this .getUniformLocation (gl, program, "x3d_FrontMaterial.shininess",        "x3d_Shininess");
-			this .x3d_Transparency     = this .getUniformLocation (gl, program, "x3d_FrontMaterial.transparency",     "x3d_Transparency");
-
-			this .x3d_BackAmbientIntensity = this .getUniformLocation (gl, program, "x3d_BackMaterial.ambientIntensity", "x3d_BackAmbientIntensity");
-			this .x3d_BackDiffuseColor     = this .getUniformLocation (gl, program, "x3d_BackMaterial.diffuseColor",     "x3d_BackDiffuseColor");
-			this .x3d_BackSpecularColor    = this .getUniformLocation (gl, program, "x3d_BackMaterial.specularColor",    "x3d_BackSpecularColor");
-			this .x3d_BackEmissiveColor    = this .getUniformLocation (gl, program, "x3d_BackMaterial.emissiveColor",    "x3d_BackEmissiveColor");
-			this .x3d_BackShininess        = this .getUniformLocation (gl, program, "x3d_BackMaterial.shininess",        "x3d_BackShininess");
-			this .x3d_BackTransparency     = this .getUniformLocation (gl, program, "x3d_BackMaterial.transparency",     "x3d_BackTransparency");
+			this .x3d_AmbientIntensity = this .getUniformLocation (gl, program, "x3d_Material.ambientIntensity", "x3d_FrontMaterial.ambientIntensity");
+			this .x3d_DiffuseColor     = this .getUniformLocation (gl, program, "x3d_Material.diffuseColor",     "x3d_FrontMaterial.diffuseColor");
+			this .x3d_SpecularColor    = this .getUniformLocation (gl, program, "x3d_Material.specularColor",    "x3d_FrontMaterial.specularColor");
+			this .x3d_EmissiveColor    = this .getUniformLocation (gl, program, "x3d_Material.emissiveColor",    "x3d_FrontMaterial.emissiveColor");
+			this .x3d_Shininess        = this .getUniformLocation (gl, program, "x3d_Material.shininess",        "x3d_FrontMaterial.shininess");
+			this .x3d_Transparency     = this .getUniformLocation (gl, program, "x3d_Material.transparency",     "x3d_FrontMaterial.transparency");
 
 			this .x3d_NumTextures           = gl .getUniformLocation (program, "x3d_NumTextures");
 			this .x3d_NumProjectiveTextures = gl .getUniformLocation (program, "x3d_NumProjectiveTextures");
@@ -51358,7 +51348,7 @@ function (X3DCast,
 
 				if (location)
 				{
-					console .error (this .getTypeName (), this .getName (), "Using uniform location name »" + depreciated + "« is depreciated, use »" + name + "«. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
+					console .warn (this .getTypeName (), this .getName (), "Using uniform location name »" + depreciated + "« is depreciated, use »" + name + "«. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
 				}
 
 				return location;
@@ -51383,7 +51373,7 @@ function (X3DCast,
 
 				if (location >= 0)
 				{
-					console .error (this .getTypeName (), this .getName (), "Using attribute location name »" + depreciated + "« is depreciated, use »" + name + "«. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
+					console .warn (this .getTypeName (), this .getName (), "Using attribute location name »" + depreciated + "« is depreciated, use »" + name + "«. See https://create3000.github.io/x_ite/Custom-Shaders.html.");
 				}
 
 				return location;
@@ -51989,7 +51979,7 @@ function (X3DCast,
 			else
 				gl .uniform1f (this .x3d_LogarithmicFarFactor1_2, 1 / Math .log2 (navigationInfo .getFarValue (viewpoint) + 1));
 		},
-		setLocalUniforms: function (gl, context)
+		setLocalUniforms: function (gl, context, front = true)
 		{
 			const
 				shapeNode             = context .shapeNode,
@@ -51998,7 +51988,7 @@ function (X3DCast,
 				textureCoordinateNode = geometryNode .textureCoordinateNode,
 				appearanceNode        = shapeNode .getAppearance (),
 				stylePropertiesNode   = appearanceNode .stylePropertiesNode [geometryType],
-				materialNode          = appearanceNode .materialNode,
+				materialNode          = front ? appearanceNode .materialNode : appearanceNode .backMaterialNode,
 				textureNode           = context .textureNode || appearanceNode .textureNode,
 				textureTransformNode  = appearanceNode .textureTransformNode,
 				modelViewMatrix       = context .modelViewMatrix,
@@ -52041,28 +52031,13 @@ function (X3DCast,
 			// Material
 
 			gl .uniform1i (this .x3d_ColorMaterial, geometryNode .colorMaterial);
+			materialNode .setShaderUniforms (gl, this, front);
 
-			if (materialNode)
-			{
-				// Lights
+			// Normal matrix
 
-				gl .uniform1i  (this .x3d_Lighting, true);
+			gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
 
-				// Material
-
-				materialNode .setShaderUniforms (gl, this);
-
-				// Normal matrix
-
-				gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
-			}
-			else
-			{
-				gl .uniform1i (this .x3d_Lighting, false);
-
-				if (this .getCustom ())
-					gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
-			}
+			// Texture
 
 			if (textureNode)
 			{
@@ -52297,11 +52272,8 @@ function (X3DCast,
 		{
 			gl .disableVertexAttribArray (this .x3d_Vertex);
 		},
-		setParticle: function (gl, particle, modelViewMatrix, normalMatrix)
+		setParticle: function (gl, particle, modelViewMatrix)
 		{
-			if (normalMatrix)
-				gl .uniformMatrix3fv (this .x3d_NormalMatrix, false, this .getNormalMatrix (modelViewMatrix));
-
 			gl .uniformMatrix4fv (this .x3d_ModelViewMatrix, false, modelViewMatrix);
 
 			gl .uniform1i (this .x3d_ParticleId,          particle .id);
@@ -52995,7 +52967,7 @@ function (Fields,
 
 
 
-define('text!assets/shaders/Types.h',[],function () { return '\nstruct x3d_FogParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float visibilityRange;\n\tmediump mat3  matrix;\n\tbool          fogCoord;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float intensity;\n\tmediump float ambientIntensity;\n\tmediump vec3  attenuation;\n\tmediump vec3  location;\n\tmediump vec3  direction;\n\tmediump float radius;\n\tmediump float beamWidth;\n\tmediump float cutOffAngle;\n\tmediump mat3  matrix;\n\t#ifdef X3D_SHADOWS\n\tmediump vec3  shadowColor;\n\tmediump float shadowIntensity;\n\tmediump float shadowBias;\n\tmediump mat4  shadowMatrix;\n\tmediump int   shadowMapSize;\n\t#endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_PointPropertiesParameters\n{\n\tmediump float pointSizeScaleFactor;\n\tmediump float pointSizeMinValue;\n\tmediump float pointSizeMaxValue;\n\tmediump vec3  pointSizeAttenuation;\n\tmediump int   colorMode;\n};\n\n//uniform x3d_PointPropertiesParameters x3d_PointProperties;\n\nstruct x3d_LinePropertiesParameters\n{\n\tbool          applied;\n\tmediump float linewidthScaleFactor;\n\tsampler2D     linetype;\n};\n\n//uniform x3d_LinePropertiesParameters x3d_LineProperties;\n\nstruct x3d_FillPropertiesParameters\n{\n\tbool         filled;\n\tbool         hatched;\n\tmediump vec3 hatchColor;\n\tsampler2D    hatchStyle;\n};\n\n//uniform x3d_FillPropertiesParameters x3d_FillProperties;\n\nstruct x3d_MaterialParameters\n{\n\tmediump float ambientIntensity;\n\tmediump vec3  diffuseColor;\n\tmediump vec3  specularColor;\n\tmediump vec3  emissiveColor;\n\tmediump float shininess;\n\tmediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_FrontMaterial;\n//uniform x3d_MaterialParameters x3d_BackMaterial;\n\nstruct x3d_MultiTextureParameters\n{\n\tmediump int mode;\n\tmediump int alphaMode;\n\tmediump int source;\n\tmediump int function;\n};\n\n//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];\n\nstruct x3d_TextureCoordinateGeneratorParameters\n{\n\tmediump int   mode;\n\tmediump float parameter [6];\n};\n\n//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];\n\nstruct x3d_ParticleParameters\n{\n\tmediump int   id;\n\tmediump int   life;\n\tmediump float elapsedTime;\n};\n\n//uniform x3d_ParticleParameters x3d_Particle;\n';});
+define('text!assets/shaders/Types.glsl',[],function () { return '\nstruct x3d_FogParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float visibilityRange;\n\tmediump mat3  matrix;\n\tbool          fogCoord;\n};\n\n//uniform x3d_FogParameters x3d_Fog;\n\nstruct x3d_LightSourceParameters {\n\tmediump int   type;\n\tmediump vec3  color;\n\tmediump float intensity;\n\tmediump float ambientIntensity;\n\tmediump vec3  attenuation;\n\tmediump vec3  location;\n\tmediump vec3  direction;\n\tmediump float radius;\n\tmediump float beamWidth;\n\tmediump float cutOffAngle;\n\tmediump mat3  matrix;\n\t#ifdef X3D_SHADOWS\n\tmediump vec3  shadowColor;\n\tmediump float shadowIntensity;\n\tmediump float shadowBias;\n\tmediump mat4  shadowMatrix;\n\tmediump int   shadowMapSize;\n\t#endif\n};\n\n//uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];\n\nstruct x3d_PointPropertiesParameters\n{\n\tmediump float pointSizeScaleFactor;\n\tmediump float pointSizeMinValue;\n\tmediump float pointSizeMaxValue;\n\tmediump vec3  pointSizeAttenuation;\n\tmediump int   colorMode;\n};\n\n//uniform x3d_PointPropertiesParameters x3d_PointProperties;\n\nstruct x3d_LinePropertiesParameters\n{\n\tbool          applied;\n\tmediump float linewidthScaleFactor;\n\tsampler2D     linetype;\n};\n\n//uniform x3d_LinePropertiesParameters x3d_LineProperties;\n\nstruct x3d_FillPropertiesParameters\n{\n\tbool         filled;\n\tbool         hatched;\n\tmediump vec3 hatchColor;\n\tsampler2D    hatchStyle;\n};\n\n//uniform x3d_FillPropertiesParameters x3d_FillProperties;\n\nstruct x3d_MaterialParameters\n{\n\tmediump float ambientIntensity;\n\tmediump vec3  diffuseColor;\n\tmediump vec3  specularColor;\n\tmediump vec3  emissiveColor;\n\tmediump float shininess;\n\tmediump float transparency;\n};\n\n//uniform x3d_MaterialParameters x3d_Material;\n\nstruct x3d_MultiTextureParameters\n{\n\tmediump int mode;\n\tmediump int alphaMode;\n\tmediump int source;\n\tmediump int function;\n};\n\n//uniform x3d_MultiTextureParameters x3d_MultiTexture [x3d_MaxTextures];\n\nstruct x3d_TextureCoordinateGeneratorParameters\n{\n\tmediump int   mode;\n\tmediump float parameter [6];\n};\n\n//uniform x3d_TextureCoordinateGeneratorParameters x3d_TextureCoordinateGenerator [x3d_MaxTextures];\n\nstruct x3d_ParticleParameters\n{\n\tmediump int   id;\n\tmediump int   life;\n\tmediump float elapsedTime;\n};\n\n//uniform x3d_ParticleParameters x3d_Particle;\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -53335,7 +53307,7 @@ define ('x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType',[],function
 
 define ('x_ite/Browser/Shaders/Shader',[
 	"x_ite/Browser/Shaders/ShaderSource",
-	"text!assets/shaders/Types.h",
+	"text!assets/shaders/Types.glsl",
 	"x_ite/Browser/Texturing/MultiTextureModeType",
 	"x_ite/Browser/Texturing/MultiTextureSourceType",
 	"x_ite/Browser/Texturing/MultiTextureFunctionType",
@@ -56647,6 +56619,7 @@ function ($,
 
 				if (browser .hasPointShader ())  shaders .add (browser .getPointShader ());
 				if (browser .hasLineShader ())   shaders .add (browser .getLineShader ());
+				if (browser .hasUnlitShader ())  shaders .add (browser .getUnlitShader ());
 				if (browser .hasShadowShader ()) shaders .add (browser .getShadowShader ());
 				shaders .add (browser .getDefaultShader ());
 
@@ -59629,14 +59602,16 @@ function (X3DBindableNode,
 		},
 		drawCube: (function ()
 		{
-			var textureMatrixArray = new Float32Array (new Matrix4 ());
+			const
+				textureMatrixArray = new Float32Array (new Matrix4 ()),
+				white              = new Float32Array ([1, 1, 1]);
 
 			return function (renderObject)
 			{
 				var
 					browser    = renderObject .getBrowser (),
 					gl         = browser .getContext (),
-					shaderNode = browser .getGouraudShader ();
+					shaderNode = browser .getUnlitShader ();
 
 				if (shaderNode .getValid ())
 				{
@@ -59652,15 +59627,16 @@ function (X3DBindableNode,
 
 					// Uniforms
 
-					gl .uniform1i (shaderNode .x3d_FogType,                            0);
-					gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,               true);
-					gl .uniform1i (shaderNode .x3d_FillPropertiesHatched,              false);
-					gl .uniform1i (shaderNode .x3d_ColorMaterial,                      false);
-					gl .uniform1i (shaderNode .x3d_Lighting,                           false);
-					gl .uniform1i (shaderNode .x3d_NumTextures,                        1);
-					gl .uniform1i (shaderNode .x3d_TextureType [0],                    2);
-					gl .uniform1i (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
-					gl .uniform1i (shaderNode .x3d_NumProjectiveTextures,              0);
+					gl .uniform1i  (shaderNode .x3d_FogType,                            0);
+					gl .uniform1i  (shaderNode .x3d_FillPropertiesFilled,               true);
+					gl .uniform1i  (shaderNode .x3d_FillPropertiesHatched,              false);
+					gl .uniform1i  (shaderNode .x3d_ColorMaterial,                      false);
+					gl .uniform3fv (shaderNode .x3d_EmissiveColor,                      white)
+					gl .uniform1f  (shaderNode .x3d_Transparency,                       0)
+					gl .uniform1i  (shaderNode .x3d_NumTextures,                        1);
+					gl .uniform1i  (shaderNode .x3d_TextureType [0],                    2);
+					gl .uniform1i  (shaderNode .x3d_TextureCoordinateGeneratorMode [0], 0);
+					gl .uniform1i  (shaderNode .x3d_NumProjectiveTextures,              0);
 
 					gl .uniformMatrix4fv (shaderNode .x3d_TextureMatrix [0], false, textureMatrixArray);
 					gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix,  false, this .projectionMatrixArray);
@@ -59758,26 +59734,12 @@ define ('x_ite/Components/Texturing/X3DTextureNode',[
 	"x_ite/Fields",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Texturing/MultiTextureModeType",
-	"x_ite/Browser/Texturing/MultiTextureSourceType",
-	"x_ite/Browser/Texturing/MultiTextureFunctionType",
 ],
 function (Fields,
           X3DAppearanceChildNode,
-          X3DConstants,
-          ModeType,
-          SourceType,
-          FunctionType)
+          X3DConstants)
 {
 "use strict";
-
-	// Anisotropic Filtering in WebGL is handled by an extension, use one of getExtension depending on browser:
-
-	const ANISOTROPIC_EXT = [
-		"EXT_texture_filter_anisotropic",
-		"MOZ_EXT_texture_filter_anisotropic",
-		"WEBKIT_EXT_texture_filter_anisotropic",
-	];
 
 	function X3DTextureNode (executionContext)
 	{
@@ -59793,14 +59755,6 @@ function (Fields,
 	X3DTextureNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
 	{
 		constructor: X3DTextureNode,
-		initialize: function ()
-		{
-			X3DAppearanceChildNode .prototype .initialize .call (this);
-
-			const gl = this .getBrowser () .getContext ();
-
-			this .texture = gl .createTexture ();
-		},
 		setTransparent: function (value)
 		{
 			if (value !== this .transparent_ .getValue ())
@@ -59809,72 +59763,6 @@ function (Fields,
 		getTransparent: function ()
 		{
 			return this .transparent_ .getValue ();
-		},
-		getTexture: function ()
-		{
-			return this .texture;
-		},
-		updateTextureProperties: function (target, haveTextureProperties, textureProperties, width, height, repeatS, repeatT, repeatR)
-		{
-			const gl = this .getBrowser () .getContext ();
-
-			gl .bindTexture (target, this .getTexture ());
-
-			if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! haveTextureProperties)
-			{
-				// Dont generate mipmaps.
-				gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
-				gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
-			}
-			else
-			{
-				if (textureProperties .generateMipMaps_ .getValue ())
-					gl .generateMipmap (target);
-
-				gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl [textureProperties .getMinificationFilter ()]);
-				gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl [textureProperties .getMagnificationFilter ()]);
-			}
-
-			if (haveTextureProperties)
-			{
-				gl .texParameteri (target, gl .TEXTURE_WRAP_S, gl [textureProperties .getBoundaryModeS ()]);
-				gl .texParameteri (target, gl .TEXTURE_WRAP_T, gl [textureProperties .getBoundaryModeT ()]);
-
-				if (gl .getVersion () >= 2)
-					gl .texParameteri (target, gl .TEXTURE_WRAP_R, gl [textureProperties .getBoundaryModeR ()]);
-			}
-			else
-			{
-				gl .texParameteri (target, gl .TEXTURE_WRAP_S, repeatS ? gl .REPEAT : gl .CLAMP_TO_EDGE);
-				gl .texParameteri (target, gl .TEXTURE_WRAP_T, repeatT ? gl .REPEAT : gl .CLAMP_TO_EDGE);
-
-				if (gl .getVersion () >= 2)
-					gl .texParameteri (target, gl .TEXTURE_WRAP_R, repeatR ? gl .REPEAT : gl .CLAMP_TO_EDGE);
-			}
-
-			//gl .texParameterfv (target, gl .TEXTURE_BORDER_COLOR, textureProperties .borderColor_ .getValue ());
-			//gl .texParameterf  (target, gl .TEXTURE_PRIORITY,     textureProperties .texturePriority_ .getValue ());
-
-			for (const extension of ANISOTROPIC_EXT)
-			{
-				const ext = gl .getExtension (extension);
-
-				if (ext)
-				{
-					gl .texParameterf (target, ext .TEXTURE_MAX_ANISOTROPY_EXT, textureProperties .anisotropicDegree_ .getValue ());
-					break;
-				}
-			}
-		},
-		setShaderUniforms: function (gl, shaderObject, renderObject)
-		{
-			this .setShaderUniformsToChannel (gl, shaderObject, renderObject, 0);
-
-			gl .uniform1i (shaderObject .x3d_NumTextures, 1);
-			gl .uniform1i (shaderObject .x3d_MultiTextureMode [0],      ModeType .MODULATE);
-			gl .uniform1i (shaderObject .x3d_MultiTextureAlphaMode [0], ModeType .MODULATE);
-			gl .uniform1i (shaderObject .x3d_MultiTextureSource [0],    SourceType .DEFAULT);
-			gl .uniform1i (shaderObject .x3d_MultiTextureFunction [0],  FunctionType .DEFAULT);
 		},
 	});
 
@@ -59930,50 +59818,42 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Components/Texturing/X3DTexture2DNode',[
-	"x_ite/Fields",
+ define ('x_ite/Components/Texturing/X3DSingleTextureNode',[
 	"x_ite/Components/Texturing/X3DTextureNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Bits/X3DCast",
+	"x_ite/Browser/Texturing/MultiTextureModeType",
+	"x_ite/Browser/Texturing/MultiTextureSourceType",
+	"x_ite/Browser/Texturing/MultiTextureFunctionType",
 ],
-function (Fields,
-          X3DTextureNode,
+function (X3DTextureNode,
           X3DConstants,
-          X3DCast)
+          X3DCast,
+          ModeType,
+          SourceType,
+          FunctionType)
 {
 "use strict";
 
-   var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
-
-	function X3DTexture2DNode (executionContext)
+	function X3DSingleTextureNode (executionContext)
 	{
 		X3DTextureNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DTexture2DNode);
-
-		this .width  = 0;
-		this .height = 0;
-		this .flipY  = false;
-		this .data   = null;
+		this .addType (X3DConstants .X3DSingleTextureNode);
 	}
 
-	X3DTexture2DNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
+	X3DSingleTextureNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
 	{
-		constructor: X3DTexture2DNode,
+		constructor: X3DSingleTextureNode,
 		initialize: function ()
 		{
 			X3DTextureNode .prototype .initialize .call (this);
 
-			var gl = this .getBrowser () .getContext ();
-
-			this .target = gl .TEXTURE_2D;
-
-			this .repeatS_           .addInterest ("updateTextureProperties", this);
-			this .repeatT_           .addInterest ("updateTextureProperties", this);
 			this .textureProperties_ .addInterest ("set_textureProperties__", this);
 
-			gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-			gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+			const gl = this .getBrowser () .getContext ();
+
+			this .texture = gl .createTexture ();
 
 			this .set_textureProperties__ ();
 		},
@@ -59990,6 +59870,178 @@ function (Fields,
 			this .texturePropertiesNode .addInterest ("updateTextureProperties", this);
 
 			this .updateTextureProperties ();
+		},
+		getTexture: function ()
+		{
+			return this .texture;
+		},
+		updateTextureProperties: (function ()
+      {
+         // Anisotropic Filtering in WebGL is handled by an extension, use one of getExtension depending on browser:
+
+         const ANISOTROPIC_EXT = [
+            "EXT_texture_filter_anisotropic",
+            "MOZ_EXT_texture_filter_anisotropic",
+            "WEBKIT_EXT_texture_filter_anisotropic",
+         ];
+
+         return function (target, haveTextureProperties, textureProperties, width, height, repeatS, repeatT, repeatR)
+         {
+            const gl = this .getBrowser () .getContext ();
+
+            gl .bindTexture (target, this .getTexture ());
+
+            if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! haveTextureProperties)
+            {
+               // Dont generate mipmaps.
+               gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl .NEAREST);
+               gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl .NEAREST);
+            }
+            else
+            {
+               if (textureProperties .generateMipMaps_ .getValue ())
+                  gl .generateMipmap (target);
+
+               gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl [textureProperties .getMinificationFilter ()]);
+               gl .texParameteri (target, gl .TEXTURE_MAG_FILTER, gl [textureProperties .getMagnificationFilter ()]);
+            }
+
+            if (haveTextureProperties)
+            {
+               gl .texParameteri (target, gl .TEXTURE_WRAP_S, gl [textureProperties .getBoundaryModeS ()]);
+               gl .texParameteri (target, gl .TEXTURE_WRAP_T, gl [textureProperties .getBoundaryModeT ()]);
+
+               if (gl .getVersion () >= 2)
+                  gl .texParameteri (target, gl .TEXTURE_WRAP_R, gl [textureProperties .getBoundaryModeR ()]);
+            }
+            else
+            {
+               gl .texParameteri (target, gl .TEXTURE_WRAP_S, repeatS ? gl .REPEAT : gl .CLAMP_TO_EDGE);
+               gl .texParameteri (target, gl .TEXTURE_WRAP_T, repeatT ? gl .REPEAT : gl .CLAMP_TO_EDGE);
+
+               if (gl .getVersion () >= 2)
+                  gl .texParameteri (target, gl .TEXTURE_WRAP_R, repeatR ? gl .REPEAT : gl .CLAMP_TO_EDGE);
+            }
+
+            //gl .texParameterfv (target, gl .TEXTURE_BORDER_COLOR, textureProperties .borderColor_ .getValue ());
+            //gl .texParameterf  (target, gl .TEXTURE_PRIORITY,     textureProperties .texturePriority_ .getValue ());
+
+            for (const extension of ANISOTROPIC_EXT)
+            {
+               const ext = gl .getExtension (extension);
+
+               if (ext)
+               {
+                  gl .texParameterf (target, ext .TEXTURE_MAX_ANISOTROPY_EXT, textureProperties .anisotropicDegree_ .getValue ());
+                  break;
+               }
+            }
+         };
+      })(),
+		setShaderUniforms: function (gl, shaderObject, renderObject)
+		{
+			this .setShaderUniformsToChannel (gl, shaderObject, renderObject, 0);
+
+			gl .uniform1i (shaderObject .x3d_NumTextures, 1);
+			gl .uniform1i (shaderObject .x3d_MultiTextureMode [0],      ModeType .MODULATE);
+			gl .uniform1i (shaderObject .x3d_MultiTextureAlphaMode [0], ModeType .MODULATE);
+			gl .uniform1i (shaderObject .x3d_MultiTextureSource [0],    SourceType .DEFAULT);
+			gl .uniform1i (shaderObject .x3d_MultiTextureFunction [0],  FunctionType .DEFAULT);
+		},
+	});
+
+	return X3DSingleTextureNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Components/Texturing/X3DTexture2DNode',[
+	"x_ite/Components/Texturing/X3DSingleTextureNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (X3DSingleTextureNode,
+          X3DConstants)
+{
+"use strict";
+
+   var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+
+	function X3DTexture2DNode (executionContext)
+	{
+		X3DSingleTextureNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DTexture2DNode);
+
+		const gl = this .getBrowser () .getContext ();
+
+		this .target = gl .TEXTURE_2D;
+		this .width  = 0;
+		this .height = 0;
+		this .flipY  = false;
+		this .data   = null;
+	}
+
+	X3DTexture2DNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
+	{
+		constructor: X3DTexture2DNode,
+		initialize: function ()
+		{
+			X3DSingleTextureNode .prototype .initialize .call (this);
+
+			this .repeatS_ .addInterest ("updateTextureProperties", this);
+			this .repeatT_ .addInterest ("updateTextureProperties", this);
+
+			const gl = this .getBrowser () .getContext ();
+
+			gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
+			gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 		},
 		getTarget: function ()
 		{
@@ -60062,17 +60114,15 @@ function (Fields,
 		},
 		updateTextureProperties: function ()
 		{
-			var gl = this .getBrowser () .getContext ();
-
-			X3DTextureNode .prototype .updateTextureProperties .call (this,
-			                                                          gl .TEXTURE_2D,
-			                                                          this .textureProperties_ .getValue (),
-			                                                          this .texturePropertiesNode,
-			                                                          this .width,
-			                                                          this .height,
-			                                                          this .repeatS_ .getValue (),
-			                                                          this .repeatT_ .getValue (),
-			                                                          false);
+			X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
+			                                                                this .target,
+			                                                                this .textureProperties_ .getValue (),
+			                                                                this .texturePropertiesNode,
+			                                                                this .width,
+			                                                                this .height,
+			                                                                this .repeatS_ .getValue (),
+			                                                                this .repeatT_ .getValue (),
+			                                                                false);
 		},
 		setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
 		{
@@ -60175,6 +60225,7 @@ function ($,
 		constructor: ImageTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
@@ -61828,1484 +61879,1361 @@ define ('standard/Networking/BinaryTransport',[],function ()
 	};
 });
 
-/* pako 1.0.11 nodeca/pako */(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define('pako_inflate/dist/pako_inflate',[],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.pako = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-'use strict';
 
+/*! pako 2.0.4 https://github.com/nodeca/pako @license (MIT AND Zlib) */
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+  typeof define === 'function' && define.amd ? define('pako_inflate/dist/pako_inflate',['exports'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.pako = {}));
+}(this, (function (exports) { 'use strict';
 
-var TYPED_OK =  (typeof Uint8Array !== 'undefined') &&
-                (typeof Uint16Array !== 'undefined') &&
-                (typeof Int32Array !== 'undefined');
+  // Note: adler32 takes 12% for level 0 and 2% for level 6.
+  // It isn't worth it to make additional optimizations as in original.
+  // Small size is preferable.
 
-function _has(obj, key) {
-  return Object.prototype.hasOwnProperty.call(obj, key);
-}
+  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
+  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
+  //
+  // This software is provided 'as-is', without any express or implied
+  // warranty. In no event will the authors be held liable for any damages
+  // arising from the use of this software.
+  //
+  // Permission is granted to anyone to use this software for any purpose,
+  // including commercial applications, and to alter it and redistribute it
+  // freely, subject to the following restrictions:
+  //
+  // 1. The origin of this software must not be misrepresented; you must not
+  //   claim that you wrote the original software. If you use this software
+  //   in a product, an acknowledgment in the product documentation would be
+  //   appreciated but is not required.
+  // 2. Altered source versions must be plainly marked as such, and must not be
+  //   misrepresented as being the original software.
+  // 3. This notice may not be removed or altered from any source distribution.
 
-exports.assign = function (obj /*from1, from2, from3, ...*/) {
-  var sources = Array.prototype.slice.call(arguments, 1);
-  while (sources.length) {
-    var source = sources.shift();
-    if (!source) { continue; }
+  const adler32 = (adler, buf, len, pos) => {
+    let s1 = (adler & 0xffff) |0,
+        s2 = ((adler >>> 16) & 0xffff) |0,
+        n = 0;
 
-    if (typeof source !== 'object') {
-      throw new TypeError(source + 'must be non-object');
+    while (len !== 0) {
+      // Set limit ~ twice less than 5552, to keep
+      // s2 in 31-bits, because we force signed ints.
+      // in other case %= will fail.
+      n = len > 2000 ? 2000 : len;
+      len -= n;
+
+      do {
+        s1 = (s1 + buf[pos++]) |0;
+        s2 = (s2 + s1) |0;
+      } while (--n);
+
+      s1 %= 65521;
+      s2 %= 65521;
     }
 
-    for (var p in source) {
-      if (_has(source, p)) {
-        obj[p] = source[p];
+    return (s1 | (s2 << 16)) |0;
+  };
+
+
+  var adler32_1 = adler32;
+
+  // Note: we can't get significant speed boost here.
+  // So write code to minimize size - no pregenerated tables
+  // and array tools dependencies.
+
+  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
+  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
+  //
+  // This software is provided 'as-is', without any express or implied
+  // warranty. In no event will the authors be held liable for any damages
+  // arising from the use of this software.
+  //
+  // Permission is granted to anyone to use this software for any purpose,
+  // including commercial applications, and to alter it and redistribute it
+  // freely, subject to the following restrictions:
+  //
+  // 1. The origin of this software must not be misrepresented; you must not
+  //   claim that you wrote the original software. If you use this software
+  //   in a product, an acknowledgment in the product documentation would be
+  //   appreciated but is not required.
+  // 2. Altered source versions must be plainly marked as such, and must not be
+  //   misrepresented as being the original software.
+  // 3. This notice may not be removed or altered from any source distribution.
+
+  // Use ordinary array, since untyped makes no boost here
+  const makeTable = () => {
+    let c, table = [];
+
+    for (var n = 0; n < 256; n++) {
+      c = n;
+      for (var k = 0; k < 8; k++) {
+        c = ((c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1));
       }
-    }
-  }
-
-  return obj;
-};
-
-
-// reduce buffer size, avoiding mem copy
-exports.shrinkBuf = function (buf, size) {
-  if (buf.length === size) { return buf; }
-  if (buf.subarray) { return buf.subarray(0, size); }
-  buf.length = size;
-  return buf;
-};
-
-
-var fnTyped = {
-  arraySet: function (dest, src, src_offs, len, dest_offs) {
-    if (src.subarray && dest.subarray) {
-      dest.set(src.subarray(src_offs, src_offs + len), dest_offs);
-      return;
-    }
-    // Fallback to ordinary array
-    for (var i = 0; i < len; i++) {
-      dest[dest_offs + i] = src[src_offs + i];
-    }
-  },
-  // Join array of chunks to single array.
-  flattenChunks: function (chunks) {
-    var i, l, len, pos, chunk, result;
-
-    // calculate data length
-    len = 0;
-    for (i = 0, l = chunks.length; i < l; i++) {
-      len += chunks[i].length;
+      table[n] = c;
     }
 
-    // join chunks
-    result = new Uint8Array(len);
-    pos = 0;
-    for (i = 0, l = chunks.length; i < l; i++) {
-      chunk = chunks[i];
-      result.set(chunk, pos);
-      pos += chunk.length;
+    return table;
+  };
+
+  // Create table on load. Just 255 signed longs. Not a problem.
+  const crcTable = new Uint32Array(makeTable());
+
+
+  const crc32 = (crc, buf, len, pos) => {
+    const t = crcTable;
+    const end = pos + len;
+
+    crc ^= -1;
+
+    for (let i = pos; i < end; i++) {
+      crc = (crc >>> 8) ^ t[(crc ^ buf[i]) & 0xFF];
     }
 
-    return result;
-  }
-};
-
-var fnUntyped = {
-  arraySet: function (dest, src, src_offs, len, dest_offs) {
-    for (var i = 0; i < len; i++) {
-      dest[dest_offs + i] = src[src_offs + i];
-    }
-  },
-  // Join array of chunks to single array.
-  flattenChunks: function (chunks) {
-    return [].concat.apply([], chunks);
-  }
-};
+    return (crc ^ (-1)); // >>> 0;
+  };
 
 
-// Enable/Disable typed arrays use, for testing
-//
-exports.setTyped = function (on) {
-  if (on) {
-    exports.Buf8  = Uint8Array;
-    exports.Buf16 = Uint16Array;
-    exports.Buf32 = Int32Array;
-    exports.assign(exports, fnTyped);
-  } else {
-    exports.Buf8  = Array;
-    exports.Buf16 = Array;
-    exports.Buf32 = Array;
-    exports.assign(exports, fnUntyped);
-  }
-};
+  var crc32_1 = crc32;
 
-exports.setTyped(TYPED_OK);
+  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
+  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
+  //
+  // This software is provided 'as-is', without any express or implied
+  // warranty. In no event will the authors be held liable for any damages
+  // arising from the use of this software.
+  //
+  // Permission is granted to anyone to use this software for any purpose,
+  // including commercial applications, and to alter it and redistribute it
+  // freely, subject to the following restrictions:
+  //
+  // 1. The origin of this software must not be misrepresented; you must not
+  //   claim that you wrote the original software. If you use this software
+  //   in a product, an acknowledgment in the product documentation would be
+  //   appreciated but is not required.
+  // 2. Altered source versions must be plainly marked as such, and must not be
+  //   misrepresented as being the original software.
+  // 3. This notice may not be removed or altered from any source distribution.
 
-},{}],2:[function(require,module,exports){
-// String encode/decode helpers
+  // See state defs from inflate.js
+  const BAD$1 = 30;       /* got a data error -- remain here until reset */
+  const TYPE$1 = 12;      /* i: waiting for type bits, including last-flag bit */
 
+  /*
+     Decode literal, length, and distance codes and write out the resulting
+     literal and match bytes until either not enough input or output is
+     available, an end-of-block is encountered, or a data error is encountered.
+     When large enough input and output buffers are supplied to inflate(), for
+     example, a 16K input buffer and a 64K output buffer, more than 95% of the
+     inflate execution time is spent in this routine.
 
+     Entry assumptions:
 
-var utils = require('./common');
+          state.mode === LEN
+          strm.avail_in >= 6
+          strm.avail_out >= 258
+          start >= strm.avail_out
+          state.bits < 8
 
+     On return, state.mode is one of:
 
-// Quick check if we can use fast array to bin string conversion
-//
-// - apply(Array) can fail on Android 2.2
-// - apply(Uint8Array) can fail on iOS 5.1 Safari
-//
-var STR_APPLY_OK = true;
-var STR_APPLY_UIA_OK = true;
+          LEN -- ran out of enough output space or enough available input
+          TYPE -- reached end of block code, inflate() to interpret next block
+          BAD -- error in block data
 
-try { String.fromCharCode.apply(null, [ 0 ]); } catch (__) { STR_APPLY_OK = false; }
-try { String.fromCharCode.apply(null, new Uint8Array(1)); } catch (__) { STR_APPLY_UIA_OK = false; }
+     Notes:
 
+      - The maximum input bits used by a length/distance pair is 15 bits for the
+        length code, 5 bits for the length extra, 15 bits for the distance code,
+        and 13 bits for the distance extra.  This totals 48 bits, or six bytes.
+        Therefore if strm.avail_in >= 6, then there is enough input to avoid
+        checking for available input while decoding.
 
-// Table with utf8 lengths (calculated by first byte of sequence)
-// Note, that 5 & 6-byte values and some 4-byte values can not be represented in JS,
-// because max possible codepoint is 0x10ffff
-var _utf8len = new utils.Buf8(256);
-for (var q = 0; q < 256; q++) {
-  _utf8len[q] = (q >= 252 ? 6 : q >= 248 ? 5 : q >= 240 ? 4 : q >= 224 ? 3 : q >= 192 ? 2 : 1);
-}
-_utf8len[254] = _utf8len[254] = 1; // Invalid sequence start
-
-
-// convert string to array (typed, when possible)
-exports.string2buf = function (str) {
-  var buf, c, c2, m_pos, i, str_len = str.length, buf_len = 0;
-
-  // count binary size
-  for (m_pos = 0; m_pos < str_len; m_pos++) {
-    c = str.charCodeAt(m_pos);
-    if ((c & 0xfc00) === 0xd800 && (m_pos + 1 < str_len)) {
-      c2 = str.charCodeAt(m_pos + 1);
-      if ((c2 & 0xfc00) === 0xdc00) {
-        c = 0x10000 + ((c - 0xd800) << 10) + (c2 - 0xdc00);
-        m_pos++;
-      }
-    }
-    buf_len += c < 0x80 ? 1 : c < 0x800 ? 2 : c < 0x10000 ? 3 : 4;
-  }
-
-  // allocate buffer
-  buf = new utils.Buf8(buf_len);
-
-  // convert
-  for (i = 0, m_pos = 0; i < buf_len; m_pos++) {
-    c = str.charCodeAt(m_pos);
-    if ((c & 0xfc00) === 0xd800 && (m_pos + 1 < str_len)) {
-      c2 = str.charCodeAt(m_pos + 1);
-      if ((c2 & 0xfc00) === 0xdc00) {
-        c = 0x10000 + ((c - 0xd800) << 10) + (c2 - 0xdc00);
-        m_pos++;
-      }
-    }
-    if (c < 0x80) {
-      /* one byte */
-      buf[i++] = c;
-    } else if (c < 0x800) {
-      /* two bytes */
-      buf[i++] = 0xC0 | (c >>> 6);
-      buf[i++] = 0x80 | (c & 0x3f);
-    } else if (c < 0x10000) {
-      /* three bytes */
-      buf[i++] = 0xE0 | (c >>> 12);
-      buf[i++] = 0x80 | (c >>> 6 & 0x3f);
-      buf[i++] = 0x80 | (c & 0x3f);
-    } else {
-      /* four bytes */
-      buf[i++] = 0xf0 | (c >>> 18);
-      buf[i++] = 0x80 | (c >>> 12 & 0x3f);
-      buf[i++] = 0x80 | (c >>> 6 & 0x3f);
-      buf[i++] = 0x80 | (c & 0x3f);
-    }
-  }
-
-  return buf;
-};
-
-// Helper (used in 2 places)
-function buf2binstring(buf, len) {
-  // On Chrome, the arguments in a function call that are allowed is `65534`.
-  // If the length of the buffer is smaller than that, we can use this optimization,
-  // otherwise we will take a slower path.
-  if (len < 65534) {
-    if ((buf.subarray && STR_APPLY_UIA_OK) || (!buf.subarray && STR_APPLY_OK)) {
-      return String.fromCharCode.apply(null, utils.shrinkBuf(buf, len));
-    }
-  }
-
-  var result = '';
-  for (var i = 0; i < len; i++) {
-    result += String.fromCharCode(buf[i]);
-  }
-  return result;
-}
+      - The maximum bytes that a single length/distance pair can output is 258
+        bytes, which is the maximum length that can be coded.  inflate_fast()
+        requires strm.avail_out >= 258 for each loop to avoid checking for
+        output space.
+   */
+  var inffast = function inflate_fast(strm, start) {
+    let _in;                    /* local strm.input */
+    let last;                   /* have enough input while in < last */
+    let _out;                   /* local strm.output */
+    let beg;                    /* inflate()'s initial strm.output */
+    let end;                    /* while out < end, enough space available */
+  //#ifdef INFLATE_STRICT
+    let dmax;                   /* maximum distance from zlib header */
+  //#endif
+    let wsize;                  /* window size or zero if not using window */
+    let whave;                  /* valid bytes in the window */
+    let wnext;                  /* window write index */
+    // Use `s_window` instead `window`, avoid conflict with instrumentation tools
+    let s_window;               /* allocated sliding window, if wsize != 0 */
+    let hold;                   /* local strm.hold */
+    let bits;                   /* local strm.bits */
+    let lcode;                  /* local strm.lencode */
+    let dcode;                  /* local strm.distcode */
+    let lmask;                  /* mask for first level of length codes */
+    let dmask;                  /* mask for first level of distance codes */
+    let here;                   /* retrieved table entry */
+    let op;                     /* code bits, operation, extra bits, or */
+                                /*  window position, window bytes to copy */
+    let len;                    /* match length, unused bytes */
+    let dist;                   /* match distance */
+    let from;                   /* where to copy match from */
+    let from_source;
 
 
-// Convert byte array to binary string
-exports.buf2binstring = function (buf) {
-  return buf2binstring(buf, buf.length);
-};
+    let input, output; // JS specific, because we have no pointers
+
+    /* copy state to local variables */
+    const state = strm.state;
+    //here = state.here;
+    _in = strm.next_in;
+    input = strm.input;
+    last = _in + (strm.avail_in - 5);
+    _out = strm.next_out;
+    output = strm.output;
+    beg = _out - (start - strm.avail_out);
+    end = _out + (strm.avail_out - 257);
+  //#ifdef INFLATE_STRICT
+    dmax = state.dmax;
+  //#endif
+    wsize = state.wsize;
+    whave = state.whave;
+    wnext = state.wnext;
+    s_window = state.window;
+    hold = state.hold;
+    bits = state.bits;
+    lcode = state.lencode;
+    dcode = state.distcode;
+    lmask = (1 << state.lenbits) - 1;
+    dmask = (1 << state.distbits) - 1;
 
 
-// Convert binary string (typed, when possible)
-exports.binstring2buf = function (str) {
-  var buf = new utils.Buf8(str.length);
-  for (var i = 0, len = buf.length; i < len; i++) {
-    buf[i] = str.charCodeAt(i);
-  }
-  return buf;
-};
+    /* decode literals and length/distances until end-of-block or not enough
+       input data or output space */
 
-
-// convert array to string
-exports.buf2string = function (buf, max) {
-  var i, out, c, c_len;
-  var len = max || buf.length;
-
-  // Reserve max possible length (2 words per char)
-  // NB: by unknown reasons, Array is significantly faster for
-  //     String.fromCharCode.apply than Uint16Array.
-  var utf16buf = new Array(len * 2);
-
-  for (out = 0, i = 0; i < len;) {
-    c = buf[i++];
-    // quick process ascii
-    if (c < 0x80) { utf16buf[out++] = c; continue; }
-
-    c_len = _utf8len[c];
-    // skip 5 & 6 byte codes
-    if (c_len > 4) { utf16buf[out++] = 0xfffd; i += c_len - 1; continue; }
-
-    // apply mask on first byte
-    c &= c_len === 2 ? 0x1f : c_len === 3 ? 0x0f : 0x07;
-    // join the rest
-    while (c_len > 1 && i < len) {
-      c = (c << 6) | (buf[i++] & 0x3f);
-      c_len--;
-    }
-
-    // terminated by end of string?
-    if (c_len > 1) { utf16buf[out++] = 0xfffd; continue; }
-
-    if (c < 0x10000) {
-      utf16buf[out++] = c;
-    } else {
-      c -= 0x10000;
-      utf16buf[out++] = 0xd800 | ((c >> 10) & 0x3ff);
-      utf16buf[out++] = 0xdc00 | (c & 0x3ff);
-    }
-  }
-
-  return buf2binstring(utf16buf, out);
-};
-
-
-// Calculate max possible position in utf8 buffer,
-// that will not break sequence. If that's not possible
-// - (very small limits) return max size as is.
-//
-// buf[] - utf8 bytes array
-// max   - length limit (mandatory);
-exports.utf8border = function (buf, max) {
-  var pos;
-
-  max = max || buf.length;
-  if (max > buf.length) { max = buf.length; }
-
-  // go back from last position, until start of sequence found
-  pos = max - 1;
-  while (pos >= 0 && (buf[pos] & 0xC0) === 0x80) { pos--; }
-
-  // Very small and broken sequence,
-  // return max, because we should return something anyway.
-  if (pos < 0) { return max; }
-
-  // If we came to start of buffer - that means buffer is too small,
-  // return max too.
-  if (pos === 0) { return max; }
-
-  return (pos + _utf8len[buf[pos]] > max) ? pos : max;
-};
-
-},{"./common":1}],3:[function(require,module,exports){
-'use strict';
-
-// Note: adler32 takes 12% for level 0 and 2% for level 6.
-// It isn't worth it to make additional optimizations as in original.
-// Small size is preferable.
-
-// (C) 1995-2013 Jean-loup Gailly and Mark Adler
-// (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-//
-// This software is provided 'as-is', without any express or implied
-// warranty. In no event will the authors be held liable for any damages
-// arising from the use of this software.
-//
-// Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it
-// freely, subject to the following restrictions:
-//
-// 1. The origin of this software must not be misrepresented; you must not
-//   claim that you wrote the original software. If you use this software
-//   in a product, an acknowledgment in the product documentation would be
-//   appreciated but is not required.
-// 2. Altered source versions must be plainly marked as such, and must not be
-//   misrepresented as being the original software.
-// 3. This notice may not be removed or altered from any source distribution.
-
-function adler32(adler, buf, len, pos) {
-  var s1 = (adler & 0xffff) |0,
-      s2 = ((adler >>> 16) & 0xffff) |0,
-      n = 0;
-
-  while (len !== 0) {
-    // Set limit ~ twice less than 5552, to keep
-    // s2 in 31-bits, because we force signed ints.
-    // in other case %= will fail.
-    n = len > 2000 ? 2000 : len;
-    len -= n;
-
+    top:
     do {
-      s1 = (s1 + buf[pos++]) |0;
-      s2 = (s2 + s1) |0;
-    } while (--n);
-
-    s1 %= 65521;
-    s2 %= 65521;
-  }
-
-  return (s1 | (s2 << 16)) |0;
-}
-
-
-module.exports = adler32;
-
-},{}],4:[function(require,module,exports){
-'use strict';
-
-// (C) 1995-2013 Jean-loup Gailly and Mark Adler
-// (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-//
-// This software is provided 'as-is', without any express or implied
-// warranty. In no event will the authors be held liable for any damages
-// arising from the use of this software.
-//
-// Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it
-// freely, subject to the following restrictions:
-//
-// 1. The origin of this software must not be misrepresented; you must not
-//   claim that you wrote the original software. If you use this software
-//   in a product, an acknowledgment in the product documentation would be
-//   appreciated but is not required.
-// 2. Altered source versions must be plainly marked as such, and must not be
-//   misrepresented as being the original software.
-// 3. This notice may not be removed or altered from any source distribution.
-
-module.exports = {
-
-  /* Allowed flush values; see deflate() and inflate() below for details */
-  Z_NO_FLUSH:         0,
-  Z_PARTIAL_FLUSH:    1,
-  Z_SYNC_FLUSH:       2,
-  Z_FULL_FLUSH:       3,
-  Z_FINISH:           4,
-  Z_BLOCK:            5,
-  Z_TREES:            6,
-
-  /* Return codes for the compression/decompression functions. Negative values
-  * are errors, positive values are used for special but normal events.
-  */
-  Z_OK:               0,
-  Z_STREAM_END:       1,
-  Z_NEED_DICT:        2,
-  Z_ERRNO:           -1,
-  Z_STREAM_ERROR:    -2,
-  Z_DATA_ERROR:      -3,
-  //Z_MEM_ERROR:     -4,
-  Z_BUF_ERROR:       -5,
-  //Z_VERSION_ERROR: -6,
-
-  /* compression levels */
-  Z_NO_COMPRESSION:         0,
-  Z_BEST_SPEED:             1,
-  Z_BEST_COMPRESSION:       9,
-  Z_DEFAULT_COMPRESSION:   -1,
-
-
-  Z_FILTERED:               1,
-  Z_HUFFMAN_ONLY:           2,
-  Z_RLE:                    3,
-  Z_FIXED:                  4,
-  Z_DEFAULT_STRATEGY:       0,
-
-  /* Possible values of the data_type field (though see inflate()) */
-  Z_BINARY:                 0,
-  Z_TEXT:                   1,
-  //Z_ASCII:                1, // = Z_TEXT (deprecated)
-  Z_UNKNOWN:                2,
-
-  /* The deflate compression method */
-  Z_DEFLATED:               8
-  //Z_NULL:                 null // Use -1 or null inline, depending on var type
-};
-
-},{}],5:[function(require,module,exports){
-'use strict';
-
-// Note: we can't get significant speed boost here.
-// So write code to minimize size - no pregenerated tables
-// and array tools dependencies.
-
-// (C) 1995-2013 Jean-loup Gailly and Mark Adler
-// (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-//
-// This software is provided 'as-is', without any express or implied
-// warranty. In no event will the authors be held liable for any damages
-// arising from the use of this software.
-//
-// Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it
-// freely, subject to the following restrictions:
-//
-// 1. The origin of this software must not be misrepresented; you must not
-//   claim that you wrote the original software. If you use this software
-//   in a product, an acknowledgment in the product documentation would be
-//   appreciated but is not required.
-// 2. Altered source versions must be plainly marked as such, and must not be
-//   misrepresented as being the original software.
-// 3. This notice may not be removed or altered from any source distribution.
-
-// Use ordinary array, since untyped makes no boost here
-function makeTable() {
-  var c, table = [];
-
-  for (var n = 0; n < 256; n++) {
-    c = n;
-    for (var k = 0; k < 8; k++) {
-      c = ((c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1));
-    }
-    table[n] = c;
-  }
-
-  return table;
-}
-
-// Create table on load. Just 255 signed longs. Not a problem.
-var crcTable = makeTable();
-
-
-function crc32(crc, buf, len, pos) {
-  var t = crcTable,
-      end = pos + len;
-
-  crc ^= -1;
-
-  for (var i = pos; i < end; i++) {
-    crc = (crc >>> 8) ^ t[(crc ^ buf[i]) & 0xFF];
-  }
-
-  return (crc ^ (-1)); // >>> 0;
-}
-
-
-module.exports = crc32;
-
-},{}],6:[function(require,module,exports){
-'use strict';
-
-// (C) 1995-2013 Jean-loup Gailly and Mark Adler
-// (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-//
-// This software is provided 'as-is', without any express or implied
-// warranty. In no event will the authors be held liable for any damages
-// arising from the use of this software.
-//
-// Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it
-// freely, subject to the following restrictions:
-//
-// 1. The origin of this software must not be misrepresented; you must not
-//   claim that you wrote the original software. If you use this software
-//   in a product, an acknowledgment in the product documentation would be
-//   appreciated but is not required.
-// 2. Altered source versions must be plainly marked as such, and must not be
-//   misrepresented as being the original software.
-// 3. This notice may not be removed or altered from any source distribution.
-
-function GZheader() {
-  /* true if compressed data believed to be text */
-  this.text       = 0;
-  /* modification time */
-  this.time       = 0;
-  /* extra flags (not used when writing a gzip file) */
-  this.xflags     = 0;
-  /* operating system */
-  this.os         = 0;
-  /* pointer to extra field or Z_NULL if none */
-  this.extra      = null;
-  /* extra field length (valid if extra != Z_NULL) */
-  this.extra_len  = 0; // Actually, we don't need it in JS,
-                       // but leave for few code modifications
-
-  //
-  // Setup limits is not necessary because in js we should not preallocate memory
-  // for inflate use constant limit in 65536 bytes
-  //
-
-  /* space at extra (only when reading header) */
-  // this.extra_max  = 0;
-  /* pointer to zero-terminated file name or Z_NULL */
-  this.name       = '';
-  /* space at name (only when reading header) */
-  // this.name_max   = 0;
-  /* pointer to zero-terminated comment or Z_NULL */
-  this.comment    = '';
-  /* space at comment (only when reading header) */
-  // this.comm_max   = 0;
-  /* true if there was or will be a header crc */
-  this.hcrc       = 0;
-  /* true when done reading gzip header (not used when writing a gzip file) */
-  this.done       = false;
-}
-
-module.exports = GZheader;
-
-},{}],7:[function(require,module,exports){
-'use strict';
-
-// (C) 1995-2013 Jean-loup Gailly and Mark Adler
-// (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-//
-// This software is provided 'as-is', without any express or implied
-// warranty. In no event will the authors be held liable for any damages
-// arising from the use of this software.
-//
-// Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it
-// freely, subject to the following restrictions:
-//
-// 1. The origin of this software must not be misrepresented; you must not
-//   claim that you wrote the original software. If you use this software
-//   in a product, an acknowledgment in the product documentation would be
-//   appreciated but is not required.
-// 2. Altered source versions must be plainly marked as such, and must not be
-//   misrepresented as being the original software.
-// 3. This notice may not be removed or altered from any source distribution.
-
-// See state defs from inflate.js
-var BAD = 30;       /* got a data error -- remain here until reset */
-var TYPE = 12;      /* i: waiting for type bits, including last-flag bit */
-
-/*
-   Decode literal, length, and distance codes and write out the resulting
-   literal and match bytes until either not enough input or output is
-   available, an end-of-block is encountered, or a data error is encountered.
-   When large enough input and output buffers are supplied to inflate(), for
-   example, a 16K input buffer and a 64K output buffer, more than 95% of the
-   inflate execution time is spent in this routine.
-
-   Entry assumptions:
-
-        state.mode === LEN
-        strm.avail_in >= 6
-        strm.avail_out >= 258
-        start >= strm.avail_out
-        state.bits < 8
-
-   On return, state.mode is one of:
-
-        LEN -- ran out of enough output space or enough available input
-        TYPE -- reached end of block code, inflate() to interpret next block
-        BAD -- error in block data
-
-   Notes:
-
-    - The maximum input bits used by a length/distance pair is 15 bits for the
-      length code, 5 bits for the length extra, 15 bits for the distance code,
-      and 13 bits for the distance extra.  This totals 48 bits, or six bytes.
-      Therefore if strm.avail_in >= 6, then there is enough input to avoid
-      checking for available input while decoding.
-
-    - The maximum bytes that a single length/distance pair can output is 258
-      bytes, which is the maximum length that can be coded.  inflate_fast()
-      requires strm.avail_out >= 258 for each loop to avoid checking for
-      output space.
- */
-module.exports = function inflate_fast(strm, start) {
-  var state;
-  var _in;                    /* local strm.input */
-  var last;                   /* have enough input while in < last */
-  var _out;                   /* local strm.output */
-  var beg;                    /* inflate()'s initial strm.output */
-  var end;                    /* while out < end, enough space available */
-//#ifdef INFLATE_STRICT
-  var dmax;                   /* maximum distance from zlib header */
-//#endif
-  var wsize;                  /* window size or zero if not using window */
-  var whave;                  /* valid bytes in the window */
-  var wnext;                  /* window write index */
-  // Use `s_window` instead `window`, avoid conflict with instrumentation tools
-  var s_window;               /* allocated sliding window, if wsize != 0 */
-  var hold;                   /* local strm.hold */
-  var bits;                   /* local strm.bits */
-  var lcode;                  /* local strm.lencode */
-  var dcode;                  /* local strm.distcode */
-  var lmask;                  /* mask for first level of length codes */
-  var dmask;                  /* mask for first level of distance codes */
-  var here;                   /* retrieved table entry */
-  var op;                     /* code bits, operation, extra bits, or */
-                              /*  window position, window bytes to copy */
-  var len;                    /* match length, unused bytes */
-  var dist;                   /* match distance */
-  var from;                   /* where to copy match from */
-  var from_source;
-
-
-  var input, output; // JS specific, because we have no pointers
-
-  /* copy state to local variables */
-  state = strm.state;
-  //here = state.here;
-  _in = strm.next_in;
-  input = strm.input;
-  last = _in + (strm.avail_in - 5);
-  _out = strm.next_out;
-  output = strm.output;
-  beg = _out - (start - strm.avail_out);
-  end = _out + (strm.avail_out - 257);
-//#ifdef INFLATE_STRICT
-  dmax = state.dmax;
-//#endif
-  wsize = state.wsize;
-  whave = state.whave;
-  wnext = state.wnext;
-  s_window = state.window;
-  hold = state.hold;
-  bits = state.bits;
-  lcode = state.lencode;
-  dcode = state.distcode;
-  lmask = (1 << state.lenbits) - 1;
-  dmask = (1 << state.distbits) - 1;
-
-
-  /* decode literals and length/distances until end-of-block or not enough
-     input data or output space */
-
-  top:
-  do {
-    if (bits < 15) {
-      hold += input[_in++] << bits;
-      bits += 8;
-      hold += input[_in++] << bits;
-      bits += 8;
-    }
-
-    here = lcode[hold & lmask];
-
-    dolen:
-    for (;;) { // Goto emulation
-      op = here >>> 24/*here.bits*/;
-      hold >>>= op;
-      bits -= op;
-      op = (here >>> 16) & 0xff/*here.op*/;
-      if (op === 0) {                          /* literal */
-        //Tracevv((stderr, here.val >= 0x20 && here.val < 0x7f ?
-        //        "inflate:         literal '%c'\n" :
-        //        "inflate:         literal 0x%02x\n", here.val));
-        output[_out++] = here & 0xffff/*here.val*/;
+      if (bits < 15) {
+        hold += input[_in++] << bits;
+        bits += 8;
+        hold += input[_in++] << bits;
+        bits += 8;
       }
-      else if (op & 16) {                     /* length base */
-        len = here & 0xffff/*here.val*/;
-        op &= 15;                           /* number of extra bits */
-        if (op) {
-          if (bits < op) {
-            hold += input[_in++] << bits;
-            bits += 8;
-          }
-          len += hold & ((1 << op) - 1);
-          hold >>>= op;
-          bits -= op;
-        }
-        //Tracevv((stderr, "inflate:         length %u\n", len));
-        if (bits < 15) {
-          hold += input[_in++] << bits;
-          bits += 8;
-          hold += input[_in++] << bits;
-          bits += 8;
-        }
-        here = dcode[hold & dmask];
 
-        dodist:
-        for (;;) { // goto emulation
-          op = here >>> 24/*here.bits*/;
-          hold >>>= op;
-          bits -= op;
-          op = (here >>> 16) & 0xff/*here.op*/;
+      here = lcode[hold & lmask];
 
-          if (op & 16) {                      /* distance base */
-            dist = here & 0xffff/*here.val*/;
-            op &= 15;                       /* number of extra bits */
+      dolen:
+      for (;;) { // Goto emulation
+        op = here >>> 24/*here.bits*/;
+        hold >>>= op;
+        bits -= op;
+        op = (here >>> 16) & 0xff/*here.op*/;
+        if (op === 0) {                          /* literal */
+          //Tracevv((stderr, here.val >= 0x20 && here.val < 0x7f ?
+          //        "inflate:         literal '%c'\n" :
+          //        "inflate:         literal 0x%02x\n", here.val));
+          output[_out++] = here & 0xffff/*here.val*/;
+        }
+        else if (op & 16) {                     /* length base */
+          len = here & 0xffff/*here.val*/;
+          op &= 15;                           /* number of extra bits */
+          if (op) {
             if (bits < op) {
               hold += input[_in++] << bits;
               bits += 8;
+            }
+            len += hold & ((1 << op) - 1);
+            hold >>>= op;
+            bits -= op;
+          }
+          //Tracevv((stderr, "inflate:         length %u\n", len));
+          if (bits < 15) {
+            hold += input[_in++] << bits;
+            bits += 8;
+            hold += input[_in++] << bits;
+            bits += 8;
+          }
+          here = dcode[hold & dmask];
+
+          dodist:
+          for (;;) { // goto emulation
+            op = here >>> 24/*here.bits*/;
+            hold >>>= op;
+            bits -= op;
+            op = (here >>> 16) & 0xff/*here.op*/;
+
+            if (op & 16) {                      /* distance base */
+              dist = here & 0xffff/*here.val*/;
+              op &= 15;                       /* number of extra bits */
               if (bits < op) {
                 hold += input[_in++] << bits;
                 bits += 8;
-              }
-            }
-            dist += hold & ((1 << op) - 1);
-//#ifdef INFLATE_STRICT
-            if (dist > dmax) {
-              strm.msg = 'invalid distance too far back';
-              state.mode = BAD;
-              break top;
-            }
-//#endif
-            hold >>>= op;
-            bits -= op;
-            //Tracevv((stderr, "inflate:         distance %u\n", dist));
-            op = _out - beg;                /* max distance in output */
-            if (dist > op) {                /* see if copy from window */
-              op = dist - op;               /* distance back in window */
-              if (op > whave) {
-                if (state.sane) {
-                  strm.msg = 'invalid distance too far back';
-                  state.mode = BAD;
-                  break top;
+                if (bits < op) {
+                  hold += input[_in++] << bits;
+                  bits += 8;
                 }
+              }
+              dist += hold & ((1 << op) - 1);
+  //#ifdef INFLATE_STRICT
+              if (dist > dmax) {
+                strm.msg = 'invalid distance too far back';
+                state.mode = BAD$1;
+                break top;
+              }
+  //#endif
+              hold >>>= op;
+              bits -= op;
+              //Tracevv((stderr, "inflate:         distance %u\n", dist));
+              op = _out - beg;                /* max distance in output */
+              if (dist > op) {                /* see if copy from window */
+                op = dist - op;               /* distance back in window */
+                if (op > whave) {
+                  if (state.sane) {
+                    strm.msg = 'invalid distance too far back';
+                    state.mode = BAD$1;
+                    break top;
+                  }
 
-// (!) This block is disabled in zlib defaults,
-// don't enable it for binary compatibility
-//#ifdef INFLATE_ALLOW_INVALID_DISTANCE_TOOFAR_ARRR
-//                if (len <= op - whave) {
-//                  do {
-//                    output[_out++] = 0;
-//                  } while (--len);
-//                  continue top;
-//                }
-//                len -= op - whave;
-//                do {
-//                  output[_out++] = 0;
-//                } while (--op > whave);
-//                if (op === 0) {
-//                  from = _out - dist;
-//                  do {
-//                    output[_out++] = output[from++];
-//                  } while (--len);
-//                  continue top;
-//                }
-//#endif
-              }
-              from = 0; // window index
-              from_source = s_window;
-              if (wnext === 0) {           /* very common case */
-                from += wsize - op;
-                if (op < len) {         /* some from window */
-                  len -= op;
-                  do {
-                    output[_out++] = s_window[from++];
-                  } while (--op);
-                  from = _out - dist;  /* rest from output */
-                  from_source = output;
+  // (!) This block is disabled in zlib defaults,
+  // don't enable it for binary compatibility
+  //#ifdef INFLATE_ALLOW_INVALID_DISTANCE_TOOFAR_ARRR
+  //                if (len <= op - whave) {
+  //                  do {
+  //                    output[_out++] = 0;
+  //                  } while (--len);
+  //                  continue top;
+  //                }
+  //                len -= op - whave;
+  //                do {
+  //                  output[_out++] = 0;
+  //                } while (--op > whave);
+  //                if (op === 0) {
+  //                  from = _out - dist;
+  //                  do {
+  //                    output[_out++] = output[from++];
+  //                  } while (--len);
+  //                  continue top;
+  //                }
+  //#endif
                 }
-              }
-              else if (wnext < op) {      /* wrap around window */
-                from += wsize + wnext - op;
-                op -= wnext;
-                if (op < len) {         /* some from end of window */
-                  len -= op;
-                  do {
-                    output[_out++] = s_window[from++];
-                  } while (--op);
-                  from = 0;
-                  if (wnext < len) {  /* some from start of window */
-                    op = wnext;
+                from = 0; // window index
+                from_source = s_window;
+                if (wnext === 0) {           /* very common case */
+                  from += wsize - op;
+                  if (op < len) {         /* some from window */
                     len -= op;
                     do {
                       output[_out++] = s_window[from++];
                     } while (--op);
-                    from = _out - dist;      /* rest from output */
+                    from = _out - dist;  /* rest from output */
                     from_source = output;
                   }
                 }
-              }
-              else {                      /* contiguous in window */
-                from += wnext - op;
-                if (op < len) {         /* some from window */
-                  len -= op;
-                  do {
-                    output[_out++] = s_window[from++];
-                  } while (--op);
-                  from = _out - dist;  /* rest from output */
-                  from_source = output;
+                else if (wnext < op) {      /* wrap around window */
+                  from += wsize + wnext - op;
+                  op -= wnext;
+                  if (op < len) {         /* some from end of window */
+                    len -= op;
+                    do {
+                      output[_out++] = s_window[from++];
+                    } while (--op);
+                    from = 0;
+                    if (wnext < len) {  /* some from start of window */
+                      op = wnext;
+                      len -= op;
+                      do {
+                        output[_out++] = s_window[from++];
+                      } while (--op);
+                      from = _out - dist;      /* rest from output */
+                      from_source = output;
+                    }
+                  }
                 }
-              }
-              while (len > 2) {
-                output[_out++] = from_source[from++];
-                output[_out++] = from_source[from++];
-                output[_out++] = from_source[from++];
-                len -= 3;
-              }
-              if (len) {
-                output[_out++] = from_source[from++];
-                if (len > 1) {
+                else {                      /* contiguous in window */
+                  from += wnext - op;
+                  if (op < len) {         /* some from window */
+                    len -= op;
+                    do {
+                      output[_out++] = s_window[from++];
+                    } while (--op);
+                    from = _out - dist;  /* rest from output */
+                    from_source = output;
+                  }
+                }
+                while (len > 2) {
                   output[_out++] = from_source[from++];
+                  output[_out++] = from_source[from++];
+                  output[_out++] = from_source[from++];
+                  len -= 3;
+                }
+                if (len) {
+                  output[_out++] = from_source[from++];
+                  if (len > 1) {
+                    output[_out++] = from_source[from++];
+                  }
                 }
               }
+              else {
+                from = _out - dist;          /* copy direct from output */
+                do {                        /* minimum length is three */
+                  output[_out++] = output[from++];
+                  output[_out++] = output[from++];
+                  output[_out++] = output[from++];
+                  len -= 3;
+                } while (len > 2);
+                if (len) {
+                  output[_out++] = output[from++];
+                  if (len > 1) {
+                    output[_out++] = output[from++];
+                  }
+                }
+              }
+            }
+            else if ((op & 64) === 0) {          /* 2nd level distance code */
+              here = dcode[(here & 0xffff)/*here.val*/ + (hold & ((1 << op) - 1))];
+              continue dodist;
             }
             else {
-              from = _out - dist;          /* copy direct from output */
-              do {                        /* minimum length is three */
-                output[_out++] = output[from++];
-                output[_out++] = output[from++];
-                output[_out++] = output[from++];
-                len -= 3;
-              } while (len > 2);
-              if (len) {
-                output[_out++] = output[from++];
-                if (len > 1) {
-                  output[_out++] = output[from++];
-                }
-              }
+              strm.msg = 'invalid distance code';
+              state.mode = BAD$1;
+              break top;
             }
-          }
-          else if ((op & 64) === 0) {          /* 2nd level distance code */
-            here = dcode[(here & 0xffff)/*here.val*/ + (hold & ((1 << op) - 1))];
-            continue dodist;
-          }
-          else {
-            strm.msg = 'invalid distance code';
-            state.mode = BAD;
-            break top;
-          }
 
-          break; // need to emulate goto via "continue"
+            break; // need to emulate goto via "continue"
+          }
         }
+        else if ((op & 64) === 0) {              /* 2nd level length code */
+          here = lcode[(here & 0xffff)/*here.val*/ + (hold & ((1 << op) - 1))];
+          continue dolen;
+        }
+        else if (op & 32) {                     /* end-of-block */
+          //Tracevv((stderr, "inflate:         end of block\n"));
+          state.mode = TYPE$1;
+          break top;
+        }
+        else {
+          strm.msg = 'invalid literal/length code';
+          state.mode = BAD$1;
+          break top;
+        }
+
+        break; // need to emulate goto via "continue"
       }
-      else if ((op & 64) === 0) {              /* 2nd level length code */
-        here = lcode[(here & 0xffff)/*here.val*/ + (hold & ((1 << op) - 1))];
-        continue dolen;
+    } while (_in < last && _out < end);
+
+    /* return unused bytes (on entry, bits < 8, so in won't go too far back) */
+    len = bits >> 3;
+    _in -= len;
+    bits -= len << 3;
+    hold &= (1 << bits) - 1;
+
+    /* update state and return */
+    strm.next_in = _in;
+    strm.next_out = _out;
+    strm.avail_in = (_in < last ? 5 + (last - _in) : 5 - (_in - last));
+    strm.avail_out = (_out < end ? 257 + (end - _out) : 257 - (_out - end));
+    state.hold = hold;
+    state.bits = bits;
+    return;
+  };
+
+  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
+  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
+  //
+  // This software is provided 'as-is', without any express or implied
+  // warranty. In no event will the authors be held liable for any damages
+  // arising from the use of this software.
+  //
+  // Permission is granted to anyone to use this software for any purpose,
+  // including commercial applications, and to alter it and redistribute it
+  // freely, subject to the following restrictions:
+  //
+  // 1. The origin of this software must not be misrepresented; you must not
+  //   claim that you wrote the original software. If you use this software
+  //   in a product, an acknowledgment in the product documentation would be
+  //   appreciated but is not required.
+  // 2. Altered source versions must be plainly marked as such, and must not be
+  //   misrepresented as being the original software.
+  // 3. This notice may not be removed or altered from any source distribution.
+
+  const MAXBITS = 15;
+  const ENOUGH_LENS$1 = 852;
+  const ENOUGH_DISTS$1 = 592;
+  //const ENOUGH = (ENOUGH_LENS+ENOUGH_DISTS);
+
+  const CODES$1 = 0;
+  const LENS$1 = 1;
+  const DISTS$1 = 2;
+
+  const lbase = new Uint16Array([ /* Length codes 257..285 base */
+    3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31,
+    35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0
+  ]);
+
+  const lext = new Uint8Array([ /* Length codes 257..285 extra */
+    16, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18,
+    19, 19, 19, 19, 20, 20, 20, 20, 21, 21, 21, 21, 16, 72, 78
+  ]);
+
+  const dbase = new Uint16Array([ /* Distance codes 0..29 base */
+    1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193,
+    257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145,
+    8193, 12289, 16385, 24577, 0, 0
+  ]);
+
+  const dext = new Uint8Array([ /* Distance codes 0..29 extra */
+    16, 16, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 22,
+    23, 23, 24, 24, 25, 25, 26, 26, 27, 27,
+    28, 28, 29, 29, 64, 64
+  ]);
+
+  const inflate_table = (type, lens, lens_index, codes, table, table_index, work, opts) =>
+  {
+    const bits = opts.bits;
+        //here = opts.here; /* table entry for duplication */
+
+    let len = 0;               /* a code's length in bits */
+    let sym = 0;               /* index of code symbols */
+    let min = 0, max = 0;          /* minimum and maximum code lengths */
+    let root = 0;              /* number of index bits for root table */
+    let curr = 0;              /* number of index bits for current table */
+    let drop = 0;              /* code bits to drop for sub-table */
+    let left = 0;                   /* number of prefix codes available */
+    let used = 0;              /* code entries in table used */
+    let huff = 0;              /* Huffman code */
+    let incr;              /* for incrementing code, index */
+    let fill;              /* index for replicating entries */
+    let low;               /* low bits for current root entry */
+    let mask;              /* mask for low root bits */
+    let next;             /* next available space in table */
+    let base = null;     /* base value table to use */
+    let base_index = 0;
+  //  let shoextra;    /* extra bits table to use */
+    let end;                    /* use base and extra for symbol > end */
+    const count = new Uint16Array(MAXBITS + 1); //[MAXBITS+1];    /* number of codes of each length */
+    const offs = new Uint16Array(MAXBITS + 1); //[MAXBITS+1];     /* offsets in table for each length */
+    let extra = null;
+    let extra_index = 0;
+
+    let here_bits, here_op, here_val;
+
+    /*
+     Process a set of code lengths to create a canonical Huffman code.  The
+     code lengths are lens[0..codes-1].  Each length corresponds to the
+     symbols 0..codes-1.  The Huffman code is generated by first sorting the
+     symbols by length from short to long, and retaining the symbol order
+     for codes with equal lengths.  Then the code starts with all zero bits
+     for the first code of the shortest length, and the codes are integer
+     increments for the same length, and zeros are appended as the length
+     increases.  For the deflate format, these bits are stored backwards
+     from their more natural integer increment ordering, and so when the
+     decoding tables are built in the large loop below, the integer codes
+     are incremented backwards.
+
+     This routine assumes, but does not check, that all of the entries in
+     lens[] are in the range 0..MAXBITS.  The caller must assure this.
+     1..MAXBITS is interpreted as that code length.  zero means that that
+     symbol does not occur in this code.
+
+     The codes are sorted by computing a count of codes for each length,
+     creating from that a table of starting indices for each length in the
+     sorted table, and then entering the symbols in order in the sorted
+     table.  The sorted table is work[], with that space being provided by
+     the caller.
+
+     The length counts are used for other purposes as well, i.e. finding
+     the minimum and maximum length codes, determining if there are any
+     codes at all, checking for a valid set of lengths, and looking ahead
+     at length counts to determine sub-table sizes when building the
+     decoding tables.
+     */
+
+    /* accumulate lengths for codes (assumes lens[] all in 0..MAXBITS) */
+    for (len = 0; len <= MAXBITS; len++) {
+      count[len] = 0;
+    }
+    for (sym = 0; sym < codes; sym++) {
+      count[lens[lens_index + sym]]++;
+    }
+
+    /* bound code lengths, force root to be within code lengths */
+    root = bits;
+    for (max = MAXBITS; max >= 1; max--) {
+      if (count[max] !== 0) { break; }
+    }
+    if (root > max) {
+      root = max;
+    }
+    if (max === 0) {                     /* no symbols to code at all */
+      //table.op[opts.table_index] = 64;  //here.op = (var char)64;    /* invalid code marker */
+      //table.bits[opts.table_index] = 1;   //here.bits = (var char)1;
+      //table.val[opts.table_index++] = 0;   //here.val = (var short)0;
+      table[table_index++] = (1 << 24) | (64 << 16) | 0;
+
+
+      //table.op[opts.table_index] = 64;
+      //table.bits[opts.table_index] = 1;
+      //table.val[opts.table_index++] = 0;
+      table[table_index++] = (1 << 24) | (64 << 16) | 0;
+
+      opts.bits = 1;
+      return 0;     /* no symbols, but wait for decoding to report error */
+    }
+    for (min = 1; min < max; min++) {
+      if (count[min] !== 0) { break; }
+    }
+    if (root < min) {
+      root = min;
+    }
+
+    /* check for an over-subscribed or incomplete set of lengths */
+    left = 1;
+    for (len = 1; len <= MAXBITS; len++) {
+      left <<= 1;
+      left -= count[len];
+      if (left < 0) {
+        return -1;
+      }        /* over-subscribed */
+    }
+    if (left > 0 && (type === CODES$1 || max !== 1)) {
+      return -1;                      /* incomplete set */
+    }
+
+    /* generate offsets into symbol table for each length for sorting */
+    offs[1] = 0;
+    for (len = 1; len < MAXBITS; len++) {
+      offs[len + 1] = offs[len] + count[len];
+    }
+
+    /* sort symbols by length, by symbol order within each length */
+    for (sym = 0; sym < codes; sym++) {
+      if (lens[lens_index + sym] !== 0) {
+        work[offs[lens[lens_index + sym]]++] = sym;
       }
-      else if (op & 32) {                     /* end-of-block */
-        //Tracevv((stderr, "inflate:         end of block\n"));
-        state.mode = TYPE;
-        break top;
+    }
+
+    /*
+     Create and fill in decoding tables.  In this loop, the table being
+     filled is at next and has curr index bits.  The code being used is huff
+     with length len.  That code is converted to an index by dropping drop
+     bits off of the bottom.  For codes where len is less than drop + curr,
+     those top drop + curr - len bits are incremented through all values to
+     fill the table with replicated entries.
+
+     root is the number of index bits for the root table.  When len exceeds
+     root, sub-tables are created pointed to by the root entry with an index
+     of the low root bits of huff.  This is saved in low to check for when a
+     new sub-table should be started.  drop is zero when the root table is
+     being filled, and drop is root when sub-tables are being filled.
+
+     When a new sub-table is needed, it is necessary to look ahead in the
+     code lengths to determine what size sub-table is needed.  The length
+     counts are used for this, and so count[] is decremented as codes are
+     entered in the tables.
+
+     used keeps track of how many table entries have been allocated from the
+     provided *table space.  It is checked for LENS and DIST tables against
+     the constants ENOUGH_LENS and ENOUGH_DISTS to guard against changes in
+     the initial root table size constants.  See the comments in inftrees.h
+     for more information.
+
+     sym increments through all symbols, and the loop terminates when
+     all codes of length max, i.e. all codes, have been processed.  This
+     routine permits incomplete codes, so another loop after this one fills
+     in the rest of the decoding tables with invalid code markers.
+     */
+
+    /* set up for code type */
+    // poor man optimization - use if-else instead of switch,
+    // to avoid deopts in old v8
+    if (type === CODES$1) {
+      base = extra = work;    /* dummy value--not used */
+      end = 19;
+
+    } else if (type === LENS$1) {
+      base = lbase;
+      base_index -= 257;
+      extra = lext;
+      extra_index -= 257;
+      end = 256;
+
+    } else {                    /* DISTS */
+      base = dbase;
+      extra = dext;
+      end = -1;
+    }
+
+    /* initialize opts for loop */
+    huff = 0;                   /* starting code */
+    sym = 0;                    /* starting code symbol */
+    len = min;                  /* starting code length */
+    next = table_index;              /* current table to fill in */
+    curr = root;                /* current table index bits */
+    drop = 0;                   /* current bits to drop from code for index */
+    low = -1;                   /* trigger new sub-table when len > root */
+    used = 1 << root;          /* use root table entries */
+    mask = used - 1;            /* mask for comparing low */
+
+    /* check available table space */
+    if ((type === LENS$1 && used > ENOUGH_LENS$1) ||
+      (type === DISTS$1 && used > ENOUGH_DISTS$1)) {
+      return 1;
+    }
+
+    /* process all codes and make table entries */
+    for (;;) {
+      /* create table entry */
+      here_bits = len - drop;
+      if (work[sym] < end) {
+        here_op = 0;
+        here_val = work[sym];
+      }
+      else if (work[sym] > end) {
+        here_op = extra[extra_index + work[sym]];
+        here_val = base[base_index + work[sym]];
       }
       else {
-        strm.msg = 'invalid literal/length code';
-        state.mode = BAD;
-        break top;
+        here_op = 32 + 64;         /* end of block */
+        here_val = 0;
       }
 
-      break; // need to emulate goto via "continue"
+      /* replicate for those indices with low len bits equal to huff */
+      incr = 1 << (len - drop);
+      fill = 1 << curr;
+      min = fill;                 /* save offset to next table */
+      do {
+        fill -= incr;
+        table[next + (huff >> drop) + fill] = (here_bits << 24) | (here_op << 16) | here_val |0;
+      } while (fill !== 0);
+
+      /* backwards increment the len-bit code huff */
+      incr = 1 << (len - 1);
+      while (huff & incr) {
+        incr >>= 1;
+      }
+      if (incr !== 0) {
+        huff &= incr - 1;
+        huff += incr;
+      } else {
+        huff = 0;
+      }
+
+      /* go to next symbol, update count, len */
+      sym++;
+      if (--count[len] === 0) {
+        if (len === max) { break; }
+        len = lens[lens_index + work[sym]];
+      }
+
+      /* create new sub-table if needed */
+      if (len > root && (huff & mask) !== low) {
+        /* if first time, transition to sub-tables */
+        if (drop === 0) {
+          drop = root;
+        }
+
+        /* increment past last table */
+        next += min;            /* here min is 1 << curr */
+
+        /* determine length of next table */
+        curr = len - drop;
+        left = 1 << curr;
+        while (curr + drop < max) {
+          left -= count[curr + drop];
+          if (left <= 0) { break; }
+          curr++;
+          left <<= 1;
+        }
+
+        /* check for enough space */
+        used += 1 << curr;
+        if ((type === LENS$1 && used > ENOUGH_LENS$1) ||
+          (type === DISTS$1 && used > ENOUGH_DISTS$1)) {
+          return 1;
+        }
+
+        /* point entry in root table to sub-table */
+        low = huff & mask;
+        /*table.op[low] = curr;
+        table.bits[low] = root;
+        table.val[low] = next - opts.table_index;*/
+        table[low] = (root << 24) | (curr << 16) | (next - table_index) |0;
+      }
     }
-  } while (_in < last && _out < end);
 
-  /* return unused bytes (on entry, bits < 8, so in won't go too far back) */
-  len = bits >> 3;
-  _in -= len;
-  bits -= len << 3;
-  hold &= (1 << bits) - 1;
+    /* fill in remaining table entry if code is incomplete (guaranteed to have
+     at most one remaining entry, since if the code is incomplete, the
+     maximum code length that was allowed to get this far is one bit) */
+    if (huff !== 0) {
+      //table.op[next + huff] = 64;            /* invalid code marker */
+      //table.bits[next + huff] = len - drop;
+      //table.val[next + huff] = 0;
+      table[next + huff] = ((len - drop) << 24) | (64 << 16) |0;
+    }
 
-  /* update state and return */
-  strm.next_in = _in;
-  strm.next_out = _out;
-  strm.avail_in = (_in < last ? 5 + (last - _in) : 5 - (_in - last));
-  strm.avail_out = (_out < end ? 257 + (end - _out) : 257 - (_out - end));
-  state.hold = hold;
-  state.bits = bits;
-  return;
-};
-
-},{}],8:[function(require,module,exports){
-'use strict';
-
-// (C) 1995-2013 Jean-loup Gailly and Mark Adler
-// (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-//
-// This software is provided 'as-is', without any express or implied
-// warranty. In no event will the authors be held liable for any damages
-// arising from the use of this software.
-//
-// Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it
-// freely, subject to the following restrictions:
-//
-// 1. The origin of this software must not be misrepresented; you must not
-//   claim that you wrote the original software. If you use this software
-//   in a product, an acknowledgment in the product documentation would be
-//   appreciated but is not required.
-// 2. Altered source versions must be plainly marked as such, and must not be
-//   misrepresented as being the original software.
-// 3. This notice may not be removed or altered from any source distribution.
-
-var utils         = require('../utils/common');
-var adler32       = require('./adler32');
-var crc32         = require('./crc32');
-var inflate_fast  = require('./inffast');
-var inflate_table = require('./inftrees');
-
-var CODES = 0;
-var LENS = 1;
-var DISTS = 2;
-
-/* Public constants ==========================================================*/
-/* ===========================================================================*/
+    /* set return parameters */
+    //opts.table_index += used;
+    opts.bits = root;
+    return 0;
+  };
 
 
-/* Allowed flush values; see deflate() and inflate() below for details */
-//var Z_NO_FLUSH      = 0;
-//var Z_PARTIAL_FLUSH = 1;
-//var Z_SYNC_FLUSH    = 2;
-//var Z_FULL_FLUSH    = 3;
-var Z_FINISH        = 4;
-var Z_BLOCK         = 5;
-var Z_TREES         = 6;
+  var inftrees = inflate_table;
+
+  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
+  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
+  //
+  // This software is provided 'as-is', without any express or implied
+  // warranty. In no event will the authors be held liable for any damages
+  // arising from the use of this software.
+  //
+  // Permission is granted to anyone to use this software for any purpose,
+  // including commercial applications, and to alter it and redistribute it
+  // freely, subject to the following restrictions:
+  //
+  // 1. The origin of this software must not be misrepresented; you must not
+  //   claim that you wrote the original software. If you use this software
+  //   in a product, an acknowledgment in the product documentation would be
+  //   appreciated but is not required.
+  // 2. Altered source versions must be plainly marked as such, and must not be
+  //   misrepresented as being the original software.
+  // 3. This notice may not be removed or altered from any source distribution.
+
+  var constants$1 = {
+
+    /* Allowed flush values; see deflate() and inflate() below for details */
+    Z_NO_FLUSH:         0,
+    Z_PARTIAL_FLUSH:    1,
+    Z_SYNC_FLUSH:       2,
+    Z_FULL_FLUSH:       3,
+    Z_FINISH:           4,
+    Z_BLOCK:            5,
+    Z_TREES:            6,
+
+    /* Return codes for the compression/decompression functions. Negative values
+    * are errors, positive values are used for special but normal events.
+    */
+    Z_OK:               0,
+    Z_STREAM_END:       1,
+    Z_NEED_DICT:        2,
+    Z_ERRNO:           -1,
+    Z_STREAM_ERROR:    -2,
+    Z_DATA_ERROR:      -3,
+    Z_MEM_ERROR:       -4,
+    Z_BUF_ERROR:       -5,
+    //Z_VERSION_ERROR: -6,
+
+    /* compression levels */
+    Z_NO_COMPRESSION:         0,
+    Z_BEST_SPEED:             1,
+    Z_BEST_COMPRESSION:       9,
+    Z_DEFAULT_COMPRESSION:   -1,
 
 
-/* Return codes for the compression/decompression functions. Negative values
- * are errors, positive values are used for special but normal events.
- */
-var Z_OK            = 0;
-var Z_STREAM_END    = 1;
-var Z_NEED_DICT     = 2;
-//var Z_ERRNO         = -1;
-var Z_STREAM_ERROR  = -2;
-var Z_DATA_ERROR    = -3;
-var Z_MEM_ERROR     = -4;
-var Z_BUF_ERROR     = -5;
-//var Z_VERSION_ERROR = -6;
+    Z_FILTERED:               1,
+    Z_HUFFMAN_ONLY:           2,
+    Z_RLE:                    3,
+    Z_FIXED:                  4,
+    Z_DEFAULT_STRATEGY:       0,
 
-/* The deflate compression method */
-var Z_DEFLATED  = 8;
+    /* Possible values of the data_type field (though see inflate()) */
+    Z_BINARY:                 0,
+    Z_TEXT:                   1,
+    //Z_ASCII:                1, // = Z_TEXT (deprecated)
+    Z_UNKNOWN:                2,
 
+    /* The deflate compression method */
+    Z_DEFLATED:               8
+    //Z_NULL:                 null // Use -1 or null inline, depending on var type
+  };
 
-/* STATES ====================================================================*/
-/* ===========================================================================*/
-
-
-var    HEAD = 1;       /* i: waiting for magic header */
-var    FLAGS = 2;      /* i: waiting for method and flags (gzip) */
-var    TIME = 3;       /* i: waiting for modification time (gzip) */
-var    OS = 4;         /* i: waiting for extra flags and operating system (gzip) */
-var    EXLEN = 5;      /* i: waiting for extra length (gzip) */
-var    EXTRA = 6;      /* i: waiting for extra bytes (gzip) */
-var    NAME = 7;       /* i: waiting for end of file name (gzip) */
-var    COMMENT = 8;    /* i: waiting for end of comment (gzip) */
-var    HCRC = 9;       /* i: waiting for header crc (gzip) */
-var    DICTID = 10;    /* i: waiting for dictionary check value */
-var    DICT = 11;      /* waiting for inflateSetDictionary() call */
-var        TYPE = 12;      /* i: waiting for type bits, including last-flag bit */
-var        TYPEDO = 13;    /* i: same, but skip check to exit inflate on new block */
-var        STORED = 14;    /* i: waiting for stored size (length and complement) */
-var        COPY_ = 15;     /* i/o: same as COPY below, but only first time in */
-var        COPY = 16;      /* i/o: waiting for input or output to copy stored block */
-var        TABLE = 17;     /* i: waiting for dynamic block table lengths */
-var        LENLENS = 18;   /* i: waiting for code length code lengths */
-var        CODELENS = 19;  /* i: waiting for length/lit and distance code lengths */
-var            LEN_ = 20;      /* i: same as LEN below, but only first time in */
-var            LEN = 21;       /* i: waiting for length/lit/eob code */
-var            LENEXT = 22;    /* i: waiting for length extra bits */
-var            DIST = 23;      /* i: waiting for distance code */
-var            DISTEXT = 24;   /* i: waiting for distance extra bits */
-var            MATCH = 25;     /* o: waiting for output space to copy string */
-var            LIT = 26;       /* o: waiting for output space to write literal */
-var    CHECK = 27;     /* i: waiting for 32-bit check value */
-var    LENGTH = 28;    /* i: waiting for 32-bit length (gzip) */
-var    DONE = 29;      /* finished check, done -- remain here until reset */
-var    BAD = 30;       /* got a data error -- remain here until reset */
-var    MEM = 31;       /* got an inflate() memory error -- remain here until reset */
-var    SYNC = 32;      /* looking for synchronization bytes to restart inflate() */
-
-/* ===========================================================================*/
+  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
+  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
+  //
+  // This software is provided 'as-is', without any express or implied
+  // warranty. In no event will the authors be held liable for any damages
+  // arising from the use of this software.
+  //
+  // Permission is granted to anyone to use this software for any purpose,
+  // including commercial applications, and to alter it and redistribute it
+  // freely, subject to the following restrictions:
+  //
+  // 1. The origin of this software must not be misrepresented; you must not
+  //   claim that you wrote the original software. If you use this software
+  //   in a product, an acknowledgment in the product documentation would be
+  //   appreciated but is not required.
+  // 2. Altered source versions must be plainly marked as such, and must not be
+  //   misrepresented as being the original software.
+  // 3. This notice may not be removed or altered from any source distribution.
 
 
 
-var ENOUGH_LENS = 852;
-var ENOUGH_DISTS = 592;
-//var ENOUGH =  (ENOUGH_LENS+ENOUGH_DISTS);
-
-var MAX_WBITS = 15;
-/* 32K LZ77 window */
-var DEF_WBITS = MAX_WBITS;
 
 
-function zswap32(q) {
-  return  (((q >>> 24) & 0xff) +
-          ((q >>> 8) & 0xff00) +
-          ((q & 0xff00) << 8) +
-          ((q & 0xff) << 24));
-}
+
+  const CODES = 0;
+  const LENS = 1;
+  const DISTS = 2;
+
+  /* Public constants ==========================================================*/
+  /* ===========================================================================*/
+
+  const {
+    Z_FINISH: Z_FINISH$1, Z_BLOCK, Z_TREES,
+    Z_OK: Z_OK$1, Z_STREAM_END: Z_STREAM_END$1, Z_NEED_DICT: Z_NEED_DICT$1, Z_STREAM_ERROR: Z_STREAM_ERROR$1, Z_DATA_ERROR: Z_DATA_ERROR$1, Z_MEM_ERROR: Z_MEM_ERROR$1, Z_BUF_ERROR,
+    Z_DEFLATED
+  } = constants$1;
 
 
-function InflateState() {
-  this.mode = 0;             /* current inflate mode */
-  this.last = false;          /* true if processing last block */
-  this.wrap = 0;              /* bit 0 true for zlib, bit 1 true for gzip */
-  this.havedict = false;      /* true if dictionary provided */
-  this.flags = 0;             /* gzip header method and flags (0 if zlib) */
-  this.dmax = 0;              /* zlib header max distance (INFLATE_STRICT) */
-  this.check = 0;             /* protected copy of check value */
-  this.total = 0;             /* protected copy of output count */
-  // TODO: may be {}
-  this.head = null;           /* where to save gzip header information */
+  /* STATES ====================================================================*/
+  /* ===========================================================================*/
 
-  /* sliding window */
-  this.wbits = 0;             /* log base 2 of requested window size */
-  this.wsize = 0;             /* window size or zero if not using window */
-  this.whave = 0;             /* valid bytes in the window */
-  this.wnext = 0;             /* window write index */
-  this.window = null;         /* allocated sliding window, if needed */
 
-  /* bit accumulator */
-  this.hold = 0;              /* input bit accumulator */
-  this.bits = 0;              /* number of bits in "in" */
+  const    HEAD = 1;       /* i: waiting for magic header */
+  const    FLAGS = 2;      /* i: waiting for method and flags (gzip) */
+  const    TIME = 3;       /* i: waiting for modification time (gzip) */
+  const    OS = 4;         /* i: waiting for extra flags and operating system (gzip) */
+  const    EXLEN = 5;      /* i: waiting for extra length (gzip) */
+  const    EXTRA = 6;      /* i: waiting for extra bytes (gzip) */
+  const    NAME = 7;       /* i: waiting for end of file name (gzip) */
+  const    COMMENT = 8;    /* i: waiting for end of comment (gzip) */
+  const    HCRC = 9;       /* i: waiting for header crc (gzip) */
+  const    DICTID = 10;    /* i: waiting for dictionary check value */
+  const    DICT = 11;      /* waiting for inflateSetDictionary() call */
+  const        TYPE = 12;      /* i: waiting for type bits, including last-flag bit */
+  const        TYPEDO = 13;    /* i: same, but skip check to exit inflate on new block */
+  const        STORED = 14;    /* i: waiting for stored size (length and complement) */
+  const        COPY_ = 15;     /* i/o: same as COPY below, but only first time in */
+  const        COPY = 16;      /* i/o: waiting for input or output to copy stored block */
+  const        TABLE = 17;     /* i: waiting for dynamic block table lengths */
+  const        LENLENS = 18;   /* i: waiting for code length code lengths */
+  const        CODELENS = 19;  /* i: waiting for length/lit and distance code lengths */
+  const            LEN_ = 20;      /* i: same as LEN below, but only first time in */
+  const            LEN = 21;       /* i: waiting for length/lit/eob code */
+  const            LENEXT = 22;    /* i: waiting for length extra bits */
+  const            DIST = 23;      /* i: waiting for distance code */
+  const            DISTEXT = 24;   /* i: waiting for distance extra bits */
+  const            MATCH = 25;     /* o: waiting for output space to copy string */
+  const            LIT = 26;       /* o: waiting for output space to write literal */
+  const    CHECK = 27;     /* i: waiting for 32-bit check value */
+  const    LENGTH = 28;    /* i: waiting for 32-bit length (gzip) */
+  const    DONE = 29;      /* finished check, done -- remain here until reset */
+  const    BAD = 30;       /* got a data error -- remain here until reset */
+  const    MEM = 31;       /* got an inflate() memory error -- remain here until reset */
+  const    SYNC = 32;      /* looking for synchronization bytes to restart inflate() */
 
-  /* for string and stored block copying */
-  this.length = 0;            /* literal or length of data to copy */
-  this.offset = 0;            /* distance back to copy string from */
+  /* ===========================================================================*/
 
-  /* for table and code decoding */
-  this.extra = 0;             /* extra bits needed */
 
-  /* fixed and dynamic code tables */
-  this.lencode = null;          /* starting table for length/literal codes */
-  this.distcode = null;         /* starting table for distance codes */
-  this.lenbits = 0;           /* index bits for lencode */
-  this.distbits = 0;          /* index bits for distcode */
 
-  /* dynamic table building */
-  this.ncode = 0;             /* number of code length code lengths */
-  this.nlen = 0;              /* number of length code lengths */
-  this.ndist = 0;             /* number of distance code lengths */
-  this.have = 0;              /* number of code lengths in lens[] */
-  this.next = null;              /* next available space in codes[] */
+  const ENOUGH_LENS = 852;
+  const ENOUGH_DISTS = 592;
+  //const ENOUGH =  (ENOUGH_LENS+ENOUGH_DISTS);
 
-  this.lens = new utils.Buf16(320); /* temporary storage for code lengths */
-  this.work = new utils.Buf16(288); /* work area for code table building */
+  const MAX_WBITS = 15;
+  /* 32K LZ77 window */
+  const DEF_WBITS = MAX_WBITS;
+
+
+  const zswap32 = (q) => {
+
+    return  (((q >>> 24) & 0xff) +
+            ((q >>> 8) & 0xff00) +
+            ((q & 0xff00) << 8) +
+            ((q & 0xff) << 24));
+  };
+
+
+  function InflateState() {
+    this.mode = 0;             /* current inflate mode */
+    this.last = false;          /* true if processing last block */
+    this.wrap = 0;              /* bit 0 true for zlib, bit 1 true for gzip */
+    this.havedict = false;      /* true if dictionary provided */
+    this.flags = 0;             /* gzip header method and flags (0 if zlib) */
+    this.dmax = 0;              /* zlib header max distance (INFLATE_STRICT) */
+    this.check = 0;             /* protected copy of check value */
+    this.total = 0;             /* protected copy of output count */
+    // TODO: may be {}
+    this.head = null;           /* where to save gzip header information */
+
+    /* sliding window */
+    this.wbits = 0;             /* log base 2 of requested window size */
+    this.wsize = 0;             /* window size or zero if not using window */
+    this.whave = 0;             /* valid bytes in the window */
+    this.wnext = 0;             /* window write index */
+    this.window = null;         /* allocated sliding window, if needed */
+
+    /* bit accumulator */
+    this.hold = 0;              /* input bit accumulator */
+    this.bits = 0;              /* number of bits in "in" */
+
+    /* for string and stored block copying */
+    this.length = 0;            /* literal or length of data to copy */
+    this.offset = 0;            /* distance back to copy string from */
+
+    /* for table and code decoding */
+    this.extra = 0;             /* extra bits needed */
+
+    /* fixed and dynamic code tables */
+    this.lencode = null;          /* starting table for length/literal codes */
+    this.distcode = null;         /* starting table for distance codes */
+    this.lenbits = 0;           /* index bits for lencode */
+    this.distbits = 0;          /* index bits for distcode */
+
+    /* dynamic table building */
+    this.ncode = 0;             /* number of code length code lengths */
+    this.nlen = 0;              /* number of length code lengths */
+    this.ndist = 0;             /* number of distance code lengths */
+    this.have = 0;              /* number of code lengths in lens[] */
+    this.next = null;              /* next available space in codes[] */
+
+    this.lens = new Uint16Array(320); /* temporary storage for code lengths */
+    this.work = new Uint16Array(288); /* work area for code table building */
+
+    /*
+     because we don't have pointers in js, we use lencode and distcode directly
+     as buffers so we don't need codes
+    */
+    //this.codes = new Int32Array(ENOUGH);       /* space for code tables */
+    this.lendyn = null;              /* dynamic table for length/literal codes (JS specific) */
+    this.distdyn = null;             /* dynamic table for distance codes (JS specific) */
+    this.sane = 0;                   /* if false, allow invalid distance too far */
+    this.back = 0;                   /* bits back of last unprocessed length/lit */
+    this.was = 0;                    /* initial length of match */
+  }
+
+
+  const inflateResetKeep = (strm) => {
+
+    if (!strm || !strm.state) { return Z_STREAM_ERROR$1; }
+    const state = strm.state;
+    strm.total_in = strm.total_out = state.total = 0;
+    strm.msg = ''; /*Z_NULL*/
+    if (state.wrap) {       /* to support ill-conceived Java test suite */
+      strm.adler = state.wrap & 1;
+    }
+    state.mode = HEAD;
+    state.last = 0;
+    state.havedict = 0;
+    state.dmax = 32768;
+    state.head = null/*Z_NULL*/;
+    state.hold = 0;
+    state.bits = 0;
+    //state.lencode = state.distcode = state.next = state.codes;
+    state.lencode = state.lendyn = new Int32Array(ENOUGH_LENS);
+    state.distcode = state.distdyn = new Int32Array(ENOUGH_DISTS);
+
+    state.sane = 1;
+    state.back = -1;
+    //Tracev((stderr, "inflate: reset\n"));
+    return Z_OK$1;
+  };
+
+
+  const inflateReset = (strm) => {
+
+    if (!strm || !strm.state) { return Z_STREAM_ERROR$1; }
+    const state = strm.state;
+    state.wsize = 0;
+    state.whave = 0;
+    state.wnext = 0;
+    return inflateResetKeep(strm);
+
+  };
+
+
+  const inflateReset2 = (strm, windowBits) => {
+    let wrap;
+
+    /* get the state */
+    if (!strm || !strm.state) { return Z_STREAM_ERROR$1; }
+    const state = strm.state;
+
+    /* extract wrap request from windowBits parameter */
+    if (windowBits < 0) {
+      wrap = 0;
+      windowBits = -windowBits;
+    }
+    else {
+      wrap = (windowBits >> 4) + 1;
+      if (windowBits < 48) {
+        windowBits &= 15;
+      }
+    }
+
+    /* set number of window bits, free window if different */
+    if (windowBits && (windowBits < 8 || windowBits > 15)) {
+      return Z_STREAM_ERROR$1;
+    }
+    if (state.window !== null && state.wbits !== windowBits) {
+      state.window = null;
+    }
+
+    /* update state and reset the rest of it */
+    state.wrap = wrap;
+    state.wbits = windowBits;
+    return inflateReset(strm);
+  };
+
+
+  const inflateInit2 = (strm, windowBits) => {
+
+    if (!strm) { return Z_STREAM_ERROR$1; }
+    //strm.msg = Z_NULL;                 /* in case we return an error */
+
+    const state = new InflateState();
+
+    //if (state === Z_NULL) return Z_MEM_ERROR;
+    //Tracev((stderr, "inflate: allocated\n"));
+    strm.state = state;
+    state.window = null/*Z_NULL*/;
+    const ret = inflateReset2(strm, windowBits);
+    if (ret !== Z_OK$1) {
+      strm.state = null/*Z_NULL*/;
+    }
+    return ret;
+  };
+
+
+  const inflateInit = (strm) => {
+
+    return inflateInit2(strm, DEF_WBITS);
+  };
+
 
   /*
-   because we don't have pointers in js, we use lencode and distcode directly
-   as buffers so we don't need codes
-  */
-  //this.codes = new utils.Buf32(ENOUGH);       /* space for code tables */
-  this.lendyn = null;              /* dynamic table for length/literal codes (JS specific) */
-  this.distdyn = null;             /* dynamic table for distance codes (JS specific) */
-  this.sane = 0;                   /* if false, allow invalid distance too far */
-  this.back = 0;                   /* bits back of last unprocessed length/lit */
-  this.was = 0;                    /* initial length of match */
-}
+   Return state with length and distance decoding tables and index sizes set to
+   fixed code decoding.  Normally this returns fixed tables from inffixed.h.
+   If BUILDFIXED is defined, then instead this routine builds the tables the
+   first time it's called, and returns those tables the first time and
+   thereafter.  This reduces the size of the code by about 2K bytes, in
+   exchange for a little execution time.  However, BUILDFIXED should not be
+   used for threaded applications, since the rewriting of the tables and virgin
+   may not be thread-safe.
+   */
+  let virgin = true;
 
-function inflateResetKeep(strm) {
-  var state;
+  let lenfix, distfix; // We have no pointers in JS, so keep tables separate
 
-  if (!strm || !strm.state) { return Z_STREAM_ERROR; }
-  state = strm.state;
-  strm.total_in = strm.total_out = state.total = 0;
-  strm.msg = ''; /*Z_NULL*/
-  if (state.wrap) {       /* to support ill-conceived Java test suite */
-    strm.adler = state.wrap & 1;
-  }
-  state.mode = HEAD;
-  state.last = 0;
-  state.havedict = 0;
-  state.dmax = 32768;
-  state.head = null/*Z_NULL*/;
-  state.hold = 0;
-  state.bits = 0;
-  //state.lencode = state.distcode = state.next = state.codes;
-  state.lencode = state.lendyn = new utils.Buf32(ENOUGH_LENS);
-  state.distcode = state.distdyn = new utils.Buf32(ENOUGH_DISTS);
 
-  state.sane = 1;
-  state.back = -1;
-  //Tracev((stderr, "inflate: reset\n"));
-  return Z_OK;
-}
+  const fixedtables = (state) => {
 
-function inflateReset(strm) {
-  var state;
+    /* build fixed huffman tables if first call (may not be thread safe) */
+    if (virgin) {
+      lenfix = new Int32Array(512);
+      distfix = new Int32Array(32);
 
-  if (!strm || !strm.state) { return Z_STREAM_ERROR; }
-  state = strm.state;
-  state.wsize = 0;
-  state.whave = 0;
-  state.wnext = 0;
-  return inflateResetKeep(strm);
+      /* literal/length table */
+      let sym = 0;
+      while (sym < 144) { state.lens[sym++] = 8; }
+      while (sym < 256) { state.lens[sym++] = 9; }
+      while (sym < 280) { state.lens[sym++] = 7; }
+      while (sym < 288) { state.lens[sym++] = 8; }
 
-}
+      inftrees(LENS,  state.lens, 0, 288, lenfix,   0, state.work, { bits: 9 });
 
-function inflateReset2(strm, windowBits) {
-  var wrap;
-  var state;
+      /* distance table */
+      sym = 0;
+      while (sym < 32) { state.lens[sym++] = 5; }
 
-  /* get the state */
-  if (!strm || !strm.state) { return Z_STREAM_ERROR; }
-  state = strm.state;
+      inftrees(DISTS, state.lens, 0, 32,   distfix, 0, state.work, { bits: 5 });
 
-  /* extract wrap request from windowBits parameter */
-  if (windowBits < 0) {
-    wrap = 0;
-    windowBits = -windowBits;
-  }
-  else {
-    wrap = (windowBits >> 4) + 1;
-    if (windowBits < 48) {
-      windowBits &= 15;
+      /* do this just once */
+      virgin = false;
     }
-  }
 
-  /* set number of window bits, free window if different */
-  if (windowBits && (windowBits < 8 || windowBits > 15)) {
-    return Z_STREAM_ERROR;
-  }
-  if (state.window !== null && state.wbits !== windowBits) {
-    state.window = null;
-  }
-
-  /* update state and reset the rest of it */
-  state.wrap = wrap;
-  state.wbits = windowBits;
-  return inflateReset(strm);
-}
-
-function inflateInit2(strm, windowBits) {
-  var ret;
-  var state;
-
-  if (!strm) { return Z_STREAM_ERROR; }
-  //strm.msg = Z_NULL;                 /* in case we return an error */
-
-  state = new InflateState();
-
-  //if (state === Z_NULL) return Z_MEM_ERROR;
-  //Tracev((stderr, "inflate: allocated\n"));
-  strm.state = state;
-  state.window = null/*Z_NULL*/;
-  ret = inflateReset2(strm, windowBits);
-  if (ret !== Z_OK) {
-    strm.state = null/*Z_NULL*/;
-  }
-  return ret;
-}
-
-function inflateInit(strm) {
-  return inflateInit2(strm, DEF_WBITS);
-}
+    state.lencode = lenfix;
+    state.lenbits = 9;
+    state.distcode = distfix;
+    state.distbits = 5;
+  };
 
 
-/*
- Return state with length and distance decoding tables and index sizes set to
- fixed code decoding.  Normally this returns fixed tables from inffixed.h.
- If BUILDFIXED is defined, then instead this routine builds the tables the
- first time it's called, and returns those tables the first time and
- thereafter.  This reduces the size of the code by about 2K bytes, in
- exchange for a little execution time.  However, BUILDFIXED should not be
- used for threaded applications, since the rewriting of the tables and virgin
- may not be thread-safe.
- */
-var virgin = true;
+  /*
+   Update the window with the last wsize (normally 32K) bytes written before
+   returning.  If window does not exist yet, create it.  This is only called
+   when a window is already in use, or when output has been written during this
+   inflate call, but the end of the deflate stream has not been reached yet.
+   It is also called to create a window for dictionary data when a dictionary
+   is loaded.
 
-var lenfix, distfix; // We have no pointers in JS, so keep tables separate
+   Providing output buffers larger than 32K to inflate() should provide a speed
+   advantage, since only the last 32K of output is copied to the sliding window
+   upon return from inflate(), and since all distances after the first 32K of
+   output will fall in the output data, making match copies simpler and faster.
+   The advantage may be dependent on the size of the processor's data caches.
+   */
+  const updatewindow = (strm, src, end, copy) => {
 
-function fixedtables(state) {
-  /* build fixed huffman tables if first call (may not be thread safe) */
-  if (virgin) {
-    var sym;
+    let dist;
+    const state = strm.state;
 
-    lenfix = new utils.Buf32(512);
-    distfix = new utils.Buf32(32);
+    /* if it hasn't been done already, allocate space for the window */
+    if (state.window === null) {
+      state.wsize = 1 << state.wbits;
+      state.wnext = 0;
+      state.whave = 0;
 
-    /* literal/length table */
-    sym = 0;
-    while (sym < 144) { state.lens[sym++] = 8; }
-    while (sym < 256) { state.lens[sym++] = 9; }
-    while (sym < 280) { state.lens[sym++] = 7; }
-    while (sym < 288) { state.lens[sym++] = 8; }
-
-    inflate_table(LENS,  state.lens, 0, 288, lenfix,   0, state.work, { bits: 9 });
-
-    /* distance table */
-    sym = 0;
-    while (sym < 32) { state.lens[sym++] = 5; }
-
-    inflate_table(DISTS, state.lens, 0, 32,   distfix, 0, state.work, { bits: 5 });
-
-    /* do this just once */
-    virgin = false;
-  }
-
-  state.lencode = lenfix;
-  state.lenbits = 9;
-  state.distcode = distfix;
-  state.distbits = 5;
-}
-
-
-/*
- Update the window with the last wsize (normally 32K) bytes written before
- returning.  If window does not exist yet, create it.  This is only called
- when a window is already in use, or when output has been written during this
- inflate call, but the end of the deflate stream has not been reached yet.
- It is also called to create a window for dictionary data when a dictionary
- is loaded.
-
- Providing output buffers larger than 32K to inflate() should provide a speed
- advantage, since only the last 32K of output is copied to the sliding window
- upon return from inflate(), and since all distances after the first 32K of
- output will fall in the output data, making match copies simpler and faster.
- The advantage may be dependent on the size of the processor's data caches.
- */
-function updatewindow(strm, src, end, copy) {
-  var dist;
-  var state = strm.state;
-
-  /* if it hasn't been done already, allocate space for the window */
-  if (state.window === null) {
-    state.wsize = 1 << state.wbits;
-    state.wnext = 0;
-    state.whave = 0;
-
-    state.window = new utils.Buf8(state.wsize);
-  }
-
-  /* copy state->wsize or less output bytes into the circular window */
-  if (copy >= state.wsize) {
-    utils.arraySet(state.window, src, end - state.wsize, state.wsize, 0);
-    state.wnext = 0;
-    state.whave = state.wsize;
-  }
-  else {
-    dist = state.wsize - state.wnext;
-    if (dist > copy) {
-      dist = copy;
+      state.window = new Uint8Array(state.wsize);
     }
-    //zmemcpy(state->window + state->wnext, end - copy, dist);
-    utils.arraySet(state.window, src, end - copy, dist, state.wnext);
-    copy -= dist;
-    if (copy) {
-      //zmemcpy(state->window, end - copy, copy);
-      utils.arraySet(state.window, src, end - copy, copy, 0);
-      state.wnext = copy;
+
+    /* copy state->wsize or less output bytes into the circular window */
+    if (copy >= state.wsize) {
+      state.window.set(src.subarray(end - state.wsize, end), 0);
+      state.wnext = 0;
       state.whave = state.wsize;
     }
     else {
-      state.wnext += dist;
-      if (state.wnext === state.wsize) { state.wnext = 0; }
-      if (state.whave < state.wsize) { state.whave += dist; }
+      dist = state.wsize - state.wnext;
+      if (dist > copy) {
+        dist = copy;
+      }
+      //zmemcpy(state->window + state->wnext, end - copy, dist);
+      state.window.set(src.subarray(end - copy, end - copy + dist), state.wnext);
+      copy -= dist;
+      if (copy) {
+        //zmemcpy(state->window, end - copy, copy);
+        state.window.set(src.subarray(end - copy, end), 0);
+        state.wnext = copy;
+        state.whave = state.wsize;
+      }
+      else {
+        state.wnext += dist;
+        if (state.wnext === state.wsize) { state.wnext = 0; }
+        if (state.whave < state.wsize) { state.whave += dist; }
+      }
     }
-  }
-  return 0;
-}
-
-function inflate(strm, flush) {
-  var state;
-  var input, output;          // input/output buffers
-  var next;                   /* next input INDEX */
-  var put;                    /* next output INDEX */
-  var have, left;             /* available input and output */
-  var hold;                   /* bit buffer */
-  var bits;                   /* bits in bit buffer */
-  var _in, _out;              /* save starting available input and output */
-  var copy;                   /* number of stored or match bytes to copy */
-  var from;                   /* where to copy match bytes from */
-  var from_source;
-  var here = 0;               /* current decoding table entry */
-  var here_bits, here_op, here_val; // paked "here" denormalized (JS specific)
-  //var last;                   /* parent table entry */
-  var last_bits, last_op, last_val; // paked "last" denormalized (JS specific)
-  var len;                    /* length to copy for repeats, bits to drop */
-  var ret;                    /* return code */
-  var hbuf = new utils.Buf8(4);    /* buffer for gzip header crc calculation */
-  var opts;
-
-  var n; // temporary var for NEED_BITS
-
-  var order = /* permutation of code lengths */
-    [ 16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15 ];
+    return 0;
+  };
 
 
-  if (!strm || !strm.state || !strm.output ||
-      (!strm.input && strm.avail_in !== 0)) {
-    return Z_STREAM_ERROR;
-  }
+  const inflate$1 = (strm, flush) => {
 
-  state = strm.state;
-  if (state.mode === TYPE) { state.mode = TYPEDO; }    /* skip check */
+    let state;
+    let input, output;          // input/output buffers
+    let next;                   /* next input INDEX */
+    let put;                    /* next output INDEX */
+    let have, left;             /* available input and output */
+    let hold;                   /* bit buffer */
+    let bits;                   /* bits in bit buffer */
+    let _in, _out;              /* save starting available input and output */
+    let copy;                   /* number of stored or match bytes to copy */
+    let from;                   /* where to copy match bytes from */
+    let from_source;
+    let here = 0;               /* current decoding table entry */
+    let here_bits, here_op, here_val; // paked "here" denormalized (JS specific)
+    //let last;                   /* parent table entry */
+    let last_bits, last_op, last_val; // paked "last" denormalized (JS specific)
+    let len;                    /* length to copy for repeats, bits to drop */
+    let ret;                    /* return code */
+    const hbuf = new Uint8Array(4);    /* buffer for gzip header crc calculation */
+    let opts;
+
+    let n; // temporary variable for NEED_BITS
+
+    const order = /* permutation of code lengths */
+      new Uint8Array([ 16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15 ]);
 
 
-  //--- LOAD() ---
-  put = strm.next_out;
-  output = strm.output;
-  left = strm.avail_out;
-  next = strm.next_in;
-  input = strm.input;
-  have = strm.avail_in;
-  hold = state.hold;
-  bits = state.bits;
-  //---
+    if (!strm || !strm.state || !strm.output ||
+        (!strm.input && strm.avail_in !== 0)) {
+      return Z_STREAM_ERROR$1;
+    }
 
-  _in = have;
-  _out = left;
-  ret = Z_OK;
+    state = strm.state;
+    if (state.mode === TYPE) { state.mode = TYPEDO; }    /* skip check */
 
-  inf_leave: // goto emulation
-  for (;;) {
-    switch (state.mode) {
-      case HEAD:
-        if (state.wrap === 0) {
-          state.mode = TYPEDO;
-          break;
-        }
-        //=== NEEDBITS(16);
-        while (bits < 16) {
-          if (have === 0) { break inf_leave; }
-          have--;
-          hold += input[next++] << bits;
-          bits += 8;
-        }
-        //===//
-        if ((state.wrap & 2) && hold === 0x8b1f) {  /* gzip header */
-          state.check = 0/*crc32(0L, Z_NULL, 0)*/;
-          //=== CRC2(state.check, hold);
-          hbuf[0] = hold & 0xff;
-          hbuf[1] = (hold >>> 8) & 0xff;
-          state.check = crc32(state.check, hbuf, 2, 0);
+
+    //--- LOAD() ---
+    put = strm.next_out;
+    output = strm.output;
+    left = strm.avail_out;
+    next = strm.next_in;
+    input = strm.input;
+    have = strm.avail_in;
+    hold = state.hold;
+    bits = state.bits;
+    //---
+
+    _in = have;
+    _out = left;
+    ret = Z_OK$1;
+
+    inf_leave: // goto emulation
+    for (;;) {
+      switch (state.mode) {
+        case HEAD:
+          if (state.wrap === 0) {
+            state.mode = TYPEDO;
+            break;
+          }
+          //=== NEEDBITS(16);
+          while (bits < 16) {
+            if (have === 0) { break inf_leave; }
+            have--;
+            hold += input[next++] << bits;
+            bits += 8;
+          }
           //===//
+          if ((state.wrap & 2) && hold === 0x8b1f) {  /* gzip header */
+            state.check = 0/*crc32(0L, Z_NULL, 0)*/;
+            //=== CRC2(state.check, hold);
+            hbuf[0] = hold & 0xff;
+            hbuf[1] = (hold >>> 8) & 0xff;
+            state.check = crc32_1(state.check, hbuf, 2, 0);
+            //===//
 
+            //=== INITBITS();
+            hold = 0;
+            bits = 0;
+            //===//
+            state.mode = FLAGS;
+            break;
+          }
+          state.flags = 0;           /* expect zlib header */
+          if (state.head) {
+            state.head.done = false;
+          }
+          if (!(state.wrap & 1) ||   /* check if zlib header allowed */
+            (((hold & 0xff)/*BITS(8)*/ << 8) + (hold >> 8)) % 31) {
+            strm.msg = 'incorrect header check';
+            state.mode = BAD;
+            break;
+          }
+          if ((hold & 0x0f)/*BITS(4)*/ !== Z_DEFLATED) {
+            strm.msg = 'unknown compression method';
+            state.mode = BAD;
+            break;
+          }
+          //--- DROPBITS(4) ---//
+          hold >>>= 4;
+          bits -= 4;
+          //---//
+          len = (hold & 0x0f)/*BITS(4)*/ + 8;
+          if (state.wbits === 0) {
+            state.wbits = len;
+          }
+          else if (len > state.wbits) {
+            strm.msg = 'invalid window size';
+            state.mode = BAD;
+            break;
+          }
+
+          // !!! pako patch. Force use `options.windowBits` if passed.
+          // Required to always use max window size by default.
+          state.dmax = 1 << state.wbits;
+          //state.dmax = 1 << len;
+
+          //Tracev((stderr, "inflate:   zlib header ok\n"));
+          strm.adler = state.check = 1/*adler32(0L, Z_NULL, 0)*/;
+          state.mode = hold & 0x200 ? DICTID : TYPE;
           //=== INITBITS();
           hold = 0;
           bits = 0;
           //===//
-          state.mode = FLAGS;
           break;
-        }
-        state.flags = 0;           /* expect zlib header */
-        if (state.head) {
-          state.head.done = false;
-        }
-        if (!(state.wrap & 1) ||   /* check if zlib header allowed */
-          (((hold & 0xff)/*BITS(8)*/ << 8) + (hold >> 8)) % 31) {
-          strm.msg = 'incorrect header check';
-          state.mode = BAD;
-          break;
-        }
-        if ((hold & 0x0f)/*BITS(4)*/ !== Z_DEFLATED) {
-          strm.msg = 'unknown compression method';
-          state.mode = BAD;
-          break;
-        }
-        //--- DROPBITS(4) ---//
-        hold >>>= 4;
-        bits -= 4;
-        //---//
-        len = (hold & 0x0f)/*BITS(4)*/ + 8;
-        if (state.wbits === 0) {
-          state.wbits = len;
-        }
-        else if (len > state.wbits) {
-          strm.msg = 'invalid window size';
-          state.mode = BAD;
-          break;
-        }
-        state.dmax = 1 << len;
-        //Tracev((stderr, "inflate:   zlib header ok\n"));
-        strm.adler = state.check = 1/*adler32(0L, Z_NULL, 0)*/;
-        state.mode = hold & 0x200 ? DICTID : TYPE;
-        //=== INITBITS();
-        hold = 0;
-        bits = 0;
-        //===//
-        break;
-      case FLAGS:
-        //=== NEEDBITS(16); */
-        while (bits < 16) {
-          if (have === 0) { break inf_leave; }
-          have--;
-          hold += input[next++] << bits;
-          bits += 8;
-        }
-        //===//
-        state.flags = hold;
-        if ((state.flags & 0xff) !== Z_DEFLATED) {
-          strm.msg = 'unknown compression method';
-          state.mode = BAD;
-          break;
-        }
-        if (state.flags & 0xe000) {
-          strm.msg = 'unknown header flags set';
-          state.mode = BAD;
-          break;
-        }
-        if (state.head) {
-          state.head.text = ((hold >> 8) & 1);
-        }
-        if (state.flags & 0x0200) {
-          //=== CRC2(state.check, hold);
-          hbuf[0] = hold & 0xff;
-          hbuf[1] = (hold >>> 8) & 0xff;
-          state.check = crc32(state.check, hbuf, 2, 0);
-          //===//
-        }
-        //=== INITBITS();
-        hold = 0;
-        bits = 0;
-        //===//
-        state.mode = TIME;
-        /* falls through */
-      case TIME:
-        //=== NEEDBITS(32); */
-        while (bits < 32) {
-          if (have === 0) { break inf_leave; }
-          have--;
-          hold += input[next++] << bits;
-          bits += 8;
-        }
-        //===//
-        if (state.head) {
-          state.head.time = hold;
-        }
-        if (state.flags & 0x0200) {
-          //=== CRC4(state.check, hold)
-          hbuf[0] = hold & 0xff;
-          hbuf[1] = (hold >>> 8) & 0xff;
-          hbuf[2] = (hold >>> 16) & 0xff;
-          hbuf[3] = (hold >>> 24) & 0xff;
-          state.check = crc32(state.check, hbuf, 4, 0);
-          //===
-        }
-        //=== INITBITS();
-        hold = 0;
-        bits = 0;
-        //===//
-        state.mode = OS;
-        /* falls through */
-      case OS:
-        //=== NEEDBITS(16); */
-        while (bits < 16) {
-          if (have === 0) { break inf_leave; }
-          have--;
-          hold += input[next++] << bits;
-          bits += 8;
-        }
-        //===//
-        if (state.head) {
-          state.head.xflags = (hold & 0xff);
-          state.head.os = (hold >> 8);
-        }
-        if (state.flags & 0x0200) {
-          //=== CRC2(state.check, hold);
-          hbuf[0] = hold & 0xff;
-          hbuf[1] = (hold >>> 8) & 0xff;
-          state.check = crc32(state.check, hbuf, 2, 0);
-          //===//
-        }
-        //=== INITBITS();
-        hold = 0;
-        bits = 0;
-        //===//
-        state.mode = EXLEN;
-        /* falls through */
-      case EXLEN:
-        if (state.flags & 0x0400) {
+        case FLAGS:
           //=== NEEDBITS(16); */
           while (bits < 16) {
             if (have === 0) { break inf_leave; }
@@ -63314,117 +63242,61 @@ function inflate(strm, flush) {
             bits += 8;
           }
           //===//
-          state.length = hold;
+          state.flags = hold;
+          if ((state.flags & 0xff) !== Z_DEFLATED) {
+            strm.msg = 'unknown compression method';
+            state.mode = BAD;
+            break;
+          }
+          if (state.flags & 0xe000) {
+            strm.msg = 'unknown header flags set';
+            state.mode = BAD;
+            break;
+          }
           if (state.head) {
-            state.head.extra_len = hold;
+            state.head.text = ((hold >> 8) & 1);
           }
           if (state.flags & 0x0200) {
             //=== CRC2(state.check, hold);
             hbuf[0] = hold & 0xff;
             hbuf[1] = (hold >>> 8) & 0xff;
-            state.check = crc32(state.check, hbuf, 2, 0);
+            state.check = crc32_1(state.check, hbuf, 2, 0);
             //===//
           }
           //=== INITBITS();
           hold = 0;
           bits = 0;
           //===//
-        }
-        else if (state.head) {
-          state.head.extra = null/*Z_NULL*/;
-        }
-        state.mode = EXTRA;
-        /* falls through */
-      case EXTRA:
-        if (state.flags & 0x0400) {
-          copy = state.length;
-          if (copy > have) { copy = have; }
-          if (copy) {
-            if (state.head) {
-              len = state.head.extra_len - state.length;
-              if (!state.head.extra) {
-                // Use untyped array for more convenient processing later
-                state.head.extra = new Array(state.head.extra_len);
-              }
-              utils.arraySet(
-                state.head.extra,
-                input,
-                next,
-                // extra field is limited to 65536 bytes
-                // - no need for additional size check
-                copy,
-                /*len + copy > state.head.extra_max - len ? state.head.extra_max : copy,*/
-                len
-              );
-              //zmemcpy(state.head.extra + len, next,
-              //        len + copy > state.head.extra_max ?
-              //        state.head.extra_max - len : copy);
-            }
-            if (state.flags & 0x0200) {
-              state.check = crc32(state.check, input, copy, next);
-            }
-            have -= copy;
-            next += copy;
-            state.length -= copy;
+          state.mode = TIME;
+          /* falls through */
+        case TIME:
+          //=== NEEDBITS(32); */
+          while (bits < 32) {
+            if (have === 0) { break inf_leave; }
+            have--;
+            hold += input[next++] << bits;
+            bits += 8;
           }
-          if (state.length) { break inf_leave; }
-        }
-        state.length = 0;
-        state.mode = NAME;
-        /* falls through */
-      case NAME:
-        if (state.flags & 0x0800) {
-          if (have === 0) { break inf_leave; }
-          copy = 0;
-          do {
-            // TODO: 2 or 1 bytes?
-            len = input[next + copy++];
-            /* use constant limit because in js we should not preallocate memory */
-            if (state.head && len &&
-                (state.length < 65536 /*state.head.name_max*/)) {
-              state.head.name += String.fromCharCode(len);
-            }
-          } while (len && copy < have);
-
+          //===//
+          if (state.head) {
+            state.head.time = hold;
+          }
           if (state.flags & 0x0200) {
-            state.check = crc32(state.check, input, copy, next);
+            //=== CRC4(state.check, hold)
+            hbuf[0] = hold & 0xff;
+            hbuf[1] = (hold >>> 8) & 0xff;
+            hbuf[2] = (hold >>> 16) & 0xff;
+            hbuf[3] = (hold >>> 24) & 0xff;
+            state.check = crc32_1(state.check, hbuf, 4, 0);
+            //===
           }
-          have -= copy;
-          next += copy;
-          if (len) { break inf_leave; }
-        }
-        else if (state.head) {
-          state.head.name = null;
-        }
-        state.length = 0;
-        state.mode = COMMENT;
-        /* falls through */
-      case COMMENT:
-        if (state.flags & 0x1000) {
-          if (have === 0) { break inf_leave; }
-          copy = 0;
-          do {
-            len = input[next + copy++];
-            /* use constant limit because in js we should not preallocate memory */
-            if (state.head && len &&
-                (state.length < 65536 /*state.head.comm_max*/)) {
-              state.head.comment += String.fromCharCode(len);
-            }
-          } while (len && copy < have);
-          if (state.flags & 0x0200) {
-            state.check = crc32(state.check, input, copy, next);
-          }
-          have -= copy;
-          next += copy;
-          if (len) { break inf_leave; }
-        }
-        else if (state.head) {
-          state.head.comment = null;
-        }
-        state.mode = HCRC;
-        /* falls through */
-      case HCRC:
-        if (state.flags & 0x0200) {
+          //=== INITBITS();
+          hold = 0;
+          bits = 0;
+          //===//
+          state.mode = OS;
+          /* falls through */
+        case OS:
           //=== NEEDBITS(16); */
           while (bits < 16) {
             if (have === 0) { break inf_leave; }
@@ -63433,201 +63305,213 @@ function inflate(strm, flush) {
             bits += 8;
           }
           //===//
-          if (hold !== (state.check & 0xffff)) {
-            strm.msg = 'header crc mismatch';
-            state.mode = BAD;
-            break;
+          if (state.head) {
+            state.head.xflags = (hold & 0xff);
+            state.head.os = (hold >> 8);
+          }
+          if (state.flags & 0x0200) {
+            //=== CRC2(state.check, hold);
+            hbuf[0] = hold & 0xff;
+            hbuf[1] = (hold >>> 8) & 0xff;
+            state.check = crc32_1(state.check, hbuf, 2, 0);
+            //===//
           }
           //=== INITBITS();
           hold = 0;
           bits = 0;
           //===//
-        }
-        if (state.head) {
-          state.head.hcrc = ((state.flags >> 9) & 1);
-          state.head.done = true;
-        }
-        strm.adler = state.check = 0;
-        state.mode = TYPE;
-        break;
-      case DICTID:
-        //=== NEEDBITS(32); */
-        while (bits < 32) {
-          if (have === 0) { break inf_leave; }
-          have--;
-          hold += input[next++] << bits;
-          bits += 8;
-        }
-        //===//
-        strm.adler = state.check = zswap32(hold);
-        //=== INITBITS();
-        hold = 0;
-        bits = 0;
-        //===//
-        state.mode = DICT;
-        /* falls through */
-      case DICT:
-        if (state.havedict === 0) {
-          //--- RESTORE() ---
-          strm.next_out = put;
-          strm.avail_out = left;
-          strm.next_in = next;
-          strm.avail_in = have;
-          state.hold = hold;
-          state.bits = bits;
-          //---
-          return Z_NEED_DICT;
-        }
-        strm.adler = state.check = 1/*adler32(0L, Z_NULL, 0)*/;
-        state.mode = TYPE;
-        /* falls through */
-      case TYPE:
-        if (flush === Z_BLOCK || flush === Z_TREES) { break inf_leave; }
-        /* falls through */
-      case TYPEDO:
-        if (state.last) {
-          //--- BYTEBITS() ---//
-          hold >>>= bits & 7;
-          bits -= bits & 7;
-          //---//
-          state.mode = CHECK;
-          break;
-        }
-        //=== NEEDBITS(3); */
-        while (bits < 3) {
-          if (have === 0) { break inf_leave; }
-          have--;
-          hold += input[next++] << bits;
-          bits += 8;
-        }
-        //===//
-        state.last = (hold & 0x01)/*BITS(1)*/;
-        //--- DROPBITS(1) ---//
-        hold >>>= 1;
-        bits -= 1;
-        //---//
-
-        switch ((hold & 0x03)/*BITS(2)*/) {
-          case 0:                             /* stored block */
-            //Tracev((stderr, "inflate:     stored block%s\n",
-            //        state.last ? " (last)" : ""));
-            state.mode = STORED;
-            break;
-          case 1:                             /* fixed block */
-            fixedtables(state);
-            //Tracev((stderr, "inflate:     fixed codes block%s\n",
-            //        state.last ? " (last)" : ""));
-            state.mode = LEN_;             /* decode codes */
-            if (flush === Z_TREES) {
-              //--- DROPBITS(2) ---//
-              hold >>>= 2;
-              bits -= 2;
-              //---//
-              break inf_leave;
+          state.mode = EXLEN;
+          /* falls through */
+        case EXLEN:
+          if (state.flags & 0x0400) {
+            //=== NEEDBITS(16); */
+            while (bits < 16) {
+              if (have === 0) { break inf_leave; }
+              have--;
+              hold += input[next++] << bits;
+              bits += 8;
             }
+            //===//
+            state.length = hold;
+            if (state.head) {
+              state.head.extra_len = hold;
+            }
+            if (state.flags & 0x0200) {
+              //=== CRC2(state.check, hold);
+              hbuf[0] = hold & 0xff;
+              hbuf[1] = (hold >>> 8) & 0xff;
+              state.check = crc32_1(state.check, hbuf, 2, 0);
+              //===//
+            }
+            //=== INITBITS();
+            hold = 0;
+            bits = 0;
+            //===//
+          }
+          else if (state.head) {
+            state.head.extra = null/*Z_NULL*/;
+          }
+          state.mode = EXTRA;
+          /* falls through */
+        case EXTRA:
+          if (state.flags & 0x0400) {
+            copy = state.length;
+            if (copy > have) { copy = have; }
+            if (copy) {
+              if (state.head) {
+                len = state.head.extra_len - state.length;
+                if (!state.head.extra) {
+                  // Use untyped array for more convenient processing later
+                  state.head.extra = new Uint8Array(state.head.extra_len);
+                }
+                state.head.extra.set(
+                  input.subarray(
+                    next,
+                    // extra field is limited to 65536 bytes
+                    // - no need for additional size check
+                    next + copy
+                  ),
+                  /*len + copy > state.head.extra_max - len ? state.head.extra_max : copy,*/
+                  len
+                );
+                //zmemcpy(state.head.extra + len, next,
+                //        len + copy > state.head.extra_max ?
+                //        state.head.extra_max - len : copy);
+              }
+              if (state.flags & 0x0200) {
+                state.check = crc32_1(state.check, input, copy, next);
+              }
+              have -= copy;
+              next += copy;
+              state.length -= copy;
+            }
+            if (state.length) { break inf_leave; }
+          }
+          state.length = 0;
+          state.mode = NAME;
+          /* falls through */
+        case NAME:
+          if (state.flags & 0x0800) {
+            if (have === 0) { break inf_leave; }
+            copy = 0;
+            do {
+              // TODO: 2 or 1 bytes?
+              len = input[next + copy++];
+              /* use constant limit because in js we should not preallocate memory */
+              if (state.head && len &&
+                  (state.length < 65536 /*state.head.name_max*/)) {
+                state.head.name += String.fromCharCode(len);
+              }
+            } while (len && copy < have);
+
+            if (state.flags & 0x0200) {
+              state.check = crc32_1(state.check, input, copy, next);
+            }
+            have -= copy;
+            next += copy;
+            if (len) { break inf_leave; }
+          }
+          else if (state.head) {
+            state.head.name = null;
+          }
+          state.length = 0;
+          state.mode = COMMENT;
+          /* falls through */
+        case COMMENT:
+          if (state.flags & 0x1000) {
+            if (have === 0) { break inf_leave; }
+            copy = 0;
+            do {
+              len = input[next + copy++];
+              /* use constant limit because in js we should not preallocate memory */
+              if (state.head && len &&
+                  (state.length < 65536 /*state.head.comm_max*/)) {
+                state.head.comment += String.fromCharCode(len);
+              }
+            } while (len && copy < have);
+            if (state.flags & 0x0200) {
+              state.check = crc32_1(state.check, input, copy, next);
+            }
+            have -= copy;
+            next += copy;
+            if (len) { break inf_leave; }
+          }
+          else if (state.head) {
+            state.head.comment = null;
+          }
+          state.mode = HCRC;
+          /* falls through */
+        case HCRC:
+          if (state.flags & 0x0200) {
+            //=== NEEDBITS(16); */
+            while (bits < 16) {
+              if (have === 0) { break inf_leave; }
+              have--;
+              hold += input[next++] << bits;
+              bits += 8;
+            }
+            //===//
+            if (hold !== (state.check & 0xffff)) {
+              strm.msg = 'header crc mismatch';
+              state.mode = BAD;
+              break;
+            }
+            //=== INITBITS();
+            hold = 0;
+            bits = 0;
+            //===//
+          }
+          if (state.head) {
+            state.head.hcrc = ((state.flags >> 9) & 1);
+            state.head.done = true;
+          }
+          strm.adler = state.check = 0;
+          state.mode = TYPE;
+          break;
+        case DICTID:
+          //=== NEEDBITS(32); */
+          while (bits < 32) {
+            if (have === 0) { break inf_leave; }
+            have--;
+            hold += input[next++] << bits;
+            bits += 8;
+          }
+          //===//
+          strm.adler = state.check = zswap32(hold);
+          //=== INITBITS();
+          hold = 0;
+          bits = 0;
+          //===//
+          state.mode = DICT;
+          /* falls through */
+        case DICT:
+          if (state.havedict === 0) {
+            //--- RESTORE() ---
+            strm.next_out = put;
+            strm.avail_out = left;
+            strm.next_in = next;
+            strm.avail_in = have;
+            state.hold = hold;
+            state.bits = bits;
+            //---
+            return Z_NEED_DICT$1;
+          }
+          strm.adler = state.check = 1/*adler32(0L, Z_NULL, 0)*/;
+          state.mode = TYPE;
+          /* falls through */
+        case TYPE:
+          if (flush === Z_BLOCK || flush === Z_TREES) { break inf_leave; }
+          /* falls through */
+        case TYPEDO:
+          if (state.last) {
+            //--- BYTEBITS() ---//
+            hold >>>= bits & 7;
+            bits -= bits & 7;
+            //---//
+            state.mode = CHECK;
             break;
-          case 2:                             /* dynamic block */
-            //Tracev((stderr, "inflate:     dynamic codes block%s\n",
-            //        state.last ? " (last)" : ""));
-            state.mode = TABLE;
-            break;
-          case 3:
-            strm.msg = 'invalid block type';
-            state.mode = BAD;
-        }
-        //--- DROPBITS(2) ---//
-        hold >>>= 2;
-        bits -= 2;
-        //---//
-        break;
-      case STORED:
-        //--- BYTEBITS() ---// /* go to byte boundary */
-        hold >>>= bits & 7;
-        bits -= bits & 7;
-        //---//
-        //=== NEEDBITS(32); */
-        while (bits < 32) {
-          if (have === 0) { break inf_leave; }
-          have--;
-          hold += input[next++] << bits;
-          bits += 8;
-        }
-        //===//
-        if ((hold & 0xffff) !== ((hold >>> 16) ^ 0xffff)) {
-          strm.msg = 'invalid stored block lengths';
-          state.mode = BAD;
-          break;
-        }
-        state.length = hold & 0xffff;
-        //Tracev((stderr, "inflate:       stored length %u\n",
-        //        state.length));
-        //=== INITBITS();
-        hold = 0;
-        bits = 0;
-        //===//
-        state.mode = COPY_;
-        if (flush === Z_TREES) { break inf_leave; }
-        /* falls through */
-      case COPY_:
-        state.mode = COPY;
-        /* falls through */
-      case COPY:
-        copy = state.length;
-        if (copy) {
-          if (copy > have) { copy = have; }
-          if (copy > left) { copy = left; }
-          if (copy === 0) { break inf_leave; }
-          //--- zmemcpy(put, next, copy); ---
-          utils.arraySet(output, input, next, copy, put);
-          //---//
-          have -= copy;
-          next += copy;
-          left -= copy;
-          put += copy;
-          state.length -= copy;
-          break;
-        }
-        //Tracev((stderr, "inflate:       stored end\n"));
-        state.mode = TYPE;
-        break;
-      case TABLE:
-        //=== NEEDBITS(14); */
-        while (bits < 14) {
-          if (have === 0) { break inf_leave; }
-          have--;
-          hold += input[next++] << bits;
-          bits += 8;
-        }
-        //===//
-        state.nlen = (hold & 0x1f)/*BITS(5)*/ + 257;
-        //--- DROPBITS(5) ---//
-        hold >>>= 5;
-        bits -= 5;
-        //---//
-        state.ndist = (hold & 0x1f)/*BITS(5)*/ + 1;
-        //--- DROPBITS(5) ---//
-        hold >>>= 5;
-        bits -= 5;
-        //---//
-        state.ncode = (hold & 0x0f)/*BITS(4)*/ + 4;
-        //--- DROPBITS(4) ---//
-        hold >>>= 4;
-        bits -= 4;
-        //---//
-//#ifndef PKZIP_BUG_WORKAROUND
-        if (state.nlen > 286 || state.ndist > 30) {
-          strm.msg = 'too many length or distance symbols';
-          state.mode = BAD;
-          break;
-        }
-//#endif
-        //Tracev((stderr, "inflate:       table sizes ok\n"));
-        state.have = 0;
-        state.mode = LENLENS;
-        /* falls through */
-      case LENLENS:
-        while (state.have < state.ncode) {
-          //=== NEEDBITS(3);
+          }
+          //=== NEEDBITS(3); */
           while (bits < 3) {
             if (have === 0) { break inf_leave; }
             have--;
@@ -63635,39 +63519,442 @@ function inflate(strm, flush) {
             bits += 8;
           }
           //===//
-          state.lens[order[state.have++]] = (hold & 0x07);//BITS(3);
-          //--- DROPBITS(3) ---//
-          hold >>>= 3;
-          bits -= 3;
+          state.last = (hold & 0x01)/*BITS(1)*/;
+          //--- DROPBITS(1) ---//
+          hold >>>= 1;
+          bits -= 1;
           //---//
-        }
-        while (state.have < 19) {
-          state.lens[order[state.have++]] = 0;
-        }
-        // We have separate tables & no pointers. 2 commented lines below not needed.
-        //state.next = state.codes;
-        //state.lencode = state.next;
-        // Switch to use dynamic table
-        state.lencode = state.lendyn;
-        state.lenbits = 7;
 
-        opts = { bits: state.lenbits };
-        ret = inflate_table(CODES, state.lens, 0, 19, state.lencode, 0, state.work, opts);
-        state.lenbits = opts.bits;
-
-        if (ret) {
-          strm.msg = 'invalid code lengths set';
-          state.mode = BAD;
+          switch ((hold & 0x03)/*BITS(2)*/) {
+            case 0:                             /* stored block */
+              //Tracev((stderr, "inflate:     stored block%s\n",
+              //        state.last ? " (last)" : ""));
+              state.mode = STORED;
+              break;
+            case 1:                             /* fixed block */
+              fixedtables(state);
+              //Tracev((stderr, "inflate:     fixed codes block%s\n",
+              //        state.last ? " (last)" : ""));
+              state.mode = LEN_;             /* decode codes */
+              if (flush === Z_TREES) {
+                //--- DROPBITS(2) ---//
+                hold >>>= 2;
+                bits -= 2;
+                //---//
+                break inf_leave;
+              }
+              break;
+            case 2:                             /* dynamic block */
+              //Tracev((stderr, "inflate:     dynamic codes block%s\n",
+              //        state.last ? " (last)" : ""));
+              state.mode = TABLE;
+              break;
+            case 3:
+              strm.msg = 'invalid block type';
+              state.mode = BAD;
+          }
+          //--- DROPBITS(2) ---//
+          hold >>>= 2;
+          bits -= 2;
+          //---//
           break;
-        }
-        //Tracev((stderr, "inflate:       code lengths ok\n"));
-        state.have = 0;
-        state.mode = CODELENS;
-        /* falls through */
-      case CODELENS:
-        while (state.have < state.nlen + state.ndist) {
+        case STORED:
+          //--- BYTEBITS() ---// /* go to byte boundary */
+          hold >>>= bits & 7;
+          bits -= bits & 7;
+          //---//
+          //=== NEEDBITS(32); */
+          while (bits < 32) {
+            if (have === 0) { break inf_leave; }
+            have--;
+            hold += input[next++] << bits;
+            bits += 8;
+          }
+          //===//
+          if ((hold & 0xffff) !== ((hold >>> 16) ^ 0xffff)) {
+            strm.msg = 'invalid stored block lengths';
+            state.mode = BAD;
+            break;
+          }
+          state.length = hold & 0xffff;
+          //Tracev((stderr, "inflate:       stored length %u\n",
+          //        state.length));
+          //=== INITBITS();
+          hold = 0;
+          bits = 0;
+          //===//
+          state.mode = COPY_;
+          if (flush === Z_TREES) { break inf_leave; }
+          /* falls through */
+        case COPY_:
+          state.mode = COPY;
+          /* falls through */
+        case COPY:
+          copy = state.length;
+          if (copy) {
+            if (copy > have) { copy = have; }
+            if (copy > left) { copy = left; }
+            if (copy === 0) { break inf_leave; }
+            //--- zmemcpy(put, next, copy); ---
+            output.set(input.subarray(next, next + copy), put);
+            //---//
+            have -= copy;
+            next += copy;
+            left -= copy;
+            put += copy;
+            state.length -= copy;
+            break;
+          }
+          //Tracev((stderr, "inflate:       stored end\n"));
+          state.mode = TYPE;
+          break;
+        case TABLE:
+          //=== NEEDBITS(14); */
+          while (bits < 14) {
+            if (have === 0) { break inf_leave; }
+            have--;
+            hold += input[next++] << bits;
+            bits += 8;
+          }
+          //===//
+          state.nlen = (hold & 0x1f)/*BITS(5)*/ + 257;
+          //--- DROPBITS(5) ---//
+          hold >>>= 5;
+          bits -= 5;
+          //---//
+          state.ndist = (hold & 0x1f)/*BITS(5)*/ + 1;
+          //--- DROPBITS(5) ---//
+          hold >>>= 5;
+          bits -= 5;
+          //---//
+          state.ncode = (hold & 0x0f)/*BITS(4)*/ + 4;
+          //--- DROPBITS(4) ---//
+          hold >>>= 4;
+          bits -= 4;
+          //---//
+  //#ifndef PKZIP_BUG_WORKAROUND
+          if (state.nlen > 286 || state.ndist > 30) {
+            strm.msg = 'too many length or distance symbols';
+            state.mode = BAD;
+            break;
+          }
+  //#endif
+          //Tracev((stderr, "inflate:       table sizes ok\n"));
+          state.have = 0;
+          state.mode = LENLENS;
+          /* falls through */
+        case LENLENS:
+          while (state.have < state.ncode) {
+            //=== NEEDBITS(3);
+            while (bits < 3) {
+              if (have === 0) { break inf_leave; }
+              have--;
+              hold += input[next++] << bits;
+              bits += 8;
+            }
+            //===//
+            state.lens[order[state.have++]] = (hold & 0x07);//BITS(3);
+            //--- DROPBITS(3) ---//
+            hold >>>= 3;
+            bits -= 3;
+            //---//
+          }
+          while (state.have < 19) {
+            state.lens[order[state.have++]] = 0;
+          }
+          // We have separate tables & no pointers. 2 commented lines below not needed.
+          //state.next = state.codes;
+          //state.lencode = state.next;
+          // Switch to use dynamic table
+          state.lencode = state.lendyn;
+          state.lenbits = 7;
+
+          opts = { bits: state.lenbits };
+          ret = inftrees(CODES, state.lens, 0, 19, state.lencode, 0, state.work, opts);
+          state.lenbits = opts.bits;
+
+          if (ret) {
+            strm.msg = 'invalid code lengths set';
+            state.mode = BAD;
+            break;
+          }
+          //Tracev((stderr, "inflate:       code lengths ok\n"));
+          state.have = 0;
+          state.mode = CODELENS;
+          /* falls through */
+        case CODELENS:
+          while (state.have < state.nlen + state.ndist) {
+            for (;;) {
+              here = state.lencode[hold & ((1 << state.lenbits) - 1)];/*BITS(state.lenbits)*/
+              here_bits = here >>> 24;
+              here_op = (here >>> 16) & 0xff;
+              here_val = here & 0xffff;
+
+              if ((here_bits) <= bits) { break; }
+              //--- PULLBYTE() ---//
+              if (have === 0) { break inf_leave; }
+              have--;
+              hold += input[next++] << bits;
+              bits += 8;
+              //---//
+            }
+            if (here_val < 16) {
+              //--- DROPBITS(here.bits) ---//
+              hold >>>= here_bits;
+              bits -= here_bits;
+              //---//
+              state.lens[state.have++] = here_val;
+            }
+            else {
+              if (here_val === 16) {
+                //=== NEEDBITS(here.bits + 2);
+                n = here_bits + 2;
+                while (bits < n) {
+                  if (have === 0) { break inf_leave; }
+                  have--;
+                  hold += input[next++] << bits;
+                  bits += 8;
+                }
+                //===//
+                //--- DROPBITS(here.bits) ---//
+                hold >>>= here_bits;
+                bits -= here_bits;
+                //---//
+                if (state.have === 0) {
+                  strm.msg = 'invalid bit length repeat';
+                  state.mode = BAD;
+                  break;
+                }
+                len = state.lens[state.have - 1];
+                copy = 3 + (hold & 0x03);//BITS(2);
+                //--- DROPBITS(2) ---//
+                hold >>>= 2;
+                bits -= 2;
+                //---//
+              }
+              else if (here_val === 17) {
+                //=== NEEDBITS(here.bits + 3);
+                n = here_bits + 3;
+                while (bits < n) {
+                  if (have === 0) { break inf_leave; }
+                  have--;
+                  hold += input[next++] << bits;
+                  bits += 8;
+                }
+                //===//
+                //--- DROPBITS(here.bits) ---//
+                hold >>>= here_bits;
+                bits -= here_bits;
+                //---//
+                len = 0;
+                copy = 3 + (hold & 0x07);//BITS(3);
+                //--- DROPBITS(3) ---//
+                hold >>>= 3;
+                bits -= 3;
+                //---//
+              }
+              else {
+                //=== NEEDBITS(here.bits + 7);
+                n = here_bits + 7;
+                while (bits < n) {
+                  if (have === 0) { break inf_leave; }
+                  have--;
+                  hold += input[next++] << bits;
+                  bits += 8;
+                }
+                //===//
+                //--- DROPBITS(here.bits) ---//
+                hold >>>= here_bits;
+                bits -= here_bits;
+                //---//
+                len = 0;
+                copy = 11 + (hold & 0x7f);//BITS(7);
+                //--- DROPBITS(7) ---//
+                hold >>>= 7;
+                bits -= 7;
+                //---//
+              }
+              if (state.have + copy > state.nlen + state.ndist) {
+                strm.msg = 'invalid bit length repeat';
+                state.mode = BAD;
+                break;
+              }
+              while (copy--) {
+                state.lens[state.have++] = len;
+              }
+            }
+          }
+
+          /* handle error breaks in while */
+          if (state.mode === BAD) { break; }
+
+          /* check for end-of-block code (better have one) */
+          if (state.lens[256] === 0) {
+            strm.msg = 'invalid code -- missing end-of-block';
+            state.mode = BAD;
+            break;
+          }
+
+          /* build code tables -- note: do not change the lenbits or distbits
+             values here (9 and 6) without reading the comments in inftrees.h
+             concerning the ENOUGH constants, which depend on those values */
+          state.lenbits = 9;
+
+          opts = { bits: state.lenbits };
+          ret = inftrees(LENS, state.lens, 0, state.nlen, state.lencode, 0, state.work, opts);
+          // We have separate tables & no pointers. 2 commented lines below not needed.
+          // state.next_index = opts.table_index;
+          state.lenbits = opts.bits;
+          // state.lencode = state.next;
+
+          if (ret) {
+            strm.msg = 'invalid literal/lengths set';
+            state.mode = BAD;
+            break;
+          }
+
+          state.distbits = 6;
+          //state.distcode.copy(state.codes);
+          // Switch to use dynamic table
+          state.distcode = state.distdyn;
+          opts = { bits: state.distbits };
+          ret = inftrees(DISTS, state.lens, state.nlen, state.ndist, state.distcode, 0, state.work, opts);
+          // We have separate tables & no pointers. 2 commented lines below not needed.
+          // state.next_index = opts.table_index;
+          state.distbits = opts.bits;
+          // state.distcode = state.next;
+
+          if (ret) {
+            strm.msg = 'invalid distances set';
+            state.mode = BAD;
+            break;
+          }
+          //Tracev((stderr, 'inflate:       codes ok\n'));
+          state.mode = LEN_;
+          if (flush === Z_TREES) { break inf_leave; }
+          /* falls through */
+        case LEN_:
+          state.mode = LEN;
+          /* falls through */
+        case LEN:
+          if (have >= 6 && left >= 258) {
+            //--- RESTORE() ---
+            strm.next_out = put;
+            strm.avail_out = left;
+            strm.next_in = next;
+            strm.avail_in = have;
+            state.hold = hold;
+            state.bits = bits;
+            //---
+            inffast(strm, _out);
+            //--- LOAD() ---
+            put = strm.next_out;
+            output = strm.output;
+            left = strm.avail_out;
+            next = strm.next_in;
+            input = strm.input;
+            have = strm.avail_in;
+            hold = state.hold;
+            bits = state.bits;
+            //---
+
+            if (state.mode === TYPE) {
+              state.back = -1;
+            }
+            break;
+          }
+          state.back = 0;
           for (;;) {
-            here = state.lencode[hold & ((1 << state.lenbits) - 1)];/*BITS(state.lenbits)*/
+            here = state.lencode[hold & ((1 << state.lenbits) - 1)];  /*BITS(state.lenbits)*/
+            here_bits = here >>> 24;
+            here_op = (here >>> 16) & 0xff;
+            here_val = here & 0xffff;
+
+            if (here_bits <= bits) { break; }
+            //--- PULLBYTE() ---//
+            if (have === 0) { break inf_leave; }
+            have--;
+            hold += input[next++] << bits;
+            bits += 8;
+            //---//
+          }
+          if (here_op && (here_op & 0xf0) === 0) {
+            last_bits = here_bits;
+            last_op = here_op;
+            last_val = here_val;
+            for (;;) {
+              here = state.lencode[last_val +
+                      ((hold & ((1 << (last_bits + last_op)) - 1))/*BITS(last.bits + last.op)*/ >> last_bits)];
+              here_bits = here >>> 24;
+              here_op = (here >>> 16) & 0xff;
+              here_val = here & 0xffff;
+
+              if ((last_bits + here_bits) <= bits) { break; }
+              //--- PULLBYTE() ---//
+              if (have === 0) { break inf_leave; }
+              have--;
+              hold += input[next++] << bits;
+              bits += 8;
+              //---//
+            }
+            //--- DROPBITS(last.bits) ---//
+            hold >>>= last_bits;
+            bits -= last_bits;
+            //---//
+            state.back += last_bits;
+          }
+          //--- DROPBITS(here.bits) ---//
+          hold >>>= here_bits;
+          bits -= here_bits;
+          //---//
+          state.back += here_bits;
+          state.length = here_val;
+          if (here_op === 0) {
+            //Tracevv((stderr, here.val >= 0x20 && here.val < 0x7f ?
+            //        "inflate:         literal '%c'\n" :
+            //        "inflate:         literal 0x%02x\n", here.val));
+            state.mode = LIT;
+            break;
+          }
+          if (here_op & 32) {
+            //Tracevv((stderr, "inflate:         end of block\n"));
+            state.back = -1;
+            state.mode = TYPE;
+            break;
+          }
+          if (here_op & 64) {
+            strm.msg = 'invalid literal/length code';
+            state.mode = BAD;
+            break;
+          }
+          state.extra = here_op & 15;
+          state.mode = LENEXT;
+          /* falls through */
+        case LENEXT:
+          if (state.extra) {
+            //=== NEEDBITS(state.extra);
+            n = state.extra;
+            while (bits < n) {
+              if (have === 0) { break inf_leave; }
+              have--;
+              hold += input[next++] << bits;
+              bits += 8;
+            }
+            //===//
+            state.length += hold & ((1 << state.extra) - 1)/*BITS(state.extra)*/;
+            //--- DROPBITS(state.extra) ---//
+            hold >>>= state.extra;
+            bits -= state.extra;
+            //---//
+            state.back += state.extra;
+          }
+          //Tracevv((stderr, "inflate:         length %u\n", state.length));
+          state.was = state.length;
+          state.mode = DIST;
+          /* falls through */
+        case DIST:
+          for (;;) {
+            here = state.distcode[hold & ((1 << state.distbits) - 1)];/*BITS(state.distbits)*/
             here_bits = here >>> 24;
             here_op = (here >>> 16) & 0xff;
             here_val = here & 0xffff;
@@ -63680,1454 +63967,1136 @@ function inflate(strm, flush) {
             bits += 8;
             //---//
           }
-          if (here_val < 16) {
-            //--- DROPBITS(here.bits) ---//
-            hold >>>= here_bits;
-            bits -= here_bits;
-            //---//
-            state.lens[state.have++] = here_val;
-          }
-          else {
-            if (here_val === 16) {
-              //=== NEEDBITS(here.bits + 2);
-              n = here_bits + 2;
-              while (bits < n) {
-                if (have === 0) { break inf_leave; }
-                have--;
-                hold += input[next++] << bits;
-                bits += 8;
-              }
-              //===//
-              //--- DROPBITS(here.bits) ---//
-              hold >>>= here_bits;
-              bits -= here_bits;
+          if ((here_op & 0xf0) === 0) {
+            last_bits = here_bits;
+            last_op = here_op;
+            last_val = here_val;
+            for (;;) {
+              here = state.distcode[last_val +
+                      ((hold & ((1 << (last_bits + last_op)) - 1))/*BITS(last.bits + last.op)*/ >> last_bits)];
+              here_bits = here >>> 24;
+              here_op = (here >>> 16) & 0xff;
+              here_val = here & 0xffff;
+
+              if ((last_bits + here_bits) <= bits) { break; }
+              //--- PULLBYTE() ---//
+              if (have === 0) { break inf_leave; }
+              have--;
+              hold += input[next++] << bits;
+              bits += 8;
               //---//
-              if (state.have === 0) {
-                strm.msg = 'invalid bit length repeat';
+            }
+            //--- DROPBITS(last.bits) ---//
+            hold >>>= last_bits;
+            bits -= last_bits;
+            //---//
+            state.back += last_bits;
+          }
+          //--- DROPBITS(here.bits) ---//
+          hold >>>= here_bits;
+          bits -= here_bits;
+          //---//
+          state.back += here_bits;
+          if (here_op & 64) {
+            strm.msg = 'invalid distance code';
+            state.mode = BAD;
+            break;
+          }
+          state.offset = here_val;
+          state.extra = (here_op) & 15;
+          state.mode = DISTEXT;
+          /* falls through */
+        case DISTEXT:
+          if (state.extra) {
+            //=== NEEDBITS(state.extra);
+            n = state.extra;
+            while (bits < n) {
+              if (have === 0) { break inf_leave; }
+              have--;
+              hold += input[next++] << bits;
+              bits += 8;
+            }
+            //===//
+            state.offset += hold & ((1 << state.extra) - 1)/*BITS(state.extra)*/;
+            //--- DROPBITS(state.extra) ---//
+            hold >>>= state.extra;
+            bits -= state.extra;
+            //---//
+            state.back += state.extra;
+          }
+  //#ifdef INFLATE_STRICT
+          if (state.offset > state.dmax) {
+            strm.msg = 'invalid distance too far back';
+            state.mode = BAD;
+            break;
+          }
+  //#endif
+          //Tracevv((stderr, "inflate:         distance %u\n", state.offset));
+          state.mode = MATCH;
+          /* falls through */
+        case MATCH:
+          if (left === 0) { break inf_leave; }
+          copy = _out - left;
+          if (state.offset > copy) {         /* copy from window */
+            copy = state.offset - copy;
+            if (copy > state.whave) {
+              if (state.sane) {
+                strm.msg = 'invalid distance too far back';
                 state.mode = BAD;
                 break;
               }
-              len = state.lens[state.have - 1];
-              copy = 3 + (hold & 0x03);//BITS(2);
-              //--- DROPBITS(2) ---//
-              hold >>>= 2;
-              bits -= 2;
-              //---//
+  // (!) This block is disabled in zlib defaults,
+  // don't enable it for binary compatibility
+  //#ifdef INFLATE_ALLOW_INVALID_DISTANCE_TOOFAR_ARRR
+  //          Trace((stderr, "inflate.c too far\n"));
+  //          copy -= state.whave;
+  //          if (copy > state.length) { copy = state.length; }
+  //          if (copy > left) { copy = left; }
+  //          left -= copy;
+  //          state.length -= copy;
+  //          do {
+  //            output[put++] = 0;
+  //          } while (--copy);
+  //          if (state.length === 0) { state.mode = LEN; }
+  //          break;
+  //#endif
             }
-            else if (here_val === 17) {
-              //=== NEEDBITS(here.bits + 3);
-              n = here_bits + 3;
-              while (bits < n) {
-                if (have === 0) { break inf_leave; }
-                have--;
-                hold += input[next++] << bits;
-                bits += 8;
-              }
-              //===//
-              //--- DROPBITS(here.bits) ---//
-              hold >>>= here_bits;
-              bits -= here_bits;
-              //---//
-              len = 0;
-              copy = 3 + (hold & 0x07);//BITS(3);
-              //--- DROPBITS(3) ---//
-              hold >>>= 3;
-              bits -= 3;
-              //---//
+            if (copy > state.wnext) {
+              copy -= state.wnext;
+              from = state.wsize - copy;
             }
             else {
-              //=== NEEDBITS(here.bits + 7);
-              n = here_bits + 7;
-              while (bits < n) {
-                if (have === 0) { break inf_leave; }
-                have--;
-                hold += input[next++] << bits;
-                bits += 8;
-              }
-              //===//
-              //--- DROPBITS(here.bits) ---//
-              hold >>>= here_bits;
-              bits -= here_bits;
-              //---//
-              len = 0;
-              copy = 11 + (hold & 0x7f);//BITS(7);
-              //--- DROPBITS(7) ---//
-              hold >>>= 7;
-              bits -= 7;
-              //---//
+              from = state.wnext - copy;
             }
-            if (state.have + copy > state.nlen + state.ndist) {
-              strm.msg = 'invalid bit length repeat';
+            if (copy > state.length) { copy = state.length; }
+            from_source = state.window;
+          }
+          else {                              /* copy from output */
+            from_source = output;
+            from = put - state.offset;
+            copy = state.length;
+          }
+          if (copy > left) { copy = left; }
+          left -= copy;
+          state.length -= copy;
+          do {
+            output[put++] = from_source[from++];
+          } while (--copy);
+          if (state.length === 0) { state.mode = LEN; }
+          break;
+        case LIT:
+          if (left === 0) { break inf_leave; }
+          output[put++] = state.length;
+          left--;
+          state.mode = LEN;
+          break;
+        case CHECK:
+          if (state.wrap) {
+            //=== NEEDBITS(32);
+            while (bits < 32) {
+              if (have === 0) { break inf_leave; }
+              have--;
+              // Use '|' instead of '+' to make sure that result is signed
+              hold |= input[next++] << bits;
+              bits += 8;
+            }
+            //===//
+            _out -= left;
+            strm.total_out += _out;
+            state.total += _out;
+            if (_out) {
+              strm.adler = state.check =
+                  /*UPDATE(state.check, put - _out, _out);*/
+                  (state.flags ? crc32_1(state.check, output, _out, put - _out) : adler32_1(state.check, output, _out, put - _out));
+
+            }
+            _out = left;
+            // NB: crc32 stored as signed 32-bit int, zswap32 returns signed too
+            if ((state.flags ? hold : zswap32(hold)) !== state.check) {
+              strm.msg = 'incorrect data check';
               state.mode = BAD;
               break;
             }
-            while (copy--) {
-              state.lens[state.have++] = len;
+            //=== INITBITS();
+            hold = 0;
+            bits = 0;
+            //===//
+            //Tracev((stderr, "inflate:   check matches trailer\n"));
+          }
+          state.mode = LENGTH;
+          /* falls through */
+        case LENGTH:
+          if (state.wrap && state.flags) {
+            //=== NEEDBITS(32);
+            while (bits < 32) {
+              if (have === 0) { break inf_leave; }
+              have--;
+              hold += input[next++] << bits;
+              bits += 8;
             }
-          }
-        }
-
-        /* handle error breaks in while */
-        if (state.mode === BAD) { break; }
-
-        /* check for end-of-block code (better have one) */
-        if (state.lens[256] === 0) {
-          strm.msg = 'invalid code -- missing end-of-block';
-          state.mode = BAD;
-          break;
-        }
-
-        /* build code tables -- note: do not change the lenbits or distbits
-           values here (9 and 6) without reading the comments in inftrees.h
-           concerning the ENOUGH constants, which depend on those values */
-        state.lenbits = 9;
-
-        opts = { bits: state.lenbits };
-        ret = inflate_table(LENS, state.lens, 0, state.nlen, state.lencode, 0, state.work, opts);
-        // We have separate tables & no pointers. 2 commented lines below not needed.
-        // state.next_index = opts.table_index;
-        state.lenbits = opts.bits;
-        // state.lencode = state.next;
-
-        if (ret) {
-          strm.msg = 'invalid literal/lengths set';
-          state.mode = BAD;
-          break;
-        }
-
-        state.distbits = 6;
-        //state.distcode.copy(state.codes);
-        // Switch to use dynamic table
-        state.distcode = state.distdyn;
-        opts = { bits: state.distbits };
-        ret = inflate_table(DISTS, state.lens, state.nlen, state.ndist, state.distcode, 0, state.work, opts);
-        // We have separate tables & no pointers. 2 commented lines below not needed.
-        // state.next_index = opts.table_index;
-        state.distbits = opts.bits;
-        // state.distcode = state.next;
-
-        if (ret) {
-          strm.msg = 'invalid distances set';
-          state.mode = BAD;
-          break;
-        }
-        //Tracev((stderr, 'inflate:       codes ok\n'));
-        state.mode = LEN_;
-        if (flush === Z_TREES) { break inf_leave; }
-        /* falls through */
-      case LEN_:
-        state.mode = LEN;
-        /* falls through */
-      case LEN:
-        if (have >= 6 && left >= 258) {
-          //--- RESTORE() ---
-          strm.next_out = put;
-          strm.avail_out = left;
-          strm.next_in = next;
-          strm.avail_in = have;
-          state.hold = hold;
-          state.bits = bits;
-          //---
-          inflate_fast(strm, _out);
-          //--- LOAD() ---
-          put = strm.next_out;
-          output = strm.output;
-          left = strm.avail_out;
-          next = strm.next_in;
-          input = strm.input;
-          have = strm.avail_in;
-          hold = state.hold;
-          bits = state.bits;
-          //---
-
-          if (state.mode === TYPE) {
-            state.back = -1;
-          }
-          break;
-        }
-        state.back = 0;
-        for (;;) {
-          here = state.lencode[hold & ((1 << state.lenbits) - 1)];  /*BITS(state.lenbits)*/
-          here_bits = here >>> 24;
-          here_op = (here >>> 16) & 0xff;
-          here_val = here & 0xffff;
-
-          if (here_bits <= bits) { break; }
-          //--- PULLBYTE() ---//
-          if (have === 0) { break inf_leave; }
-          have--;
-          hold += input[next++] << bits;
-          bits += 8;
-          //---//
-        }
-        if (here_op && (here_op & 0xf0) === 0) {
-          last_bits = here_bits;
-          last_op = here_op;
-          last_val = here_val;
-          for (;;) {
-            here = state.lencode[last_val +
-                    ((hold & ((1 << (last_bits + last_op)) - 1))/*BITS(last.bits + last.op)*/ >> last_bits)];
-            here_bits = here >>> 24;
-            here_op = (here >>> 16) & 0xff;
-            here_val = here & 0xffff;
-
-            if ((last_bits + here_bits) <= bits) { break; }
-            //--- PULLBYTE() ---//
-            if (have === 0) { break inf_leave; }
-            have--;
-            hold += input[next++] << bits;
-            bits += 8;
-            //---//
-          }
-          //--- DROPBITS(last.bits) ---//
-          hold >>>= last_bits;
-          bits -= last_bits;
-          //---//
-          state.back += last_bits;
-        }
-        //--- DROPBITS(here.bits) ---//
-        hold >>>= here_bits;
-        bits -= here_bits;
-        //---//
-        state.back += here_bits;
-        state.length = here_val;
-        if (here_op === 0) {
-          //Tracevv((stderr, here.val >= 0x20 && here.val < 0x7f ?
-          //        "inflate:         literal '%c'\n" :
-          //        "inflate:         literal 0x%02x\n", here.val));
-          state.mode = LIT;
-          break;
-        }
-        if (here_op & 32) {
-          //Tracevv((stderr, "inflate:         end of block\n"));
-          state.back = -1;
-          state.mode = TYPE;
-          break;
-        }
-        if (here_op & 64) {
-          strm.msg = 'invalid literal/length code';
-          state.mode = BAD;
-          break;
-        }
-        state.extra = here_op & 15;
-        state.mode = LENEXT;
-        /* falls through */
-      case LENEXT:
-        if (state.extra) {
-          //=== NEEDBITS(state.extra);
-          n = state.extra;
-          while (bits < n) {
-            if (have === 0) { break inf_leave; }
-            have--;
-            hold += input[next++] << bits;
-            bits += 8;
-          }
-          //===//
-          state.length += hold & ((1 << state.extra) - 1)/*BITS(state.extra)*/;
-          //--- DROPBITS(state.extra) ---//
-          hold >>>= state.extra;
-          bits -= state.extra;
-          //---//
-          state.back += state.extra;
-        }
-        //Tracevv((stderr, "inflate:         length %u\n", state.length));
-        state.was = state.length;
-        state.mode = DIST;
-        /* falls through */
-      case DIST:
-        for (;;) {
-          here = state.distcode[hold & ((1 << state.distbits) - 1)];/*BITS(state.distbits)*/
-          here_bits = here >>> 24;
-          here_op = (here >>> 16) & 0xff;
-          here_val = here & 0xffff;
-
-          if ((here_bits) <= bits) { break; }
-          //--- PULLBYTE() ---//
-          if (have === 0) { break inf_leave; }
-          have--;
-          hold += input[next++] << bits;
-          bits += 8;
-          //---//
-        }
-        if ((here_op & 0xf0) === 0) {
-          last_bits = here_bits;
-          last_op = here_op;
-          last_val = here_val;
-          for (;;) {
-            here = state.distcode[last_val +
-                    ((hold & ((1 << (last_bits + last_op)) - 1))/*BITS(last.bits + last.op)*/ >> last_bits)];
-            here_bits = here >>> 24;
-            here_op = (here >>> 16) & 0xff;
-            here_val = here & 0xffff;
-
-            if ((last_bits + here_bits) <= bits) { break; }
-            //--- PULLBYTE() ---//
-            if (have === 0) { break inf_leave; }
-            have--;
-            hold += input[next++] << bits;
-            bits += 8;
-            //---//
-          }
-          //--- DROPBITS(last.bits) ---//
-          hold >>>= last_bits;
-          bits -= last_bits;
-          //---//
-          state.back += last_bits;
-        }
-        //--- DROPBITS(here.bits) ---//
-        hold >>>= here_bits;
-        bits -= here_bits;
-        //---//
-        state.back += here_bits;
-        if (here_op & 64) {
-          strm.msg = 'invalid distance code';
-          state.mode = BAD;
-          break;
-        }
-        state.offset = here_val;
-        state.extra = (here_op) & 15;
-        state.mode = DISTEXT;
-        /* falls through */
-      case DISTEXT:
-        if (state.extra) {
-          //=== NEEDBITS(state.extra);
-          n = state.extra;
-          while (bits < n) {
-            if (have === 0) { break inf_leave; }
-            have--;
-            hold += input[next++] << bits;
-            bits += 8;
-          }
-          //===//
-          state.offset += hold & ((1 << state.extra) - 1)/*BITS(state.extra)*/;
-          //--- DROPBITS(state.extra) ---//
-          hold >>>= state.extra;
-          bits -= state.extra;
-          //---//
-          state.back += state.extra;
-        }
-//#ifdef INFLATE_STRICT
-        if (state.offset > state.dmax) {
-          strm.msg = 'invalid distance too far back';
-          state.mode = BAD;
-          break;
-        }
-//#endif
-        //Tracevv((stderr, "inflate:         distance %u\n", state.offset));
-        state.mode = MATCH;
-        /* falls through */
-      case MATCH:
-        if (left === 0) { break inf_leave; }
-        copy = _out - left;
-        if (state.offset > copy) {         /* copy from window */
-          copy = state.offset - copy;
-          if (copy > state.whave) {
-            if (state.sane) {
-              strm.msg = 'invalid distance too far back';
+            //===//
+            if (hold !== (state.total & 0xffffffff)) {
+              strm.msg = 'incorrect length check';
               state.mode = BAD;
               break;
             }
-// (!) This block is disabled in zlib defaults,
-// don't enable it for binary compatibility
-//#ifdef INFLATE_ALLOW_INVALID_DISTANCE_TOOFAR_ARRR
-//          Trace((stderr, "inflate.c too far\n"));
-//          copy -= state.whave;
-//          if (copy > state.length) { copy = state.length; }
-//          if (copy > left) { copy = left; }
-//          left -= copy;
-//          state.length -= copy;
-//          do {
-//            output[put++] = 0;
-//          } while (--copy);
-//          if (state.length === 0) { state.mode = LEN; }
-//          break;
-//#endif
+            //=== INITBITS();
+            hold = 0;
+            bits = 0;
+            //===//
+            //Tracev((stderr, "inflate:   length matches trailer\n"));
           }
-          if (copy > state.wnext) {
-            copy -= state.wnext;
-            from = state.wsize - copy;
-          }
-          else {
-            from = state.wnext - copy;
-          }
-          if (copy > state.length) { copy = state.length; }
-          from_source = state.window;
-        }
-        else {                              /* copy from output */
-          from_source = output;
-          from = put - state.offset;
-          copy = state.length;
-        }
-        if (copy > left) { copy = left; }
-        left -= copy;
-        state.length -= copy;
-        do {
-          output[put++] = from_source[from++];
-        } while (--copy);
-        if (state.length === 0) { state.mode = LEN; }
-        break;
-      case LIT:
-        if (left === 0) { break inf_leave; }
-        output[put++] = state.length;
-        left--;
-        state.mode = LEN;
-        break;
-      case CHECK:
-        if (state.wrap) {
-          //=== NEEDBITS(32);
-          while (bits < 32) {
-            if (have === 0) { break inf_leave; }
-            have--;
-            // Use '|' instead of '+' to make sure that result is signed
-            hold |= input[next++] << bits;
-            bits += 8;
-          }
-          //===//
-          _out -= left;
-          strm.total_out += _out;
-          state.total += _out;
-          if (_out) {
-            strm.adler = state.check =
-                /*UPDATE(state.check, put - _out, _out);*/
-                (state.flags ? crc32(state.check, output, _out, put - _out) : adler32(state.check, output, _out, put - _out));
-
-          }
-          _out = left;
-          // NB: crc32 stored as signed 32-bit int, zswap32 returns signed too
-          if ((state.flags ? hold : zswap32(hold)) !== state.check) {
-            strm.msg = 'incorrect data check';
-            state.mode = BAD;
-            break;
-          }
-          //=== INITBITS();
-          hold = 0;
-          bits = 0;
-          //===//
-          //Tracev((stderr, "inflate:   check matches trailer\n"));
-        }
-        state.mode = LENGTH;
-        /* falls through */
-      case LENGTH:
-        if (state.wrap && state.flags) {
-          //=== NEEDBITS(32);
-          while (bits < 32) {
-            if (have === 0) { break inf_leave; }
-            have--;
-            hold += input[next++] << bits;
-            bits += 8;
-          }
-          //===//
-          if (hold !== (state.total & 0xffffffff)) {
-            strm.msg = 'incorrect length check';
-            state.mode = BAD;
-            break;
-          }
-          //=== INITBITS();
-          hold = 0;
-          bits = 0;
-          //===//
-          //Tracev((stderr, "inflate:   length matches trailer\n"));
-        }
-        state.mode = DONE;
-        /* falls through */
-      case DONE:
-        ret = Z_STREAM_END;
-        break inf_leave;
-      case BAD:
-        ret = Z_DATA_ERROR;
-        break inf_leave;
-      case MEM:
-        return Z_MEM_ERROR;
-      case SYNC:
-        /* falls through */
-      default:
-        return Z_STREAM_ERROR;
+          state.mode = DONE;
+          /* falls through */
+        case DONE:
+          ret = Z_STREAM_END$1;
+          break inf_leave;
+        case BAD:
+          ret = Z_DATA_ERROR$1;
+          break inf_leave;
+        case MEM:
+          return Z_MEM_ERROR$1;
+        case SYNC:
+          /* falls through */
+        default:
+          return Z_STREAM_ERROR$1;
+      }
     }
-  }
 
-  // inf_leave <- here is real place for "goto inf_leave", emulated via "break inf_leave"
+    // inf_leave <- here is real place for "goto inf_leave", emulated via "break inf_leave"
 
-  /*
-     Return from inflate(), updating the total counts and the check value.
-     If there was no progress during the inflate() call, return a buffer
-     error.  Call updatewindow() to create and/or update the window state.
-     Note: a memory error from inflate() is non-recoverable.
-   */
+    /*
+       Return from inflate(), updating the total counts and the check value.
+       If there was no progress during the inflate() call, return a buffer
+       error.  Call updatewindow() to create and/or update the window state.
+       Note: a memory error from inflate() is non-recoverable.
+     */
 
-  //--- RESTORE() ---
-  strm.next_out = put;
-  strm.avail_out = left;
-  strm.next_in = next;
-  strm.avail_in = have;
-  state.hold = hold;
-  state.bits = bits;
-  //---
+    //--- RESTORE() ---
+    strm.next_out = put;
+    strm.avail_out = left;
+    strm.next_in = next;
+    strm.avail_in = have;
+    state.hold = hold;
+    state.bits = bits;
+    //---
 
-  if (state.wsize || (_out !== strm.avail_out && state.mode < BAD &&
-                      (state.mode < CHECK || flush !== Z_FINISH))) {
-    if (updatewindow(strm, strm.output, strm.next_out, _out - strm.avail_out)) {
+    if (state.wsize || (_out !== strm.avail_out && state.mode < BAD &&
+                        (state.mode < CHECK || flush !== Z_FINISH$1))) {
+      if (updatewindow(strm, strm.output, strm.next_out, _out - strm.avail_out)) ;
+    }
+    _in -= strm.avail_in;
+    _out -= strm.avail_out;
+    strm.total_in += _in;
+    strm.total_out += _out;
+    state.total += _out;
+    if (state.wrap && _out) {
+      strm.adler = state.check = /*UPDATE(state.check, strm.next_out - _out, _out);*/
+        (state.flags ? crc32_1(state.check, output, _out, strm.next_out - _out) : adler32_1(state.check, output, _out, strm.next_out - _out));
+    }
+    strm.data_type = state.bits + (state.last ? 64 : 0) +
+                      (state.mode === TYPE ? 128 : 0) +
+                      (state.mode === LEN_ || state.mode === COPY_ ? 256 : 0);
+    if (((_in === 0 && _out === 0) || flush === Z_FINISH$1) && ret === Z_OK$1) {
+      ret = Z_BUF_ERROR;
+    }
+    return ret;
+  };
+
+
+  const inflateEnd = (strm) => {
+
+    if (!strm || !strm.state /*|| strm->zfree == (free_func)0*/) {
+      return Z_STREAM_ERROR$1;
+    }
+
+    let state = strm.state;
+    if (state.window) {
+      state.window = null;
+    }
+    strm.state = null;
+    return Z_OK$1;
+  };
+
+
+  const inflateGetHeader = (strm, head) => {
+
+    /* check state */
+    if (!strm || !strm.state) { return Z_STREAM_ERROR$1; }
+    const state = strm.state;
+    if ((state.wrap & 2) === 0) { return Z_STREAM_ERROR$1; }
+
+    /* save header structure */
+    state.head = head;
+    head.done = false;
+    return Z_OK$1;
+  };
+
+
+  const inflateSetDictionary = (strm, dictionary) => {
+    const dictLength = dictionary.length;
+
+    let state;
+    let dictid;
+    let ret;
+
+    /* check state */
+    if (!strm /* == Z_NULL */ || !strm.state /* == Z_NULL */) { return Z_STREAM_ERROR$1; }
+    state = strm.state;
+
+    if (state.wrap !== 0 && state.mode !== DICT) {
+      return Z_STREAM_ERROR$1;
+    }
+
+    /* check for correct dictionary identifier */
+    if (state.mode === DICT) {
+      dictid = 1; /* adler32(0, null, 0)*/
+      /* dictid = adler32(dictid, dictionary, dictLength); */
+      dictid = adler32_1(dictid, dictionary, dictLength, 0);
+      if (dictid !== state.check) {
+        return Z_DATA_ERROR$1;
+      }
+    }
+    /* copy dictionary to window using updatewindow(), which will amend the
+     existing dictionary if appropriate */
+    ret = updatewindow(strm, dictionary, dictLength, dictLength);
+    if (ret) {
       state.mode = MEM;
-      return Z_MEM_ERROR;
+      return Z_MEM_ERROR$1;
     }
-  }
-  _in -= strm.avail_in;
-  _out -= strm.avail_out;
-  strm.total_in += _in;
-  strm.total_out += _out;
-  state.total += _out;
-  if (state.wrap && _out) {
-    strm.adler = state.check = /*UPDATE(state.check, strm.next_out - _out, _out);*/
-      (state.flags ? crc32(state.check, output, _out, strm.next_out - _out) : adler32(state.check, output, _out, strm.next_out - _out));
-  }
-  strm.data_type = state.bits + (state.last ? 64 : 0) +
-                    (state.mode === TYPE ? 128 : 0) +
-                    (state.mode === LEN_ || state.mode === COPY_ ? 256 : 0);
-  if (((_in === 0 && _out === 0) || flush === Z_FINISH) && ret === Z_OK) {
-    ret = Z_BUF_ERROR;
-  }
-  return ret;
-}
-
-function inflateEnd(strm) {
-
-  if (!strm || !strm.state /*|| strm->zfree == (free_func)0*/) {
-    return Z_STREAM_ERROR;
-  }
-
-  var state = strm.state;
-  if (state.window) {
-    state.window = null;
-  }
-  strm.state = null;
-  return Z_OK;
-}
-
-function inflateGetHeader(strm, head) {
-  var state;
-
-  /* check state */
-  if (!strm || !strm.state) { return Z_STREAM_ERROR; }
-  state = strm.state;
-  if ((state.wrap & 2) === 0) { return Z_STREAM_ERROR; }
-
-  /* save header structure */
-  state.head = head;
-  head.done = false;
-  return Z_OK;
-}
-
-function inflateSetDictionary(strm, dictionary) {
-  var dictLength = dictionary.length;
-
-  var state;
-  var dictid;
-  var ret;
-
-  /* check state */
-  if (!strm /* == Z_NULL */ || !strm.state /* == Z_NULL */) { return Z_STREAM_ERROR; }
-  state = strm.state;
-
-  if (state.wrap !== 0 && state.mode !== DICT) {
-    return Z_STREAM_ERROR;
-  }
-
-  /* check for correct dictionary identifier */
-  if (state.mode === DICT) {
-    dictid = 1; /* adler32(0, null, 0)*/
-    /* dictid = adler32(dictid, dictionary, dictLength); */
-    dictid = adler32(dictid, dictionary, dictLength, 0);
-    if (dictid !== state.check) {
-      return Z_DATA_ERROR;
-    }
-  }
-  /* copy dictionary to window using updatewindow(), which will amend the
-   existing dictionary if appropriate */
-  ret = updatewindow(strm, dictionary, dictLength, dictLength);
-  if (ret) {
-    state.mode = MEM;
-    return Z_MEM_ERROR;
-  }
-  state.havedict = 1;
-  // Tracev((stderr, "inflate:   dictionary set\n"));
-  return Z_OK;
-}
-
-exports.inflateReset = inflateReset;
-exports.inflateReset2 = inflateReset2;
-exports.inflateResetKeep = inflateResetKeep;
-exports.inflateInit = inflateInit;
-exports.inflateInit2 = inflateInit2;
-exports.inflate = inflate;
-exports.inflateEnd = inflateEnd;
-exports.inflateGetHeader = inflateGetHeader;
-exports.inflateSetDictionary = inflateSetDictionary;
-exports.inflateInfo = 'pako inflate (from Nodeca project)';
-
-/* Not implemented
-exports.inflateCopy = inflateCopy;
-exports.inflateGetDictionary = inflateGetDictionary;
-exports.inflateMark = inflateMark;
-exports.inflatePrime = inflatePrime;
-exports.inflateSync = inflateSync;
-exports.inflateSyncPoint = inflateSyncPoint;
-exports.inflateUndermine = inflateUndermine;
-*/
-
-},{"../utils/common":1,"./adler32":3,"./crc32":5,"./inffast":7,"./inftrees":9}],9:[function(require,module,exports){
-'use strict';
-
-// (C) 1995-2013 Jean-loup Gailly and Mark Adler
-// (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-//
-// This software is provided 'as-is', without any express or implied
-// warranty. In no event will the authors be held liable for any damages
-// arising from the use of this software.
-//
-// Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it
-// freely, subject to the following restrictions:
-//
-// 1. The origin of this software must not be misrepresented; you must not
-//   claim that you wrote the original software. If you use this software
-//   in a product, an acknowledgment in the product documentation would be
-//   appreciated but is not required.
-// 2. Altered source versions must be plainly marked as such, and must not be
-//   misrepresented as being the original software.
-// 3. This notice may not be removed or altered from any source distribution.
-
-var utils = require('../utils/common');
-
-var MAXBITS = 15;
-var ENOUGH_LENS = 852;
-var ENOUGH_DISTS = 592;
-//var ENOUGH = (ENOUGH_LENS+ENOUGH_DISTS);
-
-var CODES = 0;
-var LENS = 1;
-var DISTS = 2;
-
-var lbase = [ /* Length codes 257..285 base */
-  3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31,
-  35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0
-];
-
-var lext = [ /* Length codes 257..285 extra */
-  16, 16, 16, 16, 16, 16, 16, 16, 17, 17, 17, 17, 18, 18, 18, 18,
-  19, 19, 19, 19, 20, 20, 20, 20, 21, 21, 21, 21, 16, 72, 78
-];
-
-var dbase = [ /* Distance codes 0..29 base */
-  1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193,
-  257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145,
-  8193, 12289, 16385, 24577, 0, 0
-];
-
-var dext = [ /* Distance codes 0..29 extra */
-  16, 16, 16, 16, 17, 17, 18, 18, 19, 19, 20, 20, 21, 21, 22, 22,
-  23, 23, 24, 24, 25, 25, 26, 26, 27, 27,
-  28, 28, 29, 29, 64, 64
-];
-
-module.exports = function inflate_table(type, lens, lens_index, codes, table, table_index, work, opts)
-{
-  var bits = opts.bits;
-      //here = opts.here; /* table entry for duplication */
-
-  var len = 0;               /* a code's length in bits */
-  var sym = 0;               /* index of code symbols */
-  var min = 0, max = 0;          /* minimum and maximum code lengths */
-  var root = 0;              /* number of index bits for root table */
-  var curr = 0;              /* number of index bits for current table */
-  var drop = 0;              /* code bits to drop for sub-table */
-  var left = 0;                   /* number of prefix codes available */
-  var used = 0;              /* code entries in table used */
-  var huff = 0;              /* Huffman code */
-  var incr;              /* for incrementing code, index */
-  var fill;              /* index for replicating entries */
-  var low;               /* low bits for current root entry */
-  var mask;              /* mask for low root bits */
-  var next;             /* next available space in table */
-  var base = null;     /* base value table to use */
-  var base_index = 0;
-//  var shoextra;    /* extra bits table to use */
-  var end;                    /* use base and extra for symbol > end */
-  var count = new utils.Buf16(MAXBITS + 1); //[MAXBITS+1];    /* number of codes of each length */
-  var offs = new utils.Buf16(MAXBITS + 1); //[MAXBITS+1];     /* offsets in table for each length */
-  var extra = null;
-  var extra_index = 0;
-
-  var here_bits, here_op, here_val;
-
-  /*
-   Process a set of code lengths to create a canonical Huffman code.  The
-   code lengths are lens[0..codes-1].  Each length corresponds to the
-   symbols 0..codes-1.  The Huffman code is generated by first sorting the
-   symbols by length from short to long, and retaining the symbol order
-   for codes with equal lengths.  Then the code starts with all zero bits
-   for the first code of the shortest length, and the codes are integer
-   increments for the same length, and zeros are appended as the length
-   increases.  For the deflate format, these bits are stored backwards
-   from their more natural integer increment ordering, and so when the
-   decoding tables are built in the large loop below, the integer codes
-   are incremented backwards.
-
-   This routine assumes, but does not check, that all of the entries in
-   lens[] are in the range 0..MAXBITS.  The caller must assure this.
-   1..MAXBITS is interpreted as that code length.  zero means that that
-   symbol does not occur in this code.
-
-   The codes are sorted by computing a count of codes for each length,
-   creating from that a table of starting indices for each length in the
-   sorted table, and then entering the symbols in order in the sorted
-   table.  The sorted table is work[], with that space being provided by
-   the caller.
-
-   The length counts are used for other purposes as well, i.e. finding
-   the minimum and maximum length codes, determining if there are any
-   codes at all, checking for a valid set of lengths, and looking ahead
-   at length counts to determine sub-table sizes when building the
-   decoding tables.
-   */
-
-  /* accumulate lengths for codes (assumes lens[] all in 0..MAXBITS) */
-  for (len = 0; len <= MAXBITS; len++) {
-    count[len] = 0;
-  }
-  for (sym = 0; sym < codes; sym++) {
-    count[lens[lens_index + sym]]++;
-  }
-
-  /* bound code lengths, force root to be within code lengths */
-  root = bits;
-  for (max = MAXBITS; max >= 1; max--) {
-    if (count[max] !== 0) { break; }
-  }
-  if (root > max) {
-    root = max;
-  }
-  if (max === 0) {                     /* no symbols to code at all */
-    //table.op[opts.table_index] = 64;  //here.op = (var char)64;    /* invalid code marker */
-    //table.bits[opts.table_index] = 1;   //here.bits = (var char)1;
-    //table.val[opts.table_index++] = 0;   //here.val = (var short)0;
-    table[table_index++] = (1 << 24) | (64 << 16) | 0;
+    state.havedict = 1;
+    // Tracev((stderr, "inflate:   dictionary set\n"));
+    return Z_OK$1;
+  };
 
 
-    //table.op[opts.table_index] = 64;
-    //table.bits[opts.table_index] = 1;
-    //table.val[opts.table_index++] = 0;
-    table[table_index++] = (1 << 24) | (64 << 16) | 0;
+  var inflateReset_1 = inflateReset;
+  var inflateReset2_1 = inflateReset2;
+  var inflateResetKeep_1 = inflateResetKeep;
+  var inflateInit_1 = inflateInit;
+  var inflateInit2_1 = inflateInit2;
+  var inflate_2$1 = inflate$1;
+  var inflateEnd_1 = inflateEnd;
+  var inflateGetHeader_1 = inflateGetHeader;
+  var inflateSetDictionary_1 = inflateSetDictionary;
+  var inflateInfo = 'pako inflate (from Nodeca project)';
 
-    opts.bits = 1;
-    return 0;     /* no symbols, but wait for decoding to report error */
-  }
-  for (min = 1; min < max; min++) {
-    if (count[min] !== 0) { break; }
-  }
-  if (root < min) {
-    root = min;
-  }
+  /* Not implemented
+  module.exports.inflateCopy = inflateCopy;
+  module.exports.inflateGetDictionary = inflateGetDictionary;
+  module.exports.inflateMark = inflateMark;
+  module.exports.inflatePrime = inflatePrime;
+  module.exports.inflateSync = inflateSync;
+  module.exports.inflateSyncPoint = inflateSyncPoint;
+  module.exports.inflateUndermine = inflateUndermine;
+  */
 
-  /* check for an over-subscribed or incomplete set of lengths */
-  left = 1;
-  for (len = 1; len <= MAXBITS; len++) {
-    left <<= 1;
-    left -= count[len];
-    if (left < 0) {
-      return -1;
-    }        /* over-subscribed */
-  }
-  if (left > 0 && (type === CODES || max !== 1)) {
-    return -1;                      /* incomplete set */
-  }
+  var inflate_1$1 = {
+  	inflateReset: inflateReset_1,
+  	inflateReset2: inflateReset2_1,
+  	inflateResetKeep: inflateResetKeep_1,
+  	inflateInit: inflateInit_1,
+  	inflateInit2: inflateInit2_1,
+  	inflate: inflate_2$1,
+  	inflateEnd: inflateEnd_1,
+  	inflateGetHeader: inflateGetHeader_1,
+  	inflateSetDictionary: inflateSetDictionary_1,
+  	inflateInfo: inflateInfo
+  };
 
-  /* generate offsets into symbol table for each length for sorting */
-  offs[1] = 0;
-  for (len = 1; len < MAXBITS; len++) {
-    offs[len + 1] = offs[len] + count[len];
-  }
+  const _has = (obj, key) => {
+    return Object.prototype.hasOwnProperty.call(obj, key);
+  };
 
-  /* sort symbols by length, by symbol order within each length */
-  for (sym = 0; sym < codes; sym++) {
-    if (lens[lens_index + sym] !== 0) {
-      work[offs[lens[lens_index + sym]]++] = sym;
-    }
-  }
+  var assign = function (obj /*from1, from2, from3, ...*/) {
+    const sources = Array.prototype.slice.call(arguments, 1);
+    while (sources.length) {
+      const source = sources.shift();
+      if (!source) { continue; }
 
-  /*
-   Create and fill in decoding tables.  In this loop, the table being
-   filled is at next and has curr index bits.  The code being used is huff
-   with length len.  That code is converted to an index by dropping drop
-   bits off of the bottom.  For codes where len is less than drop + curr,
-   those top drop + curr - len bits are incremented through all values to
-   fill the table with replicated entries.
-
-   root is the number of index bits for the root table.  When len exceeds
-   root, sub-tables are created pointed to by the root entry with an index
-   of the low root bits of huff.  This is saved in low to check for when a
-   new sub-table should be started.  drop is zero when the root table is
-   being filled, and drop is root when sub-tables are being filled.
-
-   When a new sub-table is needed, it is necessary to look ahead in the
-   code lengths to determine what size sub-table is needed.  The length
-   counts are used for this, and so count[] is decremented as codes are
-   entered in the tables.
-
-   used keeps track of how many table entries have been allocated from the
-   provided *table space.  It is checked for LENS and DIST tables against
-   the constants ENOUGH_LENS and ENOUGH_DISTS to guard against changes in
-   the initial root table size constants.  See the comments in inftrees.h
-   for more information.
-
-   sym increments through all symbols, and the loop terminates when
-   all codes of length max, i.e. all codes, have been processed.  This
-   routine permits incomplete codes, so another loop after this one fills
-   in the rest of the decoding tables with invalid code markers.
-   */
-
-  /* set up for code type */
-  // poor man optimization - use if-else instead of switch,
-  // to avoid deopts in old v8
-  if (type === CODES) {
-    base = extra = work;    /* dummy value--not used */
-    end = 19;
-
-  } else if (type === LENS) {
-    base = lbase;
-    base_index -= 257;
-    extra = lext;
-    extra_index -= 257;
-    end = 256;
-
-  } else {                    /* DISTS */
-    base = dbase;
-    extra = dext;
-    end = -1;
-  }
-
-  /* initialize opts for loop */
-  huff = 0;                   /* starting code */
-  sym = 0;                    /* starting code symbol */
-  len = min;                  /* starting code length */
-  next = table_index;              /* current table to fill in */
-  curr = root;                /* current table index bits */
-  drop = 0;                   /* current bits to drop from code for index */
-  low = -1;                   /* trigger new sub-table when len > root */
-  used = 1 << root;          /* use root table entries */
-  mask = used - 1;            /* mask for comparing low */
-
-  /* check available table space */
-  if ((type === LENS && used > ENOUGH_LENS) ||
-    (type === DISTS && used > ENOUGH_DISTS)) {
-    return 1;
-  }
-
-  /* process all codes and make table entries */
-  for (;;) {
-    /* create table entry */
-    here_bits = len - drop;
-    if (work[sym] < end) {
-      here_op = 0;
-      here_val = work[sym];
-    }
-    else if (work[sym] > end) {
-      here_op = extra[extra_index + work[sym]];
-      here_val = base[base_index + work[sym]];
-    }
-    else {
-      here_op = 32 + 64;         /* end of block */
-      here_val = 0;
-    }
-
-    /* replicate for those indices with low len bits equal to huff */
-    incr = 1 << (len - drop);
-    fill = 1 << curr;
-    min = fill;                 /* save offset to next table */
-    do {
-      fill -= incr;
-      table[next + (huff >> drop) + fill] = (here_bits << 24) | (here_op << 16) | here_val |0;
-    } while (fill !== 0);
-
-    /* backwards increment the len-bit code huff */
-    incr = 1 << (len - 1);
-    while (huff & incr) {
-      incr >>= 1;
-    }
-    if (incr !== 0) {
-      huff &= incr - 1;
-      huff += incr;
-    } else {
-      huff = 0;
-    }
-
-    /* go to next symbol, update count, len */
-    sym++;
-    if (--count[len] === 0) {
-      if (len === max) { break; }
-      len = lens[lens_index + work[sym]];
-    }
-
-    /* create new sub-table if needed */
-    if (len > root && (huff & mask) !== low) {
-      /* if first time, transition to sub-tables */
-      if (drop === 0) {
-        drop = root;
+      if (typeof source !== 'object') {
+        throw new TypeError(source + 'must be non-object');
       }
 
-      /* increment past last table */
-      next += min;            /* here min is 1 << curr */
-
-      /* determine length of next table */
-      curr = len - drop;
-      left = 1 << curr;
-      while (curr + drop < max) {
-        left -= count[curr + drop];
-        if (left <= 0) { break; }
-        curr++;
-        left <<= 1;
-      }
-
-      /* check for enough space */
-      used += 1 << curr;
-      if ((type === LENS && used > ENOUGH_LENS) ||
-        (type === DISTS && used > ENOUGH_DISTS)) {
-        return 1;
-      }
-
-      /* point entry in root table to sub-table */
-      low = huff & mask;
-      /*table.op[low] = curr;
-      table.bits[low] = root;
-      table.val[low] = next - opts.table_index;*/
-      table[low] = (root << 24) | (curr << 16) | (next - table_index) |0;
-    }
-  }
-
-  /* fill in remaining table entry if code is incomplete (guaranteed to have
-   at most one remaining entry, since if the code is incomplete, the
-   maximum code length that was allowed to get this far is one bit) */
-  if (huff !== 0) {
-    //table.op[next + huff] = 64;            /* invalid code marker */
-    //table.bits[next + huff] = len - drop;
-    //table.val[next + huff] = 0;
-    table[next + huff] = ((len - drop) << 24) | (64 << 16) |0;
-  }
-
-  /* set return parameters */
-  //opts.table_index += used;
-  opts.bits = root;
-  return 0;
-};
-
-},{"../utils/common":1}],10:[function(require,module,exports){
-'use strict';
-
-// (C) 1995-2013 Jean-loup Gailly and Mark Adler
-// (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-//
-// This software is provided 'as-is', without any express or implied
-// warranty. In no event will the authors be held liable for any damages
-// arising from the use of this software.
-//
-// Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it
-// freely, subject to the following restrictions:
-//
-// 1. The origin of this software must not be misrepresented; you must not
-//   claim that you wrote the original software. If you use this software
-//   in a product, an acknowledgment in the product documentation would be
-//   appreciated but is not required.
-// 2. Altered source versions must be plainly marked as such, and must not be
-//   misrepresented as being the original software.
-// 3. This notice may not be removed or altered from any source distribution.
-
-module.exports = {
-  2:      'need dictionary',     /* Z_NEED_DICT       2  */
-  1:      'stream end',          /* Z_STREAM_END      1  */
-  0:      '',                    /* Z_OK              0  */
-  '-1':   'file error',          /* Z_ERRNO         (-1) */
-  '-2':   'stream error',        /* Z_STREAM_ERROR  (-2) */
-  '-3':   'data error',          /* Z_DATA_ERROR    (-3) */
-  '-4':   'insufficient memory', /* Z_MEM_ERROR     (-4) */
-  '-5':   'buffer error',        /* Z_BUF_ERROR     (-5) */
-  '-6':   'incompatible version' /* Z_VERSION_ERROR (-6) */
-};
-
-},{}],11:[function(require,module,exports){
-'use strict';
-
-// (C) 1995-2013 Jean-loup Gailly and Mark Adler
-// (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
-//
-// This software is provided 'as-is', without any express or implied
-// warranty. In no event will the authors be held liable for any damages
-// arising from the use of this software.
-//
-// Permission is granted to anyone to use this software for any purpose,
-// including commercial applications, and to alter it and redistribute it
-// freely, subject to the following restrictions:
-//
-// 1. The origin of this software must not be misrepresented; you must not
-//   claim that you wrote the original software. If you use this software
-//   in a product, an acknowledgment in the product documentation would be
-//   appreciated but is not required.
-// 2. Altered source versions must be plainly marked as such, and must not be
-//   misrepresented as being the original software.
-// 3. This notice may not be removed or altered from any source distribution.
-
-function ZStream() {
-  /* next input byte */
-  this.input = null; // JS specific, because we have no pointers
-  this.next_in = 0;
-  /* number of bytes available at input */
-  this.avail_in = 0;
-  /* total number of input bytes read so far */
-  this.total_in = 0;
-  /* next output byte should be put there */
-  this.output = null; // JS specific, because we have no pointers
-  this.next_out = 0;
-  /* remaining free space at output */
-  this.avail_out = 0;
-  /* total number of bytes output so far */
-  this.total_out = 0;
-  /* last error message, NULL if no error */
-  this.msg = ''/*Z_NULL*/;
-  /* not visible by applications */
-  this.state = null;
-  /* best guess about the data type: binary or text */
-  this.data_type = 2/*Z_UNKNOWN*/;
-  /* adler32 value of the uncompressed data */
-  this.adler = 0;
-}
-
-module.exports = ZStream;
-
-},{}],"/lib/inflate.js":[function(require,module,exports){
-'use strict';
-
-
-var zlib_inflate = require('./zlib/inflate');
-var utils        = require('./utils/common');
-var strings      = require('./utils/strings');
-var c            = require('./zlib/constants');
-var msg          = require('./zlib/messages');
-var ZStream      = require('./zlib/zstream');
-var GZheader     = require('./zlib/gzheader');
-
-var toString = Object.prototype.toString;
-
-/**
- * class Inflate
- *
- * Generic JS-style wrapper for zlib calls. If you don't need
- * streaming behaviour - use more simple functions: [[inflate]]
- * and [[inflateRaw]].
- **/
-
-/* internal
- * inflate.chunks -> Array
- *
- * Chunks of output data, if [[Inflate#onData]] not overridden.
- **/
-
-/**
- * Inflate.result -> Uint8Array|Array|String
- *
- * Uncompressed result, generated by default [[Inflate#onData]]
- * and [[Inflate#onEnd]] handlers. Filled after you push last chunk
- * (call [[Inflate#push]] with `Z_FINISH` / `true` param) or if you
- * push a chunk with explicit flush (call [[Inflate#push]] with
- * `Z_SYNC_FLUSH` param).
- **/
-
-/**
- * Inflate.err -> Number
- *
- * Error code after inflate finished. 0 (Z_OK) on success.
- * Should be checked if broken data possible.
- **/
-
-/**
- * Inflate.msg -> String
- *
- * Error message, if [[Inflate.err]] != 0
- **/
-
-
-/**
- * new Inflate(options)
- * - options (Object): zlib inflate options.
- *
- * Creates new inflator instance with specified params. Throws exception
- * on bad params. Supported options:
- *
- * - `windowBits`
- * - `dictionary`
- *
- * [http://zlib.net/manual.html#Advanced](http://zlib.net/manual.html#Advanced)
- * for more information on these.
- *
- * Additional options, for internal needs:
- *
- * - `chunkSize` - size of generated data chunks (16K by default)
- * - `raw` (Boolean) - do raw inflate
- * - `to` (String) - if equal to 'string', then result will be converted
- *   from utf8 to utf16 (javascript) string. When string output requested,
- *   chunk length can differ from `chunkSize`, depending on content.
- *
- * By default, when no options set, autodetect deflate/gzip data format via
- * wrapper header.
- *
- * ##### Example:
- *
- * ```javascript
- * var pako = require('pako')
- *   , chunk1 = Uint8Array([1,2,3,4,5,6,7,8,9])
- *   , chunk2 = Uint8Array([10,11,12,13,14,15,16,17,18,19]);
- *
- * var inflate = new pako.Inflate({ level: 3});
- *
- * inflate.push(chunk1, false);
- * inflate.push(chunk2, true);  // true -> last chunk
- *
- * if (inflate.err) { throw new Error(inflate.err); }
- *
- * console.log(inflate.result);
- * ```
- **/
-function Inflate(options) {
-  if (!(this instanceof Inflate)) return new Inflate(options);
-
-  this.options = utils.assign({
-    chunkSize: 16384,
-    windowBits: 0,
-    to: ''
-  }, options || {});
-
-  var opt = this.options;
-
-  // Force window size for `raw` data, if not set directly,
-  // because we have no header for autodetect.
-  if (opt.raw && (opt.windowBits >= 0) && (opt.windowBits < 16)) {
-    opt.windowBits = -opt.windowBits;
-    if (opt.windowBits === 0) { opt.windowBits = -15; }
-  }
-
-  // If `windowBits` not defined (and mode not raw) - set autodetect flag for gzip/deflate
-  if ((opt.windowBits >= 0) && (opt.windowBits < 16) &&
-      !(options && options.windowBits)) {
-    opt.windowBits += 32;
-  }
-
-  // Gzip header has no info about windows size, we can do autodetect only
-  // for deflate. So, if window size not set, force it to max when gzip possible
-  if ((opt.windowBits > 15) && (opt.windowBits < 48)) {
-    // bit 3 (16) -> gzipped data
-    // bit 4 (32) -> autodetect gzip/deflate
-    if ((opt.windowBits & 15) === 0) {
-      opt.windowBits |= 15;
-    }
-  }
-
-  this.err    = 0;      // error code, if happens (0 = Z_OK)
-  this.msg    = '';     // error message
-  this.ended  = false;  // used to avoid multiple onEnd() calls
-  this.chunks = [];     // chunks of compressed data
-
-  this.strm   = new ZStream();
-  this.strm.avail_out = 0;
-
-  var status  = zlib_inflate.inflateInit2(
-    this.strm,
-    opt.windowBits
-  );
-
-  if (status !== c.Z_OK) {
-    throw new Error(msg[status]);
-  }
-
-  this.header = new GZheader();
-
-  zlib_inflate.inflateGetHeader(this.strm, this.header);
-
-  // Setup dictionary
-  if (opt.dictionary) {
-    // Convert data if needed
-    if (typeof opt.dictionary === 'string') {
-      opt.dictionary = strings.string2buf(opt.dictionary);
-    } else if (toString.call(opt.dictionary) === '[object ArrayBuffer]') {
-      opt.dictionary = new Uint8Array(opt.dictionary);
-    }
-    if (opt.raw) { //In raw mode we need to set the dictionary early
-      status = zlib_inflate.inflateSetDictionary(this.strm, opt.dictionary);
-      if (status !== c.Z_OK) {
-        throw new Error(msg[status]);
-      }
-    }
-  }
-}
-
-/**
- * Inflate#push(data[, mode]) -> Boolean
- * - data (Uint8Array|Array|ArrayBuffer|String): input data
- * - mode (Number|Boolean): 0..6 for corresponding Z_NO_FLUSH..Z_TREE modes.
- *   See constants. Skipped or `false` means Z_NO_FLUSH, `true` means Z_FINISH.
- *
- * Sends input data to inflate pipe, generating [[Inflate#onData]] calls with
- * new output chunks. Returns `true` on success. The last data block must have
- * mode Z_FINISH (or `true`). That will flush internal pending buffers and call
- * [[Inflate#onEnd]]. For interim explicit flushes (without ending the stream) you
- * can use mode Z_SYNC_FLUSH, keeping the decompression context.
- *
- * On fail call [[Inflate#onEnd]] with error code and return false.
- *
- * We strongly recommend to use `Uint8Array` on input for best speed (output
- * format is detected automatically). Also, don't skip last param and always
- * use the same type in your code (boolean or number). That will improve JS speed.
- *
- * For regular `Array`-s make sure all elements are [0..255].
- *
- * ##### Example
- *
- * ```javascript
- * push(chunk, false); // push one of data chunks
- * ...
- * push(chunk, true);  // push last chunk
- * ```
- **/
-Inflate.prototype.push = function (data, mode) {
-  var strm = this.strm;
-  var chunkSize = this.options.chunkSize;
-  var dictionary = this.options.dictionary;
-  var status, _mode;
-  var next_out_utf8, tail, utf8str;
-
-  // Flag to properly process Z_BUF_ERROR on testing inflate call
-  // when we check that all output data was flushed.
-  var allowBufError = false;
-
-  if (this.ended) { return false; }
-  _mode = (mode === ~~mode) ? mode : ((mode === true) ? c.Z_FINISH : c.Z_NO_FLUSH);
-
-  // Convert data if needed
-  if (typeof data === 'string') {
-    // Only binary strings can be decompressed on practice
-    strm.input = strings.binstring2buf(data);
-  } else if (toString.call(data) === '[object ArrayBuffer]') {
-    strm.input = new Uint8Array(data);
-  } else {
-    strm.input = data;
-  }
-
-  strm.next_in = 0;
-  strm.avail_in = strm.input.length;
-
-  do {
-    if (strm.avail_out === 0) {
-      strm.output = new utils.Buf8(chunkSize);
-      strm.next_out = 0;
-      strm.avail_out = chunkSize;
-    }
-
-    status = zlib_inflate.inflate(strm, c.Z_NO_FLUSH);    /* no bad return value */
-
-    if (status === c.Z_NEED_DICT && dictionary) {
-      status = zlib_inflate.inflateSetDictionary(this.strm, dictionary);
-    }
-
-    if (status === c.Z_BUF_ERROR && allowBufError === true) {
-      status = c.Z_OK;
-      allowBufError = false;
-    }
-
-    if (status !== c.Z_STREAM_END && status !== c.Z_OK) {
-      this.onEnd(status);
-      this.ended = true;
-      return false;
-    }
-
-    if (strm.next_out) {
-      if (strm.avail_out === 0 || status === c.Z_STREAM_END || (strm.avail_in === 0 && (_mode === c.Z_FINISH || _mode === c.Z_SYNC_FLUSH))) {
-
-        if (this.options.to === 'string') {
-
-          next_out_utf8 = strings.utf8border(strm.output, strm.next_out);
-
-          tail = strm.next_out - next_out_utf8;
-          utf8str = strings.buf2string(strm.output, next_out_utf8);
-
-          // move tail
-          strm.next_out = tail;
-          strm.avail_out = chunkSize - tail;
-          if (tail) { utils.arraySet(strm.output, strm.output, next_out_utf8, tail, 0); }
-
-          this.onData(utf8str);
-
-        } else {
-          this.onData(utils.shrinkBuf(strm.output, strm.next_out));
+      for (const p in source) {
+        if (_has(source, p)) {
+          obj[p] = source[p];
         }
       }
     }
 
-    // When no more input data, we should check that internal inflate buffers
-    // are flushed. The only way to do it when avail_out = 0 - run one more
-    // inflate pass. But if output data not exists, inflate return Z_BUF_ERROR.
-    // Here we set flag to process this error properly.
+    return obj;
+  };
+
+
+  // Join array of chunks to single array.
+  var flattenChunks = (chunks) => {
+    // calculate data length
+    let len = 0;
+
+    for (let i = 0, l = chunks.length; i < l; i++) {
+      len += chunks[i].length;
+    }
+
+    // join chunks
+    const result = new Uint8Array(len);
+
+    for (let i = 0, pos = 0, l = chunks.length; i < l; i++) {
+      let chunk = chunks[i];
+      result.set(chunk, pos);
+      pos += chunk.length;
+    }
+
+    return result;
+  };
+
+  var common = {
+  	assign: assign,
+  	flattenChunks: flattenChunks
+  };
+
+  // String encode/decode helpers
+
+
+  // Quick check if we can use fast array to bin string conversion
+  //
+  // - apply(Array) can fail on Android 2.2
+  // - apply(Uint8Array) can fail on iOS 5.1 Safari
+  //
+  let STR_APPLY_UIA_OK = true;
+
+  try { String.fromCharCode.apply(null, new Uint8Array(1)); } catch (__) { STR_APPLY_UIA_OK = false; }
+
+
+  // Table with utf8 lengths (calculated by first byte of sequence)
+  // Note, that 5 & 6-byte values and some 4-byte values can not be represented in JS,
+  // because max possible codepoint is 0x10ffff
+  const _utf8len = new Uint8Array(256);
+  for (let q = 0; q < 256; q++) {
+    _utf8len[q] = (q >= 252 ? 6 : q >= 248 ? 5 : q >= 240 ? 4 : q >= 224 ? 3 : q >= 192 ? 2 : 1);
+  }
+  _utf8len[254] = _utf8len[254] = 1; // Invalid sequence start
+
+
+  // convert string to array (typed, when possible)
+  var string2buf = (str) => {
+    if (typeof TextEncoder === 'function' && TextEncoder.prototype.encode) {
+      return new TextEncoder().encode(str);
+    }
+
+    let buf, c, c2, m_pos, i, str_len = str.length, buf_len = 0;
+
+    // count binary size
+    for (m_pos = 0; m_pos < str_len; m_pos++) {
+      c = str.charCodeAt(m_pos);
+      if ((c & 0xfc00) === 0xd800 && (m_pos + 1 < str_len)) {
+        c2 = str.charCodeAt(m_pos + 1);
+        if ((c2 & 0xfc00) === 0xdc00) {
+          c = 0x10000 + ((c - 0xd800) << 10) + (c2 - 0xdc00);
+          m_pos++;
+        }
+      }
+      buf_len += c < 0x80 ? 1 : c < 0x800 ? 2 : c < 0x10000 ? 3 : 4;
+    }
+
+    // allocate buffer
+    buf = new Uint8Array(buf_len);
+
+    // convert
+    for (i = 0, m_pos = 0; i < buf_len; m_pos++) {
+      c = str.charCodeAt(m_pos);
+      if ((c & 0xfc00) === 0xd800 && (m_pos + 1 < str_len)) {
+        c2 = str.charCodeAt(m_pos + 1);
+        if ((c2 & 0xfc00) === 0xdc00) {
+          c = 0x10000 + ((c - 0xd800) << 10) + (c2 - 0xdc00);
+          m_pos++;
+        }
+      }
+      if (c < 0x80) {
+        /* one byte */
+        buf[i++] = c;
+      } else if (c < 0x800) {
+        /* two bytes */
+        buf[i++] = 0xC0 | (c >>> 6);
+        buf[i++] = 0x80 | (c & 0x3f);
+      } else if (c < 0x10000) {
+        /* three bytes */
+        buf[i++] = 0xE0 | (c >>> 12);
+        buf[i++] = 0x80 | (c >>> 6 & 0x3f);
+        buf[i++] = 0x80 | (c & 0x3f);
+      } else {
+        /* four bytes */
+        buf[i++] = 0xf0 | (c >>> 18);
+        buf[i++] = 0x80 | (c >>> 12 & 0x3f);
+        buf[i++] = 0x80 | (c >>> 6 & 0x3f);
+        buf[i++] = 0x80 | (c & 0x3f);
+      }
+    }
+
+    return buf;
+  };
+
+  // Helper
+  const buf2binstring = (buf, len) => {
+    // On Chrome, the arguments in a function call that are allowed is `65534`.
+    // If the length of the buffer is smaller than that, we can use this optimization,
+    // otherwise we will take a slower path.
+    if (len < 65534) {
+      if (buf.subarray && STR_APPLY_UIA_OK) {
+        return String.fromCharCode.apply(null, buf.length === len ? buf : buf.subarray(0, len));
+      }
+    }
+
+    let result = '';
+    for (let i = 0; i < len; i++) {
+      result += String.fromCharCode(buf[i]);
+    }
+    return result;
+  };
+
+
+  // convert array to string
+  var buf2string = (buf, max) => {
+    const len = max || buf.length;
+
+    if (typeof TextDecoder === 'function' && TextDecoder.prototype.decode) {
+      return new TextDecoder().decode(buf.subarray(0, max));
+    }
+
+    let i, out;
+
+    // Reserve max possible length (2 words per char)
+    // NB: by unknown reasons, Array is significantly faster for
+    //     String.fromCharCode.apply than Uint16Array.
+    const utf16buf = new Array(len * 2);
+
+    for (out = 0, i = 0; i < len;) {
+      let c = buf[i++];
+      // quick process ascii
+      if (c < 0x80) { utf16buf[out++] = c; continue; }
+
+      let c_len = _utf8len[c];
+      // skip 5 & 6 byte codes
+      if (c_len > 4) { utf16buf[out++] = 0xfffd; i += c_len - 1; continue; }
+
+      // apply mask on first byte
+      c &= c_len === 2 ? 0x1f : c_len === 3 ? 0x0f : 0x07;
+      // join the rest
+      while (c_len > 1 && i < len) {
+        c = (c << 6) | (buf[i++] & 0x3f);
+        c_len--;
+      }
+
+      // terminated by end of string?
+      if (c_len > 1) { utf16buf[out++] = 0xfffd; continue; }
+
+      if (c < 0x10000) {
+        utf16buf[out++] = c;
+      } else {
+        c -= 0x10000;
+        utf16buf[out++] = 0xd800 | ((c >> 10) & 0x3ff);
+        utf16buf[out++] = 0xdc00 | (c & 0x3ff);
+      }
+    }
+
+    return buf2binstring(utf16buf, out);
+  };
+
+
+  // Calculate max possible position in utf8 buffer,
+  // that will not break sequence. If that's not possible
+  // - (very small limits) return max size as is.
+  //
+  // buf[] - utf8 bytes array
+  // max   - length limit (mandatory);
+  var utf8border = (buf, max) => {
+
+    max = max || buf.length;
+    if (max > buf.length) { max = buf.length; }
+
+    // go back from last position, until start of sequence found
+    let pos = max - 1;
+    while (pos >= 0 && (buf[pos] & 0xC0) === 0x80) { pos--; }
+
+    // Very small and broken sequence,
+    // return max, because we should return something anyway.
+    if (pos < 0) { return max; }
+
+    // If we came to start of buffer - that means buffer is too small,
+    // return max too.
+    if (pos === 0) { return max; }
+
+    return (pos + _utf8len[buf[pos]] > max) ? pos : max;
+  };
+
+  var strings = {
+  	string2buf: string2buf,
+  	buf2string: buf2string,
+  	utf8border: utf8border
+  };
+
+  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
+  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
+  //
+  // This software is provided 'as-is', without any express or implied
+  // warranty. In no event will the authors be held liable for any damages
+  // arising from the use of this software.
+  //
+  // Permission is granted to anyone to use this software for any purpose,
+  // including commercial applications, and to alter it and redistribute it
+  // freely, subject to the following restrictions:
+  //
+  // 1. The origin of this software must not be misrepresented; you must not
+  //   claim that you wrote the original software. If you use this software
+  //   in a product, an acknowledgment in the product documentation would be
+  //   appreciated but is not required.
+  // 2. Altered source versions must be plainly marked as such, and must not be
+  //   misrepresented as being the original software.
+  // 3. This notice may not be removed or altered from any source distribution.
+
+  var messages = {
+    2:      'need dictionary',     /* Z_NEED_DICT       2  */
+    1:      'stream end',          /* Z_STREAM_END      1  */
+    0:      '',                    /* Z_OK              0  */
+    '-1':   'file error',          /* Z_ERRNO         (-1) */
+    '-2':   'stream error',        /* Z_STREAM_ERROR  (-2) */
+    '-3':   'data error',          /* Z_DATA_ERROR    (-3) */
+    '-4':   'insufficient memory', /* Z_MEM_ERROR     (-4) */
+    '-5':   'buffer error',        /* Z_BUF_ERROR     (-5) */
+    '-6':   'incompatible version' /* Z_VERSION_ERROR (-6) */
+  };
+
+  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
+  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
+  //
+  // This software is provided 'as-is', without any express or implied
+  // warranty. In no event will the authors be held liable for any damages
+  // arising from the use of this software.
+  //
+  // Permission is granted to anyone to use this software for any purpose,
+  // including commercial applications, and to alter it and redistribute it
+  // freely, subject to the following restrictions:
+  //
+  // 1. The origin of this software must not be misrepresented; you must not
+  //   claim that you wrote the original software. If you use this software
+  //   in a product, an acknowledgment in the product documentation would be
+  //   appreciated but is not required.
+  // 2. Altered source versions must be plainly marked as such, and must not be
+  //   misrepresented as being the original software.
+  // 3. This notice may not be removed or altered from any source distribution.
+
+  function ZStream() {
+    /* next input byte */
+    this.input = null; // JS specific, because we have no pointers
+    this.next_in = 0;
+    /* number of bytes available at input */
+    this.avail_in = 0;
+    /* total number of input bytes read so far */
+    this.total_in = 0;
+    /* next output byte should be put there */
+    this.output = null; // JS specific, because we have no pointers
+    this.next_out = 0;
+    /* remaining free space at output */
+    this.avail_out = 0;
+    /* total number of bytes output so far */
+    this.total_out = 0;
+    /* last error message, NULL if no error */
+    this.msg = ''/*Z_NULL*/;
+    /* not visible by applications */
+    this.state = null;
+    /* best guess about the data type: binary or text */
+    this.data_type = 2/*Z_UNKNOWN*/;
+    /* adler32 value of the uncompressed data */
+    this.adler = 0;
+  }
+
+  var zstream = ZStream;
+
+  // (C) 1995-2013 Jean-loup Gailly and Mark Adler
+  // (C) 2014-2017 Vitaly Puzrin and Andrey Tupitsin
+  //
+  // This software is provided 'as-is', without any express or implied
+  // warranty. In no event will the authors be held liable for any damages
+  // arising from the use of this software.
+  //
+  // Permission is granted to anyone to use this software for any purpose,
+  // including commercial applications, and to alter it and redistribute it
+  // freely, subject to the following restrictions:
+  //
+  // 1. The origin of this software must not be misrepresented; you must not
+  //   claim that you wrote the original software. If you use this software
+  //   in a product, an acknowledgment in the product documentation would be
+  //   appreciated but is not required.
+  // 2. Altered source versions must be plainly marked as such, and must not be
+  //   misrepresented as being the original software.
+  // 3. This notice may not be removed or altered from any source distribution.
+
+  function GZheader() {
+    /* true if compressed data believed to be text */
+    this.text       = 0;
+    /* modification time */
+    this.time       = 0;
+    /* extra flags (not used when writing a gzip file) */
+    this.xflags     = 0;
+    /* operating system */
+    this.os         = 0;
+    /* pointer to extra field or Z_NULL if none */
+    this.extra      = null;
+    /* extra field length (valid if extra != Z_NULL) */
+    this.extra_len  = 0; // Actually, we don't need it in JS,
+                         // but leave for few code modifications
+
     //
-    // NOTE. Deflate does not return error in this case and does not needs such
-    // logic.
-    if (strm.avail_in === 0 && strm.avail_out === 0) {
-      allowBufError = true;
+    // Setup limits is not necessary because in js we should not preallocate memory
+    // for inflate use constant limit in 65536 bytes
+    //
+
+    /* space at extra (only when reading header) */
+    // this.extra_max  = 0;
+    /* pointer to zero-terminated file name or Z_NULL */
+    this.name       = '';
+    /* space at name (only when reading header) */
+    // this.name_max   = 0;
+    /* pointer to zero-terminated comment or Z_NULL */
+    this.comment    = '';
+    /* space at comment (only when reading header) */
+    // this.comm_max   = 0;
+    /* true if there was or will be a header crc */
+    this.hcrc       = 0;
+    /* true when done reading gzip header (not used when writing a gzip file) */
+    this.done       = false;
+  }
+
+  var gzheader = GZheader;
+
+  const toString = Object.prototype.toString;
+
+  /* Public constants ==========================================================*/
+  /* ===========================================================================*/
+
+  const {
+    Z_NO_FLUSH, Z_FINISH,
+    Z_OK, Z_STREAM_END, Z_NEED_DICT, Z_STREAM_ERROR, Z_DATA_ERROR, Z_MEM_ERROR
+  } = constants$1;
+
+  /* ===========================================================================*/
+
+
+  /**
+   * class Inflate
+   *
+   * Generic JS-style wrapper for zlib calls. If you don't need
+   * streaming behaviour - use more simple functions: [[inflate]]
+   * and [[inflateRaw]].
+   **/
+
+  /* internal
+   * inflate.chunks -> Array
+   *
+   * Chunks of output data, if [[Inflate#onData]] not overridden.
+   **/
+
+  /**
+   * Inflate.result -> Uint8Array|String
+   *
+   * Uncompressed result, generated by default [[Inflate#onData]]
+   * and [[Inflate#onEnd]] handlers. Filled after you push last chunk
+   * (call [[Inflate#push]] with `Z_FINISH` / `true` param).
+   **/
+
+  /**
+   * Inflate.err -> Number
+   *
+   * Error code after inflate finished. 0 (Z_OK) on success.
+   * Should be checked if broken data possible.
+   **/
+
+  /**
+   * Inflate.msg -> String
+   *
+   * Error message, if [[Inflate.err]] != 0
+   **/
+
+
+  /**
+   * new Inflate(options)
+   * - options (Object): zlib inflate options.
+   *
+   * Creates new inflator instance with specified params. Throws exception
+   * on bad params. Supported options:
+   *
+   * - `windowBits`
+   * - `dictionary`
+   *
+   * [http://zlib.net/manual.html#Advanced](http://zlib.net/manual.html#Advanced)
+   * for more information on these.
+   *
+   * Additional options, for internal needs:
+   *
+   * - `chunkSize` - size of generated data chunks (16K by default)
+   * - `raw` (Boolean) - do raw inflate
+   * - `to` (String) - if equal to 'string', then result will be converted
+   *   from utf8 to utf16 (javascript) string. When string output requested,
+   *   chunk length can differ from `chunkSize`, depending on content.
+   *
+   * By default, when no options set, autodetect deflate/gzip data format via
+   * wrapper header.
+   *
+   * ##### Example:
+   *
+   * ```javascript
+   * const pako = require('pako')
+   * const chunk1 = new Uint8Array([1,2,3,4,5,6,7,8,9])
+   * const chunk2 = new Uint8Array([10,11,12,13,14,15,16,17,18,19]);
+   *
+   * const inflate = new pako.Inflate({ level: 3});
+   *
+   * inflate.push(chunk1, false);
+   * inflate.push(chunk2, true);  // true -> last chunk
+   *
+   * if (inflate.err) { throw new Error(inflate.err); }
+   *
+   * console.log(inflate.result);
+   * ```
+   **/
+  function Inflate(options) {
+    this.options = common.assign({
+      chunkSize: 1024 * 64,
+      windowBits: 15,
+      to: ''
+    }, options || {});
+
+    const opt = this.options;
+
+    // Force window size for `raw` data, if not set directly,
+    // because we have no header for autodetect.
+    if (opt.raw && (opt.windowBits >= 0) && (opt.windowBits < 16)) {
+      opt.windowBits = -opt.windowBits;
+      if (opt.windowBits === 0) { opt.windowBits = -15; }
     }
 
-  } while ((strm.avail_in > 0 || strm.avail_out === 0) && status !== c.Z_STREAM_END);
+    // If `windowBits` not defined (and mode not raw) - set autodetect flag for gzip/deflate
+    if ((opt.windowBits >= 0) && (opt.windowBits < 16) &&
+        !(options && options.windowBits)) {
+      opt.windowBits += 32;
+    }
 
-  if (status === c.Z_STREAM_END) {
-    _mode = c.Z_FINISH;
+    // Gzip header has no info about windows size, we can do autodetect only
+    // for deflate. So, if window size not set, force it to max when gzip possible
+    if ((opt.windowBits > 15) && (opt.windowBits < 48)) {
+      // bit 3 (16) -> gzipped data
+      // bit 4 (32) -> autodetect gzip/deflate
+      if ((opt.windowBits & 15) === 0) {
+        opt.windowBits |= 15;
+      }
+    }
+
+    this.err    = 0;      // error code, if happens (0 = Z_OK)
+    this.msg    = '';     // error message
+    this.ended  = false;  // used to avoid multiple onEnd() calls
+    this.chunks = [];     // chunks of compressed data
+
+    this.strm   = new zstream();
+    this.strm.avail_out = 0;
+
+    let status  = inflate_1$1.inflateInit2(
+      this.strm,
+      opt.windowBits
+    );
+
+    if (status !== Z_OK) {
+      throw new Error(messages[status]);
+    }
+
+    this.header = new gzheader();
+
+    inflate_1$1.inflateGetHeader(this.strm, this.header);
+
+    // Setup dictionary
+    if (opt.dictionary) {
+      // Convert data if needed
+      if (typeof opt.dictionary === 'string') {
+        opt.dictionary = strings.string2buf(opt.dictionary);
+      } else if (toString.call(opt.dictionary) === '[object ArrayBuffer]') {
+        opt.dictionary = new Uint8Array(opt.dictionary);
+      }
+      if (opt.raw) { //In raw mode we need to set the dictionary early
+        status = inflate_1$1.inflateSetDictionary(this.strm, opt.dictionary);
+        if (status !== Z_OK) {
+          throw new Error(messages[status]);
+        }
+      }
+    }
   }
 
-  // Finalize on the last chunk.
-  if (_mode === c.Z_FINISH) {
-    status = zlib_inflate.inflateEnd(this.strm);
-    this.onEnd(status);
-    this.ended = true;
-    return status === c.Z_OK;
-  }
+  /**
+   * Inflate#push(data[, flush_mode]) -> Boolean
+   * - data (Uint8Array|ArrayBuffer): input data
+   * - flush_mode (Number|Boolean): 0..6 for corresponding Z_NO_FLUSH..Z_TREE
+   *   flush modes. See constants. Skipped or `false` means Z_NO_FLUSH,
+   *   `true` means Z_FINISH.
+   *
+   * Sends input data to inflate pipe, generating [[Inflate#onData]] calls with
+   * new output chunks. Returns `true` on success. If end of stream detected,
+   * [[Inflate#onEnd]] will be called.
+   *
+   * `flush_mode` is not needed for normal operation, because end of stream
+   * detected automatically. You may try to use it for advanced things, but
+   * this functionality was not tested.
+   *
+   * On fail call [[Inflate#onEnd]] with error code and return false.
+   *
+   * ##### Example
+   *
+   * ```javascript
+   * push(chunk, false); // push one of data chunks
+   * ...
+   * push(chunk, true);  // push last chunk
+   * ```
+   **/
+  Inflate.prototype.push = function (data, flush_mode) {
+    const strm = this.strm;
+    const chunkSize = this.options.chunkSize;
+    const dictionary = this.options.dictionary;
+    let status, _flush_mode, last_avail_out;
 
-  // callback interim results if Z_SYNC_FLUSH.
-  if (_mode === c.Z_SYNC_FLUSH) {
-    this.onEnd(c.Z_OK);
-    strm.avail_out = 0;
-    return true;
-  }
+    if (this.ended) return false;
 
-  return true;
-};
+    if (flush_mode === ~~flush_mode) _flush_mode = flush_mode;
+    else _flush_mode = flush_mode === true ? Z_FINISH : Z_NO_FLUSH;
 
-
-/**
- * Inflate#onData(chunk) -> Void
- * - chunk (Uint8Array|Array|String): output data. Type of array depends
- *   on js engine support. When string output requested, each chunk
- *   will be string.
- *
- * By default, stores data blocks in `chunks[]` property and glue
- * those in `onEnd`. Override this handler, if you need another behaviour.
- **/
-Inflate.prototype.onData = function (chunk) {
-  this.chunks.push(chunk);
-};
-
-
-/**
- * Inflate#onEnd(status) -> Void
- * - status (Number): inflate status. 0 (Z_OK) on success,
- *   other if not.
- *
- * Called either after you tell inflate that the input stream is
- * complete (Z_FINISH) or should be flushed (Z_SYNC_FLUSH)
- * or if an error happened. By default - join collected chunks,
- * free memory and fill `results` / `err` properties.
- **/
-Inflate.prototype.onEnd = function (status) {
-  // On success - join
-  if (status === c.Z_OK) {
-    if (this.options.to === 'string') {
-      // Glue & convert here, until we teach pako to send
-      // utf8 aligned strings to onData
-      this.result = this.chunks.join('');
+    // Convert data if needed
+    if (toString.call(data) === '[object ArrayBuffer]') {
+      strm.input = new Uint8Array(data);
     } else {
-      this.result = utils.flattenChunks(this.chunks);
+      strm.input = data;
     }
+
+    strm.next_in = 0;
+    strm.avail_in = strm.input.length;
+
+    for (;;) {
+      if (strm.avail_out === 0) {
+        strm.output = new Uint8Array(chunkSize);
+        strm.next_out = 0;
+        strm.avail_out = chunkSize;
+      }
+
+      status = inflate_1$1.inflate(strm, _flush_mode);
+
+      if (status === Z_NEED_DICT && dictionary) {
+        status = inflate_1$1.inflateSetDictionary(strm, dictionary);
+
+        if (status === Z_OK) {
+          status = inflate_1$1.inflate(strm, _flush_mode);
+        } else if (status === Z_DATA_ERROR) {
+          // Replace code with more verbose
+          status = Z_NEED_DICT;
+        }
+      }
+
+      // Skip snyc markers if more data follows and not raw mode
+      while (strm.avail_in > 0 &&
+             status === Z_STREAM_END &&
+             strm.state.wrap > 0 &&
+             data[strm.next_in] !== 0)
+      {
+        inflate_1$1.inflateReset(strm);
+        status = inflate_1$1.inflate(strm, _flush_mode);
+      }
+
+      switch (status) {
+        case Z_STREAM_ERROR:
+        case Z_DATA_ERROR:
+        case Z_NEED_DICT:
+        case Z_MEM_ERROR:
+          this.onEnd(status);
+          this.ended = true;
+          return false;
+      }
+
+      // Remember real `avail_out` value, because we may patch out buffer content
+      // to align utf8 strings boundaries.
+      last_avail_out = strm.avail_out;
+
+      if (strm.next_out) {
+        if (strm.avail_out === 0 || status === Z_STREAM_END) {
+
+          if (this.options.to === 'string') {
+
+            let next_out_utf8 = strings.utf8border(strm.output, strm.next_out);
+
+            let tail = strm.next_out - next_out_utf8;
+            let utf8str = strings.buf2string(strm.output, next_out_utf8);
+
+            // move tail & realign counters
+            strm.next_out = tail;
+            strm.avail_out = chunkSize - tail;
+            if (tail) strm.output.set(strm.output.subarray(next_out_utf8, next_out_utf8 + tail), 0);
+
+            this.onData(utf8str);
+
+          } else {
+            this.onData(strm.output.length === strm.next_out ? strm.output : strm.output.subarray(0, strm.next_out));
+          }
+        }
+      }
+
+      // Must repeat iteration if out buffer is full
+      if (status === Z_OK && last_avail_out === 0) continue;
+
+      // Finalize if end of stream reached.
+      if (status === Z_STREAM_END) {
+        status = inflate_1$1.inflateEnd(this.strm);
+        this.onEnd(status);
+        this.ended = true;
+        return true;
+      }
+
+      if (strm.avail_in === 0) break;
+    }
+
+    return true;
+  };
+
+
+  /**
+   * Inflate#onData(chunk) -> Void
+   * - chunk (Uint8Array|String): output data. When string output requested,
+   *   each chunk will be string.
+   *
+   * By default, stores data blocks in `chunks[]` property and glue
+   * those in `onEnd`. Override this handler, if you need another behaviour.
+   **/
+  Inflate.prototype.onData = function (chunk) {
+    this.chunks.push(chunk);
+  };
+
+
+  /**
+   * Inflate#onEnd(status) -> Void
+   * - status (Number): inflate status. 0 (Z_OK) on success,
+   *   other if not.
+   *
+   * Called either after you tell inflate that the input stream is
+   * complete (Z_FINISH). By default - join collected chunks,
+   * free memory and fill `results` / `err` properties.
+   **/
+  Inflate.prototype.onEnd = function (status) {
+    // On success - join
+    if (status === Z_OK) {
+      if (this.options.to === 'string') {
+        this.result = this.chunks.join('');
+      } else {
+        this.result = common.flattenChunks(this.chunks);
+      }
+    }
+    this.chunks = [];
+    this.err = status;
+    this.msg = this.strm.msg;
+  };
+
+
+  /**
+   * inflate(data[, options]) -> Uint8Array|String
+   * - data (Uint8Array): input data to decompress.
+   * - options (Object): zlib inflate options.
+   *
+   * Decompress `data` with inflate/ungzip and `options`. Autodetect
+   * format via wrapper header by default. That's why we don't provide
+   * separate `ungzip` method.
+   *
+   * Supported options are:
+   *
+   * - windowBits
+   *
+   * [http://zlib.net/manual.html#Advanced](http://zlib.net/manual.html#Advanced)
+   * for more information.
+   *
+   * Sugar (options):
+   *
+   * - `raw` (Boolean) - say that we work with raw stream, if you don't wish to specify
+   *   negative windowBits implicitly.
+   * - `to` (String) - if equal to 'string', then result will be converted
+   *   from utf8 to utf16 (javascript) string. When string output requested,
+   *   chunk length can differ from `chunkSize`, depending on content.
+   *
+   *
+   * ##### Example:
+   *
+   * ```javascript
+   * const pako = require('pako');
+   * const input = pako.deflate(new Uint8Array([1,2,3,4,5,6,7,8,9]));
+   * let output;
+   *
+   * try {
+   *   output = pako.inflate(input);
+   * } catch (err) {
+   *   console.log(err);
+   * }
+   * ```
+   **/
+  function inflate(input, options) {
+    const inflator = new Inflate(options);
+
+    inflator.push(input);
+
+    // That will never happens, if you don't cheat with options :)
+    if (inflator.err) throw inflator.msg || messages[inflator.err];
+
+    return inflator.result;
   }
-  this.chunks = [];
-  this.err = status;
-  this.msg = this.strm.msg;
-};
 
 
-/**
- * inflate(data[, options]) -> Uint8Array|Array|String
- * - data (Uint8Array|Array|String): input data to decompress.
- * - options (Object): zlib inflate options.
- *
- * Decompress `data` with inflate/ungzip and `options`. Autodetect
- * format via wrapper header by default. That's why we don't provide
- * separate `ungzip` method.
- *
- * Supported options are:
- *
- * - windowBits
- *
- * [http://zlib.net/manual.html#Advanced](http://zlib.net/manual.html#Advanced)
- * for more information.
- *
- * Sugar (options):
- *
- * - `raw` (Boolean) - say that we work with raw stream, if you don't wish to specify
- *   negative windowBits implicitly.
- * - `to` (String) - if equal to 'string', then result will be converted
- *   from utf8 to utf16 (javascript) string. When string output requested,
- *   chunk length can differ from `chunkSize`, depending on content.
- *
- *
- * ##### Example:
- *
- * ```javascript
- * var pako = require('pako')
- *   , input = pako.deflate([1,2,3,4,5,6,7,8,9])
- *   , output;
- *
- * try {
- *   output = pako.inflate(input);
- * } catch (err)
- *   console.log(err);
- * }
- * ```
- **/
-function inflate(input, options) {
-  var inflator = new Inflate(options);
-
-  inflator.push(input, true);
-
-  // That will never happens, if you don't cheat with options :)
-  if (inflator.err) { throw inflator.msg || msg[inflator.err]; }
-
-  return inflator.result;
-}
+  /**
+   * inflateRaw(data[, options]) -> Uint8Array|String
+   * - data (Uint8Array): input data to decompress.
+   * - options (Object): zlib inflate options.
+   *
+   * The same as [[inflate]], but creates raw data, without wrapper
+   * (header and adler32 crc).
+   **/
+  function inflateRaw(input, options) {
+    options = options || {};
+    options.raw = true;
+    return inflate(input, options);
+  }
 
 
-/**
- * inflateRaw(data[, options]) -> Uint8Array|Array|String
- * - data (Uint8Array|Array|String): input data to decompress.
- * - options (Object): zlib inflate options.
- *
- * The same as [[inflate]], but creates raw data, without wrapper
- * (header and adler32 crc).
- **/
-function inflateRaw(input, options) {
-  options = options || {};
-  options.raw = true;
-  return inflate(input, options);
-}
+  /**
+   * ungzip(data[, options]) -> Uint8Array|String
+   * - data (Uint8Array): input data to decompress.
+   * - options (Object): zlib inflate options.
+   *
+   * Just shortcut to [[inflate]], because it autodetects format
+   * by header.content. Done for convenience.
+   **/
 
 
-/**
- * ungzip(data[, options]) -> Uint8Array|Array|String
- * - data (Uint8Array|Array|String): input data to decompress.
- * - options (Object): zlib inflate options.
- *
- * Just shortcut to [[inflate]], because it autodetects format
- * by header.content. Done for convenience.
- **/
+  var Inflate_1 = Inflate;
+  var inflate_2 = inflate;
+  var inflateRaw_1 = inflateRaw;
+  var ungzip = inflate;
+  var constants = constants$1;
 
+  var inflate_1 = {
+  	Inflate: Inflate_1,
+  	inflate: inflate_2,
+  	inflateRaw: inflateRaw_1,
+  	ungzip: ungzip,
+  	constants: constants
+  };
 
-exports.Inflate = Inflate;
-exports.inflate = inflate;
-exports.inflateRaw = inflateRaw;
-exports.ungzip  = inflate;
+  exports.Inflate = Inflate_1;
+  exports.constants = constants;
+  exports['default'] = inflate_1;
+  exports.inflate = inflate_2;
+  exports.inflateRaw = inflateRaw_1;
+  exports.ungzip = ungzip;
 
-},{"./utils/common":1,"./utils/strings":2,"./zlib/constants":4,"./zlib/gzheader":6,"./zlib/inflate":8,"./zlib/messages":10,"./zlib/zstream":11}]},{},[])("/lib/inflate.js")
-});
+  Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
 
 define('pako_inflate', ['pako_inflate/dist/pako_inflate'], function (main) { return main; });
 
@@ -66001,11 +65970,11 @@ function (TextureBuffer,
 {
 "use strict";
 
-	var ShaderTest =
+	const ShaderTest =
 	{
 		verify: (function ()
 		{
-			var normals = [
+			const normals = [
 				0, 0, 1,
 				0, 0, 1,
 				0, 0, 1,
@@ -66014,7 +65983,7 @@ function (TextureBuffer,
 				0, 0, 1,
 			];
 
-			var vertices = [
+			const vertices = [
 				 2,  2, 0, 1,
 				-2,  2, 0, 1,
 				-2, -2, 0, 1,
@@ -66025,7 +65994,7 @@ function (TextureBuffer,
 
 			return function (browser, shaderNode)
 			{
-				var
+				const
 					gl           = browser .getContext (),
 					frameBuffer  = new TextureBuffer (browser, 16, 16),
 		         normalBuffer = gl .createBuffer (),
@@ -66054,19 +66023,17 @@ function (TextureBuffer,
 				gl .uniform1i (shaderNode .x3d_FillPropertiesFilled,  true);
 				gl .uniform1i (shaderNode .x3d_FillPropertiesHatched, false);
 				gl .uniform1i (shaderNode .x3d_ColorMaterial,         false);
-				gl .uniform1i (shaderNode .x3d_Lighting,              true);
 				gl .uniform1i (shaderNode .x3d_NumLights,             0);
 				gl .uniform1i (shaderNode .x3d_NumTextures,           0);
 				gl .uniform1i (shaderNode .x3d_NumProjectiveTextures, 0);
 				gl .uniform1i (shaderNode .x3d_NumClipPlanes,         0);
 
-				gl .uniform1i (shaderNode .x3d_SeparateBackColor, false);
-				gl .uniform1f (shaderNode .x3d_AmbientIntensity,  0);
-				gl .uniform3f (shaderNode .x3d_DiffuseColor,      1, 0, 0);
-				gl .uniform3f (shaderNode .x3d_SpecularColor,     1, 0, 0);
-				gl .uniform3f (shaderNode .x3d_EmissiveColor,     1, 0, 0);
-				gl .uniform1f (shaderNode .x3d_Shininess,         0);
-				gl .uniform1f (shaderNode .x3d_Transparency,      0);
+				gl .uniform1f (shaderNode .x3d_AmbientIntensity, 0);
+				gl .uniform3f (shaderNode .x3d_DiffuseColor,     1, 0, 0);
+				gl .uniform3f (shaderNode .x3d_SpecularColor,    1, 0, 0);
+				gl .uniform3f (shaderNode .x3d_EmissiveColor,    1, 0, 0);
+				gl .uniform1f (shaderNode .x3d_Shininess,        0);
+				gl .uniform1f (shaderNode .x3d_Transparency,     0);
 
 				gl .viewport (0, 0, 16, 16);
 				gl .clearColor (0, 0, 0, 0);
@@ -66086,7 +66053,7 @@ function (TextureBuffer,
 				shaderNode .disableNormalAttribute (gl, normalBuffer);
 				shaderNode .disable                (gl);
 
-				var data = frameBuffer .readPixels ();
+				const data = frameBuffer .readPixels ();
 
 				frameBuffer .unbind ();
 
@@ -66213,7 +66180,7 @@ function (Shading,
 		},
 		getPointShader: function ()
 		{
-			this .pointShader = this .createShader ("PointShader", "PointSet", false);
+			this .pointShader = this .createShader ("PointShader", "PointSet");
 
 			this .getPointShader = function () { return this .pointShader; };
 
@@ -66225,11 +66192,25 @@ function (Shading,
 		},
 		getLineShader: function ()
 		{
-			this .lineShader = this .createShader ("WireframeShader", "Wireframe", false);
+			this .lineShader = this .createShader ("WireframeShader", "Wireframe");
 
 			this .getLineShader = function () { return this .lineShader; };
 
 			return this .lineShader;
+		},
+		hasUnlitShader: function ()
+		{
+			return !! this .unlitShader;
+		},
+		getUnlitShader: function ()
+		{
+			this .unlitShader = this .createShader ("UnlitShader", "Unlit");
+
+			this .unlitShader .isValid_ .addInterest ("set_unlit_shader_valid__", this);
+
+			this .getUnlitShader = function () { return this .unlitShader; };
+
+			return this .unlitShader;
 		},
 		hasGouraudShader: function ()
 		{
@@ -66279,7 +66260,7 @@ function (Shading,
 		},
 		getDepthShader: function ()
 		{
-			this .depthShader = this .createShader ("DepthShader", "Depth", false);
+			this .depthShader = this .createShader ("DepthShader", "Depth");
 
 			this .getDepthShader = function () { return this .depthShader; };
 
@@ -66306,7 +66287,7 @@ function (Shading,
 			for (const shader of this .getShaders ())
 				shader .setShading (type);
 		},
-		createShader: function (name, file, shadow)
+		createShader: function (name, file, shadow = false)
 		{
 			if (this .getDebug ())
 				console .log ("Initializing " + name);
@@ -66338,6 +66319,19 @@ function (Shading,
 			this .addShader (shader);
 
 			return shader;
+		},
+		set_unlit_shader_valid__: function (valid)
+		{
+			this .unlitShader .isValid_ .removeInterest ("set_unlit_shader_valid__", this);
+
+			if (valid .getValue () && ShaderTest .verify (this, this .unlitShader))
+				return;
+
+			console .error ("X_ITE: Unlit shading is not available, using fallback VRML shader.");
+
+			// Recompile shader.
+			this .unlitShader .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.vs") ];
+			this .unlitShader .parts_ [1] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.fs") ];
 		},
 		set_gouraud_shader_valid__: function (valid)
 		{
@@ -67160,6 +67154,7 @@ function (Fields,
 
 		this .stylePropertiesNode  = [ ];
 		this .materialNode         = null;
+		this .backMaterialNode     = null;
 		this .textureNode          = null;
 		this .textureTransformNode = null;
 		this .shaderNodes          = [ ];
@@ -67178,6 +67173,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "lineProperties",   new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "fillProperties",   new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "material",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "backMaterial",     new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "texture",          new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "shaders",          new Fields .MFNode ()),
@@ -67207,6 +67203,7 @@ function (Fields,
 			this .lineProperties_   .addInterest ("set_lineProperties__",   this);
 			this .fillProperties_   .addInterest ("set_fillProperties__",   this);
 			this .material_         .addInterest ("set_material__",         this);
+			this .backMaterial_     .addInterest ("set_backMaterial__",     this);
 			this .texture_          .addInterest ("set_texture__",          this);
 			this .textureTransform_ .addInterest ("set_textureTransform__", this);
 			this .shaders_          .addInterest ("set_shaders__",          this);
@@ -67224,6 +67221,7 @@ function (Fields,
 			this .set_lineProperties__ ();
 			this .set_fillProperties__ ();
 			this .set_material__ ();
+			this .set_backMaterial__ ();
 			this .set_texture__ ();
 			this .set_textureTransform__ ();
 			this .set_shaders__ ();
@@ -67297,8 +67295,34 @@ function (Fields,
 
 			this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this .material_);
 
+			if (! this .materialNode)
+				this .materialNode = this .getBrowser () .getDefaultMaterial ();
+
 			if (this .materialNode)
 				this .materialNode .transparent_ .addInterest ("set_transparent__", this);
+
+			// Depreciated TwoSidedMaterial handling.
+
+			if (this .materialNode .getTypeName () === "TwoSidedMaterial")
+			{
+				console .warn ("TwoSidedMaterial is depreciated, please use Appearance backMaterial.");
+				this .set_backMaterial__ ();
+			}
+		},
+		set_backMaterial__: function ()
+		{
+			if (this .backMaterialNode)
+				this .backMaterialNode .transparent_ .removeInterest ("set_transparent__", this);
+
+			this .backMaterialNode = X3DCast (X3DConstants .X3DOneSidedMaterialNode, this .backMaterial_);
+
+			if (this .backMaterialNode)
+				this .backMaterialNode .transparent_ .addInterest ("set_transparent__", this);
+
+			// Depreciated TwoSidedMaterial handling.
+
+			if (!this .backMaterialNode && this .materialNode .getTypeName () === "TwoSidedMaterial")
+				this .backMaterialNode = this .materialNode;
 		},
 		set_texture__: function ()
 		{
@@ -67406,7 +67430,8 @@ function (Fields,
 				case AlphaMode .AUTO:
 					this .setTransparent (Boolean (this .stylePropertiesNode [3] .getTransparent () ||
 												 (this .materialNode && this .materialNode .getTransparent ()) ||
-												 (this .textureNode  && this .textureNode  .getTransparent ()) ||
+												 (this .backMaterialNode && this .backMaterialNode .getTransparent ()) ||
+												 (this .textureNode && this .textureNode .getTransparent ()) ||
 												 this .blendModeNode));
 					break;
 				case AlphaMode .OPAQUE:
@@ -67941,6 +67966,316 @@ function (Fields,
  ******************************************************************************/
 
 
+define ('x_ite/Components/Shape/X3DMaterialNode',[
+	"x_ite/Fields",
+	"x_ite/Components/Shape/X3DAppearanceChildNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DAppearanceChildNode,
+          X3DConstants)
+{
+"use strict";
+
+	function X3DMaterialNode (executionContext)
+	{
+		X3DAppearanceChildNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DMaterialNode);
+
+		this .addChildObjects ("transparent", new Fields .SFBool ());
+
+		this .transparent_ .setAccessType (X3DConstants .outputOnly);
+	}
+
+	X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+	{
+		constructor: X3DMaterialNode,
+		setTransparent: function (value)
+		{
+			if (value !== this .transparent_ .getValue ())
+				this .transparent_ = value;
+		},
+		getTransparent: function ()
+		{
+			return this .transparent_ .getValue ();
+		},
+	});
+
+	return X3DMaterialNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+ define ('x_ite/Components/Shape/X3DOneSidedMaterialNode',[
+	"x_ite/Components/Shape/X3DMaterialNode",
+	"x_ite/Bits/X3DConstants",
+	"standard/Math/Algorithm",
+],
+function (X3DMaterialNode,
+          X3DConstants,
+          Algorithm)
+{
+"use strict";
+
+	function X3DOneSidedMaterialNode (executionContext)
+	{
+		X3DMaterialNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DOneSidedMaterialNode);
+
+		this .emissiveColor = new Float32Array (3);
+	}
+
+	X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
+	{
+		constructor: X3DOneSidedMaterialNode,
+		initialize: function ()
+		{
+			X3DMaterialNode .prototype .initialize .call (this);
+
+			this .emissiveColor_ .addInterest ("set_emissiveColor__", this);
+			this .transparency_  .addInterest ("set_transparency__",  this);
+
+			this .set_emissiveColor__ ();
+			this .set_transparency__ ();
+		},
+		set_emissiveColor__: function ()
+		{
+			//We cannot use this in Windows Edge:
+			//this .emissiveColor .set (this .emissiveColor_ .getValue ());
+
+			const
+				emissiveColor  = this .emissiveColor,
+				emissiveColor_ = this .emissiveColor_ .getValue ();
+
+			emissiveColor [0] = emissiveColor_ .r;
+			emissiveColor [1] = emissiveColor_ .g;
+			emissiveColor [2] = emissiveColor_ .b;
+		},
+		set_shininess__: function ()
+		{
+			this .shininess = Algorithm .clamp (this .shininess_ .getValue (), 0, 1);
+		},
+		set_transparency__: function ()
+		{
+			const transparency = Algorithm .clamp (this .transparency_ .getValue (), 0, 1);
+
+			this .transparency = transparency;
+
+			this .setTransparent (Boolean (transparency));
+		},
+	});
+
+	return X3DOneSidedMaterialNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+ define ('x_ite/Components/Shape/UnlitMaterial',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Components/Shape/X3DOneSidedMaterialNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DOneSidedMaterialNode,
+          X3DConstants)
+{
+"use strict";
+
+	function UnlitMaterial (executionContext)
+	{
+		X3DOneSidedMaterialNode .call (this, executionContext);
+
+		this .addType (X3DConstants .UnlitMaterial);
+	}
+
+	UnlitMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
+	{
+		constructor: UnlitMaterial,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",               new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",          new Fields .SFColor (1, 1, 1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",        new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTextureMapping", new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "normalScale",            new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",   new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",           new Fields .SFFloat ()),
+		]),
+		getTypeName: function ()
+		{
+			return "UnlitMaterial";
+		},
+		getComponentName: function ()
+		{
+			return "Shape";
+		},
+		getContainerField: function ()
+		{
+			return "material";
+		},
+      getShader: function (browser, shadow)
+      {
+         return browser .getUnlitShader ();
+      },
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			gl .uniform3fv (shaderObject .x3d_EmissiveColor, this .emissiveColor);
+			gl .uniform1f  (shaderObject .x3d_Transparency,  this .transparency);
+		},
+	});
+
+	return UnlitMaterial;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Texturing/TextureProperties',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
@@ -68166,6 +68501,7 @@ define ('x_ite/Browser/Shape/X3DShapeContext',[
 	"x_ite/Components/Shape/PointProperties",
 	"x_ite/Components/Shape/LineProperties",
 	"x_ite/Components/Shape/FillProperties",
+	"x_ite/Components/Shape/UnlitMaterial",
 	"x_ite/Components/Texturing/ImageTexture",
 	"x_ite/Components/Texturing/TextureProperties",
 	"x_ite/Browser/Networking/urls",
@@ -68174,6 +68510,7 @@ function (Appearance,
           PointProperties,
           LineProperties,
           FillProperties,
+          UnlitMaterial,
           ImageTexture,
           TextureProperties,
           urls)
@@ -68229,6 +68566,16 @@ function (Appearance,
 			this .getDefaultFillProperties = function () { return this .defaultFillProperties; };
 
 			return this .defaultFillProperties;
+		},
+		getDefaultMaterial: function ()
+		{
+			this .defaultMaterial = new UnlitMaterial (this .getPrivateScene ());
+
+			this .defaultMaterial .setup ();
+
+			this .getDefaultMaterial = function () { return this .defaultMaterial; };
+
+			return this .defaultMaterial;
 		},
 		getLinetype: function (index)
 		{
@@ -69006,9 +69353,9 @@ function (Fields,
 			{
 				try
 				{
-					const geometry = this .getGeometry ();
+					const geometryNode = this .getGeometry ();
 
-					if (geometry .getGeometryType () < 2)
+					if (geometryNode .getGeometryType () < 2)
 						return;
 
 					const browser = renderObject .getBrowser ();
@@ -69018,7 +69365,7 @@ function (Fields,
 
 					hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
 
-					if (geometry .intersectsLine (hitRay, renderObject .getLocalObjects (), modelViewMatrix, intersections))
+					if (geometryNode .intersectsLine (hitRay, renderObject .getLocalObjects (), modelViewMatrix, intersections))
 					{
 						// Finally we have intersections and must now find the closest hit in front of the camera.
 
@@ -69286,14 +69633,10 @@ function (Fields,
 			if (this .geometryType > 1)
 			{
 				for (let i = 0; i < 5; ++ i)
-					this .planes [i] = new Plane3 (Vector3 .Zero, boxNormals [0]);
+					this .planes [i] = new Plane3 (Vector3 .Zero, Vector3 .zAxis);
 			}
 
 			this .set_live__ ();
-		},
-		getShader: function (browser, shadow)
-		{
-			return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
 		},
 		setGeometryType: function (value)
 		{
@@ -70003,99 +70346,124 @@ function (Fields,
 			try
 			{
 				const
-					appearanceNode = context .shapeNode .getAppearance (),
-					shaderNode     = appearanceNode .shaderNode || this .getShader (context .browser, context .shadow);
+					appearanceNode   = context .shapeNode .getAppearance (),
+					materialNode     = appearanceNode .materialNode,
+					backMaterialNode = appearanceNode .backMaterialNode,
+					frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
 
-				// Setup shader.
-
-				if (shaderNode .getValid ())
+				if (this .solid || !backMaterialNode || context .wireframe)
 				{
-					const
-						blendModeNode = appearanceNode .blendModeNode,
-						attribNodes   = this .attribNodes,
-						attribBuffers = this .attribBuffers;
+					this .displayGeometry (gl, context, appearanceNode, frontShaderNode, true, true);
+				}
+				else
+				{
+					const backShaderNode = appearanceNode .shaderNode || backMaterialNode .getShader (context .browser, context .shadow)
 
-					if (blendModeNode)
-						blendModeNode .enable (gl);
-
-					shaderNode .enable (gl);
-					shaderNode .setLocalUniforms (gl, context);
-
-					// Setup vertex attributes.
-
-					for (let i = 0, length = attribNodes .length; i < length; ++ i)
-						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
-
-					if (this .fogCoords)
-						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
-
-					if (this .colorMaterial)
-						shaderNode .enableColorAttribute (gl, this .colorBuffer);
-
-					shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-					shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
-					shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
-
-					// Draw depending on wireframe, solid and transparent.
-
-					if (shaderNode .wireframe)
-					{
-						// Wireframes are always solid so only one drawing call is needed.
-
-						for (let i = 0, length = this .vertexCount; i < length; i += 3)
-							gl .drawArrays (shaderNode .primitiveMode, i, 3);
-					}
-					else
-					{
-						const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
-
-						gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
-
-						if (context .transparent)
-						{
-							gl .enable (gl .CULL_FACE);
-
-							if (!this .solid)
-							{
-								gl .cullFace (gl .FRONT);
-								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-							}
-
-							gl .cullFace (gl .BACK);
-							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-						}
-						else
-						{
-							if (this .solid)
-								gl .enable (gl .CULL_FACE);
-							else
-								gl .disable (gl .CULL_FACE);
-
-							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-						}
-					}
-
-					for (const attribNode of attribNodes)
-						attribNode .disable (gl, shaderNode);
-
-					if (this .fogCoords)
-						shaderNode .disableFogDepthAttribute (gl);
-
-					if (this .colorMaterial)
-						shaderNode .disableColorAttribute (gl);
-
-					shaderNode .disableTexCoordAttribute (gl);
-					shaderNode .disableNormalAttribute   (gl);
-					shaderNode .disable                  (gl);
-
-					if (blendModeNode)
-						blendModeNode .disable (gl);
+					this .displayGeometry (gl, context, appearanceNode, backShaderNode,  true,  false);
+					this .displayGeometry (gl, context, appearanceNode, frontShaderNode, false, true);
 				}
 			}
 			catch (error)
 			{
 				// Catch error from setLocalUniforms.
 				console .log (error);
+			}
+		},
+		displayGeometry: function (gl, context, appearanceNode, shaderNode, back, front)
+		{
+			if (shaderNode .getValid ())
+			{
+				const
+					blendModeNode = appearanceNode .blendModeNode,
+					attribNodes   = this .attribNodes,
+					attribBuffers = this .attribBuffers;
+
+				if (blendModeNode)
+					blendModeNode .enable (gl);
+
+				shaderNode .enable (gl);
+				shaderNode .setLocalUniforms (gl, context, front);
+
+				// Setup vertex attributes.
+
+				for (let i = 0, length = attribNodes .length; i < length; ++ i)
+					attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+
+				if (this .fogCoords)
+					shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+
+				if (this .colorMaterial)
+					shaderNode .enableColorAttribute (gl, this .colorBuffer);
+
+				shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+				shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
+				shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+
+				// Draw depending on wireframe, solid and transparent.
+
+				if (context .wireframe)
+				{
+					// Wireframes are always solid so only one drawing call is needed.
+
+					for (let i = 0, length = this .vertexCount; i < length; i += 3)
+						gl .drawArrays (shaderNode .primitiveMode, i, 3);
+				}
+				else
+				{
+					const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+
+					gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
+
+					if (context .transparent || back !== front)
+					{
+						// Render transparent or back or front.
+
+						gl .enable (gl .CULL_FACE);
+
+						// Render back.
+
+						if (back)
+						{
+							gl .cullFace (gl .FRONT);
+							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+						}
+
+						// Render front.
+
+						if (front)
+						{
+							gl .cullFace (gl .BACK);
+							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+						}
+					}
+					else
+					{
+						// Render solid or both sides.
+
+						if (this .solid)
+							gl .enable (gl .CULL_FACE);
+						else
+							gl .disable (gl .CULL_FACE);
+
+						gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+					}
+				}
+
+				for (const attribNode of attribNodes)
+					attribNode .disable (gl, shaderNode);
+
+				if (this .fogCoords)
+					shaderNode .disableFogDepthAttribute (gl);
+
+				if (this .colorMaterial)
+					shaderNode .disableColorAttribute (gl);
+
+				shaderNode .disableTexCoordAttribute (gl);
+				shaderNode .disableNormalAttribute   (gl);
+				shaderNode .disable                  (gl);
+
+				if (blendModeNode)
+					blendModeNode .disable (gl);
 			}
 		},
 		displayParticlesDepth: function (gl, context, shaderNode, particles, numParticles)
@@ -70124,7 +70492,7 @@ function (Fields,
 
 				Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-				shaderNode .setParticle (gl, particle, modelViewMatrix, false);
+				shaderNode .setParticle (gl, particle, modelViewMatrix);
 
 				gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 			}
@@ -70137,52 +70505,98 @@ function (Fields,
 			try
 			{
 				const
-					appearanceNode = context .shapeNode .getAppearance (),
-					shaderNode     = appearanceNode .shaderNode || this .getShader (context .browser, context .shadow);
+					appearanceNode   = context .shapeNode .getAppearance (),
+					materialNode     = appearanceNode .materialNode,
+					backMaterialNode = appearanceNode .backMaterialNode,
+					frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
 
-				if (shaderNode .getValid ())
+				if (this .solid || !backMaterialNode || context .wireframe)
 				{
-					const
-						blendModeNode = appearanceNode .blendModeNode,
-						attribNodes   = this .attribNodes,
-						attribBuffers = this .attribBuffers;
+					this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particles, numParticles);
+				}
+				else
+				{
+					const backShaderNode = appearanceNode .shaderNode || backMaterialNode .getShader (context .browser, context .shadow);
 
-					if (blendModeNode)
-						blendModeNode .enable (gl);
+					this .displayParticlesGeometry (gl, context, appearanceNode, backShaderNode,  true,  false, particles, numParticles);
+					this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, false, true,  particles, numParticles);
+				}
+			}
+			catch (error)
+			{
+				// Catch error from setLocalUniforms.
+				console .log (error);
+			}
+		},
+		displayParticlesGeometry: function (gl, context, appearanceNode, shaderNode, back, front, particles, numParticles)
+		{
+			if (shaderNode .getValid ())
+			{
+				const
+					blendModeNode = appearanceNode .blendModeNode,
+					attribNodes   = this .attribNodes,
+					attribBuffers = this .attribBuffers;
 
-					// Setup shader.
+				if (blendModeNode)
+					blendModeNode .enable (gl);
 
-					shaderNode .enable (gl);
-					shaderNode .setLocalUniforms (gl, context);
+				// Setup shader.
 
-					// Setup vertex attributes.
+				shaderNode .enable (gl);
+				shaderNode .setLocalUniforms (gl, context, front);
 
-					for (let i = 0, length = attribNodes .length; i < length; ++ i)
-						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+				// Setup vertex attributes.
 
-					if (this .fogCoords)
-						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+				for (let i = 0, length = attribNodes .length; i < length; ++ i)
+					attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-					if (this .colorMaterial)
-						shaderNode .enableColorAttribute (gl, this .colorBuffer);
+				if (this .fogCoords)
+					shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
 
-					shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
-					shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
-					shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+				if (this .colorMaterial)
+					shaderNode .enableColorAttribute (gl, this .colorBuffer);
 
-					// Draw depending on wireframe, solid and transparent.
+				shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+				shaderNode .enableNormalAttribute   (gl, this .normalBuffer);
+				shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
 
-					const
-						materialNode    = context .materialNode,
-						normalMatrix    = materialNode || shaderNode .getCustom (),
-						modelViewMatrix = context .modelViewMatrix,
-						x               = modelViewMatrix [12],
-						y               = modelViewMatrix [13],
-						z               = modelViewMatrix [14];
+				// Draw depending on wireframe, solid and transparent.
 
-					if (shaderNode .wireframe)
+				const
+					modelViewMatrix = context .modelViewMatrix,
+					x               = modelViewMatrix [12],
+					y               = modelViewMatrix [13],
+					z               = modelViewMatrix [14];
+
+				if (shaderNode .wireframe)
+				{
+					// Wireframes are always solid so only one drawing call is needed.
+
+					for (let p = 0; p < numParticles; ++ p)
 					{
-						// Wireframes are always solid so only one drawing call is needed.
+						const particle = particles [p];
+
+						modelViewMatrix [12] = x;
+						modelViewMatrix [13] = y;
+						modelViewMatrix [14] = z;
+
+						Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
+
+						shaderNode .setParticle (gl, particle, modelViewMatrix);
+
+						for (let i = 0, length = this .vertexCount; i < length; i += 3)
+							gl .drawArrays (shaderNode .primitiveMode, i, 3);
+					}
+				}
+				else
+				{
+					const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+
+					gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
+
+					if (context .transparent || back !== front)
+					{
+						// Render transparent or back or front.
 
 						for (let p = 0; p < numParticles; ++ p)
 						{
@@ -70194,85 +70608,64 @@ function (Fields,
 
 							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-							shaderNode .setParticle (gl, particle, modelViewMatrix, normalMatrix);
+							shaderNode .setParticle (gl, particle, modelViewMatrix);
 
-							for (let i = 0, length = this .vertexCount; i < length; i += 3)
-								gl .drawArrays (shaderNode .primitiveMode, i, 3);
-						}
-					}
-					else
-					{
-						const positiveScale = Matrix4 .prototype .determinant3 .call (context .modelViewMatrix) > 0;
+							gl .enable (gl .CULL_FACE);
 
-						gl .frontFace (positiveScale ? this .frontFace : (this .frontFace === gl .CCW ? gl .CW : gl .CCW));
-
-						if (context .transparent && ! this .solid)
-						{
-							for (let p = 0; p < numParticles; ++ p)
+							if (back)
 							{
-								const particle = particles [p];
-
-								modelViewMatrix [12] = x;
-								modelViewMatrix [13] = y;
-								modelViewMatrix [14] = z;
-
-								Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
-
-								shaderNode .setParticle (gl, particle, modelViewMatrix, normalMatrix);
-
-								gl .enable (gl .CULL_FACE);
 								gl .cullFace (gl .FRONT);
 								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
+							}
 
+							if (front)
+							{
 								gl .cullFace (gl .BACK);
 								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 							}
 						}
+					}
+					else
+					{
+						// Render solid or both sides.
+
+						if (this .solid)
+							gl .enable (gl .CULL_FACE);
 						else
+							gl .disable (gl .CULL_FACE);
+
+						for (let p = 0; p < numParticles; ++ p)
 						{
-							if (this .solid)
-								gl .enable (gl .CULL_FACE);
-							else
-								gl .disable (gl .CULL_FACE);
+							const particle = particles [p];
 
-							for (let p = 0; p < numParticles; ++ p)
-							{
-								const particle = particles [p];
+							modelViewMatrix [12] = x;
+							modelViewMatrix [13] = y;
+							modelViewMatrix [14] = z;
 
-								modelViewMatrix [12] = x;
-								modelViewMatrix [13] = y;
-								modelViewMatrix [14] = z;
+							Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-								Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
+							shaderNode .setParticle (gl, particle, modelViewMatrix);
 
-								shaderNode .setParticle (gl, particle, modelViewMatrix, normalMatrix);
-
-								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
-							}
+							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
 						}
 					}
-
-					for (const attribNode of attribNodes)
-						attribNode .disable (gl, shaderNode);
-
-					if (this .fogCoords)
-						shaderNode .disableFogDepthAttribute (gl);
-
-					if (this .colorMaterial)
-						shaderNode .disableColorAttribute (gl);
-
-					shaderNode .disableTexCoordAttribute (gl);
-					shaderNode .disableNormalAttribute   (gl);
-					shaderNode .disable                  (gl);
-
-					if (blendModeNode)
-						blendModeNode .disable (gl);
 				}
-			}
-			catch (error)
-			{
-				// Catch error from setLocalUniforms.
-				console .log (error);
+
+				for (const attribNode of attribNodes)
+					attribNode .disable (gl, shaderNode);
+
+				if (this .fogCoords)
+					shaderNode .disableFogDepthAttribute (gl);
+
+				if (this .colorMaterial)
+					shaderNode .disableColorAttribute (gl);
+
+				shaderNode .disableTexCoordAttribute (gl);
+				shaderNode .disableNormalAttribute   (gl);
+				shaderNode .disable                  (gl);
+
+				if (blendModeNode)
+					blendModeNode .disable (gl);
 			}
 		},
 	});
@@ -70362,33 +70755,6 @@ function (X3DGeometryNode,
 		{
 			return false;
 		},
-		transfer: function ()
-		{
-			if (this .getGeometryType () === 1)
-			{
-				const
-					texCoords = this .getTexCoords (),
-					vertices  = this .getVertices ();
-
-				this .getMultiTexCoords () .push (texCoords);
-
-				for (let i = 0, length = vertices .length; i < length; i += 8)
-				{
-					texCoords .push (vertices [i],
-					                 vertices [i + 1],
-					                 vertices [i + 2],
-					                 vertices [i + 3],
-					                 vertices [i],
-					                 vertices [i + 1],
-					                 vertices [i + 2],
-					                 vertices [i + 3]);
-				}
-
-				texCoords .shrinkToFit ();
-			}
-
-			X3DGeometryNode .prototype .transfer .call (this);
-		},
 		display: function (gl, context)
 		{
 			try
@@ -70423,9 +70789,6 @@ function (X3DGeometryNode,
 
 					if (this .colorMaterial)
 						shaderNode .enableColorAttribute (gl, this .colorBuffer);
-
-					if (this .getMultiTexCoords () .length)
-						shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, true);
 
 					shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
@@ -70514,7 +70877,7 @@ function (X3DGeometryNode,
 
 						Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-						shaderNode .setParticle (gl, particle, modelViewMatrix, false);
+						shaderNode .setParticle (gl, particle, modelViewMatrix);
 
 						gl .drawArrays (primitiveMode, 0, this .vertexCount);
 					}
@@ -72519,14 +72882,10 @@ function (Fields,
 
 
 define ('x_ite/Components/Texturing/X3DTextureCoordinateNode',[
-	"x_ite/Fields",
 	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
-	"x_ite/Components/Rendering/X3DGeometryNode",
 	"x_ite/Bits/X3DConstants",
 ],
-function (Fields,
-          X3DGeometricPropertyNode, 
-          X3DGeometryNode, 
+function (X3DGeometricPropertyNode,
           X3DConstants)
 {
 "use strict";
@@ -72536,28 +72895,11 @@ function (Fields,
 		X3DGeometricPropertyNode .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DTextureCoordinateNode);
-
-		this .texCoordArray = X3DGeometryNode .createArray ();
 	}
 
 	X3DTextureCoordinateNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
 	{
 		constructor: X3DTextureCoordinateNode,
-		init: function (multiArray)
-		{
-			this .texCoordArray .length = 0;
-
-			multiArray .push (this .texCoordArray);
-		},
-		addTexCoord: function (index, multiArray)
-		{
-			this .addTexCoordToChannel (index, multiArray [0]);
-		},
-		setShaderUniforms: function (gl, shaderObject)
-		{
-			for (var i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
-				this .setShaderUniformsToChannel (gl, shaderObject, i);
-		},
 		setShaderUniformsToChannel: function (gl, shaderObject, i)
 		{
 			gl .uniform1i (shaderObject .x3d_TextureCoordinateGeneratorMode [i], 0);
@@ -72616,18 +72958,110 @@ function (Fields,
  ******************************************************************************/
 
 
+ define ('x_ite/Components/Texturing/X3DSingleTextureCoordinateNode',[
+	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
+	"x_ite/Components/Rendering/X3DGeometryNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (X3DTextureCoordinateNode,
+          X3DGeometryNode,
+          X3DConstants)
+{
+"use strict";
+
+	function X3DSingleTextureCoordinateNode (executionContext)
+	{
+		X3DTextureCoordinateNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DSingleTextureCoordinateNode);
+
+		this .texCoordArray = X3DGeometryNode .createArray ();
+	}
+
+	X3DSingleTextureCoordinateNode .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
+	{
+		constructor: X3DSingleTextureCoordinateNode,
+		init: function (multiArray)
+		{
+			this .texCoordArray .length = 0;
+
+			multiArray .push (this .texCoordArray);
+		},
+		addTexCoord: function (index, multiArray)
+		{
+			this .addTexCoordToChannel (index, multiArray [0]);
+		},
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			for (let i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+				this .setShaderUniformsToChannel (gl, shaderObject, i);
+		},
+	});
+
+	return X3DSingleTextureCoordinateNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Components/Texturing/TextureCoordinate',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
+	"x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector4",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureCoordinateNode,
+          X3DSingleTextureCoordinateNode,
           X3DConstants,
           Vector4)
 {
@@ -72635,16 +73069,17 @@ function (Fields,
 
 	function TextureCoordinate (executionContext)
 	{
-		X3DTextureCoordinateNode .call (this, executionContext);
+		X3DSingleTextureCoordinateNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TextureCoordinate);
 	}
 
-	TextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
+	TextureCoordinate .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
 	{
 		constructor: TextureCoordinate,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec2f ()),
 		]),
 		getTypeName: function ()
@@ -72661,7 +73096,7 @@ function (Fields,
 		},
 		initialize: function ()
 		{
-			X3DTextureCoordinateNode .prototype .initialize .call (this);
+			X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
 			this .point_ .addInterest ("set_point__", this);
 
@@ -72708,7 +73143,7 @@ function (Fields,
 		{
 			if (index >= 0 && index < this .length)
 			{
-				var point = this .point;
+				const point = this .point;
 
 				index *= 2;
 
@@ -72716,7 +73151,7 @@ function (Fields,
 			}
 			else if (index >= 0 && this .length)
 			{
-				var point = this .point;
+				const point = this .point;
 
 				index %= this .length;
 				index *= 2;
@@ -72730,16 +73165,12 @@ function (Fields,
 		},
 		getTexCoord: function (array)
 		{
-			var point = this .point_;
+			const point = this .point;
 
-			for (var i = 0, length = point .length; i < length; ++ i)
-			{
-				var p = point [i];
+			for (let i = 0, p = 0, length = this .length; i < length; ++ i, p += 2)
+				array [i] = new Vector4 (point [p], point [p + 1], 0, 1);
 
-				array [i] = new Vector4 (p .x, p .y, 0, 1);
-			}
-
-			array .length = length;
+			array .length = this .length;
 
 			return array;
 		},
@@ -76563,7 +76994,8 @@ function (Fields,
 
 		this .addType (X3DConstants .DirectionalLight);
 
-		this .global_ = false;
+		if (executionContext .getSpecificationVersion () == "2.0")
+			this .global_ = true;
 	}
 
 	DirectionalLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
@@ -76571,7 +77003,7 @@ function (Fields,
 		constructor: DirectionalLight,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "global",           new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "global",           new Fields .SFBool (false)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "on",               new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "color",            new Fields .SFColor (1, 1, 1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",        new Fields .SFFloat (1)),
@@ -77173,7 +77605,7 @@ function (TextureProperties)
 		initialize: function () { },
 		getBackgroundSphereShader: function ()
 		{
-			this .backgroundSphereShader = this .createShader ("BackgroundSphereShader", "Background", false);
+			this .backgroundSphereShader = this .createShader ("BackgroundSphereShader", "Background");
 
 			this .getBackgroundSphereShader = function () { return this .backgroundSphereShader; };
 
@@ -79407,13 +79839,13 @@ function (Fields,
 });
 
 /**
- * https://opentype.js.org v0.11.0 | (c) Frederik De Bleser and other contributors | MIT License | Uses tiny-inflate by Devon Govett and string.prototype.codepointat polyfill by Mathias Bynens
+ * https://opentype.js.org v1.3.4 | (c) Frederik De Bleser and other contributors | MIT License | Uses tiny-inflate by Devon Govett and string.prototype.codepointat polyfill by Mathias Bynens
  */
 
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define('opentype/dist/opentype',['exports'], factory) :
-	(factory((global.opentype = {})));
+	(global = global || self, factory(global.opentype = {}));
 }(this, (function (exports) { 'use strict';
 
 	/*! https://mths.be/codepointat v0.2.0 by @mathias */
@@ -79944,8 +80376,6 @@ function (Fields,
 	 * @param {number} y - The ending Y coordinate.
 	 */
 	BoundingBox.prototype.addBezier = function(x0, y0, x1, y1, x2, y2, x, y) {
-	    var this$1 = this;
-
 	    // This code is based on http://nishiohirokazu.blogspot.com/2009/06/how-to-calculate-bezier-curves-bounding.html
 	    // and https://github.com/icons8/svg-path-bounding-box
 
@@ -79966,8 +80396,8 @@ function (Fields,
 	            if (b === 0) { continue; }
 	            var t = -c / b;
 	            if (0 < t && t < 1) {
-	                if (i === 0) { this$1.addX(derive(p0[i], p1[i], p2[i], p3[i], t)); }
-	                if (i === 1) { this$1.addY(derive(p0[i], p1[i], p2[i], p3[i], t)); }
+	                if (i === 0) { this.addX(derive(p0[i], p1[i], p2[i], p3[i], t)); }
+	                if (i === 1) { this.addY(derive(p0[i], p1[i], p2[i], p3[i], t)); }
 	            }
 	            continue;
 	        }
@@ -79976,13 +80406,13 @@ function (Fields,
 	        if (b2ac < 0) { continue; }
 	        var t1 = (-b + Math.sqrt(b2ac)) / (2 * a);
 	        if (0 < t1 && t1 < 1) {
-	            if (i === 0) { this$1.addX(derive(p0[i], p1[i], p2[i], p3[i], t1)); }
-	            if (i === 1) { this$1.addY(derive(p0[i], p1[i], p2[i], p3[i], t1)); }
+	            if (i === 0) { this.addX(derive(p0[i], p1[i], p2[i], p3[i], t1)); }
+	            if (i === 1) { this.addY(derive(p0[i], p1[i], p2[i], p3[i], t1)); }
 	        }
 	        var t2 = (-b - Math.sqrt(b2ac)) / (2 * a);
 	        if (0 < t2 && t2 < 1) {
-	            if (i === 0) { this$1.addX(derive(p0[i], p1[i], p2[i], p3[i], t2)); }
-	            if (i === 1) { this$1.addY(derive(p0[i], p1[i], p2[i], p3[i], t2)); }
+	            if (i === 0) { this.addX(derive(p0[i], p1[i], p2[i], p3[i], t2)); }
+	            if (i === 1) { this.addY(derive(p0[i], p1[i], p2[i], p3[i], t2)); }
 	        }
 	    }
 	};
@@ -80156,8 +80586,6 @@ function (Fields,
 	 * @returns {opentype.BoundingBox}
 	 */
 	Path.prototype.getBoundingBox = function() {
-	    var this$1 = this;
-
 	    var box = new BoundingBox();
 
 	    var startX = 0;
@@ -80165,7 +80593,7 @@ function (Fields,
 	    var prevX = 0;
 	    var prevY = 0;
 	    for (var i = 0; i < this.commands.length; i++) {
-	        var cmd = this$1.commands[i];
+	        var cmd = this.commands[i];
 	        switch (cmd.type) {
 	            case 'M':
 	                box.addPoint(cmd.x, cmd.y);
@@ -80206,11 +80634,9 @@ function (Fields,
 	 * @param {CanvasRenderingContext2D} ctx - A 2D drawing context.
 	 */
 	Path.prototype.draw = function(ctx) {
-	    var this$1 = this;
-
 	    ctx.beginPath();
 	    for (var i = 0; i < this.commands.length; i += 1) {
-	        var cmd = this$1.commands[i];
+	        var cmd = this.commands[i];
 	        if (cmd.type === 'M') {
 	            ctx.moveTo(cmd.x, cmd.y);
 	        } else if (cmd.type === 'L') {
@@ -80243,8 +80669,6 @@ function (Fields,
 	 * @return {string}
 	 */
 	Path.prototype.toPathData = function(decimalPlaces) {
-	    var this$1 = this;
-
 	    decimalPlaces = decimalPlaces !== undefined ? decimalPlaces : 2;
 
 	    function floatToString(v) {
@@ -80273,7 +80697,7 @@ function (Fields,
 
 	    var d = '';
 	    for (var i = 0; i < this.commands.length; i += 1) {
-	        var cmd = this$1.commands[i];
+	        var cmd = this.commands[i];
 	        if (cmd.type === 'M') {
 	            d += 'M' + packValues(cmd.x, cmd.y);
 	        } else if (cmd.type === 'L') {
@@ -80410,6 +80834,10 @@ function (Fields,
 	 * @returns {Array}
 	 */
 	encode.CHARARRAY = function(v) {
+	    if (typeof v === 'undefined') {
+	        v = '';
+	        console.warn('Undefined CHARARRAY encountered and treated as an empty string. This is probably caused by a missing glyph name.');
+	    }
 	    var b = [];
 	    for (var i = 0; i < v.length; i += 1) {
 	        b[i] = v.charCodeAt(i);
@@ -80423,6 +80851,9 @@ function (Fields,
 	 * @returns {number}
 	 */
 	sizeOf.CHARARRAY = function(v) {
+	    if (typeof v === 'undefined') {
+	        return 0;
+	    }
 	    return v.length;
 	};
 
@@ -81320,11 +81751,14 @@ function (Fields,
 	 * @constructor
 	 */
 	function Table(tableName, fields, options) {
-	    var this$1 = this;
-
-	    for (var i = 0; i < fields.length; i += 1) {
-	        var field = fields[i];
-	        this$1[field.name] = field.value;
+	    // For coverage tables with coverage format 2, we do not want to add the coverage data directly to the table object,
+	    // as this will result in wrong encoding order of the coverage data on serialization to bytes.
+	    // The fallback of using the field values directly when not present on the table is handled in types.encode.TABLE() already.
+	    if (fields.length && (fields[0].name !== 'coverageFormat' || fields[0].value === 1)) {
+	        for (var i = 0; i < fields.length; i += 1) {
+	            var field = fields[i];
+	            this[field.name] = field.value;
+	        }
 	    }
 
 	    this.tableName = tableName;
@@ -81334,8 +81768,8 @@ function (Fields,
 	        for (var i$1 = 0; i$1 < optionKeys.length; i$1 += 1) {
 	            var k = optionKeys[i$1];
 	            var v = options[k];
-	            if (this$1[k] !== undefined) {
-	                this$1[k] = v;
+	            if (this[k] !== undefined) {
+	                this[k] = v;
 	            }
 	        }
 	    }
@@ -81413,8 +81847,18 @@ function (Fields,
 	            [{name: 'coverageFormat', type: 'USHORT', value: 1}]
 	            .concat(ushortList('glyph', coverageTable.glyphs))
 	        );
+	    } else if (coverageTable.format === 2) {
+	        Table.call(this, 'coverageTable',
+	            [{name: 'coverageFormat', type: 'USHORT', value: 2}]
+	            .concat(recordList('rangeRecord', coverageTable.ranges, function(RangeRecord) {
+	                return [
+	                    {name: 'startGlyphID', type: 'USHORT', value: RangeRecord.start},
+	                    {name: 'endGlyphID', type: 'USHORT', value: RangeRecord.end},
+	                    {name: 'startCoverageIndex', type: 'USHORT', value: RangeRecord.index} ];
+	            }))
+	        );
 	    } else {
-	        check.assert(false, 'Can\'t create coverage table format 2 yet.');
+	        check.assert(false, 'Coverage format must be 1 or 2.');
 	    }
 	}
 	Coverage.prototype = Object.create(Table.prototype);
@@ -81767,29 +82211,25 @@ function (Fields,
 	 * itemCallback is one of the Parser methods.
 	 */
 	Parser.prototype.parseList = function(count, itemCallback) {
-	    var this$1 = this;
-
 	    if (!itemCallback) {
 	        itemCallback = count;
 	        count = this.parseUShort();
 	    }
 	    var list = new Array(count);
 	    for (var i = 0; i < count; i++) {
-	        list[i] = itemCallback.call(this$1);
+	        list[i] = itemCallback.call(this);
 	    }
 	    return list;
 	};
 
 	Parser.prototype.parseList32 = function(count, itemCallback) {
-	    var this$1 = this;
-
 	    if (!itemCallback) {
 	        itemCallback = count;
 	        count = this.parseULong();
 	    }
 	    var list = new Array(count);
 	    for (var i = 0; i < count; i++) {
-	        list[i] = itemCallback.call(this$1);
+	        list[i] = itemCallback.call(this);
 	    }
 	    return list;
 	};
@@ -81800,8 +82240,6 @@ function (Fields,
 	 * Example of recordDescription: { sequenceIndex: Parser.uShort, lookupListIndex: Parser.uShort }
 	 */
 	Parser.prototype.parseRecordList = function(count, recordDescription) {
-	    var this$1 = this;
-
 	    // If the count argument is absent, read it in the stream.
 	    if (!recordDescription) {
 	        recordDescription = count;
@@ -81814,7 +82252,7 @@ function (Fields,
 	        for (var j = 0; j < fields.length; j++) {
 	            var fieldName = fields[j];
 	            var fieldType = recordDescription[fieldName];
-	            rec[fieldName] = fieldType.call(this$1);
+	            rec[fieldName] = fieldType.call(this);
 	        }
 	        records[i] = rec;
 	    }
@@ -81822,8 +82260,6 @@ function (Fields,
 	};
 
 	Parser.prototype.parseRecordList32 = function(count, recordDescription) {
-	    var this$1 = this;
-
 	    // If the count argument is absent, read it in the stream.
 	    if (!recordDescription) {
 	        recordDescription = count;
@@ -81836,7 +82272,7 @@ function (Fields,
 	        for (var j = 0; j < fields.length; j++) {
 	            var fieldName = fields[j];
 	            var fieldType = recordDescription[fieldName];
-	            rec[fieldName] = fieldType.call(this$1);
+	            rec[fieldName] = fieldType.call(this);
 	        }
 	        records[i] = rec;
 	    }
@@ -81846,8 +82282,6 @@ function (Fields,
 	// Parse a data structure into an object
 	// Example of description: { sequenceIndex: Parser.uShort, lookupListIndex: Parser.uShort }
 	Parser.prototype.parseStruct = function(description) {
-	    var this$1 = this;
-
 	    if (typeof description === 'function') {
 	        return description.call(this);
 	    } else {
@@ -81856,7 +82290,7 @@ function (Fields,
 	        for (var j = 0; j < fields.length; j++) {
 	            var fieldName = fields[j];
 	            var fieldType = description[fieldName];
-	            struct[fieldName] = fieldType.call(this$1);
+	            struct[fieldName] = fieldType.call(this);
 	        }
 	        return struct;
 	    }
@@ -81899,13 +82333,11 @@ function (Fields,
 	 * valueFormat and valueCount are read from the stream.
 	 */
 	Parser.prototype.parseValueRecordList = function() {
-	    var this$1 = this;
-
 	    var valueFormat = this.parseUShort();
 	    var valueCount = this.parseUShort();
 	    var values = new Array(valueCount);
 	    for (var i = 0; i < valueCount; i++) {
-	        values[i] = this$1.parseValueRecord(valueFormat);
+	        values[i] = this.parseValueRecord(valueFormat);
 	    }
 	    return values;
 	};
@@ -81936,8 +82368,6 @@ function (Fields,
 	 * See examples in tables/gsub.js
 	 */
 	Parser.prototype.parseListOfLists = function(itemCallback) {
-	    var this$1 = this;
-
 	    var offsets = this.parseOffset16List();
 	    var count = offsets.length;
 	    var relativeOffset = this.relativeOffset;
@@ -81950,17 +82380,17 @@ function (Fields,
 	            list[i] = undefined;
 	            continue;
 	        }
-	        this$1.relativeOffset = start;
+	        this.relativeOffset = start;
 	        if (itemCallback) {
-	            var subOffsets = this$1.parseOffset16List();
+	            var subOffsets = this.parseOffset16List();
 	            var subList = new Array(subOffsets.length);
 	            for (var j = 0; j < subOffsets.length; j++) {
-	                this$1.relativeOffset = start + subOffsets[j];
-	                subList[j] = itemCallback.call(this$1);
+	                this.relativeOffset = start + subOffsets[j];
+	                subList[j] = itemCallback.call(this);
 	            }
 	            list[i] = subList;
 	        } else {
-	            list[i] = this$1.parseUShortList();
+	            list[i] = this.parseUShortList();
 	        }
 	    }
 	    this.relativeOffset = relativeOffset;
@@ -81973,8 +82403,6 @@ function (Fields,
 	// https://www.microsoft.com/typography/OTSPEC/chapter2.htm
 	// parser.offset must point to the start of the table containing the coverage.
 	Parser.prototype.parseCoverage = function() {
-	    var this$1 = this;
-
 	    var startOffset = this.offset + this.relativeOffset;
 	    var format = this.parseUShort();
 	    var count = this.parseUShort();
@@ -81987,9 +82415,9 @@ function (Fields,
 	        var ranges = new Array(count);
 	        for (var i = 0; i < count; i++) {
 	            ranges[i] = {
-	                start: this$1.parseUShort(),
-	                end: this$1.parseUShort(),
-	                index: this$1.parseUShort()
+	                start: this.parseUShort(),
+	                end: this.parseUShort(),
+	                index: this.parseUShort()
 	            };
 	        }
 	        return {
@@ -82628,8 +83056,6 @@ function (Fields,
 	 * @param {Object} post
 	 */
 	function GlyphNames(post) {
-	    var this$1 = this;
-
 	    switch (post.version) {
 	        case 1:
 	            this.names = standardNames.slice();
@@ -82638,9 +83064,9 @@ function (Fields,
 	            this.names = new Array(post.numberOfGlyphs);
 	            for (var i = 0; i < post.numberOfGlyphs; i++) {
 	                if (post.glyphNameIndex[i] < standardNames.length) {
-	                    this$1.names[i] = standardNames[post.glyphNameIndex[i]];
+	                    this.names[i] = standardNames[post.glyphNameIndex[i]];
 	                } else {
-	                    this$1.names[i] = post.names[post.glyphNameIndex[i] - standardNames.length];
+	                    this.names[i] = post.names[post.glyphNameIndex[i] - standardNames.length];
 	                }
 	            }
 
@@ -82648,7 +83074,7 @@ function (Fields,
 	        case 2.5:
 	            this.names = new Array(post.numberOfGlyphs);
 	            for (var i$1 = 0; i$1 < post.numberOfGlyphs; i$1++) {
-	                this$1.names[i$1] = standardNames[i$1 + post.glyphNameIndex[i$1]];
+	                this.names[i$1] = standardNames[i$1 + post.glyphNameIndex[i$1]];
 	            }
 
 	            break;
@@ -82678,11 +83104,7 @@ function (Fields,
 	    return this.names[gid];
 	};
 
-	/**
-	 * @alias opentype.addGlyphNames
-	 * @param {opentype.Font}
-	 */
-	function addGlyphNames(font) {
+	function addGlyphNamesAll(font) {
 	    var glyph;
 	    var glyphIndexMap = font.tables.cmap.glyphIndexMap;
 	    var charCodes = Object.keys(glyphIndexMap);
@@ -82705,6 +83127,38 @@ function (Fields,
 	        } else if (font.glyphNames.names) {
 	            glyph.name = font.glyphNames.glyphIndexToName(i$1);
 	        }
+	    }
+	}
+
+	function addGlyphNamesToUnicodeMap(font) {
+	    font._IndexToUnicodeMap = {};
+
+	    var glyphIndexMap = font.tables.cmap.glyphIndexMap;
+	    var charCodes = Object.keys(glyphIndexMap);
+
+	    for (var i = 0; i < charCodes.length; i += 1) {
+	        var c = charCodes[i];
+	        var glyphIndex = glyphIndexMap[c];
+	        if (font._IndexToUnicodeMap[glyphIndex] === undefined) {
+	            font._IndexToUnicodeMap[glyphIndex] = {
+	                unicodes: [parseInt(c)]
+	            };
+	        } else {
+	            font._IndexToUnicodeMap[glyphIndex].unicodes.push(parseInt(c));
+	        }
+	    }
+	}
+
+	/**
+	 * @alias opentype.addGlyphNames
+	 * @param {opentype.Font}
+	 * @param {Object}
+	 */
+	function addGlyphNames(font, opt) {
+	    if (opt.lowMemory) {
+	        addGlyphNamesToUnicodeMap(font);
+	    } else {
+	        addGlyphNamesAll(font);
 	    }
 	}
 
@@ -82784,23 +83238,23 @@ function (Fields,
 
 	    // But by binding these values only when necessary, we reduce can
 	    // the memory requirements by almost 3% for larger fonts.
-	    if (options.xMin) {
+	    if ('xMin' in options) {
 	        this.xMin = options.xMin;
 	    }
 
-	    if (options.yMin) {
+	    if ('yMin' in options) {
 	        this.yMin = options.yMin;
 	    }
 
-	    if (options.xMax) {
+	    if ('xMax' in options) {
 	        this.xMax = options.xMax;
 	    }
 
-	    if (options.yMax) {
+	    if ('yMax' in options) {
 	        this.yMax = options.yMax;
 	    }
 
-	    if (options.advanceWidth) {
+	    if ('advanceWidth' in options) {
 	        this.advanceWidth = options.advanceWidth;
 	    }
 
@@ -82865,7 +83319,7 @@ function (Fields,
 	        xScale = yScale = 1;
 	    } else {
 	        commands = this.path.commands;
-	        var scale = 1 / this.path.unitsPerEm * fontSize;
+	        var scale = 1 / (this.path.unitsPerEm || 1000) * fontSize;
 	        if (xScale === undefined) { xScale = scale; }
 	        if (yScale === undefined) { yScale = scale; }
 	    }
@@ -82899,8 +83353,6 @@ function (Fields,
 	 * @return {Array}
 	 */
 	Glyph.prototype.getContours = function() {
-	    var this$1 = this;
-
 	    if (this.points === undefined) {
 	        return [];
 	    }
@@ -82908,7 +83360,7 @@ function (Fields,
 	    var contours = [];
 	    var currentContour = [];
 	    for (var i = 0; i < this.points.length; i += 1) {
-	        var pt = this$1.points[i];
+	        var pt = this.points[i];
 	        currentContour.push(pt);
 	        if (pt.lastPointOfContour) {
 	            contours.push(currentContour);
@@ -82996,11 +83448,10 @@ function (Fields,
 	 */
 	Glyph.prototype.drawPoints = function(ctx, x, y, fontSize) {
 	    function drawCircles(l, x, y, scale) {
-	        var PI_SQ = Math.PI * 2;
 	        ctx.beginPath();
 	        for (var j = 0; j < l.length; j += 1) {
 	            ctx.moveTo(x + (l[j].x * scale), y + (l[j].y * scale));
-	            ctx.arc(x + (l[j].x * scale), y + (l[j].y * scale), 2, 0, PI_SQ, false);
+	            ctx.arc(x + (l[j].x * scale), y + (l[j].y * scale), 2, 0, Math.PI * 2, false);
 	        }
 
 	        ctx.closePath();
@@ -83107,13 +83558,13 @@ function (Fields,
 	 * @param {Array}
 	 */
 	function GlyphSet(font, glyphs) {
-	    var this$1 = this;
-
 	    this.font = font;
 	    this.glyphs = {};
 	    if (Array.isArray(glyphs)) {
 	        for (var i = 0; i < glyphs.length; i++) {
-	            this$1.glyphs[i] = glyphs[i];
+	            var glyph = glyphs[i];
+	            glyph.path.unitsPerEm = font.unitsPerEm;
+	            this.glyphs[i] = glyph;
 	        }
 	    }
 
@@ -83125,8 +83576,37 @@ function (Fields,
 	 * @return {opentype.Glyph}
 	 */
 	GlyphSet.prototype.get = function(index) {
-	    if (typeof this.glyphs[index] === 'function') {
-	        this.glyphs[index] = this.glyphs[index]();
+	    // this.glyphs[index] is 'undefined' when low memory mode is on. glyph is pushed on request only.
+	    if (this.glyphs[index] === undefined) {
+	        this.font._push(index);
+	        if (typeof this.glyphs[index] === 'function') {
+	            this.glyphs[index] = this.glyphs[index]();
+	        }
+
+	        var glyph = this.glyphs[index];
+	        var unicodeObj = this.font._IndexToUnicodeMap[index];
+
+	        if (unicodeObj) {
+	            for (var j = 0; j < unicodeObj.unicodes.length; j++)
+	                { glyph.addUnicode(unicodeObj.unicodes[j]); }
+	        }
+
+	        if (this.font.cffEncoding) {
+	            if (this.font.isCIDFont) {
+	                glyph.name = 'gid' + index;
+	            } else {
+	                glyph.name = this.font.cffEncoding.charset[index];
+	            }
+	        } else if (this.font.glyphNames.names) {
+	            glyph.name = this.font.glyphNames.glyphIndexToName(index);
+	        }
+
+	        this.glyphs[index].advanceWidth = this.font._hmtxTableData[index].advanceWidth;
+	        this.glyphs[index].leftSideBearing = this.font._hmtxTableData[index].leftSideBearing;
+	    } else {
+	        if (typeof this.glyphs[index] === 'function') {
+	            this.glyphs[index] = this.glyphs[index]();
+	        }
 	    }
 
 	    return this.glyphs[index];
@@ -83278,6 +83758,43 @@ function (Fields,
 	    }
 
 	    return {objects: objects, startOffset: start, endOffset: endOffset};
+	}
+
+	function parseCFFIndexLowMemory(data, start) {
+	    var offsets = [];
+	    var count = parse.getCard16(data, start);
+	    var objectOffset;
+	    var endOffset;
+	    if (count !== 0) {
+	        var offsetSize = parse.getByte(data, start + 2);
+	        objectOffset = start + ((count + 1) * offsetSize) + 2;
+	        var pos = start + 3;
+	        for (var i = 0; i < count + 1; i += 1) {
+	            offsets.push(parse.getOffset(data, pos, offsetSize));
+	            pos += offsetSize;
+	        }
+
+	        // The total size of the index array is 4 header bytes + the value of the last offset.
+	        endOffset = objectOffset + offsets[count];
+	    } else {
+	        endOffset = start + 2;
+	    }
+
+	    return {offsets: offsets, startOffset: start, endOffset: endOffset};
+	}
+	function getCffIndexObject(i, offsets, data, start, conversionFn) {
+	    var count = parse.getCard16(data, start);
+	    var objectOffset = 0;
+	    if (count !== 0) {
+	        var offsetSize = parse.getByte(data, start + 2);
+	        objectOffset = start + ((count + 1) * offsetSize) + 2;
+	    }
+
+	    var value = parse.getBytes(data, objectOffset + offsets[i], objectOffset + offsets[i + 1]);
+	    if (conversionFn) {
+	        value = conversionFn(value);
+	    }
+	    return value;
 	}
 
 	// Parse a `CFF` DICT real value.
@@ -83547,6 +84064,8 @@ function (Fields,
 	        var topDict = parseCFFTopDict(topDictData, strings);
 	        topDict._subrs = [];
 	        topDict._subrsBias = 0;
+	        topDict._defaultWidthX = 0;
+	        topDict._nominalWidthX = 0;
 	        var privateSize = topDict.private[0];
 	        var privateOffset = topDict.private[1];
 	        if (privateSize !== 0 && privateOffset !== 0) {
@@ -83698,7 +84217,7 @@ function (Fields,
 	        haveWidth = true;
 	    }
 
-	    function parse$$1(code) {
+	    function parse(code) {
 	        var b1;
 	        var b2;
 	        var b3;
@@ -83782,7 +84301,7 @@ function (Fields,
 	                    codeIndex = stack.pop() + subrsBias;
 	                    subrCode = subrs[codeIndex];
 	                    if (subrCode) {
-	                        parse$$1(subrCode);
+	                        parse(subrCode);
 	                    }
 
 	                    break;
@@ -83982,7 +84501,7 @@ function (Fields,
 	                    codeIndex = stack.pop() + font.gsubrsBias;
 	                    subrCode = font.gsubrs[codeIndex];
 	                    if (subrCode) {
-	                        parse$$1(subrCode);
+	                        parse(subrCode);
 	                    }
 
 	                    break;
@@ -84057,7 +84576,7 @@ function (Fields,
 	        }
 	    }
 
-	    parse$$1(code);
+	    parse(code);
 
 	    glyph.advanceWidth = width;
 	    return p;
@@ -84109,7 +84628,7 @@ function (Fields,
 	}
 
 	// Parse the `CFF` table, which contains the glyph outlines in PostScript format.
-	function parseCFFTable(data, start, font) {
+	function parseCFFTable(data, start, font, opt) {
 	    font.tables.cff = {};
 	    var header = parseCFFHeader(data, start);
 	    var nameIndex = parseCFFIndex(data, header.endOffset, parse.bytesToString);
@@ -84166,8 +84685,14 @@ function (Fields,
 	    }
 
 	    // Offsets in the top dict are relative to the beginning of the CFF data, so add the CFF start offset.
-	    var charStringsIndex = parseCFFIndex(data, start + topDict.charStrings);
-	    font.nGlyphs = charStringsIndex.objects.length;
+	    var charStringsIndex;
+	    if (opt.lowMemory) {
+	        charStringsIndex = parseCFFIndexLowMemory(data, start + topDict.charStrings);
+	        font.nGlyphs = charStringsIndex.offsets.length;
+	    } else {
+	        charStringsIndex = parseCFFIndex(data, start + topDict.charStrings);
+	        font.nGlyphs = charStringsIndex.objects.length;
+	    }
 
 	    var charset = parseCFFCharset(data, start + topDict.charset, font.nGlyphs, stringIndex.objects);
 	    if (topDict.encoding === 0) {
@@ -84184,9 +84709,16 @@ function (Fields,
 	    font.encoding = font.encoding || font.cffEncoding;
 
 	    font.glyphs = new glyphset.GlyphSet(font);
-	    for (var i = 0; i < font.nGlyphs; i += 1) {
-	        var charString = charStringsIndex.objects[i];
-	        font.glyphs.push(i, glyphset.cffGlyphLoader(font, i, parseCFFCharstring, charString));
+	    if (opt.lowMemory) {
+	        font._push = function(i) {
+	            var charString = getCffIndexObject(i, charStringsIndex.offsets, data, start + topDict.charStrings);
+	            font.glyphs.push(i, glyphset.cffGlyphLoader(font, i, parseCFFCharstring, charString));
+	        };
+	    } else {
+	        for (var i = 0; i < font.nGlyphs; i += 1) {
+	            var charString = charStringsIndex.objects[i];
+	            font.glyphs.push(i, glyphset.cffGlyphLoader(font, i, parseCFFCharstring, charString));
+	        }
 	    }
 	}
 
@@ -84317,14 +84849,15 @@ function (Fields,
 	            var _23 = 2 / 3;
 
 	            // We're going to create a new command so we don't change the original path.
+	            // Since all coordinates are relative, we round() them ASAP to avoid propagating errors.
 	            cmd = {
 	                type: 'C',
 	                x: cmd.x,
 	                y: cmd.y,
-	                x1: _13 * x + _23 * cmd.x1,
-	                y1: _13 * y + _23 * cmd.y1,
-	                x2: _13 * cmd.x + _23 * cmd.x1,
-	                y2: _13 * cmd.y + _23 * cmd.y1
+	                x1: Math.round(_13 * x + _23 * cmd.x1),
+	                y1: Math.round(_13 * y + _23 * cmd.y1),
+	                x2: Math.round(_13 * cmd.x + _23 * cmd.x1),
+	                y2: Math.round(_13 * cmd.y + _23 * cmd.y1)
 	            };
 	        }
 
@@ -84574,9 +85107,7 @@ function (Fields,
 
 	// The `hmtx` table contains the horizontal metrics for all glyphs.
 
-	// Parse the `hmtx` table, which contains the horizontal metrics for all glyphs.
-	// This function augments the glyph array, adding the advanceWidth and leftSideBearing to each glyph.
-	function parseHmtxTable(data, start, numMetrics, numGlyphs, glyphs) {
+	function parseHmtxTableAll(data, start, numMetrics, numGlyphs, glyphs) {
 	    var advanceWidth;
 	    var leftSideBearing;
 	    var p = new parse.Parser(data, start);
@@ -84591,6 +85122,35 @@ function (Fields,
 	        glyph.advanceWidth = advanceWidth;
 	        glyph.leftSideBearing = leftSideBearing;
 	    }
+	}
+
+	function parseHmtxTableOnLowMemory(font, data, start, numMetrics, numGlyphs) {
+	    font._hmtxTableData = {};
+
+	    var advanceWidth;
+	    var leftSideBearing;
+	    var p = new parse.Parser(data, start);
+	    for (var i = 0; i < numGlyphs; i += 1) {
+	        // If the font is monospaced, only one entry is needed. This last entry applies to all subsequent glyphs.
+	        if (i < numMetrics) {
+	            advanceWidth = p.parseUShort();
+	            leftSideBearing = p.parseShort();
+	        }
+
+	        font._hmtxTableData[i] = {
+	            advanceWidth: advanceWidth,
+	            leftSideBearing: leftSideBearing
+	        };
+	    }
+	}
+
+	// Parse the `hmtx` table, which contains the horizontal metrics for all glyphs.
+	// This function augments the glyph array, adding the advanceWidth and leftSideBearing to each glyph.
+	function parseHmtxTable(font, data, start, numMetrics, numGlyphs, glyphs, opt) {
+	    if (opt.lowMemory)
+	        { parseHmtxTableOnLowMemory(font, data, start, numMetrics, numGlyphs); }
+	    else
+	        { parseHmtxTableAll(data, start, numMetrics, numGlyphs, glyphs); }
 	}
 
 	function makeHmtxTable(glyphs) {
@@ -86056,7 +86616,16 @@ function (Fields,
 	            {name: 'coverage', type: 'TABLE', value: new table.Coverage(subtable.coverage)}
 	        ].concat(table.ushortList('substitute', subtable.substitute)));
 	    }
-	    check.fail('Lookup type 1 substFormat must be 1 or 2.');
+	};
+
+	subtableMakers[2] = function makeLookup2(subtable) {
+	    check.assert(subtable.substFormat === 1, 'Lookup type 2 substFormat must be 1.');
+	    return new table.Table('substitutionTable', [
+	        {name: 'substFormat', type: 'USHORT', value: 1},
+	        {name: 'coverage', type: 'TABLE', value: new table.Coverage(subtable.coverage)}
+	    ].concat(table.tableList('seqSet', subtable.sequences, function(sequenceSet) {
+	        return new table.Table('sequenceSetTable', table.ushortList('sequence', sequenceSet));
+	    })));
 	};
 
 	subtableMakers[3] = function makeLookup3(subtable) {
@@ -86082,6 +86651,61 @@ function (Fields,
 	            );
 	        }));
 	    })));
+	};
+
+	subtableMakers[6] = function makeLookup6(subtable) {
+	    if (subtable.substFormat === 1) {
+	        var returnTable = new table.Table('chainContextTable', [
+	            {name: 'substFormat', type: 'USHORT', value: subtable.substFormat},
+	            {name: 'coverage', type: 'TABLE', value: new table.Coverage(subtable.coverage)}
+	        ].concat(table.tableList('chainRuleSet', subtable.chainRuleSets, function(chainRuleSet) {
+	            return new table.Table('chainRuleSetTable', table.tableList('chainRule', chainRuleSet, function(chainRule) {
+	                var tableData = table.ushortList('backtrackGlyph', chainRule.backtrack, chainRule.backtrack.length)
+	                    .concat(table.ushortList('inputGlyph', chainRule.input, chainRule.input.length + 1))
+	                    .concat(table.ushortList('lookaheadGlyph', chainRule.lookahead, chainRule.lookahead.length))
+	                    .concat(table.ushortList('substitution', [], chainRule.lookupRecords.length));
+
+	                chainRule.lookupRecords.forEach(function (record, i) {
+	                    tableData = tableData
+	                        .concat({name: 'sequenceIndex' + i, type: 'USHORT', value: record.sequenceIndex})
+	                        .concat({name: 'lookupListIndex' + i, type: 'USHORT', value: record.lookupListIndex});
+	                });
+	                return new table.Table('chainRuleTable', tableData);
+	            }));
+	        })));
+	        return returnTable;
+	    } else if (subtable.substFormat === 2) {
+	        check.assert(false, 'lookup type 6 format 2 is not yet supported.');
+	    } else if (subtable.substFormat === 3) {
+	        var tableData = [
+	            {name: 'substFormat', type: 'USHORT', value: subtable.substFormat} ];
+
+	        tableData.push({name: 'backtrackGlyphCount', type: 'USHORT', value: subtable.backtrackCoverage.length});
+	        subtable.backtrackCoverage.forEach(function (coverage, i) {
+	            tableData.push({name: 'backtrackCoverage' + i, type: 'TABLE', value: new table.Coverage(coverage)});
+	        });
+	        tableData.push({name: 'inputGlyphCount', type: 'USHORT', value: subtable.inputCoverage.length});
+	        subtable.inputCoverage.forEach(function (coverage, i) {
+	            tableData.push({name: 'inputCoverage' + i, type: 'TABLE', value: new table.Coverage(coverage)});
+	        });
+	        tableData.push({name: 'lookaheadGlyphCount', type: 'USHORT', value: subtable.lookaheadCoverage.length});
+	        subtable.lookaheadCoverage.forEach(function (coverage, i) {
+	            tableData.push({name: 'lookaheadCoverage' + i, type: 'TABLE', value: new table.Coverage(coverage)});
+	        });
+
+	        tableData.push({name: 'substitutionCount', type: 'USHORT', value: subtable.lookupRecords.length});
+	        subtable.lookupRecords.forEach(function (record, i) {
+	            tableData = tableData
+	                .concat({name: 'sequenceIndex' + i, type: 'USHORT', value: record.sequenceIndex})
+	                .concat({name: 'lookupListIndex' + i, type: 'USHORT', value: record.lookupListIndex});
+	        });
+
+	        var returnTable$1 = new table.Table('chainContextTable', tableData);
+
+	        return returnTable$1;
+	    }
+
+	    check.assert(false, 'lookup type 6 format must be 1, 2 or 3.');
 	};
 
 	function makeGsubTable(gsub) {
@@ -86353,17 +86977,14 @@ function (Fields,
 
 	    var maxpTable = maxp.make(font.glyphs.length);
 
-	    var os2Table = os2.make({
+	    var os2Table = os2.make(Object.assign({
 	        xAvgCharWidth: Math.round(globals.advanceWidthAvg),
-	        usWeightClass: font.tables.os2.usWeightClass,
-	        usWidthClass: font.tables.os2.usWidthClass,
 	        usFirstCharIndex: firstCharIndex,
 	        usLastCharIndex: lastCharIndex,
 	        ulUnicodeRange1: ulUnicodeRange1,
 	        ulUnicodeRange2: ulUnicodeRange2,
 	        ulUnicodeRange3: ulUnicodeRange3,
 	        ulUnicodeRange4: ulUnicodeRange4,
-	        fsSelection: font.tables.os2.fsSelection, // REGULAR
 	        // See http://typophile.com/node/13081 for more info on vertical metrics.
 	        // We get metrics for typical characters (such as "x" for xHeight).
 	        // We provide some fallback characters if characters are unavailable: their
@@ -86377,8 +86998,8 @@ function (Fields,
 	        sxHeight: metricsForChar(font, 'xyvw', {yMax: Math.round(globals.ascender / 2)}).yMax,
 	        sCapHeight: metricsForChar(font, 'HIKLEFJMNTZBDPRAGOQSUVWXY', globals).yMax,
 	        usDefaultChar: font.hasChar(' ') ? 32 : 0, // Use space as the default character, if available.
-	        usBreakChar: font.hasChar(' ') ? 32 : 0 // Use space as the break character, if available.
-	    });
+	        usBreakChar: font.hasChar(' ') ? 32 : 0, // Use space as the break character, if available.
+	    }, font.tables.os2));
 
 	    var hmtxTable = hmtx.make(font.glyphs);
 	    var cmapTable = cmap.make(font.glyphs);
@@ -86834,13 +87455,11 @@ function (Fields,
 	 * @returns {integer}
 	 */
 	Position.prototype.getKerningValue = function(kerningLookups, leftIndex, rightIndex) {
-	    var this$1 = this;
-
 	    for (var i = 0; i < kerningLookups.length; i++) {
 	        var subtables = kerningLookups[i].subtables;
 	        for (var j = 0; j < subtables.length; j++) {
 	            var subtable = subtables[j];
-	            var covIndex = this$1.getCoverageIndex(subtable.coverage, leftIndex);
+	            var covIndex = this.getCoverageIndex(subtable.coverage, leftIndex);
 	            if (covIndex < 0) { continue; }
 	            switch (subtable.posFormat) {
 	                case 1:
@@ -86855,8 +87474,8 @@ function (Fields,
 	                    break;      // left glyph found, not right glyph - try next subtable
 	                case 2:
 	                    // Search Pair Adjustment Positioning Format 2
-	                    var class1 = this$1.getGlyphClass(subtable.classDef1, leftIndex);
-	                    var class2 = this$1.getGlyphClass(subtable.classDef2, rightIndex);
+	                    var class1 = this.getGlyphClass(subtable.classDef1, leftIndex);
+	                    var class2 = this.getGlyphClass(subtable.classDef2, rightIndex);
 	                    var pair$1 = subtable.classRecords[class1][class2];
 	                    return pair$1.value1 && pair$1.value1.xAdvance || 0;
 	            }
@@ -86947,15 +87566,13 @@ function (Fields,
 	 * @return {Array} substitutions - The list of substitutions.
 	 */
 	Substitution.prototype.getSingle = function(feature, script, language) {
-	    var this$1 = this;
-
 	    var substitutions = [];
 	    var lookupTables = this.getLookupTables(script, language, feature, 1);
 	    for (var idx = 0; idx < lookupTables.length; idx++) {
 	        var subtables = lookupTables[idx].subtables;
 	        for (var i = 0; i < subtables.length; i++) {
 	            var subtable = subtables[i];
-	            var glyphs = this$1.expandCoverage(subtable.coverage);
+	            var glyphs = this.expandCoverage(subtable.coverage);
 	            var j = (void 0);
 	            if (subtable.substFormat === 1) {
 	                var delta = subtable.deltaGlyphId;
@@ -86975,6 +87592,33 @@ function (Fields,
 	};
 
 	/**
+	 * List all multiple substitutions (lookup type 2) for a given script, language, and feature.
+	 * @param {string} [script='DFLT']
+	 * @param {string} [language='dflt']
+	 * @param {string} feature - 4-character feature name ('ccmp', 'stch')
+	 * @return {Array} substitutions - The list of substitutions.
+	 */
+	Substitution.prototype.getMultiple = function(feature, script, language) {
+	    var substitutions = [];
+	    var lookupTables = this.getLookupTables(script, language, feature, 2);
+	    for (var idx = 0; idx < lookupTables.length; idx++) {
+	        var subtables = lookupTables[idx].subtables;
+	        for (var i = 0; i < subtables.length; i++) {
+	            var subtable = subtables[i];
+	            var glyphs = this.expandCoverage(subtable.coverage);
+	            var j = (void 0);
+
+	            for (j = 0; j < glyphs.length; j++) {
+	                var glyph = glyphs[j];
+	                var replacements = subtable.sequences[j];
+	                substitutions.push({ sub: glyph, by: replacements });
+	            }
+	        }
+	    }
+	    return substitutions;
+	};
+
+	/**
 	 * List all alternates (lookup type 3) for a given script, language, and feature.
 	 * @param {string} [script='DFLT']
 	 * @param {string} [language='dflt']
@@ -86982,15 +87626,13 @@ function (Fields,
 	 * @return {Array} alternates - The list of alternates
 	 */
 	Substitution.prototype.getAlternates = function(feature, script, language) {
-	    var this$1 = this;
-
 	    var alternates = [];
 	    var lookupTables = this.getLookupTables(script, language, feature, 3);
 	    for (var idx = 0; idx < lookupTables.length; idx++) {
 	        var subtables = lookupTables[idx].subtables;
 	        for (var i = 0; i < subtables.length; i++) {
 	            var subtable = subtables[i];
-	            var glyphs = this$1.expandCoverage(subtable.coverage);
+	            var glyphs = this.expandCoverage(subtable.coverage);
 	            var alternateSets = subtable.alternateSets;
 	            for (var j = 0; j < glyphs.length; j++) {
 	                alternates.push({ sub: glyphs[j], by: alternateSets[j] });
@@ -87009,15 +87651,13 @@ function (Fields,
 	 * @return {Array} ligatures - The list of ligatures.
 	 */
 	Substitution.prototype.getLigatures = function(feature, script, language) {
-	    var this$1 = this;
-
 	    var ligatures = [];
 	    var lookupTables = this.getLookupTables(script, language, feature, 4);
 	    for (var idx = 0; idx < lookupTables.length; idx++) {
 	        var subtables = lookupTables[idx].subtables;
 	        for (var i = 0; i < subtables.length; i++) {
 	            var subtable = subtables[i];
-	            var glyphs = this$1.expandCoverage(subtable.coverage);
+	            var glyphs = this.expandCoverage(subtable.coverage);
 	            var ligatureSets = subtable.ligatureSets;
 	            for (var j = 0; j < glyphs.length; j++) {
 	                var startGlyph = glyphs[j];
@@ -87039,7 +87679,7 @@ function (Fields,
 	 * Add or modify a single substitution (lookup type 1)
 	 * Format 2, more flexible, is always used.
 	 * @param {string} feature - 4-letter feature name ('liga', 'rlig', 'dlig'...)
-	 * @param {Object} substitution - { sub: id, delta: number } for format 1 or { sub: id, by: id } for format 2.
+	 * @param {Object} substitution - { sub: id, by: id } (format 1 is not supported)
 	 * @param {string} [script='DFLT']
 	 * @param {string} [language='dflt']
 	 */
@@ -87050,7 +87690,7 @@ function (Fields,
 	        coverage: {format: 1, glyphs: []},
 	        substitute: []
 	    });
-	    check.assert(subtable.coverage.format === 1, 'Ligature: unable to modify coverage table format ' + subtable.coverage.format);
+	    check.assert(subtable.coverage.format === 1, 'Single: unable to modify coverage table format ' + subtable.coverage.format);
 	    var coverageGlyph = substitution.sub;
 	    var pos = this.binSearch(subtable.coverage.glyphs, coverageGlyph);
 	    if (pos < 0) {
@@ -87062,7 +87702,33 @@ function (Fields,
 	};
 
 	/**
-	 * Add or modify an alternate substitution (lookup type 1)
+	 * Add or modify a multiple substitution (lookup type 2)
+	 * @param {string} feature - 4-letter feature name ('ccmp', 'stch')
+	 * @param {Object} substitution - { sub: id, by: [id] } for format 2.
+	 * @param {string} [script='DFLT']
+	 * @param {string} [language='dflt']
+	 */
+	Substitution.prototype.addMultiple = function(feature, substitution, script, language) {
+	    check.assert(substitution.by instanceof Array && substitution.by.length > 1, 'Multiple: "by" must be an array of two or more ids');
+	    var lookupTable = this.getLookupTables(script, language, feature, 2, true)[0];
+	    var subtable = getSubstFormat(lookupTable, 1, {                // lookup type 2 subtable, format 1, coverage format 1
+	        substFormat: 1,
+	        coverage: {format: 1, glyphs: []},
+	        sequences: []
+	    });
+	    check.assert(subtable.coverage.format === 1, 'Multiple: unable to modify coverage table format ' + subtable.coverage.format);
+	    var coverageGlyph = substitution.sub;
+	    var pos = this.binSearch(subtable.coverage.glyphs, coverageGlyph);
+	    if (pos < 0) {
+	        pos = -1 - pos;
+	        subtable.coverage.glyphs.splice(pos, 0, coverageGlyph);
+	        subtable.sequences.splice(pos, 0, 0);
+	    }
+	    subtable.sequences[pos] = substitution.by;
+	};
+
+	/**
+	 * Add or modify an alternate substitution (lookup type 3)
 	 * @param {string} feature - 4-letter feature name ('liga', 'rlig', 'dlig'...)
 	 * @param {Object} substitution - { sub: id, by: [ids] }
 	 * @param {string} [script='DFLT']
@@ -87075,7 +87741,7 @@ function (Fields,
 	        coverage: {format: 1, glyphs: []},
 	        alternateSets: []
 	    });
-	    check.assert(subtable.coverage.format === 1, 'Ligature: unable to modify coverage table format ' + subtable.coverage.format);
+	    check.assert(subtable.coverage.format === 1, 'Alternate: unable to modify coverage table format ' + subtable.coverage.format);
 	    var coverageGlyph = substitution.sub;
 	    var pos = this.binSearch(subtable.coverage.glyphs, coverageGlyph);
 	    if (pos < 0) {
@@ -87151,7 +87817,13 @@ function (Fields,
 	                    .concat(this.getAlternates(feature, script, language));
 	        case 'dlig':
 	        case 'liga':
-	        case 'rlig': return this.getLigatures(feature, script, language);
+	        case 'rlig':
+	            return this.getLigatures(feature, script, language);
+	        case 'ccmp':
+	            return this.getMultiple(feature, script, language)
+	                .concat(this.getLigatures(feature, script, language));
+	        case 'stch':
+	            return this.getMultiple(feature, script, language);
 	    }
 	    return undefined;
 	};
@@ -87178,6 +87850,11 @@ function (Fields,
 	        case 'dlig':
 	        case 'liga':
 	        case 'rlig':
+	            return this.addLigature(feature, sub, script, language);
+	        case 'ccmp':
+	            if (sub.by instanceof Array) {
+	                return this.addMultiple(feature, sub, script, language);
+	            }
 	            return this.addLigature(feature, sub, script, language);
 	    }
 	    return undefined;
@@ -87514,8 +88191,7 @@ function (Fields,
 	    return getPath(glyph.points);
 	}
 
-	// Parse all the glyphs according to the offsets from the `loca` table.
-	function parseGlyfTable(data, start, loca, font) {
+	function parseGlyfTableAll(data, start, loca, font) {
 	    var glyphs = new glyphset.GlyphSet(font);
 
 	    // The last element of the loca table is invalid.
@@ -87532,7 +88208,31 @@ function (Fields,
 	    return glyphs;
 	}
 
-	var glyf = { getPath: getPath, parse: parseGlyfTable };
+	function parseGlyfTableOnLowMemory(data, start, loca, font) {
+	    var glyphs = new glyphset.GlyphSet(font);
+
+	    font._push = function(i) {
+	        var offset = loca[i];
+	        var nextOffset = loca[i + 1];
+	        if (offset !== nextOffset) {
+	            glyphs.push(i, glyphset.ttfGlyphLoader(font, i, parseGlyph, data, start + offset, buildPath));
+	        } else {
+	            glyphs.push(i, glyphset.glyphLoader(font, i));
+	        }
+	    };
+
+	    return glyphs;
+	}
+
+	// Parse all the glyphs according to the offsets from the `loca` table.
+	function parseGlyfTable(data, start, loca, font, opt) {
+	    if (opt.lowMemory)
+	        { return parseGlyfTableOnLowMemory(data, start, loca, font); }
+	    else
+	        { return parseGlyfTableAll(data, start, loca, font); }
+	}
+
+	var glyf = { getPath: getPath, parse: parseGlyfTable};
 
 	/* A TrueType font hinting interpreter.
 	*
@@ -89509,7 +90209,7 @@ function (Fields,
 	    if (!test) {
 	        skip(state, true);
 
-	        if (exports.DEBUG) { console.log(state.step, 'EIF[]'); }
+	        if (exports.DEBUG) { console.log(state.step,  'EIF[]'); }
 	    }
 	}
 
@@ -90632,6 +91332,13 @@ function (Fields,
 	}
 
 	/**
+	 * @typedef ContextParams
+	 * @type Object
+	 * @property {array} context context items
+	 * @property {number} currentIndex current item index
+	 */
+
+	/**
 	 * Create a context params
 	 * @param {array} context a list of items
 	 * @param {number} currentIndex current item index
@@ -91042,13 +91749,11 @@ function (Fields,
 	 * Updates context ranges
 	 */
 	Tokenizer.prototype.updateContextsRanges = function () {
-	    var this$1 = this;
-
 	    this.resetContextsRanges();
 	    var chars = this.tokens.map(function (token) { return token.char; });
 	    for (var i = 0; i < chars.length; i++) {
 	        var contextParams = new ContextParams(chars, i);
-	        this$1.runContextCheck(contextParams);
+	        this.runContextCheck(contextParams);
 	    }
 	    this.dispatch('updateContextsRanges', [this.registeredContexts]);
 	};
@@ -91097,8 +91802,6 @@ function (Fields,
 	 * @param {string} text a text to tokenize
 	 */
 	Tokenizer.prototype.tokenize = function (text) {
-	    var this$1 = this;
-
 	    this.tokens = [];
 	    this.resetContextsRanges();
 	    var chars = Array.from(text);
@@ -91106,11 +91809,11 @@ function (Fields,
 	    for (var i = 0; i < chars.length; i++) {
 	        var char = chars[i];
 	        var contextParams = new ContextParams(chars, i);
-	        this$1.dispatch('next', [contextParams]);
-	        this$1.runContextCheck(contextParams);
+	        this.dispatch('next', [contextParams]);
+	        this.runContextCheck(contextParams);
 	        var token = new Token(char);
-	        this$1.tokens.push(token);
-	        this$1.dispatch('newToken', [token, contextParams]);
+	        this.tokens.push(token);
+	        this.dispatch('newToken', [token, contextParams]);
 	    }
 	    this.dispatch('end', [this.tokens]);
 	    return this.tokens;
@@ -91145,12 +91848,500 @@ function (Fields,
 	}
 
 	/**
+	 * Check if a char is Latin
+	 * @param {string} c a single char
+	 */
+	function isLatinChar(c) {
+	    return /[A-z]/.test(c);
+	}
+
+	/**
 	 * Check if a char is whitespace char
 	 * @param {string} c a single char
 	 */
 	function isWhiteSpace(c) {
 	    return /\s/.test(c);
 	}
+
+	/**
+	 * Query a feature by some of it's properties to lookup a glyph substitution.
+	 */
+
+	/**
+	 * Create feature query instance
+	 * @param {Font} font opentype font instance
+	 */
+	function FeatureQuery(font) {
+	    this.font = font;
+	    this.features = {};
+	}
+
+	/**
+	 * @typedef SubstitutionAction
+	 * @type Object
+	 * @property {number} id substitution type
+	 * @property {string} tag feature tag
+	 * @property {any} substitution substitution value(s)
+	 */
+
+	/**
+	 * Create a substitution action instance
+	 * @param {SubstitutionAction} action
+	 */
+	function SubstitutionAction(action) {
+	    this.id = action.id;
+	    this.tag = action.tag;
+	    this.substitution = action.substitution;
+	}
+
+	/**
+	 * Lookup a coverage table
+	 * @param {number} glyphIndex glyph index
+	 * @param {CoverageTable} coverage coverage table
+	 */
+	function lookupCoverage(glyphIndex, coverage) {
+	    if (!glyphIndex) { return -1; }
+	    switch (coverage.format) {
+	        case 1:
+	            return coverage.glyphs.indexOf(glyphIndex);
+
+	        case 2:
+	            var ranges = coverage.ranges;
+	            for (var i = 0; i < ranges.length; i++) {
+	                var range = ranges[i];
+	                if (glyphIndex >= range.start && glyphIndex <= range.end) {
+	                    var offset = glyphIndex - range.start;
+	                    return range.index + offset;
+	                }
+	            }
+	            break;
+	        default:
+	            return -1; // not found
+	    }
+	    return -1;
+	}
+
+	/**
+	 * Handle a single substitution - format 1
+	 * @param {ContextParams} contextParams context params to lookup
+	 */
+	function singleSubstitutionFormat1(glyphIndex, subtable) {
+	    var substituteIndex = lookupCoverage(glyphIndex, subtable.coverage);
+	    if (substituteIndex === -1) { return null; }
+	    return glyphIndex + subtable.deltaGlyphId;
+	}
+
+	/**
+	 * Handle a single substitution - format 2
+	 * @param {ContextParams} contextParams context params to lookup
+	 */
+	function singleSubstitutionFormat2(glyphIndex, subtable) {
+	    var substituteIndex = lookupCoverage(glyphIndex, subtable.coverage);
+	    if (substituteIndex === -1) { return null; }
+	    return subtable.substitute[substituteIndex];
+	}
+
+	/**
+	 * Lookup a list of coverage tables
+	 * @param {any} coverageList a list of coverage tables
+	 * @param {ContextParams} contextParams context params to lookup
+	 */
+	function lookupCoverageList(coverageList, contextParams) {
+	    var lookupList = [];
+	    for (var i = 0; i < coverageList.length; i++) {
+	        var coverage = coverageList[i];
+	        var glyphIndex = contextParams.current;
+	        glyphIndex = Array.isArray(glyphIndex) ? glyphIndex[0] : glyphIndex;
+	        var lookupIndex = lookupCoverage(glyphIndex, coverage);
+	        if (lookupIndex !== -1) {
+	            lookupList.push(lookupIndex);
+	        }
+	    }
+	    if (lookupList.length !== coverageList.length) { return -1; }
+	    return lookupList;
+	}
+
+	/**
+	 * Handle chaining context substitution - format 3
+	 * @param {ContextParams} contextParams context params to lookup
+	 */
+	function chainingSubstitutionFormat3(contextParams, subtable) {
+	    var lookupsCount = (
+	        subtable.inputCoverage.length +
+	        subtable.lookaheadCoverage.length +
+	        subtable.backtrackCoverage.length
+	    );
+	    if (contextParams.context.length < lookupsCount) { return []; }
+	    // INPUT LOOKUP //
+	    var inputLookups = lookupCoverageList(
+	        subtable.inputCoverage, contextParams
+	    );
+	    if (inputLookups === -1) { return []; }
+	    // LOOKAHEAD LOOKUP //
+	    var lookaheadOffset = subtable.inputCoverage.length - 1;
+	    if (contextParams.lookahead.length < subtable.lookaheadCoverage.length) { return []; }
+	    var lookaheadContext = contextParams.lookahead.slice(lookaheadOffset);
+	    while (lookaheadContext.length && isTashkeelArabicChar(lookaheadContext[0].char)) {
+	        lookaheadContext.shift();
+	    }
+	    var lookaheadParams = new ContextParams(lookaheadContext, 0);
+	    var lookaheadLookups = lookupCoverageList(
+	        subtable.lookaheadCoverage, lookaheadParams
+	    );
+	    // BACKTRACK LOOKUP //
+	    var backtrackContext = [].concat(contextParams.backtrack);
+	    backtrackContext.reverse();
+	    while (backtrackContext.length && isTashkeelArabicChar(backtrackContext[0].char)) {
+	        backtrackContext.shift();
+	    }
+	    if (backtrackContext.length < subtable.backtrackCoverage.length) { return []; }
+	    var backtrackParams = new ContextParams(backtrackContext, 0);
+	    var backtrackLookups = lookupCoverageList(
+	        subtable.backtrackCoverage, backtrackParams
+	    );
+	    var contextRulesMatch = (
+	        inputLookups.length === subtable.inputCoverage.length &&
+	        lookaheadLookups.length === subtable.lookaheadCoverage.length &&
+	        backtrackLookups.length === subtable.backtrackCoverage.length
+	    );
+	    var substitutions = [];
+	    if (contextRulesMatch) {
+	        for (var i = 0; i < subtable.lookupRecords.length; i++) {
+	            var lookupRecord = subtable.lookupRecords[i];
+	            var lookupListIndex = lookupRecord.lookupListIndex;
+	            var lookupTable = this.getLookupByIndex(lookupListIndex);
+	            for (var s = 0; s < lookupTable.subtables.length; s++) {
+	                var subtable$1 = lookupTable.subtables[s];
+	                var lookup = this.getLookupMethod(lookupTable, subtable$1);
+	                var substitutionType = this.getSubstitutionType(lookupTable, subtable$1);
+	                if (substitutionType === '12') {
+	                    for (var n = 0; n < inputLookups.length; n++) {
+	                        var glyphIndex = contextParams.get(n);
+	                        var substitution = lookup(glyphIndex);
+	                        if (substitution) { substitutions.push(substitution); }
+	                    }
+	                }
+	            }
+	        }
+	    }
+	    return substitutions;
+	}
+
+	/**
+	 * Handle ligature substitution - format 1
+	 * @param {ContextParams} contextParams context params to lookup
+	 */
+	function ligatureSubstitutionFormat1(contextParams, subtable) {
+	    // COVERAGE LOOKUP //
+	    var glyphIndex = contextParams.current;
+	    var ligSetIndex = lookupCoverage(glyphIndex, subtable.coverage);
+	    if (ligSetIndex === -1) { return null; }
+	    // COMPONENTS LOOKUP
+	    // (!) note, components are ordered in the written direction.
+	    var ligature;
+	    var ligatureSet = subtable.ligatureSets[ligSetIndex];
+	    for (var s = 0; s < ligatureSet.length; s++) {
+	        ligature = ligatureSet[s];
+	        for (var l = 0; l < ligature.components.length; l++) {
+	            var lookaheadItem = contextParams.lookahead[l];
+	            var component = ligature.components[l];
+	            if (lookaheadItem !== component) { break; }
+	            if (l === ligature.components.length - 1) { return ligature; }
+	        }
+	    }
+	    return null;
+	}
+
+	/**
+	 * Handle decomposition substitution - format 1
+	 * @param {number} glyphIndex glyph index
+	 * @param {any} subtable subtable
+	 */
+	function decompositionSubstitutionFormat1(glyphIndex, subtable) {
+	    var substituteIndex = lookupCoverage(glyphIndex, subtable.coverage);
+	    if (substituteIndex === -1) { return null; }
+	    return subtable.sequences[substituteIndex];
+	}
+
+	/**
+	 * Get default script features indexes
+	 */
+	FeatureQuery.prototype.getDefaultScriptFeaturesIndexes = function () {
+	    var scripts = this.font.tables.gsub.scripts;
+	    for (var s = 0; s < scripts.length; s++) {
+	        var script = scripts[s];
+	        if (script.tag === 'DFLT') { return (
+	            script.script.defaultLangSys.featureIndexes
+	        ); }
+	    }
+	    return [];
+	};
+
+	/**
+	 * Get feature indexes of a specific script
+	 * @param {string} scriptTag script tag
+	 */
+	FeatureQuery.prototype.getScriptFeaturesIndexes = function(scriptTag) {
+	    var tables = this.font.tables;
+	    if (!tables.gsub) { return []; }
+	    if (!scriptTag) { return this.getDefaultScriptFeaturesIndexes(); }
+	    var scripts = this.font.tables.gsub.scripts;
+	    for (var i = 0; i < scripts.length; i++) {
+	        var script = scripts[i];
+	        if (script.tag === scriptTag && script.script.defaultLangSys) {
+	            return script.script.defaultLangSys.featureIndexes;
+	        } else {
+	            var langSysRecords = script.langSysRecords;
+	            if (!!langSysRecords) {
+	                for (var j = 0; j < langSysRecords.length; j++) {
+	                    var langSysRecord = langSysRecords[j];
+	                    if (langSysRecord.tag === scriptTag) {
+	                        var langSys = langSysRecord.langSys;
+	                        return langSys.featureIndexes;
+	                    }
+	                }
+	            }
+	        }
+	    }
+	    return this.getDefaultScriptFeaturesIndexes();
+	};
+
+	/**
+	 * Map a feature tag to a gsub feature
+	 * @param {any} features gsub features
+	 * @param {string} scriptTag script tag
+	 */
+	FeatureQuery.prototype.mapTagsToFeatures = function (features, scriptTag) {
+	    var tags = {};
+	    for (var i = 0; i < features.length; i++) {
+	        var tag = features[i].tag;
+	        var feature = features[i].feature;
+	        tags[tag] = feature;
+	    }
+	    this.features[scriptTag].tags = tags;
+	};
+
+	/**
+	 * Get features of a specific script
+	 * @param {string} scriptTag script tag
+	 */
+	FeatureQuery.prototype.getScriptFeatures = function (scriptTag) {
+	    var features = this.features[scriptTag];
+	    if (this.features.hasOwnProperty(scriptTag)) { return features; }
+	    var featuresIndexes = this.getScriptFeaturesIndexes(scriptTag);
+	    if (!featuresIndexes) { return null; }
+	    var gsub = this.font.tables.gsub;
+	    features = featuresIndexes.map(function (index) { return gsub.features[index]; });
+	    this.features[scriptTag] = features;
+	    this.mapTagsToFeatures(features, scriptTag);
+	    return features;
+	};
+
+	/**
+	 * Get substitution type
+	 * @param {any} lookupTable lookup table
+	 * @param {any} subtable subtable
+	 */
+	FeatureQuery.prototype.getSubstitutionType = function(lookupTable, subtable) {
+	    var lookupType = lookupTable.lookupType.toString();
+	    var substFormat = subtable.substFormat.toString();
+	    return lookupType + substFormat;
+	};
+
+	/**
+	 * Get lookup method
+	 * @param {any} lookupTable lookup table
+	 * @param {any} subtable subtable
+	 */
+	FeatureQuery.prototype.getLookupMethod = function(lookupTable, subtable) {
+	    var this$1 = this;
+
+	    var substitutionType = this.getSubstitutionType(lookupTable, subtable);
+	    switch (substitutionType) {
+	        case '11':
+	            return function (glyphIndex) { return singleSubstitutionFormat1.apply(
+	                this$1, [glyphIndex, subtable]
+	            ); };
+	        case '12':
+	            return function (glyphIndex) { return singleSubstitutionFormat2.apply(
+	                this$1, [glyphIndex, subtable]
+	            ); };
+	        case '63':
+	            return function (contextParams) { return chainingSubstitutionFormat3.apply(
+	                this$1, [contextParams, subtable]
+	            ); };
+	        case '41':
+	            return function (contextParams) { return ligatureSubstitutionFormat1.apply(
+	                this$1, [contextParams, subtable]
+	            ); };
+	        case '21':
+	            return function (glyphIndex) { return decompositionSubstitutionFormat1.apply(
+	                this$1, [glyphIndex, subtable]
+	            ); };
+	        default:
+	            throw new Error(
+	                "lookupType: " + (lookupTable.lookupType) + " - " +
+	                "substFormat: " + (subtable.substFormat) + " " +
+	                "is not yet supported"
+	            );
+	    }
+	};
+
+	/**
+	 * [ LOOKUP TYPES ]
+	 * -------------------------------
+	 * Single                        1;
+	 * Multiple                      2;
+	 * Alternate                     3;
+	 * Ligature                      4;
+	 * Context                       5;
+	 * ChainingContext               6;
+	 * ExtensionSubstitution         7;
+	 * ReverseChainingContext        8;
+	 * -------------------------------
+	 *
+	 */
+
+	/**
+	 * @typedef FQuery
+	 * @type Object
+	 * @param {string} tag feature tag
+	 * @param {string} script feature script
+	 * @param {ContextParams} contextParams context params
+	 */
+
+	/**
+	 * Lookup a feature using a query parameters
+	 * @param {FQuery} query feature query
+	 */
+	FeatureQuery.prototype.lookupFeature = function (query) {
+	    var contextParams = query.contextParams;
+	    var currentIndex = contextParams.index;
+	    var feature = this.getFeature({
+	        tag: query.tag, script: query.script
+	    });
+	    if (!feature) { return new Error(
+	        "font '" + (this.font.names.fullName.en) + "' " +
+	        "doesn't support feature '" + (query.tag) + "' " +
+	        "for script '" + (query.script) + "'."
+	    ); }
+	    var lookups = this.getFeatureLookups(feature);
+	    var substitutions = [].concat(contextParams.context);
+	    for (var l = 0; l < lookups.length; l++) {
+	        var lookupTable = lookups[l];
+	        var subtables = this.getLookupSubtables(lookupTable);
+	        for (var s = 0; s < subtables.length; s++) {
+	            var subtable = subtables[s];
+	            var substType = this.getSubstitutionType(lookupTable, subtable);
+	            var lookup = this.getLookupMethod(lookupTable, subtable);
+	            var substitution = (void 0);
+	            switch (substType) {
+	                case '11':
+	                    substitution = lookup(contextParams.current);
+	                    if (substitution) {
+	                        substitutions.splice(currentIndex, 1, new SubstitutionAction({
+	                            id: 11, tag: query.tag, substitution: substitution
+	                        }));
+	                    }
+	                    break;
+	                case '12':
+	                    substitution = lookup(contextParams.current);
+	                    if (substitution) {
+	                        substitutions.splice(currentIndex, 1, new SubstitutionAction({
+	                            id: 12, tag: query.tag, substitution: substitution
+	                        }));
+	                    }
+	                    break;
+	                case '63':
+	                    substitution = lookup(contextParams);
+	                    if (Array.isArray(substitution) && substitution.length) {
+	                        substitutions.splice(currentIndex, 1, new SubstitutionAction({
+	                            id: 63, tag: query.tag, substitution: substitution
+	                        }));
+	                    }
+	                    break;
+	                case '41':
+	                    substitution = lookup(contextParams);
+	                    if (substitution) {
+	                        substitutions.splice(currentIndex, 1, new SubstitutionAction({
+	                            id: 41, tag: query.tag, substitution: substitution
+	                        }));
+	                    }
+	                    break;
+	                case '21':
+	                    substitution = lookup(contextParams.current);
+	                    if (substitution) {
+	                        substitutions.splice(currentIndex, 1, new SubstitutionAction({
+	                            id: 21, tag: query.tag, substitution: substitution
+	                        }));
+	                    }
+	                    break;
+	            }
+	            contextParams = new ContextParams(substitutions, currentIndex);
+	            if (Array.isArray(substitution) && !substitution.length) { continue; }
+	            substitution = null;
+	        }
+	    }
+	    return substitutions.length ? substitutions : null;
+	};
+
+	/**
+	 * Checks if a font supports a specific features
+	 * @param {FQuery} query feature query object
+	 */
+	FeatureQuery.prototype.supports = function (query) {
+	    if (!query.script) { return false; }
+	    this.getScriptFeatures(query.script);
+	    var supportedScript = this.features.hasOwnProperty(query.script);
+	    if (!query.tag) { return supportedScript; }
+	    var supportedFeature = (
+	        this.features[query.script].some(function (feature) { return feature.tag === query.tag; })
+	    );
+	    return supportedScript && supportedFeature;
+	};
+
+	/**
+	 * Get lookup table subtables
+	 * @param {any} lookupTable lookup table
+	 */
+	FeatureQuery.prototype.getLookupSubtables = function (lookupTable) {
+	    return lookupTable.subtables || null;
+	};
+
+	/**
+	 * Get lookup table by index
+	 * @param {number} index lookup table index
+	 */
+	FeatureQuery.prototype.getLookupByIndex = function (index) {
+	    var lookups = this.font.tables.gsub.lookups;
+	    return lookups[index] || null;
+	};
+
+	/**
+	 * Get lookup tables for a feature
+	 * @param {string} feature
+	 */
+	FeatureQuery.prototype.getFeatureLookups = function (feature) {
+	    // TODO: memoize
+	    return feature.lookupListIndexes.map(this.getLookupByIndex.bind(this));
+	};
+
+	/**
+	 * Query a feature by it's properties
+	 * @param {any} query an object that describes the properties of a query
+	 */
+	FeatureQuery.prototype.getFeature = function getFeature(query) {
+	    if (!this.font) { return { FAIL: "No font was found"}; }
+	    if (!this.features.hasOwnProperty(query.script)) {
+	        this.getScriptFeatures(query.script);
+	    }
+	    var scriptFeatures = this.features[query.script];
+	    if (!scriptFeatures) { return (
+	        { FAIL: ("No feature for script " + (query.script))}
+	    ); }
+	    if (!scriptFeatures.tags[query.tag]) { return null; }
+	    return this.features[query.script].tags[query.tag];
+	};
 
 	/**
 	 * Arabic word context checkers
@@ -91176,7 +92367,11 @@ function (Fields,
 	        (!isArabicChar(nextChar))
 	    );
 	}
-	var arabicWordCheck = { arabicWordStartCheck: arabicWordStartCheck, arabicWordEndCheck: arabicWordEndCheck };
+
+	var arabicWordCheck = {
+	    startCheck: arabicWordStartCheck,
+	    endCheck: arabicWordEndCheck
+	};
 
 	/**
 	 * Arabic sentence context checkers
@@ -91214,11 +92409,87 @@ function (Fields,
 	            return false;
 	    }
 	}
-	var arabicSentenceCheck = { arabicSentenceStartCheck: arabicSentenceStartCheck, arabicSentenceEndCheck: arabicSentenceEndCheck };
+
+	var arabicSentenceCheck = {
+	    startCheck: arabicSentenceStartCheck,
+	    endCheck: arabicSentenceEndCheck
+	};
+
+	/**
+	 * Apply single substitution format 1
+	 * @param {Array} substitutions substitutions
+	 * @param {any} tokens a list of tokens
+	 * @param {number} index token index
+	 */
+	function singleSubstitutionFormat1$1(action, tokens, index) {
+	    tokens[index].setState(action.tag, action.substitution);
+	}
+
+	/**
+	 * Apply single substitution format 2
+	 * @param {Array} substitutions substitutions
+	 * @param {any} tokens a list of tokens
+	 * @param {number} index token index
+	 */
+	function singleSubstitutionFormat2$1(action, tokens, index) {
+	    tokens[index].setState(action.tag, action.substitution);
+	}
+
+	/**
+	 * Apply chaining context substitution format 3
+	 * @param {Array} substitutions substitutions
+	 * @param {any} tokens a list of tokens
+	 * @param {number} index token index
+	 */
+	function chainingSubstitutionFormat3$1(action, tokens, index) {
+	    action.substitution.forEach(function (subst, offset) {
+	        var token = tokens[index + offset];
+	        token.setState(action.tag, subst);
+	    });
+	}
+
+	/**
+	 * Apply ligature substitution format 1
+	 * @param {Array} substitutions substitutions
+	 * @param {any} tokens a list of tokens
+	 * @param {number} index token index
+	 */
+	function ligatureSubstitutionFormat1$1(action, tokens, index) {
+	    var token = tokens[index];
+	    token.setState(action.tag, action.substitution.ligGlyph);
+	    var compsCount = action.substitution.components.length;
+	    for (var i = 0; i < compsCount; i++) {
+	        token = tokens[index + i + 1];
+	        token.setState('deleted', true);
+	    }
+	}
+
+	/**
+	 * Supported substitutions
+	 */
+	var SUBSTITUTIONS = {
+	    11: singleSubstitutionFormat1$1,
+	    12: singleSubstitutionFormat2$1,
+	    63: chainingSubstitutionFormat3$1,
+	    41: ligatureSubstitutionFormat1$1
+	};
+
+	/**
+	 * Apply substitutions to a list of tokens
+	 * @param {Array} substitutions substitutions
+	 * @param {any} tokens a list of tokens
+	 * @param {number} index token index
+	 */
+	function applySubstitution(action, tokens, index) {
+	    if (action instanceof SubstitutionAction && SUBSTITUTIONS[action.id]) {
+	        SUBSTITUTIONS[action.id](action, tokens, index);
+	    }
+	}
 
 	/**
 	 * Apply Arabic presentation forms to a range of tokens
 	 */
+
 	/**
 	 * Check if a char can be connected to it's preceding char
 	 * @param {ContextParams} charContextParams context params of a char
@@ -91254,44 +92525,42 @@ function (Fields,
 	 * @param {ContextRange} range a range of tokens
 	 */
 	function arabicPresentationForms(range) {
-	    var features = this.features.arab;
-	    var rangeTokens = this.tokenizer.getRangeTokens(range);
-	    if (rangeTokens.length === 1) { return; }
-	    var getSubstitutionIndex = function (substitution) { return (
-	        substitution.length === 1 &&
-	        substitution[0].id === 12 &&
-	        substitution[0].substitution
-	    ); };
-	    var applyForm = function (tag, token, params) {
-	        if (!features.hasOwnProperty(tag)) { return; }
-	        var substitution = features[tag].lookup(params) || null;
-	        var substIndex = getSubstitutionIndex(substitution)[0];
-	        if (substIndex >= 0) {
-	            return token.setState(tag, substIndex);
-	        }
-	    };
-	    var tokensParams = new ContextParams(rangeTokens, 0);
-	    var charContextParams = new ContextParams(rangeTokens.map(function (t){ return t.char; }), 0);
-	    rangeTokens.forEach(function (token, i) {
+	    var this$1 = this;
+
+	    var script = 'arab';
+	    var tags = this.featuresTags[script];
+	    var tokens = this.tokenizer.getRangeTokens(range);
+	    if (tokens.length === 1) { return; }
+	    var contextParams = new ContextParams(
+	        tokens.map(function (token) { return token.getState('glyphIndex'); }
+	    ), 0);
+	    var charContextParams = new ContextParams(
+	        tokens.map(function (token) { return token.char; }
+	    ), 0);
+	    tokens.forEach(function (token, index) {
 	        if (isTashkeelArabicChar(token.char)) { return; }
-	        tokensParams.setCurrentIndex(i);
-	        charContextParams.setCurrentIndex(i);
+	        contextParams.setCurrentIndex(index);
+	        charContextParams.setCurrentIndex(index);
 	        var CONNECT = 0; // 2 bits 00 (10: can connect next) (01: can connect prev)
 	        if (willConnectPrev(charContextParams)) { CONNECT |= 1; }
 	        if (willConnectNext(charContextParams)) { CONNECT |= 2; }
+	        var tag;
 	        switch (CONNECT) {
-	            case 0: // isolated * original form
-	                return;
-	            case 1: // fina
-	                applyForm('fina', token, tokensParams);
-	                break;
-	            case 2: // init
-	                applyForm('init', token, tokensParams);
-	                break;
-	            case 3: // medi
-	                applyForm('medi', token, tokensParams);
-	                break;
+	            case 1: (tag = 'fina'); break;
+	            case 2: (tag = 'init'); break;
+	            case 3: (tag = 'medi'); break;
 	        }
+	        if (tags.indexOf(tag) === -1) { return; }
+	        var substitutions = this$1.query.lookupFeature({
+	            tag: tag, script: script, contextParams: contextParams
+	        });
+	        if (substitutions instanceof Error) { return console.info(substitutions.message); }
+	        substitutions.forEach(function (action, index) {
+	            if (action instanceof SubstitutionAction) {
+	                applySubstitution(action, tokens, index);
+	                contextParams.context[index] = action.substitution;
+	            }
+	        });
 	    });
 	}
 
@@ -91300,46 +92569,105 @@ function (Fields,
 	 */
 
 	/**
+	 * Update context params
+	 * @param {any} tokens a list of tokens
+	 * @param {number} index current item index
+	 */
+	function getContextParams(tokens, index) {
+	    var context = tokens.map(function (token) { return token.activeState.value; });
+	    return new ContextParams(context, index || 0);
+	}
+
+	/**
 	 * Apply Arabic required ligatures to a context range
 	 * @param {ContextRange} range a range of tokens
 	 */
 	function arabicRequiredLigatures(range) {
-	    var features = this.features.arab;
-	    if (!features.hasOwnProperty('rlig')) { return; }
+	    var this$1 = this;
+
+	    var script = 'arab';
 	    var tokens = this.tokenizer.getRangeTokens(range);
-	    for (var i = 0; i < tokens.length; i++) {
-	        var lookupParams = new ContextParams(tokens, i);
-	        var substitution = features.rlig.lookup(lookupParams) || null;
-	        var chainingContext = (
-	            substitution.length === 1 &&
-	            substitution[0].id === 63 &&
-	            substitution[0].substitution
-	        );
-	        var ligature = (
-	            substitution.length === 1 &&
-	            substitution[0].id === 41 &&
-	            substitution[0].substitution[0]
-	        );
-	        var token = tokens[i];
-	        if (!!ligature) {
-	            token.setState('rlig', [ligature.ligGlyph]);
-	            for (var c = 0; c < ligature.components.length; c++) {
-	                var component = ligature.components[c];
-	                var lookaheadToken = lookupParams.get(c + 1);
-	                if (lookaheadToken.activeState.value === component) {
-	                    lookaheadToken.state.deleted = true;
-	                }
-	            }
-	        } else if (chainingContext) {
-	            var substIndex = (
-	                chainingContext &&
-	                chainingContext.length === 1 &&
-	                chainingContext[0].id === 12 &&
-	                chainingContext[0].substitution
+	    var contextParams = getContextParams(tokens);
+	    contextParams.context.forEach(function (glyphIndex, index) {
+	        contextParams.setCurrentIndex(index);
+	        var substitutions = this$1.query.lookupFeature({
+	            tag: 'rlig', script: script, contextParams: contextParams
+	        });
+	        if (substitutions.length) {
+	            substitutions.forEach(
+	                function (action) { return applySubstitution(action, tokens, index); }
 	            );
-	            if (!!substIndex && substIndex >= 0) { token.setState('rlig', substIndex); }
+	            contextParams = getContextParams(tokens);
 	        }
-	    }
+	    });
+	}
+
+	/**
+	 * Latin word context checkers
+	 */
+
+	function latinWordStartCheck(contextParams) {
+	    var char = contextParams.current;
+	    var prevChar = contextParams.get(-1);
+	    return (
+	        // ? latin first char
+	        (prevChar === null && isLatinChar(char)) ||
+	        // ? latin char preceded with a non latin char
+	        (!isLatinChar(prevChar) && isLatinChar(char))
+	    );
+	}
+
+	function latinWordEndCheck(contextParams) {
+	    var nextChar = contextParams.get(1);
+	    return (
+	        // ? last latin char
+	        (nextChar === null) ||
+	        // ? next char is not latin
+	        (!isLatinChar(nextChar))
+	    );
+	}
+
+	var latinWordCheck = {
+	    startCheck: latinWordStartCheck,
+	    endCheck: latinWordEndCheck
+	};
+
+	/**
+	 * Apply Latin ligature feature to a range of tokens
+	 */
+
+	/**
+	 * Update context params
+	 * @param {any} tokens a list of tokens
+	 * @param {number} index current item index
+	 */
+	function getContextParams$1(tokens, index) {
+	    var context = tokens.map(function (token) { return token.activeState.value; });
+	    return new ContextParams(context, index || 0);
+	}
+
+	/**
+	 * Apply Arabic required ligatures to a context range
+	 * @param {ContextRange} range a range of tokens
+	 */
+	function latinLigature(range) {
+	    var this$1 = this;
+
+	    var script = 'latn';
+	    var tokens = this.tokenizer.getRangeTokens(range);
+	    var contextParams = getContextParams$1(tokens);
+	    contextParams.context.forEach(function (glyphIndex, index) {
+	        contextParams.setCurrentIndex(index);
+	        var substitutions = this$1.query.lookupFeature({
+	            tag: 'liga', script: script, contextParams: contextParams
+	        });
+	        if (substitutions.length) {
+	            substitutions.forEach(
+	                function (action) { return applySubstitution(action, tokens, index); }
+	            );
+	            contextParams = getContextParams$1(tokens);
+	        }
+	    });
 	}
 
 	/**
@@ -91354,7 +92682,7 @@ function (Fields,
 	function Bidi(baseDir) {
 	    this.baseDir = baseDir || 'ltr';
 	    this.tokenizer = new Tokenizer();
-	    this.features = [];
+	    this.featuresTags = {};
 	}
 
 	/**
@@ -91371,6 +92699,7 @@ function (Fields,
 	 * arabic sentence check for adjusting arabic layout
 	 */
 	Bidi.prototype.contextChecks = ({
+	    latinWordCheck: latinWordCheck,
 	    arabicWordCheck: arabicWordCheck,
 	    arabicSentenceCheck: arabicSentenceCheck
 	});
@@ -91378,24 +92707,10 @@ function (Fields,
 	/**
 	 * Register arabic word check
 	 */
-	function registerArabicWordCheck() {
-	    var checks = this.contextChecks.arabicWordCheck;
+	function registerContextChecker(checkId) {
+	    var check = this.contextChecks[(checkId + "Check")];
 	    return this.tokenizer.registerContextChecker(
-	        'arabicWord',
-	        checks.arabicWordStartCheck,
-	        checks.arabicWordEndCheck
-	    );
-	}
-
-	/**
-	 * Register arabic sentence check
-	 */
-	function registerArabicSentenceCheck() {
-	    var checks = this.contextChecks.arabicSentenceCheck;
-	    return this.tokenizer.registerContextChecker(
-	        'arabicSentence',
-	        checks.arabicSentenceStartCheck,
-	        checks.arabicSentenceEndCheck
+	        checkId, check.startCheck, check.endCheck
 	    );
 	}
 
@@ -91404,8 +92719,9 @@ function (Fields,
 	 * tokenize text input
 	 */
 	function tokenizeText() {
-	    registerArabicWordCheck.call(this);
-	    registerArabicSentenceCheck.call(this);
+	    registerContextChecker.call(this, 'latinWord');
+	    registerContextChecker.call(this, 'arabicWord');
+	    registerContextChecker.call(this, 'arabicSentence');
 	    return this.tokenizer.tokenize(this.text);
 	}
 
@@ -91428,39 +92744,39 @@ function (Fields,
 	}
 
 	/**
-	 * Subscribe arabic presentation form features
-	 * @param {feature} feature a feature to apply
+	 * Register supported features tags
+	 * @param {script} script script tag
+	 * @param {Array} tags features tags list
 	 */
-	Bidi.prototype.subscribeArabicForms = function(feature) {
+	Bidi.prototype.registerFeatures = function (script, tags) {
 	    var this$1 = this;
 
-	    this.tokenizer.events.contextEnd.subscribe(
-	        function (contextName, range) {
-	            if (contextName === 'arabicWord') {
-	                return arabicPresentationForms.call(
-	                    this$1.tokenizer, range, feature
-	                );
-	            }
-	        }
+	    var supportedTags = tags.filter(
+	        function (tag) { return this$1.query.supports({script: script, tag: tag}); }
 	    );
+	    if (!this.featuresTags.hasOwnProperty(script)) {
+	        this.featuresTags[script] = supportedTags;
+	    } else {
+	        this.featuresTags[script] =
+	        this.featuresTags[script].concat(supportedTags);
+	    }
 	};
 
 	/**
-	 * Apply Gsub features
-	 * @param {feature} features a list of features
+	 * Apply GSUB features
+	 * @param {Array} tagsList a list of features tags
+	 * @param {string} script a script tag
+	 * @param {Font} font opentype font instance
 	 */
-	Bidi.prototype.applyFeatures = function (features) {
-	    var this$1 = this;
-
-	    for (var i = 0; i < features.length; i++) {
-	        var feature = features[i];
-	        if (feature) {
-	            var script = feature.script;
-	            if (!this$1.features[script]) {
-	                this$1.features[script] = {};
-	            }
-	            this$1.features[script][feature.tag] = feature;
-	        }
+	Bidi.prototype.applyFeatures = function (font, features) {
+	    if (!font) { throw new Error(
+	        'No valid font was provided to apply features'
+	    ); }
+	    if (!this.query) { this.query = new FeatureQuery(font); }
+	    for (var f = 0; f < features.length; f++) {
+	        var feature = features[f];
+	        if (!this.query.supports({script: feature.script})) { continue; }
+	        this.registerFeatures(feature.script, feature.tags);
 	    }
 	};
 
@@ -91492,7 +92808,8 @@ function (Fields,
 	function applyArabicPresentationForms() {
 	    var this$1 = this;
 
-	    if (!this.features.hasOwnProperty('arab')) { return; }
+	    var script = 'arab';
+	    if (!this.featuresTags.hasOwnProperty(script)) { return; }
 	    checkGlyphIndexStatus.call(this);
 	    var ranges = this.tokenizer.getContextRanges('arabicWord');
 	    ranges.forEach(function (range) {
@@ -91506,14 +92823,57 @@ function (Fields,
 	function applyArabicRequireLigatures() {
 	    var this$1 = this;
 
-	    if (!this.features.hasOwnProperty('arab')) { return; }
-	    if (!this.features.arab.hasOwnProperty('rlig')) { return; }
+	    var script = 'arab';
+	    if (!this.featuresTags.hasOwnProperty(script)) { return; }
+	    var tags = this.featuresTags[script];
+	    if (tags.indexOf('rlig') === -1) { return; }
 	    checkGlyphIndexStatus.call(this);
 	    var ranges = this.tokenizer.getContextRanges('arabicWord');
 	    ranges.forEach(function (range) {
 	        arabicRequiredLigatures.call(this$1, range);
 	    });
 	}
+
+	/**
+	 * Apply required arabic ligatures
+	 */
+	function applyLatinLigatures() {
+	    var this$1 = this;
+
+	    var script = 'latn';
+	    if (!this.featuresTags.hasOwnProperty(script)) { return; }
+	    var tags = this.featuresTags[script];
+	    if (tags.indexOf('liga') === -1) { return; }
+	    checkGlyphIndexStatus.call(this);
+	    var ranges = this.tokenizer.getContextRanges('latinWord');
+	    ranges.forEach(function (range) {
+	        latinLigature.call(this$1, range);
+	    });
+	}
+
+	/**
+	 * Check if a context is registered
+	 * @param {string} contextId context id
+	 */
+	Bidi.prototype.checkContextReady = function (contextId) {
+	    return !!this.tokenizer.getContext(contextId);
+	};
+
+	/**
+	 * Apply features to registered contexts
+	 */
+	Bidi.prototype.applyFeaturesToContexts = function () {
+	    if (this.checkContextReady('arabicWord')) {
+	        applyArabicPresentationForms.call(this);
+	        applyArabicRequireLigatures.call(this);
+	    }
+	    if (this.checkContextReady('latinWord')) {
+	        applyLatinLigatures.call(this);
+	    }
+	    if (this.checkContextReady('arabicSentence')) {
+	        reverseArabicSentences.call(this);
+	    }
+	};
 
 	/**
 	 * process text input
@@ -91523,9 +92883,7 @@ function (Fields,
 	    if (!this.text || this.text !== text) {
 	        this.setText(text);
 	        tokenizeText.call(this);
-	        applyArabicPresentationForms.call(this);
-	        applyArabicRequireLigatures.call(this);
-	        reverseArabicSentences.call(this);
+	        this.applyFeaturesToContexts();
 	    }
 	};
 
@@ -91544,436 +92902,15 @@ function (Fields,
 	 * @param {text} text an input text
 	 */
 	Bidi.prototype.getTextGlyphs = function (text) {
-	    var this$1 = this;
-
 	    this.processText(text);
 	    var indexes = [];
 	    for (var i = 0; i < this.tokenizer.tokens.length; i++) {
-	        var token = this$1.tokenizer.tokens[i];
+	        var token = this.tokenizer.tokens[i];
 	        if (token.state.deleted) { continue; }
 	        var index = token.activeState.value;
 	        indexes.push(Array.isArray(index) ? index[0] : index);
 	    }
 	    return indexes;
-	};
-
-	/**
-	 * Query a feature by some of it's properties to lookup a glyph substitution.
-	 */
-
-	// DEFAULT TEXT BASE DIRECTION
-	var BASE_DIR = 'ltr';
-
-	/**
-	 * Create feature query instance
-	 * @param {Font} font opentype font instance
-	 * @param {string} baseDir text base direction
-	 */
-	function FeatureQuery(font, baseDir) {
-	    this.font = font;
-	    this.features = {};
-	    BASE_DIR = !!baseDir ? baseDir : BASE_DIR;
-	}
-
-	/**
-	 * Create a new feature lookup
-	 * @param {string} tag feature tag
-	 * @param {feature} feature reference to feature at gsub table
-	 * @param {FeatureLookups} feature lookups associated with this feature
-	 * @param {string} script gsub script tag
-	 */
-	function Feature(tag, feature, featureLookups, script) {
-	    this.tag = tag;
-	    this.featureRef = feature;
-	    this.lookups = featureLookups.lookups;
-	    this.script = script;
-	}
-
-	/**
-	 * Create a coverage table lookup
-	 * @param {any} coverageTable gsub coverage table
-	 */
-	function Coverage$1(coverageTable) {
-	    this.table = coverageTable;
-	}
-
-	/**
-	 * Create a ligature set lookup
-	 * @param {any} ligatureSets gsub ligature set
-	 */
-	function LigatureSets(ligatureSets) {
-	    this.ligatureSets = ligatureSets;
-	}
-
-	/**
-	 * Lookup a glyph ligature
-	 * @param {ContextParams} contextParams context params to lookup
-	 * @param {number} ligSetIndex ligature set index at ligature sets
-	 */
-	LigatureSets.prototype.lookup = function (contextParams, ligSetIndex) {
-	    var ligatureSet = this.ligatureSets[ligSetIndex];
-	    var matchComponents = function (components, indexes) {
-	        if (components.length > indexes.length) { return null; }
-	        for (var c = 0; c < components.length; c++) {
-	            var component = components[c];
-	            var index = indexes[c];
-	            if (component !== index) { return false; }
-	        }
-	        return true;
-	    };
-	    for (var s = 0; s < ligatureSet.length; s++) {
-	        var ligSetItem = ligatureSet[s];
-	        var lookaheadIndexes = contextParams.lookahead.map(
-	            function (token) { return token.activeState.value; }
-	        );
-	        if (BASE_DIR === 'rtl') { lookaheadIndexes.reverse(); }
-	        var componentsMatch = matchComponents(
-	            ligSetItem.components, lookaheadIndexes
-	        );
-	        if (componentsMatch) { return ligSetItem; }
-	    }
-	    return null;
-	};
-
-	/**
-	 * Create a feature substitution
-	 * @param {any} lookups a reference to gsub lookups
-	 * @param {Lookuptable} lookupTable a feature lookup table
-	 * @param {any} subtable substitution table
-	 */
-	function Substitution$1(lookups, lookupTable, subtable) {
-	    this.lookups = lookups;
-	    this.subtable = subtable;
-	    this.lookupTable = lookupTable;
-	    if (subtable.hasOwnProperty('coverage')) {
-	        this.coverage = new Coverage$1(
-	            subtable.coverage
-	        );
-	    }
-	    if (subtable.hasOwnProperty('inputCoverage')) {
-	        this.inputCoverage = subtable.inputCoverage.map(
-	            function (table) { return new Coverage$1(table); }
-	        );
-	    }
-	    if (subtable.hasOwnProperty('backtrackCoverage')) {
-	        this.backtrackCoverage = subtable.backtrackCoverage.map(
-	            function (table) { return new Coverage$1(table); }
-	        );
-	    }
-	    if (subtable.hasOwnProperty('lookaheadCoverage')) {
-	        this.lookaheadCoverage = subtable.lookaheadCoverage.map(
-	            function (table) { return new Coverage$1(table); }
-	        );
-	    }
-	    if (subtable.hasOwnProperty('ligatureSets')) {
-	        this.ligatureSets = new LigatureSets(subtable.ligatureSets);
-	    }
-	}
-
-	/**
-	 * Create a lookup table lookup
-	 * @param {number} index table index at gsub lookups
-	 * @param {any} lookups a reference to gsub lookups
-	 */
-	function LookupTable(index, lookups) {
-	    this.index = index;
-	    this.subtables = lookups[index].subtables.map(
-	        function (subtable) { return new Substitution$1(
-	            lookups, lookups[index], subtable
-	        ); }
-	    );
-	}
-
-	function FeatureLookups(lookups, lookupListIndexes) {
-	    this.lookups = lookupListIndexes.map(
-	        function (index) { return new LookupTable(index, lookups); }
-	    );
-	}
-
-	/**
-	 * Lookup a lookup table subtables
-	 * @param {ContextParams} contextParams context params to lookup
-	 */
-	LookupTable.prototype.lookup = function (contextParams) {
-	    var this$1 = this;
-
-	    var substitutions = [];
-	    for (var i = 0; i < this.subtables.length; i++) {
-	        var subsTable = this$1.subtables[i];
-	        var substitution = subsTable.lookup(contextParams);
-	        if (substitution !== null || substitution.length) {
-	            substitutions = substitutions.concat(substitution);
-	        }
-	    }
-	    return substitutions;
-	};
-
-	/**
-	 * Handle a single substitution - format 2
-	 * @param {ContextParams} contextParams context params to lookup
-	 */
-	function singleSubstitutionFormat2(contextParams) {
-	    var glyphIndex = contextParams.current.activeState.value;
-	    glyphIndex = Array.isArray(glyphIndex) ? glyphIndex[0] : glyphIndex;
-	    var substituteIndex = this.coverage.lookup(glyphIndex);
-	    if (substituteIndex === -1) { return []; }
-	    return [this.subtable.substitute[substituteIndex]];
-	}
-
-	/**
-	 * Lookup a list of coverage tables
-	 * @param {any} coverageList a list of coverage tables
-	 * @param {any} contextParams context params to lookup
-	 */
-	function lookupCoverageList(coverageList, contextParams) {
-	    var lookupList = [];
-	    for (var i = 0; i < coverageList.length; i++) {
-	        var coverage = coverageList[i];
-	        var glyphIndex = contextParams.current.activeState.value;
-	        glyphIndex = Array.isArray(glyphIndex) ? glyphIndex[0] : glyphIndex;
-	        var lookupIndex = coverage.lookup(glyphIndex);
-	        if (lookupIndex !== -1) {
-	            lookupList.push(lookupIndex);
-	        }
-	    }
-	    if (lookupList.length !== coverageList.length) { return -1; }
-	    return lookupList;
-	}
-
-	/**
-	 * Handle chaining context substitution - format 3
-	 * @param {any} contextParams context params to lookup
-	 */
-	function chainingSubstitutionFormat3(contextParams) {
-	    var this$1 = this;
-
-	    var lookupsCount = (
-	        this.inputCoverage.length +
-	        this.lookaheadCoverage.length +
-	        this.backtrackCoverage.length
-	    );
-	    if (contextParams.context.length < lookupsCount) { return []; }
-	    // INPUT LOOKUP //
-	    var inputLookups = lookupCoverageList(
-	        this.inputCoverage, contextParams
-	    );
-	    if (inputLookups === -1) { return []; }
-	    // LOOKAHEAD LOOKUP //
-	    var lookaheadOffset = this.inputCoverage.length - 1;
-	    if (contextParams.lookahead.length < this.lookaheadCoverage.length) { return []; }
-	    var lookaheadContext = contextParams.lookahead.slice(lookaheadOffset);
-	    while (lookaheadContext.length && isTashkeelArabicChar(lookaheadContext[0].char)) {
-	        lookaheadContext.shift();
-	    }
-	    var lookaheadParams = new ContextParams(lookaheadContext, 0);
-	    var lookaheadLookups = lookupCoverageList(
-	        this.lookaheadCoverage, lookaheadParams
-	    );
-	    // BACKTRACK LOOKUP //
-	    var backtrackContext = [].concat(contextParams.backtrack);
-	    backtrackContext.reverse();
-	    while (backtrackContext.length && isTashkeelArabicChar(backtrackContext[0].char)) {
-	        backtrackContext.shift();
-	    }
-	    if (backtrackContext.length < this.backtrackCoverage.length) { return []; }
-	    var backtrackParams = new ContextParams(backtrackContext, 0);
-	    var backtrackLookups = lookupCoverageList(
-	        this.backtrackCoverage, backtrackParams
-	    );
-	    var contextRulesMatch = (
-	        inputLookups.length === this.inputCoverage.length &&
-	        lookaheadLookups.length === this.lookaheadCoverage.length &&
-	        backtrackLookups.length === this.backtrackCoverage.length
-	    );
-	    var substitutions = [];
-	    if (contextRulesMatch) {
-	        var lookupRecords = this.subtable.lookupRecords;
-	        for (var i = 0; i < lookupRecords.length; i++) {
-	            var lookupRecord = lookupRecords[i];
-	            for (var j = 0; j < inputLookups.length; j++) {
-	                var inputContext = new ContextParams([contextParams.get(j)], 0);
-	                var lookupIndex = lookupRecord.lookupListIndex;
-	                var lookupTable = new LookupTable(lookupIndex, this$1.lookups);
-	                var lookup = lookupTable.lookup(inputContext);
-	                substitutions = substitutions.concat(lookup);
-	            }
-	        }
-	    }
-	    return substitutions;
-	}
-
-	/**
-	 * Handle ligature substitution - format 1
-	 * @param {any} contextParams context params to lookup
-	 */
-	function ligatureSubstitutionFormat1(contextParams) {
-	    // COVERAGE LOOKUP //
-	    var glyphIndex = contextParams.current.activeState.value;
-	    var ligSetIndex = this.coverage.lookup(glyphIndex);
-	    if (ligSetIndex === -1) { return []; }
-	    // COMPONENTS LOOKUP * note that components is logically ordered
-	    var ligGlyphs = this.ligatureSets.lookup(contextParams, ligSetIndex);
-	    return ligGlyphs ? [ligGlyphs] : [];
-	}
-
-	/**
-	 * [ LOOKUP TYPES ]
-	 * -------------------------------
-	 * Single                        1;
-	 * Multiple                      2;
-	 * Alternate                     3;
-	 * Ligature                      4;
-	 * Context                       5;
-	 * ChainingContext               6;
-	 * ExtensionSubstitution         7;
-	 * ReverseChainingContext        8;
-	 * -------------------------------
-	 * @param {any} contextParams context params to lookup
-	 */
-	Substitution$1.prototype.lookup = function (contextParams) {
-	    var substitutions = [];
-	    var lookupType = this.lookupTable.lookupType;
-	    var substFormat = this.subtable.substFormat;
-	    if (lookupType === 1 && substFormat === 2) {
-	        var substitution = singleSubstitutionFormat2.call(this, contextParams);
-	        if (substitution.length > 0) {
-	            substitutions.push({ id: 12, substitution: substitution });
-	        }
-	    }
-	    if (lookupType === 6 && substFormat === 3) {
-	        var substitution$1 = chainingSubstitutionFormat3.call(this, contextParams);
-	        if (substitution$1.length > 0) {
-	            substitutions.push({ id: 63, substitution: substitution$1 });
-	        }
-	    }
-	    if (lookupType === 4 && substFormat === 1) {
-	        var substitution$2 = ligatureSubstitutionFormat1.call(this, contextParams);
-	        if (substitution$2.length > 0) {
-	            substitutions.push({ id: 41, substitution: substitution$2 });
-	        }
-	    }
-	    return substitutions;
-	};
-
-	/**
-	 * Lookup a coverage table
-	 * @param {number} glyphIndex to lookup
-	 */
-	Coverage$1.prototype.lookup = function (glyphIndex) {
-	    if (!glyphIndex) { return -1; }
-	    switch (this.table.format) {
-	        case 1:
-	            return this.table.glyphs.indexOf(glyphIndex);
-
-	        case 2:
-	            var ranges = this.table.ranges;
-	            for (var i = 0; i < ranges.length; i++) {
-	                var range = ranges[i];
-	                if (glyphIndex >= range.start && glyphIndex <= range.end) {
-	                    var offset = glyphIndex - range.start;
-	                    return range.index + offset;
-	                }
-	            }
-	            break;
-	        default:
-	            return -1; // not found
-	    }
-	    return -1;
-	};
-
-	/**
-	 * Lookup a feature for a substitution or more
-	 * @param {any} contextParams context params to lookup
-	 */
-	Feature.prototype.lookup = function(contextParams) {
-	    var this$1 = this;
-
-	    var lookups = [];
-	    for (var i = 0; i < this.lookups.length; i++) {
-	        var lookupTable = this$1.lookups[i];
-	        var lookup = lookupTable.lookup(contextParams);
-	        if (lookup !== null || lookup.length) {
-	            lookups = lookups.concat(lookup);
-	        }
-	    }
-	    return lookups;
-	};
-
-	/**
-	 * Get feature indexes of a specific script
-	 * @param {string} scriptTag script tag
-	 */
-	FeatureQuery.prototype.getScriptFeaturesIndexes = function(scriptTag) {
-	    if (!scriptTag) { return []; }
-	    var tables = this.font.tables;
-	    if (!tables.gsub) { return []; }
-	    var scripts = this.font.tables.gsub.scripts;
-	    for (var i = 0; i < scripts.length; i++) {
-	        var script = scripts[i];
-	        if (script.tag === scriptTag) {
-	            var defaultLangSys = script.script.defaultLangSys;
-	            return defaultLangSys.featureIndexes;
-	        } else {
-	            var langSysRecords = script.langSysRecords;
-	            if (!!langSysRecords) {
-	                for (var j = 0; j < langSysRecords.length; j++) {
-	                    var langSysRecord = langSysRecords[j];
-	                    if (langSysRecord.tag === scriptTag) {
-	                        var langSys = langSysRecord.langSys;
-	                        return langSys.featureIndexes;
-	                    }
-	                }
-	            }
-	        }
-	    }
-	    return [];
-	};
-
-	/**
-	 * Map a feature tag to a gsub feature
-	 * @param {any} features gsub features
-	 * @param {*} scriptTag script tag
-	 */
-	FeatureQuery.prototype.mapTagsToFeatures = function (features, scriptTag) {
-	    var this$1 = this;
-
-	    var tags = {};
-	    for (var i = 0; i < features.length; i++) {
-	        var feature = features[i].feature;
-	        var tag = features[i].tag;
-	        var lookups = this$1.font.tables.gsub.lookups;
-	        var featureLookups = new FeatureLookups(lookups, feature.lookupListIndexes);
-	        tags[tag] = new Feature(tag, feature, featureLookups, scriptTag);
-	    }
-	    this.features[scriptTag].tags = tags;
-	};
-
-	/**
-	 * Get features of a specific script
-	 * @param {string} scriptTag script tag
-	 */
-	FeatureQuery.prototype.getScriptFeatures = function (scriptTag) {
-	    var features = this.features[scriptTag];
-	    if (this.features.hasOwnProperty(scriptTag)) { return features; }
-	    var featuresIndexes = this.getScriptFeaturesIndexes(scriptTag);
-	    if (!featuresIndexes) { return null; }
-	    var gsub = this.font.tables.gsub;
-	    features = featuresIndexes.map(function (index) { return gsub.features[index]; });
-	    this.features[scriptTag] = features;
-	    this.mapTagsToFeatures(features, scriptTag);
-	    return features;
-	};
-
-	/**
-	 * Query a feature by it's properties
-	 * @param {any} query an object that describes the properties of a query
-	 */
-	FeatureQuery.prototype.getFeature = function (query) {
-	    if (!this.font) { return { FAIL: "No font was found"}; }
-	    if (!this.features.hasOwnProperty(query.script)) {
-	        this.getScriptFeatures(query.script);
-	    }
-	    return this.features[query.script].tags[query.tag] || null;
 	};
 
 	// The Font object
@@ -92016,6 +92953,7 @@ function (Fields,
 	 */
 	function Font(options) {
 	    options = options || {};
+	    options.tables = options.tables || {};
 
 	    if (!options.empty) {
 	        // Check that we've provided the minimum set of names.
@@ -92023,8 +92961,7 @@ function (Fields,
 	        checkArgument(options.styleName, 'When creating a new Font object, styleName is required.');
 	        checkArgument(options.unitsPerEm, 'When creating a new Font object, unitsPerEm is required.');
 	        checkArgument(options.ascender, 'When creating a new Font object, ascender is required.');
-	        checkArgument(options.descender, 'When creating a new Font object, descender is required.');
-	        checkArgument(options.descender < 0, 'Descender should be negative (e.g. -512).');
+	        checkArgument(options.descender <= 0, 'When creating a new Font object, negative descender value is required.');
 
 	        // OS X will complain if the names are empty, so we put a single space everywhere by default.
 	        this.names = {
@@ -92048,11 +92985,13 @@ function (Fields,
 	        this.ascender = options.ascender;
 	        this.descender = options.descender;
 	        this.createdTimestamp = options.createdTimestamp;
-	        this.tables = { os2: {
-	            usWeightClass: options.weightClass || this.usWeightClasses.MEDIUM,
-	            usWidthClass: options.widthClass || this.usWidthClasses.MEDIUM,
-	            fsSelection: options.fsSelection || this.fsSelectionValues.REGULAR
-	        } };
+	        this.tables = Object.assign(options.tables, {
+	            os2: Object.assign({
+	                usWeightClass: options.weightClass || this.usWeightClasses.MEDIUM,
+	                usWidthClass: options.widthClass || this.usWidthClasses.MEDIUM,
+	                fsSelection: options.fsSelection || this.fsSelectionValues.REGULAR,
+	            }, options.tables.os2)
+	        });
 	    }
 
 	    this.supported = true; // Deprecated: parseBuffer will throw an error if font is not supported.
@@ -92061,6 +93000,10 @@ function (Fields,
 	    this.position = new Position(this);
 	    this.substitution = new Substitution(this);
 	    this.tables = this.tables || {};
+
+	    // needed for low memory mode only.
+	    this._push = null;
+	    this._hmtxTableData = {};
 
 	    Object.defineProperty(this, 'hinting', {
 	        get: function() {
@@ -92111,6 +93054,24 @@ function (Fields,
 	};
 
 	/**
+	 * Update features
+	 * @param {any} options features options
+	 */
+	Font.prototype.updateFeatures = function (options) {
+	    // TODO: update all features options not only 'latn'.
+	    return this.defaultRenderOptions.features.map(function (feature) {
+	        if (feature.script === 'latn') {
+	            return {
+	                script: 'latn',
+	                tags: feature.tags.filter(function (tag) { return options[tag]; })
+	            };
+	        } else {
+	            return feature;
+	        }
+	    });
+	};
+
+	/**
 	 * Convert the given text to a list of Glyph objects.
 	 * Note that there is no strict one-to-one mapping between characters and
 	 * glyphs, so the list of returned glyphs can be larger or smaller than the
@@ -92122,7 +93083,6 @@ function (Fields,
 	Font.prototype.stringToGlyphs = function(s, options) {
 	    var this$1 = this;
 
-	    options = options || this.defaultRenderOptions;
 
 	    var bidi = new Bidi();
 
@@ -92130,45 +93090,22 @@ function (Fields,
 	    var charToGlyphIndexMod = function (token) { return this$1.charToGlyphIndex(token.char); };
 	    bidi.registerModifier('glyphIndex', null, charToGlyphIndexMod);
 
-	    var arabFeatureQuery = new FeatureQuery(this);
-	    var arabFeatures = ['init', 'medi', 'fina', 'rlig'];
-	    bidi.applyFeatures(
-	        arabFeatures.map(function (tag) {
-	            var query = { tag: tag, script: 'arab' };
-	            var feature = arabFeatureQuery.getFeature(query);
-	            if (!!feature) { return feature; }
-	        })
-	    );
+	    // roll-back to default features
+	    var features = options ?
+	    this.updateFeatures(options.features) :
+	    this.defaultRenderOptions.features;
+
+	    bidi.applyFeatures(this, features);
+
 	    var indexes = bidi.getTextGlyphs(s);
 
 	    var length = indexes.length;
 
-	    // Apply substitutions on glyph indexes
-	    if (options.features) {
-	        var script = options.script || this.substitution.getDefaultScriptName();
-	        var manyToOne = [];
-	        if (options.features.liga) { manyToOne = manyToOne.concat(this.substitution.getFeature('liga', script, options.language)); }
-	        if (options.features.rlig) { manyToOne = manyToOne.concat(this.substitution.getFeature('rlig', script, options.language)); }
-	        for (var i = 0; i < length; i += 1) {
-	            for (var j = 0; j < manyToOne.length; j++) {
-	                var ligature = manyToOne[j];
-	                var components = ligature.sub;
-	                var compCount = components.length;
-	                var k = 0;
-	                while (k < compCount && components[k] === indexes[i + k]) { k++; }
-	                if (k === compCount) {
-	                    indexes.splice(i, compCount, ligature.by);
-	                    length = length - compCount + 1;
-	                }
-	            }
-	        }
-	    }
-
 	    // convert glyph indexes to glyph objects
 	    var glyphs = new Array(length);
 	    var notdef = this.glyphs.get(0);
-	    for (var i$1 = 0; i$1 < length; i$1 += 1) {
-	        glyphs[i$1] = this$1.glyphs.get(indexes[i$1]) || notdef;
+	    for (var i = 0; i < length; i += 1) {
+	        glyphs[i] = this.glyphs.get(indexes[i]) || notdef;
 	    }
 	    return glyphs;
 	};
@@ -92243,10 +93180,14 @@ function (Fields,
 	 */
 	Font.prototype.defaultRenderOptions = {
 	    kerning: true,
-	    features: {
-	        liga: true,
-	        rlig: true
-	    }
+	    features: [
+	        /**
+	         * these 4 features are required to render Arabic text properly
+	         * and shouldn't be turned off when rendering arabic text.
+	         */
+	        { script: 'arab', tags: ['init', 'medi', 'fina', 'rlig'] },
+	        { script: 'latn', tags: ['liga', 'rlig'] }
+	    ]
 	};
 
 	/**
@@ -92260,12 +93201,10 @@ function (Fields,
 	 * @param  {Function} callback
 	 */
 	Font.prototype.forEachGlyph = function(text, x, y, fontSize, options, callback) {
-	    var this$1 = this;
-
 	    x = x !== undefined ? x : 0;
 	    y = y !== undefined ? y : 0;
 	    fontSize = fontSize !== undefined ? fontSize : 72;
-	    options = options || this.defaultRenderOptions;
+	    options = Object.assign({}, this.defaultRenderOptions, options);
 	    var fontScale = 1 / this.unitsPerEm * fontSize;
 	    var glyphs = this.stringToGlyphs(text, options);
 	    var kerningLookups;
@@ -92275,7 +93214,7 @@ function (Fields,
 	    }
 	    for (var i = 0; i < glyphs.length; i += 1) {
 	        var glyph = glyphs[i];
-	        callback.call(this$1, glyph, x, y, fontSize, options);
+	        callback.call(this, glyph, x, y, fontSize, options);
 	        if (glyph.advanceWidth) {
 	            x += glyph.advanceWidth * fontScale;
 	        }
@@ -92284,8 +93223,8 @@ function (Fields,
 	            // We should apply position adjustment lookups in a more generic way.
 	            // Here we only use the xAdvance value.
 	            var kerningValue = kerningLookups ?
-	                  this$1.position.getKerningValue(kerningLookups, glyph.index, glyphs[i + 1].index) :
-	                  this$1.getKerningValue(glyph, glyphs[i + 1]);
+	                  this.position.getKerningValue(kerningLookups, glyph.index, glyphs[i + 1].index) :
+	                  this.getKerningValue(glyph, glyphs[i + 1]);
 	            x += kerningValue * fontScale;
 	        }
 
@@ -92423,8 +93362,7 @@ function (Fields,
 
 	    function assertNamePresent(name) {
 	        var englishName = _this.getEnglishName(name);
-	        assert(englishName && englishName.trim().length > 0,
-	               'No English ' + name + ' specified.');
+	        assert(englishName && englishName.trim().length > 0);
 	    }
 
 	    // Identification information
@@ -92435,7 +93373,7 @@ function (Fields,
 	    assertNamePresent('version');
 
 	    // Dimension information
-	    assert(this.unitsPerEm > 0, 'No unitsPerEm specified.');
+	    assert(this.unitsPerEm > 0);
 	};
 
 	/**
@@ -92678,6 +93616,65 @@ function (Fields,
 	}
 
 	var fvar = { make: makeFvarTable, parse: parseFvarTable };
+
+	// The `GDEF` table contains various glyph properties
+
+	var attachList = function() {
+	    return {
+	        coverage: this.parsePointer(Parser.coverage),
+	        attachPoints: this.parseList(Parser.pointer(Parser.uShortList))
+	    };
+	};
+
+	var caretValue = function() {
+	    var format = this.parseUShort();
+	    check.argument(format === 1 || format === 2 || format === 3,
+	        'Unsupported CaretValue table version.');
+	    if (format === 1) {
+	        return { coordinate: this.parseShort() };
+	    } else if (format === 2) {
+	        return { pointindex: this.parseShort() };
+	    } else if (format === 3) {
+	        // Device / Variation Index tables unsupported
+	        return { coordinate: this.parseShort() };
+	    }
+	};
+
+	var ligGlyph = function() {
+	    return this.parseList(Parser.pointer(caretValue));
+	};
+
+	var ligCaretList = function() {
+	    return {
+	        coverage: this.parsePointer(Parser.coverage),
+	        ligGlyphs: this.parseList(Parser.pointer(ligGlyph))
+	    };
+	};
+
+	var markGlyphSets = function() {
+	    this.parseUShort(); // Version
+	    return this.parseList(Parser.pointer(Parser.coverage));
+	};
+
+	function parseGDEFTable(data, start) {
+	    start = start || 0;
+	    var p = new Parser(data, start);
+	    var tableVersion = p.parseVersion(1);
+	    check.argument(tableVersion === 1 || tableVersion === 1.2 || tableVersion === 1.3,
+	        'Unsupported GDEF table version.');
+	    var gdef = {
+	        version: tableVersion,
+	        classDef: p.parsePointer(Parser.classDef),
+	        attachList: p.parsePointer(attachList),
+	        ligCaretList: p.parsePointer(ligCaretList),
+	        markAttachClassDef: p.parsePointer(Parser.classDef)
+	    };
+	    if (tableVersion >= 1.2) {
+	        gdef.markGlyphSets = p.parsePointer(markGlyphSets);
+	    }
+	    return gdef;
+	}
+	var gdef = { parse: parseGDEFTable };
 
 	// The `GPOS` table contains kerning pairs, among other things.
 
@@ -93029,9 +94026,12 @@ function (Fields,
 	 * Parse the OpenType file data (as an ArrayBuffer) and return a Font object.
 	 * Throws an error if the font could not be parsed.
 	 * @param  {ArrayBuffer}
+	 * @param  {Object} opt - options for parsing
 	 * @return {opentype.Font}
 	 */
-	function parseBuffer(buffer) {
+	function parseBuffer(buffer, opt) {
+	    opt = (opt === undefined || opt === null) ?  {} : opt;
+
 	    var indexToLocFormat;
 	    var ltagTable;
 
@@ -93073,6 +94073,7 @@ function (Fields,
 	    var cffTableEntry;
 	    var fvarTableEntry;
 	    var glyfTableEntry;
+	    var gdefTableEntry;
 	    var gposTableEntry;
 	    var gsubTableEntry;
 	    var hmtxTableEntry;
@@ -93158,6 +94159,9 @@ function (Fields,
 	            case 'kern':
 	                kernTableEntry = tableEntry;
 	                break;
+	            case 'GDEF':
+	                gdefTableEntry = tableEntry;
+	                break;
 	            case 'GPOS':
 	                gposTableEntry = tableEntry;
 	                break;
@@ -93179,23 +94183,28 @@ function (Fields,
 	        var locaTable = uncompressTable(data, locaTableEntry);
 	        var locaOffsets = loca.parse(locaTable.data, locaTable.offset, font.numGlyphs, shortVersion);
 	        var glyfTable = uncompressTable(data, glyfTableEntry);
-	        font.glyphs = glyf.parse(glyfTable.data, glyfTable.offset, locaOffsets, font);
+	        font.glyphs = glyf.parse(glyfTable.data, glyfTable.offset, locaOffsets, font, opt);
 	    } else if (cffTableEntry) {
 	        var cffTable = uncompressTable(data, cffTableEntry);
-	        cff.parse(cffTable.data, cffTable.offset, font);
+	        cff.parse(cffTable.data, cffTable.offset, font, opt);
 	    } else {
 	        throw new Error('Font doesn\'t contain TrueType or CFF outlines.');
 	    }
 
 	    var hmtxTable = uncompressTable(data, hmtxTableEntry);
-	    hmtx.parse(hmtxTable.data, hmtxTable.offset, font.numberOfHMetrics, font.numGlyphs, font.glyphs);
-	    addGlyphNames(font);
+	    hmtx.parse(font, hmtxTable.data, hmtxTable.offset, font.numberOfHMetrics, font.numGlyphs, font.glyphs, opt);
+	    addGlyphNames(font, opt);
 
 	    if (kernTableEntry) {
 	        var kernTable = uncompressTable(data, kernTableEntry);
 	        font.kerningPairs = kern.parse(kernTable.data, kernTable.offset);
 	    } else {
 	        font.kerningPairs = {};
+	    }
+
+	    if (gdefTableEntry) {
+	        var gdefTable = uncompressTable(data, gdefTableEntry);
+	        font.tables.gdef = gdef.parse(gdefTable.data, gdefTable.offset);
 	    }
 
 	    if (gposTableEntry) {
@@ -93233,20 +94242,36 @@ function (Fields,
 	 * @param  {string} url - The URL of the font to load.
 	 * @param  {Function} callback - The callback.
 	 */
-	function load(url, callback) {
-	    var isNode$$1 = typeof window === 'undefined';
-	    var loadFn = isNode$$1 ? loadFromFile : loadFromUrl;
-	    loadFn(url, function(err, arrayBuffer) {
-	        if (err) {
-	            return callback(err);
-	        }
-	        var font;
-	        try {
-	            font = parseBuffer(arrayBuffer);
-	        } catch (e) {
-	            return callback(e, null);
-	        }
-	        return callback(null, font);
+	function load(url, callback, opt) {
+	    opt = (opt === undefined || opt === null) ?  {} : opt;
+	    var isNode = typeof window === 'undefined';
+	    var loadFn = isNode && !opt.isUrl ? loadFromFile : loadFromUrl;
+
+	    return new Promise(function (resolve, reject) {
+	        loadFn(url, function(err, arrayBuffer) {
+	            if (err) {
+	                if (callback) {
+	                    return callback(err);
+	                } else {
+	                    reject(err);
+	                }
+	            }
+	            var font;
+	            try {
+	                font = parseBuffer(arrayBuffer, opt);
+	            } catch (e) {
+	                if (callback) {
+	                    return callback(e, null);
+	                } else {
+	                    reject(e);
+	                }
+	            }
+	            if (callback) {
+	                return callback(null, font);
+	            } else {
+	                resolve(font);
+	            }
+	        });
 	    });
 	}
 
@@ -93255,22 +94280,36 @@ function (Fields,
 	 * When done, returns the font object or throws an error.
 	 * @alias opentype.loadSync
 	 * @param  {string} url - The URL of the font to load.
+	 * @param  {Object} opt - opt.lowMemory
 	 * @return {opentype.Font}
 	 */
-	function loadSync(url) {
+	function loadSync(url, opt) {
 	    var fs = require('fs');
 	    var buffer = fs.readFileSync(url);
-	    return parseBuffer(nodeBufferToArrayBuffer(buffer));
+	    return parseBuffer(nodeBufferToArrayBuffer(buffer), opt);
 	}
 
+	var opentype = /*#__PURE__*/Object.freeze({
+		__proto__: null,
+		Font: Font,
+		Glyph: Glyph,
+		Path: Path,
+		BoundingBox: BoundingBox,
+		_parse: parse,
+		parse: parseBuffer,
+		load: load,
+		loadSync: loadSync
+	});
+
+	exports.BoundingBox = BoundingBox;
 	exports.Font = Font;
 	exports.Glyph = Glyph;
 	exports.Path = Path;
-	exports.BoundingBox = BoundingBox;
 	exports._parse = parse;
-	exports.parse = parseBuffer;
+	exports.default = opentype;
 	exports.load = load;
 	exports.loadSync = loadSync;
+	exports.parse = parseBuffer;
 
 	Object.defineProperty(exports, '__esModule', { value: true });
 
@@ -93467,7 +94506,7 @@ define ('x_ite/Components/Texturing/X3DTextureTransformNode',[
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Matrix4",
 ],
-function (X3DAppearanceChildNode, 
+function (X3DAppearanceChildNode,
           X3DConstants,
           Matrix4)
 {
@@ -93479,8 +94518,7 @@ function (X3DAppearanceChildNode,
 
 		this .addType (X3DConstants .X3DTextureTransformNode);
 
-		this .matrix      = new Matrix4 ();
-		this .matrixArray = new Float32Array (this .matrix);
+		this .matrixArray = new Float32Array (Matrix4 .Identity);
 	}
 
 	X3DTextureTransformNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
@@ -93489,15 +94527,6 @@ function (X3DAppearanceChildNode,
 		setMatrix: function (value)
 		{
 			this .matrixArray .set (value);
-		},
-		getMatrix: function ()
-		{
-			return this .matrix;
-		},
-		setShaderUniforms: function (gl, shaderObject)
-		{
-			for (var i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
-				this .setShaderUniformsToChannel (gl, shaderObject, i);
 		},
 		setShaderUniformsToChannel: function (gl, shaderObject, i)
 		{
@@ -93508,7 +94537,83 @@ function (X3DAppearanceChildNode,
 	return X3DTextureTransformNode;
 });
 
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
 
+
+ define ('x_ite/Components/Texturing/X3DSingleTextureTransformNode',[
+	"x_ite/Components/Texturing/X3DTextureTransformNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (X3DTextureTransformNode,
+          X3DConstants)
+{
+"use strict";
+
+	function X3DSingleTextureTransformNode (executionContext)
+	{
+		X3DTextureTransformNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DSingleTextureTransformNode);
+	}
+
+	X3DSingleTextureTransformNode .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
+	{
+		constructor: X3DSingleTextureTransformNode,
+		setShaderUniforms: function (gl, shaderObject)
+		{
+			for (let i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
+				this .setShaderUniformsToChannel (gl, shaderObject, i);
+		},
+	});
+
+	return X3DSingleTextureTransformNode;
+});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -93563,39 +94668,40 @@ define ('x_ite/Components/Texturing/TextureTransform',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DTextureTransformNode",
+	"x_ite/Components/Texturing/X3DSingleTextureTransformNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Numbers/Vector2",
 	"standard/Math/Numbers/Matrix3",
+	"standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureTransformNode, 
+          X3DSingleTextureTransformNode,
           X3DConstants,
           Vector2,
-          Matrix3)
+          Matrix3,
+          Matrix4)
 {
 "use strict";
 
-	var vector = new Vector2 (0, 0);
-
 	function TextureTransform (executionContext)
 	{
-		X3DTextureTransformNode .call (this, executionContext);
+		X3DSingleTextureTransformNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TextureTransform);
 
 		this .rotation_ .setUnit ("angle");
 
-		this .matrix3 = new Matrix3 ();
+		this .matrix = new Matrix4 ();
 	}
 
-	TextureTransform .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
+	TextureTransform .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
 	{
 		constructor: TextureTransform,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",     new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "translation", new Fields .SFVec2f ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "rotation",    new Fields .SFFloat ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "scale",       new Fields .SFVec2f (1, 1)),
@@ -93615,55 +94721,62 @@ function (Fields,
 		},
 		initialize: function ()
 		{
-			X3DTextureTransformNode .prototype .initialize .call (this);
-			
+			X3DSingleTextureTransformNode .prototype .initialize .call (this);
+
 			this .addInterest ("eventsProcessed", this);
 
 			this .eventsProcessed ();
 		},
-		eventsProcessed: function ()
+		getMatrix: function ()
 		{
-			var
-				translation = this .translation_ .getValue (),
-				rotation    = this .rotation_ .getValue (),
-				scale       = this .scale_ .getValue (),
-				center      = this .center_ .getValue (),
-				matrix3     = this .matrix3;
-
-			matrix3 .identity ();
-
-			if (! center .equals (Vector2 .Zero))
-				matrix3 .translate (vector .assign (center) .negate ());
-
-			if (! scale .equals (Vector2 .One))
-				matrix3 .scale (scale);
-
-			if (rotation !== 0)
-				matrix3 .rotate (rotation);
-
-			if (! center .equals (Vector2 .Zero))
-				matrix3 .translate (center);
-
-			if (! translation .equals (Vector2 .Zero))
-				matrix3 .translate (translation);
-
-			var matrix4 = this .getMatrix ();
-			
-			matrix4 [ 0] = matrix3 [0];
-			matrix4 [ 1] = matrix3 [1];
-			matrix4 [ 4] = matrix3 [3];
-			matrix4 [ 5] = matrix3 [4];
-			matrix4 [12] = matrix3 [6]; 
-			matrix4 [13] = matrix3 [7];
-
-			this .setMatrix (matrix4);
+			return this .matrix;
 		},
+		eventsProcessed: (function ()
+		{
+			const
+				vector  = new Vector2 (0, 0),
+				matrix3 = new Matrix3 ();
+
+			return function ()
+			{
+				const
+					translation = this .translation_ .getValue (),
+					rotation    = this .rotation_ .getValue (),
+					scale       = this .scale_ .getValue (),
+					center      = this .center_ .getValue (),
+					matrix4     = this .matrix;
+
+				matrix3 .identity ();
+
+				if (! center .equals (Vector2 .Zero))
+					matrix3 .translate (vector .assign (center) .negate ());
+
+				if (! scale .equals (Vector2 .One))
+					matrix3 .scale (scale);
+
+				if (rotation !== 0)
+					matrix3 .rotate (rotation);
+
+				if (! center .equals (Vector2 .Zero))
+					matrix3 .translate (center);
+
+				if (! translation .equals (Vector2 .Zero))
+					matrix3 .translate (translation);
+
+				matrix4 [ 0] = matrix3 [0];
+				matrix4 [ 1] = matrix3 [1];
+				matrix4 [ 4] = matrix3 [3];
+				matrix4 [ 5] = matrix3 [4];
+				matrix4 [12] = matrix3 [6];
+				matrix4 [13] = matrix3 [7];
+
+				this .setMatrix (matrix4);
+			};
+		})(),
 	});
 
 	return TextureTransform;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -95432,7 +96545,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		MetadataBoolean: MetadataBoolean,
 		MetadataDouble:  MetadataDouble,
@@ -95443,7 +96556,7 @@ function (SupportedNodes,
 		WorldInfo:       WorldInfo,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DBindableNode:      X3DBindableNode,
 		X3DChildNode:         X3DChildNode,
@@ -95453,14 +96566,13 @@ function (SupportedNodes,
 		X3DPrototypeInstance: X3DPrototypeInstance,
 		X3DSensorNode:        X3DSensorNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -95959,7 +97071,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		Background:        Background,
 		Fog:               Fog,
@@ -95968,19 +97080,18 @@ function (SupportedNodes,
 		TextureBackground: TextureBackground,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DBackgroundNode: X3DBackgroundNode,
 		X3DFogObject:      X3DFogObject,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -96981,25 +98092,24 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		ProximitySensor:  ProximitySensor,
 		TransformSensor:  TransformSensor,
 		VisibilitySensor: VisibilitySensor,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DEnvironmentalSensorNode: X3DEnvironmentalSensorNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -98998,7 +100108,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		ColorChaser:       ColorChaser,
 		ColorDamper:       ColorDamper,
@@ -99016,20 +100126,19 @@ function (SupportedNodes,
 		TexCoordDamper2D:  TexCoordDamper2D,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DChaserNode: X3DChaserNode,
 		X3DDamperNode: X3DDamperNode,
 		X3DFollowerNode: X3DFollowerNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -101117,7 +102226,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		Box:            Box,
 		Cone:           Cone,
@@ -101128,17 +102237,16 @@ function (SupportedNodes,
 		Sphere:         Sphere,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -102187,7 +103295,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		Group:       Group,
 		StaticGroup: StaticGroup,
@@ -102195,21 +103303,20 @@ function (SupportedNodes,
 		Transform:   Transform,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DBoundedObject:         X3DBoundedObject,
 		X3DGroupingNode:          X3DGroupingNode,
 		X3DTransformMatrix3DNode: X3DTransformMatrix3DNode,
 		X3DTransformNode:         X3DTransformNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -104199,7 +105306,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		ColorInterpolator:            ColorInterpolator,
 		CoordinateInterpolator:       CoordinateInterpolator,
@@ -104216,18 +105323,17 @@ function (SupportedNodes,
 		SquadOrientationInterpolator: SquadOrientationInterpolator,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DInterpolatorNode: X3DInterpolatorNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /*******************************************************************************
  *
@@ -104294,26 +105400,25 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		Layer:    Layer,
 		LayerSet: LayerSet,
 		Viewport: Viewport,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DLayerNode:    X3DLayerNode,
 		X3DViewportNode: X3DViewportNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -105144,25 +106249,24 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		DirectionalLight: DirectionalLight,
 		PointLight:       PointLight,
 		SpotLight:        SpotLight,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DLightNode: X3DLightNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -106245,7 +107349,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		Billboard:      Billboard,
 		Collision:      Collision,
@@ -106256,18 +107360,17 @@ function (SupportedNodes,
 		ViewpointGroup: ViewpointGroup,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DViewpointNode: X3DViewpointNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -107224,26 +108327,25 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		Anchor:     Anchor,
 		Inline:     Inline,
 		LoadSensor: LoadSensor,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DNetworkSensorNode: X3DNetworkSensorNode,
 		X3DUrlObject:         X3DUrlObject,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -108654,7 +109756,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		CylinderSensor: CylinderSensor,
 		PlaneSensor:    PlaneSensor,
@@ -108662,20 +109764,19 @@ function (SupportedNodes,
 		TouchSensor:    TouchSensor,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DDragSensorNode:           X3DDragSensorNode,
 		X3DPointingDeviceSensorNode: X3DPointingDeviceSensorNode,
 		X3DTouchSensorNode:          X3DTouchSensorNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -110693,7 +111794,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		ClipPlane:               ClipPlane,
 		Color:                   Color,
@@ -110711,7 +111812,7 @@ function (SupportedNodes,
 		TriangleStripSet:        TriangleStripSet,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DColorNode:             X3DColorNode,
 		X3DComposedGeometryNode:  X3DComposedGeometryNode,
@@ -110721,14 +111822,13 @@ function (SupportedNodes,
 		X3DLineGeometryNode:      X3DLineGeometryNode,
 		X3DNormalNode:            X3DNormalNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -111322,7 +112422,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		ComposedShader:         ComposedShader,
 		FloatVertexAttribute:   FloatVertexAttribute,
@@ -111334,110 +112434,19 @@ function (SupportedNodes,
 //		ShaderProgram:          ShaderProgram,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DProgrammableShaderObject: X3DProgrammableShaderObject,
 		X3DShaderNode:               X3DShaderNode,
 		X3DVertexAttributeNode:      X3DVertexAttributeNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Components/Shape/X3DMaterialNode',[
-	"x_ite/Fields",
-	"x_ite/Components/Shape/X3DAppearanceChildNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DAppearanceChildNode, 
-          X3DConstants)
-{
-"use strict";
-
-	function X3DMaterialNode (executionContext)
-	{
-		X3DAppearanceChildNode .call (this, executionContext);
-
-		this .addType (X3DConstants .X3DMaterialNode);
-
-		this .addChildObjects ("transparent", new Fields .SFBool ());
-
-		this .transparent_ .setAccessType (X3DConstants .outputOnly);
-	}
-
-	X3DMaterialNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
-	{
-		constructor: X3DMaterialNode,
-		setTransparent: function (value)
-		{
-			if (value !== this .transparent_ .getValue ())
-				this .transparent_ = value;
-		},
-		getTransparent: function ()
-		{
-			return this .transparent_ .getValue ();
-		},
-	});
-
-	return X3DMaterialNode;
-});
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -111492,14 +112501,14 @@ define ('x_ite/Components/Shape/Material',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Shape/X3DMaterialNode",
+	"x_ite/Components/Shape/X3DOneSidedMaterialNode",
 	"x_ite/Bits/X3DConstants",
 	"standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DMaterialNode,
+          X3DOneSidedMaterialNode,
           X3DConstants,
           Algorithm)
 {
@@ -111507,26 +112516,41 @@ function (Fields,
 
 	function Material (executionContext)
 	{
-		X3DMaterialNode .call (this, executionContext);
+		X3DOneSidedMaterialNode .call (this, executionContext);
 
 		this .addType (X3DConstants .Material);
 
 		this .diffuseColor  = new Float32Array (3);
 		this .specularColor = new Float32Array (3);
-		this .emissiveColor = new Float32Array (3);
 	}
 
-	Material .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
+	Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
 	{
 		constructor: Material,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "ambientIntensity", new Fields .SFFloat (0.2)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "diffuseColor",     new Fields .SFColor (0.8, 0.8, 0.8)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "specularColor",    new Fields .SFColor ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",    new Fields .SFColor ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "shininess",        new Fields .SFFloat (0.2)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",     new Fields .SFFloat ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "ambientIntensity",         new Fields .SFFloat (0.2)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "ambientTexture",           new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "ambientTextureMapping",    new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "diffuseColor",             new Fields .SFColor (0.8, 0.8, 0.8)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "diffuseTexture",           new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "diffuseTextureMapping",    new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "specularColor",            new Fields .SFColor ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "specularTexture",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "specularTextureMapping",   new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",            new Fields .SFColor ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTextureMapping",   new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "shininess",                new Fields .SFFloat (0.2)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "shininessTexture",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "shininessTextureMapping",  new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionStrength",        new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTexture",         new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "occlusionTextureMapping",  new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "normalScale",              new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "normalTexture",            new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "normalTextureMapping",     new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "transparency",             new Fields .SFFloat ()),
 		]),
 		getTypeName: function ()
 		{
@@ -111542,21 +112566,17 @@ function (Fields,
 		},
 		initialize: function ()
 		{
-			X3DMaterialNode .prototype .initialize .call (this);
+			X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
 			this .ambientIntensity_ .addInterest ("set_ambientIntensity__", this);
 			this .diffuseColor_     .addInterest ("set_diffuseColor__",     this);
 			this .specularColor_    .addInterest ("set_specularColor__",    this);
-			this .emissiveColor_    .addInterest ("set_emissiveColor__",    this);
 			this .shininess_        .addInterest ("set_shininess__",        this);
-			this .transparency_     .addInterest ("set_transparency__",     this);
 
 			this .set_ambientIntensity__ ();
 			this .set_diffuseColor__ ();
 			this .set_specularColor__ ();
-			this .set_emissiveColor__ ();
 			this .set_shininess__ ();
-			this .set_transparency__ ();
 		},
 		set_ambientIntensity__: function ()
 		{
@@ -111588,40 +112608,22 @@ function (Fields,
 			specularColor [1] = specularColor_ .g;
 			specularColor [2] = specularColor_ .b;
 		},
-		set_emissiveColor__: function ()
-		{
-			//We cannot use this in Windows Edge:
-			//this .emissiveColor .set (this .emissiveColor_ .getValue ());
-
-			const
-				emissiveColor  = this .emissiveColor,
-				emissiveColor_ = this .emissiveColor_ .getValue ();
-
-			emissiveColor [0] = emissiveColor_ .r;
-			emissiveColor [1] = emissiveColor_ .g;
-			emissiveColor [2] = emissiveColor_ .b;
-		},
 		set_shininess__: function ()
 		{
 			this .shininess = Algorithm .clamp (this .shininess_ .getValue (), 0, 1);
 		},
-		set_transparency__: function ()
-		{
-			const transparency = Algorithm .clamp (this .transparency_ .getValue (), 0, 1);
-
-			this .transparency = transparency;
-
-			this .setTransparent (Boolean (transparency));
-		},
+      getShader: function (browser, shadow)
+      {
+         return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
+      },
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			gl .uniform1i  (shaderObject .x3d_SeparateBackColor, false);
-			gl .uniform1f  (shaderObject .x3d_AmbientIntensity,  this .ambientIntensity);
-			gl .uniform3fv (shaderObject .x3d_DiffuseColor,      this .diffuseColor);
-			gl .uniform3fv (shaderObject .x3d_SpecularColor,     this .specularColor);
-			gl .uniform3fv (shaderObject .x3d_EmissiveColor,     this .emissiveColor);
-			gl .uniform1f  (shaderObject .x3d_Shininess,         this .shininess);
-			gl .uniform1f  (shaderObject .x3d_Transparency,      this .transparency);
+			gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
+			gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColor);
+			gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColor);
+			gl .uniform3fv (shaderObject .x3d_EmissiveColor,    this .emissiveColor);
+			gl .uniform1f  (shaderObject .x3d_Shininess,        this .shininess);
+			gl .uniform1f  (shaderObject .x3d_Transparency,     this .transparency);
 		},
 	});
 
@@ -111887,28 +112889,29 @@ function (Fields,
 		{
 			this .setTransparent (Boolean (this .transparency_ .getValue () || (this .separateBackColor_ .getValue () && this .backTransparency_ .getValue ())));
 		},
-		setShaderUniforms: function (gl, shaderObject)
+      getShader: function (browser, shadow)
+      {
+         return shadow ? browser .getShadowShader () : browser .getDefaultShader ();
+      },
+		setShaderUniforms: function (gl, shaderObject, front)
 		{
-			gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
-			gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColor);
-			gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColor);
-			gl .uniform3fv (shaderObject .x3d_EmissiveColor,    this .emissiveColor);
-			gl .uniform1f  (shaderObject .x3d_Shininess,        this .shininess);
-			gl .uniform1f  (shaderObject .x3d_Transparency,     this .transparency);
-
-			if (this .separateBackColor_ .getValue ())
+			if (!front && this .separateBackColor_ .getValue ())
 			{
-				gl .uniform1i  (shaderObject .x3d_SeparateBackColor,    true);
-				gl .uniform1f  (shaderObject .x3d_BackAmbientIntensity, this .backAmbientIntensity);
-				gl .uniform3fv (shaderObject .x3d_BackDiffuseColor,     this .backDiffuseColor);
-				gl .uniform3fv (shaderObject .x3d_BackSpecularColor,    this .backSpecularColor);
-				gl .uniform3fv (shaderObject .x3d_BackEmissiveColor,    this .backEmissiveColor);
-				gl .uniform1f  (shaderObject .x3d_BackShininess,        this .backShininess);
-				gl .uniform1f  (shaderObject .x3d_BackTransparency,     this .backTransparency);
+				gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .backAmbientIntensity);
+				gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .backDiffuseColor);
+				gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .backSpecularColor);
+				gl .uniform3fv (shaderObject .x3d_EmissiveColor,    this .backEmissiveColor);
+				gl .uniform1f  (shaderObject .x3d_Shininess,        this .backShininess);
+				gl .uniform1f  (shaderObject .x3d_Transparency,     this .backTransparency);
 			}
 			else
 			{
-				gl .uniform1i  (shaderObject .x3d_SeparateBackColor, false);
+				gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .ambientIntensity);
+				gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .diffuseColor);
+				gl .uniform3fv (shaderObject .x3d_SpecularColor,    this .specularColor);
+				gl .uniform3fv (shaderObject .x3d_EmissiveColor,    this .emissiveColor);
+				gl .uniform1f  (shaderObject .x3d_Shininess,        this .shininess);
+				gl .uniform1f  (shaderObject .x3d_Transparency,     this .transparency);
 			}
 		},
 	});
@@ -111973,9 +112976,11 @@ define ('x_ite/Components/Shape',[
 	"x_ite/Components/Shape/PointProperties",
 	"x_ite/Components/Shape/Shape",
 	"x_ite/Components/Shape/TwoSidedMaterial",
+	"x_ite/Components/Shape/UnlitMaterial",
 	"x_ite/Components/Shape/X3DAppearanceChildNode",
 	"x_ite/Components/Shape/X3DAppearanceNode",
 	"x_ite/Components/Shape/X3DMaterialNode",
+	"x_ite/Components/Shape/X3DOneSidedMaterialNode",
 	"x_ite/Components/Shape/X3DShapeNode",
 ],
 function (SupportedNodes,
@@ -111986,14 +112991,16 @@ function (SupportedNodes,
           PointProperties,
           Shape,
           TwoSidedMaterial,
+          UnlitMaterial,
           X3DAppearanceChildNode,
           X3DAppearanceNode,
           X3DMaterialNode,
+          X3DOneSidedMaterialNode,
           X3DShapeNode)
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		Appearance:       Appearance,
 		FillProperties:   FillProperties,
@@ -112002,20 +113009,22 @@ function (SupportedNodes,
 		PointProperties:  PointProperties,
 		Shape:            Shape,
 		TwoSidedMaterial: TwoSidedMaterial,
+		UnlitMaterial:    UnlitMaterial,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
-		X3DAppearanceChildNode: X3DAppearanceChildNode,
-		X3DAppearanceNode:      X3DAppearanceNode,
-		X3DMaterialNode:        X3DMaterialNode,
-		X3DShapeNode:           X3DShapeNode,
+		X3DAppearanceChildNode:  X3DAppearanceChildNode,
+		X3DAppearanceNode:       X3DAppearanceNode,
+		X3DMaterialNode:         X3DMaterialNode,
+		X3DOneSidedMaterialNode: X3DOneSidedMaterialNode,
+		X3DShapeNode:            X3DShapeNode,
 	};
 
-	for (var typeName in Types)
+	for (const typeName in Types)
 		SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (var typeName in AbstractTypes)
+	for (const typeName in AbstractTypes)
 		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
 
@@ -112916,25 +113925,24 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		AudioClip: AudioClip,
 		Sound:     Sound,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DSoundNode:       X3DSoundNode,
 		X3DSoundSourceNode: X3DSoundSourceNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -113194,24 +114202,23 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		FontStyle: FontStyle,
 		Text: Text,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DFontStyleNode: X3DFontStyleNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -113555,21 +114562,20 @@ function (Fields,
 		this .sources      = [ ];
 		this .functions    = [ ];
 		this .textureNodes = [ ];
-
-		this .setTransparent (false);
 	}
 
 	MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
 	{
 		constructor: MultiTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .SFColor (1, 1, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "alpha",    new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "mode",     new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "source",   new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "function", new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "texture",  new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "description", new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "color",       new Fields .SFColor (1, 1, 1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "alpha",       new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "mode",        new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "source",      new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "function",    new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "texture",     new Fields .MFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -113857,7 +114863,7 @@ define ('x_ite/Components/Texturing/MultiTextureCoordinate',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureCoordinateNode, 
+          X3DTextureCoordinateNode,
           X3DConstants,
           X3DCast)
 {
@@ -113901,28 +114907,26 @@ function (Fields,
 		},
 		set_texCoord__: function ()
 		{
-			var textureCoordinateNodes = this .textureCoordinateNodes;
+			const textureCoordinateNodes = this .textureCoordinateNodes;
 
-			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
-				textureCoordinateNodes [i] .removeInterest ("addNodeEvent", this);
+			for (const textureCoordinateNode of textureCoordinateNodes)
+				textureCoordinateNode .removeInterest ("addNodeEvent", this);
 
 			textureCoordinateNodes .length = 0;
 
-			for (var i = 0, length = this .texCoord_ .length; i < length; ++ i)
+			for (const node of this .texCoord_)
 			{
-				var node = this .texCoord_ [i];
-
 				if (X3DCast (X3DConstants .MultiTextureCoordinate, node))
 					continue;
 
-				var textureCoordinateNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, node);
+				const textureCoordinateNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, node);
 
 				if (textureCoordinateNode)
 					textureCoordinateNodes .push (textureCoordinateNode);
 			}
 
-			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
-				textureCoordinateNodes [i] .addInterest ("addNodeEvent", this);
+			for (const textureCoordinateNode of textureCoordinateNodes)
+				textureCoordinateNode .addInterest ("addNodeEvent", this);
 		},
 		isEmpty: function ()
 		{
@@ -113934,66 +114938,50 @@ function (Fields,
 		},
 		get1Point: function (index, vector)
 		{
-			var textureCoordinateNodes = this .textureCoordinateNodes;
-
-			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
-				return textureCoordinateNodes [i] .get1Point (index, vector);
+			for (const textureCoordinateNode of this .textureCoordinateNodes)
+				return textureCoordinateNode .get1Point (index, vector);
 
 			return vector .set (0, 0, 0, 1);
 		},
 		init: function (multiArray)
 		{
-			var textureCoordinateNodes = this .textureCoordinateNodes;
-
-			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
-				textureCoordinateNodes [i] .init (multiArray);
+			for (const textureCoordinateNode of this .textureCoordinateNodes)
+				textureCoordinateNode .init (multiArray);
 		},
 		addTexCoord: function (index, multiArray)
 		{
-			var textureCoordinateNodes = this .textureCoordinateNodes;
+			const textureCoordinateNodes = this .textureCoordinateNodes;
 
-			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
+			for (let i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
 				textureCoordinateNodes [i] .addTexCoordToChannel (index, multiArray [i]);
 		},
 		addTexCoordToChannel: function (index, array)
 		{ },
 		getTexCoord: function (array)
 		{
-			var textureCoordinateNodes = this .textureCoordinateNodes;
-
-			for (var i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
-				return textureCoordinateNodes [i] .getTexCoord (array);
+			for (const textureCoordinateNode of this .textureCoordinateNodes)
+				return textureCoordinateNode .getTexCoord (array);
 
 			return array;
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			var
+			const
 				textureCoordinateNodes = this .textureCoordinateNodes,
 				length                 = Math .min (shaderObject .x3d_MaxTextures, textureCoordinateNodes .length);
 
-			for (var i = 0; i < length; ++ i)
+			for (let i = 0; i < length; ++ i)
 				textureCoordinateNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
 
-			if (length)
-			{
-				var last = length - 1;
-	
-				for (var i = length, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
-					textureCoordinateNodes [last] .setShaderUniformsToChannel (gl, shaderObject, i);
-			}
-			else
-			{
-				for (var i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
-					this .setShaderUniformsToChannel (gl, shaderObject, i);
-			}
+			const last = length ? textureCoordinateNodes .at (-1) : this;
+
+			for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
+				textureCoordinateNodes [last] .setShaderUniformsToChannel (gl, shaderObject, i);
 		},
 	});
 
 	return MultiTextureCoordinate;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -114055,7 +115043,7 @@ define ('x_ite/Components/Texturing/MultiTextureTransform',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureTransformNode, 
+          X3DTextureTransformNode,
           X3DConstants,
           X3DCast)
 {
@@ -114099,18 +115087,16 @@ function (Fields,
 		},
 		set_textureTransform__: function ()
 		{
-			var textureTransformNodes = this .textureTransformNodes;
+			const textureTransformNodes = this .textureTransformNodes;
 
 			textureTransformNodes .length = 0;
 
-			for (var i = 0, length = this .textureTransform_ .length; i < length; ++ i)
+			for (const node of this .textureTransform_)
 			{
-				var node = this .textureTransform_ [i];
-
 				if (X3DCast (X3DConstants .MultiTextureTransform, node))
 					continue;
 
-				var textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, node);
+				const textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, node);
 
 				if (textureTransformNode)
 					textureTransformNodes .push (textureTransformNode);
@@ -114118,32 +115104,22 @@ function (Fields,
 		},
 		setShaderUniforms: function (gl, shaderObject)
 		{
-			var
+			const
 				textureTransformNodes = this .textureTransformNodes,
 				length                = Math .min (shaderObject .x3d_MaxTextures, textureTransformNodes .length);
 
-			for (var i = 0; i < length; ++ i)
+			for (let i = 0; i < length; ++ i)
 				textureTransformNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
 
-			if (length)
-			{
-				var last = length - 1;
+			const last = length ? textureTransformNodes .at (-1) : this;
 
-				for (var i = length, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
-					textureTransformNodes [last] .setShaderUniformsToChannel (gl, shaderObject, i);
-			}
-			else
-			{
-				for (var i = 0, length = shaderObject .x3d_MaxTextures; i < length; ++ i)
-					this .setShaderUniformsToChannel (gl, shaderObject, i);
-			}
+			for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
+				last .setShaderUniformsToChannel (gl, shaderObject, i);
 		},
 	});
 
 	return MultiTextureTransform;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -114229,6 +115205,7 @@ function ($,
 		constructor: PixelTexture,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .SFImage (0, 0, 0, new Fields .MFInt32 ())),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool (true)),
@@ -114481,14 +115458,14 @@ define ('x_ite/Components/Texturing/TextureCoordinateGenerator',[
 	"x_ite/Fields",
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
+	"x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTextureCoordinateNode,
+          X3DSingleTextureCoordinateNode,
           X3DConstants,
           ModeType)
 {
@@ -114496,7 +115473,7 @@ function (Fields,
 
 	function TextureCoordinateGenerator (executionContext)
 	{
-		X3DTextureCoordinateNode .call (this, executionContext);
+		X3DSingleTextureCoordinateNode .call (this, executionContext);
 
 		this .addType (X3DConstants .TextureCoordinateGenerator);
 
@@ -114504,11 +115481,12 @@ function (Fields,
 		this .parameter = new Float32Array (6);
 	}
 
-	TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
+	TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
 	{
 		constructor: TextureCoordinateGenerator,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",   new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "mode",      new Fields .SFString ("SPHERE")),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "parameter", new Fields .MFFloat ()),
 		]),
@@ -114526,7 +115504,7 @@ function (Fields,
 		},
 		initialize: function ()
 		{
-			X3DTextureCoordinateNode .prototype .initialize .call (this);
+			X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
 			this .mode_      .addInterest ("set_mode__",      this);
 			this .parameter_ .addInterest ("set_parameter__", this);
@@ -114536,7 +115514,7 @@ function (Fields,
 		},
 		set_mode__: (function ()
 		{
-			var modes = new Map ([
+			const modes = new Map ([
 				["SPHERE",                      ModeType .SPHERE],
 				["CAMERASPACENORMAL",           ModeType .CAMERASPACENORMAL],
 				["CAMERASPACEPOSITION",         ModeType .CAMERASPACEPOSITION],
@@ -114560,7 +115538,9 @@ function (Fields,
 		})(),
 		set_parameter__: function ()
 		{
-			for (var i = 0, length = Math .min (this .parameter .length, this .parameter_ .length); i < length; ++ i)
+			const length = Math .min (this .parameter .length, this .parameter_ .length)
+
+			for (let i = 0; i < length; ++ i)
 				this .parameter [i] = this .parameter_ [i];
 
 			this .parameter .fill (0, length);
@@ -114647,6 +115627,9 @@ define ('x_ite/Components/Texturing',[
 	"x_ite/Components/Texturing/TextureCoordinateGenerator",
 	"x_ite/Components/Texturing/TextureProperties",
 	"x_ite/Components/Texturing/TextureTransform",
+	"x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
+	"x_ite/Components/Texturing/X3DSingleTextureNode",
+	"x_ite/Components/Texturing/X3DSingleTextureTransformNode",
 	"x_ite/Components/Texturing/X3DTexture2DNode",
 	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
 	"x_ite/Components/Texturing/X3DTextureNode",
@@ -114663,6 +115646,9 @@ function (SupportedNodes,
           TextureCoordinateGenerator,
           TextureProperties,
           TextureTransform,
+          X3DSingleTextureCoordinateNode,
+          X3DSingleTextureNode,
+          X3DSingleTextureTransformNode,
           X3DTexture2DNode,
           X3DTextureCoordinateNode,
           X3DTextureNode,
@@ -114670,7 +115656,7 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		ImageTexture:               ImageTexture,
 		MovieTexture:               MovieTexture,
@@ -114684,21 +115670,23 @@ function (SupportedNodes,
 		TextureTransform:           TextureTransform,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
-		X3DTexture2DNode:         X3DTexture2DNode,
-		X3DTextureCoordinateNode: X3DTextureCoordinateNode,
-		X3DTextureNode:           X3DTextureNode,
-		X3DTextureTransformNode:  X3DTextureTransformNode,
+		X3DSingleTextureCoordinateNode: X3DSingleTextureCoordinateNode,
+		X3DSingleTextureNode:           X3DSingleTextureNode,
+		X3DSingleTextureTransformNode:  X3DSingleTextureTransformNode,
+		X3DTexture2DNode:               X3DTexture2DNode,
+		X3DTextureCoordinateNode:       X3DTextureCoordinateNode,
+		X3DTextureNode:                 X3DTextureNode,
+		X3DTextureTransformNode:        X3DTextureTransformNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /*******************************************************************************
  *
@@ -114759,23 +115747,22 @@ function (SupportedNodes,
 {
 "use strict";
 
-	var Types =
+	const Types =
 	{
 		TimeSensor: TimeSensor,
 	};
 
-	var AbstractTypes =
+	const AbstractTypes =
 	{
 		X3DTimeDependentNode: X3DTimeDependentNode,
 	};
-	
-	for (var typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]); 
 
-	for (var typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]); 
+	for (const typeName in Types)
+		SupportedNodes .addType (typeName, Types [typeName]);
+
+	for (const typeName in AbstractTypes)
+		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************

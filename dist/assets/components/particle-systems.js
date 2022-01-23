@@ -2141,12 +2141,9 @@ function (Fields,
 				case TRIANGLE:
 				case QUAD:
 				case SPRITE:
-				{
-					this .shaderNode = this .getBrowser () .getDefaultShader ();
-					break;
-				}
 				case GEOMETRY:
 				{
+					this .shaderNode = null;
 					break;
 				}
 			}
@@ -3022,7 +3019,7 @@ function (Fields,
 				{
 					const
 						appearanceNode = this .getAppearance (),
-						shaderNode     = appearanceNode .shaderNode || this .shaderNode;
+						shaderNode     = appearanceNode .shaderNode || this .shaderNode || appearanceNode .materialNode .getShader (context .browser, context .shadow);
 
 					// Setup shader.
 
