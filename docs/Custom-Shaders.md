@@ -848,8 +848,10 @@ function initialize ()
 To address the issue of the depth not being interpolated in perspectively-correct way, output the following interpolant to the vertex shader:
 
 ```c
+#version 300 es
+
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-varying float depth;
+out float depth;
 #endif
 
 void
@@ -857,7 +859,7 @@ main ()
 {
    ...
    #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-   // Assuming gl_Position was already computed
+   // Assuming gl_Position was already computed.
    depth = 1.0 + gl_Position .w;
    #endif
 }
@@ -866,13 +868,12 @@ main ()
 and then in the fragment shader add:
 
 ```c
-#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-#extension GL_EXT_frag_depth : enable
-#endif
+#version 300 es
 
 #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+#extension GL_EXT_frag_depth : enable
 uniform float x3d_LogarithmicFarValue1_2;
-varying float depth;
+in float depth;
 #endif
 
 void
