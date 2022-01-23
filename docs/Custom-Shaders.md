@@ -127,9 +127,9 @@ A ComposedShader node provides the capability to define custom fields like the S
 <table class=" table">
    <thead>
       <tr>
-         <th scope="col">X3D field type</th>
-         <th scope="col">GLSL variable type</th>
-         <th scope="col"></th>
+         <th>X3D field type</th>
+         <th>GLSL variable type</th>
+         <th></th>
       </tr>
    </thead>
    <tbody>
@@ -357,9 +357,9 @@ A ComposedShader defines a number of special variables for the various shader st
 <table class=" table">
    <thead>
       <tr>
-         <th scope="col">Type</th>
-         <th scope="col">Name</th>
-         <th scope="col">Comment</th>
+         <th>Type</th>
+         <th>Name</th>
+         <th>Comment</th>
       </tr>
    </thead>
    <tbody>
@@ -618,7 +618,7 @@ If the shader node is part of a ParticleSystem node the following attributes are
 | Type            | Name                     | Comment                                                   |
 |-----------------|--------------------------|-----------------------------------------------------------|
 | attribute float | x3d\_ParticleId          | integer id of the particle                                |
-| attribute float | x3d\_ParticleLife        | integer number of current life                            |
+| attribute float | x3d\_ParticleLife        | integer number of current life cycle                      |
 | attribute float | x3d\_ParticleElapsedTime | elapsed time normalized in the range \[0, 1\]             |
 | attribute vec4  | x3d\_ParticlePosition    | center coordinate of particle, in relation to x3d\_Vertex |
 
@@ -640,191 +640,191 @@ If the ParticleSystem.*geometryType* is GEOMETRY the following uniforms are avai
 
 Some built-in variables are enumerated and have special values and meanings. The following table list all of them and their corresponding values. Note: as of version 1.27 these constant are buit-in.
 
-<table class=" table" style="width: 1046px;">
+<table class=" table">
    <thead>
       <tr>
-         <th style="width: 297.767px;">Variable</th>
-         <th style="width: 41.7667px;">Type</th>
-         <th scope="col" style="width: 252.767px;">Name</th>
-         <th scope="col" style="width: 49.7667px;">Value</th>
-         <th style="width: 369.933px;">Comment</th>
+         <th>Variable</th>
+         <th>Type</th>
+         <th>Name</th>
+         <th>Value</th>
+         <th>Comment</th>
       </tr>
    </thead>
    <tbody>
       <tr>
-         <td style="width: 297.767px;">X_ITE</td>
-         <td style="width: 41.7667px;"></td>
-         <td style="width: 252.767px;"></td>
-         <td style="width: 49.7667px;"></td>
-         <td style="width: 369.933px;">defined</td>
+         <td>X_ITE</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>defined</td>
       </tr>
       <tr>
-         <td colspan="5" style="width: 1036px;"><hr/>
+         <td colspan="5"><hr/>
          </td>
       </tr>
       <tr>
-         <td style="width: 297.767px;">X3D_LOGARITHMIC_DEPTH_BUFFER</td>
-         <td style="width: 41.7667px;"></td>
-         <td style="width: 252.767px;"></td>
-         <td style="width: 49.7667px;"></td>
-         <td style="width: 369.933px;">defined if logarithmic depth buffer is enabled in [browser options](http://create3000.de/users-guide/ecmascript-object-and-function-definitions/browser-services/#browser-object).</td>
+         <td>X3D_LOGARITHMIC_DEPTH_BUFFER</td>
+         <td></td>
+         <td></td>
+         <td></td>
+         <td>defined if logarithmic depth buffer is enabled in [browser options](http://create3000.de/users-guide/ecmascript-object-and-function-definitions/browser-services/#browser-object).</td>
       </tr>
       <tr>
-         <td colspan="5" style="width: 1036px;"><hr/>
+         <td colspan="5"><hr/>
          </td>
       </tr>
       <tr>
-         <td style="width: 297.767px;">x3d_GeometryType</td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_Points</td>
-         <td style="width: 49.7667px;">0</td>
-         <td style="width: 369.933px;">appears on PointSet and Polypoint2D</td>
+         <td>x3d_GeometryType</td>
+         <td>int</td>
+         <td>x3d_Points</td>
+         <td>0</td>
+         <td>appears on PointSet and Polypoint2D</td>
       </tr>
       <tr>
-         <td style="width: 297.767px;"></td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_Lines</td>
-         <td style="width: 49.7667px;">1</td>
-         <td style="width: 369.933px;">appears on IndexedLineSet, LineSet and Polyline2D</td>
+         <td></td>
+         <td>int</td>
+         <td>x3d_Lines</td>
+         <td>1</td>
+         <td>appears on IndexedLineSet, LineSet and Polyline2D</td>
       </tr>
       <tr>
-         <td style="width: 297.767px;"></td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_Geometry2D</td>
-         <td style="width: 49.7667px;">2</td>
-         <td style="width: 369.933px;">appears on Geometry2D nodes</td>
+         <td></td>
+         <td>int</td>
+         <td>x3d_Geometry2D</td>
+         <td>2</td>
+         <td>appears on Geometry2D nodes</td>
       </tr>
       <tr>
-         <td style="width: 297.767px;"></td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_Geometry3D</td>
-         <td style="width: 49.7667px;">3</td>
-         <td style="width: 369.933px;">appears on Geometry3D nodes and other 3D nodes</td>
+         <td></td>
+         <td>int</td>
+         <td>x3d_Geometry3D</td>
+         <td>3</td>
+         <td>appears on Geometry3D nodes and other 3D nodes</td>
       </tr>
       <tr>
-         <td colspan="5" style="width: 1036px;"><hr/>
+         <td colspan="5"><hr/>
          </td>
       </tr>
       <tr>
-         <td style="width: 297.767px;">x3d_ClipPlane</td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_MaxClipPlanes</td>
-         <td style="width: 49.7667px;">6</td>
-         <td style="width: 369.933px;"></td>
+         <td>x3d_ClipPlane</td>
+         <td>int</td>
+         <td>x3d_MaxClipPlanes</td>
+         <td>6</td>
+         <td></td>
       </tr>
       <tr>
-         <td colspan="5" style="width: 1036px;"><hr/>
+         <td colspan="5"><hr/>
          </td>
       </tr>
       <tr>
-         <td style="width: 297.767px;">x3d_FogType</td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_None</td>
-         <td style="width: 49.7667px;">0</td>
-         <td style="width: 369.933px;"></td>
+         <td>x3d_FogType</td>
+         <td>int</td>
+         <td>x3d_None</td>
+         <td>0</td>
+         <td></td>
       </tr>
       <tr>
-         <td style="width: 297.767px;"></td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_LinearFog</td>
-         <td style="width: 49.7667px;">1</td>
-         <td style="width: 369.933px;"></td>
+         <td></td>
+         <td>int</td>
+         <td>x3d_LinearFog</td>
+         <td>1</td>
+         <td></td>
       </tr>
       <tr>
-         <td style="width: 297.767px;"></td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_ExponentialFog</td>
-         <td style="width: 49.7667px;">2</td>
-         <td style="width: 369.933px;"></td>
+         <td></td>
+         <td>int</td>
+         <td>x3d_ExponentialFog</td>
+         <td>2</td>
+         <td></td>
       </tr>
       <tr>
-         <td colspan="5" style="width: 1036px;"><hr/>
+         <td colspan="5"><hr/>
          </td>
       </tr>
       <tr>
-         <td style="width: 297.767px;"></td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_MaxLights</td>
-         <td style="width: 49.7667px;">8</td>
-         <td style="width: 369.933px;"></td>
+         <td></td>
+         <td>int</td>
+         <td>x3d_MaxLights</td>
+         <td>8</td>
+         <td></td>
       </tr>
       <tr>
-         <td style="width: 297.767px;">x3d_LightType</td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_DirectionalLight</td>
-         <td style="width: 49.7667px;">1</td>
-         <td style="width: 369.933px;"></td>
+         <td>x3d_LightType</td>
+         <td>int</td>
+         <td>x3d_DirectionalLight</td>
+         <td>1</td>
+         <td></td>
       </tr>
       <tr>
-         <td style="width: 297.767px;"></td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_PointLight</td>
-         <td style="width: 49.7667px;">2</td>
-         <td style="width: 369.933px;"></td>
+         <td></td>
+         <td>int</td>
+         <td>x3d_PointLight</td>
+         <td>2</td>
+         <td></td>
       </tr>
       <tr>
-         <td style="width: 297.767px;"></td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_SpotLight</td>
-         <td style="width: 49.7667px;">3</td>
-         <td style="width: 369.933px;"></td>
+         <td></td>
+         <td>int</td>
+         <td>x3d_SpotLight</td>
+         <td>3</td>
+         <td></td>
       </tr>
       <tr>
-         <td colspan="5" style="width: 1036px;"><hr/>
+         <td colspan="5"><hr/>
          </td>
       </tr>
       <tr>
-         <td style="width: 297.767px;"></td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_MaxTextures</td>
-         <td style="width: 49.7667px;">2</td>
-         <td style="width: 369.933px;"></td>
+         <td></td>
+         <td>int</td>
+         <td>x3d_MaxTextures</td>
+         <td>2</td>
+         <td></td>
       </tr>
       <tr>
-         <td style="width: 297.767px;">x3d_TextureType</td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_TextureType2D</td>
-         <td style="width: 49.7667px;">2</td>
-         <td style="width: 369.933px;"></td>
+         <td>x3d_TextureType</td>
+         <td>int</td>
+         <td>x3d_TextureType2D</td>
+         <td>2</td>
+         <td></td>
       </tr>
       <tr>
-         <td style="width: 297.767px;"></td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_TextureType3D</td>
-         <td style="width: 49.7667px;">3</td>
-         <td style="width: 369.933px;"></td>
+         <td></td>
+         <td>int</td>
+         <td>x3d_TextureType3D</td>
+         <td>3</td>
+         <td></td>
       </tr>
       <tr>
-         <td style="width: 297.767px;"></td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_TextureTypeCubeMapTexture</td>
-         <td style="width: 49.7667px;">4</td>
-         <td style="width: 369.933px;"></td>
+         <td></td>
+         <td>int</td>
+         <td>x3d_TextureTypeCubeMapTexture</td>
+         <td>4</td>
+         <td></td>
       </tr>
       <tr>
-         <td colspan="5" style="width: 1036px;"><hr/>
+         <td colspan="5"><hr/>
          </td>
       </tr>
       <tr>
-         <td style="width: 297.767px;">x3d_ColorMode</td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_PointColor</td>
-         <td style="width: 49.7667px;">0</td>
-         <td style="width: 369.933px;">PointProperties colorMode constants</td>
+         <td>x3d_ColorMode</td>
+         <td>int</td>
+         <td>x3d_PointColor</td>
+         <td>0</td>
+         <td>PointProperties colorMode constants</td>
       </tr>
       <tr>
-         <td style="width: 297.767px;"></td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_TextureColor</td>
-         <td style="width: 49.7667px;">1</td>
-         <td style="width: 369.933px;"></td>
+         <td></td>
+         <td>int</td>
+         <td>x3d_TextureColor</td>
+         <td>1</td>
+         <td></td>
       </tr>
       <tr>
-         <td style="width: 297.767px;"></td>
-         <td style="width: 41.7667px;">int</td>
-         <td style="width: 252.767px;">x3d_TextureAndPointColor</td>
-         <td style="width: 49.7667px;">2</td>
-         <td style="width: 369.933px;"></td>
+         <td></td>
+         <td>int</td>
+         <td>x3d_TextureAndPointColor</td>
+         <td>2</td>
+         <td></td>
       </tr>
    </tbody>
 </table>
