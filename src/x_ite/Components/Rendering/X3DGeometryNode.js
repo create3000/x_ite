@@ -912,7 +912,7 @@ function (Fields,
 					backMaterialNode = appearanceNode .backMaterialNode,
 					frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
 
-				if (this .solid || !backMaterialNode || context .wireframe)
+				if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
 				{
 					this .displayGeometry (gl, context, appearanceNode, frontShaderNode, true, true);
 				}
@@ -964,7 +964,7 @@ function (Fields,
 
 				if (shaderNode .wireframe)
 				{
-					// Wireframes are always solid so only one drawing call is needed.
+					// Wireframes.
 
 					for (let i = 0, length = this .vertexCount; i < length; i += 3)
 						gl .drawArrays (shaderNode .primitiveMode, i, 3);
@@ -1071,7 +1071,7 @@ function (Fields,
 					backMaterialNode = appearanceNode .backMaterialNode,
 					frontShaderNode  = appearanceNode .shaderNode || materialNode .getShader (context .browser, context .shadow);
 
-				if (this .solid || !backMaterialNode || context .wireframe)
+				if (this .solid || !backMaterialNode || frontShaderNode .wireframe)
 				{
 					this .displayParticlesGeometry (gl, context, appearanceNode, frontShaderNode, true, true, particles, numParticles);
 				}
