@@ -535,7 +535,7 @@ A ComposedShader defines a number of special variables for the various shader st
       <tr>
          <td>attribute vec4</td>
          <td>x3d_Vertex</td>
-         <td>vertex coordinate, **required**</td>
+         <td>vertex coordinate, <b>required</b></td>
       </tr>
    </tbody>
 </table>
