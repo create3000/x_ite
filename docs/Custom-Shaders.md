@@ -447,7 +447,7 @@ A ComposedShader defines a number of special variables for the various shader st
       </tr>
       <tr>
          <td>uniform x3d_MaterialParameters</td>
-         <td>x3d_tMaterial</td>
+         <td>x3d_Material</td>
          <td>see table »Uniform Struct x3d_MaterialParameters«</td>
       </tr>
       <tr>
