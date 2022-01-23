@@ -626,7 +626,7 @@ If the ParticleSystem.*geometryType* is GEOMETRY the following uniforms are avai
 
 | Type                            | Name          | Comment                                            |
 |---------------------------------|---------------|----------------------------------------------------|
-| uniform x3d\_ParticleParameters | x3d\_Particle | See table »Uniform Struct x3d\_ParticleParameters« |
+| uniform x3d\_ParticleParameters | x3d\_Particle | see table »Uniform Struct x3d\_ParticleParameters« |
 
 #### Uniform Struct x3d\_ParticleParameters
 
