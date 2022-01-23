@@ -75,7 +75,7 @@ function (Fields,
 
 		this .addType (X3DConstants .Collision);
 
-		if (executionContext .getSpecificationVersion () == "2.0")
+		if (executionContext .getSpecificationVersion () === "2.0")
 			this .addAlias ("collide", this .enabled_); // VRML2
 	}
 

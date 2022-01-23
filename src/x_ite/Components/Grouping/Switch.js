@@ -72,7 +72,7 @@ function (Fields,
 
 		this .addType (X3DConstants .Switch);
 
-		if (executionContext .getSpecificationVersion () == "2.0")
+		if (executionContext .getSpecificationVersion () === "2.0")
 			this .addAlias ("choice", this .children_);
 
 		this .childNode     = null;

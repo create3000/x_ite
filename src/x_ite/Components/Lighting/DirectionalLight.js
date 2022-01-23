@@ -273,7 +273,7 @@ function (Fields,
 
 		this .addType (X3DConstants .DirectionalLight);
 
-		if (executionContext .getSpecificationVersion () == "2.0")
+		if (executionContext .getSpecificationVersion () === "2.0")
 			this .global_ = true;
 	}
 

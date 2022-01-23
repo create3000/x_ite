@@ -76,7 +76,7 @@ function (Fields,
 
 		this .addType (X3DConstants .LOD);
 
-		if (executionContext .getSpecificationVersion () == "2.0")
+		if (executionContext .getSpecificationVersion () === "2.0")
 			this .addAlias ("level", this .children_); // VRML2
 
 		this .center_ .setUnit ("length");
