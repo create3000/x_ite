@@ -12,7 +12,12 @@
 		"X3D",
 		"VRML",
 		"WebGL",
-		"browser"
+		"browser",
+		"3D",
+		"wrl",
+		"JavaScript",
+		"JSON",
+		"xite"
 	],
 	"author": "Holger Seelig <holger.seelig@yahoo.de>",
 	"license": "GPL-3.0",
