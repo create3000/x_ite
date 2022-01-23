@@ -73,7 +73,7 @@ uniform mat4 x3d_TextureMatrix [x3d_MaxTextures];
 uniform mat4 x3d_ModelViewMatrix;
 uniform mat4 x3d_ProjectionMatrix;
 
-in vec4 x3d_TexCoord;
+in vec4 x3d_TexCoord0;
 in vec4 x3d_Vertex;
 
 out vec4 texCoord;
@@ -81,7 +81,7 @@ out vec4 texCoord;
 void
 main ()
 {
-  texCoord = x3d_TextureMatrix [0] * x3d_TexCoord;
+  texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;
 
   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_Vertex;
 }
