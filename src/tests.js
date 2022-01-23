@@ -296,6 +296,7 @@ var X_ITE_TESTS = [
 	{ path: "Shape/LineProperties.x3dv" },
 	{ path: "Shape/BackMaterial.x3d" },
 	{ path: "Shape/UnlitMaterial.x3d" },
+	{ path: "Shape/Transparency.x3dv" },
 	{ path: "Shape/TwoSidedMaterial.x3d" },
 	{ component: "Sound" },
 	{ path: "Sound/04. Like A Virgin.mp3" },

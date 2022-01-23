@@ -990,7 +990,7 @@ function (Fields,
 
 						// Render back.
 
-						if (back)
+						if (back && !this .solid)
 						{
 							gl .cullFace (gl .FRONT);
 							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
@@ -1187,7 +1187,7 @@ function (Fields,
 
 							gl .enable (gl .CULL_FACE);
 
-							if (back)
+							if (back && !this .solid)
 							{
 								gl .cullFace (gl .FRONT);
 								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
