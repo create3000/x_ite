@@ -1125,7 +1125,7 @@ function (Fields,
 					y               = modelViewMatrix [13],
 					z               = modelViewMatrix [14];
 
-				shaderNode .setNormalMatrix (gl, modelViewMatrix)
+				shaderNode .setNormalMatrix (gl, modelViewMatrix);
 
 				if (shaderNode .wireframe)
 				{
