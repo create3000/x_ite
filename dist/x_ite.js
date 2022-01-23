@@ -1,4 +1,4 @@
-/* X_ITE v4.7.5-1122 */
+/* X_ITE v4.7.5-1123 */
 
 (function () {
 
@@ -76994,7 +76994,7 @@ function (Fields,
 
 		this .addType (X3DConstants .DirectionalLight);
 
-		if (executionContext .getSpecificationVersion () == "2.0")
+		if (executionContext .getSpecificationVersion () === "2.0")
 			this .global_ = true;
 	}
 
@@ -102639,7 +102639,7 @@ function (Fields,
 
 		this .addType (X3DConstants .Switch);
 
-		if (executionContext .getSpecificationVersion () == "2.0")
+		if (executionContext .getSpecificationVersion () === "2.0")
 			this .addAlias ("choice", this .children_);
 
 		this .childNode     = null;
@@ -106542,7 +106542,7 @@ function (Fields,
 
 		this .addType (X3DConstants .Collision);
 
-		if (executionContext .getSpecificationVersion () == "2.0")
+		if (executionContext .getSpecificationVersion () === "2.0")
 			this .addAlias ("collide", this .enabled_); // VRML2
 	}
 
@@ -106723,7 +106723,7 @@ function (Fields,
 
 		this .addType (X3DConstants .LOD);
 
-		if (executionContext .getSpecificationVersion () == "2.0")
+		if (executionContext .getSpecificationVersion () === "2.0")
 			this .addAlias ("level", this .children_); // VRML2
 
 		this .center_ .setUnit ("length");
