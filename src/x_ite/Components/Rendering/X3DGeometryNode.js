@@ -1125,8 +1125,6 @@ function (Fields,
 					y               = modelViewMatrix [13],
 					z               = modelViewMatrix [14];
 
-				shaderNode .setNormalMatrix (gl, modelViewMatrix);
-
 				if (shaderNode .wireframe)
 				{
 					// Wireframes are always solid so only one drawing call is needed.
