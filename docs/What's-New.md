@@ -1,6 +1,6 @@
 # What's New
 
-## X\_ITE v4.7.5 Released
+## X\_ITE v4.7.6 Released
 
 *Leipzig, 23th January 2022*: This release implements the new X3Dv4 UnlitMaterial. This also means that the custom shader interface has changed:
 

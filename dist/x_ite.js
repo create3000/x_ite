@@ -1,4 +1,4 @@
-/* X_ITE v4.7.5-1125 */
+/* X_ITE v4.7.6-1126 */
 
 (function () {
 
@@ -24858,7 +24858,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.7.5";
+	return "4.7.6";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -70429,7 +70429,7 @@ function (Fields,
 
 						// Render back.
 
-						if (back)
+						if (back && !this .solid)
 						{
 							gl .cullFace (gl .FRONT);
 							gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);
@@ -70626,7 +70626,7 @@ function (Fields,
 
 							gl .enable (gl .CULL_FACE);
 
-							if (back)
+							if (back && !this .solid)
 							{
 								gl .cullFace (gl .FRONT);
 								gl .drawArrays (shaderNode .primitiveMode, 0, this .vertexCount);

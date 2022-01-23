@@ -49,5 +49,5 @@
 
 define (function ()
 {
-	return "4.7.5";
+	return "4.7.6";
 });
