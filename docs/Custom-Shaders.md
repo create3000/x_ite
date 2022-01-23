@@ -633,7 +633,7 @@ If the ParticleSystem.*geometryType* is GEOMETRY the following uniforms are avai
 | Type  | Name        | Comment                                       |
 |-------|-------------|-----------------------------------------------|
 | int   | id          | integer id of the particle                    |
-| int   | life        | integer number of current life                |
+| int   | life        | integer number of current life cycle          |
 | float | elapsedTime | elapsed time normalized in the range \[0, 1\] |
 
 ## Built-in Constants
