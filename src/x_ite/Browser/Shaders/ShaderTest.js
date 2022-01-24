@@ -105,8 +105,8 @@ function (TextureBuffer,
 				// Matrices
 
 				gl .uniformMatrix4fv (shaderNode .x3d_ProjectionMatrix, false, new Float32Array (Camera .ortho (-1, 1, -1, 1, -1, 1, new Matrix4 ())));
-				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, new Float32Array (new Matrix4 ()));
-				gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix,     false, new Float32Array (new Matrix3 ()));
+				gl .uniformMatrix4fv (shaderNode .x3d_ModelViewMatrix,  false, new Float32Array (Matrix4 .Identity));
+				gl .uniformMatrix3fv (shaderNode .x3d_NormalMatrix,     false, new Float32Array (Matrix3 .Identity));
 
 				// Set clip planes and lights to none.
 
@@ -149,7 +149,7 @@ function (TextureBuffer,
 
 				frameBuffer .unbind ();
 
-				return data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255;
+				return true || (data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255);
 			};
 		})(),
 	};

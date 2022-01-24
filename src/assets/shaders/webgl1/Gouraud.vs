@@ -11,7 +11,6 @@ uniform bool x3d_ColorMaterial; // true if a X3DColorNode is attached, otherwise
 
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
-uniform bool x3d_SeparateBackColor;
 uniform x3d_MaterialParameters x3d_Material;
 
 attribute float x3d_FogDepth;

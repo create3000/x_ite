@@ -1,4 +1,4 @@
-/* X_ITE v4.7.6-1127 */
+/* X_ITE v4.7.6-1128 */
 
 (function () {
 
@@ -66057,6 +66057,8 @@ function (TextureBuffer,
 
 				frameBuffer .unbind ();
 
+				console .log (data)
+
 				return data [0] == 255 && data [1] == 0 && data [2] == 0 && data [3] == 255;
 			};
 		})(),
@@ -66323,6 +66325,9 @@ function (Shading,
 		set_unlit_shader_valid__: function (valid)
 		{
 			this .unlitShader .isValid_ .removeInterest ("set_unlit_shader_valid__", this);
+
+			console .log (valid .getValue (), ShaderTest .verify (this, this .unlitShader));
+			return;
 
 			if (valid .getValue () && ShaderTest .verify (this, this .unlitShader))
 				return;

@@ -8,7 +8,6 @@ uniform mat4 x3d_ModelViewMatrix;
 uniform bool x3d_ColorMaterial; 
 uniform int x3d_NumLights;
 uniform x3d_LightSourceParameters x3d_LightSource [x3d_MaxLights];
-uniform bool x3d_SeparateBackColor;
 uniform x3d_MaterialParameters x3d_Material;
 in float x3d_FogDepth;
 in vec4 x3d_Color;

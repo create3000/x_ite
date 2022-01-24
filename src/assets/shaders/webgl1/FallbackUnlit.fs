@@ -12,11 +12,10 @@ varying vec4 color;
 void
 main ()
 {
-	vec4 textureColor = x3d_NumTextures > 0 ? texture2D (x3d_Texture2D [0], texCoord .st) : vec4 (1.0);
-	vec4 finalColor   = vec4 (0.0);
+	vec4 finalColor = x3d_NumTextures > 0 ? texture2D (x3d_Texture2D [0], texCoord .st) : vec4 (1.0);
 
 	finalColor .rgb += x3d_Material .emissiveColor;
-	finalColor .a    = textureColor .a * color .a * (1.0 - x3d_Material .transparency);
+	finalColor .a   *= color .a * (1.0 - x3d_Material .transparency);
 
 	gl_FragColor = finalColor;
 }
