@@ -1,7 +1,5 @@
 {
    "files.exclude": {
-      ".vscode/ipch": true,
-      "**/.bzr": true,
       "**/*~": true,
       "**/node_modules": true
    },
