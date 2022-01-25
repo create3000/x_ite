@@ -134,7 +134,7 @@ function (Fields,
 			this .Shading_                   .addInterest ("set_shading__",                this);
 			this .StraightenHorizon_         .addInterest ("set_straightenHorizon__",      this);
 			this .LogarithmicDepthBuffer_    .addInterest ("set_logarithmicDepthBuffer__", this);
-			this .Timings_                   .addInterest ("set_timings__", this);
+			this .Timings_                   .addInterest ("set_timings__",                this);
 
 			this .configure ();
 		},
@@ -167,19 +167,19 @@ function (Fields,
 
 			this .setAttributeSplashScreen ();
 
-			if (rubberband !== undefined && rubberband !== this .Rubberband_ .getValue ())
+			if (rubberband !== this .Rubberband_ .getValue ())
 				this .Rubberband_ = rubberband;
 
-			if (primitiveQuality !== undefined && primitiveQuality !== this .PrimitiveQuality_ .getValue () .toUpperCase ())
+			if (primitiveQuality !== this .PrimitiveQuality_ .getValue () .toUpperCase ())
 				this .PrimitiveQuality_ = primitiveQuality;
 
-			if (textureQuality !== undefined && textureQuality !== this .TextureQuality_ .getValue () .toUpperCase ())
+			if (textureQuality !== this .TextureQuality_ .getValue () .toUpperCase ())
 				this .TextureQuality_ = textureQuality;
 
-			if (straightenHorizon !== undefined && straightenHorizon !== this .StraightenHorizon_ .getValue ())
+			if (straightenHorizon !== this .StraightenHorizon_ .getValue ())
 				this .StraightenHorizon_ = straightenHorizon;
 
-			if (timings !== undefined && timings !== this .Timings_ .getValue ())
+			if (timings !== this .Timings_ .getValue ())
 				this .Timings_ = timings;
 		},
 		setAttributeSplashScreen: function ()

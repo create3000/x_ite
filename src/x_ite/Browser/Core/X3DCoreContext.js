@@ -50,29 +50,27 @@
 define ([
 	"jquery",
 	"x_ite/Fields",
+	"x_ite/Browser/Core/BrowserTimings",
 	"x_ite/Browser/Core/BrowserOptions",
 	"x_ite/Browser/Core/BrowserProperties",
 	"x_ite/Browser/Core/RenderingProperties",
 	"x_ite/Browser/Core/Notification",
-	"x_ite/Browser/Core/BrowserTimings",
 	"x_ite/Browser/Core/ContextMenu",
 	"x_ite/Execution/Scene",
 	"x_ite/Parser/Parser",
 	"standard/Utility/DataStorage",
-	"x_ite/DEBUG",
 ],
 function ($,
           Fields,
+          BrowserTimings,
           BrowserOptions,
           BrowserProperties,
           RenderingProperties,
           Notification,
-          BrowserTimings,
           ContextMenu,
           Scene,
           Parser,
-          DataStorage,
-          DEBUG)
+          DataStorage)
 {
 "use strict";
 
@@ -212,15 +210,15 @@ function ($,
 		},
 		this);
 
+		this .localStorage = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this .number + ").");
+		this .mobile       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
+
+		this .browserTimings      = new BrowserTimings      (this .getPrivateScene ());
 		this .browserOptions      = new BrowserOptions      (this .getPrivateScene ());
 		this .browserProperties   = new BrowserProperties   (this .getPrivateScene ());
 		this .renderingProperties = new RenderingProperties (this .getPrivateScene ());
 		this .notification        = new Notification        (this .getPrivateScene ());
-		this .browserTimings      = new BrowserTimings      (this .getPrivateScene ());
 		this .contextMenu         = new ContextMenu         (this .getPrivateScene ());
-
-		this .localStorage = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this .number + ").");
-		this .mobile       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
 		$(".x_ite-console") .empty ();
 
@@ -236,11 +234,11 @@ function ($,
 		{
 			// Setup browser nodes.
 
+			this .browserTimings      .setup ();
 			this .browserOptions      .setup ()
 			this .browserProperties   .setup ()
 			this .renderingProperties .setup ();
 			this .notification        .setup ();
-			this .browserTimings      .setup ();
 			this .contextMenu         .setup ();
 
 			// Observe Element's attributes.

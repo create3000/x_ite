@@ -150,13 +150,6 @@ const getScriptURL = (function ()
 	{
 		$ .noConflict (true);
 
-		//Inject CSS.
-		$("<link></link>")
-			.attr ("rel", "stylesheet")
-			.attr ("type", "text/css")
-			.attr ("href", new URL ("x_ite.css", getScriptURL ()) .href)
-			.appendTo ("head");
-
 		// Now assign real X3D.
 		PrivateX3D = X3D;
 

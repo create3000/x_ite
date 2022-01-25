@@ -26304,1006 +26304,6 @@ function (X3DEventObject,
 	return X3DBaseNode;
 });
 
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Browser/Core/PrimitiveQuality',[],function ()
-{
-"use strict";
-
-	let i = 0;
-
-	const PrimitiveQuality =
-	{
-		LOW:    i ++,
-		MEDIUM: i ++,
-		HIGH:   i ++,
-	};
-
-	return PrimitiveQuality;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Browser/Core/Shading',[],function ()
-{
-"use strict";
-
-	let i = 0;
-
-	const Shading =
-	{
-		POINT:     i ++,
-		WIREFRAME: i ++,
-		FLAT:      i ++,
-		GOURAUD:   i ++,
-		PHONG:     i ++,
-	};
-
-	return Shading;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Browser/Core/TextureQuality',[],function ()
-{
-"use strict";
-
-	let i = 0;
-
-	const TextureQuality =
-	{
-		LOW:    i ++,
-		MEDIUM: i ++,
-		HIGH:   i ++,
-	};
-
-	return TextureQuality;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Browser/Core/BrowserOptions',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Core/PrimitiveQuality",
-	"x_ite/Browser/Core/Shading",
-	"x_ite/Browser/Core/TextureQuality",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DBaseNode,
-          X3DConstants,
-          PrimitiveQuality,
-          Shading,
-          TextureQuality)
-{
-"use strict";
-
-	function toBoolean (value, defaultValue)
-	{
-		if (value === "true" || value === "TRUE")
-			return true;
-
-		if (value === "false" || value === "FALSE")
-			return false;
-
-		return defaultValue;
-	}
-
-	function BrowserOptions (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
-
-		this .addAlias ("AntiAliased", this .Antialiased_);
-
-		this .textureQuality   = TextureQuality .MEDIUM
-		this .primitiveQuality = PrimitiveQuality .MEDIUM;
-		this .shading          = Shading .GOURAUD;
-
-		this .setAttributeSplashScreen ();
-	}
-
-	BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: BrowserOptions,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "SplashScreen",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "Dashboard",              new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "Rubberband",             new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "EnableInlineViewpoints", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "Antialiased",            new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "TextureQuality",         new Fields .SFString ("MEDIUM")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "PrimitiveQuality",       new Fields .SFString ("MEDIUM")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "QualityWhenMoving",      new Fields .SFString ("MEDIUM")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "Shading",                new Fields .SFString ("GOURAUD")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFFloat (9.80665)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                new Fields .SFBool (false)),
-		]),
-		getTypeName: function ()
-		{
-			return "BrowserOptions";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "browserOptions";
-		},
-		initialize: function ()
-		{
-			X3DBaseNode .prototype .initialize .call (this);
-
-			this .SplashScreen_              .addInterest ("set_splashScreen__",           this);
-			this .Rubberband_                .addInterest ("set_rubberband__",             this);
-			this .PrimitiveQuality_          .addInterest ("set_primitiveQuality__",       this);
-			this .TextureQuality_            .addInterest ("set_textureQuality__",         this);
-			this .Shading_                   .addInterest ("set_shading__",                this);
-			this .StraightenHorizon_         .addInterest ("set_straightenHorizon__",      this);
-			this .LogarithmicDepthBuffer_    .addInterest ("set_logarithmicDepthBuffer__", this);
-			this .Timings_                   .addInterest ("set_timings__", this);
-
-			this .configure ();
-		},
-		configure: function ()
-		{
-			if (! this .isInitialized ())
-				return;
-
-			var fieldDefinitions = this .getFieldDefinitions ();
-
-			for (var i = 0; i < fieldDefinitions .length; ++ i)
-			{
-				var
-					fieldDefinition = fieldDefinitions [i],
-					field           = this .getField (fieldDefinition .name);
-
-				if (this .getBrowser () .getLocalStorage () ["BrowserOptions." + fieldDefinition .name] !== undefined)
-					continue;
-
-				if (! field .equals (fieldDefinition .value))
-					field .setValue (fieldDefinition .value);
-			}
-
-			var
-				rubberband        = this .getBrowser () .getLocalStorage () ["BrowserOptions.Rubberband"],
-				primitiveQuality  = this .getBrowser () .getLocalStorage () ["BrowserOptions.PrimitiveQuality"],
-				textureQuality    = this .getBrowser () .getLocalStorage () ["BrowserOptions.TextureQuality"],
-				straightenHorizon = this .getBrowser () .getLocalStorage () ["BrowserOptions.StraightenHorizon"],
-				timings           = this .getBrowser () .getLocalStorage () ["BrowserOptions.Timings"];
-
-			this .setAttributeSplashScreen ();
-
-			if (rubberband !== undefined && rubberband !== this .Rubberband_ .getValue ())
-				this .Rubberband_ = rubberband;
-
-			if (primitiveQuality !== undefined && primitiveQuality !== this .PrimitiveQuality_ .getValue () .toUpperCase ())
-				this .PrimitiveQuality_ = primitiveQuality;
-
-			if (textureQuality !== undefined && textureQuality !== this .TextureQuality_ .getValue () .toUpperCase ())
-				this .TextureQuality_ = textureQuality;
-
-			if (straightenHorizon !== undefined && straightenHorizon !== this .StraightenHorizon_ .getValue ())
-				this .StraightenHorizon_ = straightenHorizon;
-
-			if (timings !== undefined && timings !== this .Timings_ .getValue ())
-				this .Timings_ = timings;
-		},
-		setAttributeSplashScreen: function ()
-		{
-			this .SplashScreen_ .set (this .getSplashScreen ());
-		},
-		getCache: function ()
-		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("cache"), true);
-		},
-		getContextMenu: function ()
-		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("contextMenu"), true);
-		},
-		getDebug: function ()
-		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("debug"), false);
-		},
-		getNotifications: function ()
-		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("notifications"), true);
-		},
-		getSplashScreen: function ()
-		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("splashScreen"), true);
-		},
-		getTimings: function ()
-		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("Timings"), true);
-		},
-		getPrimitiveQuality: function ()
-		{
-			return this .primitiveQuality;
-		},
-		getShading: function ()
-		{
-			return this .shading;
-		},
-		getTextureQuality: function ()
-		{
-			return this .textureQuality;
-		},
-		set_splashScreen__: function (splashScreen)
-		{
-			this .getBrowser () .getElement () .attr ("splashScreen", splashScreen .getValue () ? "true" : "false");
-		},
-		set_rubberband__: function (rubberband)
-		{
-			this .getBrowser () .getLocalStorage () ["BrowserOptions.Rubberband"] = rubberband .getValue ();
-			this .getBrowser () .getViewer () .initShaders ();
-		},
-		set_primitiveQuality__: function (value)
-		{
-			var
-				browser          = this .getBrowser (),
-				primitiveQuality = value .getValue () .toUpperCase ();
-
-			browser .getLocalStorage () ["BrowserOptions.PrimitiveQuality"] = primitiveQuality;
-
-			var
-				cone     = browser .getConeOptions (),
-				cylinder = browser .getCylinderOptions (),
-				sphere   = browser .getSphereOptions ();
-
-			switch (primitiveQuality)
-			{
-				case "LOW":
-				{
-					if (this .primitiveQuality === PrimitiveQuality .LOW)
-						break;
-
-					this .primitiveQuality = PrimitiveQuality .LOW;
-
-					if (browser .setGeometry2DPrimitiveQuality)
-						browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
-
-					cone     .xDimension_ = 16;
-					cylinder .xDimension_ = 16;
-					sphere   .xDimension_ = 20;
-					sphere   .yDimension_ = 9;
-					break;
-				}
-				case "HIGH":
-				{
-					if (this .primitiveQuality === PrimitiveQuality .HIGH)
-						break;
-
-					this .primitiveQuality = PrimitiveQuality .HIGH;
-
-					if (browser .setGeometry2DPrimitiveQuality)
-						browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
-
-					cone     .xDimension_ = 32;
-					cylinder .xDimension_ = 32;
-					sphere   .xDimension_ = 64;
-					sphere   .yDimension_ = 31;
-					break;
-				}
-				default:
-				{
-					if (this .primitiveQuality === PrimitiveQuality .MEDIUM)
-						break;
-
-					this .primitiveQuality = PrimitiveQuality .MEDIUM;
-
-					if (browser .setGeometry2DPrimitiveQuality)
-						browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
-
-					cone     .xDimension_ = 20;
-					cylinder .xDimension_ = 20;
-					sphere   .xDimension_ = 32;
-					sphere   .yDimension_ = 15;
-					break;
-				}
-			}
-		},
-		set_textureQuality__: function (value)
-		{
-			var textureQuality = value .getValue () .toUpperCase ();
-
-			this .getBrowser () .getLocalStorage () ["BrowserOptions.TextureQuality"] = textureQuality;
-
-			var textureProperties = this .getBrowser () .getDefaultTextureProperties ();
-
-			switch (textureQuality)
-			{
-				case "LOW":
-				{
-					if (this .textureQuality === TextureQuality .LOW)
-						break;
-
-					this .textureQuality = TextureQuality .LOW;
-
-					textureProperties .magnificationFilter_ = "AVG_PIXEL";
-					textureProperties .minificationFilter_  = "AVG_PIXEL";
-					textureProperties .textureCompression_  = "FASTEST";
-					textureProperties .generateMipMaps_     = true;
-
-					//glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
-					//glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-					break;
-				}
-				case "HIGH":
-				{
-					if (this .textureQuality === TextureQuality .HIGH)
-						break;
-
-					this .textureQuality = TextureQuality .HIGH;
-
-					textureProperties .magnificationFilter_ = "NICEST";
-					textureProperties .minificationFilter_  = "NICEST";
-					textureProperties .textureCompression_  = "NICEST";
-					textureProperties .generateMipMaps_     = true;
-
-					//glHint (GL_GENERATE_MIPMAP_HINT,        GL_NICEST);
-					//glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-					break;
-				}
-				default:
-				{
-					if (this .textureQuality === TextureQuality .MEDIUM)
-						break;
-
-					this .textureQuality = TextureQuality .MEDIUM;
-
-					textureProperties .magnificationFilter_ = "NICEST";
-					textureProperties .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
-					textureProperties .textureCompression_  = "NICEST";
-					textureProperties .generateMipMaps_     = true;
-
-					//glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
-					//glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-					break;
-				}
-			}
-		},
-		set_shading__: function (value)
-		{
-			var shading = value .getValue () .toUpperCase ();
-
-			switch (shading)
-			{
-				case "POINT":
-				case "POINTSET":
-				{
-					this .shading = Shading .POINT;
-					break;
-				}
-				case "WIREFRAME":
-				{
-					this .shading = Shading .WIREFRAME;
-					break;
-				}
-				case "FLAT":
-				{
-					this .shading = Shading .FLAT;
-					break;
-				}
-				case "PHONG":
-				{
-					this .shading = Shading .PHONG;
-					break;
-				}
-				default:
-				{
-					this .shading = Shading .GOURAUD;
-					break;
-				}
-			}
-
-			this .getBrowser () .setShading (this .shading);
-		},
-		set_straightenHorizon__: function (straightenHorizon)
-		{
-			this .getBrowser () .getLocalStorage () ["BrowserOptions.StraightenHorizon"] = straightenHorizon .getValue ();
-		},
-		set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
-		{
-			var
-				browser = this .getBrowser (),
-				gl      = browser .getContext ();
-
-			logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && (gl .getVersion () >= 2 || Boolean (browser .getExtension ("EXT_frag_depth")));
-
-			if (logarithmicDepthBuffer === browser .getRenderingProperties () .LogarithmicDepthBuffer_ .getValue ())
-				return;
-
-			browser .getRenderingProperties () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer;
-
-			// Recompile shaders.
-
-			// There's no need to update background shader.
-
-			if (browser .hasPointShader ())
-			{
-				browser .getPointShader () .parts_ [0] .getValue () .url_ .addEvent ();
-				browser .getPointShader () .parts_ [1] .getValue () .url_ .addEvent ();
-			}
-
-			if (browser .hasLineShader ())
-			{
-				browser .getLineShader () .parts_ [0] .getValue () .url_ .addEvent ();
-				browser .getLineShader () .parts_ [1] .getValue () .url_ .addEvent ();
-			}
-
-			if (browser .hasGouraudShader ())
-			{
-				browser .getGouraudShader () .parts_ [0] .getValue () .url_ .addEvent ();
-				browser .getGouraudShader () .parts_ [1] .getValue () .url_ .addEvent ();
-			}
-
-			if (browser .hasPhongShader ())
-			{
-				browser .getPhongShader () .parts_ [0] .getValue () .url_ .addEvent ();
-				browser .getPhongShader () .parts_ [1] .getValue () .url_ .addEvent ();
-			}
-
-			if (browser .hasShadowShader ())
-			{
-				browser .getShadowShader () .parts_ [0] .getValue () .url_ .addEvent ();
-				browser .getShadowShader () .parts_ [1] .getValue () .url_ .addEvent ();
-			}
-		},
-		set_timings__: function (timings)
-		{
-			const browser = this .getBrowser ();
-
-			browser .getLocalStorage () ["BrowserOptions.Timings"] = timings .getValue ();
-			browser .getBrowserTimings () .setEnabled (timings .getValue ());
-		},
-	});
-
-	return BrowserOptions;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Browser/Core/BrowserProperties',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DBaseNode, 
-          X3DConstants)
-{
-"use strict";
-	
-	function BrowserProperties (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
-	}
-
-	BrowserProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: BrowserProperties,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "ABSTRACT_NODES",        new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "CONCRETE_NODES",        new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "EXTERNAL_INTERACTIONS", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "PROTOTYPE_CREATE",      new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "DOM_IMPORT",            new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "XML_ENCODING",          new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "CLASSIC_VRML_ENCODING", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "BINARY_ENCODING",       new Fields .SFBool ()),
-		]),
-		getTypeName: function ()
-		{
-			return "BrowserProperties";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "browserProperties";
-		},
-	});
-
-	return BrowserProperties;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Browser/Core/RenderingProperties',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Bits/X3DConstants",
-],
-function (Fields,
-          X3DFieldDefinition,
-          FieldDefinitionArray,
-          X3DBaseNode, 
-          X3DConstants)
-{
-"use strict";
-	
-	function RenderingProperties (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
-
-		this .addAlias ("AntiAliased", this .Antialiased_);
-	}
-
-	RenderingProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: RenderingProperties,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .outputOnly, "Shading",                new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly, "MaxTextureSize",         new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly, "TextureUnits",           new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly, "MaxLights",              new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly, "Antialiased",            new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .outputOnly, "ColorDepth",             new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly, "TextureMemory",          new Fields .SFDouble ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
-		]),
-		getTypeName: function ()
-		{
-			return "RenderingProperties";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "renderingProperties";
-		},
-		initialize: function ()
-		{
-			X3DBaseNode .prototype .initialize .call (this);
-
-			var browser = this .getBrowser ();
-
-			this .MaxTextureSize_ = browser .getMaxTextureSize ();
-			this .TextureUnits_   = browser .getCombinedTextureUnits ();
-			this .MaxLights_      = browser .getMaxLights ();
-			this .ColorDepth_     = browser .getColorDepth ();
-			this .TextureMemory_  = browser .getTextureMemory ();
-
-			browser .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
-
-			this .set_shading__ (browser .getBrowserOptions () .Shading_);
-		},
-		set_shading__: function (shading)
-		{
-			this .Shading_ = shading;
-		},
-	});
-
-	return RenderingProperties;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Browser/Core/Notification',[
-	"jquery",
-	"x_ite/Fields/SFString",
-	"x_ite/Basic/X3DBaseNode",
-],
-function ($,
-          SFString,
-          X3DBaseNode)
-{
-"use strict";
-
-	$.fn.textWidth = function (string)
-	{
-		var children = $(this) .children ();
-		var html     = $(this) .html ();
-		var span     = '<span>' + html + '</span>';
-		$(this) .html (span);
-		var width = $(this) .find ('span:first') .width ();
-		$(this) .empty ();
-		$(this) .append (children);
-		return width;
-	};
-
-   function Notification (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
-
-		this .addChildObjects ("string", new SFString ());
-	}
-
-	Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: Notification,
-		getTypeName: function ()
-		{
-			return "Notification";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		initialize: function ()
-		{
-			X3DBaseNode .prototype .initialize .call (this);
-
-			this .element = $("<div></div>")
-				.addClass ("x_ite-private-notification")
-				.appendTo (this .getBrowser () .getSurface ())
-				.animate ({ width: 0 });
-
-			$("<span></span>") .appendTo (this .element);
-
-			this .string_ .addInterest ("set_string__", this);
-		},
-		set_string__: function ()
-		{
-			if (! this .getBrowser () .getBrowserOptions () .getNotifications ())
-				return;
-
-			if (this .string_ .length === 0)
-				return;
-
-			this .element .children () .text (this .string_ .getValue ());
-
-			this .element
-				.stop (true, true)
-				.fadeIn (0)
-				.animate ({ width: this .element .textWidth () })
-				.animate ({ "delay": 1 }, 5000)
-				.animate ({ width: 0 })
-				.fadeOut (0);
-		},
-	});
-
-	return Notification;
-});
-
 /**
  * @license text 2.0.16 Copyright jQuery Foundation and other contributors.
  * Released under MIT license, http://github.com/requirejs/text/LICENSE
@@ -28085,6 +27085,1006 @@ function ($,
 	});
 
 	return BrowserTimings;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Core/PrimitiveQuality',[],function ()
+{
+"use strict";
+
+	let i = 0;
+
+	const PrimitiveQuality =
+	{
+		LOW:    i ++,
+		MEDIUM: i ++,
+		HIGH:   i ++,
+	};
+
+	return PrimitiveQuality;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Core/Shading',[],function ()
+{
+"use strict";
+
+	let i = 0;
+
+	const Shading =
+	{
+		POINT:     i ++,
+		WIREFRAME: i ++,
+		FLAT:      i ++,
+		GOURAUD:   i ++,
+		PHONG:     i ++,
+	};
+
+	return Shading;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Core/TextureQuality',[],function ()
+{
+"use strict";
+
+	let i = 0;
+
+	const TextureQuality =
+	{
+		LOW:    i ++,
+		MEDIUM: i ++,
+		HIGH:   i ++,
+	};
+
+	return TextureQuality;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Core/BrowserOptions',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Basic/X3DBaseNode",
+	"x_ite/Bits/X3DConstants",
+	"x_ite/Browser/Core/PrimitiveQuality",
+	"x_ite/Browser/Core/Shading",
+	"x_ite/Browser/Core/TextureQuality",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DBaseNode,
+          X3DConstants,
+          PrimitiveQuality,
+          Shading,
+          TextureQuality)
+{
+"use strict";
+
+	function toBoolean (value, defaultValue)
+	{
+		if (value === "true" || value === "TRUE")
+			return true;
+
+		if (value === "false" || value === "FALSE")
+			return false;
+
+		return defaultValue;
+	}
+
+	function BrowserOptions (executionContext)
+	{
+		X3DBaseNode .call (this, executionContext);
+
+		this .addAlias ("AntiAliased", this .Antialiased_);
+
+		this .textureQuality   = TextureQuality .MEDIUM
+		this .primitiveQuality = PrimitiveQuality .MEDIUM;
+		this .shading          = Shading .GOURAUD;
+
+		this .setAttributeSplashScreen ();
+	}
+
+	BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+	{
+		constructor: BrowserOptions,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .inputOutput, "SplashScreen",           new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "Dashboard",              new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "Rubberband",             new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "EnableInlineViewpoints", new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "Antialiased",            new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "TextureQuality",         new Fields .SFString ("MEDIUM")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "PrimitiveQuality",       new Fields .SFString ("MEDIUM")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "QualityWhenMoving",      new Fields .SFString ("MEDIUM")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "Shading",                new Fields .SFString ("GOURAUD")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFFloat (9.80665)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                new Fields .SFBool (false)),
+		]),
+		getTypeName: function ()
+		{
+			return "BrowserOptions";
+		},
+		getComponentName: function ()
+		{
+			return "X_ITE";
+		},
+		getContainerField: function ()
+		{
+			return "browserOptions";
+		},
+		initialize: function ()
+		{
+			X3DBaseNode .prototype .initialize .call (this);
+
+			this .SplashScreen_              .addInterest ("set_splashScreen__",           this);
+			this .Rubberband_                .addInterest ("set_rubberband__",             this);
+			this .PrimitiveQuality_          .addInterest ("set_primitiveQuality__",       this);
+			this .TextureQuality_            .addInterest ("set_textureQuality__",         this);
+			this .Shading_                   .addInterest ("set_shading__",                this);
+			this .StraightenHorizon_         .addInterest ("set_straightenHorizon__",      this);
+			this .LogarithmicDepthBuffer_    .addInterest ("set_logarithmicDepthBuffer__", this);
+			this .Timings_                   .addInterest ("set_timings__",                this);
+
+			this .configure ();
+		},
+		configure: function ()
+		{
+			if (! this .isInitialized ())
+				return;
+
+			var fieldDefinitions = this .getFieldDefinitions ();
+
+			for (var i = 0; i < fieldDefinitions .length; ++ i)
+			{
+				var
+					fieldDefinition = fieldDefinitions [i],
+					field           = this .getField (fieldDefinition .name);
+
+				if (this .getBrowser () .getLocalStorage () ["BrowserOptions." + fieldDefinition .name] !== undefined)
+					continue;
+
+				if (! field .equals (fieldDefinition .value))
+					field .setValue (fieldDefinition .value);
+			}
+
+			var
+				rubberband        = this .getBrowser () .getLocalStorage () ["BrowserOptions.Rubberband"],
+				primitiveQuality  = this .getBrowser () .getLocalStorage () ["BrowserOptions.PrimitiveQuality"],
+				textureQuality    = this .getBrowser () .getLocalStorage () ["BrowserOptions.TextureQuality"],
+				straightenHorizon = this .getBrowser () .getLocalStorage () ["BrowserOptions.StraightenHorizon"],
+				timings           = this .getBrowser () .getLocalStorage () ["BrowserOptions.Timings"];
+
+			this .setAttributeSplashScreen ();
+
+			if (rubberband !== this .Rubberband_ .getValue ())
+				this .Rubberband_ = rubberband;
+
+			if (primitiveQuality !== this .PrimitiveQuality_ .getValue () .toUpperCase ())
+				this .PrimitiveQuality_ = primitiveQuality;
+
+			if (textureQuality !== this .TextureQuality_ .getValue () .toUpperCase ())
+				this .TextureQuality_ = textureQuality;
+
+			if (straightenHorizon !== this .StraightenHorizon_ .getValue ())
+				this .StraightenHorizon_ = straightenHorizon;
+
+			if (timings !== this .Timings_ .getValue ())
+				this .Timings_ = timings;
+		},
+		setAttributeSplashScreen: function ()
+		{
+			this .SplashScreen_ .set (this .getSplashScreen ());
+		},
+		getCache: function ()
+		{
+			return toBoolean (this .getBrowser () .getElement () .attr ("cache"), true);
+		},
+		getContextMenu: function ()
+		{
+			return toBoolean (this .getBrowser () .getElement () .attr ("contextMenu"), true);
+		},
+		getDebug: function ()
+		{
+			return toBoolean (this .getBrowser () .getElement () .attr ("debug"), false);
+		},
+		getNotifications: function ()
+		{
+			return toBoolean (this .getBrowser () .getElement () .attr ("notifications"), true);
+		},
+		getSplashScreen: function ()
+		{
+			return toBoolean (this .getBrowser () .getElement () .attr ("splashScreen"), true);
+		},
+		getTimings: function ()
+		{
+			return toBoolean (this .getBrowser () .getElement () .attr ("Timings"), true);
+		},
+		getPrimitiveQuality: function ()
+		{
+			return this .primitiveQuality;
+		},
+		getShading: function ()
+		{
+			return this .shading;
+		},
+		getTextureQuality: function ()
+		{
+			return this .textureQuality;
+		},
+		set_splashScreen__: function (splashScreen)
+		{
+			this .getBrowser () .getElement () .attr ("splashScreen", splashScreen .getValue () ? "true" : "false");
+		},
+		set_rubberband__: function (rubberband)
+		{
+			this .getBrowser () .getLocalStorage () ["BrowserOptions.Rubberband"] = rubberband .getValue ();
+			this .getBrowser () .getViewer () .initShaders ();
+		},
+		set_primitiveQuality__: function (value)
+		{
+			var
+				browser          = this .getBrowser (),
+				primitiveQuality = value .getValue () .toUpperCase ();
+
+			browser .getLocalStorage () ["BrowserOptions.PrimitiveQuality"] = primitiveQuality;
+
+			var
+				cone     = browser .getConeOptions (),
+				cylinder = browser .getCylinderOptions (),
+				sphere   = browser .getSphereOptions ();
+
+			switch (primitiveQuality)
+			{
+				case "LOW":
+				{
+					if (this .primitiveQuality === PrimitiveQuality .LOW)
+						break;
+
+					this .primitiveQuality = PrimitiveQuality .LOW;
+
+					if (browser .setGeometry2DPrimitiveQuality)
+						browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
+
+					cone     .xDimension_ = 16;
+					cylinder .xDimension_ = 16;
+					sphere   .xDimension_ = 20;
+					sphere   .yDimension_ = 9;
+					break;
+				}
+				case "HIGH":
+				{
+					if (this .primitiveQuality === PrimitiveQuality .HIGH)
+						break;
+
+					this .primitiveQuality = PrimitiveQuality .HIGH;
+
+					if (browser .setGeometry2DPrimitiveQuality)
+						browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
+
+					cone     .xDimension_ = 32;
+					cylinder .xDimension_ = 32;
+					sphere   .xDimension_ = 64;
+					sphere   .yDimension_ = 31;
+					break;
+				}
+				default:
+				{
+					if (this .primitiveQuality === PrimitiveQuality .MEDIUM)
+						break;
+
+					this .primitiveQuality = PrimitiveQuality .MEDIUM;
+
+					if (browser .setGeometry2DPrimitiveQuality)
+						browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
+
+					cone     .xDimension_ = 20;
+					cylinder .xDimension_ = 20;
+					sphere   .xDimension_ = 32;
+					sphere   .yDimension_ = 15;
+					break;
+				}
+			}
+		},
+		set_textureQuality__: function (value)
+		{
+			var textureQuality = value .getValue () .toUpperCase ();
+
+			this .getBrowser () .getLocalStorage () ["BrowserOptions.TextureQuality"] = textureQuality;
+
+			var textureProperties = this .getBrowser () .getDefaultTextureProperties ();
+
+			switch (textureQuality)
+			{
+				case "LOW":
+				{
+					if (this .textureQuality === TextureQuality .LOW)
+						break;
+
+					this .textureQuality = TextureQuality .LOW;
+
+					textureProperties .magnificationFilter_ = "AVG_PIXEL";
+					textureProperties .minificationFilter_  = "AVG_PIXEL";
+					textureProperties .textureCompression_  = "FASTEST";
+					textureProperties .generateMipMaps_     = true;
+
+					//glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
+					//glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+					break;
+				}
+				case "HIGH":
+				{
+					if (this .textureQuality === TextureQuality .HIGH)
+						break;
+
+					this .textureQuality = TextureQuality .HIGH;
+
+					textureProperties .magnificationFilter_ = "NICEST";
+					textureProperties .minificationFilter_  = "NICEST";
+					textureProperties .textureCompression_  = "NICEST";
+					textureProperties .generateMipMaps_     = true;
+
+					//glHint (GL_GENERATE_MIPMAP_HINT,        GL_NICEST);
+					//glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+					break;
+				}
+				default:
+				{
+					if (this .textureQuality === TextureQuality .MEDIUM)
+						break;
+
+					this .textureQuality = TextureQuality .MEDIUM;
+
+					textureProperties .magnificationFilter_ = "NICEST";
+					textureProperties .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
+					textureProperties .textureCompression_  = "NICEST";
+					textureProperties .generateMipMaps_     = true;
+
+					//glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
+					//glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+					break;
+				}
+			}
+		},
+		set_shading__: function (value)
+		{
+			var shading = value .getValue () .toUpperCase ();
+
+			switch (shading)
+			{
+				case "POINT":
+				case "POINTSET":
+				{
+					this .shading = Shading .POINT;
+					break;
+				}
+				case "WIREFRAME":
+				{
+					this .shading = Shading .WIREFRAME;
+					break;
+				}
+				case "FLAT":
+				{
+					this .shading = Shading .FLAT;
+					break;
+				}
+				case "PHONG":
+				{
+					this .shading = Shading .PHONG;
+					break;
+				}
+				default:
+				{
+					this .shading = Shading .GOURAUD;
+					break;
+				}
+			}
+
+			this .getBrowser () .setShading (this .shading);
+		},
+		set_straightenHorizon__: function (straightenHorizon)
+		{
+			this .getBrowser () .getLocalStorage () ["BrowserOptions.StraightenHorizon"] = straightenHorizon .getValue ();
+		},
+		set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
+		{
+			var
+				browser = this .getBrowser (),
+				gl      = browser .getContext ();
+
+			logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && (gl .getVersion () >= 2 || Boolean (browser .getExtension ("EXT_frag_depth")));
+
+			if (logarithmicDepthBuffer === browser .getRenderingProperties () .LogarithmicDepthBuffer_ .getValue ())
+				return;
+
+			browser .getRenderingProperties () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer;
+
+			// Recompile shaders.
+
+			// There's no need to update background shader.
+
+			if (browser .hasPointShader ())
+			{
+				browser .getPointShader () .parts_ [0] .getValue () .url_ .addEvent ();
+				browser .getPointShader () .parts_ [1] .getValue () .url_ .addEvent ();
+			}
+
+			if (browser .hasLineShader ())
+			{
+				browser .getLineShader () .parts_ [0] .getValue () .url_ .addEvent ();
+				browser .getLineShader () .parts_ [1] .getValue () .url_ .addEvent ();
+			}
+
+			if (browser .hasGouraudShader ())
+			{
+				browser .getGouraudShader () .parts_ [0] .getValue () .url_ .addEvent ();
+				browser .getGouraudShader () .parts_ [1] .getValue () .url_ .addEvent ();
+			}
+
+			if (browser .hasPhongShader ())
+			{
+				browser .getPhongShader () .parts_ [0] .getValue () .url_ .addEvent ();
+				browser .getPhongShader () .parts_ [1] .getValue () .url_ .addEvent ();
+			}
+
+			if (browser .hasShadowShader ())
+			{
+				browser .getShadowShader () .parts_ [0] .getValue () .url_ .addEvent ();
+				browser .getShadowShader () .parts_ [1] .getValue () .url_ .addEvent ();
+			}
+		},
+		set_timings__: function (timings)
+		{
+			const browser = this .getBrowser ();
+
+			browser .getLocalStorage () ["BrowserOptions.Timings"] = timings .getValue ();
+			browser .getBrowserTimings () .setEnabled (timings .getValue ());
+		},
+	});
+
+	return BrowserOptions;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Core/BrowserProperties',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Basic/X3DBaseNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DBaseNode, 
+          X3DConstants)
+{
+"use strict";
+	
+	function BrowserProperties (executionContext)
+	{
+		X3DBaseNode .call (this, executionContext);
+	}
+
+	BrowserProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+	{
+		constructor: BrowserProperties,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "ABSTRACT_NODES",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "CONCRETE_NODES",        new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "EXTERNAL_INTERACTIONS", new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "PROTOTYPE_CREATE",      new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "DOM_IMPORT",            new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "XML_ENCODING",          new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "CLASSIC_VRML_ENCODING", new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "BINARY_ENCODING",       new Fields .SFBool ()),
+		]),
+		getTypeName: function ()
+		{
+			return "BrowserProperties";
+		},
+		getComponentName: function ()
+		{
+			return "X_ITE";
+		},
+		getContainerField: function ()
+		{
+			return "browserProperties";
+		},
+	});
+
+	return BrowserProperties;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Core/RenderingProperties',[
+	"x_ite/Fields",
+	"x_ite/Basic/X3DFieldDefinition",
+	"x_ite/Basic/FieldDefinitionArray",
+	"x_ite/Basic/X3DBaseNode",
+	"x_ite/Bits/X3DConstants",
+],
+function (Fields,
+          X3DFieldDefinition,
+          FieldDefinitionArray,
+          X3DBaseNode, 
+          X3DConstants)
+{
+"use strict";
+	
+	function RenderingProperties (executionContext)
+	{
+		X3DBaseNode .call (this, executionContext);
+
+		this .addAlias ("AntiAliased", this .Antialiased_);
+	}
+
+	RenderingProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+	{
+		constructor: RenderingProperties,
+		fieldDefinitions: new FieldDefinitionArray ([
+			new X3DFieldDefinition (X3DConstants .outputOnly, "Shading",                new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "MaxTextureSize",         new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "TextureUnits",           new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "MaxLights",              new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "Antialiased",            new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "ColorDepth",             new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "TextureMemory",          new Fields .SFDouble ()),
+			new X3DFieldDefinition (X3DConstants .outputOnly, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
+		]),
+		getTypeName: function ()
+		{
+			return "RenderingProperties";
+		},
+		getComponentName: function ()
+		{
+			return "X_ITE";
+		},
+		getContainerField: function ()
+		{
+			return "renderingProperties";
+		},
+		initialize: function ()
+		{
+			X3DBaseNode .prototype .initialize .call (this);
+
+			var browser = this .getBrowser ();
+
+			this .MaxTextureSize_ = browser .getMaxTextureSize ();
+			this .TextureUnits_   = browser .getCombinedTextureUnits ();
+			this .MaxLights_      = browser .getMaxLights ();
+			this .ColorDepth_     = browser .getColorDepth ();
+			this .TextureMemory_  = browser .getTextureMemory ();
+
+			browser .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
+
+			this .set_shading__ (browser .getBrowserOptions () .Shading_);
+		},
+		set_shading__: function (shading)
+		{
+			this .Shading_ = shading;
+		},
+	});
+
+	return RenderingProperties;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/Core/Notification',[
+	"jquery",
+	"x_ite/Fields/SFString",
+	"x_ite/Basic/X3DBaseNode",
+],
+function ($,
+          SFString,
+          X3DBaseNode)
+{
+"use strict";
+
+	$.fn.textWidth = function (string)
+	{
+		var children = $(this) .children ();
+		var html     = $(this) .html ();
+		var span     = '<span>' + html + '</span>';
+		$(this) .html (span);
+		var width = $(this) .find ('span:first') .width ();
+		$(this) .empty ();
+		$(this) .append (children);
+		return width;
+	};
+
+   function Notification (executionContext)
+	{
+		X3DBaseNode .call (this, executionContext);
+
+		this .addChildObjects ("string", new SFString ());
+	}
+
+	Notification .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+	{
+		constructor: Notification,
+		getTypeName: function ()
+		{
+			return "Notification";
+		},
+		getComponentName: function ()
+		{
+			return "X_ITE";
+		},
+		initialize: function ()
+		{
+			X3DBaseNode .prototype .initialize .call (this);
+
+			this .element = $("<div></div>")
+				.addClass ("x_ite-private-notification")
+				.appendTo (this .getBrowser () .getSurface ())
+				.animate ({ width: 0 });
+
+			$("<span></span>") .appendTo (this .element);
+
+			this .string_ .addInterest ("set_string__", this);
+		},
+		set_string__: function ()
+		{
+			if (! this .getBrowser () .getBrowserOptions () .getNotifications ())
+				return;
+
+			if (this .string_ .length === 0)
+				return;
+
+			this .element .children () .text (this .string_ .getValue ());
+
+			this .element
+				.stop (true, true)
+				.fadeIn (0)
+				.animate ({ width: this .element .textWidth () })
+				.animate ({ "delay": 1 }, 5000)
+				.animate ({ width: 0 })
+				.fadeOut (0);
+		},
+	});
+
+	return Notification;
 });
 
 /**
@@ -38878,29 +38878,27 @@ define ('standard/Utility/DataStorage',[],function ()
 define ('x_ite/Browser/Core/X3DCoreContext',[
 	"jquery",
 	"x_ite/Fields",
+	"x_ite/Browser/Core/BrowserTimings",
 	"x_ite/Browser/Core/BrowserOptions",
 	"x_ite/Browser/Core/BrowserProperties",
 	"x_ite/Browser/Core/RenderingProperties",
 	"x_ite/Browser/Core/Notification",
-	"x_ite/Browser/Core/BrowserTimings",
 	"x_ite/Browser/Core/ContextMenu",
 	"x_ite/Execution/Scene",
 	"x_ite/Parser/Parser",
 	"standard/Utility/DataStorage",
-	"x_ite/DEBUG",
 ],
 function ($,
           Fields,
+          BrowserTimings,
           BrowserOptions,
           BrowserProperties,
           RenderingProperties,
           Notification,
-          BrowserTimings,
           ContextMenu,
           Scene,
           Parser,
-          DataStorage,
-          DEBUG)
+          DataStorage)
 {
 "use strict";
 
@@ -39040,15 +39038,15 @@ function ($,
 		},
 		this);
 
+		this .localStorage = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this .number + ").");
+		this .mobile       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
+
+		this .browserTimings      = new BrowserTimings      (this .getPrivateScene ());
 		this .browserOptions      = new BrowserOptions      (this .getPrivateScene ());
 		this .browserProperties   = new BrowserProperties   (this .getPrivateScene ());
 		this .renderingProperties = new RenderingProperties (this .getPrivateScene ());
 		this .notification        = new Notification        (this .getPrivateScene ());
-		this .browserTimings      = new BrowserTimings      (this .getPrivateScene ());
 		this .contextMenu         = new ContextMenu         (this .getPrivateScene ());
-
-		this .localStorage = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this .number + ").");
-		this .mobile       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
 		$(".x_ite-console") .empty ();
 
@@ -39064,11 +39062,11 @@ function ($,
 		{
 			// Setup browser nodes.
 
+			this .browserTimings      .setup ();
 			this .browserOptions      .setup ()
 			this .browserProperties   .setup ()
 			this .renderingProperties .setup ();
 			this .notification        .setup ();
-			this .browserTimings      .setup ();
 			this .contextMenu         .setup ();
 
 			// Observe Element's attributes.
@@ -118346,13 +118344,6 @@ const getScriptURL = (function ()
 	require (["jquery", "x_ite/X3D"], function ($, X3D)
 	{
 		$ .noConflict (true);
-
-		//Inject CSS.
-		$("<link></link>")
-			.attr ("rel", "stylesheet")
-			.attr ("type", "text/css")
-			.attr ("href", new URL ("x_ite.css", getScriptURL ()) .href)
-			.appendTo ("head");
 
 		// Now assign real X3D.
 		PrivateX3D = X3D;
