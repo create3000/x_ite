@@ -143,6 +143,8 @@ function ($,
 
 			// Print welcome message.
 
+			if (!this .getDebug ()) return;
+
 			this .print ("Welcome to " + this .name + " X3D Browser " + this .version + ":\n" +
 			             "   Current Graphics Renderer\n" +
 			             "      Name: " + this .getVendor () + " " + this .getRenderer () + "\n" +

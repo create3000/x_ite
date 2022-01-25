@@ -1,4 +1,4 @@
-/* X_ITE v4.7.6-1129 */
+/* X_ITE v4.7.6-1130 */
 
 (function () {
 
@@ -49459,10 +49459,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('standard/Utility/DataStorage',[
-	"jquery",
-],
-function ($)
+define ('standard/Utility/DataStorage',[],function ()
 {
 "use strict";
 
@@ -49484,7 +49481,7 @@ function ($)
 			if (value === undefined || value === "undefined")
 			   return undefined;
 
-			return $ .parseJSON (value);
+			return JSON .parse (value);
 		},
 		set: function (target, key, value)
 		{
@@ -49524,11 +49521,11 @@ function ($)
 				storage   = this .getStorage (),
 				namespace = this .getNameSpace ();
 
-			$.each (storage, function (key)
+			for (const key of Object .keys (storage))
 			{
 				if (key .substr (0, namespace .length) === namespace)
-					storage .removeItem (key);
-			});
+					storage .removeItem (key)
+			}
 		},
 	}
 
@@ -116852,6 +116849,8 @@ function ($,
 			}
 
 			// Print welcome message.
+
+			if (!this .getDebug ()) return;
 
 			this .print ("Welcome to " + this .name + " X3D Browser " + this .version + ":\n" +
 			             "   Current Graphics Renderer\n" +
