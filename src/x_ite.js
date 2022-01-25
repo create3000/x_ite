@@ -48,6 +48,7 @@
 
 if (typeof module === 'undefined')
 	var module = { };
+var nodeModule, nodeRequire;
 
 require .config ({
 	"waitSeconds": 0,
@@ -71,7 +72,10 @@ define .hide = function ()
 
 const getScriptURL = (function ()
 {
-	const src = document .currentScript .src;
+	if (document .currentScript)
+		var src = document .currentScript .src;
+	else if (typeof __filename !== "undefined")
+		var src = "file://" + __filename;
 
 	return function ()
 	{
@@ -128,6 +132,9 @@ const getScriptURL = (function ()
 
 	// Now assign temporary X3D.
 	window .X3D = X_ITE;
+
+	if (nodeModule)
+		nodeModule .exports = X_ITE;
 
 	// IE fix.
 	document .createElement ("X3DCanvas");

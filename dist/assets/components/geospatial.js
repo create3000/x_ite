@@ -1,9 +1,19 @@
-(function () {
+(function (nodeModule, nodeRequire, nodeProcess) {
 
-	var
-		define  = X3D .define,
-		require = X3D .require,
-		module  = { };
+if (typeof X3D === "undefined")
+	return;
+
+var
+	define  = X3D .define,
+	require = X3D .require;
+
+var module = { }, exports, process;
+
+if (nodeProcess === undefined)
+{
+	nodeModule  = undefined;
+	nodeRequire = undefined;
+}
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *
@@ -3791,7 +3801,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define ([
+define (X3D .getComponentUrl ("geospatial"), [
 	"x_ite/Components",
 	"x_ite/Components/Geospatial/GeoCoordinate",
 	"x_ite/Components/Geospatial/GeoElevationGrid",
@@ -3847,4 +3857,4 @@ function (Components,
 
 
 
-}());
+}(typeof module !== "undefined" ? module : undefined, typeof require !== "undefined" ? require : undefined, typeof process !== "undefined" ? process : undefined));

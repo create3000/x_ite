@@ -1,13 +1,19 @@
-/* X_ITE v4.7.6-1131 */
+/* X_ITE v4.7.6-1132 */
 
-(function () {
+(function (nodeModule, nodeRequire, nodeProcess) {
 
 var x_iteNoConfict = {
 	sprintf:  window .sprintf,
 	vsprintf: window .vsprintf,
 };
 
-var module = { };
+var module, exports, process;
+
+if (nodeProcess === undefined)
+{
+	nodeModule  = undefined;
+	nodeRequire = undefined;
+}
 /** vim: et:ts=4:sw=4:sts=4
  * @license RequireJS 2.3.6 Copyright jQuery Foundation and other contributors.
  * Released under MIT license, https://github.com/requirejs/requirejs/blob/master/LICENSE
@@ -34099,6 +34105,12 @@ define ('x_ite/Parser/X3DParser',[],function ()
 
 					if (providerUrl .match (componentsUrl))
 						providerUrls .add (providerUrl);
+				}
+
+				if (nodeRequire)
+				{
+					for (const url of providerUrls)
+						nodeRequire (new URL (url) .pathname);
 				}
 
 				return Array .from (providerUrls);
@@ -117905,6 +117917,7 @@ function ($,
 
 if (typeof module === 'undefined')
 	var module = { };
+var nodeModule, nodeRequire;
 
 require .config ({
 	"waitSeconds": 0,
@@ -117928,7 +117941,10 @@ define .hide = function ()
 
 const getScriptURL = (function ()
 {
-	const src = document .currentScript .src;
+	if (document .currentScript)
+		var src = document .currentScript .src;
+	else if (typeof __filename !== "undefined")
+		var src = "file://" + __filename;
 
 	return function ()
 	{
@@ -117985,6 +118001,9 @@ const getScriptURL = (function ()
 
 	// Now assign temporary X3D.
 	window .X3D = X_ITE;
+
+	if (nodeModule)
+		nodeModule .exports = X_ITE;
 
 	// IE fix.
 	document .createElement ("X3DCanvas");
@@ -118071,4 +118090,4 @@ for (var key in x_iteNoConfict)
 	else
 		window [key] = x_iteNoConfict [key];
 }
-}());
+}(typeof module !== "undefined" ? module : undefined, typeof require !== "undefined" ? require : undefined, typeof process !== "undefined" ? process : undefined));

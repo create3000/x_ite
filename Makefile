@@ -76,5 +76,6 @@ define generate_component
 	node_modules/requirejs/bin/r.js -o build/components/$(1).build.js
 	perl -pi -e "s|'assets/components/$(1)',||" dist/assets/components/$(1).js
 	perl -pi -e "s|text/text!|text!|" dist/assets/components/$(1).js
+	perl -pi -e "s|define\\s+\\(\\[|define (X3D .getComponentUrl (\"$(1)\"), [|" dist/assets/components/$(1).js
 	node_modules/uglify-js-es6/bin/uglifyjs --mangle $(2) -- dist/assets/components/$(1).js > dist/assets/components/$(1).min.js
 endef

@@ -45,6 +45,11 @@
  *
  ******************************************************************************/
 
+var nodeRequire;
+
+if (nodeRequire !== undefined)
+ 	nodeRequire (new URL (X3D .getComponentUrl ("rigid-body-physics")) .pathname);
+
 define ([
 	"x_ite/Components",
 	"x_ite/Components/Picking/LinePickSensor",
@@ -84,4 +89,3 @@ function (Components,
 		},
 	});
 });
-

@@ -130,6 +130,12 @@ define (function ()
 						providerUrls .add (providerUrl);
 				}
 
+				if (nodeRequire)
+				{
+					for (const url of providerUrls)
+						nodeRequire (new URL (url) .pathname);
+				}
+
 				return Array .from (providerUrls);
 			};
 		})(),
