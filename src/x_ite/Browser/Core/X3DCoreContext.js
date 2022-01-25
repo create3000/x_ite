@@ -627,7 +627,7 @@ function ($,
 					if (this .getControlKey ())
 					{
 						event .preventDefault ();
-						this .getBrowserTimings () .setEnabled (! this .getBrowserTimings () .getEnabled ());
+						this .setBrowserOption ("Timings", !this .getBrowserOption ("Timings"));
 					}
 
 					break;

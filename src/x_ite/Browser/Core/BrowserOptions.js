@@ -56,7 +56,6 @@ define ([
 	"x_ite/Browser/Core/PrimitiveQuality",
 	"x_ite/Browser/Core/Shading",
 	"x_ite/Browser/Core/TextureQuality",
-	"x_ite/Browser/Navigation/X3DFlyViewer",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -65,8 +64,7 @@ function (Fields,
           X3DConstants,
           PrimitiveQuality,
           Shading,
-          TextureQuality,
-          X3DFlyViewer)
+          TextureQuality)
 {
 "use strict";
 
@@ -111,6 +109,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFFloat (9.80665)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                new Fields .SFBool (false)),
 		]),
 		getTypeName: function ()
 		{
@@ -135,6 +134,7 @@ function (Fields,
 			this .Shading_                   .addInterest ("set_shading__",                this);
 			this .StraightenHorizon_         .addInterest ("set_straightenHorizon__",      this);
 			this .LogarithmicDepthBuffer_    .addInterest ("set_logarithmicDepthBuffer__", this);
+			this .Timings_                   .addInterest ("set_timings__", this);
 
 			this .configure ();
 		},
@@ -162,7 +162,8 @@ function (Fields,
 				rubberband        = this .getBrowser () .getLocalStorage () ["BrowserOptions.Rubberband"],
 				primitiveQuality  = this .getBrowser () .getLocalStorage () ["BrowserOptions.PrimitiveQuality"],
 				textureQuality    = this .getBrowser () .getLocalStorage () ["BrowserOptions.TextureQuality"],
-				straightenHorizon = this .getBrowser () .getLocalStorage () ["BrowserOptions.StraightenHorizon"];
+				straightenHorizon = this .getBrowser () .getLocalStorage () ["BrowserOptions.StraightenHorizon"],
+				timings           = this .getBrowser () .getLocalStorage () ["BrowserOptions.Timings"];
 
 			this .setAttributeSplashScreen ();
 
@@ -177,6 +178,9 @@ function (Fields,
 
 			if (straightenHorizon !== undefined && straightenHorizon !== this .StraightenHorizon_ .getValue ())
 				this .StraightenHorizon_ = straightenHorizon;
+
+			if (timings !== undefined && timings !== this .Timings_ .getValue ())
+				this .Timings_ = timings;
 		},
 		setAttributeSplashScreen: function ()
 		{
@@ -204,7 +208,7 @@ function (Fields,
 		},
 		getTimings: function ()
 		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("timings"), true);
+			return toBoolean (this .getBrowser () .getElement () .attr ("Timings"), true);
 		},
 		getPrimitiveQuality: function ()
 		{
@@ -438,6 +442,13 @@ function (Fields,
 				browser .getShadowShader () .parts_ [0] .getValue () .url_ .addEvent ();
 				browser .getShadowShader () .parts_ [1] .getValue () .url_ .addEvent ();
 			}
+		},
+		set_timings__: function (timings)
+		{
+			const browser = this .getBrowser ();
+
+			browser .getLocalStorage () ["BrowserOptions.Timings"] = timings .getValue ();
+			browser .getBrowserTimings () .setEnabled (timings .getValue ());
 		},
 	});
 

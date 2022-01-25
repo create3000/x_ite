@@ -316,11 +316,11 @@ function ($,
 					"browser-timings": browser .getBrowserOptions () .getTimings () ? {
 						name: _("Browser Timings"),
 						type: "checkbox",
-						selected: browser .getBrowserTimings () .getEnabled (),
+						selected: browser .getBrowserOption ("Timings"),
 						events: {
 							click: function (event)
 							{
-								browser .getBrowserTimings () .setEnabled ($(event .target) .is (":checked"));
+								browser .setBrowserOption ("Timings", $(event .target) .is (":checked"));
 								browser .getSurface () .focus ();
 							}
 							.bind (this),

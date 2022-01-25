@@ -66,7 +66,7 @@ function ($,
 	{
 		X3DBaseNode .call (this, executionContext);
 
-		this .addChildObjects ("enabled", new SFBool ());
+		this .enabled = false;
 	}
 
 	BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -88,8 +88,6 @@ function ($,
 		{
 			X3DBaseNode .prototype .initialize .call (this);
 
-			this .enabled_ .addInterest ("set_enabled__", this);
-
 			this .localeOptions = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
 			this .type          = this .getBrowser () .getLocalStorage () ["BrowserTimings.type"] || "LESS";
 			this .startTime     = 0;
@@ -104,26 +102,19 @@ function ($,
 			this .rows    = [ ];
 
 			this .set_button__ ();
-
-			if (this .getBrowser () .getLocalStorage () ["BrowserTimings.enabled"])
-				this .enabled_ = true;
-		},
-		setEnabled: function (value)
-		{
-			this .enabled_ = value;
 		},
 		getEnabled: function ()
 		{
-			return this .enabled_ .getValue ();
+			return this .enabled;
 		},
-		set_enabled__: function (enabled)
+		setEnabled: function (enabled)
 		{
-			if (! this .getBrowser () .getBrowserOptions () .getTimings ())
+			if (this .enabled === enabled)
 				return;
 
-			this .getBrowser () .getLocalStorage () ["BrowserTimings.enabled"] = enabled .getValue ();
+			this .enabled = enabled;
 
-			if (enabled .getValue ())
+			if (enabled)
 			{
 				this .element .fadeIn ();
 				this .getBrowser () .prepareEvents () .addInterest ("update", this);
