@@ -47,10 +47,7 @@
  ******************************************************************************/
 
 
-define ([
-	"jquery",
-],
-function ($)
+define (function ()
 {
 "use strict";
 
@@ -72,7 +69,7 @@ function ($)
 			if (value === undefined || value === "undefined")
 			   return undefined;
 
-			return $ .parseJSON (value);
+			return JSON .parse (value);
 		},
 		set: function (target, key, value)
 		{
@@ -112,11 +109,11 @@ function ($)
 				storage   = this .getStorage (),
 				namespace = this .getNameSpace ();
 
-			$.each (storage, function (key)
+			for (const key of Object .keys (storage))
 			{
 				if (key .substr (0, namespace .length) === namespace)
-					storage .removeItem (key);
-			});
+					storage .removeItem (key)
+			}
 		},
 	}
 
