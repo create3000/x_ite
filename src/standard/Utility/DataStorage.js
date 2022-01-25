@@ -111,7 +111,7 @@ define (function ()
 
 			for (const key of Object .keys (storage))
 			{
-				if (key .substr (0, namespace .length) === namespace)
+				if (key .startsWith (namespace))
 					storage .removeItem (key)
 			}
 		},
