@@ -1,4 +1,5 @@
-(function (nodeModule, nodeRequire, __filename) {
+(function (nodeModule, nodeRequire, __filename)
+{
 
 var
 	define  = X3D .define,
@@ -1216,4 +1217,5 @@ function (Components,
 
 
 
-}(typeof module !== "undefined" ? module : undefined, typeof require !== "undefined" ? require : undefined, typeof __filename !== "undefined" ? __filename : undefined));
+})
+(typeof module === "object" ? module : undefined, typeof require === "function" ? require : undefined, typeof __filename === "string" ? __filename : undefined);

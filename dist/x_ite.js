@@ -1,6 +1,7 @@
 /* X_ITE v4.7.7-1132 */
 
-(function (nodeModule, nodeRequire, __filename) {
+(function (nodeModule, nodeRequire, __filename)
+{
 
 var x_iteNoConfict = {
 	sprintf:  window .sprintf,
@@ -27441,7 +27442,7 @@ function (Fields,
 				if (localStorage ["BrowserOptions." + fieldDefinition .name] !== undefined)
 					continue;
 
-				if (! field .equals (fieldDefinition .value))
+				if (!field .equals (fieldDefinition .value))
 					field .setValue (fieldDefinition .value);
 			}
 
@@ -30311,6 +30312,8 @@ function ($,
 	function ContextMenu (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
+
+		this .active = false;
 	}
 
 	ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -30346,6 +30349,8 @@ function ($,
 				{
 					show: function (options)
 					{
+						this .active = true;
+
 						if (browser .getElement () .fullScreen ())
 						{
 							browser .getElement () .append (options .$menu);
@@ -30369,9 +30374,19 @@ function ($,
 								"right": options .$menu .width () + "px",
 							});
 						}
-					},
+					}
+					.bind (this),
+					hide: function (options)
+					{
+						this .active = false;
+					}
+					.bind (this),
 				},
 			});
+		},
+		getActive: function ()
+		{
+			return this .active;
 		},
 		build: function (trigger, event)
 		{
@@ -39164,6 +39179,18 @@ function ($,
 		{
 			return this .extensions [name];
 		},
+		getMobile: function ()
+		{
+			return this .mobile;
+		},
+		getLocalStorage: function ()
+		{
+			return this .localStorage;
+		},
+		getBrowserTimings: function ()
+		{
+			return this .browserTimings;
+		},
 		getBrowserOptions: function ()
 		{
 			return this .browserOptions;
@@ -39180,17 +39207,9 @@ function ($,
 		{
 			return this .notification;
 		},
-		getBrowserTimings: function ()
+		getContextMenu: function ()
 		{
-			return this .browserTimings;
-		},
-		getLocalStorage: function ()
-		{
-			return this .localStorage;
-		},
-		getMobile: function ()
-		{
-			return this .mobile;
+			return this .contextMenu;
 		},
 		getPrivateScene: function ()
 		{
@@ -72298,9 +72317,12 @@ function ($,
 		},
 		mousedown: function (event)
 		{
-			var browser = this .getBrowser ();
+			const browser = this .getBrowser ();
 
 			browser .getElement () .focus ();
+
+			if (browser .getContextMenu () .getActive ())
+				return;
 
 			if (browser .getShiftKey () && browser .getControlKey ())
 				return;
@@ -74056,6 +74078,9 @@ function ($,
 		},
 		mousedown: function (event)
 		{
+			if (this .getBrowser () .getContextMenu () .getActive ())
+				return;
+
 			if (this .button >= 0)
 				return;
 
@@ -74856,6 +74881,9 @@ function ($,
 		},
 		mousedown: function (event)
 		{
+			if (this .getBrowser () .getContextMenu () .getActive ())
+				return;
+
 			if (this .button >= 0)
 				return;
 
@@ -75817,6 +75845,9 @@ function ($,
 		},
 		mousedown: function (event)
 		{
+			if (this .getBrowser () .getContextMenu () .getActive ())
+				return;
+
 			if (this .button >= 0)
 				return;
 
@@ -76182,6 +76213,9 @@ function ($,
 		},
 		mousedown: function (event)
 		{
+			if (this .getBrowser () .getContextMenu () .getActive ())
+				return;
+
 			if (this .button >= 0)
 				return;
 
@@ -118338,7 +118372,7 @@ const getScriptURL = (function ()
 	// Now assign temporary X3D.
 	window .X3D = X_ITE;
 
-	if (nodeModule)
+	if (nodeModule && typeof nodeModule .exports === "object")
 		nodeModule .exports = X_ITE;
 
 	// IE fix.
@@ -118426,4 +118460,6 @@ for (var key in x_iteNoConfict)
 	else
 		window [key] = x_iteNoConfict [key];
 }
-}(typeof module !== "undefined" ? module : undefined, typeof require !== "undefined" ? require : undefined, typeof __filename !== "undefined" ? __filename : undefined));
+
+})
+(typeof module === "object" ? module : undefined, typeof require === "function" ? require : undefined, typeof __filename === "string" ? __filename : undefined);

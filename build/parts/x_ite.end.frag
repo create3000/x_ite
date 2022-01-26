@@ -20,4 +20,6 @@ for (var key in x_iteNoConfict)
 	else
 		window [key] = x_iteNoConfict [key];
 }
-}(typeof module !== "undefined" ? module : undefined, typeof require !== "undefined" ? require : undefined, typeof __filename !== "undefined" ? __filename : undefined));
+
+})
+(typeof module === "object" ? module : undefined, typeof require === "function" ? require : undefined, typeof __filename === "string" ? __filename : undefined);

@@ -1,4 +1,5 @@
-(function (nodeModule, nodeRequire, __filename) {
+(function (nodeModule, nodeRequire, __filename)
+{
 
 var
 	define  = X3D .define,
