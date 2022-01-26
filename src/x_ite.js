@@ -139,7 +139,7 @@ const getScriptURL = (function ()
 	// Now assign temporary X3D.
 	window .X3D = X_ITE;
 
-	if (nodeModule)
+	if (nodeModule && typeof nodeModule .exports === "object")
 		nodeModule .exports = X_ITE;
 
 	// IE fix.
