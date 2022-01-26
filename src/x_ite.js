@@ -74,7 +74,7 @@ const getScriptURL = (function ()
 {
 	if (document .currentScript)
 		var src = document .currentScript .src;
-	else if (typeof __filename !== "undefined")
+	else if (__filename !== undefined)
 		var src = "file://" + __filename;
 
 	return function ()

@@ -1,4 +1,4 @@
-(function (nodeModule, nodeRequire, nodeProcess) {
+(function (nodeModule, nodeRequire, __filename) {
 
 var x_iteNoConfict = {
 	sprintf:  window .sprintf,
@@ -7,7 +7,7 @@ var x_iteNoConfict = {
 
 var module, exports, process;
 
-if (nodeProcess === undefined)
+if (__filename === undefined)
 {
 	nodeModule  = undefined;
 	nodeRequire = undefined;

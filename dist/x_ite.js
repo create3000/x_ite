@@ -1,6 +1,6 @@
 /* X_ITE v4.7.6-1132 */
 
-(function (nodeModule, nodeRequire, nodeProcess) {
+(function (nodeModule, nodeRequire, __filename) {
 
 var x_iteNoConfict = {
 	sprintf:  window .sprintf,
@@ -9,7 +9,7 @@ var x_iteNoConfict = {
 
 var module, exports, process;
 
-if (nodeProcess === undefined)
+if (__filename === undefined)
 {
 	nodeModule  = undefined;
 	nodeRequire = undefined;
@@ -118269,7 +118269,7 @@ const getScriptURL = (function ()
 {
 	if (document .currentScript)
 		var src = document .currentScript .src;
-	else if (typeof __filename !== "undefined")
+	else if (__filename !== undefined)
 		var src = "file://" + __filename;
 
 	return function ()
@@ -118422,4 +118422,4 @@ for (var key in x_iteNoConfict)
 	else
 		window [key] = x_iteNoConfict [key];
 }
-}(typeof module !== "undefined" ? module : undefined, typeof require !== "undefined" ? require : undefined, typeof process !== "undefined" ? process : undefined));
+}(typeof module !== "undefined" ? module : undefined, typeof require !== "undefined" ? require : undefined, typeof __filename !== "undefined" ? __filename : undefined));

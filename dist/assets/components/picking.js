@@ -1,4 +1,4 @@
-(function (nodeModule, nodeRequire, nodeProcess) {
+(function (nodeModule, nodeRequire, __filename) {
 
 var
 	define  = X3D .define,
@@ -6,7 +6,7 @@ var
 
 var module = { }, exports, process;
 
-if (nodeProcess === undefined)
+if (__filename === undefined)
 {
 	nodeModule  = undefined;
 	nodeRequire = undefined;
@@ -2489,4 +2489,4 @@ function (Components,
 });
 
 
-}(typeof module !== "undefined" ? module : undefined, typeof require !== "undefined" ? require : undefined, typeof process !== "undefined" ? process : undefined));
+}(typeof module !== "undefined" ? module : undefined, typeof require !== "undefined" ? require : undefined, typeof __filename !== "undefined" ? __filename : undefined));

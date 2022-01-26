@@ -8,7 +8,7 @@ If you want combine DOM access with X3D access in your JavaScript functions then
 
 ## Introduction
 
-There is the X3D object which is always available, it expects one function handler that is called when the browsers (&lt;X3DCanvas&gt; elements) are ready, and a second function handler, that is called if an error occurred. These two arguments are optional. The return value of the X3D function is a Promise.
+There is the X3D object which is always available, it expects one function handler that is called when the browsers (&lt;X3DCanvas&gt; elements) are ready, and a second function handler, that is called if an error occurred. These two arguments are optional. The return value of the X3D function is a Promise, which can be used instead of the arguments.
 
 ```js
 Promise X3D ([callback[, errorCallback]]);
@@ -65,14 +65,25 @@ function (error)
 </script>
 ```
 
-## Async use of X3D object
+### Using the Promise return value
+
+```js
+X3D () .then (() => {
+  const browser = X3D .getBrowser ();
+}) .catch ((error) => {
+  // ooops an error.
+  console .error (error);
+});
+```
+
+### Async use of X3D object
 
 ```js
 async function foo ()
 {
-  await X3D ()
+  await X3D ();
 
-  const browser = X3D .getBrowser ()
+  const browser = X3D .getBrowser ();
 }
 ```
 
