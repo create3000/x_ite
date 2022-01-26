@@ -158,7 +158,13 @@ Returns a browser option with the corresponding name.
          <td>Dashboard</td>
          <td>Display browser navigation user interface.</td>
          <td>Boolean</td>
-         <td>Specified by bound NavigationInfo in content</td>
+         <td>true</td>
+      </tr>
+      <tr>
+         <td>Rubberband</td>
+         <td>Display a rubberband line when walk or fly.</td>
+         <td>Boolean</td>
+         <td>true</td>
       </tr>
       <tr>
          <td>EnableInlineViewpoints</td>

@@ -1,4 +1,4 @@
-/* X_ITE v4.7.6-1132 */
+/* X_ITE v4.7.7-1132 */
 
 (function (nodeModule, nodeRequire, __filename) {
 
@@ -24864,7 +24864,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.7.6";
+	return "4.7.7";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -27426,46 +27426,47 @@ function (Fields,
 		},
 		configure: function ()
 		{
-			if (! this .isInitialized ())
+			if (!this .isInitialized ())
 				return;
 
-			var fieldDefinitions = this .getFieldDefinitions ();
+			const
+				browser          = this .getBrowser (),
+				localStorage     = browser .getLocalStorage (),
+				fieldDefinitions = this .getFieldDefinitions ();
 
-			for (var i = 0; i < fieldDefinitions .length; ++ i)
+			for (const fieldDefinition of fieldDefinitions)
 			{
-				var
-					fieldDefinition = fieldDefinitions [i],
-					field           = this .getField (fieldDefinition .name);
+				const field = this .getField (fieldDefinition .name);
 
-				if (this .getBrowser () .getLocalStorage () ["BrowserOptions." + fieldDefinition .name] !== undefined)
+				if (localStorage ["BrowserOptions." + fieldDefinition .name] !== undefined)
 					continue;
 
 				if (! field .equals (fieldDefinition .value))
 					field .setValue (fieldDefinition .value);
 			}
 
-			var
-				rubberband        = this .getBrowser () .getLocalStorage () ["BrowserOptions.Rubberband"],
-				primitiveQuality  = this .getBrowser () .getLocalStorage () ["BrowserOptions.PrimitiveQuality"],
-				textureQuality    = this .getBrowser () .getLocalStorage () ["BrowserOptions.TextureQuality"],
-				straightenHorizon = this .getBrowser () .getLocalStorage () ["BrowserOptions.StraightenHorizon"],
-				timings           = this .getBrowser () .getLocalStorage () ["BrowserOptions.Timings"];
+			const
+				rubberband        = localStorage ["BrowserOptions.Rubberband"],
+				primitiveQuality  = localStorage ["BrowserOptions.PrimitiveQuality"],
+				textureQuality    = localStorage ["BrowserOptions.TextureQuality"],
+				straightenHorizon = localStorage ["BrowserOptions.StraightenHorizon"],
+				timings           = localStorage ["BrowserOptions.Timings"];
 
 			this .setAttributeSplashScreen ();
 
-			if (rubberband !== this .Rubberband_ .getValue ())
+			if (rubberband !== undefined && rubberband !== this .Rubberband_ .getValue ())
 				this .Rubberband_ = rubberband;
 
-			if (primitiveQuality !== this .PrimitiveQuality_ .getValue () .toUpperCase ())
+			if (primitiveQuality !== undefined && primitiveQuality !== this .PrimitiveQuality_ .getValue () .toUpperCase ())
 				this .PrimitiveQuality_ = primitiveQuality;
 
-			if (textureQuality !== this .TextureQuality_ .getValue () .toUpperCase ())
+			if (textureQuality !== undefined && textureQuality !== this .TextureQuality_ .getValue () .toUpperCase ())
 				this .TextureQuality_ = textureQuality;
 
-			if (straightenHorizon !== this .StraightenHorizon_ .getValue ())
+			if (straightenHorizon !== undefined && straightenHorizon !== this .StraightenHorizon_ .getValue ())
 				this .StraightenHorizon_ = straightenHorizon;
 
-			if (timings !== this .Timings_ .getValue ())
+			if (timings !== undefined && timings !== this .Timings_ .getValue ())
 				this .Timings_ = timings;
 		},
 		setAttributeSplashScreen: function ()
@@ -27519,13 +27520,14 @@ function (Fields,
 		},
 		set_primitiveQuality__: function (value)
 		{
-			var
+			const
 				browser          = this .getBrowser (),
+				localStorage     = browser .getLocalStorage (),
 				primitiveQuality = value .getValue () .toUpperCase ();
 
-			browser .getLocalStorage () ["BrowserOptions.PrimitiveQuality"] = primitiveQuality;
+			localStorage ["BrowserOptions.PrimitiveQuality"] = primitiveQuality;
 
-			var
+			const
 				cone     = browser .getConeOptions (),
 				cylinder = browser .getCylinderOptions (),
 				sphere   = browser .getSphereOptions ();
@@ -27584,11 +27586,14 @@ function (Fields,
 		},
 		set_textureQuality__: function (value)
 		{
-			var textureQuality = value .getValue () .toUpperCase ();
+			const
+				browser        = this .getBrowser (),
+				localStorage   = browser .getLocalStorage (),
+				textureQuality = value .getValue () .toUpperCase ();
 
-			this .getBrowser () .getLocalStorage () ["BrowserOptions.TextureQuality"] = textureQuality;
+			localStorage ["BrowserOptions.TextureQuality"] = textureQuality;
 
-			var textureProperties = this .getBrowser () .getDefaultTextureProperties ();
+			const textureProperties = this .getBrowser () .getDefaultTextureProperties ();
 
 			switch (textureQuality)
 			{
@@ -27644,7 +27649,7 @@ function (Fields,
 		},
 		set_shading__: function (value)
 		{
-			var shading = value .getValue () .toUpperCase ();
+			const shading = value .getValue () .toUpperCase ();
 
 			switch (shading)
 			{
@@ -27684,7 +27689,7 @@ function (Fields,
 		},
 		set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
 		{
-			var
+			const
 				browser = this .getBrowser (),
 				gl      = browser .getContext ();
 
@@ -38772,7 +38777,7 @@ define ('standard/Utility/DataStorage',[],function ()
 
 			var value = target .getStorage () [target .getNameSpace () + key];
 
-			if (value === undefined || value === "undefined")
+			if (value === undefined || value === "undefined" || value === null)
 			   return undefined;
 
 			return JSON .parse (value);
@@ -39552,10 +39557,9 @@ function ($,
 
 	function copyToClipboard (text)
 	{
-		const $temp = $("<textarea>");
-
+		const $temp = $("<textarea></textarea>");
 		$("body") .append ($temp);
-		$temp .val (text) .select ();
+		$temp .text (text) .select ();
 		document .execCommand ("copy");
 		$temp .remove ();
 	}
