@@ -724,7 +724,7 @@ function ($,
 
 	function copyToClipboard (text)
 	{
-		const $temp = $("<textarea></textarea>");
+		const $temp = $("<input></input>");
 		$("body") .append ($temp);
 		$temp .val (text) .select ();
 		document .execCommand ("copy");
