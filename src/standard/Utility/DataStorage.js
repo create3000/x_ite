@@ -66,7 +66,7 @@ define (function ()
 
 			var value = target .getStorage () [target .getNameSpace () + key];
 
-			if (value === undefined || value === "undefined")
+			if (value === undefined || value === "undefined" || value === null)
 			   return undefined;
 
 			return JSON .parse (value);
