@@ -4,7 +4,7 @@
 // Undefine global variables.
 var module = { }, exports, process;
 
-if (__filename === undefined)
+if (typeof __filename === "undefined")
 {
 	nodeModule  = undefined;
 	nodeRequire = undefined;

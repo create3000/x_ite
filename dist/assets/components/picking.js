@@ -2446,9 +2446,6 @@ function (Fields,
  ******************************************************************************/
 
 
-if (typeof nodeRequire === "function")
- 	nodeRequire (new URL (X3D .getComponentUrl ("rigid-body-physics")) .pathname);
-
 define (X3D .getComponentUrl ("picking"), [
 	"x_ite/Components",
 	"x_ite/Components/Picking/LinePickSensor",
