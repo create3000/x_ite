@@ -62,7 +62,7 @@ Parse the passed URL into a X3D scene. When complete send the passed event to th
 
 If event and node are omitted a X3DScene object is returned.
 
-#### void **loadURL** (*MFString url, MFString parameter*)
+#### void **loadURL** (*MFString url \[, MFString parameter\]*)
 
 Load the passed URL, using the passed parameter string to possibly redirect it to another frame. If the destination is the frame containing the current scene, this method may never return.
 
