@@ -1,7 +1,6 @@
 {
    "files.exclude": {
-      "**/*~": true,
-      "**/node_modules": true
+      "**/*~": true
    },
    "files.watcherExclude": {
       "**/.bzr/**": true
