@@ -1,17 +1,18 @@
 (function (nodeModule, nodeRequire, __filename)
 {
 
-var
-	define  = X3D .define,
-	require = X3D .require;
-
+// Undefine global variables.
 var module = { }, exports, process;
 
-if (__filename === undefined)
+if (typeof __filename === "undefined")
 {
 	nodeModule  = undefined;
 	nodeRequire = undefined;
 }
+
+const
+	define  = X3D .define,
+	require = X3D .require;
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
  *

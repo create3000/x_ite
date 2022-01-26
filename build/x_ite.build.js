@@ -12,7 +12,7 @@
 		"x_ite/Browser/Shaders/ShaderSource"
 	],
 	wrap: {
-		startFile: "parts/x_ite.start.frag",
-		endFile: "parts/x_ite.end.frag"
+		startFile: "parts/x_ite.start.frag.js",
+		endFile: "parts/x_ite.end.frag.js"
 	},
 })

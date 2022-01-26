@@ -46,10 +46,6 @@
  *
  ******************************************************************************/
 
-if (typeof module === 'undefined')
-	var module = { };
-var nodeModule, nodeRequire;
-
 require .config ({
 	"waitSeconds": 0,
 });
@@ -74,7 +70,7 @@ const getScriptURL = (function ()
 {
 	if (document .currentScript)
 		var src = document .currentScript .src;
-	else if (__filename !== undefined)
+	else if (typeof __filename === "string")
 		var src = "file://" + __filename;
 
 	return function ()
@@ -139,7 +135,7 @@ const getScriptURL = (function ()
 	// Now assign temporary X3D.
 	window .X3D = X_ITE;
 
-	if (nodeModule && typeof nodeModule .exports === "object")
+	if (typeof nodeModule === "object" && typeof nodeModule .exports === "object")
 		nodeModule .exports = X_ITE;
 
 	// IE fix.

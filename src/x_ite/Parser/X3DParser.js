@@ -130,7 +130,7 @@ define (function ()
 						providerUrls .add (providerUrl);
 				}
 
-				if (nodeRequire)
+				if (typeof nodeRequire === "function")
 				{
 					for (const url of providerUrls)
 						nodeRequire (new URL (url) .pathname);

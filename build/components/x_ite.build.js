@@ -9,7 +9,7 @@
 		"x_ite"
 	],
 	wrap: {
-		startFile: "../parts/default.start.frag",
-		endFile: "../parts/default.end.frag"
+		startFile: "../parts/default.start.frag.js",
+		endFile: "../parts/default.end.frag.js"
 	},
 })

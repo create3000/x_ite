@@ -45,9 +45,8 @@
  *
  ******************************************************************************/
 
-var nodeRequire;
 
-if (nodeRequire !== undefined)
+if (typeof nodeRequire === "function")
  	nodeRequire (new URL (X3D .getComponentUrl ("rigid-body-physics")) .pathname);
 
 define ([

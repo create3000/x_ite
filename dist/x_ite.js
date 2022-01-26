@@ -3,18 +3,19 @@
 (function (nodeModule, nodeRequire, __filename)
 {
 
-var x_iteNoConfict = {
-	sprintf:  window .sprintf,
-	vsprintf: window .vsprintf,
-};
-
+// Undefine global variables.
 var module, exports, process;
 
-if (__filename === undefined)
+if (typeof __filename === "undefined")
 {
 	nodeModule  = undefined;
 	nodeRequire = undefined;
 }
+
+const x_iteNoConfict = {
+	sprintf:  window .sprintf,
+	vsprintf: window .vsprintf,
+};
 /** vim: et:ts=4:sw=4:sts=4
  * @license RequireJS 2.3.6 Copyright jQuery Foundation and other contributors.
  * Released under MIT license, https://github.com/requirejs/requirejs/blob/master/LICENSE
@@ -34127,7 +34128,7 @@ define ('x_ite/Parser/X3DParser',[],function ()
 						providerUrls .add (providerUrl);
 				}
 
-				if (nodeRequire)
+				if (typeof nodeRequire === "function")
 				{
 					for (const url of providerUrls)
 						nodeRequire (new URL (url) .pathname);
@@ -118279,10 +118280,6 @@ function ($,
  *
  ******************************************************************************/
 
-if (typeof module === 'undefined')
-	var module = { };
-var nodeModule, nodeRequire;
-
 require .config ({
 	"waitSeconds": 0,
 });
@@ -118307,7 +118304,7 @@ const getScriptURL = (function ()
 {
 	if (document .currentScript)
 		var src = document .currentScript .src;
-	else if (__filename !== undefined)
+	else if (typeof __filename === "string")
 		var src = "file://" + __filename;
 
 	return function ()
@@ -118372,7 +118369,7 @@ const getScriptURL = (function ()
 	// Now assign temporary X3D.
 	window .X3D = X_ITE;
 
-	if (nodeModule && typeof nodeModule .exports === "object")
+	if (typeof nodeModule === "object" && typeof nodeModule .exports === "object")
 		nodeModule .exports = X_ITE;
 
 	// IE fix.
@@ -118453,7 +118450,7 @@ function ()
 	};
 });
 
-for (var key in x_iteNoConfict)
+for (const key in x_iteNoConfict)
 {
 	if (x_iteNoConfict [key] === undefined)
 		delete window [key];
