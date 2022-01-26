@@ -68,9 +68,12 @@ function (error)
 ### Using the Promise return value
 
 ```js
-X3D () .then (() => {
+X3D () .then (function ()
+{
   const browser = X3D .getBrowser ();
-}) .catch ((error) => {
+})
+.catch (function (error)
+{
   // ooops an error.
   console .error (error);
 });
