@@ -331,6 +331,18 @@ function ($,
 		{
 			return this .extensions [name];
 		},
+		getMobile: function ()
+		{
+			return this .mobile;
+		},
+		getLocalStorage: function ()
+		{
+			return this .localStorage;
+		},
+		getBrowserTimings: function ()
+		{
+			return this .browserTimings;
+		},
 		getBrowserOptions: function ()
 		{
 			return this .browserOptions;
@@ -347,17 +359,9 @@ function ($,
 		{
 			return this .notification;
 		},
-		getBrowserTimings: function ()
+		getContextMenu: function ()
 		{
-			return this .browserTimings;
-		},
-		getLocalStorage: function ()
-		{
-			return this .localStorage;
-		},
-		getMobile: function ()
-		{
-			return this .mobile;
+			return this .contextMenu;
 		},
 		getPrivateScene: function ()
 		{

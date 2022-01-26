@@ -63,6 +63,8 @@ function ($,
 	function ContextMenu (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
+
+		this .active = false;
 	}
 
 	ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -98,6 +100,8 @@ function ($,
 				{
 					show: function (options)
 					{
+						this .active = true;
+
 						if (browser .getElement () .fullScreen ())
 						{
 							browser .getElement () .append (options .$menu);
@@ -121,9 +125,19 @@ function ($,
 								"right": options .$menu .width () + "px",
 							});
 						}
-					},
+					}
+					.bind (this),
+					hide: function (options)
+					{
+						this .active = false;
+					}
+					.bind (this),
 				},
 			});
+		},
+		getActive: function ()
+		{
+			return this .active;
 		},
 		build: function (trigger, event)
 		{

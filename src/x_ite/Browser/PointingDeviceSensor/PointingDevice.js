@@ -92,9 +92,12 @@ function ($,
 		},
 		mousedown: function (event)
 		{
-			var browser = this .getBrowser ();
+			const browser = this .getBrowser ();
 
 			browser .getElement () .focus ();
+
+			if (browser .getContextMenu () .getActive ())
+				return;
 
 			if (browser .getShiftKey () && browser .getControlKey ())
 				return;
