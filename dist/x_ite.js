@@ -118284,15 +118284,21 @@ const getScriptURL = (function ()
 
 	function X_ITE (callback, fallback)
 	{
-		if (PrivateX3D)
+		const promise = new Promise (function (resolve, reject)
 		{
-			PrivateX3D (callback, fallback);
-		}
-		else
-		{
-			callbacks .push (callback);
-			fallbacks .push (fallback);
-		}
+			if (PrivateX3D)
+			{
+				PrivateX3D (resolve, reject);
+				PrivateX3D (callback, fallback);
+			}
+			else
+			{
+				callbacks .push (resolve, callback);
+				fallbacks .push (reject,  fallback);
+			}
+		});
+
+		return promise;
 	}
 
 	function fallback (error)
