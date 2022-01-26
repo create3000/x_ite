@@ -804,6 +804,12 @@ There is a ZIP archive available to locally install X\_ITE on your server. Compr
 
 [Download X\_ITE ZIP archive](https://create3000.github.io/code/x_ite/latest/dist/x_ite.zip)
 
+### You can get it on NPM
+
+```sh
+$ npm install x_ite
+```
+
 ### Using X\_ITE with a CDN
 
 CDNs can offer a performance benefit by hosting X\_ITE on servers spread across the globe. This also offers an advantage that if the visitor to your webpage has already downloaded a copy of X\_ITE from the same CDN, it won't have to be re-downloaded. To use the X\_ITE CDN, just reference the CSS and JavaScript file in the script tag directly from the GitHub CDN or jsDelivr CDN domain.
