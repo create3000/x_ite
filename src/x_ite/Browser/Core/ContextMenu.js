@@ -368,7 +368,7 @@ function ($,
 									priv      = browser .getElement () .find (".x_ite-private-browser"),
 									overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
 									div       = $("<div></div>") .addClass ("x_ite-private-world-info") .appendTo (overlay),
-									worldInfo = browser .getExecutionContext () .getWorldInfo (),
+									worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
 									title     = worldInfo .title_ .getValue (),
 									info      = worldInfo .info_;
 
@@ -436,7 +436,7 @@ function ($,
 				delete menu .items ["straighten-horizon"];
 			}
 
-			const worldInfo = browser .getExecutionContext () .getWorldInfo ();
+			const worldInfo = browser .getExecutionContext () .getWorldInfos () [0];
 
 			if (!worldInfo || (worldInfo .title_ .getValue () .length === 0 && worldInfo .info_ .length === 0))
 			{

@@ -639,14 +639,9 @@ function (Fields,
 		{
 			return this ._routes;
 		},
-		getWorldInfo: function ()
+		getWorldInfos: function ()
 		{
-			const length = this ._worldInfoNodes .length;
-
-			if (length)
-				return this ._worldInfoNodes [length - 1];
-
-			return null;
+			return this ._worldInfoNodes;
 		},
 		addWorldInfo: function (worldInfoNode)
 		{
@@ -654,7 +649,10 @@ function (Fields,
 		},
 		removeWorldInfo: function (worldInfoNode)
 		{
-			this ._worldInfoNodes = this ._worldInfoNodes .filter (function (node) { return node !== worldInfoNode; });
+			const index = this ._worldInfoNodes .indexOf (worldInfoNode);
+
+			if (index !== -1)
+				this ._worldInfoNodes .splice (index, 1);
 		},
 		toVRMLStream: function (stream)
 		{
