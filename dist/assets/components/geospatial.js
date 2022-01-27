@@ -1,14 +1,14 @@
-(function (nodeModule, nodeRequire, __filename)
+(function (globalModule, globalRequire)
 {
-
-// Undefine global variables.
-var module = { }, exports, process;
 
 if (typeof __filename === "undefined")
 {
-	nodeModule  = undefined;
-	nodeRequire = undefined;
+	globalModule  = undefined;
+	globalRequire = undefined;
 }
+
+// Undefine global variables.
+var module = { }, exports, process;
 
 const
 	define  = X3D .define,
@@ -3857,4 +3857,4 @@ function (Components,
 
 
 })
-(typeof module === "object" ? module : undefined, typeof require === "function" ? require : undefined, typeof __filename === "string" ? __filename : undefined);
+(typeof module === "object" ? module : undefined, typeof require === "function" ? require : undefined);

@@ -70,7 +70,7 @@ function (error)
 ```js
 X3D () .then (function ()
 {
-  const browser = X3D .getBrowser ();
+  const Browser = X3D .getBrowser ();
 })
 .catch (function (error)
 {
@@ -82,11 +82,15 @@ X3D () .then (function ()
 ### Async use of X3D object
 
 ```js
-async function foo ()
+async function foo (url)
 {
   await X3D ();
 
-  const browser = X3D .getBrowser ();
+  const Browser = X3D .getBrowser ();
+
+  await Browser .loadURL (new MFString (url));
+
+  console .log (`Done loading scene '${Browser .currentScene .worldURL}'.`);
 }
 ```
 

@@ -1,14 +1,14 @@
-(function (nodeModule, nodeRequire, __filename)
+(function (globalModule, globalRequire)
 {
-
-// Undefine global variables.
-var module, exports, process;
 
 if (typeof __filename === "undefined")
 {
-	nodeModule  = undefined;
-	nodeRequire = undefined;
+	globalModule  = undefined;
+	globalRequire = undefined;
 }
+
+// Undefine global variables.
+var module, exports, process;
 
 const x_iteNoConfict = {
 	sprintf:  window .sprintf,

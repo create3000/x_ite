@@ -60,18 +60,18 @@ function (X3DField,
 {
 "use strict";
 
-	var handler =
+	const handler =
 	{
 		get: function (target, key)
 		{
 			try
 			{
-				var value = target [key];
+				const value = target [key];
 
 				if (value !== undefined)
 					return value;
 
-				var
+				const
 					field      = target .getValue () .getField (key),
 					accessType = field .getAccessType ();
 
@@ -97,7 +97,7 @@ function (X3DField,
 
 			try
 			{
-				var
+				const
 					field      = target .getValue () .getField (key),
 					accessType = field .getAccessType ();
 
@@ -127,7 +127,7 @@ function (X3DField,
 
 	function SFNode (value)
 	{
-		if (value)
+		if (value instanceof require ("x_ite/Basic/X3DBaseNode"))
 		{
 			value .addParent (this);
 
@@ -151,7 +151,7 @@ function (X3DField,
 		},
 		copy: function (instance)
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				return new SFNode (value .copy (instance));
@@ -179,7 +179,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			var current = this .getValue ();
+			const current = this .getValue ();
 
 			if (current)
 			{
@@ -187,7 +187,7 @@ function (X3DField,
 				current .removeParent (this);
 			}
 
-			if (value)
+			if (value instanceof require ("x_ite/Basic/X3DBaseNode"))
 			{
 				value .addParent (this);
 				value .addCloneCount (this ._cloneCount);
@@ -201,7 +201,7 @@ function (X3DField,
 		},
 		getNodeTypeName: function ()
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				return value .getTypeName ();
@@ -210,7 +210,7 @@ function (X3DField,
 		},
 		getNodeName: function ()
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				return value .getName ();
@@ -219,7 +219,7 @@ function (X3DField,
 		},
 		getNodeType: function ()
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				return value .getType () .slice ();
@@ -228,7 +228,7 @@ function (X3DField,
 		},
 		getFieldDefinitions: function ()
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				return value .getFieldDefinitions ();
@@ -245,7 +245,7 @@ function (X3DField,
 				}
 				case 3:
 				{
-					var value = this .getValue ();
+					const value = this .getValue ();
 
 					if (value)
 						return value .getField (name) .addFieldCallback (string, object);
@@ -264,7 +264,7 @@ function (X3DField,
 				}
 				case 2:
 				{
-					var value = this .getValue ();
+					const value = this .getValue ();
 
 					if (value)
 						return value .getField (name) .removeFieldCallback (string);
@@ -275,7 +275,7 @@ function (X3DField,
 		},
 		addCloneCount: function (count)
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			this ._cloneCount += count;
 
@@ -284,7 +284,7 @@ function (X3DField,
 		},
 		removeCloneCount: function (count)
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			this ._cloneCount -= count;
 
@@ -293,7 +293,7 @@ function (X3DField,
 		},
 		valueOf: function ()
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				return SFNodeCache .get (value);
@@ -302,7 +302,7 @@ function (X3DField,
 		},
 		toStream: function (stream)
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				value .toStream (stream);
@@ -311,7 +311,7 @@ function (X3DField,
 		},
 		toVRMLStream: function (stream)
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				value .toVRMLStream (stream);
@@ -320,7 +320,7 @@ function (X3DField,
 		},
 		toXMLString: function ()
 		{
-			var
+			const
 				stream    = { string: "" },
 				generator = Generator .Get (stream),
 				value     = this .getValue ();
@@ -335,7 +335,7 @@ function (X3DField,
 		},
 		toXMLStream: function (stream)
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				value .toXMLStream (stream);

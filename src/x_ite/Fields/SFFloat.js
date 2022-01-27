@@ -89,7 +89,7 @@ function (X3DField,
 		valueOf: X3DField .prototype .getValue,
 		toStream: function (stream)
 		{
-			var
+			const
 				generator = Generator .Get (stream),
 				category  = generator .Unit (this .getUnit ());
 

@@ -58,7 +58,7 @@ function (X3DField,
 {
 "use strict";
 
-	var
+	const
 		unescape = /\\(.)/g,
 		escape   = /([\\"])/g;
 

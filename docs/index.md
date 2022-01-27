@@ -804,13 +804,13 @@ There is a ZIP archive available to locally install X\_ITE on your server. Compr
 
 [Download X\_ITE ZIP archive](https://create3000.github.io/code/x_ite/latest/dist/x_ite.zip)
 
-### You can get it on NPM
+### You also can get it on NPM
 
 ```sh
 $ npm install x_ite
 ```
 
-It can be used in [Electron](https://www.electronjs.org) apps in the renderer process like this:
+It can be used in [Electron](https://www.electronjs.org) apps in the **renderer process** like this:
 
 ```js
 const X3D = require ("x_ite")
@@ -824,15 +824,6 @@ CDNs can offer a performance benefit by hosting X\_ITE on servers spread across 
 
 GitCDN serves raw files directly from GitHub with proper Content-Type headers and a super fast CDN!
 
-#### Snipped
-
-If you are on production and everything works fine, then use a numbered version.
-
-```html
-<link rel="stylesheet" type="text/css" href="https://create3000.github.io/code/x_ite/4.7.6/dist/x_ite.css"/>
-<script type="text/javascript" src="https://create3000.github.io/code/x_ite/4.7.6/dist/x_ite.min.js"></script>
-```
-
 #### Latest Stable Version
 
 If you are a developer or you always wanna be up to date:
@@ -840,6 +831,15 @@ If you are a developer or you always wanna be up to date:
 ```html
 <link rel="stylesheet" type="text/css" href="https://create3000.github.io/code/x_ite/latest/dist/x_ite.css"/>
 <script type="text/javascript" src="https://create3000.github.io/code/x_ite/latest/dist/x_ite.min.js"></script>
+```
+
+#### Snipped
+
+If you are on production and everything works fine, then use a numbered version.
+
+```html
+<link rel="stylesheet" type="text/css" href="https://create3000.github.io/code/x_ite/4.7.6/dist/x_ite.css"/>
+<script type="text/javascript" src="https://create3000.github.io/code/x_ite/4.7.6/dist/x_ite.min.js"></script>
 ```
 
 ### jsDelivr CDN

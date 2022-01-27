@@ -128,7 +128,7 @@ function (X3DField,
 			});
 		}
 
-		for (var i = 0; i < Matrix3 .prototype .length; ++ i)
+		for (let i = 0; i < Matrix3 .prototype .length; ++ i)
 			defineProperty (i);
 
 		return SFMatrix3;

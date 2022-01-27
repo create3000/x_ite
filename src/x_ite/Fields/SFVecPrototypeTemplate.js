@@ -126,12 +126,12 @@ function (X3DField,
 			},
 			toStream: function (stream)
 			{
-				var
+				const
 					generator = Generator .Get (stream),
 					value     = this .getValue (),
 					category  = generator .Unit (this .getUnit ());
 
-				for (var i = 0, l = value .length - 1; i < l; ++ i)
+				for (let i = 0, l = value .length - 1; i < l; ++ i)
 				{
 					stream .string += String (generator .ToUnit (category, value [i]));
 					stream .string += " ";

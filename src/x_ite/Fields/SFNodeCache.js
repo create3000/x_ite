@@ -51,7 +51,7 @@ define (function ()
 {
 "use strict";
 
-	var cache = new WeakMap ();
+	const cache = new WeakMap ();
 
 	function SFNodeCache () { }
 
@@ -59,9 +59,9 @@ define (function ()
 	{
 		add: function (baseNode, node)
 		{
-			var SFNode = require ("x_ite/Fields/SFNode");
+			const SFNode = require ("x_ite/Fields/SFNode");
 
-			var node = node ? SFNode .call (node, baseNode) : new SFNode (baseNode);
+			node = node ? SFNode .call (node, baseNode) : new SFNode (baseNode);
 
 			cache .set (baseNode, node);
 
@@ -69,19 +69,23 @@ define (function ()
 		},
 		get: function (baseNode)
 		{
-			var node = cache .get (baseNode);
+			const node = cache .get (baseNode);
 
 			if (node)
+			{
 				return node;
+			}
+			else
+			{
+				const SFNode = require ("x_ite/Fields/SFNode");
 
-			var SFNode = require ("x_ite/Fields/SFNode");
+				// Always create new instance!
+				const node = new SFNode (baseNode);
 
-			// Always create new instance!
-			node = new SFNode (baseNode);
+				cache .set (baseNode, node);
 
-			cache .set (baseNode, node);
-
-			return node;
+				return node;
+			}
 		},
 	};
 

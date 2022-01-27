@@ -59,6 +59,8 @@ define ([
 	"x_ite/Execution/Scene",
 	"x_ite/Parser/Parser",
 	"standard/Utility/DataStorage",
+	"standard/Math/Numbers/Vector3",
+	"locale/gettext",
 ],
 function ($,
           Fields,
@@ -70,7 +72,9 @@ function ($,
           ContextMenu,
           Scene,
           Parser,
-          DataStorage)
+          DataStorage,
+          Vector3,
+          _)
 {
 "use strict";
 
@@ -666,21 +670,64 @@ function ($,
 
 						const viewpoint = this .getActiveViewpoint ();
 
-						if (! viewpoint)
+						if (!viewpoint)
 							break;
 
 						let text = "";
 
-						text += "Viewpoint {\n";
-						text += "  position " + viewpoint .getUserPosition () + "\n";
-						text += "  orientation " + viewpoint .getUserOrientation () + "\n";
-						text += "  centerOfRotation " + viewpoint .getUserCenterOfRotation () + "\n";
-						text += "}";
+						switch (viewpoint .getTypeName ())
+						{
+							case "Viewpoint":
+							{
+								text += "Viewpoint {\n";
+								text += "  position " + viewpoint .getUserPosition () + "\n";
+								text += "  orientation " + viewpoint .getUserOrientation () + "\n";
+								text += "  centerOfRotation " + viewpoint .getUserCenterOfRotation () + "\n";
+								text += "  fieldOfView " + viewpoint .getFieldOfView () + "\n";
+								text += "}\n";
+								break;
+							}
+							case "OrthoViewpoint":
+							{
+								text += "OrthoViewpoint {\n";
+								text += "  position " + viewpoint .getUserPosition () + "\n";
+								text += "  orientation " + viewpoint .getUserOrientation () + "\n";
+								text += "  centerOfRotation " + viewpoint .getUserCenterOfRotation () + "\n";
+								text += "  fieldOfView [" + viewpoint .getMinimumX () + ", " + viewpoint .getMinimumY () + ", " + viewpoint .getMaximumX () + ", " + viewpoint .getMaximumY () + "]\n";
+								text += "}\n";
+								break;
+							}
+							case "GeoViewpoint":
+							{
+								const geoCoord = new Vector3 (0, 0, 0);
+
+								text += "GeoViewpoint {\n";
+
+								if (viewpoint .geoOrigin_ && viewpoint .geoOrigin_ .getNodeTypeName () === "GeoOrigin")
+								{
+									const geoOrigin = viewpoint .geoOrigin_ .getValue ();
+
+									text += "  geoOrigin GeoOrigin {\n";
+									text += "    geoSystem [\"" + Array .prototype .join .call (geoOrigin .geoSystem_, "\", \"") + "\"]\n";
+									text += "    geoCoords " + geoOrigin .geoCoords_ + "\n";
+									text += "    rotateYUp " + geoOrigin .rotateYUp_ + "\n";
+									text += "  }\n";
+								}
+
+								text += "  geoSystem [\"" + Array .prototype .join .call (viewpoint .geoSystem_, "\", \"") + "\"]\n";
+								text += "  position " + viewpoint .getGeoCoord (viewpoint .getUserPosition (), geoCoord) + "\n";
+								text += "  orientation " + viewpoint .getUserOrientation () + "\n";
+								text += "  centerOfRotation " + viewpoint .getGeoCoord (viewpoint .getUserCenterOfRotation (), geoCoord) + "\n";
+								text += "  fieldOfView " + viewpoint .getFieldOfView () + "\n";
+								text += "}\n";
+								break;
+							}
+						}
 
 						console .log (text);
-						copyToClipboard (text);
+						this .copyToClipboard (text);
 
-						this .getNotification () .string_ = "Copied viewpoint to clipboard.";
+						this .getNotification () .string_ = _ ("Viewpoint is copied to clipboard.");
 					}
 
 					break;
@@ -724,16 +771,16 @@ function ($,
 				}
 			}
 		},
+		copyToClipboard: function (text)
+		{
+			// The textarea must be visible to make copy work.
+			const $temp = $("<textarea></textarea>");
+			this .getElement () .find (".x_ite-private-browser") .prepend ($temp);
+			$temp .text (text) .select ();
+			document .execCommand ("copy");
+			$temp .remove ();
+		},
 	};
-
-	function copyToClipboard (text)
-	{
-		const $temp = $("<textarea></textarea>");
-		$("body") .append ($temp);
-		$temp .text (text) .select ();
-		document .execCommand ("copy");
-		$temp .remove ();
-	}
 
 	return X3DCoreContext;
 });

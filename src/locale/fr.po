@@ -15,215 +15,158 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: Browser/Core/BrowserTimings.js:96
 msgid "Less Properties"
 msgstr "Moins de propriétés"
 
-#: Browser/Core/BrowserTimings.js:98
 msgid "More Properties"
 msgstr "Plus de propriétés"
 
-#: Browser/Core/BrowserTimings.js:124
 msgid "Frame rate"
 msgstr "Fréquence"
 
-#: Browser/Core/BrowserTimings.js:124
 msgid "fps"
 msgstr "fps"
 
-#: Browser/Core/BrowserTimings.js:125
 msgid "Speed"
 msgstr "Vélocité"
 
-#: Browser/Core/BrowserTimings.js:125
 msgid "m/s"
 msgstr ""
 
-#: Browser/Core/BrowserTimings.js:125
 msgid "km/h"
 msgstr ""
 
-#: Browser/Core/BrowserTimings.js:150
-#, fuzzy
 msgid "Browser"
 msgstr "X_ITE Navigateur"
 
-#: Browser/Core/BrowserTimings.js:150 Browser/Core/BrowserTimings.js:151
-#: Browser/Core/BrowserTimings.js:152 Browser/Core/BrowserTimings.js:153
-#: Browser/Core/BrowserTimings.js:154 Browser/Core/BrowserTimings.js:155
-#: Browser/Core/BrowserTimings.js:156
 msgid "ms"
 msgstr ""
 
-#: Browser/Core/BrowserTimings.js:151
-msgid "X3D"
-msgstr ""
+msgid "X3D total"
+msgstr "X3D total"
 
-#: Browser/Core/BrowserTimings.js:152
-msgid "Routing"
+msgid "Traitement des événements"
 msgstr "Routes"
 
-#: Browser/Core/BrowserTimings.js:153
 msgid "Pointer"
 msgstr "Pointeur"
 
-#: Browser/Core/BrowserTimings.js:154
 msgid "Camera"
 msgstr "Caméra"
 
-#: Browser/Core/BrowserTimings.js:155
-msgid "Collision"
-msgstr "Collision"
+msgid "Collision Detection"
+msgstr "Détection des collisions"
 
-#: Browser/Core/BrowserTimings.js:156
-msgid "Display"
-msgstr "Visualisation"
+msgid "Rendering"
+msgstr "Rendement"
 
-#: Browser/Core/BrowserTimings.js:157
-msgid "Shapes"
-msgstr "Formes"
+msgid "Number of Shapes"
+msgstr "Nombre de formes"
 
-#: Browser/Core/BrowserTimings.js:158
-msgid "Sensors"
-msgstr "Senseurs"
+msgid "Number of Sensors"
+msgstr "Nombre de senseurs"
 
-#: Browser/Core/BrowserTimings.js:163 Browser/Core/ContextMenu.js:210
 msgid "Browser Timings"
 msgstr "Calcul du temps"
 
-#: Browser/Core/ContextMenu.js:19
 msgid "X_ITE Browser"
 msgstr "X_ITE Navigateur"
 
-#: Browser/Core/ContextMenu.js:59
 msgid "Viewpoints"
 msgstr "Points de vue"
 
-#: Browser/Core/ContextMenu.js:87
 msgid "Available Viewers"
 msgstr "Visionneurs disponibles"
 
-#: Browser/Core/ContextMenu.js:145
 msgid "Straighten Horizon"
 msgstr "Redresser l'horizon"
 
-#: Browser/Core/ContextMenu.js:95 Browser/Core/ContextMenu.js:107
-#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:135
 msgid "Primitive Quality"
 msgstr "Qualité des objets simples"
 
-#: Browser/Core/ContextMenu.js:99 Browser/Core/ContextMenu.js:147
 msgid "High"
 msgstr "Haut"
 
-#: Browser/Core/ContextMenu.js:107 Browser/Core/ContextMenu.js:155
 msgid "high"
 msgstr "haut"
 
-#: Browser/Core/ContextMenu.js:113 Browser/Core/ContextMenu.js:161
 msgid "Medium"
 msgstr "Moyenne"
 
-#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:169
 msgid "medium"
 msgstr "moyenne"
 
-#: Browser/Core/ContextMenu.js:127 Browser/Core/ContextMenu.js:175
 msgid "Low"
 msgstr "Faible"
 
-#: Browser/Core/ContextMenu.js:135 Browser/Core/ContextMenu.js:183
 msgid "low"
 msgstr "faible"
 
-#: Browser/Core/ContextMenu.js:143 Browser/Core/ContextMenu.js:155
-#: Browser/Core/ContextMenu.js:169 Browser/Core/ContextMenu.js:183
 msgid "Texture Quality"
 msgstr "Qualité des textures"
 
-#: Browser/Core/ContextMenu.js:191
 msgid "Display Rubberband"
 msgstr "Présenter le bande élastique"
 
-#: Browser/Core/ContextMenu.js:202 Browser/Core/ContextMenu.js:204
 msgid "Rubberband"
 msgstr "Bande élastique"
 
-#: Browser/Core/ContextMenu.js:202
 msgid "on"
 msgstr "marche"
 
-#: Browser/Core/ContextMenu.js:204
 msgid "off"
 msgstr "arrêt"
 
-#: Browser/Core/ContextMenu.js:225
 msgid "Mute Browser"
 msgstr "Rendre navigateur muet"
 
-#: Browser/Core/ContextMenu.js:233
 msgid "Browser muted"
 msgstr "Navigateur muet"
 
-#: Browser/Core/ContextMenu.js:233
 msgid "Browser unmuted"
 msgstr "Son de navigateur réactivé"
 
-#: Browser/Core/ContextMenu.js:239
 msgid "Leave Fullscreen"
 msgstr "Sortie en plein écran"
 
-#: Browser/Core/ContextMenu.js:239
 msgid "Fullscreen"
 msgstr "Plein écran"
 
-#: Browser/Core/ContextMenu.js:249
 msgid "About X_ITE"
 msgstr "À propos de X_ITE"
 
-#: Browser/Core/ContextMenu.js:342
 msgid "Examine Viewer"
 msgstr "Examiner"
 
-#: Browser/Core/ContextMenu.js:344
 msgid "Walk Viewer"
 msgstr "Aller"
 
-#: Browser/Core/ContextMenu.js:346
 msgid "Fly Viewer"
 msgstr "Voler"
 
-#: Browser/Core/ContextMenu.js:348
 msgid "Plane Viewer"
 msgstr "Visionneur de la plaine"
 
-#: Browser/Core/ContextMenu.js:350
-#, fuzzy
 msgid "Look At Viewer"
 msgstr "Regarder un objet de près"
 
-#: Browser/Core/ContextMenu.js:352
 msgid "None Viewer"
 msgstr "Pas de visionneur"
 
-#: Browser/Networking/X3DNetworkingContext.js:101
-#, javascript-format
 msgid "Loading %d file"
 msgstr "Télécharger %d fichier"
 
-#: Browser/Networking/X3DNetworkingContext.js:101
-#, javascript-format
 msgid "Loading %d files"
 msgstr "Télécharger %d fichiers"
 
-#: Browser/Networking/X3DNetworkingContext.js:104
 msgid "Loading done"
 msgstr "Téléchargement fini"
 
-#: Browser/X3DBrowser.js:313
 msgid "Failed loading world."
 msgstr "Le chargement des fichiers a échoué."
 
-#: Browser/X3DBrowser.js:313
 msgid "Show World Info"
 msgstr "Afficher World Info"
+
+msgid "Viewpoint is copied to clipboard."
+msgstr "Le point de vue est copié dans le presse-papiers."

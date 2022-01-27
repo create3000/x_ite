@@ -90,7 +90,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 			},
 		});
 
-		var x = {
+		const x = {
 			get: function ()
 			{
 				return this .getValue () .x;
@@ -104,7 +104,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 			configurable: false
 		};
 
-		var y = {
+		const y = {
 			get: function ()
 			{
 				return this .getValue () .y;

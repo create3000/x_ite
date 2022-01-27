@@ -108,8 +108,8 @@ function ($,
 	{
 		const url = urls .getProviderUrl (name);
 
-		if (typeof nodeRequire === "function")
-			 nodeRequire (new URL (url) .pathname);
+		if (typeof globalRequire === "function")
+			 globalRequire (new URL (url) .pathname);
 
 		return url;
 	}

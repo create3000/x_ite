@@ -51,6 +51,8 @@ define (function ()
 {
 "use strict";
 
+	// Return a pseudo accurate timestamp.
+
 	performance .now = (function ()
 	{
 		const now = performance .now;
@@ -61,7 +63,7 @@ define (function ()
 
 		return function ()
 		{
-			const current = now .call (performance);
+			const current = now .call (this);
 
 			if (current > last)
 			{

@@ -62,7 +62,7 @@ function (SFVec3,
 {
 "use strict";
 
-	var SFVec3f = SFVec3 .SFVec3f;
+	const SFVec3f = SFVec3 .SFVec3f;
 
 	function SFRotation (x, y, z, angle)
 	{
@@ -141,7 +141,7 @@ function (SFVec3,
 		},
 		toStream: function (stream)
 		{
-			var
+			const
 				generator = Generator .Get (stream),
 				rotation  = this .getValue ();
 
@@ -160,7 +160,7 @@ function (SFVec3,
 		},
 	});
 
-	var x = {
+	const x = {
 		get: function ()
 		{
 			return this .getValue () .x;
@@ -174,7 +174,7 @@ function (SFVec3,
 		configurable: false
 	};
 
-	var y = {
+	const y = {
 		get: function ()
 		{
 			return this .getValue () .y;
@@ -188,7 +188,7 @@ function (SFVec3,
 		configurable: false
 	};
 
-	var z = {
+	const z = {
 		get: function ()
 		{
 			return this .getValue () .z;
@@ -202,7 +202,7 @@ function (SFVec3,
 		configurable: false
 	};
 
-	var angle = {
+	const angle = {
 		get: function ()
 		{
 			return this .getValue () .angle;

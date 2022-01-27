@@ -116,14 +116,14 @@ function (Color3,
 		},
 		lerp: (function ()
 		{
-			var
+			const
 				s = [ ],
 				d = [ ],
 				r = [ ];
 
 			return function (destination, t)
 			{
-				var result = new SFColor ();
+				const result = new SFColor ();
 
 				this .getValue () .getHSV (s),
 				destination .getValue () .getHSV (d),
@@ -148,7 +148,7 @@ function (Color3,
 		},
 	});
 
-	var r = {
+	const r = {
 		get: function ()
 		{
 			return this .getValue () .r;
@@ -162,7 +162,7 @@ function (Color3,
 		configurable: false
 	};
 
-	var g = {
+	const g = {
 		get: function ()
 		{
 			return this .getValue () .g;
@@ -176,7 +176,7 @@ function (Color3,
 		configurable: false
 	};
 
-	var b = {
+	const b = {
 		get: function ()
 		{
 			return this .getValue () .b;

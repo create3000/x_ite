@@ -97,7 +97,7 @@ function (X3DField,
 			},
 		});
 
-		var x = {
+		const x = {
 			get: function ()
 			{
 				return this .getValue () .x;
@@ -111,7 +111,7 @@ function (X3DField,
 			configurable: false
 		};
 
-		var y = {
+		const y = {
 			get: function ()
 			{
 				return this .getValue () .y;
@@ -125,7 +125,7 @@ function (X3DField,
 			configurable: false
 		};
 
-		var z = {
+		const z = {
 			get: function ()
 			{
 				return this .getValue () .z;

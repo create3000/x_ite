@@ -50,7 +50,6 @@
 define ([
 	"jquery",
 	"x_ite/Browser/VERSION",
-	"x_ite/Base/Events",
 	"x_ite/Fields",
 	"x_ite/Components",
 	"x_ite/Components/Layering/X3DLayerNode",
@@ -70,7 +69,6 @@ define ([
 ],
 function ($,
           VERSION,
-          Events,
           Fields,
           Components,
           X3DLayerNode,
@@ -249,9 +247,6 @@ function ($,
 				this .callBrowserEventHandler ("onshutdown");
 			}
 
-			// Clear event cache.
-			Events .clear ();
-
 			// Replace world.
 
 			if (scene instanceof Fields .MFNode)
@@ -404,68 +399,91 @@ function ($,
 		},
 		loadURL: function (url, parameter)
 		{
-			// Cancel any loading.
-
-			this .loadCount_       .removeInterest ("set_loadCount__", this);
-			this .prepareEvents () .removeInterest ("bind", this);
-
-			if (this .loader)
-				this .loader .abort ();
-
-			// Start loading.
-
-			this .setBrowserLoading (true);
-			this .addLoadCount (this);
-
-			const loader = this .loader = new FileLoader (this .getWorld ());
-
-			loader .createX3DFromURL (url, parameter,
-			function (scene)
+			const promise = new Promise (function (resolve, reject)
 			{
-				if (loader !== this .loader)
-					return;
+				// Cancel any loading.
 
-				if (! this .getBrowserOptions () .getSplashScreen ())
-					this .getCanvas () .fadeIn (0);
+				this .loadCount_       .removeInterest ("set_loadCount__", this);
+				this .prepareEvents () .removeInterest ("bind", this);
 
-				if (scene)
+				if (this .loader)
+					this .loader .abort ();
+
+				// Start loading.
+
+				this .setBrowserLoading (true);
+				this .addLoadCount (this);
+
+				const loader = this .loader = new FileLoader (this .getWorld ());
+
+				loader .createX3DFromURL (url, parameter,
+				function (scene)
 				{
-					this .replaceWorld (scene);
+					if (loader !== this .loader)
+					{
+						reject ();
+						return;
+					}
+
+					if (! this .getBrowserOptions () .getSplashScreen ())
+						this .getCanvas () .fadeIn (0);
+
+					if (scene)
+					{
+						this .replaceWorld (scene);
+						this .removeLoadCount (this);
+
+						resolve ();
+					}
+					else
+					{
+						this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
+						this .callBrowserEventHandler ("onerror");
+
+						setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
+
+						reject ();
+					}
+				}
+				.bind (this),
+				function (fragment)
+				{
+					if (loader !== this .loader)
+					{
+						reject ();
+						return;
+					}
+
+					this .changeViewpoint (fragment);
 					this .removeLoadCount (this);
+					this .setBrowserLoading (false);
+
+					resolve ();
 				}
-				else
+				.bind (this),
+				function (url, target)
 				{
-					this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
-					this .callBrowserEventHandler ("onerror");
+					if (loader !== this .loader)
+					{
+						reject ();
+						return;
+					}
 
-					setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
+					if (target)
+						window .open (url, target);
+					else
+						location = url;
+
+					this .removeLoadCount (this);
+					this .setBrowserLoading (false);
+
+					resolve ();
 				}
-			}
-			.bind (this),
-			function (fragment)
-			{
-				if (loader !== this .loader)
-					return;
-
-				this .changeViewpoint (fragment);
-				this .removeLoadCount (this);
-				this .setBrowserLoading (false);
-			}
-			.bind (this),
-			function (url, target)
-			{
-				if (loader !== this .loader)
-					return;
-
-				if (target)
-					window .open (url, target);
-				else
-					location = url;
-
-				this .removeLoadCount (this);
-				this .setBrowserLoading (false);
+				.bind (this));
 			}
 			.bind (this));
+
+			return promise;
 		},
 		addBrowserListener: function (callback, object)
 		{

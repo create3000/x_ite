@@ -1,16 +1,16 @@
 /* X_ITE v4.7.7-1132 */
 
-(function (nodeModule, nodeRequire, __filename)
+(function (globalModule, globalRequire)
 {
-
-// Undefine global variables.
-var module, exports, process;
 
 if (typeof __filename === "undefined")
 {
-	nodeModule  = undefined;
-	nodeRequire = undefined;
+	globalModule  = undefined;
+	globalRequire = undefined;
 }
+
+// Undefine global variables.
+var module, exports, process;
 
 const x_iteNoConfict = {
 	sprintf:  window .sprintf,
@@ -15521,14 +15521,14 @@ function (Color3,
 		},
 		lerp: (function ()
 		{
-			var
+			const
 				s = [ ],
 				d = [ ],
 				r = [ ];
 
 			return function (destination, t)
 			{
-				var result = new SFColor ();
+				const result = new SFColor ();
 
 				this .getValue () .getHSV (s),
 				destination .getValue () .getHSV (d),
@@ -15553,7 +15553,7 @@ function (Color3,
 		},
 	});
 
-	var r = {
+	const r = {
 		get: function ()
 		{
 			return this .getValue () .r;
@@ -15567,7 +15567,7 @@ function (Color3,
 		configurable: false
 	};
 
-	var g = {
+	const g = {
 		get: function ()
 		{
 			return this .getValue () .g;
@@ -15581,7 +15581,7 @@ function (Color3,
 		configurable: false
 	};
 
-	var b = {
+	const b = {
 		get: function ()
 		{
 			return this .getValue () .b;
@@ -15924,14 +15924,14 @@ function (X3DField,
 		},
 		lerp: (function ()
 		{
-			var
+			const
 				s = [ ],
 				d = [ ],
 				r = [ ];
 
 			return function (destination, t)
 			{
-				var result = new SFColorRGBA ();
+				const result = new SFColorRGBA ();
 
 				this .getValue () .getHSVA (s),
 				destination .getValue () .getHSVA (d),
@@ -15947,7 +15947,7 @@ function (X3DField,
 		toXMLStream: SFColor .prototype .toXMLStream,
 	});
 
-	var r = {
+	const r = {
 		get: function ()
 		{
 			return this .getValue () .r;
@@ -15961,7 +15961,7 @@ function (X3DField,
 		configurable: false
 	};
 
-	var g = {
+	const g = {
 		get: function ()
 		{
 			return this .getValue () .g;
@@ -15975,7 +15975,7 @@ function (X3DField,
 		configurable: false
 	};
 
-	var b = {
+	const b = {
 		get: function ()
 		{
 			return this .getValue () .b;
@@ -15989,7 +15989,7 @@ function (X3DField,
 		configurable: false
 	};
 
-	var a = {
+	const a = {
 		get: function ()
 		{
 			return this .getValue () .a;
@@ -16112,7 +16112,7 @@ function (X3DField,
 		valueOf: X3DField .prototype .getValue,
 		toStream: function (stream)
 		{
-			var
+			const
 				generator = Generator .Get (stream),
 				category  = generator .Unit (this .getUnit ());
 
@@ -16222,7 +16222,7 @@ function (X3DField,
 		valueOf: X3DField .prototype .getValue,
 		toStream: function (stream)
 		{
-			var
+			const
 				generator = Generator .Get (stream),
 				category  = generator .Unit (this .getUnit ());
 
@@ -16411,7 +16411,7 @@ function (X3DField,
 
 	function Image (width, height, comp, array)
 	{
-	   var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
+	   const MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
 
 		this .width  = ~~width;
 		this .height = ~~height;
@@ -16420,7 +16420,7 @@ function (X3DField,
 		this .array .setValue (array);
 		this .array .length = this .width * this .height;
 	}
-	
+
 	Image .prototype =
 	{
 		constructor: Image,
@@ -16452,7 +16452,7 @@ function (X3DField,
 		setWidth: function (value)
 		{
 			this .width = ~~value;
-			this .array .length = this .width  * this .height;	
+			this .array .length = this .width  * this .height;
 		},
 		getWidth: function ()
 		{
@@ -16461,7 +16461,7 @@ function (X3DField,
 		setHeight: function (value)
 		{
 			this .height = ~~value;
-			this .array .length = this .width  * this .height;	
+			this .array .length = this .width  * this .height;
 		},
 		getHeight: function ()
 		{
@@ -16478,7 +16478,7 @@ function (X3DField,
 		setArray: function (value)
 		{
 			this .array .assign (value);
-			this .array .length = this .width  * this .height;	
+			this .array .length = this .width  * this .height;
 		},
 		getArray: function ()
 		{
@@ -16492,8 +16492,8 @@ function (X3DField,
 
 	function SFImage (width, height, comp, array)
 	{
-		var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
-   
+		const MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
+
 		if (arguments [0] instanceof Image)
 			X3DField .call (this, arguments [0]);
 		else if (arguments .length === 4)
@@ -16542,13 +16542,13 @@ function (X3DField,
 		},
 		toStream: function (stream)
 		{
-		   var
+		   const
 				array = this .array,
 				int   = new SFInt32 ();
 
 			stream .string += this .width + " " + this .height + " " + this .comp;
 
-			for (var i = 0, length = this .width * this .height; i < length; ++ i)
+			for (let i = 0, length = this .width * this .height; i < length; ++ i)
 			{
 				stream .string += " 0x";
 
@@ -16566,7 +16566,7 @@ function (X3DField,
 		},
 	});
 
-	var width = {
+	const width = {
 		get: function ()
 		{
 			return this .getValue () .getWidth ();
@@ -16580,7 +16580,7 @@ function (X3DField,
 		configurable: false
 	};
 
-	var height = {
+	const height = {
 		get: function ()
 		{
 			return this .getValue () .getHeight ();
@@ -16594,7 +16594,7 @@ function (X3DField,
 		configurable: false
 	};
 
-	var comp = {
+	const comp = {
 		get: function ()
 		{
 			return this .getValue () .getComp ();
@@ -16608,7 +16608,7 @@ function (X3DField,
 		configurable: false
 	};
 
-	var array = {
+	const array = {
 		get: function ()
 		{
 			return this .getValue () .getArray ();
@@ -16912,12 +16912,12 @@ function (X3DField,
 			},
 			toStream: function (stream)
 			{
-				var
+				const
 					generator = Generator .Get (stream),
 					value     = this .getValue (),
 					category  = generator .Unit (this .getUnit ());
 
-				for (var i = 0, l = value .length - 1; i < l; ++ i)
+				for (let i = 0, l = value .length - 1; i < l; ++ i)
 				{
 					stream .string += String (generator .ToUnit (category, value [i]));
 					stream .string += " ";
@@ -17320,7 +17320,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 			},
 		});
 
-		var x = {
+		const x = {
 			get: function ()
 			{
 				return this .getValue () .x;
@@ -17334,7 +17334,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 			configurable: false
 		};
 
-		var y = {
+		const y = {
 			get: function ()
 			{
 				return this .getValue () .y;
@@ -19037,7 +19037,7 @@ function (X3DField,
 			});
 		}
 
-		for (var i = 0; i < Matrix3 .prototype .length; ++ i)
+		for (let i = 0; i < Matrix3 .prototype .length; ++ i)
 			defineProperty (i);
 
 		return SFMatrix3;
@@ -19148,7 +19148,7 @@ function (X3DField,
 			},
 		});
 
-		var x = {
+		const x = {
 			get: function ()
 			{
 				return this .getValue () .x;
@@ -19162,7 +19162,7 @@ function (X3DField,
 			configurable: false
 		};
 
-		var y = {
+		const y = {
 			get: function ()
 			{
 				return this .getValue () .y;
@@ -19176,7 +19176,7 @@ function (X3DField,
 			configurable: false
 		};
 
-		var z = {
+		const z = {
 			get: function ()
 			{
 				return this .getValue () .z;
@@ -21675,7 +21675,7 @@ function (X3DField,
 			});
 		}
 
-		for (var i = 0; i < Matrix4 .prototype .length; ++ i)
+		for (let i = 0; i < Matrix4 .prototype .length; ++ i)
 			defineProperty (i);
 
 		return SFMatrix4;
@@ -21741,7 +21741,7 @@ define ('x_ite/Fields/SFNodeCache',['x_ite/Fields/SFNode','x_ite/Fields/SFNode']
 {
 "use strict";
 
-	var cache = new WeakMap ();
+	const cache = new WeakMap ();
 
 	function SFNodeCache () { }
 
@@ -21749,9 +21749,9 @@ define ('x_ite/Fields/SFNodeCache',['x_ite/Fields/SFNode','x_ite/Fields/SFNode']
 	{
 		add: function (baseNode, node)
 		{
-			var SFNode = require ("x_ite/Fields/SFNode");
+			const SFNode = require ("x_ite/Fields/SFNode");
 
-			var node = node ? SFNode .call (node, baseNode) : new SFNode (baseNode);
+			node = node ? SFNode .call (node, baseNode) : new SFNode (baseNode);
 
 			cache .set (baseNode, node);
 
@@ -21759,19 +21759,23 @@ define ('x_ite/Fields/SFNodeCache',['x_ite/Fields/SFNode','x_ite/Fields/SFNode']
 		},
 		get: function (baseNode)
 		{
-			var node = cache .get (baseNode);
+			const node = cache .get (baseNode);
 
 			if (node)
+			{
 				return node;
+			}
+			else
+			{
+				const SFNode = require ("x_ite/Fields/SFNode");
 
-			var SFNode = require ("x_ite/Fields/SFNode");
+				// Always create new instance!
+				const node = new SFNode (baseNode);
 
-			// Always create new instance!
-			node = new SFNode (baseNode);
+				cache .set (baseNode, node);
 
-			cache .set (baseNode, node);
-
-			return node;
+				return node;
+			}
 		},
 	};
 
@@ -21840,18 +21844,18 @@ function (X3DField,
 {
 "use strict";
 
-	var handler =
+	const handler =
 	{
 		get: function (target, key)
 		{
 			try
 			{
-				var value = target [key];
+				const value = target [key];
 
 				if (value !== undefined)
 					return value;
 
-				var
+				const
 					field      = target .getValue () .getField (key),
 					accessType = field .getAccessType ();
 
@@ -21877,7 +21881,7 @@ function (X3DField,
 
 			try
 			{
-				var
+				const
 					field      = target .getValue () .getField (key),
 					accessType = field .getAccessType ();
 
@@ -21907,7 +21911,7 @@ function (X3DField,
 
 	function SFNode (value)
 	{
-		if (value)
+		if (value instanceof require ("x_ite/Basic/X3DBaseNode"))
 		{
 			value .addParent (this);
 
@@ -21931,7 +21935,7 @@ function (X3DField,
 		},
 		copy: function (instance)
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				return new SFNode (value .copy (instance));
@@ -21959,7 +21963,7 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			var current = this .getValue ();
+			const current = this .getValue ();
 
 			if (current)
 			{
@@ -21967,7 +21971,7 @@ function (X3DField,
 				current .removeParent (this);
 			}
 
-			if (value)
+			if (value instanceof require ("x_ite/Basic/X3DBaseNode"))
 			{
 				value .addParent (this);
 				value .addCloneCount (this ._cloneCount);
@@ -21981,7 +21985,7 @@ function (X3DField,
 		},
 		getNodeTypeName: function ()
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				return value .getTypeName ();
@@ -21990,7 +21994,7 @@ function (X3DField,
 		},
 		getNodeName: function ()
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				return value .getName ();
@@ -21999,7 +22003,7 @@ function (X3DField,
 		},
 		getNodeType: function ()
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				return value .getType () .slice ();
@@ -22008,7 +22012,7 @@ function (X3DField,
 		},
 		getFieldDefinitions: function ()
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				return value .getFieldDefinitions ();
@@ -22025,7 +22029,7 @@ function (X3DField,
 				}
 				case 3:
 				{
-					var value = this .getValue ();
+					const value = this .getValue ();
 
 					if (value)
 						return value .getField (name) .addFieldCallback (string, object);
@@ -22044,7 +22048,7 @@ function (X3DField,
 				}
 				case 2:
 				{
-					var value = this .getValue ();
+					const value = this .getValue ();
 
 					if (value)
 						return value .getField (name) .removeFieldCallback (string);
@@ -22055,7 +22059,7 @@ function (X3DField,
 		},
 		addCloneCount: function (count)
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			this ._cloneCount += count;
 
@@ -22064,7 +22068,7 @@ function (X3DField,
 		},
 		removeCloneCount: function (count)
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			this ._cloneCount -= count;
 
@@ -22073,7 +22077,7 @@ function (X3DField,
 		},
 		valueOf: function ()
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				return SFNodeCache .get (value);
@@ -22082,7 +22086,7 @@ function (X3DField,
 		},
 		toStream: function (stream)
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				value .toStream (stream);
@@ -22091,7 +22095,7 @@ function (X3DField,
 		},
 		toVRMLStream: function (stream)
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				value .toVRMLStream (stream);
@@ -22100,7 +22104,7 @@ function (X3DField,
 		},
 		toXMLString: function ()
 		{
-			var
+			const
 				stream    = { string: "" },
 				generator = Generator .Get (stream),
 				value     = this .getValue ();
@@ -22115,7 +22119,7 @@ function (X3DField,
 		},
 		toXMLStream: function (stream)
 		{
-			var value = this .getValue ();
+			const value = this .getValue ();
 
 			if (value)
 				value .toXMLStream (stream);
@@ -22197,7 +22201,7 @@ function (SFVec3,
 {
 "use strict";
 
-	var SFVec3f = SFVec3 .SFVec3f;
+	const SFVec3f = SFVec3 .SFVec3f;
 
 	function SFRotation (x, y, z, angle)
 	{
@@ -22276,7 +22280,7 @@ function (SFVec3,
 		},
 		toStream: function (stream)
 		{
-			var
+			const
 				generator = Generator .Get (stream),
 				rotation  = this .getValue ();
 
@@ -22295,7 +22299,7 @@ function (SFVec3,
 		},
 	});
 
-	var x = {
+	const x = {
 		get: function ()
 		{
 			return this .getValue () .x;
@@ -22309,7 +22313,7 @@ function (SFVec3,
 		configurable: false
 	};
 
-	var y = {
+	const y = {
 		get: function ()
 		{
 			return this .getValue () .y;
@@ -22323,7 +22327,7 @@ function (SFVec3,
 		configurable: false
 	};
 
-	var z = {
+	const z = {
 		get: function ()
 		{
 			return this .getValue () .z;
@@ -22337,7 +22341,7 @@ function (SFVec3,
 		configurable: false
 	};
 
-	var angle = {
+	const angle = {
 		get: function ()
 		{
 			return this .getValue () .angle;
@@ -22429,7 +22433,7 @@ function (X3DField,
 {
 "use strict";
 
-	var
+	const
 		unescape = /\\(.)/g,
 		escape   = /([\\"])/g;
 
@@ -22700,7 +22704,7 @@ function (X3DField,
 			},
 		});
 
-		var x = {
+		const x = {
 			get: function ()
 			{
 				return this .getValue () .x;
@@ -22714,7 +22718,7 @@ function (X3DField,
 			configurable: false
 		};
 
-		var y = {
+		const y = {
 			get: function ()
 			{
 				return this .getValue () .y;
@@ -22728,7 +22732,7 @@ function (X3DField,
 			configurable: false
 		};
 
-		var z = {
+		const z = {
 			get: function ()
 			{
 				return this .getValue () .z;
@@ -22742,7 +22746,7 @@ function (X3DField,
 			configurable: false
 		};
 
-		var w = {
+		const w = {
 			get: function ()
 			{
 				return this .getValue () .w;
@@ -26722,10 +26726,10 @@ define('text/text',['module'], function (module) {
 define('text', ['text/text'], function (main) { return main; });
 
 
-define('text!locale/de.po',[],function () { return 'msgid ""\nmsgstr ""\n"Project-Id-Version: X_ITE\\n"\n"POT-Creation-Date: 2015-12-23 04:56+0100\\n"\n"PO-Revision-Date: 2015-12-23 04:57+0100\\n"\n"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\\n"\n"Language-Team: \\n"\n"Language: de\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"X-Generator: Poedit 1.8.4\\n"\n"X-Poedit-Basepath: ../x_ite\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n"X-Poedit-SourceCharset: UTF-8\\n"\n"X-Poedit-SearchPath-0: .\\n"\n\n#: Browser/Core/BrowserTimings.js:96\nmsgid "Less Properties"\nmsgstr "Weniger Eigenschaften"\n\n#: Browser/Core/BrowserTimings.js:98\nmsgid "More Properties"\nmsgstr "Mehr Eigenschaften"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "Frame rate"\nmsgstr "Bildrate"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "fps"\nmsgstr "BpS"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "Speed"\nmsgstr "Geschwindigkeit"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "m/s"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "km/h"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:150\nmsgid "Browser"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:150 Browser/Core/BrowserTimings.js:151\n#: Browser/Core/BrowserTimings.js:152 Browser/Core/BrowserTimings.js:153\n#: Browser/Core/BrowserTimings.js:154 Browser/Core/BrowserTimings.js:155\n#: Browser/Core/BrowserTimings.js:156\nmsgid "ms"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:151\nmsgid "X3D"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:152\nmsgid "Routing"\nmsgstr "Routen"\n\n#: Browser/Core/BrowserTimings.js:153\nmsgid "Pointer"\nmsgstr "Zeigegerät"\n\n#: Browser/Core/BrowserTimings.js:154\nmsgid "Camera"\nmsgstr "Kamera"\n\n#: Browser/Core/BrowserTimings.js:155\nmsgid "Collision"\nmsgstr "Kollision"\n\n#: Browser/Core/BrowserTimings.js:156\nmsgid "Display"\nmsgstr "Anzeige"\n\n#: Browser/Core/BrowserTimings.js:157\nmsgid "Shapes"\nmsgstr "Formen"\n\n#: Browser/Core/BrowserTimings.js:158\nmsgid "Sensors"\nmsgstr "Sensoren"\n\n#: Browser/Core/BrowserTimings.js:163 Browser/Core/ContextMenu.js:210\nmsgid "Browser Timings"\nmsgstr "Zeitberechnung"\n\n#: Browser/Core/ContextMenu.js:19\nmsgid "X_ITE Browser"\nmsgstr ""\n\n#: Browser/Core/ContextMenu.js:59\nmsgid "Viewpoints"\nmsgstr "Ansichtspunkte"\n\n#: Browser/Core/ContextMenu.js:87\nmsgid "Available Viewers"\nmsgstr "Verfügbare Betrachter"\n\n#: Browser/Core/ContextMenu.js:145\nmsgid "Straighten Horizon"\nmsgstr "Horizont gerade richten"\n\n#: Browser/Core/ContextMenu.js:95 Browser/Core/ContextMenu.js:107\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:135\nmsgid "Primitive Quality"\nmsgstr "Qualität der Grundobjekte"\n\n#: Browser/Core/ContextMenu.js:99 Browser/Core/ContextMenu.js:147\nmsgid "High"\nmsgstr "Hoch"\n\n#: Browser/Core/ContextMenu.js:107 Browser/Core/ContextMenu.js:155\nmsgid "high"\nmsgstr "hoch"\n\n#: Browser/Core/ContextMenu.js:113 Browser/Core/ContextMenu.js:161\nmsgid "Medium"\nmsgstr "Mittel"\n\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:169\nmsgid "medium"\nmsgstr "mittel"\n\n#: Browser/Core/ContextMenu.js:127 Browser/Core/ContextMenu.js:175\nmsgid "Low"\nmsgstr "Niedrig"\n\n#: Browser/Core/ContextMenu.js:135 Browser/Core/ContextMenu.js:183\nmsgid "low"\nmsgstr "niedrig"\n\n#: Browser/Core/ContextMenu.js:143 Browser/Core/ContextMenu.js:155\n#: Browser/Core/ContextMenu.js:169 Browser/Core/ContextMenu.js:183\nmsgid "Texture Quality"\nmsgstr "Textur Qualität"\n\n#: Browser/Core/ContextMenu.js:191\nmsgid "Display Rubberband"\nmsgstr "Gummiband anzeigen"\n\n#: Browser/Core/ContextMenu.js:202 Browser/Core/ContextMenu.js:204\nmsgid "Rubberband"\nmsgstr "Gummiband"\n\n#: Browser/Core/ContextMenu.js:202\nmsgid "on"\nmsgstr "an"\n\n#: Browser/Core/ContextMenu.js:204\nmsgid "off"\nmsgstr "aus"\n\n#: Browser/Core/ContextMenu.js:225\nmsgid "Mute Browser"\nmsgstr "Browser stumm schalten"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser muted"\nmsgstr "Browser stumm geschalten"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser unmuted"\nmsgstr "Browser Ton an"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Leave Fullscreen"\nmsgstr "Vollbild verlassen"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Fullscreen"\nmsgstr "Vollbild"\n\n#: Browser/Core/ContextMenu.js:249\nmsgid "About X_ITE"\nmsgstr "Über X_ITE"\n\n#: Browser/Core/ContextMenu.js:342\nmsgid "Examine Viewer"\nmsgstr "Untersuchen"\n\n#: Browser/Core/ContextMenu.js:344\nmsgid "Walk Viewer"\nmsgstr "Laufen"\n\n#: Browser/Core/ContextMenu.js:346\nmsgid "Fly Viewer"\nmsgstr "Fliegen"\n\n#: Browser/Core/ContextMenu.js:348\nmsgid "Plane Viewer"\nmsgstr "Ebenen Betrachter"\n\n#: Browser/Core/ContextMenu.js:350\n#, fuzzy\nmsgid "Look At Viewer"\nmsgstr "Auf Objekte zielen"\n\n#: Browser/Core/ContextMenu.js:352\nmsgid "None Viewer"\nmsgstr "Kein Betrachter"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d file"\nmsgstr "Lade %d Datei"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d files"\nmsgstr "Lade %d Dateien"\n\n#: Browser/Networking/X3DNetworkingContext.js:104\nmsgid "Loading done"\nmsgstr "Fertig mit Laden"\n\n#: Browser/X3DBrowser.js:313\nmsgid "Failed loading world."\nmsgstr "Laden der Dateien fehlgeschlagen."\n\n#: Browser/X3DBrowser.js:313\nmsgid "Show World Info"\nmsgstr "World Info anzeigen"\n';});
+define('text!locale/de.po',[],function () { return 'msgid ""\nmsgstr ""\n"Project-Id-Version: X_ITE\\n"\n"POT-Creation-Date: 2015-12-23 04:56+0100\\n"\n"PO-Revision-Date: 2015-12-23 04:57+0100\\n"\n"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\\n"\n"Language-Team: \\n"\n"Language: de\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"X-Generator: Poedit 1.8.4\\n"\n"X-Poedit-Basepath: ../x_ite\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n"X-Poedit-SourceCharset: UTF-8\\n"\n"X-Poedit-SearchPath-0: .\\n"\n\nmsgid "Less Properties"\nmsgstr "Weniger Eigenschaften"\n\nmsgid "More Properties"\nmsgstr "Mehr Eigenschaften"\n\nmsgid "Frame rate"\nmsgstr "Bildrate"\n\nmsgid "fps"\nmsgstr "BpS"\n\nmsgid "Speed"\nmsgstr "Geschwindigkeit"\n\nmsgid "m/s"\nmsgstr ""\n\nmsgid "km/h"\nmsgstr ""\n\nmsgid "Browser"\nmsgstr ""\n\nmsgid "ms"\nmsgstr ""\n\nmsgid "X3D total"\nmsgstr "X3D gesamt"\n\nmsgid "Event Processing"\nmsgstr "Ereignisverarbeitung"\n\nmsgid "Pointer"\nmsgstr "Zeigegerät"\n\nmsgid "Camera"\nmsgstr "Kamera"\n\nmsgid "Collision Detection"\nmsgstr "Kollisionserkennung"\n\nmsgid "Rendering"\nmsgstr "Rendering"\n\nmsgid "Number of Shapes"\nmsgstr "Anzahl der Formen"\n\nmsgid "Number of Sensors"\nmsgstr "Anzahl der Sensoren"\n\nmsgid "Browser Timings"\nmsgstr "Zeitberechnung"\n\nmsgid "X_ITE Browser"\nmsgstr ""\n\nmsgid "Viewpoints"\nmsgstr "Ansichtspunkte"\n\nmsgid "Available Viewers"\nmsgstr "Verfügbare Betrachter"\n\nmsgid "Straighten Horizon"\nmsgstr "Horizont gerade richten"\n\nmsgid "Primitive Quality"\nmsgstr "Qualität der Grundobjekte"\n\nmsgid "High"\nmsgstr "Hoch"\n\nmsgid "high"\nmsgstr "hoch"\n\nmsgid "Medium"\nmsgstr "Mittel"\n\nmsgid "medium"\nmsgstr "mittel"\n\nmsgid "Low"\nmsgstr "Niedrig"\n\nmsgid "low"\nmsgstr "niedrig"\n\nmsgid "Texture Quality"\nmsgstr "Textur Qualität"\n\nmsgid "Display Rubberband"\nmsgstr "Gummiband anzeigen"\n\nmsgid "Rubberband"\nmsgstr "Gummiband"\n\nmsgid "on"\nmsgstr "an"\n\nmsgid "off"\nmsgstr "aus"\n\nmsgid "Mute Browser"\nmsgstr "Browser stumm schalten"\n\nmsgid "Browser muted"\nmsgstr "Browser stumm geschalten"\n\nmsgid "Browser unmuted"\nmsgstr "Browser Ton an"\n\nmsgid "Leave Fullscreen"\nmsgstr "Vollbild verlassen"\n\nmsgid "Fullscreen"\nmsgstr "Vollbild"\n\nmsgid "About X_ITE"\nmsgstr "Über X_ITE"\n\nmsgid "Examine Viewer"\nmsgstr "Untersuchen"\n\nmsgid "Walk Viewer"\nmsgstr "Laufen"\n\nmsgid "Fly Viewer"\nmsgstr "Fliegen"\n\nmsgid "Plane Viewer"\nmsgstr "Ebenen Betrachter"\n\nmsgid "Look At Viewer"\nmsgstr "Auf Objekte zielen"\n\nmsgid "None Viewer"\nmsgstr "Kein Betrachter"\n\nmsgid "Loading %d file"\nmsgstr "Lade %d Datei"\n\nmsgid "Loading %d files"\nmsgstr "Lade %d Dateien"\n\nmsgid "Loading done"\nmsgstr "Fertig mit Laden"\n\nmsgid "Failed loading world."\nmsgstr "Laden der Dateien fehlgeschlagen."\n\nmsgid "Show World Info"\nmsgstr "World Info anzeigen"\n\nmsgid "Viewpoint is copied to clipboard."\nmsgstr "Ansichtspunkt wurde in die Zwischenablage kopiert."\n';});
 
 
-define('text!locale/fr.po',[],function () { return 'msgid ""\nmsgstr ""\n"Project-Id-Version: X_ITE\\n"\n"POT-Creation-Date: 2015-12-23 04:58+0100\\n"\n"PO-Revision-Date: 2015-12-23 05:07+0100\\n"\n"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\\n"\n"Language-Team: \\n"\n"Language: fr\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"X-Generator: Poedit 1.8.4\\n"\n"X-Poedit-Basepath: ../x_ite\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n"X-Poedit-SourceCharset: UTF-8\\n"\n"X-Poedit-SearchPath-0: .\\n"\n\n#: Browser/Core/BrowserTimings.js:96\nmsgid "Less Properties"\nmsgstr "Moins de propriétés"\n\n#: Browser/Core/BrowserTimings.js:98\nmsgid "More Properties"\nmsgstr "Plus de propriétés"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "Frame rate"\nmsgstr "Fréquence"\n\n#: Browser/Core/BrowserTimings.js:124\nmsgid "fps"\nmsgstr "fps"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "Speed"\nmsgstr "Vélocité"\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "m/s"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:125\nmsgid "km/h"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:150\n#, fuzzy\nmsgid "Browser"\nmsgstr "X_ITE Navigateur"\n\n#: Browser/Core/BrowserTimings.js:150 Browser/Core/BrowserTimings.js:151\n#: Browser/Core/BrowserTimings.js:152 Browser/Core/BrowserTimings.js:153\n#: Browser/Core/BrowserTimings.js:154 Browser/Core/BrowserTimings.js:155\n#: Browser/Core/BrowserTimings.js:156\nmsgid "ms"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:151\nmsgid "X3D"\nmsgstr ""\n\n#: Browser/Core/BrowserTimings.js:152\nmsgid "Routing"\nmsgstr "Routes"\n\n#: Browser/Core/BrowserTimings.js:153\nmsgid "Pointer"\nmsgstr "Pointeur"\n\n#: Browser/Core/BrowserTimings.js:154\nmsgid "Camera"\nmsgstr "Caméra"\n\n#: Browser/Core/BrowserTimings.js:155\nmsgid "Collision"\nmsgstr "Collision"\n\n#: Browser/Core/BrowserTimings.js:156\nmsgid "Display"\nmsgstr "Visualisation"\n\n#: Browser/Core/BrowserTimings.js:157\nmsgid "Shapes"\nmsgstr "Formes"\n\n#: Browser/Core/BrowserTimings.js:158\nmsgid "Sensors"\nmsgstr "Senseurs"\n\n#: Browser/Core/BrowserTimings.js:163 Browser/Core/ContextMenu.js:210\nmsgid "Browser Timings"\nmsgstr "Calcul du temps"\n\n#: Browser/Core/ContextMenu.js:19\nmsgid "X_ITE Browser"\nmsgstr "X_ITE Navigateur"\n\n#: Browser/Core/ContextMenu.js:59\nmsgid "Viewpoints"\nmsgstr "Points de vue"\n\n#: Browser/Core/ContextMenu.js:87\nmsgid "Available Viewers"\nmsgstr "Visionneurs disponibles"\n\n#: Browser/Core/ContextMenu.js:145\nmsgid "Straighten Horizon"\nmsgstr "Redresser l\'horizon"\n\n#: Browser/Core/ContextMenu.js:95 Browser/Core/ContextMenu.js:107\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:135\nmsgid "Primitive Quality"\nmsgstr "Qualité des objets simples"\n\n#: Browser/Core/ContextMenu.js:99 Browser/Core/ContextMenu.js:147\nmsgid "High"\nmsgstr "Haut"\n\n#: Browser/Core/ContextMenu.js:107 Browser/Core/ContextMenu.js:155\nmsgid "high"\nmsgstr "haut"\n\n#: Browser/Core/ContextMenu.js:113 Browser/Core/ContextMenu.js:161\nmsgid "Medium"\nmsgstr "Moyenne"\n\n#: Browser/Core/ContextMenu.js:121 Browser/Core/ContextMenu.js:169\nmsgid "medium"\nmsgstr "moyenne"\n\n#: Browser/Core/ContextMenu.js:127 Browser/Core/ContextMenu.js:175\nmsgid "Low"\nmsgstr "Faible"\n\n#: Browser/Core/ContextMenu.js:135 Browser/Core/ContextMenu.js:183\nmsgid "low"\nmsgstr "faible"\n\n#: Browser/Core/ContextMenu.js:143 Browser/Core/ContextMenu.js:155\n#: Browser/Core/ContextMenu.js:169 Browser/Core/ContextMenu.js:183\nmsgid "Texture Quality"\nmsgstr "Qualité des textures"\n\n#: Browser/Core/ContextMenu.js:191\nmsgid "Display Rubberband"\nmsgstr "Présenter le bande élastique"\n\n#: Browser/Core/ContextMenu.js:202 Browser/Core/ContextMenu.js:204\nmsgid "Rubberband"\nmsgstr "Bande élastique"\n\n#: Browser/Core/ContextMenu.js:202\nmsgid "on"\nmsgstr "marche"\n\n#: Browser/Core/ContextMenu.js:204\nmsgid "off"\nmsgstr "arrêt"\n\n#: Browser/Core/ContextMenu.js:225\nmsgid "Mute Browser"\nmsgstr "Rendre navigateur muet"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser muted"\nmsgstr "Navigateur muet"\n\n#: Browser/Core/ContextMenu.js:233\nmsgid "Browser unmuted"\nmsgstr "Son de navigateur réactivé"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Leave Fullscreen"\nmsgstr "Sortie en plein écran"\n\n#: Browser/Core/ContextMenu.js:239\nmsgid "Fullscreen"\nmsgstr "Plein écran"\n\n#: Browser/Core/ContextMenu.js:249\nmsgid "About X_ITE"\nmsgstr "À propos de X_ITE"\n\n#: Browser/Core/ContextMenu.js:342\nmsgid "Examine Viewer"\nmsgstr "Examiner"\n\n#: Browser/Core/ContextMenu.js:344\nmsgid "Walk Viewer"\nmsgstr "Aller"\n\n#: Browser/Core/ContextMenu.js:346\nmsgid "Fly Viewer"\nmsgstr "Voler"\n\n#: Browser/Core/ContextMenu.js:348\nmsgid "Plane Viewer"\nmsgstr "Visionneur de la plaine"\n\n#: Browser/Core/ContextMenu.js:350\n#, fuzzy\nmsgid "Look At Viewer"\nmsgstr "Regarder un objet de près"\n\n#: Browser/Core/ContextMenu.js:352\nmsgid "None Viewer"\nmsgstr "Pas de visionneur"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d file"\nmsgstr "Télécharger %d fichier"\n\n#: Browser/Networking/X3DNetworkingContext.js:101\n#, javascript-format\nmsgid "Loading %d files"\nmsgstr "Télécharger %d fichiers"\n\n#: Browser/Networking/X3DNetworkingContext.js:104\nmsgid "Loading done"\nmsgstr "Téléchargement fini"\n\n#: Browser/X3DBrowser.js:313\nmsgid "Failed loading world."\nmsgstr "Le chargement des fichiers a échoué."\n\n#: Browser/X3DBrowser.js:313\nmsgid "Show World Info"\nmsgstr "Afficher World Info"\n';});
+define('text!locale/fr.po',[],function () { return 'msgid ""\nmsgstr ""\n"Project-Id-Version: X_ITE\\n"\n"POT-Creation-Date: 2015-12-23 04:58+0100\\n"\n"PO-Revision-Date: 2015-12-23 05:07+0100\\n"\n"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\\n"\n"Language-Team: \\n"\n"Language: fr\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"X-Generator: Poedit 1.8.4\\n"\n"X-Poedit-Basepath: ../x_ite\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n"X-Poedit-SourceCharset: UTF-8\\n"\n"X-Poedit-SearchPath-0: .\\n"\n\nmsgid "Less Properties"\nmsgstr "Moins de propriétés"\n\nmsgid "More Properties"\nmsgstr "Plus de propriétés"\n\nmsgid "Frame rate"\nmsgstr "Fréquence"\n\nmsgid "fps"\nmsgstr "fps"\n\nmsgid "Speed"\nmsgstr "Vélocité"\n\nmsgid "m/s"\nmsgstr ""\n\nmsgid "km/h"\nmsgstr ""\n\nmsgid "Browser"\nmsgstr "X_ITE Navigateur"\n\nmsgid "ms"\nmsgstr ""\n\nmsgid "X3D total"\nmsgstr "X3D total"\n\nmsgid "Traitement des événements"\nmsgstr "Routes"\n\nmsgid "Pointer"\nmsgstr "Pointeur"\n\nmsgid "Camera"\nmsgstr "Caméra"\n\nmsgid "Collision Detection"\nmsgstr "Détection des collisions"\n\nmsgid "Rendering"\nmsgstr "Rendement"\n\nmsgid "Number of Shapes"\nmsgstr "Nombre de formes"\n\nmsgid "Number of Sensors"\nmsgstr "Nombre de senseurs"\n\nmsgid "Browser Timings"\nmsgstr "Calcul du temps"\n\nmsgid "X_ITE Browser"\nmsgstr "X_ITE Navigateur"\n\nmsgid "Viewpoints"\nmsgstr "Points de vue"\n\nmsgid "Available Viewers"\nmsgstr "Visionneurs disponibles"\n\nmsgid "Straighten Horizon"\nmsgstr "Redresser l\'horizon"\n\nmsgid "Primitive Quality"\nmsgstr "Qualité des objets simples"\n\nmsgid "High"\nmsgstr "Haut"\n\nmsgid "high"\nmsgstr "haut"\n\nmsgid "Medium"\nmsgstr "Moyenne"\n\nmsgid "medium"\nmsgstr "moyenne"\n\nmsgid "Low"\nmsgstr "Faible"\n\nmsgid "low"\nmsgstr "faible"\n\nmsgid "Texture Quality"\nmsgstr "Qualité des textures"\n\nmsgid "Display Rubberband"\nmsgstr "Présenter le bande élastique"\n\nmsgid "Rubberband"\nmsgstr "Bande élastique"\n\nmsgid "on"\nmsgstr "marche"\n\nmsgid "off"\nmsgstr "arrêt"\n\nmsgid "Mute Browser"\nmsgstr "Rendre navigateur muet"\n\nmsgid "Browser muted"\nmsgstr "Navigateur muet"\n\nmsgid "Browser unmuted"\nmsgstr "Son de navigateur réactivé"\n\nmsgid "Leave Fullscreen"\nmsgstr "Sortie en plein écran"\n\nmsgid "Fullscreen"\nmsgstr "Plein écran"\n\nmsgid "About X_ITE"\nmsgstr "À propos de X_ITE"\n\nmsgid "Examine Viewer"\nmsgstr "Examiner"\n\nmsgid "Walk Viewer"\nmsgstr "Aller"\n\nmsgid "Fly Viewer"\nmsgstr "Voler"\n\nmsgid "Plane Viewer"\nmsgstr "Visionneur de la plaine"\n\nmsgid "Look At Viewer"\nmsgstr "Regarder un objet de près"\n\nmsgid "None Viewer"\nmsgstr "Pas de visionneur"\n\nmsgid "Loading %d file"\nmsgstr "Télécharger %d fichier"\n\nmsgid "Loading %d files"\nmsgstr "Télécharger %d fichiers"\n\nmsgid "Loading done"\nmsgstr "Téléchargement fini"\n\nmsgid "Failed loading world."\nmsgstr "Le chargement des fichiers a échoué."\n\nmsgid "Show World Info"\nmsgstr "Afficher World Info"\n\nmsgid "Viewpoint is copied to clipboard."\nmsgstr "Le point de vue est copié dans le presse-papiers."\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -27053,15 +27057,15 @@ function ($,
 			   rows [1] .addClass ("x_ite-private-more");
 
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Browser")   + ":")) .append ($("<td></td>") .text (f2(systemTime)           .toLocaleString (language, fixed) + " " + _("ms")));
-				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D")       + ":")) .append ($("<td></td>") .text (f2(browser .browserTime) .toLocaleString (language, fixed) + " " + _("ms")));
-				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Routing")   + ":")) .append ($("<td></td>") .text (f2(routingTime)          .toLocaleString (language, fixed) + " " + _("ms")));
+				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D total")       + ":")) .append ($("<td></td>") .text (f2(browser .browserTime) .toLocaleString (language, fixed) + " " + _("ms")));
+				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Event Processing")   + ":")) .append ($("<td></td>") .text (f2(routingTime)          .toLocaleString (language, fixed) + " " + _("ms")));
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Pointer")   + ":")) .append ($("<td></td>") .text (f2(browser .pointerTime) .toLocaleString (language, fixed) + " " + _("ms")));
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Camera")    + ":")) .append ($("<td></td>") .text (f2(browser .cameraTime)  .toLocaleString (language, fixed) + " " + _("ms")));
 				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Picking")   + ":")) .append ($("<td></td>") .text (f2(browser .pickingTime) .toLocaleString (language, fixed) + " " + _("ms")));
-				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Collision") + ":")) .append ($("<td></td>") .text (f2(collisionTime)        .toLocaleString (language, fixed) + " " + _("ms")));
-				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Display")   + ":")) .append ($("<td></td>") .text (f2(browser .displayTime) .toLocaleString (language, fixed) + " " + _("ms")));
-				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Shapes")    + ":")) .append ($("<td></td>") .text (opaqueShapes + " + " + transparentShapes));
-				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Sensors")   + ":")) .append ($("<td></td>") .text (prepareEvents + sensors));
+				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Collision Detection") + ":")) .append ($("<td></td>") .text (f2(collisionTime)        .toLocaleString (language, fixed) + " " + _("ms")));
+				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Rendering")   + ":")) .append ($("<td></td>") .text (f2(browser .displayTime) .toLocaleString (language, fixed) + " " + _("ms")));
+				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Number of Shapes")    + ":")) .append ($("<td></td>") .text (opaqueShapes + " + " + transparentShapes));
+				rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Number of Sensors")   + ":")) .append ($("<td></td>") .text (prepareEvents + sensors));
 			}
 
 			rows .length = r;
@@ -34128,10 +34132,10 @@ define ('x_ite/Parser/X3DParser',[],function ()
 						providerUrls .add (providerUrl);
 				}
 
-				if (typeof nodeRequire === "function")
+				if (typeof globalRequire === "function")
 				{
 					for (const url of providerUrls)
-						nodeRequire (new URL (url) .pathname);
+						globalRequire (new URL (url) .pathname);
 				}
 
 				return Array .from (providerUrls);
@@ -38908,6 +38912,8 @@ define ('x_ite/Browser/Core/X3DCoreContext',[
 	"x_ite/Execution/Scene",
 	"x_ite/Parser/Parser",
 	"standard/Utility/DataStorage",
+	"standard/Math/Numbers/Vector3",
+	"locale/gettext",
 ],
 function ($,
           Fields,
@@ -38919,7 +38925,9 @@ function ($,
           ContextMenu,
           Scene,
           Parser,
-          DataStorage)
+          DataStorage,
+          Vector3,
+          _)
 {
 "use strict";
 
@@ -39515,21 +39523,64 @@ function ($,
 
 						const viewpoint = this .getActiveViewpoint ();
 
-						if (! viewpoint)
+						if (!viewpoint)
 							break;
 
 						let text = "";
 
-						text += "Viewpoint {\n";
-						text += "  position " + viewpoint .getUserPosition () + "\n";
-						text += "  orientation " + viewpoint .getUserOrientation () + "\n";
-						text += "  centerOfRotation " + viewpoint .getUserCenterOfRotation () + "\n";
-						text += "}";
+						switch (viewpoint .getTypeName ())
+						{
+							case "Viewpoint":
+							{
+								text += "Viewpoint {\n";
+								text += "  position " + viewpoint .getUserPosition () + "\n";
+								text += "  orientation " + viewpoint .getUserOrientation () + "\n";
+								text += "  centerOfRotation " + viewpoint .getUserCenterOfRotation () + "\n";
+								text += "  fieldOfView " + viewpoint .getFieldOfView () + "\n";
+								text += "}\n";
+								break;
+							}
+							case "OrthoViewpoint":
+							{
+								text += "OrthoViewpoint {\n";
+								text += "  position " + viewpoint .getUserPosition () + "\n";
+								text += "  orientation " + viewpoint .getUserOrientation () + "\n";
+								text += "  centerOfRotation " + viewpoint .getUserCenterOfRotation () + "\n";
+								text += "  fieldOfView [" + viewpoint .getMinimumX () + ", " + viewpoint .getMinimumY () + ", " + viewpoint .getMaximumX () + ", " + viewpoint .getMaximumY () + "]\n";
+								text += "}\n";
+								break;
+							}
+							case "GeoViewpoint":
+							{
+								const geoCoord = new Vector3 (0, 0, 0);
+
+								text += "GeoViewpoint {\n";
+
+								if (viewpoint .geoOrigin_ && viewpoint .geoOrigin_ .getNodeTypeName () === "GeoOrigin")
+								{
+									const geoOrigin = viewpoint .geoOrigin_ .getValue ();
+
+									text += "  geoOrigin GeoOrigin {\n";
+									text += "    geoSystem [\"" + Array .prototype .join .call (geoOrigin .geoSystem_, "\", \"") + "\"]\n";
+									text += "    geoCoords " + geoOrigin .geoCoords_ + "\n";
+									text += "    rotateYUp " + geoOrigin .rotateYUp_ + "\n";
+									text += "  }\n";
+								}
+
+								text += "  geoSystem [\"" + Array .prototype .join .call (viewpoint .geoSystem_, "\", \"") + "\"]\n";
+								text += "  position " + viewpoint .getGeoCoord (viewpoint .getUserPosition (), geoCoord) + "\n";
+								text += "  orientation " + viewpoint .getUserOrientation () + "\n";
+								text += "  centerOfRotation " + viewpoint .getGeoCoord (viewpoint .getUserCenterOfRotation (), geoCoord) + "\n";
+								text += "  fieldOfView " + viewpoint .getFieldOfView () + "\n";
+								text += "}\n";
+								break;
+							}
+						}
 
 						console .log (text);
-						copyToClipboard (text);
+						this .copyToClipboard (text);
 
-						this .getNotification () .string_ = "Copied viewpoint to clipboard.";
+						this .getNotification () .string_ = _ ("Viewpoint is copied to clipboard.");
 					}
 
 					break;
@@ -39573,16 +39624,16 @@ function ($,
 				}
 			}
 		},
+		copyToClipboard: function (text)
+		{
+			// The textarea must be visible to make copy work.
+			const $temp = $("<textarea></textarea>");
+			this .getElement () .find (".x_ite-private-browser") .prepend ($temp);
+			$temp .text (text) .select ();
+			document .execCommand ("copy");
+			$temp .remove ();
+		},
 	};
-
-	function copyToClipboard (text)
-	{
-		const $temp = $("<textarea></textarea>");
-		$("body") .append ($temp);
-		$temp .text (text) .select ();
-		document .execCommand ("copy");
-		$temp .remove ();
-	}
 
 	return X3DCoreContext;
 });
@@ -117136,7 +117187,6 @@ function (ProfileInfo,
 define ('x_ite/Browser/X3DBrowser',[
 	"jquery",
 	"x_ite/Browser/VERSION",
-	"x_ite/Base/Events",
 	"x_ite/Fields",
 	"x_ite/Components",
 	"x_ite/Components/Layering/X3DLayerNode",
@@ -117156,7 +117206,6 @@ define ('x_ite/Browser/X3DBrowser',[
 ],
 function ($,
           VERSION,
-          Events,
           Fields,
           Components,
           X3DLayerNode,
@@ -117335,9 +117384,6 @@ function ($,
 				this .callBrowserEventHandler ("onshutdown");
 			}
 
-			// Clear event cache.
-			Events .clear ();
-
 			// Replace world.
 
 			if (scene instanceof Fields .MFNode)
@@ -117490,68 +117536,91 @@ function ($,
 		},
 		loadURL: function (url, parameter)
 		{
-			// Cancel any loading.
-
-			this .loadCount_       .removeInterest ("set_loadCount__", this);
-			this .prepareEvents () .removeInterest ("bind", this);
-
-			if (this .loader)
-				this .loader .abort ();
-
-			// Start loading.
-
-			this .setBrowserLoading (true);
-			this .addLoadCount (this);
-
-			const loader = this .loader = new FileLoader (this .getWorld ());
-
-			loader .createX3DFromURL (url, parameter,
-			function (scene)
+			const promise = new Promise (function (resolve, reject)
 			{
-				if (loader !== this .loader)
-					return;
+				// Cancel any loading.
 
-				if (! this .getBrowserOptions () .getSplashScreen ())
-					this .getCanvas () .fadeIn (0);
+				this .loadCount_       .removeInterest ("set_loadCount__", this);
+				this .prepareEvents () .removeInterest ("bind", this);
 
-				if (scene)
+				if (this .loader)
+					this .loader .abort ();
+
+				// Start loading.
+
+				this .setBrowserLoading (true);
+				this .addLoadCount (this);
+
+				const loader = this .loader = new FileLoader (this .getWorld ());
+
+				loader .createX3DFromURL (url, parameter,
+				function (scene)
 				{
-					this .replaceWorld (scene);
+					if (loader !== this .loader)
+					{
+						reject ();
+						return;
+					}
+
+					if (! this .getBrowserOptions () .getSplashScreen ())
+						this .getCanvas () .fadeIn (0);
+
+					if (scene)
+					{
+						this .replaceWorld (scene);
+						this .removeLoadCount (this);
+
+						resolve ();
+					}
+					else
+					{
+						this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
+						this .callBrowserEventHandler ("onerror");
+
+						setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
+
+						reject ();
+					}
+				}
+				.bind (this),
+				function (fragment)
+				{
+					if (loader !== this .loader)
+					{
+						reject ();
+						return;
+					}
+
+					this .changeViewpoint (fragment);
 					this .removeLoadCount (this);
+					this .setBrowserLoading (false);
+
+					resolve ();
 				}
-				else
+				.bind (this),
+				function (url, target)
 				{
-					this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
-					this .callBrowserEventHandler ("onerror");
+					if (loader !== this .loader)
+					{
+						reject ();
+						return;
+					}
 
-					setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
+					if (target)
+						window .open (url, target);
+					else
+						location = url;
+
+					this .removeLoadCount (this);
+					this .setBrowserLoading (false);
+
+					resolve ();
 				}
-			}
-			.bind (this),
-			function (fragment)
-			{
-				if (loader !== this .loader)
-					return;
-
-				this .changeViewpoint (fragment);
-				this .removeLoadCount (this);
-				this .setBrowserLoading (false);
-			}
-			.bind (this),
-			function (url, target)
-			{
-				if (loader !== this .loader)
-					return;
-
-				if (target)
-					window .open (url, target);
-				else
-					location = url;
-
-				this .removeLoadCount (this);
-				this .setBrowserLoading (false);
+				.bind (this));
 			}
 			.bind (this));
+
+			return promise;
 		},
 		addBrowserListener: function (callback, object)
 		{
@@ -117948,6 +118017,8 @@ define ('standard/Time/MicroTime',[],function ()
 {
 "use strict";
 
+	// Return a pseudo accurate timestamp.
+
 	performance .now = (function ()
 	{
 		const now = performance .now;
@@ -117958,7 +118029,7 @@ define ('standard/Time/MicroTime',[],function ()
 
 		return function ()
 		{
-			const current = now .call (performance);
+			const current = now .call (this);
 
 			if (current > last)
 			{
@@ -118085,8 +118156,8 @@ function ($,
 	{
 		const url = urls .getProviderUrl (name);
 
-		if (typeof nodeRequire === "function")
-			 nodeRequire (new URL (url) .pathname);
+		if (typeof globalRequire === "function")
+			 globalRequire (new URL (url) .pathname);
 
 		return url;
 	}
@@ -118374,8 +118445,8 @@ const getScriptURL = (function ()
 	// Now assign temporary X3D.
 	window .X3D = X_ITE;
 
-	if (typeof nodeModule === "object" && typeof nodeModule .exports === "object")
-		nodeModule .exports = X_ITE;
+	if (typeof globalModule === "object" && typeof globalModule .exports === "object")
+		globalModule .exports = X_ITE;
 
 	// IE fix.
 	document .createElement ("X3DCanvas");
@@ -118464,4 +118535,4 @@ for (const key in x_iteNoConfict)
 }
 
 })
-(typeof module === "object" ? module : undefined, typeof require === "function" ? require : undefined, typeof __filename === "string" ? __filename : undefined);
+(typeof module === "object" ? module : undefined, typeof require === "function" ? require : undefined);

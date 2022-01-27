@@ -113,14 +113,14 @@ function (X3DField,
 		},
 		lerp: (function ()
 		{
-			var
+			const
 				s = [ ],
 				d = [ ],
 				r = [ ];
 
 			return function (destination, t)
 			{
-				var result = new SFColorRGBA ();
+				const result = new SFColorRGBA ();
 
 				this .getValue () .getHSVA (s),
 				destination .getValue () .getHSVA (d),
@@ -136,7 +136,7 @@ function (X3DField,
 		toXMLStream: SFColor .prototype .toXMLStream,
 	});
 
-	var r = {
+	const r = {
 		get: function ()
 		{
 			return this .getValue () .r;
@@ -150,7 +150,7 @@ function (X3DField,
 		configurable: false
 	};
 
-	var g = {
+	const g = {
 		get: function ()
 		{
 			return this .getValue () .g;
@@ -164,7 +164,7 @@ function (X3DField,
 		configurable: false
 	};
 
-	var b = {
+	const b = {
 		get: function ()
 		{
 			return this .getValue () .b;
@@ -178,7 +178,7 @@ function (X3DField,
 		configurable: false
 	};
 
-	var a = {
+	const a = {
 		get: function ()
 		{
 			return this .getValue () .a;

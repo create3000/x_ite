@@ -64,7 +64,7 @@ function (X3DField,
 
 	function Image (width, height, comp, array)
 	{
-	   var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
+	   const MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
 
 		this .width  = ~~width;
 		this .height = ~~height;
@@ -73,7 +73,7 @@ function (X3DField,
 		this .array .setValue (array);
 		this .array .length = this .width * this .height;
 	}
-	
+
 	Image .prototype =
 	{
 		constructor: Image,
@@ -105,7 +105,7 @@ function (X3DField,
 		setWidth: function (value)
 		{
 			this .width = ~~value;
-			this .array .length = this .width  * this .height;	
+			this .array .length = this .width  * this .height;
 		},
 		getWidth: function ()
 		{
@@ -114,7 +114,7 @@ function (X3DField,
 		setHeight: function (value)
 		{
 			this .height = ~~value;
-			this .array .length = this .width  * this .height;	
+			this .array .length = this .width  * this .height;
 		},
 		getHeight: function ()
 		{
@@ -131,7 +131,7 @@ function (X3DField,
 		setArray: function (value)
 		{
 			this .array .assign (value);
-			this .array .length = this .width  * this .height;	
+			this .array .length = this .width  * this .height;
 		},
 		getArray: function ()
 		{
@@ -145,8 +145,8 @@ function (X3DField,
 
 	function SFImage (width, height, comp, array)
 	{
-		var MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
-   
+		const MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
+
 		if (arguments [0] instanceof Image)
 			X3DField .call (this, arguments [0]);
 		else if (arguments .length === 4)
@@ -195,13 +195,13 @@ function (X3DField,
 		},
 		toStream: function (stream)
 		{
-		   var
+		   const
 				array = this .array,
 				int   = new SFInt32 ();
 
 			stream .string += this .width + " " + this .height + " " + this .comp;
 
-			for (var i = 0, length = this .width * this .height; i < length; ++ i)
+			for (let i = 0, length = this .width * this .height; i < length; ++ i)
 			{
 				stream .string += " 0x";
 
@@ -219,7 +219,7 @@ function (X3DField,
 		},
 	});
 
-	var width = {
+	const width = {
 		get: function ()
 		{
 			return this .getValue () .getWidth ();
@@ -233,7 +233,7 @@ function (X3DField,
 		configurable: false
 	};
 
-	var height = {
+	const height = {
 		get: function ()
 		{
 			return this .getValue () .getHeight ();
@@ -247,7 +247,7 @@ function (X3DField,
 		configurable: false
 	};
 
-	var comp = {
+	const comp = {
 		get: function ()
 		{
 			return this .getValue () .getComp ();
@@ -261,7 +261,7 @@ function (X3DField,
 		configurable: false
 	};
 
-	var array = {
+	const array = {
 		get: function ()
 		{
 			return this .getValue () .getArray ();

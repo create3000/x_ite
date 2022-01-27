@@ -135,8 +135,8 @@ const getScriptURL = (function ()
 	// Now assign temporary X3D.
 	window .X3D = X_ITE;
 
-	if (typeof nodeModule === "object" && typeof nodeModule .exports === "object")
-		nodeModule .exports = X_ITE;
+	if (typeof globalModule === "object" && typeof globalModule .exports === "object")
+		globalModule .exports = X_ITE;
 
 	// IE fix.
 	document .createElement ("X3DCanvas");
