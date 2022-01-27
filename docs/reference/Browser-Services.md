@@ -330,6 +330,8 @@ Prints *object* to the browser's console, inserting a newline character after th
 
 #### String **getVersion** ()
 
+#### Number **getCurrentSpeed** ()
+
 #### Number **getCurrentFrameRate** ()
 
 #### String **getWorldURL** ()
