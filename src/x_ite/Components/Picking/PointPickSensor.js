@@ -59,7 +59,7 @@ define ([
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Geometry/Box3",
-	X3D .getComponentUrl ("rigid-body-physics"),
+	require .getComponentUrl ("rigid-body-physics"),
 ],
 function (Fields,
           X3DFieldDefinition,

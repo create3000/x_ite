@@ -55,7 +55,7 @@ define ([
 	"x_ite/Components/Picking/VolumePickSensor",
 	"x_ite/Components/Picking/X3DPickSensorNode",
 	"x_ite/Components/Picking/X3DPickableObject",
-	X3D .getComponentUrl ("rigid-body-physics"),
+	require .getComponentUrl ("rigid-body-physics"),
 ],
 function (Components,
           LinePickSensor,

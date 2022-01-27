@@ -185,11 +185,12 @@ function ($,
 		});
 	}
 
+	require .getComponentUrl = getComponentUrl;
+
 	Object .assign (X3D,
 	{
 		require:                     require,
 		define:                      define,
-		getComponentUrl:             getComponentUrl,
 
 		getBrowser:                  getBrowser,
 		createBrowser:               createBrowser,
