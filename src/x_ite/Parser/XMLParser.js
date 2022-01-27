@@ -995,7 +995,7 @@ function ($,
 			}
 			catch (error)
 			{
-				//console .warn (error .message);
+				//console .warn (error);
 			}
 		},
 		fieldValue: function (field, value)

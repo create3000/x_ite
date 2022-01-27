@@ -127,7 +127,9 @@ function (X3DField,
 
 	function SFNode (value)
 	{
-		if (value instanceof require ("x_ite/Basic/X3DBaseNode"))
+		// Node need to test for X3DBaseNode, because there is a special version of SFNode in Script.
+
+		if (value)
 		{
 			value .addParent (this);
 
@@ -187,7 +189,9 @@ function (X3DField,
 				current .removeParent (this);
 			}
 
-			if (value instanceof require ("x_ite/Basic/X3DBaseNode"))
+			// Node need to test for X3DBaseNode, because there is a special version of SFNode in Script.
+
+			if (value)
 			{
 				value .addParent (this);
 				value .addCloneCount (this ._cloneCount);
