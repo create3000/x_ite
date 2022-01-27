@@ -222,6 +222,12 @@ Returns a browser option with the corresponding name.
          <td>Boolean</td>
          <td>false</td>
       </tr>
+      <tr>
+         <td>Timings</td>
+         <td>Whether browser timings should be displayed.</td>
+         <td>Boolean</td>
+         <td>false</td>
+      </tr>
    </tbody>
 </table>
 
