@@ -1,4 +1,4 @@
-/* X_ITE v4.7.7-1132 */
+/* X_ITE v4.7.7a-1132 */
 
 (function (globalModule, globalRequire)
 {
@@ -13560,7 +13560,7 @@ function (X3DConstants)
 		},
 		PadRight: function (string, pad)
 		{
-			for (var i = 0, length = pad - string .length; i < length; ++ i)
+			for (let i = 0, length = pad - string .length; i < length; ++ i)
 				string += " ";
 
 			return string;
@@ -13612,7 +13612,7 @@ function (X3DConstants)
 		},
 		ExportedNodes: function (exportedNodes)
 		{
-			var index = this .exportedNodesIndex .get (this .ExecutionContext ());
+			const index = this .exportedNodesIndex .get (this .ExecutionContext ());
 
 			exportedNodes .forEach (function (exportedNode)
 			{
@@ -13626,7 +13626,7 @@ function (X3DConstants)
 		},
 		ImportedNodes: function (importedNodes)
 		{
-			var index = this .importedNodesIndex .get (this .ExecutionContext ());
+			const index = this .importedNodesIndex .get (this .ExecutionContext ());
 
 			importedNodes .forEach (function (importedNode)
 			{
@@ -13664,72 +13664,79 @@ function (X3DConstants)
 		{
 			return this .nodes .has (baseNode);
 		},
-		Name: function (baseNode)
+		Name: (function ()
 		{
-			// Is the node already in index
+			const _TrailingNumbers = /(_\d+$)/;
 
-			var name = this .namesByNode .get (baseNode);
-
-			if (name !== undefined)
-				return name;
-
-			var names = this .names .get (this .ExecutionContext ());
-
-			// The node has no name
-
-			if (baseNode .getName () .length === 0)
+			return function (baseNode)
 			{
-				if (this .NeedsName (baseNode))
+				// Is the node already in index
+
+				const name = this .namesByNode .get (baseNode);
+
+				if (name !== undefined)
 				{
-					var name = this .UniqueName ();
+					return name;
+				}
+				else
+				{
+					const names = this .names .get (this .ExecutionContext ());
+
+					// The node has no name
+
+					if (baseNode .getName () .length === 0)
+					{
+						if (this .NeedsName (baseNode))
+						{
+							const name = this .UniqueName ();
+
+							names .set (name, baseNode);
+							this .namesByNode .set (baseNode, name);
+
+							return name;
+						}
+
+						// The node doesn't need a name
+
+						return baseNode .getName ();
+					}
+
+					// The node has a name
+
+					let   name      = baseNode .getName ();
+					const hasNumber = name .match (_TrailingNumbers) !== null;
+
+					name = name .replace (_TrailingNumbers, "");
+
+					if (name .length === 0)
+					{
+						if (this .NeedsName (baseNode))
+							name = this .UniqueName ();
+
+						else
+							return "";
+					}
+					else
+					{
+						let
+							i       = 0,
+							newName = hasNumber ? name + '_' + (++ i) : name;
+
+						while (names .has (newName))
+						{
+							newName = name + '_' + (++ i);
+						}
+
+						name = newName;
+					}
 
 					names .set (name, baseNode);
 					this .namesByNode .set (baseNode, name);
 
 					return name;
 				}
-
-				// The node doesn't need a name
-
-				return baseNode .getName ();
-			}
-
-			// The node has a name
-
-			var _TrailingNumbers = /(_\d+$)/;
-
-			var name      = baseNode .getName ();
-			var hasNumber = name .match (_TrailingNumbers) !== null;
-
-			name = name .replace (_TrailingNumbers, "");
-
-			if (name .length === 0)
-			{
-				if (this .NeedsName (baseNode))
-					name = this .UniqueName ();
-
-				else
-					return "";
-			}
-			else
-			{
-				var
-					i       = 0,
-					newName = hasNumber ? name + '_' + (++ i) : name;
-
-				while (names .has (newName))
-				{
-					newName = name + '_' + (++ i);
-				}
-
-				name = newName;
-			}
-
-			names .set (name, baseNode);
-			this .namesByNode .set (baseNode, name);
-
-			return name;
-		},
+			};
+		})(),
 		NeedsName: function (baseNode)
 		{
 			if (baseNode .getCloneCount () > 1)
@@ -13738,7 +13745,7 @@ function (X3DConstants)
 			if (baseNode .hasRoutes ())
 				return true;
 
-			var
+			const
 				executionContext = baseNode .getExecutionContext (),
 				index            = this .importedNodesIndex .get (executionContext);
 
@@ -13747,24 +13754,26 @@ function (X3DConstants)
 				if (index .has (baseNode))
 					return true;
 			}
-
-			var index = this .exportedNodesIndex .get (executionContext);
-
-			if (index)
+			else
 			{
-				if (index .has (baseNode))
-					return true;
-			}
+				const index = this .exportedNodesIndex .get (executionContext);
 
-			return false;
+				if (index)
+				{
+					if (index .has (baseNode))
+						return true;
+				}
+
+				return false;
+			}
 		},
 		UniqueName: function ()
 		{
-			var names = this .names .get (this .ExecutionContext ());
+			const names = this .names .get (this .ExecutionContext ());
 
 			for (; ;)
 			{
-				var name = '_' + (++ this .newName);
+				const name = '_' + (++ this .newName);
 
 				if (names .has (name))
 					continue;
@@ -13774,7 +13783,7 @@ function (X3DConstants)
 		},
 		LocalName: function (baseNode)
 		{
-			var importedName = this .importedNames .get (baseNode);
+			const importedName = this .importedNames .get (baseNode);
 
 			if (importedName !== undefined)
 				return importedName;
@@ -13840,7 +13849,7 @@ function (X3DConstants)
 		{
 			if (this .units)
 			{
-				var executionContext = this .ExecutionContext ();
+				const executionContext = this .ExecutionContext ();
 
 				if (executionContext)
 					return executionContext .toUnit (category, value);
@@ -16923,7 +16932,7 @@ function (X3DField,
 					stream .string += " ";
 				}
 
-				stream .string += String (generator .ToUnit (category, value [i]));
+				stream .string += String (generator .ToUnit (category, value [value .length - 1]));
 			},
 			toVRMLStream: function (stream)
 			{
@@ -21911,7 +21920,9 @@ function (X3DField,
 
 	function SFNode (value)
 	{
-		if (value instanceof require ("x_ite/Basic/X3DBaseNode"))
+		// Node need to test for X3DBaseNode, because there is a special version of SFNode in Script.
+
+		if (value)
 		{
 			value .addParent (this);
 
@@ -21971,7 +21982,9 @@ function (X3DField,
 				current .removeParent (this);
 			}
 
-			if (value instanceof require ("x_ite/Basic/X3DBaseNode"))
+			// Node need to test for X3DBaseNode, because there is a special version of SFNode in Script.
+
+			if (value)
 			{
 				value .addParent (this);
 				value .addCloneCount (this ._cloneCount);
@@ -24870,7 +24883,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.7.7";
+	return "4.7.7a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -27498,10 +27511,6 @@ function (Fields,
 		getSplashScreen: function ()
 		{
 			return toBoolean (this .getBrowser () .getElement () .attr ("splashScreen"), true);
-		},
-		getTimings: function ()
-		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("Timings"), true);
 		},
 		getPrimitiveQuality: function ()
 		{
@@ -30581,7 +30590,7 @@ function ($,
 							.bind (this),
 						},
 					},
-					"browser-timings": browser .getBrowserOptions () .getTimings () ? {
+					"browser-timings": {
 						name: _("Browser Timings"),
 						type: "checkbox",
 						selected: browser .getBrowserOption ("Timings"),
@@ -30593,7 +30602,7 @@ function ($,
 							}
 							.bind (this),
 						},
-					} : undefined,
+					},
 					"fullscreen": {
 						name: fullscreen ? _("Leave Fullscreen") : _("Fullscreen"),
 						className: "context-menu-icon " + (fullscreen ? "x_ite-private-icon-leave-fullscreen" : "x_ite-private-icon-fullscreen"),
@@ -30622,9 +30631,9 @@ function ($,
 									priv      = browser .getElement () .find (".x_ite-private-browser"),
 									overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
 									div       = $("<div></div>") .addClass ("x_ite-private-world-info") .appendTo (overlay),
-									worldInfo = browser .getExecutionContext () .getWorldInfo (),
-									title     = worldInfo .title_ .getValue (),
-									info      = worldInfo .info_;
+									worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
+									title     = worldInfo .title,
+									info      = worldInfo .info;
 
 								converter .setOption ("omitExtraWLInCodeBlocks",            true);
 								converter .setOption ("simplifiedAutoLink",                 true);
@@ -30640,9 +30649,9 @@ function ($,
 									$("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
 								}
 
-								for (var i = 0, length = info .length; i < length; ++ i)
+								for (const line of info)
 								{
-									$("<div></div>") .addClass ("x_ite-private-world-info-info") .html (converter .makeHtml (info [i])) .appendTo (div);
+									$("<div></div>") .addClass ("x_ite-private-world-info-info") .html (converter .makeHtml (line)) .appendTo (div);
 								}
 
 								div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
@@ -30690,9 +30699,9 @@ function ($,
 				delete menu .items ["straighten-horizon"];
 			}
 
-			const worldInfo = browser .getExecutionContext () .getWorldInfo ();
+			const worldInfo = browser .getExecutionContext () .getWorldInfos () [0];
 
-			if (!worldInfo || (worldInfo .title_ .getValue () .length === 0 && worldInfo .info_ .length === 0))
+			if (!worldInfo || (worldInfo .title .length === 0 && worldInfo .info .length === 0))
 			{
 				delete menu .items ["world-info"];
 			}
@@ -32021,7 +32030,8 @@ function (Fields,
 	{
 		X3DBaseNode .call (this, executionContext);
 
-		this .addChildObjects ("rootNodes", new Fields .MFNode ());
+		this .addChildObjects ("rootNodes",  new Fields .MFNode (),
+		                       "worldInfos", new Fields .MFNode ());
 
 		this .rootNodes_ .setAccessType (X3DConstants .initializeOnly);
 		this .rootNodes_ .addCloneCount (1);
@@ -32032,7 +32042,6 @@ function (Fields,
 		this ._externprotos   = new ExternProtoDeclarationArray ();
 		this ._routes         = new RouteArray ();
 		this ._routeIndex     = new Map ();
-		this ._worldInfoNodes = [ ];
 	}
 
 	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -32580,22 +32589,20 @@ function (Fields,
 		{
 			return this ._routes;
 		},
-		getWorldInfo: function ()
+		getWorldInfos: function ()
 		{
-			const length = this ._worldInfoNodes .length;
-
-			if (length)
-				return this ._worldInfoNodes [length - 1];
-
-			return null;
+			return this .worldInfos_;
 		},
 		addWorldInfo: function (worldInfoNode)
 		{
-			this ._worldInfoNodes .push (worldInfoNode);
+			this .worldInfos_ .push (worldInfoNode);
 		},
 		removeWorldInfo: function (worldInfoNode)
 		{
-			this ._worldInfoNodes = this ._worldInfoNodes .filter (function (node) { return node !== worldInfoNode; });
+			const index = this .worldInfos_ .getValue () .indexOf (worldInfoNode);
+
+			if (index !== -1)
+				this .worldInfos_ .splice (index, 1);
 		},
 		toVRMLStream: function (stream)
 		{
@@ -43315,10 +43322,6 @@ function (X3DCast,
 
 				if (location)
 				{
-					field ._uniformLocation = location;
-
-					field .addInterest ("set_field__", this);
-
 					switch (field .getType ())
 					{
 						case X3DConstants .SFImage:
@@ -43411,6 +43414,13 @@ function (X3DCast,
 							break;
 						}
 					}
+
+					if (location .array)
+						field ._uniformLocation = location .array .length ? location : null;
+					else
+						field ._uniformLocation = location;
+
+					field .addInterest ("set_field__", this);
 
 					this .set_field__ (field);
 				}
@@ -43618,12 +43628,7 @@ function (X3DCast,
 						}
 						case X3DConstants .MFImage:
 						{
-							let array = location .array;
-
-							const numImages = this .getImagesLength (field);
-
-							if (numImages !== array .length)
-								array = location .array = new Int32Array (numImages);
+							const array = location .array;
 
 							for (let i = 0, a = 0, length = field .length; i < length; ++ i)
 							{
@@ -43796,8 +43801,8 @@ function (X3DCast,
 
 			let length = 3 * images .length;
 
-			for (let i = 0, l = images .length; i < l; ++ i)
-				length += images [i] .array .length;
+			for (const image of images)
+				length += image .array .length;
 
 			return length;
 		},
@@ -46440,7 +46445,7 @@ function ($,
 			}
 			catch (error)
 			{
-				//console .warn (error .message);
+				//console .warn (error);
 			}
 		},
 		fieldValue: function (field, value)

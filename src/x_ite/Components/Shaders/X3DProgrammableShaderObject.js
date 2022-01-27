@@ -383,10 +383,6 @@ function (X3DCast,
 
 				if (location)
 				{
-					field ._uniformLocation = location;
-
-					field .addInterest ("set_field__", this);
-
 					switch (field .getType ())
 					{
 						case X3DConstants .SFImage:
@@ -479,6 +475,13 @@ function (X3DCast,
 							break;
 						}
 					}
+
+					if (location .array)
+						field ._uniformLocation = location .array .length ? location : null;
+					else
+						field ._uniformLocation = location;
+
+					field .addInterest ("set_field__", this);
 
 					this .set_field__ (field);
 				}
@@ -686,12 +689,7 @@ function (X3DCast,
 						}
 						case X3DConstants .MFImage:
 						{
-							let array = location .array;
-
-							const numImages = this .getImagesLength (field);
-
-							if (numImages !== array .length)
-								array = location .array = new Int32Array (numImages);
+							const array = location .array;
 
 							for (let i = 0, a = 0, length = field .length; i < length; ++ i)
 							{
@@ -864,8 +862,8 @@ function (X3DCast,
 
 			let length = 3 * images .length;
 
-			for (let i = 0, l = images .length; i < l; ++ i)
-				length += images [i] .array .length;
+			for (const image of images)
+				length += image .array .length;
 
 			return length;
 		},
