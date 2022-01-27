@@ -80,7 +80,8 @@ function (Fields,
 	{
 		X3DBaseNode .call (this, executionContext);
 
-		this .addChildObjects ("rootNodes", new Fields .MFNode ());
+		this .addChildObjects ("rootNodes",  new Fields .MFNode (),
+		                       "worldInfos", new Fields .MFNode ());
 
 		this .rootNodes_ .setAccessType (X3DConstants .initializeOnly);
 		this .rootNodes_ .addCloneCount (1);
@@ -91,7 +92,6 @@ function (Fields,
 		this ._externprotos   = new ExternProtoDeclarationArray ();
 		this ._routes         = new RouteArray ();
 		this ._routeIndex     = new Map ();
-		this ._worldInfoNodes = [ ];
 	}
 
 	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -641,18 +641,18 @@ function (Fields,
 		},
 		getWorldInfos: function ()
 		{
-			return this ._worldInfoNodes;
+			return this .worldInfos_;
 		},
 		addWorldInfo: function (worldInfoNode)
 		{
-			this ._worldInfoNodes .push (worldInfoNode);
+			this .worldInfos_ .push (worldInfoNode);
 		},
 		removeWorldInfo: function (worldInfoNode)
 		{
-			const index = this ._worldInfoNodes .indexOf (worldInfoNode);
+			const index = this .worldInfos_ .getValue () .indexOf (worldInfoNode);
 
 			if (index !== -1)
-				this ._worldInfoNodes .splice (index, 1);
+				this .worldInfos_ .splice (index, 1);
 		},
 		toVRMLStream: function (stream)
 		{

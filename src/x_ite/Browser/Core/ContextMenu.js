@@ -369,8 +369,8 @@ function ($,
 									overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
 									div       = $("<div></div>") .addClass ("x_ite-private-world-info") .appendTo (overlay),
 									worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
-									title     = worldInfo .title_ .getValue (),
-									info      = worldInfo .info_;
+									title     = worldInfo .title,
+									info      = worldInfo .info;
 
 								converter .setOption ("omitExtraWLInCodeBlocks",            true);
 								converter .setOption ("simplifiedAutoLink",                 true);
@@ -386,9 +386,9 @@ function ($,
 									$("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
 								}
 
-								for (var i = 0, length = info .length; i < length; ++ i)
+								for (const line of info)
 								{
-									$("<div></div>") .addClass ("x_ite-private-world-info-info") .html (converter .makeHtml (info [i])) .appendTo (div);
+									$("<div></div>") .addClass ("x_ite-private-world-info-info") .html (converter .makeHtml (line)) .appendTo (div);
 								}
 
 								div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
@@ -438,7 +438,7 @@ function ($,
 
 			const worldInfo = browser .getExecutionContext () .getWorldInfos () [0];
 
-			if (!worldInfo || (worldInfo .title_ .getValue () .length === 0 && worldInfo .info_ .length === 0))
+			if (!worldInfo || (worldInfo .title .length === 0 && worldInfo .info .length === 0))
 			{
 				delete menu .items ["world-info"];
 			}
