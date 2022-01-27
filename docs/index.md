@@ -984,11 +984,6 @@ A Boolean value (`true` or `false`) to indicate whether the splash screen should
 A String value with the URL that should be loaded on page load. If no src attribute is specified or the src attribute is empty an empty scene is displayed.
 {: .notice}
 
-### timings
-
-A Boolean value (`true` or `false`) to indicate whether the browser timings bubble should be displayed if the context menu option is enabled. The default value for the timings attribute is `true`. This attribute changes the facility whether browsers timings can be displayed, if browser timings are really displayed is in the hand of the user if he toggles the context menu option to true.
-{: .notice}
-
 ### url
 
 A MFString value with urls that should be loaded on page load. If no url attribute is specified or the attribute is empty an empty scene is displayed. If both src and url attribute are specified the src attribute takes precedence.

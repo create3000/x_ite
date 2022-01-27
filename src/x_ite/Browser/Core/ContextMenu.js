@@ -327,7 +327,7 @@ function ($,
 							.bind (this),
 						},
 					},
-					"browser-timings": browser .getBrowserOptions () .getTimings () ? {
+					"browser-timings": {
 						name: _("Browser Timings"),
 						type: "checkbox",
 						selected: browser .getBrowserOption ("Timings"),
@@ -339,7 +339,7 @@ function ($,
 							}
 							.bind (this),
 						},
-					} : undefined,
+					},
 					"fullscreen": {
 						name: fullscreen ? _("Leave Fullscreen") : _("Fullscreen"),
 						className: "context-menu-icon " + (fullscreen ? "x_ite-private-icon-leave-fullscreen" : "x_ite-private-icon-fullscreen"),

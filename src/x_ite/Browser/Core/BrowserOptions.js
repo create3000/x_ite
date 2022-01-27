@@ -207,10 +207,6 @@ function (Fields,
 		{
 			return toBoolean (this .getBrowser () .getElement () .attr ("splashScreen"), true);
 		},
-		getTimings: function ()
-		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("Timings"), true);
-		},
 		getPrimitiveQuality: function ()
 		{
 			return this .primitiveQuality;
