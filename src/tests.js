@@ -1,4 +1,4 @@
-var X_ITE_TESTS = [
+const X_ITE_TESTS = [
 	{ component: "CADGeometry" },
 	{ path: "CADGeometry/CADGeometry.x3d" },
 	{ path: "CADGeometry/CADLayer.x3d" },

@@ -47,7 +47,7 @@
  ******************************************************************************/
 
 
-var Bookmarks = (function ()
+const Bookmarks = (function ()
 {
 "use strict";
 
@@ -61,16 +61,13 @@ var Bookmarks = (function ()
 	{
 		setup: function (array)
 		{
-			for (var a = 0; a < array .length; ++ a)
+			for (const bookmarks of array)
 			{
-				var
-					bookmarks = array [a],
-					server    = bookmarks .server;
+				const server = bookmarks .server;
 
-				for (var i = 0, length = bookmarks .length; i < length; ++ i)
+				for (const bookmark of bookmarks)
 				{
-					var
-						bookmark  = bookmarks [i],
+					const
 						component = bookmark .component,
 						test      = bookmark .test,
 						path      = bookmark .path;
@@ -91,8 +88,8 @@ var Bookmarks = (function ()
 						if (! path .match (/\.(?:x3d|x3dz|x3dv|x3dvz|x3dj|x3djz|wrl|wrz)$/))
 							continue;
 
-						var basename = path .match (/([^\/]+)\.\w+$/);
-						var name     = basename [1] .replace (/([A-Z]+)/g, ' $1');
+						const basename = path .match (/([^\/]+)\.\w+$/);
+						const name     = basename [1] .replace (/([A-Z]+)/g, ' $1');
 
 						var element = $('<span/>')
 							.addClass ('example-box')
@@ -126,7 +123,7 @@ var Bookmarks = (function ()
 		},
 		restore: function (first)
 		{
-			var url = this .browser .getLocalStorage () ["Bookmarks.url"];
+			const url = this .browser .getLocalStorage () ["Bookmarks.url"];
 
 			if (url)
 				this .loadURL (url);

@@ -1,4 +1,4 @@
-var X_ITE_EXAMPLES = [
+const X_ITE_EXAMPLES = [
 	{ component: "CADGeometry", test: "QuadSet" },
 	{ component: "CubeMapTexturing", test: "ComposedCubeMapTexture" },
 	{ component: "CubeMapTexturing", test: "GeneratedCubeMapTexture" },

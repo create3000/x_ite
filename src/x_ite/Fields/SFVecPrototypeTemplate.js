@@ -137,7 +137,7 @@ function (X3DField,
 					stream .string += " ";
 				}
 
-				stream .string += String (generator .ToUnit (category, value [i]));
+				stream .string += String (generator .ToUnit (category, value [value .length - 1]));
 			},
 			toVRMLStream: function (stream)
 			{
