@@ -313,9 +313,9 @@ The script can access any inputOutput field, inputOnly fields or outputOnly fiel
 DEF SomeNode Transform { }
 
 Script {
-  inputOnly      SFVec3f set_pos
+  inputOnly      SFVec3f    set_pos
   inputOutput    SFRotation rot
-  initializeOnly SFNode  node USE SomeNode
+  initializeOnly SFNode     node USE SomeNode
   url "ecmascript:
 ...
 
