@@ -141,7 +141,7 @@ function ($,
 
 			// Print welcome message.
 
-			if (!this .getDebug ()) return;
+			if (this .getNumber () > 1) return;
 
 			this .print ("Welcome to " + this .name + " X3D Browser " + this .version + ":\n" +
 			             "   Current Graphics Renderer\n" +

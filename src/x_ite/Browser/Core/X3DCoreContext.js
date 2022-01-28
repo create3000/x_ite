@@ -180,11 +180,11 @@ function ($,
 		return gl;
 	}
 
-	let browserId = 0;
+	let browserNumber = 0;
 
 	function X3DCoreContext (element)
 	{
-		this .number  = ++ browserId;
+		this .number  = ++ browserNumber;
 		this .element = element;
 
 		// Get canvas & context.
