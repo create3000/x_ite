@@ -701,9 +701,7 @@ function ($,
 
 								if (geoOrigin .getValue () && geoOrigin .getNodeTypeName () === "GeoOrigin")
 								{
-									const
-										geoOrigin = viewpoint .geoOrigin_,
-										go        = this .getPrivateScene () .createNode ("GeoOrigin");
+									const go = this .getPrivateScene () .createNode ("GeoOrigin");
 
 									vp .geoOrigin = go;
 									go .geoSystem = geoOrigin .geoSystem;
