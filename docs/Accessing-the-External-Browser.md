@@ -294,7 +294,7 @@ function spin ()
 ### The HTML
 
 ```html
-<X3DCanvas src="external-browser.x3d" onload="init ()"/>
+<X3DCanvas src="external-browser.x3d" onload="init ()"></X3DCanvas>
 
 <div class="buttons">
   <button id="center" class="button" onclick="center ()">Center</button>
