@@ -373,9 +373,10 @@ function ($,
 				text += "\n;var " + callbacks .join (",") + ";";
 				text += "\n[" + callbacks .join (",") + "];";
 
+				this .global = this .getGlobal ();
+
 				const
-					global  = this .getGlobal (),
-					result  = evaluate (global, text),
+					result  = this .evaluate (text),
 					context = { };
 
 				for (let i = 0; i < callbacks .length; ++ i)
@@ -389,6 +390,10 @@ function ($,
 
 				return { };
 			}
+		},
+		evaluate: function (text)
+		{
+			return evaluate (this .global, text);
 		},
 		getGlobal: function ()
 		{
@@ -781,7 +786,7 @@ function ($,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("scripting"), [
+define (require .getComponentUrl ("scripting"), [
 	"x_ite/Components",
 	"x_ite/Components/Scripting/Script",
 	"x_ite/Components/Scripting/X3DScriptNode",

@@ -3900,7 +3900,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("volume-rendering"), [
+define (require .getComponentUrl ("volume-rendering"), [
 	"x_ite/Components",
 	"x_ite/Browser/VolumeRendering/X3DVolumeRenderingContext",
 	"x_ite/Components/VolumeRendering/BlendedVolumeStyle",
@@ -3919,8 +3919,8 @@ define (X3D .getComponentUrl ("volume-rendering"), [
 	"x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
 	"x_ite/Components/VolumeRendering/X3DVolumeDataNode",
 	"x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode",
-	X3D .getComponentUrl ("cad-geometry"),
-	X3D .getComponentUrl ("texturing-3d"),
+	require .getComponentUrl ("cad-geometry"),
+	require .getComponentUrl ("texturing-3d"),
 ],
 function (Components,
           X3DVolumeRenderingContext,

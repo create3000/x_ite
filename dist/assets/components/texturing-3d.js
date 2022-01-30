@@ -10016,7 +10016,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("texturing-3d"), [
+define (require .getComponentUrl ("texturing-3d"), [
 	"x_ite/Components",
 	"x_ite/Components/Texturing3D/ComposedTexture3D",
 	"x_ite/Components/Texturing3D/ImageTexture3D",

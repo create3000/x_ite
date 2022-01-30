@@ -4499,7 +4499,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("rigid-body-physics"), [
+define (require .getComponentUrl ("rigid-body-physics"), [
 	"x_ite/Components",
 	"x_ite/Components/RigidBodyPhysics/BallJoint",
 	"x_ite/Components/RigidBodyPhysics/CollidableOffset",

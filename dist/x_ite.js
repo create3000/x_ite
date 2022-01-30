@@ -1,4 +1,4 @@
-/* X_ITE v4.7.7a-1132 */
+/* X_ITE v4.7.7-1133 */
 
 (function (globalModule, globalRequire)
 {
@@ -24883,7 +24883,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.7.7a";
+	return "4.7.7";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -39040,11 +39040,11 @@ function ($,
 		return gl;
 	}
 
-	let browserId = 0;
+	let browserNumber = 0;
 
 	function X3DCoreContext (element)
 	{
-		this .number  = ++ browserId;
+		this .number  = ++ browserNumber;
 		this .element = element;
 
 		// Get canvas & context.
@@ -39533,60 +39533,65 @@ function ($,
 						if (!viewpoint)
 							break;
 
-						let text = "";
+						const vp = this .getPrivateScene () .createNode (viewpoint .getTypeName ());
 
 						switch (viewpoint .getTypeName ())
 						{
 							case "Viewpoint":
 							{
-								text += "Viewpoint {\n";
-								text += "  position " + viewpoint .getUserPosition () + "\n";
-								text += "  orientation " + viewpoint .getUserOrientation () + "\n";
-								text += "  centerOfRotation " + viewpoint .getUserCenterOfRotation () + "\n";
-								text += "  fieldOfView " + viewpoint .getFieldOfView () + "\n";
-								text += "}\n";
+								vp .position         = viewpoint .getUserPosition ();
+								vp .orientation      = viewpoint .getUserOrientation ();
+								vp .centerOfRotation = viewpoint .getUserCenterOfRotation ();
+								vp .fieldOfView      = viewpoint .getFieldOfView ();
 								break;
 							}
 							case "OrthoViewpoint":
 							{
-								text += "OrthoViewpoint {\n";
-								text += "  position " + viewpoint .getUserPosition () + "\n";
-								text += "  orientation " + viewpoint .getUserOrientation () + "\n";
-								text += "  centerOfRotation " + viewpoint .getUserCenterOfRotation () + "\n";
-								text += "  fieldOfView [" + viewpoint .getMinimumX () + ", " + viewpoint .getMinimumY () + ", " + viewpoint .getMaximumX () + ", " + viewpoint .getMaximumY () + "]\n";
-								text += "}\n";
+								vp .position         = viewpoint .getUserPosition ();
+								vp .orientation      = viewpoint .getUserOrientation ();
+								vp .centerOfRotation = viewpoint .getUserCenterOfRotation ();
+								vp .fieldOfView      = new Fields .MFFloat (viewpoint .getMinimumX (), viewpoint .getMinimumY (), viewpoint .getMaximumX (), viewpoint .getMaximumY ());
 								break;
 							}
 							case "GeoViewpoint":
 							{
-								const geoCoord = new Vector3 (0, 0, 0);
+								const
+									geoOrigin = viewpoint .geoOrigin_,
+									geoCoord  = new Vector3 (0, 0, 0);
 
-								text += "GeoViewpoint {\n";
-
-								if (viewpoint .geoOrigin_ && viewpoint .geoOrigin_ .getNodeTypeName () === "GeoOrigin")
+								if (geoOrigin .getValue () && geoOrigin .getNodeTypeName () === "GeoOrigin")
 								{
-									const geoOrigin = viewpoint .geoOrigin_ .getValue ();
+									const go = this .getPrivateScene () .createNode ("GeoOrigin");
 
-									text += "  geoOrigin GeoOrigin {\n";
-									text += "    geoSystem [\"" + Array .prototype .join .call (geoOrigin .geoSystem_, "\", \"") + "\"]\n";
-									text += "    geoCoords " + geoOrigin .geoCoords_ + "\n";
-									text += "    rotateYUp " + geoOrigin .rotateYUp_ + "\n";
-									text += "  }\n";
+									vp .geoOrigin = go;
+									go .geoSystem = geoOrigin .geoSystem;
+									go .geoCoords = geoOrigin .geoCoords;
+									go .rotateYUp = geoOrigin .rotateYUp;
 								}
 
-								text += "  geoSystem [\"" + Array .prototype .join .call (viewpoint .geoSystem_, "\", \"") + "\"]\n";
-								text += "  position " + viewpoint .getGeoCoord (viewpoint .getUserPosition (), geoCoord) + "\n";
-								text += "  orientation " + viewpoint .getUserOrientation () + "\n";
-								text += "  centerOfRotation " + viewpoint .getGeoCoord (viewpoint .getUserCenterOfRotation (), geoCoord) + "\n";
-								text += "  fieldOfView " + viewpoint .getFieldOfView () + "\n";
-								text += "}\n";
+								vp .geoSystem        = viewpoint .geoSystem_;
+								vp .position         = viewpoint .getGeoCoord (viewpoint .getUserPosition (), geoCoord);
+								vp .orientation      = viewpoint .getUserOrientation ();
+								vp .centerOfRotation = viewpoint .getGeoCoord (viewpoint .getUserCenterOfRotation (), geoCoord);
+								vp .fieldOfView      = viewpoint .getFieldOfView ();
 								break;
 							}
 						}
 
+						let text;
+
+						switch (this .getExecutionContext () .getEncoding ())
+						{
+							case "ASCII":
+							case "VRML": text = vp .toVRMLString (); break;
+							case "JSON": text = vp .toVRMLString (); break;
+							default:     text = vp .toXMLString ();  break;
+						}
+
+						text += "\n";
+
 						console .log (text);
 						this .copyToClipboard (text);
-
 						this .getNotification () .string_ = _ ("Viewpoint is copied to clipboard.");
 					}
 
@@ -117283,7 +117288,7 @@ function ($,
 
 			// Print welcome message.
 
-			if (!this .getDebug ()) return;
+			if (this .getNumber () > 1) return;
 
 			this .print ("Welcome to " + this .name + " X3D Browser " + this .version + ":\n" +
 			             "   Current Graphics Renderer\n" +
@@ -118238,11 +118243,12 @@ function ($,
 		});
 	}
 
+	require .getComponentUrl = getComponentUrl;
+
 	Object .assign (X3D,
 	{
 		require:                     require,
 		define:                      define,
-		getComponentUrl:             getComponentUrl,
 
 		getBrowser:                  getBrowser,
 		createBrowser:               createBrowser,

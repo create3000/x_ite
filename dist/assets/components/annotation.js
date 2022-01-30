@@ -779,7 +779,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("annotation"), [
+define (require .getComponentUrl ("annotation"), [
 	"x_ite/Components",
 	"x_ite/Components/Annotation/AnnotationLayer",
 	"x_ite/Components/Annotation/AnnotationTarget",

@@ -3800,7 +3800,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("geospatial"), [
+define (require .getComponentUrl ("geospatial"), [
 	"x_ite/Components",
 	"x_ite/Components/Geospatial/GeoCoordinate",
 	"x_ite/Components/Geospatial/GeoElevationGrid",

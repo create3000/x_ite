@@ -791,7 +791,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("projective-texture-mapping"), [
+define (require .getComponentUrl ("projective-texture-mapping"), [
 	"x_ite/Components",
 	"x_ite/Components/ProjectiveTextureMapping/TextureProjectorPerspective",
 	"x_ite/Components/ProjectiveTextureMapping/TextureProjectorParallel",

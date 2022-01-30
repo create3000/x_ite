@@ -1,5 +1,28 @@
 # What's New
 
+## X\_ITE v4.7.7 Released
+
+*Leipzig, 30th January 2022*: This release is primarily a bug fix release, but there are also new features.
+
+{% capture notice-text %}
+#### New Features
+
+- Output XML or VRML encoding when viewpoint is copied.
+- Added browser option "Timings", but removed attribute.
+- Return promise from X3D function.
+
+{% endcapture %}
+<div class="notice--success">{{ notice-text | markdownify }}</div>
+
+{% capture notice-text %}
+#### Bug Fixes
+
+- Prevent accidental navigation when context menu is closed.
+- Fixed copy to clipboard of viewpoint when in fullscreen mode.
+
+{% endcapture %}
+<div class="notice--success">{{ notice-text | markdownify }}</div>
+
 ## X\_ITE v4.7.6 Released
 
 *Leipzig, 23th January 2022*: This release implements the new X3Dv4 UnlitMaterial. This also means that the custom shader interface has changed:

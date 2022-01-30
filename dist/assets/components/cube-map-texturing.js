@@ -1186,7 +1186,7 @@ function ($,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("cube-map-texturing"), [
+define (require .getComponentUrl ("cube-map-texturing"), [
 	"x_ite/Components",
 	"x_ite/Components/CubeMapTexturing/ComposedCubeMapTexture",
 	"x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture",

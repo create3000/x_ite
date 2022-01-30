@@ -221,9 +221,10 @@ function ($,
 				text += "\n;var " + callbacks .join (",") + ";";
 				text += "\n[" + callbacks .join (",") + "];";
 
+				this .global = this .getGlobal ();
+
 				const
-					global  = this .getGlobal (),
-					result  = evaluate (global, text),
+					result  = this .evaluate (text),
 					context = { };
 
 				for (let i = 0; i < callbacks .length; ++ i)
@@ -237,6 +238,10 @@ function ($,
 
 				return { };
 			}
+		},
+		evaluate: function (text)
+		{
+			return evaluate (this .global, text);
 		},
 		getGlobal: function ()
 		{

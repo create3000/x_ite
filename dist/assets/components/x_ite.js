@@ -269,7 +269,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("x_ite"), [
+define (require .getComponentUrl ("x_ite"), [
 	"x_ite/Components",
 	"x_ite/Components/X_ITE/BlendMode",
 ],

@@ -4163,7 +4163,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("particle-systems"), [
+define (require .getComponentUrl ("particle-systems"), [
 	"x_ite/Components",
 	"x_ite/Browser/ParticleSystems/X3DParticleSystemsContext",
 	"x_ite/Components/ParticleSystems/BoundedPhysicsModel",

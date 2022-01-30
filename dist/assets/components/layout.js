@@ -1973,7 +1973,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("layout"), [
+define (require .getComponentUrl ("layout"), [
 	"x_ite/Components",
 	"x_ite/Browser/Layout/X3DLayoutContext",
 	"x_ite/Components/Layout/Layout",

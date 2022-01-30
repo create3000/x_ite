@@ -2149,7 +2149,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("geometry2d"), [
+define (require .getComponentUrl ("geometry2d"), [
 	"x_ite/Components",
 	"x_ite/Browser/Geometry2D/X3DGeometry2DContext",
 	"x_ite/Components/Geometry2D/Arc2D",

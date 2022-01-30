@@ -1002,7 +1002,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("cad-geometry"), [
+define (require .getComponentUrl ("cad-geometry"), [
 	"x_ite/Components",
 	"x_ite/Components/CADGeometry/CADAssembly",
 	"x_ite/Components/CADGeometry/CADFace",

@@ -1053,7 +1053,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("h-anim"), [
+define (require .getComponentUrl ("h-anim"), [
 	"x_ite/Components",
 	"x_ite/Components/HAnim/HAnimDisplacer",
 	"x_ite/Components/HAnim/HAnimHumanoid",

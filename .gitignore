@@ -1,4 +1,4 @@
 node_modules
 src/tests
 
-.DS_Store
+**/.DS_Store

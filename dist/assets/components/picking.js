@@ -1372,7 +1372,7 @@ define ('x_ite/Browser/Picking/VolumePicker',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Numbers/Matrix4",
-	X3D .getComponentUrl ("rigid-body-physics"),
+	require .getComponentUrl ("rigid-body-physics"),
 ],
 function (Vector3,
           Rotation4,
@@ -1578,7 +1578,7 @@ define ('x_ite/Components/Picking/PointPickSensor',[
 	"standard/Math/Numbers/Vector3",
 	"standard/Math/Numbers/Rotation4",
 	"standard/Math/Geometry/Box3",
-	X3D .getComponentUrl ("rigid-body-physics"),
+	require .getComponentUrl ("rigid-body-physics"),
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -2446,7 +2446,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("picking"), [
+define (require .getComponentUrl ("picking"), [
 	"x_ite/Components",
 	"x_ite/Components/Picking/LinePickSensor",
 	"x_ite/Components/Picking/PickableGroup",
@@ -2455,7 +2455,7 @@ define (X3D .getComponentUrl ("picking"), [
 	"x_ite/Components/Picking/VolumePickSensor",
 	"x_ite/Components/Picking/X3DPickSensorNode",
 	"x_ite/Components/Picking/X3DPickableObject",
-	X3D .getComponentUrl ("rigid-body-physics"),
+	require .getComponentUrl ("rigid-body-physics"),
 ],
 function (Components,
           LinePickSensor,

@@ -1073,7 +1073,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("event-utilities"), [
+define (require .getComponentUrl ("event-utilities"), [
 	"x_ite/Components",
 	"x_ite/Components/EventUtilities/BooleanFilter",
 	"x_ite/Components/EventUtilities/BooleanSequencer",

@@ -5323,7 +5323,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("nurbs"), [
+define (require .getComponentUrl ("nurbs"), [
 	"x_ite/Components",
 	"x_ite/Components/NURBS/Contour2D",
 	"x_ite/Components/NURBS/ContourPolyline2D",

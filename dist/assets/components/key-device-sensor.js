@@ -824,7 +824,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("key-device-sensor"), [
+define (require .getComponentUrl ("key-device-sensor"), [
 	"x_ite/Components",
 	"x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext",
 	"x_ite/Components/KeyDeviceSensor/KeySensor",

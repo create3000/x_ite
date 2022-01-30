@@ -876,7 +876,7 @@ function (Fields,
  ******************************************************************************/
 
 
-define (X3D .getComponentUrl ("dis"), [
+define (require .getComponentUrl ("dis"), [
 	"x_ite/Components",
 	"x_ite/Components/DIS/DISEntityManager",
 	"x_ite/Components/DIS/DISEntityTypeMapping",
