@@ -61,6 +61,13 @@ define (function ()
 				if (getScriptURL () .match (/\.min\.js$/))
 					file += ".min";
 
+				if (typeof globalProcess === "object" && globalProcess .platform === "win32")
+				{
+					const path = globalRequire ("path");
+
+					return path .join (path .dirname (getScriptURL ()), "assets\\components\\" + file + ".js");
+				}
+
 				return new URL ("assets/components/" + file + ".js", getScriptURL ()) .href;
 			}
 

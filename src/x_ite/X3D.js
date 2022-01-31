@@ -109,7 +109,12 @@ function ($,
 		const url = urls .getProviderUrl (name);
 
 		if (typeof globalRequire === "function")
-			 globalRequire (new URL (url) .pathname);
+		{
+			if (typeof globalProcess === "object" && globalProcess .platform === "win32")
+				globalRequire (url);
+			else
+				globalRequire (new URL (url) .pathname);
+		}
 
 		return url;
 	}

@@ -1,12 +1,13 @@
-/* X_ITE v4.7.7-1133 */
+/* X_ITE v4.7.8-1134 */
 
-(function (globalModule, globalRequire)
+(function (globalModule, globalRequire, globalProcess)
 {
 
 if (typeof __filename === "undefined")
 {
 	globalModule  = undefined;
 	globalRequire = undefined;
+	globalProcess = undefined;
 }
 
 // Undefine global variables.
@@ -24883,7 +24884,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.7.7";
+	return "4.7.8";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -34134,15 +34135,22 @@ define ('x_ite/Parser/X3DParser',[],function ()
 				for (const component of components)
 				{
 					const providerUrl = component .providerUrl;
-
-					if (providerUrl .match (componentsUrl))
+				if (providerUrl .match (componentsUrl))
 						providerUrls .add (providerUrl);
 				}
 
 				if (typeof globalRequire === "function")
 				{
-					for (const url of providerUrls)
-						globalRequire (new URL (url) .pathname);
+					if (typeof globalProcess === "object" && globalProcess .platform === "win32")
+					{
+						for (const url of providerUrls)
+							globalRequire (url);
+					}
+					else
+					{
+						for (const url of providerUrls)
+							globalRequire (new URL (url) .pathname);
+					}
 				}
 
 				return Array .from (providerUrls);
@@ -39910,6 +39918,13 @@ define ('x_ite/Browser/Networking/urls',[],function ()
 			{
 				if (getScriptURL () .match (/\.min\.js$/))
 					file += ".min";
+
+				if (typeof globalProcess === "object" && globalProcess .platform === "win32")
+				{
+					const path = globalRequire ("path");
+
+					return path .join (path .dirname (getScriptURL ()), "assets\\components\\" + file + ".js");
+				}
 
 				return new URL ("assets/components/" + file + ".js", getScriptURL ()) .href;
 			}
@@ -118167,7 +118182,12 @@ function ($,
 		const url = urls .getProviderUrl (name);
 
 		if (typeof globalRequire === "function")
-			 globalRequire (new URL (url) .pathname);
+		{
+			if (typeof globalProcess === "object" && globalProcess .platform === "win32")
+				globalRequire (url);
+			else
+				globalRequire (new URL (url) .pathname);
+		}
 
 		return url;
 	}
@@ -118390,9 +118410,16 @@ define .hide = function ()
 const getScriptURL = (function ()
 {
 	if (document .currentScript)
+	{
 		var src = document .currentScript .src;
+	}
 	else if (typeof __filename === "string")
-		var src = "file://" + __filename;
+	{
+		if (typeof globalProcess === "object" && globalProcess .platform === "win32")
+			var src = __filename;
+		else
+			var src = "file://" + __filename;
+	}
 
 	return function ()
 	{
@@ -118546,4 +118573,6 @@ for (const key in x_iteNoConfict)
 }
 
 })
-(typeof module === "object" ? module : undefined, typeof require === "function" ? require : undefined);
+(typeof module === "object" ? module : undefined,
+ typeof require === "function" ? require : undefined,
+ typeof process === "object" ? process : undefined);
