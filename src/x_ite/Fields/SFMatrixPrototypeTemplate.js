@@ -54,7 +54,7 @@ function (X3DField)
 {
 "use strict";
 
-	return function (Matrix, SFVec)
+	return function (Matrix, SFVec, double)
 	{
 		return Object .assign (Object .create (X3DField .prototype),
 		{
@@ -132,9 +132,20 @@ function (X3DField)
 			},
 			toStream: function (stream)
 			{
-				stream .string += this .getValue () .toString ();
+				const
+					generator = Generator .Get (stream),
+					value     = this .getValue (),
+					last      = value .length - 1;
+
+				for (let i = 0; i < last; ++ i)
+				{
+					stream .string += double ? generator .DoublePrecision (value [i]) : generator .Precision (value [i]);
+					stream .string += " ";
+				}
+
+				stream .string += double ? generator .DoublePrecision (value [last]) : generator .Precision (value [last]);
 			},
-			toVRMLStream: function (stream)
+				toVRMLStream: function (stream)
 			{
 				this .toStream (stream);
 			},

@@ -1,13 +1,12 @@
-/* X_ITE v4.7.8-1134 */
+/* X_ITE v4.7.9-1135 */
 
-(function (globalModule, globalRequire, globalProcess)
+(function (globalModule, globalRequire)
 {
 
 if (typeof __filename === "undefined")
 {
 	globalModule  = undefined;
 	globalRequire = undefined;
-	globalProcess = undefined;
 }
 
 // Undefine global variables.
@@ -13515,7 +13514,6 @@ define ('x_ite/Bits/X3DConstants',[],function ()
  ******************************************************************************/
 
 
-
 define ('x_ite/InputOutput/Generator',[
 	"x_ite/Bits/X3DConstants",
 ],
@@ -13525,8 +13523,12 @@ function (X3DConstants)
 
 	function Generator ()
 	{
-		this .indent                = "";
-		this .indentChar            = "  ";
+		this .indent              = "";
+		this .indentChar          = "  ";
+		this .precision           = 6;
+		this .doublePrecision     = 14;
+		this .removeTrailingZeros = /\.?0*$|\.?0*(?=e|E)/;
+
 		this .executionContextStack = [ null ];
 		this .importedNodesIndex    = new Map ();
 		this .exportedNodesIndex    = new Map ();
@@ -13565,6 +13567,14 @@ function (X3DConstants)
 				string += " ";
 
 			return string;
+		},
+		Precision: function (value)
+		{
+			return Math .fround (value) .toPrecision (this .precision) .replace (this .removeTrailingZeros, "");
+		},
+		DoublePrecision: function (value)
+		{
+			return value .toPrecision (this .doublePrecision) .replace (this .removeTrailingZeros, "");
 		},
 		PushExecutionContext: function (executionContext)
 		{
@@ -15466,10 +15476,12 @@ define ('x_ite/Fields/SFColor',[
 	"standard/Math/Numbers/Color3",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/InputOutput/Generator",
 ],
 function (Color3,
           X3DField,
-          X3DConstants)
+          X3DConstants,
+          Generator)
 {
 "use strict";
 
@@ -15551,7 +15563,18 @@ function (Color3,
 		})(),
 		toStream: function (stream)
 		{
-			stream .string += this .getValue () .toString ();
+			const
+				generator = Generator .Get (stream),
+				value     = this .getValue (),
+				last      = value .length - 1;
+
+			for (let i = 0; i < last; ++ i)
+			{
+				stream .string += generator .Precision (value [i]);
+				stream .string += " ";
+			}
+
+			stream .string += generator .Precision (value [last]);
 		},
 		toVRMLStream: function (stream)
 		{
@@ -16126,7 +16149,7 @@ function (X3DField,
 				generator = Generator .Get (stream),
 				category  = generator .Unit (this .getUnit ());
 
-			stream .string += String (generator .ToUnit (category, this .getValue ()));
+			stream .string += generator .DoublePrecision (generator .ToUnit (category, this .getValue ()));
 		},
 		toVRMLStream: function (stream)
 		{
@@ -16236,7 +16259,7 @@ function (X3DField,
 				generator = Generator .Get (stream),
 				category  = generator .Unit (this .getUnit ());
 
-			stream .string += String (generator .ToUnit (category, this .getValue ()));
+			stream .string += generator .Precision (generator .ToUnit (category, this .getValue ()));
 		},
 		toVRMLStream: function (stream)
 		{
@@ -16702,7 +16725,7 @@ function (X3DField)
 {
 "use strict";
 
-	return function (Matrix, SFVec)
+	return function (Matrix, SFVec, double)
 	{
 		return Object .assign (Object .create (X3DField .prototype),
 		{
@@ -16780,9 +16803,20 @@ function (X3DField)
 			},
 			toStream: function (stream)
 			{
-				stream .string += this .getValue () .toString ();
+				const
+					generator = Generator .Get (stream),
+					value     = this .getValue (),
+					last      = value .length - 1;
+
+				for (let i = 0; i < last; ++ i)
+				{
+					stream .string += double ? generator .DoublePrecision (value [i]) : generator .Precision (value [i]);
+					stream .string += " ";
+				}
+
+				stream .string += double ? generator .DoublePrecision (value [last]) : generator .Precision (value [last]);
 			},
-			toVRMLStream: function (stream)
+				toVRMLStream: function (stream)
 			{
 				this .toStream (stream);
 			},
@@ -16852,7 +16886,7 @@ function (X3DField,
 {
 "use strict";
 
-	return function (Type)
+	return function (Type, double)
 	{
 		return Object .assign (Object .create (X3DField .prototype),
 		{
@@ -16925,15 +16959,16 @@ function (X3DField,
 				const
 					generator = Generator .Get (stream),
 					value     = this .getValue (),
-					category  = generator .Unit (this .getUnit ());
+					category  = generator .Unit (this .getUnit ()),
+					last      = value .length - 1;
 
-				for (let i = 0, l = value .length - 1; i < l; ++ i)
+				for (let i = 0; i < last; ++ i)
 				{
-					stream .string += String (generator .ToUnit (category, value [i]));
+					stream .string += double ? generator .DoublePrecision (generator .ToUnit (category, value [i])) : generator .Precision (generator .ToUnit (category, value [i]));
 					stream .string += " ";
 				}
 
-				stream .string += String (generator .ToUnit (category, value [value .length - 1]));
+				stream .string += double ? generator .DoublePrecision (generator .ToUnit (category, value [last])) : generator .Precision (generator .ToUnit (category, value [last]));
 			},
 			toVRMLStream: function (stream)
 			{
@@ -17297,7 +17332,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 {
 "use strict";
 
-	function SFVec2Template (TypeName, Type)
+	function SFVec2Template (TypeName, Type, double)
 	{
 		function SFVec2 (x, y)
 		{
@@ -17317,7 +17352,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 		}
 
 		SFVec2 .prototype = Object .assign (Object .create (X3DField .prototype),
-			SFVecPrototypeTemplate (Vector2),
+			SFVecPrototypeTemplate (Vector2, double),
 		{
 			constructor: SFVec2,
 			getTypeName: function ()
@@ -17371,8 +17406,8 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
 	}
 
 	return {
-		SFVec2d: SFVec2Template ("SFVec2d", X3DConstants .SFVec2d),
-		SFVec2f: SFVec2Template ("SFVec2f", X3DConstants .SFVec2f),
+		SFVec2d: SFVec2Template ("SFVec2d", X3DConstants .SFVec2d, true),
+		SFVec2f: SFVec2Template ("SFVec2f", X3DConstants .SFVec2f, false),
 	};
 });
 
@@ -18982,7 +19017,7 @@ function (X3DField,
 {
 "use strict";
 
-	function SFMatrix3Template (TypeName, Type, SFVec2)
+	function SFMatrix3Template (TypeName, Type, SFVec2, double)
 	{
 		function SFMatrix3 (m00, m01, m02,
 		                    m10, m11, m12,
@@ -19006,7 +19041,7 @@ function (X3DField,
 		}
 
 		SFMatrix3 .prototype = Object .assign (Object .create (X3DField .prototype),
-			SFMatrixPrototypeTemplate (Matrix3, SFVec2),
+			SFMatrixPrototypeTemplate (Matrix3, SFVec2, double),
 		{
 			constructor: SFMatrix3,
 			getTypeName: function ()
@@ -19054,8 +19089,8 @@ function (X3DField,
 	}
 
 	return {
-		SFMatrix3d: SFMatrix3Template ("SFMatrix3d", X3DConstants .SFMatrix3d, SFVec2 .SFVec2d),
-		SFMatrix3f: SFMatrix3Template ("SFMatrix3f", X3DConstants .SFMatrix3f, SFVec2 .SFVec2f),
+		SFMatrix3d: SFMatrix3Template ("SFMatrix3d", X3DConstants .SFMatrix3d, SFVec2 .SFVec2d, true),
+		SFMatrix3f: SFMatrix3Template ("SFMatrix3f", X3DConstants .SFMatrix3f, SFVec2 .SFVec2f, false),
 	};
 });
 
@@ -19121,7 +19156,7 @@ function (X3DField,
 {
 "use strict";
 
-	function SFVec3Template (TypeName, Type)
+	function SFVec3Template (TypeName, Type, double)
 	{
 		function SFVec3 (x, y, z)
 		{
@@ -19141,7 +19176,7 @@ function (X3DField,
 		}
 
 		SFVec3 .prototype = Object .assign (Object .create (X3DField .prototype),
-			SFVecPrototypeTemplate (Vector3),
+			SFVecPrototypeTemplate (Vector3, double),
 		{
 			constructor: SFVec3,
 			getTypeName: function ()
@@ -19216,8 +19251,8 @@ function (X3DField,
 	}
 
 	return {
-		SFVec3d: SFVec3Template ("SFVec3d", X3DConstants .SFVec3d),
-		SFVec3f: SFVec3Template ("SFVec3f", X3DConstants .SFVec3f),
+		SFVec3d: SFVec3Template ("SFVec3d", X3DConstants .SFVec3d, true),
+		SFVec3f: SFVec3Template ("SFVec3f", X3DConstants .SFVec3f, false),
 	};
 });
 
@@ -21628,7 +21663,7 @@ function (X3DField,
 {
 "use strict";
 
-	function SFMatrix4Template (TypeName, Type, SFVec3)
+	function SFMatrix4Template (TypeName, Type, SFVec3, double)
 	{
 		function SFMatrix4 (m00, m01, m02, m03,
 		                    m10, m11, m12, m13,
@@ -21654,7 +21689,7 @@ function (X3DField,
 		}
 
 		SFMatrix4 .prototype = Object .assign (Object .create (X3DField .prototype),
-			SFMatrixPrototypeTemplate (Matrix4, SFVec3),
+			SFMatrixPrototypeTemplate (Matrix4, SFVec3, double),
 		{
 			constructor: SFMatrix4,
 			getTypeName: function ()
@@ -21692,9 +21727,9 @@ function (X3DField,
 	}
 
 	return {
-		SFMatrix4d: SFMatrix4Template ("SFMatrix4d", X3DConstants .SFMatrix4d, SFVec3 .SFVec3d),
-		SFMatrix4f: SFMatrix4Template ("SFMatrix4f", X3DConstants .SFMatrix4f, SFVec3 .SFVec3f),
-		VrmlMatrix: SFMatrix4Template ("VrmlMatrix", X3DConstants .VrmlMatrix, SFVec3 .SFVec3f),
+		SFMatrix4d: SFMatrix4Template ("SFMatrix4d", X3DConstants .SFMatrix4d, SFVec3 .SFVec3d, true),
+		SFMatrix4f: SFMatrix4Template ("SFMatrix4f", X3DConstants .SFMatrix4f, SFVec3 .SFVec3f, false),
+		VrmlMatrix: SFMatrix4Template ("VrmlMatrix", X3DConstants .VrmlMatrix, SFVec3 .SFVec3f, false),
 	};
 });
 
@@ -22298,10 +22333,10 @@ function (SFVec3,
 				generator = Generator .Get (stream),
 				rotation  = this .getValue ();
 
-			stream .string +=  rotation .x + " " +
-			                   rotation .y + " " +
-			                   rotation .z + " " +
-			                   generator .ToUnit ("angle", rotation .angle);
+			stream .string += generator .DoublePrecision (rotation .x) + " " +
+			                  generator .DoublePrecision (rotation .y) + " " +
+			                  generator .DoublePrecision (rotation .z) + " " +
+			                  generator .DoublePrecision (generator .ToUnit ("angle", rotation .angle));
 		},
 		toVRMLStream: function (stream)
 		{
@@ -22608,7 +22643,7 @@ function (X3DField,
 		valueOf: X3DField .prototype .getValue,
 		toStream: function (stream)
 		{
-			stream .string += String (this .getValue ());
+			stream .string += this .getValue ();
 		},
 		toVRMLStream: function (stream)
 		{
@@ -22685,7 +22720,7 @@ function (X3DField,
 {
 "use strict";
 
-	function SFVec4Template (TypeName, Type)
+	function SFVec4Template (TypeName, Type, double)
 	{
 		function SFVec4 (x, y, z, w)
 		{
@@ -22705,7 +22740,7 @@ function (X3DField,
 		}
 
 		SFVec4 .prototype = Object .assign (Object .create (X3DField .prototype),
-			SFVecPrototypeTemplate (Vector4),
+			SFVecPrototypeTemplate (Vector4, double),
 		{
 			constructor: SFVec4,
 			getTypeName: function ()
@@ -22793,8 +22828,8 @@ function (X3DField,
 	}
 
 	return {
-		SFVec4d: SFVec4Template ("SFVec4d", X3DConstants .SFVec4d),
-		SFVec4f: SFVec4Template ("SFVec4f", X3DConstants .SFVec4f),
+		SFVec4d: SFVec4Template ("SFVec4d", X3DConstants .SFVec4d, true),
+		SFVec4f: SFVec4Template ("SFVec4f", X3DConstants .SFVec4f, false),
 	};
 });
 
@@ -24884,7 +24919,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.7.8";
+	return "4.7.9";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -26740,10 +26775,10 @@ define('text/text',['module'], function (module) {
 define('text', ['text/text'], function (main) { return main; });
 
 
-define('text!locale/de.po',[],function () { return 'msgid ""\nmsgstr ""\n"Project-Id-Version: X_ITE\\n"\n"POT-Creation-Date: 2015-12-23 04:56+0100\\n"\n"PO-Revision-Date: 2015-12-23 04:57+0100\\n"\n"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\\n"\n"Language-Team: \\n"\n"Language: de\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"X-Generator: Poedit 1.8.4\\n"\n"X-Poedit-Basepath: ../x_ite\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n"X-Poedit-SourceCharset: UTF-8\\n"\n"X-Poedit-SearchPath-0: .\\n"\n\nmsgid "Less Properties"\nmsgstr "Weniger Eigenschaften"\n\nmsgid "More Properties"\nmsgstr "Mehr Eigenschaften"\n\nmsgid "Frame rate"\nmsgstr "Bildrate"\n\nmsgid "fps"\nmsgstr "BpS"\n\nmsgid "Speed"\nmsgstr "Geschwindigkeit"\n\nmsgid "m/s"\nmsgstr ""\n\nmsgid "km/h"\nmsgstr ""\n\nmsgid "Browser"\nmsgstr ""\n\nmsgid "ms"\nmsgstr ""\n\nmsgid "X3D total"\nmsgstr "X3D gesamt"\n\nmsgid "Event Processing"\nmsgstr "Ereignisverarbeitung"\n\nmsgid "Pointer"\nmsgstr "Zeigegerät"\n\nmsgid "Camera"\nmsgstr "Kamera"\n\nmsgid "Collision Detection"\nmsgstr "Kollisionserkennung"\n\nmsgid "Rendering"\nmsgstr "Rendering"\n\nmsgid "Number of Shapes"\nmsgstr "Anzahl der Formen"\n\nmsgid "Number of Sensors"\nmsgstr "Anzahl der Sensoren"\n\nmsgid "Browser Timings"\nmsgstr "Zeitberechnung"\n\nmsgid "X_ITE Browser"\nmsgstr ""\n\nmsgid "Viewpoints"\nmsgstr "Ansichtspunkte"\n\nmsgid "Available Viewers"\nmsgstr "Verfügbare Betrachter"\n\nmsgid "Straighten Horizon"\nmsgstr "Horizont gerade richten"\n\nmsgid "Primitive Quality"\nmsgstr "Qualität der Grundobjekte"\n\nmsgid "High"\nmsgstr "Hoch"\n\nmsgid "high"\nmsgstr "hoch"\n\nmsgid "Medium"\nmsgstr "Mittel"\n\nmsgid "medium"\nmsgstr "mittel"\n\nmsgid "Low"\nmsgstr "Niedrig"\n\nmsgid "low"\nmsgstr "niedrig"\n\nmsgid "Texture Quality"\nmsgstr "Textur Qualität"\n\nmsgid "Display Rubberband"\nmsgstr "Gummiband anzeigen"\n\nmsgid "Rubberband"\nmsgstr "Gummiband"\n\nmsgid "on"\nmsgstr "an"\n\nmsgid "off"\nmsgstr "aus"\n\nmsgid "Mute Browser"\nmsgstr "Browser stumm schalten"\n\nmsgid "Browser muted"\nmsgstr "Browser stumm geschalten"\n\nmsgid "Browser unmuted"\nmsgstr "Browser Ton an"\n\nmsgid "Leave Fullscreen"\nmsgstr "Vollbild verlassen"\n\nmsgid "Fullscreen"\nmsgstr "Vollbild"\n\nmsgid "About X_ITE"\nmsgstr "Über X_ITE"\n\nmsgid "Examine Viewer"\nmsgstr "Untersuchen"\n\nmsgid "Walk Viewer"\nmsgstr "Laufen"\n\nmsgid "Fly Viewer"\nmsgstr "Fliegen"\n\nmsgid "Plane Viewer"\nmsgstr "Ebenen Betrachter"\n\nmsgid "Look At Viewer"\nmsgstr "Auf Objekte zielen"\n\nmsgid "None Viewer"\nmsgstr "Kein Betrachter"\n\nmsgid "Loading %d file"\nmsgstr "Lade %d Datei"\n\nmsgid "Loading %d files"\nmsgstr "Lade %d Dateien"\n\nmsgid "Loading done"\nmsgstr "Fertig mit Laden"\n\nmsgid "Failed loading world."\nmsgstr "Laden der Dateien fehlgeschlagen."\n\nmsgid "Show World Info"\nmsgstr "World Info anzeigen"\n\nmsgid "Viewpoint is copied to clipboard."\nmsgstr "Ansichtspunkt wurde in die Zwischenablage kopiert."\n';});
+define('text!locale/de.po',[],function () { return 'msgid ""\nmsgstr ""\n"Project-Id-Version: X_ITE\\n"\n"POT-Creation-Date: 2015-12-23 04:56+0100\\n"\n"PO-Revision-Date: 2015-12-23 04:57+0100\\n"\n"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\\n"\n"Language-Team: \\n"\n"Language: de\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"X-Generator: Poedit 1.8.4\\n"\n"X-Poedit-Basepath: ../x_ite\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n"X-Poedit-SourceCharset: UTF-8\\n"\n"X-Poedit-SearchPath-0: .\\n"\n\nmsgid "Less Properties"\nmsgstr "Weniger Eigenschaften"\n\nmsgid "More Properties"\nmsgstr "Mehr Eigenschaften"\n\nmsgid "Frame rate"\nmsgstr "Bildrate"\n\nmsgid "fps"\nmsgstr "BpS"\n\nmsgid "Speed"\nmsgstr "Geschwindigkeit"\n\nmsgid "m/s"\nmsgstr ""\n\nmsgid "km/h"\nmsgstr ""\n\nmsgid "Browser"\nmsgstr ""\n\nmsgid "ms"\nmsgstr ""\n\nmsgid "X3D total"\nmsgstr "X3D gesamt"\n\nmsgid "Event Processing"\nmsgstr "Ereignisverarbeitung"\n\nmsgid "Pointer"\nmsgstr "Zeigegerät"\n\nmsgid "Camera"\nmsgstr "Kamera"\n\nmsgid "Collision Detection"\nmsgstr "Kollisionserkennung"\n\nmsgid "Rendering"\nmsgstr "Rendering"\n\nmsgid "Number of Shapes"\nmsgstr "Anzahl der Formen"\n\nmsgid "Number of Sensors"\nmsgstr "Anzahl der Sensoren"\n\nmsgid "Browser Timings"\nmsgstr "Zeitberechnung"\n\nmsgid "X_ITE Browser"\nmsgstr ""\n\nmsgid "Viewpoints"\nmsgstr "Ansichtspunkte"\n\nmsgid "Available Viewers"\nmsgstr "Verfügbare Betrachter"\n\nmsgid "Straighten Horizon"\nmsgstr "Horizont gerade richten"\n\nmsgid "Primitive Quality"\nmsgstr "Qualität der Grundobjekte"\n\nmsgid "High"\nmsgstr "Hoch"\n\nmsgid "high"\nmsgstr "hoch"\n\nmsgid "Medium"\nmsgstr "Mittel"\n\nmsgid "medium"\nmsgstr "mittel"\n\nmsgid "Low"\nmsgstr "Niedrig"\n\nmsgid "low"\nmsgstr "niedrig"\n\nmsgid "Texture Quality"\nmsgstr "Textur Qualität"\n\nmsgid "Display Rubberband"\nmsgstr "Gummiband anzeigen"\n\nmsgid "Rubberband"\nmsgstr "Gummiband"\n\nmsgid "on"\nmsgstr "an"\n\nmsgid "off"\nmsgstr "aus"\n\nmsgid "Mute Browser"\nmsgstr "Browser stumm schalten"\n\nmsgid "Browser muted"\nmsgstr "Browser stumm geschalten"\n\nmsgid "Browser unmuted"\nmsgstr "Browser Ton an"\n\nmsgid "Leave Fullscreen"\nmsgstr "Vollbild verlassen"\n\nmsgid "Fullscreen"\nmsgstr "Vollbild"\n\nmsgid "About X_ITE"\nmsgstr "Über X_ITE"\n\nmsgid "Examine Viewer"\nmsgstr "Untersuchen"\n\nmsgid "Walk Viewer"\nmsgstr "Laufen"\n\nmsgid "Fly Viewer"\nmsgstr "Fliegen"\n\nmsgid "Plane Viewer"\nmsgstr "Ebenen Betrachter"\n\nmsgid "Look At Viewer"\nmsgstr "Auf Objekte zielen"\n\nmsgid "None Viewer"\nmsgstr "Kein Betrachter"\n\nmsgid "Loading %1 file"\nmsgstr "Lade %1 Datei"\n\nmsgid "Loading %1 files"\nmsgstr "Lade %1 Dateien"\n\nmsgid "Loading done"\nmsgstr "Fertig mit Laden"\n\nmsgid "Failed loading world."\nmsgstr "Laden der Dateien fehlgeschlagen."\n\nmsgid "Show World Info"\nmsgstr "World Info anzeigen"\n\nmsgid "Viewpoint is copied to clipboard."\nmsgstr "Ansichtspunkt wurde in die Zwischenablage kopiert."\n';});
 
 
-define('text!locale/fr.po',[],function () { return 'msgid ""\nmsgstr ""\n"Project-Id-Version: X_ITE\\n"\n"POT-Creation-Date: 2015-12-23 04:58+0100\\n"\n"PO-Revision-Date: 2015-12-23 05:07+0100\\n"\n"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\\n"\n"Language-Team: \\n"\n"Language: fr\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"X-Generator: Poedit 1.8.4\\n"\n"X-Poedit-Basepath: ../x_ite\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n"X-Poedit-SourceCharset: UTF-8\\n"\n"X-Poedit-SearchPath-0: .\\n"\n\nmsgid "Less Properties"\nmsgstr "Moins de propriétés"\n\nmsgid "More Properties"\nmsgstr "Plus de propriétés"\n\nmsgid "Frame rate"\nmsgstr "Fréquence"\n\nmsgid "fps"\nmsgstr "fps"\n\nmsgid "Speed"\nmsgstr "Vélocité"\n\nmsgid "m/s"\nmsgstr ""\n\nmsgid "km/h"\nmsgstr ""\n\nmsgid "Browser"\nmsgstr "X_ITE Navigateur"\n\nmsgid "ms"\nmsgstr ""\n\nmsgid "X3D total"\nmsgstr "X3D total"\n\nmsgid "Traitement des événements"\nmsgstr "Routes"\n\nmsgid "Pointer"\nmsgstr "Pointeur"\n\nmsgid "Camera"\nmsgstr "Caméra"\n\nmsgid "Collision Detection"\nmsgstr "Détection des collisions"\n\nmsgid "Rendering"\nmsgstr "Rendement"\n\nmsgid "Number of Shapes"\nmsgstr "Nombre de formes"\n\nmsgid "Number of Sensors"\nmsgstr "Nombre de senseurs"\n\nmsgid "Browser Timings"\nmsgstr "Calcul du temps"\n\nmsgid "X_ITE Browser"\nmsgstr "X_ITE Navigateur"\n\nmsgid "Viewpoints"\nmsgstr "Points de vue"\n\nmsgid "Available Viewers"\nmsgstr "Visionneurs disponibles"\n\nmsgid "Straighten Horizon"\nmsgstr "Redresser l\'horizon"\n\nmsgid "Primitive Quality"\nmsgstr "Qualité des objets simples"\n\nmsgid "High"\nmsgstr "Haut"\n\nmsgid "high"\nmsgstr "haut"\n\nmsgid "Medium"\nmsgstr "Moyenne"\n\nmsgid "medium"\nmsgstr "moyenne"\n\nmsgid "Low"\nmsgstr "Faible"\n\nmsgid "low"\nmsgstr "faible"\n\nmsgid "Texture Quality"\nmsgstr "Qualité des textures"\n\nmsgid "Display Rubberband"\nmsgstr "Présenter le bande élastique"\n\nmsgid "Rubberband"\nmsgstr "Bande élastique"\n\nmsgid "on"\nmsgstr "marche"\n\nmsgid "off"\nmsgstr "arrêt"\n\nmsgid "Mute Browser"\nmsgstr "Rendre navigateur muet"\n\nmsgid "Browser muted"\nmsgstr "Navigateur muet"\n\nmsgid "Browser unmuted"\nmsgstr "Son de navigateur réactivé"\n\nmsgid "Leave Fullscreen"\nmsgstr "Sortie en plein écran"\n\nmsgid "Fullscreen"\nmsgstr "Plein écran"\n\nmsgid "About X_ITE"\nmsgstr "À propos de X_ITE"\n\nmsgid "Examine Viewer"\nmsgstr "Examiner"\n\nmsgid "Walk Viewer"\nmsgstr "Aller"\n\nmsgid "Fly Viewer"\nmsgstr "Voler"\n\nmsgid "Plane Viewer"\nmsgstr "Visionneur de la plaine"\n\nmsgid "Look At Viewer"\nmsgstr "Regarder un objet de près"\n\nmsgid "None Viewer"\nmsgstr "Pas de visionneur"\n\nmsgid "Loading %d file"\nmsgstr "Télécharger %d fichier"\n\nmsgid "Loading %d files"\nmsgstr "Télécharger %d fichiers"\n\nmsgid "Loading done"\nmsgstr "Téléchargement fini"\n\nmsgid "Failed loading world."\nmsgstr "Le chargement des fichiers a échoué."\n\nmsgid "Show World Info"\nmsgstr "Afficher World Info"\n\nmsgid "Viewpoint is copied to clipboard."\nmsgstr "Le point de vue est copié dans le presse-papiers."\n';});
+define('text!locale/fr.po',[],function () { return 'msgid ""\nmsgstr ""\n"Project-Id-Version: X_ITE\\n"\n"POT-Creation-Date: 2015-12-23 04:58+0100\\n"\n"PO-Revision-Date: 2015-12-23 05:07+0100\\n"\n"Last-Translator: Holger Seelig <holger.seelig@yahoo.de>\\n"\n"Language-Team: \\n"\n"Language: fr\\n"\n"MIME-Version: 1.0\\n"\n"Content-Type: text/plain; charset=UTF-8\\n"\n"Content-Transfer-Encoding: 8bit\\n"\n"X-Generator: Poedit 1.8.4\\n"\n"X-Poedit-Basepath: ../x_ite\\n"\n"Plural-Forms: nplurals=2; plural=(n != 1);\\n"\n"X-Poedit-SourceCharset: UTF-8\\n"\n"X-Poedit-SearchPath-0: .\\n"\n\nmsgid "Less Properties"\nmsgstr "Moins de propriétés"\n\nmsgid "More Properties"\nmsgstr "Plus de propriétés"\n\nmsgid "Frame rate"\nmsgstr "Fréquence"\n\nmsgid "fps"\nmsgstr "fps"\n\nmsgid "Speed"\nmsgstr "Vélocité"\n\nmsgid "m/s"\nmsgstr ""\n\nmsgid "km/h"\nmsgstr ""\n\nmsgid "Browser"\nmsgstr "X_ITE Navigateur"\n\nmsgid "ms"\nmsgstr ""\n\nmsgid "X3D total"\nmsgstr "X3D total"\n\nmsgid "Traitement des événements"\nmsgstr "Routes"\n\nmsgid "Pointer"\nmsgstr "Pointeur"\n\nmsgid "Camera"\nmsgstr "Caméra"\n\nmsgid "Collision Detection"\nmsgstr "Détection des collisions"\n\nmsgid "Rendering"\nmsgstr "Rendement"\n\nmsgid "Number of Shapes"\nmsgstr "Nombre de formes"\n\nmsgid "Number of Sensors"\nmsgstr "Nombre de senseurs"\n\nmsgid "Browser Timings"\nmsgstr "Calcul du temps"\n\nmsgid "X_ITE Browser"\nmsgstr "X_ITE Navigateur"\n\nmsgid "Viewpoints"\nmsgstr "Points de vue"\n\nmsgid "Available Viewers"\nmsgstr "Visionneurs disponibles"\n\nmsgid "Straighten Horizon"\nmsgstr "Redresser l\'horizon"\n\nmsgid "Primitive Quality"\nmsgstr "Qualité des objets simples"\n\nmsgid "High"\nmsgstr "Haut"\n\nmsgid "high"\nmsgstr "haut"\n\nmsgid "Medium"\nmsgstr "Moyenne"\n\nmsgid "medium"\nmsgstr "moyenne"\n\nmsgid "Low"\nmsgstr "Faible"\n\nmsgid "low"\nmsgstr "faible"\n\nmsgid "Texture Quality"\nmsgstr "Qualité des textures"\n\nmsgid "Display Rubberband"\nmsgstr "Présenter le bande élastique"\n\nmsgid "Rubberband"\nmsgstr "Bande élastique"\n\nmsgid "on"\nmsgstr "marche"\n\nmsgid "off"\nmsgstr "arrêt"\n\nmsgid "Mute Browser"\nmsgstr "Rendre navigateur muet"\n\nmsgid "Browser muted"\nmsgstr "Navigateur muet"\n\nmsgid "Browser unmuted"\nmsgstr "Son de navigateur réactivé"\n\nmsgid "Leave Fullscreen"\nmsgstr "Sortie en plein écran"\n\nmsgid "Fullscreen"\nmsgstr "Plein écran"\n\nmsgid "About X_ITE"\nmsgstr "À propos de X_ITE"\n\nmsgid "Examine Viewer"\nmsgstr "Examiner"\n\nmsgid "Walk Viewer"\nmsgstr "Aller"\n\nmsgid "Fly Viewer"\nmsgstr "Voler"\n\nmsgid "Plane Viewer"\nmsgstr "Visionneur de la plaine"\n\nmsgid "Look At Viewer"\nmsgstr "Regarder un objet de près"\n\nmsgid "None Viewer"\nmsgstr "Pas de visionneur"\n\nmsgid "Loading %1 file"\nmsgstr "Télécharger %1 fichier"\n\nmsgid "Loading %1 files"\nmsgstr "Télécharger %1 fichiers"\n\nmsgid "Loading done"\nmsgstr "Téléchargement fini"\n\nmsgid "Failed loading world."\nmsgstr "Le chargement des fichiers a échoué."\n\nmsgid "Show World Info"\nmsgstr "Afficher World Info"\n\nmsgid "Viewpoint is copied to clipboard."\nmsgstr "Le point de vue est copié dans le presse-papiers."\n';});
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -26924,18 +26959,16 @@ function (de, fr)
 
 define ('x_ite/Browser/Core/BrowserTimings',[
 	"jquery",
-	"x_ite/Fields/SFBool",
 	"x_ite/Basic/X3DBaseNode",
 	"locale/gettext",
 ],
 function ($,
-          SFBool,
           X3DBaseNode,
           _)
 {
 "use strict";
 
-   function f2 (n) { return Math .floor (n * 100) / 100; }
+   function f2 (n) { return n .toFixed (2); }
 
 	function BrowserTimings (executionContext)
 	{
@@ -34135,22 +34168,15 @@ define ('x_ite/Parser/X3DParser',[],function ()
 				for (const component of components)
 				{
 					const providerUrl = component .providerUrl;
-				if (providerUrl .match (componentsUrl))
+
+					if (providerUrl .match (componentsUrl))
 						providerUrls .add (providerUrl);
 				}
 
-				if (typeof globalRequire === "function")
+				if (typeof globalRequire === "function" && typeof __filename === "string")
 				{
-					if (typeof globalProcess === "object" && globalProcess .platform === "win32")
-					{
-						for (const url of providerUrls)
-							globalRequire (url);
-					}
-					else
-					{
-						for (const url of providerUrls)
-							globalRequire (new URL (url) .pathname);
-					}
+					for (const url of providerUrls)
+						globalRequire (url);
 				}
 
 				return Array .from (providerUrls);
@@ -39919,12 +39945,8 @@ define ('x_ite/Browser/Networking/urls',[],function ()
 				if (getScriptURL () .match (/\.min\.js$/))
 					file += ".min";
 
-				if (typeof globalProcess === "object" && globalProcess .platform === "win32")
-				{
-					const path = globalRequire ("path");
-
-					return path .join (path .dirname (getScriptURL ()), "assets\\components\\" + file + ".js");
-				}
+				if (typeof globalRequire === "function" && typeof __filename === "string")
+					return this .getPath ("assets", "components", file + ".js");
 
 				return new URL ("assets/components/" + file + ".js", getScriptURL ()) .href;
 			}
@@ -39933,30 +39955,46 @@ define ('x_ite/Browser/Networking/urls',[],function ()
 		},
 		getShaderUrl: function (file)
 		{
+			if (typeof globalRequire === "function" && typeof __filename === "string")
+				return this .getPath ("assets", "shaders", file);
+
 			return new URL ("assets/shaders/" + file, getScriptURL ()) .href;
 		},
 		getFontsUrl: function (file)
 		{
+			if (typeof globalRequire === "function" && typeof __filename === "string")
+				return this .getPath ("assets", "fonts", file);
+
 			return new URL ("assets/fonts/" + file, getScriptURL ()) .href;
 		},
 		getLinetypeUrl: function (index)
 		{
+			if (typeof globalRequire === "function" && typeof __filename === "string")
+				return this .getPath ("assets", "linetype", index + ".png");
+
 			return new URL ("assets/linetype/" + index + ".png", getScriptURL ()) .href;
 		},
 		getHatchingUrl: function (index)
 		{
+			if (typeof globalRequire === "function" && typeof __filename === "string")
+				return this .getPath ("assets", "hatching", index + ".png");
+
 			return new URL ("assets/hatching/" + index + ".png", getScriptURL ()) .href;
+		},
+		getPath: function ()
+		{
+			const
+				path = globalRequire ("path"),
+				args = Array .prototype .slice .call (arguments);
+
+			args .unshift (path .dirname (getScriptURL ()));
+
+			return path .join .apply (path, args);
 		},
 	};
 
 	return new URLs ();
 });
-
-/*! sprintf-js v1.1.2 | Copyright (c) 2007-present, Alexandru Mărășteanu <hello@alexei.ro> | BSD-3-Clause */
-!function(){"use strict";var g={not_string:/[^s]/,not_bool:/[^t]/,not_type:/[^T]/,not_primitive:/[^v]/,number:/[diefg]/,numeric_arg:/[bcdiefguxX]/,json:/[j]/,not_json:/[^j]/,text:/^[^\x25]+/,modulo:/^\x25{2}/,placeholder:/^\x25(?:([1-9]\d*)\$|\(([^)]+)\))?(\+)?(0|'[^$])?(-)?(\d+)?(?:\.(\d+))?([b-gijostTuvxX])/,key:/^([a-z_][a-z_\d]*)/i,key_access:/^\.([a-z_][a-z_\d]*)/i,index_access:/^\[(\d+)\]/,sign:/^[+-]/};function y(e){return function(e,t){var r,n,i,s,a,o,p,c,l,u=1,f=e.length,d="";for(n=0;n<f;n++)if("string"==typeof e[n])d+=e[n];else if("object"==typeof e[n]){if((s=e[n]).keys)for(r=t[u],i=0;i<s.keys.length;i++){if(null==r)throw new Error(y('[sprintf] Cannot access property "%s" of undefined value "%s"',s.keys[i],s.keys[i-1]));r=r[s.keys[i]]}else r=s.param_no?t[s.param_no]:t[u++];if(g.not_type.test(s.type)&&g.not_primitive.test(s.type)&&r instanceof Function&&(r=r()),g.numeric_arg.test(s.type)&&"number"!=typeof r&&isNaN(r))throw new TypeError(y("[sprintf] expecting number but found %T",r));switch(g.number.test(s.type)&&(c=0<=r),s.type){case"b":r=parseInt(r,10).toString(2);break;case"c":r=String.fromCharCode(parseInt(r,10));break;case"d":case"i":r=parseInt(r,10);break;case"j":r=JSON.stringify(r,null,s.width?parseInt(s.width):0);break;case"e":r=s.precision?parseFloat(r).toExponential(s.precision):parseFloat(r).toExponential();break;case"f":r=s.precision?parseFloat(r).toFixed(s.precision):parseFloat(r);break;case"g":r=s.precision?String(Number(r.toPrecision(s.precision))):parseFloat(r);break;case"o":r=(parseInt(r,10)>>>0).toString(8);break;case"s":r=String(r),r=s.precision?r.substring(0,s.precision):r;break;case"t":r=String(!!r),r=s.precision?r.substring(0,s.precision):r;break;case"T":r=Object.prototype.toString.call(r).slice(8,-1).toLowerCase(),r=s.precision?r.substring(0,s.precision):r;break;case"u":r=parseInt(r,10)>>>0;break;case"v":r=r.valueOf(),r=s.precision?r.substring(0,s.precision):r;break;case"x":r=(parseInt(r,10)>>>0).toString(16);break;case"X":r=(parseInt(r,10)>>>0).toString(16).toUpperCase()}g.json.test(s.type)?d+=r:(!g.number.test(s.type)||c&&!s.sign?l="":(l=c?"+":"-",r=r.toString().replace(g.sign,"")),o=s.pad_char?"0"===s.pad_char?"0":s.pad_char.charAt(1):" ",p=s.width-(l+r).length,a=s.width&&0<p?o.repeat(p):"",d+=s.align?l+r+a:"0"===o?l+a+r:a+l+r)}return d}(function(e){if(p[e])return p[e];var t,r=e,n=[],i=0;for(;r;){if(null!==(t=g.text.exec(r)))n.push(t[0]);else if(null!==(t=g.modulo.exec(r)))n.push("%");else{if(null===(t=g.placeholder.exec(r)))throw new SyntaxError("[sprintf] unexpected placeholder");if(t[2]){i|=1;var s=[],a=t[2],o=[];if(null===(o=g.key.exec(a)))throw new SyntaxError("[sprintf] failed to parse named argument key");for(s.push(o[1]);""!==(a=a.substring(o[0].length));)if(null!==(o=g.key_access.exec(a)))s.push(o[1]);else{if(null===(o=g.index_access.exec(a)))throw new SyntaxError("[sprintf] failed to parse named argument key");s.push(o[1])}t[2]=s}else i|=2;if(3===i)throw new Error("[sprintf] mixing positional and named placeholders is not (yet) supported");n.push({placeholder:t[0],param_no:t[1],keys:t[2],sign:t[3],pad_char:t[4],align:t[5],width:t[6],precision:t[7],type:t[8]})}r=r.substring(t[0].length)}return p[e]=n}(e),arguments)}function e(e,t){return y.apply(null,[e].concat(t||[]))}var p=Object.create(null);"undefined"!=typeof exports&&(exports.sprintf=y,exports.vsprintf=e),"undefined"!=typeof window&&(window.sprintf=y,window.vsprintf=e,"function"==typeof define&&define.amd&&define('sprintf/dist/sprintf.min',[],function(){return{sprintf:y,vsprintf:e}}))}();
-//# sourceMappingURL=sprintf.min.js.map
-;
-define('sprintf', ['sprintf/dist/sprintf.min'], function (main) { return main; });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -40010,12 +40048,10 @@ define('sprintf', ['sprintf/dist/sprintf.min'], function (main) { return main; }
 define ('x_ite/Browser/Networking/X3DNetworkingContext',[
 	"x_ite/Fields",
 	"x_ite/Browser/Networking/urls",
-	"sprintf",
 	"locale/gettext",
 ],
 function (Fields,
           urls,
-          sprintf,
           _)
 {
 "use strict";
@@ -40136,7 +40172,7 @@ function (Fields,
 
 			if (value)
 			{
-				var string = sprintf .sprintf (value == 1 ? _ ("Loading %d file") : _ ("Loading %d files"), value);
+				var string = (value == 1 ? _ ("Loading %1 file") : _ ("Loading %1 files")) .replace ("%1", value);
 			}
 			else
 			{
@@ -118181,13 +118217,8 @@ function ($,
 	{
 		const url = urls .getProviderUrl (name);
 
-		if (typeof globalRequire === "function")
-		{
-			if (typeof globalProcess === "object" && globalProcess .platform === "win32")
-				globalRequire (url);
-			else
-				globalRequire (new URL (url) .pathname);
-		}
+		if (typeof globalRequire === "function" && typeof __filename === "string")
+			globalRequire (url);
 
 		return url;
 	}
@@ -118410,16 +118441,9 @@ define .hide = function ()
 const getScriptURL = (function ()
 {
 	if (document .currentScript)
-	{
 		var src = document .currentScript .src;
-	}
 	else if (typeof __filename === "string")
-	{
-		if (typeof globalProcess === "object" && globalProcess .platform === "win32")
-			var src = __filename;
-		else
-			var src = "file://" + __filename;
-	}
+		var src = __filename;
 
 	return function ()
 	{
@@ -118573,6 +118597,4 @@ for (const key in x_iteNoConfict)
 }
 
 })
-(typeof module === "object" ? module : undefined,
- typeof require === "function" ? require : undefined,
- typeof process === "object" ? process : undefined);
+(typeof module === "object" ? module : undefined, typeof require === "function" ? require : undefined);

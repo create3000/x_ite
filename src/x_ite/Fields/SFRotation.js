@@ -145,10 +145,10 @@ function (SFVec3,
 				generator = Generator .Get (stream),
 				rotation  = this .getValue ();
 
-			stream .string +=  rotation .x + " " +
-			                   rotation .y + " " +
-			                   rotation .z + " " +
-			                   generator .ToUnit ("angle", rotation .angle);
+			stream .string += generator .DoublePrecision (rotation .x) + " " +
+			                  generator .DoublePrecision (rotation .y) + " " +
+			                  generator .DoublePrecision (rotation .z) + " " +
+			                  generator .DoublePrecision (generator .ToUnit ("angle", rotation .angle));
 		},
 		toVRMLStream: function (stream)
 		{

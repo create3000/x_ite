@@ -87,7 +87,7 @@ function (X3DField,
 		valueOf: X3DField .prototype .getValue,
 		toStream: function (stream)
 		{
-			stream .string += String (this .getValue ());
+			stream .string += this .getValue ();
 		},
 		toVRMLStream: function (stream)
 		{

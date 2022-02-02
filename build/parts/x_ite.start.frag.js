@@ -1,11 +1,10 @@
-(function (globalModule, globalRequire, globalProcess)
+(function (globalModule, globalRequire)
 {
 
 if (typeof __filename === "undefined")
 {
 	globalModule  = undefined;
 	globalRequire = undefined;
-	globalProcess = undefined;
 }
 
 // Undefine global variables.

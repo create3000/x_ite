@@ -60,7 +60,7 @@ function (X3DField,
 {
 "use strict";
 
-	function SFVec4Template (TypeName, Type)
+	function SFVec4Template (TypeName, Type, double)
 	{
 		function SFVec4 (x, y, z, w)
 		{
@@ -80,7 +80,7 @@ function (X3DField,
 		}
 
 		SFVec4 .prototype = Object .assign (Object .create (X3DField .prototype),
-			SFVecPrototypeTemplate (Vector4),
+			SFVecPrototypeTemplate (Vector4, double),
 		{
 			constructor: SFVec4,
 			getTypeName: function ()
@@ -168,7 +168,7 @@ function (X3DField,
 	}
 
 	return {
-		SFVec4d: SFVec4Template ("SFVec4d", X3DConstants .SFVec4d),
-		SFVec4f: SFVec4Template ("SFVec4f", X3DConstants .SFVec4f),
+		SFVec4d: SFVec4Template ("SFVec4d", X3DConstants .SFVec4d, true),
+		SFVec4f: SFVec4Template ("SFVec4f", X3DConstants .SFVec4f, false),
 	};
 });

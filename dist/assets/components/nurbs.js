@@ -1,12 +1,5 @@
-(function (globalModule, globalRequire)
+(function ()
 {
-
-if (typeof __filename === "undefined")
-{
-	globalModule  = undefined;
-	globalRequire = undefined;
-}
-
 // Undefine global variables.
 var module = { }, exports, process;
 
@@ -5394,5 +5387,4 @@ function (Components,
 
 
 
-})
-(typeof module === "object" ? module : undefined, typeof require === "function" ? require : undefined);
+})();

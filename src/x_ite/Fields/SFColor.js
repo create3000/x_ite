@@ -51,10 +51,12 @@ define ([
 	"standard/Math/Numbers/Color3",
 	"x_ite/Basic/X3DField",
 	"x_ite/Bits/X3DConstants",
+	"x_ite/InputOutput/Generator",
 ],
 function (Color3,
           X3DField,
-          X3DConstants)
+          X3DConstants,
+          Generator)
 {
 "use strict";
 
@@ -136,7 +138,18 @@ function (Color3,
 		})(),
 		toStream: function (stream)
 		{
-			stream .string += this .getValue () .toString ();
+			const
+				generator = Generator .Get (stream),
+				value     = this .getValue (),
+				last      = value .length - 1;
+
+			for (let i = 0; i < last; ++ i)
+			{
+				stream .string += generator .Precision (value [i]);
+				stream .string += " ";
+			}
+
+			stream .string += generator .Precision (value [last]);
 		},
 		toVRMLStream: function (stream)
 		{

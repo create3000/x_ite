@@ -63,7 +63,7 @@ function (X3DField,
 {
 "use strict";
 
-	function SFMatrix3Template (TypeName, Type, SFVec2)
+	function SFMatrix3Template (TypeName, Type, SFVec2, double)
 	{
 		function SFMatrix3 (m00, m01, m02,
 		                    m10, m11, m12,
@@ -87,7 +87,7 @@ function (X3DField,
 		}
 
 		SFMatrix3 .prototype = Object .assign (Object .create (X3DField .prototype),
-			SFMatrixPrototypeTemplate (Matrix3, SFVec2),
+			SFMatrixPrototypeTemplate (Matrix3, SFVec2, double),
 		{
 			constructor: SFMatrix3,
 			getTypeName: function ()
@@ -135,7 +135,7 @@ function (X3DField,
 	}
 
 	return {
-		SFMatrix3d: SFMatrix3Template ("SFMatrix3d", X3DConstants .SFMatrix3d, SFVec2 .SFVec2d),
-		SFMatrix3f: SFMatrix3Template ("SFMatrix3f", X3DConstants .SFMatrix3f, SFVec2 .SFVec2f),
+		SFMatrix3d: SFMatrix3Template ("SFMatrix3d", X3DConstants .SFMatrix3d, SFVec2 .SFVec2d, true),
+		SFMatrix3f: SFMatrix3Template ("SFMatrix3f", X3DConstants .SFMatrix3f, SFVec2 .SFVec2f, false),
 	};
 });

@@ -153,11 +153,11 @@ msgstr "Auf Objekte zielen"
 msgid "None Viewer"
 msgstr "Kein Betrachter"
 
-msgid "Loading %d file"
-msgstr "Lade %d Datei"
+msgid "Loading %1 file"
+msgstr "Lade %1 Datei"
 
-msgid "Loading %d files"
-msgstr "Lade %d Dateien"
+msgid "Loading %1 files"
+msgstr "Lade %1 Dateien"
 
 msgid "Loading done"
 msgstr "Fertig mit Laden"

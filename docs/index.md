@@ -838,8 +838,8 @@ If you are a developer or you always wanna be up to date:
 If you are on production and everything works fine, then use a numbered version.
 
 ```html
-<link rel="stylesheet" type="text/css" href="https://create3000.github.io/code/x_ite/4.7.8/dist/x_ite.css"/>
-<script type="text/javascript" src="https://create3000.github.io/code/x_ite/4.7.8/dist/x_ite.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://create3000.github.io/code/x_ite/4.7.9/dist/x_ite.css"/>
+<script type="text/javascript" src="https://create3000.github.io/code/x_ite/4.7.9/dist/x_ite.min.js"></script>
 ```
 
 ### jsDelivr CDN

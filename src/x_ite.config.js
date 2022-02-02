@@ -37,11 +37,6 @@ require .config ({
 			"main": "dist/opentype.js"
 		},
 		{
-			"name": "sprintf",
-			"location": "../node_modules/sprintf-js",
-			"main": "dist/sprintf.min.js"
-		},
-		{
 			"name": "contextMenu",
 			"location": "../node_modules/jquery-contextmenu",
 			"main": "dist/jquery.contextMenu.js"

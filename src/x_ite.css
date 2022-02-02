@@ -93,7 +93,7 @@ X3DCanvas .x_ite-private-notification {
 
 X3DCanvas .x_ite-private-notification span {
 	padding: 0px 24px 0px 20px;
-	background: url(assets/images/icon.bw.png) no-repeat 0px 3px;
+	background: url(assets/images/icon.bw.png) no-repeat 0px 2px;
 }
 
 X3DCanvas .x_ite-private-browser-timings {
@@ -336,6 +336,7 @@ X3DCanvas #context-menu-layer {
 }
 
 .x_ite-private-menu .context-menu-separator {
+	padding-top: 0;
 	padding-bottom: 0;
 	border-bottom: 1px solid #111;
 }

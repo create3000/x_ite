@@ -56,7 +56,7 @@ function (X3DField,
 {
 "use strict";
 
-	return function (Type)
+	return function (Type, double)
 	{
 		return Object .assign (Object .create (X3DField .prototype),
 		{
@@ -129,15 +129,16 @@ function (X3DField,
 				const
 					generator = Generator .Get (stream),
 					value     = this .getValue (),
-					category  = generator .Unit (this .getUnit ());
+					category  = generator .Unit (this .getUnit ()),
+					last      = value .length - 1;
 
-				for (let i = 0, l = value .length - 1; i < l; ++ i)
+				for (let i = 0; i < last; ++ i)
 				{
-					stream .string += String (generator .ToUnit (category, value [i]));
+					stream .string += double ? generator .DoublePrecision (generator .ToUnit (category, value [i])) : generator .Precision (generator .ToUnit (category, value [i]));
 					stream .string += " ";
 				}
 
-				stream .string += String (generator .ToUnit (category, value [value .length - 1]));
+				stream .string += double ? generator .DoublePrecision (generator .ToUnit (category, value [last])) : generator .Precision (generator .ToUnit (category, value [last]));
 			},
 			toVRMLStream: function (stream)
 			{

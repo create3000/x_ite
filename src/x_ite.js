@@ -69,16 +69,9 @@ define .hide = function ()
 const getScriptURL = (function ()
 {
 	if (document .currentScript)
-	{
 		var src = document .currentScript .src;
-	}
 	else if (typeof __filename === "string")
-	{
-		if (typeof globalProcess === "object" && globalProcess .platform === "win32")
-			var src = __filename;
-		else
-			var src = "file://" + __filename;
-	}
+		var src = __filename;
 
 	return function ()
 	{

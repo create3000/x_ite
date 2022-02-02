@@ -50,12 +50,10 @@
 define ([
 	"x_ite/Fields",
 	"x_ite/Browser/Networking/urls",
-	"sprintf",
 	"locale/gettext",
 ],
 function (Fields,
           urls,
-          sprintf,
           _)
 {
 "use strict";
@@ -176,7 +174,7 @@ function (Fields,
 
 			if (value)
 			{
-				var string = sprintf .sprintf (value == 1 ? _ ("Loading %d file") : _ ("Loading %d files"), value);
+				var string = (value == 1 ? _ ("Loading %1 file") : _ ("Loading %1 files")) .replace ("%1", value);
 			}
 			else
 			{

@@ -153,11 +153,11 @@ msgstr "Regarder un objet de près"
 msgid "None Viewer"
 msgstr "Pas de visionneur"
 
-msgid "Loading %d file"
-msgstr "Télécharger %d fichier"
+msgid "Loading %1 file"
+msgstr "Télécharger %1 fichier"
 
-msgid "Loading %d files"
-msgstr "Télécharger %d fichiers"
+msgid "Loading %1 files"
+msgstr "Télécharger %1 fichiers"
 
 msgid "Loading done"
 msgstr "Téléchargement fini"

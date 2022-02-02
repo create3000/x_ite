@@ -93,7 +93,7 @@ function (X3DField,
 				generator = Generator .Get (stream),
 				category  = generator .Unit (this .getUnit ());
 
-			stream .string += String (generator .ToUnit (category, this .getValue ()));
+			stream .string += generator .DoublePrecision (generator .ToUnit (category, this .getValue ()));
 		},
 		toVRMLStream: function (stream)
 		{

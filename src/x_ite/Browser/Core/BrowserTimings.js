@@ -49,18 +49,16 @@
 
 define ([
 	"jquery",
-	"x_ite/Fields/SFBool",
 	"x_ite/Basic/X3DBaseNode",
 	"locale/gettext",
 ],
 function ($,
-          SFBool,
           X3DBaseNode,
           _)
 {
 "use strict";
 
-   function f2 (n) { return Math .floor (n * 100) / 100; }
+   function f2 (n) { return n .toFixed (2); }
 
 	function BrowserTimings (executionContext)
 	{

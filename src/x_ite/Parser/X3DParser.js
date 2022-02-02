@@ -125,22 +125,15 @@ define (function ()
 				for (const component of components)
 				{
 					const providerUrl = component .providerUrl;
-				if (providerUrl .match (componentsUrl))
+
+					if (providerUrl .match (componentsUrl))
 						providerUrls .add (providerUrl);
 				}
 
-				if (typeof globalRequire === "function")
+				if (typeof globalRequire === "function" && typeof __filename === "string")
 				{
-					if (typeof globalProcess === "object" && globalProcess .platform === "win32")
-					{
-						for (const url of providerUrls)
-							globalRequire (url);
-					}
-					else
-					{
-						for (const url of providerUrls)
-							globalRequire (new URL (url) .pathname);
-					}
+					for (const url of providerUrls)
+						globalRequire (url);
 				}
 
 				return Array .from (providerUrls);

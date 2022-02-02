@@ -47,7 +47,6 @@
  ******************************************************************************/
 
 
-
 define ([
 	"x_ite/Bits/X3DConstants",
 ],
@@ -57,8 +56,12 @@ function (X3DConstants)
 
 	function Generator ()
 	{
-		this .indent                = "";
-		this .indentChar            = "  ";
+		this .indent              = "";
+		this .indentChar          = "  ";
+		this .precision           = 6;
+		this .doublePrecision     = 14;
+		this .removeTrailingZeros = /\.?0*$|\.?0*(?=e|E)/;
+
 		this .executionContextStack = [ null ];
 		this .importedNodesIndex    = new Map ();
 		this .exportedNodesIndex    = new Map ();
@@ -97,6 +100,14 @@ function (X3DConstants)
 				string += " ";
 
 			return string;
+		},
+		Precision: function (value)
+		{
+			return Math .fround (value) .toPrecision (this .precision) .replace (this .removeTrailingZeros, "");
+		},
+		DoublePrecision: function (value)
+		{
+			return value .toPrecision (this .doublePrecision) .replace (this .removeTrailingZeros, "");
 		},
 		PushExecutionContext: function (executionContext)
 		{

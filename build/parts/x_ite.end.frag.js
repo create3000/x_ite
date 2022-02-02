@@ -22,6 +22,4 @@ for (const key in x_iteNoConfict)
 }
 
 })
-(typeof module === "object" ? module : undefined,
- typeof require === "function" ? require : undefined,
- typeof process === "object" ? process : undefined);
+(typeof module === "object" ? module : undefined, typeof require === "function" ? require : undefined);

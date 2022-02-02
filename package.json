@@ -1,7 +1,7 @@
 {
 	"name": "x_ite",
-	"version": "4.7.8",
-	"revision": "1134",
+	"version": "4.7.9",
+	"revision": "1135",
 	"description": "X_ITE X3D Browser, a framework for integrating and manipulating X3D and VRML scenes in HTML.",
 	"main": "dist/x_ite.js",
 	"repository": {
@@ -64,12 +64,14 @@
 		"require": "^0.4.4",
 		"requirejs": ">=2.3.6",
 		"requirejs-text": ">=2.0.15",
-		"sprintf-js": ">=1.1.2",
 		"uglify-js-es6": ">=2.8.9"
 	},
 	"scripts": {
 		"lint": "jshint **",
 		"build": "make",
 		"-prebuild:js": "npm run lint"
+	},
+	"dependencies": {
+		"sprintf-js": "^1.1.2"
 	}
 }
