@@ -60,7 +60,7 @@ function (X3DConstants)
 		this .indentChar          = "  ";
 		this .precision           = 6;
 		this .doublePrecision     = 14;
-		this .removeTrailingZeros = /\.?0*$|\.?0*(?=e|E)/;
+		this .removeTrailingZeros = /\.?0*(?=$|[eE])/;
 
 		this .executionContextStack = [ null ];
 		this .importedNodesIndex    = new Map ();
