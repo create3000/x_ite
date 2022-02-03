@@ -103,6 +103,14 @@ define (function ()
 		{
 			return namespaces .get (this .target);
 		},
+		setDefaults: function (defaults)
+		{
+			for (const key in defaults)
+			{
+				if (this [key] === undefined)
+					this [key] = defaults [key];
+			}
+		},
 		clear: function ()
 		{
 			const
