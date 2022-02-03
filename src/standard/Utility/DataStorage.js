@@ -103,7 +103,7 @@ define (function ()
 		{
 			return namespaces .get (this .target);
 		},
-		setDefaults: function (defaults)
+		addDefaults: function (defaults)
 		{
 			for (const key in defaults)
 			{
