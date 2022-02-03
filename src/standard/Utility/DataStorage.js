@@ -53,7 +53,8 @@ define (function ()
 
 	const
 		storages   = new WeakMap (),
-		namespaces = new WeakMap ();
+		namespaces = new WeakMap (),
+		defaults   = new WeakMap ();
 
 	const handler =
 	{
@@ -67,7 +68,7 @@ define (function ()
 			var value = target .getStorage () [target .getNameSpace () + key];
 
 			if (value === undefined || value === "undefined" || value === null)
-			   return undefined;
+			   return target .getDefault (key);
 
 			return JSON .parse (value);
 		},
@@ -89,6 +90,7 @@ define (function ()
 
 		storages   .set (this, storage);
 		namespaces .set (this, namespace);
+		defaults   .set (this, { });
 
 		return new Proxy (this, handler);
 	}
@@ -105,11 +107,11 @@ define (function ()
 		},
 		addDefaults: function (defaults)
 		{
-			for (const key in defaults)
-			{
-				if (this [key] === undefined)
-					this [key] = defaults [key];
-			}
+			Object .assign (defaults .get (this .target), object);
+		},
+		getDefault (key)
+		{
+			return defaults .get (this .target) [key];
 		},
 		clear: function ()
 		{
