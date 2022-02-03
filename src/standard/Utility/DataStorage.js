@@ -105,6 +105,10 @@ define (function ()
 		{
 			return namespaces .get (this .target);
 		},
+		addNameSpace: function (namespace)
+		{
+			return new DataStorage (this .getStorage (), this .getNameSpace () + namespace);
+		},
 		addDefaults: function (defaults)
 		{
 			Object .assign (defaults .get (this .target), object);
