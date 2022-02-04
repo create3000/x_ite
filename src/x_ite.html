@@ -288,6 +288,50 @@ X3D (function ()
 	{
 		Browser .getLocalStorage () ["Bookmarks.location"] = $(".location-entry") .val ();
 	});
+
+	Browser .getContextMenu () .setUserMenu (function ()
+	{
+		return {
+			"shading": {
+				name: "Shading",
+				items: {
+					"point": {
+						name: "Point",
+						type: "radio",
+						selected: Browser .getBrowserOption ("Shading") === "POINT",
+						events: {
+							click: function ()
+							{
+								Browser .setBrowserOption ("Shading", "POINT");
+							},
+						},
+					},
+					"wireframe": {
+						name: "Wireframe",
+						type: "radio",
+						selected: Browser .getBrowserOption ("Shading") === "WIREFRAME",
+						events: {
+							click: function ()
+							{
+								Browser .setBrowserOption ("Shading", "WIREFRAME");
+							},
+						},
+					},
+					"phong": {
+						name: "Phong",
+						type: "radio",
+						selected: Browser .getBrowserOption ("Shading") === "PHONG",
+						events: {
+							click: function ()
+							{
+								Browser .setBrowserOption ("Shading", "PHONG");
+							},
+						},
+					},
+				},
+			},
+		};
+	});
 },
 function (error)
 {

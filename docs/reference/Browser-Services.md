@@ -253,7 +253,7 @@ Returns a rendering property with the corresponding *name*.
       <tr>
          <td>Shading</td>
          <td>String</td>
-         <td>The type of shading algorithm in use. Typical values are Flat, Gouraud, Phong, Wireframe.</td>
+         <td>The type of shading algorithm in use. Typical values are Flat, Gouraud, Phong, Wireframe, Point.</td>
       </tr>
       <tr>
          <td>MaxTextureSize</td>
