@@ -70,8 +70,5 @@
 		"lint": "jshint **",
 		"build": "make",
 		"-prebuild:js": "npm run lint"
-	},
-	"dependencies": {
-		"sprintf-js": "^1.1.2"
 	}
 }
