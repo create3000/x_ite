@@ -68,7 +68,7 @@ define (function ()
 			var value = target .getStorage () [target .getNameSpace () + key];
 
 			if (value === undefined || value === "undefined" || value === null)
-			   return target .getDefault (key);
+			   return target .getDefaultValue (key);
 
 			return JSON .parse (value);
 		},
@@ -109,11 +109,11 @@ define (function ()
 		{
 			return new DataStorage (this .getStorage (), this .getNameSpace () + namespace);
 		},
-		addDefaults: function (defaults)
+		addDefaultValues: function (defaults)
 		{
 			Object .assign (defaults .get (this .target), object);
 		},
-		getDefault (key)
+		getDefaultValue (key)
 		{
 			return defaults .get (this .target) [key];
 		},
