@@ -117,13 +117,16 @@ function ($,
 							},
 							1);
 						}
-
+					},
+					activated: function (options)
+					{
 						// Display submenus on left side if there is no space on right side.
 
 						if (options .$menu .hasClass ("x_ite-private-menu-submenus-left"))
 						{
-							options .$menu .find (".context-menu-item > .context-menu-list") .css ({
-								"right": options .$menu .width () + "px",
+							options .$menu .find (".context-menu-list") .each (function (i, e)
+							{
+								$(e) .css ("right", $(e) .parent () .parent () .css ("width"));
 							});
 						}
 					}
