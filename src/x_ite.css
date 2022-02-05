@@ -335,12 +335,6 @@ X3DCanvas #context-menu-layer {
 	letter-spacing: unset;
 }
 
-.x_ite-private-menu .context-menu-separator {
-	padding-top: 0;
-	padding-bottom: 0;
-	border-bottom: 1px solid #111;
-}
-
 .x_ite-private-menu .context-menu-item > label > input,
 .x_ite-private-menu .context-menu-item > label > textarea {
 	all: revert;
@@ -360,11 +354,18 @@ X3DCanvas #context-menu-layer {
 	-moz-appearance: radio;
 }
 
-.x_ite-private-menu .context-menu-hover {
+.x_ite-private-menu .context-menu-item:hover {
 	cursor: pointer;
 	background-color: #444;
 	border-top: 1px solid #eee;
 	border-bottom: 1px solid #eee;
+}
+
+.x_ite-private-menu .context-menu-item.context-menu-separator {
+	padding-top: 0;
+	padding-bottom: 0;
+	border-top: 0;
+	border-bottom: 1px solid #111;
 }
 
 .x_ite-private-menu .context-menu-disabled {
@@ -445,7 +446,7 @@ X3DCanvas #context-menu-layer {
 }
 
 .x_ite-private-menu .context-menu-item > .context-menu-list {
-	top: 5px;
+	top: -9px;
 	/* re-positioned by js */
 	right: -5px;
 	display: none;

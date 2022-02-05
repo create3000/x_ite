@@ -129,6 +129,45 @@ function ($,
 								$(e) .css ("right", $(e) .parent () .parent () .css ("width"));
 							});
 						}
+						else
+						{
+							options .$menu .find (".context-menu-list") .each (function (i, e)
+							{
+								$(e) .css ("left", (parseInt ($(e) .parent () .parent () .css ("width")) - 2) + "px");
+							});
+						}
+
+						// If the submenu is higher than vh, add scrollbars.
+						options .$menu .find (".context-menu-list") .each (function (i, e)
+						{
+							if ($(e) .height () > $(window) .height ())
+							{
+								$(e) .css ({
+									"overflow-y": "scroll",
+									"max-height": "100vh",
+								});
+							}
+						});
+
+						// If the submenu is higher than vh, reposition it.
+						options .$menu .find (".context-menu-item") .on ("mouseenter", function (event)
+						{
+							event .stopImmediatePropagation ();
+
+							const
+								t = $(event .target),
+								e = t .children (".context-menu-list");
+
+							if (!e .length)
+								return;
+
+							e .css ("top", "");
+
+							const bottom = e .offset () .top + e .height () - $(window) .scrollTop () - $(window) .height ();
+
+							if (bottom > 0)
+								e .offset ({ "top": e .offset () .top - bottom });
+						});
 					}
 					.bind (this),
 					hide: function (options)
