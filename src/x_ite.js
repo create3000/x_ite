@@ -70,8 +70,8 @@ const getScriptURL = (function ()
 {
 	if (document .currentScript)
 		var src = document .currentScript .src;
-	else if (typeof __filename === "string")
-		var src = __filename;
+	else if (typeof globalRequire === "function" && typeof __filename === "string")
+		var src = globalRequire ("url") .pathToFileURL (__filename) .href;
 
 	return function ()
 	{

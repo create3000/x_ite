@@ -61,9 +61,6 @@ define (function ()
 				if (getScriptURL () .match (/\.min\.js$/))
 					file += ".min";
 
-				if (typeof globalRequire === "function" && typeof __filename === "string")
-					return this .getPath ("assets", "components", file + ".js");
-
 				return new URL ("assets/components/" + file + ".js", getScriptURL ()) .href;
 			}
 
@@ -71,41 +68,19 @@ define (function ()
 		},
 		getShaderUrl: function (file)
 		{
-			if (typeof globalRequire === "function" && typeof __filename === "string")
-				return this .getPath ("assets", "shaders", file);
-
 			return new URL ("assets/shaders/" + file, getScriptURL ()) .href;
 		},
 		getFontsUrl: function (file)
 		{
-			if (typeof globalRequire === "function" && typeof __filename === "string")
-				return this .getPath ("assets", "fonts", file);
-
 			return new URL ("assets/fonts/" + file, getScriptURL ()) .href;
 		},
 		getLinetypeUrl: function (index)
 		{
-			if (typeof globalRequire === "function" && typeof __filename === "string")
-				return this .getPath ("assets", "linetype", index + ".png");
-
 			return new URL ("assets/linetype/" + index + ".png", getScriptURL ()) .href;
 		},
 		getHatchingUrl: function (index)
 		{
-			if (typeof globalRequire === "function" && typeof __filename === "string")
-				return this .getPath ("assets", "hatching", index + ".png");
-
 			return new URL ("assets/hatching/" + index + ".png", getScriptURL ()) .href;
-		},
-		getPath: function ()
-		{
-			const
-				path = globalRequire ("path"),
-				args = Array .prototype .slice .call (arguments);
-
-			args .unshift (path .dirname (getScriptURL ()));
-
-			return path .join .apply (path, args);
 		},
 	};
 

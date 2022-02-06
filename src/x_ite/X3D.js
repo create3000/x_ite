@@ -109,7 +109,7 @@ function ($,
 		const url = urls .getProviderUrl (name);
 
 		if (typeof globalRequire === "function" && typeof __filename === "string")
-			globalRequire (url);
+			globalRequire (globalRequire ("url") .fileURLToPath (url));
 
 		return url;
 	}

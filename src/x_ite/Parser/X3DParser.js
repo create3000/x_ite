@@ -133,7 +133,7 @@ define (function ()
 				if (typeof globalRequire === "function" && typeof __filename === "string")
 				{
 					for (const url of providerUrls)
-						globalRequire (url);
+						globalRequire (globalRequire ("url") .fileURLToPath (url));
 				}
 
 				return Array .from (providerUrls);
