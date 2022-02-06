@@ -317,6 +317,28 @@ X3D (function ()
 							},
 						},
 					},
+					"flat": {
+						name: "Flat",
+						type: "radio",
+						selected: Browser .getBrowserOption ("Shading") === "FLAT",
+						events: {
+							click: function ()
+							{
+								Browser .setBrowserOption ("Shading", "GOURAUD");
+							},
+						},
+					},
+					"gouraud": {
+						name: "Gouraud",
+						type: "radio",
+						selected: Browser .getBrowserOption ("Shading") === "GOURAUD",
+						events: {
+							click: function ()
+							{
+								Browser .setBrowserOption ("Shading", "GOURAUD");
+							},
+						},
+					},
 					"phong": {
 						name: "Phong",
 						type: "radio",

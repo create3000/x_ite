@@ -189,7 +189,7 @@ Returns a browser option with the corresponding name.
       <tr>
          <td>Shading</td>
          <td>Specify shading mode for all objects.</td>
-         <td>Wireframe, Flat, Gouraud, Phong</td>
+         <td>Point, Wireframe, Flat, Gouraud, Phong</td>
          <td>Gouraud</td>
       </tr>
       <tr>
