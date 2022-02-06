@@ -1,4 +1,4 @@
-/* X_ITE v4.7.9-1135 */
+/* X_ITE v4.7.10-1136 */
 
 (function (globalModule, globalRequire)
 {
@@ -11,11 +11,6 @@ if (typeof __filename === "undefined")
 
 // Undefine global variables.
 var module, exports, process;
-
-const x_iteNoConfict = {
-	sprintf:  window .sprintf,
-	vsprintf: window .vsprintf,
-};
 /** vim: et:ts=4:sw=4:sts=4
  * @license RequireJS 2.3.6 Copyright jQuery Foundation and other contributors.
  * Released under MIT license, https://github.com/requirejs/requirejs/blob/master/LICENSE
@@ -13527,7 +13522,7 @@ function (X3DConstants)
 		this .indentChar          = "  ";
 		this .precision           = 6;
 		this .doublePrecision     = 14;
-		this .removeTrailingZeros = /\.?0*$|\.?0*(?=e|E)/;
+		this .removeTrailingZeros = /\.?0*(?=$|[eE])/;
 
 		this .executionContextStack = [ null ];
 		this .importedNodesIndex    = new Map ();
@@ -24919,7 +24914,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.7.9";
+	return "4.7.10";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -30361,7 +30356,8 @@ function ($,
 	{
 		X3DBaseNode .call (this, executionContext);
 
-		this .active = false;
+		this .userMenu = null;
+		this .active   = false;
 	}
 
 	ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -30413,15 +30409,57 @@ function ($,
 							},
 							1);
 						}
-
+					},
+					activated: function (options)
+					{
 						// Display submenus on left side if there is no space on right side.
 
 						if (options .$menu .hasClass ("x_ite-private-menu-submenus-left"))
 						{
-							options .$menu .find (".context-menu-item > .context-menu-list") .css ({
-								"right": options .$menu .width () + "px",
+							options .$menu .find (".context-menu-list") .each (function (i, e)
+							{
+								$(e) .css ("right", $(e) .parent () .parent () .css ("width"));
 							});
 						}
+						else
+						{
+							options .$menu .find (".context-menu-list") .each (function (i, e)
+							{
+								$(e) .css ("left", (parseInt ($(e) .parent () .parent () .css ("width")) - 2) + "px");
+							});
+						}
+
+						// If the submenu is higher than vh, add scrollbars.
+						options .$menu .find (".context-menu-list") .each (function (i, e)
+						{
+							if ($(e) .height () > $(window) .height ())
+							{
+								$(e) .css ({
+									"overflow-y": "scroll",
+									"max-height": "100vh",
+								});
+							}
+						});
+
+						// If the submenu is higher than vh, reposition it.
+						options .$menu .find (".context-menu-item") .on ("mouseenter", function (event)
+						{
+							event .stopImmediatePropagation ();
+
+							const
+								t = $(event .target),
+								e = t .children (".context-menu-list");
+
+							if (!e .length)
+								return;
+
+							e .css ("top", "");
+
+							const bottom = e .offset () .top + e .height () - $(window) .scrollTop () - $(window) .height ();
+
+							if (bottom > 0)
+								e .offset ({ "top": e .offset () .top - bottom });
+						});
 					}
 					.bind (this),
 					hide: function (options)
@@ -30431,6 +30469,14 @@ function ($,
 					.bind (this),
 				},
 			});
+		},
+		getUserMenu: function ()
+		{
+			return this .userMenu;
+		},
+		setUserMenu: function (userMenu)
+		{
+			this .userMenu = userMenu;
 		},
 		getActive: function ()
 		{
@@ -30711,8 +30757,21 @@ function ($,
 							window .open (browser .getProviderUrl ());
 						},
 					},
-				}
+				},
 			};
+
+			if ($.isFunction (this .userMenu))
+			{
+				const userMenu = this .userMenu ();
+
+				if ($.isPlainObject (userMenu))
+				{
+					Object .assign (menu .items, { "separator4": "--------" });
+
+					for (const key in userMenu)
+						menu .items ["user-" + key] = userMenu [key];
+				}
+			}
 
 			if (leftSubMenus)
 				menu .className += " x_ite-private-menu-submenus-left";
@@ -34176,7 +34235,7 @@ define ('x_ite/Parser/X3DParser',[],function ()
 				if (typeof globalRequire === "function" && typeof __filename === "string")
 				{
 					for (const url of providerUrls)
-						globalRequire (url);
+						globalRequire (globalRequire ("url") .fileURLToPath (url));
 				}
 
 				return Array .from (providerUrls);
@@ -35273,7 +35332,7 @@ function ($,
 				this .setInternalScene (value);
 
 			else
-				this .setError ();
+				this .setError (new Error ("File could not be loaded."));
 
 			this .getScene () .removeInitLoadCount (this);
 		},
@@ -38825,7 +38884,8 @@ define ('standard/Utility/DataStorage',[],function ()
 
 	const
 		storages   = new WeakMap (),
-		namespaces = new WeakMap ();
+		namespaces = new WeakMap (),
+		defaults   = new WeakMap ();
 
 	const handler =
 	{
@@ -38839,7 +38899,7 @@ define ('standard/Utility/DataStorage',[],function ()
 			var value = target .getStorage () [target .getNameSpace () + key];
 
 			if (value === undefined || value === "undefined" || value === null)
-			   return undefined;
+			   return target .getDefaultValue (key);
 
 			return JSON .parse (value);
 		},
@@ -38861,6 +38921,7 @@ define ('standard/Utility/DataStorage',[],function ()
 
 		storages   .set (this, storage);
 		namespaces .set (this, namespace);
+		defaults   .set (this, { });
 
 		return new Proxy (this, handler);
 	}
@@ -38874,6 +38935,18 @@ define ('standard/Utility/DataStorage',[],function ()
 		getNameSpace: function ()
 		{
 			return namespaces .get (this .target);
+		},
+		addNameSpace: function (namespace)
+		{
+			return new DataStorage (this .getStorage (), this .getNameSpace () + namespace);
+		},
+		addDefaultValues: function (defaults)
+		{
+			Object .assign (defaults .get (this .target), object);
+		},
+		getDefaultValue (key)
+		{
+			return defaults .get (this .target) [key];
 		},
 		clear: function ()
 		{
@@ -39945,9 +40018,6 @@ define ('x_ite/Browser/Networking/urls',[],function ()
 				if (getScriptURL () .match (/\.min\.js$/))
 					file += ".min";
 
-				if (typeof globalRequire === "function" && typeof __filename === "string")
-					return this .getPath ("assets", "components", file + ".js");
-
 				return new URL ("assets/components/" + file + ".js", getScriptURL ()) .href;
 			}
 
@@ -39955,41 +40025,19 @@ define ('x_ite/Browser/Networking/urls',[],function ()
 		},
 		getShaderUrl: function (file)
 		{
-			if (typeof globalRequire === "function" && typeof __filename === "string")
-				return this .getPath ("assets", "shaders", file);
-
 			return new URL ("assets/shaders/" + file, getScriptURL ()) .href;
 		},
 		getFontsUrl: function (file)
 		{
-			if (typeof globalRequire === "function" && typeof __filename === "string")
-				return this .getPath ("assets", "fonts", file);
-
 			return new URL ("assets/fonts/" + file, getScriptURL ()) .href;
 		},
 		getLinetypeUrl: function (index)
 		{
-			if (typeof globalRequire === "function" && typeof __filename === "string")
-				return this .getPath ("assets", "linetype", index + ".png");
-
 			return new URL ("assets/linetype/" + index + ".png", getScriptURL ()) .href;
 		},
 		getHatchingUrl: function (index)
 		{
-			if (typeof globalRequire === "function" && typeof __filename === "string")
-				return this .getPath ("assets", "hatching", index + ".png");
-
 			return new URL ("assets/hatching/" + index + ".png", getScriptURL ()) .href;
-		},
-		getPath: function ()
-		{
-			const
-				path = globalRequire ("path"),
-				args = Array .prototype .slice .call (arguments);
-
-			args .unshift (path .dirname (getScriptURL ()));
-
-			return path .join .apply (path, args);
 		},
 	};
 
@@ -118218,7 +118266,7 @@ function ($,
 		const url = urls .getProviderUrl (name);
 
 		if (typeof globalRequire === "function" && typeof __filename === "string")
-			globalRequire (url);
+			globalRequire (globalRequire ("url") .fileURLToPath (url));
 
 		return url;
 	}
@@ -118442,8 +118490,8 @@ const getScriptURL = (function ()
 {
 	if (document .currentScript)
 		var src = document .currentScript .src;
-	else if (typeof __filename === "string")
-		var src = __filename;
+	else if (typeof globalRequire === "function" && typeof __filename === "string")
+		var src = globalRequire ("url") .pathToFileURL (__filename) .href;
 
 	return function ()
 	{
@@ -118587,14 +118635,6 @@ function ()
 		},
 	};
 });
-
-for (const key in x_iteNoConfict)
-{
-	if (x_iteNoConfict [key] === undefined)
-		delete window [key];
-	else
-		window [key] = x_iteNoConfict [key];
-}
 
 })
 (typeof module === "object" ? module : undefined, typeof require === "function" ? require : undefined);
