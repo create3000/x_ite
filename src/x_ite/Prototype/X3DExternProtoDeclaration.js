@@ -164,7 +164,7 @@ function ($,
 				this .setInternalScene (value);
 
 			else
-				this .setError ();
+				this .setError (new Error ("File could not be loaded."));
 
 			this .getScene () .removeInitLoadCount (this);
 		},
