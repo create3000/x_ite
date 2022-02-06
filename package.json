@@ -1,6 +1,6 @@
 {
 	"name": "x_ite",
-	"version": "4.7.9",
+	"version": "4.7.10",
 	"revision": "1135",
 	"description": "X_ITE X3D Browser, a framework for integrating and manipulating X3D and VRML scenes in HTML.",
 	"main": "dist/x_ite.js",
@@ -17,7 +17,9 @@
 		"wrl",
 		"JavaScript",
 		"JSON",
-		"xite"
+		"xite",
+		"node",
+		"electron"
 	],
 	"author": "Holger Seelig <holger.seelig@gmail.com>",
 	"license": "GPL-3.0",
