@@ -999,6 +999,27 @@ A MFString value with urls that should be loaded on page load. If no url attribu
 
 More options can be adjusted using the [Browser Object](/x_ite/reference/Browser-Services.html#browser-object) and [Browser Options](/x_ite/reference/Browser-Services.html#browser-options) for scene specific adjustments.
 
+## Extending the Context Menu
+
+The context menu is the jQuery Context Menu plugin, and it can be extended using the `items` syntax. The full documentation [can be found here](https://swisnl.github.io/jQuery-contextMenu/docs/items.html).
+
+### Example
+
+```js
+Browser .getContextMenu () .setUserMenu (function ()
+{
+  return {
+    "command-1": {
+      name: "Command 1",
+      callback: function (key, opt)
+      {
+        console .log ("Clicked on " + key);
+      },
+    },
+  };
+});
+```
+
 ## Accessing the External Browser
 
 X\_ITE is designed to provide access to a browser and its contained scene graph via JavaScript, either within an internal X3D Script node or an external HTML script.

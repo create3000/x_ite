@@ -65,20 +65,6 @@ function (error)
 </script>
 ```
 
-### Using the Promise return value
-
-```js
-X3D () .then (function ()
-{
-  const Browser = X3D .getBrowser ();
-})
-.catch (function (error)
-{
-  // ooops an error.
-  console .error (error);
-});
-```
-
 ### Async use of X3D object
 
 ```js
@@ -194,7 +180,7 @@ function foo (node)
 
 #### **X3DFields**
 
-All X3DFields (SFColor, ..., MFBool, MFColor, and so on). The fields can be created using the object as construtor. **Note:** Scalar objects like SFBool, SFDouble, SFFloat, SFInt32, SFString, and SFTime have no constructor, just use the built-in JavaScript types Boolean, Number, and String.
+All X3DFields (SFColor, ..., MFBool, MFColor, and so on). The fields can be created using the object as constructor. **Note:** Scalar objects like SFBool, SFDouble, SFFloat, SFInt32, SFString, and SFTime have no constructor, just use the built-in JavaScript types Boolean, Number, and String.
 
 ```js
 // Create a new translation vector and

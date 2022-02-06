@@ -368,6 +368,10 @@ X3DCanvas #context-menu-layer {
 	border-bottom: 1px solid #111;
 }
 
+.x_ite-private-menu .context-menu-separator + .context-menu-separator {
+	display: none !important;
+}
+
 .x_ite-private-menu .context-menu-disabled {
 	color: #666;
 }
