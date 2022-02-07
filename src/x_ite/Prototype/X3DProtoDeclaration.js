@@ -315,7 +315,7 @@ function (Fields,
 
 			generator .IncIndent ();
 
-			this .body .toXMLStream .call (stream);
+			this .body .toXMLStream (stream);
 
 			generator .DecIndent ();
 
