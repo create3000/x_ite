@@ -954,7 +954,7 @@ function (X3DEventObject,
 				references = [ ],
 				childNodes = [ ];
 
-			const cdata = this .getSourceText ();
+			let cdata = this .getSourceText ();
 
 			if (cdata && cdata .length === 0)
 				cdata = null;
