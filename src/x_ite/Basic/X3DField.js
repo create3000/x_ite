@@ -265,16 +265,16 @@ function ($,
 		{
 			return this ._outputRoutes;
 		},
-		addRouteCallback: function (string, object)
+		addRouteCallback: function (id, object)
 		{
 			if (! this .hasOwnProperty ("_routeCallbacks"))
 				this ._routeCallbacks = new Map ();
 
-			this ._routeCallbacks .set (string, object);
+			this ._routeCallbacks .set (id, object);
 		},
-		removeRouteCallback: function (string)
+		removeRouteCallback: function (id)
 		{
-			this ._routeCallbacks .delete (string);
+			this ._routeCallbacks .delete (id);
 		},
 		getRouteCallbacks: function ()
 		{
@@ -284,14 +284,16 @@ function ($,
 		{
 			const routeCallbacks = new Map ();
 
+			function processRouteCallback (routeCallback)
+			{
+				routeCallback ();
+			}
+
 			return function ()
 			{
 				if (this ._routeCallbacks .size)
 				{
-					MapUtilities .assign (routeCallbacks, this ._routeCallbacks) .forEach (function (routeCallback)
-					{
-						routeCallback ();
-					});
+					MapUtilities .assign (routeCallbacks, this ._routeCallbacks) .forEach (processRouteCallback);
 				}
 			};
 		})(),
