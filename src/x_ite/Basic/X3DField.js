@@ -280,16 +280,21 @@ function ($,
 		{
 			return this ._routeCallbacks;
 		},
-		processRouteCallbacks: function ()
+		processRouteCallbacks: (function ()
 		{
-			if (this ._routeCallbacks .size)
+			const routeCallbacks = new Map ();
+
+			return function ()
 			{
-				this ._routeCallbacks .forEach (function (routeCallback)
+				if (this ._routeCallbacks .size)
 				{
-					routeCallback ();
-				});
-			}
-		},
+					MapUtilities .assign (routeCallbacks, this ._routeCallbacks) .forEach (function (routeCallback)
+					{
+						routeCallback ();
+					});
+				}
+			};
+		})(),
 		processEvent: (function ()
 		{
 			const fieldCallbacks = new Map ();
