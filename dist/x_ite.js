@@ -1,4 +1,4 @@
-/* X_ITE v4.7.10-1136 */
+/* X_ITE v4.7.11-1137 */
 
 (function (globalModule, globalRequire)
 {
@@ -24914,7 +24914,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.7.10";
+	return "4.7.11";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -26056,7 +26056,7 @@ function (X3DEventObject,
 				references = [ ],
 				childNodes = [ ];
 
-			const cdata = this .getSourceText ();
+			let cdata = this .getSourceText ();
 
 			if (cdata && cdata .length === 0)
 				cdata = null;
@@ -35844,7 +35844,7 @@ function (Fields,
 
 			generator .IncIndent ();
 
-			this .body .toXMLStream .call (stream);
+			this .body .toXMLStream (stream);
 
 			generator .DecIndent ();
 
