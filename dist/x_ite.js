@@ -1,4 +1,4 @@
-/* X_ITE v4.7.11-1137 */
+/* X_ITE v4.7.12-1138 */
 
 (function (globalModule, globalRequire)
 {
@@ -14645,16 +14645,21 @@ function ($,
 		{
 			return this ._routeCallbacks;
 		},
-		processRouteCallbacks: function ()
+		processRouteCallbacks: (function ()
 		{
-			if (this ._routeCallbacks .size)
+			const routeCallbacks = new Map ();
+
+			return function ()
 			{
-				this ._routeCallbacks .forEach (function (routeCallback)
+				if (this ._routeCallbacks .size)
 				{
-					routeCallback ();
-				});
-			}
-		},
+					MapUtilities .assign (routeCallbacks, this ._routeCallbacks) .forEach (function (routeCallback)
+					{
+						routeCallback ();
+					});
+				}
+			};
+		})(),
 		processEvent: (function ()
 		{
 			const fieldCallbacks = new Map ();
@@ -24914,7 +24919,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.7.11";
+	return "4.7.12";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
