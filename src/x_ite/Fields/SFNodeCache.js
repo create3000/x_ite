@@ -57,11 +57,11 @@ define (function ()
 
 	SFNodeCache .prototype =
 	{
-		add: function (baseNode, node)
+		add: function (baseNode)
 		{
-			const SFNode = require ("x_ite/Fields/SFNode");
-
-			node = node ? SFNode .call (node, baseNode) : new SFNode (baseNode);
+			const
+				SFNode = require ("x_ite/Fields/SFNode"),
+				node   = new SFNode (baseNode);
 
 			cache .set (baseNode, node);
 

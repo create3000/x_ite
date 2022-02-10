@@ -189,7 +189,7 @@ function (X3DField,
 				current .removeParent (this);
 			}
 
-			// Node need to test for X3DBaseNode, because there is a special version of SFNode in Script.
+			// No need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
 			if (value)
 			{

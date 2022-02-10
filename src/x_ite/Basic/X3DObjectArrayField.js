@@ -90,10 +90,16 @@ function ($,
 				}
 			}
 
-			const array = target .getValue ();
-
 			if (key === Symbol .iterator)
-				return array [key];
+			{
+				return function* ()
+				{
+					const array = target .getValue ();
+
+					for (const value of array)
+						yield value .valueOf ();
+				};
+			}
 		},
 		set: function (target, key, value)
 		{
