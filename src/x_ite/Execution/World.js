@@ -70,8 +70,8 @@ function (SFNode,
 
 		this .addChildObjects ("activeLayer", new SFNode (this .layer0));
 
-		this .layerSet        = new LayerSet (executionContext);
-		this .defaultLayerSet = this .layerSet;
+		this .defaultLayerSet = new LayerSet (executionContext);
+		this .layerSet        = this .defaultLayerSet;
 		this .layer0          = new Layer (executionContext);
 	}
 
@@ -130,10 +130,10 @@ function (SFNode,
 					this .layerSet = layerSet;
 			}
 
-			this .layerSet .setLayer0 (this .layer0);
-
 			if (this .layerSet === oldLayerSet)
 				return;
+
+			this .layerSet .setLayer0 (this .layer0);
 
 			oldLayerSet    .activeLayer_ .removeInterest ("set_activeLayer__", this);
 			this .layerSet .activeLayer_ .addInterest ("set_activeLayer__", this);
