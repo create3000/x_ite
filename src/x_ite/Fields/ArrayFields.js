@@ -168,7 +168,7 @@ function (SFBool,
 		},
 		removeCloneCount: function (count)
 		{
-			this ._cloneCount += count;
+			this ._cloneCount -= count;
 
 			for (const element of this .getValue ())
 				element .removeCloneCount (count);
