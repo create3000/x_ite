@@ -57,16 +57,6 @@ define (function ()
 
 	SFNodeCache .prototype =
 	{
-		add: function (baseNode)
-		{
-			const
-				SFNode = require ("x_ite/Fields/SFNode"),
-				node   = new SFNode (baseNode);
-
-			cache .set (baseNode, node);
-
-			return node;
-		},
 		get: function (baseNode)
 		{
 			const node = cache .get (baseNode);

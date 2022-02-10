@@ -183,7 +183,7 @@ function (Fields,
 
 				baseNode .setup ();
 
-				return SFNodeCache .add (baseNode);
+				return SFNodeCache .get (baseNode);
 			}
 		},
 		createProto: function (name, setup = true)

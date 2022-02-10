@@ -82,7 +82,7 @@ function (X3DBaseNode,
 
 				instance .setup ();
 
-				return SFNodeCache .add (instance);
+				return SFNodeCache .get (instance);
 			}
 		},
 		newInstance: function ()
