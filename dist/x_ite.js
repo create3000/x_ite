@@ -1,4 +1,4 @@
-/* X_ITE v4.7.12-1138 */
+/* X_ITE v4.7.14-1139 */
 
 (function (globalModule, globalRequire)
 {
@@ -14630,16 +14630,16 @@ function ($,
 		{
 			return this ._outputRoutes;
 		},
-		addRouteCallback: function (string, object)
+		addRouteCallback: function (id, object)
 		{
 			if (! this .hasOwnProperty ("_routeCallbacks"))
 				this ._routeCallbacks = new Map ();
 
-			this ._routeCallbacks .set (string, object);
+			this ._routeCallbacks .set (id, object);
 		},
-		removeRouteCallback: function (string)
+		removeRouteCallback: function (id)
 		{
-			this ._routeCallbacks .delete (string);
+			this ._routeCallbacks .delete (id);
 		},
 		getRouteCallbacks: function ()
 		{
@@ -14649,14 +14649,16 @@ function ($,
 		{
 			const routeCallbacks = new Map ();
 
+			function processRouteCallback (routeCallback)
+			{
+				routeCallback ();
+			}
+
 			return function ()
 			{
 				if (this ._routeCallbacks .size)
 				{
-					MapUtilities .assign (routeCallbacks, this ._routeCallbacks) .forEach (function (routeCallback)
-					{
-						routeCallback ();
-					});
+					MapUtilities .assign (routeCallbacks, this ._routeCallbacks) .forEach (processRouteCallback);
 				}
 			};
 		})(),
@@ -21792,11 +21794,11 @@ define ('x_ite/Fields/SFNodeCache',['x_ite/Fields/SFNode','x_ite/Fields/SFNode']
 
 	SFNodeCache .prototype =
 	{
-		add: function (baseNode, node)
+		add: function (baseNode)
 		{
-			const SFNode = require ("x_ite/Fields/SFNode");
-
-			node = node ? SFNode .call (node, baseNode) : new SFNode (baseNode);
+			const
+				SFNode = require ("x_ite/Fields/SFNode"),
+				node   = new SFNode (baseNode);
 
 			cache .set (baseNode, node);
 
@@ -21812,10 +21814,9 @@ define ('x_ite/Fields/SFNodeCache',['x_ite/Fields/SFNode','x_ite/Fields/SFNode']
 			}
 			else
 			{
-				const SFNode = require ("x_ite/Fields/SFNode");
-
-				// Always create new instance!
-				const node = new SFNode (baseNode);
+				const
+					SFNode = require ("x_ite/Fields/SFNode"),
+					node   = new SFNode (baseNode);
 
 				cache .set (baseNode, node);
 
@@ -21958,9 +21959,11 @@ function (X3DField,
 	{
 		// Node need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
+		const proxy = new Proxy (this, handler);
+
 		if (value)
 		{
-			value .addParent (this);
+			value .addParent (proxy);
 
 			X3DField .call (this, value);
 		}
@@ -21969,7 +21972,7 @@ function (X3DField,
 			X3DField .call (this, null);
 		}
 
-		return new Proxy (this, handler);
+		return proxy;
 	}
 
 	SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -22018,7 +22021,7 @@ function (X3DField,
 				current .removeParent (this);
 			}
 
-			// Node need to test for X3DBaseNode, because there is a special version of SFNode in Script.
+			// No need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
 			if (value)
 			{
@@ -22925,10 +22928,16 @@ function ($,
 				}
 			}
 
-			const array = target .getValue ();
-
 			if (key === Symbol .iterator)
-				return array [key];
+			{
+				return function* ()
+				{
+					const array = target .getValue ();
+
+					for (const value of array)
+						yield value .valueOf ();
+				};
+			}
 		},
 		set: function (target, key, value)
 		{
@@ -24389,7 +24398,7 @@ function (SFBool,
 		},
 		removeCloneCount: function (count)
 		{
-			this ._cloneCount += count;
+			this ._cloneCount -= count;
 
 			for (const element of this .getValue ())
 				element .removeCloneCount (count);
@@ -24919,7 +24928,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.7.12";
+	return "4.7.14";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -59959,7 +59968,7 @@ function (Fields,
 			}
 			else
 			{
-				var index = this .activeLayer_ - 1;
+				const index = this .activeLayer_ - 1;
 
 				if (index >= 0 && index < this .layers_ .length)
 				{
@@ -59975,24 +59984,23 @@ function (Fields,
 		},
 		set_layers: function ()
 		{
-			var layers = this .layers_ .getValue ();
+			const layers = this .layers_ .getValue ();
 
 			this .layerNodes .length = 0;
 
-			for (var i = 0; i < this .order_ .length; ++ i)
+			for (let index of this .order_)
 			{
-				var index = this .order_ [i];
-
 				if (index === 0)
+				{
 					this .layerNodes .push (this .layerNode0);
-
+				}
 				else
 				{
 					-- index;
 
 					if (index >= 0 && index < layers .length)
 					{
-						var layerNode = X3DCast (X3DConstants .X3DLayerNode, layers [index]);
+						const layerNode = X3DCast (X3DConstants .X3DLayerNode, layers [index]);
 
 						if (layerNode)
 							this .layerNodes .push (layerNode);
@@ -60018,11 +60026,11 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
-			var layerNodes = this .layerNodes;
+			const layerNodes = this .layerNodes;
 
 			if (type === TraverseType .POINTER)
 			{
-				for (var i = 0, length = layerNodes .length; i < length; ++ i)
+				for (let i = 0, length = layerNodes .length; i < length; ++ i)
 				{
 					this .getBrowser () .setLayerNumber (i);
 					layerNodes [i] .traverse (type, renderObject);
@@ -60030,9 +60038,9 @@ function (Fields,
 			}
 			else
 			{
-				for (var i = 0, length = layerNodes .length; i < length; ++ i)
+				for (const layerNode of layerNodes)
 				{
-					layerNodes [i] .traverse (type, renderObject);
+					layerNode .traverse (type, renderObject);
 				}
 			}
 		},
@@ -60167,10 +60175,10 @@ function (SFNode,
 
 			for (const rootNode of rootNodes)
 			{
-				const rootLayerSet = X3DCast (X3DConstants .LayerSet, rootNode);
+				const layerSet = X3DCast (X3DConstants .LayerSet, rootNode);
 
-				if (rootLayerSet)
-					this .layerSet = rootLayerSet;
+				if (layerSet)
+					this .layerSet = layerSet;
 			}
 
 			this .layerSet .setLayer0 (this .layer0);

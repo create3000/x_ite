@@ -20,7 +20,7 @@ github: [metadata]
 author:
   name: *title
   avatar: "assets/images/logo.png"
-  bio: "Version 4.7.12"
+  bio: "Version 4.7.14"
   links:
     - label: "GitHub"
       icon: "fab fa-2x fa-fw fa-github"

@@ -409,7 +409,7 @@ function ($,
 
 				if (rootNodes .length && rootNodes [0])
 				{
-					return SFNodeCache .add (rootNodes [0] .getValue (), this);
+					return rootNodes [0];
 				}
 
 				throw new Error ("SFNode.new: invalid argument, must be 'string' is 'undefined'.");
