@@ -161,7 +161,7 @@ function (Fields,
 
 			this .layerNodes .length = 0;
 
-			for (const index of this .order_)
+			for (let index of this .order_)
 			{
 				if (index === 0)
 				{

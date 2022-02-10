@@ -77,10 +77,9 @@ define (function ()
 			}
 			else
 			{
-				const SFNode = require ("x_ite/Fields/SFNode");
-
-				// Always create new instance!
-				const node = new SFNode (baseNode);
+				const
+					SFNode = require ("x_ite/Fields/SFNode"),
+					node   = new SFNode (baseNode);
 
 				cache .set (baseNode, node);
 
