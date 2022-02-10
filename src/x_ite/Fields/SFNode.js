@@ -129,9 +129,11 @@ function (X3DField,
 	{
 		// Node need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
+		const proxy = new Proxy (this, handler);
+
 		if (value)
 		{
-			value .addParent (this);
+			value .addParent (proxy);
 
 			X3DField .call (this, value);
 		}
@@ -140,7 +142,7 @@ function (X3DField,
 			X3DField .call (this, null);
 		}
 
-		return new Proxy (this, handler);
+		return proxy;
 	}
 
 	SFNode .prototype = Object .assign (Object .create (X3DField .prototype),

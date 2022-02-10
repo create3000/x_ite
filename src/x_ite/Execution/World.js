@@ -124,10 +124,10 @@ function (SFNode,
 
 			for (const rootNode of rootNodes)
 			{
-				const rootLayerSet = X3DCast (X3DConstants .LayerSet, rootNode);
+				const layerSet = X3DCast (X3DConstants .LayerSet, rootNode);
 
-				if (rootLayerSet)
-					this .layerSet = rootLayerSet;
+				if (layerSet)
+					this .layerSet = layerSet;
 			}
 
 			this .layerSet .setLayer0 (this .layer0);

@@ -141,7 +141,7 @@ function (Fields,
 			}
 			else
 			{
-				var index = this .activeLayer_ - 1;
+				const index = this .activeLayer_ - 1;
 
 				if (index >= 0 && index < this .layers_ .length)
 				{
@@ -157,24 +157,23 @@ function (Fields,
 		},
 		set_layers: function ()
 		{
-			var layers = this .layers_ .getValue ();
+			const layers = this .layers_ .getValue ();
 
 			this .layerNodes .length = 0;
 
-			for (var i = 0; i < this .order_ .length; ++ i)
+			for (const index of this .order_)
 			{
-				var index = this .order_ [i];
-
 				if (index === 0)
+				{
 					this .layerNodes .push (this .layerNode0);
-
+				}
 				else
 				{
 					-- index;
 
 					if (index >= 0 && index < layers .length)
 					{
-						var layerNode = X3DCast (X3DConstants .X3DLayerNode, layers [index]);
+						const layerNode = X3DCast (X3DConstants .X3DLayerNode, layers [index]);
 
 						if (layerNode)
 							this .layerNodes .push (layerNode);
@@ -200,11 +199,11 @@ function (Fields,
 		},
 		traverse: function (type, renderObject)
 		{
-			var layerNodes = this .layerNodes;
+			const layerNodes = this .layerNodes;
 
 			if (type === TraverseType .POINTER)
 			{
-				for (var i = 0, length = layerNodes .length; i < length; ++ i)
+				for (let i = 0, length = layerNodes .length; i < length; ++ i)
 				{
 					this .getBrowser () .setLayerNumber (i);
 					layerNodes [i] .traverse (type, renderObject);
@@ -212,9 +211,9 @@ function (Fields,
 			}
 			else
 			{
-				for (var i = 0, length = layerNodes .length; i < length; ++ i)
+				for (const layerNode of layerNodes)
 				{
-					layerNodes [i] .traverse (type, renderObject);
+					layerNode .traverse (type, renderObject);
 				}
 			}
 		},
