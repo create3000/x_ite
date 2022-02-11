@@ -132,10 +132,11 @@ function (X3DField,
 		const proxy = new Proxy (this, handler);
 
 		this ._target = this;
+		this ._proxy  = proxy;
 
 		if (value)
 		{
-			value .addParent (this);
+			value .addParent (proxy);
 
 			X3DField .call (this, value);
 		}
@@ -200,14 +201,14 @@ function (X3DField,
 			if (current)
 			{
 				current .removeCloneCount (target ._cloneCount);
-				current .removeParent (target);
+				current .removeParent (target ._proxy);
 			}
 
 			// No need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
 			if (value)
 			{
-				value .addParent (target);
+				value .addParent (target ._proxy);
 				value .addCloneCount (target ._cloneCount);
 
 				X3DField .prototype .set .call (target, value);

@@ -136,6 +136,7 @@ function ($,
 		X3DArrayField .call (this, [ ]);
 
 		this ._target = this;
+		this ._proxy  = proxy;
 
 		if (value [0] instanceof Array)
 			value = value [0];
@@ -441,11 +442,11 @@ function ($,
 		},
 		addChildObject: function (value)
 		{
-			value .addParent (this ._target);
+			value .addParent (this ._proxy);
 		},
 		removeChildObject: function (value)
 		{
-			value .removeParent (this ._target);
+			value .removeParent (this ._proxy);
 		},
 		toStream: function (stream)
 		{
