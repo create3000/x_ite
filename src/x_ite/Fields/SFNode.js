@@ -131,9 +131,11 @@ function (X3DField,
 
 		const proxy = new Proxy (this, handler);
 
+		this ._target = this;
+
 		if (value)
 		{
-			value .addParent (proxy);
+			value .addParent (this);
 
 			X3DField .call (this, value);
 		}
@@ -172,10 +174,12 @@ function (X3DField,
 		},
 		equals: function (node)
 		{
-			if (node)
-				return this .getValue () === node .getValue ();
+			const target = this ._target;
 
-			return this .getValue () === null;
+			if (node)
+				return target .getValue () === node .getValue ();
+
+			return target .getValue () === null;
 		},
 		isDefaultValue: function ()
 		{
@@ -183,26 +187,28 @@ function (X3DField,
 		},
 		set: function (value)
 		{
-			const current = this .getValue ();
+			const
+				target  = this ._target,
+				current = target .getValue ();
 
 			if (current)
 			{
-				current .removeCloneCount (this ._cloneCount);
-				current .removeParent (this);
+				current .removeCloneCount (target ._cloneCount);
+				current .removeParent (target);
 			}
 
 			// No need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
 			if (value)
 			{
-				value .addParent (this);
-				value .addCloneCount (this ._cloneCount);
+				value .addParent (target);
+				value .addCloneCount (target ._cloneCount);
 
-				X3DField .prototype .set .call (this, value);
+				X3DField .prototype .set .call (target, value);
 			}
 			else
 			{
-				X3DField .prototype .set .call (this, null);
+				X3DField .prototype .set .call (target, null);
 			}
 		},
 		getNodeTypeName: function ()
@@ -243,15 +249,17 @@ function (X3DField,
 		},
 		addFieldCallback: function (name, string, object)
 		{
+			const target = this ._target;
+
 			switch (arguments .length)
 			{
 				case 2:
 				{
-					return X3DField .prototype .addFieldCallback .apply (this, arguments);
+					return X3DField .prototype .addFieldCallback .apply (target, arguments);
 				}
 				case 3:
 				{
-					const value = this .getValue ();
+					const value = target .getValue ();
 
 					if (value)
 						return value .getField (name) .addFieldCallback (string, object);
@@ -262,15 +270,17 @@ function (X3DField,
 		},
 		removeFieldCallback: function (name, string)
 		{
+			const target = this ._target;
+
 			switch (arguments .length)
 			{
 				case 1:
 				{
-					return X3DField .prototype .removeFieldCallback .apply (this, arguments);
+					return X3DField .prototype .removeFieldCallback .apply (target, arguments);
 				}
 				case 2:
 				{
-					const value = this .getValue ();
+					const value = target .getValue ();
 
 					if (value)
 						return value .getField (name) .removeFieldCallback (string);
@@ -281,18 +291,22 @@ function (X3DField,
 		},
 		addCloneCount: function (count)
 		{
-			const value = this .getValue ();
+			const
+				target = this ._target,
+				value  = target .getValue ();
 
-			this ._cloneCount += count;
+			target ._cloneCount += count;
 
 			if (value)
 				value .addCloneCount (count);
 		},
 		removeCloneCount: function (count)
 		{
-			const value = this .getValue ();
+			const
+				target = this ._target,
+				value  = target .getValue ();
 
-			this ._cloneCount -= count;
+			target ._cloneCount -= count;
 
 			if (value)
 				value .removeCloneCount (count);
@@ -327,13 +341,14 @@ function (X3DField,
 		toXMLString: function ()
 		{
 			const
+				target    = this ._target,
 				stream    = { string: "" },
 				generator = Generator .Get (stream),
-				value     = this .getValue ();
+				value     = target .getValue ();
 
 			generator .PushExecutionContext (value .getExecutionContext ());
 
-			this .toXMLStream (stream);
+			target .toXMLStream (stream);
 
 			generator .PopExecutionContext ();
 
@@ -350,9 +365,11 @@ function (X3DField,
 		},
 		dispose: function ()
 		{
-			this .set (null);
+			const target = this ._target;
 
-			X3DField .prototype .dispose .call (this);
+			target .set (null);
+
+			X3DField .prototype .dispose .call (target);
 		},
 	});
 
