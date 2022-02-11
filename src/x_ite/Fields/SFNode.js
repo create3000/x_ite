@@ -153,11 +153,11 @@ function (X3DField,
 		_cloneCount: 0,
 		clone: function ()
 		{
-			return new SFNode (this .getValue ());
+			return new SFNode (this ._target .getValue ());
 		},
 		copy: function (instance)
 		{
-			const value = this .getValue ();
+			const value = this ._target .getValue ();
 
 			if (value)
 				return new SFNode (value .copy (instance));
@@ -183,7 +183,7 @@ function (X3DField,
 		},
 		isDefaultValue: function ()
 		{
-			return this .getValue () === null;
+			return this ._target .getValue () === null;
 		},
 		set: function (value)
 		{
@@ -213,7 +213,7 @@ function (X3DField,
 		},
 		getNodeTypeName: function ()
 		{
-			const value = this .getValue ();
+			const value = this ._target .getValue ();
 
 			if (value)
 				return value .getTypeName ();
@@ -222,7 +222,7 @@ function (X3DField,
 		},
 		getNodeName: function ()
 		{
-			const value = this .getValue ();
+			const value = this ._target .getValue ();
 
 			if (value)
 				return value .getName ();
@@ -231,7 +231,7 @@ function (X3DField,
 		},
 		getNodeType: function ()
 		{
-			const value = this .getValue ();
+			const value = this ._target .getValue ();
 
 			if (value)
 				return value .getType () .slice ();
@@ -240,7 +240,7 @@ function (X3DField,
 		},
 		getFieldDefinitions: function ()
 		{
-			const value = this .getValue ();
+			const value = this ._target .getValue ();
 
 			if (value)
 				return value .getFieldDefinitions ();
@@ -313,7 +313,7 @@ function (X3DField,
 		},
 		valueOf: function ()
 		{
-			const value = this .getValue ();
+			const value = this ._target .getValue ();
 
 			if (value)
 				return SFNodeCache .get (value);
@@ -322,7 +322,7 @@ function (X3DField,
 		},
 		toStream: function (stream)
 		{
-			const value = this .getValue ();
+			const value = this ._target .getValue ();
 
 			if (value)
 				value .toStream (stream);
@@ -331,7 +331,7 @@ function (X3DField,
 		},
 		toVRMLStream: function (stream)
 		{
-			const value = this .getValue ();
+			const value = this ._target .getValue ();
 
 			if (value)
 				value .toVRMLStream (stream);
@@ -356,7 +356,7 @@ function (X3DField,
 		},
 		toXMLStream: function (stream)
 		{
-			const value = this .getValue ();
+			const value = this ._target .getValue ();
 
 			if (value)
 				value .toXMLStream (stream);
