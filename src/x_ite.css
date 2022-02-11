@@ -68,7 +68,7 @@ X3DCanvas canvas.x_ite-private-canvas {
 
 X3DCanvas .x_ite-private-notification {
 	display: none;
-	padding: 2px 5px 5px 5px;
+	padding: 5px;
 	position: absolute;
 	top: 20px;
 	right: -4px;

@@ -131,16 +131,19 @@ function ($,
 
 	function X3DObjectArrayField (value)
 	{
+		const proxy = new Proxy (this, handler);
+
 		X3DArrayField .call (this, [ ]);
 
 		this ._target = this;
+		this ._proxy  = proxy;
 
 		if (value [0] instanceof Array)
 			value = value [0];
 
 		X3DObjectArrayField .prototype .push .apply (this, value);
 
-		return new Proxy (this, handler);
+		return proxy;
 	}
 
 	X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
@@ -439,11 +442,11 @@ function ($,
 		},
 		addChildObject: function (value)
 		{
-			value .addParent (this ._target);
+			value .addParent (this ._proxy);
 		},
 		removeChildObject: function (value)
 		{
-			value .removeParent (this ._target);
+			value .removeParent (this ._proxy);
 		},
 		toStream: function (stream)
 		{
