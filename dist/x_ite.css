@@ -1,14 +1,11 @@
-/* X_ITE v4.7.15-1140 */
+/* X_ITE v4.7.15-1141 */
 @charset "utf-8";
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
 X3DCanvas .x_ite-private-splash-screen {
 	display: none;
 	z-index: 100;
 	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
+	inset: 0;
 	background: #1b1d21;
 	background: -moz-radial-gradient(center, ellipse cover, #2f3135 0%, #1b1d21 100%);
 	background: -webkit-radial-gradient(center, ellipse cover, #2f3135 0%,#1b1d21 100%);
@@ -38,7 +35,7 @@ X3DCanvas .x_ite-private-x_ite {
 	color: white;
 	font-size: 28pt;
 	text-align: center;
-	text-shadow: 1px 1px 0px black;
+	text-shadow: 1px 1px 0 black;
 	font-family: PT Sans, sans-serif;
 }
 X3DCanvas .x_ite-private-x_ite span.x_ite-private-x3d {
@@ -48,7 +45,7 @@ X3DCanvas .x_ite-private-spinner-text {
 	color: white;
 	font-size: 11pt;
 	text-align: center;
-	text-shadow: 1px 1px 0px black;
+	text-shadow: 1px 1px 0 black;
 	font-family: PT Sans, sans-serif;
 }
 X3DCanvas .x_ite-private-progressbar {
@@ -68,10 +65,10 @@ X3DCanvas {
 	position: relative;
 	display: inline-block;
 	outline: none;
-	margin: 0px;
-	padding: 0px;
-	border: 0px;
-	border-radius: 0px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
 	width: 300px;
 	height: 150px;
 }
@@ -90,30 +87,27 @@ X3DCanvas .x_ite-private-browser {
 	z-index: 0;
 	display: block;
 	position: absolute;
-	top: 0px;
-	right: 0px;
-	bottom: 0px;
-	left: 0px;
-	margin: 0px;
-	padding: 0px;
-	border: 0px;
-	border-radius: 0px;
+	inset: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
 }
 X3DCanvas .x_ite-private-surface {
-	margin: 0px;
-	padding: 0px;
-	border: 0px;
-	border-radius: 0px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
 	height: 100%;
-	margin-right: 0px;
+	margin-right: 0;
 }
 X3DCanvas canvas.x_ite-private-canvas {
 	display: block;
 	outline: none;
-	margin: 0px;
-	padding: 0px;
-	border: 0px;
-	border-radius: 0px;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-radius: 0;
 	width: 100%;
 	height: 100%;
 }
@@ -142,8 +136,8 @@ X3DCanvas .x_ite-private-notification {
 	pointer-events: none;
 }
 X3DCanvas .x_ite-private-notification span {
-	padding: 0px 24px 0px 20px;
-	background: url(assets/images/icon.bw.png) no-repeat 0px 2px;
+	padding: 0 24px 0 20px;
+	background: url(assets/images/icon.bw.png) no-repeat 0 2px;
 }
 X3DCanvas .x_ite-private-browser-timings {
 	display: none;
@@ -176,10 +170,10 @@ X3DCanvas .x_ite-private-browser-timings tr,
 X3DCanvas .x_ite-private-browser-timings th,
 X3DCanvas .x_ite-private-browser-timings td {
 	box-sizing: border-box;
-	outline: 0px;
-	margin: 0px;
-	border: 0px;
-	border-radius: 0px;
+	outline: 0;
+	margin: 0;
+	border: 0;
+	border-radius: 0;
 	padding: 0;
 	background: none;
 	color: white;
@@ -214,14 +208,14 @@ X3DCanvas .x_ite-private-browser-timings td {
 	padding-bottom: 2px;
 }
 X3DCanvas .x_ite-private-browser-timings tfoot td:first-child {
-	padding-right: 0px;
+	padding-right: 0;
 }
 X3DCanvas .x_ite-private-browser-timings tfoot td {
 	padding-top: 4px;
 }
 X3DCanvas .x_ite-private-browser-timings button {
 	box-sizing: border-box;
-	border: 0px;
+	border: 0;
 	border-radius: 10px;
 	padding: 2px 2px 4px 2px;
 	width: 100%;
@@ -238,18 +232,12 @@ X3DCanvas .x_ite-private-browser-timings button {
 }
 X3DCanvas .x_ite-private-world-info-overlay {
 	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
+	inset: 0;
 }
 X3DCanvas .x_ite-private-world-info {
 	overflow-y: auto;
 	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
+	inset: 0;
 	-webkit-backdrop-filter: blur(8px);
 	backdrop-filter: blur(8px);
 	background: rgba(0,0,0,0.61803);
@@ -263,10 +251,10 @@ X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-title,
 X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-info,
 X3DCanvas .x_ite-private-world-info p {
 	box-sizing: border-box;
-	outline: 0px;
-	margin: 0px;
-	border: 0px;
-	border-radius: 0px;
+	outline: 0;
+	margin: 0;
+	border: 0;
+	border-radius: 0;
 	padding: 0;
 	background: none;
 	color: white;
@@ -284,13 +272,13 @@ X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-top {
 	font-size: 9pt;
 }
 X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-title {
-	margin: 0.3em 0px 1em 0px;
+	margin: 0.3em 0 1em 0;
 	font-weight: bold;
 	font-size: 21pt;
 }
 X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-info,
 X3DCanvas .x_ite-private-world-info .x_ite-private-world-info-info p {
-	margin: 1em 0px 1em 0px;
+	margin: 1em 0 1em 0;
 	font-size: 14pt;
 }
 X3DCanvas .x_ite-private-world-info a {
@@ -339,14 +327,14 @@ X3DCanvas #context-menu-layer {
 	list-style-type: none;
 	background: #222;
 	color: #eee;
-	border: 0px solid #ddd;
+	border: 0 solid #ddd;
 	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
 	        box-shadow: 0 2px 5px rgba(0, 0, 0, .5);
 }
 .x_ite-private-menu .context-menu-item {
 	position: relative;
 	background-color: #222;
-	margin: 0px;
+	margin: 0;
 	border-top: 1px solid #222;
 	border-bottom: 1px solid #222;
 	padding: 3px 24px 3px 24px;
@@ -438,8 +426,8 @@ X3DCanvas #context-menu-layer {
 .x_ite-private-menu .context-menu-input > label > select {
 	display: block;
 	box-sizing: border-box;
-	margin: 0px;
-	padding: 0px;
+	margin: 0;
+	padding: 0;
 	width: 100%;
 	font-size: 10pt;
 	letter-spacing: unset;

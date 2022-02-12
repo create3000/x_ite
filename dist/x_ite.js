@@ -1,4 +1,4 @@
-/* X_ITE v4.7.15-1140 */
+/* X_ITE v4.7.15-1141 */
 
 (function (globalModule, globalRequire)
 {
@@ -14753,8 +14753,11 @@ function ($,
 
 			parser .setUnits (!! scene);
 			parser .setInput (string);
-			parser .fieldValue (this);
-			this .addEvent ();
+
+			if (parser .fieldValue (this))
+				return;
+
+			throw new Error ("Couldn't read value for field '" + this .getName () + "'.");
 		},
 	});
 
@@ -30977,6 +30980,156 @@ function ($,
  *
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
  *
+ * This file is part of the X_ITE Project.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains "non-military use only" components.
+ *
+ * Copyright 2016 Andreas Plesch.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Parser/HTMLSupport',[],function ()
+{
+"use strict";
+
+	const HTMLSupport =
+	{
+		// Fields are set when component is registered.
+		fields: new Map (),
+	};
+
+	return HTMLSupport;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Configuration/SupportedNodes',[
+	"x_ite/Bits/X3DConstants",
+	"x_ite/Parser/HTMLSupport",
+],
+function (X3DConstants,
+          HTMLSupport)
+{
+"use strict";
+
+	let nodeType = 0;
+
+	function SupportedNodes ()
+	{
+		this .types         = new Map ();
+		this .abstractTypes = new Map ();
+	}
+
+	SupportedNodes .prototype =
+	{
+		addType: function (typeName, Type)
+		{
+			X3DConstants [typeName] = ++ nodeType; // Start with 1, as X3DBaseNode is 0.
+
+			this .types .set (typeName,                 Type);
+			this .types .set (typeName .toUpperCase (), Type);
+
+			// HTMLSupport
+
+			for (const fieldDefinition of Type .prototype .fieldDefinitions)
+			{
+				const
+					name       = fieldDefinition .name,
+					accessType = fieldDefinition .accessType;
+
+				if (accessType & X3DConstants .initializeOnly)
+				{
+					HTMLSupport .fields .set (name,                 name);
+					HTMLSupport .fields .set (name .toLowerCase (), name);
+				}
+			}
+		},
+		addAbstractType: function (typeName, Type)
+		{
+			X3DConstants [typeName] = ++ nodeType;
+		},
+		getType: function (typeName)
+		{
+			return this .types .get (typeName);
+		},
+	};
+
+	return new SupportedNodes ();
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
  * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
  *
  * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
@@ -32177,6 +32330,7 @@ function (Fields)
 
 
 define ('x_ite/Execution/X3DExecutionContext',[
+	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Fields",
 	"x_ite/Base/X3DObject",
 	"x_ite/Basic/X3DBaseNode",
@@ -32191,7 +32345,8 @@ define ('x_ite/Execution/X3DExecutionContext',[
 	"x_ite/Fields/SFNodeCache",
 	"standard/Math/Algorithm",
 ],
-function (Fields,
+function (SupportedNodes,
+          Fields,
           X3DObject,
           X3DBaseNode,
           ImportedNode,
@@ -32207,9 +32362,13 @@ function (Fields,
 {
 "use strict";
 
+	SupportedNodes .addAbstractType ("X3DExecutionContext");
+
 	function X3DExecutionContext (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DExecutionContext)
 
 		this .addChildObjects ("rootNodes",  new Fields .MFNode (),
 		                       "worldInfos", new Fields .MFNode ());
@@ -33547,6 +33706,7 @@ function (Fields,
 
 
 define ('x_ite/Execution/X3DScene',[
+	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Fields",
 	"x_ite/Execution/X3DExecutionContext",
 	"x_ite/Configuration/ComponentInfoArray",
@@ -33557,7 +33717,8 @@ define ('x_ite/Execution/X3DScene',[
 	"x_ite/InputOutput/Generator",
 	"x_ite/Fields/SFNodeCache",
 ],
-function (Fields,
+function (SupportedNodes,
+          Fields,
           X3DExecutionContext,
           ComponentInfoArray,
           UnitInfo,
@@ -33569,9 +33730,13 @@ function (Fields,
 {
 "use strict";
 
+	SupportedNodes .addAbstractType ("X3DScene");
+
 	function X3DScene (executionContext)
 	{
 		X3DExecutionContext .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DScene)
 
 		this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 
@@ -35225,21 +35390,29 @@ function (X3DChildObject,
 
 
 define ('x_ite/Prototype/X3DProtoDeclarationNode',[
+	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Base/X3DObject",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Core/X3DPrototypeInstance",
 	"x_ite/Fields/SFNodeCache",
+	"x_ite/Bits/X3DConstants",
 ],
-function (X3DObject,
+function (SupportedNodes,
+          X3DObject,
           X3DBaseNode,
           X3DPrototypeInstance,
-          SFNodeCache)
+          SFNodeCache,
+          X3DConstants)
 {
 "use strict";
+
+	SupportedNodes .addAbstractType ("X3DProtoDeclarationNode");
 
 	function X3DProtoDeclarationNode (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DProtoDeclarationNode)
 	}
 
 	X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -35325,8 +35498,8 @@ function (X3DObject,
 
 define ('x_ite/Prototype/X3DExternProtoDeclaration',[
 	"jquery",
+	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Prototype/X3DProtoDeclarationNode",
@@ -35334,8 +35507,8 @@ define ('x_ite/Prototype/X3DExternProtoDeclaration',[
 	"x_ite/InputOutput/Generator",
 ],
 function ($,
+          SupportedNodes,
           Fields,
-          X3DFieldDefinition,
           FieldDefinitionArray,
           X3DUrlObject,
           X3DProtoDeclarationNode,
@@ -35344,10 +35517,14 @@ function ($,
 {
 "use strict";
 
+	SupportedNodes .addAbstractType ("X3DExternProtoDeclaration");
+
 	function X3DExternProtoDeclaration (executionContext)
 	{
 		X3DProtoDeclarationNode .call (this, executionContext);
 		X3DUrlObject            .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DExternProtoDeclaration)
 
 		this .addChildObjects ("url",                  new Fields .MFString (),
 		                       "autoRefresh",          new Fields .SFTime (),
@@ -35473,10 +35650,6 @@ function ($,
 
 			this .deferred .resolve ();
 			this .deferred = $.Deferred ();
-		},
-		toStream: function (stream)
-		{
-			stream .string += Object .prototype .toString .call (this);
 		},
 		toVRMLStream: function (stream)
 		{
@@ -35677,16 +35850,16 @@ function ($,
 
 
 define ('x_ite/Prototype/X3DProtoDeclaration',[
+	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Execution/X3DExecutionContext",
 	"x_ite/Prototype/X3DProtoDeclarationNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function (Fields,
-          X3DFieldDefinition,
+function (SupportedNodes,
+          Fields,
           FieldDefinitionArray,
           X3DExecutionContext,
           X3DProtoDeclarationNode,
@@ -35695,9 +35868,13 @@ function (Fields,
 {
 "use strict";
 
+	SupportedNodes .addAbstractType ("X3DProtoDeclaration");
+
 	function X3DProtoDeclaration (executionContext)
 	{
 		X3DProtoDeclarationNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DProtoDeclaration)
 
 		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 
@@ -35738,10 +35915,6 @@ function (Fields,
 		hasUserDefinedFields: function ()
 		{
 			return true;
-		},
-		toStream: function (stream)
-		{
-			stream .string += Object .prototype .toString .call (this);
 		},
 		toVRMLStream: function (stream)
 		{
@@ -45595,53 +45768,6 @@ function (ShaderSource,
 	}
 
 	return Shader;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * This file is part of the X_ITE Project.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains "non-military use only" components.
- *
- * Copyright 2016 Andreas Plesch.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Parser/HTMLSupport',[],function ()
-{
-"use strict";
-
-	const HTMLSupport =
-	{
-		// Fields are set when component is registered.
-		fields: new Map (),
-	};
-
-	return HTMLSupport;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -60176,7 +60302,8 @@ function (Fields,
  ******************************************************************************/
 
 
-define ('x_ite/Execution/World',[
+define ('x_ite/Execution/X3DWorld',[
+	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Fields/SFNode",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Layering/LayerSet",
@@ -60184,7 +60311,8 @@ define ('x_ite/Execution/World',[
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function (SFNode,
+function (SupportedNodes,
+          SFNode,
           X3DBaseNode,
           LayerSet,
           Layer,
@@ -60193,9 +60321,13 @@ function (SFNode,
 {
 "use strict";
 
-	function World (executionContext)
+	SupportedNodes .addAbstractType ("X3DWorld");
+
+	function X3DWorld (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DWorld)
 
 		this .addChildObjects ("activeLayer", new SFNode (this .layer0));
 
@@ -60204,12 +60336,12 @@ function (SFNode,
 		this .layer0          = new Layer (executionContext);
 	}
 
-	World .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+	X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
-		constructor: World,
+		constructor: X3DWorld,
 		getTypeName: function ()
 		{
-			return "World";
+			return "X3DWorld";
 		},
 		initialize: function ()
 		{
@@ -60287,7 +60419,7 @@ function (SFNode,
 		},
 	});
 
-	return World;
+	return X3DWorld;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -63689,7 +63821,7 @@ define ('x_ite/InputOutput/FileLoader',[
 	"x_ite/Parser/Parser",
 	"x_ite/Parser/XMLParser",
 	"x_ite/Parser/JSONParser",
-	"x_ite/Execution/World",
+	"x_ite/Execution/X3DWorld",
 	"standard/Networking/BinaryTransport",
 	"pako_inflate",
 	"x_ite/DEBUG",
@@ -63700,7 +63832,7 @@ function ($,
           Parser,
           XMLParser,
           JSONParser,
-          World,
+          X3DWorld,
           BinaryTransport,
           pako,
           DEBUG)
@@ -63756,7 +63888,7 @@ function ($,
 		{
 			const scene = this .browser .createScene ();
 
-			if (this .node instanceof World)
+			if (this .node instanceof X3DWorld)
 				scene .loader = this;
 			else
 				scene .setExecutionContext (this .executionContext);
@@ -64203,7 +64335,7 @@ function ($,
 		},
 		getReferer: function ()
 		{
-			if (this .node .getTypeName () === "World")
+			if (this .node .getTypeName () === "X3DWorld")
 			{
 				if (this .external)
 					return this .browser .getLocation ();
@@ -95583,7 +95715,7 @@ define ('x_ite/Browser/X3DBrowserContext',[
 	"x_ite/Browser/Text/X3DTextContext",
 	"x_ite/Browser/Texturing/X3DTexturingContext",
 	"x_ite/Browser/Time/X3DTimeContext",
-	"x_ite/Execution/World",
+	"x_ite/Execution/X3DWorld",
 	"x_ite/Bits/TraverseType",
 ],
 function ($,
@@ -95609,7 +95741,7 @@ function ($,
           X3DTextContext,
           X3DTexturingContext,
           X3DTimeContext,
-          World,
+          X3DWorld,
           TraverseType)
 {
 "use strict";
@@ -95744,7 +95876,7 @@ function ($,
 		},
 		setExecutionContext: function (executionContext)
 		{
-			this .world = new World (executionContext);
+			this .world = new X3DWorld (executionContext);
 			this .world .setup ();
 		},
 		getExecutionContext: function ()
@@ -95830,109 +95962,6 @@ function ($,
 	});
 
 	return X3DBrowserContext;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Configuration/SupportedNodes',[
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Parser/HTMLSupport",
-],
-function (X3DConstants,
-          HTMLSupport)
-{
-"use strict";
-
-	let nodeType = 0;
-
-	function SupportedNodes ()
-	{
-		this .types         = new Map ();
-		this .abstractTypes = new Map ();
-	}
-
-	SupportedNodes .prototype =
-	{
-		addType: function (typeName, Type)
-		{
-			X3DConstants [typeName] = ++ nodeType; // Start with 1, as X3DBaseNode is 0.
-
-			this .types .set (typeName,                 Type);
-			this .types .set (typeName .toUpperCase (), Type);
-
-			// HTMLSupport
-
-			for (const fieldDefinition of Type .prototype .fieldDefinitions)
-			{
-				const
-					name       = fieldDefinition .name,
-					accessType = fieldDefinition .accessType;
-
-				if (accessType & X3DConstants .initializeOnly)
-				{
-					HTMLSupport .fields .set (name,                 name);
-					HTMLSupport .fields .set (name .toLowerCase (), name);
-				}
-			}
-		},
-		addAbstractType: function (typeName, Type)
-		{
-			X3DConstants [typeName] = ++ nodeType;
-		},
-		getType: function (typeName)
-		{
-			return this .types .get (typeName);
-		},
-	};
-
-	return new SupportedNodes ();
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
