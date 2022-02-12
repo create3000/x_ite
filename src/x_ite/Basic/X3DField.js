@@ -363,8 +363,11 @@ function ($,
 
 			parser .setUnits (!! scene);
 			parser .setInput (string);
-			parser .fieldValue (this);
-			this .addEvent ();
+
+			if (parser .fieldValue (this))
+				return;
+
+			throw new Error ("Couldn't read value for field '" + this .getName () + "'.");
 		},
 	});
 
