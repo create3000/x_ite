@@ -48,9 +48,11 @@
 
 
 define ([
+	"x_ite/Base/X3DObject",
 	"x_ite/InputOutput/Generator",
 ],
-function (Generator)
+function (X3DObject,
+          Generator)
 {
 "use strict";
 
@@ -65,9 +67,13 @@ function (Generator)
 		this .conversionFactor = conversionFactor;
 	}
 
-	Object .assign (UnitInfo .prototype,
+	UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: UnitInfo,
+		getTypeName: function ()
+		{
+			return "UnitInfo";
+		},
 		toVRMLStream: function (stream)
 		{
 			stream .string += "UNIT";

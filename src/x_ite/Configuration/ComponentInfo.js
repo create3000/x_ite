@@ -48,12 +48,10 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Bits/X3DConstants",
+	"x_ite/Base/X3DObject",
 	"x_ite/InputOutput/Generator",
 ],
-function (Fields,
-          X3DConstants,
+function (X3DObject,
           Generator)
 {
 "use strict";
@@ -66,9 +64,13 @@ function (Fields,
 		this .providerUrl = providerUrl;
 	}
 
-	Object .assign (ComponentInfo .prototype,
+	ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: ComponentInfo,
+		getTypeName: function ()
+		{
+			return "ComponentInfo";
+		},
 		toVRMLStream: function (stream)
 		{
 			stream .string += "COMPONENT";

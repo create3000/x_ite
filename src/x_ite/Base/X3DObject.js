@@ -75,6 +75,10 @@ function (Generator)
 				return this ._id = ++ id;
 			};
 		})(),
+		getTypeName: function ()
+		{
+			return "X3DObject";
+		},
 		setName: function (value)
 		{
 			this ._name = value;
@@ -156,6 +160,10 @@ function (Generator)
 			this .toXMLStream (stream);
 
 			return stream .string;
+		},
+		toStream: function (stream)
+		{
+			stream .string = "[object " + this .getTypeName () + "]";
 		},
 		dispose: function () { },
 	};

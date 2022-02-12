@@ -49,6 +49,7 @@
 
 define ([
 	"x_ite/Fields",
+	"x_ite/Base/X3DObject",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Execution/ImportedNode",
 	"x_ite/Prototype/ExternProtoDeclarationArray",
@@ -62,6 +63,7 @@ define ([
 	"standard/Math/Algorithm",
 ],
 function (Fields,
+          X3DObject,
           X3DBaseNode,
           ImportedNode,
           ExternProtoDeclarationArray,
@@ -97,6 +99,10 @@ function (Fields,
 	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: X3DExecutionContext,
+		getTypeName: function ()
+		{
+			return "X3DExecutionContext";
+		},
 		isMainContext: function ()
 		{
 			return false;
@@ -654,6 +660,7 @@ function (Fields,
 			if (index !== -1)
 				this .worldInfos_ .splice (index, 1);
 		},
+		toStream: X3DObject .prototype .toStream,
 		toVRMLStream: function (stream)
 		{
 			const generator = Generator .Get (stream);

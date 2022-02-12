@@ -71,10 +71,6 @@ function (Fields,
 	Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
 	{
 		constructor: Scene,
-		getTypeName: function ()
-		{
-			return "Scene";
-		},
 		setExecutionContext: function (value)
 		{
 			if (! this .isMainContext ())

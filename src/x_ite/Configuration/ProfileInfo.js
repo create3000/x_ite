@@ -47,7 +47,10 @@
  ******************************************************************************/
 
 
-define (function ()
+define ([
+	"x_ite/Base/X3DObject",
+],
+function (X3DObject)
 {
 "use strict";
 
@@ -59,9 +62,13 @@ define (function ()
 		this .components  = components;
 	}
 
-	Object .assign (ProfileInfo .prototype,
+	ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: ProfileInfo,
+		getTypeName: function ()
+		{
+			return "ProfileInfo";
+		},
 		toVRMLStream: function (stream)
 		{
 			stream .string += "PROFILE";

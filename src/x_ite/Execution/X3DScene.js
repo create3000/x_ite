@@ -99,6 +99,10 @@ function (Fields,
 	X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
 	{
 		constructor: X3DScene,
+		getTypeName: function ()
+		{
+			return "X3DScene";
+		},
 		isMainContext: function ()
 		{
 			return this === this .getExecutionContext ();
@@ -324,10 +328,6 @@ function (Fields,
 		setRootNodes: function (value)
 		{
 			this .getRootNodes () .setValue (value);
-		},
-		toStream: function (stream)
-		{
-			stream .string += Object .prototype .toString .call (this);
 		},
 		toVRMLStream: function (stream)
 		{

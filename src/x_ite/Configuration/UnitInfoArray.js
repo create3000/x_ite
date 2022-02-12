@@ -62,6 +62,10 @@ function (X3DInfoArray)
 	UnitInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: UnitInfoArray,
+		getTypeName: function ()
+		{
+			return "UnitInfoArray";
+		},
 	});
 
 	return UnitInfoArray;

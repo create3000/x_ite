@@ -66,6 +66,10 @@ function (ComponentInfoArray,
 	ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: ProfileInfoArray,
+		getTypeName: function ()
+		{
+			return "ProfileInfoArray";
+		},
 		addProfile: function (value)
 		{
 			this .add (value .name, new ProfileInfo (value .name, value .title, value .providerUrl, new ComponentInfoArray (value .components)));

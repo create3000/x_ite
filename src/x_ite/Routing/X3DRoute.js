@@ -115,10 +115,6 @@ function (Fields,
 			this ._sourceField      .removeOutputRoute (this);
 			this ._destinationField .removeInputRoute (this);
 		},
-		toStream: function (stream)
-		{
-			stream .string += Object .prototype .toString .call (this);
-		},
 		toVRMLStream: function (stream)
 		{
 			const

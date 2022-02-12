@@ -84,15 +84,7 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([ ]),
 		getTypeName: function ()
 		{
-			return "PROTO";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "protos";
+			return "X3DProtoDeclaration";
 		},
 		initialize: function ()
 		{

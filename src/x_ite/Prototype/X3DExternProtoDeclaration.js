@@ -87,15 +87,7 @@ function ($,
 		fieldDefinitions: new FieldDefinitionArray ([ ]),
 		getTypeName: function ()
 		{
-			return "EXTERNPROTO";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "externprotos";
+			return "X3DExternProtoDeclaration";
 		},
 		initialize: function ()
 		{

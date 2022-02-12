@@ -47,7 +47,10 @@
  ******************************************************************************/
 
 
-define (function ()
+define ([
+	"x_ite/Base/X3DObject",
+],
+function (X3DObject)
 {
 "use strict";
 
@@ -86,9 +89,13 @@ define (function ()
 		return new Proxy (this, handler);
 	}
 
-	Object .assign (FieldDefinitionArray .prototype,
+	FieldDefinitionArray .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: FieldDefinitionArray,
+		getTypeName: function ()
+		{
+			return "FieldDefinitionArray";
+		},
 		add: function (fieldDefinition)
 		{
 			this .array .push (fieldDefinition);

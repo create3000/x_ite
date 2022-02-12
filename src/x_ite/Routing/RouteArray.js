@@ -47,7 +47,10 @@
  ******************************************************************************/
 
 
-define (function ()
+define ([
+	"x_ite/Base/X3DObject",
+],
+function (X3DObject)
 {
 "use strict";
 
@@ -82,9 +85,13 @@ define (function ()
 		return new Proxy (this, handler);
 	}
 
-	Object .assign (RouteArray .prototype,
+	RouteArray .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: RouteArray,
+		getTypeName: function ()
+		{
+			return "RouteArray";
+		},
 		getValue: function ()
 		{
 			return this .array;

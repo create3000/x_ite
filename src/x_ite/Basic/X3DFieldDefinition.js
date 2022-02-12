@@ -47,7 +47,10 @@
  ******************************************************************************/
 
 
-define (function ()
+define ([
+	"x_ite/Base/X3DObject",
+],
+function (X3DObject)
 {
 "use strict";
 
@@ -59,7 +62,14 @@ define (function ()
 		this .value       = value;
 	}
 
-	X3DFieldDefinition .prototype .constructor = X3DFieldDefinition;
+	X3DFieldDefinition .prototype = Object .assign (Object .create (X3DObject .prototype),
+	{
+		constructor: X3DFieldDefinition,
+		getTypeName: function ()
+		{
+			return "X3DFieldDefinition";
+		},
+	});
 
 	return X3DFieldDefinition;
 });

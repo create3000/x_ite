@@ -62,6 +62,10 @@ function (X3DInfoArray)
 	ExternProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: ExternProtoDeclarationArray,
+		getTypeName: function ()
+		{
+			return "ExternProtoDeclarationArray";
+		},
 		toVRMLStream: function (stream)
 		{
 			this .array .forEach (function (value)
@@ -69,7 +73,7 @@ function (X3DInfoArray)
 				try
 				{
 					value .toVRMLStream (stream);
-	
+
 					stream .string += "\n";
 					stream .string += "\n";
 				}

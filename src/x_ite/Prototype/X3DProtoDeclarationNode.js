@@ -48,11 +48,13 @@
 
 
 define ([
+	"x_ite/Base/X3DObject",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Core/X3DPrototypeInstance",
 	"x_ite/Fields/SFNodeCache",
 ],
-function (X3DBaseNode,
+function (X3DObject,
+          X3DBaseNode,
           X3DPrototypeInstance,
           SFNodeCache)
 {
@@ -89,6 +91,7 @@ function (X3DBaseNode,
 		{
 			return this .createInstance (this .getExecutionContext ());
 		},
+		toStream: X3DObject .prototype .toStream,
 	});
 
 	return X3DProtoDeclarationNode;
