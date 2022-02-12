@@ -3,10 +3,7 @@ X3DCanvas .x_ite-private-splash-screen {
 	display: none;
 	z-index: 100;
 	position: absolute;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
+	inset: 0;
 	background: #1b1d21;
 	background: -moz-radial-gradient(center, ellipse cover, #2f3135 0%, #1b1d21 100%);
 	background: -webkit-radial-gradient(center, ellipse cover, #2f3135 0%,#1b1d21 100%);
@@ -39,7 +36,7 @@ X3DCanvas .x_ite-private-x_ite {
 	color: white;
 	font-size: 28pt;
 	text-align: center;
-	text-shadow: 1px 1px 0px black;
+	text-shadow: 1px 1px 0 black;
 	font-family: PT Sans, sans-serif;
 }
 
@@ -51,7 +48,7 @@ X3DCanvas .x_ite-private-spinner-text {
 	color: white;
 	font-size: 11pt;
 	text-align: center;
-	text-shadow: 1px 1px 0px black;
+	text-shadow: 1px 1px 0 black;
 	font-family: PT Sans, sans-serif;
 }
 
