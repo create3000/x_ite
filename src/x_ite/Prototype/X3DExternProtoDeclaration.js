@@ -49,8 +49,8 @@
 
 define ([
 	"jquery",
+	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Prototype/X3DProtoDeclarationNode",
@@ -58,8 +58,8 @@ define ([
 	"x_ite/InputOutput/Generator",
 ],
 function ($,
+          SupportedNodes,
           Fields,
-          X3DFieldDefinition,
           FieldDefinitionArray,
           X3DUrlObject,
           X3DProtoDeclarationNode,
@@ -68,10 +68,14 @@ function ($,
 {
 "use strict";
 
+	SupportedNodes .addAbstractType ("X3DExternProtoDeclaration");
+
 	function X3DExternProtoDeclaration (executionContext)
 	{
 		X3DProtoDeclarationNode .call (this, executionContext);
 		X3DUrlObject            .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DExternProtoDeclaration)
 
 		this .addChildObjects ("url",                  new Fields .MFString (),
 		                       "autoRefresh",          new Fields .SFTime (),
@@ -197,10 +201,6 @@ function ($,
 
 			this .deferred .resolve ();
 			this .deferred = $.Deferred ();
-		},
-		toStream: function (stream)
-		{
-			stream .string += Object .prototype .toString .call (this);
 		},
 		toVRMLStream: function (stream)
 		{

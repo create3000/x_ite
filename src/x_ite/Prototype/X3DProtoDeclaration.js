@@ -48,16 +48,16 @@
 
 
 define ([
+	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Execution/X3DExecutionContext",
 	"x_ite/Prototype/X3DProtoDeclarationNode",
 	"x_ite/Bits/X3DConstants",
 	"x_ite/InputOutput/Generator",
 ],
-function (Fields,
-          X3DFieldDefinition,
+function (SupportedNodes,
+          Fields,
           FieldDefinitionArray,
           X3DExecutionContext,
           X3DProtoDeclarationNode,
@@ -66,9 +66,13 @@ function (Fields,
 {
 "use strict";
 
+	SupportedNodes .addAbstractType ("X3DProtoDeclaration");
+
 	function X3DProtoDeclaration (executionContext)
 	{
 		X3DProtoDeclarationNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DProtoDeclaration)
 
 		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 
@@ -109,10 +113,6 @@ function (Fields,
 		hasUserDefinedFields: function ()
 		{
 			return true;
-		},
-		toStream: function (stream)
-		{
-			stream .string += Object .prototype .toString .call (this);
 		},
 		toVRMLStream: function (stream)
 		{
