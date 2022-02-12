@@ -48,6 +48,7 @@
 
 
 define ([
+	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Fields",
 	"x_ite/Execution/X3DExecutionContext",
 	"x_ite/Configuration/ComponentInfoArray",
@@ -58,7 +59,8 @@ define ([
 	"x_ite/InputOutput/Generator",
 	"x_ite/Fields/SFNodeCache",
 ],
-function (Fields,
+function (SupportedNodes,
+          Fields,
           X3DExecutionContext,
           ComponentInfoArray,
           UnitInfo,
@@ -70,9 +72,13 @@ function (Fields,
 {
 "use strict";
 
+	SupportedNodes .addAbstractType ("X3DScene");
+
 	function X3DScene (executionContext)
 	{
 		X3DExecutionContext .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DScene)
 
 		this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 

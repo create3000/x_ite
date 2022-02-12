@@ -48,6 +48,7 @@
 
 
 define ([
+	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Fields",
 	"x_ite/Base/X3DObject",
 	"x_ite/Basic/X3DBaseNode",
@@ -62,7 +63,8 @@ define ([
 	"x_ite/Fields/SFNodeCache",
 	"standard/Math/Algorithm",
 ],
-function (Fields,
+function (SupportedNodes,
+          Fields,
           X3DObject,
           X3DBaseNode,
           ImportedNode,
@@ -78,9 +80,13 @@ function (Fields,
 {
 "use strict";
 
+	SupportedNodes .addAbstractType ("X3DExecutionContext");
+
 	function X3DExecutionContext (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DExecutionContext)
 
 		this .addChildObjects ("rootNodes",  new Fields .MFNode (),
 		                       "worldInfos", new Fields .MFNode ());

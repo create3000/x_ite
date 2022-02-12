@@ -71,7 +71,7 @@ define ([
 	"x_ite/Browser/Text/X3DTextContext",
 	"x_ite/Browser/Texturing/X3DTexturingContext",
 	"x_ite/Browser/Time/X3DTimeContext",
-	"x_ite/Execution/World",
+	"x_ite/Execution/X3DWorld",
 	"x_ite/Bits/TraverseType",
 ],
 function ($,
@@ -97,7 +97,7 @@ function ($,
           X3DTextContext,
           X3DTexturingContext,
           X3DTimeContext,
-          World,
+          X3DWorld,
           TraverseType)
 {
 "use strict";
@@ -232,7 +232,7 @@ function ($,
 		},
 		setExecutionContext: function (executionContext)
 		{
-			this .world = new World (executionContext);
+			this .world = new X3DWorld (executionContext);
 			this .world .setup ();
 		},
 		getExecutionContext: function ()

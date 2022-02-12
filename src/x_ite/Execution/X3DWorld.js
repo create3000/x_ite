@@ -48,6 +48,7 @@
 
 
 define ([
+	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Fields/SFNode",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Layering/LayerSet",
@@ -55,7 +56,8 @@ define ([
 	"x_ite/Bits/X3DCast",
 	"x_ite/Bits/X3DConstants",
 ],
-function (SFNode,
+function (SupportedNodes,
+          SFNode,
           X3DBaseNode,
           LayerSet,
           Layer,
@@ -64,9 +66,13 @@ function (SFNode,
 {
 "use strict";
 
-	function World (executionContext)
+	SupportedNodes .addAbstractType ("X3DWorld");
+
+	function X3DWorld (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DWorld)
 
 		this .addChildObjects ("activeLayer", new SFNode (this .layer0));
 
@@ -75,12 +81,12 @@ function (SFNode,
 		this .layer0          = new Layer (executionContext);
 	}
 
-	World .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+	X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
-		constructor: World,
+		constructor: X3DWorld,
 		getTypeName: function ()
 		{
-			return "World";
+			return "X3DWorld";
 		},
 		initialize: function ()
 		{
@@ -158,5 +164,5 @@ function (SFNode,
 		},
 	});
 
-	return World;
+	return X3DWorld;
 });

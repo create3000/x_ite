@@ -48,21 +48,29 @@
 
 
 define ([
+	"x_ite/Configuration/SupportedNodes",
 	"x_ite/Base/X3DObject",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Core/X3DPrototypeInstance",
 	"x_ite/Fields/SFNodeCache",
+	"x_ite/Bits/X3DConstants",
 ],
-function (X3DObject,
+function (SupportedNodes,
+          X3DObject,
           X3DBaseNode,
           X3DPrototypeInstance,
-          SFNodeCache)
+          SFNodeCache,
+          X3DConstants)
 {
 "use strict";
+
+	SupportedNodes .addAbstractType ("X3DProtoDeclarationNode");
 
 	function X3DProtoDeclarationNode (executionContext)
 	{
 		X3DBaseNode .call (this, executionContext);
+
+		this .addType (X3DConstants .X3DProtoDeclarationNode)
 	}
 
 	X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),

@@ -54,7 +54,7 @@ define ([
 	"x_ite/Parser/Parser",
 	"x_ite/Parser/XMLParser",
 	"x_ite/Parser/JSONParser",
-	"x_ite/Execution/World",
+	"x_ite/Execution/X3DWorld",
 	"standard/Networking/BinaryTransport",
 	"pako_inflate",
 	"x_ite/DEBUG",
@@ -65,7 +65,7 @@ function ($,
           Parser,
           XMLParser,
           JSONParser,
-          World,
+          X3DWorld,
           BinaryTransport,
           pako,
           DEBUG)
@@ -121,7 +121,7 @@ function ($,
 		{
 			const scene = this .browser .createScene ();
 
-			if (this .node instanceof World)
+			if (this .node instanceof X3DWorld)
 				scene .loader = this;
 			else
 				scene .setExecutionContext (this .executionContext);
@@ -568,7 +568,7 @@ function ($,
 		},
 		getReferer: function ()
 		{
-			if (this .node .getTypeName () === "World")
+			if (this .node .getTypeName () === "X3DWorld")
 			{
 				if (this .external)
 					return this .browser .getLocation ();
