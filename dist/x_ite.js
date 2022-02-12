@@ -1,4 +1,4 @@
-/* X_ITE v4.7.14-1139 */
+/* X_ITE v4.7.15-1140 */
 
 (function (globalModule, globalRequire)
 {
@@ -13187,188 +13187,6 @@ function ($)
  ******************************************************************************/
 
 
-define ('x_ite/Basic/X3DFieldDefinition',[],function ()
-{
-"use strict";
-
-	function X3DFieldDefinition (accessType, name, value)
-	{
-		this .accessType  = accessType;
-		this .dataType    = value .getType ();
-		this .name        = name;
-		this .value       = value;
-	}
-
-	X3DFieldDefinition .prototype .constructor = X3DFieldDefinition;
-
-	return X3DFieldDefinition;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Basic/FieldDefinitionArray',[],function ()
-{
-"use strict";
-
-	const handler =
-	{
-		get: function (target, key)
-		{
-			const value = target [key];
-
-			if (value !== undefined)
-				return value;
-
-			return target .array [key];
-		},
-		set: function (target, key, value)
-		{
-			return false;
-		},
-		has: function (target, key)
-		{
-			if (Number .isInteger (+key))
-				return key < target .array .length;
-
-			return key in target;
-		},
-	};
-
-	function FieldDefinitionArray (value)
-	{
-		this .array = value;
-		this .index = { };
-
-		for (const fieldDefinition of value)
-			this .index [fieldDefinition .name] = fieldDefinition;
-
-		return new Proxy (this, handler);
-	}
-
-	Object .assign (FieldDefinitionArray .prototype,
-	{
-		constructor: FieldDefinitionArray,
-		add: function (fieldDefinition)
-		{
-			this .array .push (fieldDefinition);
-			this .index [fieldDefinition .name] = fieldDefinition;
-		},
-		get: function (key)
-		{
-			return this .index [key];
-		},
-		getValue: function ()
-		{
-			return this .array;
-		},
-	});
-
-	Object .defineProperty (FieldDefinitionArray .prototype, "length",
-	{
-		get: function () { return this .array .length; },
-		enumerable: false,
-		configurable: false
-	});
-
-	return FieldDefinitionArray;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Bits/X3DConstants',[],function ()
 {
 "use strict";
@@ -13970,6 +13788,10 @@ function (Generator)
 				return this ._id = ++ id;
 			};
 		})(),
+		getTypeName: function ()
+		{
+			return "X3DObject";
+		},
 		setName: function (value)
 		{
 			this ._name = value;
@@ -14052,10 +13874,213 @@ function (Generator)
 
 			return stream .string;
 		},
+		toStream: function (stream)
+		{
+			stream .string = "[object " + this .getTypeName () + "]";
+		},
 		dispose: function () { },
 	};
 
 	return X3DObject;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Basic/X3DFieldDefinition',[
+	"x_ite/Base/X3DObject",
+],
+function (X3DObject)
+{
+"use strict";
+
+	function X3DFieldDefinition (accessType, name, value)
+	{
+		this .accessType  = accessType;
+		this .dataType    = value .getType ();
+		this .name        = name;
+		this .value       = value;
+	}
+
+	X3DFieldDefinition .prototype = Object .assign (Object .create (X3DObject .prototype),
+	{
+		constructor: X3DFieldDefinition,
+		getTypeName: function ()
+		{
+			return "X3DFieldDefinition";
+		},
+	});
+
+	return X3DFieldDefinition;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Basic/FieldDefinitionArray',[
+	"x_ite/Base/X3DObject",
+],
+function (X3DObject)
+{
+"use strict";
+
+	const handler =
+	{
+		get: function (target, key)
+		{
+			const value = target [key];
+
+			if (value !== undefined)
+				return value;
+
+			return target .array [key];
+		},
+		set: function (target, key, value)
+		{
+			return false;
+		},
+		has: function (target, key)
+		{
+			if (Number .isInteger (+key))
+				return key < target .array .length;
+
+			return key in target;
+		},
+	};
+
+	function FieldDefinitionArray (value)
+	{
+		this .array = value;
+		this .index = { };
+
+		for (const fieldDefinition of value)
+			this .index [fieldDefinition .name] = fieldDefinition;
+
+		return new Proxy (this, handler);
+	}
+
+	FieldDefinitionArray .prototype = Object .assign (Object .create (X3DObject .prototype),
+	{
+		constructor: FieldDefinitionArray,
+		getTypeName: function ()
+		{
+			return "FieldDefinitionArray";
+		},
+		add: function (fieldDefinition)
+		{
+			this .array .push (fieldDefinition);
+			this .index [fieldDefinition .name] = fieldDefinition;
+		},
+		get: function (key)
+		{
+			return this .index [key];
+		},
+		getValue: function ()
+		{
+			return this .array;
+		},
+	});
+
+	Object .defineProperty (FieldDefinitionArray .prototype, "length",
+	{
+		get: function () { return this .array .length; },
+		enumerable: false,
+		configurable: false
+	});
+
+	return FieldDefinitionArray;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -21784,7 +21809,7 @@ function (X3DField,
  ******************************************************************************/
 
 
-define ('x_ite/Fields/SFNodeCache',['x_ite/Fields/SFNode','x_ite/Fields/SFNode'],function ()
+define ('x_ite/Fields/SFNodeCache',['x_ite/Fields/SFNode'],function ()
 {
 "use strict";
 
@@ -21794,16 +21819,6 @@ define ('x_ite/Fields/SFNodeCache',['x_ite/Fields/SFNode','x_ite/Fields/SFNode']
 
 	SFNodeCache .prototype =
 	{
-		add: function (baseNode)
-		{
-			const
-				SFNode = require ("x_ite/Fields/SFNode"),
-				node   = new SFNode (baseNode);
-
-			cache .set (baseNode, node);
-
-			return node;
-		},
 		get: function (baseNode)
 		{
 			const node = cache .get (baseNode);
@@ -21961,6 +21976,9 @@ function (X3DField,
 
 		const proxy = new Proxy (this, handler);
 
+		this ._target = this;
+		this ._proxy  = proxy;
+
 		if (value)
 		{
 			value .addParent (proxy);
@@ -21981,11 +21999,15 @@ function (X3DField,
 		_cloneCount: 0,
 		clone: function ()
 		{
-			return new SFNode (this .getValue ());
+			const target = this ._target;
+
+			return new SFNode (target .getValue ());
 		},
 		copy: function (instance)
 		{
-			const value = this .getValue ();
+			const
+				target = this ._target,
+				value  = target .getValue ();
 
 			if (value)
 				return new SFNode (value .copy (instance));
@@ -22002,42 +22024,50 @@ function (X3DField,
 		},
 		equals: function (node)
 		{
-			if (node)
-				return this .getValue () === node .getValue ();
+			const target = this ._target;
 
-			return this .getValue () === null;
+			if (node)
+				return target .getValue () === node .getValue ();
+
+			return target .getValue () === null;
 		},
 		isDefaultValue: function ()
 		{
-			return this .getValue () === null;
+			const target = this ._target;
+
+			return target .getValue () === null;
 		},
 		set: function (value)
 		{
-			const current = this .getValue ();
+			const
+				target  = this ._target,
+				current = target .getValue ();
 
 			if (current)
 			{
-				current .removeCloneCount (this ._cloneCount);
-				current .removeParent (this);
+				current .removeCloneCount (target ._cloneCount);
+				current .removeParent (target ._proxy);
 			}
 
 			// No need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
 			if (value)
 			{
-				value .addParent (this);
-				value .addCloneCount (this ._cloneCount);
+				value .addParent (target ._proxy);
+				value .addCloneCount (target ._cloneCount);
 
-				X3DField .prototype .set .call (this, value);
+				X3DField .prototype .set .call (target, value);
 			}
 			else
 			{
-				X3DField .prototype .set .call (this, null);
+				X3DField .prototype .set .call (target, null);
 			}
 		},
 		getNodeTypeName: function ()
 		{
-			const value = this .getValue ();
+			const
+				target = this ._target,
+			 	value  = target .getValue ();
 
 			if (value)
 				return value .getTypeName ();
@@ -22046,7 +22076,9 @@ function (X3DField,
 		},
 		getNodeName: function ()
 		{
-			const value = this .getValue ();
+			const
+				target = this ._target,
+			 	value  = target .getValue ();
 
 			if (value)
 				return value .getName ();
@@ -22055,7 +22087,9 @@ function (X3DField,
 		},
 		getNodeType: function ()
 		{
-			const value = this .getValue ();
+			const
+				target = this ._target,
+			 	value  = target .getValue ();
 
 			if (value)
 				return value .getType () .slice ();
@@ -22064,7 +22098,9 @@ function (X3DField,
 		},
 		getFieldDefinitions: function ()
 		{
-			const value = this .getValue ();
+			const
+				target = this ._target,
+			 	value  = target .getValue ();
 
 			if (value)
 				return value .getFieldDefinitions ();
@@ -22073,15 +22109,17 @@ function (X3DField,
 		},
 		addFieldCallback: function (name, string, object)
 		{
+			const target = this ._target;
+
 			switch (arguments .length)
 			{
 				case 2:
 				{
-					return X3DField .prototype .addFieldCallback .apply (this, arguments);
+					return X3DField .prototype .addFieldCallback .apply (target, arguments);
 				}
 				case 3:
 				{
-					const value = this .getValue ();
+					const value = target .getValue ();
 
 					if (value)
 						return value .getField (name) .addFieldCallback (string, object);
@@ -22092,15 +22130,17 @@ function (X3DField,
 		},
 		removeFieldCallback: function (name, string)
 		{
+			const target = this ._target;
+
 			switch (arguments .length)
 			{
 				case 1:
 				{
-					return X3DField .prototype .removeFieldCallback .apply (this, arguments);
+					return X3DField .prototype .removeFieldCallback .apply (target, arguments);
 				}
 				case 2:
 				{
-					const value = this .getValue ();
+					const value = target .getValue ();
 
 					if (value)
 						return value .getField (name) .removeFieldCallback (string);
@@ -22111,25 +22151,31 @@ function (X3DField,
 		},
 		addCloneCount: function (count)
 		{
-			const value = this .getValue ();
+			const
+				target = this ._target,
+				value  = target .getValue ();
 
-			this ._cloneCount += count;
+			target ._cloneCount += count;
 
 			if (value)
 				value .addCloneCount (count);
 		},
 		removeCloneCount: function (count)
 		{
-			const value = this .getValue ();
+			const
+				target = this ._target,
+				value  = target .getValue ();
 
-			this ._cloneCount -= count;
+			target ._cloneCount -= count;
 
 			if (value)
 				value .removeCloneCount (count);
 		},
 		valueOf: function ()
 		{
-			const value = this .getValue ();
+			const
+				target = this ._target,
+			 	value  = target .getValue ();
 
 			if (value)
 				return SFNodeCache .get (value);
@@ -22138,7 +22184,9 @@ function (X3DField,
 		},
 		toStream: function (stream)
 		{
-			const value = this .getValue ();
+			const
+				target = this ._target,
+			 	value  = target .getValue ();
 
 			if (value)
 				value .toStream (stream);
@@ -22147,7 +22195,9 @@ function (X3DField,
 		},
 		toVRMLStream: function (stream)
 		{
-			const value = this .getValue ();
+			const
+				target = this ._target,
+			 	value  = target .getValue ();
 
 			if (value)
 				value .toVRMLStream (stream);
@@ -22157,13 +22207,14 @@ function (X3DField,
 		toXMLString: function ()
 		{
 			const
+				target    = this ._target,
 				stream    = { string: "" },
 				generator = Generator .Get (stream),
-				value     = this .getValue ();
+				value     = target .getValue ();
 
 			generator .PushExecutionContext (value .getExecutionContext ());
 
-			this .toXMLStream (stream);
+			target .toXMLStream (stream);
 
 			generator .PopExecutionContext ();
 
@@ -22171,7 +22222,9 @@ function (X3DField,
 		},
 		toXMLStream: function (stream)
 		{
-			const value = this .getValue ();
+			const
+				target = this ._target,
+			 	value  = target .getValue ();
 
 			if (value)
 				value .toXMLStream (stream);
@@ -22180,9 +22233,11 @@ function (X3DField,
 		},
 		dispose: function ()
 		{
-			this .set (null);
+			const target = this ._target;
 
-			X3DField .prototype .dispose .call (this);
+			target .set (null);
+
+			X3DField .prototype .dispose .call (target);
 		},
 	});
 
@@ -22969,16 +23024,19 @@ function ($,
 
 	function X3DObjectArrayField (value)
 	{
+		const proxy = new Proxy (this, handler);
+
 		X3DArrayField .call (this, [ ]);
 
 		this ._target = this;
+		this ._proxy  = proxy;
 
 		if (value [0] instanceof Array)
 			value = value [0];
 
 		X3DObjectArrayField .prototype .push .apply (this, value);
 
-		return new Proxy (this, handler);
+		return proxy;
 	}
 
 	X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
@@ -23277,11 +23335,11 @@ function ($,
 		},
 		addChildObject: function (value)
 		{
-			value .addParent (this ._target);
+			value .addParent (this ._proxy);
 		},
 		removeChildObject: function (value)
 		{
-			value .removeParent (this ._target);
+			value .removeParent (this ._proxy);
 		},
 		toStream: function (stream)
 		{
@@ -24928,7 +24986,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-	return "4.7.14";
+	return "4.7.15";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -31339,7 +31397,10 @@ function (X3DBaseNode,
  ******************************************************************************/
 
 
-define ('x_ite/Configuration/X3DInfoArray',[],function ()
+define ('x_ite/Configuration/X3DInfoArray',[
+	"x_ite/Base/X3DObject",
+],
+function (X3DObject)
 {
 "use strict";
 
@@ -31380,7 +31441,7 @@ define ('x_ite/Configuration/X3DInfoArray',[],function ()
 		return new Proxy (this, handler);
 	}
 
-	Object .assign (X3DInfoArray .prototype,
+	X3DInfoArray .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: X3DInfoArray,
 		add: function (key, value)
@@ -31501,6 +31562,10 @@ function (X3DInfoArray)
 	ExternProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: ExternProtoDeclarationArray,
+		getTypeName: function ()
+		{
+			return "ExternProtoDeclarationArray";
+		},
 		toVRMLStream: function (stream)
 		{
 			this .array .forEach (function (value)
@@ -31508,7 +31573,7 @@ function (X3DInfoArray)
 				try
 				{
 					value .toVRMLStream (stream);
-	
+
 					stream .string += "\n";
 					stream .string += "\n";
 				}
@@ -31587,6 +31652,10 @@ function (X3DInfoArray)
 	ProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: ProtoDeclarationArray,
+		getTypeName: function ()
+		{
+			return "ProtoDeclarationArray";
+		},
 		toVRMLStream: function (stream)
 		{
 			this .array .forEach (function (value)
@@ -31594,7 +31663,7 @@ function (X3DInfoArray)
 				try
 				{
 					value .toVRMLStream (stream);
-	
+
 					stream .string += "\n";
 					stream .string += "\n";
 				}
@@ -31658,7 +31727,10 @@ function (X3DInfoArray)
  ******************************************************************************/
 
 
-define ('x_ite/Routing/RouteArray',[],function ()
+define ('x_ite/Routing/RouteArray',[
+	"x_ite/Base/X3DObject",
+],
+function (X3DObject)
 {
 "use strict";
 
@@ -31693,9 +31765,13 @@ define ('x_ite/Routing/RouteArray',[],function ()
 		return new Proxy (this, handler);
 	}
 
-	Object .assign (RouteArray .prototype,
+	RouteArray .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: RouteArray,
+		getTypeName: function ()
+		{
+			return "RouteArray";
+		},
 		getValue: function ()
 		{
 			return this .array;
@@ -31853,10 +31929,6 @@ function (Fields,
 
 			this ._sourceField      .removeOutputRoute (this);
 			this ._destinationField .removeInputRoute (this);
-		},
-		toStream: function (stream)
-		{
-			stream .string += Object .prototype .toString .call (this);
 		},
 		toVRMLStream: function (stream)
 		{
@@ -32106,6 +32178,7 @@ function (Fields)
 
 define ('x_ite/Execution/X3DExecutionContext',[
 	"x_ite/Fields",
+	"x_ite/Base/X3DObject",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Execution/ImportedNode",
 	"x_ite/Prototype/ExternProtoDeclarationArray",
@@ -32119,6 +32192,7 @@ define ('x_ite/Execution/X3DExecutionContext',[
 	"standard/Math/Algorithm",
 ],
 function (Fields,
+          X3DObject,
           X3DBaseNode,
           ImportedNode,
           ExternProtoDeclarationArray,
@@ -32154,6 +32228,10 @@ function (Fields,
 	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
 	{
 		constructor: X3DExecutionContext,
+		getTypeName: function ()
+		{
+			return "X3DExecutionContext";
+		},
 		isMainContext: function ()
 		{
 			return false;
@@ -32240,7 +32318,7 @@ function (Fields,
 
 				baseNode .setup ();
 
-				return SFNodeCache .add (baseNode);
+				return SFNodeCache .get (baseNode);
 			}
 		},
 		createProto: function (name, setup = true)
@@ -32711,6 +32789,7 @@ function (Fields,
 			if (index !== -1)
 				this .worldInfos_ .splice (index, 1);
 		},
+		toStream: X3DObject .prototype .toStream,
 		toVRMLStream: function (stream)
 		{
 			const generator = Generator .Get (stream);
@@ -32959,12 +33038,10 @@ function (Fields,
 
 
 define ('x_ite/Configuration/ComponentInfo',[
-	"x_ite/Fields",
-	"x_ite/Bits/X3DConstants",
+	"x_ite/Base/X3DObject",
 	"x_ite/InputOutput/Generator",
 ],
-function (Fields,
-          X3DConstants,
+function (X3DObject,
           Generator)
 {
 "use strict";
@@ -32977,9 +33054,13 @@ function (Fields,
 		this .providerUrl = providerUrl;
 	}
 
-	Object .assign (ComponentInfo .prototype,
+	ComponentInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: ComponentInfo,
+		getTypeName: function ()
+		{
+			return "ComponentInfo";
+		},
 		toVRMLStream: function (stream)
 		{
 			stream .string += "COMPONENT";
@@ -33082,6 +33163,10 @@ function (ComponentInfo,
 	ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: ComponentInfoArray,
+		getTypeName: function ()
+		{
+			return "ComponentInfoArray";
+		},
 		addBaseComponent: function (value)
 		{
 			this .add (value .name, new ComponentInfo (value .name, value .level, value .title, value .providerUrl));
@@ -33141,9 +33226,11 @@ function (ComponentInfo,
 
 
 define ('x_ite/Configuration/UnitInfo',[
+	"x_ite/Base/X3DObject",
 	"x_ite/InputOutput/Generator",
 ],
-function (Generator)
+function (X3DObject,
+          Generator)
 {
 "use strict";
 
@@ -33158,9 +33245,13 @@ function (Generator)
 		this .conversionFactor = conversionFactor;
 	}
 
-	Object .assign (UnitInfo .prototype,
+	UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: UnitInfo,
+		getTypeName: function ()
+		{
+			return "UnitInfo";
+		},
 		toVRMLStream: function (stream)
 		{
 			stream .string += "UNIT";
@@ -33267,6 +33358,10 @@ function (X3DInfoArray)
 	UnitInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: UnitInfoArray,
+		getTypeName: function ()
+		{
+			return "UnitInfoArray";
+		},
 	});
 
 	return UnitInfoArray;
@@ -33503,6 +33598,10 @@ function (Fields,
 	X3DScene .prototype = Object .assign (Object .create (X3DExecutionContext .prototype),
 	{
 		constructor: X3DScene,
+		getTypeName: function ()
+		{
+			return "X3DScene";
+		},
 		isMainContext: function ()
 		{
 			return this === this .getExecutionContext ();
@@ -33728,10 +33827,6 @@ function (Fields,
 		setRootNodes: function (value)
 		{
 			this .getRootNodes () .setValue (value);
-		},
-		toStream: function (stream)
-		{
-			stream .string += Object .prototype .toString .call (this);
 		},
 		toVRMLStream: function (stream)
 		{
@@ -34035,10 +34130,6 @@ function (Fields,
 	Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
 	{
 		constructor: Scene,
-		getTypeName: function ()
-		{
-			return "Scene";
-		},
 		setExecutionContext: function (value)
 		{
 			if (! this .isMainContext ())
@@ -35134,11 +35225,13 @@ function (X3DChildObject,
 
 
 define ('x_ite/Prototype/X3DProtoDeclarationNode',[
+	"x_ite/Base/X3DObject",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Components/Core/X3DPrototypeInstance",
 	"x_ite/Fields/SFNodeCache",
 ],
-function (X3DBaseNode,
+function (X3DObject,
+          X3DBaseNode,
           X3DPrototypeInstance,
           SFNodeCache)
 {
@@ -35168,13 +35261,14 @@ function (X3DBaseNode,
 
 				instance .setup ();
 
-				return SFNodeCache .add (instance);
+				return SFNodeCache .get (instance);
 			}
 		},
 		newInstance: function ()
 		{
 			return this .createInstance (this .getExecutionContext ());
 		},
+		toStream: X3DObject .prototype .toStream,
 	});
 
 	return X3DProtoDeclarationNode;
@@ -35269,15 +35363,7 @@ function ($,
 		fieldDefinitions: new FieldDefinitionArray ([ ]),
 		getTypeName: function ()
 		{
-			return "EXTERNPROTO";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "externprotos";
+			return "X3DExternProtoDeclaration";
 		},
 		initialize: function ()
 		{
@@ -35627,15 +35713,7 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([ ]),
 		getTypeName: function ()
 		{
-			return "PROTO";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "protos";
+			return "X3DProtoDeclaration";
 		},
 		initialize: function ()
 		{
@@ -60121,8 +60199,8 @@ function (SFNode,
 
 		this .addChildObjects ("activeLayer", new SFNode (this .layer0));
 
-		this .layerSet        = new LayerSet (executionContext);
-		this .defaultLayerSet = this .layerSet;
+		this .defaultLayerSet = new LayerSet (executionContext);
+		this .layerSet        = this .defaultLayerSet;
 		this .layer0          = new Layer (executionContext);
 	}
 
@@ -60181,10 +60259,10 @@ function (SFNode,
 					this .layerSet = layerSet;
 			}
 
-			this .layerSet .setLayer0 (this .layer0);
-
 			if (this .layerSet === oldLayerSet)
 				return;
+
+			this .layerSet .setLayer0 (this .layer0);
 
 			oldLayerSet    .activeLayer_ .removeInterest ("set_activeLayer__", this);
 			this .layerSet .activeLayer_ .addInterest ("set_activeLayer__", this);
@@ -95484,6 +95562,7 @@ function (Vector3)
 define ('x_ite/Browser/X3DBrowserContext',[
 	"jquery",
 	"x_ite/Fields/SFTime",
+	"x_ite/Base/X3DObject",
 	"x_ite/Basic/X3DBaseNode",
 	"x_ite/Browser/Core/X3DCoreContext",
 	"x_ite/Routing/X3DRoutingContext",
@@ -95509,6 +95588,7 @@ define ('x_ite/Browser/X3DBrowserContext',[
 ],
 function ($,
           SFTime,
+          X3DObject,
           X3DBaseNode,
           X3DCoreContext,
           X3DRoutingContext,
@@ -95724,10 +95804,7 @@ function ($,
 
 			this .finished_ .processInterests ();
 		},
-		toStream: function (stream)
-		{
-			stream .string += Object .prototype .toString .call (this);
-		},
+		toStream: X3DObject .prototype .toStream,
 	});
 
 	Object .assign (X3DBrowserContext,
@@ -116521,7 +116598,10 @@ function (DEBUG,
  ******************************************************************************/
 
 
-define ('x_ite/Configuration/ProfileInfo',[],function ()
+define ('x_ite/Configuration/ProfileInfo',[
+	"x_ite/Base/X3DObject",
+],
+function (X3DObject)
 {
 "use strict";
 
@@ -116533,9 +116613,13 @@ define ('x_ite/Configuration/ProfileInfo',[],function ()
 		this .components  = components;
 	}
 
-	Object .assign (ProfileInfo .prototype,
+	ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: ProfileInfo,
+		getTypeName: function ()
+		{
+			return "ProfileInfo";
+		},
 		toVRMLStream: function (stream)
 		{
 			stream .string += "PROFILE";
@@ -116619,6 +116703,10 @@ function (ComponentInfoArray,
 	ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: ProfileInfoArray,
+		getTypeName: function ()
+		{
+			return "ProfileInfoArray";
+		},
 		addProfile: function (value)
 		{
 			this .add (value .name, new ProfileInfo (value .name, value .title, value .providerUrl, new ComponentInfoArray (value .components)));
