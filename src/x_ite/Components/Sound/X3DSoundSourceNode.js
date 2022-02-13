@@ -113,7 +113,7 @@ function (Fields,
 
 			if (value)
 			{
-				var media = value [0];
+				const media = value [0];
 
 				this .setVolume (0);
 				this .duration_changed_ = media .duration;
@@ -155,7 +155,7 @@ function (Fields,
 			if (! this .media)
 				return;
 
-			var
+			const
 				mute      = this .getBrowser () .mute_ .getValue (),
 				intensity = Algorithm .clamp (this .getBrowser () .volume_ .getValue (), 0, 1),
 				volume    = (! mute) * intensity * this .volume;
@@ -205,7 +205,7 @@ function (Fields,
 		{
 			if (this .media)
 			{
-				var media = this .media [0];
+				const media = this .media [0];
 
 				if (media .currentTime < media .duration)
 					return;
