@@ -65,7 +65,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DDragSensorNode, 
+          X3DDragSensorNode,
           X3DConstants,
           Rotation4,
           Vector3,
@@ -100,8 +100,8 @@ function (Fields,
 		constructor: PlaneSensor,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "description",         new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "axisRotation",        new Fields .SFRotation ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "autoOffset",          new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "offset",              new Fields .SFVec3f ()),
@@ -202,7 +202,7 @@ function (Fields,
 						if (this .getLineTrackPoint (hit, this .line, this .startPoint))
 						{
 							var trackPoint = new Vector3 (0, 0, 0);
-	
+
 							try
 							{
 								this .getLineTrackPoint (hit, new Line3 (this .line .direction, this .line .direction), trackPoint);
@@ -210,7 +210,7 @@ function (Fields,
 							catch (error)
 							{
 								//console .log (error);
-	
+
 								trackPoint = this .startPoint;
 							}
 
@@ -269,7 +269,7 @@ function (Fields,
 						{
 							trackPoint .assign (endPoint);
 						}
-					
+
 						this .track (endPoint, trackPoint);
 					}
 					else
@@ -312,5 +312,3 @@ function (Fields,
 
 	return PlaneSensor;
 });
-
-

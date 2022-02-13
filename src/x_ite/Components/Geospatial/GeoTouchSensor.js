@@ -60,8 +60,8 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTouchSensorNode, 
-          X3DGeospatialObject, 
+          X3DTouchSensorNode,
+          X3DGeospatialObject,
           X3DConstants,
           Vector3,
           Matrix4)
@@ -88,10 +88,10 @@ function (Fields,
 		constructor: GeoTouchSensor,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",            new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",         new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",           new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",           new Fields .MFString ("GD", "WE")),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",             new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",         new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "hitTexCoord_changed", new Fields .SFVec2f ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "hitNormal_changed",   new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "hitPoint_changed",    new Fields .SFVec3f ()),
@@ -144,5 +144,3 @@ function (Fields,
 
 	return GeoTouchSensor;
 });
-
-

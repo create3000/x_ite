@@ -64,7 +64,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DDragSensorNode, 
+          X3DDragSensorNode,
           X3DConstants,
           Vector3,
           Rotation4,
@@ -88,8 +88,8 @@ function (Fields,
 		constructor: SphereSensor,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "description",        new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "autoOffset",         new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "offset",             new Fields .SFRotation ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "trackPoint_changed", new Fields .SFVec3f ()),
@@ -159,7 +159,7 @@ function (Fields,
 					this .fromVector  .assign (hitPoint);
 					this .startPoint  .assign (hitPoint);
 					this .startOffset .assign (this .offset_ .getValue ());
-	
+
 					this .trackPoint_changed_ = hitPoint;
 					this .rotation_changed_   = this .offset_ .getValue ();
 				}
@@ -195,7 +195,7 @@ function (Fields,
 					this .zPlane .intersectsLine (hitRay, tangentPoint);
 
 					hitRay = new Line3 (tangentPoint, Vector3 .subtract (this .sphere .center, tangentPoint) .normalize ());
-					
+
 					//console .log (hitRay .toString ());
 
 					this .getTrackPoint (hitRay, trackPoint, false);
@@ -237,5 +237,3 @@ function (Fields,
 
 	return SphereSensor;
 });
-
-
