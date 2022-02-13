@@ -13776,6 +13776,19 @@ define ('standard/Utility/MapUtilities',['require'],function ($)
 
          return m1;
       },
+      values: function (a, m)
+      {
+         let i = 0;
+
+         m .forEach (function (value)
+         {
+            a [i ++] = value;
+         });
+
+         a .length = m .size;
+
+         return a;
+      },
    };
 
 	return MapUtilities;
@@ -13844,23 +13857,13 @@ function (Generator,
 	X3DObject .prototype =
 	{
 		constructor: X3DObject,
-		_id: 0,
 		_name: "",
 		_interests: new Map (),
 		_interestsTemp: new Map (),
-		getId: (function ()
+		getId: function ()
 		{
-			let id = 0;
-
-			function getId () { return this ._id; }
-
-			return function ()
-			{
-				this .getId = getId;
-
-				return this ._id = ++ id;
-			};
-		})(),
+			return X3DObject .getId (this);
+		},
 		getTypeName: function ()
 		{
 			return "X3DObject";
@@ -13875,14 +13878,14 @@ function (Generator,
 		},
 		hasInterest: function (callbackName, object)
 		{
-			return this ._interests .has (object .getId () + callbackName);
+			return this ._interests .has (X3DObject .getId (object) + "." + callbackName);
 		},
 		addInterest: function (callbackName, object)
 		{
 			if (!this .hasOwnProperty ("_interests"))
 			{
 				this ._interests     = new Map ();
-				this ._interestsTemp = new Map ();
+				this ._interestsTemp = [ ];
 			}
 
 			const callback = object [callbackName];
@@ -13894,16 +13897,16 @@ function (Generator,
 				args [0] = object;
 				args [1] = this;
 
-				this ._interests .set (object .getId () + callbackName, Function .prototype .bind .apply (callback, args));
+				this ._interests .set (X3DObject .getId (object) + "." + callbackName, Function .prototype .bind .apply (callback, args));
 			}
 			else
 			{
-				this ._interests .set (object .getId () + callbackName, callback .bind (object, this));
+				this ._interests .set (X3DObject .getId (object) + "." + callbackName, callback .bind (object, this));
 			}
 		},
 		removeInterest: function (callbackName, object)
 		{
-			this ._interests .delete (object .getId () + callbackName);
+			this ._interests .delete (X3DObject .getId (object) + "." + callbackName);
 		},
 		getInterests: function ()
 		{
@@ -13919,7 +13922,7 @@ function (Generator,
 			return function ()
 			{
 				if (this ._interests .size)
-					MapUtilities .assign (this ._interestsTemp, this ._interests) .forEach (processInterest);
+					MapUtilities .values (this ._interestsTemp, this ._interests) .forEach (processInterest);
 			};
 		})(),
 		toString: function (scene)
@@ -13955,6 +13958,25 @@ function (Generator,
 		},
 		dispose: function () { },
 	};
+
+	X3DObject .getId = (function ()
+	{
+		const map = new WeakMap ();
+
+		let counter = 0;
+
+		return function (object)
+		{
+			const id = map .get (object);
+
+			if (id !== undefined)
+				return id;
+
+			map .set (object, ++ counter);
+
+			return counter;
+		};
+	})();
 
 	return X3DObject;
 });
@@ -14473,11 +14495,11 @@ function ($,
 		_accessType: X3DConstants .initializeOnly,
 		_unit: null,
 		_uniformLocation: null,
-		_references: new Map (),
-		_fieldInterests: new Map (),
+		_references: new Set (),
+		_fieldInterests: new Set (),
 		_fieldCallbacks: new Map (),
-		_inputRoutes: new Map (),
-		_outputRoutes: new Map (),
+		_inputRoutes: new Set (),
+		_outputRoutes: new Set (),
 		_routeCallbacks: new Map (),
 		clone: function ()
 		{
@@ -14559,10 +14581,10 @@ function ($,
 		{
 			const references = this .getReferences ();
 
-			if (references .has (reference .getId ()))
+			if (references .has (reference))
 				return; // throw ???
 
-			references .set (reference .getId (), reference);
+			references .add (reference);
 
 			// Create IS relationship
 
@@ -14585,38 +14607,61 @@ function ($,
 					return;
 			}
 		},
+		removeReference: function (reference)
+		{
+			this .getReferences () .delete (reference);
+
+			// Create IS relationship
+
+			switch (this .getAccessType () & reference .getAccessType ())
+			{
+				case X3DConstants .initializeOnly:
+					reference .removeFieldInterest (this);
+					return;
+				case X3DConstants .inputOnly:
+					reference .removeFieldInterest (this);
+					return;
+				case X3DConstants .outputOnly:
+					this .removeFieldInterest (reference);
+					return;
+				case X3DConstants .inputOutput:
+					reference .removeFieldInterest (this);
+					this .removeFieldInterest (reference);
+					return;
+			}
+		},
 		getReferences: function ()
 		{
 			if (! this .hasOwnProperty ("_references"))
-				this ._references = new Map ();
+				this ._references = new Set ();
 
 			return this ._references;
 		},
 		addFieldInterest: function (field)
 		{
 			if (! this .hasOwnProperty ("_fieldInterests"))
-				this ._fieldInterests = new Map ();
+				this ._fieldInterests = new Set ();
 
-			this ._fieldInterests .set (field .getId (), field);
+			this ._fieldInterests .add (field);
 		},
 		removeFieldInterest: function (field)
 		{
-			this ._fieldInterests .delete (field .getId ());
+			this ._fieldInterests .delete (field);
 		},
 		getFieldInterests: function ()
 		{
 			return this ._fieldInterests;
 		},
-		addFieldCallback: function (string, object)
+		addFieldCallback: function (key, object)
 		{
 			if (! this .hasOwnProperty ("_fieldCallbacks"))
 				this ._fieldCallbacks = new Map ();
 
-			this ._fieldCallbacks .set (string, object);
+			this ._fieldCallbacks .set (key, object);
 		},
-		removeFieldCallback: function (string)
+		removeFieldCallback: function (key)
 		{
-			this ._fieldCallbacks .delete (string);
+			this ._fieldCallbacks .delete (key);
 		},
 		getFieldCallbacks: function ()
 		{
@@ -14625,15 +14670,15 @@ function ($,
 		addInputRoute: function (route)
 		{
 			if (! this .hasOwnProperty ("_inputRoutes"))
-				this ._inputRoutes = new Map ();
+				this ._inputRoutes = new Set ();
 
-			this ._inputRoutes .set (route .getId (), route);
+			this ._inputRoutes .add (route);
 
 			this .processRouteCallbacks ();
 		},
 		removeInputRoute: function (route)
 		{
-			this ._inputRoutes .delete (route .getId ());
+			this ._inputRoutes .delete (route);
 
 			this .processRouteCallbacks ();
 		},
@@ -14644,15 +14689,15 @@ function ($,
 		addOutputRoute: function (route)
 		{
 			if (! this .hasOwnProperty ("_outputRoutes"))
-				this ._outputRoutes = new Map ();
+				this ._outputRoutes = new Set ();
 
-			this ._outputRoutes .set (route .getId (), route);
+			this ._outputRoutes .add (route);
 
 			this .processRouteCallbacks ();
 		},
 		removeOutputRoute: function (route)
 		{
-			this ._outputRoutes .delete (route .getId ());
+			this ._outputRoutes .delete (route);
 
 			this .processRouteCallbacks ();
 		},
@@ -14660,16 +14705,16 @@ function ($,
 		{
 			return this ._outputRoutes;
 		},
-		addRouteCallback: function (id, object)
+		addRouteCallback: function (key, object)
 		{
 			if (! this .hasOwnProperty ("_routeCallbacks"))
 				this ._routeCallbacks = new Map ();
 
-			this ._routeCallbacks .set (id, object);
+			this ._routeCallbacks .set (key, object);
 		},
-		removeRouteCallback: function (id)
+		removeRouteCallback: function (key)
 		{
-			this ._routeCallbacks .delete (id);
+			this ._routeCallbacks .delete (key);
 		},
 		getRouteCallbacks: function ()
 		{
@@ -14677,7 +14722,7 @@ function ($,
 		},
 		processRouteCallbacks: (function ()
 		{
-			const routeCallbacks = new Map ();
+			const routeCallbacks = [ ];
 
 			function processRouteCallback (routeCallback)
 			{
@@ -14687,12 +14732,12 @@ function ($,
 			return function ()
 			{
 				if (this ._routeCallbacks .size)
-					MapUtilities .assign (routeCallbacks, this ._routeCallbacks) .forEach (processRouteCallback);
+					MapUtilities .values (routeCallbacks, this ._routeCallbacks) .forEach (processRouteCallback);
 			};
 		})(),
 		processEvent: (function ()
 		{
-			const fieldCallbacks = new Map ();
+			const fieldCallbacks = [ ];
 
 			function processEvent (fieldCallback)
 			{
@@ -14740,7 +14785,7 @@ function ($,
 
 				if (this ._fieldCallbacks .size)
 				{
-					MapUtilities .assign (fieldCallbacks, this ._fieldCallbacks) .forEach (processEvent, this);
+					MapUtilities .values (fieldCallbacks, this ._fieldCallbacks) .forEach (processEvent, this);
 				}
 			};
 		})(),
@@ -39268,7 +39313,9 @@ define ('standard/Utility/DataStorage',[],function ()
 		},
 		getDefaultValue (key)
 		{
-			return defaults .get (this .target) [key];
+			const value = defaults .get (this .target) [key];
+
+			return value === undefined ? undefined : JSON .parse (JSON .stringify (value));
 		},
 		clear: function ()
 		{
@@ -117844,13 +117891,13 @@ function ($,
 		},
 		callBrowserCallbacks: (function ()
 		{
-			const browserCallbacks = new Map ();
+			const browserCallbacks = [ ];
 
 			return function (browserEvent)
 			{
 				if (this .browserCallbacks .size)
 				{
-					MapUtilities .assign (browserCallbacks, this .browserCallbacks) .forEach (function (browserCallback)
+					MapUtilities .values (browserCallbacks, this .browserCallbacks) .forEach (function (browserCallback)
 					{
 						browserCallback (browserEvent);
 					});

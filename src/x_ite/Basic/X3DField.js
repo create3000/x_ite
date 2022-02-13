@@ -78,11 +78,11 @@ function ($,
 		_accessType: X3DConstants .initializeOnly,
 		_unit: null,
 		_uniformLocation: null,
-		_references: new Map (),
-		_fieldInterests: new Map (),
+		_references: new Set (),
+		_fieldInterests: new Set (),
 		_fieldCallbacks: new Map (),
-		_inputRoutes: new Map (),
-		_outputRoutes: new Map (),
+		_inputRoutes: new Set (),
+		_outputRoutes: new Set (),
 		_routeCallbacks: new Map (),
 		clone: function ()
 		{
@@ -164,10 +164,10 @@ function ($,
 		{
 			const references = this .getReferences ();
 
-			if (references .has (reference .getId ()))
+			if (references .has (reference))
 				return; // throw ???
 
-			references .set (reference .getId (), reference);
+			references .add (reference);
 
 			// Create IS relationship
 
@@ -190,38 +190,61 @@ function ($,
 					return;
 			}
 		},
+		removeReference: function (reference)
+		{
+			this .getReferences () .delete (reference);
+
+			// Create IS relationship
+
+			switch (this .getAccessType () & reference .getAccessType ())
+			{
+				case X3DConstants .initializeOnly:
+					reference .removeFieldInterest (this);
+					return;
+				case X3DConstants .inputOnly:
+					reference .removeFieldInterest (this);
+					return;
+				case X3DConstants .outputOnly:
+					this .removeFieldInterest (reference);
+					return;
+				case X3DConstants .inputOutput:
+					reference .removeFieldInterest (this);
+					this .removeFieldInterest (reference);
+					return;
+			}
+		},
 		getReferences: function ()
 		{
 			if (! this .hasOwnProperty ("_references"))
-				this ._references = new Map ();
+				this ._references = new Set ();
 
 			return this ._references;
 		},
 		addFieldInterest: function (field)
 		{
 			if (! this .hasOwnProperty ("_fieldInterests"))
-				this ._fieldInterests = new Map ();
+				this ._fieldInterests = new Set ();
 
-			this ._fieldInterests .set (field .getId (), field);
+			this ._fieldInterests .add (field);
 		},
 		removeFieldInterest: function (field)
 		{
-			this ._fieldInterests .delete (field .getId ());
+			this ._fieldInterests .delete (field);
 		},
 		getFieldInterests: function ()
 		{
 			return this ._fieldInterests;
 		},
-		addFieldCallback: function (string, object)
+		addFieldCallback: function (key, object)
 		{
 			if (! this .hasOwnProperty ("_fieldCallbacks"))
 				this ._fieldCallbacks = new Map ();
 
-			this ._fieldCallbacks .set (string, object);
+			this ._fieldCallbacks .set (key, object);
 		},
-		removeFieldCallback: function (string)
+		removeFieldCallback: function (key)
 		{
-			this ._fieldCallbacks .delete (string);
+			this ._fieldCallbacks .delete (key);
 		},
 		getFieldCallbacks: function ()
 		{
@@ -230,15 +253,15 @@ function ($,
 		addInputRoute: function (route)
 		{
 			if (! this .hasOwnProperty ("_inputRoutes"))
-				this ._inputRoutes = new Map ();
+				this ._inputRoutes = new Set ();
 
-			this ._inputRoutes .set (route .getId (), route);
+			this ._inputRoutes .add (route);
 
 			this .processRouteCallbacks ();
 		},
 		removeInputRoute: function (route)
 		{
-			this ._inputRoutes .delete (route .getId ());
+			this ._inputRoutes .delete (route);
 
 			this .processRouteCallbacks ();
 		},
@@ -249,15 +272,15 @@ function ($,
 		addOutputRoute: function (route)
 		{
 			if (! this .hasOwnProperty ("_outputRoutes"))
-				this ._outputRoutes = new Map ();
+				this ._outputRoutes = new Set ();
 
-			this ._outputRoutes .set (route .getId (), route);
+			this ._outputRoutes .add (route);
 
 			this .processRouteCallbacks ();
 		},
 		removeOutputRoute: function (route)
 		{
-			this ._outputRoutes .delete (route .getId ());
+			this ._outputRoutes .delete (route);
 
 			this .processRouteCallbacks ();
 		},
@@ -265,16 +288,16 @@ function ($,
 		{
 			return this ._outputRoutes;
 		},
-		addRouteCallback: function (id, object)
+		addRouteCallback: function (key, object)
 		{
 			if (! this .hasOwnProperty ("_routeCallbacks"))
 				this ._routeCallbacks = new Map ();
 
-			this ._routeCallbacks .set (id, object);
+			this ._routeCallbacks .set (key, object);
 		},
-		removeRouteCallback: function (id)
+		removeRouteCallback: function (key)
 		{
-			this ._routeCallbacks .delete (id);
+			this ._routeCallbacks .delete (key);
 		},
 		getRouteCallbacks: function ()
 		{
