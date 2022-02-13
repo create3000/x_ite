@@ -84,9 +84,7 @@ function (Fields,
 		constructor: X3DTimeDependentNode,
 		initialize: function ()
 		{
-			X3DChildNode .prototype .initialize .call (this);
-
-			this .isLive ()   .addInterest ("set_live__", this);
+			this .isLive ()   .addInterest ("set_live__",  this);
 			this .isEvenLive_ .addInterest ("_set_live__", this); // to X3DBaseNode
 
 			this .initialized_ .addInterest ("set_loop__",       this);
