@@ -52,24 +52,28 @@ define ([
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DInfoNode",
+	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DInfoNode,
+          X3DUrlObject,
           X3DConstants)
 {
 "use strict";
 
 	function GeoMetadata (executionContext)
 	{
-		X3DInfoNode .call (this, executionContext);
+		X3DInfoNode  .call (this, executionContext);
+		X3DUrlObject .call (this, executionContext);
 
 		this .addType (X3DConstants .GeoMetadata);
 	}
 
 	GeoMetadata .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
+		X3DUrlObject .prototype,
 	{
 		constructor: GeoMetadata,
 		fieldDefinitions: new FieldDefinitionArray ([
@@ -92,6 +96,11 @@ function (Fields,
 		getContainerField: function ()
 		{
 			return "children";
+		},
+		initialize: function ()
+		{
+			X3DInfoNode  .prototype .initialize .call (this);
+			X3DUrlObject .prototype .initialize .call (this);
 		},
 		requestImmediateLoad: function (cache = true)
 		{ },

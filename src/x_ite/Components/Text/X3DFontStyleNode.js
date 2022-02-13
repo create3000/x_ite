@@ -104,6 +104,8 @@ function (Fields,
 		                       "autoRefresh",          new Fields .SFTime (),
 									  "autoRefreshTimeLimit", new Fields .SFTime (3600));
 
+		this .family_ .setName ("family");
+
 		this .familyStack = [ ];
 		this .alignments  = [ ];
 		this .loader      = new FileLoader (this);
