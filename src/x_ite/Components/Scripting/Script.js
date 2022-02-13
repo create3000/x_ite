@@ -408,8 +408,6 @@ function ($,
 		{
 			this .context = this .getContext (text);
 
-			this .isLive () .addInterest ("set_live__", this);
-
 			this .set_live__ ();
 		},
 		set_live__: function ()
