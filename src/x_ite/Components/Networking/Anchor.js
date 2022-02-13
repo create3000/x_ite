@@ -136,10 +136,6 @@ function (Fields,
 					anchor .requestImmediateLoad ();
 			};
 		},
-		set_load__: function ()
-		{ },
-		set_url__: function ()
-		{ },
 		requestImmediateLoad: function (cache = true)
 		{
 			this .setCache (cache);
@@ -174,6 +170,8 @@ function (Fields,
 			}
 			.bind (this));
 		},
+		requestUnload ()
+		{ },
 		traverse: function (type, renderObject)
 		{
 			if (type === TraverseType .POINTER)
