@@ -57,7 +57,7 @@ define ([
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DInfoNode, 
+          X3DInfoNode,
           X3DConstants)
 {
 "use strict";
@@ -73,10 +73,13 @@ function (Fields,
 	{
 		constructor: GeoMetadata,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "url",      new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "summary",  new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "data",     new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "summary",              new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "data",                 new Fields .MFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -90,9 +93,11 @@ function (Fields,
 		{
 			return "children";
 		},
+		requestImmediateLoad: function (cache = true)
+		{ },
+		requestUnload: function ()
+		{ },
 	});
 
 	return GeoMetadata;
 });
-
-

@@ -80,8 +80,6 @@ function (Fields,
 
 		this .addType (X3DConstants .Inline);
 
-		this .addChildObjects ("buffer", new Fields .MFString ());
-
 		this .scene = this .getBrowser () .getDefaultScene ();
 		this .group = new Group (executionContext);
 
@@ -128,10 +126,6 @@ function (Fields,
 			this .group .isCameraObject_   .addFieldInterest (this .isCameraObject_);
 			this .group .isPickableObject_ .addFieldInterest (this .isPickableObject_);
 
-			this .load_   .addInterest ("set_load__",   this);
-			this .url_    .addInterest ("set_url__",    this);
-			this .buffer_ .addInterest ("set_buffer__", this);
-
 			this .set_url__ ();
 		},
 		getBBox: function (bbox, shadow)
@@ -147,51 +141,9 @@ function (Fields,
 
 			this .scene .setLive (this .isLive () .getValue ());
 		},
-		set_load__: function ()
-		{
-			if (this .load_ .getValue ())
-			{
-				this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
-				this .requestImmediateLoad ();
-			}
-			else
-				this .requestUnload ();
-		},
-		set_url__: function ()
-		{
-			if (! this .load_ .getValue ())
-				return;
-
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
-			this .requestImmediateLoad ();
-		},
-		requestImmediateLoad: function (cache = true)
-		{
-			if (! this .load_ .getValue ())
-				return;
-
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-				return;
-
-			this .setCache (cache);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-
-			// buffer prevents double load of the scene if load and url field are set at the same time.
-			this .buffer_ = this .url_;
-		},
 		set_buffer__: function ()
 		{
 			new FileLoader (this) .createX3DFromURL (this .buffer_, null, this .setInternalSceneAsync .bind (this));
-		},
-		requestUnload: function ()
-		{
-			if (this .checkLoadState () === X3DConstants .NOT_STARTED_STATE || this .checkLoadState () === X3DConstants .FAILED_STATE)
-				return;
-
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-			this .setInternalScene (this .getBrowser () .getDefaultScene ());
 		},
 		setInternalSceneAsync: function (scene)
 		{
@@ -226,11 +178,15 @@ function (Fields,
 		},
 		getInternalScene: function ()
 		{
-			///  Returns the internal X3DScene of this extern proto, that is loaded from the url given.
+			///  Returns the internal X3DScene of this inline, that is loaded from the url given.
 			///  If the load field was false an empty scene is returned.  This empty scene is the same for all Inline
 			///  nodes (due to performance reasons).
 
 			return this .scene;
+		},
+		unload: function ()
+		{
+			this .setInternalScene (this .getBrowser () .getDefaultScene ());
 		},
 		traverse: function (type, renderObject)
 		{

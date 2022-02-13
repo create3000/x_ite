@@ -1094,7 +1094,7 @@ function (Fields,
 						{
 							if (this .URLList (this .MFString))
 							{
-								var externproto = new X3DExternProtoDeclaration (this .getExecutionContext ());
+								var externproto = new X3DExternProtoDeclaration (this .getExecutionContext (), this .MFString);
 
 								for (var i = 0, length = externInterfaceDeclarations .length; i < length; ++ i)
 								{
@@ -1104,7 +1104,6 @@ function (Fields,
 								}
 
 								externproto .setName (nodeTypeId);
-								externproto .url_ = this .MFString;
 								externproto .setup ();
 
 								this .getExecutionContext () .externprotos .add (nodeTypeId, externproto);

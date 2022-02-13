@@ -106,8 +106,6 @@ function ($,
 	{
 		X3DScriptNode .call (this, executionContext);
 
-		this .addChildObjects ("buffer", new Fields .MFString ());
-
 		this .addType (X3DConstants .Script);
 
 		this .pauseTime = 0;
@@ -118,6 +116,7 @@ function ($,
 		constructor: Script,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
@@ -140,21 +139,12 @@ function ($,
 		{
 			X3DScriptNode .prototype .initialize .call (this);
 
-			this .url_    .addInterest ("set_url__",    this);
-			this .buffer_ .addInterest ("set_buffer__", this);
-
 			this .getUserDefinedFields () .forEach (function (field)
 			{
 				field .setModificationTime (0);
 			});
 
 			this .set_url__ ();
-		},
-		set_url__: function ()
-		{
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
-			this .requestImmediateLoad ();
 		},
 		getExtendedEventHandling: function ()
 		{
@@ -167,19 +157,6 @@ function ($,
 		getSourceText: function ()
 		{
 			return this .url_;
-		},
-		requestImmediateLoad: function (cache = true)
-		{
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-				return;
-
-			if (this .url_ .length === 0)
-				return;
-
-			this .setCache (cache);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-
-			this .buffer_ = this .url_;
 		},
 		set_buffer__: function ()
 		{
@@ -198,6 +175,10 @@ function ($,
 				}
 			}
 			.bind (this));
+		},
+		unload: function ()
+		{
+			this .initialize__ ("");
 		},
 		getContext: function (text)
 		{

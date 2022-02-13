@@ -76,8 +76,6 @@ function (Fields,
 		X3DUrlObject     .call (this, executionContext);
 
 		this .addType (X3DConstants .ImageTexture3D);
-
-		this .addChildObjects ("buffer", new Fields .MFString ());
 	}
 
 	ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
@@ -87,6 +85,7 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
@@ -112,26 +111,7 @@ function (Fields,
 			X3DTexture3DNode .prototype .initialize .call (this);
 			X3DUrlObject     .prototype .initialize .call (this);
 
-			this .url_    .addInterest ("set_url__",   this);
-			this .buffer_ .addInterest ("set_buffer__", this);
-
 			this .set_url__ ();
-		},
-		set_url__: function ()
-		{
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
-			this .requestImmediateLoad ();
-		},
-		requestImmediateLoad: function (cache = true)
-		{
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-				return;
-
-			this .setCache (cache);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-
-			this .buffer_ = this .url_;
 		},
 		getInternalType: function (components)
 		{
@@ -188,6 +168,10 @@ function (Fields,
 				}
 			}
 			.bind (this));
+		},
+		unload: function ()
+		{
+			this .clearTexture ();
 		},
 	});
 

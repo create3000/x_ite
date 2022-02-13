@@ -70,14 +70,15 @@ function ($,
 
 	SupportedNodes .addAbstractType ("X3DExternProtoDeclaration");
 
-	function X3DExternProtoDeclaration (executionContext)
+	function X3DExternProtoDeclaration (executionContext, url)
 	{
 		X3DProtoDeclarationNode .call (this, executionContext);
 		X3DUrlObject            .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DExternProtoDeclaration)
 
-		this .addChildObjects ("url",                  new Fields .MFString (),
+		this .addChildObjects ("load",                 new Fields .SFBool (true),
+		                       "url",                  url .copy (), // Must be of type MFString.
 		                       "autoRefresh",          new Fields .SFTime (),
 									  "autoRefreshTimeLimit", new Fields .SFTime (3600));
 
@@ -143,6 +144,12 @@ function ($,
 				this .deferred .done (callback);
 
 			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
+				return;
+
+			if (!this .load_ .getValue ())
+				return;
+
+			if (this .url_ .length === 0)
 				return;
 
 			this .getScene () .addInitLoadCount (this);

@@ -75,8 +75,7 @@ function ($,
 
 		this .addType (X3DConstants .AudioClip);
 
-		this .addChildObjects ("speed",  new Fields .SFFloat (1),
-		                       "buffer", new Fields .MFString ());
+		this .addChildObjects ("speed", new Fields .SFFloat (1));
 
 		this .audio    = $("<audio></audio>");
 		this .urlStack = new Fields .MFString ();
@@ -90,6 +89,7 @@ function ($,
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
@@ -121,9 +121,6 @@ function ($,
 			X3DSoundSourceNode .prototype .initialize .call (this);
 			X3DUrlObject       .prototype .initialize .call (this);
 
-			this .url_    .addInterest ("set_url__",    this);
-			this .buffer_ .addInterest ("set_buffer__", this);
-
 			this .audio .on ("error", this .setError .bind (this));
 
 			this .audio [0] .preload     = "auto";
@@ -140,22 +137,6 @@ function ($,
 		{
 			X3DSoundSourceNode .prototype .set_live__ .call (this);
 			X3DUrlObject       .prototype .set_live__ .call (this);
-		},
-		set_url__: function ()
-		{
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
-			this .requestImmediateLoad ();
-		},
-		requestImmediateLoad: function (cache = true)
-		{
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-				return;
-
-			this .setCache (cache);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-
-			this .buffer_ = this .url_;
 		},
 		set_buffer__: function ()
 		{
@@ -202,6 +183,10 @@ function ($,
 			this .audio .unbind ("canplaythrough");
 			this .setMedia (this .audio);
 			this .setLoadState (X3DConstants .COMPLETE_STATE);
+		},
+		unload: function ()
+		{
+			this .setMedia (null);
 		},
 	});
 

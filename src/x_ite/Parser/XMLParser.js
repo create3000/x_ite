@@ -499,14 +499,13 @@ function ($,
 				this .parser .setInput (url);
 				Parser .prototype .sfstringValues .call (this .parser, this .url);
 
-				var externproto = new X3DExternProtoDeclaration (this .getExecutionContext ());
+				var externproto = new X3DExternProtoDeclaration (this .getExecutionContext (), this .url);
 
 				this .pushParent (externproto);
 				this .protoInterfaceElement (xmlElement); // parse fields
 				this .popParent ();
 
 				externproto .setName (name);
-				externproto .url_ = this .url;
 				externproto .setup ();
 
 				this .getExecutionContext () .externprotos .add (name, externproto);

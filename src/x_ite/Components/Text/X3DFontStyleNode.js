@@ -99,7 +99,8 @@ function (Fields,
 
 		this .addType (X3DConstants .X3DFontStyleNode);
 
-		this .addChildObjects ("url",                  new Fields .MFString (),
+		this .addChildObjects ("load",                 new Fields .SFBool (),
+		                       "url",                  new Fields .MFString (),
 		                       "autoRefresh",          new Fields .SFTime (),
 									  "autoRefreshTimeLimit", new Fields .SFTime (3600));
 

@@ -87,8 +87,6 @@ function (Fields,
 
 		this .addType (X3DConstants .ShaderPart);
 
-		this .addChildObjects ("buffer", new Fields .MFString ());
-
 		this .valid = false;
 	}
 
@@ -99,6 +97,7 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
@@ -124,16 +123,9 @@ function (Fields,
 
 			this .shader = gl .createShader (gl [this .getShaderType ()]);
 
-			this .url_    .addInterest ("set_url__",    this);
 			this .buffer_ .addInterest ("set_buffer__", this);
 
 			this .set_url__ ();
-		},
-		set_url__: function ()
-		{
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
-			this .requestImmediateLoad ();
 		},
 		isValid: function ()
 		{
@@ -173,6 +165,14 @@ function (Fields,
 			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
 			this .buffer_ = this .url_;
+		},
+		requestUnload: function ()
+		{
+			if (this .checkLoadState () === X3DConstants .NOT_STARTED_STATE || this .checkLoadState () === X3DConstants .FAILED_STATE)
+				return;
+
+			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+			this .valid = false;
 		},
 		set_buffer__: function ()
 		{

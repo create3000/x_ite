@@ -60,7 +60,8 @@ function (Fields,
 	{
 		this .addType (X3DConstants .X3DUrlObject);
 
-		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE),
+		                       "buffer",    new Fields .MFString ());
 
 		this .cache                = true;
 		this .autoRefreshStartTime = performance .now ();
@@ -73,6 +74,9 @@ function (Fields,
 		{
 			this .isLive () .addInterest ("set_live__", this);
 
+			this .load_                 .addInterest ("set_load__",        this);
+			this .url_                  .addInterest ("set_url__",         this);
+			this .buffer_               .addInterest ("set_buffer__",      this);
 			this .autoRefresh_          .addInterest ("set_autoRefresh__", this);
 			this .autoRefreshTimeLimit_ .addInterest ("set_autoRefresh__", this);
 		},
@@ -122,6 +126,33 @@ function (Fields,
 		{
 			return this .cache;
 		},
+		requestImmediateLoad: function (cache = true)
+		{
+			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
+				return;
+
+			if (!this .load_ .getValue ())
+				return;
+
+			if (this .url_ .length === 0)
+				return;
+
+			this .setCache (cache);
+			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
+
+			// buffer prevents double load of the scene if load and url field are set at the same time.
+			this .buffer_ = this .url_;
+		},
+		requestUnload: function ()
+		{
+			if (this .checkLoadState () === X3DConstants .NOT_STARTED_STATE || this .checkLoadState () === X3DConstants .FAILED_STATE)
+				return;
+
+			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+			this .unload ();
+		},
+		unload: function ()
+		{ },
 		setAutoRefreshTimer: function (autoRefreshInterval)
 		{
 			clearTimeout (this .autoRefreshId);
@@ -151,6 +182,28 @@ function (Fields,
 			else
 				clearTimeout (this .autoRefreshId);
 		},
+		set_load__: function ()
+		{
+			if (this .load_ .getValue ())
+			{
+				this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+
+				this .requestImmediateLoad ();
+			}
+			else
+				this .requestUnload ();
+		},
+		set_url__: function ()
+		{
+			if (! this .load_ .getValue ())
+				return;
+
+			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+
+			this .requestImmediateLoad ();
+		},
+		set_buffer__: function ()
+		{ },
 		set_autoRefresh__: function ()
 		{
 			if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)

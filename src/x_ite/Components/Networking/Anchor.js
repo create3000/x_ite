@@ -87,6 +87,7 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "parameter",            new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
@@ -135,6 +136,10 @@ function (Fields,
 					anchor .requestImmediateLoad ();
 			};
 		},
+		set_load__: function ()
+		{ },
+		set_url__: function ()
+		{ },
 		requestImmediateLoad: function (cache = true)
 		{
 			this .setCache (cache);
