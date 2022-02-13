@@ -106,7 +106,6 @@ function (Fields,
 			{
 				this .media [0] .volume = 0;
 				this .media [0] .pause ();
-				this .media .unbind ("ended");
 			}
 
 			this .media = value;
@@ -114,6 +113,8 @@ function (Fields,
 			if (value)
 			{
 				const media = value [0];
+
+				media .loop = this .loop_ .getValue ();
 
 				this .setVolume (0);
 				this .duration_changed_ = media .duration;
@@ -150,6 +151,11 @@ function (Fields,
 
 			this .set_volume__ ();
 		},
+		set_loop: function ()
+		{
+			if (this .media)
+				this .media [0] .loop = this .loop_ .getValue ();
+		},
 		set_volume__: function ()
 		{
 			if (! this .media)
@@ -180,10 +186,7 @@ function (Fields,
 		set_pause: function ()
 		{
 			if (this .media)
-			{
-				this .media .unbind ("ended");
 				this .media [0] .pause ();
-			}
 		},
 		set_resume: function ()
 		{
@@ -196,10 +199,7 @@ function (Fields,
 		set_stop: function ()
 		{
 			if (this .media)
-			{
-				this .media .unbind ("ended");
 				this .media [0] .pause ();
-			}
 		},
 		set_ended: function ()
 		{
@@ -210,27 +210,16 @@ function (Fields,
 				if (media .currentTime < media .duration)
 					return;
 
-				if (this .loop_ .getValue ())
-				{
-					if (this .speed_ .getValue ())
-						media .play ();
-
-					// The event order below is very important.
-
-					this .elapsedTime_ = this .getElapsedTime ();
-				}
-				else
-				{
+				if (!this .loop_ .getValue ())
 					this .stop ();
-				}
 			}
 		},
 		set_time: function ()
 		{
-			this .set_ended ();
-
 			if (this .media)
 				this .elapsedTime_ = this .getElapsedTime ();
+
+			this .set_ended ();
 		},
 	});
 
