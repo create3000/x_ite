@@ -163,36 +163,43 @@ define ('x_ite/Components/DIS/DISEntityTypeMapping',[
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DInfoNode",
+	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DInfoNode, 
+          X3DInfoNode,
+          X3DUrlObject,
           X3DConstants)
 {
 "use strict";
 
 	function DISEntityTypeMapping (executionContext)
 	{
-		X3DInfoNode .call (this, executionContext);
+		X3DInfoNode  .call (this, executionContext);
+		X3DUrlObject .call (this, executionContext);
 
 		this .addType (X3DConstants .DISEntityTypeMapping);
 	}
 
 	DISEntityTypeMapping .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
+		X3DUrlObject .prototype,
 	{
 		constructor: DISEntityTypeMapping,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",         new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "category",    new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "country",     new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "domain",      new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "extra",       new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "kind",        new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "specific",    new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "subcategory", new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "category",             new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "country",              new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "domain",               new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "extra",                new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "kind",                 new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "specific",             new Fields .SFInt32 ()),
+			new X3DFieldDefinition (X3DConstants .initializeOnly, "subcategory",          new Fields .SFInt32 ()),
 		]),
 		getTypeName: function ()
 		{
@@ -206,12 +213,23 @@ function (Fields,
 		{
 			return "mapping";
 		},
+		initialize: function ()
+		{
+			X3DInfoNode  .prototype .initialize .call (this);
+			X3DUrlObject .prototype .initialize .call (this);
+		},
+		requestImmediateLoad: function (cache = true)
+		{ },
+		requestUnload: function ()
+		{ },
+		set_load__: function ()
+		{ },
+		set_url__: function ()
+		{ },
 	});
 
 	return DISEntityTypeMapping;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************

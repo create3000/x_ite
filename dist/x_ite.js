@@ -13760,10 +13760,82 @@ function (X3DConstants)
  ******************************************************************************/
 
 
+define ('standard/Utility/MapUtilities',['require'],function ($)
+{
+"use strict";
+
+   const MapUtilities = {
+      assign: function (m1, m2)
+      {
+         m1 .clear ();
+
+         m2 .forEach (function (value, key)
+         {
+            m1 .set (key, value);
+         });
+
+         return m1;
+      },
+   };
+
+	return MapUtilities;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Base/X3DObject',[
 	"x_ite/InputOutput/Generator",
+	"standard/Utility/MapUtilities",
 ],
-function (Generator)
+function (Generator,
+          MapUtilities)
 {
 "use strict";
 
@@ -13775,9 +13847,10 @@ function (Generator)
 		_id: 0,
 		_name: "",
 		_interests: new Map (),
+		_interestsTemp: new Map (),
 		getId: (function ()
 		{
-			var id = 0;
+			let id = 0;
 
 			function getId () { return this ._id; }
 
@@ -13806,8 +13879,11 @@ function (Generator)
 		},
 		addInterest: function (callbackName, object)
 		{
-			if (! this .hasOwnProperty ("_interests"))
-				this ._interests = new Map ();
+			if (!this .hasOwnProperty ("_interests"))
+			{
+				this ._interests     = new Map ();
+				this ._interestsTemp = new Map ();
+			}
 
 			const callback = object [callbackName];
 
@@ -13822,9 +13898,7 @@ function (Generator)
 			}
 			else
 			{
-				const self = this;
-
-				this ._interests .set (object .getId () + callbackName, function () { callback .call (object, self); });
+				this ._interests .set (object .getId () + callbackName, callback .bind (object, this));
 			}
 		},
 		removeInterest: function (callbackName, object)
@@ -13844,7 +13918,8 @@ function (Generator)
 
 			return function ()
 			{
-				this ._interests .forEach (processInterest);
+				if (this ._interests .size)
+					MapUtilities .assign (this ._interestsTemp, this ._interests) .forEach (processInterest);
 			};
 		})(),
 		toString: function (scene)
@@ -14367,76 +14442,6 @@ define ('x_ite/Base/Events',[],function ()
  ******************************************************************************/
 
 
-define ('standard/Utility/MapUtilities',['require'],function ($)
-{
-"use strict";
-
-   const MapUtilities = {
-      assign: function (m1, m2)
-      {
-         m1 .clear ();
-
-         m2 .forEach (function (value, key)
-         {
-            m1 .set (key, value);
-         });
-
-         return m1;
-      },
-   };
-
-	return MapUtilities;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Basic/X3DField',[
 	"jquery",
 	"x_ite/Base/X3DChildObject",
@@ -14682,9 +14687,7 @@ function ($,
 			return function ()
 			{
 				if (this ._routeCallbacks .size)
-				{
 					MapUtilities .assign (routeCallbacks, this ._routeCallbacks) .forEach (processRouteCallback);
-				}
 			};
 		})(),
 		processEvent: (function ()
@@ -25668,6 +25671,14 @@ function (X3DEventObject,
 		addAlias: function (alias, field)
 		{
 			this ._aliases .set (alias, field);
+
+			Object .defineProperty (this, alias + "_",
+			{
+				get: function () { return field; },
+				set: function (value) { field .setValue (value); },
+				enumerable: true,
+				configurable: false,
+			});
 		},
 		getFieldDefinitions: function ()
 		{
@@ -34615,7 +34626,8 @@ function (Fields,
 	{
 		this .addType (X3DConstants .X3DUrlObject);
 
-		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE),
+		                       "urlBuffer", new Fields .MFString ());
 
 		this .cache                = true;
 		this .autoRefreshStartTime = performance .now ();
@@ -34628,6 +34640,9 @@ function (Fields,
 		{
 			this .isLive () .addInterest ("set_live__", this);
 
+			this .load_                 .addInterest ("set_load__",        this);
+			this .url_                  .addInterest ("set_url__",         this);
+			this .urlBuffer_            .addInterest ("loadNow",           this);
 			this .autoRefresh_          .addInterest ("set_autoRefresh__", this);
 			this .autoRefreshTimeLimit_ .addInterest ("set_autoRefresh__", this);
 		},
@@ -34677,6 +34692,35 @@ function (Fields,
 		{
 			return this .cache;
 		},
+		requestImmediateLoad: function (cache = true)
+		{
+			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
+				return;
+
+			if (!this .load_ .getValue ())
+				return;
+
+			if (this .url_ .length === 0)
+				return;
+
+			this .setCache (cache);
+			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
+
+			// Buffer prevents double load of the scene if load and url field are set at the same time.
+			this .urlBuffer_ = this .url_;
+		},
+		loadNow: function ()
+		{ },
+		requestUnload: function ()
+		{
+			if (this .checkLoadState () === X3DConstants .NOT_STARTED_STATE || this .checkLoadState () === X3DConstants .FAILED_STATE)
+				return;
+
+			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+			this .unloadNow ();
+		},
+		unloadNow: function ()
+		{ },
 		setAutoRefreshTimer: function (autoRefreshInterval)
 		{
 			clearTimeout (this .autoRefreshId);
@@ -34705,6 +34749,26 @@ function (Fields,
 				this .set_autoRefresh__ ();
 			else
 				clearTimeout (this .autoRefreshId);
+		},
+		set_load__: function ()
+		{
+			if (this .load_ .getValue ())
+			{
+				this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+
+				this .requestImmediateLoad ();
+			}
+			else
+				this .requestUnload ();
+		},
+		set_url__: function ()
+		{
+			if (!this .load_ .getValue ())
+				return;
+
+			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+
+			this .requestImmediateLoad ();
 		},
 		set_autoRefresh__: function ()
 		{
@@ -34879,7 +34943,8 @@ function (X3DChildObject,
 		if (! protoNode .isExternProto)
 			return;
 
-		protoNode .requestImmediateLoad (this .construct .bind (this));
+		protoNode .addCallback (this .construct .bind (this));
+		protoNode .requestImmediateLoad ();
 	}
 
 	X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .prototype),
@@ -35519,14 +35584,15 @@ function ($,
 
 	SupportedNodes .addAbstractType ("X3DExternProtoDeclaration");
 
-	function X3DExternProtoDeclaration (executionContext)
+	function X3DExternProtoDeclaration (executionContext, url)
 	{
 		X3DProtoDeclarationNode .call (this, executionContext);
 		X3DUrlObject            .call (this, executionContext);
 
 		this .addType (X3DConstants .X3DExternProtoDeclaration)
 
-		this .addChildObjects ("url",                  new Fields .MFString (),
+		this .addChildObjects ("load",                 new Fields .SFBool (true),
+		                       "url",                  url .copy (), // Must be of type MFString.
 		                       "autoRefresh",          new Fields .SFTime (),
 									  "autoRefreshTimeLimit", new Fields .SFTime (3600));
 
@@ -35581,27 +35647,19 @@ function ($,
 		{
 			return this .proto;
 		},
-		loadNow: function (callback)
+		addCallback: function (callback)
 		{
-			// 7.73 — ExternProtoDeclaration function, added callback argument.
-			this .requestImmediateLoad (callback);
+			this .deferred .done (callback);
 		},
-		requestImmediateLoad: function (callback)
+		loadNow: function ()
 		{
-			if ($.isFunction (callback))
-				this .deferred .done (callback);
-
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-				return;
+			// 7.73 — ExternProtoDeclaration function
 
 			this .getScene () .addInitLoadCount (this);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-
-			// Don't create scene cache, due to possible default nodes in proto SFNode fields and complete scenes.
 
 			const FileLoader = require ("x_ite/InputOutput/FileLoader");
 
-			new FileLoader (this) .createX3DFromURL (this .url_, null, this .setInternalSceneAsync .bind (this));
+			new FileLoader (this) .createX3DFromURL (this .urlBuffer_, null, this .setInternalSceneAsync .bind (this));
 		},
 		setInternalSceneAsync: function (value)
 		{
@@ -37245,7 +37303,7 @@ function (Fields,
 						{
 							if (this .URLList (this .MFString))
 							{
-								var externproto = new X3DExternProtoDeclaration (this .getExecutionContext ());
+								var externproto = new X3DExternProtoDeclaration (this .getExecutionContext (), this .MFString);
 
 								for (var i = 0, length = externInterfaceDeclarations .length; i < length; ++ i)
 								{
@@ -37255,7 +37313,6 @@ function (Fields,
 								}
 
 								externproto .setName (nodeTypeId);
-								externproto .url_ = this .MFString;
 								externproto .setup ();
 
 								this .getExecutionContext () .externprotos .add (nodeTypeId, externproto);
@@ -41167,9 +41224,7 @@ function (Fields,
 		constructor: X3DTimeDependentNode,
 		initialize: function ()
 		{
-			X3DChildNode .prototype .initialize .call (this);
-
-			this .isLive ()   .addInterest ("set_live__", this);
+			this .isLive ()   .addInterest ("set_live__",  this);
 			this .isEvenLive_ .addInterest ("_set_live__", this); // to X3DBaseNode
 
 			this .initialized_ .addInterest ("set_loop__",       this);
@@ -41381,13 +41436,13 @@ function (Fields,
 		},
 		real_resume: function ()
 		{
-			var interval = (performance .now () - this .pause) / 1000;
+			const interval = (performance .now () - this .pause) / 1000;
 
 			this .pauseInterval += interval;
 
 			this .set_resume (interval);
 
-			this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
+			this .getBrowser () .timeEvents () .addInterest ("set_time", this);
 			this .getBrowser () .addBrowserEvent ();
 		},
 		do_stop: function ()
@@ -41569,7 +41624,7 @@ function (Fields,
 		},
 		setRange: function (currentFraction, firstFraction, lastFraction)
 		{
-			var
+			const
 				currentTime   = this .getBrowser () .getCurrentTime (),
 				startTime     = this .startTime_ .getValue (),
 				cycleInterval = this .cycleInterval_ .getValue ();
@@ -41605,7 +41660,7 @@ function (Fields,
 		},
 		set_resume: function (pauseInterval)
 		{
-			var
+			const
 				currentTime   = this .getBrowser () .getCurrentTime (),
 				startTime     = this .startTime_ .getValue ();
 
@@ -41619,7 +41674,7 @@ function (Fields,
 		{
 			// The event order below is very important.
 
-			var time = this .getBrowser () .getCurrentTime ();
+			const time = this .getBrowser () .getCurrentTime ();
 
 			if (time - this .cycle >= this .interval)
 			{
@@ -46271,14 +46326,13 @@ function ($,
 				this .parser .setInput (url);
 				Parser .prototype .sfstringValues .call (this .parser, this .url);
 
-				var externproto = new X3DExternProtoDeclaration (this .getExecutionContext ());
+				var externproto = new X3DExternProtoDeclaration (this .getExecutionContext (), this .url);
 
 				this .pushParent (externproto);
 				this .protoInterfaceElement (xmlElement); // parse fields
 				this .popParent ();
 
 				externproto .setName (name);
-				externproto .url_ = this .url;
 				externproto .setup ();
 
 				this .getExecutionContext () .externprotos .add (name, externproto);
@@ -58874,8 +58928,6 @@ function ($,
 
 		this .addType (X3DConstants .ImageTexture);
 
-		this .addChildObjects ("buffer", new Fields .MFString ());
-
 		this .urlStack = new Fields .MFString ();
 	}
 
@@ -58886,6 +58938,7 @@ function ($,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
@@ -58910,9 +58963,6 @@ function ($,
 			X3DTexture2DNode .prototype .initialize .call (this);
 			X3DUrlObject     .prototype .initialize .call (this);
 
-			this .url_    .addInterest ("set_url__",   this);
-			this .buffer_ .addInterest ("set_buffer__", this);
-
 			this .canvas = $("<canvas></canvas>");
 
 			this .image = $("<img></img>");
@@ -58922,27 +58972,15 @@ function ($,
 
 			this .image [0] .crossOrigin = "Anonymous";
 
-			this .set_url__ ();
-		},
-		set_url__: function ()
-		{
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
 			this .requestImmediateLoad ();
 		},
-		requestImmediateLoad: function (cache = true)
+		unloadNow: function ()
 		{
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-				return;
-
-			this .setCache (cache);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-
-			this .buffer_ = this .url_;
+			this .clearTexture ();
 		},
-		set_buffer__: function ()
+		loadNow: function ()
 		{
-			this .urlStack .setValue (this .buffer_);
+			this .urlStack .setValue (this .urlBuffer_);
 			this .loadNext ();
 		},
 		loadNext: function ()
@@ -64431,24 +64469,12 @@ function (Fields,
 {
 "use strict";
 
-	var shaderTypes =
-	{
-		VERTEX:          "VERTEX_SHADER",
-		TESS_CONTROL:    "TESS_CONTROL_SHADER",
-		TESS_EVALUATION: "TESS_EVALUATION_SHADER",
-		GEOMETRY:        "GEOMETRY_SHADER",
-		FRAGMENT:        "FRAGMENT_SHADER",
-		COMPUTE:         "COMPUTE_SHADER",
-	};
-
 	function ShaderPart (executionContext)
 	{
 		X3DNode      .call (this, executionContext);
 		X3DUrlObject .call (this, executionContext);
 
 		this .addType (X3DConstants .ShaderPart);
-
-		this .addChildObjects ("buffer", new Fields .MFString ());
 
 		this .valid = false;
 	}
@@ -64460,6 +64486,7 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
@@ -64481,18 +64508,9 @@ function (Fields,
 			X3DNode      .prototype .initialize .call (this);
 			X3DUrlObject .prototype .initialize .call (this);
 
-			var gl = this .getBrowser () .getContext ();
+			const gl = this .getBrowser () .getContext ();
 
 			this .shader = gl .createShader (gl [this .getShaderType ()]);
-
-			this .url_    .addInterest ("set_url__",    this);
-			this .buffer_ .addInterest ("set_buffer__", this);
-
-			this .set_url__ ();
-		},
-		set_url__: function ()
-		{
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
 			this .requestImmediateLoad ();
 		},
@@ -64504,15 +64522,28 @@ function (Fields,
 		{
 			return this .shader;
 		},
-		getShaderType: function ()
+		getShaderType: (function ()
 		{
-			var type = shaderTypes [this .type_ .getValue ()];
+			const shaderTypes =
+			{
+				VERTEX:          "VERTEX_SHADER",
+				TESS_CONTROL:    "TESS_CONTROL_SHADER",
+				TESS_EVALUATION: "TESS_EVALUATION_SHADER",
+				GEOMETRY:        "GEOMETRY_SHADER",
+				FRAGMENT:        "FRAGMENT_SHADER",
+				COMPUTE:         "COMPUTE_SHADER",
+			};
 
-			if (type)
-				return type;
+			return function ()
+			{
+				const type = shaderTypes [this .type_ .getValue ()];
 
-			return "VERTEX_SHADER";
-		},
+				if (type)
+					return type;
+
+				return "VERTEX_SHADER";
+			};
+		})(),
 		getSourceText: function ()
 		{
 			return this .url_;
@@ -64525,21 +64556,15 @@ function (Fields,
 		{
 			return this .shadow;
 		},
-		requestImmediateLoad: function (cache = true)
+		unloadNow: function ()
 		{
-			if (this .checkLoadState () == X3DConstants .COMPLETE_STATE || this .checkLoadState () == X3DConstants .IN_PROGRESS_STATE)
-				return;
-
-			this .setCache (cache);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-
-			this .buffer_ = this .url_;
+			this .valid = false;
 		},
-		set_buffer__: function ()
+		loadNow: function ()
 		{
 			this .valid = false;
 
-			new FileLoader (this) .loadDocument (this .buffer_,
+			new FileLoader (this) .loadDocument (this .urlBuffer_,
 			function (data)
 			{
 				if (data === null)
@@ -64549,7 +64574,7 @@ function (Fields,
 				}
 				else
 				{
-					var
+					const
 						gl     = this .getBrowser () .getContext (),
 						source = Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .shadow);
 
@@ -78592,9 +78617,11 @@ function (Fields,
 
 		this .addType (X3DConstants .X3DFontStyleNode);
 
-		this .addChildObjects ("url",                  new Fields .MFString (),
+		this .addChildObjects ("load",                 new Fields .SFBool (true),
 		                       "autoRefresh",          new Fields .SFTime (),
 									  "autoRefreshTimeLimit", new Fields .SFTime (3600));
+
+		this .addAlias ("url", this .family_);
 
 		this .familyStack = [ ];
 		this .alignments  = [ ];
@@ -78610,7 +78637,7 @@ function (Fields,
 			X3DNode      .prototype .initialize .call (this);
 			X3DUrlObject .prototype .initialize .call (this);
 
-			this .style_   .addInterest ("set_style__", this);
+			this .style_   .addInterest ("set_style__",   this);
 			this .justify_ .addInterest ("set_justify__", this);
 
 			this .font        = null;
@@ -78621,16 +78648,11 @@ function (Fields,
 
 			this .requestImmediateLoad ();
 		},
-		getMajorAlignment: function ()
-		{
-			return this .alignments [0];
-		},
-		getMinorAlignment: function ()
-		{
-			return this .alignments [1];
-		},
 		set_style__: function ()
 		{
+			if (!this .load_ .getValue ())
+				return;
+
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
 			this .requestImmediateLoad ();
@@ -78648,6 +78670,14 @@ function (Fields,
 			this .alignments [1] = this .justify_ .length > 1
 			                       ? this .getAlignment (1, minorNormal)
 			                       : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
+		},
+		getMajorAlignment: function ()
+		{
+			return this .alignments [0];
+		},
+		getMinorAlignment: function ()
+		{
+			return this .alignments [1];
 		},
 		getAlignment: function (index, normal)
 		{
@@ -78678,17 +78708,20 @@ function (Fields,
 
 			return index ? TextAlignment .FIRST : TextAlignment .BEGIN;
 		},
-		requestImmediateLoad: function (cache = true)
+		getDefaultFont: function (familyName)
 		{
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-				return;
+			const family = Fonts [familyName];
 
-			this .setCache (cache);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
+			if (family)
+				return family [this .style_ .getValue ()] || family .PLAIN;
 
+			return;
+		},
+		loadNow: function ()
+		{
 			// Add default font to family array.
 
-			const family = this .family_ .copy ();
+			const family = this .urlBuffer_ .copy ();
 
 			family .push ("SERIF");
 
@@ -78700,15 +78733,6 @@ function (Fields,
 				this .familyStack .push (this .getDefaultFont (familyName) || familyName);
 
 			this .loadNext ();
-		},
-		getDefaultFont: function (familyName)
-		{
-			const family = Fonts [familyName];
-
-			if (family)
-				return family [this .style_ .getValue ()] || family .PLAIN;
-
-			return;
 		},
 		loadNext: function ()
 		{
@@ -80281,16 +80305,16 @@ function (Fields,
 	{
 		constructor: FontStyle,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "language",    new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "family",      new Fields .MFString ("SERIF")),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "style",       new Fields .SFString ("PLAIN")),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "size",        new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "spacing",     new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "horizontal",  new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "leftToRight", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "topToBottom", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "justify",     new Fields .MFString ("BEGIN")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "language",    new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "family",      new Fields .MFString ("SERIF")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "style",       new Fields .SFString ("PLAIN")),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "size",        new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "spacing",     new Fields .SFFloat (1)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "horizontal",  new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "leftToRight", new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "topToBottom", new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "justify",     new Fields .MFString ("BEGIN")),
 		]),
 		getTypeName: function ()
 		{
@@ -108109,7 +108133,7 @@ define ('x_ite/Components/PointingDeviceSensor/TouchSensor',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTouchSensorNode, 
+          X3DTouchSensorNode,
           X3DConstants,
           Matrix4)
 {
@@ -108131,8 +108155,8 @@ function (Fields,
 		constructor: TouchSensor,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "description",         new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "hitTexCoord_changed", new Fields .SFVec2f ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "hitNormal_changed",   new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "hitPoint_changed",    new Fields .SFVec3f ()),
@@ -108178,8 +108202,6 @@ function (Fields,
 
 	return TouchSensor;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -108270,6 +108292,7 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "parameter",            new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
@@ -108300,8 +108323,10 @@ function (Fields,
 			X3DUrlObject    .prototype .initialize .call (this);
 
 			this .description_ .addFieldInterest (this .touchSensorNode .description_);
+			this .load_        .addFieldInterest (this .touchSensorNode .enabled_);
 
 			this .touchSensorNode .description_ = this .description_;
+			this .touchSensorNode .enabled_     = this .load_;
 			this .touchSensorNode .setup ();
 
 			// Modify set_active__ to get immediate response to user action (click event), otherwise links are not opened in this window.
@@ -108318,6 +108343,10 @@ function (Fields,
 					anchor .requestImmediateLoad ();
 			};
 		},
+		set_load__: function ()
+		{ },
+		set_url__: function ()
+		{ },
 		requestImmediateLoad: function (cache = true)
 		{
 			this .setCache (cache);
@@ -108352,6 +108381,8 @@ function (Fields,
 			}
 			.bind (this));
 		},
+		requestUnload ()
+		{ },
 		traverse: function (type, renderObject)
 		{
 			if (type === TraverseType .POINTER)
@@ -108456,8 +108487,6 @@ function (Fields,
 
 		this .addType (X3DConstants .Inline);
 
-		this .addChildObjects ("buffer", new Fields .MFString ());
-
 		this .scene = this .getBrowser () .getDefaultScene ();
 		this .group = new Group (executionContext);
 
@@ -108504,15 +108533,14 @@ function (Fields,
 			this .group .isCameraObject_   .addFieldInterest (this .isCameraObject_);
 			this .group .isPickableObject_ .addFieldInterest (this .isPickableObject_);
 
-			this .load_   .addInterest ("set_load__",   this);
-			this .url_    .addInterest ("set_url__",    this);
-			this .buffer_ .addInterest ("set_buffer__", this);
-
-			this .set_url__ ();
+			this .requestImmediateLoad ();
 		},
 		getBBox: function (bbox, shadow)
 		{
-			return this .group .getBBox (bbox, shadow);
+			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+				return this .group .getBBox (bbox, shadow);
+
+			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 		},
 		set_live__: function ()
 		{
@@ -108523,51 +108551,13 @@ function (Fields,
 
 			this .scene .setLive (this .isLive () .getValue ());
 		},
-		set_load__: function ()
+		unloadNow: function ()
 		{
-			if (this .load_ .getValue ())
-			{
-				this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
-				this .requestImmediateLoad ();
-			}
-			else
-				this .requestUnload ();
-		},
-		set_url__: function ()
-		{
-			if (! this .load_ .getValue ())
-				return;
-
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
-			this .requestImmediateLoad ();
-		},
-		requestImmediateLoad: function (cache = true)
-		{
-			if (! this .load_ .getValue ())
-				return;
-
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-				return;
-
-			this .setCache (cache);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-
-			// buffer prevents double load of the scene if load and url field are set at the same time.
-			this .buffer_ = this .url_;
-		},
-		set_buffer__: function ()
-		{
-			new FileLoader (this) .createX3DFromURL (this .buffer_, null, this .setInternalSceneAsync .bind (this));
-		},
-		requestUnload: function ()
-		{
-			if (this .checkLoadState () === X3DConstants .NOT_STARTED_STATE || this .checkLoadState () === X3DConstants .FAILED_STATE)
-				return;
-
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 			this .setInternalScene (this .getBrowser () .getDefaultScene ());
+		},
+		loadNow: function ()
+		{
+			new FileLoader (this) .createX3DFromURL (this .urlBuffer_, null, this .setInternalSceneAsync .bind (this));
 		},
 		setInternalSceneAsync: function (scene)
 		{
@@ -108602,7 +108592,7 @@ function (Fields,
 		},
 		getInternalScene: function ()
 		{
-			///  Returns the internal X3DScene of this extern proto, that is loaded from the url given.
+			///  Returns the internal X3DScene of this inline, that is loaded from the url given.
 			///  If the load field was false an empty scene is returned.  This empty scene is the same for all Inline
 			///  nodes (due to performance reasons).
 
@@ -108614,7 +108604,7 @@ function (Fields,
 			{
 				case TraverseType .PICKING:
 				{
-					var
+					const
 						browser          = renderObject .getBrowser (),
 						pickingHierarchy = browser .getPickingHierarchy ();
 
@@ -109066,8 +109056,8 @@ function (Fields,
 		constructor: CylinderSensor,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "description",        new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "axisRotation",       new Fields .SFRotation ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "diskAngle",          new Fields .SFFloat (0.261792)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle",           new Fields .SFFloat ()),
@@ -109365,7 +109355,7 @@ define ('x_ite/Components/PointingDeviceSensor/PlaneSensor',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DDragSensorNode, 
+          X3DDragSensorNode,
           X3DConstants,
           Rotation4,
           Vector3,
@@ -109400,8 +109390,8 @@ function (Fields,
 		constructor: PlaneSensor,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "description",         new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "axisRotation",        new Fields .SFRotation ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "autoOffset",          new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "offset",              new Fields .SFVec3f ()),
@@ -109502,7 +109492,7 @@ function (Fields,
 						if (this .getLineTrackPoint (hit, this .line, this .startPoint))
 						{
 							var trackPoint = new Vector3 (0, 0, 0);
-	
+
 							try
 							{
 								this .getLineTrackPoint (hit, new Line3 (this .line .direction, this .line .direction), trackPoint);
@@ -109510,7 +109500,7 @@ function (Fields,
 							catch (error)
 							{
 								//console .log (error);
-	
+
 								trackPoint = this .startPoint;
 							}
 
@@ -109569,7 +109559,7 @@ function (Fields,
 						{
 							trackPoint .assign (endPoint);
 						}
-					
+
 						this .track (endPoint, trackPoint);
 					}
 					else
@@ -109612,8 +109602,6 @@ function (Fields,
 
 	return PlaneSensor;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -109886,7 +109874,7 @@ define ('x_ite/Components/PointingDeviceSensor/SphereSensor',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DDragSensorNode, 
+          X3DDragSensorNode,
           X3DConstants,
           Vector3,
           Rotation4,
@@ -109910,8 +109898,8 @@ function (Fields,
 		constructor: SphereSensor,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "description",        new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "autoOffset",         new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "offset",             new Fields .SFRotation ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,  "trackPoint_changed", new Fields .SFVec3f ()),
@@ -109981,7 +109969,7 @@ function (Fields,
 					this .fromVector  .assign (hitPoint);
 					this .startPoint  .assign (hitPoint);
 					this .startOffset .assign (this .offset_ .getValue ());
-	
+
 					this .trackPoint_changed_ = hitPoint;
 					this .rotation_changed_   = this .offset_ .getValue ();
 				}
@@ -110017,7 +110005,7 @@ function (Fields,
 					this .zPlane .intersectsLine (hitRay, tangentPoint);
 
 					hitRay = new Line3 (tangentPoint, Vector3 .subtract (this .sphere .center, tangentPoint) .normalize ());
-					
+
 					//console .log (hitRay .toString ());
 
 					this .getTrackPoint (hitRay, trackPoint, false);
@@ -110059,8 +110047,6 @@ function (Fields,
 
 	return SphereSensor;
 });
-
-
 
 /*******************************************************************************
  *
@@ -112808,6 +112794,7 @@ function (Fields,
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected",           new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "isValid",              new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "language",             new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
@@ -112829,6 +112816,8 @@ function (Fields,
 			return this .url_;
 		},
 		requestImmediateLoad: function (cache = true)
+		{ },
+		requestUnload: function ()
 		{ },
 	});
 
@@ -113021,6 +113010,7 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
@@ -113042,6 +113032,8 @@ function (Fields,
 			return this .url_;
 		},
 		requestImmediateLoad: function (cache = true)
+		{ },
+		requestUnload: function ()
 		{ },
 	});
 
@@ -113802,8 +113794,6 @@ function (Fields,
 
 		this .addType (X3DConstants .X3DSoundSourceNode);
 
-		this .addChildObjects ("enabled", new Fields .SFBool (true));
-
 		this .volume = 0;
 		this .media  = null;
 	}
@@ -113816,11 +113806,10 @@ function (Fields,
 		{
 			X3DChildNode         .prototype .initialize .call (this);
 			X3DTimeDependentNode .prototype .initialize .call (this);
-
 		},
-		set_browser_live__: function ()
+		set_live__: function ()
 		{
-			X3DTimeDependentNode .prototype .set_browser_live__ .call (this);
+			X3DTimeDependentNode .prototype .set_live__ .call (this);
 
 			if (this .getDisabled ())
 			{
@@ -113840,14 +113829,15 @@ function (Fields,
 			{
 				this .media [0] .volume = 0;
 				this .media [0] .pause ();
-				this .media .unbind ("ended");
 			}
 
 			this .media = value;
 
 			if (value)
 			{
-				var media = value [0];
+				const media = value [0];
+
+				media .loop = this .loop_ .getValue ();
 
 				this .setVolume (0);
 				this .duration_changed_ = media .duration;
@@ -113884,12 +113874,17 @@ function (Fields,
 
 			this .set_volume__ ();
 		},
+		set_loop: function ()
+		{
+			if (this .media)
+				this .media [0] .loop = this .loop_ .getValue ();
+		},
 		set_volume__: function ()
 		{
 			if (! this .media)
 				return;
 
-			var
+			const
 				mute      = this .getBrowser () .mute_ .getValue (),
 				intensity = Algorithm .clamp (this .getBrowser () .volume_ .getValue (), 0, 1),
 				volume    = (! mute) * intensity * this .volume;
@@ -113914,10 +113909,7 @@ function (Fields,
 		set_pause: function ()
 		{
 			if (this .media)
-			{
-				this .media .unbind ("ended");
 				this .media [0] .pause ();
-			}
 		},
 		set_resume: function ()
 		{
@@ -113930,41 +113922,27 @@ function (Fields,
 		set_stop: function ()
 		{
 			if (this .media)
-			{
-				this .media .unbind ("ended");
 				this .media [0] .pause ();
-			}
 		},
 		set_ended: function ()
 		{
 			if (this .media)
 			{
-				var media = this .media [0];
+				const media = this .media [0];
 
 				if (media .currentTime < media .duration)
 					return;
 
-				if (this .loop_ .getValue ())
-				{
-					if (this .speed_ .getValue ())
-						media .play ();
-
-					// The event order below is very important.
-
-					this .elapsedTime_ = this .getElapsedTime ();
-				}
-				else
-				{
+				if (!this .loop_ .getValue ())
 					this .stop ();
-				}
 			}
 		},
 		set_time: function ()
 		{
-			this .set_ended ();
-
 			if (this .media)
 				this .elapsedTime_ = this .getElapsedTime ();
+
+			this .set_ended ();
 		},
 	});
 
@@ -114048,8 +114026,7 @@ function ($,
 
 		this .addType (X3DConstants .AudioClip);
 
-		this .addChildObjects ("speed",  new Fields .SFFloat (1),
-		                       "buffer", new Fields .MFString ());
+		this .addChildObjects ("speed", new Fields .SFFloat (1));
 
 		this .audio    = $("<audio></audio>");
 		this .urlStack = new Fields .MFString ();
@@ -114062,9 +114039,12 @@ function ($,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "gain",                 new Fields .SFFloat (1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "pitch",                new Fields .SFFloat (1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "loop",                 new Fields .SFBool ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput, "startTime",            new Fields .SFTime ()),
@@ -114093,41 +114073,31 @@ function ($,
 			X3DSoundSourceNode .prototype .initialize .call (this);
 			X3DUrlObject       .prototype .initialize .call (this);
 
-			this .url_    .addInterest ("set_url__",    this);
-			this .buffer_ .addInterest ("set_buffer__", this);
-
 			this .audio .on ("error", this .setError .bind (this));
 
 			this .audio [0] .preload     = "auto";
 			this .audio [0] .volume      = 0;
 			this .audio [0] .crossOrigin = "Anonymous";
 
-			this .set_url__ ();
+			this .requestImmediateLoad ();
 		},
 		getElement: function ()
 		{
 			return this .audio [0];
 		},
-		set_url__: function ()
+		set_live__: function ()
 		{
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
-			this .requestImmediateLoad ();
+			X3DSoundSourceNode .prototype .set_live__ .call (this);
+			X3DUrlObject       .prototype .set_live__ .call (this);
 		},
-		requestImmediateLoad: function (cache = true)
-		{
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-				return;
-
-			this .setCache (cache);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-
-			this .buffer_ = this .url_;
-		},
-		set_buffer__: function ()
+		unloadNow: function ()
 		{
 			this .setMedia (null);
-			this .urlStack .setValue (this .buffer_);
+		},
+		loadNow: function ()
+		{
+			this .setMedia (null);
+			this .urlStack .setValue (this .urlBuffer_);
 			this .audio .bind ("canplaythrough", this .setAudio .bind (this));
 			this .loadNext ();
 		},
@@ -115005,8 +114975,6 @@ function ($,
 
 		this .addType (X3DConstants .MovieTexture);
 
-		this .addChildObjects ("buffer", new Fields .MFString ());
-
 		this .canvas   = $("<canvas></canvas>");
 		this .video    = $("<video></video>");
 		this .urlStack = new Fields .MFString ();
@@ -115020,9 +114988,12 @@ function ($,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",              new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "gain",                 new Fields .SFFloat (1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",                new Fields .SFFloat (1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "pitch",                new Fields .SFFloat (1)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "loop",                 new Fields .SFBool ()),
@@ -115056,41 +115027,31 @@ function ($,
 			X3DSoundSourceNode .prototype .initialize .call (this);
 			X3DUrlObject       .prototype .initialize .call (this);
 
-			this .url_    .addInterest ("set_url__",    this);
-			this .buffer_ .addInterest ("set_buffer__", this);
-
 			this .video .on ("error", this .setError .bind (this));
 
 			this .video [0] .preload     = "auto";
 			this .video [0] .volume      = 0;
 			this .video [0] .crossOrigin = "Anonymous";
 
-			this .set_url__ ();
+			this .requestImmediateLoad ();
 		},
 		getElement: function ()
 		{
 			return this .video [0];
 		},
-		set_url__: function ()
+		set_live__: function ()
 		{
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
-			this .requestImmediateLoad ();
+			X3DSoundSourceNode .prototype .set_live__ .call (this);
+			X3DUrlObject       .prototype .set_live__ .call (this);
 		},
-		requestImmediateLoad: function (cache = true)
+		unloadNow: function ()
 		{
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-				return;
-
-			this .setCache (cache);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-
-			this .buffer_ = this .url_;
+			this .clearTexture ();
 		},
-		set_buffer__: function ()
+		loadNow: function ()
 		{
 			this .setMedia (null);
-			this .urlStack .setValue (this .buffer_);
+			this .urlStack .setValue (this .urlBuffer_);
 			this .video .bind ("canplaythrough", this .setVideo .bind (this));
 			this .loadNext ();
 		},

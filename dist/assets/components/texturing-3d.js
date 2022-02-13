@@ -9001,8 +9001,6 @@ function (Fields,
 		X3DUrlObject     .call (this, executionContext);
 
 		this .addType (X3DConstants .ImageTexture3D);
-
-		this .addChildObjects ("buffer", new Fields .MFString ());
 	}
 
 	ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
@@ -9012,6 +9010,7 @@ function (Fields,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
@@ -9037,30 +9036,11 @@ function (Fields,
 			X3DTexture3DNode .prototype .initialize .call (this);
 			X3DUrlObject     .prototype .initialize .call (this);
 
-			this .url_    .addInterest ("set_url__",   this);
-			this .buffer_ .addInterest ("set_buffer__", this);
-
-			this .set_url__ ();
-		},
-		set_url__: function ()
-		{
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
 			this .requestImmediateLoad ();
-		},
-		requestImmediateLoad: function (cache = true)
-		{
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-				return;
-
-			this .setCache (cache);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-
-			this .buffer_ = this .url_;
 		},
 		getInternalType: function (components)
 		{
-			var gl = this .getBrowser () .getContext ();
+			const gl = this .getBrowser () .getContext ();
 
 			switch (components)
 			{
@@ -9074,9 +9054,13 @@ function (Fields,
 					return gl .RGBA;
 			}
 		},
-		set_buffer__: function ()
+		unloadNow: function ()
 		{
-			new FileLoader (this) .loadBinaryDocument (this .buffer_,
+			this .clearTexture ();
+		},
+		loadNow: function ()
+		{
+			new FileLoader (this) .loadBinaryDocument (this .urlBuffer_,
 			function (data)
 			{
 				if (data === null)
@@ -9087,22 +9071,22 @@ function (Fields,
 				}
 				else
 				{
-					var nrrd = new NRRDParser () .parse (data);
+					const nrrd = new NRRDParser () .parse (data);
 
 					if (nrrd .nrrd)
 					{
-						var internalType = this .getInternalType (nrrd .components);
+						const internalType = this .getInternalType (nrrd .components);
 
 						this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
 						this .setLoadState (X3DConstants .COMPLETE_STATE);
 						return;
 					}
 
-					var dicom = new DICOMParser () .parse (data);
+					const dicom = new DICOMParser () .parse (data);
 
 					if (dicom .dicom)
 					{
-						var internalType = this .getInternalType (dicom .components);
+						const internalType = this .getInternalType (dicom .components);
 
 						this .setTexture (dicom .width, dicom .height, dicom .depth, false, internalType, dicom .data);
 						this .setLoadState (X3DConstants .COMPLETE_STATE);

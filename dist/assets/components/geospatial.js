@@ -2616,31 +2616,38 @@ define ('x_ite/Components/Geospatial/GeoMetadata',[
 	"x_ite/Basic/X3DFieldDefinition",
 	"x_ite/Basic/FieldDefinitionArray",
 	"x_ite/Components/Core/X3DInfoNode",
+	"x_ite/Components/Networking/X3DUrlObject",
 	"x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DInfoNode, 
+          X3DInfoNode,
+          X3DUrlObject,
           X3DConstants)
 {
 "use strict";
 
 	function GeoMetadata (executionContext)
 	{
-		X3DInfoNode .call (this, executionContext);
+		X3DInfoNode  .call (this, executionContext);
+		X3DUrlObject .call (this, executionContext);
 
 		this .addType (X3DConstants .GeoMetadata);
 	}
 
 	GeoMetadata .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
+		X3DUrlObject .prototype,
 	{
 		constructor: GeoMetadata,
 		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "url",      new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "summary",  new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "data",     new Fields .MFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "summary",              new Fields .MFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput, "data",                 new Fields .MFNode ()),
 		]),
 		getTypeName: function ()
 		{
@@ -2654,12 +2661,23 @@ function (Fields,
 		{
 			return "children";
 		},
+		initialize: function ()
+		{
+			X3DInfoNode  .prototype .initialize .call (this);
+			X3DUrlObject .prototype .initialize .call (this);
+		},
+		requestImmediateLoad: function (cache = true)
+		{ },
+		requestUnload: function ()
+		{ },
+		set_load__: function ()
+		{ },
+		set_url__: function ()
+		{ },
 	});
 
 	return GeoMetadata;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -3158,8 +3176,8 @@ define ('x_ite/Components/Geospatial/GeoTouchSensor',[
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTouchSensorNode, 
-          X3DGeospatialObject, 
+          X3DTouchSensorNode,
+          X3DGeospatialObject,
           X3DConstants,
           Vector3,
           Matrix4)
@@ -3186,10 +3204,10 @@ function (Fields,
 		constructor: GeoTouchSensor,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",            new Fields .SFNode ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",         new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",           new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",           new Fields .MFString ("GD", "WE")),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",             new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",         new Fields .SFString ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "hitTexCoord_changed", new Fields .SFVec2f ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "hitNormal_changed",   new Fields .SFVec3f ()),
 			new X3DFieldDefinition (X3DConstants .outputOnly,     "hitPoint_changed",    new Fields .SFVec3f ()),
@@ -3242,8 +3260,6 @@ function (Fields,
 
 	return GeoTouchSensor;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************

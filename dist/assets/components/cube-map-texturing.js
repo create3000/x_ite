@@ -946,6 +946,7 @@ function ($,
 		fieldDefinitions: new FieldDefinitionArray ([
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
 			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
@@ -979,8 +980,6 @@ function ($,
 
 			// Initialize.
 
-			this .url_ .addInterest ("set_url__", this);
-
 			this .canvas = $("<canvas></canvas>");
 
 			this .image = $("<img></img>");
@@ -992,21 +991,13 @@ function ($,
 
 			this .requestImmediateLoad ();
 		},
-		set_url__: function ()
+		unloadNow: function ()
 		{
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-
-			this .requestImmediateLoad ();
+			this .clearTexture ();
 		},
-		requestImmediateLoad: function (cache = true)
+		loadNow: function ()
 		{
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-				return;
-
-			this .setCache (cache);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-
-			this .urlStack .setValue (this .url_);
+			this .urlStack .setValue (this .urlBuffer_);
 			this .loadNext ();
 		},
 		loadNext: function ()
