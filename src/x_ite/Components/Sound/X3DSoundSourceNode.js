@@ -69,8 +69,6 @@ function (Fields,
 
 		this .addType (X3DConstants .X3DSoundSourceNode);
 
-		this .addChildObjects ("enabled", new Fields .SFBool (true));
-
 		this .volume = 0;
 		this .media  = null;
 	}
