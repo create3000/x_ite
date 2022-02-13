@@ -135,6 +135,11 @@ function ($,
 		{
 			return this .audio [0];
 		},
+		set_live__: function ()
+		{
+			X3DSoundSourceNode .prototype .set_live__ .call (this);
+			X3DUrlObject       .prototype .set_live__ .call (this);
+		},
 		set_url__: function ()
 		{
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);

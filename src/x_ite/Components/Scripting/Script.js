@@ -414,6 +414,8 @@ function ($,
 		},
 		set_live__: function ()
 		{
+			X3DScriptNode .prototype .set_live__ .call (this);
+
 			if (!this .context)
 				return;
 
