@@ -115,7 +115,9 @@ define (function ()
 		},
 		getDefaultValue (key)
 		{
-			return defaults .get (this .target) [key];
+			const value = defaults .get (this .target) [key];
+
+			return value === undefined ? undefined : JSON .parse (JSON .stringify (value));
 		},
 		clear: function ()
 		{

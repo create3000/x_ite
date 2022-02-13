@@ -507,13 +507,13 @@ function ($,
 		},
 		callBrowserCallbacks: (function ()
 		{
-			const browserCallbacks = new Map ();
+			const browserCallbacks = [ ];
 
 			return function (browserEvent)
 			{
 				if (this .browserCallbacks .size)
 				{
-					MapUtilities .assign (browserCallbacks, this .browserCallbacks) .forEach (function (browserCallback)
+					MapUtilities .values (browserCallbacks, this .browserCallbacks) .forEach (function (browserCallback)
 					{
 						browserCallback (browserEvent);
 					});

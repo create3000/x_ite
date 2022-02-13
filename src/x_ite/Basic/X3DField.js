@@ -282,7 +282,7 @@ function ($,
 		},
 		processRouteCallbacks: (function ()
 		{
-			const routeCallbacks = new Map ();
+			const routeCallbacks = [ ];
 
 			function processRouteCallback (routeCallback)
 			{
@@ -292,12 +292,12 @@ function ($,
 			return function ()
 			{
 				if (this ._routeCallbacks .size)
-					MapUtilities .assign (routeCallbacks, this ._routeCallbacks) .forEach (processRouteCallback);
+					MapUtilities .values (routeCallbacks, this ._routeCallbacks) .forEach (processRouteCallback);
 			};
 		})(),
 		processEvent: (function ()
 		{
-			const fieldCallbacks = new Map ();
+			const fieldCallbacks = [ ];
 
 			function processEvent (fieldCallback)
 			{
@@ -345,7 +345,7 @@ function ($,
 
 				if (this ._fieldCallbacks .size)
 				{
-					MapUtilities .assign (fieldCallbacks, this ._fieldCallbacks) .forEach (processEvent, this);
+					MapUtilities .values (fieldCallbacks, this ._fieldCallbacks) .forEach (processEvent, this);
 				}
 			};
 		})(),

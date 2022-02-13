@@ -89,7 +89,7 @@ function (Generator,
 			if (!this .hasOwnProperty ("_interests"))
 			{
 				this ._interests     = new Map ();
-				this ._interestsTemp = new Map ();
+				this ._interestsTemp = [ ];
 			}
 
 			const callback = object [callbackName];
@@ -126,7 +126,7 @@ function (Generator,
 			return function ()
 			{
 				if (this ._interests .size)
-					MapUtilities .assign (this ._interestsTemp, this ._interests) .forEach (processInterest);
+					MapUtilities .values (this ._interestsTemp, this ._interests) .forEach (processInterest);
 			};
 		})(),
 		toString: function (scene)

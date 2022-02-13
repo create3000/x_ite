@@ -63,6 +63,19 @@ define (function ($)
 
          return m1;
       },
+      values: function (a, m)
+      {
+         let i = 0;
+
+         m .forEach (function (value)
+         {
+            a [i ++] = value;
+         });
+
+         a .length = m .size;
+
+         return a;
+      },
    };
 
 	return MapUtilities;
