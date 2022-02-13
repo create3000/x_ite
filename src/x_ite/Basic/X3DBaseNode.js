@@ -491,6 +491,14 @@ function (X3DEventObject,
 		addAlias: function (alias, field)
 		{
 			this ._aliases .set (alias, field);
+
+			Object .defineProperty (this, alias + "_",
+			{
+				get: function () { return field; },
+				set: function (value) { field .setValue (value); },
+				enumerable: true,
+				configurable: false,
+			});
 		},
 		getFieldDefinitions: function ()
 		{

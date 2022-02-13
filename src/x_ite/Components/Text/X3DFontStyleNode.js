@@ -100,11 +100,10 @@ function (Fields,
 		this .addType (X3DConstants .X3DFontStyleNode);
 
 		this .addChildObjects ("load",                 new Fields .SFBool (true),
-		                       "url",                  this .family_,
 		                       "autoRefresh",          new Fields .SFTime (),
 									  "autoRefreshTimeLimit", new Fields .SFTime (3600));
 
-		this .family_ .setName ("family");
+		this .addAlias ("url", this .family_);
 
 		this .familyStack = [ ];
 		this .alignments  = [ ];
