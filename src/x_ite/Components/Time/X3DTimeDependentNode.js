@@ -298,13 +298,13 @@ function (Fields,
 		},
 		real_resume: function ()
 		{
-			var interval = (performance .now () - this .pause) / 1000;
+			const interval = (performance .now () - this .pause) / 1000;
 
 			this .pauseInterval += interval;
 
 			this .set_resume (interval);
 
-			this .getBrowser () .timeEvents () .addInterest ("set_time" ,this);
+			this .getBrowser () .timeEvents () .addInterest ("set_time", this);
 			this .getBrowser () .addBrowserEvent ();
 		},
 		do_stop: function ()

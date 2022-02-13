@@ -292,9 +292,7 @@ function ($,
 			return function ()
 			{
 				if (this ._routeCallbacks .size)
-				{
 					MapUtilities .assign (routeCallbacks, this ._routeCallbacks) .forEach (processRouteCallback);
-				}
 			};
 		})(),
 		processEvent: (function ()

@@ -102,8 +102,8 @@ function (Fields,
 		initialize: function ()
 		{
 			X3DAppearanceChildNode .prototype .initialize .call (this);
-	
-			var
+
+			const
 				gl  = this .getBrowser () .getContext (),
 				ext = gl .getExtension ('EXT_blend_minmax');
 
@@ -187,7 +187,7 @@ function (Fields,
 		},
 		enable: function (gl)
 		{
-			var color = this .blendColor_ .getValue ();
+			const color = this .blendColor_ .getValue ();
 
 			gl .blendColor (color .r, color .g, color .b, color .a);
 			gl .blendFuncSeparate (this .sourceColorFactorType, this .destinationColorFactorType, this .sourceAlphaFactorType, this .destinationAlphaFactorType);
@@ -202,5 +202,3 @@ function (Fields,
 
 	return BlendMode;
 });
-
-

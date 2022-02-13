@@ -49,8 +49,10 @@
 
 define ([
 	"x_ite/InputOutput/Generator",
+	"standard/Utility/MapUtilities",
 ],
-function (Generator)
+function (Generator,
+          MapUtilities)
 {
 "use strict";
 
@@ -62,9 +64,10 @@ function (Generator)
 		_id: 0,
 		_name: "",
 		_interests: new Map (),
+		_interestsTemp: new Map (),
 		getId: (function ()
 		{
-			var id = 0;
+			let id = 0;
 
 			function getId () { return this ._id; }
 
@@ -93,8 +96,11 @@ function (Generator)
 		},
 		addInterest: function (callbackName, object)
 		{
-			if (! this .hasOwnProperty ("_interests"))
-				this ._interests = new Map ();
+			if (!this .hasOwnProperty ("_interests"))
+			{
+				this ._interests     = new Map ();
+				this ._interestsTemp = new Map ();
+			}
 
 			const callback = object [callbackName];
 
@@ -109,9 +115,7 @@ function (Generator)
 			}
 			else
 			{
-				const self = this;
-
-				this ._interests .set (object .getId () + callbackName, function () { callback .call (object, self); });
+				this ._interests .set (object .getId () + callbackName, callback .bind (object, this));
 			}
 		},
 		removeInterest: function (callbackName, object)
@@ -131,7 +135,8 @@ function (Generator)
 
 			return function ()
 			{
-				this ._interests .forEach (processInterest);
+				if (this ._interests .size)
+					MapUtilities .assign (this ._interestsTemp, this ._interests) .forEach (processInterest);
 			};
 		})(),
 		toString: function (scene)

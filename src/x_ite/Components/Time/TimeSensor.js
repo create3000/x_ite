@@ -125,7 +125,7 @@ function (Fields,
 		},
 		setRange: function (currentFraction, firstFraction, lastFraction)
 		{
-			var
+			const
 				currentTime   = this .getBrowser () .getCurrentTime (),
 				startTime     = this .startTime_ .getValue (),
 				cycleInterval = this .cycleInterval_ .getValue ();
@@ -161,7 +161,7 @@ function (Fields,
 		},
 		set_resume: function (pauseInterval)
 		{
-			var
+			const
 				currentTime   = this .getBrowser () .getCurrentTime (),
 				startTime     = this .startTime_ .getValue ();
 
@@ -175,7 +175,7 @@ function (Fields,
 		{
 			// The event order below is very important.
 
-			var time = this .getBrowser () .getCurrentTime ();
+			const time = this .getBrowser () .getCurrentTime ();
 
 			if (time - this .cycle >= this .interval)
 			{
