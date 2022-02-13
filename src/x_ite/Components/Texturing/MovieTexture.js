@@ -155,7 +155,7 @@ function ($,
 		loadNow: function ()
 		{
 			this .setMedia (null);
-			this .urlStack .setValue (this .buffer_);
+			this .urlStack .setValue (this .urlBuffer_);
 			this .video .bind ("canplaythrough", this .setVideo .bind (this));
 			this .loadNext ();
 		},

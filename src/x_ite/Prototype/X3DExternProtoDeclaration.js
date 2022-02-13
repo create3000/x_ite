@@ -145,7 +145,7 @@ function ($,
 
 			const FileLoader = require ("x_ite/InputOutput/FileLoader");
 
-			new FileLoader (this) .createX3DFromURL (this .url_, null, this .setInternalSceneAsync .bind (this));
+			new FileLoader (this) .createX3DFromURL (this .urlBuffer_, null, this .setInternalSceneAsync .bind (this));
 		},
 		setInternalSceneAsync: function (value)
 		{

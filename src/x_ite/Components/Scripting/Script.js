@@ -166,7 +166,7 @@ function ($,
 		{
 			this .initialized = false;
 
-			new FileLoader (this) .loadScript (this .buffer_,
+			new FileLoader (this) .loadScript (this .urlBuffer_,
 			function (data)
 			{
 				if (data === null)

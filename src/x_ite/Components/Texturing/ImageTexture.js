@@ -129,7 +129,7 @@ function ($,
 		},
 		loadNow: function ()
 		{
-			this .urlStack .setValue (this .buffer_);
+			this .urlStack .setValue (this .urlBuffer_);
 			this .loadNext ();
 		},
 		loadNext: function ()

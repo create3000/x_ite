@@ -70,16 +70,6 @@ function (Fields,
 {
 "use strict";
 
-	var shaderTypes =
-	{
-		VERTEX:          "VERTEX_SHADER",
-		TESS_CONTROL:    "TESS_CONTROL_SHADER",
-		TESS_EVALUATION: "TESS_EVALUATION_SHADER",
-		GEOMETRY:        "GEOMETRY_SHADER",
-		FRAGMENT:        "FRAGMENT_SHADER",
-		COMPUTE:         "COMPUTE_SHADER",
-	};
-
 	function ShaderPart (executionContext)
 	{
 		X3DNode      .call (this, executionContext);
@@ -119,13 +109,11 @@ function (Fields,
 			X3DNode      .prototype .initialize .call (this);
 			X3DUrlObject .prototype .initialize .call (this);
 
-			var gl = this .getBrowser () .getContext ();
+			const gl = this .getBrowser () .getContext ();
 
 			this .shader = gl .createShader (gl [this .getShaderType ()]);
 
-			this .buffer_ .addInterest ("loadNow", this);
-
-			this .set_url__ ();
+			this .requestImmediateLoad ();
 		},
 		isValid: function ()
 		{
@@ -135,15 +123,28 @@ function (Fields,
 		{
 			return this .shader;
 		},
-		getShaderType: function ()
+		getShaderType: (function ()
 		{
-			var type = shaderTypes [this .type_ .getValue ()];
+			const shaderTypes =
+			{
+				VERTEX:          "VERTEX_SHADER",
+				TESS_CONTROL:    "TESS_CONTROL_SHADER",
+				TESS_EVALUATION: "TESS_EVALUATION_SHADER",
+				GEOMETRY:        "GEOMETRY_SHADER",
+				FRAGMENT:        "FRAGMENT_SHADER",
+				COMPUTE:         "COMPUTE_SHADER",
+			};
 
-			if (type)
-				return type;
+			return function ()
+			{
+				const type = shaderTypes [this .type_ .getValue ()];
 
-			return "VERTEX_SHADER";
-		},
+				if (type)
+					return type;
+
+				return "VERTEX_SHADER";
+			};
+		})(),
 		getSourceText: function ()
 		{
 			return this .url_;
@@ -156,29 +157,15 @@ function (Fields,
 		{
 			return this .shadow;
 		},
-		requestImmediateLoad: function (cache = true)
+		unloadNow: function ()
 		{
-			if (this .checkLoadState () == X3DConstants .COMPLETE_STATE || this .checkLoadState () == X3DConstants .IN_PROGRESS_STATE)
-				return;
-
-			this .setCache (cache);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-
-			this .buffer_ = this .url_;
-		},
-		requestUnload: function ()
-		{
-			if (this .checkLoadState () === X3DConstants .NOT_STARTED_STATE || this .checkLoadState () === X3DConstants .FAILED_STATE)
-				return;
-
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 			this .valid = false;
 		},
 		loadNow: function ()
 		{
 			this .valid = false;
 
-			new FileLoader (this) .loadDocument (this .buffer_,
+			new FileLoader (this) .loadDocument (this .urlBuffer_,
 			function (data)
 			{
 				if (data === null)
@@ -188,7 +175,7 @@ function (Fields,
 				}
 				else
 				{
-					var
+					const
 						gl     = this .getBrowser () .getContext (),
 						source = Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .shadow);
 
