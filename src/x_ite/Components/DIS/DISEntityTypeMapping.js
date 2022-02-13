@@ -111,6 +111,10 @@ function (Fields,
 		{ },
 		requestUnload: function ()
 		{ },
+		set_load__: function ()
+		{ },
+		set_url__: function ()
+		{ },
 	});
 
 	return DISEntityTypeMapping;

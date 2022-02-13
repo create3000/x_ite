@@ -118,8 +118,10 @@ function (Fields,
 			X3DUrlObject    .prototype .initialize .call (this);
 
 			this .description_ .addFieldInterest (this .touchSensorNode .description_);
+			this .load_        .addFieldInterest (this .touchSensorNode .enabled_);
 
 			this .touchSensorNode .description_ = this .description_;
+			this .touchSensorNode .enabled_     = this .load_;
 			this .touchSensorNode .setup ();
 
 			// Modify set_active__ to get immediate response to user action (click event), otherwise links are not opened in this window.
@@ -136,6 +138,10 @@ function (Fields,
 					anchor .requestImmediateLoad ();
 			};
 		},
+		set_load__: function ()
+		{ },
+		set_url__: function ()
+		{ },
 		requestImmediateLoad: function (cache = true)
 		{
 			this .setCache (cache);
