@@ -137,7 +137,7 @@ function ($,
 			this .video [0] .volume      = 0;
 			this .video [0] .crossOrigin = "Anonymous";
 
-			this .set_url__ ();
+			this .requestImmediateLoad ();
 		},
 		getElement: function ()
 		{
@@ -148,7 +148,11 @@ function ($,
 			X3DSoundSourceNode .prototype .set_live__ .call (this);
 			X3DUrlObject       .prototype .set_live__ .call (this);
 		},
-		set_buffer__: function ()
+		unloadNow: function ()
+		{
+			this .clearTexture ();
+		},
+		loadNow: function ()
 		{
 			this .setMedia (null);
 			this .urlStack .setValue (this .buffer_);
@@ -226,10 +230,6 @@ function ($,
 				console .log (error .message);
 				this .setError ();
 			}
-		},
-		unload: function ()
-		{
-			this .clearTexture ();
 		},
 		set_time: function ()
 		{

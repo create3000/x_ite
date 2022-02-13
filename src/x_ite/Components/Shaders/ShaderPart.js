@@ -123,7 +123,7 @@ function (Fields,
 
 			this .shader = gl .createShader (gl [this .getShaderType ()]);
 
-			this .buffer_ .addInterest ("set_buffer__", this);
+			this .buffer_ .addInterest ("loadNow", this);
 
 			this .set_url__ ();
 		},
@@ -174,7 +174,7 @@ function (Fields,
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 			this .valid = false;
 		},
-		set_buffer__: function ()
+		loadNow: function ()
 		{
 			this .valid = false;
 

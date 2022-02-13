@@ -111,11 +111,11 @@ function (Fields,
 			X3DTexture3DNode .prototype .initialize .call (this);
 			X3DUrlObject     .prototype .initialize .call (this);
 
-			this .set_url__ ();
+			this .requestImmediateLoad ();
 		},
 		getInternalType: function (components)
 		{
-			var gl = this .getBrowser () .getContext ();
+			const gl = this .getBrowser () .getContext ();
 
 			switch (components)
 			{
@@ -129,7 +129,11 @@ function (Fields,
 					return gl .RGBA;
 			}
 		},
-		set_buffer__: function ()
+		unloadNow: function ()
+		{
+			this .clearTexture ();
+		},
+		loadNow: function ()
 		{
 			new FileLoader (this) .loadBinaryDocument (this .buffer_,
 			function (data)
@@ -142,22 +146,22 @@ function (Fields,
 				}
 				else
 				{
-					var nrrd = new NRRDParser () .parse (data);
+					const nrrd = new NRRDParser () .parse (data);
 
 					if (nrrd .nrrd)
 					{
-						var internalType = this .getInternalType (nrrd .components);
+						const internalType = this .getInternalType (nrrd .components);
 
 						this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
 						this .setLoadState (X3DConstants .COMPLETE_STATE);
 						return;
 					}
 
-					var dicom = new DICOMParser () .parse (data);
+					const dicom = new DICOMParser () .parse (data);
 
 					if (dicom .dicom)
 					{
-						var internalType = this .getInternalType (dicom .components);
+						const internalType = this .getInternalType (dicom .components);
 
 						this .setTexture (dicom .width, dicom .height, dicom .depth, false, internalType, dicom .data);
 						this .setLoadState (X3DConstants .COMPLETE_STATE);
@@ -168,10 +172,6 @@ function (Fields,
 				}
 			}
 			.bind (this));
-		},
-		unload: function ()
-		{
-			this .clearTexture ();
 		},
 	});
 

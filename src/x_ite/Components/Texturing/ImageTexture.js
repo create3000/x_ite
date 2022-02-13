@@ -121,9 +121,13 @@ function ($,
 
 			this .image [0] .crossOrigin = "Anonymous";
 
-			this .set_url__ ();
+			this .requestImmediateLoad ();
 		},
-		set_buffer__: function ()
+		unloadNow: function ()
+		{
+			this .clearTexture ();
+		},
+		loadNow: function ()
 		{
 			this .urlStack .setValue (this .buffer_);
 			this .loadNext ();
@@ -231,10 +235,6 @@ function ($,
 				console .log (error .message);
 				this .setError ();
 			}
-		},
-		unload: function ()
-		{
-			this .clearTexture ();
 		},
 	});
 

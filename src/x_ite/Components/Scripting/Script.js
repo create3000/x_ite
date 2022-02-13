@@ -144,7 +144,7 @@ function ($,
 				field .setModificationTime (0);
 			});
 
-			this .set_url__ ();
+			this .requestImmediateLoad ();
 		},
 		getExtendedEventHandling: function ()
 		{
@@ -158,8 +158,14 @@ function ($,
 		{
 			return this .url_;
 		},
-		set_buffer__: function ()
+		unloadNow: function ()
 		{
+			this .initialize__ ("");
+		},
+		loadNow: function ()
+		{
+			this .initialized = false;
+
 			new FileLoader (this) .loadScript (this .buffer_,
 			function (data)
 			{
@@ -175,10 +181,6 @@ function ($,
 				}
 			}
 			.bind (this));
-		},
-		unload: function ()
-		{
-			this .initialize__ ("");
 		},
 		getContext: function (text)
 		{

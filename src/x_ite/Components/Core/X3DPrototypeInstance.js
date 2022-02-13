@@ -77,7 +77,8 @@ function (X3DChildObject,
 		if (! protoNode .isExternProto)
 			return;
 
-		protoNode .requestImmediateLoad (this .construct .bind (this));
+		protoNode .addCallback (this .construct .bind (this));
+		protoNode .requestImmediateLoad ();
 	}
 
 	X3DPrototypeInstance .prototype = Object .assign (Object .create (X3DNode .prototype),

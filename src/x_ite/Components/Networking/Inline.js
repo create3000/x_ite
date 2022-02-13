@@ -126,11 +126,14 @@ function (Fields,
 			this .group .isCameraObject_   .addFieldInterest (this .isCameraObject_);
 			this .group .isPickableObject_ .addFieldInterest (this .isPickableObject_);
 
-			this .set_url__ ();
+			this .requestImmediateLoad ();
 		},
 		getBBox: function (bbox, shadow)
 		{
-			return this .group .getBBox (bbox, shadow);
+			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+				return this .group .getBBox (bbox, shadow);
+
+			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
 		},
 		set_live__: function ()
 		{
@@ -141,7 +144,11 @@ function (Fields,
 
 			this .scene .setLive (this .isLive () .getValue ());
 		},
-		set_buffer__: function ()
+		unloadNow: function ()
+		{
+			this .setInternalScene (this .getBrowser () .getDefaultScene ());
+		},
+		loadNow: function ()
 		{
 			new FileLoader (this) .createX3DFromURL (this .buffer_, null, this .setInternalSceneAsync .bind (this));
 		},
@@ -184,17 +191,13 @@ function (Fields,
 
 			return this .scene;
 		},
-		unload: function ()
-		{
-			this .setInternalScene (this .getBrowser () .getDefaultScene ());
-		},
 		traverse: function (type, renderObject)
 		{
 			switch (type)
 			{
 				case TraverseType .PICKING:
 				{
-					var
+					const
 						browser          = renderObject .getBrowser (),
 						pickingHierarchy = browser .getPickingHierarchy ();
 

@@ -127,7 +127,7 @@ function ($,
 			this .audio [0] .volume      = 0;
 			this .audio [0] .crossOrigin = "Anonymous";
 
-			this .set_url__ ();
+			this .requestImmediateLoad ();
 		},
 		getElement: function ()
 		{
@@ -138,7 +138,11 @@ function ($,
 			X3DSoundSourceNode .prototype .set_live__ .call (this);
 			X3DUrlObject       .prototype .set_live__ .call (this);
 		},
-		set_buffer__: function ()
+		unloadNow: function ()
+		{
+			this .setMedia (null);
+		},
+		loadNow: function ()
 		{
 			this .setMedia (null);
 			this .urlStack .setValue (this .buffer_);
@@ -183,10 +187,6 @@ function ($,
 			this .audio .unbind ("canplaythrough");
 			this .setMedia (this .audio);
 			this .setLoadState (X3DConstants .COMPLETE_STATE);
-		},
-		unload: function ()
-		{
-			this .setMedia (null);
 		},
 	});
 

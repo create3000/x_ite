@@ -99,8 +99,8 @@ function (Fields,
 
 		this .addType (X3DConstants .X3DFontStyleNode);
 
-		this .addChildObjects ("load",                 new Fields .SFBool (),
-		                       "url",                  new Fields .MFString (),
+		this .addChildObjects ("load",                 new Fields .SFBool (true),
+		                       "url",                  this .family_,
 		                       "autoRefresh",          new Fields .SFTime (),
 									  "autoRefreshTimeLimit", new Fields .SFTime (3600));
 
@@ -118,7 +118,7 @@ function (Fields,
 			X3DNode      .prototype .initialize .call (this);
 			X3DUrlObject .prototype .initialize .call (this);
 
-			this .style_   .addInterest ("set_style__", this);
+			this .style_   .addInterest ("set_style__",   this);
 			this .justify_ .addInterest ("set_justify__", this);
 
 			this .font        = null;
@@ -129,16 +129,11 @@ function (Fields,
 
 			this .requestImmediateLoad ();
 		},
-		getMajorAlignment: function ()
-		{
-			return this .alignments [0];
-		},
-		getMinorAlignment: function ()
-		{
-			return this .alignments [1];
-		},
 		set_style__: function ()
 		{
+			if (!this .load_ .getValue ())
+				return;
+
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
 			this .requestImmediateLoad ();
@@ -156,6 +151,14 @@ function (Fields,
 			this .alignments [1] = this .justify_ .length > 1
 			                       ? this .getAlignment (1, minorNormal)
 			                       : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
+		},
+		getMajorAlignment: function ()
+		{
+			return this .alignments [0];
+		},
+		getMinorAlignment: function ()
+		{
+			return this .alignments [1];
 		},
 		getAlignment: function (index, normal)
 		{
@@ -186,17 +189,20 @@ function (Fields,
 
 			return index ? TextAlignment .FIRST : TextAlignment .BEGIN;
 		},
-		requestImmediateLoad: function (cache = true)
+		getDefaultFont: function (familyName)
 		{
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-				return;
+			const family = Fonts [familyName];
 
-			this .setCache (cache);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
+			if (family)
+				return family [this .style_ .getValue ()] || family .PLAIN;
 
+			return;
+		},
+		loadNow: function ()
+		{
 			// Add default font to family array.
 
-			const family = this .family_ .copy ();
+			const family = this .buffer_ .copy ();
 
 			family .push ("SERIF");
 
@@ -208,15 +214,6 @@ function (Fields,
 				this .familyStack .push (this .getDefaultFont (familyName) || familyName);
 
 			this .loadNext ();
-		},
-		getDefaultFont: function (familyName)
-		{
-			const family = Fonts [familyName];
-
-			if (family)
-				return family [this .style_ .getValue ()] || family .PLAIN;
-
-			return;
 		},
 		loadNext: function ()
 		{

@@ -76,7 +76,7 @@ function (Fields,
 
 			this .load_                 .addInterest ("set_load__",        this);
 			this .url_                  .addInterest ("set_url__",         this);
-			this .buffer_               .addInterest ("set_buffer__",      this);
+			this .buffer_               .addInterest ("loadNow",           this);
 			this .autoRefresh_          .addInterest ("set_autoRefresh__", this);
 			this .autoRefreshTimeLimit_ .addInterest ("set_autoRefresh__", this);
 		},
@@ -143,15 +143,17 @@ function (Fields,
 			// buffer prevents double load of the scene if load and url field are set at the same time.
 			this .buffer_ = this .url_;
 		},
+		loadNow: function ()
+		{ },
 		requestUnload: function ()
 		{
 			if (this .checkLoadState () === X3DConstants .NOT_STARTED_STATE || this .checkLoadState () === X3DConstants .FAILED_STATE)
 				return;
 
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-			this .unload ();
+			this .unloadNow ();
 		},
-		unload: function ()
+		unloadNow: function ()
 		{ },
 		setAutoRefreshTimer: function (autoRefreshInterval)
 		{
@@ -195,15 +197,13 @@ function (Fields,
 		},
 		set_url__: function ()
 		{
-			if (! this .load_ .getValue ())
+			if (!this .load_ .getValue ())
 				return;
 
 			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
 			this .requestImmediateLoad ();
 		},
-		set_buffer__: function ()
-		{ },
 		set_autoRefresh__: function ()
 		{
 			if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)

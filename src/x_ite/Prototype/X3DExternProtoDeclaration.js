@@ -133,29 +133,15 @@ function ($,
 		{
 			return this .proto;
 		},
-		loadNow: function (callback)
+		addCallback: function (callback)
 		{
-			// 7.73 — ExternProtoDeclaration function, added callback argument.
-			this .requestImmediateLoad (callback);
+			this .deferred .done (callback);
 		},
-		requestImmediateLoad: function (callback)
+		loadNow: function ()
 		{
-			if ($.isFunction (callback))
-				this .deferred .done (callback);
-
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-				return;
-
-			if (!this .load_ .getValue ())
-				return;
-
-			if (this .url_ .length === 0)
-				return;
+			// 7.73 — ExternProtoDeclaration function
 
 			this .getScene () .addInitLoadCount (this);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
-
-			// Don't create scene cache, due to possible default nodes in proto SFNode fields and complete scenes.
 
 			const FileLoader = require ("x_ite/InputOutput/FileLoader");
 
