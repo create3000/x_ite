@@ -61,23 +61,13 @@ function (Generator,
 	X3DObject .prototype =
 	{
 		constructor: X3DObject,
-		_id: 0,
 		_name: "",
 		_interests: new Map (),
 		_interestsTemp: new Map (),
-		getId: (function ()
+		getId: function ()
 		{
-			let id = 0;
-
-			function getId () { return this ._id; }
-
-			return function ()
-			{
-				this .getId = getId;
-
-				return this ._id = ++ id;
-			};
-		})(),
+			return X3DObject .getId (this);
+		},
 		getTypeName: function ()
 		{
 			return "X3DObject";
@@ -92,7 +82,7 @@ function (Generator,
 		},
 		hasInterest: function (callbackName, object)
 		{
-			return this ._interests .has (object .getId () + callbackName);
+			return this ._interests .has (X3DObject .getId (object) + "." + callbackName);
 		},
 		addInterest: function (callbackName, object)
 		{
@@ -111,16 +101,16 @@ function (Generator,
 				args [0] = object;
 				args [1] = this;
 
-				this ._interests .set (object .getId () + callbackName, Function .prototype .bind .apply (callback, args));
+				this ._interests .set (X3DObject .getId (object) + "." + callbackName, Function .prototype .bind .apply (callback, args));
 			}
 			else
 			{
-				this ._interests .set (object .getId () + callbackName, callback .bind (object, this));
+				this ._interests .set (X3DObject .getId (object) + "." + callbackName, callback .bind (object, this));
 			}
 		},
 		removeInterest: function (callbackName, object)
 		{
-			this ._interests .delete (object .getId () + callbackName);
+			this ._interests .delete (X3DObject .getId (object) + "." + callbackName);
 		},
 		getInterests: function ()
 		{
@@ -172,6 +162,25 @@ function (Generator,
 		},
 		dispose: function () { },
 	};
+
+	X3DObject .getId = (function ()
+	{
+		const map = new WeakMap ();
+
+		let counter = 0;
+
+		return function (object)
+		{
+			const id = map .get (object);
+
+			if (id !== undefined)
+				return id;
+
+			map .set (object, ++ counter);
+
+			return counter;
+		};
+	})();
 
 	return X3DObject;
 });
