@@ -156,6 +156,14 @@ function (Generator,
 
          return stream .string;
       },
+      toJSONString: function ()
+      {
+         const stream = { string: "" };
+
+         this .toJSONStream (stream);
+
+         return stream .string;
+      },
       toStream: function (stream)
       {
          stream .string = "[object " + this .getTypeName () + "]";
