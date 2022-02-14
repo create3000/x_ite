@@ -170,6 +170,7 @@ const X_ITE_TESTS = [
 	{ path: "Networking/autoRefresh.x3dv" },
 	{ component: "PROTO" },
 	{ path: "PROTO/27cubes.x3d" },
+	{ path: "PROTO/Double.x3dv" },
 	{ path: "PROTO/ExternProto.x3d" },
 	{ path: "PROTO/ExternProto.x3dv" },
 	{ path: "PROTO/NestedProtos.x3d" },
