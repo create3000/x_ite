@@ -259,12 +259,12 @@ X3D (function ()
 
    function toXMLString ()
    {
-      console .log (X3D .getBrowser ("#browser") .currentScene .toXMLString ());
+      console .log (Browser .currentScene .toXMLString ());
    }
 
    function toVRMLString ()
    {
-      console .log (X3D .getBrowser ("#browser") .currentScene .toVRMLString ());
+      console .log (Browser .currentScene .toVRMLString ());
    }
 
    const bookmarks = new Bookmarks (Browser, $(".examples-box"));
@@ -280,9 +280,9 @@ X3D (function ()
 
    // Restore location entry.
 
-   const defaultLocaton = "http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d";
+   const defaultLocation = "http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d";
 
-   $(".location-entry") .val (Browser .getLocalStorage () ["Bookmarks.location"] || defaultLocaton)
+   $(".location-entry") .val (Browser .getLocalStorage () ["Bookmarks.location"] || defaultLocation)
 
    $(window) .on ("unload", function ()
    {
