@@ -81,10 +81,10 @@ function (X3DObject)
 	function FieldDefinitionArray (value)
 	{
 		this .array = value;
-		this .index = { };
+		this .index = new Map ();
 
 		for (const fieldDefinition of value)
-			this .index [fieldDefinition .name] = fieldDefinition;
+			this .index .set (fieldDefinition .name, fieldDefinition);
 
 		return new Proxy (this, handler);
 	}
@@ -96,18 +96,23 @@ function (X3DObject)
 		{
 			return "FieldDefinitionArray";
 		},
-		add: function (fieldDefinition)
-		{
-			this .array .push (fieldDefinition);
-			this .index [fieldDefinition .name] = fieldDefinition;
-		},
-		get: function (key)
-		{
-			return this .index [key];
-		},
 		getValue: function ()
 		{
 			return this .array;
+		},
+		has: function (key)
+		{
+			return this .index .has (key);
+		},
+		get: function (key)
+		{
+			return this .index .get (key);
+		},
+		add: function (fieldDefinition)
+		{
+			this .array .push (fieldDefinition);
+			this .index .set (fieldDefinition .name, fieldDefinition);
+			this .processInterests ();
 		},
 	});
 

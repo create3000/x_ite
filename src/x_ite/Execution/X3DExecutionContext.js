@@ -666,6 +666,7 @@ function (SupportedNodes,
 				route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
 
 				this ._routes .getValue () .push (route);
+				this ._routes .processInterests ();
 				this ._routeIndex .set (id, route);
 
 				return route;
@@ -702,7 +703,10 @@ function (SupportedNodes,
 				route .disconnect ();
 
 				if (index !== -1)
+				{
 					this ._routes .getValue () .splice (index, 1);
+					this ._routes .processInterests ();
+				}
 
 				this ._routeIndex .delete (id);
 

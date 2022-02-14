@@ -110,10 +110,12 @@ function (X3DObject)
 		{
 			this .array .push (value);
 			this .index .set (key, value);
+			this .processInterests ();
 		},
 		addAlias: function (alias, key)
 		{
 			this .index .set (alias, this .index .get (key));
+			this .processInterests ();
 		},
 		remove: function (key)
 		{
@@ -128,6 +130,8 @@ function (X3DObject)
 
 			if (index > -1)
 				this .array .splice (index, 1);
+
+			this .processInterests ();
 		},
 		toVRMLStream: function (stream)
 		{
