@@ -116,29 +116,13 @@ function (SupportedNodes,
       {
          return false;
       },
-      getPrototype: function ()
+      getParent: function ()
       {
-         const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
-
-         for (const node of this .getParents ())
-         {
-            if (node instanceof X3DProtoDeclaration)
-               return node;
-         }
-
-         return null;
+         return this .parent || null;
       },
-      getInstance: function ()
+      setParent: function (value)
       {
-         const X3DPrototypeInstance = require ("x_ite/Components/Core/X3DPrototypeInstance");
-
-         for (const node of this .getParents ())
-         {
-            if (node instanceof X3DPrototypeInstance)
-               return node;
-         }
-
-         return null;
+         this .parent = value;
       },
       getSpecificationVersion: function ()
       {
