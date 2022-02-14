@@ -118,6 +118,7 @@ function (SupportedNodes,
       },
       getParent: function ()
       {
+         // Can be either of type X3DProtoDeclaration or X3DPrototypeInstance, or null.
          return this ._parent || null;
       },
       setParent: function (value)
