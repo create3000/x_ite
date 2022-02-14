@@ -117,6 +117,30 @@ function (X3DObject)
 			this .index .set (alias, this .index .get (key));
 			this .processInterests ();
 		},
+		update: function (oldKey, newKey, value)
+		{
+			const oldValue = this .index .get (oldKey);
+
+			if (oldKey !== newKey)
+				this .remove (newKey);
+
+			this .index .delete (oldKey);
+			this .index .set (newKey, value);
+
+			if (oldValue !== undefined)
+			{
+				const index = this .array .indexOf (oldValue);
+
+				if (index > -1)
+					this .array [index] = value;
+			}
+			else
+			{
+				this .array .push (value);
+			}
+
+			this .processInterests ();
+		},
 		remove: function (key)
 		{
 			const value = this .index .get (key);

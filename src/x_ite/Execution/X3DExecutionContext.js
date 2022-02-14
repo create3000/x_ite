@@ -449,9 +449,7 @@ function (SupportedNodes,
 			if (name .length === 0)
 				throw new Error ("Couldn't add proto declaration: proto name is empty.");
 
-			this ._protos .remove (proto .getName ());
-			this ._protos .remove (name);
-			this ._protos .add (name, proto);
+			this ._protos .update (proto .getName (), name, proto);
 			proto .setName (name);
 		},
 		removeProtoDeclaration (name)
@@ -526,9 +524,7 @@ function (SupportedNodes,
 			if (name .length === 0)
 				throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
 
-			this ._externprotos .remove (externproto .getName ());
-			this ._externprotos .remove (name);
-			this ._externprotos .add (name, externproto);
+			this ._externprotos .update (externproto .getName (), name, externproto);
 			externproto .setName (name);
 		},
 		removeExternProtoDeclaration (name)
