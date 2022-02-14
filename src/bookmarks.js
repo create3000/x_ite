@@ -137,15 +137,15 @@ const Bookmarks = (function ()
          $(".file") .text (url)
             .append ($("<a/>")
             .attr ('href', base + ".x3d")
-            .click (this .loadURL .bind (this, url))
+            .on ("click", this .loadURL .bind (this, base + ".x3d"))
             .text (".x3d"))
             .append ($("<a/>")
             .attr ('href', base + ".x3dv")
-            .click (this .loadURL .bind (this, url))
+            .on ("click", this .loadURL .bind (this, base + ".x3dv"))
             .text (".x3dv"))
             .append ($("<a/>")
             .attr ('href', base + ".x3dj")
-            .click (this .loadURL .bind (this, url))
+            .on ("click", this .loadURL .bind (this, base + ".x3dj"))
             .text (".x3dj"));
 
          this .browser .getLocalStorage () ["Bookmarks.url"] = url;
