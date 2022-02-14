@@ -426,20 +426,6 @@ function (X3DEventObject,
             });
          }
       },
-      removeField: function (name)
-      {
-         const field = this ._fields .get (name);
-
-         if (field)
-         {
-            this ._fields            .delete (name);
-            this ._userDefinedFields .delete (name);
-            this .fieldDefinition    .remove (name);
-
-            if (! this .getPrivate ())
-               field .removeCloneCount (1);
-         }
-      },
       getField: (function ()
       {
          const
@@ -500,8 +486,8 @@ function (X3DEventObject,
       },
       addUserDefinedField: function (accessType, name, field)
       {
-         if (this ._fields .has (name))
-            this .removeField (name);
+         if (this ._userDefinedFields .has (name))
+            this .removeUserDefinedField (name);
 
          field .setTainted (true);
          field .addParent (this);
@@ -511,6 +497,20 @@ function (X3DEventObject,
          this .fieldDefinitions .add (name, new X3DFieldDefinition (accessType, name, field));
 
          this .setField (name, field, true);
+      },
+      removeUserDefinedField: function (name)
+      {
+         const field = this ._userDefinedFields .get (name);
+
+         if (field)
+         {
+            this ._fields            .delete (name);
+            this ._userDefinedFields .delete (name);
+            this .fieldDefinitions   .remove (name);
+
+            if (! this .getPrivate ())
+               field .removeCloneCount (1);
+         }
       },
       getUserDefinedFields: function ()
       {
