@@ -50,7 +50,6 @@
 define ([
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields",
-   "x_ite/Base/X3DObject",
    "x_ite/Basic/X3DBaseNode",
    "x_ite/Execution/ImportedNode",
    "x_ite/Prototype/ExternProtoDeclarationArray",
@@ -65,7 +64,6 @@ define ([
 ],
 function (SupportedNodes,
           Fields,
-          X3DObject,
           X3DBaseNode,
           ImportedNode,
           ExternProtoDeclarationArray,
@@ -766,7 +764,6 @@ function (SupportedNodes,
          if (index !== -1)
             this .worldInfos_ .splice (index, 1);
       },
-      toStream: X3DObject .prototype .toStream,
       toVRMLStream: function (stream)
       {
          const generator = Generator .Get (stream);

@@ -50,7 +50,6 @@
 define ([
    "jquery",
    "x_ite/Fields/SFTime",
-   "x_ite/Base/X3DObject",
    "x_ite/Basic/X3DBaseNode",
    "x_ite/Browser/Core/X3DCoreContext",
    "x_ite/Routing/X3DRoutingContext",
@@ -76,7 +75,6 @@ define ([
 ],
 function ($,
           SFTime,
-          X3DObject,
           X3DBaseNode,
           X3DCoreContext,
           X3DRoutingContext,
@@ -292,7 +290,6 @@ function ($,
 
          this .finished_ .processInterests ();
       },
-      toStream: X3DObject .prototype .toStream,
    });
 
    Object .assign (X3DBrowserContext,
