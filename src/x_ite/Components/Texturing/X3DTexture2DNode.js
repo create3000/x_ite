@@ -48,8 +48,8 @@
 
 
 define ([
-	"x_ite/Components/Texturing/X3DSingleTextureNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Components/Texturing/X3DSingleTextureNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DSingleTextureNode,
           X3DConstants)
@@ -58,124 +58,124 @@ function (X3DSingleTextureNode,
 
    var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
-	function X3DTexture2DNode (executionContext)
-	{
-		X3DSingleTextureNode .call (this, executionContext);
+   function X3DTexture2DNode (executionContext)
+   {
+      X3DSingleTextureNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DTexture2DNode);
+      this .addType (X3DConstants .X3DTexture2DNode);
 
-		const gl = this .getBrowser () .getContext ();
+      const gl = this .getBrowser () .getContext ();
 
-		this .target = gl .TEXTURE_2D;
-		this .width  = 0;
-		this .height = 0;
-		this .flipY  = false;
-		this .data   = null;
-	}
+      this .target = gl .TEXTURE_2D;
+      this .width  = 0;
+      this .height = 0;
+      this .flipY  = false;
+      this .data   = null;
+   }
 
-	X3DTexture2DNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
-	{
-		constructor: X3DTexture2DNode,
-		initialize: function ()
-		{
-			X3DSingleTextureNode .prototype .initialize .call (this);
+   X3DTexture2DNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
+   {
+      constructor: X3DTexture2DNode,
+      initialize: function ()
+      {
+         X3DSingleTextureNode .prototype .initialize .call (this);
 
-			this .repeatS_ .addInterest ("updateTextureProperties", this);
-			this .repeatT_ .addInterest ("updateTextureProperties", this);
+         this .repeatS_ .addInterest ("updateTextureProperties", this);
+         this .repeatT_ .addInterest ("updateTextureProperties", this);
 
-			const gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
-			gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-			gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-		},
-		getTarget: function ()
-		{
-			return this .target;
-		},
-		getWidth: function ()
-		{
-			return this .width;
-		},
-		getHeight: function ()
-		{
-			return this .height;
-		},
-		getFlipY: function ()
-		{
-			return this .flipY;
-		},
-		getData: function ()
-		{
-			return this .data;
-		},
-		clearTexture: function ()
-		{
-			this .setTexture (1, 1, false, defaultData, false);
+         gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
+         gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+      },
+      getTarget: function ()
+      {
+         return this .target;
+      },
+      getWidth: function ()
+      {
+         return this .width;
+      },
+      getHeight: function ()
+      {
+         return this .height;
+      },
+      getFlipY: function ()
+      {
+         return this .flipY;
+      },
+      getData: function ()
+      {
+         return this .data;
+      },
+      clearTexture: function ()
+      {
+         this .setTexture (1, 1, false, defaultData, false);
 
-			this .data = null;
-		},
-		setTexture: function (width, height, transparent, data, flipY)
-		{
-			try
-			{
-				this .width  = width;
-				this .height = height;
-				this .flipY  = flipY;
-				this .data   = data;
+         this .data = null;
+      },
+      setTexture: function (width, height, transparent, data, flipY)
+      {
+         try
+         {
+            this .width  = width;
+            this .height = height;
+            this .flipY  = flipY;
+            this .data   = data;
 
-				var gl = this .getBrowser () .getContext ();
+            var gl = this .getBrowser () .getContext ();
 
-				gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
-				gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
-				gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-				gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
+            gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
+            gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
+            gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, width, height, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
-				this .setTransparent (transparent);
-				this .updateTextureProperties ();
-				this .addNodeEvent ();
-			}
-			catch (error)
-			{ }
-		},
-		updateTexture: function (data, flipY)
-		{
-			try
-			{
-				this .data = data;
+            this .setTransparent (transparent);
+            this .updateTextureProperties ();
+            this .addNodeEvent ();
+         }
+         catch (error)
+         { }
+      },
+      updateTexture: function (data, flipY)
+      {
+         try
+         {
+            this .data = data;
 
-				var gl = this .getBrowser () .getContext ();
+            var gl = this .getBrowser () .getContext ();
 
-				gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
-				gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-				gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
+            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
+            gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
+            gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
-				if (this .texturePropertiesNode .generateMipMaps_ .getValue ())
-					gl .generateMipmap (gl .TEXTURE_2D);
+            if (this .texturePropertiesNode .generateMipMaps_ .getValue ())
+               gl .generateMipmap (gl .TEXTURE_2D);
 
-				this .addNodeEvent ();
-			}
-			catch (error)
-			{ }
-		},
-		updateTextureProperties: function ()
-		{
-			X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
-			                                                                this .target,
-			                                                                this .textureProperties_ .getValue (),
-			                                                                this .texturePropertiesNode,
-			                                                                this .width,
-			                                                                this .height,
-			                                                                this .repeatS_ .getValue (),
-			                                                                this .repeatT_ .getValue (),
-			                                                                false);
-		},
-		setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
-		{
-			gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getTexture2DUnits () [i]);
-			gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
-			gl .uniform1i (shaderObject .x3d_TextureType [i], 2);
-		},
-	});
+            this .addNodeEvent ();
+         }
+         catch (error)
+         { }
+      },
+      updateTextureProperties: function ()
+      {
+         X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
+                                                                         this .target,
+                                                                         this .textureProperties_ .getValue (),
+                                                                         this .texturePropertiesNode,
+                                                                         this .width,
+                                                                         this .height,
+                                                                         this .repeatS_ .getValue (),
+                                                                         this .repeatT_ .getValue (),
+                                                                         false);
+      },
+      setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
+      {
+         gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getTexture2DUnits () [i]);
+         gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
+         gl .uniform1i (shaderObject .x3d_TextureType [i], 2);
+      },
+   });
 
-	return X3DTexture2DNode;
+   return X3DTexture2DNode;
 });

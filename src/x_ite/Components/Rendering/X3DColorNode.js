@@ -48,42 +48,40 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Components/Rendering/X3DGeometricPropertyNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
-          X3DGeometricPropertyNode, 
+          X3DGeometricPropertyNode,
           X3DConstants)
 {
 "use strict";
 
-	function X3DColorNode (executionContext)
-	{
-		X3DGeometricPropertyNode .call (this, executionContext);
+   function X3DColorNode (executionContext)
+   {
+      X3DGeometricPropertyNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DColorNode);
+      this .addType (X3DConstants .X3DColorNode);
 
-		this .addChildObjects ("transparent", new Fields .SFBool ());
+      this .addChildObjects ("transparent", new Fields .SFBool ());
 
-		this .transparent_ .setAccessType (X3DConstants .outputOnly);
-	}
+      this .transparent_ .setAccessType (X3DConstants .outputOnly);
+   }
 
-	X3DColorNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
-	{
-		constructor: X3DColorNode,
-		setTransparent: function (value)
-		{
-			if (value !== this .transparent_ .getValue ())
-				this .transparent_ = value;
-		},
-		getTransparent: function ()
-		{
-			return this .transparent_ .getValue ();
-		},
-	});
+   X3DColorNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+   {
+      constructor: X3DColorNode,
+      setTransparent: function (value)
+      {
+         if (value !== this .transparent_ .getValue ())
+            this .transparent_ = value;
+      },
+      getTransparent: function ()
+      {
+         return this .transparent_ .getValue ();
+      },
+   });
 
-	return X3DColorNode;
+   return X3DColorNode;
 });
-
-

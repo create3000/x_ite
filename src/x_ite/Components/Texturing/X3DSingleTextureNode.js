@@ -48,12 +48,12 @@
 
 
  define ([
-	"x_ite/Components/Texturing/X3DTextureNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Browser/Texturing/MultiTextureModeType",
-	"x_ite/Browser/Texturing/MultiTextureSourceType",
-	"x_ite/Browser/Texturing/MultiTextureFunctionType",
+   "x_ite/Components/Texturing/X3DTextureNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Browser/Texturing/MultiTextureModeType",
+   "x_ite/Browser/Texturing/MultiTextureSourceType",
+   "x_ite/Browser/Texturing/MultiTextureFunctionType",
 ],
 function (X3DTextureNode,
           X3DConstants,
@@ -64,47 +64,47 @@ function (X3DTextureNode,
 {
 "use strict";
 
-	function X3DSingleTextureNode (executionContext)
-	{
-		X3DTextureNode .call (this, executionContext);
+   function X3DSingleTextureNode (executionContext)
+   {
+      X3DTextureNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DSingleTextureNode);
-	}
+      this .addType (X3DConstants .X3DSingleTextureNode);
+   }
 
-	X3DSingleTextureNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
-	{
-		constructor: X3DSingleTextureNode,
-		initialize: function ()
-		{
-			X3DTextureNode .prototype .initialize .call (this);
+   X3DSingleTextureNode .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
+   {
+      constructor: X3DSingleTextureNode,
+      initialize: function ()
+      {
+         X3DTextureNode .prototype .initialize .call (this);
 
-			this .textureProperties_ .addInterest ("set_textureProperties__", this);
+         this .textureProperties_ .addInterest ("set_textureProperties__", this);
 
-			const gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
-			this .texture = gl .createTexture ();
+         this .texture = gl .createTexture ();
 
-			this .set_textureProperties__ ();
-		},
-		set_textureProperties__: function ()
-		{
-			if (this .texturePropertiesNode)
-				this .texturePropertiesNode .removeInterest ("updateTextureProperties", this);
+         this .set_textureProperties__ ();
+      },
+      set_textureProperties__: function ()
+      {
+         if (this .texturePropertiesNode)
+            this .texturePropertiesNode .removeInterest ("updateTextureProperties", this);
 
-			this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this .textureProperties_);
+         this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this .textureProperties_);
 
-			if (! this .texturePropertiesNode)
-				this .texturePropertiesNode = this .getBrowser () .getDefaultTextureProperties ();
+         if (! this .texturePropertiesNode)
+            this .texturePropertiesNode = this .getBrowser () .getDefaultTextureProperties ();
 
-			this .texturePropertiesNode .addInterest ("updateTextureProperties", this);
+         this .texturePropertiesNode .addInterest ("updateTextureProperties", this);
 
-			this .updateTextureProperties ();
-		},
-		getTexture: function ()
-		{
-			return this .texture;
-		},
-		updateTextureProperties: (function ()
+         this .updateTextureProperties ();
+      },
+      getTexture: function ()
+      {
+         return this .texture;
+      },
+      updateTextureProperties: (function ()
       {
          // Anisotropic Filtering in WebGL is handled by an extension, use one of getExtension depending on browser:
 
@@ -167,17 +167,17 @@ function (X3DTextureNode,
             }
          };
       })(),
-		setShaderUniforms: function (gl, shaderObject, renderObject)
-		{
-			this .setShaderUniformsToChannel (gl, shaderObject, renderObject, 0);
+      setShaderUniforms: function (gl, shaderObject, renderObject)
+      {
+         this .setShaderUniformsToChannel (gl, shaderObject, renderObject, 0);
 
-			gl .uniform1i (shaderObject .x3d_NumTextures, 1);
-			gl .uniform1i (shaderObject .x3d_MultiTextureMode [0],      ModeType .MODULATE);
-			gl .uniform1i (shaderObject .x3d_MultiTextureAlphaMode [0], ModeType .MODULATE);
-			gl .uniform1i (shaderObject .x3d_MultiTextureSource [0],    SourceType .DEFAULT);
-			gl .uniform1i (shaderObject .x3d_MultiTextureFunction [0],  FunctionType .DEFAULT);
-		},
-	});
+         gl .uniform1i (shaderObject .x3d_NumTextures, 1);
+         gl .uniform1i (shaderObject .x3d_MultiTextureMode [0],      ModeType .MODULATE);
+         gl .uniform1i (shaderObject .x3d_MultiTextureAlphaMode [0], ModeType .MODULATE);
+         gl .uniform1i (shaderObject .x3d_MultiTextureSource [0],    SourceType .DEFAULT);
+         gl .uniform1i (shaderObject .x3d_MultiTextureFunction [0],  FunctionType .DEFAULT);
+      },
+   });
 
-	return X3DSingleTextureNode;
+   return X3DSingleTextureNode;
 });

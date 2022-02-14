@@ -51,108 +51,108 @@ const Bookmarks = (function ()
 {
 "use strict";
 
-	function Bookmarks (browser, element, filesPerPage)
-	{
-		this .browser = browser;
-		this .element = element;
-	}
+   function Bookmarks (browser, element, filesPerPage)
+   {
+      this .browser = browser;
+      this .element = element;
+   }
 
-	Bookmarks .prototype =
-	{
-		setup: function (array)
-		{
-			for (const bookmarks of array)
-			{
-				const server = bookmarks .server;
+   Bookmarks .prototype =
+   {
+      setup: function (array)
+      {
+         for (const bookmarks of array)
+         {
+            const server = bookmarks .server;
 
-				for (const bookmark of bookmarks)
-				{
-					const
-						component = bookmark .component,
-						test      = bookmark .test,
-						path      = bookmark .path;
+            for (const bookmark of bookmarks)
+            {
+               const
+                  component = bookmark .component,
+                  test      = bookmark .test,
+                  path      = bookmark .path;
 
-					if (test)
-					{
-						var element = $('<span/>')
-							.addClass ('example-box')
-							.attr ('title', component + ' » ' + test)
-							.append ($("<a/>")
-								.addClass ('display-example')
-								.attr ('href', server + '/' + component + '/' + test + '/' + test + '.x3d')
-								.attr ('style', 'background-image:url(' + server + '/' + component + '/' + test + '/screenshot-small.png)')
-								.click (this .loadURL .bind (this, server + '/' + component + '/' + test + '/' + test + '.x3d')));
-					}
-					else if (path)
-					{
-						if (! path .match (/\.(?:x3d|x3dz|x3dv|x3dvz|x3dj|x3djz|wrl|wrz)$/))
-							continue;
+               if (test)
+               {
+                  var element = $('<span/>')
+                     .addClass ('example-box')
+                     .attr ('title', component + ' » ' + test)
+                     .append ($("<a/>")
+                        .addClass ('display-example')
+                        .attr ('href', server + '/' + component + '/' + test + '/' + test + '.x3d')
+                        .attr ('style', 'background-image:url(' + server + '/' + component + '/' + test + '/screenshot-small.png)')
+                        .click (this .loadURL .bind (this, server + '/' + component + '/' + test + '/' + test + '.x3d')));
+               }
+               else if (path)
+               {
+                  if (! path .match (/\.(?:x3d|x3dz|x3dv|x3dvz|x3dj|x3djz|wrl|wrz)$/))
+                     continue;
 
-						const basename = path .match (/([^\/]+)\.\w+$/);
-						const name     = basename [1] .replace (/([A-Z]+)/g, ' $1');
+                  const basename = path .match (/([^\/]+)\.\w+$/);
+                  const name     = basename [1] .replace (/([A-Z]+)/g, ' $1');
 
-						var element = $('<span/>')
-							.addClass ('example-box')
-							.attr ('title', path)
-							.append ($("<a/>")
-								.addClass ('display-example')
-								.attr ('href', server + '/' + path)
-								.click (this .loadURL .bind (this, server + '/' + path))
-								.text (name));
-					}
-					else if (component)
-					{
-						var element = $('<span/>')
-							.addClass ('example-box')
-							.attr ('title', path)
-							.addClass ('display-component')
-							.text (component);
-					}
+                  var element = $('<span/>')
+                     .addClass ('example-box')
+                     .attr ('title', path)
+                     .append ($("<a/>")
+                        .addClass ('display-example')
+                        .attr ('href', server + '/' + path)
+                        .click (this .loadURL .bind (this, server + '/' + path))
+                        .text (name));
+               }
+               else if (component)
+               {
+                  var element = $('<span/>')
+                     .addClass ('example-box')
+                     .attr ('title', path)
+                     .addClass ('display-component')
+                     .text (component);
+               }
 
-					this .element .append (element);
-				}
-			}
+               this .element .append (element);
+            }
+         }
 
-			this .element .scrollLeft (this .browser .getLocalStorage () ["Bookmarks.scrollLeft"] || 0);
+         this .element .scrollLeft (this .browser .getLocalStorage () ["Bookmarks.scrollLeft"] || 0);
 
-			$(window) .on ("unload", function ()
-			{
-				this .browser .getLocalStorage () ["Bookmarks.scrollLeft"] = this .element .scrollLeft ();
-			}
-			.bind (this));
-		},
-		restore: function (first)
-		{
-			const url = this .browser .getLocalStorage () ["Bookmarks.url"];
+         $(window) .on ("unload", function ()
+         {
+            this .browser .getLocalStorage () ["Bookmarks.scrollLeft"] = this .element .scrollLeft ();
+         }
+         .bind (this));
+      },
+      restore: function (first)
+      {
+         const url = this .browser .getLocalStorage () ["Bookmarks.url"];
 
-			if (url)
-				this .loadURL (url);
-			else
-				this .loadURL (first);
-		},
-		loadURL: function (url)
-		{
-			const base = url .replace (/\.[^\.]+$/, "");
+         if (url)
+            this .loadURL (url);
+         else
+            this .loadURL (first);
+      },
+      loadURL: function (url)
+      {
+         const base = url .replace (/\.[^\.]+$/, "");
 
-			$(".file") .text (url)
-				.append ($("<a/>")
-				.attr ('href', base + ".x3d")
-				.click (this .loadURL .bind (this, url))
-				.text (".x3d"))
-				.append ($("<a/>")
-				.attr ('href', base + ".x3dv")
-				.click (this .loadURL .bind (this, url))
-				.text (".x3dv"))
-				.append ($("<a/>")
-				.attr ('href', base + ".x3dj")
-				.click (this .loadURL .bind (this, url))
-				.text (".x3dj"));
+         $(".file") .text (url)
+            .append ($("<a/>")
+            .attr ('href', base + ".x3d")
+            .click (this .loadURL .bind (this, url))
+            .text (".x3d"))
+            .append ($("<a/>")
+            .attr ('href', base + ".x3dv")
+            .click (this .loadURL .bind (this, url))
+            .text (".x3dv"))
+            .append ($("<a/>")
+            .attr ('href', base + ".x3dj")
+            .click (this .loadURL .bind (this, url))
+            .text (".x3dj"));
 
-			this .browser .getLocalStorage () ["Bookmarks.url"] = url;
-			this .browser .loadURL (new X3D .MFString (url), new X3D .MFString ());
-			return false;
-		},
-	};
+         this .browser .getLocalStorage () ["Bookmarks.url"] = url;
+         this .browser .loadURL (new X3D .MFString (url), new X3D .MFString ());
+         return false;
+      },
+   };
 
-	return Bookmarks;
+   return Bookmarks;
 }) ();

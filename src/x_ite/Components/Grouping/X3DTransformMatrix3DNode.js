@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Components/Grouping/X3DGroupingNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
-	"standard/Math/Numbers/Matrix4",
+   "x_ite/Components/Grouping/X3DGroupingNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Rotation4",
+   "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGroupingNode,
           X3DConstants,
@@ -62,98 +62,98 @@ function (X3DGroupingNode,
 {
 "use strict";
 
-	function X3DTransformMatrix3DNode (executionContext)
-	{
-		X3DGroupingNode .call (this, executionContext);
+   function X3DTransformMatrix3DNode (executionContext)
+   {
+      X3DGroupingNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DTransformMatrix3DNode);
+      this .addType (X3DConstants .X3DTransformMatrix3DNode);
 
-		this .matrix   = new Matrix4 ();
-		this .getBBox  = this .getGetGroupBBox ();
-		this .traverse = this .getGroupTraverse ();
-	}
+      this .matrix   = new Matrix4 ();
+      this .getBBox  = this .getGetGroupBBox ();
+      this .traverse = this .getGroupTraverse ();
+   }
 
-	X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
-	{
-		constructor: X3DTransformMatrix3DNode,
-		setMatrix: function (matrix)
-		{
-			if (matrix .equals (Matrix4 .Identity))
-			{
-				this .matrix .identity ();
+   X3DTransformMatrix3DNode .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+   {
+      constructor: X3DTransformMatrix3DNode,
+      setMatrix: function (matrix)
+      {
+         if (matrix .equals (Matrix4 .Identity))
+         {
+            this .matrix .identity ();
 
-				this .getBBox  = this .getGetGroupBBox ();
-				this .traverse = this .getGroupTraverse ();
-			}
-			else
-			{
-				this .matrix .assign (matrix);
+            this .getBBox  = this .getGetGroupBBox ();
+            this .traverse = this .getGroupTraverse ();
+         }
+         else
+         {
+            this .matrix .assign (matrix);
 
-				this .getBBox  = this .getGetBBox ();
-				this .traverse = this .getTraverse ();
-			}
-		},
-		getMatrix: function ()
-		{
-			return this .matrix;
-		},
-		setTransform: function (t, r, s, so, c)
-		{
-			if (t .equals (Vector3 .Zero) && r .equals (Rotation4 .Identity) && s .equals (Vector3 .One))
-			{
-				this .matrix .identity ();
+            this .getBBox  = this .getGetBBox ();
+            this .traverse = this .getTraverse ();
+         }
+      },
+      getMatrix: function ()
+      {
+         return this .matrix;
+      },
+      setTransform: function (t, r, s, so, c)
+      {
+         if (t .equals (Vector3 .Zero) && r .equals (Rotation4 .Identity) && s .equals (Vector3 .One))
+         {
+            this .matrix .identity ();
 
-				this .getBBox  = this .getGetGroupBBox ();
-				this .traverse = this .getGroupTraverse ();
-			}
-			else
-			{
-			   this .matrix .set (t, r, s, so, c);
+            this .getBBox  = this .getGetGroupBBox ();
+            this .traverse = this .getGroupTraverse ();
+         }
+         else
+         {
+            this .matrix .set (t, r, s, so, c);
 
-				this .getBBox  = this .getGetBBox ();
-				this .traverse = this .getTraverse ();
-			}
-		},
-		getGetBBox: (function ()
-		{
-			function getBBox (bbox, shadow)
-			{
-				return this .getSubBBox (bbox, shadow) .multRight (this .matrix);
-			}
+            this .getBBox  = this .getGetBBox ();
+            this .traverse = this .getTraverse ();
+         }
+      },
+      getGetBBox: (function ()
+      {
+         function getBBox (bbox, shadow)
+         {
+            return this .getSubBBox (bbox, shadow) .multRight (this .matrix);
+         }
 
-			return function ()
-			{
-				return getBBox;
-			};
-		})(),
-		getGetGroupBBox: function ()
-		{
-			return X3DGroupingNode .prototype .getBBox;
-		},
-		getTraverse: (function ()
-		{
-			function traverse (type, renderObject)
-			{
-				const modelViewMatrix = renderObject .getModelViewMatrix ();
+         return function ()
+         {
+            return getBBox;
+         };
+      })(),
+      getGetGroupBBox: function ()
+      {
+         return X3DGroupingNode .prototype .getBBox;
+      },
+      getTraverse: (function ()
+      {
+         function traverse (type, renderObject)
+         {
+            const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-				modelViewMatrix .push ();
-				modelViewMatrix .multLeft (this .matrix);
+            modelViewMatrix .push ();
+            modelViewMatrix .multLeft (this .matrix);
 
-				X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+            X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-				modelViewMatrix .pop ();
-			}
+            modelViewMatrix .pop ();
+         }
 
-			return function ()
-			{
-				return traverse;
-			};
-		})(),
-		getGroupTraverse: function ()
-		{
-			return X3DGroupingNode .prototype .traverse;
-		},
-	});
+         return function ()
+         {
+            return traverse;
+         };
+      })(),
+      getGroupTraverse: function ()
+      {
+         return X3DGroupingNode .prototype .traverse;
+      },
+   });
 
-	return X3DTransformMatrix3DNode;
+   return X3DTransformMatrix3DNode;
 });

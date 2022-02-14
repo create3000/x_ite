@@ -48,38 +48,38 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DBaseNode",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DBaseNode",
 ],
 function (Fields,
           X3DBaseNode)
 {
 "use strict";
-	
-	function CylinderOptions (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
-			
-		this .addChildObjects ("xDimension", new Fields .SFInt32 (20),
-		                       "yDimension", new Fields .SFInt32 (1))
-	}
 
-	CylinderOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: CylinderOptions,
-		getTypeName: function ()
-		{
-			return "CylinderOptions";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "cylinderOptions";
-		},
-	});
+   function CylinderOptions (executionContext)
+   {
+      X3DBaseNode .call (this, executionContext);
 
-	return CylinderOptions;
+      this .addChildObjects ("xDimension", new Fields .SFInt32 (20),
+                             "yDimension", new Fields .SFInt32 (1))
+   }
+
+   CylinderOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   {
+      constructor: CylinderOptions,
+      getTypeName: function ()
+      {
+         return "CylinderOptions";
+      },
+      getComponentName: function ()
+      {
+         return "X_ITE";
+      },
+      getContainerField: function ()
+      {
+         return "cylinderOptions";
+      },
+   });
+
+   return CylinderOptions;
 });

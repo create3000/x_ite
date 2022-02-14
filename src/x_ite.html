@@ -1,177 +1,177 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
-	<meta http-equiv="Pragma" content="no-cache"/>
-	<meta http-equiv="Expires" content="0"/>
-	<meta charset="utf-8"/>
+   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+   <meta http-equiv="Pragma" content="no-cache"/>
+   <meta http-equiv="Expires" content="0"/>
+   <meta charset="utf-8"/>
 
-	<meta name="viewport" content="width=1080"/>
+   <meta name="viewport" content="width=1080"/>
 
-	<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.js"></script>
-	<script type="text/javascript" src="bookmarks.js"></script>
-	<script type="text/javascript" src="examples.js"></script>
-	<script type="text/javascript" src="tests.js"></script>
+   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.0.js"></script>
+   <script type="text/javascript" src="bookmarks.js"></script>
+   <script type="text/javascript" src="examples.js"></script>
+   <script type="text/javascript" src="tests.js"></script>
 
-	<!-- X_ITE START -->
-	<link rel="stylesheet" type="text/css" href="x_ite.css"/>
-	<script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
-	<script type="text/javascript" src="x_ite.config.js"></script>
-	<script type="text/javascript" src="x_ite.js"></script>
-	<!-- X_ITE END -->
+   <!-- X_ITE START -->
+   <link rel="stylesheet" type="text/css" href="x_ite.css"/>
+   <script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
+   <script type="text/javascript" src="x_ite.config.js"></script>
+   <script type="text/javascript" src="x_ite.js"></script>
+   <!-- X_ITE END -->
 
-	<style>
+   <style>
 @import url(https://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700,700italic);
 
 html, body {
-	margin: 0px;
-	padding: 0px;
-	border: 0px;
-	height: 100%;
+   margin: 0px;
+   padding: 0px;
+   border: 0px;
+   height: 100%;
 }
 
 body {
-	padding-bottom: 100px;
-	background: black;
-	color: white;
-	font-family: PT Sans, sans-serif;
-	line-height: 1.3;
+   padding-bottom: 100px;
+   background: black;
+   color: white;
+   font-family: PT Sans, sans-serif;
+   line-height: 1.3;
 }
 
 a {
-	text-decoration: none;
-	color: inherit;
-	outline: 0;
+   text-decoration: none;
+   color: inherit;
+   outline: 0;
 }
 
 p a {
-	color: white;
-	text-shadow: 0px 0px 3px black;
+   color: white;
+   text-shadow: 0px 0px 3px black;
 }
 
 header > div,
 footer > div,
 main > div {
-	margin: 0px auto;
-	padding: 20px 30px 10px 30px;
-	width: 1000px;
+   margin: 0px auto;
+   padding: 20px 30px 10px 30px;
+   width: 1000px;
 }
 
 main {
-	background: #3d4145;
+   background: #3d4145;
 }
 
 main.color-management {
-	background: #2E8BE6;
+   background: #2E8BE6;
 }
 
 main.color-management .browser {
-	box-shadow: none;
+   box-shadow: none;
 }
 
 .version {
-	margin: 10px 40px 10px 20px;
-	font-weight: bold;
-	font-size: 52px;
+   margin: 10px 40px 10px 20px;
+   font-weight: bold;
+   font-size: 52px;
 }
 
 .file {
-	margin: 10px 40px 10px 20px;
+   margin: 10px 40px 10px 20px;
 }
 
 .file a {
-	margin-left: 10px;
-	padding-left: 10px;
-	border-left: 1px solid white;
+   margin-left: 10px;
+   padding-left: 10px;
+   border-left: 1px solid white;
 }
 
 .browser {
-	display: block;
-	margin: 10px 0px;
-	width: 100%;
-	height: 563px;
-	box-shadow: 0px 2px 12px 1px rgba(0, 0, 0, 0.75);
+   display: block;
+   margin: 10px 0px;
+   width: 100%;
+   height: 563px;
+   box-shadow: 0px 2px 12px 1px rgba(0, 0, 0, 0.75);
 }
 
 .browser:focus {
-	outline: 2px solid black;
+   outline: 2px solid black;
 }
 
 .fallback {
-	display: block;
-	margin: 300px 30px 0 30px;
-	text-align: center;
+   display: block;
+   margin: 300px 30px 0 30px;
+   text-align: center;
 }
 
 .location-entry {
-	display: block;
-	float: left;
-	box-sizing: border-box;
-	margin: 0px;
-	border: 0px;
-	padding: 4px;
-	width: 880px;
-	background: #313131;
-	color: white;
-	vertical-align: middle;
-	font-family: PT Sans, sans-serif;
-	font-size: 10pt;
+   display: block;
+   float: left;
+   box-sizing: border-box;
+   margin: 0px;
+   border: 0px;
+   padding: 4px;
+   width: 880px;
+   background: #313131;
+   color: white;
+   vertical-align: middle;
+   font-family: PT Sans, sans-serif;
+   font-size: 10pt;
 }
 
 .location-go {
-	display: block;
-	float: left;
-	box-sizing: border-box;
-	margin: 0px;
-	margin-left: 5px;
-	border: 0px;
-	padding: 4px;
-	width: 115px;
-	background: #313131;
-	color: white;
-	vertical-align: middle;
-	font-family: PT Sans, sans-serif;
-	font-size: 10pt;
+   display: block;
+   float: left;
+   box-sizing: border-box;
+   margin: 0px;
+   margin-left: 5px;
+   border: 0px;
+   padding: 4px;
+   width: 115px;
+   background: #313131;
+   color: white;
+   vertical-align: middle;
+   font-family: PT Sans, sans-serif;
+   font-size: 10pt;
 }
 
 .location-go:hover {
-	background: #363636;
+   background: #363636;
 }
 
 .location-go:active {
-	background: #515151;
+   background: #515151;
 }
 
 .buttons {
-	margin: 10px 0px;
-	float: left;
+   margin: 10px 0px;
+   float: left;
 }
 
 .links {
-	margin: 10px 0px;
-	text-align: right;
+   margin: 10px 0px;
+   text-align: right;
 }
 
 .buttons a,
 .links a {
-	padding: 0px 5px;
-	border-left: 1px solid white;
+   padding: 0px 5px;
+   border-left: 1px solid white;
 }
 
 .buttons a:first-child,
 .links a:first-child {
-	border-left: none;
+   border-left: none;
 }
 
 .buttons a:last-child,
 .links a:last-child {
-	border-right: 0px;
+   border-right: 0px;
 }
 
 .min-links,
 .min-links a:last-child {
-	color: #e06c75;
-	border-color: #e06c75;
+   color: #e06c75;
+   border-color: #e06c75;
 }
 
 .clearfix,
@@ -185,10 +185,10 @@ main.color-management .browser {
 }
 
 .examples-box {
-	overflow-x: scroll;
-	display: block;
-	width: calc(100% + 5px);
-	white-space: nowrap;
+   overflow-x: scroll;
+   display: block;
+   width: calc(100% + 5px);
+   white-space: nowrap;
 }
 
 .examples-box:after {
@@ -201,16 +201,16 @@ main.color-management .browser {
 }
 
 .example-box {
-	overflow: hidden;
-	display: inline-block;
-	position: relative;
-	width: 62px;
-	height: 62px;
-	margin: 0px 5px 5px 0px;
-	background-color: gray;
-	font-size: 8pt;
-	white-space: normal;
-	word-wrap: break-word;
+   overflow: hidden;
+   display: inline-block;
+   position: relative;
+   width: 62px;
+   height: 62px;
+   margin: 0px 5px 5px 0px;
+   background-color: gray;
+   font-size: 8pt;
+   white-space: normal;
+   word-wrap: break-word;
 }
 
 .example-box::before,
@@ -230,108 +230,108 @@ main.color-management .browser {
 }
 
 .display-component {
-	background-color: teal;
+   background-color: teal;
 }
 
 .example-box a.display-example {
-	display: block;
-	width: 100%;
-	height: 100%;
-	background-size: cover;
-	background-position: center center;
+   display: block;
+   width: 100%;
+   height: 100%;
+   background-size: cover;
+   background-position: center center;
 }
 
 .example-box a.display-example:before {
-	display: none;
+   display: none;
 }
 
-	</style>
+   </style>
 
-	<script type="text/javascript">
+   <script type="text/javascript">
 X3D (function ()
 {
-	const Browser = X3D .getBrowser ();
+   const Browser = X3D .getBrowser ();
 
-	function loadURL ()
-	{
-		bookmarks .loadURL ($(".location-entry") .val ());
-	}
+   function loadURL ()
+   {
+      bookmarks .loadURL ($(".location-entry") .val ());
+   }
 
-	function toXMLString ()
-	{
-		console .log (X3D .getBrowser ("#browser") .currentScene .toXMLString ());
-	}
+   function toXMLString ()
+   {
+      console .log (X3D .getBrowser ("#browser") .currentScene .toXMLString ());
+   }
 
-	function toVRMLString ()
-	{
-		console .log (X3D .getBrowser ("#browser") .currentScene .toVRMLString ());
-	}
+   function toVRMLString ()
+   {
+      console .log (X3D .getBrowser ("#browser") .currentScene .toVRMLString ());
+   }
 
-	const bookmarks = new Bookmarks (Browser, $(".examples-box"));
+   const bookmarks = new Bookmarks (Browser, $(".examples-box"));
 
-	bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
-	bookmarks .restore ("https://rawgit.com/create3000/Library/main/Tests/Components/Layout/info.x3d");
+   bookmarks .setup ([X_ITE_EXAMPLES, X_ITE_TESTS]);
+   bookmarks .restore ("https://rawgit.com/create3000/Library/main/Tests/Components/Layout/info.x3d");
 
-	$(".version") .text (Browser .name + " v" + Browser .version);
-	$(".location-entry") .keydown (function (event) { if (event .key == "Enter") loadURL (); });
-	$(".location-go") .click (loadURL);
-	$(".print-xml") .click (toXMLString);
-	$(".print-vrml") .click (toVRMLString);
+   $(".version") .text (Browser .name + " v" + Browser .version);
+   $(".location-entry") .keydown (function (event) { if (event .key == "Enter") loadURL (); });
+   $(".location-go") .click (loadURL);
+   $(".print-xml") .click (toXMLString);
+   $(".print-vrml") .click (toVRMLString);
 
-	// Restore location entry.
+   // Restore location entry.
 
-	const defaultLocaton = "http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d";
+   const defaultLocaton = "http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d";
 
-	$(".location-entry") .val (Browser .getLocalStorage () ["Bookmarks.location"] || defaultLocaton)
+   $(".location-entry") .val (Browser .getLocalStorage () ["Bookmarks.location"] || defaultLocaton)
 
-	$(window) .on ("unload", function ()
-	{
-		Browser .getLocalStorage () ["Bookmarks.location"] = $(".location-entry") .val ();
-	});
+   $(window) .on ("unload", function ()
+   {
+      Browser .getLocalStorage () ["Bookmarks.location"] = $(".location-entry") .val ();
+   });
 },
 function (error)
 {
-	console .error ("Please forgive me, your browser may not support all features required by X_ITE!");
+   console .error ("Please forgive me, your browser may not support all features required by X_ITE!");
 });
-	</script>
+   </script>
 </head>
 <body>
-	<div class="page">
-		<header>
-			<div>
-				<h1 class="version"></h1>
-				<p class="file"></p>
-			</div>
-		</header>
-		<main>
-			<div>
-				<form action="javascript:alert('form submited')">
-					<X3DCanvas id="browser" class="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false">
-						<p class="fallback">
-							Sorry,<br/>
-							it wasn't me!<br/>
-							<br/>
-							Your browser may not support all features required by X_ITE! You can use Firefox, Chrome,
-							or Microsoft Edge, because this is currently the choice of the choice. We will continuously
-							keep you informed on technical developments and as soon as X_ITE is running in other browser too.
-						</p>
-					</X3DCanvas>
-				</form>
-				<div class="location-bar">
-					<input class="location-entry" value="http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"/>
-					<button class="location-go" type="button">Load URL</button>
-				</div>
-				<div class="buttons">
-					<a class="print-xml" href="#">XML</a><a class="print-vrml" href="#">VRML</a>
-				</div>
-				<div class="links">
-					<a href="../x_ite.min.html">x_ite.min.html</a><a href="http://rawgit.com/create3000/x_ite/main/x_ite.min.html">github</a>
-				</div>
-				<div class="examples-box">
-				</div>
-			</div>
-		</main>
-		<footer><div class="console x_ite-console"></div></footer>
-	</div>
+   <div class="page">
+      <header>
+         <div>
+            <h1 class="version"></h1>
+            <p class="file"></p>
+         </div>
+      </header>
+      <main>
+         <div>
+            <form action="javascript:alert('form submited')">
+               <X3DCanvas id="browser" class="browser" splashScreen="true" contextMenu="true" cache="false" debug="true" preserveDrawingBuffer="false">
+                  <p class="fallback">
+                     Sorry,<br/>
+                     it wasn't me!<br/>
+                     <br/>
+                     Your browser may not support all features required by X_ITE! You can use Firefox, Chrome,
+                     or Microsoft Edge, because this is currently the choice of the choice. We will continuously
+                     keep you informed on technical developments and as soon as X_ITE is running in other browser too.
+                  </p>
+               </X3DCanvas>
+            </form>
+            <div class="location-bar">
+               <input class="location-entry" value="http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d"/>
+               <button class="location-go" type="button">Load URL</button>
+            </div>
+            <div class="buttons">
+               <a class="print-xml" href="#">XML</a><a class="print-vrml" href="#">VRML</a>
+            </div>
+            <div class="links">
+               <a href="../x_ite.min.html">x_ite.min.html</a><a href="http://rawgit.com/create3000/x_ite/main/x_ite.min.html">github</a>
+            </div>
+            <div class="examples-box">
+            </div>
+         </div>
+      </main>
+      <footer><div class="console x_ite-console"></div></footer>
+   </div>
 </body>
 </html>

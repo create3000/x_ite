@@ -51,14 +51,14 @@ define (function ()
 {
 "use strict";
 
-	let i = 0;
+   let i = 0;
 
-	const PrimitiveQuality =
-	{
-		LOW:    i ++,
-		MEDIUM: i ++,
-		HIGH:   i ++,
-	};
+   const PrimitiveQuality =
+   {
+      LOW:    i ++,
+      MEDIUM: i ++,
+      HIGH:   i ++,
+   };
 
-	return PrimitiveQuality;
+   return PrimitiveQuality;
 });

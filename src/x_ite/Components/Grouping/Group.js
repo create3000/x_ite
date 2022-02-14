@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Grouping/X3DGroupingNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Grouping/X3DGroupingNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -62,39 +62,39 @@ function (Fields,
 {
 "use strict";
 
-	function Group (executionContext)
-	{
-		X3DGroupingNode .call (this, executionContext);
+   function Group (executionContext)
+   {
+      X3DGroupingNode .call (this, executionContext);
 
-		this .addType (X3DConstants .Group);
-	}
+      this .addType (X3DConstants .Group);
+   }
 
-	Group .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
-	{
-		constructor: Group,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Group";
-		},
-		getComponentName: function ()
-		{
-			return "Grouping";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-	});
+   Group .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+   {
+      constructor: Group,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "Group";
+      },
+      getComponentName: function ()
+      {
+         return "Grouping";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+   });
 
-	return Group;
+   return Group;
 });

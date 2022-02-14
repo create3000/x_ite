@@ -48,27 +48,25 @@
 
 
 define ([
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DChildNode,
           X3DConstants)
 {
 "use strict";
 
-	function X3DLayoutNode (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
+   function X3DLayoutNode (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DLayoutNode);
-	}
+      this .addType (X3DConstants .X3DLayoutNode);
+   }
 
-	X3DLayoutNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: X3DLayoutNode,
-	});
+   X3DLayoutNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: X3DLayoutNode,
+   });
 
-	return X3DLayoutNode;
+   return X3DLayoutNode;
 });
-
-

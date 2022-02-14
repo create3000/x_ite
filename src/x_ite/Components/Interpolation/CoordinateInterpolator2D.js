@@ -48,82 +48,80 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Interpolation/X3DInterpolatorNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Algorithm",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Interpolation/X3DInterpolatorNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DInterpolatorNode, 
+          X3DInterpolatorNode,
           X3DConstants,
           Algorithm)
 {
 "use strict";
 
-	function CoordinateInterpolator2D (executionContext)
-	{
-		X3DInterpolatorNode .call (this, executionContext);
+   function CoordinateInterpolator2D (executionContext)
+   {
+      X3DInterpolatorNode .call (this, executionContext);
 
-		this .addType (X3DConstants .CoordinateInterpolator2D);
-	}
+      this .addType (X3DConstants .CoordinateInterpolator2D);
+   }
 
-	CoordinateInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
-	{
-		constructor: CoordinateInterpolator2D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec2f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .MFVec2f ()),
-		]),
-		getTypeName: function ()
-		{
-			return "CoordinateInterpolator2D";
-		},
-		getComponentName: function ()
-		{
-			return "Interpolation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		set_keyValue__: function () { },
-		interpolate: function (index0, index1, weight)
-		{
-			var
-				keyValue = this .keyValue_ .getValue (),
-				size     = this .key_ .length ? Math .floor (this .keyValue_ .length / this .key_ .length) : 0;
+   CoordinateInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+   {
+      constructor: CoordinateInterpolator2D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .MFVec2f ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "CoordinateInterpolator2D";
+      },
+      getComponentName: function ()
+      {
+         return "Interpolation";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      set_keyValue__: function () { },
+      interpolate: function (index0, index1, weight)
+      {
+         var
+            keyValue = this .keyValue_ .getValue (),
+            size     = this .key_ .length ? Math .floor (this .keyValue_ .length / this .key_ .length) : 0;
 
-			this .value_changed_ .length = size;
+         this .value_changed_ .length = size;
 
-			var value_changed = this .value_changed_ .getValue ();
+         var value_changed = this .value_changed_ .getValue ();
 
-			index0 *= size;
-			index1  = index0 + (this .key_ .length > 1 ? size : 0);
+         index0 *= size;
+         index1  = index0 + (this .key_ .length > 1 ? size : 0);
 
-			index0 *= 2;
-			index1 *= 2;
-			size   *= 2;
+         index0 *= 2;
+         index1 *= 2;
+         size   *= 2;
 
-			for (var i0 = 0; i0 < size; i0 += 2)
-			{
-				var i1 = i0 + 1;
+         for (var i0 = 0; i0 < size; i0 += 2)
+         {
+            var i1 = i0 + 1;
 
-				value_changed [i0] = Algorithm .lerp (keyValue [index0 + i0], keyValue [index1 + i0], weight);
-				value_changed [i1] = Algorithm .lerp (keyValue [index0 + i1], keyValue [index1 + i1], weight);
-			}
+            value_changed [i0] = Algorithm .lerp (keyValue [index0 + i0], keyValue [index1 + i0], weight);
+            value_changed [i1] = Algorithm .lerp (keyValue [index0 + i1], keyValue [index1 + i1], weight);
+         }
 
-			this .value_changed_ .addEvent ();
-		},
-	});
+         this .value_changed_ .addEvent ();
+      },
+   });
 
-	return CoordinateInterpolator2D;
+   return CoordinateInterpolator2D;
 });
-
-

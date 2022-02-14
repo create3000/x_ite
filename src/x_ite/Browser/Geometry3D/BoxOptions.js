@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Components/Geometry3D/IndexedFaceSet",
-	"x_ite/Components/Rendering/Coordinate",
-	"x_ite/Components/Texturing/TextureCoordinate",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Components/Geometry3D/IndexedFaceSet",
+   "x_ite/Components/Rendering/Coordinate",
+   "x_ite/Components/Texturing/TextureCoordinate",
 ],
 function (Fields,
           X3DBaseNode,
@@ -61,79 +61,79 @@ function (Fields,
           TextureCoordinate)
 {
 "use strict";
-	
-	function BoxOptions (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
-	}
 
-	BoxOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: BoxOptions,
-		getTypeName: function ()
-		{
-			return "BoxOptions";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "boxOptions";
-		},
-		initialize: function ()
-		{
-			X3DBaseNode .prototype .initialize .call (this);
-		},
-		getGeometry: function ()
-		{
-			if (this .geometry)
-				return this .geometry;
+   function BoxOptions (executionContext)
+   {
+      X3DBaseNode .call (this, executionContext);
+   }
 
-			this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
-			this .geometry .texCoord_ = new TextureCoordinate (this .getExecutionContext ());
-			this .geometry .coord_    = new Coordinate (this .getExecutionContext ());
+   BoxOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   {
+      constructor: BoxOptions,
+      getTypeName: function ()
+      {
+         return "BoxOptions";
+      },
+      getComponentName: function ()
+      {
+         return "X_ITE";
+      },
+      getContainerField: function ()
+      {
+         return "boxOptions";
+      },
+      initialize: function ()
+      {
+         X3DBaseNode .prototype .initialize .call (this);
+      },
+      getGeometry: function ()
+      {
+         if (this .geometry)
+            return this .geometry;
 
-			var
-				geometry = this .geometry,
-				texCoord = this .geometry .texCoord_ .getValue (),
-				coord    = this .geometry .coord_ .getValue ();
+         this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
+         this .geometry .texCoord_ = new TextureCoordinate (this .getExecutionContext ());
+         this .geometry .coord_    = new Coordinate (this .getExecutionContext ());
 
-			geometry .texCoordIndex_ = new Fields .MFInt32 (
-				0, 1, 2, 3, -1, // front
-				0, 1, 2, 3, -1, // back
-				0, 1, 2, 3, -1, // left
-				0, 1, 2, 3, -1, // right
-				0, 1, 2, 3, -1, // top
-				0, 1, 2, 3, -1  // bottom
-			);
+         var
+            geometry = this .geometry,
+            texCoord = this .geometry .texCoord_ .getValue (),
+            coord    = this .geometry .coord_ .getValue ();
 
-			geometry .coordIndex_ = new Fields .MFInt32 (
-				0, 1, 2, 3, -1, // front
-				5, 4, 7, 6, -1, // back
-				1, 5, 6, 2, -1, // left
-				4, 0, 3, 7, -1, // right
-				4, 5, 1, 0, -1, // top
-				3, 2, 6, 7, -1  // bottom
-			);
+         geometry .texCoordIndex_ = new Fields .MFInt32 (
+            0, 1, 2, 3, -1, // front
+            0, 1, 2, 3, -1, // back
+            0, 1, 2, 3, -1, // left
+            0, 1, 2, 3, -1, // right
+            0, 1, 2, 3, -1, // top
+            0, 1, 2, 3, -1  // bottom
+         );
 
-			texCoord .point_ = new Fields .MFVec2f (
-				new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0)
-			);
+         geometry .coordIndex_ = new Fields .MFInt32 (
+            0, 1, 2, 3, -1, // front
+            5, 4, 7, 6, -1, // back
+            1, 5, 6, 2, -1, // left
+            4, 0, 3, 7, -1, // right
+            4, 5, 1, 0, -1, // top
+            3, 2, 6, 7, -1  // bottom
+         );
 
-			coord .point_ = new Fields .MFVec3f (
-				new Fields .SFVec3f ( 1,  1,  1), new Fields .SFVec3f (-1,  1,  1), new Fields .SFVec3f (-1, -1,  1), new Fields .SFVec3f ( 1, -1,  1), 
-				new Fields .SFVec3f ( 1,  1, -1), new Fields .SFVec3f (-1,  1, -1), new Fields .SFVec3f (-1, -1, -1), new Fields .SFVec3f ( 1, -1, -1)
-			);
+         texCoord .point_ = new Fields .MFVec2f (
+            new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0)
+         );
 
-			texCoord .setup ();
-			coord    .setup ();
-			geometry .setup ();
+         coord .point_ = new Fields .MFVec3f (
+            new Fields .SFVec3f ( 1,  1,  1), new Fields .SFVec3f (-1,  1,  1), new Fields .SFVec3f (-1, -1,  1), new Fields .SFVec3f ( 1, -1,  1),
+            new Fields .SFVec3f ( 1,  1, -1), new Fields .SFVec3f (-1,  1, -1), new Fields .SFVec3f (-1, -1, -1), new Fields .SFVec3f ( 1, -1, -1)
+         );
 
-			return this .geometry;
-		},
-	});
+         texCoord .setup ();
+         coord    .setup ();
+         geometry .setup ();
 
-	return BoxOptions;
+         return this .geometry;
+      },
+   });
+
+   return BoxOptions;
 });

@@ -48,73 +48,73 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DBaseNode, 
+          X3DBaseNode,
           X3DConstants)
 {
 "use strict";
-	
-	function RenderingProperties (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
 
-		this .addAlias ("AntiAliased", this .Antialiased_);
-	}
+   function RenderingProperties (executionContext)
+   {
+      X3DBaseNode .call (this, executionContext);
 
-	RenderingProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: RenderingProperties,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .outputOnly, "Shading",                new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly, "MaxTextureSize",         new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly, "TextureUnits",           new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly, "MaxLights",              new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly, "Antialiased",            new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .outputOnly, "ColorDepth",             new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly, "TextureMemory",          new Fields .SFDouble ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
-		]),
-		getTypeName: function ()
-		{
-			return "RenderingProperties";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "renderingProperties";
-		},
-		initialize: function ()
-		{
-			X3DBaseNode .prototype .initialize .call (this);
+      this .addAlias ("AntiAliased", this .Antialiased_);
+   }
 
-			var browser = this .getBrowser ();
+   RenderingProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   {
+      constructor: RenderingProperties,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "Shading",                new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "MaxTextureSize",         new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "TextureUnits",           new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "MaxLights",              new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "Antialiased",            new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "ColorDepth",             new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "TextureMemory",          new Fields .SFDouble ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
+      ]),
+      getTypeName: function ()
+      {
+         return "RenderingProperties";
+      },
+      getComponentName: function ()
+      {
+         return "X_ITE";
+      },
+      getContainerField: function ()
+      {
+         return "renderingProperties";
+      },
+      initialize: function ()
+      {
+         X3DBaseNode .prototype .initialize .call (this);
 
-			this .MaxTextureSize_ = browser .getMaxTextureSize ();
-			this .TextureUnits_   = browser .getCombinedTextureUnits ();
-			this .MaxLights_      = browser .getMaxLights ();
-			this .ColorDepth_     = browser .getColorDepth ();
-			this .TextureMemory_  = browser .getTextureMemory ();
+         var browser = this .getBrowser ();
 
-			browser .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
+         this .MaxTextureSize_ = browser .getMaxTextureSize ();
+         this .TextureUnits_   = browser .getCombinedTextureUnits ();
+         this .MaxLights_      = browser .getMaxLights ();
+         this .ColorDepth_     = browser .getColorDepth ();
+         this .TextureMemory_  = browser .getTextureMemory ();
 
-			this .set_shading__ (browser .getBrowserOptions () .Shading_);
-		},
-		set_shading__: function (shading)
-		{
-			this .Shading_ = shading;
-		},
-	});
+         browser .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
 
-	return RenderingProperties;
+         this .set_shading__ (browser .getBrowserOptions () .Shading_);
+      },
+      set_shading__: function (shading)
+      {
+         this .Shading_ = shading;
+      },
+   });
+
+   return RenderingProperties;
 });

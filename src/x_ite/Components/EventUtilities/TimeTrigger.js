@@ -48,60 +48,58 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/EventUtilities/X3DTriggerNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/EventUtilities/X3DTriggerNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTriggerNode, 
+          X3DTriggerNode,
           X3DConstants)
 {
 "use strict";
 
-	function TimeTrigger (executionContext)
-	{
-		X3DTriggerNode .call (this, executionContext);
+   function TimeTrigger (executionContext)
+   {
+      X3DTriggerNode .call (this, executionContext);
 
-		this .addType (X3DConstants .TimeTrigger);
-	}
+      this .addType (X3DConstants .TimeTrigger);
+   }
 
-	TimeTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
-	{
-		constructor: TimeTrigger,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTime", new Fields .SFTime ()),
-		]),
-		getTypeName: function ()
-		{
-			return "TimeTrigger";
-		},
-		getComponentName: function ()
-		{
-			return "EventUtilities";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DTriggerNode .prototype .initialize .call (this);
-		
-			this .set_boolean_ .addInterest ("set_boolean__", this);
-		},
-		set_boolean__: function ()
-		{
-			this .triggerTime_ = this .getBrowser () .getCurrentTime ();
-		},
-	});
+   TimeTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
+   {
+      constructor: TimeTrigger,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTime", new Fields .SFTime ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "TimeTrigger";
+      },
+      getComponentName: function ()
+      {
+         return "EventUtilities";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DTriggerNode .prototype .initialize .call (this);
 
-	return TimeTrigger;
+         this .set_boolean_ .addInterest ("set_boolean__", this);
+      },
+      set_boolean__: function ()
+      {
+         this .triggerTime_ = this .getBrowser () .getCurrentTime ();
+      },
+   });
+
+   return TimeTrigger;
 });
-
-

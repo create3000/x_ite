@@ -48,81 +48,81 @@
 
 
 define ([
-	"text!locale/de.po",
-	"text!locale/fr.po",
+   "text!locale/de.po",
+   "text!locale/fr.po",
 ],
 function (de, fr)
 {
 "use strict";
 
-	function execAll (regex, string)
-	{
-		var
-			match   = null,
-			matches = [ ];
+   function execAll (regex, string)
+   {
+      var
+         match   = null,
+         matches = [ ];
 
-		while (match = regex .exec (string))
-			matches .push (match);
-	
-		return matches;
-	}
+      while (match = regex .exec (string))
+         matches .push (match);
 
-	function getLanguage ()
-	{
-		for (var i = 0; i < navigator .languages; ++ i)
-		{
-			var language = navigator .languages [i] .split ("-") [0];
-	
-			if (locales [language])
-				return language;
-		}
+      return matches;
+   }
 
-		return (navigator .language || navigator .userLanguage) .split ("-") [0];
-	}
+   function getLanguage ()
+   {
+      for (var i = 0; i < navigator .languages; ++ i)
+      {
+         var language = navigator .languages [i] .split ("-") [0];
 
-	function setLocale (language)
-	{
-		if (locales [language])
-		{
-			var
-				matches = execAll (msg, locales [language]),
-				locale  = locales [language] = { };
-	
-			for (var i = 0, length = matches .length; i < length; ++ i)
-			{
-				if (matches [i] [2] .length)
-					locale [matches [i] [1]] = matches [i] [2];
-			}
-		}
-	}
+         if (locales [language])
+            return language;
+      }
 
-	var locales =
-	{
-		en: "C",
-		de: de,
-		fr: fr,
-	};
+      return (navigator .language || navigator .userLanguage) .split ("-") [0];
+   }
 
-	var
-		msg      = /msgid\s+"(.*?)"\nmsgstr\s+"(.*?)"\n/g,
-		language = getLanguage ();
+   function setLocale (language)
+   {
+      if (locales [language])
+      {
+         var
+            matches = execAll (msg, locales [language]),
+            locale  = locales [language] = { };
 
-	setLocale (language);
+         for (var i = 0, length = matches .length; i < length; ++ i)
+         {
+            if (matches [i] [2] .length)
+               locale [matches [i] [1]] = matches [i] [2];
+         }
+      }
+   }
 
-	function gettext (string)
-	{
-		var locale = locales [language];
+   var locales =
+   {
+      en: "C",
+      de: de,
+      fr: fr,
+   };
 
-		if (locale === undefined)
-			return string;
+   var
+      msg      = /msgid\s+"(.*?)"\nmsgstr\s+"(.*?)"\n/g,
+      language = getLanguage ();
 
-		var translation = locale [string];
+   setLocale (language);
 
-		if (translation === undefined)
-			return string;
+   function gettext (string)
+   {
+      var locale = locales [language];
 
-		return translation;
-	}
+      if (locale === undefined)
+         return string;
 
-	return gettext;
+      var translation = locale [string];
+
+      if (translation === undefined)
+         return string;
+
+      return translation;
+   }
+
+   return gettext;
 });

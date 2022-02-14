@@ -51,32 +51,32 @@ define (function ()
 {
 "use strict";
 
-	const cache = new WeakMap ();
+   const cache = new WeakMap ();
 
-	function SFNodeCache () { }
+   function SFNodeCache () { }
 
-	SFNodeCache .prototype =
-	{
-		get: function (baseNode)
-		{
-			const node = cache .get (baseNode);
+   SFNodeCache .prototype =
+   {
+      get: function (baseNode)
+      {
+         const node = cache .get (baseNode);
 
-			if (node)
-			{
-				return node;
-			}
-			else
-			{
-				const
-					SFNode = require ("x_ite/Fields/SFNode"),
-					node   = new SFNode (baseNode);
+         if (node)
+         {
+            return node;
+         }
+         else
+         {
+            const
+               SFNode = require ("x_ite/Fields/SFNode"),
+               node   = new SFNode (baseNode);
 
-				cache .set (baseNode, node);
+            cache .set (baseNode, node);
 
-				return node;
-			}
-		},
-	};
+            return node;
+         }
+      },
+   };
 
-	return new SFNodeCache ();
+   return new SFNodeCache ();
 });

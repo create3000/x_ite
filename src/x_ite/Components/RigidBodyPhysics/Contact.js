@@ -48,72 +48,70 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNode, 
+          X3DNode,
           X3DConstants)
 {
 "use strict";
 
-	function Contact (executionContext)
-	{
-		X3DNode .call (this, executionContext);
+   function Contact (executionContext)
+   {
+      X3DNode .call (this, executionContext);
 
-		this .addType (X3DConstants .Contact);
+      this .addType (X3DConstants .Contact);
 
-		// Units
-	
-		this .position_                 .setUnit ("length");
-		this .depth_                    .setUnit ("length");
-		this .minBounceSpeed_           .setUnit ("speed");
-		this .surfaceSpeed_             .setUnit ("speed");
-		this .softnessConstantForceMix_ .setUnit ("force");
-	}
+      // Units
 
-	Contact .prototype = Object .assign (Object .create (X3DNode .prototype),
-	{
-		constructor: Contact,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "position",                 new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "contactNormal",            new Fields .SFVec3f (0, 1, 0)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "depth",                    new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "frictionDirection",        new Fields .SFVec3f (0, 1, 0)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "appliedParameters",        new Fields .MFString ("BOUNCE")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "bounce",                   new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "minBounceSpeed",           new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "frictionCoefficients",     new Fields .SFVec2f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceSpeed",             new Fields .SFVec2f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "slipCoefficients",         new Fields .SFVec2f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "softnessConstantForceMix", new Fields .SFFloat (0.0001)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "softnessErrorCorrection",  new Fields .SFFloat (0.8)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "geometry1",                new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "geometry2",                new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                    new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Contact";
-		},
-		getComponentName: function ()
-		{
-			return "RigidBodyPhysics";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-	});
+      this .position_                 .setUnit ("length");
+      this .depth_                    .setUnit ("length");
+      this .minBounceSpeed_           .setUnit ("speed");
+      this .surfaceSpeed_             .setUnit ("speed");
+      this .softnessConstantForceMix_ .setUnit ("force");
+   }
 
-	return Contact;
+   Contact .prototype = Object .assign (Object .create (X3DNode .prototype),
+   {
+      constructor: Contact,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "position",                 new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "contactNormal",            new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "depth",                    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "frictionDirection",        new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "appliedParameters",        new Fields .MFString ("BOUNCE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "bounce",                   new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "minBounceSpeed",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "frictionCoefficients",     new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceSpeed",             new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "slipCoefficients",         new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "softnessConstantForceMix", new Fields .SFFloat (0.0001)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "softnessErrorCorrection",  new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "geometry1",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "geometry2",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                    new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "Contact";
+      },
+      getComponentName: function ()
+      {
+         return "RigidBodyPhysics";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+   });
+
+   return Contact;
 });
-
-

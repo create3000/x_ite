@@ -48,14 +48,14 @@
 
 
 define ([
-	"x_ite/Components",
-	"x_ite/Components/CADGeometry/CADAssembly",
-	"x_ite/Components/CADGeometry/CADFace",
-	"x_ite/Components/CADGeometry/CADLayer",
-	"x_ite/Components/CADGeometry/CADPart",
-	"x_ite/Components/CADGeometry/IndexedQuadSet",
-	"x_ite/Components/CADGeometry/QuadSet",
-	"x_ite/Components/CADGeometry/X3DProductStructureChildNode",
+   "x_ite/Components",
+   "x_ite/Components/CADGeometry/CADAssembly",
+   "x_ite/Components/CADGeometry/CADFace",
+   "x_ite/Components/CADGeometry/CADLayer",
+   "x_ite/Components/CADGeometry/CADPart",
+   "x_ite/Components/CADGeometry/IndexedQuadSet",
+   "x_ite/Components/CADGeometry/QuadSet",
+   "x_ite/Components/CADGeometry/X3DProductStructureChildNode",
 ],
 function (Components,
           CADAssembly,
@@ -68,21 +68,20 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "CADGeometry",
-		types:
-		{
-			CADAssembly:    CADAssembly,
-			CADFace:        CADFace,
-			CADLayer:       CADLayer,
-			CADPart:        CADPart,
-			IndexedQuadSet: IndexedQuadSet,
-			QuadSet:        QuadSet,
-		},
-		abstractTypes:
-		{
-			X3DProductStructureChildNode: X3DProductStructureChildNode,
-		},
-	});
+   Components .addComponent ({
+      name: "CADGeometry",
+      types:
+      {
+         CADAssembly:    CADAssembly,
+         CADFace:        CADFace,
+         CADLayer:       CADLayer,
+         CADPart:        CADPart,
+         IndexedQuadSet: IndexedQuadSet,
+         QuadSet:        QuadSet,
+      },
+      abstractTypes:
+      {
+         X3DProductStructureChildNode: X3DProductStructureChildNode,
+      },
+   });
 });
-

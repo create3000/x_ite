@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
-	"standard/Math/Numbers/Matrix4",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Rotation4",
+   "standard/Math/Numbers/Matrix4",
 ],
 function (X3DChildNode,
           X3DConstants,
@@ -64,154 +64,154 @@ function (X3DChildNode,
 {
 "use strict";
 
-	function X3DTextureProjectorNode (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
+   function X3DTextureProjectorNode (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DTextureProjectorNode);
+      this .addType (X3DConstants .X3DTextureProjectorNode);
 
-		this .location_    .setUnit ("length");
-		this .farDistance_ .setUnit ("length");
-		this .location_    .setUnit ("length");
-	}
+      this .location_    .setUnit ("length");
+      this .farDistance_ .setUnit ("length");
+      this .location_    .setUnit ("length");
+   }
 
-	X3DTextureProjectorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: X3DTextureProjectorNode,
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
+   X3DTextureProjectorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: X3DTextureProjectorNode,
+      initialize: function ()
+      {
+         X3DChildNode .prototype .initialize .call (this);
 
-			this .on_      .addInterest ("set_on__",      this);
-			this .texture_ .addInterest ("set_texture__", this);
+         this .on_      .addInterest ("set_on__",      this);
+         this .texture_ .addInterest ("set_texture__", this);
 
-			this .set_texture__ ();
-		},
-		getGlobal: function ()
-		{
-			return this .global_ .getValue ();
-		},
-		getLocation: function ()
-		{
-			return this .location_ .getValue ();
-		},
-		getDirection: function ()
-		{
-			return this .direction_ .getValue ();
-		},
-		getNearDistance: function ()
-		{
-			return this .nearDistance_ .getValue ();
-		},
-		getFarDistance: function ()
-		{
-			return this .farDistance_ .getValue ();
-		},
-		getTexture: function ()
-		{
-			return this .textureNode;
-		},
-		getBiasMatrix: (function ()
-		{
-			// Transforms normalized coords from range (-1, 1) to (0, 1).
-			var biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
-			                              0.0, 0.5, 0.0, 0.0,
-			                              0.0, 0.0, 0.5, 0.0,
-			                              0.5, 0.5, 0.5, 1.0);
+         this .set_texture__ ();
+      },
+      getGlobal: function ()
+      {
+         return this .global_ .getValue ();
+      },
+      getLocation: function ()
+      {
+         return this .location_ .getValue ();
+      },
+      getDirection: function ()
+      {
+         return this .direction_ .getValue ();
+      },
+      getNearDistance: function ()
+      {
+         return this .nearDistance_ .getValue ();
+      },
+      getFarDistance: function ()
+      {
+         return this .farDistance_ .getValue ();
+      },
+      getTexture: function ()
+      {
+         return this .textureNode;
+      },
+      getBiasMatrix: (function ()
+      {
+         // Transforms normalized coords from range (-1, 1) to (0, 1).
+         var biasMatrix = new Matrix4 (0.5, 0.0, 0.0, 0.0,
+                                       0.0, 0.5, 0.0, 0.0,
+                                       0.0, 0.0, 0.5, 0.0,
+                                       0.5, 0.5, 0.5, 1.0);
 
-			return function ()
-			{
-				return biasMatrix;
-			};
-		})(),
-		straightenHorizon: (function ()
-		{
-			var
-				localXAxis = new Vector3 (0, 0, 0),
-				localZAxis = new Vector3 (0, 0, 0),
-				upVector   = new Vector3 (0, 0, 0),
-				rotation   = new Rotation4 (0, 0, 1, 0);
+         return function ()
+         {
+            return biasMatrix;
+         };
+      })(),
+      straightenHorizon: (function ()
+      {
+         var
+            localXAxis = new Vector3 (0, 0, 0),
+            localZAxis = new Vector3 (0, 0, 0),
+            upVector   = new Vector3 (0, 0, 0),
+            rotation   = new Rotation4 (0, 0, 1, 0);
 
-			return function (orientation)
-			{
-				orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
-				orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
-				upVector .assign (this .upVector_ .getValue ()) .normalize ();
+         return function (orientation)
+         {
+            orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
+            orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
+            upVector .assign (this .upVector_ .getValue ()) .normalize ();
 
-				var vector = localZAxis .cross (upVector);
+            var vector = localZAxis .cross (upVector);
 
-				// If viewer looks along the up vector.
-				if (Math .abs (localZAxis .dot (upVector)) >= 1)
-					return orientation;
+            // If viewer looks along the up vector.
+            if (Math .abs (localZAxis .dot (upVector)) >= 1)
+               return orientation;
 
-				if (Math .abs (vector .dot (localXAxis)) >= 1)
-					return orientation;
+            if (Math .abs (vector .dot (localXAxis)) >= 1)
+               return orientation;
 
-				rotation .setFromToVec (localXAxis, vector);
+            rotation .setFromToVec (localXAxis, vector);
 
-				return orientation .multRight (rotation);
-			};
-		})(),
-		set_on__: function ()
-		{
-			if (this .on_ .getValue () && this .textureNode && this .getBrowser () .getProjectiveTextureMapping ())
-			{
-				delete this .push;
-				delete this .pop;
-			}
-			else
-			{
-				this .push = Function .prototype;
-				this .pop  = Function .prototype;
-			}
-		},
-		set_texture__: function ()
-		{
-			if (this .textureNode)
-				this .textureNode .removeInterest ("set_aspectRatio__", this);
+            return orientation .multRight (rotation);
+         };
+      })(),
+      set_on__: function ()
+      {
+         if (this .on_ .getValue () && this .textureNode && this .getBrowser () .getProjectiveTextureMapping ())
+         {
+            delete this .push;
+            delete this .pop;
+         }
+         else
+         {
+            this .push = Function .prototype;
+            this .pop  = Function .prototype;
+         }
+      },
+      set_texture__: function ()
+      {
+         if (this .textureNode)
+            this .textureNode .removeInterest ("set_aspectRatio__", this);
 
-			this .textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this .texture_);
+         this .textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this .texture_);
 
-			if (this .textureNode)
-				this .textureNode .addInterest ("set_aspectRatio__", this);
+         if (this .textureNode)
+            this .textureNode .addInterest ("set_aspectRatio__", this);
 
-			this .set_aspectRatio__ ();
-			this .set_on__ ();
-		},
-		set_aspectRatio__: function ()
-		{
-			if (this .textureNode)
-				this .aspectRatio_ = this .textureNode .getWidth () / this .textureNode .getHeight ();
-			else
-				this .aspectRatio_ = 0;
-		},
-		push: function (renderObject)
-		{
-			var textureProjectorContainer = this .getTextureProjectors () .pop ();
+         this .set_aspectRatio__ ();
+         this .set_on__ ();
+      },
+      set_aspectRatio__: function ()
+      {
+         if (this .textureNode)
+            this .aspectRatio_ = this .textureNode .getWidth () / this .textureNode .getHeight ();
+         else
+            this .aspectRatio_ = 0;
+      },
+      push: function (renderObject)
+      {
+         var textureProjectorContainer = this .getTextureProjectors () .pop ();
 
-			textureProjectorContainer .set (renderObject .getBrowser (),
-			                                this,
-			                                renderObject .getModelViewMatrix () .get ());
+         textureProjectorContainer .set (renderObject .getBrowser (),
+                                         this,
+                                         renderObject .getModelViewMatrix () .get ());
 
-			if (this .global_ .getValue ())
-			{
-				renderObject .getGlobalObjects ()     .push (textureProjectorContainer);
-				renderObject .getTextureProjectors () .push (textureProjectorContainer);
-			}
-			else
-			{
-				renderObject .getLocalObjects ()      .push (textureProjectorContainer);
-				renderObject .getTextureProjectors () .push (textureProjectorContainer);
-			}
-		},
-		pop: function (renderObject)
-		{
-			if (this .global_ .getValue ())
-				return;
+         if (this .global_ .getValue ())
+         {
+            renderObject .getGlobalObjects ()     .push (textureProjectorContainer);
+            renderObject .getTextureProjectors () .push (textureProjectorContainer);
+         }
+         else
+         {
+            renderObject .getLocalObjects ()      .push (textureProjectorContainer);
+            renderObject .getTextureProjectors () .push (textureProjectorContainer);
+         }
+      },
+      pop: function (renderObject)
+      {
+         if (this .global_ .getValue ())
+            return;
 
-			renderObject .getLocalObjects () .pop ();
-		},
-	});
+         renderObject .getLocalObjects () .pop ();
+      },
+   });
 
-	return X3DTextureProjectorNode;
+   return X3DTextureProjectorNode;
 });

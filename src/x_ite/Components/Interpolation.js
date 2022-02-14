@@ -47,21 +47,21 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Interpolation/ColorInterpolator",
-	"x_ite/Components/Interpolation/CoordinateInterpolator",
-	"x_ite/Components/Interpolation/CoordinateInterpolator2D",
-	"x_ite/Components/Interpolation/EaseInEaseOut",
-	"x_ite/Components/Interpolation/NormalInterpolator",
-	"x_ite/Components/Interpolation/OrientationInterpolator",
-	"x_ite/Components/Interpolation/PositionInterpolator",
-	"x_ite/Components/Interpolation/PositionInterpolator2D",
-	"x_ite/Components/Interpolation/ScalarInterpolator",
-	"x_ite/Components/Interpolation/SplinePositionInterpolator",
-	"x_ite/Components/Interpolation/SplinePositionInterpolator2D",
-	"x_ite/Components/Interpolation/SplineScalarInterpolator",
-	"x_ite/Components/Interpolation/SquadOrientationInterpolator",
-	"x_ite/Components/Interpolation/X3DInterpolatorNode",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/Interpolation/ColorInterpolator",
+   "x_ite/Components/Interpolation/CoordinateInterpolator",
+   "x_ite/Components/Interpolation/CoordinateInterpolator2D",
+   "x_ite/Components/Interpolation/EaseInEaseOut",
+   "x_ite/Components/Interpolation/NormalInterpolator",
+   "x_ite/Components/Interpolation/OrientationInterpolator",
+   "x_ite/Components/Interpolation/PositionInterpolator",
+   "x_ite/Components/Interpolation/PositionInterpolator2D",
+   "x_ite/Components/Interpolation/ScalarInterpolator",
+   "x_ite/Components/Interpolation/SplinePositionInterpolator",
+   "x_ite/Components/Interpolation/SplinePositionInterpolator2D",
+   "x_ite/Components/Interpolation/SplineScalarInterpolator",
+   "x_ite/Components/Interpolation/SquadOrientationInterpolator",
+   "x_ite/Components/Interpolation/X3DInterpolatorNode",
 ],
 function (SupportedNodes,
           ColorInterpolator,
@@ -81,31 +81,31 @@ function (SupportedNodes,
 {
 "use strict";
 
-	const Types =
-	{
-		ColorInterpolator:            ColorInterpolator,
-		CoordinateInterpolator:       CoordinateInterpolator,
-		CoordinateInterpolator2D:     CoordinateInterpolator2D,
-		EaseInEaseOut:                EaseInEaseOut,
-		NormalInterpolator:           NormalInterpolator,
-		OrientationInterpolator:      OrientationInterpolator,
-		PositionInterpolator:         PositionInterpolator,
-		PositionInterpolator2D:       PositionInterpolator2D,
-		ScalarInterpolator:           ScalarInterpolator,
-		SplinePositionInterpolator:   SplinePositionInterpolator,
-		SplinePositionInterpolator2D: SplinePositionInterpolator2D,
-		SplineScalarInterpolator:     SplineScalarInterpolator,
-		SquadOrientationInterpolator: SquadOrientationInterpolator,
-	};
+   const Types =
+   {
+      ColorInterpolator:            ColorInterpolator,
+      CoordinateInterpolator:       CoordinateInterpolator,
+      CoordinateInterpolator2D:     CoordinateInterpolator2D,
+      EaseInEaseOut:                EaseInEaseOut,
+      NormalInterpolator:           NormalInterpolator,
+      OrientationInterpolator:      OrientationInterpolator,
+      PositionInterpolator:         PositionInterpolator,
+      PositionInterpolator2D:       PositionInterpolator2D,
+      ScalarInterpolator:           ScalarInterpolator,
+      SplinePositionInterpolator:   SplinePositionInterpolator,
+      SplinePositionInterpolator2D: SplinePositionInterpolator2D,
+      SplineScalarInterpolator:     SplineScalarInterpolator,
+      SquadOrientationInterpolator: SquadOrientationInterpolator,
+   };
 
-	const AbstractTypes =
-	{
-		X3DInterpolatorNode: X3DInterpolatorNode,
-	};
+   const AbstractTypes =
+   {
+      X3DInterpolatorNode: X3DInterpolatorNode,
+   };
 
-	for (const typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]);
+   for (const typeName in Types)
+      SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (const typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   for (const typeName in AbstractTypes)
+      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

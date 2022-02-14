@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Components/Networking/X3DUrlObject",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Components/Networking/X3DUrlObject",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DChildNode,
           X3DUrlObject,
@@ -58,19 +58,19 @@ function (X3DChildNode,
 {
 "use strict";
 
-	function X3DScriptNode (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
-		X3DUrlObject .call (this, executionContext);
+   function X3DScriptNode (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
+      X3DUrlObject .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DScriptNode);
-	}
+      this .addType (X3DConstants .X3DScriptNode);
+   }
 
-	X3DScriptNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-		X3DUrlObject .prototype,
-	{
-		constructor: X3DScriptNode,
-	});
+   X3DScriptNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+      X3DUrlObject .prototype,
+   {
+      constructor: X3DScriptNode,
+   });
 
-	return X3DScriptNode;
+   return X3DScriptNode;
 });

@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DSingleTextureTransformNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Texturing/X3DSingleTextureTransformNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -62,50 +62,50 @@ function (Fields,
 {
 "use strict";
 
-	function TextureTransformMatrix3D (executionContext)
-	{
-		X3DSingleTextureTransformNode .call (this, executionContext);
+   function TextureTransformMatrix3D (executionContext)
+   {
+      X3DSingleTextureTransformNode .call (this, executionContext);
 
-		this .addType (X3DConstants .TextureTransformMatrix3D);
-	}
+      this .addType (X3DConstants .TextureTransformMatrix3D);
+   }
 
-	TextureTransformMatrix3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
-	{
-		constructor: TextureTransformMatrix3D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "matrix",   new Fields .SFMatrix4f ()),
-		]),
-		getTypeName: function ()
-		{
-			return "TextureTransformMatrix3D";
-		},
-		getComponentName: function ()
-		{
-			return "Texturing3D";
-		},
-		getContainerField: function ()
-		{
-			return "textureTransform";
-		},
-		initialize: function ()
-		{
-			X3DSingleTextureTransformNode .prototype .initialize .call (this);
+   TextureTransformMatrix3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
+   {
+      constructor: TextureTransformMatrix3D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "matrix",   new Fields .SFMatrix4f ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "TextureTransformMatrix3D";
+      },
+      getComponentName: function ()
+      {
+         return "Texturing3D";
+      },
+      getContainerField: function ()
+      {
+         return "textureTransform";
+      },
+      initialize: function ()
+      {
+         X3DSingleTextureTransformNode .prototype .initialize .call (this);
 
-			this .addInterest ("eventsProcessed", this);
+         this .addInterest ("eventsProcessed", this);
 
-			this .eventsProcessed ();
-		},
-		getMatrix: function ()
-		{
-			return this .matrix_ .getValue ();
-		},
-		eventsProcessed: function ()
-		{
-			this .setMatrix (this .matrix_ .getValue ());
-		},
-	});
+         this .eventsProcessed ();
+      },
+      getMatrix: function ()
+      {
+         return this .matrix_ .getValue ();
+      },
+      eventsProcessed: function ()
+      {
+         this .setMatrix (this .matrix_ .getValue ());
+      },
+   });
 
-	return TextureTransformMatrix3D;
+   return TextureTransformMatrix3D;
 });

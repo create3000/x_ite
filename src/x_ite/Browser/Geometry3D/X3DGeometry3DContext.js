@@ -48,10 +48,10 @@
 
 
 define ([
-	"x_ite/Browser/Geometry3D/BoxOptions",
-	"x_ite/Browser/Geometry3D/ConeOptions",
-	"x_ite/Browser/Geometry3D/CylinderOptions",
-	"x_ite/Browser/Geometry3D/QuadSphereOptions",
+   "x_ite/Browser/Geometry3D/BoxOptions",
+   "x_ite/Browser/Geometry3D/ConeOptions",
+   "x_ite/Browser/Geometry3D/CylinderOptions",
+   "x_ite/Browser/Geometry3D/QuadSphereOptions",
 ],
 function (BoxOptions,
           ConeOptions,
@@ -60,39 +60,39 @@ function (BoxOptions,
 {
 "use strict";
 
-	function getOptionNode (fun, name, Type)
-	{
-		this [name] = new Type (this .getPrivateScene ());
-		this [name] .setup ();
+   function getOptionNode (fun, name, Type)
+   {
+      this [name] = new Type (this .getPrivateScene ());
+      this [name] .setup ();
 
-		this [fun] = function () { return this [name]; };
+      this [fun] = function () { return this [name]; };
 
-		return this [name];
-	}
+      return this [name];
+   }
 
-	function X3DGeometry3DContext () { }
+   function X3DGeometry3DContext () { }
 
-	X3DGeometry3DContext .prototype =
-	{
-		initialize: function ()
-		{ },
-		getBoxOptions: function ()
-		{
-			return getOptionNode .call (this, "getBoxOptions", "boxOptions", BoxOptions);
-		},
-		getConeOptions: function ()
-		{
-			return getOptionNode .call (this, "getConeOptions", "coneOptions", ConeOptions);
-		},
-		getCylinderOptions: function ()
-		{
-			return getOptionNode .call (this, "getCylinderOptions", "cylinderOptions", CylinderOptions);
-		},
-		getSphereOptions: function ()
-		{
-			return getOptionNode .call (this, "getSphereOptions", "sphereOptions", QuadSphereOptions);
-		},
-	};
+   X3DGeometry3DContext .prototype =
+   {
+      initialize: function ()
+      { },
+      getBoxOptions: function ()
+      {
+         return getOptionNode .call (this, "getBoxOptions", "boxOptions", BoxOptions);
+      },
+      getConeOptions: function ()
+      {
+         return getOptionNode .call (this, "getConeOptions", "coneOptions", ConeOptions);
+      },
+      getCylinderOptions: function ()
+      {
+         return getOptionNode .call (this, "getCylinderOptions", "cylinderOptions", CylinderOptions);
+      },
+      getSphereOptions: function ()
+      {
+         return getOptionNode .call (this, "getSphereOptions", "sphereOptions", QuadSphereOptions);
+      },
+   };
 
-	return X3DGeometry3DContext;
+   return X3DGeometry3DContext;
 });

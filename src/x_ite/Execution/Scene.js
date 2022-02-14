@@ -48,100 +48,100 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Execution/X3DScene",
+   "x_ite/Fields",
+   "x_ite/Execution/X3DScene",
 ],
 function (Fields,
           X3DScene)
 {
 "use strict";
 
-	function Scene (browser)
-	{
-		this ._browser = browser;
+   function Scene (browser)
+   {
+      this ._browser = browser;
 
-		X3DScene .call (this, this);
+      X3DScene .call (this, this);
 
-		this .addChildObjects ("initLoadCount", new Fields .SFInt32 (),  // Pre load count, must be zero before the scene can be passed to the requester.
+      this .addChildObjects ("initLoadCount", new Fields .SFInt32 (),  // Pre load count, must be zero before the scene can be passed to the requester.
                              "loadCount",     new Fields .SFInt32 ()); // Load count of all X3DUrlObjects.
 
-		this .loadingObjects = new Set ();
-	}
+      this .loadingObjects = new Set ();
+   }
 
-	Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
-	{
-		constructor: Scene,
-		setExecutionContext: function (value)
-		{
-			if (! this .isMainContext ())
-			{
-				const scene = this .getScene ();
+   Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
+   {
+      constructor: Scene,
+      setExecutionContext: function (value)
+      {
+         if (! this .isMainContext ())
+         {
+            const scene = this .getScene ();
 
-				for (const object of this .loadingObjects)
-					scene .removeLoadCount (object);
-			}
+            for (const object of this .loadingObjects)
+               scene .removeLoadCount (object);
+         }
 
-			X3DScene .prototype .setExecutionContext .call (this, value);
+         X3DScene .prototype .setExecutionContext .call (this, value);
 
-			if (! this .isMainContext ())
-			{
-				const scene = this .getScene ();
+         if (! this .isMainContext ())
+         {
+            const scene = this .getScene ();
 
-				for (const object of this .loadingObjects)
-					scene .addLoadCount (object);
-			}
-		},
-		addInitLoadCount: function (node)
-		{
-			this .initLoadCount_ = this .initLoadCount_ .getValue () + 1;
-		},
-		removeInitLoadCount: function (node)
-		{
-			this .initLoadCount_ = this .initLoadCount_ .getValue () - 1;
-		},
-		addLoadCount: function (node)
-		{
-			if (this .loadingObjects .has (node))
-				return;
+            for (const object of this .loadingObjects)
+               scene .addLoadCount (object);
+         }
+      },
+      addInitLoadCount: function (node)
+      {
+         this .initLoadCount_ = this .initLoadCount_ .getValue () + 1;
+      },
+      removeInitLoadCount: function (node)
+      {
+         this .initLoadCount_ = this .initLoadCount_ .getValue () - 1;
+      },
+      addLoadCount: function (node)
+      {
+         if (this .loadingObjects .has (node))
+            return;
 
-			this .loadingObjects .add (node);
+         this .loadingObjects .add (node);
 
-			this .loadCount_ = this .loadingObjects .size;
+         this .loadCount_ = this .loadingObjects .size;
 
-			const
-				browser = this .getBrowser (),
-				scene   = this .getScene ();
+         const
+            browser = this .getBrowser (),
+            scene   = this .getScene ();
 
-			if (this === browser .getExecutionContext () || this .loader === browser .loader)
-				browser .addLoadCount (node);
+         if (this === browser .getExecutionContext () || this .loader === browser .loader)
+            browser .addLoadCount (node);
 
-			if (! this .isMainContext ())
-				scene .addLoadCount (node);
-		},
-		removeLoadCount: function (node)
-		{
-			if (! this .loadingObjects .has (node))
-				return;
+         if (! this .isMainContext ())
+            scene .addLoadCount (node);
+      },
+      removeLoadCount: function (node)
+      {
+         if (! this .loadingObjects .has (node))
+            return;
 
-			this .loadingObjects .delete (node);
+         this .loadingObjects .delete (node);
 
-			this .loadCount_ = this .loadingObjects .size;
+         this .loadCount_ = this .loadingObjects .size;
 
-			const
-				browser = this .getBrowser (),
-				scene   = this .getScene ();
+         const
+            browser = this .getBrowser (),
+            scene   = this .getScene ();
 
-			if (this === browser .getExecutionContext () || this .loader === browser .loader)
-				browser .removeLoadCount (node);
+         if (this === browser .getExecutionContext () || this .loader === browser .loader)
+            browser .removeLoadCount (node);
 
-			if (! this .isMainContext ())
-				scene .removeLoadCount (node);
-		},
-		getLoadingObjects: function ()
-		{
-			return this .loadingObjects;
-		},
-	});
+         if (! this .isMainContext ())
+            scene .removeLoadCount (node);
+      },
+      getLoadingObjects: function ()
+      {
+         return this .loadingObjects;
+      },
+   });
 
-	return Scene;
+   return Scene;
 });

@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Basic/X3DField",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/InputOutput/Generator",
+   "x_ite/Basic/X3DField",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/InputOutput/Generator",
 ],
 function (X3DField,
           X3DConstants,
@@ -58,74 +58,74 @@ function (X3DField,
 {
 "use strict";
 
-	const
-		unescape = /\\(.)/g,
-		escape   = /([\\"])/g;
+   const
+      unescape = /\\(.)/g,
+      escape   = /([\\"])/g;
 
-	function SFString (value)
-	{
-		return X3DField .call (this, arguments .length ? "" + value : "");
-	}
+   function SFString (value)
+   {
+      return X3DField .call (this, arguments .length ? "" + value : "");
+   }
 
-	Object .assign (SFString,
-	{
-		unescape: function (string)
-		{
-			return string .replace (unescape, "$1");
-		},
-		escape: function (string)
-		{
-			return string .replace (escape, "\\$1");
-		},
-	});
+   Object .assign (SFString,
+   {
+      unescape: function (string)
+      {
+         return string .replace (unescape, "$1");
+      },
+      escape: function (string)
+      {
+         return string .replace (escape, "\\$1");
+      },
+   });
 
-	SFString .prototype = Object .assign (Object .create (X3DField .prototype),
-	{
-		constructor: SFString,
-		copy: function ()
-		{
-			return new SFString (this .getValue ());
-		},
-		getTypeName: function ()
-		{
-			return "SFString";
-		},
-		getType: function ()
-		{
-			return X3DConstants .SFString;
-		},
-		isDefaultValue: function ()
-		{
-			return this .getValue () === "";
-		},
-		set: function (value)
-		{
-			X3DField .prototype .set .call (this, "" + value);
-		},
-		valueOf: X3DField .prototype .getValue,
-		toStream: function (stream)
-		{
-			stream .string += '"'+ SFString .escape (this .getValue ()) + '"';
-		},
-		toVRMLStream: function (stream)
-		{
-			this .toStream (stream);
-		},
-		toXMLStream: function (stream)
-		{
-			stream .string += Generator .Get (stream) .XMLEncode (this .getValue ());
-		},
-	});
+   SFString .prototype = Object .assign (Object .create (X3DField .prototype),
+   {
+      constructor: SFString,
+      copy: function ()
+      {
+         return new SFString (this .getValue ());
+      },
+      getTypeName: function ()
+      {
+         return "SFString";
+      },
+      getType: function ()
+      {
+         return X3DConstants .SFString;
+      },
+      isDefaultValue: function ()
+      {
+         return this .getValue () === "";
+      },
+      set: function (value)
+      {
+         X3DField .prototype .set .call (this, "" + value);
+      },
+      valueOf: X3DField .prototype .getValue,
+      toStream: function (stream)
+      {
+         stream .string += '"'+ SFString .escape (this .getValue ()) + '"';
+      },
+      toVRMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+      toXMLStream: function (stream)
+      {
+         stream .string += Generator .Get (stream) .XMLEncode (this .getValue ());
+      },
+   });
 
-	Object .defineProperty (SFString .prototype, "length",
-	{
-		get: function ()
-		{
-			return this .getValue () .length;
-		},
-		enumerable: true,
-		configurable: false
-	});
+   Object .defineProperty (SFString .prototype, "length",
+   {
+      get: function ()
+      {
+         return this .getValue () .length;
+      },
+      enumerable: true,
+      configurable: false
+   });
 
-	return SFString;
+   return SFString;
 });

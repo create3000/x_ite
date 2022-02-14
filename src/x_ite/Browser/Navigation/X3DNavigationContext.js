@@ -48,15 +48,15 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Browser/Navigation/ExamineViewer",
-	"x_ite/Browser/Navigation/WalkViewer",
-	"x_ite/Browser/Navigation/FlyViewer",
-	"x_ite/Browser/Navigation/PlaneViewer",
-	"x_ite/Browser/Navigation/NoneViewer",
-	"x_ite/Browser/Navigation/LookAtViewer",
-	"x_ite/Components/Lighting/DirectionalLight",
-	"standard/Math/Numbers/Matrix4",
+   "x_ite/Fields",
+   "x_ite/Browser/Navigation/ExamineViewer",
+   "x_ite/Browser/Navigation/WalkViewer",
+   "x_ite/Browser/Navigation/FlyViewer",
+   "x_ite/Browser/Navigation/PlaneViewer",
+   "x_ite/Browser/Navigation/NoneViewer",
+   "x_ite/Browser/Navigation/LookAtViewer",
+   "x_ite/Components/Lighting/DirectionalLight",
+   "standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
           ExamineViewer,
@@ -69,177 +69,177 @@ function (Fields,
           Matrix4)
 {
 "use strict";
-	
-	function getHeadLight (browser)
-	{
-		var headlight = new DirectionalLight (browser .getPrivateScene ());
 
-		headlight .setup ();
+   function getHeadLight (browser)
+   {
+      var headlight = new DirectionalLight (browser .getPrivateScene ());
 
-		var headlightContainer = headlight .getLights () .pop ();
+      headlight .setup ();
 
-		headlightContainer .set (browser, headlight, null, Matrix4 .Identity);
-		headlightContainer .dispose = function () { };
+      var headlightContainer = headlight .getLights () .pop ();
 
-		return headlightContainer;
-	};
+      headlightContainer .set (browser, headlight, null, Matrix4 .Identity);
+      headlightContainer .dispose = function () { };
 
-	function X3DNavigationContext ()
-	{
-		this .addChildObjects ("activeLayer",          new Fields .SFNode (),
-		                       "activeNavigationInfo", new Fields .SFNode (),
-		                       "activeViewpoint",      new Fields .SFNode (),
-		                       "availableViewers",     new Fields .MFString (),
-		                       "viewer",               new Fields .SFString ("EXAMINE"));
-		
-		this .activeCollisions = new Set ();
-		this .viewerNode       = new NoneViewer (this);
-	}
+      return headlightContainer;
+   };
 
-	X3DNavigationContext .prototype =
-	{
-		initialize: function ()
-		{
-			this .viewer_ .addInterest ("set_viewer__", this);
+   function X3DNavigationContext ()
+   {
+      this .addChildObjects ("activeLayer",          new Fields .SFNode (),
+                             "activeNavigationInfo", new Fields .SFNode (),
+                             "activeViewpoint",      new Fields .SFNode (),
+                             "availableViewers",     new Fields .MFString (),
+                             "viewer",               new Fields .SFString ("EXAMINE"));
 
-			this .initialized () .addInterest ("set_world__",    this);
-			this .shutdown ()    .addInterest ("remove_world__", this);
+      this .activeCollisions = new Set ();
+      this .viewerNode       = new NoneViewer (this);
+   }
 
-			this .headlightContainer = getHeadLight (this);
-			this .viewerNode .setup ();
-		},
-		getHeadlight: function ()
-		{
-			return this .headlightContainer;
-		},
-		getActiveLayer: function ()
-		{
-			return this .activeLayer_ .getValue ();
-		},
-		getActiveNavigationInfo: function ()
-		{
-			return this .activeNavigationInfo_ .getValue ();
-		},
-		getActiveViewpoint: function ()
-		{
-			return this .activeViewpoint_ .getValue ();
-		},
-		getCurrentViewer: function ()
-		{
-			return this .viewer_ .getValue ();
-		},
-		getViewer: function ()
-		{
-			return this .viewerNode;
-		},
-		addCollision: function (object)
-		{
-			this .activeCollisions .add (object);
-		},
-		removeCollision: function (object)
-		{
-			this .activeCollisions .delete (object);
-		},
-		getCollisionCount: function ()
-		{
-			return this .activeCollisions .size;
-		},
-		remove_world__: function ()
-		{
-			this .getWorld () .activeLayer_ .removeInterest ("set_activeLayer__", this);
-		},
-		set_world__: function ()
-		{
-			this .getWorld () .activeLayer_ .addInterest ("set_activeLayer__", this);
+   X3DNavigationContext .prototype =
+   {
+      initialize: function ()
+      {
+         this .viewer_ .addInterest ("set_viewer__", this);
 
-			this .set_activeLayer__ ();
-		},
-		set_activeLayer__: function ()
-		{
-			if (this .activeLayer_ .getValue ())
-			{
-				this .activeLayer_ .getValue () .getNavigationInfoStack () .removeInterest ("set_activeNavigationInfo__", this);
-				this .activeLayer_ .getValue () .getViewpointStack ()      .removeInterest ("set_activeViewpoint__",      this);
-			}
+         this .initialized () .addInterest ("set_world__",    this);
+         this .shutdown ()    .addInterest ("remove_world__", this);
 
-			this .activeLayer_ = this .getWorld () .getActiveLayer ();
+         this .headlightContainer = getHeadLight (this);
+         this .viewerNode .setup ();
+      },
+      getHeadlight: function ()
+      {
+         return this .headlightContainer;
+      },
+      getActiveLayer: function ()
+      {
+         return this .activeLayer_ .getValue ();
+      },
+      getActiveNavigationInfo: function ()
+      {
+         return this .activeNavigationInfo_ .getValue ();
+      },
+      getActiveViewpoint: function ()
+      {
+         return this .activeViewpoint_ .getValue ();
+      },
+      getCurrentViewer: function ()
+      {
+         return this .viewer_ .getValue ();
+      },
+      getViewer: function ()
+      {
+         return this .viewerNode;
+      },
+      addCollision: function (object)
+      {
+         this .activeCollisions .add (object);
+      },
+      removeCollision: function (object)
+      {
+         this .activeCollisions .delete (object);
+      },
+      getCollisionCount: function ()
+      {
+         return this .activeCollisions .size;
+      },
+      remove_world__: function ()
+      {
+         this .getWorld () .activeLayer_ .removeInterest ("set_activeLayer__", this);
+      },
+      set_world__: function ()
+      {
+         this .getWorld () .activeLayer_ .addInterest ("set_activeLayer__", this);
 
-			if (this .activeLayer_ .getValue ())
-			{
-				this .activeLayer_ .getValue () .getNavigationInfoStack () .addInterest ("set_activeNavigationInfo__", this);
-				this .activeLayer_ .getValue () .getViewpointStack ()      .addInterest ("set_activeViewpoint__",      this);
-			}
+         this .set_activeLayer__ ();
+      },
+      set_activeLayer__: function ()
+      {
+         if (this .activeLayer_ .getValue ())
+         {
+            this .activeLayer_ .getValue () .getNavigationInfoStack () .removeInterest ("set_activeNavigationInfo__", this);
+            this .activeLayer_ .getValue () .getViewpointStack ()      .removeInterest ("set_activeViewpoint__",      this);
+         }
 
-			this .set_activeNavigationInfo__ ();
-			this .set_activeViewpoint__ ();
-		},
-		set_activeNavigationInfo__: function ()
-		{
-			if (this .activeNavigationInfo_ .getValue ())
-				this .activeNavigationInfo_ .getValue () .viewer_ .removeFieldInterest (this .viewer_);
+         this .activeLayer_ = this .getWorld () .getActiveLayer ();
 
-			if (this .activeLayer_ .getValue ())
-			{
-				this .activeNavigationInfo_ = this .activeLayer_ .getValue () .getNavigationInfo ();
-	
-				this .activeNavigationInfo_ .getValue () .viewer_ .addFieldInterest (this .viewer_);
-	
-				this .viewer_ = this .activeNavigationInfo_ .getValue () .viewer_;
-			}
-			else
-			{
-				this .activeNavigationInfo_ = null;
-				this .viewer_               = "NONE";
-			}
-		},
-		set_activeViewpoint__: function ()
-		{
-			if (this .activeLayer_ .getValue ())
-				this .activeViewpoint_ = this .activeLayer_ .getValue () .getViewpoint ();
-			else
-				this .activeViewpoint_ = null;
-		},
-		set_viewer__: function (viewer)
-		{
-			if (this .activeNavigationInfo_ .getValue ())
-				this .availableViewers_ = this .activeNavigationInfo_ .getValue () .availableViewers_;
-			else
-				this .availableViewers_ .length = 0;
+         if (this .activeLayer_ .getValue ())
+         {
+            this .activeLayer_ .getValue () .getNavigationInfoStack () .addInterest ("set_activeNavigationInfo__", this);
+            this .activeLayer_ .getValue () .getViewpointStack ()      .addInterest ("set_activeViewpoint__",      this);
+         }
 
-			// Create viewer node.
+         this .set_activeNavigationInfo__ ();
+         this .set_activeViewpoint__ ();
+      },
+      set_activeNavigationInfo__: function ()
+      {
+         if (this .activeNavigationInfo_ .getValue ())
+            this .activeNavigationInfo_ .getValue () .viewer_ .removeFieldInterest (this .viewer_);
 
-			if (this .viewerNode)
-				this .viewerNode .dispose ();
+         if (this .activeLayer_ .getValue ())
+         {
+            this .activeNavigationInfo_ = this .activeLayer_ .getValue () .getNavigationInfo ();
 
-			switch (viewer .getValue ())
-			{
-				case "EXAMINE":
-					this .viewerNode = new ExamineViewer (this);
-					break;
-				case "WALK":
-					this .viewerNode = new WalkViewer (this);
-					break;
-				case "FLY":
-					this .viewerNode = new FlyViewer (this);
-					break;
-				case "PLANE":
-				case "PLANE_create3000.de":
-					this .viewerNode = new PlaneViewer (this);
-					break;
-				case "NONE":
-					this .viewerNode = new NoneViewer (this);
-					break;
-				case "LOOKAT":
-					this .viewerNode = new LookAtViewer (this);
-					break;
-				default:
-					this .viewerNode = new ExamineViewer (this);
-					break;
-			}
+            this .activeNavigationInfo_ .getValue () .viewer_ .addFieldInterest (this .viewer_);
 
-			this .viewerNode .setup ();
-		},
-	};
+            this .viewer_ = this .activeNavigationInfo_ .getValue () .viewer_;
+         }
+         else
+         {
+            this .activeNavigationInfo_ = null;
+            this .viewer_               = "NONE";
+         }
+      },
+      set_activeViewpoint__: function ()
+      {
+         if (this .activeLayer_ .getValue ())
+            this .activeViewpoint_ = this .activeLayer_ .getValue () .getViewpoint ();
+         else
+            this .activeViewpoint_ = null;
+      },
+      set_viewer__: function (viewer)
+      {
+         if (this .activeNavigationInfo_ .getValue ())
+            this .availableViewers_ = this .activeNavigationInfo_ .getValue () .availableViewers_;
+         else
+            this .availableViewers_ .length = 0;
 
-	return X3DNavigationContext;
+         // Create viewer node.
+
+         if (this .viewerNode)
+            this .viewerNode .dispose ();
+
+         switch (viewer .getValue ())
+         {
+            case "EXAMINE":
+               this .viewerNode = new ExamineViewer (this);
+               break;
+            case "WALK":
+               this .viewerNode = new WalkViewer (this);
+               break;
+            case "FLY":
+               this .viewerNode = new FlyViewer (this);
+               break;
+            case "PLANE":
+            case "PLANE_create3000.de":
+               this .viewerNode = new PlaneViewer (this);
+               break;
+            case "NONE":
+               this .viewerNode = new NoneViewer (this);
+               break;
+            case "LOOKAT":
+               this .viewerNode = new LookAtViewer (this);
+               break;
+            default:
+               this .viewerNode = new ExamineViewer (this);
+               break;
+         }
+
+         this .viewerNode .setup ();
+      },
+   };
+
+   return X3DNavigationContext;
 });

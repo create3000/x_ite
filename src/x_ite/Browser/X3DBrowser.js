@@ -48,24 +48,24 @@
 
 
 define ([
-	"jquery",
-	"x_ite/Browser/VERSION",
-	"x_ite/Fields",
-	"x_ite/Components",
-	"x_ite/Components/Layering/X3DLayerNode",
-	"x_ite/Browser/X3DBrowserContext",
-	"x_ite/Configuration/ComponentInfo",
-	"x_ite/Configuration/SupportedProfiles",
-	"x_ite/Configuration/SupportedComponents",
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Execution/Scene",
-	"x_ite/Execution/X3DScene",
-	"x_ite/InputOutput/FileLoader",
-	"x_ite/Parser/XMLParser",
-	"x_ite/Parser/JSONParser",
-	"x_ite/Bits/X3DConstants",
-	"standard/Utility/MapUtilities",
-	"locale/gettext",
+   "jquery",
+   "x_ite/Browser/VERSION",
+   "x_ite/Fields",
+   "x_ite/Components",
+   "x_ite/Components/Layering/X3DLayerNode",
+   "x_ite/Browser/X3DBrowserContext",
+   "x_ite/Configuration/ComponentInfo",
+   "x_ite/Configuration/SupportedProfiles",
+   "x_ite/Configuration/SupportedComponents",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Execution/Scene",
+   "x_ite/Execution/X3DScene",
+   "x_ite/InputOutput/FileLoader",
+   "x_ite/Parser/XMLParser",
+   "x_ite/Parser/JSONParser",
+   "x_ite/Bits/X3DConstants",
+   "standard/Utility/MapUtilities",
+   "locale/gettext",
 ],
 function ($,
           VERSION,
@@ -88,741 +88,741 @@ function ($,
 {
 "use strict";
 
-	function X3DBrowser (element)
-	{
-		X3DBrowserContext .call (this, element);
-
-		this .currentSpeed     = 0;
-		this .currentFrameRate = 60;
-		this .components       = { };
-		this .browserCallbacks = new Map ();
-
-		this .replaceWorld (this .createScene ());
-	};
-
-	X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .prototype),
-	{
-		constructor: X3DBrowser,
-		getTypeName: function ()
-		{
-			return "X3DBrowser";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "browser";
-		},
-		initialize: function ()
-		{
-			X3DBrowserContext .prototype .initialize .call (this);
-
-			let urlCharacters = this .getElement () .attr ("src");
-
-			if (urlCharacters)
-				urlCharacters = '"' + urlCharacters + '"';
-			else
-				urlCharacters = this .getElement () .attr ("url");
-
-			if (urlCharacters)
-			{
-				this .initialized () .set (this .getCurrentTime ());
-
-				this .load (urlCharacters);
-			}
-			else
-			{
-				this .initialized () .setValue (this .getCurrentTime ());
-				this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
-				this .callBrowserEventHandler ("onload");
-			}
-
-			// Print welcome message.
-
-			if (this .getNumber () > 1) return;
-
-			this .print ("Welcome to " + this .name + " X3D Browser " + this .version + ":\n" +
-			             "   Current Graphics Renderer\n" +
-			             "      Name: " + this .getVendor () + " " + this .getRenderer () + "\n" +
-			             "      WebGL version: " + this .getWebGLVersion () + "\n" +
-			             "      Shading language: " + this .getShadingLanguageVersion () + "\n" +
-			             "   Rendering Properties\n" +
-			             "      Antialiased: " + this .getAntialiased () + "\n" +
-			             "      Depth size: " + this .getDepthSize () + " bits\n" +
-			             "      Color depth: " + this .getColorDepth () + " bits\n" +
-			             "      Max clip planes: " + this .getMaxClipPlanes () + "\n" +
-			             "      Max global lights: " + this .getMaxLights () + "\n" +
-			             "      Max textures: " + this .getMaxTextures () + "\n" +
-			             "      Texture units: " + this .getMaxCombinedTextureUnits () + "\n" +
-			             "      Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixel\n" +
-			             "      Texture memory: " + this .getTextureMemory () + "\n" +
-			             "      Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +
-			             "      Max fragment uniform vectors: " + this .getMaxFragmentUniformVectors () + "\n" +
-			             "      Max vertex attribs: " + this .getMaxVertexAttribs () + "\n");
-		},
-		getName: function ()
-		{
-			return this .name;
-		},
-		getVersion: function ()
-		{
-			return this .version;
-		},
-		getCurrentSpeed: function ()
-		{
-			return this .currentSpeed;
-		},
-		getCurrentFrameRate: function ()
-		{
-			return this .currentFrameRate;
-		},
-		setDescription: function (value)
-		{
-			this .description = value;
-		},
-		getWorldURL: function ()
-		{
-			return this .currentScene .worldURL;
-		},
-		getProfile: function (name)
-		{
-			const profile = SupportedProfiles .get (name);
+   function X3DBrowser (element)
+   {
+      X3DBrowserContext .call (this, element);
+
+      this .currentSpeed     = 0;
+      this .currentFrameRate = 60;
+      this .components       = { };
+      this .browserCallbacks = new Map ();
+
+      this .replaceWorld (this .createScene ());
+   };
+
+   X3DBrowser .prototype = Object .assign (Object .create (X3DBrowserContext .prototype),
+   {
+      constructor: X3DBrowser,
+      getTypeName: function ()
+      {
+         return "X3DBrowser";
+      },
+      getComponentName: function ()
+      {
+         return "X_ITE";
+      },
+      getContainerField: function ()
+      {
+         return "browser";
+      },
+      initialize: function ()
+      {
+         X3DBrowserContext .prototype .initialize .call (this);
+
+         let urlCharacters = this .getElement () .attr ("src");
+
+         if (urlCharacters)
+            urlCharacters = '"' + urlCharacters + '"';
+         else
+            urlCharacters = this .getElement () .attr ("url");
+
+         if (urlCharacters)
+         {
+            this .initialized () .set (this .getCurrentTime ());
+
+            this .load (urlCharacters);
+         }
+         else
+         {
+            this .initialized () .setValue (this .getCurrentTime ());
+            this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
+            this .callBrowserEventHandler ("onload");
+         }
+
+         // Print welcome message.
+
+         if (this .getNumber () > 1) return;
+
+         this .print ("Welcome to " + this .name + " X3D Browser " + this .version + ":\n" +
+                      "   Current Graphics Renderer\n" +
+                      "      Name: " + this .getVendor () + " " + this .getRenderer () + "\n" +
+                      "      WebGL version: " + this .getWebGLVersion () + "\n" +
+                      "      Shading language: " + this .getShadingLanguageVersion () + "\n" +
+                      "   Rendering Properties\n" +
+                      "      Antialiased: " + this .getAntialiased () + "\n" +
+                      "      Depth size: " + this .getDepthSize () + " bits\n" +
+                      "      Color depth: " + this .getColorDepth () + " bits\n" +
+                      "      Max clip planes: " + this .getMaxClipPlanes () + "\n" +
+                      "      Max global lights: " + this .getMaxLights () + "\n" +
+                      "      Max textures: " + this .getMaxTextures () + "\n" +
+                      "      Texture units: " + this .getMaxCombinedTextureUnits () + "\n" +
+                      "      Max texture size: " + this .getMaxTextureSize () + " × " + this .getMaxTextureSize () + " pixel\n" +
+                      "      Texture memory: " + this .getTextureMemory () + "\n" +
+                      "      Max vertex uniform vectors: " + this .getMaxVertexUniformVectors () + "\n" +
+                      "      Max fragment uniform vectors: " + this .getMaxFragmentUniformVectors () + "\n" +
+                      "      Max vertex attribs: " + this .getMaxVertexAttribs () + "\n");
+      },
+      getName: function ()
+      {
+         return this .name;
+      },
+      getVersion: function ()
+      {
+         return this .version;
+      },
+      getCurrentSpeed: function ()
+      {
+         return this .currentSpeed;
+      },
+      getCurrentFrameRate: function ()
+      {
+         return this .currentFrameRate;
+      },
+      setDescription: function (value)
+      {
+         this .description = value;
+      },
+      getWorldURL: function ()
+      {
+         return this .currentScene .worldURL;
+      },
+      getProfile: function (name)
+      {
+         const profile = SupportedProfiles .get (name);
 
-			if (profile)
-				return profile;
+         if (profile)
+            return profile;
 
-			throw Error ("Profile '" + name + "' is not supported.");
-		},
-		getComponent: function (name, level)
-		{
-			const component = SupportedComponents .get (name);
+         throw Error ("Profile '" + name + "' is not supported.");
+      },
+      getComponent: function (name, level)
+      {
+         const component = SupportedComponents .get (name);
 
-			if (component)
-			{
-				if (level <= component .level || true)
-					return new ComponentInfo (name, level, component .title, component. providerUrl);
-			}
+         if (component)
+         {
+            if (level <= component .level || true)
+               return new ComponentInfo (name, level, component .title, component. providerUrl);
+         }
 
-			throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");
-		},
-		getSupportedNode: function (typeName)
-		{
-			return SupportedNodes .getType (typeName);
-		},
-		createScene: function (profile, component1 /*, ...*/)
-		{
-		   const scene = new Scene (this);
-
-			if (arguments .length)
-			{
-				scene .setProfile (profile);
-
-				for (let i = 1, length = arguments .length; i < length; ++ i)
-					scene .addComponent (arguments [i]);
-			}
-
-			scene .setup ();
-
-			return scene;
-		},
-		replaceWorld: function (scene)
-		{
-			// Cancel any loading.
-
-			this .loadCount_       .removeInterest ("set_loadCount__", this);
-			this .prepareEvents () .removeInterest ("bind", this);
-
-			if (this .loader)
-				this .loader .abort ();
-
-			// Remove world.
-
-			if (this .getWorld ())
-			{
-				this .getExecutionContext () .setLive (false);
-				this .shutdown () .processInterests ();
-				this .callBrowserCallbacks (X3DConstants .SHUTDOWN_EVENT);
-				this .callBrowserEventHandler ("onshutdown");
-			}
-
-			// Replace world.
-
-			if (scene instanceof Fields .MFNode)
-			{
-				// VRML version of replaceWorld has a MFNode value as argument.
-
-				const rootNodes = scene;
-
-				scene = this .createScene ();
-
-				for (const rootNode of rootNodes)
-					scene .isLive () .addInterest (rootNode .getValue () .getExecutionContext () .isLive ());
-
-				scene .setRootNodes (rootNodes);
-			}
-
-			if (! (scene instanceof X3DScene))
-				scene = this .createScene ();
-
-			// Detach scene from parent.
-
-			scene .getExecutionContext () .isLive () .removeInterest ("setLive", scene);
-			scene .setExecutionContext (scene);
-
-			// Replace.
-
-			this .description = "";
-
-			this .getBrowserOptions () .configure ();
-			this .setBrowserLoading (true);
-			this .loadCount_ .addInterest ("set_loadCount__", this);
-			this .prepareEvents () .removeInterest ("bind", this);
-
-			for (const object of scene .getLoadingObjects ())
-				this .addLoadCount (object);
-
-			this .setExecutionContext (scene);
-			this .getWorld () .bind ();
-
-			scene .setLive (this .isLive () .getValue ());
-		},
-		set_loadCount__: function (loadCount)
-		{
-			if (loadCount .getValue ())
-				return;
-
-			this .loadCount_ .removeInterest ("set_loadCount__", this);
-
-			this .prepareEvents () .addInterest ("bind", this);
-			this .addBrowserEvent ();
-		},
-		bind: function ()
-		{
-			this .prepareEvents () .removeInterest ("bind", this);
-
-			this .setBrowserLoading (false);
-
-			if (this .initialized () .getValue ())
-			{
-				this .initialized () .setValue (this .getCurrentTime ());
-				this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
-				this .callBrowserEventHandler ("onload");
-			}
-		},
-		createVrmlFromString: function (vrmlSyntax)
-		{
-			return this .createX3DFromString (vrmlSyntax) .rootNodes;
-		},
-		createX3DFromString: function (x3dSyntax)
-		{
-			const
-				currentScene = this .currentScene,
-				external     = this .isExternal (),
-				fileLoader   = new FileLoader (this .getWorld ()),
-				scene        = fileLoader .createX3DFromString (currentScene .getWorldURL (), x3dSyntax);
-
-			if (!external)
-			{
-				currentScene .isLive () .addInterest ("setLive", scene);
-				scene .setExecutionContext (currentScene);
-				scene .setLive (currentScene .getLive ());
-			}
-
-			return scene;
-		},
-		createVrmlFromURL: function (url, node, event)
-		{
-			if (! (node instanceof Fields .SFNode))
-				throw new Error ("Browser.createVrmlFromURL: node must be of type SFNode.");
-
-			if (! node .getValue ())
-				throw new Error ("Browser.createVrmlFromURL: node IS NULL.");
-
-			const field = node .getValue () .getField (event);
-
-			if (! field .isInput ())
-				throw new Error ("Browser.createVrmlFromURL: event named '" + event + "' must be a input field.");
-
-			if (field .getType () !== X3DConstants .MFNode)
-				throw new Error ("Browser.createVrmlFromURL: event named '" + event + "' must be of type MFNode.");
-
-			const
-				currentScene = this .currentScene,
-				external     = this .isExternal (),
-				loader       = new FileLoader (this .getWorld ());
-
-			this .addLoadCount (loader);
-
-			loader .createX3DFromURL (url, null,
-			function (scene)
-			{
-				this .removeLoadCount (loader);
-
-				if (scene)
-				{
-					// Handle isLive for script scenes here:
-
-				   if (! external)
-				   {
-						currentScene .isLive () .addInterest ("setLive", scene);
-						scene .setExecutionContext (currentScene);
-						scene .setLive (currentScene .getLive ());
-					}
-
-					// Wait until scene is completely loaded, scene .loadCount_ must be 0.
-					field .setValue (scene .rootNodes);
-				}
-			}
-			.bind (this));
-		},
-		createX3DFromURL: function (url, node, event)
-		{
-			if (arguments .length === 3)
-				return this .createVrmlFromURL (url, node, event);
-
-			const
-				currentScene = this .currentScene,
-				external     = this .isExternal (),
-				fileLoader   = new FileLoader (this .getWorld ()),
-				scene        = fileLoader .createX3DFromURL (url, null);
-
-			if (! external)
-			{
-				currentScene .isLive () .addInterest ("setLive", scene);
-				scene .setExecutionContext (currentScene);
-				scene .setLive (currentScene .getLive ());
-			}
-
-			return scene;
-		},
-		loadURL: function (url, parameter)
-		{
-			const promise = new Promise (function (resolve, reject)
-			{
-				// Cancel any loading.
-
-				this .loadCount_       .removeInterest ("set_loadCount__", this);
-				this .prepareEvents () .removeInterest ("bind", this);
-
-				if (this .loader)
-					this .loader .abort ();
-
-				// Start loading.
-
-				this .setBrowserLoading (true);
-				this .addLoadCount (this);
-
-				const loader = this .loader = new FileLoader (this .getWorld ());
-
-				loader .createX3DFromURL (url, parameter,
-				function (scene)
-				{
-					if (loader !== this .loader)
-					{
-						reject ();
-						return;
-					}
-
-					if (! this .getBrowserOptions () .getSplashScreen ())
-						this .getCanvas () .fadeIn (0);
-
-					if (scene)
-					{
-						this .replaceWorld (scene);
-						this .removeLoadCount (this);
-
-						resolve ();
-					}
-					else
-					{
-						this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
-						this .callBrowserEventHandler ("onerror");
-
-						setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
-
-						reject ();
-					}
-				}
-				.bind (this),
-				function (fragment)
-				{
-					if (loader !== this .loader)
-					{
-						reject ();
-						return;
-					}
-
-					this .changeViewpoint (fragment);
-					this .removeLoadCount (this);
-					this .setBrowserLoading (false);
-
-					resolve ();
-				}
-				.bind (this),
-				function (url, target)
-				{
-					if (loader !== this .loader)
-					{
-						reject ();
-						return;
-					}
-
-					if (target)
-						window .open (url, target);
-					else
-						location = url;
-
-					this .removeLoadCount (this);
-					this .setBrowserLoading (false);
-
-					resolve ();
-				}
-				.bind (this));
-			}
-			.bind (this));
-
-			return promise;
-		},
-		addBrowserListener: function (callback, object)
-		{
-			// The string describes the name of the callback function to be called within the current ECMAScript context.
-		},
-		removeBrowserListener: function (callback)
-		{
-			// The string describes the name of the callback function to be called within the current ECMAScript context.
-		},
-		addBrowserCallback: function (key, object)
-		{
-			this .browserCallbacks .set (key, object);
-		},
-		removeBrowserCallback: function (key)
-		{
-			this .browserCallbacks .delete (key);
-		},
-		getBrowserCallbacks: function ()
-		{
-			return this .browserCallbacks;
-		},
-		callBrowserCallbacks: (function ()
-		{
-			const browserCallbacks = [ ];
-
-			return function (browserEvent)
-			{
-				if (this .browserCallbacks .size)
-				{
-					MapUtilities .values (browserCallbacks, this .browserCallbacks) .forEach (function (browserCallback)
-					{
-						browserCallback (browserEvent);
-					});
-				}
-			};
-		})(),
-		importDocument: function (dom, success, error)
-		{
-			const
-				currentScene = this .currentScene,
-				scene        = this .createScene (),
-				external     = this .isExternal ();
-
-			if (!external)
-			{
-				currentScene .isLive () .addInterest ("setLive", scene);
-				scene .setExecutionContext (currentScene);
-				scene .setLive (currentScene .getLive ());
-			}
-
-			new XMLParser (scene) .parseIntoScene (dom, success, error);
-
-			if (arguments .length === 1)
-				return scene;
-		},
-		importJS: function (json, success, error)
-		{
-			const
-				currentScene = this .currentScene,
-				scene        = this .createScene (),
-				external     = this .isExternal ();
-
-			if (!external)
-			{
-				currentScene .isLive () .addInterest ("setLive", scene);
-				scene .setExecutionContext (currentScene);
-				scene .setLive (currentScene .getLive ());
-			}
-
-			new JSONParser (scene) .parseIntoScene (json, success, error);
-
-			if (arguments .length === 1)
-				return scene;
-		},
-		getBrowserProperty: function (name)
-		{
-			return this .getBrowserProperties () .getField (name) .getValue ();
-		},
-		setBrowserOption: function (name, value)
-		{
-			this .getBrowserOptions () .getField (name) .setValue (value);
-		},
-		getBrowserOption: function (name)
-		{
-			return this .getBrowserOptions () .getField (name) .getValue ();
-		},
-		getRenderingProperty: function (name)
-		{
-			return this .getRenderingProperties () .getField (name) .getValue ();
-		},
-		firstViewpoint: function (layerNode)
-		{
-			if (layerNode instanceof Fields .SFNode)
-				layerNode = layerNode .getValue ()
-
-			if (! layerNode)
-				layerNode = this .getActiveLayer ();
-
-			if (layerNode instanceof X3DLayerNode)
-			{
-				const viewpoints = layerNode .getUserViewpoints ();
-
-				if (viewpoints .length)
-					this .bindViewpoint (layerNode, viewpoints [0]);
-			}
-		},
-		previousViewpoint: function (layerNode)
-		{
-			if (layerNode instanceof Fields .SFNode)
-				layerNode = layerNode .getValue ()
-
-			if (! layerNode)
-				layerNode = this .getActiveLayer ();
-
-			if (layerNode instanceof X3DLayerNode)
-			{
-				const viewpoints = layerNode .getUserViewpoints ();
-
-				if (viewpoints .length === 0)
-					return;
-
-				for (var i = 0; i < viewpoints .length; ++ i)
-				{
-					if (viewpoints [i] .isBound_ .getValue ())
-						break;
-				}
-
-				if (i < viewpoints .length)
-				{
-					if (i === 0)
-						this .bindViewpoint (layerNode, viewpoints .at (-1));
-
-					else
-						this .bindViewpoint (layerNode, viewpoints [i - 1]);
-				}
-				else
-					this .bindViewpoint (layerNode, viewpoints .at (-1));
-			}
-		},
-		nextViewpoint: function (layerNode)
-		{
-			if (layerNode instanceof Fields .SFNode)
-				layerNode = layerNode .getValue ()
-
-			if (! layerNode)
-				layerNode = this .getActiveLayer ();
-
-			if (layerNode instanceof X3DLayerNode)
-			{
-				const viewpoints = layerNode .getUserViewpoints ();
-
-				if (viewpoints .length === 0)
-					return;
-
-				for (var i = 0; i < viewpoints .length; ++ i)
-				{
-					if (viewpoints [i] .isBound_ .getValue ())
-						break;
-				}
-
-				if (i < viewpoints .length)
-				{
-					if (i === viewpoints .length - 1)
-						this .bindViewpoint (layerNode, viewpoints [0]);
-
-					else
-						this .bindViewpoint (layerNode, viewpoints [i + 1]);
-				}
-				else
-					this .bindViewpoint (layerNode, viewpoints [0]);
-			}
-		},
-		lastViewpoint: function (layerNode)
-		{
-			if (layerNode instanceof Fields .SFNode)
-				layerNode = layerNode .getValue ()
-
-			if (! layerNode)
-				layerNode = this .getActiveLayer ();
-
-			if (layerNode instanceof X3DLayerNode)
-			{
-				const viewpoints = layerNode .getUserViewpoints ();
-
-				if (viewpoints .length)
-					this .bindViewpoint (layerNode, viewpoints .at (-1));
-			}
-		},
-		changeViewpoint: function (layerNode, name)
-		{
-			if (layerNode instanceof Fields .SFNode)
-				layerNode = layerNode .getValue ()
-
-			if (arguments .length === 1)
-			{
-				name      = layerNode;
-				layerNode = this .getActiveLayer ();
-			}
-
-			if (layerNode instanceof X3DLayerNode)
-			{
-				for (const viewpointNode of layerNode .getViewpoints () .get ())
-				{
-					if (viewpointNode .getName () === name)
-					{
-						this .bindViewpoint (layerNode, viewpointNode);
-						break;
-					}
-				}
-			}
-		},
-		bindViewpoint: function (layerNode, viewpointNode)
-		{
-			viewpointNode .setVRMLTransition (true);
-
-			if (viewpointNode .isBound_ .getValue ())
-				viewpointNode .transitionStart (layerNode, viewpointNode, viewpointNode);
-
-			else
-				viewpointNode .set_bind_ = true;
-		},
-		addRoute: function (fromNode, fromEventOut, toNode, toEventIn)
-		{
-			this .currentScene .addRoute (fromNode, fromEventOut, toNode, toEventIn);
-		},
-		deleteRoute: function (fromNode, fromEventOut, toNode, toEventIn)
-		{
-			try
-			{
-				const route = this .currentScene .getRoute (fromNode, fromEventOut, toNode, toEventIn);
-
-				if (route)
-					this .currentScene .deleteRoute (route);
-			}
-			catch (error)
-			{
-				console .log (error);
-			}
-		},
-		beginUpdate: function ()
-		{
-			this .setLive (true);
-			this .getExecutionContext () .setLive (true);
-			this .advanceTime (performance .now ());
-		},
-		endUpdate: function ()
-		{
-			this .setLive (false);
-			this .getExecutionContext () .setLive (false);
-		},
-		print: function ()
-		{
-			let string = "";
-
-			for (const argument of arguments)
-				string += argument;
-
-			console .log (string);
-
-			const element = $(".x_ite-console");
-
-			if (element .length)
-				element .append (document .createTextNode (string));
-		},
-		println: function ()
-		{
-			let string = "";
-
-			for (const argument of arguments)
-				string += argument;
-
-			console .log (string);
-
-			string += "\n";
-
-			const element = $(".x_ite-console");
-
-			if (element .length)
-				element .append (document .createTextNode (string));
-		},
-	});
-
-	Object .defineProperty (X3DBrowser .prototype, "name",
-	{
-		get: function () { return "X_ITE"; },
-		enumerable: true,
-		configurable: false
-	});
-
-	Object .defineProperty (X3DBrowser .prototype, "version",
-	{
-		get: function () { return VERSION; },
-		enumerable: true,
-		configurable: false
-	});
-
-	Object .defineProperty (X3DBrowser .prototype, "description",
-	{
-		get: function ()
-		{
-			return this .getNotification () .string_ .getValue ();
-		},
-		set: function (value)
-		{
-			this .getNotification () .string_ = value;
-		},
-		enumerable: true,
-		configurable: false
-	});
-
-	Object .defineProperty (X3DBrowser .prototype, "currentScene",
-	{
-		get: function ()
-		{
-			return this .getScriptStack () .at (-1) .getExecutionContext ();
-		},
-		enumerable: true,
-		configurable: false
-	});
-
-	Object .defineProperty (X3DBrowser .prototype, "supportedProfiles",
-	{
-		get: function ()
-		{
-			return SupportedProfiles;
-		},
-		enumerable: true,
-		configurable: false
-	});
-
-	Object .defineProperty (X3DBrowser .prototype, "supportedComponents",
-	{
-		get: function ()
-		{
-			return SupportedComponents;
-		},
-		enumerable: true,
-		configurable: false
-	});
-
-	return X3DBrowser;
+         throw Error ("Component '" + name + "' at level '" + level + "' is not supported.");
+      },
+      getSupportedNode: function (typeName)
+      {
+         return SupportedNodes .getType (typeName);
+      },
+      createScene: function (profile, component1 /*, ...*/)
+      {
+         const scene = new Scene (this);
+
+         if (arguments .length)
+         {
+            scene .setProfile (profile);
+
+            for (let i = 1, length = arguments .length; i < length; ++ i)
+               scene .addComponent (arguments [i]);
+         }
+
+         scene .setup ();
+
+         return scene;
+      },
+      replaceWorld: function (scene)
+      {
+         // Cancel any loading.
+
+         this .loadCount_       .removeInterest ("set_loadCount__", this);
+         this .prepareEvents () .removeInterest ("bind", this);
+
+         if (this .loader)
+            this .loader .abort ();
+
+         // Remove world.
+
+         if (this .getWorld ())
+         {
+            this .getExecutionContext () .setLive (false);
+            this .shutdown () .processInterests ();
+            this .callBrowserCallbacks (X3DConstants .SHUTDOWN_EVENT);
+            this .callBrowserEventHandler ("onshutdown");
+         }
+
+         // Replace world.
+
+         if (scene instanceof Fields .MFNode)
+         {
+            // VRML version of replaceWorld has a MFNode value as argument.
+
+            const rootNodes = scene;
+
+            scene = this .createScene ();
+
+            for (const rootNode of rootNodes)
+               scene .isLive () .addInterest (rootNode .getValue () .getExecutionContext () .isLive ());
+
+            scene .setRootNodes (rootNodes);
+         }
+
+         if (! (scene instanceof X3DScene))
+            scene = this .createScene ();
+
+         // Detach scene from parent.
+
+         scene .getExecutionContext () .isLive () .removeInterest ("setLive", scene);
+         scene .setExecutionContext (scene);
+
+         // Replace.
+
+         this .description = "";
+
+         this .getBrowserOptions () .configure ();
+         this .setBrowserLoading (true);
+         this .loadCount_ .addInterest ("set_loadCount__", this);
+         this .prepareEvents () .removeInterest ("bind", this);
+
+         for (const object of scene .getLoadingObjects ())
+            this .addLoadCount (object);
+
+         this .setExecutionContext (scene);
+         this .getWorld () .bind ();
+
+         scene .setLive (this .isLive () .getValue ());
+      },
+      set_loadCount__: function (loadCount)
+      {
+         if (loadCount .getValue ())
+            return;
+
+         this .loadCount_ .removeInterest ("set_loadCount__", this);
+
+         this .prepareEvents () .addInterest ("bind", this);
+         this .addBrowserEvent ();
+      },
+      bind: function ()
+      {
+         this .prepareEvents () .removeInterest ("bind", this);
+
+         this .setBrowserLoading (false);
+
+         if (this .initialized () .getValue ())
+         {
+            this .initialized () .setValue (this .getCurrentTime ());
+            this .callBrowserCallbacks (X3DConstants .INITIALIZED_EVENT);
+            this .callBrowserEventHandler ("onload");
+         }
+      },
+      createVrmlFromString: function (vrmlSyntax)
+      {
+         return this .createX3DFromString (vrmlSyntax) .rootNodes;
+      },
+      createX3DFromString: function (x3dSyntax)
+      {
+         const
+            currentScene = this .currentScene,
+            external     = this .isExternal (),
+            fileLoader   = new FileLoader (this .getWorld ()),
+            scene        = fileLoader .createX3DFromString (currentScene .getWorldURL (), x3dSyntax);
+
+         if (!external)
+         {
+            currentScene .isLive () .addInterest ("setLive", scene);
+            scene .setExecutionContext (currentScene);
+            scene .setLive (currentScene .getLive ());
+         }
+
+         return scene;
+      },
+      createVrmlFromURL: function (url, node, event)
+      {
+         if (! (node instanceof Fields .SFNode))
+            throw new Error ("Browser.createVrmlFromURL: node must be of type SFNode.");
+
+         if (! node .getValue ())
+            throw new Error ("Browser.createVrmlFromURL: node IS NULL.");
+
+         const field = node .getValue () .getField (event);
+
+         if (! field .isInput ())
+            throw new Error ("Browser.createVrmlFromURL: event named '" + event + "' must be a input field.");
+
+         if (field .getType () !== X3DConstants .MFNode)
+            throw new Error ("Browser.createVrmlFromURL: event named '" + event + "' must be of type MFNode.");
+
+         const
+            currentScene = this .currentScene,
+            external     = this .isExternal (),
+            loader       = new FileLoader (this .getWorld ());
+
+         this .addLoadCount (loader);
+
+         loader .createX3DFromURL (url, null,
+         function (scene)
+         {
+            this .removeLoadCount (loader);
+
+            if (scene)
+            {
+               // Handle isLive for script scenes here:
+
+               if (! external)
+               {
+                  currentScene .isLive () .addInterest ("setLive", scene);
+                  scene .setExecutionContext (currentScene);
+                  scene .setLive (currentScene .getLive ());
+               }
+
+               // Wait until scene is completely loaded, scene .loadCount_ must be 0.
+               field .setValue (scene .rootNodes);
+            }
+         }
+         .bind (this));
+      },
+      createX3DFromURL: function (url, node, event)
+      {
+         if (arguments .length === 3)
+            return this .createVrmlFromURL (url, node, event);
+
+         const
+            currentScene = this .currentScene,
+            external     = this .isExternal (),
+            fileLoader   = new FileLoader (this .getWorld ()),
+            scene        = fileLoader .createX3DFromURL (url, null);
+
+         if (! external)
+         {
+            currentScene .isLive () .addInterest ("setLive", scene);
+            scene .setExecutionContext (currentScene);
+            scene .setLive (currentScene .getLive ());
+         }
+
+         return scene;
+      },
+      loadURL: function (url, parameter)
+      {
+         const promise = new Promise (function (resolve, reject)
+         {
+            // Cancel any loading.
+
+            this .loadCount_       .removeInterest ("set_loadCount__", this);
+            this .prepareEvents () .removeInterest ("bind", this);
+
+            if (this .loader)
+               this .loader .abort ();
+
+            // Start loading.
+
+            this .setBrowserLoading (true);
+            this .addLoadCount (this);
+
+            const loader = this .loader = new FileLoader (this .getWorld ());
+
+            loader .createX3DFromURL (url, parameter,
+            function (scene)
+            {
+               if (loader !== this .loader)
+               {
+                  reject ();
+                  return;
+               }
+
+               if (! this .getBrowserOptions () .getSplashScreen ())
+                  this .getCanvas () .fadeIn (0);
+
+               if (scene)
+               {
+                  this .replaceWorld (scene);
+                  this .removeLoadCount (this);
+
+                  resolve ();
+               }
+               else
+               {
+                  this .callBrowserCallbacks (X3DConstants .CONNECTION_ERROR);
+                  this .callBrowserEventHandler ("onerror");
+
+                  setTimeout (function () { this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (_ ("Failed loading world.")); } .bind (this), 31);
+
+                  reject ();
+               }
+            }
+            .bind (this),
+            function (fragment)
+            {
+               if (loader !== this .loader)
+               {
+                  reject ();
+                  return;
+               }
+
+               this .changeViewpoint (fragment);
+               this .removeLoadCount (this);
+               this .setBrowserLoading (false);
+
+               resolve ();
+            }
+            .bind (this),
+            function (url, target)
+            {
+               if (loader !== this .loader)
+               {
+                  reject ();
+                  return;
+               }
+
+               if (target)
+                  window .open (url, target);
+               else
+                  location = url;
+
+               this .removeLoadCount (this);
+               this .setBrowserLoading (false);
+
+               resolve ();
+            }
+            .bind (this));
+         }
+         .bind (this));
+
+         return promise;
+      },
+      addBrowserListener: function (callback, object)
+      {
+         // The string describes the name of the callback function to be called within the current ECMAScript context.
+      },
+      removeBrowserListener: function (callback)
+      {
+         // The string describes the name of the callback function to be called within the current ECMAScript context.
+      },
+      addBrowserCallback: function (key, object)
+      {
+         this .browserCallbacks .set (key, object);
+      },
+      removeBrowserCallback: function (key)
+      {
+         this .browserCallbacks .delete (key);
+      },
+      getBrowserCallbacks: function ()
+      {
+         return this .browserCallbacks;
+      },
+      callBrowserCallbacks: (function ()
+      {
+         const browserCallbacks = [ ];
+
+         return function (browserEvent)
+         {
+            if (this .browserCallbacks .size)
+            {
+               MapUtilities .values (browserCallbacks, this .browserCallbacks) .forEach (function (browserCallback)
+               {
+                  browserCallback (browserEvent);
+               });
+            }
+         };
+      })(),
+      importDocument: function (dom, success, error)
+      {
+         const
+            currentScene = this .currentScene,
+            scene        = this .createScene (),
+            external     = this .isExternal ();
+
+         if (!external)
+         {
+            currentScene .isLive () .addInterest ("setLive", scene);
+            scene .setExecutionContext (currentScene);
+            scene .setLive (currentScene .getLive ());
+         }
+
+         new XMLParser (scene) .parseIntoScene (dom, success, error);
+
+         if (arguments .length === 1)
+            return scene;
+      },
+      importJS: function (json, success, error)
+      {
+         const
+            currentScene = this .currentScene,
+            scene        = this .createScene (),
+            external     = this .isExternal ();
+
+         if (!external)
+         {
+            currentScene .isLive () .addInterest ("setLive", scene);
+            scene .setExecutionContext (currentScene);
+            scene .setLive (currentScene .getLive ());
+         }
+
+         new JSONParser (scene) .parseIntoScene (json, success, error);
+
+         if (arguments .length === 1)
+            return scene;
+      },
+      getBrowserProperty: function (name)
+      {
+         return this .getBrowserProperties () .getField (name) .getValue ();
+      },
+      setBrowserOption: function (name, value)
+      {
+         this .getBrowserOptions () .getField (name) .setValue (value);
+      },
+      getBrowserOption: function (name)
+      {
+         return this .getBrowserOptions () .getField (name) .getValue ();
+      },
+      getRenderingProperty: function (name)
+      {
+         return this .getRenderingProperties () .getField (name) .getValue ();
+      },
+      firstViewpoint: function (layerNode)
+      {
+         if (layerNode instanceof Fields .SFNode)
+            layerNode = layerNode .getValue ()
+
+         if (! layerNode)
+            layerNode = this .getActiveLayer ();
+
+         if (layerNode instanceof X3DLayerNode)
+         {
+            const viewpoints = layerNode .getUserViewpoints ();
+
+            if (viewpoints .length)
+               this .bindViewpoint (layerNode, viewpoints [0]);
+         }
+      },
+      previousViewpoint: function (layerNode)
+      {
+         if (layerNode instanceof Fields .SFNode)
+            layerNode = layerNode .getValue ()
+
+         if (! layerNode)
+            layerNode = this .getActiveLayer ();
+
+         if (layerNode instanceof X3DLayerNode)
+         {
+            const viewpoints = layerNode .getUserViewpoints ();
+
+            if (viewpoints .length === 0)
+               return;
+
+            for (var i = 0; i < viewpoints .length; ++ i)
+            {
+               if (viewpoints [i] .isBound_ .getValue ())
+                  break;
+            }
+
+            if (i < viewpoints .length)
+            {
+               if (i === 0)
+                  this .bindViewpoint (layerNode, viewpoints .at (-1));
+
+               else
+                  this .bindViewpoint (layerNode, viewpoints [i - 1]);
+            }
+            else
+               this .bindViewpoint (layerNode, viewpoints .at (-1));
+         }
+      },
+      nextViewpoint: function (layerNode)
+      {
+         if (layerNode instanceof Fields .SFNode)
+            layerNode = layerNode .getValue ()
+
+         if (! layerNode)
+            layerNode = this .getActiveLayer ();
+
+         if (layerNode instanceof X3DLayerNode)
+         {
+            const viewpoints = layerNode .getUserViewpoints ();
+
+            if (viewpoints .length === 0)
+               return;
+
+            for (var i = 0; i < viewpoints .length; ++ i)
+            {
+               if (viewpoints [i] .isBound_ .getValue ())
+                  break;
+            }
+
+            if (i < viewpoints .length)
+            {
+               if (i === viewpoints .length - 1)
+                  this .bindViewpoint (layerNode, viewpoints [0]);
+
+               else
+                  this .bindViewpoint (layerNode, viewpoints [i + 1]);
+            }
+            else
+               this .bindViewpoint (layerNode, viewpoints [0]);
+         }
+      },
+      lastViewpoint: function (layerNode)
+      {
+         if (layerNode instanceof Fields .SFNode)
+            layerNode = layerNode .getValue ()
+
+         if (! layerNode)
+            layerNode = this .getActiveLayer ();
+
+         if (layerNode instanceof X3DLayerNode)
+         {
+            const viewpoints = layerNode .getUserViewpoints ();
+
+            if (viewpoints .length)
+               this .bindViewpoint (layerNode, viewpoints .at (-1));
+         }
+      },
+      changeViewpoint: function (layerNode, name)
+      {
+         if (layerNode instanceof Fields .SFNode)
+            layerNode = layerNode .getValue ()
+
+         if (arguments .length === 1)
+         {
+            name      = layerNode;
+            layerNode = this .getActiveLayer ();
+         }
+
+         if (layerNode instanceof X3DLayerNode)
+         {
+            for (const viewpointNode of layerNode .getViewpoints () .get ())
+            {
+               if (viewpointNode .getName () === name)
+               {
+                  this .bindViewpoint (layerNode, viewpointNode);
+                  break;
+               }
+            }
+         }
+      },
+      bindViewpoint: function (layerNode, viewpointNode)
+      {
+         viewpointNode .setVRMLTransition (true);
+
+         if (viewpointNode .isBound_ .getValue ())
+            viewpointNode .transitionStart (layerNode, viewpointNode, viewpointNode);
+
+         else
+            viewpointNode .set_bind_ = true;
+      },
+      addRoute: function (fromNode, fromEventOut, toNode, toEventIn)
+      {
+         this .currentScene .addRoute (fromNode, fromEventOut, toNode, toEventIn);
+      },
+      deleteRoute: function (fromNode, fromEventOut, toNode, toEventIn)
+      {
+         try
+         {
+            const route = this .currentScene .getRoute (fromNode, fromEventOut, toNode, toEventIn);
+
+            if (route)
+               this .currentScene .deleteRoute (route);
+         }
+         catch (error)
+         {
+            console .log (error);
+         }
+      },
+      beginUpdate: function ()
+      {
+         this .setLive (true);
+         this .getExecutionContext () .setLive (true);
+         this .advanceTime (performance .now ());
+      },
+      endUpdate: function ()
+      {
+         this .setLive (false);
+         this .getExecutionContext () .setLive (false);
+      },
+      print: function ()
+      {
+         let string = "";
+
+         for (const argument of arguments)
+            string += argument;
+
+         console .log (string);
+
+         const element = $(".x_ite-console");
+
+         if (element .length)
+            element .append (document .createTextNode (string));
+      },
+      println: function ()
+      {
+         let string = "";
+
+         for (const argument of arguments)
+            string += argument;
+
+         console .log (string);
+
+         string += "\n";
+
+         const element = $(".x_ite-console");
+
+         if (element .length)
+            element .append (document .createTextNode (string));
+      },
+   });
+
+   Object .defineProperty (X3DBrowser .prototype, "name",
+   {
+      get: function () { return "X_ITE"; },
+      enumerable: true,
+      configurable: false
+   });
+
+   Object .defineProperty (X3DBrowser .prototype, "version",
+   {
+      get: function () { return VERSION; },
+      enumerable: true,
+      configurable: false
+   });
+
+   Object .defineProperty (X3DBrowser .prototype, "description",
+   {
+      get: function ()
+      {
+         return this .getNotification () .string_ .getValue ();
+      },
+      set: function (value)
+      {
+         this .getNotification () .string_ = value;
+      },
+      enumerable: true,
+      configurable: false
+   });
+
+   Object .defineProperty (X3DBrowser .prototype, "currentScene",
+   {
+      get: function ()
+      {
+         return this .getScriptStack () .at (-1) .getExecutionContext ();
+      },
+      enumerable: true,
+      configurable: false
+   });
+
+   Object .defineProperty (X3DBrowser .prototype, "supportedProfiles",
+   {
+      get: function ()
+      {
+         return SupportedProfiles;
+      },
+      enumerable: true,
+      configurable: false
+   });
+
+   Object .defineProperty (X3DBrowser .prototype, "supportedComponents",
+   {
+      get: function ()
+      {
+         return SupportedComponents;
+      },
+      enumerable: true,
+      configurable: false
+   });
+
+   return X3DBrowser;
 });

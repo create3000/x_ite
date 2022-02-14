@@ -48,60 +48,58 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/EventUtilities/X3DTriggerNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/EventUtilities/X3DTriggerNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DTriggerNode, 
+          X3DTriggerNode,
           X3DConstants)
 {
 "use strict";
 
-	function BooleanTrigger (executionContext)
-	{
-		X3DTriggerNode .call (this, executionContext);
+   function BooleanTrigger (executionContext)
+   {
+      X3DTriggerNode .call (this, executionContext);
 
-		this .addType (X3DConstants .BooleanTrigger);
-	}
+      this .addType (X3DConstants .BooleanTrigger);
+   }
 
-	BooleanTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
-	{
-		constructor: BooleanTrigger,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_triggerTime", new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTrue",     new Fields .SFBool ()),
-		]),
-		getTypeName: function ()
-		{
-			return "BooleanTrigger";
-		},
-		getComponentName: function ()
-		{
-			return "EventUtilities";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DTriggerNode .prototype .initialize .call (this);
+   BooleanTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
+   {
+      constructor: BooleanTrigger,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_triggerTime", new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTrue",     new Fields .SFBool ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "BooleanTrigger";
+      },
+      getComponentName: function ()
+      {
+         return "EventUtilities";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DTriggerNode .prototype .initialize .call (this);
 
-			this .set_triggerTime_ .addInterest ("set_triggerTime__", this);
-		},
-		set_triggerTime__: function ()
-		{
-			this .triggerTrue_ = true;
-		},
-	});
+         this .set_triggerTime_ .addInterest ("set_triggerTime__", this);
+      },
+      set_triggerTime__: function ()
+      {
+         this .triggerTrue_ = true;
+      },
+   });
 
-	return BooleanTrigger;
+   return BooleanTrigger;
 });
-
-

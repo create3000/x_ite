@@ -48,10 +48,10 @@
 
 
 define ([
-	"x_ite/Basic/X3DField",
-	"x_ite/Fields/SFVecPrototypeTemplate",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector4",
+   "x_ite/Basic/X3DField",
+   "x_ite/Fields/SFVecPrototypeTemplate",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector4",
 ],
 function (X3DField,
           SFVecPrototypeTemplate,
@@ -60,115 +60,115 @@ function (X3DField,
 {
 "use strict";
 
-	function SFVec4Template (TypeName, Type, double)
-	{
-		function SFVec4 (x, y, z, w)
-		{
-			switch (arguments .length)
-			{
-				case 0:
-					return X3DField .call (this, new Vector4 (0, 0, 0, 0));
+   function SFVec4Template (TypeName, Type, double)
+   {
+      function SFVec4 (x, y, z, w)
+      {
+         switch (arguments .length)
+         {
+            case 0:
+               return X3DField .call (this, new Vector4 (0, 0, 0, 0));
 
-				case 1:
-					return X3DField .call (this, arguments [0]);
+            case 1:
+               return X3DField .call (this, arguments [0]);
 
-				case 4:
-					return X3DField .call (this, new Vector4 (x * 1, y * 1, z * 1, w * 1));
-			}
+            case 4:
+               return X3DField .call (this, new Vector4 (x * 1, y * 1, z * 1, w * 1));
+         }
 
-			throw new Error ("Invalid arguments.");
-		}
+         throw new Error ("Invalid arguments.");
+      }
 
-		SFVec4 .prototype = Object .assign (Object .create (X3DField .prototype),
-			SFVecPrototypeTemplate (Vector4, double),
-		{
-			constructor: SFVec4,
-			getTypeName: function ()
-			{
-				return TypeName;
-			},
-			getType: function ()
-			{
-				return Type;
-			},
-		});
+      SFVec4 .prototype = Object .assign (Object .create (X3DField .prototype),
+         SFVecPrototypeTemplate (Vector4, double),
+      {
+         constructor: SFVec4,
+         getTypeName: function ()
+         {
+            return TypeName;
+         },
+         getType: function ()
+         {
+            return Type;
+         },
+      });
 
-		const x = {
-			get: function ()
-			{
-				return this .getValue () .x;
-			},
-			set: function (value)
-			{
-				this .getValue () .x = value * 1;
-				this .addEvent ();
-			},
-			enumerable: true,
-			configurable: false
-		};
+      const x = {
+         get: function ()
+         {
+            return this .getValue () .x;
+         },
+         set: function (value)
+         {
+            this .getValue () .x = value * 1;
+            this .addEvent ();
+         },
+         enumerable: true,
+         configurable: false
+      };
 
-		const y = {
-			get: function ()
-			{
-				return this .getValue () .y;
-			},
-			set: function (value)
-			{
-				this .getValue () .y = value * 1;
-				this .addEvent ();
-			},
-			enumerable: true,
-			configurable: false
-		};
+      const y = {
+         get: function ()
+         {
+            return this .getValue () .y;
+         },
+         set: function (value)
+         {
+            this .getValue () .y = value * 1;
+            this .addEvent ();
+         },
+         enumerable: true,
+         configurable: false
+      };
 
-		const z = {
-			get: function ()
-			{
-				return this .getValue () .z;
-			},
-			set: function (value)
-			{
-				this .getValue () .z = value * 1;
-				this .addEvent ();
-			},
-			enumerable: true,
-			configurable: false
-		};
+      const z = {
+         get: function ()
+         {
+            return this .getValue () .z;
+         },
+         set: function (value)
+         {
+            this .getValue () .z = value * 1;
+            this .addEvent ();
+         },
+         enumerable: true,
+         configurable: false
+      };
 
-		const w = {
-			get: function ()
-			{
-				return this .getValue () .w;
-			},
-			set: function (value)
-			{
-				this .getValue () .w = value * 1;
-				this .addEvent ();
-			},
-			enumerable: true,
-			configurable: false
-		};
+      const w = {
+         get: function ()
+         {
+            return this .getValue () .w;
+         },
+         set: function (value)
+         {
+            this .getValue () .w = value * 1;
+            this .addEvent ();
+         },
+         enumerable: true,
+         configurable: false
+      };
 
-		Object .defineProperty (SFVec4 .prototype, "x", x);
-		Object .defineProperty (SFVec4 .prototype, "y", y);
-		Object .defineProperty (SFVec4 .prototype, "z", z);
-		Object .defineProperty (SFVec4 .prototype, "w", w);
+      Object .defineProperty (SFVec4 .prototype, "x", x);
+      Object .defineProperty (SFVec4 .prototype, "y", y);
+      Object .defineProperty (SFVec4 .prototype, "z", z);
+      Object .defineProperty (SFVec4 .prototype, "w", w);
 
-		x .enumerable = false;
-		y .enumerable = false;
-		z .enumerable = false;
-		w .enumerable = false;
+      x .enumerable = false;
+      y .enumerable = false;
+      z .enumerable = false;
+      w .enumerable = false;
 
-		Object .defineProperty (SFVec4 .prototype, "0", x);
-		Object .defineProperty (SFVec4 .prototype, "1", y);
-		Object .defineProperty (SFVec4 .prototype, "2", z);
-		Object .defineProperty (SFVec4 .prototype, "3", w);
+      Object .defineProperty (SFVec4 .prototype, "0", x);
+      Object .defineProperty (SFVec4 .prototype, "1", y);
+      Object .defineProperty (SFVec4 .prototype, "2", z);
+      Object .defineProperty (SFVec4 .prototype, "3", w);
 
-		return SFVec4;
-	}
+      return SFVec4;
+   }
 
-	return {
-		SFVec4d: SFVec4Template ("SFVec4d", X3DConstants .SFVec4d, true),
-		SFVec4f: SFVec4Template ("SFVec4f", X3DConstants .SFVec4f, false),
-	};
+   return {
+      SFVec4d: SFVec4Template ("SFVec4d", X3DConstants .SFVec4d, true),
+      SFVec4f: SFVec4Template ("SFVec4f", X3DConstants .SFVec4f, false),
+   };
 });

@@ -48,10 +48,10 @@
 
 
 define ([
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
-	"standard/Math/Numbers/Matrix4",
-	require .getComponentUrl ("rigid-body-physics"),
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Rotation4",
+   "standard/Math/Numbers/Matrix4",
+   require .getComponentUrl ("rigid-body-physics"),
 ],
 function (Vector3,
           Rotation4,
@@ -60,138 +60,138 @@ function (Vector3,
 {
 "use strict";
 
-	var Ammo = RigidBodyPhysics .Ammo;
+   var Ammo = RigidBodyPhysics .Ammo;
 
-	function VolumePicker ()
-	{
-		this .broadphase             = new Ammo .btDbvtBroadphase ();
-		this .collisionConfiguration = new Ammo .btDefaultCollisionConfiguration ();
-		this .dispatcher             = new Ammo .btCollisionDispatcher (this .collisionConfiguration);
-		this .collisionWorld         = new Ammo .btCollisionWorld (this .dispatcher, this .broadphase, this .collisionConfiguration);
+   function VolumePicker ()
+   {
+      this .broadphase             = new Ammo .btDbvtBroadphase ();
+      this .collisionConfiguration = new Ammo .btDefaultCollisionConfiguration ();
+      this .dispatcher             = new Ammo .btCollisionDispatcher (this .collisionConfiguration);
+      this .collisionWorld         = new Ammo .btCollisionWorld (this .dispatcher, this .broadphase, this .collisionConfiguration);
 
-		this .compoundShape1         = new Ammo .btCompoundShape ();
-		this .motionState1           = new Ammo .btDefaultMotionState ();
-		this .constructionInfo1      = new Ammo .btRigidBodyConstructionInfo (0, this .motionState1, this .compoundShape1);
-		this .rigidBody1             = new Ammo .btRigidBody (this .constructionInfo1);
+      this .compoundShape1         = new Ammo .btCompoundShape ();
+      this .motionState1           = new Ammo .btDefaultMotionState ();
+      this .constructionInfo1      = new Ammo .btRigidBodyConstructionInfo (0, this .motionState1, this .compoundShape1);
+      this .rigidBody1             = new Ammo .btRigidBody (this .constructionInfo1);
 
-		this .compoundShape2         = new Ammo .btCompoundShape ();
-		this .motionState2           = new Ammo .btDefaultMotionState ();
-		this .constructionInfo2      = new Ammo .btRigidBodyConstructionInfo (0, this .motionState2, this .compoundShape2);
-		this .rigidBody2             = new Ammo .btRigidBody (this .constructionInfo2);
+      this .compoundShape2         = new Ammo .btCompoundShape ();
+      this .motionState2           = new Ammo .btDefaultMotionState ();
+      this .constructionInfo2      = new Ammo .btRigidBodyConstructionInfo (0, this .motionState2, this .compoundShape2);
+      this .rigidBody2             = new Ammo .btRigidBody (this .constructionInfo2);
 
-		this .collisionWorld .addCollisionObject (this .rigidBody1);
-		this .collisionWorld .addCollisionObject (this .rigidBody2);
-	}
+      this .collisionWorld .addCollisionObject (this .rigidBody1);
+      this .collisionWorld .addCollisionObject (this .rigidBody2);
+   }
 
-	VolumePicker .prototype =
-	{
-		constuctor: VolumePicker,
-		setChildShape1: function (matrix, childShape)
-		{
-			this .setChildShape (this .compoundShape1, matrix, childShape);
-		},
-		setChildShape2: function (matrix, childShape)
-		{
-			this .setChildShape (this .compoundShape2, matrix, childShape);
-		},
-		setChildShape1Components: function (transform, localScaling, childShape)
-		{
-			this .setChildShapeComponents (this .compoundShape1, transform, localScaling, childShape);
-		},
-		setChildShape2Components: function (transform, localScaling, childShape)
-		{
-			this .setChildShapeComponents (this .compoundShape2, transform, localScaling, childShape);
-		},
-		setChildShape: (function ()
-		{
-			var
-				translation = new Vector3 (0, 0, 0),
-				rotation    = new Rotation4 (0, 0, 1, 0),
-				scale       = new Vector3 (1, 1, 1),
-				s           = new Ammo .btVector3 (0, 0, 0);
+   VolumePicker .prototype =
+   {
+      constuctor: VolumePicker,
+      setChildShape1: function (matrix, childShape)
+      {
+         this .setChildShape (this .compoundShape1, matrix, childShape);
+      },
+      setChildShape2: function (matrix, childShape)
+      {
+         this .setChildShape (this .compoundShape2, matrix, childShape);
+      },
+      setChildShape1Components: function (transform, localScaling, childShape)
+      {
+         this .setChildShapeComponents (this .compoundShape1, transform, localScaling, childShape);
+      },
+      setChildShape2Components: function (transform, localScaling, childShape)
+      {
+         this .setChildShapeComponents (this .compoundShape2, transform, localScaling, childShape);
+      },
+      setChildShape: (function ()
+      {
+         var
+            translation = new Vector3 (0, 0, 0),
+            rotation    = new Rotation4 (0, 0, 1, 0),
+            scale       = new Vector3 (1, 1, 1),
+            s           = new Ammo .btVector3 (0, 0, 0);
 
-			return function (compoundShape, matrix, childShape)
-			{
-				try
-				{
-					if (compoundShape .getNumChildShapes ())
-						compoundShape .removeChildShapeByIndex (0);
+         return function (compoundShape, matrix, childShape)
+         {
+            try
+            {
+               if (compoundShape .getNumChildShapes ())
+                  compoundShape .removeChildShapeByIndex (0);
 
-					if (childShape .getNumChildShapes ())
-					{
-						matrix .get (translation, rotation, scale);
+               if (childShape .getNumChildShapes ())
+               {
+                  matrix .get (translation, rotation, scale);
 
-						s .setValue (scale .x, scale .y, scale .z);
+                  s .setValue (scale .x, scale .y, scale .z);
 
-						childShape .setLocalScaling (s);
-						compoundShape .addChildShape (this .getTransform (translation, rotation), childShape);
-					}
-				}
-				catch (error)
-				{
-					// matrix .get
-				}
-			};
-		})(),
-		setChildShapeComponents: function (compoundShape, transform, localScaling, childShape)
-		{
-			if (compoundShape .getNumChildShapes ())
-				compoundShape .removeChildShapeByIndex (0);
+                  childShape .setLocalScaling (s);
+                  compoundShape .addChildShape (this .getTransform (translation, rotation), childShape);
+               }
+            }
+            catch (error)
+            {
+               // matrix .get
+            }
+         };
+      })(),
+      setChildShapeComponents: function (compoundShape, transform, localScaling, childShape)
+      {
+         if (compoundShape .getNumChildShapes ())
+            compoundShape .removeChildShapeByIndex (0);
 
-			if (childShape .getNumChildShapes ())
-			{
-				childShape .setLocalScaling (localScaling);
-				compoundShape .addChildShape (transform, childShape);
-			}
-		},
-		contactTest: function ()
-		{
-			this .collisionWorld .performDiscreteCollisionDetection ();
+         if (childShape .getNumChildShapes ())
+         {
+            childShape .setLocalScaling (localScaling);
+            compoundShape .addChildShape (transform, childShape);
+         }
+      },
+      contactTest: function ()
+      {
+         this .collisionWorld .performDiscreteCollisionDetection ();
 
-			var numManifolds = this .dispatcher .getNumManifolds ();
+         var numManifolds = this .dispatcher .getNumManifolds ();
 
-			for (var i = 0; i < numManifolds; ++ i)
-			{
-				var
-					contactManifold = this .dispatcher .getManifoldByIndexInternal (i),
-					numContacts     = contactManifold .getNumContacts ();
+         for (var i = 0; i < numManifolds; ++ i)
+         {
+            var
+               contactManifold = this .dispatcher .getManifoldByIndexInternal (i),
+               numContacts     = contactManifold .getNumContacts ();
 
-				for (var j = 0; j < numContacts; ++ j)
-				{
-					var pt = contactManifold .getContactPoint (j);
+            for (var j = 0; j < numContacts; ++ j)
+            {
+               var pt = contactManifold .getContactPoint (j);
 
-					if (pt .getDistance () <= 0)
-						return true;
-				}
-			}
+               if (pt .getDistance () <= 0)
+                  return true;
+            }
+         }
 
-			return false;
-		},
-		getTransform: (function ()
-		{
-			var
-				T = new Ammo .btTransform (),
-				o = new Ammo .btVector3 (0, 0, 0),
-				m = new Matrix4 ();
+         return false;
+      },
+      getTransform: (function ()
+      {
+         var
+            T = new Ammo .btTransform (),
+            o = new Ammo .btVector3 (0, 0, 0),
+            m = new Matrix4 ();
 
-			return function (translation, rotation, transform)
-			{
-				var t = transform || T;
+         return function (translation, rotation, transform)
+         {
+            var t = transform || T;
 
-				m .set (translation, rotation);
+            m .set (translation, rotation);
 
-				o .setValue (m [12], m [13], m [14]);
+            o .setValue (m [12], m [13], m [14]);
 
-				t .getBasis () .setValue (m [0], m [4], m [8],
-				                          m [1], m [5], m [9],
-				                          m [2], m [6], m [10]);
+            t .getBasis () .setValue (m [0], m [4], m [8],
+                                      m [1], m [5], m [9],
+                                      m [2], m [6], m [10]);
 
-				t .setOrigin (o);
+            t .setOrigin (o);
 
-				return t;
-			};
-		})(),
-	};
+            return t;
+         };
+      })(),
+   };
 
-	return VolumePicker;
+   return VolumePicker;
 });

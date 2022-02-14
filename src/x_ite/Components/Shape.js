@@ -47,20 +47,20 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Shape/Appearance",
-	"x_ite/Components/Shape/FillProperties",
-	"x_ite/Components/Shape/LineProperties",
-	"x_ite/Components/Shape/Material",
-	"x_ite/Components/Shape/PointProperties",
-	"x_ite/Components/Shape/Shape",
-	"x_ite/Components/Shape/TwoSidedMaterial",
-	"x_ite/Components/Shape/UnlitMaterial",
-	"x_ite/Components/Shape/X3DAppearanceChildNode",
-	"x_ite/Components/Shape/X3DAppearanceNode",
-	"x_ite/Components/Shape/X3DMaterialNode",
-	"x_ite/Components/Shape/X3DOneSidedMaterialNode",
-	"x_ite/Components/Shape/X3DShapeNode",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/Shape/Appearance",
+   "x_ite/Components/Shape/FillProperties",
+   "x_ite/Components/Shape/LineProperties",
+   "x_ite/Components/Shape/Material",
+   "x_ite/Components/Shape/PointProperties",
+   "x_ite/Components/Shape/Shape",
+   "x_ite/Components/Shape/TwoSidedMaterial",
+   "x_ite/Components/Shape/UnlitMaterial",
+   "x_ite/Components/Shape/X3DAppearanceChildNode",
+   "x_ite/Components/Shape/X3DAppearanceNode",
+   "x_ite/Components/Shape/X3DMaterialNode",
+   "x_ite/Components/Shape/X3DOneSidedMaterialNode",
+   "x_ite/Components/Shape/X3DShapeNode",
 ],
 function (SupportedNodes,
           Appearance,
@@ -79,30 +79,30 @@ function (SupportedNodes,
 {
 "use strict";
 
-	const Types =
-	{
-		Appearance:       Appearance,
-		FillProperties:   FillProperties,
-		LineProperties:   LineProperties,
-		Material:         Material,
-		PointProperties:  PointProperties,
-		Shape:            Shape,
-		TwoSidedMaterial: TwoSidedMaterial,
-		UnlitMaterial:    UnlitMaterial,
-	};
+   const Types =
+   {
+      Appearance:       Appearance,
+      FillProperties:   FillProperties,
+      LineProperties:   LineProperties,
+      Material:         Material,
+      PointProperties:  PointProperties,
+      Shape:            Shape,
+      TwoSidedMaterial: TwoSidedMaterial,
+      UnlitMaterial:    UnlitMaterial,
+   };
 
-	const AbstractTypes =
-	{
-		X3DAppearanceChildNode:  X3DAppearanceChildNode,
-		X3DAppearanceNode:       X3DAppearanceNode,
-		X3DMaterialNode:         X3DMaterialNode,
-		X3DOneSidedMaterialNode: X3DOneSidedMaterialNode,
-		X3DShapeNode:            X3DShapeNode,
-	};
+   const AbstractTypes =
+   {
+      X3DAppearanceChildNode:  X3DAppearanceChildNode,
+      X3DAppearanceNode:       X3DAppearanceNode,
+      X3DMaterialNode:         X3DMaterialNode,
+      X3DOneSidedMaterialNode: X3DOneSidedMaterialNode,
+      X3DShapeNode:            X3DShapeNode,
+   };
 
-	for (const typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]);
+   for (const typeName in Types)
+      SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (const typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   for (const typeName in AbstractTypes)
+      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

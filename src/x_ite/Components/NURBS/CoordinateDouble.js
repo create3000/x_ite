@@ -48,49 +48,47 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DCoordinateNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Rendering/X3DCoordinateNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DCoordinateNode, 
+          X3DCoordinateNode,
           X3DConstants)
 {
 "use strict";
 
-	function CoordinateDouble (executionContext)
-	{
-		X3DCoordinateNode .call (this, executionContext);
+   function CoordinateDouble (executionContext)
+   {
+      X3DCoordinateNode .call (this, executionContext);
 
-		this .addType (X3DConstants .CoordinateDouble);
-	}
+      this .addType (X3DConstants .CoordinateDouble);
+   }
 
-	CoordinateDouble .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
-	{
-		constructor: CoordinateDouble,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3d ()),
-		]),
-		getTypeName: function ()
-		{
-			return "CoordinateDouble";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "coord";
-		},
-	});
+   CoordinateDouble .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
+   {
+      constructor: CoordinateDouble,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3d ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "CoordinateDouble";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "coord";
+      },
+   });
 
-	return CoordinateDouble;
+   return CoordinateDouble;
 });
-
-

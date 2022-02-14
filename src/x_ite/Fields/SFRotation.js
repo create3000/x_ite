@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Fields/SFVec3",
-	"x_ite/Basic/X3DField",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/InputOutput/Generator",
-	"standard/Math/Numbers/Rotation4",
+   "x_ite/Fields/SFVec3",
+   "x_ite/Basic/X3DField",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/InputOutput/Generator",
+   "standard/Math/Numbers/Rotation4",
 ],
 function (SFVec3,
           X3DField,
@@ -62,174 +62,174 @@ function (SFVec3,
 {
 "use strict";
 
-	const SFVec3f = SFVec3 .SFVec3f;
+   const SFVec3f = SFVec3 .SFVec3f;
 
-	function SFRotation (x, y, z, angle)
-	{
-		switch (arguments .length)
-		{
-			case 0:
-				return X3DField .call (this, new Rotation4 ());
+   function SFRotation (x, y, z, angle)
+   {
+      switch (arguments .length)
+      {
+         case 0:
+            return X3DField .call (this, new Rotation4 ());
 
-			case 1:
-				return X3DField .call (this, arguments [0]);
+         case 1:
+            return X3DField .call (this, arguments [0]);
 
-			case 2:
-				if (arguments [1] instanceof SFVec3f)
-					return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] .getValue ()));
+         case 2:
+            if (arguments [1] instanceof SFVec3f)
+               return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] .getValue ()));
 
-				return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] * 1));
+            return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] * 1));
 
-			case 4:
-				return X3DField .call (this, new Rotation4 (x * 1, y * 1, z * 1, angle * 1));
-		}
+         case 4:
+            return X3DField .call (this, new Rotation4 (x * 1, y * 1, z * 1, angle * 1));
+      }
 
-		throw new Error ("Invalid arguments.");
-	}
+      throw new Error ("Invalid arguments.");
+   }
 
-	SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
-	{
-		constructor: SFRotation,
-		copy: function ()
-		{
-			return new SFRotation (this .getValue () .copy ());
-		},
-		equals: function (rotation)
-		{
-			return this .getValue () .equals (rotation .getValue ());
-		},
-		isDefaultValue: function ()
-		{
-			return this .getValue () .equals (Rotation4 .Identity);
-		},
-		getTypeName: function ()
-		{
-			return "SFRotation";
-		},
-		getType: function ()
-		{
-			return X3DConstants .SFRotation;
-		},
-		set: function (value)
-		{
-			this .getValue () .assign (value);
-		},
-		setAxis: function (vector)
-		{
-			this .getValue () .setAxis (vector .getValue ());
-			this .addEvent ();
-		},
-		getAxis: function ()
-		{
-			return new SFVec3f (this .getValue () .getAxis () .copy ());
-		},
-		inverse: function ()
-		{
-			return new SFRotation (Rotation4 .inverse (this .getValue ()));
-		},
-		multiply: function (rotation)
-		{
-			return new SFRotation (Rotation4 .multRight (this .getValue (), rotation .getValue ()));
-		},
-		multVec: function (vector)
-		{
-			return new SFVec3f (this .getValue () .multVecRot (vector .getValue () .copy ()));
-		},
-		slerp: function (rotation, t)
-		{
-			return new SFRotation (Rotation4 .slerp (this .getValue (), rotation .getValue (), t));
-		},
-		toStream: function (stream)
-		{
-			const
-				generator = Generator .Get (stream),
-				rotation  = this .getValue ();
+   SFRotation .prototype = Object .assign (Object .create (X3DField .prototype),
+   {
+      constructor: SFRotation,
+      copy: function ()
+      {
+         return new SFRotation (this .getValue () .copy ());
+      },
+      equals: function (rotation)
+      {
+         return this .getValue () .equals (rotation .getValue ());
+      },
+      isDefaultValue: function ()
+      {
+         return this .getValue () .equals (Rotation4 .Identity);
+      },
+      getTypeName: function ()
+      {
+         return "SFRotation";
+      },
+      getType: function ()
+      {
+         return X3DConstants .SFRotation;
+      },
+      set: function (value)
+      {
+         this .getValue () .assign (value);
+      },
+      setAxis: function (vector)
+      {
+         this .getValue () .setAxis (vector .getValue ());
+         this .addEvent ();
+      },
+      getAxis: function ()
+      {
+         return new SFVec3f (this .getValue () .getAxis () .copy ());
+      },
+      inverse: function ()
+      {
+         return new SFRotation (Rotation4 .inverse (this .getValue ()));
+      },
+      multiply: function (rotation)
+      {
+         return new SFRotation (Rotation4 .multRight (this .getValue (), rotation .getValue ()));
+      },
+      multVec: function (vector)
+      {
+         return new SFVec3f (this .getValue () .multVecRot (vector .getValue () .copy ()));
+      },
+      slerp: function (rotation, t)
+      {
+         return new SFRotation (Rotation4 .slerp (this .getValue (), rotation .getValue (), t));
+      },
+      toStream: function (stream)
+      {
+         const
+            generator = Generator .Get (stream),
+            rotation  = this .getValue ();
 
-			stream .string += generator .DoublePrecision (rotation .x) + " " +
-			                  generator .DoublePrecision (rotation .y) + " " +
-			                  generator .DoublePrecision (rotation .z) + " " +
-			                  generator .DoublePrecision (generator .ToUnit ("angle", rotation .angle));
-		},
-		toVRMLStream: function (stream)
-		{
-			this .toStream (stream);
-		},
-		toXMLStream: function (stream)
-		{
-			this .toStream (stream);
-		},
-	});
+         stream .string += generator .DoublePrecision (rotation .x) + " " +
+                           generator .DoublePrecision (rotation .y) + " " +
+                           generator .DoublePrecision (rotation .z) + " " +
+                           generator .DoublePrecision (generator .ToUnit ("angle", rotation .angle));
+      },
+      toVRMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+      toXMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+   });
 
-	const x = {
-		get: function ()
-		{
-			return this .getValue () .x;
-		},
-		set: function (value)
-		{
-			this .getValue () .x = value * 1;
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
+   const x = {
+      get: function ()
+      {
+         return this .getValue () .x;
+      },
+      set: function (value)
+      {
+         this .getValue () .x = value * 1;
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
+   };
 
-	const y = {
-		get: function ()
-		{
-			return this .getValue () .y;
-		},
-		set: function (value)
-		{
-			this .getValue () .y = value * 1;
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
+   const y = {
+      get: function ()
+      {
+         return this .getValue () .y;
+      },
+      set: function (value)
+      {
+         this .getValue () .y = value * 1;
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
+   };
 
-	const z = {
-		get: function ()
-		{
-			return this .getValue () .z;
-		},
-		set: function (value)
-		{
-			this .getValue () .z = value * 1;
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
+   const z = {
+      get: function ()
+      {
+         return this .getValue () .z;
+      },
+      set: function (value)
+      {
+         this .getValue () .z = value * 1;
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
+   };
 
-	const angle = {
-		get: function ()
-		{
-			return this .getValue () .angle;
-		},
-		set: function (value)
-		{
-			this .getValue () .angle = value * 1;
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
+   const angle = {
+      get: function ()
+      {
+         return this .getValue () .angle;
+      },
+      set: function (value)
+      {
+         this .getValue () .angle = value * 1;
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
+   };
 
-	Object .defineProperty (SFRotation .prototype, "x",     x);
-	Object .defineProperty (SFRotation .prototype, "y",     y);
-	Object .defineProperty (SFRotation .prototype, "z",     z);
-	Object .defineProperty (SFRotation .prototype, "angle", angle);
+   Object .defineProperty (SFRotation .prototype, "x",     x);
+   Object .defineProperty (SFRotation .prototype, "y",     y);
+   Object .defineProperty (SFRotation .prototype, "z",     z);
+   Object .defineProperty (SFRotation .prototype, "angle", angle);
 
-	x     .enumerable = false;
-	y     .enumerable = false;
-	z     .enumerable = false;
-	angle .enumerable = false;
+   x     .enumerable = false;
+   y     .enumerable = false;
+   z     .enumerable = false;
+   angle .enumerable = false;
 
-	Object .defineProperty (SFRotation .prototype, "0", x);
-	Object .defineProperty (SFRotation .prototype, "1", y);
-	Object .defineProperty (SFRotation .prototype, "2", z);
-	Object .defineProperty (SFRotation .prototype, "3", angle);
+   Object .defineProperty (SFRotation .prototype, "0", x);
+   Object .defineProperty (SFRotation .prototype, "1", y);
+   Object .defineProperty (SFRotation .prototype, "2", z);
+   Object .defineProperty (SFRotation .prototype, "3", angle);
 
-	return SFRotation;
+   return SFRotation;
 });

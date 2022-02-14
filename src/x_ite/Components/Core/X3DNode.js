@@ -48,25 +48,25 @@
 
 
 define ([
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DBaseNode,
           X3DConstants)
 {
 "use strict";
 
-	function X3DNode (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
+   function X3DNode (executionContext)
+   {
+      X3DBaseNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DNode);
-	}
+      this .addType (X3DConstants .X3DNode);
+   }
 
-	X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: X3DNode,
-	});
+   X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   {
+      constructor: X3DNode,
+   });
 
-	return X3DNode;
+   return X3DNode;
 });

@@ -94,7 +94,7 @@ canvas.text {
     font-weight: bold;
     border-radius: 2px;
     display: none;
-	clear: both;
+   clear: both;
 }
 
 .message {
@@ -261,5 +261,3 @@ pre:not(.contour) { margin: 0; }
 pre.contour { margin: 0 0 1em 2em; border-bottom: solid 1px #a0a0a0; }
 span.oncurve { color: blue; }
 span.offcurve { color: red; }
-
-

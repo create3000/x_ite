@@ -48,56 +48,56 @@
 
 
 define ([
-	"x_ite/Basic/X3DField",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Basic/X3DField",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DField,
           X3DConstants)
 {
 "use strict";
 
-	function SFInt32 (value)
-	{
-		return X3DField .call (this, ~~value);
-	}
+   function SFInt32 (value)
+   {
+      return X3DField .call (this, ~~value);
+   }
 
-	SFInt32 .prototype = Object .assign (Object .create (X3DField .prototype),
-	{
-		constructor: SFInt32,
-		copy: function ()
-		{
-			return new SFInt32 (this .getValue ());
-		},
-		getTypeName: function ()
-		{
-			return "SFInt32";
-		},
-		getType: function ()
-		{
-			return X3DConstants .SFInt32;
-		},
-		isDefaultValue: function ()
-		{
-			return this .getValue () === 0;
-		},
-		set: function (value)
-		{
-			X3DField .prototype .set .call (this, ~~value);
-		},
-		valueOf: X3DField .prototype .getValue,
-		toStream: function (stream, base)
-		{
-			stream .string += this .getValue () .toString (base);
-		},
-		toVRMLStream: function (stream)
-		{
-			this .toStream (stream);
-		},
-		toXMLStream: function (stream)
-		{
-			stream .string += this .getValue () .toString ();
-		},
-	});
+   SFInt32 .prototype = Object .assign (Object .create (X3DField .prototype),
+   {
+      constructor: SFInt32,
+      copy: function ()
+      {
+         return new SFInt32 (this .getValue ());
+      },
+      getTypeName: function ()
+      {
+         return "SFInt32";
+      },
+      getType: function ()
+      {
+         return X3DConstants .SFInt32;
+      },
+      isDefaultValue: function ()
+      {
+         return this .getValue () === 0;
+      },
+      set: function (value)
+      {
+         X3DField .prototype .set .call (this, ~~value);
+      },
+      valueOf: X3DField .prototype .getValue,
+      toStream: function (stream, base)
+      {
+         stream .string += this .getValue () .toString (base);
+      },
+      toVRMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+      toXMLStream: function (stream)
+      {
+         stream .string += this .getValue () .toString ();
+      },
+   });
 
-	return SFInt32;
+   return SFInt32;
 });

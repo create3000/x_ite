@@ -47,18 +47,18 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Shaders/ComposedShader",
-	"x_ite/Components/Shaders/FloatVertexAttribute",
-	"x_ite/Components/Shaders/Matrix3VertexAttribute",
-	"x_ite/Components/Shaders/Matrix4VertexAttribute",
-	"x_ite/Components/Shaders/PackagedShader",
-	"x_ite/Components/Shaders/ProgramShader",
-	"x_ite/Components/Shaders/ShaderPart",
-	"x_ite/Components/Shaders/ShaderProgram",
-	"x_ite/Components/Shaders/X3DProgrammableShaderObject",
-	"x_ite/Components/Shaders/X3DShaderNode",
-	"x_ite/Components/Shaders/X3DVertexAttributeNode",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/Shaders/ComposedShader",
+   "x_ite/Components/Shaders/FloatVertexAttribute",
+   "x_ite/Components/Shaders/Matrix3VertexAttribute",
+   "x_ite/Components/Shaders/Matrix4VertexAttribute",
+   "x_ite/Components/Shaders/PackagedShader",
+   "x_ite/Components/Shaders/ProgramShader",
+   "x_ite/Components/Shaders/ShaderPart",
+   "x_ite/Components/Shaders/ShaderProgram",
+   "x_ite/Components/Shaders/X3DProgrammableShaderObject",
+   "x_ite/Components/Shaders/X3DShaderNode",
+   "x_ite/Components/Shaders/X3DVertexAttributeNode",
 ],
 function (SupportedNodes,
           ComposedShader,
@@ -75,28 +75,28 @@ function (SupportedNodes,
 {
 "use strict";
 
-	const Types =
-	{
-		ComposedShader:         ComposedShader,
-		FloatVertexAttribute:   FloatVertexAttribute,
-		Matrix3VertexAttribute: Matrix3VertexAttribute,
-		Matrix4VertexAttribute: Matrix4VertexAttribute,
-		PackagedShader:         PackagedShader,
-		ProgramShader:          ProgramShader,
-		ShaderPart:             ShaderPart,
-		ShaderProgram:          ShaderProgram,
-	};
+   const Types =
+   {
+      ComposedShader:         ComposedShader,
+      FloatVertexAttribute:   FloatVertexAttribute,
+      Matrix3VertexAttribute: Matrix3VertexAttribute,
+      Matrix4VertexAttribute: Matrix4VertexAttribute,
+      PackagedShader:         PackagedShader,
+      ProgramShader:          ProgramShader,
+      ShaderPart:             ShaderPart,
+      ShaderProgram:          ShaderProgram,
+   };
 
-	const AbstractTypes =
-	{
-		X3DProgrammableShaderObject: X3DProgrammableShaderObject,
-		X3DShaderNode:               X3DShaderNode,
-		X3DVertexAttributeNode:      X3DVertexAttributeNode,
-	};
+   const AbstractTypes =
+   {
+      X3DProgrammableShaderObject: X3DProgrammableShaderObject,
+      X3DShaderNode:               X3DShaderNode,
+      X3DVertexAttributeNode:      X3DVertexAttributeNode,
+   };
 
-	for (const typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]);
+   for (const typeName in Types)
+      SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (const typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   for (const typeName in AbstractTypes)
+      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

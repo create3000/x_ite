@@ -30,35 +30,35 @@ out float depth;
 void
 main ()
 {
-	vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
+   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
 
-	fogDepth = x3d_FogDepth;
-	vertex   = position .xyz;
+   fogDepth = x3d_FogDepth;
+   vertex   = position .xyz;
 
-	gl_Position = x3d_ProjectionMatrix * position;
+   gl_Position = x3d_ProjectionMatrix * position;
 
-	#ifdef X_ITE
-	// Line Stipple
-	vec4 start = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_TexCoord0;
+   #ifdef X_ITE
+   // Line Stipple
+   vec4 start = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_TexCoord0;
 
-	startPosition  = start .xyz / start .w;
-	vertexPosition = gl_Position .xyz / gl_Position .w;
-	#endif
+   startPosition  = start .xyz / start .w;
+   vertexPosition = gl_Position .xyz / gl_Position .w;
+   #endif
 
-	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-	depth = 1.0 + gl_Position .w;
-	#endif
+   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+   depth = 1.0 + gl_Position .w;
+   #endif
 
-	float alpha = 1.0 - x3d_Material .transparency;
+   float alpha = 1.0 - x3d_Material .transparency;
 
-	if (x3d_ColorMaterial)
-	{
-		color .rgb = x3d_Color .rgb;
-		color .a   = x3d_Color .a * alpha;
-	}
-	else
-	{
-		color .rgb = x3d_Material .emissiveColor;
-		color .a   = alpha;
-	}
+   if (x3d_ColorMaterial)
+   {
+      color .rgb = x3d_Color .rgb;
+      color .a   = x3d_Color .a * alpha;
+   }
+   else
+   {
+      color .rgb = x3d_Material .emissiveColor;
+      color .a   = alpha;
+   }
 }

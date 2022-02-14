@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Texturing/X3DTextureCoordinateNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,116 +64,116 @@ function (Fields,
 {
 "use strict";
 
-	function MultiTextureCoordinate (executionContext)
-	{
-		X3DTextureCoordinateNode .call (this, executionContext);
+   function MultiTextureCoordinate (executionContext)
+   {
+      X3DTextureCoordinateNode .call (this, executionContext);
 
-		this .addType (X3DConstants .MultiTextureCoordinate);
+      this .addType (X3DConstants .MultiTextureCoordinate);
 
-		this .textureCoordinateNodes = [ ];
-	}
+      this .textureCoordinateNodes = [ ];
+   }
 
-	MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
-	{
-		constructor: MultiTextureCoordinate,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "texCoord", new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "MultiTextureCoordinate";
-		},
-		getComponentName: function ()
-		{
-			return "Texturing";
-		},
-		getContainerField: function ()
-		{
-			return "texCoord";
-		},
-		initialize: function ()
-		{
-			X3DTextureCoordinateNode .prototype .initialize .call (this);
+   MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
+   {
+      constructor: MultiTextureCoordinate,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "texCoord", new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "MultiTextureCoordinate";
+      },
+      getComponentName: function ()
+      {
+         return "Texturing";
+      },
+      getContainerField: function ()
+      {
+         return "texCoord";
+      },
+      initialize: function ()
+      {
+         X3DTextureCoordinateNode .prototype .initialize .call (this);
 
-			this .texCoord_ .addInterest ("set_texCoord__", this);
+         this .texCoord_ .addInterest ("set_texCoord__", this);
 
-			this .set_texCoord__ ();
-		},
-		set_texCoord__: function ()
-		{
-			const textureCoordinateNodes = this .textureCoordinateNodes;
+         this .set_texCoord__ ();
+      },
+      set_texCoord__: function ()
+      {
+         const textureCoordinateNodes = this .textureCoordinateNodes;
 
-			for (const textureCoordinateNode of textureCoordinateNodes)
-				textureCoordinateNode .removeInterest ("addNodeEvent", this);
+         for (const textureCoordinateNode of textureCoordinateNodes)
+            textureCoordinateNode .removeInterest ("addNodeEvent", this);
 
-			textureCoordinateNodes .length = 0;
+         textureCoordinateNodes .length = 0;
 
-			for (const node of this .texCoord_)
-			{
-				if (X3DCast (X3DConstants .MultiTextureCoordinate, node))
-					continue;
+         for (const node of this .texCoord_)
+         {
+            if (X3DCast (X3DConstants .MultiTextureCoordinate, node))
+               continue;
 
-				const textureCoordinateNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, node);
+            const textureCoordinateNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, node);
 
-				if (textureCoordinateNode)
-					textureCoordinateNodes .push (textureCoordinateNode);
-			}
+            if (textureCoordinateNode)
+               textureCoordinateNodes .push (textureCoordinateNode);
+         }
 
-			for (const textureCoordinateNode of textureCoordinateNodes)
-				textureCoordinateNode .addInterest ("addNodeEvent", this);
-		},
-		isEmpty: function ()
-		{
-			return true;
-		},
-		getSize: function ()
-		{
-			return 0;
-		},
-		get1Point: function (index, vector)
-		{
-			for (const textureCoordinateNode of this .textureCoordinateNodes)
-				return textureCoordinateNode .get1Point (index, vector);
+         for (const textureCoordinateNode of textureCoordinateNodes)
+            textureCoordinateNode .addInterest ("addNodeEvent", this);
+      },
+      isEmpty: function ()
+      {
+         return true;
+      },
+      getSize: function ()
+      {
+         return 0;
+      },
+      get1Point: function (index, vector)
+      {
+         for (const textureCoordinateNode of this .textureCoordinateNodes)
+            return textureCoordinateNode .get1Point (index, vector);
 
-			return vector .set (0, 0, 0, 1);
-		},
-		init: function (multiArray)
-		{
-			for (const textureCoordinateNode of this .textureCoordinateNodes)
-				textureCoordinateNode .init (multiArray);
-		},
-		addTexCoord: function (index, multiArray)
-		{
-			const textureCoordinateNodes = this .textureCoordinateNodes;
+         return vector .set (0, 0, 0, 1);
+      },
+      init: function (multiArray)
+      {
+         for (const textureCoordinateNode of this .textureCoordinateNodes)
+            textureCoordinateNode .init (multiArray);
+      },
+      addTexCoord: function (index, multiArray)
+      {
+         const textureCoordinateNodes = this .textureCoordinateNodes;
 
-			for (let i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
-				textureCoordinateNodes [i] .addTexCoordToChannel (index, multiArray [i]);
-		},
-		addTexCoordToChannel: function (index, array)
-		{ },
-		getTexCoord: function (array)
-		{
-			for (const textureCoordinateNode of this .textureCoordinateNodes)
-				return textureCoordinateNode .getTexCoord (array);
+         for (let i = 0, length = textureCoordinateNodes .length; i < length; ++ i)
+            textureCoordinateNodes [i] .addTexCoordToChannel (index, multiArray [i]);
+      },
+      addTexCoordToChannel: function (index, array)
+      { },
+      getTexCoord: function (array)
+      {
+         for (const textureCoordinateNode of this .textureCoordinateNodes)
+            return textureCoordinateNode .getTexCoord (array);
 
-			return array;
-		},
-		setShaderUniforms: function (gl, shaderObject)
-		{
-			const
-				textureCoordinateNodes = this .textureCoordinateNodes,
-				length                 = Math .min (shaderObject .x3d_MaxTextures, textureCoordinateNodes .length);
+         return array;
+      },
+      setShaderUniforms: function (gl, shaderObject)
+      {
+         const
+            textureCoordinateNodes = this .textureCoordinateNodes,
+            length                 = Math .min (shaderObject .x3d_MaxTextures, textureCoordinateNodes .length);
 
-			for (let i = 0; i < length; ++ i)
-				textureCoordinateNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
+         for (let i = 0; i < length; ++ i)
+            textureCoordinateNodes [i] .setShaderUniformsToChannel (gl, shaderObject, i);
 
-			const last = length ? textureCoordinateNodes .at (-1) : this;
+         const last = length ? textureCoordinateNodes .at (-1) : this;
 
-			for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
-				textureCoordinateNodes [last] .setShaderUniformsToChannel (gl, shaderObject, i);
-		},
-	});
+         for (let i = length, l = shaderObject .x3d_MaxTextures; i < l; ++ i)
+            textureCoordinateNodes [last] .setShaderUniformsToChannel (gl, shaderObject, i);
+      },
+   });
 
-	return MultiTextureCoordinate;
+   return MultiTextureCoordinate;
 });

@@ -48,44 +48,42 @@
 
 
 define ([
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DConstants)
 {
 "use strict";
 
-	function X3DPickableObject (executionContext)
-	{
-		this .addType (X3DConstants .X3DPickableObject);
+   function X3DPickableObject (executionContext)
+   {
+      this .addType (X3DConstants .X3DPickableObject);
 
-		this .objectType = new Set ();
-	}
+      this .objectType = new Set ();
+   }
 
-	X3DPickableObject .prototype =
-	{
-		constructor: X3DPickableObject,
-		initialize: function ()
-		{
-			this .objectType_ .addInterest ("set_objectType__", this);
+   X3DPickableObject .prototype =
+   {
+      constructor: X3DPickableObject,
+      initialize: function ()
+      {
+         this .objectType_ .addInterest ("set_objectType__", this);
 
-			this .set_objectType__ ();
-		},
-		getObjectType: function ()
-		{
-			return this .objectType;
-		},
-		set_objectType__: function ()
-		{
-			this .objectType .clear ();
+         this .set_objectType__ ();
+      },
+      getObjectType: function ()
+      {
+         return this .objectType;
+      },
+      set_objectType__: function ()
+      {
+         this .objectType .clear ();
 
-			for (var i = 0, length = this .objectType_ .length; i < length; ++ i)
-			{
-				this .objectType .add (this .objectType_ [i]);
-			}
-		},
-	};
+         for (var i = 0, length = this .objectType_ .length; i < length; ++ i)
+         {
+            this .objectType .add (this .objectType_ [i]);
+         }
+      },
+   };
 
-	return X3DPickableObject;
+   return X3DPickableObject;
 });
-
-

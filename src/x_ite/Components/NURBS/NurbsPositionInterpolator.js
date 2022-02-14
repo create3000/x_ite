@@ -48,15 +48,15 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Components/Interpolation/PositionInterpolator",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Browser/NURBS/NURBS",
-	"nurbs",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Components/Interpolation/PositionInterpolator",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Browser/NURBS/NURBS",
+   "nurbs",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -70,149 +70,149 @@ function (Fields,
 {
 "use strict";
 
-	function NurbsPositionInterpolator (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
+   function NurbsPositionInterpolator (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .NurbsPositionInterpolator);
+      this .addType (X3DConstants .NurbsPositionInterpolator);
 
-		this .addChildObjects ("rebuild", new Fields .SFTime ());
+      this .addChildObjects ("rebuild", new Fields .SFTime ());
 
-	   this .interpolator  = new PositionInterpolator (executionContext);
-		this .knots         = [ ];
-		this .weights       = [ ];
-		this .controlPoints = [ ];
-		this .mesh          = { };
-		this .sampleOptions = { resolution: [ 128 ] };
-	}
+      this .interpolator  = new PositionInterpolator (executionContext);
+      this .knots         = [ ];
+      this .weights       = [ ];
+      this .controlPoints = [ ];
+      this .mesh          = { };
+      this .sampleOptions = { resolution: [ 128 ] };
+   }
 
-	NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: NurbsPositionInterpolator,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "order",         new Fields .SFInt32 (3)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "knot",          new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint",  new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec3f ()),
-		]),
-		getTypeName: function ()
-		{
-			return "NurbsPositionInterpolator";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
+   NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: NurbsPositionInterpolator,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "order",         new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "knot",          new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec3f ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "NurbsPositionInterpolator";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DChildNode .prototype .initialize .call (this);
 
-			this .order_        .addInterest ("requestRebuild",     this);
-			this .knot_         .addInterest ("requestRebuild",     this);
-			this .weight_       .addInterest ("requestRebuild",     this);
-			this .controlPoint_ .addInterest ("set_controlPoint__", this);
+         this .order_        .addInterest ("requestRebuild",     this);
+         this .knot_         .addInterest ("requestRebuild",     this);
+         this .weight_       .addInterest ("requestRebuild",     this);
+         this .controlPoint_ .addInterest ("set_controlPoint__", this);
 
-			this .rebuild_ .addInterest ("build", this);
+         this .rebuild_ .addInterest ("build", this);
 
-			this .set_fraction_ .addFieldInterest (this .interpolator .set_fraction_);
-			this .interpolator .value_changed_ .addFieldInterest (this .value_changed_);
+         this .set_fraction_ .addFieldInterest (this .interpolator .set_fraction_);
+         this .interpolator .value_changed_ .addFieldInterest (this .value_changed_);
 
-			this .interpolator .setup ();
+         this .interpolator .setup ();
 
-			this .set_controlPoint__ ();
-		},
-		set_controlPoint__: function ()
-		{
-			if (this .controlPointNode)
-				this .controlPointNode .removeInterest ("requestRebuild", this);
+         this .set_controlPoint__ ();
+      },
+      set_controlPoint__: function ()
+      {
+         if (this .controlPointNode)
+            this .controlPointNode .removeInterest ("requestRebuild", this);
 
-			this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+         this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
 
-			if (this .controlPointNode)
-				this .controlPointNode .addInterest ("requestRebuild", this);
+         if (this .controlPointNode)
+            this .controlPointNode .addInterest ("requestRebuild", this);
 
-			this .requestRebuild ();
-		},
-		getClosed: function (order, knot, weight, controlPointNode)
-		{
-			return false && NURBS .getClosed (order, knot, weight, controlPointNode);
-		},
-		getKnots: function (result, closed, order, dimension, knot)
-		{
-			return NURBS .getKnots (result, closed, order, dimension, knot);
-		},
-		getWeights: function (result, dimension, weight)
-		{
-			return NURBS .getWeights (result, dimension, weight);
-		},
-		getControlPoints: function (result, closed, order, weights, controlPointNode)
-		{
-			return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
-		},
-		requestRebuild: function ()
-		{
-			this .rebuild_ .addEvent ();
-		},
-		build: function ()
-		{
-			if (this .order_ .getValue () < 2)
-				return;
+         this .requestRebuild ();
+      },
+      getClosed: function (order, knot, weight, controlPointNode)
+      {
+         return false && NURBS .getClosed (order, knot, weight, controlPointNode);
+      },
+      getKnots: function (result, closed, order, dimension, knot)
+      {
+         return NURBS .getKnots (result, closed, order, dimension, knot);
+      },
+      getWeights: function (result, dimension, weight)
+      {
+         return NURBS .getWeights (result, dimension, weight);
+      },
+      getControlPoints: function (result, closed, order, weights, controlPointNode)
+      {
+         return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
+      },
+      requestRebuild: function ()
+      {
+         this .rebuild_ .addEvent ();
+      },
+      build: function ()
+      {
+         if (this .order_ .getValue () < 2)
+            return;
 
-			if (! this .controlPointNode)
-				return;
+         if (! this .controlPointNode)
+            return;
 
-			if (this .controlPointNode .getSize () < this .order_ .getValue ())
-				return;
+         if (this .controlPointNode .getSize () < this .order_ .getValue ())
+            return;
 
-			// Order and dimension are now positive numbers.
+         // Order and dimension are now positive numbers.
 
-			var
-				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
-				weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this .weight_),
-				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPointNode);
+         var
+            closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
+            weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this .weight_),
+            controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPointNode);
 
-			// Knots
+         // Knots
 
-			var
-				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
-				scale = knots .at (-1) - knots [0];
+         var
+            knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+            scale = knots .at (-1) - knots [0];
 
-			// Initialize NURBS tessellator
+         // Initialize NURBS tessellator
 
-			var degree = this .order_ .getValue () - 1;
+         var degree = this .order_ .getValue () - 1;
 
-			var surface = this .surface = (this .surface || nurbs) ({
-				boundary: ["open"],
-				degree: [degree],
-				knots: [knots],
-				points: controlPoints,
-				debug: false,
-			});
+         var surface = this .surface = (this .surface || nurbs) ({
+            boundary: ["open"],
+            degree: [degree],
+            knots: [knots],
+            points: controlPoints,
+            debug: false,
+         });
 
-			this .sampleOptions .haveWeights = Boolean (weights);
+         this .sampleOptions .haveWeights = Boolean (weights);
 
-			var
-				mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
-				points       = mesh .points,
-				interpolator = this .interpolator;
+         var
+            mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
+            points       = mesh .points,
+            interpolator = this .interpolator;
 
-			interpolator .key_      .length = 0;
-			interpolator .keyValue_ .length = 0;
+         interpolator .key_      .length = 0;
+         interpolator .keyValue_ .length = 0;
 
-			for (var i = 0, length = points .length; i < length; i += 3)
-			{
-				interpolator .key_      .push (knots [0] + i / (length - 3) * scale);
-				interpolator .keyValue_. push (new Fields .SFVec3f (points [i], points [i + 1], points [i + 2]));
-			}
-		},
-	});
+         for (var i = 0, length = points .length; i < length; i += 3)
+         {
+            interpolator .key_      .push (knots [0] + i / (length - 3) * scale);
+            interpolator .keyValue_. push (new Fields .SFVec3f (points [i], points [i + 1], points [i + 2]));
+         }
+      },
+   });
 
-	return NurbsPositionInterpolator;
+   return NurbsPositionInterpolator;
 });

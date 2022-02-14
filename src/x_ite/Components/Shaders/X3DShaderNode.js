@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Browser/Core/Shading",
-	"x_ite/Components/Shape/X3DAppearanceChildNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/TraverseType",
+   "x_ite/Fields",
+   "x_ite/Browser/Core/Shading",
+   "x_ite/Components/Shape/X3DAppearanceChildNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/TraverseType",
 ],
 function (Fields,
           Shading,
@@ -62,103 +62,103 @@ function (Fields,
 {
 "use strict";
 
-	function X3DShaderNode (executionContext)
-	{
-		X3DAppearanceChildNode .call (this, executionContext);
+   function X3DShaderNode (executionContext)
+   {
+      X3DAppearanceChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DShaderNode);
+      this .addType (X3DConstants .X3DShaderNode);
 
-		this .addChildObjects ("activationTime", new Fields .SFTime ());
+      this .addChildObjects ("activationTime", new Fields .SFTime ());
 
-		this .valid    = false;
-		this .selected = 0;
-	}
+      this .valid    = false;
+      this .selected = 0;
+   }
 
-	X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
-	{
-		constructor: X3DShaderNode,
-		initialize: function ()
-		{
-			X3DAppearanceChildNode .prototype .initialize .call (this);
+   X3DShaderNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+   {
+      constructor: X3DShaderNode,
+      initialize: function ()
+      {
+         X3DAppearanceChildNode .prototype .initialize .call (this);
 
-			this .activate_ .addInterest ("set_activate__", this);
-		},
-		set_activate__: function ()
-		{
-			this .activationTime_ = this .getBrowser () .getCurrentTime ();
-		},
-		custom: true,
-		setCustom: function (value)
-		{
-			this .custom = value;
-		},
-		getCustom: function ()
-		{
-			return this .custom;
-		},
-		setValid: function (value)
-		{
-			this .isValid_ = this .valid = value;
-		},
-		getValid: function ()
-		{
-			return this .valid;
-		},
-		setShading: function (shading)
-		{
-			var gl = this .getBrowser () .getContext ();
+         this .activate_ .addInterest ("set_activate__", this);
+      },
+      set_activate__: function ()
+      {
+         this .activationTime_ = this .getBrowser () .getCurrentTime ();
+      },
+      custom: true,
+      setCustom: function (value)
+      {
+         this .custom = value;
+      },
+      getCustom: function ()
+      {
+         return this .custom;
+      },
+      setValid: function (value)
+      {
+         this .isValid_ = this .valid = value;
+      },
+      getValid: function ()
+      {
+         return this .valid;
+      },
+      setShading: function (shading)
+      {
+         var gl = this .getBrowser () .getContext ();
 
-			switch (shading)
-			{
-				case Shading .POINT:
-				{
-					this .primitiveMode = gl .POINTS;
-					this .wireframe     = true;
-					break;
-				}
-				case Shading .WIREFRAME:
-				{
-					this .primitiveMode = gl .LINE_LOOP;
-					this .wireframe     = true;
-					break;
-				}
-				default:
-				{
-					// case Shading .FLAT:
-					// case Shading .GOURAUD:
-					// case Shading .PHONG:
+         switch (shading)
+         {
+            case Shading .POINT:
+            {
+               this .primitiveMode = gl .POINTS;
+               this .wireframe     = true;
+               break;
+            }
+            case Shading .WIREFRAME:
+            {
+               this .primitiveMode = gl .LINE_LOOP;
+               this .wireframe     = true;
+               break;
+            }
+            default:
+            {
+               // case Shading .FLAT:
+               // case Shading .GOURAUD:
+               // case Shading .PHONG:
 
-					this .primitiveMode = gl .TRIANGLES;
-					this .wireframe     = false;
-					break;
-				}
-			}
-		},
-		select: function ()
-		{
-			++ this .selected;
+               this .primitiveMode = gl .TRIANGLES;
+               this .wireframe     = false;
+               break;
+            }
+         }
+      },
+      select: function ()
+      {
+         ++ this .selected;
 
-			if (! this .isSelected_ .getValue ())
-				this .isSelected_ = true;
-		},
-		deselect: function ()
-		{
-			-- this .selected;
+         if (! this .isSelected_ .getValue ())
+            this .isSelected_ = true;
+      },
+      deselect: function ()
+      {
+         -- this .selected;
 
-			if (this .selected === 0)
-			{
-				if (this .isSelected_ .getValue ())
-					this .isSelected_ = false;
-			}
-		},
-		traverse: function (type, renderObject)
-		{
-			if (type !== TraverseType .DISPLAY)
-				return;
+         if (this .selected === 0)
+         {
+            if (this .isSelected_ .getValue ())
+               this .isSelected_ = false;
+         }
+      },
+      traverse: function (type, renderObject)
+      {
+         if (type !== TraverseType .DISPLAY)
+            return;
 
-			renderObject .getShaders () .add (this);
-		},
-	});
+         renderObject .getShaders () .add (this);
+      },
+   });
 
-	return X3DShaderNode;
+   return X3DShaderNode;
 });

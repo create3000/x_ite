@@ -42,26 +42,26 @@ varying float depth;
 void
 main ()
 {
-	vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
+   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
 
-	fogDepth    = x3d_FogDepth;
-	color       = x3d_Color;
-	normal      = x3d_NormalMatrix * x3d_Normal;
-	vertex      = position .xyz;
-	localNormal = x3d_Normal;
-	localVertex = x3d_Vertex .xyz;
+   fogDepth    = x3d_FogDepth;
+   color       = x3d_Color;
+   normal      = x3d_NormalMatrix * x3d_Normal;
+   vertex      = position .xyz;
+   localNormal = x3d_Normal;
+   localVertex = x3d_Vertex .xyz;
 
-	#if x3d_MaxTextures > 0
-	texCoord0 = x3d_TextureMatrix [0] * x3d_TexCoord0;
-	#endif
+   #if x3d_MaxTextures > 0
+   texCoord0 = x3d_TextureMatrix [0] * x3d_TexCoord0;
+   #endif
 
-	#if x3d_MaxTextures > 1
-	texCoord1 = x3d_TextureMatrix [1] * x3d_TexCoord1;
-	#endif
+   #if x3d_MaxTextures > 1
+   texCoord1 = x3d_TextureMatrix [1] * x3d_TexCoord1;
+   #endif
 
-	gl_Position = x3d_ProjectionMatrix * position;
+   gl_Position = x3d_ProjectionMatrix * position;
 
-	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-	depth = 1.0 + gl_Position .w;
-	#endif
+   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+   depth = 1.0 + gl_Position .w;
+   #endif
 }

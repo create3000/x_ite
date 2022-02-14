@@ -48,33 +48,31 @@
 
 
 define ([
-	"x_ite/Components/Rendering/X3DGeometryNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/NURBS/NURBS",
+   "x_ite/Components/Rendering/X3DGeometryNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Browser/NURBS/NURBS",
 ],
-function (X3DGeometryNode, 
+function (X3DGeometryNode,
           X3DConstants,
           NURBS)
 {
 "use strict";
 
-	function X3DParametricGeometryNode (executionContext)
-	{
-		X3DGeometryNode .call (this, executionContext);
+   function X3DParametricGeometryNode (executionContext)
+   {
+      X3DGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DParametricGeometryNode);
-	}
+      this .addType (X3DConstants .X3DParametricGeometryNode);
+   }
 
-	X3DParametricGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
-	{
-		constructor: X3DParametricGeometryNode,
-		getKnots: function (result, closed, order, dimension, knot)
-		{
-			return NURBS .getKnots (result, closed, order, dimension, knot);
-		},
-	});
+   X3DParametricGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+   {
+      constructor: X3DParametricGeometryNode,
+      getKnots: function (result, closed, order, dimension, knot)
+      {
+         return NURBS .getKnots (result, closed, order, dimension, knot);
+      },
+   });
 
-	return X3DParametricGeometryNode;
+   return X3DParametricGeometryNode;
 });
-
-

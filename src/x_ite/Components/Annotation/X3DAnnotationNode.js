@@ -48,29 +48,29 @@
 
 
 define ([
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DChildNode,
           X3DConstants)
 {
 "use strict";
 
-	function X3DAnnotationNode (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
+   function X3DAnnotationNode (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DAnnotationNode);
-	}
+      this .addType (X3DConstants .X3DAnnotationNode);
+   }
 
-	X3DAnnotationNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: X3DAnnotationNode,
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
-		},
-	});
+   X3DAnnotationNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: X3DAnnotationNode,
+      initialize: function ()
+      {
+         X3DChildNode .prototype .initialize .call (this);
+      },
+   });
 
-	return X3DAnnotationNode;
+   return X3DAnnotationNode;
 });

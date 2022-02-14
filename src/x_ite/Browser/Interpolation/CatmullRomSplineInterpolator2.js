@@ -48,13 +48,13 @@
 
 
 define ([
-	"x_ite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate",
-	"standard/Math/Numbers/Vector2",
+   "x_ite/Browser/Interpolation/CatmullRomSplineInterpolatorTemplate",
+   "standard/Math/Numbers/Vector2",
 ],
 function (CatmullRomSplineInterpolatorTemplate,
           Vector2)
 {
 "use strict";
 
-	return CatmullRomSplineInterpolatorTemplate (Vector2);
+   return CatmullRomSplineInterpolatorTemplate (Vector2);
 });

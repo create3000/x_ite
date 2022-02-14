@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Grouping/X3DGroupingNode",
-	"x_ite/Components/CADGeometry/X3DProductStructureChildNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Grouping/X3DGroupingNode",
+   "x_ite/Components/CADGeometry/X3DProductStructureChildNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,42 +64,42 @@ function (Fields,
 {
 "use strict";
 
-	function CADAssembly (executionContext)
-	{
-		X3DGroupingNode              .call (this, executionContext);
-		X3DProductStructureChildNode .call (this, executionContext);
+   function CADAssembly (executionContext)
+   {
+      X3DGroupingNode              .call (this, executionContext);
+      X3DProductStructureChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .CADAssembly);
-	}
+      this .addType (X3DConstants .CADAssembly);
+   }
 
-	CADAssembly .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
-		//X3DProductStructureChildNode .prototype,
-	{
-		constructor: CADAssembly,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "name",           new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "CADAssembly";
-		},
-		getComponentName: function ()
-		{
-			return "CADGeometry";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-	});
+   CADAssembly .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+      //X3DProductStructureChildNode .prototype,
+   {
+      constructor: CADAssembly,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "name",           new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "CADAssembly";
+      },
+      getComponentName: function ()
+      {
+         return "CADGeometry";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+   });
 
-	return CADAssembly;
+   return CADAssembly;
 });

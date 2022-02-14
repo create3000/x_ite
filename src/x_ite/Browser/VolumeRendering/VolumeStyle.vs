@@ -18,11 +18,11 @@ out vec4 texCoord;
 void
 main ()
 {
-	vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
+   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
 
-	fogDepth = x3d_FogDepth;
-	vertex   = position .xyz;
-	texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;
+   fogDepth = x3d_FogDepth;
+   vertex   = position .xyz;
+   texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;
 
-	gl_Position = x3d_ProjectionMatrix * position;
+   gl_Position = x3d_ProjectionMatrix * position;
 }

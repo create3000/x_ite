@@ -48,17 +48,17 @@
 
 
 define ([
-	"jquery",
-	"x_ite/Browser/PointingDeviceSensor/PointingDevice",
-	"x_ite/Bits/TraverseType",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Geometry/Line3",
-	"standard/Math/Geometry/ViewVolume",
-	"standard/Math/Numbers/Vector2",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Matrix4",
-	"standard/Math/Algorithms/MergeSort",
-	"standard/Math/Algorithm",
+   "jquery",
+   "x_ite/Browser/PointingDeviceSensor/PointingDevice",
+   "x_ite/Bits/TraverseType",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Geometry/Line3",
+   "standard/Math/Geometry/ViewVolume",
+   "standard/Math/Numbers/Vector2",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Matrix4",
+   "standard/Math/Algorithms/MergeSort",
+   "standard/Math/Algorithm",
 ],
 function ($,
           PointingDevice,
@@ -74,253 +74,253 @@ function ($,
 {
 "use strict";
 
-	var line = new Line3 (Vector3 .Zero, Vector3 .Zero);
+   var line = new Line3 (Vector3 .Zero, Vector3 .Zero);
 
-	function X3DPointingDeviceSensorContext ()
-	{
-		this .pointingDevice = new PointingDevice (this);
+   function X3DPointingDeviceSensorContext ()
+   {
+      this .pointingDevice = new PointingDevice (this);
 
-		this .pointer        = new Vector2 (0, 0);
-		this .hitRay         = new Line3 (Vector3 .Zero, Vector3 .Zero);
-		this .hits           = [ ];
-		this .enabledSensors = [{ }];
-		this .selectedLayer  = null;
-		this .overSensors    = { };
-		this .activeSensors  = { };
+      this .pointer        = new Vector2 (0, 0);
+      this .hitRay         = new Line3 (Vector3 .Zero, Vector3 .Zero);
+      this .hits           = [ ];
+      this .enabledSensors = [{ }];
+      this .selectedLayer  = null;
+      this .overSensors    = { };
+      this .activeSensors  = { };
 
-		this .hitPointSorter = new MergeSort (this .hits, function (lhs, rhs) { return lhs .intersection .point .z < rhs .intersection .point .z; });
-		this .layerSorter    = new MergeSort (this .hits, function (lhs, rhs) { return lhs .layerNumber < rhs .layerNumber; });
+      this .hitPointSorter = new MergeSort (this .hits, function (lhs, rhs) { return lhs .intersection .point .z < rhs .intersection .point .z; });
+      this .layerSorter    = new MergeSort (this .hits, function (lhs, rhs) { return lhs .layerNumber < rhs .layerNumber; });
 
-		this .pointerTime = 0;
-	}
+      this .pointerTime = 0;
+   }
 
-	X3DPointingDeviceSensorContext .prototype =
-	{
-		initialize: function ()
-		{
-			// Make element focusable.
-			this .getElement () .attr ("tabindex", this .getElement () .attr ("tabindex") || 0);
-			this .setCursor ("DEFAULT");
+   X3DPointingDeviceSensorContext .prototype =
+   {
+      initialize: function ()
+      {
+         // Make element focusable.
+         this .getElement () .attr ("tabindex", this .getElement () .attr ("tabindex") || 0);
+         this .setCursor ("DEFAULT");
 
-			this .pointingDevice .setup ();
-		},
-		setCursor: function (value)
-		{
-			this .cursorType = value;
+         this .pointingDevice .setup ();
+      },
+      setCursor: function (value)
+      {
+         this .cursorType = value;
 
-			var div = this .getSurface ();
+         var div = this .getSurface ();
 
-			switch (value)
-			{
-				case "HAND": // Hand with finger
-					div .css ("cursor", "pointer");
-					break;
-				case "MOVE": // Hand grabed something
-					div .css ("cursor", "move");
-					break;
-				case "CROSSHAIR":
-					div .css ("cursor", "crosshair");
-					break;
-				default:
-				{
-					if (this .loadCount_ .getValue ())
-						div .css ("cursor", "wait");
-					else if (this .pointingDevice && this .pointingDevice .isOver)
-						div .css ("cursor", "pointer");
-					else
-						div .css ("cursor", "default");
-					break;
-				}
-			}
-		},
-		getCursor: function ()
-		{
-			return this .cursorType;
-		},
-		isPointerInRectangle: function (rectangle)
-		{
-			return this .pointer .x > rectangle .x &&
-			       this .pointer .x < rectangle .x + rectangle .z &&
-			       this .pointer .y > rectangle .y &&
-			       this .pointer .y < rectangle .y + rectangle .w;
-		},
-		setLayerNumber: function (value)
-		{
-			this .layerNumber = value;
-		},
-		getSelectedLayer: function ()
-		{
-			return this .selectedLayer;
-		},
-		setHitRay: function (projectionMatrix, viewport)
-		{
-			try
-			{
-				ViewVolume .unProjectRay (this .pointer .x, this .pointer .y, Matrix4 .Identity, projectionMatrix, viewport, this .hitRay);
-			}
-			catch (error)
-			{
-				this .hitRay .set (Vector3 .Zero, Vector3 .Zero);
-			}
-		},
-		getHitRay: function ()
-		{
-			return this .hitRay;
-		},
-		getSensors: function ()
-		{
-			return this .enabledSensors;
-		},
-		addHit: function (intersection, layer, shape, modelViewMatrix)
-		{
-			this .hits .push ({
-				pointer:         this .pointer,
-				hitRay:          this .hitRay .copy (),
-				intersection:    intersection,
-				sensors:         this .enabledSensors .at (-1),
-				layer:           layer,
-				layerNumber:     this .layerNumber,
-				shape:           shape,
-				modelViewMatrix: modelViewMatrix .copy (),
-			});
-		},
-		getHits: function ()
-		{
-			return this .hits;
-		},
-		getNearestHit: function ()
-		{
-			return this .hits .at (-1);
-		},
-		buttonPressEvent: function (x, y)
-		{
-			this .touch (x, y);
+         switch (value)
+         {
+            case "HAND": // Hand with finger
+               div .css ("cursor", "pointer");
+               break;
+            case "MOVE": // Hand grabed something
+               div .css ("cursor", "move");
+               break;
+            case "CROSSHAIR":
+               div .css ("cursor", "crosshair");
+               break;
+            default:
+            {
+               if (this .loadCount_ .getValue ())
+                  div .css ("cursor", "wait");
+               else if (this .pointingDevice && this .pointingDevice .isOver)
+                  div .css ("cursor", "pointer");
+               else
+                  div .css ("cursor", "default");
+               break;
+            }
+         }
+      },
+      getCursor: function ()
+      {
+         return this .cursorType;
+      },
+      isPointerInRectangle: function (rectangle)
+      {
+         return this .pointer .x > rectangle .x &&
+                this .pointer .x < rectangle .x + rectangle .z &&
+                this .pointer .y > rectangle .y &&
+                this .pointer .y < rectangle .y + rectangle .w;
+      },
+      setLayerNumber: function (value)
+      {
+         this .layerNumber = value;
+      },
+      getSelectedLayer: function ()
+      {
+         return this .selectedLayer;
+      },
+      setHitRay: function (projectionMatrix, viewport)
+      {
+         try
+         {
+            ViewVolume .unProjectRay (this .pointer .x, this .pointer .y, Matrix4 .Identity, projectionMatrix, viewport, this .hitRay);
+         }
+         catch (error)
+         {
+            this .hitRay .set (Vector3 .Zero, Vector3 .Zero);
+         }
+      },
+      getHitRay: function ()
+      {
+         return this .hitRay;
+      },
+      getSensors: function ()
+      {
+         return this .enabledSensors;
+      },
+      addHit: function (intersection, layer, shape, modelViewMatrix)
+      {
+         this .hits .push ({
+            pointer:         this .pointer,
+            hitRay:          this .hitRay .copy (),
+            intersection:    intersection,
+            sensors:         this .enabledSensors .at (-1),
+            layer:           layer,
+            layerNumber:     this .layerNumber,
+            shape:           shape,
+            modelViewMatrix: modelViewMatrix .copy (),
+         });
+      },
+      getHits: function ()
+      {
+         return this .hits;
+      },
+      getNearestHit: function ()
+      {
+         return this .hits .at (-1);
+      },
+      buttonPressEvent: function (x, y)
+      {
+         this .touch (x, y);
 
-			if (this .hits .length === 0)
-				return false;
+         if (this .hits .length === 0)
+            return false;
 
-			var nearestHit = this .getNearestHit ();
+         var nearestHit = this .getNearestHit ();
 
-			this .selectedLayer = nearestHit .layer;
-			this .activeSensors = nearestHit .sensors;
+         this .selectedLayer = nearestHit .layer;
+         this .activeSensors = nearestHit .sensors;
 
-			for (var key in this .activeSensors)
-				this .activeSensors [key] .set_active__ (true, nearestHit);
+         for (var key in this .activeSensors)
+            this .activeSensors [key] .set_active__ (true, nearestHit);
 
-			return ! $.isEmptyObject (nearestHit .sensors);
-		},
-		buttonReleaseEvent: function ()
-		{
-			this .selectedLayer = null;
+         return ! $.isEmptyObject (nearestHit .sensors);
+      },
+      buttonReleaseEvent: function ()
+      {
+         this .selectedLayer = null;
 
-			for (var key in this .activeSensors)
-				this .activeSensors [key] .set_active__ (false, null);
+         for (var key in this .activeSensors)
+            this .activeSensors [key] .set_active__ (false, null);
 
-			this .activeSensors = { };
+         this .activeSensors = { };
 
-			// Selection
+         // Selection
 
-			return true;
-		},
-		motionNotifyEvent: function (x, y)
-		{
-			this .touch (x, y);
+         return true;
+      },
+      motionNotifyEvent: function (x, y)
+      {
+         this .touch (x, y);
 
-			this .motion ();
+         this .motion ();
 
-			return this .hits .length && ! $.isEmptyObject (this .hits .at (-1) .sensors);
-		},
-		leaveNotifyEvent: function ()
-		{
-		},
-		touch: function (x, y)
-		{
-			if (this .getViewer () .isActive_ .getValue ())
-			{
-				this .pointerTime = 0;
-				return;
-			}
+         return this .hits .length && ! $.isEmptyObject (this .hits .at (-1) .sensors);
+      },
+      leaveNotifyEvent: function ()
+      {
+      },
+      touch: function (x, y)
+      {
+         if (this .getViewer () .isActive_ .getValue ())
+         {
+            this .pointerTime = 0;
+            return;
+         }
 
-			var t0 = performance .now ();
+         var t0 = performance .now ();
 
-			this .pointer .set (x, y);
+         this .pointer .set (x, y);
 
-			// Clear hits.
+         // Clear hits.
 
-			this .hits .length = 0;
+         this .hits .length = 0;
 
-			// Pick.
+         // Pick.
 
-			this .getWorld () .traverse (TraverseType .POINTER, null);
+         this .getWorld () .traverse (TraverseType .POINTER, null);
 
-			// Picking end.
+         // Picking end.
 
-			this .hitPointSorter .sort (0, this .hits .length);
-			this .layerSorter    .sort (0, this .hits .length);
+         this .hitPointSorter .sort (0, this .hits .length);
+         this .layerSorter    .sort (0, this .hits .length);
 
-			this .addBrowserEvent ();
-			this .pointerTime = performance .now () - t0;
-		},
-		motion: function ()
-		{
-			if (this .hits .length)
-			{
-				var nearestHit = this .hits .at (-1);
-			}
-			else
-			{
-				var hitRay = this .selectedLayer ? this .hitRay : line;
+         this .addBrowserEvent ();
+         this .pointerTime = performance .now () - t0;
+      },
+      motion: function ()
+      {
+         if (this .hits .length)
+         {
+            var nearestHit = this .hits .at (-1);
+         }
+         else
+         {
+            var hitRay = this .selectedLayer ? this .hitRay : line;
 
-				var nearestHit = {
-					pointer:         this .pointer,
-					modelViewMatrix: new Matrix4 (),
-					hitRay:          hitRay,
-					intersection:    null,
-					sensors:         { },
-					shape:           null,
-					layer:           null,
-					layerNumber:     0,
-				};
-			}
+            var nearestHit = {
+               pointer:         this .pointer,
+               modelViewMatrix: new Matrix4 (),
+               hitRay:          hitRay,
+               intersection:    null,
+               sensors:         { },
+               shape:           null,
+               layer:           null,
+               layerNumber:     0,
+            };
+         }
 
-			// Set isOver to FALSE for appropriate nodes
+         // Set isOver to FALSE for appropriate nodes
 
-			if (this .hits .length)
-			{
-				var difference = Algorithm .set_difference (this .overSensors, nearestHit .sensors, { }, function (lhs, rhs) {
-					return lhs .getNode () < rhs .getNode ();
-				});
-			}
-			else
-			{
-				var difference = Object .assign ({ }, this .overSensors);
-			}
+         if (this .hits .length)
+         {
+            var difference = Algorithm .set_difference (this .overSensors, nearestHit .sensors, { }, function (lhs, rhs) {
+               return lhs .getNode () < rhs .getNode ();
+            });
+         }
+         else
+         {
+            var difference = Object .assign ({ }, this .overSensors);
+         }
 
-			for (var key in difference)
-				difference [key] .set_over__ (false, nearestHit);
+         for (var key in difference)
+            difference [key] .set_over__ (false, nearestHit);
 
-			// Set isOver to TRUE for appropriate nodes
+         // Set isOver to TRUE for appropriate nodes
 
-			if (this .hits .length)
-			{
-				this .overSensors = nearestHit .sensors;
+         if (this .hits .length)
+         {
+            this .overSensors = nearestHit .sensors;
 
-				for (var key in this .overSensors)
-					this .overSensors [key] .set_over__ (true, nearestHit);
-			}
-			else
-			{
-				this .overSensors = { };
-			}
+            for (var key in this .overSensors)
+               this .overSensors [key] .set_over__ (true, nearestHit);
+         }
+         else
+         {
+            this .overSensors = { };
+         }
 
-			// Forward motion event to active drag sensor nodes
+         // Forward motion event to active drag sensor nodes
 
-			for (var key in this .activeSensors)
-			{
-				this .activeSensors [key] .set_motion__ (nearestHit);
-			}
-		},
-	};
+         for (var key in this .activeSensors)
+         {
+            this .activeSensors [key] .set_motion__ (nearestHit);
+         }
+      },
+   };
 
-	return X3DPointingDeviceSensorContext;
+   return X3DPointingDeviceSensorContext;
 });

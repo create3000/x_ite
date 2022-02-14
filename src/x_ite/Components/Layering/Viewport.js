@@ -48,15 +48,15 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Layering/X3DViewportNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/TraverseType",
-	"standard/Utility/ObjectCache",
-	"standard/Math/Geometry/ViewVolume",
-	"standard/Math/Numbers/Vector4",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Layering/X3DViewportNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/TraverseType",
+   "standard/Utility/ObjectCache",
+   "standard/Math/Geometry/ViewVolume",
+   "standard/Math/Numbers/Vector4",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -70,113 +70,113 @@ function (Fields,
 {
 "use strict";
 
-	const ViewVolumes = ObjectCache (ViewVolume);
+   const ViewVolumes = ObjectCache (ViewVolume);
 
-	function Viewport (executionContext)
-	{
-		X3DViewportNode .call (this, executionContext);
+   function Viewport (executionContext)
+   {
+      X3DViewportNode .call (this, executionContext);
 
-		this .addType (X3DConstants .Viewport);
+      this .addType (X3DConstants .Viewport);
 
-		this .rectangle = new Vector4 (0, 0, 0, 0);
-	}
+      this .rectangle = new Vector4 (0, 0, 0, 0);
+   }
 
-	Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype),
-	{
-		constructor: Viewport,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "clipBoundary",   new Fields .MFFloat (0, 1, 0, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Viewport";
-		},
-		getComponentName: function ()
-		{
-			return "Layering";
-		},
-		getContainerField: function ()
-		{
-			return "viewport";
-		},
-		getRectangle: function (browser)
-		{
-			const viewport = browser .getViewport ();
+   Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype),
+   {
+      constructor: Viewport,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "clipBoundary",   new Fields .MFFloat (0, 1, 0, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "Viewport";
+      },
+      getComponentName: function ()
+      {
+         return "Layering";
+      },
+      getContainerField: function ()
+      {
+         return "viewport";
+      },
+      getRectangle: function (browser)
+      {
+         const viewport = browser .getViewport ();
 
-			const
-				left   = Math .floor (viewport [2] * this .getLeft ()),
-				right  = Math .floor (viewport [2] * this .getRight ()),
-				bottom = Math .floor (viewport [3] * this .getBottom ()),
-				top    = Math .floor (viewport [3] * this .getTop ());
+         const
+            left   = Math .floor (viewport [2] * this .getLeft ()),
+            right  = Math .floor (viewport [2] * this .getRight ()),
+            bottom = Math .floor (viewport [3] * this .getBottom ()),
+            top    = Math .floor (viewport [3] * this .getTop ());
 
-			this .rectangle .set (left,
-			                      bottom,
-			                      Math .max (0, right - left),
-			                      Math .max (0, top - bottom));
+         this .rectangle .set (left,
+                               bottom,
+                               Math .max (0, right - left),
+                               Math .max (0, top - bottom));
 
-			return this .rectangle;
-		},
-		getLeft: function ()
-		{
-			return this .clipBoundary_ .length > 0 ? this .clipBoundary_ [0] : 0;
-		},
-		getRight: function ()
-		{
-			return this .clipBoundary_ .length > 1 ? this .clipBoundary_ [1] : 1;
-		},
-		getBottom: function ()
-		{
-			return this .clipBoundary_ .length > 2 ? this .clipBoundary_ [2] : 0;
-		},
-		getTop: function ()
-		{
-			return this .clipBoundary_ .length > 3 ? this .clipBoundary_ [3] : 1;
-		},
-		traverse: function (type, renderObject)
-		{
-			this .push (renderObject);
+         return this .rectangle;
+      },
+      getLeft: function ()
+      {
+         return this .clipBoundary_ .length > 0 ? this .clipBoundary_ [0] : 0;
+      },
+      getRight: function ()
+      {
+         return this .clipBoundary_ .length > 1 ? this .clipBoundary_ [1] : 1;
+      },
+      getBottom: function ()
+      {
+         return this .clipBoundary_ .length > 2 ? this .clipBoundary_ [2] : 0;
+      },
+      getTop: function ()
+      {
+         return this .clipBoundary_ .length > 3 ? this .clipBoundary_ [3] : 1;
+      },
+      traverse: function (type, renderObject)
+      {
+         this .push (renderObject);
 
-			switch (type)
-			{
-				case TraverseType .POINTER:
-				{
-					if (renderObject .getBrowser () .isPointerInRectangle (this .rectangle))
-						X3DViewportNode .prototype .traverse .call (this, type, renderObject);
+         switch (type)
+         {
+            case TraverseType .POINTER:
+            {
+               if (renderObject .getBrowser () .isPointerInRectangle (this .rectangle))
+                  X3DViewportNode .prototype .traverse .call (this, type, renderObject);
 
-					break;
-				}
-				default:
-					X3DViewportNode .prototype .traverse .call (this, type, renderObject);
-					break;
-			}
+               break;
+            }
+            default:
+               X3DViewportNode .prototype .traverse .call (this, type, renderObject);
+               break;
+         }
 
-			this .pop (renderObject);
-		},
-		push: function (renderObject)
-		{
-			const
-				viewVolumes = renderObject .getViewVolumes (),
-				rectangle   = this .getRectangle (renderObject .getBrowser ()),
-				viewport    = viewVolumes .length ? viewVolumes .at (-1) .getViewport () : rectangle,
-				viewVolume  = ViewVolumes .pop ();
+         this .pop (renderObject);
+      },
+      push: function (renderObject)
+      {
+         const
+            viewVolumes = renderObject .getViewVolumes (),
+            rectangle   = this .getRectangle (renderObject .getBrowser ()),
+            viewport    = viewVolumes .length ? viewVolumes .at (-1) .getViewport () : rectangle,
+            viewVolume  = ViewVolumes .pop ();
 
-			viewVolume .set (renderObject .getProjectionMatrix () .get (), viewport, rectangle);
+         viewVolume .set (renderObject .getProjectionMatrix () .get (), viewport, rectangle);
 
-			viewVolumes .push (viewVolume);
-		},
-		pop: function (renderObject)
-		{
-			ViewVolumes .push (renderObject .getViewVolumes () .pop ());
-		},
-	});
+         viewVolumes .push (viewVolume);
+      },
+      pop: function (renderObject)
+      {
+         ViewVolumes .push (renderObject .getViewVolumes () .pop ());
+      },
+   });
 
-	return Viewport;
+   return Viewport;
 });

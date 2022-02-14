@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DNode,
@@ -58,30 +58,30 @@ function (Fields,
 {
 "use strict";
 
-	function X3DAppearanceNode (executionContext)
-	{
-		X3DNode .call (this, executionContext);
+   function X3DAppearanceNode (executionContext)
+   {
+      X3DNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DAppearanceNode);
+      this .addType (X3DConstants .X3DAppearanceNode);
 
-		this .addChildObjects ("transparent", new Fields .SFBool ());
+      this .addChildObjects ("transparent", new Fields .SFBool ());
 
-		this .transparent_ .setAccessType (X3DConstants .outputOnly);
-	}
+      this .transparent_ .setAccessType (X3DConstants .outputOnly);
+   }
 
-	X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-	{
-		constructor: X3DAppearanceNode,
-		setTransparent: function (value)
-		{
-			if (value !== this .transparent_ .getValue ())
-				this .transparent_ = value;
-		},
-		getTransparent: function ()
-		{
-			return this .transparent_ .getValue ();
-		},
-	});
+   X3DAppearanceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+   {
+      constructor: X3DAppearanceNode,
+      setTransparent: function (value)
+      {
+         if (value !== this .transparent_ .getValue ())
+            this .transparent_ = value;
+      },
+      getTransparent: function ()
+      {
+         return this .transparent_ .getValue ();
+      },
+   });
 
-	return X3DAppearanceNode;
+   return X3DAppearanceNode;
 });

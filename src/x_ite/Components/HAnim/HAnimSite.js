@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Grouping/X3DTransformNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Grouping/X3DTransformNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -62,45 +62,45 @@ function (Fields,
 {
 "use strict";
 
-	function HAnimSite (executionContext)
-	{
-		X3DTransformNode .call (this, executionContext);
+   function HAnimSite (executionContext)
+   {
+      X3DTransformNode .call (this, executionContext);
 
-		this .addType (X3DConstants .HAnimSite);
-	}
+      this .addType (X3DConstants .HAnimSite);
+   }
 
-	HAnimSite .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
-	{
-		constructor: HAnimSite,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "name",             new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",      new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",         new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",            new Fields .SFVec3f (1, 1, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientation", new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "center",           new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "HAnimSite";
-		},
-		getComponentName: function ()
-		{
-			return "HAnim";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-	});
+   HAnimSite .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
+   {
+      constructor: HAnimSite,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "name",             new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",      new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",         new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",            new Fields .SFVec3f (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientation", new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "center",           new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "HAnimSite";
+      },
+      getComponentName: function ()
+      {
+         return "HAnim";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+   });
 
-	return HAnimSite;
+   return HAnimSite;
 });

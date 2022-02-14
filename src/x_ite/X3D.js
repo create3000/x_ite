@@ -48,31 +48,31 @@
 
 
 define ([
-	"jquery",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Basic/X3DField",
-	"x_ite/Basic/X3DArrayField",
-	"x_ite/Fields",
-	"x_ite/Browser/X3DBrowser",
-	"x_ite/Configuration/ComponentInfo",
-	"x_ite/Configuration/ComponentInfoArray",
-	"x_ite/Configuration/ProfileInfo",
-	"x_ite/Configuration/ProfileInfoArray",
-	"x_ite/Configuration/UnitInfo",
-	"x_ite/Configuration/UnitInfoArray",
-	"x_ite/Execution/X3DExecutionContext",
-	"x_ite/Execution/X3DScene",
-	"x_ite/Prototype/ExternProtoDeclarationArray",
-	"x_ite/Prototype/ProtoDeclarationArray",
-	"x_ite/Prototype/X3DExternProtoDeclaration",
-	"x_ite/Prototype/X3DProtoDeclaration",
-	"x_ite/Routing/RouteArray",
-	"x_ite/Routing/X3DRoute",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Networking/urls",
-	"x_ite/Fallback",
-	"standard/Time/MicroTime",
+   "jquery",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Basic/X3DField",
+   "x_ite/Basic/X3DArrayField",
+   "x_ite/Fields",
+   "x_ite/Browser/X3DBrowser",
+   "x_ite/Configuration/ComponentInfo",
+   "x_ite/Configuration/ComponentInfoArray",
+   "x_ite/Configuration/ProfileInfo",
+   "x_ite/Configuration/ProfileInfoArray",
+   "x_ite/Configuration/UnitInfo",
+   "x_ite/Configuration/UnitInfoArray",
+   "x_ite/Execution/X3DExecutionContext",
+   "x_ite/Execution/X3DScene",
+   "x_ite/Prototype/ExternProtoDeclarationArray",
+   "x_ite/Prototype/ProtoDeclarationArray",
+   "x_ite/Prototype/X3DExternProtoDeclaration",
+   "x_ite/Prototype/X3DProtoDeclaration",
+   "x_ite/Routing/RouteArray",
+   "x_ite/Routing/X3DRoute",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Browser/Networking/urls",
+   "x_ite/Fallback",
+   "standard/Time/MicroTime",
 ],
 function ($,
           X3DFieldDefinition,
@@ -98,165 +98,165 @@ function ($,
           X3DConstants,
           urls,
           Fallback,
-			 microtime)
+          microtime)
 {
 "use strict";
 
-	// X3D
+   // X3D
 
-	function getComponentUrl (name)
-	{
-		const url = urls .getProviderUrl (name);
+   function getComponentUrl (name)
+   {
+      const url = urls .getProviderUrl (name);
 
-		if (typeof globalRequire === "function" && typeof __filename === "string")
-			globalRequire (globalRequire ("url") .fileURLToPath (url));
+      if (typeof globalRequire === "function" && typeof __filename === "string")
+         globalRequire (globalRequire ("url") .fileURLToPath (url));
 
-		return url;
-	}
+      return url;
+   }
 
-	function createBrowser (url, parameter)
-	{
-		const element = $("<X3DCanvas></X3DCanvas>");
+   function createBrowser (url, parameter)
+   {
+      const element = $("<X3DCanvas></X3DCanvas>");
 
-		if (url instanceof Fields .MFString)
-			 element .attr ("url", url .toString ())
+      if (url instanceof Fields .MFString)
+          element .attr ("url", url .toString ())
 
-		createBrowserFromElement (element);
+      createBrowserFromElement (element);
 
-		return element [0];
-	}
+      return element [0];
+   }
 
-	function getBrowser (dom)
-	{
-		return $(dom || "X3DCanvas") .data ("browser");
-	}
+   function getBrowser (dom)
+   {
+      return $(dom || "X3DCanvas") .data ("browser");
+   }
 
-	function createBrowserFromElement (dom)
-	{
-		dom = $(dom);
+   function createBrowserFromElement (dom)
+   {
+      dom = $(dom);
 
-		if (dom .find (".x_ite-private-browser") .length)
-			return;
+      if (dom .find (".x_ite-private-browser") .length)
+         return;
 
-		const browser = new X3DBrowser (dom);
+      const browser = new X3DBrowser (dom);
 
-		dom .data ("browser", browser);
+      dom .data ("browser", browser);
 
-		browser .setup ();
+      browser .setup ();
 
-		return browser;
-	}
+      return browser;
+   }
 
-	const
-		callbacks = $.Deferred (),
-		fallbacks = $.Deferred ();
+   const
+      callbacks = $.Deferred (),
+      fallbacks = $.Deferred ();
 
-	let initialized = false;
+   let initialized = false;
 
-	function X3D (callback, fallback)
-	{
-		if (typeof callback === "function")
-			callbacks .done (callback);
+   function X3D (callback, fallback)
+   {
+      if (typeof callback === "function")
+         callbacks .done (callback);
 
-		if (typeof fallback === "function")
-			fallbacks .done (fallback);
+      if (typeof fallback === "function")
+         fallbacks .done (fallback);
 
-		if (initialized)
-			return;
+      if (initialized)
+         return;
 
-		initialized = true;
+      initialized = true;
 
-		$(function ()
-		{
-			const elements = $("X3DCanvas");
+      $(function ()
+      {
+         const elements = $("X3DCanvas");
 
-			elements .children () .hide ();
+         elements .children () .hide ();
 
-			try
-			{
-				$.map (elements, createBrowserFromElement);
-				callbacks .resolve ();
-			}
-			catch (error)
-			{
-				Fallback .show (elements, error);
-				fallbacks .resolve (error);
-			}
-		});
-	}
+         try
+         {
+            $.map (elements, createBrowserFromElement);
+            callbacks .resolve ();
+         }
+         catch (error)
+         {
+            Fallback .show (elements, error);
+            fallbacks .resolve (error);
+         }
+      });
+   }
 
-	require .getComponentUrl = getComponentUrl;
+   require .getComponentUrl = getComponentUrl;
 
-	Object .assign (X3D,
-	{
-		require:                     require,
-		define:                      define,
+   Object .assign (X3D,
+   {
+      require:                     require,
+      define:                      define,
 
-		getBrowser:                  getBrowser,
-		createBrowser:               createBrowser,
+      getBrowser:                  getBrowser,
+      createBrowser:               createBrowser,
 
-		X3DConstants:                X3DConstants,
-		X3DBrowser:                  X3DBrowser,
-		X3DExecutionContext:         X3DExecutionContext,
-		X3DScene:                    X3DScene,
-		ComponentInfo:               ComponentInfo,
-		ComponentInfoArray:          ComponentInfoArray,
-		ProfileInfo:                 ProfileInfo,
-		ProfileInfoArray:            ProfileInfoArray,
-		UnitInfo:                    UnitInfo,
-		UnitInfoArray:               UnitInfoArray,
-		ExternProtoDeclarationArray: ExternProtoDeclarationArray,
-		ProtoDeclarationArray:       ProtoDeclarationArray,
-		X3DExterProtonDeclaration:   X3DExternProtoDeclaration,
-		X3DProtoDeclaration:         X3DProtoDeclaration,
-		RouteArray:                  RouteArray,
-		X3DRoute:                    X3DRoute,
+      X3DConstants:                X3DConstants,
+      X3DBrowser:                  X3DBrowser,
+      X3DExecutionContext:         X3DExecutionContext,
+      X3DScene:                    X3DScene,
+      ComponentInfo:               ComponentInfo,
+      ComponentInfoArray:          ComponentInfoArray,
+      ProfileInfo:                 ProfileInfo,
+      ProfileInfoArray:            ProfileInfoArray,
+      UnitInfo:                    UnitInfo,
+      UnitInfoArray:               UnitInfoArray,
+      ExternProtoDeclarationArray: ExternProtoDeclarationArray,
+      ProtoDeclarationArray:       ProtoDeclarationArray,
+      X3DExterProtonDeclaration:   X3DExternProtoDeclaration,
+      X3DProtoDeclaration:         X3DProtoDeclaration,
+      RouteArray:                  RouteArray,
+      X3DRoute:                    X3DRoute,
 
-		X3DFieldDefinition:          X3DFieldDefinition,
-		FieldDefinitionArray:        FieldDefinitionArray,
+      X3DFieldDefinition:          X3DFieldDefinition,
+      FieldDefinitionArray:        FieldDefinitionArray,
 
-		X3DField:                    X3DField,
-		X3DArrayField:               X3DArrayField,
+      X3DField:                    X3DField,
+      X3DArrayField:               X3DArrayField,
 
-		SFColor:                     Fields .SFColor,
-		SFColorRGBA:                 Fields .SFColorRGBA,
-		SFImage:                     Fields .SFImage,
-		SFMatrix3d:                  Fields .SFMatrix3d,
-		SFMatrix3f:                  Fields .SFMatrix3f,
-		SFMatrix4d:                  Fields .SFMatrix4d,
-		SFMatrix4f:                  Fields .SFMatrix4f,
-		SFNode:                      Fields .SFNode,
-		SFRotation:                  Fields .SFRotation,
-		SFVec2d:                     Fields .SFVec2d,
-		SFVec2f:                     Fields .SFVec2f,
-		SFVec3d:                     Fields .SFVec3d,
-		SFVec3f:                     Fields .SFVec3f,
-		SFVec4d:                     Fields .SFVec4d,
-		SFVec4f:                     Fields .SFVec4f,
-		VrmlMatrix:                  Fields .VrmlMatrix,
+      SFColor:                     Fields .SFColor,
+      SFColorRGBA:                 Fields .SFColorRGBA,
+      SFImage:                     Fields .SFImage,
+      SFMatrix3d:                  Fields .SFMatrix3d,
+      SFMatrix3f:                  Fields .SFMatrix3f,
+      SFMatrix4d:                  Fields .SFMatrix4d,
+      SFMatrix4f:                  Fields .SFMatrix4f,
+      SFNode:                      Fields .SFNode,
+      SFRotation:                  Fields .SFRotation,
+      SFVec2d:                     Fields .SFVec2d,
+      SFVec2f:                     Fields .SFVec2f,
+      SFVec3d:                     Fields .SFVec3d,
+      SFVec3f:                     Fields .SFVec3f,
+      SFVec4d:                     Fields .SFVec4d,
+      SFVec4f:                     Fields .SFVec4f,
+      VrmlMatrix:                  Fields .VrmlMatrix,
 
-		MFBool:                      Fields .MFBool,
-		MFColor:                     Fields .MFColor,
-		MFColorRGBA:                 Fields .MFColorRGBA,
-		MFDouble:                    Fields .MFDouble,
-		MFFloat:                     Fields .MFFloat,
-		MFImage:                     Fields .MFImage,
-		MFInt32:                     Fields .MFInt32,
-		MFMatrix3d:                  Fields .MFMatrix3d,
-		MFMatrix3f:                  Fields .MFMatrix3f,
-		MFMatrix4d:                  Fields .MFMatrix4d,
-		MFMatrix4f:                  Fields .MFMatrix4f,
-		MFNode:                      Fields .MFNode,
-		MFRotation:                  Fields .MFRotation,
-		MFString:                    Fields .MFString,
-		MFTime:                      Fields .MFTime,
-		MFVec2d:                     Fields .MFVec2d,
-		MFVec2f:                     Fields .MFVec2f,
-		MFVec3d:                     Fields .MFVec3d,
-		MFVec3f:                     Fields .MFVec3f,
-		MFVec4d:                     Fields .MFVec4d,
-		MFVec4f:                     Fields .MFVec4f,
-	});
+      MFBool:                      Fields .MFBool,
+      MFColor:                     Fields .MFColor,
+      MFColorRGBA:                 Fields .MFColorRGBA,
+      MFDouble:                    Fields .MFDouble,
+      MFFloat:                     Fields .MFFloat,
+      MFImage:                     Fields .MFImage,
+      MFInt32:                     Fields .MFInt32,
+      MFMatrix3d:                  Fields .MFMatrix3d,
+      MFMatrix3f:                  Fields .MFMatrix3f,
+      MFMatrix4d:                  Fields .MFMatrix4d,
+      MFMatrix4f:                  Fields .MFMatrix4f,
+      MFNode:                      Fields .MFNode,
+      MFRotation:                  Fields .MFRotation,
+      MFString:                    Fields .MFString,
+      MFTime:                      Fields .MFTime,
+      MFVec2d:                     Fields .MFVec2d,
+      MFVec2f:                     Fields .MFVec2f,
+      MFVec3d:                     Fields .MFVec3d,
+      MFVec3f:                     Fields .MFVec3f,
+      MFVec4d:                     Fields .MFVec4d,
+      MFVec4f:                     Fields .MFVec4f,
+   });
 
-	return X3D;
+   return X3D;
 });

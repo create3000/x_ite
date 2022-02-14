@@ -51,20 +51,20 @@ define (function ()
 {
 "use strict";
 
-	var i = 0;
+   var i = 0;
 
-	var AppliedParametersType =
-	{
-		BOUNCE:                 i ++,
-		USER_FRICTION:          i ++,
-		FRICTION_COEFFICIENT_2: i ++,
-		ERROR_REDUCTION:        i ++,
-		CONSTANT_FORCE:         i ++,
-		SPEED_1:                i ++,
-		SPEED_2:                i ++,
-		SLIP_1:                 i ++,
-		SLIP_2:                 i ++,
-	};
+   var AppliedParametersType =
+   {
+      BOUNCE:                 i ++,
+      USER_FRICTION:          i ++,
+      FRICTION_COEFFICIENT_2: i ++,
+      ERROR_REDUCTION:        i ++,
+      CONSTANT_FORCE:         i ++,
+      SPEED_1:                i ++,
+      SPEED_2:                i ++,
+      SLIP_1:                 i ++,
+      SLIP_2:                 i ++,
+   };
 
-	return AppliedParametersType;
+   return AppliedParametersType;
 });

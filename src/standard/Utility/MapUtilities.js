@@ -78,5 +78,5 @@ define (function ($)
       },
    };
 
-	return MapUtilities;
+   return MapUtilities;
 });

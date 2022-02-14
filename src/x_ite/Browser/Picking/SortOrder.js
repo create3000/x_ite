@@ -51,15 +51,15 @@ define (function ()
 {
 "use strict";
 
-	var i = 0;
+   var i = 0;
 
-	var SortOrder =
-	{
-		ANY:        i ++,
-		CLOSEST:    i ++,
-		ALL:        i ++,
-		ALL_SORTED: i ++,
-	};
+   var SortOrder =
+   {
+      ANY:        i ++,
+      CLOSEST:    i ++,
+      ALL:        i ++,
+      ALL_SORTED: i ++,
+   };
 
-	return SortOrder;
+   return SortOrder;
 });

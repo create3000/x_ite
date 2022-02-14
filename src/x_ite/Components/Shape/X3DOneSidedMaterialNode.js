@@ -48,9 +48,9 @@
 
 
  define ([
-	"x_ite/Components/Shape/X3DMaterialNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Algorithm",
+   "x_ite/Components/Shape/X3DMaterialNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Algorithm",
 ],
 function (X3DMaterialNode,
           X3DConstants,
@@ -58,54 +58,54 @@ function (X3DMaterialNode,
 {
 "use strict";
 
-	function X3DOneSidedMaterialNode (executionContext)
-	{
-		X3DMaterialNode .call (this, executionContext);
+   function X3DOneSidedMaterialNode (executionContext)
+   {
+      X3DMaterialNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DOneSidedMaterialNode);
+      this .addType (X3DConstants .X3DOneSidedMaterialNode);
 
-		this .emissiveColor = new Float32Array (3);
-	}
+      this .emissiveColor = new Float32Array (3);
+   }
 
-	X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
-	{
-		constructor: X3DOneSidedMaterialNode,
-		initialize: function ()
-		{
-			X3DMaterialNode .prototype .initialize .call (this);
+   X3DOneSidedMaterialNode .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
+   {
+      constructor: X3DOneSidedMaterialNode,
+      initialize: function ()
+      {
+         X3DMaterialNode .prototype .initialize .call (this);
 
-			this .emissiveColor_ .addInterest ("set_emissiveColor__", this);
-			this .transparency_  .addInterest ("set_transparency__",  this);
+         this .emissiveColor_ .addInterest ("set_emissiveColor__", this);
+         this .transparency_  .addInterest ("set_transparency__",  this);
 
-			this .set_emissiveColor__ ();
-			this .set_transparency__ ();
-		},
-		set_emissiveColor__: function ()
-		{
-			//We cannot use this in Windows Edge:
-			//this .emissiveColor .set (this .emissiveColor_ .getValue ());
+         this .set_emissiveColor__ ();
+         this .set_transparency__ ();
+      },
+      set_emissiveColor__: function ()
+      {
+         //We cannot use this in Windows Edge:
+         //this .emissiveColor .set (this .emissiveColor_ .getValue ());
 
-			const
-				emissiveColor  = this .emissiveColor,
-				emissiveColor_ = this .emissiveColor_ .getValue ();
+         const
+            emissiveColor  = this .emissiveColor,
+            emissiveColor_ = this .emissiveColor_ .getValue ();
 
-			emissiveColor [0] = emissiveColor_ .r;
-			emissiveColor [1] = emissiveColor_ .g;
-			emissiveColor [2] = emissiveColor_ .b;
-		},
-		set_shininess__: function ()
-		{
-			this .shininess = Algorithm .clamp (this .shininess_ .getValue (), 0, 1);
-		},
-		set_transparency__: function ()
-		{
-			const transparency = Algorithm .clamp (this .transparency_ .getValue (), 0, 1);
+         emissiveColor [0] = emissiveColor_ .r;
+         emissiveColor [1] = emissiveColor_ .g;
+         emissiveColor [2] = emissiveColor_ .b;
+      },
+      set_shininess__: function ()
+      {
+         this .shininess = Algorithm .clamp (this .shininess_ .getValue (), 0, 1);
+      },
+      set_transparency__: function ()
+      {
+         const transparency = Algorithm .clamp (this .transparency_ .getValue (), 0, 1);
 
-			this .transparency = transparency;
+         this .transparency = transparency;
 
-			this .setTransparent (Boolean (transparency));
-		},
-	});
+         this .setTransparent (Boolean (transparency));
+      },
+   });
 
-	return X3DOneSidedMaterialNode;
+   return X3DOneSidedMaterialNode;
 });

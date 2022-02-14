@@ -10,7 +10,7 @@ varying vec3 vertex; // point on geometry
 void
 main ()
 {
-	clip ();
+   clip ();
 
-	gl_FragColor = color;
+   gl_FragColor = color;
 }

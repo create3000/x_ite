@@ -48,151 +48,151 @@
 
 
 define ([
-	"standard/Math/Numbers/Color3",
-	"standard/Math/Algorithm",
+   "standard/Math/Numbers/Color3",
+   "standard/Math/Algorithm",
 ],
 function (Color3, Algorithm)
 {
 "use strict";
 
-	const clamp = Algorithm .clamp;
+   const clamp = Algorithm .clamp;
 
-	function Color4 (r, g, b, a)
-	{
-		if (arguments .length)
-		{
-			this .r_ = clamp (r, 0, 1);
-			this .g_ = clamp (g, 0, 1);
-			this .b_ = clamp (b, 0, 1);
-			this .a_ = clamp (a, 0, 1);
-		}
-		else
-		{
-			this .r_ = 0;
-			this .g_ = 0;
-			this .b_ = 0;
-			this .a_ = 0;
-		}
-	}
+   function Color4 (r, g, b, a)
+   {
+      if (arguments .length)
+      {
+         this .r_ = clamp (r, 0, 1);
+         this .g_ = clamp (g, 0, 1);
+         this .b_ = clamp (b, 0, 1);
+         this .a_ = clamp (a, 0, 1);
+      }
+      else
+      {
+         this .r_ = 0;
+         this .g_ = 0;
+         this .b_ = 0;
+         this .a_ = 0;
+      }
+   }
 
-	Color4 .prototype =
-	{
-		constructor: Color4,
-		length: 4,
-		copy: function ()
-		{
-			const copy = Object .create (Color4 .prototype);
-			copy .r_ = this .r_;
-			copy .g_ = this .g_;
-			copy .b_ = this .b_;
-			copy .a_ = this .a_;
-			return copy;
-		},
-		assign: function (color)
-		{
-			this .r_ = color .r_;
-			this .g_ = color .g_;
-			this .b_ = color .b_;
-			this .a_ = color .a_;
-		},
-		set: function (r, g, b, a)
-		{
-			this .r_ = clamp (r, 0, 1);
-			this .g_ = clamp (g, 0, 1);
-			this .b_ = clamp (b, 0, 1);
-			this .a_ = clamp (a, 0, 1);
-		},
-		equals: function (color)
-		{
-			return this .r_ === color .r_ &&
-			       this .g_ === color .g_ &&
-			       this .b_ === color .b_ &&
-			       this .a_ === color .a_;
-		},
-		getHSVA: function (result)
-		{
-			Color3 .prototype .getHSV .call (this, result);
+   Color4 .prototype =
+   {
+      constructor: Color4,
+      length: 4,
+      copy: function ()
+      {
+         const copy = Object .create (Color4 .prototype);
+         copy .r_ = this .r_;
+         copy .g_ = this .g_;
+         copy .b_ = this .b_;
+         copy .a_ = this .a_;
+         return copy;
+      },
+      assign: function (color)
+      {
+         this .r_ = color .r_;
+         this .g_ = color .g_;
+         this .b_ = color .b_;
+         this .a_ = color .a_;
+      },
+      set: function (r, g, b, a)
+      {
+         this .r_ = clamp (r, 0, 1);
+         this .g_ = clamp (g, 0, 1);
+         this .b_ = clamp (b, 0, 1);
+         this .a_ = clamp (a, 0, 1);
+      },
+      equals: function (color)
+      {
+         return this .r_ === color .r_ &&
+                this .g_ === color .g_ &&
+                this .b_ === color .b_ &&
+                this .a_ === color .a_;
+      },
+      getHSVA: function (result)
+      {
+         Color3 .prototype .getHSV .call (this, result);
 
-			result [3] = this .a_;
+         result [3] = this .a_;
 
-			return result;
-		},
-		setHSVA: function (h, s, v, a)
-		{
-			Color3 .prototype .setHSV .call (this, h, s, v);
+         return result;
+      },
+      setHSVA: function (h, s, v, a)
+      {
+         Color3 .prototype .setHSV .call (this, h, s, v);
 
-			this .a_ = clamp (a, 0, 1);
-		},
-		toString: function ()
-		{
-			return this .r_ + " " +
-			       this .g_ + " " +
-			       this .b_ + " " +
-			       this .a_;
-		},
-	};
+         this .a_ = clamp (a, 0, 1);
+      },
+      toString: function ()
+      {
+         return this .r_ + " " +
+                this .g_ + " " +
+                this .b_ + " " +
+                this .a_;
+      },
+   };
 
-	const r = {
-		get: function () { return this .r_; },
-		set: function (value) { this .r_ = clamp (value, 0, 1); },
-		enumerable: true,
-		configurable: false
-	};
+   const r = {
+      get: function () { return this .r_; },
+      set: function (value) { this .r_ = clamp (value, 0, 1); },
+      enumerable: true,
+      configurable: false
+   };
 
-	const g = {
-		get: function () { return this .g_; },
-		set: function (value) { this .g_ = clamp (value, 0, 1); },
-		enumerable: true,
-		configurable: false
-	};
+   const g = {
+      get: function () { return this .g_; },
+      set: function (value) { this .g_ = clamp (value, 0, 1); },
+      enumerable: true,
+      configurable: false
+   };
 
-	const b = {
-		get: function () { return this .b_; },
-		set: function (value) { this .b_ = clamp (value, 0, 1); },
-		enumerable: true,
-		configurable: false
-	};
+   const b = {
+      get: function () { return this .b_; },
+      set: function (value) { this .b_ = clamp (value, 0, 1); },
+      enumerable: true,
+      configurable: false
+   };
 
-	const a = {
-		get: function () { return this .a_; },
-		set: function (value) { this .a_ = clamp (value, 0, 1); },
-		enumerable: true,
-		configurable: false
-	};
+   const a = {
+      get: function () { return this .a_; },
+      set: function (value) { this .a_ = clamp (value, 0, 1); },
+      enumerable: true,
+      configurable: false
+   };
 
-	Object .defineProperty (Color4 .prototype, "r", r);
-	Object .defineProperty (Color4 .prototype, "g", g);
-	Object .defineProperty (Color4 .prototype, "b", b);
-	Object .defineProperty (Color4 .prototype, "a", a);
+   Object .defineProperty (Color4 .prototype, "r", r);
+   Object .defineProperty (Color4 .prototype, "g", g);
+   Object .defineProperty (Color4 .prototype, "b", b);
+   Object .defineProperty (Color4 .prototype, "a", a);
 
-	r .enumerable = false;
-	g .enumerable = false;
-	b .enumerable = false;
-	a .enumerable = false;
+   r .enumerable = false;
+   g .enumerable = false;
+   b .enumerable = false;
+   a .enumerable = false;
 
-	Object .defineProperty (Color4 .prototype, "0", r);
-	Object .defineProperty (Color4 .prototype, "1", g);
-	Object .defineProperty (Color4 .prototype, "2", b);
-	Object .defineProperty (Color4 .prototype, "3", a);
+   Object .defineProperty (Color4 .prototype, "0", r);
+   Object .defineProperty (Color4 .prototype, "1", g);
+   Object .defineProperty (Color4 .prototype, "2", b);
+   Object .defineProperty (Color4 .prototype, "3", a);
 
-	Object .assign (Color4,
-	{
-		HSVA: function (h, s, v, a)
-		{
-			const color = Object .create (this .prototype);
-			color .setHSVA (h, s, v, a);
-			return color;
-		},
-		lerp: function (a, b, t, r)
-		{
-			// Linearely interpolate in HSVA space between source color @a a and destination color @a b by an amount of @a t.
-			// Source and destination color must be in HSVA space. The resulting HSVA color is stored in @a r.
-			const aa = a [3];
-			Color3 .lerp (a, b, t, r);
-			r [3] = aa + t * (b [3] - aa);
-			return r;
-		},
-	});
+   Object .assign (Color4,
+   {
+      HSVA: function (h, s, v, a)
+      {
+         const color = Object .create (this .prototype);
+         color .setHSVA (h, s, v, a);
+         return color;
+      },
+      lerp: function (a, b, t, r)
+      {
+         // Linearely interpolate in HSVA space between source color @a a and destination color @a b by an amount of @a t.
+         // Source and destination color must be in HSVA space. The resulting HSVA color is stored in @a r.
+         const aa = a [3];
+         Color3 .lerp (a, b, t, r);
+         r [3] = aa + t * (b [3] - aa);
+         return r;
+      },
+   });
 
-	return Color4;
+   return Color4;
 });

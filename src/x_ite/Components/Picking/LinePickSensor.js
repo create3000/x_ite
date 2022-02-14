@@ -48,21 +48,21 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Picking/X3DPickSensorNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Picking/IntersectionType",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Matrix4",
-	"standard/Math/Geometry/Box3",
-	"standard/Math/Geometry/Line3",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Picking/X3DPickSensorNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Browser/Picking/IntersectionType",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Matrix4",
+   "standard/Math/Geometry/Box3",
+   "standard/Math/Geometry/Line3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DPickSensorNode, 
+          X3DPickSensorNode,
           X3DConstants,
           IntersectionType,
           Vector3,
@@ -72,280 +72,278 @@ function (Fields,
 {
 "use strict";
 
-	function LinePickSensor (executionContext)
-	{
-		X3DPickSensorNode .call (this, executionContext);
+   function LinePickSensor (executionContext)
+   {
+      X3DPickSensorNode .call (this, executionContext);
 
-		this .addType (X3DConstants .LinePickSensor);
+      this .addType (X3DConstants .LinePickSensor);
 
-		this .pickingGeometryNode = null;
-	}
+      this .pickingGeometryNode = null;
+   }
 
-	LinePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
-	{
-		constructor: LinePickSensor,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",                new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                 new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "objectType",              new Fields .MFString ("ALL")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "matchCriterion",          new Fields .SFString ("MATCH_ANY")),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "intersectionType",        new Fields .SFString ("BOUNDS")),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "sortOrder",               new Fields .SFString ("CLOSEST")),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",                new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedTextureCoordinate", new Fields .MFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedNormal",            new Fields .MFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedPoint",             new Fields .MFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "pickingGeometry",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "pickTarget",              new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedGeometry",          new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "LinePickSensor";
-		},
-		getComponentName: function ()
-		{
-			return "Picking";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DPickSensorNode .prototype .initialize .call (this);
-			
-			this .pickingGeometry_ .addInterest ("set_pickingGeometry__", this);
+   LinePickSensor .prototype = Object .assign (Object .create (X3DPickSensorNode .prototype),
+   {
+      constructor: LinePickSensor,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "objectType",              new Fields .MFString ("ALL")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "matchCriterion",          new Fields .SFString ("MATCH_ANY")),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "intersectionType",        new Fields .SFString ("BOUNDS")),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "sortOrder",               new Fields .SFString ("CLOSEST")),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",                new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedTextureCoordinate", new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedNormal",            new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedPoint",             new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "pickingGeometry",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "pickTarget",              new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "pickedGeometry",          new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "LinePickSensor";
+      },
+      getComponentName: function ()
+      {
+         return "Picking";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DPickSensorNode .prototype .initialize .call (this);
 
-			this .set_pickingGeometry__ ();
-		},
-		set_pickingGeometry__: function ()
-		{
-			this .pickingGeometryNode = null;
+         this .pickingGeometry_ .addInterest ("set_pickingGeometry__", this);
 
-			try
-			{
-				var
-					node = this .pickingGeometry_ .getValue () .getInnerNode (),
-					type = node .getType ();
+         this .set_pickingGeometry__ ();
+      },
+      set_pickingGeometry__: function ()
+      {
+         this .pickingGeometryNode = null;
 
-				for (var t = type .length - 1; t >= 0; -- t)
-				{
-					switch (type [t])
-					{
-						case X3DConstants .IndexedLineSet:
-						case X3DConstants .LineSet:
-						{
-							this .pickingGeometryNode = node;
-							break;
-						}
-						default:
-							continue;
-					}
-				}
-			}
-			catch (error)
-			{ }
-		},
-		process: (function ()
-		{
-			var
-				pickingBBox             = new Box3 (),
-				targetBBox              = new Box3 (),
-				pickingCenter           = new Vector3 (0, 0, 0),
-				targetCenter            = new Vector3 (0, 0, 0),
-				matrix                  = new Matrix4 (),
-				point1                  = new Vector3 (0, 0, 0),
-				point2                  = new Vector3 (0, 0, 0),
-				line                    = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-				a                       = new Vector3 (0, 0, 0),
-				b                       = new Vector3 (0, 0, 0),
-				clipPlanes              = [ ],
-				intersections           = [ ],
-				texCoord                = new Vector3 (0, 0, 0),
-				pickedTextureCoordinate = new Fields .MFVec3f (),
-				pickedNormal            = new Fields .MFVec3f (),
-				pickedPoint             = new Fields .MFVec3f ();
+         try
+         {
+            var
+               node = this .pickingGeometry_ .getValue () .getInnerNode (),
+               type = node .getType ();
 
-			return function ()
-			{
-				if (this .pickingGeometryNode)
-				{
-					var
-						modelMatrices = this .getModelMatrices (),
-						targets       = this .getTargets ();
-		
-					switch (this .getIntersectionType ())
-					{
-						case IntersectionType .BOUNDS:
-						{
-							// Intersect bboxes.
-	
-							for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
-							{
-								var modelMatrix = modelMatrices [m];
+            for (var t = type .length - 1; t >= 0; -- t)
+            {
+               switch (type [t])
+               {
+                  case X3DConstants .IndexedLineSet:
+                  case X3DConstants .LineSet:
+                  {
+                     this .pickingGeometryNode = node;
+                     break;
+                  }
+                  default:
+                     continue;
+               }
+            }
+         }
+         catch (error)
+         { }
+      },
+      process: (function ()
+      {
+         var
+            pickingBBox             = new Box3 (),
+            targetBBox              = new Box3 (),
+            pickingCenter           = new Vector3 (0, 0, 0),
+            targetCenter            = new Vector3 (0, 0, 0),
+            matrix                  = new Matrix4 (),
+            point1                  = new Vector3 (0, 0, 0),
+            point2                  = new Vector3 (0, 0, 0),
+            line                    = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+            a                       = new Vector3 (0, 0, 0),
+            b                       = new Vector3 (0, 0, 0),
+            clipPlanes              = [ ],
+            intersections           = [ ],
+            texCoord                = new Vector3 (0, 0, 0),
+            pickedTextureCoordinate = new Fields .MFVec3f (),
+            pickedNormal            = new Fields .MFVec3f (),
+            pickedPoint             = new Fields .MFVec3f ();
 
-								pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
-				
-								for (var t = 0, tLength = targets .size; t < tLength; ++ t)
-								{
-									var target = targets [t];
+         return function ()
+         {
+            if (this .pickingGeometryNode)
+            {
+               var
+                  modelMatrices = this .getModelMatrices (),
+                  targets       = this .getTargets ();
 
-									targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
-	
-									if (pickingBBox .intersectsBox (targetBBox))
-									{
-										pickingCenter .assign (pickingBBox .center);
-										targetCenter  .assign (targetBBox .center);
+               switch (this .getIntersectionType ())
+               {
+                  case IntersectionType .BOUNDS:
+                  {
+                     // Intersect bboxes.
 
-										target .intersected = true;
-										target .distance    = pickingCenter .distance (targetCenter);
-									}
-								}
-							}
-		
-							// Send events.
-	
-							var
-								pickedGeometries = this .getPickedGeometries (),
-								active           = Boolean (pickedGeometries .length);
+                     for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+                     {
+                        var modelMatrix = modelMatrices [m];
 
-							pickedGeometries .remove (0, pickedGeometries .length, null);
+                        pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
 
-							if (active !== this .isActive_ .getValue ())
-								this .isActive_ = active;
-	
-							if (! this .pickedGeometry_ .equals (pickedGeometries))
-								this .pickedGeometry_ = pickedGeometries;
-	
-							break;
-						}
-						case IntersectionType .GEOMETRY:
-						{
-							// Intersect geometry.
-		
-							for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
-							{
-								var modelMatrix = modelMatrices [m];
+                        for (var t = 0, tLength = targets .size; t < tLength; ++ t)
+                        {
+                           var target = targets [t];
 
-								pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
-				
-								for (var t = 0, tLength = targets .size; t < tLength; ++ t)
-								{
-									try
-									{
-										var
-											target       = targets [t],
-											geometryNode = target .geometryNode,
-											vertices     = this .pickingGeometryNode .getVertices ();
+                           targetBBox .assign (target .geometryNode .getBBox ()) .multRight (target .modelMatrix);
 
-										targetBBox .assign (geometryNode .getBBox ()) .multRight (target .modelMatrix);
-										matrix .assign (target .modelMatrix) .inverse () .multLeft (modelMatrix);
-	
-										for (var v = 0, vLength = vertices .length; v < vLength; v += 8)
-										{
-											matrix .multVecMatrix (point1 .set (vertices [v + 0], vertices [v + 1], vertices [v + 2]));
-											matrix .multVecMatrix (point2 .set (vertices [v + 4], vertices [v + 5], vertices [v + 6]));
-											line .setPoints (point1, point2);
-	
-											intersections .length = 0;
-	
-											if (geometryNode .intersectsLine (line, clipPlanes, target .modelMatrix, intersections))
-											{
-												for (var i = 0, iLength = intersections .length; i < iLength; ++ i)
-												{
-													// Test if intersection.point is between point1 and point2.
-	
-													var intersection = intersections [i];
-	
-													a .assign (intersection .point) .subtract (point1);
-													b .assign (intersection .point) .subtract (point2);
-	
-													var
-														c = a .add (b) .abs (),
-														s = point1 .distance (point2);
-	
-													if (c <= s)
-														target .intersections .push (intersection);
-												}
-											}
-										}
-	
-										if (target .intersections .length)
-										{
-											pickingCenter .assign (pickingBBox .center);
-											targetCenter  .assign (targetBBox .center);
-	
-											target .intersected = true;
-											target .distance    = pickingCenter .distance (targetCenter);
-										}
-									}
-									catch (error)
-									{
-										// Catch inverse.
-										console .log (error);
-									}
-								}
-							}
-		
-							// Send events.
-	
-							var
-								pickedGeometries = this .getPickedGeometries (),
-								active           = Boolean (pickedGeometries .length);
+                           if (pickingBBox .intersectsBox (targetBBox))
+                           {
+                              pickingCenter .assign (pickingBBox .center);
+                              targetCenter  .assign (targetBBox .center);
 
-							pickedGeometries .remove (0, pickedGeometries .length, null);
+                              target .intersected = true;
+                              target .distance    = pickingCenter .distance (targetCenter);
+                           }
+                        }
+                     }
 
-							if (active !== this .isActive_ .getValue ())
-								this .isActive_ = active;
-	
-							if (! this .pickedGeometry_ .equals (pickedGeometries))
-								this .pickedGeometry_ = pickedGeometries;
+                     // Send events.
 
-							var pickedTargets = this .getPickedTargets ();
+                     var
+                        pickedGeometries = this .getPickedGeometries (),
+                        active           = Boolean (pickedGeometries .length);
 
-							pickedTextureCoordinate .length = 0;
-							pickedNormal            .length = 0;
-							pickedPoint             .length = 0;
+                     pickedGeometries .remove (0, pickedGeometries .length, null);
 
-							for (var t = 0, tLength = pickedTargets .length; t < tLength; ++ t)
-							{
-								var pickedIntersections = pickedTargets [t] .intersections;
+                     if (active !== this .isActive_ .getValue ())
+                        this .isActive_ = active;
 
-								for (var i = 0, iLength = pickedIntersections .length; i < iLength; ++ i)
-								{
-									var
-										intersection = pickedIntersections [i],
-										t            = intersection .texCoord;
-	
-									texCoord .set (t .x, t .y, t .z);
-	
-									pickedTextureCoordinate .push (texCoord);
-									pickedNormal            .push (intersection .normal);
-									pickedPoint             .push (intersection .point);
-								}
-							}
+                     if (! this .pickedGeometry_ .equals (pickedGeometries))
+                        this .pickedGeometry_ = pickedGeometries;
 
-							if (! this .pickedTextureCoordinate_ .equals (pickedTextureCoordinate))
-								this .pickedTextureCoordinate_ = pickedTextureCoordinate;
+                     break;
+                  }
+                  case IntersectionType .GEOMETRY:
+                  {
+                     // Intersect geometry.
 
-							if (! this .pickedNormal_ .equals (pickedNormal))
-								this .pickedNormal_ = pickedNormal;
+                     for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+                     {
+                        var modelMatrix = modelMatrices [m];
 
-							if (! this .pickedPoint_ .equals (pickedPoint))
-								this .pickedPoint_ = pickedPoint;
+                        pickingBBox .assign (this .pickingGeometryNode .getBBox ()) .multRight (modelMatrix);
 
-							break;
-						}
-					}
-				}
+                        for (var t = 0, tLength = targets .size; t < tLength; ++ t)
+                        {
+                           try
+                           {
+                              var
+                                 target       = targets [t],
+                                 geometryNode = target .geometryNode,
+                                 vertices     = this .pickingGeometryNode .getVertices ();
 
-				X3DPickSensorNode .prototype .process .call (this);
-			};
-		})(),
-	});
+                              targetBBox .assign (geometryNode .getBBox ()) .multRight (target .modelMatrix);
+                              matrix .assign (target .modelMatrix) .inverse () .multLeft (modelMatrix);
 
-	return LinePickSensor;
+                              for (var v = 0, vLength = vertices .length; v < vLength; v += 8)
+                              {
+                                 matrix .multVecMatrix (point1 .set (vertices [v + 0], vertices [v + 1], vertices [v + 2]));
+                                 matrix .multVecMatrix (point2 .set (vertices [v + 4], vertices [v + 5], vertices [v + 6]));
+                                 line .setPoints (point1, point2);
+
+                                 intersections .length = 0;
+
+                                 if (geometryNode .intersectsLine (line, clipPlanes, target .modelMatrix, intersections))
+                                 {
+                                    for (var i = 0, iLength = intersections .length; i < iLength; ++ i)
+                                    {
+                                       // Test if intersection.point is between point1 and point2.
+
+                                       var intersection = intersections [i];
+
+                                       a .assign (intersection .point) .subtract (point1);
+                                       b .assign (intersection .point) .subtract (point2);
+
+                                       var
+                                          c = a .add (b) .abs (),
+                                          s = point1 .distance (point2);
+
+                                       if (c <= s)
+                                          target .intersections .push (intersection);
+                                    }
+                                 }
+                              }
+
+                              if (target .intersections .length)
+                              {
+                                 pickingCenter .assign (pickingBBox .center);
+                                 targetCenter  .assign (targetBBox .center);
+
+                                 target .intersected = true;
+                                 target .distance    = pickingCenter .distance (targetCenter);
+                              }
+                           }
+                           catch (error)
+                           {
+                              // Catch inverse.
+                              console .log (error);
+                           }
+                        }
+                     }
+
+                     // Send events.
+
+                     var
+                        pickedGeometries = this .getPickedGeometries (),
+                        active           = Boolean (pickedGeometries .length);
+
+                     pickedGeometries .remove (0, pickedGeometries .length, null);
+
+                     if (active !== this .isActive_ .getValue ())
+                        this .isActive_ = active;
+
+                     if (! this .pickedGeometry_ .equals (pickedGeometries))
+                        this .pickedGeometry_ = pickedGeometries;
+
+                     var pickedTargets = this .getPickedTargets ();
+
+                     pickedTextureCoordinate .length = 0;
+                     pickedNormal            .length = 0;
+                     pickedPoint             .length = 0;
+
+                     for (var t = 0, tLength = pickedTargets .length; t < tLength; ++ t)
+                     {
+                        var pickedIntersections = pickedTargets [t] .intersections;
+
+                        for (var i = 0, iLength = pickedIntersections .length; i < iLength; ++ i)
+                        {
+                           var
+                              intersection = pickedIntersections [i],
+                              t            = intersection .texCoord;
+
+                           texCoord .set (t .x, t .y, t .z);
+
+                           pickedTextureCoordinate .push (texCoord);
+                           pickedNormal            .push (intersection .normal);
+                           pickedPoint             .push (intersection .point);
+                        }
+                     }
+
+                     if (! this .pickedTextureCoordinate_ .equals (pickedTextureCoordinate))
+                        this .pickedTextureCoordinate_ = pickedTextureCoordinate;
+
+                     if (! this .pickedNormal_ .equals (pickedNormal))
+                        this .pickedNormal_ = pickedNormal;
+
+                     if (! this .pickedPoint_ .equals (pickedPoint))
+                        this .pickedPoint_ = pickedPoint;
+
+                     break;
+                  }
+               }
+            }
+
+            X3DPickSensorNode .prototype .process .call (this);
+         };
+      })(),
+   });
+
+   return LinePickSensor;
 });
-
-

@@ -48,29 +48,27 @@
 
 
 define ([
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Bits/X3DConstants",
 ],
-function (X3DNode, 
+function (X3DNode,
           X3DConstants)
 {
 "use strict";
 
-	function X3DParticlePhysicsModelNode (executionContext)
-	{
-		X3DNode .call (this, executionContext);
+   function X3DParticlePhysicsModelNode (executionContext)
+   {
+      X3DNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DParticlePhysicsModelNode);
-	}
+      this .addType (X3DConstants .X3DParticlePhysicsModelNode);
+   }
 
-	X3DParticlePhysicsModelNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-	{
-		constructor: X3DParticlePhysicsModelNode,
-		addForce: function ()
-		{ },
-	});
+   X3DParticlePhysicsModelNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+   {
+      constructor: X3DParticlePhysicsModelNode,
+      addForce: function ()
+      { },
+   });
 
-	return X3DParticlePhysicsModelNode;
+   return X3DParticlePhysicsModelNode;
 });
-
-

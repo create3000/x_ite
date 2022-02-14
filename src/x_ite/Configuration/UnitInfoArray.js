@@ -48,25 +48,25 @@
 
 
 define ([
-	"x_ite/Configuration/X3DInfoArray",
+   "x_ite/Configuration/X3DInfoArray",
 ],
 function (X3DInfoArray)
 {
 "use strict";
 
-	function UnitInfoArray ()
-	{
-		return X3DInfoArray .call (this);
-	}
+   function UnitInfoArray ()
+   {
+      return X3DInfoArray .call (this);
+   }
 
-	UnitInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-	{
-		constructor: UnitInfoArray,
-		getTypeName: function ()
-		{
-			return "UnitInfoArray";
-		},
-	});
+   UnitInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+   {
+      constructor: UnitInfoArray,
+      getTypeName: function ()
+      {
+         return "UnitInfoArray";
+      },
+   });
 
-	return UnitInfoArray;
+   return UnitInfoArray;
 });

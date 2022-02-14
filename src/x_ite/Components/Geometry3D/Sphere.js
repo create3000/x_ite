@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DGeometryNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Rendering/X3DGeometryNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -62,84 +62,84 @@ function (Fields,
 {
 "use strict";
 
-	function Sphere (executionContext)
-	{
-		X3DGeometryNode .call (this, executionContext);
+   function Sphere (executionContext)
+   {
+      X3DGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .Sphere);
+      this .addType (X3DConstants .Sphere);
 
-		this .radius_ .setUnit ("length");
-	}
+      this .radius_ .setUnit ("length");
+   }
 
-	Sphere .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
-	{
-		constructor: Sphere,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
-		]),
-		getTypeName: function ()
-		{
-			return "Sphere";
-		},
-		getComponentName: function ()
-		{
-			return "Geometry3D";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-		set_live__: function ()
-		{
-			X3DGeometryNode .prototype .set_live__ .call (this);
+   Sphere .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+   {
+      constructor: Sphere,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
+      ]),
+      getTypeName: function ()
+      {
+         return "Sphere";
+      },
+      getComponentName: function ()
+      {
+         return "Geometry3D";
+      },
+      getContainerField: function ()
+      {
+         return "geometry";
+      },
+      set_live__: function ()
+      {
+         X3DGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .isLive () .getValue ())
-				this .getBrowser () .getSphereOptions () .addInterest ("requestRebuild", this);
-			else
-				this .getBrowser () .getSphereOptions () .removeInterest ("requestRebuild", this);
-		},
-		build: function ()
-		{
-			var
-				options  = this .getBrowser () .getSphereOptions (),
-				geometry = options .getGeometry (),
-				radius   = this .radius_ .getValue ();
+         if (this .isLive () .getValue ())
+            this .getBrowser () .getSphereOptions () .addInterest ("requestRebuild", this);
+         else
+            this .getBrowser () .getSphereOptions () .removeInterest ("requestRebuild", this);
+      },
+      build: function ()
+      {
+         var
+            options  = this .getBrowser () .getSphereOptions (),
+            geometry = options .getGeometry (),
+            radius   = this .radius_ .getValue ();
 
-			this .setMultiTexCoords (geometry .getMultiTexCoords ());
-			this .setNormals        (geometry .getNormals ());
+         this .setMultiTexCoords (geometry .getMultiTexCoords ());
+         this .setNormals        (geometry .getNormals ());
 
-			if (radius === 1)
-			{
-				this .setVertices (geometry .getVertices ());
+         if (radius === 1)
+         {
+            this .setVertices (geometry .getVertices ());
 
-				this .getMin () .assign (geometry .getMin ());
-				this .getMax () .assign (geometry .getMax ());
-			}
-			else
-			{
-				var
-					defaultVertices = geometry .getVertices () .getValue (),
-					vertexArray     = this .getVertices ();
+            this .getMin () .assign (geometry .getMin ());
+            this .getMax () .assign (geometry .getMax ());
+         }
+         else
+         {
+            var
+               defaultVertices = geometry .getVertices () .getValue (),
+               vertexArray     = this .getVertices ();
 
-				for (var i = 0; i < defaultVertices .length; i += 4)
-				{
-					vertexArray .push (radius * defaultVertices [i],
-					                   radius * defaultVertices [i + 1],
-					                   radius * defaultVertices [i + 2],
-					                   1);
-				}
+            for (var i = 0; i < defaultVertices .length; i += 4)
+            {
+               vertexArray .push (radius * defaultVertices [i],
+                                  radius * defaultVertices [i + 1],
+                                  radius * defaultVertices [i + 2],
+                                  1);
+            }
 
-				radius = Math .abs (radius);
+            radius = Math .abs (radius);
 
-				this .getMin () .set (-radius, -radius, -radius);
-				this .getMax () .set ( radius,  radius,  radius);
-			}
+            this .getMin () .set (-radius, -radius, -radius);
+            this .getMax () .set ( radius,  radius,  radius);
+         }
 
-			this .setSolid (this .solid_ .getValue ());
-		},
-	});
+         this .setSolid (this .solid_ .getValue ());
+      },
+   });
 
-	return Sphere;
+   return Sphere;
 });

@@ -48,15 +48,15 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
-	"standard/Math/Geometry/Triangle3",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Algorithm",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
+   "standard/Math/Geometry/Triangle3",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -70,190 +70,190 @@ function (Fields,
 {
 "use strict";
 
-	function SurfaceEmitter (executionContext)
-	{
-		X3DParticleEmitterNode .call (this, executionContext);
+   function SurfaceEmitter (executionContext)
+   {
+      X3DParticleEmitterNode .call (this, executionContext);
 
-		this .addType (X3DConstants .SurfaceEmitter);
+      this .addType (X3DConstants .SurfaceEmitter);
 
-		this .speed_       .setUnit ("speed");
-		this .mass_        .setUnit ("mass");
-		this .surfaceArea_ .setUnit ("area");
+      this .speed_       .setUnit ("speed");
+      this .mass_        .setUnit ("mass");
+      this .surfaceArea_ .setUnit ("area");
 
-		this .surfaceNode    = null;
-		this .areaSoFarArray = [ 0 ];
-		this .direction      = new Vector3 (0, 0, 0);
-	}
+      this .surfaceNode    = null;
+      this .areaSoFarArray = [ 0 ];
+      this .direction      = new Vector3 (0, 0, 0);
+   }
 
-	SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
-	{
-		constructor: SurfaceEmitter,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",   new Fields .SFFloat (0.25)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "mass",        new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "surfaceArea", new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "surface",     new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "SurfaceEmitter";
-		},
-		getComponentName: function ()
-		{
-			return "ParticleSystems";
-		},
-		getContainerField: function ()
-		{
-			return "emitter";
-		},
-		initialize: function ()
-		{
-			X3DParticleEmitterNode .prototype .initialize .call (this);
+   SurfaceEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+   {
+      constructor: SurfaceEmitter,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",   new Fields .SFFloat (0.25)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "mass",        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "surfaceArea", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "surface",     new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "SurfaceEmitter";
+      },
+      getComponentName: function ()
+      {
+         return "ParticleSystems";
+      },
+      getContainerField: function ()
+      {
+         return "emitter";
+      },
+      initialize: function ()
+      {
+         X3DParticleEmitterNode .prototype .initialize .call (this);
 
-			this .surface_ .addInterest ("set_surface__", this);
+         this .surface_ .addInterest ("set_surface__", this);
 
-			this .set_surface__ ();
-		},
-		set_surface__: function ()
-		{
-			if (this .surfaceNode)
-				this .surfaceNode .rebuild_ .removeInterest ("set_geometry__", this);
+         this .set_surface__ ();
+      },
+      set_surface__: function ()
+      {
+         if (this .surfaceNode)
+            this .surfaceNode .rebuild_ .removeInterest ("set_geometry__", this);
 
-			this .surfaceNode = X3DCast (X3DConstants .X3DGeometryNode, this .surface_);
+         this .surfaceNode = X3DCast (X3DConstants .X3DGeometryNode, this .surface_);
 
-			if (this .surfaceNode)
-				this .surfaceNode .rebuild_ .addInterest ("set_geometry__", this);
+         if (this .surfaceNode)
+            this .surfaceNode .rebuild_ .addInterest ("set_geometry__", this);
 
-			this .set_geometry__ ();
-		},
-		set_geometry__: (function ()
-		{
-			var
-				vertex1  = new Vector3 (0, 0, 0),
-				vertex2  = new Vector3 (0, 0, 0),
-				vertex3  = new Vector3 (0, 0, 0);
+         this .set_geometry__ ();
+      },
+      set_geometry__: (function ()
+      {
+         var
+            vertex1  = new Vector3 (0, 0, 0),
+            vertex2  = new Vector3 (0, 0, 0),
+            vertex3  = new Vector3 (0, 0, 0);
 
-			return function ()
-			{
-				if (this .surfaceNode)
-				{
-					delete this .getRandomPosition;
-					delete this .getRandomVelocity;
+         return function ()
+         {
+            if (this .surfaceNode)
+            {
+               delete this .getRandomPosition;
+               delete this .getRandomVelocity;
 
-					var
-						areaSoFar      = 0,
-						areaSoFarArray = this .areaSoFarArray,
-						vertices       = this .surfaceNode .getVertices () .getValue ();
+               var
+                  areaSoFar      = 0,
+                  areaSoFarArray = this .areaSoFarArray,
+                  vertices       = this .surfaceNode .getVertices () .getValue ();
 
-					this .normals  = this .surfaceNode .getNormals () .getValue ();
-					this .vertices = vertices;
+               this .normals  = this .surfaceNode .getNormals () .getValue ();
+               this .vertices = vertices;
 
-					areaSoFarArray .length = 1;
+               areaSoFarArray .length = 1;
 
-					for (var i = 0, length = vertices .length; i < length; i += 12)
-					{
-						vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
-						vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
-						vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
+               for (var i = 0, length = vertices .length; i < length; i += 12)
+               {
+                  vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
+                  vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+                  vertex3 .set (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
 
-						areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
-						areaSoFarArray .push (areaSoFar);
-					}
-				}
-				else
-				{
-					this .getRandomPosition = getPosition;
-					this .getRandomVelocity = this .getSphericalRandomVelocity;
-				}
-			};
-		})(),
-		getRandomPosition: function (position)
-		{
-			// Determine index0.
+                  areaSoFar += Triangle3 .area (vertex1, vertex2, vertex3);
+                  areaSoFarArray .push (areaSoFar);
+               }
+            }
+            else
+            {
+               this .getRandomPosition = getPosition;
+               this .getRandomVelocity = this .getSphericalRandomVelocity;
+            }
+         };
+      })(),
+      getRandomPosition: function (position)
+      {
+         // Determine index0.
 
-			var
-				areaSoFarArray = this .areaSoFarArray,
-				length         = areaSoFarArray .length,
-				fraction       = Math .random () * areaSoFarArray .at (-1),
-				index0         = 0;
+         var
+            areaSoFarArray = this .areaSoFarArray,
+            length         = areaSoFarArray .length,
+            fraction       = Math .random () * areaSoFarArray .at (-1),
+            index0         = 0;
 
-			if (length == 1 || fraction <= areaSoFarArray [0])
-			{
-				index0 = 0;
-			}
-			else if (fraction >= areaSoFarArray .at (-1))
-			{
-				index0 = length - 2;
-			}
-			else
-			{
-				var index = Algorithm .upperBound (areaSoFarArray, 0, length, fraction, Algorithm .less);
+         if (length == 1 || fraction <= areaSoFarArray [0])
+         {
+            index0 = 0;
+         }
+         else if (fraction >= areaSoFarArray .at (-1))
+         {
+            index0 = length - 2;
+         }
+         else
+         {
+            var index = Algorithm .upperBound (areaSoFarArray, 0, length, fraction, Algorithm .less);
 
-				if (index < length)
-				{
-					index0 = index - 1;
-				}
-				else
-				{
-					index0 = 0;
-				}
-			}
+            if (index < length)
+            {
+               index0 = index - 1;
+            }
+            else
+            {
+               index0 = 0;
+            }
+         }
 
-			// Random barycentric coordinates.
+         // Random barycentric coordinates.
 
-			var
-				u = Math .random (),
-				v = Math .random ();
+         var
+            u = Math .random (),
+            v = Math .random ();
 
-			if (u + v > 1)
-			{
-				u = 1 - u;
-				v = 1 - v;
-			}
+         if (u + v > 1)
+         {
+            u = 1 - u;
+            v = 1 - v;
+         }
 
-			var t = 1 - u - v;
+         var t = 1 - u - v;
 
-			// Interpolate and set position.
+         // Interpolate and set position.
 
-			var
-				i        = index0 * 12,
-				vertices = this .vertices;
+         var
+            i        = index0 * 12,
+            vertices = this .vertices;
 
-			position .x = u * vertices [i]     + v * vertices [i + 4] + t * vertices [i + 8];
-			position .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
-			position .z = u * vertices [i + 2] + v * vertices [i + 6] + t * vertices [i + 10];
+         position .x = u * vertices [i]     + v * vertices [i + 4] + t * vertices [i + 8];
+         position .y = u * vertices [i + 1] + v * vertices [i + 5] + t * vertices [i + 9];
+         position .z = u * vertices [i + 2] + v * vertices [i + 6] + t * vertices [i + 10];
 
-			var
-				i         = index0 * 9,
-				normals   = this .normals,
-				direction = this .direction;
+         var
+            i         = index0 * 9,
+            normals   = this .normals,
+            direction = this .direction;
 
-			direction .x = u * normals [i]     + v * normals [i + 3] + t * normals [i + 6];
-			direction .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
-			direction .z = u * normals [i + 2] + v * normals [i + 5] + t * normals [i + 8];
+         direction .x = u * normals [i]     + v * normals [i + 3] + t * normals [i + 6];
+         direction .y = u * normals [i + 1] + v * normals [i + 4] + t * normals [i + 7];
+         direction .z = u * normals [i + 2] + v * normals [i + 5] + t * normals [i + 8];
 
-			return position;
-		},
-		getRandomVelocity: function (velocity)
-		{
-			var
-				speed     = this .getRandomSpeed (),
-				direction = this .direction;
+         return position;
+      },
+      getRandomVelocity: function (velocity)
+      {
+         var
+            speed     = this .getRandomSpeed (),
+            direction = this .direction;
 
-			velocity .x = direction .x * speed;
-			velocity .y = direction .y * speed;
-			velocity .z = direction .z * speed;
+         velocity .x = direction .x * speed;
+         velocity .y = direction .y * speed;
+         velocity .z = direction .z * speed;
 
-			return velocity;
- 		},
-	});
+         return velocity;
+       },
+   });
 
-	function getPosition (position)
-	{
-		return position .set (0, 0, 0);
-	}
+   function getPosition (position)
+   {
+      return position .set (0, 0, 0);
+   }
 
-	return SurfaceEmitter;
+   return SurfaceEmitter;
 });

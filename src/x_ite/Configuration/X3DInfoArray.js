@@ -48,148 +48,148 @@
 
 
 define ([
-	"x_ite/Base/X3DObject",
+   "x_ite/Base/X3DObject",
 ],
 function (X3DObject)
 {
 "use strict";
 
-	const handler =
-	{
-		get: function (target, key)
-		{
-			let value = target [key];
+   const handler =
+   {
+      get: function (target, key)
+      {
+         let value = target [key];
 
-			if (value !== undefined)
-				return value;
+         if (value !== undefined)
+            return value;
 
-			value = target .array [key];
+         value = target .array [key];
 
-			if (value !== undefined)
-				return value;
+         if (value !== undefined)
+            return value;
 
-			return target .index .get (key);
-		},
-		set: function (target, key, value)
-		{
-			return false;
-		},
-		has: function (target, key)
-		{
-			if (Number .isInteger (+key))
-				return key < target .array .length;
+         return target .index .get (key);
+      },
+      set: function (target, key, value)
+      {
+         return false;
+      },
+      has: function (target, key)
+      {
+         if (Number .isInteger (+key))
+            return key < target .array .length;
 
-			return key in target;
-		},
-	};
+         return key in target;
+      },
+   };
 
-	function X3DInfoArray ()
-	{
-		this .array = [ ];
-		this .index = new Map ();
+   function X3DInfoArray ()
+   {
+      this .array = [ ];
+      this .index = new Map ();
 
-		return new Proxy (this, handler);
-	}
+      return new Proxy (this, handler);
+   }
 
-	X3DInfoArray .prototype = Object .assign (Object .create (X3DObject .prototype),
-	{
-		constructor: X3DInfoArray,
-		getValue: function ()
-		{
-			return this .array;
-		},
-		has: function (key)
-		{
-			return this .index .has (key);
-		},
-		get: function (key)
-		{
-			return this .index .get (key);
-		},
-		add: function (key, value)
-		{
-			this .array .push (value);
-			this .index .set (key, value);
-			this .processInterests ();
-		},
-		addAlias: function (alias, key)
-		{
-			this .index .set (alias, this .index .get (key));
-			this .processInterests ();
-		},
-		update: function (oldKey, newKey, value)
-		{
-			const oldValue = this .index .get (oldKey);
+   X3DInfoArray .prototype = Object .assign (Object .create (X3DObject .prototype),
+   {
+      constructor: X3DInfoArray,
+      getValue: function ()
+      {
+         return this .array;
+      },
+      has: function (key)
+      {
+         return this .index .has (key);
+      },
+      get: function (key)
+      {
+         return this .index .get (key);
+      },
+      add: function (key, value)
+      {
+         this .array .push (value);
+         this .index .set (key, value);
+         this .processInterests ();
+      },
+      addAlias: function (alias, key)
+      {
+         this .index .set (alias, this .index .get (key));
+         this .processInterests ();
+      },
+      update: function (oldKey, newKey, value)
+      {
+         const oldValue = this .index .get (oldKey);
 
-			if (oldKey !== newKey)
-				this .remove (newKey);
+         if (oldKey !== newKey)
+            this .remove (newKey);
 
-			this .index .delete (oldKey);
-			this .index .set (newKey, value);
+         this .index .delete (oldKey);
+         this .index .set (newKey, value);
 
-			if (oldValue !== undefined)
-			{
-				const index = this .array .indexOf (oldValue);
+         if (oldValue !== undefined)
+         {
+            const index = this .array .indexOf (oldValue);
 
-				if (index > -1)
-					this .array [index] = value;
-			}
-			else
-			{
-				this .array .push (value);
-			}
+            if (index > -1)
+               this .array [index] = value;
+         }
+         else
+         {
+            this .array .push (value);
+         }
 
-			this .processInterests ();
-		},
-		remove: function (key)
-		{
-			const value = this .index .get (key);
+         this .processInterests ();
+      },
+      remove: function (key)
+      {
+         const value = this .index .get (key);
 
-			if (value === undefined)
-				return;
+         if (value === undefined)
+            return;
 
-			const index = this .array .indexOf (value);
+         const index = this .array .indexOf (value);
 
-			this .index .delete (key);
+         this .index .delete (key);
 
-			if (index > -1)
-				this .array .splice (index, 1);
+         if (index > -1)
+            this .array .splice (index, 1);
 
-			this .processInterests ();
-		},
-		toVRMLStream: function (stream)
-		{
-			this .array .forEach (function (value)
-			{
-				try
-				{
-					value .toVRMLStream (stream);
+         this .processInterests ();
+      },
+      toVRMLStream: function (stream)
+      {
+         this .array .forEach (function (value)
+         {
+            try
+            {
+               value .toVRMLStream (stream);
 
-					stream .string += "\n";
-				}
-				catch (error)
-				{
-					console .log (error);
-				}
-			});
-		},
-		toXMLStream: function (stream)
-		{
-			this .array .forEach (function (value)
-			{
-				try
-				{
-					value .toXMLStream (stream);
+               stream .string += "\n";
+            }
+            catch (error)
+            {
+               console .log (error);
+            }
+         });
+      },
+      toXMLStream: function (stream)
+      {
+         this .array .forEach (function (value)
+         {
+            try
+            {
+               value .toXMLStream (stream);
 
-					stream .string += "\n";
-				}
-				catch (error)
-				{
-					console .log (error);
-				}
-			});
-		},
-	});
+               stream .string += "\n";
+            }
+            catch (error)
+            {
+               console .log (error);
+            }
+         });
+      },
+   });
 
-	return X3DInfoArray;
+   return X3DInfoArray;
 });

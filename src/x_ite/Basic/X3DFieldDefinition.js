@@ -48,28 +48,28 @@
 
 
 define ([
-	"x_ite/Base/X3DObject",
+   "x_ite/Base/X3DObject",
 ],
 function (X3DObject)
 {
 "use strict";
 
-	function X3DFieldDefinition (accessType, name, value)
-	{
-		this .accessType  = accessType;
-		this .dataType    = value .getType ();
-		this .name        = name;
-		this .value       = value;
-	}
+   function X3DFieldDefinition (accessType, name, value)
+   {
+      this .accessType  = accessType;
+      this .dataType    = value .getType ();
+      this .name        = name;
+      this .value       = value;
+   }
 
-	X3DFieldDefinition .prototype = Object .assign (Object .create (X3DObject .prototype),
-	{
-		constructor: X3DFieldDefinition,
-		getTypeName: function ()
-		{
-			return "X3DFieldDefinition";
-		},
-	});
+   X3DFieldDefinition .prototype = Object .assign (Object .create (X3DObject .prototype),
+   {
+      constructor: X3DFieldDefinition,
+      getTypeName: function ()
+      {
+         return "X3DFieldDefinition";
+      },
+   });
 
-	return X3DFieldDefinition;
+   return X3DFieldDefinition;
 });

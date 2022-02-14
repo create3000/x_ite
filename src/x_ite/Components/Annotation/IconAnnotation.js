@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Annotation/X3DAnnotationNode",
-	"x_ite/Components/Networking/X3DUrlObject",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Annotation/X3DAnnotationNode",
+   "x_ite/Components/Networking/X3DUrlObject",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,47 +64,47 @@ function (Fields,
 {
 "use strict";
 
-	function IconAnnotation (executionContext)
-	{
-		X3DAnnotationNode .call (this, executionContext);
-		X3DUrlObject      .call (this, executionContext);
+   function IconAnnotation (executionContext)
+   {
+      X3DAnnotationNode .call (this, executionContext);
+      X3DUrlObject      .call (this, executionContext);
 
-		this .addType (X3DConstants .IconAnnotation);
-	}
+      this .addType (X3DConstants .IconAnnotation);
+   }
 
-	IconAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .prototype),
-		X3DUrlObject .prototype,
-	{
-		constructor: IconAnnotation,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "annotationGroupID",    new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "displayPolicy",        new Fields .SFString ("NEVER")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-		]),
-		getTypeName: function ()
-		{
-			return "IconAnnotation";
-		},
-		getComponentName: function ()
-		{
-			return "Annotation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DAnnotationNode .prototype .initialize .call (this);
-			X3DUrlObject      .prototype .initialize .call (this);
-		},
-		requestImmediateLoad: function (cache = true)
-		{ },
-	});
+   IconAnnotation .prototype = Object .assign (Object .create (X3DAnnotationNode .prototype),
+      X3DUrlObject .prototype,
+   {
+      constructor: IconAnnotation,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "annotationGroupID",    new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "displayPolicy",        new Fields .SFString ("NEVER")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+      ]),
+      getTypeName: function ()
+      {
+         return "IconAnnotation";
+      },
+      getComponentName: function ()
+      {
+         return "Annotation";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DAnnotationNode .prototype .initialize .call (this);
+         X3DUrlObject      .prototype .initialize .call (this);
+      },
+      requestImmediateLoad: function (cache = true)
+      { },
+   });
 
-	return IconAnnotation;
+   return IconAnnotation;
 });

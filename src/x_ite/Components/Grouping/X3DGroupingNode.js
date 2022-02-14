@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Components/Grouping/X3DBoundedObject",
-	"x_ite/Bits/TraverseType",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Components/Grouping/X3DBoundedObject",
+   "x_ite/Bits/TraverseType",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
 ],
 function (X3DChildNode,
           X3DBoundedObject,
@@ -62,658 +62,658 @@ function (X3DChildNode,
 {
 "use strict";
 
-	function getId (value) { return value ? value .getValue () .getId () : -1; }
+   function getId (value) { return value ? value .getValue () .getId () : -1; }
 
-	function remove (array, first, last, range, rfirst, rlast)
-	{
-		const set = { };
+   function remove (array, first, last, range, rfirst, rlast)
+   {
+      const set = { };
 
-		for (let i = rfirst; i < rlast; ++ i)
-			set [getId (range [i])] = true;
+      for (let i = rfirst; i < rlast; ++ i)
+         set [getId (range [i])] = true;
 
-		function compare (value) { return set [getId (value)]; }
+      function compare (value) { return set [getId (value)]; }
 
-		return array .remove (first, last, compare);
-	}
+      return array .remove (first, last, compare);
+   }
 
-	function X3DGroupingNode (executionContext)
-	{
-		X3DChildNode     .call (this, executionContext);
-		X3DBoundedObject .call (this, executionContext);
+   function X3DGroupingNode (executionContext)
+   {
+      X3DChildNode     .call (this, executionContext);
+      X3DBoundedObject .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DGroupingNode);
+      this .addType (X3DConstants .X3DGroupingNode);
 
-		this .hidden                    = false;
-		this .allowedTypes              = new Set ();
-		this .clipPlaneNodes            = [ ];
-		this .localFogNodes             = [ ];
-		this .lightNodes                = [ ];
-		this .textureProjectorNodes     = [ ];
-		this .pointingDeviceSensorNodes = [ ];
-		this .maybeCameraObjects        = [ ];
-		this .cameraObjects             = [ ];
-		this .maybePickableSensorNodes  = [ ];
-		this .pickableSensorNodes       = [ ];
-		this .pickableObjects           = [ ];
-		this .childNodes                = [ ];
-		this .displayNodes              = [ ];
-		this .visibleNodes              = [ ];
-		this .boundedObjects            = [ ];
-	}
+      this .hidden                    = false;
+      this .allowedTypes              = new Set ();
+      this .clipPlaneNodes            = [ ];
+      this .localFogNodes             = [ ];
+      this .lightNodes                = [ ];
+      this .textureProjectorNodes     = [ ];
+      this .pointingDeviceSensorNodes = [ ];
+      this .maybeCameraObjects        = [ ];
+      this .cameraObjects             = [ ];
+      this .maybePickableSensorNodes  = [ ];
+      this .pickableSensorNodes       = [ ];
+      this .pickableObjects           = [ ];
+      this .childNodes                = [ ];
+      this .displayNodes              = [ ];
+      this .visibleNodes              = [ ];
+      this .boundedObjects            = [ ];
+   }
 
-	X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-		X3DBoundedObject .prototype,
-	{
-		constructor: X3DGroupingNode,
-		initialize: function ()
-		{
-			X3DChildNode     .prototype .initialize .call (this);
-			X3DBoundedObject .prototype .initialize .call (this);
+   X3DGroupingNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+      X3DBoundedObject .prototype,
+   {
+      constructor: X3DGroupingNode,
+      initialize: function ()
+      {
+         X3DChildNode     .prototype .initialize .call (this);
+         X3DBoundedObject .prototype .initialize .call (this);
 
-			this .transformSensors_changed_ .addInterest ("set_transformSensors__", this);
+         this .transformSensors_changed_ .addInterest ("set_transformSensors__", this);
 
-			this .addChildren_    .addInterest ("set_addChildren__",    this);
-			this .removeChildren_ .addInterest ("set_removeChildren__", this);
-			this .children_       .addInterest ("set_children__",       this);
+         this .addChildren_    .addInterest ("set_addChildren__",    this);
+         this .removeChildren_ .addInterest ("set_removeChildren__", this);
+         this .children_       .addInterest ("set_children__",       this);
 
-			this .set_children__ ();
-		},
-		getBBox: function (bbox, shadow)
-		{
-			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
-				return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadow);
+         this .set_children__ ();
+      },
+      getBBox: function (bbox, shadow)
+      {
+         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+            return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadow);
 
-			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
-		},
-		setHidden: function (value)
-		{
-			if (value !== this .hidden)
-			{
-				this .hidden = value;
+         return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+      },
+      setHidden: function (value)
+      {
+         if (value !== this .hidden)
+         {
+            this .hidden = value;
 
-				this .set_children__ ();
-			}
-		},
-		setAllowedTypes: function (/* type, ... */)
-		{
-			const allowedTypes = this .allowedTypes;
+            this .set_children__ ();
+         }
+      },
+      setAllowedTypes: function (/* type, ... */)
+      {
+         const allowedTypes = this .allowedTypes;
 
-			allowedTypes .clear ();
+         allowedTypes .clear ();
 
-			for (const type of arguments)
-				allowedTypes .add (type);
-		},
-		set_addChildren__: function ()
-		{
-			if (this .addChildren_ .length === 0)
-				return;
+         for (const type of arguments)
+            allowedTypes .add (type);
+      },
+      set_addChildren__: function ()
+      {
+         if (this .addChildren_ .length === 0)
+            return;
 
-			this .addChildren_ .setTainted (true);
-			this .addChildren_ .erase (remove (this .addChildren_, 0, this .addChildren_ .length,
-			                                   this .children_,    0, this .children_    .length),
-			                           this .addChildren_ .length);
+         this .addChildren_ .setTainted (true);
+         this .addChildren_ .erase (remove (this .addChildren_, 0, this .addChildren_ .length,
+                                            this .children_,    0, this .children_    .length),
+                                    this .addChildren_ .length);
 
-			if (! this .children_ .getTainted ())
-			{
-				this .children_ .removeInterest ("set_children__", this);
-				this .children_ .addInterest ("connectChildren", this);
-			}
+         if (! this .children_ .getTainted ())
+         {
+            this .children_ .removeInterest ("set_children__", this);
+            this .children_ .addInterest ("connectChildren", this);
+         }
 
-			this .children_ .insert (this .children_ .length, this .addChildren_, 0, this .addChildren_ .length);
-			this .add (this .addChildren_);
+         this .children_ .insert (this .children_ .length, this .addChildren_, 0, this .addChildren_ .length);
+         this .add (this .addChildren_);
 
-			this .addChildren_ .set ([ ]);
-			this .addChildren_ .setTainted (false);
-		},
-		set_removeChildren__: function ()
-		{
-			if (this .removeChildren_ .length === 0)
-				return;
+         this .addChildren_ .set ([ ]);
+         this .addChildren_ .setTainted (false);
+      },
+      set_removeChildren__: function ()
+      {
+         if (this .removeChildren_ .length === 0)
+            return;
 
-			if (this .children_ .length > 0)
-			{
-				if (! this .children_ .getTainted ())
-				{
-					this .children_ .removeInterest ("set_children__", this);
-					this .children_ .addInterest ("connectChildren", this);
-				}
+         if (this .children_ .length > 0)
+         {
+            if (! this .children_ .getTainted ())
+            {
+               this .children_ .removeInterest ("set_children__", this);
+               this .children_ .addInterest ("connectChildren", this);
+            }
 
-				this .children_ .erase (remove (this .children_,       0, this .children_ .length,
-														  this .removeChildren_, 0, this .removeChildren_ .length),
-												this .children_ .length);
+            this .children_ .erase (remove (this .children_,       0, this .children_ .length,
+                                            this .removeChildren_, 0, this .removeChildren_ .length),
+                                    this .children_ .length);
 
-				this .remove (this .removeChildren_);
-			}
+            this .remove (this .removeChildren_);
+         }
 
-			this .removeChildren_ .set ([ ]);
-		},
-		set_children__: function ()
-		{
-			this .clear ();
-			this .add (this .children_);
-		},
-		connectChildren: function ()
-		{
-			this .children_ .removeInterest ("connectChildren", this);
-			this .children_ .addInterest ("set_children__", this);
-		},
-		clear: function ()
-		{
-			for (const maybePickableSensorNode of this .maybePickableSensorNodes)
-				maybePickableSensorNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+         this .removeChildren_ .set ([ ]);
+      },
+      set_children__: function ()
+      {
+         this .clear ();
+         this .add (this .children_);
+      },
+      connectChildren: function ()
+      {
+         this .children_ .removeInterest ("connectChildren", this);
+         this .children_ .addInterest ("set_children__", this);
+      },
+      clear: function ()
+      {
+         for (const maybePickableSensorNode of this .maybePickableSensorNodes)
+            maybePickableSensorNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
 
-			for (const childNode of this .childNodes)
-			{
-				childNode .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
-				childNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+         for (const childNode of this .childNodes)
+         {
+            childNode .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
+            childNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
 
-				if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
-				{
-					childNode .visible_     .removeInterest ("set_visibles__",      this);
-					childNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__",  this);
-				}
-			}
+            if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+            {
+               childNode .visible_     .removeInterest ("set_visibles__",      this);
+               childNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__",  this);
+            }
+         }
 
-			this .clipPlaneNodes            .length = 0;
-			this .localFogNodes             .length = 0;
-			this .lightNodes                .length = 0;
-			this .textureProjectorNodes     .length = 0;
-			this .pointingDeviceSensorNodes .length = 0;
-			this .maybeCameraObjects        .length = 0;
-			this .maybePickableSensorNodes  .length = 0;
-			this .childNodes                .length = 0;
-		},
-		add: function (children)
-		{
-			if (this .hidden)
-				return;
+         this .clipPlaneNodes            .length = 0;
+         this .localFogNodes             .length = 0;
+         this .lightNodes                .length = 0;
+         this .textureProjectorNodes     .length = 0;
+         this .pointingDeviceSensorNodes .length = 0;
+         this .maybeCameraObjects        .length = 0;
+         this .maybePickableSensorNodes  .length = 0;
+         this .childNodes                .length = 0;
+      },
+      add: function (children)
+      {
+         if (this .hidden)
+            return;
 
-			for (const child of children)
-			{
-				if (child)
-				{
-					try
-					{
-						const
-							innerNode = child .getValue () .getInnerNode (),
-							type      = innerNode .getType ();
+         for (const child of children)
+         {
+            if (child)
+            {
+               try
+               {
+                  const
+                     innerNode = child .getValue () .getInnerNode (),
+                     type      = innerNode .getType ();
 
-						for (let t = type .length - 1; t >= 0; -- t)
-						{
+                  for (let t = type .length - 1; t >= 0; -- t)
+                  {
 //							if (this .allowedTypes .size)
 //							{
 //								if (! innerNode .isType (this .allowedTypes))
 //									continue;
 //							}
 
-							switch (type [t])
-							{
-								case X3DConstants .X3DPointingDeviceSensorNode:
-								{
-									this .pointingDeviceSensorNodes .push (innerNode);
-									break;
-								}
-								case X3DConstants .ClipPlane:
-								{
-									this .clipPlaneNodes .push (innerNode);
-									break;
-								}
-								case X3DConstants .LocalFog:
-								{
-									this .localFogNodes .push (innerNode);
-									break;
-								}
-								case X3DConstants .X3DTextureProjectorNode:
-								{
-									this .textureProjectorNodes .push (innerNode);
-									break;
-								}
-								case X3DConstants .X3DLightNode:
-								{
-									this .lightNodes .push (innerNode);
-									break;
-								}
-								case X3DConstants .X3DBindableNode:
-								{
-									this .maybeCameraObjects .push (innerNode);
-									break;
-								}
-								case X3DConstants .TransformSensor:
-								case X3DConstants .X3DPickSensorNode:
-								{
-									innerNode .isPickableObject_ .addInterest ("set_pickableObjects__", this);
-
-									this .maybePickableSensorNodes .push (innerNode);
-									break;
-								}
-								case X3DConstants .X3DBackgroundNode:
-								case X3DConstants .X3DChildNode:
-								{
-									innerNode .isCameraObject_   .addInterest ("set_cameraObjects__",   this);
-									innerNode .isPickableObject_ .addInterest ("set_pickableObjects__", this);
-
-									if (X3DCast (X3DConstants .X3DBoundedObject, innerNode))
-									{
-										innerNode .visible_     .addInterest ("set_visibles__",     this);
-										innerNode .bboxDisplay_ .addInterest ("set_bboxDisplays__", this);
-									}
-
-									this .maybeCameraObjects .push (innerNode);
-									this .childNodes .push (innerNode);
-									break;
-								}
-								case X3DConstants .BooleanFilter:
-								case X3DConstants .BooleanToggle:
-								case X3DConstants .NurbsOrientationInterpolator:
-								case X3DConstants .NurbsPositionInterpolator:
-								case X3DConstants .NurbsSurfaceInterpolator:
-								case X3DConstants .TimeSensor:
-								case X3DConstants .X3DFollowerNode:
-								case X3DConstants .X3DInfoNode:
-								case X3DConstants .X3DInterpolatorNode:
-								case X3DConstants .X3DKeyDeviceSensorNode:
-								case X3DConstants .X3DLayoutNode:
-								case X3DConstants .X3DScriptNode:
-								case X3DConstants .X3DSequencerNode:
-								case X3DConstants .X3DTriggerNode:
-									break;
-								default:
-									continue;
-							}
-
-							break;
-						}
-					}
-					catch (error)
-					{ }
-				}
-			}
-
-			this .set_pickableObjects__ ()
-			this .set_displayNodes__ ()
-			this .set_visibles__ ()
-			this .set_bboxDisplays__ ();
-		},
-		remove: function (children)
-		{
-			for (const child of children)
-			{
-				if (child)
-				{
-					try
-					{
-						const
-							innerNode = child .getValue () .getInnerNode (),
-							type      = innerNode .getType ();
-
-						for (let t = type .length - 1; t >= 0; -- t)
-						{
-							switch (type [t])
-							{
-								case X3DConstants .X3DPointingDeviceSensorNode:
-								{
-									const index = this .pointingDeviceSensorNodes .indexOf (innerNode);
-
-									if (index >= 0)
-										this .pointingDeviceSensorNodes .splice (index, 1);
-
-									break;
-								}
-								case X3DConstants .ClipPlane:
-								{
-									const index = this .clipPlaneNodes .indexOf (innerNode);
-
-									if (index >= 0)
-										this .clipPlaneNodes .splice (index, 1);
-
-									break;
-								}
-								case X3DConstants .LocalFog:
-								{
-									const index = this .localFogNodes .indexOf (innerNode);
-
-									if (index >= 0)
-										this .localFogNodes .splice (index, 1);
-
-									break;
-								}
-								case X3DConstants .X3DTextureProjectorNode:
-								{
-									const index = this .textureProjectorNodes .indexOf (innerNode);
-
-									if (index >= 0)
-										this .textureProjectorNodes .splice (index, 1);
-
-									break;
-								}
-								case X3DConstants .X3DLightNode:
-								{
-									const index = this .lightNodes .indexOf (innerNode);
-
-									if (index >= 0)
-										this .lightNodes .splice (index, 1);
-
-									break;
-								}
-								case X3DConstants .X3DBindableNode:
-								{
-									const index = this .maybeCameraObjects .indexOf (innerNode);
-
-									if (index >= 0)
-										this .maybeCameraObjects .splice (index, 1);
-
-									break;
-								}
-								case X3DConstants .TransformSensor:
-								case X3DConstants .X3DPickSensorNode:
-								{
-									innerNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
-
-									const index = this .maybePickableSensorNodes .indexOf (innerNode);
-
-									if (index >= 0)
-										this .maybePickableSensorNodes .splice (index, 1);
-
-									break;
-								}
-								case X3DConstants .X3DBackgroundNode:
-								case X3DConstants .X3DChildNode:
-								{
-									innerNode .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
-									innerNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
-
-									if (X3DCast (X3DConstants .X3DBoundedObject, innerNode))
-									{
-										innerNode .visible_     .removeInterest ("set_visibles__",     this);
-										innerNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__", this);
-									}
-
-									var index = this .maybeCameraObjects .indexOf (innerNode);
-
-									if (index >= 0)
-										this .maybeCameraObjects .splice (index, 1);
-
-									var index = this .childNodes .indexOf (innerNode);
-
-									if (index >= 0)
-										this .childNodes .splice (index, 1);
-
-									break;
-								}
-								case X3DConstants .BooleanFilter:
-								case X3DConstants .BooleanToggle:
-								case X3DConstants .NurbsOrientationInterpolator:
-								case X3DConstants .NurbsPositionInterpolator:
-								case X3DConstants .NurbsSurfaceInterpolator:
-								case X3DConstants .TimeSensor:
-								case X3DConstants .X3DFollowerNode:
-								case X3DConstants .X3DInfoNode:
-								case X3DConstants .X3DInterpolatorNode:
-								case X3DConstants .X3DKeyDeviceSensorNode:
-								case X3DConstants .X3DLayoutNode:
-								case X3DConstants .X3DScriptNode:
-								case X3DConstants .X3DSequencerNode:
-								case X3DConstants .X3DTriggerNode:
-									break;
-								default:
-									continue;
-							}
-
-							break;
-						}
-					}
-					catch (error)
-					{ }
-				}
-			}
-
-			this .set_pickableObjects__ ();
-			this .set_displayNodes__ ();
-			this .set_visibles__ ();
-			this .set_bboxDisplays__ ();
-		},
-		set_cameraObjects__: function ()
-		{
-			const cameraObjects = this .cameraObjects;
-
-			cameraObjects .length = 0;
-
-			for (const childNode of this .maybeCameraObjects)
-			{
-				if (childNode .getCameraObject ())
-				{
-					if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
-					{
-						if (childNode .visible_ .getValue ())
-						{
-							cameraObjects .push (childNode);
-						}
-					}
-					else
-					{
-						cameraObjects .push (childNode);
-					}
-				}
-			}
-
-			this .setCameraObject (Boolean (cameraObjects .length));
-		},
-		set_pickableObjects__: function ()
-		{
-			const
-				pickableSensorNodes = this .pickableSensorNodes,
-				pickableObjects     = this .pickableObjects;
-
-			pickableSensorNodes .length = 0;
-			pickableObjects     .length = 0;
-
-			for (const sensorNode of this .maybePickableSensorNodes)
-			{
-				if (sensorNode .getPickableObject ())
-					pickableSensorNodes .push (sensorNode);
-			}
-
-			for (const childNode of this .childNodes)
-			{
-				if (childNode .getPickableObject ())
-					pickableObjects .push (childNode);
-			}
-
-			this .set_transformSensors__ ()
-		},
-		set_transformSensors__: function ()
-		{
-			this .setPickableObject (Boolean (this .getTransformSensors () .size || this .pickableSensorNodes .length || this .pickableObjects .length));
-		},
-		set_displayNodes__: function ()
-		{
-			const displayNodes = this .displayNodes;
-
-			displayNodes .length = 0;
-
-			for (const node of this .clipPlaneNodes)
-				displayNodes .push (node);
-
-			for (const node of this .localFogNodes)
-				displayNodes .push (node);
-
-			for (const node of this .lightNodes)
-				displayNodes .push (node);
-
-			for (const node of this .textureProjectorNodes)
-				displayNodes .push (node);
-		},
-		set_visibles__: function ()
-		{
-			const
-				childNodes   = this .childNodes,
-				visibleNodes = this .visibleNodes;
-
-			visibleNodes .length = 0;
-
-			for (const childNode of childNodes)
-			{
-				if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
-				{
-					if (childNode .visible_ .getValue ())
-					{
-						visibleNodes .push (childNode);
-					}
-				}
-				else
-				{
-					visibleNodes .push (childNode);
-				}
-			}
-
-			this .set_cameraObjects__ ();
-		},
-		set_bboxDisplays__: function ()
-		{
-			const boundedObjects = this .boundedObjects;
-
-			boundedObjects .length = 0;
-
-			for (const childNode of this .childNodes)
-			{
-				if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
-				{
-					if (childNode .bboxDisplay_ .getValue ())
-					{
-						boundedObjects .push (childNode);
-					}
-				}
-			}
-		},
-		traverse: function (type, renderObject)
-		{
-			switch (type)
-			{
-				case TraverseType .POINTER:
-				{
-					const
-						pointingDeviceSensorNodes = this .pointingDeviceSensorNodes,
-						clipPlaneNodes            = this .clipPlaneNodes;
-
-					if (pointingDeviceSensorNodes .length)
-					{
-						const sensors = { };
-
-						renderObject .getBrowser () .getSensors () .push (sensors);
-
-						for (const pointingDeviceSensorNode of pointingDeviceSensorNodes)
-							pointingDeviceSensorNode .push (renderObject, sensors);
-					}
-
-					for (const clipPlaneNode of clipPlaneNodes)
-						clipPlaneNode .push (renderObject);
-
-					for (const childNode of this .childNodes)
-						childNode .traverse (type, renderObject);
-
-					for (const clipPlaneNode of clipPlaneNodes)
-						clipPlaneNode .pop (renderObject);
-
-					if (pointingDeviceSensorNodes .length)
-						renderObject .getBrowser () .getSensors () .pop ();
-
-					return;
-				}
-				case TraverseType .CAMERA:
-				{
-					for (const cameraObject of this .cameraObjects)
-						cameraObject .traverse (type, renderObject);
-
-					return;
-				}
-				case TraverseType .PICKING:
-				{
-					if (this .getTransformSensors () .size)
-					{
-						const modelMatrix = renderObject .getModelViewMatrix () .get ();
-
-						for (const transformSensorNode of this .getTransformSensors ())
-							transformSensorNode .collect (modelMatrix);
-					}
-
-					for (const pickableSensorNode of this .pickableSensorNodes)
-						pickableSensorNode .traverse (type, renderObject);
-
-					const
-						browser          = renderObject .getBrowser (),
-						pickingHierarchy = browser .getPickingHierarchy ();
-
-					pickingHierarchy .push (this);
-
-					if (browser .getPickable () .at (-1))
-					{
-						for (const childNode of this .childNodes)
-							childNode .traverse (type, renderObject);
-					}
-					else
-					{
-						for (const pickableObject of this .pickableObjects)
-							pickableObject .traverse (type, renderObject);
-					}
-
-					pickingHierarchy .pop ();
-					return;
-				}
-				case TraverseType .COLLISION:
-				{
-					const clipPlaneNodes = this .clipPlaneNodes;
-
-					for (const clipPlaneNode of clipPlaneNodes)
-						clipPlaneNode .push (renderObject);
-
-					for (const childNode of this .childNodes)
-						childNode .traverse (type, renderObject);
-
-					for (const clipPlaneNode of clipPlaneNodes)
-						clipPlaneNode .pop (renderObject);
-
-					return;
-				}
-				case TraverseType .SHADOW:
-				{
-					// Nodes that are not visible do not cast shadows.
-
-					const clipPlaneNodes = this .clipPlaneNodes;
-
-					for (const clipPlaneNode of clipPlaneNodes)
-						clipPlaneNode .push (renderObject);
-
-					for (const visibleNode of this .visibleNodes)
-						visibleNode .traverse (type, renderObject);
-
-					for (const clipPlaneNode of clipPlaneNodes)
-						clipPlaneNode .push (renderObject);
-
-					return;
-				}
-				case TraverseType .DISPLAY:
-				{
-					const displayNodes = this .displayNodes;
-
-					for (const displayNode of displayNodes)
-						displayNode .push (renderObject, this);
-
-					for (const visibleNode of this .visibleNodes)
-						visibleNode .traverse (type, renderObject);
-
-					for (const boundedObject of this .boundedObjects)
-						boundedObject .displayBBox (type, renderObject);
-
-					for (const displayNode of displayNodes)
-						displayNode .pop (renderObject);
-
-					return;
-				}
-			}
-		},
-	});
-
-	X3DGroupingNode .prototype .getSubBBox = X3DGroupingNode .prototype .getBBox;
-
-	return X3DGroupingNode;
+                     switch (type [t])
+                     {
+                        case X3DConstants .X3DPointingDeviceSensorNode:
+                        {
+                           this .pointingDeviceSensorNodes .push (innerNode);
+                           break;
+                        }
+                        case X3DConstants .ClipPlane:
+                        {
+                           this .clipPlaneNodes .push (innerNode);
+                           break;
+                        }
+                        case X3DConstants .LocalFog:
+                        {
+                           this .localFogNodes .push (innerNode);
+                           break;
+                        }
+                        case X3DConstants .X3DTextureProjectorNode:
+                        {
+                           this .textureProjectorNodes .push (innerNode);
+                           break;
+                        }
+                        case X3DConstants .X3DLightNode:
+                        {
+                           this .lightNodes .push (innerNode);
+                           break;
+                        }
+                        case X3DConstants .X3DBindableNode:
+                        {
+                           this .maybeCameraObjects .push (innerNode);
+                           break;
+                        }
+                        case X3DConstants .TransformSensor:
+                        case X3DConstants .X3DPickSensorNode:
+                        {
+                           innerNode .isPickableObject_ .addInterest ("set_pickableObjects__", this);
+
+                           this .maybePickableSensorNodes .push (innerNode);
+                           break;
+                        }
+                        case X3DConstants .X3DBackgroundNode:
+                        case X3DConstants .X3DChildNode:
+                        {
+                           innerNode .isCameraObject_   .addInterest ("set_cameraObjects__",   this);
+                           innerNode .isPickableObject_ .addInterest ("set_pickableObjects__", this);
+
+                           if (X3DCast (X3DConstants .X3DBoundedObject, innerNode))
+                           {
+                              innerNode .visible_     .addInterest ("set_visibles__",     this);
+                              innerNode .bboxDisplay_ .addInterest ("set_bboxDisplays__", this);
+                           }
+
+                           this .maybeCameraObjects .push (innerNode);
+                           this .childNodes .push (innerNode);
+                           break;
+                        }
+                        case X3DConstants .BooleanFilter:
+                        case X3DConstants .BooleanToggle:
+                        case X3DConstants .NurbsOrientationInterpolator:
+                        case X3DConstants .NurbsPositionInterpolator:
+                        case X3DConstants .NurbsSurfaceInterpolator:
+                        case X3DConstants .TimeSensor:
+                        case X3DConstants .X3DFollowerNode:
+                        case X3DConstants .X3DInfoNode:
+                        case X3DConstants .X3DInterpolatorNode:
+                        case X3DConstants .X3DKeyDeviceSensorNode:
+                        case X3DConstants .X3DLayoutNode:
+                        case X3DConstants .X3DScriptNode:
+                        case X3DConstants .X3DSequencerNode:
+                        case X3DConstants .X3DTriggerNode:
+                           break;
+                        default:
+                           continue;
+                     }
+
+                     break;
+                  }
+               }
+               catch (error)
+               { }
+            }
+         }
+
+         this .set_pickableObjects__ ()
+         this .set_displayNodes__ ()
+         this .set_visibles__ ()
+         this .set_bboxDisplays__ ();
+      },
+      remove: function (children)
+      {
+         for (const child of children)
+         {
+            if (child)
+            {
+               try
+               {
+                  const
+                     innerNode = child .getValue () .getInnerNode (),
+                     type      = innerNode .getType ();
+
+                  for (let t = type .length - 1; t >= 0; -- t)
+                  {
+                     switch (type [t])
+                     {
+                        case X3DConstants .X3DPointingDeviceSensorNode:
+                        {
+                           const index = this .pointingDeviceSensorNodes .indexOf (innerNode);
+
+                           if (index >= 0)
+                              this .pointingDeviceSensorNodes .splice (index, 1);
+
+                           break;
+                        }
+                        case X3DConstants .ClipPlane:
+                        {
+                           const index = this .clipPlaneNodes .indexOf (innerNode);
+
+                           if (index >= 0)
+                              this .clipPlaneNodes .splice (index, 1);
+
+                           break;
+                        }
+                        case X3DConstants .LocalFog:
+                        {
+                           const index = this .localFogNodes .indexOf (innerNode);
+
+                           if (index >= 0)
+                              this .localFogNodes .splice (index, 1);
+
+                           break;
+                        }
+                        case X3DConstants .X3DTextureProjectorNode:
+                        {
+                           const index = this .textureProjectorNodes .indexOf (innerNode);
+
+                           if (index >= 0)
+                              this .textureProjectorNodes .splice (index, 1);
+
+                           break;
+                        }
+                        case X3DConstants .X3DLightNode:
+                        {
+                           const index = this .lightNodes .indexOf (innerNode);
+
+                           if (index >= 0)
+                              this .lightNodes .splice (index, 1);
+
+                           break;
+                        }
+                        case X3DConstants .X3DBindableNode:
+                        {
+                           const index = this .maybeCameraObjects .indexOf (innerNode);
+
+                           if (index >= 0)
+                              this .maybeCameraObjects .splice (index, 1);
+
+                           break;
+                        }
+                        case X3DConstants .TransformSensor:
+                        case X3DConstants .X3DPickSensorNode:
+                        {
+                           innerNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+
+                           const index = this .maybePickableSensorNodes .indexOf (innerNode);
+
+                           if (index >= 0)
+                              this .maybePickableSensorNodes .splice (index, 1);
+
+                           break;
+                        }
+                        case X3DConstants .X3DBackgroundNode:
+                        case X3DConstants .X3DChildNode:
+                        {
+                           innerNode .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
+                           innerNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+
+                           if (X3DCast (X3DConstants .X3DBoundedObject, innerNode))
+                           {
+                              innerNode .visible_     .removeInterest ("set_visibles__",     this);
+                              innerNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__", this);
+                           }
+
+                           var index = this .maybeCameraObjects .indexOf (innerNode);
+
+                           if (index >= 0)
+                              this .maybeCameraObjects .splice (index, 1);
+
+                           var index = this .childNodes .indexOf (innerNode);
+
+                           if (index >= 0)
+                              this .childNodes .splice (index, 1);
+
+                           break;
+                        }
+                        case X3DConstants .BooleanFilter:
+                        case X3DConstants .BooleanToggle:
+                        case X3DConstants .NurbsOrientationInterpolator:
+                        case X3DConstants .NurbsPositionInterpolator:
+                        case X3DConstants .NurbsSurfaceInterpolator:
+                        case X3DConstants .TimeSensor:
+                        case X3DConstants .X3DFollowerNode:
+                        case X3DConstants .X3DInfoNode:
+                        case X3DConstants .X3DInterpolatorNode:
+                        case X3DConstants .X3DKeyDeviceSensorNode:
+                        case X3DConstants .X3DLayoutNode:
+                        case X3DConstants .X3DScriptNode:
+                        case X3DConstants .X3DSequencerNode:
+                        case X3DConstants .X3DTriggerNode:
+                           break;
+                        default:
+                           continue;
+                     }
+
+                     break;
+                  }
+               }
+               catch (error)
+               { }
+            }
+         }
+
+         this .set_pickableObjects__ ();
+         this .set_displayNodes__ ();
+         this .set_visibles__ ();
+         this .set_bboxDisplays__ ();
+      },
+      set_cameraObjects__: function ()
+      {
+         const cameraObjects = this .cameraObjects;
+
+         cameraObjects .length = 0;
+
+         for (const childNode of this .maybeCameraObjects)
+         {
+            if (childNode .getCameraObject ())
+            {
+               if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+               {
+                  if (childNode .visible_ .getValue ())
+                  {
+                     cameraObjects .push (childNode);
+                  }
+               }
+               else
+               {
+                  cameraObjects .push (childNode);
+               }
+            }
+         }
+
+         this .setCameraObject (Boolean (cameraObjects .length));
+      },
+      set_pickableObjects__: function ()
+      {
+         const
+            pickableSensorNodes = this .pickableSensorNodes,
+            pickableObjects     = this .pickableObjects;
+
+         pickableSensorNodes .length = 0;
+         pickableObjects     .length = 0;
+
+         for (const sensorNode of this .maybePickableSensorNodes)
+         {
+            if (sensorNode .getPickableObject ())
+               pickableSensorNodes .push (sensorNode);
+         }
+
+         for (const childNode of this .childNodes)
+         {
+            if (childNode .getPickableObject ())
+               pickableObjects .push (childNode);
+         }
+
+         this .set_transformSensors__ ()
+      },
+      set_transformSensors__: function ()
+      {
+         this .setPickableObject (Boolean (this .getTransformSensors () .size || this .pickableSensorNodes .length || this .pickableObjects .length));
+      },
+      set_displayNodes__: function ()
+      {
+         const displayNodes = this .displayNodes;
+
+         displayNodes .length = 0;
+
+         for (const node of this .clipPlaneNodes)
+            displayNodes .push (node);
+
+         for (const node of this .localFogNodes)
+            displayNodes .push (node);
+
+         for (const node of this .lightNodes)
+            displayNodes .push (node);
+
+         for (const node of this .textureProjectorNodes)
+            displayNodes .push (node);
+      },
+      set_visibles__: function ()
+      {
+         const
+            childNodes   = this .childNodes,
+            visibleNodes = this .visibleNodes;
+
+         visibleNodes .length = 0;
+
+         for (const childNode of childNodes)
+         {
+            if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+            {
+               if (childNode .visible_ .getValue ())
+               {
+                  visibleNodes .push (childNode);
+               }
+            }
+            else
+            {
+               visibleNodes .push (childNode);
+            }
+         }
+
+         this .set_cameraObjects__ ();
+      },
+      set_bboxDisplays__: function ()
+      {
+         const boundedObjects = this .boundedObjects;
+
+         boundedObjects .length = 0;
+
+         for (const childNode of this .childNodes)
+         {
+            if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
+            {
+               if (childNode .bboxDisplay_ .getValue ())
+               {
+                  boundedObjects .push (childNode);
+               }
+            }
+         }
+      },
+      traverse: function (type, renderObject)
+      {
+         switch (type)
+         {
+            case TraverseType .POINTER:
+            {
+               const
+                  pointingDeviceSensorNodes = this .pointingDeviceSensorNodes,
+                  clipPlaneNodes            = this .clipPlaneNodes;
+
+               if (pointingDeviceSensorNodes .length)
+               {
+                  const sensors = { };
+
+                  renderObject .getBrowser () .getSensors () .push (sensors);
+
+                  for (const pointingDeviceSensorNode of pointingDeviceSensorNodes)
+                     pointingDeviceSensorNode .push (renderObject, sensors);
+               }
+
+               for (const clipPlaneNode of clipPlaneNodes)
+                  clipPlaneNode .push (renderObject);
+
+               for (const childNode of this .childNodes)
+                  childNode .traverse (type, renderObject);
+
+               for (const clipPlaneNode of clipPlaneNodes)
+                  clipPlaneNode .pop (renderObject);
+
+               if (pointingDeviceSensorNodes .length)
+                  renderObject .getBrowser () .getSensors () .pop ();
+
+               return;
+            }
+            case TraverseType .CAMERA:
+            {
+               for (const cameraObject of this .cameraObjects)
+                  cameraObject .traverse (type, renderObject);
+
+               return;
+            }
+            case TraverseType .PICKING:
+            {
+               if (this .getTransformSensors () .size)
+               {
+                  const modelMatrix = renderObject .getModelViewMatrix () .get ();
+
+                  for (const transformSensorNode of this .getTransformSensors ())
+                     transformSensorNode .collect (modelMatrix);
+               }
+
+               for (const pickableSensorNode of this .pickableSensorNodes)
+                  pickableSensorNode .traverse (type, renderObject);
+
+               const
+                  browser          = renderObject .getBrowser (),
+                  pickingHierarchy = browser .getPickingHierarchy ();
+
+               pickingHierarchy .push (this);
+
+               if (browser .getPickable () .at (-1))
+               {
+                  for (const childNode of this .childNodes)
+                     childNode .traverse (type, renderObject);
+               }
+               else
+               {
+                  for (const pickableObject of this .pickableObjects)
+                     pickableObject .traverse (type, renderObject);
+               }
+
+               pickingHierarchy .pop ();
+               return;
+            }
+            case TraverseType .COLLISION:
+            {
+               const clipPlaneNodes = this .clipPlaneNodes;
+
+               for (const clipPlaneNode of clipPlaneNodes)
+                  clipPlaneNode .push (renderObject);
+
+               for (const childNode of this .childNodes)
+                  childNode .traverse (type, renderObject);
+
+               for (const clipPlaneNode of clipPlaneNodes)
+                  clipPlaneNode .pop (renderObject);
+
+               return;
+            }
+            case TraverseType .SHADOW:
+            {
+               // Nodes that are not visible do not cast shadows.
+
+               const clipPlaneNodes = this .clipPlaneNodes;
+
+               for (const clipPlaneNode of clipPlaneNodes)
+                  clipPlaneNode .push (renderObject);
+
+               for (const visibleNode of this .visibleNodes)
+                  visibleNode .traverse (type, renderObject);
+
+               for (const clipPlaneNode of clipPlaneNodes)
+                  clipPlaneNode .push (renderObject);
+
+               return;
+            }
+            case TraverseType .DISPLAY:
+            {
+               const displayNodes = this .displayNodes;
+
+               for (const displayNode of displayNodes)
+                  displayNode .push (renderObject, this);
+
+               for (const visibleNode of this .visibleNodes)
+                  visibleNode .traverse (type, renderObject);
+
+               for (const boundedObject of this .boundedObjects)
+                  boundedObject .displayBBox (type, renderObject);
+
+               for (const displayNode of displayNodes)
+                  displayNode .pop (renderObject);
+
+               return;
+            }
+         }
+      },
+   });
+
+   X3DGroupingNode .prototype .getSubBBox = X3DGroupingNode .prototype .getBBox;
+
+   return X3DGroupingNode;
 });

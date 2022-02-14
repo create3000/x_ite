@@ -51,14 +51,14 @@ define (function ()
 {
 "use strict";
 
-	var i = 0;
+   var i = 0;
 
-	var FunctionType =
-	{
-		DEFAULT:        i ++,
-		COMPLEMENT:     i ++,
-		ALPHAREPLICATE: i ++,
-	};
+   var FunctionType =
+   {
+      DEFAULT:        i ++,
+      COMPLEMENT:     i ++,
+      ALPHAREPLICATE: i ++,
+   };
 
-	return FunctionType;
+   return FunctionType;
 });

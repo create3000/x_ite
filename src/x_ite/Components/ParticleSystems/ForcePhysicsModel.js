@@ -48,60 +48,58 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DParticlePhysicsModelNode, 
+          X3DParticlePhysicsModelNode,
           X3DConstants)
 {
 "use strict";
 
-	function ForcePhysicsModel (executionContext)
-	{
-		X3DParticlePhysicsModelNode .call (this, executionContext);
+   function ForcePhysicsModel (executionContext)
+   {
+      X3DParticlePhysicsModelNode .call (this, executionContext);
 
-		this .addType (X3DConstants .ForcePhysicsModel);
+      this .addType (X3DConstants .ForcePhysicsModel);
 
-		this .force_ .setUnit ("force");
-	}
+      this .force_ .setUnit ("force");
+   }
 
-	ForcePhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
-	{
-		constructor: ForcePhysicsModel,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "force",    new Fields .SFVec3f (0, -9.8, 0)),
-		]),
-		getTypeName: function ()
-		{
-			return "ForcePhysicsModel";
-		},
-		getComponentName: function ()
-		{
-			return "ParticleSystems";
-		},
-		getContainerField: function ()
-		{
-			return "physics";
-		},
-		addForce: function (i, emitterNode, forces, turbulences)
-		{
-			if (this .enabled_ .getValue ())
-			{
-				forces      [i] .assign (this .force_ .getValue ());
-				turbulences [i] = 0;
-			}
-		},
-	});
+   ForcePhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
+   {
+      constructor: ForcePhysicsModel,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "force",    new Fields .SFVec3f (0, -9.8, 0)),
+      ]),
+      getTypeName: function ()
+      {
+         return "ForcePhysicsModel";
+      },
+      getComponentName: function ()
+      {
+         return "ParticleSystems";
+      },
+      getContainerField: function ()
+      {
+         return "physics";
+      },
+      addForce: function (i, emitterNode, forces, turbulences)
+      {
+         if (this .enabled_ .getValue ())
+         {
+            forces      [i] .assign (this .force_ .getValue ());
+            turbulences [i] = 0;
+         }
+      },
+   });
 
-	return ForcePhysicsModel;
+   return ForcePhysicsModel;
 });
-
-

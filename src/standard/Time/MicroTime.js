@@ -51,31 +51,31 @@ define (function ()
 {
 "use strict";
 
-	// Return a pseudo accurate timestamp.
+   // Return a pseudo accurate timestamp.
 
-	performance .now = (function ()
-	{
-		const now = performance .now;
+   performance .now = (function ()
+   {
+      const now = performance .now;
 
-		let
-			offset = 0,
-			last   = 0;
+      let
+         offset = 0,
+         last   = 0;
 
-		return function ()
-		{
-			const current = now .call (this);
+      return function ()
+      {
+         const current = now .call (this);
 
-			if (current > last)
-			{
-				offset = 0;
-				last   = current;
+         if (current > last)
+         {
+            offset = 0;
+            last   = current;
 
-				return current;
-			}
-			else
-			{
-				return last = current + (++ offset / 1000);
-			}
-		};
-	})();
+            return current;
+         }
+         else
+         {
+            return last = current + (++ offset / 1000);
+         }
+      };
+   })();
 });

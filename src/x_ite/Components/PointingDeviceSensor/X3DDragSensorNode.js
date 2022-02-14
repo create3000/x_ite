@@ -48,29 +48,27 @@
 
 
 define ([
-	"x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
+   "x_ite/Bits/X3DConstants",
 ],
-function (X3DPointingDeviceSensorNode, 
+function (X3DPointingDeviceSensorNode,
           X3DConstants)
 {
 "use strict";
 
-	function X3DDragSensorNode (executionContext)
-	{
-		X3DPointingDeviceSensorNode .call (this, executionContext);
+   function X3DDragSensorNode (executionContext)
+   {
+      X3DPointingDeviceSensorNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DDragSensorNode);
+      this .addType (X3DConstants .X3DDragSensorNode);
 
-		this .trackPoint_changed_ .setUnit ("length");
-	}
+      this .trackPoint_changed_ .setUnit ("length");
+   }
 
-	X3DDragSensorNode .prototype = Object .assign (Object .create (X3DPointingDeviceSensorNode .prototype),
-	{
-		constructor: X3DDragSensorNode,
-	});
+   X3DDragSensorNode .prototype = Object .assign (Object .create (X3DPointingDeviceSensorNode .prototype),
+   {
+      constructor: X3DDragSensorNode,
+   });
 
-	return X3DDragSensorNode;
+   return X3DDragSensorNode;
 });
-
-

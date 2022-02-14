@@ -48,70 +48,70 @@
 
 
 define ([
-	"x_ite/Base/X3DObject",
-	"x_ite/InputOutput/Generator",
+   "x_ite/Base/X3DObject",
+   "x_ite/InputOutput/Generator",
 ],
 function (X3DObject,
           Generator)
 {
 "use strict";
 
-	function UnitInfo (category, name, conversionFactor)
-	{
-		Object .defineProperty (this, "category", {
-		    value: category,
-		    writable: false,
-		});
+   function UnitInfo (category, name, conversionFactor)
+   {
+      Object .defineProperty (this, "category", {
+          value: category,
+          writable: false,
+      });
 
-		this .name             = name;
-		this .conversionFactor = conversionFactor;
-	}
+      this .name             = name;
+      this .conversionFactor = conversionFactor;
+   }
 
-	UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
-	{
-		constructor: UnitInfo,
-		getTypeName: function ()
-		{
-			return "UnitInfo";
-		},
-		toVRMLStream: function (stream)
-		{
-			stream .string += "UNIT";
-			stream .string += " ";
-			stream .string += this .category;
-			stream .string += " ";
-			stream .string += this .name;
-			stream .string += " ";
-			stream .string += this .conversionFactor;
-		},
-		toXMLStream: function (stream)
-		{
-			const generator = Generator .Get (stream);
+   UnitInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
+   {
+      constructor: UnitInfo,
+      getTypeName: function ()
+      {
+         return "UnitInfo";
+      },
+      toVRMLStream: function (stream)
+      {
+         stream .string += "UNIT";
+         stream .string += " ";
+         stream .string += this .category;
+         stream .string += " ";
+         stream .string += this .name;
+         stream .string += " ";
+         stream .string += this .conversionFactor;
+      },
+      toXMLStream: function (stream)
+      {
+         const generator = Generator .Get (stream);
 
-			stream .string += generator .Indent ();
-			stream .string += "<unit";
-			stream .string += " ";
-			stream .string += "category='";
-			stream .string += this .category;
-			stream .string += "'";
-			stream .string += " ";
-			stream .string += "name='";
-			stream .string += generator .XMLEncode (this .name);
-			stream .string += "'";
-			stream .string += " ";
-			stream .string += "conversionFactor='";
-			stream .string += this .conversionFactor;
-			stream .string += "'";
-			stream .string += "/>";
-		},
-	});
+         stream .string += generator .Indent ();
+         stream .string += "<unit";
+         stream .string += " ";
+         stream .string += "category='";
+         stream .string += this .category;
+         stream .string += "'";
+         stream .string += " ";
+         stream .string += "name='";
+         stream .string += generator .XMLEncode (this .name);
+         stream .string += "'";
+         stream .string += " ";
+         stream .string += "conversionFactor='";
+         stream .string += this .conversionFactor;
+         stream .string += "'";
+         stream .string += "/>";
+      },
+   });
 
-	Object .defineProperty (UnitInfo .prototype, "conversion_factor",
-	{
-		get: function () { return this .conversionFactor; },
-		enumerable: true,
-		configurable: false
-	});
+   Object .defineProperty (UnitInfo .prototype, "conversion_factor",
+   {
+      get: function () { return this .conversionFactor; },
+      enumerable: true,
+      configurable: false
+   });
 
-	return UnitInfo;
+   return UnitInfo;
 });

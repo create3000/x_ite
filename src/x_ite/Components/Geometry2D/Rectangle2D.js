@@ -48,98 +48,98 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DGeometryNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector2",
-	"standard/Math/Numbers/Vector3",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Rendering/X3DGeometryNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector2",
+   "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DGeometryNode, 
+          X3DGeometryNode,
           X3DConstants,
           Vector2,
           Vector3)
 {
 "use strict";
 
-	var defaultSize = new Vector2 (2, 2);
+   var defaultSize = new Vector2 (2, 2);
 
-	function Rectangle2D (executionContext)
-	{
-		X3DGeometryNode .call (this, executionContext);
+   function Rectangle2D (executionContext)
+   {
+      X3DGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .Rectangle2D);
+      this .addType (X3DConstants .Rectangle2D);
 
-		this .setGeometryType (2);
+      this .setGeometryType (2);
 
-		this .size_ .setUnit ("length");
-	}
+      this .size_ .setUnit ("length");
+   }
 
-	Rectangle2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
-	{
-		constructor: Rectangle2D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "size",     new Fields .SFVec2f (2, 2)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Rectangle2D";
-		},
-		getComponentName: function ()
-		{
-			return "Geometry2D";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-		build: function ()
-		{
-			var
-				options  = this .getBrowser () .getRectangle2DOptions (),
-				geometry = options .getGeometry (),
-				size     = this .size_ .getValue ();
+   Rectangle2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+   {
+      constructor: Rectangle2D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "size",     new Fields .SFVec2f (2, 2)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "Rectangle2D";
+      },
+      getComponentName: function ()
+      {
+         return "Geometry2D";
+      },
+      getContainerField: function ()
+      {
+         return "geometry";
+      },
+      build: function ()
+      {
+         var
+            options  = this .getBrowser () .getRectangle2DOptions (),
+            geometry = options .getGeometry (),
+            size     = this .size_ .getValue ();
 
-			this .setMultiTexCoords (geometry .getMultiTexCoords ());
-			this .setNormals        (geometry .getNormals ());
+         this .setMultiTexCoords (geometry .getMultiTexCoords ());
+         this .setNormals        (geometry .getNormals ());
 
-			if (size .equals (defaultSize))
-			{
-				this .setVertices (geometry .getVertices ());
+         if (size .equals (defaultSize))
+         {
+            this .setVertices (geometry .getVertices ());
 
-				this .getMin () .assign (geometry .getMin ());
-				this .getMax () .assign (geometry .getMax ());
-			}
-			else
-			{
-				var
-					scale           = Vector3 .divide (size, 2),
-					x               = scale .x,
-					y               = scale .y,
-					defaultVertices = geometry .getVertices () .getValue (),
-					vertexArray     = this .getVertices ();
+            this .getMin () .assign (geometry .getMin ());
+            this .getMax () .assign (geometry .getMax ());
+         }
+         else
+         {
+            var
+               scale           = Vector3 .divide (size, 2),
+               x               = scale .x,
+               y               = scale .y,
+               defaultVertices = geometry .getVertices () .getValue (),
+               vertexArray     = this .getVertices ();
 
-				for (var i = 0; i < defaultVertices .length; i += 4)
-				{
-					vertexArray .push (x * defaultVertices [i],
-					                   y * defaultVertices [i + 1],
-					                   defaultVertices [i + 2],
-					                   1);
-				}
-	
-				this .getMin () .set (-x, -y, 0);
-				this .getMax () .set ( x,  y, 0);
-			}
+            for (var i = 0; i < defaultVertices .length; i += 4)
+            {
+               vertexArray .push (x * defaultVertices [i],
+                                  y * defaultVertices [i + 1],
+                                  defaultVertices [i + 2],
+                                  1);
+            }
 
-			this .setSolid (this .solid_ .getValue ());
-		},
-	});
+            this .getMin () .set (-x, -y, 0);
+            this .getMax () .set ( x,  y, 0);
+         }
 
-	return Rectangle2D;
+         this .setSolid (this .solid_ .getValue ());
+      },
+   });
+
+   return Rectangle2D;
 });

@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DNormalNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Rendering/X3DNormalNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,98 +64,98 @@ function (Fields,
 {
 "use strict";
 
-	function Normal (executionContext)
-	{
-		X3DNormalNode .call (this, executionContext);
+   function Normal (executionContext)
+   {
+      X3DNormalNode .call (this, executionContext);
 
-		this .addType (X3DConstants .Normal);
-	}
+      this .addType (X3DConstants .Normal);
+   }
 
-	Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
-	{
-		constructor: Normal,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "vector",   new Fields .MFVec3f ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Normal";
-		},
-		getComponentName: function ()
-		{
-			return "Rendering";
-		},
-		getContainerField: function ()
-		{
-			return "normal";
-		},
-		initialize: function ()
-		{
-			X3DNormalNode .prototype .initialize .call (this);
+   Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
+   {
+      constructor: Normal,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "vector",   new Fields .MFVec3f ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "Normal";
+      },
+      getComponentName: function ()
+      {
+         return "Rendering";
+      },
+      getContainerField: function ()
+      {
+         return "normal";
+      },
+      initialize: function ()
+      {
+         X3DNormalNode .prototype .initialize .call (this);
 
-			this .vector_ .addInterest ("set_vector__", this);
+         this .vector_ .addInterest ("set_vector__", this);
 
-			this .set_vector__ ();
-		},
-		set_vector__: function ()
-		{
-			this .vector = this .vector_ .getValue ();
-			this .length = this .vector_ .length;
-		},
-		set1Vector: function (index, vector)
-		{
-			this .vector_ [index] = vector;
-		},
-		get1Vector: function (index, result)
-		{
-			if (index >= 0 && index < this .length)
-			{
-				const vector = this .vector;
+         this .set_vector__ ();
+      },
+      set_vector__: function ()
+      {
+         this .vector = this .vector_ .getValue ();
+         this .length = this .vector_ .length;
+      },
+      set1Vector: function (index, vector)
+      {
+         this .vector_ [index] = vector;
+      },
+      get1Vector: function (index, result)
+      {
+         if (index >= 0 && index < this .length)
+         {
+            const vector = this .vector;
 
-				index *= 3;
+            index *= 3;
 
-				return result .set (vector [index], vector [index + 1], vector [index + 2]);
-			}
-			else if (index >= 0 && this .length)
-			{
-				const vector = this .vector;
+            return result .set (vector [index], vector [index + 1], vector [index + 2]);
+         }
+         else if (index >= 0 && this .length)
+         {
+            const vector = this .vector;
 
-				index %= this .length;
-				index *= 3;
+            index %= this .length;
+            index *= 3;
 
-				return result .set (vector [index], vector [index + 1], vector [index + 2]);
-			}
-			else
-			{
-				return result .set (0, 0, 0);
-			}
-		},
-		addVector: function (index, array)
-		{
-			if (index >= 0 && index < this .length)
-			{
-				const vector = this .vector;
+            return result .set (vector [index], vector [index + 1], vector [index + 2]);
+         }
+         else
+         {
+            return result .set (0, 0, 0);
+         }
+      },
+      addVector: function (index, array)
+      {
+         if (index >= 0 && index < this .length)
+         {
+            const vector = this .vector;
 
-				index *= 3;
+            index *= 3;
 
-				array .push (vector [index], vector [index + 1], vector [index + 2]);
-			}
-			else if (index >= 0 && this .length)
-			{
-				const vector = this .vector;
+            array .push (vector [index], vector [index + 1], vector [index + 2]);
+         }
+         else if (index >= 0 && this .length)
+         {
+            const vector = this .vector;
 
-				index %= this .length;
-				index *= 3;
+            index %= this .length;
+            index *= 3;
 
-				array .push (vector [index], vector [index + 1], vector [index + 2]);
-			}
-			else
-			{
-				return array .push (0, 0, 0);
-			}
-		},
-	});
+            array .push (vector [index], vector [index + 1], vector [index + 2]);
+         }
+         else
+         {
+            return array .push (0, 0, 0);
+         }
+      },
+   });
 
-	return Normal;
+   return Normal;
 });

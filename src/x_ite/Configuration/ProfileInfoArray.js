@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Configuration/ComponentInfoArray",
-	"x_ite/Configuration/ProfileInfo",
-	"x_ite/Configuration/X3DInfoArray",
+   "x_ite/Configuration/ComponentInfoArray",
+   "x_ite/Configuration/ProfileInfo",
+   "x_ite/Configuration/X3DInfoArray",
 ],
 function (ComponentInfoArray,
           ProfileInfo,
@@ -58,26 +58,26 @@ function (ComponentInfoArray,
 {
 "use strict";
 
-	function ProfileInfoArray ()
-	{
-		return X3DInfoArray .call (this);
-	}
+   function ProfileInfoArray ()
+   {
+      return X3DInfoArray .call (this);
+   }
 
-	ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-	{
-		constructor: ProfileInfoArray,
-		getTypeName: function ()
-		{
-			return "ProfileInfoArray";
-		},
-		addProfile: function (profile)
-		{
-			this .add (profile .name, new ProfileInfo (profile .name,
-			                                           profile .title,
-			                                           profile .providerUrl,
-			                                           new ComponentInfoArray (profile .components)));
-		},
-	});
+   ProfileInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+   {
+      constructor: ProfileInfoArray,
+      getTypeName: function ()
+      {
+         return "ProfileInfoArray";
+      },
+      addProfile: function (profile)
+      {
+         this .add (profile .name, new ProfileInfo (profile .name,
+                                                    profile .title,
+                                                    profile .providerUrl,
+                                                    new ComponentInfoArray (profile .components)));
+      },
+   });
 
-	return ProfileInfoArray;
+   return ProfileInfoArray;
 });

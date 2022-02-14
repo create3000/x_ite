@@ -51,15 +51,15 @@ define (function ()
 {
 "use strict";
 
-	var i = 0;
+   var i = 0;
 
-	var AlphaMode =
-	{
-		AUTO:   i ++,
-		OPAQUE: i ++,
-		MASK:   i ++,
-		BLEND:  i ++,
-	};
+   var AlphaMode =
+   {
+      AUTO:   i ++,
+      OPAQUE: i ++,
+      MASK:   i ++,
+      BLEND:  i ++,
+   };
 
-	return AlphaMode;
+   return AlphaMode;
 });

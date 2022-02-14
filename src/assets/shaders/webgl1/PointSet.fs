@@ -36,65 +36,65 @@ varying float depth;
 vec4
 getPointColor ()
 {
-	vec4 finalColor = color;
+   vec4 finalColor = color;
 
-	if (x3d_NumTextures > 0)
-	{
-		vec4 texCoord  = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
+   if (x3d_NumTextures > 0)
+   {
+      vec4 texCoord  = vec4 (gl_PointCoord .x, 1.0 - gl_PointCoord .y, 0.0, 1.0);
 
-		texCoord0 = texCoord;
-		texCoord1 = texCoord;
+      texCoord0 = texCoord;
+      texCoord1 = texCoord;
 
-		vec4 textureColor = getTextureColor (vec4 (1.0), vec4 (1.0));
+      vec4 textureColor = getTextureColor (vec4 (1.0), vec4 (1.0));
 
-		if (x3d_PointProperties .colorMode == x3d_PointColor)
-		{
-			finalColor .a *= textureColor .a;
-		}
-		else if (x3d_PointProperties .colorMode == x3d_TextureColor)
-		{
-			finalColor = textureColor;
-		}
-		else // x3d_TextureAndPointColor
-		{
-			finalColor .rgb += textureColor .rgb;
-			finalColor .a   *= textureColor .a;
-		}
-	}
-	else
-	{
-		float ps = (pointSize + 1.0) / 2.0;
-		float t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * ps - ps + 1.0;
+      if (x3d_PointProperties .colorMode == x3d_PointColor)
+      {
+         finalColor .a *= textureColor .a;
+      }
+      else if (x3d_PointProperties .colorMode == x3d_TextureColor)
+      {
+         finalColor = textureColor;
+      }
+      else // x3d_TextureAndPointColor
+      {
+         finalColor .rgb += textureColor .rgb;
+         finalColor .a   *= textureColor .a;
+      }
+   }
+   else
+   {
+      float ps = (pointSize + 1.0) / 2.0;
+      float t  = distance (vec2 (0.5, 0.5), gl_PointCoord) * 2.0 * ps - ps + 1.0;
 
-		finalColor .a = mix (finalColor .a, 0.0, clamp (t, 0.0, 1.0));
-	}
+      finalColor .a = mix (finalColor .a, 0.0, clamp (t, 0.0, 1.0));
+   }
 
-	return finalColor;
+   return finalColor;
 }
 
 void
 main ()
 {
-	clip ();
+   clip ();
 
-	vec4 finalColor = getPointColor ();
+   vec4 finalColor = getPointColor ();
 
-	finalColor .rgb = getFogColor (finalColor .rgb);
+   finalColor .rgb = getFogColor (finalColor .rgb);
 
    if (finalColor .a < x3d_AlphaCutoff)
    {
       discard;
    }
 
-	gl_FragColor = finalColor;
+   gl_FragColor = finalColor;
 
-	// Logarithmic Depth Buffer
+   // Logarithmic Depth Buffer
 
-	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-	//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-	if (x3d_LogarithmicFarFactor1_2 > 0.0)
-		gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
-	else
-		gl_FragDepth = gl_FragCoord .z;
-	#endif
+   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+   //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
+   if (x3d_LogarithmicFarFactor1_2 > 0.0)
+      gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+   else
+      gl_FragDepth = gl_FragCoord .z;
+   #endif
 }

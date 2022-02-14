@@ -51,131 +51,131 @@ define (function ()
 {
 "use strict";
 
-	return function (Type)
-	{
-		function X3DArrayFollowerObject ()
-		{
-			this .array = this .getArray ();
-			this .zero  = this .getVector ();
-		}
+   return function (Type)
+   {
+      function X3DArrayFollowerObject ()
+      {
+         this .array = this .getArray ();
+         this .zero  = this .getVector ();
+      }
 
-		X3DArrayFollowerObject .prototype =
-		{
-			getArray: function ()
-			{
-				var array = [ ];
+      X3DArrayFollowerObject .prototype =
+      {
+         getArray: function ()
+         {
+            var array = [ ];
 
-				array .assign = function (value)
-				{
-					if (Array .isArray (value))
-					{
-						for (var i = 0, length = Math .min (this .length, value .length); i < length; ++ i)
-							this [i] .assign (value [i]);
+            array .assign = function (value)
+            {
+               if (Array .isArray (value))
+               {
+                  for (var i = 0, length = Math .min (this .length, value .length); i < length; ++ i)
+                     this [i] .assign (value [i]);
 
-						for (var i = length, length = value .length; i < length; ++ i)
-							this [i] = value [i] .copy ();
+                  for (var i = length, length = value .length; i < length; ++ i)
+                     this [i] = value [i] .copy ();
 
-						this .length = length;
-					}
-					else
-					{
-						for (var i = 0, length = Math .min (this .length, value .length); i < length; ++ i)
-							this [i] .assign (value [i] .getValue ());
+                  this .length = length;
+               }
+               else
+               {
+                  for (var i = 0, length = Math .min (this .length, value .length); i < length; ++ i)
+                     this [i] .assign (value [i] .getValue ());
 
-						for (var i = length, length = value .length; i < length; ++ i)
-							this [i] = value [i] .getValue () .copy ();
+                  for (var i = length, length = value .length; i < length; ++ i)
+                     this [i] = value [i] .getValue () .copy ();
 
-						this .length = length;
-					}
-				};
+                  this .length = length;
+               }
+            };
 
-				return array;
-			},
-			getValue: function ()
-			{
-				return this .set_value_;
-			},
-			getDestination: function ()
-			{
-				return this .set_destination_;
-			},
-			getInitialValue: function ()
-			{
-				return this .initialValue_;
-			},
-			getInitialDestination: function ()
-			{
-				return this .initialDestination_;
-			},
-			setValue: function (value)
-			{
-				if (Array .isArray (value))
-				{
-					var value_changed = this .value_changed_;
+            return array;
+         },
+         getValue: function ()
+         {
+            return this .set_value_;
+         },
+         getDestination: function ()
+         {
+            return this .set_destination_;
+         },
+         getInitialValue: function ()
+         {
+            return this .initialValue_;
+         },
+         getInitialDestination: function ()
+         {
+            return this .initialDestination_;
+         },
+         setValue: function (value)
+         {
+            if (Array .isArray (value))
+            {
+               var value_changed = this .value_changed_;
 
-					for (var i = 0, length = value .length; i < length; ++ i)
-						value_changed [i] = value [i];
+               for (var i = 0, length = value .length; i < length; ++ i)
+                  value_changed [i] = value [i];
 
-					value_changed .length = length;
-				}
-				else
-				{
-					this .value_changed_ = value;
-				}
-			},
-			duplicate: function (value)
-			{
-				var array = this .getArray ();
+               value_changed .length = length;
+            }
+            else
+            {
+               this .value_changed_ = value;
+            }
+         },
+         duplicate: function (value)
+         {
+            var array = this .getArray ();
 
-				array .assign (value);
+            array .assign (value);
 
-				return array;
-			},
-			equals: function (lhs, rhs, tolerance)
-			{
-				if (lhs .length !== rhs .length)
-					return false;
+            return array;
+         },
+         equals: function (lhs, rhs, tolerance)
+         {
+            if (lhs .length !== rhs .length)
+               return false;
 
-				var
-					a        = this .a,
-					distance = 0;
+            var
+               a        = this .a,
+               distance = 0;
 
-				for (var i = 0, length = lhs .length; i < length; ++ i)
-				  distance = Math .max (a .assign (lhs [i]) .subtract (rhs [i]) .abs ());
+            for (var i = 0, length = lhs .length; i < length; ++ i)
+              distance = Math .max (a .assign (lhs [i]) .subtract (rhs [i]) .abs ());
 
-				return distance < tolerance;
-			},
-			interpolate: function (source, destination, weight)
-			{
-				var array = this .array;
+            return distance < tolerance;
+         },
+         interpolate: function (source, destination, weight)
+         {
+            var array = this .array;
 
-				array .assign (source);
+            array .assign (source);
 
-				for (var i = 0, length = array .length; i < length; ++ i)
-					array [i] .lerp (destination [i] || this .zero, weight);
+            for (var i = 0, length = array .length; i < length; ++ i)
+               array [i] .lerp (destination [i] || this .zero, weight);
 
-				return array;
-			},
-			set_destination__: function ()
-			{
-				var
-					buffers = this .getBuffer (),
-					l       = this .set_destination_ .length;
+            return array;
+         },
+         set_destination__: function ()
+         {
+            var
+               buffers = this .getBuffer (),
+               l       = this .set_destination_ .length;
 
-				for (var i = 0, length = buffers .length; i < length; ++ i)
-				{
-					var buffer = buffers [i];
+            for (var i = 0, length = buffers .length; i < length; ++ i)
+            {
+               var buffer = buffers [i];
 
-					for (var b = buffer .length; b < l; ++ b)
-						buffer [b] = this .getVector ();
+               for (var b = buffer .length; b < l; ++ b)
+                  buffer [b] = this .getVector ();
 
-					buffer .length = l;
-				}
+               buffer .length = l;
+            }
 
-				Type .prototype .set_destination__ .call (this);
-			},
-		};
+            Type .prototype .set_destination__ .call (this);
+         },
+      };
 
-		return X3DArrayFollowerObject;
-	};
+      return X3DArrayFollowerObject;
+   };
 });

@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DColorNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector4",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Rendering/X3DColorNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector4",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,109 +64,109 @@ function (Fields,
 {
 "use strict";
 
-	function Color (executionContext)
-	{
-		X3DColorNode .call (this, executionContext);
+   function Color (executionContext)
+   {
+      X3DColorNode .call (this, executionContext);
 
-		this .addType (X3DConstants .Color);
-	}
+      this .addType (X3DConstants .Color);
+   }
 
-	Color .prototype = Object .assign (Object .create (X3DColorNode .prototype),
-	{
-		constructor: Color,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .MFColor ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Color";
-		},
-		getComponentName: function ()
-		{
-			return "Rendering";
-		},
-		getContainerField: function ()
-		{
-			return "color";
-		},
-		initialize: function ()
-		{
-			X3DColorNode .prototype .initialize .call (this);
+   Color .prototype = Object .assign (Object .create (X3DColorNode .prototype),
+   {
+      constructor: Color,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .MFColor ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "Color";
+      },
+      getComponentName: function ()
+      {
+         return "Rendering";
+      },
+      getContainerField: function ()
+      {
+         return "color";
+      },
+      initialize: function ()
+      {
+         X3DColorNode .prototype .initialize .call (this);
 
-			this .color_ .addInterest ("set_color__", this);
+         this .color_ .addInterest ("set_color__", this);
 
-			this .set_color__ ();
-		},
-		set_color__: function ()
-		{
-			this .color  = this .color_ .getValue ();
-			this .length = this .color_ .length;
-		},
-		addColor: function (index, array)
-		{
-			if (index >= 0 && index < this .length)
-			{
-				const color = this .color;
+         this .set_color__ ();
+      },
+      set_color__: function ()
+      {
+         this .color  = this .color_ .getValue ();
+         this .length = this .color_ .length;
+      },
+      addColor: function (index, array)
+      {
+         if (index >= 0 && index < this .length)
+         {
+            const color = this .color;
 
-				index *= 3;
+            index *= 3;
 
-				array .push (color [index], color [index + 1], color [index + 2], 1);
-			}
-			else if (this .length)
-			{
-				const color = this .color;
+            array .push (color [index], color [index + 1], color [index + 2], 1);
+         }
+         else if (this .length)
+         {
+            const color = this .color;
 
-				index = (this .length - 1) * 3;
+            index = (this .length - 1) * 3;
 
-				array .push (color [index], color [index + 1], color [index + 2], 1);
-			}
-			else
-			{
-				array .push (1, 1, 1, 1);
-			}
-		},
-		addColors: function (array, min)
-		{
-			if (this .length)
-			{
-				const color = this .color;
+            array .push (color [index], color [index + 1], color [index + 2], 1);
+         }
+         else
+         {
+            array .push (1, 1, 1, 1);
+         }
+      },
+      addColors: function (array, min)
+      {
+         if (this .length)
+         {
+            const color = this .color;
 
-				for (var index = 0, length = this .length * 3; index < length; index += 3)
-					array .push (color [index], color [index + 1], color [index + 2], 1);
+            for (var index = 0, length = this .length * 3; index < length; index += 3)
+               array .push (color [index], color [index + 1], color [index + 2], 1);
 
-				var index = (this .length - 1) * 3;
+            var index = (this .length - 1) * 3;
 
-				const
-					r = color [index],
-					g = color [index + 1],
-					b = color [index + 2];
+            const
+               r = color [index],
+               g = color [index + 1],
+               b = color [index + 2];
 
-				for (var index = length, length = min * 3; index < length; index += 3)
-					array .push (r, g, b, 1);
-			}
-			else
-			{
-				for (var index = 0; index < min; ++ index)
-					array .push (1, 1, 1, 1);
-			}
-		},
-		getVectors: function (array)
-		{
-			const color = this .color_;
+            for (var index = length, length = min * 3; index < length; index += 3)
+               array .push (r, g, b, 1);
+         }
+         else
+         {
+            for (var index = 0; index < min; ++ index)
+               array .push (1, 1, 1, 1);
+         }
+      },
+      getVectors: function (array)
+      {
+         const color = this .color_;
 
-			for (var i = 0, length = color .length; i < length; ++ i)
-			{
-				var c = color [i];
+         for (var i = 0, length = color .length; i < length; ++ i)
+         {
+            var c = color [i];
 
-				array [i] = new Vector4 (c .r, c .g, c .b, 1);
-			}
+            array [i] = new Vector4 (c .r, c .g, c .b, 1);
+         }
 
-			array .length = length;
+         array .length = length;
 
-			return array;
-		},
-	});
+         return array;
+      },
+   });
 
-	return Color;
+   return Color;
 });

@@ -48,139 +48,139 @@
 
 
 define ([
-	"x_ite/InputOutput/Generator",
-	"standard/Utility/MapUtilities",
+   "x_ite/InputOutput/Generator",
+   "standard/Utility/MapUtilities",
 ],
 function (Generator,
           MapUtilities)
 {
 "use strict";
 
-	function X3DObject () { }
+   function X3DObject () { }
 
-	X3DObject .prototype =
-	{
-		constructor: X3DObject,
-		_name: "",
-		_interests: new Map (),
-		_interestsTemp: new Map (),
-		getId: function ()
-		{
-			return X3DObject .getId (this);
-		},
-		getTypeName: function ()
-		{
-			return "X3DObject";
-		},
-		setName: function (value)
-		{
-			this ._name = value;
-		},
-		getName: function ()
-		{
-			return this ._name;
-		},
-		hasInterest: function (callbackName, object)
-		{
-			return this ._interests .has (X3DObject .getId (object) + "." + callbackName);
-		},
-		addInterest: function (callbackName, object)
-		{
-			if (!this .hasOwnProperty ("_interests"))
-			{
-				this ._interests     = new Map ();
-				this ._interestsTemp = [ ];
-			}
+   X3DObject .prototype =
+   {
+      constructor: X3DObject,
+      _name: "",
+      _interests: new Map (),
+      _interestsTemp: new Map (),
+      getId: function ()
+      {
+         return X3DObject .getId (this);
+      },
+      getTypeName: function ()
+      {
+         return "X3DObject";
+      },
+      setName: function (value)
+      {
+         this ._name = value;
+      },
+      getName: function ()
+      {
+         return this ._name;
+      },
+      hasInterest: function (callbackName, object)
+      {
+         return this ._interests .has (X3DObject .getId (object) + "." + callbackName);
+      },
+      addInterest: function (callbackName, object)
+      {
+         if (!this .hasOwnProperty ("_interests"))
+         {
+            this ._interests     = new Map ();
+            this ._interestsTemp = [ ];
+         }
 
-			const callback = object [callbackName];
+         const callback = object [callbackName];
 
-			if (arguments .length > 2)
-			{
-				const args = Array .prototype .slice .call (arguments, 0);
+         if (arguments .length > 2)
+         {
+            const args = Array .prototype .slice .call (arguments, 0);
 
-				args [0] = object;
-				args [1] = this;
+            args [0] = object;
+            args [1] = this;
 
-				this ._interests .set (X3DObject .getId (object) + "." + callbackName, Function .prototype .bind .apply (callback, args));
-			}
-			else
-			{
-				this ._interests .set (X3DObject .getId (object) + "." + callbackName, callback .bind (object, this));
-			}
-		},
-		removeInterest: function (callbackName, object)
-		{
-			this ._interests .delete (X3DObject .getId (object) + "." + callbackName);
-		},
-		getInterests: function ()
-		{
-			return this ._interests;
-		},
-		processInterests: (function ()
-		{
-			function processInterest (interest)
-			{
-				interest ();
-			}
+            this ._interests .set (X3DObject .getId (object) + "." + callbackName, Function .prototype .bind .apply (callback, args));
+         }
+         else
+         {
+            this ._interests .set (X3DObject .getId (object) + "." + callbackName, callback .bind (object, this));
+         }
+      },
+      removeInterest: function (callbackName, object)
+      {
+         this ._interests .delete (X3DObject .getId (object) + "." + callbackName);
+      },
+      getInterests: function ()
+      {
+         return this ._interests;
+      },
+      processInterests: (function ()
+      {
+         function processInterest (interest)
+         {
+            interest ();
+         }
 
-			return function ()
-			{
-				if (this ._interests .size)
-					MapUtilities .values (this ._interestsTemp, this ._interests) .forEach (processInterest);
-			};
-		})(),
-		toString: function (scene)
-		{
-			const stream = { string: "" };
+         return function ()
+         {
+            if (this ._interests .size)
+               MapUtilities .values (this ._interestsTemp, this ._interests) .forEach (processInterest);
+         };
+      })(),
+      toString: function (scene)
+      {
+         const stream = { string: "" };
 
-			if (scene)
-				Generator .Get (stream) .PushExecutionContext (scene);
+         if (scene)
+            Generator .Get (stream) .PushExecutionContext (scene);
 
-			this .toStream (stream);
+         this .toStream (stream);
 
-			return stream .string;
-		},
-		toVRMLString: function ()
-		{
-			const stream = { string: "" };
+         return stream .string;
+      },
+      toVRMLString: function ()
+      {
+         const stream = { string: "" };
 
-			this .toVRMLStream (stream);
+         this .toVRMLStream (stream);
 
-			return stream .string;
-		},
-		toXMLString: function ()
-		{
-			const stream = { string: "" };
+         return stream .string;
+      },
+      toXMLString: function ()
+      {
+         const stream = { string: "" };
 
-			this .toXMLStream (stream);
+         this .toXMLStream (stream);
 
-			return stream .string;
-		},
-		toStream: function (stream)
-		{
-			stream .string = "[object " + this .getTypeName () + "]";
-		},
-		dispose: function () { },
-	};
+         return stream .string;
+      },
+      toStream: function (stream)
+      {
+         stream .string = "[object " + this .getTypeName () + "]";
+      },
+      dispose: function () { },
+   };
 
-	X3DObject .getId = (function ()
-	{
-		const map = new WeakMap ();
+   X3DObject .getId = (function ()
+   {
+      const map = new WeakMap ();
 
-		let counter = 0;
+      let counter = 0;
 
-		return function (object)
-		{
-			const id = map .get (object);
+      return function (object)
+      {
+         const id = map .get (object);
 
-			if (id !== undefined)
-				return id;
+         if (id !== undefined)
+            return id;
 
-			map .set (object, ++ counter);
+         map .set (object, ++ counter);
 
-			return counter;
-		};
-	})();
+         return counter;
+      };
+   })();
 
-	return X3DObject;
+   return X3DObject;
 });

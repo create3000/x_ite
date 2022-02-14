@@ -47,11 +47,11 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Lighting/DirectionalLight",
-	"x_ite/Components/Lighting/PointLight",
-	"x_ite/Components/Lighting/SpotLight",
-	"x_ite/Components/Lighting/X3DLightNode",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/Lighting/DirectionalLight",
+   "x_ite/Components/Lighting/PointLight",
+   "x_ite/Components/Lighting/SpotLight",
+   "x_ite/Components/Lighting/X3DLightNode",
 ],
 function (SupportedNodes,
           DirectionalLight,
@@ -61,21 +61,21 @@ function (SupportedNodes,
 {
 "use strict";
 
-	const Types =
-	{
-		DirectionalLight: DirectionalLight,
-		PointLight:       PointLight,
-		SpotLight:        SpotLight,
-	};
+   const Types =
+   {
+      DirectionalLight: DirectionalLight,
+      PointLight:       PointLight,
+      SpotLight:        SpotLight,
+   };
 
-	const AbstractTypes =
-	{
-		X3DLightNode: X3DLightNode,
-	};
+   const AbstractTypes =
+   {
+      X3DLightNode: X3DLightNode,
+   };
 
-	for (const typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]);
+   for (const typeName in Types)
+      SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (const typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   for (const typeName in AbstractTypes)
+      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

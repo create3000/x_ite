@@ -39,9 +39,9 @@ out vec4 x3d_FragColor;
 vec4
 getMaterialColor ()
 {
-	float alpha = 1.0 - x3d_Material .transparency;
+   float alpha = 1.0 - x3d_Material .transparency;
 
-	return getTextureColor (x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .emissiveColor, alpha), vec4 (1.0));
+   return getTextureColor (x3d_ColorMaterial ? vec4 (color .rgb, color .a * alpha) : vec4 (x3d_Material .emissiveColor, alpha), vec4 (1.0));
 }
 
 // DEBUG
@@ -50,36 +50,36 @@ getMaterialColor ()
 void
 main ()
 {
-	clip ();
+   clip ();
 
-	vec4 finalColor = vec4 (0.0);
+   vec4 finalColor = vec4 (0.0);
 
-	finalColor      = getMaterialColor ();
-	finalColor      = getHatchColor (finalColor);
-	finalColor .rgb = getFogColor (finalColor .rgb);
+   finalColor      = getMaterialColor ();
+   finalColor      = getHatchColor (finalColor);
+   finalColor .rgb = getFogColor (finalColor .rgb);
 
    if (finalColor .a < x3d_AlphaCutoff)
    {
       discard;
    }
 
-	x3d_FragColor = finalColor;
+   x3d_FragColor = finalColor;
 
-	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-	//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-	if (x3d_LogarithmicFarFactor1_2 > 0.0)
-		gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
-	else
-		gl_FragDepth = gl_FragCoord .z;
-	#endif
+   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+   //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
+   if (x3d_LogarithmicFarFactor1_2 > 0.0)
+      gl_FragDepth = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+   else
+      gl_FragDepth = gl_FragCoord .z;
+   #endif
 
-	// DEBUG
-	#ifdef X3D_SHADOWS
-	//x3d_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;
-	//x3d_FragColor .rgb = mix (tex .rgb, x3d_FragColor .rgb, 0.5);
-	#endif
+   // DEBUG
+   #ifdef X3D_SHADOWS
+   //x3d_FragColor .rgb = texture2D (x3d_ShadowMap [0], gl_FragCoord .xy / vec2 (x3d_Viewport .zw)) .rgb;
+   //x3d_FragColor .rgb = mix (tex .rgb, x3d_FragColor .rgb, 0.5);
+   #endif
 
-	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-	//x3d_FragColor .rgb = mix (vec3 (1.0, 0.0, 0.0), x3d_FragColor .rgb, 0.5);
-	#endif
+   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+   //x3d_FragColor .rgb = mix (vec3 (1.0, 0.0, 0.0), x3d_FragColor .rgb, 0.5);
+   #endif
 }

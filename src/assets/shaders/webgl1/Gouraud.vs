@@ -49,14 +49,14 @@ varying float depth;
 float
 getSpotFactor (const in float cutOffAngle, const in float beamWidth, const in vec3 L, const in vec3 d)
 {
-	float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));
+   float spotAngle = acos (clamp (dot (-L, d), -1.0, 1.0));
 
-	if (spotAngle >= cutOffAngle)
-		return 0.0;
-	else if (spotAngle <= beamWidth)
-		return 1.0;
+   if (spotAngle >= cutOffAngle)
+      return 0.0;
+   else if (spotAngle <= beamWidth)
+      return 1.0;
 
-	return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);
+   return (spotAngle - cutOffAngle) / (beamWidth - cutOffAngle);
 }
 
 vec4
@@ -64,84 +64,84 @@ getMaterialColor (const in vec3 N,
                   const in vec3 vertex,
                   const in x3d_MaterialParameters material)
 {
-	vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position
+   vec3 V = normalize (-vertex); // normalized vector from point on geometry to viewer's position
 
-	// Calculate diffuseFactor & alpha
+   // Calculate diffuseFactor & alpha
 
-	vec3  diffuseFactor = x3d_ColorMaterial ? x3d_Color .rgb : material .diffuseColor;
-	float alpha         = (1.0 - material .transparency) * (x3d_ColorMaterial ? x3d_Color .a : 1.0);
+   vec3  diffuseFactor = x3d_ColorMaterial ? x3d_Color .rgb : material .diffuseColor;
+   float alpha         = (1.0 - material .transparency) * (x3d_ColorMaterial ? x3d_Color .a : 1.0);
 
-	// Ambient intensity
+   // Ambient intensity
 
-	vec3 ambientTerm = diffuseFactor * material .ambientIntensity;
+   vec3 ambientTerm = diffuseFactor * material .ambientIntensity;
 
-	// Apply light sources
+   // Apply light sources
 
-	vec3 finalColor = vec3 (0.0);
+   vec3 finalColor = vec3 (0.0);
 
-	for (int i = 0; i < x3d_MaxLights; ++ i)
-	{
-		if (i == x3d_NumLights)
-			break;
+   for (int i = 0; i < x3d_MaxLights; ++ i)
+   {
+      if (i == x3d_NumLights)
+         break;
 
-		x3d_LightSourceParameters light = x3d_LightSource [i];
+      x3d_LightSourceParameters light = x3d_LightSource [i];
 
-		vec3  vL = light .location - vertex;
-		float dL = length (light .matrix * vL);
-		bool  di = light .type == x3d_DirectionalLight;
+      vec3  vL = light .location - vertex;
+      float dL = length (light .matrix * vL);
+      bool  di = light .type == x3d_DirectionalLight;
 
-		if (di || dL <= light .radius)
-		{
-			vec3 d = light .direction;
-			vec3 c = light .attenuation;
-			vec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.
-			vec3 H = normalize (L + V);             // Specular term
+      if (di || dL <= light .radius)
+      {
+         vec3 d = light .direction;
+         vec3 c = light .attenuation;
+         vec3 L = di ? -d : normalize (vL);      // Normalized vector from point on geometry to light source i position.
+         vec3 H = normalize (L + V);             // Specular term
 
-			float lightAngle     = max (dot (N, L), 0.0);      // Angle between normal and light ray.
-			vec3  diffuseTerm    = diffuseFactor * lightAngle;
-			float specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;
-			vec3  specularTerm   = material .specularColor * specularFactor;
+         float lightAngle     = max (dot (N, L), 0.0);      // Angle between normal and light ray.
+         vec3  diffuseTerm    = diffuseFactor * lightAngle;
+         float specularFactor = material .shininess > 0.0 ? pow (max (dot (N, H), 0.0), material .shininess * 128.0) : 1.0;
+         vec3  specularTerm   = material .specularColor * specularFactor;
 
-			float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
-			float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
-			float attenuationSpotFactor = attenuationFactor * spotFactor;
-			vec3  ambientColor          = light .ambientIntensity * ambientTerm;
-			vec3  diffuseSpecularColor  = light .intensity * (diffuseTerm + specularTerm);
+         float attenuationFactor     = di ? 1.0 : 1.0 / max (c [0] + c [1] * dL + c [2] * (dL * dL), 1.0);
+         float spotFactor            = light .type == x3d_SpotLight ? getSpotFactor (light .cutOffAngle, light .beamWidth, L, d) : 1.0;
+         float attenuationSpotFactor = attenuationFactor * spotFactor;
+         vec3  ambientColor          = light .ambientIntensity * ambientTerm;
+         vec3  diffuseSpecularColor  = light .intensity * (diffuseTerm + specularTerm);
 
-			finalColor += attenuationSpotFactor * light .color * (ambientColor + diffuseSpecularColor);
-		}
-	}
+         finalColor += attenuationSpotFactor * light .color * (ambientColor + diffuseSpecularColor);
+      }
+   }
 
-	finalColor += material .emissiveColor;
+   finalColor += material .emissiveColor;
 
-	return vec4 (clamp (finalColor, 0.0, 1.0), alpha);
+   return vec4 (clamp (finalColor, 0.0, 1.0), alpha);
 }
 
 void
 main ()
 {
-	vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
+   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
 
-	fogDepth    = x3d_FogDepth;
-	vertex      = position .xyz;
-	normal      = normalize (x3d_NormalMatrix * x3d_Normal);
-	localNormal = x3d_Normal;
-	localVertex = x3d_Vertex .xyz;
+   fogDepth    = x3d_FogDepth;
+   vertex      = position .xyz;
+   normal      = normalize (x3d_NormalMatrix * x3d_Normal);
+   localNormal = x3d_Normal;
+   localVertex = x3d_Vertex .xyz;
 
-	#if x3d_MaxTextures > 0
-	texCoord0 = x3d_TextureMatrix [0] * x3d_TexCoord0;
-	#endif
+   #if x3d_MaxTextures > 0
+   texCoord0 = x3d_TextureMatrix [0] * x3d_TexCoord0;
+   #endif
 
-	#if x3d_MaxTextures > 1
-	texCoord1 = x3d_TextureMatrix [1] * x3d_TexCoord1;
-	#endif
+   #if x3d_MaxTextures > 1
+   texCoord1 = x3d_TextureMatrix [1] * x3d_TexCoord1;
+   #endif
 
-	gl_Position = x3d_ProjectionMatrix * position;
+   gl_Position = x3d_ProjectionMatrix * position;
 
-	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-	depth = 1.0 + gl_Position .w;
-	#endif
+   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+   depth = 1.0 + gl_Position .w;
+   #endif
 
-	frontColor = getMaterialColor ( normal, vertex, x3d_Material);
-	backColor  = getMaterialColor (-normal, vertex, x3d_Material);
+   frontColor = getMaterialColor ( normal, vertex, x3d_Material);
+   backColor  = getMaterialColor (-normal, vertex, x3d_Material);
 }

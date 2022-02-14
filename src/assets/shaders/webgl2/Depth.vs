@@ -13,9 +13,9 @@ out vec3 vertex; // point on geometry
 void
 main ()
 {
-	vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
+   vec4 position = x3d_ModelViewMatrix * x3d_Vertex;
 
-	vertex = position .xyz;
+   vertex = position .xyz;
 
-	gl_Position = x3d_ProjectionMatrix * position;
+   gl_Position = x3d_ProjectionMatrix * position;
 }

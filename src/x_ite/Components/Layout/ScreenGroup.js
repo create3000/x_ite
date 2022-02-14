@@ -48,16 +48,16 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Grouping/X3DGroupingNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/TraverseType",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Vector4",
-	"standard/Math/Numbers/Matrix4",
-	"standard/Math/Geometry/ViewVolume",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Grouping/X3DGroupingNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/TraverseType",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Vector4",
+   "standard/Math/Numbers/Matrix4",
+   "standard/Math/Geometry/ViewVolume",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -72,130 +72,130 @@ function (Fields,
 {
 "use strict";
 
-	function ScreenGroup (executionContext)
-	{
-		X3DGroupingNode .call (this, executionContext);
+   function ScreenGroup (executionContext)
+   {
+      X3DGroupingNode .call (this, executionContext);
 
-		this .addType (X3DConstants .ScreenGroup);
+      this .addType (X3DConstants .ScreenGroup);
 
-		this .matrix = new Matrix4 ();
-	}
+      this .matrix = new Matrix4 ();
+   }
 
-	ScreenGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
-	{
-		constructor: ScreenGroup,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "ScreenGroup";
-		},
-		getComponentName: function ()
-		{
-			return "Layout";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		getBBox: function (bbox, shadow)
-		{
-			return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadow) .multRight (this .matrix);
-		},
-		getMatrix: function ()
-		{
-			return this .matrix;
-		},
-		scale: (function ()
-		{
-			var
-				x            = new Vector4 (0, 0, 0, 0),
-				y            = new Vector4 (0, 0, 0, 0),
-				z            = new Vector4 (0, 0, 0, 0),
-				screenPoint  = new Vector3 (0, 0, 0),
-				screenMatrix = new Matrix4 ();
+   ScreenGroup .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+   {
+      constructor: ScreenGroup,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "ScreenGroup";
+      },
+      getComponentName: function ()
+      {
+         return "Layout";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      getBBox: function (bbox, shadow)
+      {
+         return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadow) .multRight (this .matrix);
+      },
+      getMatrix: function ()
+      {
+         return this .matrix;
+      },
+      scale: (function ()
+      {
+         var
+            x            = new Vector4 (0, 0, 0, 0),
+            y            = new Vector4 (0, 0, 0, 0),
+            z            = new Vector4 (0, 0, 0, 0),
+            screenPoint  = new Vector3 (0, 0, 0),
+            screenMatrix = new Matrix4 ();
 
-			return function (renderObject)
-			{
-				// throws domain error
+         return function (renderObject)
+         {
+            // throws domain error
 
-				var
-					modelViewMatrix  = renderObject .getModelViewMatrix () .get (),
-					projectionMatrix = renderObject .getProjectionMatrix () .get (),
-					viewport         = renderObject .getViewVolume () .getViewport ();
+            var
+               modelViewMatrix  = renderObject .getModelViewMatrix () .get (),
+               projectionMatrix = renderObject .getProjectionMatrix () .get (),
+               viewport         = renderObject .getViewVolume () .getViewport ();
 
-				// Determine screenMatrix.
-				// Same as in ScreenText.
+            // Determine screenMatrix.
+            // Same as in ScreenText.
 
-				var screenScale = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport); // in meter/pixel
+            var screenScale = renderObject .getViewpoint () .getScreenScale (modelViewMatrix .origin, viewport); // in meter/pixel
 
-				x .set (modelViewMatrix [ 0], modelViewMatrix [ 1], modelViewMatrix [ 2], modelViewMatrix [ 3]);
-				y .set (modelViewMatrix [ 4], modelViewMatrix [ 5], modelViewMatrix [ 6], modelViewMatrix [ 7]);
-				z .set (modelViewMatrix [ 8], modelViewMatrix [ 9], modelViewMatrix [10], modelViewMatrix [11]);
+            x .set (modelViewMatrix [ 0], modelViewMatrix [ 1], modelViewMatrix [ 2], modelViewMatrix [ 3]);
+            y .set (modelViewMatrix [ 4], modelViewMatrix [ 5], modelViewMatrix [ 6], modelViewMatrix [ 7]);
+            z .set (modelViewMatrix [ 8], modelViewMatrix [ 9], modelViewMatrix [10], modelViewMatrix [11]);
 
-				x .normalize () .multiply (screenScale .x);
-				y .normalize () .multiply (screenScale .y);
-				z .normalize () .multiply (screenScale .z);
+            x .normalize () .multiply (screenScale .x);
+            y .normalize () .multiply (screenScale .y);
+            z .normalize () .multiply (screenScale .z);
 
-				screenMatrix .set (x .x, x .y, x .z, x .w,
-				                   y .x, y .y, y .z, y .w,
-				                   z .x, z .y, z .z, z .w,
-				                   modelViewMatrix [12], modelViewMatrix [13], modelViewMatrix [14], modelViewMatrix [15]);
+            screenMatrix .set (x .x, x .y, x .z, x .w,
+                               y .x, y .y, y .z, y .w,
+                               z .x, z .y, z .z, z .w,
+                               modelViewMatrix [12], modelViewMatrix [13], modelViewMatrix [14], modelViewMatrix [15]);
 
-				// Snap to whole pixel.
+            // Snap to whole pixel.
 
-				ViewVolume .projectPoint (Vector3 .Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
+            ViewVolume .projectPoint (Vector3 .Zero, screenMatrix, projectionMatrix, viewport, screenPoint);
 
-				screenPoint .x = Math .round (screenPoint .x);
-				screenPoint .y = Math .round (screenPoint .y);
+            screenPoint .x = Math .round (screenPoint .x);
+            screenPoint .y = Math .round (screenPoint .y);
 
-				ViewVolume .unProjectPoint (screenPoint .x, screenPoint .y, screenPoint .z, screenMatrix, projectionMatrix, viewport, screenPoint);
+            ViewVolume .unProjectPoint (screenPoint .x, screenPoint .y, screenPoint .z, screenMatrix, projectionMatrix, viewport, screenPoint);
 
-				screenPoint .z = 0;
-				screenMatrix .translate (screenPoint);
+            screenPoint .z = 0;
+            screenMatrix .translate (screenPoint);
 
-				// Assign relative matrix.
+            // Assign relative matrix.
 
-				this .matrix .assign (modelViewMatrix) .inverse () .multLeft (screenMatrix);
-			};
-		})(),
-		traverse: function (type, renderObject)
-		{
-			try
-			{
-				switch (type)
-				{
-					case TraverseType .CAMERA:
-					case TraverseType .PICKING:
-					case TraverseType .SHADOW: // ???
-						// No clone support for shadow, generated cube map texture and bbox
-						break;
-					default:
-						this .scale (renderObject);
-						break;
-				}
+            this .matrix .assign (modelViewMatrix) .inverse () .multLeft (screenMatrix);
+         };
+      })(),
+      traverse: function (type, renderObject)
+      {
+         try
+         {
+            switch (type)
+            {
+               case TraverseType .CAMERA:
+               case TraverseType .PICKING:
+               case TraverseType .SHADOW: // ???
+                  // No clone support for shadow, generated cube map texture and bbox
+                  break;
+               default:
+                  this .scale (renderObject);
+                  break;
+            }
 
-				var modelViewMatrix = renderObject .getModelViewMatrix ();
+            var modelViewMatrix = renderObject .getModelViewMatrix ();
 
-				modelViewMatrix .push ();
-				modelViewMatrix .multLeft (this .matrix);
+            modelViewMatrix .push ();
+            modelViewMatrix .multLeft (this .matrix);
 
-				X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+            X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-				modelViewMatrix .pop ();
-			}
-			catch (error)
-			{ }
-		},
-	});
+            modelViewMatrix .pop ();
+         }
+         catch (error)
+         { }
+      },
+   });
 
-	return ScreenGroup;
+   return ScreenGroup;
 });

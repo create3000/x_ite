@@ -48,36 +48,36 @@
 
 
 define ([
-	"x_ite/Configuration/ComponentInfo",
-	"x_ite/Configuration/X3DInfoArray",
+   "x_ite/Configuration/ComponentInfo",
+   "x_ite/Configuration/X3DInfoArray",
 ],
 function (ComponentInfo,
           X3DInfoArray)
 {
 "use strict";
 
-	function ComponentInfoArray (componentInfos)
-	{
-		const proxy = X3DInfoArray .call (this);
+   function ComponentInfoArray (componentInfos)
+   {
+      const proxy = X3DInfoArray .call (this);
 
-		for (const componentInfo of componentInfos)
-			this .add (componentInfo .name, componentInfo);
+      for (const componentInfo of componentInfos)
+         this .add (componentInfo .name, componentInfo);
 
-		return proxy;
-	}
+      return proxy;
+   }
 
-	ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-	{
-		constructor: ComponentInfoArray,
-		getTypeName: function ()
-		{
-			return "ComponentInfoArray";
-		},
-		addBaseComponent: function (value)
-		{
-			this .add (value .name, new ComponentInfo (value .name, value .level, value .title, value .providerUrl));
-		},
-	});
+   ComponentInfoArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+   {
+      constructor: ComponentInfoArray,
+      getTypeName: function ()
+      {
+         return "ComponentInfoArray";
+      },
+      addBaseComponent: function (value)
+      {
+         this .add (value .name, new ComponentInfo (value .name, value .level, value .title, value .providerUrl));
+      },
+   });
 
-	return ComponentInfoArray;
+   return ComponentInfoArray;
 });

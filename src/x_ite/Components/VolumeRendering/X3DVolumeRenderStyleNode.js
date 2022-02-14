@@ -48,87 +48,87 @@
 
 
 define ([
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DNode,
           X3DConstants)
 {
 "use strict";
 
-	function X3DVolumeRenderStyleNode (executionContext)
-	{
-		X3DNode .call (this, executionContext);
+   function X3DVolumeRenderStyleNode (executionContext)
+   {
+      X3DNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DVolumeRenderStyleNode);
+      this .addType (X3DConstants .X3DVolumeRenderStyleNode);
 
-		this .volumeDataNodes = new Set ();
-	}
+      this .volumeDataNodes = new Set ();
+   }
 
-	X3DVolumeRenderStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-	{
-		constructor: X3DVolumeRenderStyleNode,
-		addShaderFields: function (shaderNode)
-		{ },
-		getUniformsText: function ()
-		{
-			return "";
-		},
-		getFunctionsText: function ()
-		{
-			return "";
-		},
-		getVolumeData: function ()
-		{
-			return this .volumeDataNodes;
-		},
-		addVolumeData: function (volumeDataNode)
-		{
-			this .volumeDataNodes .add (volumeDataNode);
-		},
-		removeVolumeData: function (volumeDataNode)
-		{
-			this .volumeDataNodes .delete (volumeDataNode);
-		},
-		getNormalText: function (surfaceNormalsNode)
-		{
-			var string = "";
+   X3DVolumeRenderStyleNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+   {
+      constructor: X3DVolumeRenderStyleNode,
+      addShaderFields: function (shaderNode)
+      { },
+      getUniformsText: function ()
+      {
+         return "";
+      },
+      getFunctionsText: function ()
+      {
+         return "";
+      },
+      getVolumeData: function ()
+      {
+         return this .volumeDataNodes;
+      },
+      addVolumeData: function (volumeDataNode)
+      {
+         this .volumeDataNodes .add (volumeDataNode);
+      },
+      removeVolumeData: function (volumeDataNode)
+      {
+         this .volumeDataNodes .delete (volumeDataNode);
+      },
+      getNormalText: function (surfaceNormalsNode)
+      {
+         var string = "";
 
-			if (surfaceNormalsNode)
-			{
-				string += "uniform sampler3D surfaceNormals_" + this .getId () + ";\n";
+         if (surfaceNormalsNode)
+         {
+            string += "uniform sampler3D surfaceNormals_" + this .getId () + ";\n";
 
-				string += "\n";
-				string += "vec4\n";
-				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
-				string += "{\n";
-				string += "	vec3 n = texture (surfaceNormals_" + this .getId () + ", texCoord) .xyz * 2.0 - 1.0;\n";
-				string += "\n";
-				string += "	return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
-				string += "}\n";
-			}
-			else
-			{
-				string += "\n";
-				string += "vec4\n";
-				string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
-				string += "{\n";
-				string += "	vec4  offset = vec4 (1.0 / x3d_TextureSize, 0.0);\n";
-				string += "	float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
-				string += "	float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
-				string += "	float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
-				string += "	float i3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
-				string += "	float i4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
-				string += "	float i5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
-				string += "	vec3  n      = vec3 (i1 - i0, i3 - i2, i5 - i4);\n";
-				string += "\n";
-				string += "	return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
-				string += "}\n";
-			}
+            string += "\n";
+            string += "vec4\n";
+            string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
+            string += "{\n";
+            string += "	vec3 n = texture (surfaceNormals_" + this .getId () + ", texCoord) .xyz * 2.0 - 1.0;\n";
+            string += "\n";
+            string += "	return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
+            string += "}\n";
+         }
+         else
+         {
+            string += "\n";
+            string += "vec4\n";
+            string += "getNormal_" + this .getId () + " (in vec3 texCoord)\n";
+            string += "{\n";
+            string += "	vec4  offset = vec4 (1.0 / x3d_TextureSize, 0.0);\n";
+            string += "	float i0     = texture (x3d_Texture3D [0], texCoord + offset .xww) .r;\n";
+            string += "	float i1     = texture (x3d_Texture3D [0], texCoord - offset .xww) .r;\n";
+            string += "	float i2     = texture (x3d_Texture3D [0], texCoord + offset .wyw) .r;\n";
+            string += "	float i3     = texture (x3d_Texture3D [0], texCoord - offset .wyw) .r;\n";
+            string += "	float i4     = texture (x3d_Texture3D [0], texCoord + offset .wwz) .r;\n";
+            string += "	float i5     = texture (x3d_Texture3D [0], texCoord - offset .wwz) .r;\n";
+            string += "	vec3  n      = vec3 (i1 - i0, i3 - i2, i5 - i4);\n";
+            string += "\n";
+            string += "	return vec4 (normalize (x3d_TextureNormalMatrix * n), length (n));\n";
+            string += "}\n";
+         }
 
-			return string;
-		},
-	});
+         return string;
+      },
+   });
 
-	return X3DVolumeRenderStyleNode;
+   return X3DVolumeRenderStyleNode;
 });

@@ -48,16 +48,16 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Components/Core/X3DSensorNode",
-	"x_ite/Bits/TraverseType",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Picking/MatchCriterion",
-	"x_ite/Browser/Picking/IntersectionType",
-	"x_ite/Browser/Picking/SortOrder",
-	"standard/Math/Numbers/Matrix4",
-	"standard/Math/Algorithms/QuickSort",
-	"standard/Utility/ObjectCache",
+   "x_ite/Fields",
+   "x_ite/Components/Core/X3DSensorNode",
+   "x_ite/Bits/TraverseType",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Browser/Picking/MatchCriterion",
+   "x_ite/Browser/Picking/IntersectionType",
+   "x_ite/Browser/Picking/SortOrder",
+   "standard/Math/Numbers/Matrix4",
+   "standard/Math/Algorithms/QuickSort",
+   "standard/Utility/ObjectCache",
 ],
 function (Fields,
           X3DSensorNode,
@@ -72,376 +72,376 @@ function (Fields,
 {
 "use strict";
 
-	var ModelMatrixCache = ObjectCache (Matrix4);
+   var ModelMatrixCache = ObjectCache (Matrix4);
 
-	function compareDistance (lhs, rhs) { return lhs .distance < rhs .distance; }
+   function compareDistance (lhs, rhs) { return lhs .distance < rhs .distance; }
 
-	function X3DPickSensorNode (executionContext)
-	{
-		X3DSensorNode .call (this, executionContext);
+   function X3DPickSensorNode (executionContext)
+   {
+      X3DSensorNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DPickSensorNode);
+      this .addType (X3DConstants .X3DPickSensorNode);
 
-		this .objectType          = new Set ();
-		this .intersectionType    = IntersectionType .BOUNDS;
-		this .sortOrder           = SortOrder .CLOSEST;
-		this .pickTargetNodes     = new Set ();
-		this .modelMatrices       = [ ];
-		this .targets             = [ ];
-		this .targets .size       = 0;
-		this .pickedTargets       = [ ];
-		this .pickedTargetsSorter = new QuickSort (this .pickedTargets, compareDistance);
-		this .pickedGeometries    = new Fields .MFNode (); // Must be unique for each X3DPickSensorNode.
-	}
+      this .objectType          = new Set ();
+      this .intersectionType    = IntersectionType .BOUNDS;
+      this .sortOrder           = SortOrder .CLOSEST;
+      this .pickTargetNodes     = new Set ();
+      this .modelMatrices       = [ ];
+      this .targets             = [ ];
+      this .targets .size       = 0;
+      this .pickedTargets       = [ ];
+      this .pickedTargetsSorter = new QuickSort (this .pickedTargets, compareDistance);
+      this .pickedGeometries    = new Fields .MFNode (); // Must be unique for each X3DPickSensorNode.
+   }
 
-	X3DPickSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
-	{
-		constructor: X3DPickSensorNode,
-		initialize: function ()
-		{
-			this .isLive () .addInterest ("set_live__", this);
+   X3DPickSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+   {
+      constructor: X3DPickSensorNode,
+      initialize: function ()
+      {
+         this .isLive () .addInterest ("set_live__", this);
 
-			this .enabled_          .addInterest ("set_live__",             this);
-			this .objectType_       .addInterest ("set_objectType__",       this);
-			this .matchCriterion_   .addInterest ("set_matchCriterion__",   this);
-			this .intersectionType_ .addInterest ("set_intersectionType__", this);
-			this .sortOrder_        .addInterest ("set_sortOrder__",        this);
-			this .pickTarget_       .addInterest ("set_pickTarget__",       this);
+         this .enabled_          .addInterest ("set_live__",             this);
+         this .objectType_       .addInterest ("set_objectType__",       this);
+         this .matchCriterion_   .addInterest ("set_matchCriterion__",   this);
+         this .intersectionType_ .addInterest ("set_intersectionType__", this);
+         this .sortOrder_        .addInterest ("set_sortOrder__",        this);
+         this .pickTarget_       .addInterest ("set_pickTarget__",       this);
 
-			this .set_objectType__ ();
-			this .set_matchCriterion__ ();
-			this .set_intersectionType__ ();
-			this .set_sortOrder__ ();
-			this .set_pickTarget__ ();
-		},
-		getObjectType: function ()
-		{
-			return this .objectType;
-		},
-		getMatchCriterion: function ()
-		{
-			return this .matchCriterion;
-		},
-		getIntersectionType: function ()
-		{
-			return this .intersectionType;
-		},
-		getSortOrder: function ()
-		{
-			return this .sortOrder;
-		},
-		getModelMatrices: function ()
-		{
-			return this .modelMatrices;
-		},
-		getTargets: function ()
-		{
-			return this .targets;
-		},
-		getPickShape: (function ()
-		{
-			var pickShapes = new WeakMap ();
+         this .set_objectType__ ();
+         this .set_matchCriterion__ ();
+         this .set_intersectionType__ ();
+         this .set_sortOrder__ ();
+         this .set_pickTarget__ ();
+      },
+      getObjectType: function ()
+      {
+         return this .objectType;
+      },
+      getMatchCriterion: function ()
+      {
+         return this .matchCriterion;
+      },
+      getIntersectionType: function ()
+      {
+         return this .intersectionType;
+      },
+      getSortOrder: function ()
+      {
+         return this .sortOrder;
+      },
+      getModelMatrices: function ()
+      {
+         return this .modelMatrices;
+      },
+      getTargets: function ()
+      {
+         return this .targets;
+      },
+      getPickShape: (function ()
+      {
+         var pickShapes = new WeakMap ();
 
-			return function (geometryNode)
-			{
-				var pickShape = pickShapes .get (geometryNode);
+         return function (geometryNode)
+         {
+            var pickShape = pickShapes .get (geometryNode);
 
-				if (pickShape !== undefined)
-					return pickShape;
+            if (pickShape !== undefined)
+               return pickShape;
 
-				var
-					shapeNode           = this .getExecutionContext () .createNode ("Shape",           false),
-					collidableShapeNode = this .getExecutionContext () .createNode ("CollidableShape", false);
+            var
+               shapeNode           = this .getExecutionContext () .createNode ("Shape",           false),
+               collidableShapeNode = this .getExecutionContext () .createNode ("CollidableShape", false);
 
-				shapeNode .setPrivate (true);
-				collidableShapeNode .setPrivate (true);
-				collidableShapeNode .setConvex (true);
+            shapeNode .setPrivate (true);
+            collidableShapeNode .setPrivate (true);
+            collidableShapeNode .setConvex (true);
 
-				shapeNode .geometry_        = geometryNode;
-				collidableShapeNode .shape_ = shapeNode;
+            shapeNode .geometry_        = geometryNode;
+            collidableShapeNode .shape_ = shapeNode;
 
-				shapeNode           .setup ();
-				collidableShapeNode .setup ();
+            shapeNode           .setup ();
+            collidableShapeNode .setup ();
 
-				pickShapes .set (geometryNode, collidableShapeNode);
+            pickShapes .set (geometryNode, collidableShapeNode);
 
-				return collidableShapeNode;
-			};
-		})(),
-		getPickedGeometries: (function ()
-		{
-			return function ()
-			{
-				var
-					targets          = this .targets,
-					numTargets       = targets .size,
-					pickedTargets    = this .pickedTargets,
-					pickedGeometries = this .pickedGeometries;
+            return collidableShapeNode;
+         };
+      })(),
+      getPickedGeometries: (function ()
+      {
+         return function ()
+         {
+            var
+               targets          = this .targets,
+               numTargets       = targets .size,
+               pickedTargets    = this .pickedTargets,
+               pickedGeometries = this .pickedGeometries;
 
-				// Filter intersecting targets.
+            // Filter intersecting targets.
 
-				pickedTargets .length = 0;
+            pickedTargets .length = 0;
 
-				for (var i = 0; i < numTargets; ++ i)
-				{
-					var target = targets [i];
+            for (var i = 0; i < numTargets; ++ i)
+            {
+               var target = targets [i];
 
-					if (target .intersected)
-						pickedTargets .push (target);
-				}
+               if (target .intersected)
+                  pickedTargets .push (target);
+            }
 
-				// No pickedTargets, return.
+            // No pickedTargets, return.
 
-				if (pickedTargets .length === 0)
-				{
-					pickedGeometries .length = 0;
+            if (pickedTargets .length === 0)
+            {
+               pickedGeometries .length = 0;
 
-					return pickedGeometries;
-				}
+               return pickedGeometries;
+            }
 
-				// Return sorted pickedTargets.
+            // Return sorted pickedTargets.
 
-				switch (this .sortOrder)
-				{
-					case SortOrder .ANY:
-					{
-						pickedTargets .length    = 1;
-						pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
-						pickedGeometries .length = 1;
-						break;
-					}
-					case SortOrder .CLOSEST:
-					{
-						this .pickedTargetsSorter .sort (0, pickedTargets .length);
+            switch (this .sortOrder)
+            {
+               case SortOrder .ANY:
+               {
+                  pickedTargets .length    = 1;
+                  pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
+                  pickedGeometries .length = 1;
+                  break;
+               }
+               case SortOrder .CLOSEST:
+               {
+                  this .pickedTargetsSorter .sort (0, pickedTargets .length);
 
-						pickedTargets .length    = 1;
-						pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
-						pickedGeometries .length = 1;
-						break;
-					}
-					case SortOrder .ALL:
-					{
-						for (var i = 0, length = pickedTargets .length; i < length; ++ i)
-							pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
+                  pickedTargets .length    = 1;
+                  pickedGeometries [0]     = this .getPickedGeometry (pickedTargets [0]);
+                  pickedGeometries .length = 1;
+                  break;
+               }
+               case SortOrder .ALL:
+               {
+                  for (var i = 0, length = pickedTargets .length; i < length; ++ i)
+                     pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
 
-						pickedGeometries .length = length;
-						break;
-					}
-					case SortOrder .ALL_SORTED:
-					{
-						this .pickedTargetsSorter .sort (0, pickedTargets .length);
+                  pickedGeometries .length = length;
+                  break;
+               }
+               case SortOrder .ALL_SORTED:
+               {
+                  this .pickedTargetsSorter .sort (0, pickedTargets .length);
 
-						for (var i = 0, length = pickedTargets .length; i < length; ++ i)
-							pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
+                  for (var i = 0, length = pickedTargets .length; i < length; ++ i)
+                     pickedGeometries [i] = this .getPickedGeometry (pickedTargets [i]);
 
-						pickedGeometries .length = length;
-						break;
-					}
-				}
+                  pickedGeometries .length = length;
+                  break;
+               }
+            }
 
-				return pickedGeometries;
-			};
-		})(),
-		getPickedGeometry: function (target)
-		{
-			var
-				executionContext = this .getExecutionContext (),
-				geometryNode     = target .geometryNode;
+            return pickedGeometries;
+         };
+      })(),
+      getPickedGeometry: function (target)
+      {
+         var
+            executionContext = this .getExecutionContext (),
+            geometryNode     = target .geometryNode;
 
-			if (geometryNode .getExecutionContext () === executionContext)
-				return geometryNode;
+         if (geometryNode .getExecutionContext () === executionContext)
+            return geometryNode;
 
-			var instance = geometryNode .getExecutionContext ();
+         var instance = geometryNode .getExecutionContext ();
 
-			if (instance .getType () .indexOf (X3DConstants .X3DPrototypeInstance) !== -1 && instance .getExecutionContext () === executionContext)
-				return instance;
+         if (instance .getType () .indexOf (X3DConstants .X3DPrototypeInstance) !== -1 && instance .getExecutionContext () === executionContext)
+            return instance;
 
-			var pickingHierarchy = target .pickingHierarchy;
+         var pickingHierarchy = target .pickingHierarchy;
 
-			for (var i = pickingHierarchy .length - 1; i >= 0; -- i)
-			{
-				var node = pickingHierarchy [i];
+         for (var i = pickingHierarchy .length - 1; i >= 0; -- i)
+         {
+            var node = pickingHierarchy [i];
 
-				if (node .getExecutionContext () === executionContext)
-					return node;
+            if (node .getExecutionContext () === executionContext)
+               return node;
 
-				var instance = node .getExecutionContext ();
+            var instance = node .getExecutionContext ();
 
-				if (instance .getType () .indexOf (X3DConstants .X3DPrototypeInstance) !== -1 && instance .getExecutionContext () === executionContext)
-					return instance;
-			}
+            if (instance .getType () .indexOf (X3DConstants .X3DPrototypeInstance) !== -1 && instance .getExecutionContext () === executionContext)
+               return instance;
+         }
 
-			return null;
-		},
-		getPickedTargets: function ()
-		{
-			return this .pickedTargets;
-		},
-		set_live__: function ()
-		{
-			if (this .isLive () .getValue () && this .enabled_ .getValue () && ! this .objectType .has ("NONE"))
-			{
-				this .getBrowser () .addPickSensor (this);
-				this .setPickableObject (true);
-			}
-			else
-			{
-				this .getBrowser () .removePickSensor (this);
-				this .setPickableObject (false);
-			}
-		},
-		set_objectType__: function ()
-		{
-			this .objectType .clear ();
+         return null;
+      },
+      getPickedTargets: function ()
+      {
+         return this .pickedTargets;
+      },
+      set_live__: function ()
+      {
+         if (this .isLive () .getValue () && this .enabled_ .getValue () && ! this .objectType .has ("NONE"))
+         {
+            this .getBrowser () .addPickSensor (this);
+            this .setPickableObject (true);
+         }
+         else
+         {
+            this .getBrowser () .removePickSensor (this);
+            this .setPickableObject (false);
+         }
+      },
+      set_objectType__: function ()
+      {
+         this .objectType .clear ();
 
-			for (var i = 0, length = this .objectType_ .length; i < length; ++ i)
-			{
-				this .objectType .add (this .objectType_ [i]);
-			}
+         for (var i = 0, length = this .objectType_ .length; i < length; ++ i)
+         {
+            this .objectType .add (this .objectType_ [i]);
+         }
 
-			this .set_live__ ();
-		},
-		set_matchCriterion__: (function ()
-		{
-			var matchCriterions = new Map ([
-				["MATCH_ANY",      MatchCriterion .MATCH_ANY],
-				["MATCH_EVERY",    MatchCriterion .MATCH_EVERY],
-				["MATCH_ONLY_ONE", MatchCriterion .MATCH_ONLY_ONE],
-			]);
+         this .set_live__ ();
+      },
+      set_matchCriterion__: (function ()
+      {
+         var matchCriterions = new Map ([
+            ["MATCH_ANY",      MatchCriterion .MATCH_ANY],
+            ["MATCH_EVERY",    MatchCriterion .MATCH_EVERY],
+            ["MATCH_ONLY_ONE", MatchCriterion .MATCH_ONLY_ONE],
+         ]);
 
-			return function ()
-			{
-				this .matchCriterion = matchCriterions .get (this .matchCriterion_ .getValue ());
+         return function ()
+         {
+            this .matchCriterion = matchCriterions .get (this .matchCriterion_ .getValue ());
 
-				if (this .matchCriterion === undefined)
-					this .matchCriterion = MatchCriterionType .MATCH_ANY;
-			};
-		})(),
-		set_intersectionType__: (function ()
-		{
-			var intersectionTypes = new Map ([
-				["BOUNDS",   IntersectionType .BOUNDS],
-				["GEOMETRY", IntersectionType .GEOMETRY],
-			]);
+            if (this .matchCriterion === undefined)
+               this .matchCriterion = MatchCriterionType .MATCH_ANY;
+         };
+      })(),
+      set_intersectionType__: (function ()
+      {
+         var intersectionTypes = new Map ([
+            ["BOUNDS",   IntersectionType .BOUNDS],
+            ["GEOMETRY", IntersectionType .GEOMETRY],
+         ]);
 
-			return function ()
-			{
-				this .intersectionType = intersectionTypes .get (this .intersectionType_ .getValue ());
+         return function ()
+         {
+            this .intersectionType = intersectionTypes .get (this .intersectionType_ .getValue ());
 
-				if (this .intersectionType === undefined)
-					this .intersectionType = IntersectionType .BOUNDS;
-			};
-		})(),
-		set_sortOrder__: (function ()
-		{
-			var sortOrders = new Map ([
-				["ANY",        SortOrder .ANY],
-				["CLOSEST",    SortOrder .CLOSEST],
-				["ALL",        SortOrder .ALL],
-				["ALL_SORTED", SortOrder .ALL_SORTED],
-			]);
+            if (this .intersectionType === undefined)
+               this .intersectionType = IntersectionType .BOUNDS;
+         };
+      })(),
+      set_sortOrder__: (function ()
+      {
+         var sortOrders = new Map ([
+            ["ANY",        SortOrder .ANY],
+            ["CLOSEST",    SortOrder .CLOSEST],
+            ["ALL",        SortOrder .ALL],
+            ["ALL_SORTED", SortOrder .ALL_SORTED],
+         ]);
 
-			return function ()
-			{
-				this .sortOrder = sortOrders .get (this .sortOrder_ .getValue ());
+         return function ()
+         {
+            this .sortOrder = sortOrders .get (this .sortOrder_ .getValue ());
 
-				if (this .sortOrder === undefined)
-					this .sortOrder = SortOrder .CLOSEST;
-			};
-		})(),
-		set_pickTarget__: function ()
-		{
-			this .pickTargetNodes .clear ();
+            if (this .sortOrder === undefined)
+               this .sortOrder = SortOrder .CLOSEST;
+         };
+      })(),
+      set_pickTarget__: function ()
+      {
+         this .pickTargetNodes .clear ();
 
-			for (var i = 0, length = this .pickTarget_ .length; i < length; ++ i)
-			{
-				try
-				{
-					var
-						node = this .pickTarget_ [i] .getValue () .getInnerNode (),
-						type = node .getType ();
+         for (var i = 0, length = this .pickTarget_ .length; i < length; ++ i)
+         {
+            try
+            {
+               var
+                  node = this .pickTarget_ [i] .getValue () .getInnerNode (),
+                  type = node .getType ();
 
-					for (var t = type .length - 1; t >= 0; -- t)
-					{
-						switch (type [t])
-						{
-							case X3DConstants .Inline:
-							case X3DConstants .Shape:
-							case X3DConstants .X3DGroupingNode:
-							{
-								this .pickTargetNodes .add (node);
-								break;
-							}
-							default:
-								continue;
-						}
-					}
-				}
-				catch (error)
-				{ }
-			}
-		},
-		traverse: function (type, renderObject)
-		{
-			// X3DPickSensorNode nodes are sorted out and only traversed during PICKING, except if is child of a LOD or Switch node.
+               for (var t = type .length - 1; t >= 0; -- t)
+               {
+                  switch (type [t])
+                  {
+                     case X3DConstants .Inline:
+                     case X3DConstants .Shape:
+                     case X3DConstants .X3DGroupingNode:
+                     {
+                        this .pickTargetNodes .add (node);
+                        break;
+                     }
+                     default:
+                        continue;
+                  }
+               }
+            }
+            catch (error)
+            { }
+         }
+      },
+      traverse: function (type, renderObject)
+      {
+         // X3DPickSensorNode nodes are sorted out and only traversed during PICKING, except if is child of a LOD or Switch node.
 
-			if (type !== TraverseType .PICKING)
-				return;
+         if (type !== TraverseType .PICKING)
+            return;
 
-			if (this .getPickableObject ())
-				this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
-		},
-		collect: function (geometryNode, modelMatrix, pickingHierarchy)
-		{
-			var pickTargetNodes = this .pickTargetNodes;
+         if (this .getPickableObject ())
+            this .modelMatrices .push (ModelMatrixCache .pop () .assign (renderObject .getModelViewMatrix () .get ()));
+      },
+      collect: function (geometryNode, modelMatrix, pickingHierarchy)
+      {
+         var pickTargetNodes = this .pickTargetNodes;
 
-			var haveTarget = pickingHierarchy .some (function (node)
-			{
-				return pickTargetNodes .has (node);
-			});
+         var haveTarget = pickingHierarchy .some (function (node)
+         {
+            return pickTargetNodes .has (node);
+         });
 
-			if (haveTarget)
-			{
-				var targets = this .targets;
+         if (haveTarget)
+         {
+            var targets = this .targets;
 
-				if (targets .size < targets .length)
-				{
-					var target = targets [targets .size];
-				}
-				else
-				{
-					var target = { modelMatrix: new Matrix4 (), pickingHierarchy: [ ], pickedPoint: [ ], intersections: [ ] };
+            if (targets .size < targets .length)
+            {
+               var target = targets [targets .size];
+            }
+            else
+            {
+               var target = { modelMatrix: new Matrix4 (), pickingHierarchy: [ ], pickedPoint: [ ], intersections: [ ] };
 
-					targets .push (target);
-				}
+               targets .push (target);
+            }
 
-				++ targets .size;
+            ++ targets .size;
 
-				target .intersected           = false;
-				target .geometryNode          = geometryNode;
-				target .pickedPoint .length   = 0;
-				target .intersections .length = 0;
-				target .modelMatrix .assign (modelMatrix);
+            target .intersected           = false;
+            target .geometryNode          = geometryNode;
+            target .pickedPoint .length   = 0;
+            target .intersections .length = 0;
+            target .modelMatrix .assign (modelMatrix);
 
-				var destPickingHierarchy = target .pickingHierarchy;
+            var destPickingHierarchy = target .pickingHierarchy;
 
-				for (var i = 0, length = pickingHierarchy .length; i < length; ++ i)
-					destPickingHierarchy [i] = pickingHierarchy [i];
+            for (var i = 0, length = pickingHierarchy .length; i < length; ++ i)
+               destPickingHierarchy [i] = pickingHierarchy [i];
 
-				destPickingHierarchy .length = length;
-			}
-		},
-		process: function ()
-		{
-			var modelMatrices = this .modelMatrices;
+            destPickingHierarchy .length = length;
+         }
+      },
+      process: function ()
+      {
+         var modelMatrices = this .modelMatrices;
 
-			for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
-				ModelMatrixCache .push (modelMatrices [m]);
+         for (var m = 0, mLength = modelMatrices .length; m < mLength; ++ m)
+            ModelMatrixCache .push (modelMatrices [m]);
 
-			this .modelMatrices .length = 0;
-			this .targets .size         = 0;
-		},
-	});
+         this .modelMatrices .length = 0;
+         this .targets .size         = 0;
+      },
+   });
 
-	return X3DPickSensorNode;
+   return X3DPickSensorNode;
 });

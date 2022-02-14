@@ -47,19 +47,19 @@
 
 
 define ([
-	"x_ite/Components",
-	"x_ite/Components/Geospatial/GeoCoordinate",
-	"x_ite/Components/Geospatial/GeoElevationGrid",
-	"x_ite/Components/Geospatial/GeoLOD",
-	"x_ite/Components/Geospatial/GeoLocation",
-	"x_ite/Components/Geospatial/GeoMetadata",
-	"x_ite/Components/Geospatial/GeoOrigin",
-	"x_ite/Components/Geospatial/GeoPositionInterpolator",
-	"x_ite/Components/Geospatial/GeoProximitySensor",
-	"x_ite/Components/Geospatial/GeoTouchSensor",
-	"x_ite/Components/Geospatial/GeoTransform",
-	"x_ite/Components/Geospatial/GeoViewpoint",
-	"x_ite/Components/Geospatial/X3DGeospatialObject",
+   "x_ite/Components",
+   "x_ite/Components/Geospatial/GeoCoordinate",
+   "x_ite/Components/Geospatial/GeoElevationGrid",
+   "x_ite/Components/Geospatial/GeoLOD",
+   "x_ite/Components/Geospatial/GeoLocation",
+   "x_ite/Components/Geospatial/GeoMetadata",
+   "x_ite/Components/Geospatial/GeoOrigin",
+   "x_ite/Components/Geospatial/GeoPositionInterpolator",
+   "x_ite/Components/Geospatial/GeoProximitySensor",
+   "x_ite/Components/Geospatial/GeoTouchSensor",
+   "x_ite/Components/Geospatial/GeoTransform",
+   "x_ite/Components/Geospatial/GeoViewpoint",
+   "x_ite/Components/Geospatial/X3DGeospatialObject",
 ],
 function (Components,
           GeoCoordinate,
@@ -77,26 +77,25 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "Geospatial",
-		types:
-		{
-			GeoCoordinate:           GeoCoordinate,
-			GeoElevationGrid:        GeoElevationGrid,
-			GeoLOD:                  GeoLOD,
-			GeoLocation:             GeoLocation,
-			GeoMetadata:             GeoMetadata,
-			GeoOrigin:               GeoOrigin,
-			GeoPositionInterpolator: GeoPositionInterpolator,
-			GeoProximitySensor:      GeoProximitySensor,
-			GeoTouchSensor:          GeoTouchSensor,
-			GeoTransform:            GeoTransform,
-			GeoViewpoint:            GeoViewpoint,
-		},
-		abstractTypes:
-		{
-			X3DGeospatialObject: X3DGeospatialObject,
-		},
-	});
+   Components .addComponent ({
+      name: "Geospatial",
+      types:
+      {
+         GeoCoordinate:           GeoCoordinate,
+         GeoElevationGrid:        GeoElevationGrid,
+         GeoLOD:                  GeoLOD,
+         GeoLocation:             GeoLocation,
+         GeoMetadata:             GeoMetadata,
+         GeoOrigin:               GeoOrigin,
+         GeoPositionInterpolator: GeoPositionInterpolator,
+         GeoProximitySensor:      GeoProximitySensor,
+         GeoTouchSensor:          GeoTouchSensor,
+         GeoTransform:            GeoTransform,
+         GeoViewpoint:            GeoViewpoint,
+      },
+      abstractTypes:
+      {
+         X3DGeospatialObject: X3DGeospatialObject,
+      },
+   });
 });
-

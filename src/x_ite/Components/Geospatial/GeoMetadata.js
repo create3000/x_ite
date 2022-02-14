@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DInfoNode",
-	"x_ite/Components/Networking/X3DUrlObject",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DInfoNode",
+   "x_ite/Components/Networking/X3DUrlObject",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,53 +64,53 @@ function (Fields,
 {
 "use strict";
 
-	function GeoMetadata (executionContext)
-	{
-		X3DInfoNode  .call (this, executionContext);
-		X3DUrlObject .call (this, executionContext);
+   function GeoMetadata (executionContext)
+   {
+      X3DInfoNode  .call (this, executionContext);
+      X3DUrlObject .call (this, executionContext);
 
-		this .addType (X3DConstants .GeoMetadata);
-	}
+      this .addType (X3DConstants .GeoMetadata);
+   }
 
-	GeoMetadata .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
-		X3DUrlObject .prototype,
-	{
-		constructor: GeoMetadata,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "summary",              new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "data",                 new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "GeoMetadata";
-		},
-		getComponentName: function ()
-		{
-			return "Geospatial";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DInfoNode  .prototype .initialize .call (this);
-			X3DUrlObject .prototype .initialize .call (this);
-		},
-		requestImmediateLoad: function (cache = true)
-		{ },
-		requestUnload: function ()
-		{ },
-		set_load__: function ()
-		{ },
-		set_url__: function ()
-		{ },
-	});
+   GeoMetadata .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
+      X3DUrlObject .prototype,
+   {
+      constructor: GeoMetadata,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "summary",              new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "data",                 new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "GeoMetadata";
+      },
+      getComponentName: function ()
+      {
+         return "Geospatial";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DInfoNode  .prototype .initialize .call (this);
+         X3DUrlObject .prototype .initialize .call (this);
+      },
+      requestImmediateLoad: function (cache = true)
+      { },
+      requestUnload: function ()
+      { },
+      set_load__: function ()
+      { },
+      set_url__: function ()
+      { },
+   });
 
-	return GeoMetadata;
+   return GeoMetadata;
 });

@@ -13,7 +13,7 @@ out vec4 x3d_FragColor;
 void
 main ()
 {
-	clip ();
+   clip ();
 
-	x3d_FragColor = color;
+   x3d_FragColor = color;
 }

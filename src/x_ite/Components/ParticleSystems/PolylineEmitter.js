@@ -48,14 +48,14 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
-	"x_ite/Components/Rendering/IndexedLineSet",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Algorithm",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
+   "x_ite/Components/Rendering/IndexedLineSet",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -68,192 +68,192 @@ function (Fields,
 {
 "use strict";
 
-	function PolylineEmitter (executionContext)
-	{
-		X3DParticleEmitterNode .call (this, executionContext);
+   function PolylineEmitter (executionContext)
+   {
+      X3DParticleEmitterNode .call (this, executionContext);
 
-		this .addType (X3DConstants .PolylineEmitter);
+      this .addType (X3DConstants .PolylineEmitter);
 
-		this .speed_       .setUnit ("speed");
-		this .mass_        .setUnit ("mass");
-		this .surfaceArea_ .setUnit ("area");
+      this .speed_       .setUnit ("speed");
+      this .mass_        .setUnit ("mass");
+      this .surfaceArea_ .setUnit ("area");
 
-		this .direction        = new Vector3 (0, 0, 0);
-		this .polylineNode     = new IndexedLineSet (executionContext);
-		this .polylines        = [ ];
-		this .lengthSoFarArray = [ 0 ];
-	}
+      this .direction        = new Vector3 (0, 0, 0);
+      this .polylineNode     = new IndexedLineSet (executionContext);
+      this .polylines        = [ ];
+      this .lengthSoFarArray = [ 0 ];
+   }
 
-	PolylineEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
-	{
-		constructor: PolylineEmitter,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",   new Fields .SFVec3f (0, 1, 0)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",   new Fields .SFFloat (0.25)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "mass",        new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "surfaceArea", new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "coordIndex",  new Fields .MFInt32 (-1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",       new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "PolylineEmitter";
-		},
-		getComponentName: function ()
-		{
-			return "ParticleSystems";
-		},
-		getContainerField: function ()
-		{
-			return "emitter";
-		},
-		initialize: function ()
-		{
-			X3DParticleEmitterNode .prototype .initialize .call (this);
+   PolylineEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+   {
+      constructor: PolylineEmitter,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",   new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",   new Fields .SFFloat (0.25)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "mass",        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "surfaceArea", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "coordIndex",  new Fields .MFInt32 (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",       new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "PolylineEmitter";
+      },
+      getComponentName: function ()
+      {
+         return "ParticleSystems";
+      },
+      getContainerField: function ()
+      {
+         return "emitter";
+      },
+      initialize: function ()
+      {
+         X3DParticleEmitterNode .prototype .initialize .call (this);
 
-			this .direction_ .addInterest ("set_direction__", this);
+         this .direction_ .addInterest ("set_direction__", this);
 
-			this .coordIndex_ .addFieldInterest (this .polylineNode .coordIndex_);
-			this .coord_      .addFieldInterest (this .polylineNode .coord_);
+         this .coordIndex_ .addFieldInterest (this .polylineNode .coordIndex_);
+         this .coord_      .addFieldInterest (this .polylineNode .coord_);
 
-			this .polylineNode .coordIndex_ = this .coordIndex_;
-			this .polylineNode .coord_      = this .coord_;
+         this .polylineNode .coordIndex_ = this .coordIndex_;
+         this .polylineNode .coord_      = this .coord_;
 
-			this .polylineNode .rebuild_ .addInterest ("set_polyline", this);
-			this .polylineNode .setPrivate (true);
-			this .polylineNode .setup ();
+         this .polylineNode .rebuild_ .addInterest ("set_polyline", this);
+         this .polylineNode .setPrivate (true);
+         this .polylineNode .setup ();
 
-			this .set_direction__ ();
-			this .set_polyline ();
-		},
-		set_direction__: function ()
-		{
-			this .direction .assign (this .direction_ .getValue ()) .normalize ();
+         this .set_direction__ ();
+         this .set_polyline ();
+      },
+      set_direction__: function ()
+      {
+         this .direction .assign (this .direction_ .getValue ()) .normalize ();
 
-			if (this .direction .equals (Vector3 .Zero))
-				this .getRandomVelocity = this .getSphericalRandomVelocity;
-			else
-				delete this .getRandomVelocity;
-		},
-		set_polyline: (function ()
-		{
-			var
-				vertex1 = new Vector3 (0, 0, 0),
-				vertex2 = new Vector3 (0, 0, 0);
+         if (this .direction .equals (Vector3 .Zero))
+            this .getRandomVelocity = this .getSphericalRandomVelocity;
+         else
+            delete this .getRandomVelocity;
+      },
+      set_polyline: (function ()
+      {
+         var
+            vertex1 = new Vector3 (0, 0, 0),
+            vertex2 = new Vector3 (0, 0, 0);
 
-			return function ()
-			{
-				var vertices = this .vertices = this .polylineNode .getVertices () .getValue ();
+         return function ()
+         {
+            var vertices = this .vertices = this .polylineNode .getVertices () .getValue ();
 
-				if (vertices .length)
-				{
-					delete this .getRandomPosition;
+            if (vertices .length)
+            {
+               delete this .getRandomPosition;
 
-					var
-						lengthSoFar      = 0,
-						lengthSoFarArray = this .lengthSoFarArray;
+               var
+                  lengthSoFar      = 0,
+                  lengthSoFarArray = this .lengthSoFarArray;
 
-					lengthSoFarArray .length = 1;
+               lengthSoFarArray .length = 1;
 
-					for (var i = 0, length = vertices .length; i < length; i += 8)
-					{
-						vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
-						vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+               for (var i = 0, length = vertices .length; i < length; i += 8)
+               {
+                  vertex1 .set (vertices [i],     vertices [i + 1], vertices [i + 2]);
+                  vertex2 .set (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
 
-						lengthSoFar += vertex2 .subtract (vertex1) .abs ();
-						lengthSoFarArray .push (lengthSoFar);
-					}
-				}
-				else
-				{
-					this .getRandomPosition = getPosition;
-				}
-			};
-		})(),
-		getRandomPosition: function (position)
-		{
-			// Determine index0 and weight.
+                  lengthSoFar += vertex2 .subtract (vertex1) .abs ();
+                  lengthSoFarArray .push (lengthSoFar);
+               }
+            }
+            else
+            {
+               this .getRandomPosition = getPosition;
+            }
+         };
+      })(),
+      getRandomPosition: function (position)
+      {
+         // Determine index0 and weight.
 
-			var
-				lengthSoFarArray = this .lengthSoFarArray,
-				length           = lengthSoFarArray .length,
-				fraction         = Math .random () * lengthSoFarArray .at (-1),
-				index0           = 0,
-				index1           = 0,
-				weight           = 0;
+         var
+            lengthSoFarArray = this .lengthSoFarArray,
+            length           = lengthSoFarArray .length,
+            fraction         = Math .random () * lengthSoFarArray .at (-1),
+            index0           = 0,
+            index1           = 0,
+            weight           = 0;
 
-			if (length == 1 || fraction <= lengthSoFarArray [0])
-			{
-				index0 = 0;
-				weight = 0;
-			}
-			else if (fraction >= lengthSoFarArray .at (-1))
-			{
-				index0 = length - 2;
-				weight = 1;
-			}
-			else
-			{
-				var index = Algorithm .upperBound (lengthSoFarArray, 0, length, fraction, Algorithm .less);
+         if (length == 1 || fraction <= lengthSoFarArray [0])
+         {
+            index0 = 0;
+            weight = 0;
+         }
+         else if (fraction >= lengthSoFarArray .at (-1))
+         {
+            index0 = length - 2;
+            weight = 1;
+         }
+         else
+         {
+            var index = Algorithm .upperBound (lengthSoFarArray, 0, length, fraction, Algorithm .less);
 
-				if (index < length)
-				{
-					index1 = index;
-					index0 = index - 1;
+            if (index < length)
+            {
+               index1 = index;
+               index0 = index - 1;
 
-					var
-						key0 = lengthSoFarArray [index0],
-						key1 = lengthSoFarArray [index1];
+               var
+                  key0 = lengthSoFarArray [index0],
+                  key1 = lengthSoFarArray [index1];
 
-					weight = Algorithm .clamp ((fraction - key0) / (key1 - key0), 0, 1);
-				}
-				else
-				{
-					index0 = 0;
-					weight = 0;
-				}
-			}
+               weight = Algorithm .clamp ((fraction - key0) / (key1 - key0), 0, 1);
+            }
+            else
+            {
+               index0 = 0;
+               weight = 0;
+            }
+         }
 
-			// Interpolate and set position.
+         // Interpolate and set position.
 
-			index0 *= 8;
-			index1  = index0 + 4;
+         index0 *= 8;
+         index1  = index0 + 4;
 
-			var
-				vertices = this .vertices,
-				x1       = vertices [index0],
-				y1       = vertices [index0 + 1],
-				z1       = vertices [index0 + 2],
-				x2       = vertices [index1],
-				y2       = vertices [index1 + 1],
-				z2       = vertices [index1 + 2];
+         var
+            vertices = this .vertices,
+            x1       = vertices [index0],
+            y1       = vertices [index0 + 1],
+            z1       = vertices [index0 + 2],
+            x2       = vertices [index1],
+            y2       = vertices [index1 + 1],
+            z2       = vertices [index1 + 2];
 
-			position .x = x1 + weight * (x2 - x1);
-			position .y = y1 + weight * (y2 - y1);
-			position .z = z1 + weight * (z2 - z1);
+         position .x = x1 + weight * (x2 - x1);
+         position .y = y1 + weight * (y2 - y1);
+         position .z = z1 + weight * (z2 - z1);
 
-			return position;
-		},
-		getRandomVelocity: function (velocity)
-		{
-			var
-				direction = this .direction,
-				speed     = this .getRandomSpeed ();
+         return position;
+      },
+      getRandomVelocity: function (velocity)
+      {
+         var
+            direction = this .direction,
+            speed     = this .getRandomSpeed ();
 
-			velocity .x = direction .x * speed;
-			velocity .y = direction .y * speed;
-			velocity .z = direction .z * speed;
+         velocity .x = direction .x * speed;
+         velocity .y = direction .y * speed;
+         velocity .z = direction .z * speed;
 
-			return velocity;
- 		},
-	});
+         return velocity;
+       },
+   });
 
-	function getPosition (position)
-	{
-		return position .set (0, 0, 0);
-	}
+   function getPosition (position)
+   {
+      return position .set (0, 0, 0);
+   }
 
-	return PolylineEmitter;
+   return PolylineEmitter;
 });

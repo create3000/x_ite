@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DLineGeometryNode",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Rendering/X3DLineGeometryNode",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,241 +64,241 @@ function (Fields,
 {
 "use strict";
 
-	function IndexedLineSet (executionContext)
-	{
-		X3DLineGeometryNode .call (this, executionContext);
+   function IndexedLineSet (executionContext)
+   {
+      X3DLineGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .IndexedLineSet);
+      this .addType (X3DConstants .IndexedLineSet);
 
-		this .setGeometryType (1);
+      this .setGeometryType (1);
 
-		this .fogCoordNode = null;
-		this .colorNode    = null;
-		this .coordNode    = null;
-	}
+      this .fogCoordNode = null;
+      this .colorNode    = null;
+      this .coordNode    = null;
+   }
 
-	IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
-	{
-		constructor: IndexedLineSet,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_colorIndex", new Fields .MFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_coordIndex", new Fields .MFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "colorIndex",     new Fields .MFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "coordIndex",     new Fields .MFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",         new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "color",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",          new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "IndexedLineSet";
-		},
-		getComponentName: function ()
-		{
-			return "Rendering";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-		initialize: function ()
-		{
-			X3DLineGeometryNode .prototype .initialize .call (this);
+   IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+   {
+      constructor: IndexedLineSet,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_colorIndex", new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_coordIndex", new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorIndex",     new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "coordIndex",     new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",         new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",          new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "IndexedLineSet";
+      },
+      getComponentName: function ()
+      {
+         return "Rendering";
+      },
+      getContainerField: function ()
+      {
+         return "geometry";
+      },
+      initialize: function ()
+      {
+         X3DLineGeometryNode .prototype .initialize .call (this);
 
-			this .set_colorIndex_ .addFieldInterest (this .colorIndex_);
-			this .set_coordIndex_ .addFieldInterest (this .coordIndex_);
-			this .attrib_         .addInterest ("set_attrib__",   this);
-			this .fogCoord_       .addInterest ("set_fogCoord__", this);
-			this .color_          .addInterest ("set_color__",    this);
-			this .coord_          .addInterest ("set_coord__",    this);
+         this .set_colorIndex_ .addFieldInterest (this .colorIndex_);
+         this .set_coordIndex_ .addFieldInterest (this .coordIndex_);
+         this .attrib_         .addInterest ("set_attrib__",   this);
+         this .fogCoord_       .addInterest ("set_fogCoord__", this);
+         this .color_          .addInterest ("set_color__",    this);
+         this .coord_          .addInterest ("set_coord__",    this);
 
-			this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
-			this .setSolid (false);
+         this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
+         this .setSolid (false);
 
-			this .set_attrib__ ();
-			this .set_fogCoord__ ();
-			this .set_color__ ();
-			this .set_coord__ ();
-		},
-		set_attrib__: function ()
-		{
-			const attribNodes = this .getAttrib ();
+         this .set_attrib__ ();
+         this .set_fogCoord__ ();
+         this .set_color__ ();
+         this .set_coord__ ();
+      },
+      set_attrib__: function ()
+      {
+         const attribNodes = this .getAttrib ();
 
-			for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				attribNodes [i] .removeInterest ("requestRebuild", this);
+         for (var i = 0, length = attribNodes .length; i < length; ++ i)
+            attribNodes [i] .removeInterest ("requestRebuild", this);
 
-			attribNodes .length = 0;
+         attribNodes .length = 0;
 
-			for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
-			{
-				const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+         for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
+         {
+            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
 
-				if (attribNode)
-					attribNodes .push (attribNode);
-			}
+            if (attribNode)
+               attribNodes .push (attribNode);
+         }
 
-			for (var i = 0; i < this .attribNodes .length; ++ i)
-				attribNodes [i] .addInterest ("requestRebuild", this);
-		},
-		set_fogCoord__: function ()
-		{
-			if (this .fogCoordNode)
-				this .fogCoordNode .removeInterest ("requestRebuild", this);
+         for (var i = 0; i < this .attribNodes .length; ++ i)
+            attribNodes [i] .addInterest ("requestRebuild", this);
+      },
+      set_fogCoord__: function ()
+      {
+         if (this .fogCoordNode)
+            this .fogCoordNode .removeInterest ("requestRebuild", this);
 
-			this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
+         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
 
-			if (this .fogCoordNode)
-				this .fogCoordNode .addInterest ("requestRebuild", this);
-		},
-		set_color__: function ()
-		{
-			if (this .colorNode)
-			{
-				this .colorNode .removeInterest ("requestRebuild", this);
-				this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
-			}
+         if (this .fogCoordNode)
+            this .fogCoordNode .addInterest ("requestRebuild", this);
+      },
+      set_color__: function ()
+      {
+         if (this .colorNode)
+         {
+            this .colorNode .removeInterest ("requestRebuild", this);
+            this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
+         }
 
-			this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
+         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
 
-			if (this .colorNode)
-			{
-				this .colorNode .addInterest ("requestRebuild", this);
-				this .colorNode .transparent_ .addInterest ("set_transparent__", this);
+         if (this .colorNode)
+         {
+            this .colorNode .addInterest ("requestRebuild", this);
+            this .colorNode .transparent_ .addInterest ("set_transparent__", this);
 
-				this .set_transparent__ ();
-			}
-			else
-				this .setTransparent (false);
-		},
-		set_transparent__: function ()
-		{
-			this .setTransparent (this .colorNode .getTransparent ());
-		},
-		set_coord__: function ()
-		{
-			if (this .coordNode)
-				this .coordNode .removeInterest ("requestRebuild", this);
+            this .set_transparent__ ();
+         }
+         else
+            this .setTransparent (false);
+      },
+      set_transparent__: function ()
+      {
+         this .setTransparent (this .colorNode .getTransparent ());
+      },
+      set_coord__: function ()
+      {
+         if (this .coordNode)
+            this .coordNode .removeInterest ("requestRebuild", this);
 
-			this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
+         this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
 
-			if (this .coordNode)
-				this .coordNode .addInterest ("requestRebuild", this);
-		},
-		getColorPerVertexIndex: function (index)
-		{
-			if (index < this .colorIndex_ .length)
-				return this .colorIndex_ [index];
+         if (this .coordNode)
+            this .coordNode .addInterest ("requestRebuild", this);
+      },
+      getColorPerVertexIndex: function (index)
+      {
+         if (index < this .colorIndex_ .length)
+            return this .colorIndex_ [index];
 
-			return this .coordIndex_ [index];
-		},
-		getColorIndex: function (index)
-		{
-			if (index < this .colorIndex_ .length)
-				return this .colorIndex_ [index];
+         return this .coordIndex_ [index];
+      },
+      getColorIndex: function (index)
+      {
+         if (index < this .colorIndex_ .length)
+            return this .colorIndex_ [index];
 
-			return index;
-		},
-		getPolylineIndices: function ()
-		{
-			const
-				coordIndex = this .coordIndex_,
-				polylines  = [ ];
+         return index;
+      },
+      getPolylineIndices: function ()
+      {
+         const
+            coordIndex = this .coordIndex_,
+            polylines  = [ ];
 
-			var polyline = [ ];
+         var polyline = [ ];
 
-			if (coordIndex .length)
-			{
-				for (var i = 0, length = coordIndex .length; i < length; ++ i)
-				{
-					const index = coordIndex [i];
+         if (coordIndex .length)
+         {
+            for (var i = 0, length = coordIndex .length; i < length; ++ i)
+            {
+               const index = coordIndex [i];
 
-					if (index >= 0)
-						// Add vertex.
-						polyline .push (i);
+               if (index >= 0)
+                  // Add vertex.
+                  polyline .push (i);
 
-					else
-					{
-						// Negativ index.
-						// Add polylines.
-						polylines .push (polyline);
+               else
+               {
+                  // Negativ index.
+                  // Add polylines.
+                  polylines .push (polyline);
 
-						polyline = [ ];
-					}
-				}
+                  polyline = [ ];
+               }
+            }
 
-				if (coordIndex [coordIndex .length - 1] >= 0)
-				{
-					polylines .push (polyline);
-				}
-			}
+            if (coordIndex [coordIndex .length - 1] >= 0)
+            {
+               polylines .push (polyline);
+            }
+         }
 
-			return polylines;
-		},
-		build: function ()
-		{
-			if (! this .coordNode || this .coordNode .isEmpty ())
-				return;
+         return polylines;
+      },
+      build: function ()
+      {
+         if (! this .coordNode || this .coordNode .isEmpty ())
+            return;
 
-			const
-				coordIndex     = this .coordIndex_,
-				polylines      = this .getPolylineIndices (),
-				colorPerVertex = this .colorPerVertex_ .getValue (),
-				attribNodes    = this .getAttrib (),
-				numAttrib      = attribNodes .length,
-				attribs        = this .getAttribs (),
-				fogCoordNode   = this .fogCoordNode,
-				colorNode      = this .colorNode,
-				coordNode      = this .coordNode,
-				fogDepthArray  = this .getFogDepths (),
-				colorArray     = this .getColors (),
-				vertexArray    = this .getVertices ();
+         const
+            coordIndex     = this .coordIndex_,
+            polylines      = this .getPolylineIndices (),
+            colorPerVertex = this .colorPerVertex_ .getValue (),
+            attribNodes    = this .getAttrib (),
+            numAttrib      = attribNodes .length,
+            attribs        = this .getAttribs (),
+            fogCoordNode   = this .fogCoordNode,
+            colorNode      = this .colorNode,
+            coordNode      = this .coordNode,
+            fogDepthArray  = this .getFogDepths (),
+            colorArray     = this .getColors (),
+            vertexArray    = this .getVertices ();
 
-			// Fill GeometryNode
+         // Fill GeometryNode
 
-			var face = 0;
+         var face = 0;
 
-			for (var p = 0, pl = polylines .length; p < pl; ++ p)
-			{
-				const polyline = polylines [p];
+         for (var p = 0, pl = polylines .length; p < pl; ++ p)
+         {
+            const polyline = polylines [p];
 
-				// Create two vertices for each line.
+            // Create two vertices for each line.
 
-				if (polyline .length > 1)
-				{
-					for (var line = 0, l_end = polyline .length - 1; line < l_end; ++ line)
-					{
-						for (var l = line, i_end = line + 2; l < i_end; ++ l)
-						{
-							const
-								i     = polyline [l],
-								index = coordIndex [i];
+            if (polyline .length > 1)
+            {
+               for (var line = 0, l_end = polyline .length - 1; line < l_end; ++ line)
+               {
+                  for (var l = line, i_end = line + 2; l < i_end; ++ l)
+                  {
+                     const
+                        i     = polyline [l],
+                        index = coordIndex [i];
 
-							for (var a = 0; a < numAttrib; ++ a)
-								attribNodes [a] .addValue (index, attribs [a]);
+                     for (var a = 0; a < numAttrib; ++ a)
+                        attribNodes [a] .addValue (index, attribs [a]);
 
-							if (fogCoordNode)
-								fogCoordNode .addDepth (index, fogDepthArray);
+                     if (fogCoordNode)
+                        fogCoordNode .addDepth (index, fogDepthArray);
 
-							if (colorNode)
-							{
-								if (colorPerVertex)
-									colorNode .addColor (this .getColorPerVertexIndex (i), colorArray);
-								else
-									colorNode .addColor (this .getColorIndex (face), colorArray);
-							}
+                     if (colorNode)
+                     {
+                        if (colorPerVertex)
+                           colorNode .addColor (this .getColorPerVertexIndex (i), colorArray);
+                        else
+                           colorNode .addColor (this .getColorIndex (face), colorArray);
+                     }
 
-							coordNode .addPoint (index, vertexArray);
-						}
-					}
-				}
+                     coordNode .addPoint (index, vertexArray);
+                  }
+               }
+            }
 
-				++ face;
-			}
-		},
-	});
+            ++ face;
+         }
+      },
+   });
 
-	return IndexedLineSet;
+   return IndexedLineSet;
 });

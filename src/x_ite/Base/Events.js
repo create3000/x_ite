@@ -51,59 +51,59 @@ define (function ()
 {
 "use strict";
 
-	const Events =
-	{
-		stack: [ ],
-		create: function (field)
-		{
-			if (this .stack .length)
-			{
-				const event = this .stack .pop ();
+   const Events =
+   {
+      stack: [ ],
+      create: function (field)
+      {
+         if (this .stack .length)
+         {
+            const event = this .stack .pop ();
 
-				event .field = field;
-				event .clear ();
+            event .field = field;
+            event .clear ();
 
-				return event;
-			}
+            return event;
+         }
 
-			const event = new Set ();
+         const event = new Set ();
 
-			event .field = field;
+         event .field = field;
 
-			return event;
-		},
-		copy: function (event)
-	   {
-			if (this .stack .length)
-			{
-				const copy = this .stack .pop ();
+         return event;
+      },
+      copy: function (event)
+      {
+         if (this .stack .length)
+         {
+            const copy = this .stack .pop ();
 
-				copy .field = event .field;
-				copy .clear ();
+            copy .field = event .field;
+            copy .clear ();
 
-				for (const source of event)
-				{
-					copy .add (source);
-				}
+            for (const source of event)
+            {
+               copy .add (source);
+            }
 
-				return copy;
-	      }
+            return copy;
+         }
 
-			const copy = new Set (event);
+         const copy = new Set (event);
 
-			copy .field = event .field;
+         copy .field = event .field;
 
-			return copy;
-	   },
-		push: function (event)
-		{
-		   this .stack .push (event);
-		},
-		clear: function ()
-		{
-			this .stack .length = 0;
-		}
-	};
+         return copy;
+      },
+      push: function (event)
+      {
+         this .stack .push (event);
+      },
+      clear: function ()
+      {
+         this .stack .length = 0;
+      },
+   };
 
-	return Events;
+   return Events;
 });

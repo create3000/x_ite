@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,114 +64,114 @@ function (Fields,
 {
 "use strict";
 
-	function OpacityMapVolumeStyle (executionContext)
-	{
-		X3DComposableVolumeRenderStyleNode .call (this, executionContext);
+   function OpacityMapVolumeStyle (executionContext)
+   {
+      X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
-		this .addType (X3DConstants .OpacityMapVolumeStyle);
-	}
+      this .addType (X3DConstants .OpacityMapVolumeStyle);
+   }
 
-	OpacityMapVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
-	{
-		constructor: OpacityMapVolumeStyle,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "transferFunction", new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "OpacityMapVolumeStyle";
-		},
-		getComponentName: function ()
-		{
-			return "VolumeRendering";
-		},
-		getContainerField: function ()
-		{
-			return "renderStyle";
-		},
-		initialize: function ()
-		{
-			X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
+   OpacityMapVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
+   {
+      constructor: OpacityMapVolumeStyle,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "transferFunction", new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "OpacityMapVolumeStyle";
+      },
+      getComponentName: function ()
+      {
+         return "VolumeRendering";
+      },
+      getContainerField: function ()
+      {
+         return "renderStyle";
+      },
+      initialize: function ()
+      {
+         X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-			var gl = this .getBrowser () .getContext ();
+         var gl = this .getBrowser () .getContext ();
 
-			if (gl .getVersion () < 2)
-				return;
+         if (gl .getVersion () < 2)
+            return;
 
-			this .transferFunction_ .addInterest ("set_transferFunction__", this);
+         this .transferFunction_ .addInterest ("set_transferFunction__", this);
 
-			this .set_transferFunction__ ();
-		},
-		set_transferFunction__: function ()
-		{
-			this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture2DNode, this .transferFunction_);
+         this .set_transferFunction__ ();
+      },
+      set_transferFunction__: function ()
+      {
+         this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture2DNode, this .transferFunction_);
 
-			if (! this .transferFunctionNode)
-				this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture3DNode, this .transferFunction_);
+         if (! this .transferFunctionNode)
+            this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture3DNode, this .transferFunction_);
 
-			if (! this .transferFunctionNode)
-				this .transferFunctionNode = this .getBrowser () .getDefaultTransferFunction ();
-		},
-		addShaderFields: function (shaderNode)
-		{
-			if (! this .enabled_ .getValue ())
-				return;
+         if (! this .transferFunctionNode)
+            this .transferFunctionNode = this .getBrowser () .getDefaultTransferFunction ();
+      },
+      addShaderFields: function (shaderNode)
+      {
+         if (! this .enabled_ .getValue ())
+            return;
 
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "transferFunction_" + this .getId (), new Fields .SFNode (this .transferFunctionNode));
-		},
-		getUniformsText: function ()
-		{
-			if (! this .enabled_ .getValue ())
-				return "";
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "transferFunction_" + this .getId (), new Fields .SFNode (this .transferFunctionNode));
+      },
+      getUniformsText: function ()
+      {
+         if (! this .enabled_ .getValue ())
+            return "";
 
-			var string = "";
+         var string = "";
 
-			string += "\n";
-			string += "// OpacityMapVolumeStyle\n";
-			string += "\n";
+         string += "\n";
+         string += "// OpacityMapVolumeStyle\n";
+         string += "\n";
 
-			if (this .transferFunctionNode .getType () .indexOf (X3DConstants .X3DTexture2DNode) !== -1)
-			{
-				string += "uniform sampler2D transferFunction_" + this .getId () + ";\n";
+         if (this .transferFunctionNode .getType () .indexOf (X3DConstants .X3DTexture2DNode) !== -1)
+         {
+            string += "uniform sampler2D transferFunction_" + this .getId () + ";\n";
 
-				string += "\n";
-				string += "vec4\n";
-				string += "getOpacityMapStyle_" + this .getId () + " (in vec4 originalColor)\n";
-				string += "{\n";
-				string += "	return texture (transferFunction_" + this .getId () + ", originalColor .rg);\n";
-				string += "}\n";
-			}
-			else
-			{
-				string += "uniform sampler3D transferFunction_" + this .getId () + ";\n";
+            string += "\n";
+            string += "vec4\n";
+            string += "getOpacityMapStyle_" + this .getId () + " (in vec4 originalColor)\n";
+            string += "{\n";
+            string += "	return texture (transferFunction_" + this .getId () + ", originalColor .rg);\n";
+            string += "}\n";
+         }
+         else
+         {
+            string += "uniform sampler3D transferFunction_" + this .getId () + ";\n";
 
-				string += "\n";
-				string += "vec4\n";
-				string += "getOpacityMapStyle_" + this .getId () + " (in vec4 originalColor)\n";
-				string += "{\n";
-				string += "	return texture (transferFunction_" + this .getId () + ", originalColor .rgb);\n";
-				string += "}\n";
-			}
+            string += "\n";
+            string += "vec4\n";
+            string += "getOpacityMapStyle_" + this .getId () + " (in vec4 originalColor)\n";
+            string += "{\n";
+            string += "	return texture (transferFunction_" + this .getId () + ", originalColor .rgb);\n";
+            string += "}\n";
+         }
 
-			return string;
-		},
-		getFunctionsText: function ()
-		{
-			if (! this .enabled_ .getValue ())
-				return "";
+         return string;
+      },
+      getFunctionsText: function ()
+      {
+         if (! this .enabled_ .getValue ())
+            return "";
 
-			var string = "";
+         var string = "";
 
-			string += "\n";
-			string += "	// OpacityMapVolumeStyle\n";
-			string += "\n";
-			string += "	textureColor = getOpacityMapStyle_" + this .getId () + " (textureColor);\n";
+         string += "\n";
+         string += "	// OpacityMapVolumeStyle\n";
+         string += "\n";
+         string += "	textureColor = getOpacityMapStyle_" + this .getId () + " (textureColor);\n";
 
-			return string;
-		},
-	});
+         return string;
+      },
+   });
 
-	return OpacityMapVolumeStyle;
+   return OpacityMapVolumeStyle;
 });

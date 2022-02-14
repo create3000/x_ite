@@ -51,15 +51,15 @@ define (function ()
 {
 "use strict";
 
-	var i = 0;
+   var i = 0;
 
-	var SourceType =
-	{
-		DEFAULT:  i ++,
-		DIFFUSE:  i ++,
-		SPECULAR: i ++,
-		FACTOR:   i ++,
-	};
+   var SourceType =
+   {
+      DEFAULT:  i ++,
+      DIFFUSE:  i ++,
+      SPECULAR: i ++,
+      FACTOR:   i ++,
+   };
 
-	return SourceType;
+   return SourceType;
 });

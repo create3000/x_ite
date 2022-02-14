@@ -48,38 +48,38 @@
 
 
 define ([
-	"x_ite/Base/X3DObject",
+   "x_ite/Base/X3DObject",
 ],
 function (X3DObject)
 {
 "use strict";
 
-	function ProfileInfo (name, title, providerUrl, components)
-	{
-		this .name        = name;
-		this .title       = title;
-		this .providerUrl = providerUrl;
-		this .components  = components;
-	}
+   function ProfileInfo (name, title, providerUrl, components)
+   {
+      this .name        = name;
+      this .title       = title;
+      this .providerUrl = providerUrl;
+      this .components  = components;
+   }
 
-	ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
-	{
-		constructor: ProfileInfo,
-		getTypeName: function ()
-		{
-			return "ProfileInfo";
-		},
-		toVRMLStream: function (stream)
-		{
-			stream .string += "PROFILE";
-			stream .string += " ";
-			stream .string += this .name;
-		},
-		toXMLStream: function (stream)
-		{
-			stream .string += this .name;
-		},
-	});
+   ProfileInfo .prototype = Object .assign (Object .create (X3DObject .prototype),
+   {
+      constructor: ProfileInfo,
+      getTypeName: function ()
+      {
+         return "ProfileInfo";
+      },
+      toVRMLStream: function (stream)
+      {
+         stream .string += "PROFILE";
+         stream .string += " ";
+         stream .string += this .name;
+      },
+      toXMLStream: function (stream)
+      {
+         stream .string += this .name;
+      },
+   });
 
-	return ProfileInfo;
+   return ProfileInfo;
 });

@@ -48,61 +48,59 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChildNode, 
+          X3DChildNode,
           X3DConstants)
 {
 "use strict";
 
-	function BooleanToggle (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
+   function BooleanToggle (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .BooleanToggle);
-	}
+      this .addType (X3DConstants .BooleanToggle);
+   }
 
-	BooleanToggle .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: BooleanToggle,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "toggle",      new Fields .SFBool ()),
-		]),
-		getTypeName: function ()
-		{
-			return "BooleanToggle";
-		},
-		getComponentName: function ()
-		{
-			return "EventUtilities";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
+   BooleanToggle .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: BooleanToggle,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "toggle",      new Fields .SFBool ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "BooleanToggle";
+      },
+      getComponentName: function ()
+      {
+         return "EventUtilities";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DChildNode .prototype .initialize .call (this);
 
-			this .set_boolean_ .addInterest ("set_boolean__", this);
-		},
-		set_boolean__: function ()
-		{
-			if (this .set_boolean_ .getValue ())
-				this .toggle_ = ! this .toggle_ .getValue ();
-		},
-	});
+         this .set_boolean_ .addInterest ("set_boolean__", this);
+      },
+      set_boolean__: function ()
+      {
+         if (this .set_boolean_ .getValue ())
+            this .toggle_ = ! this .toggle_ .getValue ();
+      },
+   });
 
-	return BooleanToggle;
+   return BooleanToggle;
 });
-
-

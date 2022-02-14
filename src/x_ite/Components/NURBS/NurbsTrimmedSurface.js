@@ -48,102 +48,100 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNurbsSurfaceGeometryNode, 
-          X3DConstants, 
+          X3DNurbsSurfaceGeometryNode,
+          X3DConstants,
           X3DCast)
 {
 "use strict";
 
-	function NurbsTrimmedSurface (executionContext)
-	{
-		X3DNurbsSurfaceGeometryNode .call (this, executionContext);
+   function NurbsTrimmedSurface (executionContext)
+   {
+      X3DNurbsSurfaceGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .NurbsTrimmedSurface);
+      this .addType (X3DConstants .NurbsTrimmedSurface);
 
-		this .trimmingContourNodes = [ ];
-	}
+      this .trimmingContourNodes = [ ];
+   }
 
-	NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
-	{
-		constructor: NurbsTrimmedSurface,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",              new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",                 new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "uTessellation",         new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "vTessellation",         new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uClosed",               new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vClosed",               new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",                new Fields .SFInt32 (3)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",                new Fields .SFInt32 (3)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",            new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",            new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",                 new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",                 new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",                new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",              new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addTrimmingContour",    new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeTrimmingContour", new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "trimmingContour",       new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "NurbsTrimmedSurface";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-		initialize: function ()
-		{
-			X3DNurbsSurfaceGeometryNode .prototype .initialize .call (this);
+   NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
+   {
+      constructor: NurbsTrimmedSurface,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",              new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "uTessellation",         new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "vTessellation",         new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uClosed",               new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vClosed",               new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",                new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",                new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",            new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",            new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",                 new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",                 new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",                new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",              new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addTrimmingContour",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeTrimmingContour", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "trimmingContour",       new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "NurbsTrimmedSurface";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "geometry";
+      },
+      initialize: function ()
+      {
+         X3DNurbsSurfaceGeometryNode .prototype .initialize .call (this);
 
-			this .trimmingContour_ .addInterest ("set_trimmingContour__", this);
+         this .trimmingContour_ .addInterest ("set_trimmingContour__", this);
 
-			this .set_trimmingContour__ ();
-		},
-		set_trimmingContour__: function ()
-		{
-			var trimmingContourNodes = this .trimmingContourNodes;
+         this .set_trimmingContour__ ();
+      },
+      set_trimmingContour__: function ()
+      {
+         var trimmingContourNodes = this .trimmingContourNodes;
 
-			trimmingContourNodes .length = 0;
+         trimmingContourNodes .length = 0;
 
-			for (var i = 0, length = this .trimmingContour_ .length; i < length; ++ i)
-			{
-				var trimmingContourNode = X3DCast (X3DConstants .Contour2D, this .trimmingContour_ [i]);
+         for (var i = 0, length = this .trimmingContour_ .length; i < length; ++ i)
+         {
+            var trimmingContourNode = X3DCast (X3DConstants .Contour2D, this .trimmingContour_ [i]);
 
-				if (trimmingContourNode)
-					trimmingContourNodes .push (trimmingContourNode);
-			}
-		},
-		getTrimmingContours: function ()
-		{
-			var
-				trimmingContourNodes = this .trimmingContourNodes,
-				trimmingContours     = [ ];
+            if (trimmingContourNode)
+               trimmingContourNodes .push (trimmingContourNode);
+         }
+      },
+      getTrimmingContours: function ()
+      {
+         var
+            trimmingContourNodes = this .trimmingContourNodes,
+            trimmingContours     = [ ];
 
-			for (var i = 0, length = trimmingContourNodes .length; i < length; ++ i)
-				trimmingContourNodes [i] .addTrimmingContour (trimmingContours);
+         for (var i = 0, length = trimmingContourNodes .length; i < length; ++ i)
+            trimmingContourNodes [i] .addTrimmingContour (trimmingContours);
 
-			return trimmingContours;
-		},
-	});
+         return trimmingContours;
+      },
+   });
 
-	return NurbsTrimmedSurface;
+   return NurbsTrimmedSurface;
 });
-
-

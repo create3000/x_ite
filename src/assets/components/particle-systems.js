@@ -47,20 +47,20 @@
 
 
 define ([
-	"x_ite/Components",
-	"x_ite/Browser/ParticleSystems/X3DParticleSystemsContext",
-	"x_ite/Components/ParticleSystems/BoundedPhysicsModel",
-	"x_ite/Components/ParticleSystems/ConeEmitter",
-	"x_ite/Components/ParticleSystems/ExplosionEmitter",
-	"x_ite/Components/ParticleSystems/ForcePhysicsModel",
-	"x_ite/Components/ParticleSystems/ParticleSystem",
-	"x_ite/Components/ParticleSystems/PointEmitter",
-	"x_ite/Components/ParticleSystems/PolylineEmitter",
-	"x_ite/Components/ParticleSystems/SurfaceEmitter",
-	"x_ite/Components/ParticleSystems/VolumeEmitter",
-	"x_ite/Components/ParticleSystems/WindPhysicsModel",
-	"x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
-	"x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
+   "x_ite/Components",
+   "x_ite/Browser/ParticleSystems/X3DParticleSystemsContext",
+   "x_ite/Components/ParticleSystems/BoundedPhysicsModel",
+   "x_ite/Components/ParticleSystems/ConeEmitter",
+   "x_ite/Components/ParticleSystems/ExplosionEmitter",
+   "x_ite/Components/ParticleSystems/ForcePhysicsModel",
+   "x_ite/Components/ParticleSystems/ParticleSystem",
+   "x_ite/Components/ParticleSystems/PointEmitter",
+   "x_ite/Components/ParticleSystems/PolylineEmitter",
+   "x_ite/Components/ParticleSystems/SurfaceEmitter",
+   "x_ite/Components/ParticleSystems/VolumeEmitter",
+   "x_ite/Components/ParticleSystems/WindPhysicsModel",
+   "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
+   "x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
 ],
 function (Components,
           X3DParticleSystemsContext,
@@ -79,27 +79,26 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "ParticleSystems",
-		types:
-		{
-			BoundedPhysicsModel: BoundedPhysicsModel,
-			ConeEmitter:         ConeEmitter,
-			ExplosionEmitter:    ExplosionEmitter,
-			ForcePhysicsModel:   ForcePhysicsModel,
-			ParticleSystem:      ParticleSystem,
-			PointEmitter:        PointEmitter,
-			PolylineEmitter:     PolylineEmitter,
-			SurfaceEmitter:      SurfaceEmitter,
-			VolumeEmitter:       VolumeEmitter,
-			WindPhysicsModel:    WindPhysicsModel,
-		},
-		abstractTypes:
-		{
-			X3DParticleEmitterNode:      X3DParticleEmitterNode,
-			X3DParticlePhysicsModelNode: X3DParticlePhysicsModelNode,
-		},
-		browser: X3DParticleSystemsContext,
-	});
+   Components .addComponent ({
+      name: "ParticleSystems",
+      types:
+      {
+         BoundedPhysicsModel: BoundedPhysicsModel,
+         ConeEmitter:         ConeEmitter,
+         ExplosionEmitter:    ExplosionEmitter,
+         ForcePhysicsModel:   ForcePhysicsModel,
+         ParticleSystem:      ParticleSystem,
+         PointEmitter:        PointEmitter,
+         PolylineEmitter:     PolylineEmitter,
+         SurfaceEmitter:      SurfaceEmitter,
+         VolumeEmitter:       VolumeEmitter,
+         WindPhysicsModel:    WindPhysicsModel,
+      },
+      abstractTypes:
+      {
+         X3DParticleEmitterNode:      X3DParticleEmitterNode,
+         X3DParticlePhysicsModelNode: X3DParticlePhysicsModelNode,
+      },
+      browser: X3DParticleSystemsContext,
+   });
 });
-

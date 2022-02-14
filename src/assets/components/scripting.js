@@ -47,9 +47,9 @@
 
 
 define ([
-	"x_ite/Components",
-	"x_ite/Components/Scripting/Script",
-	"x_ite/Components/Scripting/X3DScriptNode",
+   "x_ite/Components",
+   "x_ite/Components/Scripting/Script",
+   "x_ite/Components/Scripting/X3DScriptNode",
 ],
 function (Components,
           Script,
@@ -57,16 +57,15 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "Scripting",
-		types:
-		{
-			Script: Script,
-		},
-		abstractTypes:
-		{
-			X3DScriptNode: X3DScriptNode,
-		},
-	});
+   Components .addComponent ({
+      name: "Scripting",
+      types:
+      {
+         Script: Script,
+      },
+      abstractTypes:
+      {
+         X3DScriptNode: X3DScriptNode,
+      },
+   });
 });
-

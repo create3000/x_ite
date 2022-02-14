@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Navigation/X3DViewer",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Browser/Navigation/X3DViewer",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -61,19 +61,19 @@ function (Fields,
           X3DViewer)
 {
 "use strict";
-	
-	function NoneViewer (executionContext)
-	{
-		X3DViewer .call (this, executionContext);
-	}
 
-	NoneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
-	{
-		constructor: NoneViewer,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-		]),
-	});
+   function NoneViewer (executionContext)
+   {
+      X3DViewer .call (this, executionContext);
+   }
 
-	return NoneViewer;
+   NoneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
+   {
+      constructor: NoneViewer,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+      ]),
+   });
+
+   return NoneViewer;
 });

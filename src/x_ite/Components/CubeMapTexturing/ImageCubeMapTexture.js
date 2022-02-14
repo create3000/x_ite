@@ -48,16 +48,16 @@
 
 
 define ([
-	"jquery",
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
-	"x_ite/Components/Networking/X3DUrlObject",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector2",
-	"standard/Math/Algorithm",
-	"x_ite/DEBUG",
+   "jquery",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
+   "x_ite/Components/Networking/X3DUrlObject",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector2",
+   "standard/Math/Algorithm",
+   "x_ite/DEBUG",
 ],
 function ($,
           Fields,
@@ -74,204 +74,204 @@ function ($,
 
    const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
-	const offsets = [
-		new Vector2 (1, 1), // Front
-		new Vector2 (3, 1), // Back
-		new Vector2 (0, 1), // Left
-		new Vector2 (2, 1), // Right
-		new Vector2 (1, 0), // Bottom, must be exchanged with top
-		new Vector2 (1, 2), // Top, must be exchanged with bottom
-	];
+   const offsets = [
+      new Vector2 (1, 1), // Front
+      new Vector2 (3, 1), // Back
+      new Vector2 (0, 1), // Left
+      new Vector2 (2, 1), // Right
+      new Vector2 (1, 0), // Bottom, must be exchanged with top
+      new Vector2 (1, 2), // Top, must be exchanged with bottom
+   ];
 
-	function ImageCubeMapTexture (executionContext)
-	{
-		X3DEnvironmentTextureNode .call (this, executionContext);
-		X3DUrlObject .call (this, executionContext);
+   function ImageCubeMapTexture (executionContext)
+   {
+      X3DEnvironmentTextureNode .call (this, executionContext);
+      X3DUrlObject .call (this, executionContext);
 
-		this .addType (X3DConstants .ImageCubeMapTexture);
+      this .addType (X3DConstants .ImageCubeMapTexture);
 
-		this .urlStack = new Fields .MFString ();
-	}
+      this .urlStack = new Fields .MFString ();
+   }
 
-	ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
-		X3DUrlObject .prototype,
-	{
-		constructor: ImageCubeMapTexture,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "ImageCubeMapTexture";
-		},
-		getComponentName: function ()
-		{
-			return "CubeMapTexturing";
-		},
-		getContainerField: function ()
-		{
-			return "texture";
-		},
-		initialize: function ()
-		{
-			X3DEnvironmentTextureNode .prototype .initialize .call (this);
-			X3DUrlObject              .prototype .initialize .call (this);
+   ImageCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
+      X3DUrlObject .prototype,
+   {
+      constructor: ImageCubeMapTexture,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "ImageCubeMapTexture";
+      },
+      getComponentName: function ()
+      {
+         return "CubeMapTexturing";
+      },
+      getContainerField: function ()
+      {
+         return "texture";
+      },
+      initialize: function ()
+      {
+         X3DEnvironmentTextureNode .prototype .initialize .call (this);
+         X3DUrlObject              .prototype .initialize .call (this);
 
-			// Upload default data.
+         // Upload default data.
 
-			const gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
-			gl .bindTexture (this .getTarget (), this .getTexture ());
+         gl .bindTexture (this .getTarget (), this .getTexture ());
 
-			for (let i = 0; i < 6; ++ i)
-				gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+         for (let i = 0; i < 6; ++ i)
+            gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
-			// Initialize.
+         // Initialize.
 
-			this .canvas = $("<canvas></canvas>");
+         this .canvas = $("<canvas></canvas>");
 
-			this .image = $("<img></img>");
-			this .image .on ("load", this .setImage .bind (this));
-			this .image .on ("error", this .setError .bind (this));
-			this .image .bind ("abort", this .setError .bind (this));
+         this .image = $("<img></img>");
+         this .image .on ("load", this .setImage .bind (this));
+         this .image .on ("error", this .setError .bind (this));
+         this .image .bind ("abort", this .setError .bind (this));
 
-			this .image [0] .crossOrigin = "Anonymous";
+         this .image [0] .crossOrigin = "Anonymous";
 
-			this .requestImmediateLoad ();
-		},
-		unloadNow: function ()
-		{
-			this .clearTexture ();
-		},
-		loadNow: function ()
-		{
-			this .urlStack .setValue (this .urlBuffer_);
-			this .loadNext ();
-		},
-		loadNext: function ()
-		{
-			if (this .urlStack .length === 0)
-			{
-				this .clearTexture ();
-				this .setLoadState (X3DConstants .FAILED_STATE);
-				return;
-			}
+         this .requestImmediateLoad ();
+      },
+      unloadNow: function ()
+      {
+         this .clearTexture ();
+      },
+      loadNow: function ()
+      {
+         this .urlStack .setValue (this .urlBuffer_);
+         this .loadNext ();
+      },
+      loadNext: function ()
+      {
+         if (this .urlStack .length === 0)
+         {
+            this .clearTexture ();
+            this .setLoadState (X3DConstants .FAILED_STATE);
+            return;
+         }
 
-			// Get URL.
+         // Get URL.
 
-			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
+         this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
-			if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
-				this .URL .searchParams .set ("_", Date .now ());
+         if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
+            this .URL .searchParams .set ("_", Date .now ());
 
-			this .image .attr ("src", this .URL .href);
-		},
-		setError: function ()
-		{
-			if (this .URL .protocol !== "data:")
-				console .warn ("Error loading image:", this .URL .href);
+         this .image .attr ("src", this .URL .href);
+      },
+      setError: function ()
+      {
+         if (this .URL .protocol !== "data:")
+            console .warn ("Error loading image:", this .URL .href);
 
-			this .loadNext ();
-		},
-		setImage: function ()
-		{
-			if (DEBUG)
-			{
-				 if (this .URL .protocol !== "data:")
-			   	console .info ("Done loading image cube map texture:", this .URL .href);
-			}
+         this .loadNext ();
+      },
+      setImage: function ()
+      {
+         if (DEBUG)
+         {
+             if (this .URL .protocol !== "data:")
+               console .info ("Done loading image cube map texture:", this .URL .href);
+         }
 
-			try
-			{
-				const
-					image  = this .image [0],
-					canvas = this .canvas [0],
-					cx     = canvas .getContext ("2d");
+         try
+         {
+            const
+               image  = this .image [0],
+               canvas = this .canvas [0],
+               cx     = canvas .getContext ("2d");
 
-				let
-					width     = image .width,
-					height    = image .height,
-					width1_4  = Math .floor (width / 4),
-					height1_3 = Math .floor (height / 3);
+            let
+               width     = image .width,
+               height    = image .height,
+               width1_4  = Math .floor (width / 4),
+               height1_3 = Math .floor (height / 3);
 
-				// Scale image.
+            // Scale image.
 
-				if (! Algorithm .isPowerOfTwo (width1_4) || ! Algorithm .isPowerOfTwo (height1_3) || width1_4 * 4 !== width || height1_3 * 3 !== height)
-				{
-					width1_4  = Algorithm .nextPowerOfTwo (width1_4);
-					height1_3 = Algorithm .nextPowerOfTwo (height1_3);
-					width     = width1_4  * 4;
-					height    = height1_3 * 3;
+            if (! Algorithm .isPowerOfTwo (width1_4) || ! Algorithm .isPowerOfTwo (height1_3) || width1_4 * 4 !== width || height1_3 * 3 !== height)
+            {
+               width1_4  = Algorithm .nextPowerOfTwo (width1_4);
+               height1_3 = Algorithm .nextPowerOfTwo (height1_3);
+               width     = width1_4  * 4;
+               height    = height1_3 * 3;
 
-					canvas .width  = width;
-					canvas .height = height;
+               canvas .width  = width;
+               canvas .height = height;
 
-					cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
-				}
-				else
-				{
-					canvas .width  = width;
-					canvas .height = height;
+               cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
+            }
+            else
+            {
+               canvas .width  = width;
+               canvas .height = height;
 
-					cx .drawImage (image, 0, 0);
-				}
+               cx .drawImage (image, 0, 0);
+            }
 
-				// Extract images.
+            // Extract images.
 
-				const gl = this .getBrowser () .getContext ();
+            const gl = this .getBrowser () .getContext ();
 
-				let opaque = true;
+            let opaque = true;
 
-				gl .bindTexture (this .getTarget (), this .getTexture ());
-				gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
+            gl .bindTexture (this .getTarget (), this .getTexture ());
+            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
-				for (let i = 0; i < 6; ++ i)
-				{
-					const data = cx .getImageData (offsets [i] .x * width1_4, offsets [i] .y * height1_3, width1_4, height1_3) .data;
+            for (let i = 0; i < 6; ++ i)
+            {
+               const data = cx .getImageData (offsets [i] .x * width1_4, offsets [i] .y * height1_3, width1_4, height1_3) .data;
 
-					// Determine image alpha.
+               // Determine image alpha.
 
-					if (opaque)
-					{
-						for (let a = 3; a < data .length; a += 4)
-						{
-							if (data [a] !== 255)
-							{
-								opaque = false;
-								break;
-							}
-						}
-					}
+               if (opaque)
+               {
+                  for (let a = 3; a < data .length; a += 4)
+                  {
+                     if (data [a] !== 255)
+                     {
+                        opaque = false;
+                        break;
+                     }
+                  }
+               }
 
-					// Transfer image.
+               // Transfer image.
 
-					gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, false, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (data));
-				}
+               gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width1_4, height1_3, false, gl .RGBA, gl .UNSIGNED_BYTE, new Uint8Array (data));
+            }
 
-				this .updateTextureProperties ();
+            this .updateTextureProperties ();
 
-				// Update transparent field.
+            // Update transparent field.
 
-				this .setTransparent (! opaque);
+            this .setTransparent (! opaque);
 
-				// Update load state.
+            // Update load state.
 
-				this .setLoadState (X3DConstants .COMPLETE_STATE);
-			}
-			catch (error)
-			{
-				// Catch security error from cross origin requests.
-				console .log (error .message);
-				this .setError ();
-			}
-		},
-	});
+            this .setLoadState (X3DConstants .COMPLETE_STATE);
+         }
+         catch (error)
+         {
+            // Catch security error from cross origin requests.
+            console .log (error .message);
+            this .setError ();
+         }
+      },
+   });
 
-	return ImageCubeMapTexture;
+   return ImageCubeMapTexture;
 });

@@ -4,13 +4,13 @@
 vec4
 pack (const in float value)
 {
-	return vec4 (0.0, 0.0, 0.0, 0.0);
+   return vec4 (0.0, 0.0, 0.0, 0.0);
 }
 
 float
 unpack (const in vec4 color)
 {
-	return color .r;
+   return color .r;
 }
 
 #endif
@@ -20,11 +20,11 @@ unpack (const in vec4 color)
 vec4
 pack (const in float value)
 {
-	const vec3 bitShifts = vec3 (255.0,
-	                             255.0 * 255.0,
-	                             255.0 * 255.0 * 255.0);
+   const vec3 bitShifts = vec3 (255.0,
+                                255.0 * 255.0,
+                                255.0 * 255.0 * 255.0);
 
-	return vec4 (value, fract (value * bitShifts));
+   return vec4 (value, fract (value * bitShifts));
 }
 
 #ifdef X3D_DEPTH_TEXTURE
@@ -32,7 +32,7 @@ pack (const in float value)
 float
 unpack (const in vec4 color)
 {
-	return color .r;
+   return color .r;
 }
 
 #else
@@ -40,11 +40,11 @@ unpack (const in vec4 color)
 float
 unpack (const vec4 color)
 {
-	const vec3 bitShifts = vec3 (1.0 / 255.0,
-	                             1.0 / (255.0 * 255.0),
-	                             1.0 / (255.0 * 255.0 * 255.0));
+   const vec3 bitShifts = vec3 (1.0 / 255.0,
+                                1.0 / (255.0 * 255.0),
+                                1.0 / (255.0 * 255.0 * 255.0));
 
-	return color .x + dot (color .gba, bitShifts);
+   return color .x + dot (color .gba, bitShifts);
 }
 
 #endif

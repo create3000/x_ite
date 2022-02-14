@@ -47,12 +47,12 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Layering/Layer",
-	"x_ite/Components/Layering/LayerSet",
-	"x_ite/Components/Layering/Viewport",
-	"x_ite/Components/Layering/X3DLayerNode",
-	"x_ite/Components/Layering/X3DViewportNode",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/Layering/Layer",
+   "x_ite/Components/Layering/LayerSet",
+   "x_ite/Components/Layering/Viewport",
+   "x_ite/Components/Layering/X3DLayerNode",
+   "x_ite/Components/Layering/X3DViewportNode",
 ],
 function (SupportedNodes,
           Layer,
@@ -63,22 +63,22 @@ function (SupportedNodes,
 {
 "use strict";
 
-	const Types =
-	{
-		Layer:    Layer,
-		LayerSet: LayerSet,
-		Viewport: Viewport,
-	};
+   const Types =
+   {
+      Layer:    Layer,
+      LayerSet: LayerSet,
+      Viewport: Viewport,
+   };
 
-	const AbstractTypes =
-	{
-		X3DLayerNode:    X3DLayerNode,
-		X3DViewportNode: X3DViewportNode,
-	};
+   const AbstractTypes =
+   {
+      X3DLayerNode:    X3DLayerNode,
+      X3DViewportNode: X3DViewportNode,
+   };
 
-	for (const typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]);
+   for (const typeName in Types)
+      SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (const typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   for (const typeName in AbstractTypes)
+      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Components/Rendering/X3DGeometryNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Matrix4",
+   "x_ite/Components/Rendering/X3DGeometryNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,
           X3DConstants,
@@ -58,212 +58,212 @@ function (X3DGeometryNode,
 {
 "use strict";
 
-	function X3DLineGeometryNode (executionContext)
-	{
-		X3DGeometryNode .call (this, executionContext);
+   function X3DLineGeometryNode (executionContext)
+   {
+      X3DGeometryNode .call (this, executionContext);
 
-		//this .addType (X3DConstants .X3DLineGeometryNode);
-	}
+      //this .addType (X3DConstants .X3DLineGeometryNode);
+   }
 
-	X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
-	{
-		constructor: X3DLineGeometryNode,
-		getShader: function (browser)
-		{
-			return browser .getLineShader ();
-		},
-		intersectsLine: function (line, clipPlanes, modelViewMatrix, intersections)
-		{
-			return false;
-		},
-		intersectsBox: function (box, clipPlanes, modelViewMatrix)
-		{
-			return false;
-		},
-		transfer: function ()
-		{
-			// Line stipple support.
+   X3DLineGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+   {
+      constructor: X3DLineGeometryNode,
+      getShader: function (browser)
+      {
+         return browser .getLineShader ();
+      },
+      intersectsLine: function (line, clipPlanes, modelViewMatrix, intersections)
+      {
+         return false;
+      },
+      intersectsBox: function (box, clipPlanes, modelViewMatrix)
+      {
+         return false;
+      },
+      transfer: function ()
+      {
+         // Line stipple support.
 
-			if (this .getGeometryType () === 1)
-			{
-				const
-					texCoords = this .getTexCoords (),
-					vertices  = this .getVertices ();
+         if (this .getGeometryType () === 1)
+         {
+            const
+               texCoords = this .getTexCoords (),
+               vertices  = this .getVertices ();
 
-				this .getMultiTexCoords () .push (texCoords);
+            this .getMultiTexCoords () .push (texCoords);
 
-				for (let i = 0, length = vertices .length; i < length; i += 8)
-				{
-					texCoords .push (vertices [i],
-					                 vertices [i + 1],
-					                 vertices [i + 2],
-					                 vertices [i + 3],
-					                 vertices [i],
-					                 vertices [i + 1],
-					                 vertices [i + 2],
-					                 vertices [i + 3]);
-				}
+            for (let i = 0, length = vertices .length; i < length; i += 8)
+            {
+               texCoords .push (vertices [i],
+                                vertices [i + 1],
+                                vertices [i + 2],
+                                vertices [i + 3],
+                                vertices [i],
+                                vertices [i + 1],
+                                vertices [i + 2],
+                                vertices [i + 3]);
+            }
 
-				texCoords .shrinkToFit ();
-			}
+            texCoords .shrinkToFit ();
+         }
 
-			X3DGeometryNode .prototype .transfer .call (this);
-		},
-		display: function (gl, context)
-		{
-			try
-			{
-				const
-					browser        = context .browser,
-					appearanceNode = context .shapeNode .getAppearance (),
-					shaderNode     = appearanceNode .shaderNode || this .getShader (browser);
+         X3DGeometryNode .prototype .transfer .call (this);
+      },
+      display: function (gl, context)
+      {
+         try
+         {
+            const
+               browser        = context .browser,
+               appearanceNode = context .shapeNode .getAppearance (),
+               shaderNode     = appearanceNode .shaderNode || this .getShader (browser);
 
-				if (shaderNode .getValid ())
-				{
-					const
-						blendModeNode = appearanceNode .blendModeNode,
-						attribNodes   = this .attribNodes,
-						attribBuffers = this .attribBuffers;
+            if (shaderNode .getValid ())
+            {
+               const
+                  blendModeNode = appearanceNode .blendModeNode,
+                  attribNodes   = this .attribNodes,
+                  attribBuffers = this .attribBuffers;
 
-					if (blendModeNode)
-						blendModeNode .enable (gl);
+               if (blendModeNode)
+                  blendModeNode .enable (gl);
 
-					// Setup shader.
+               // Setup shader.
 
-					shaderNode .enable (gl);
-					shaderNode .setLocalUniforms (gl, context);
+               shaderNode .enable (gl);
+               shaderNode .setLocalUniforms (gl, context);
 
-					// Setup vertex attributes.
+               // Setup vertex attributes.
 
-					for (let i = 0, length = attribNodes .length; i < length; ++ i)
-						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+               for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-					if (this .fogCoords)
-						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+               if (this .fogCoords)
+                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
 
-					if (this .colorMaterial)
-						shaderNode .enableColorAttribute (gl, this .colorBuffer);
+               if (this .colorMaterial)
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer);
 
-					if (this .getMultiTexCoords () .length)
-						shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, true);
+               if (this .getMultiTexCoords () .length)
+                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers, true);
 
-					shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
+               shaderNode .enableVertexAttribute (gl, this .vertexBuffer);
 
-					// Wireframes are always solid so only one drawing call is needed.
+               // Wireframes are always solid so only one drawing call is needed.
 
-					gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
+               gl .drawArrays (shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode, 0, this .vertexCount);
 
-					for (const attribNode of attribNodes)
-						attribNode .disable (gl, shaderNode);
+               for (const attribNode of attribNodes)
+                  attribNode .disable (gl, shaderNode);
 
-					if (this .fogCoords)
-						shaderNode .disableFogDepthAttribute (gl);
+               if (this .fogCoords)
+                  shaderNode .disableFogDepthAttribute (gl);
 
-					if (this .colorMaterial)
-						shaderNode .disableColorAttribute (gl);
+               if (this .colorMaterial)
+                  shaderNode .disableColorAttribute (gl);
 
-					if (this .getMultiTexCoords () .length)
-						shaderNode .disableTexCoordAttribute (gl);
+               if (this .getMultiTexCoords () .length)
+                  shaderNode .disableTexCoordAttribute (gl);
 
-					shaderNode .disable (gl);
+               shaderNode .disable (gl);
 
-					if (blendModeNode)
-						blendModeNode .disable (gl);
-				}
-			}
-			catch (error)
-			{
-				// Catch error from setLocalUniforms.
-				console .log (error);
-			}
-		},
-		displayParticles: function (gl, context, particles, numParticles)
-		{
-			try
-			{
-				const
-					browser        = context .browser,
-					appearanceNode = context .shapeNode .getAppearance (),
-					shaderNode     = appearanceNode .shaderNode || this .getShader (browser);
+               if (blendModeNode)
+                  blendModeNode .disable (gl);
+            }
+         }
+         catch (error)
+         {
+            // Catch error from setLocalUniforms.
+            console .log (error);
+         }
+      },
+      displayParticles: function (gl, context, particles, numParticles)
+      {
+         try
+         {
+            const
+               browser        = context .browser,
+               appearanceNode = context .shapeNode .getAppearance (),
+               shaderNode     = appearanceNode .shaderNode || this .getShader (browser);
 
-				if (shaderNode .getValid ())
-				{
-					const
-						blendModeNode = appearanceNode .blendModeNode,
-						attribNodes   = this .attribNodes,
-						attribBuffers = this .attribBuffers;
+            if (shaderNode .getValid ())
+            {
+               const
+                  blendModeNode = appearanceNode .blendModeNode,
+                  attribNodes   = this .attribNodes,
+                  attribBuffers = this .attribBuffers;
 
-					if (blendModeNode)
-						blendModeNode .enable (gl);
+               if (blendModeNode)
+                  blendModeNode .enable (gl);
 
-					// Setup shader.
+               // Setup shader.
 
-					shaderNode .enable (gl);
-					shaderNode .setLocalUniforms (gl, context);
+               shaderNode .enable (gl);
+               shaderNode .setLocalUniforms (gl, context);
 
-					// Setup vertex attributes.
+               // Setup vertex attributes.
 
-					for (let i = 0, length = attribNodes .length; i < length; ++ i)
-						attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
+               for (let i = 0, length = attribNodes .length; i < length; ++ i)
+                  attribNodes [i] .enable (gl, shaderNode, attribBuffers [i]);
 
-					if (this .fogCoords)
-						shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
+               if (this .fogCoords)
+                  shaderNode .enableFogDepthAttribute (gl, this .fogDepthBuffer);
 
-					if (this .colorMaterial)
-						shaderNode .enableColorAttribute (gl, this .colorBuffer);
+               if (this .colorMaterial)
+                  shaderNode .enableColorAttribute (gl, this .colorBuffer);
 
-					if (this .getMultiTexCoords () .length)
-						shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
+               if (this .getMultiTexCoords () .length)
+                  shaderNode .enableTexCoordAttribute (gl, this .texCoordBuffers);
 
-					shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
+               shaderNode .enableVertexAttribute   (gl, this .vertexBuffer);
 
-					// Wireframes are always solid so only one drawing call is needed.
+               // Wireframes are always solid so only one drawing call is needed.
 
-					const
-						modelViewMatrix = context .modelViewMatrix,
-						x               = modelViewMatrix [12],
-						y               = modelViewMatrix [13],
-						z               = modelViewMatrix [14],
-						primitiveMode   = shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode;
+               const
+                  modelViewMatrix = context .modelViewMatrix,
+                  x               = modelViewMatrix [12],
+                  y               = modelViewMatrix [13],
+                  z               = modelViewMatrix [14],
+                  primitiveMode   = shaderNode .primitiveMode === gl .POINTS ? gl .POINTS : this .primitiveMode;
 
-					for (let p = 0; p < numParticles; ++ p)
-					{
-						const particle = particles [p];
+               for (let p = 0; p < numParticles; ++ p)
+               {
+                  const particle = particles [p];
 
-						modelViewMatrix [12] = x;
-						modelViewMatrix [13] = y;
-						modelViewMatrix [14] = z;
+                  modelViewMatrix [12] = x;
+                  modelViewMatrix [13] = y;
+                  modelViewMatrix [14] = z;
 
-						Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
+                  Matrix4 .prototype .translate .call (modelViewMatrix, particle .position);
 
-						shaderNode .setParticle (gl, particle, modelViewMatrix);
+                  shaderNode .setParticle (gl, particle, modelViewMatrix);
 
-						gl .drawArrays (primitiveMode, 0, this .vertexCount);
-					}
+                  gl .drawArrays (primitiveMode, 0, this .vertexCount);
+               }
 
-					for (const attribNode of attribNodes)
-						attribNode .disable (gl, shaderNode);
+               for (const attribNode of attribNodes)
+                  attribNode .disable (gl, shaderNode);
 
-					if (this .fogCoords)
-						shaderNode .disableFogDepthAttribute (gl);
+               if (this .fogCoords)
+                  shaderNode .disableFogDepthAttribute (gl);
 
-					if (this .colorMaterial)
-						shaderNode .disableColorAttribute (gl);
+               if (this .colorMaterial)
+                  shaderNode .disableColorAttribute (gl);
 
-					shaderNode .disableTexCoordAttribute (gl);
-					shaderNode .disable (gl);
+               shaderNode .disableTexCoordAttribute (gl);
+               shaderNode .disable (gl);
 
-					if (blendModeNode)
-						blendModeNode .disable (gl);
-				}
-			}
-			catch (error)
-			{
-				// Catch error from setLocalUniforms.
-				console .log (error);
-			}
-		},
-	});
+               if (blendModeNode)
+                  blendModeNode .disable (gl);
+            }
+         }
+         catch (error)
+         {
+            // Catch error from setLocalUniforms.
+            console .log (error);
+         }
+      },
+   });
 
-	return X3DLineGeometryNode;
+   return X3DLineGeometryNode;
 });

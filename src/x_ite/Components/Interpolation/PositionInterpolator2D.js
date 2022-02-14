@@ -48,78 +48,76 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Interpolation/X3DInterpolatorNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector2",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Interpolation/X3DInterpolatorNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector2",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DInterpolatorNode, 
+          X3DInterpolatorNode,
           X3DConstants,
           Vector2)
 {
 "use strict";
 
-	function PositionInterpolator2D (executionContext)
-	{
-		X3DInterpolatorNode .call (this, executionContext);
+   function PositionInterpolator2D (executionContext)
+   {
+      X3DInterpolatorNode .call (this, executionContext);
 
-		this .addType (X3DConstants .PositionInterpolator2D);
-	}
+      this .addType (X3DConstants .PositionInterpolator2D);
+   }
 
-	PositionInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
-	{
-		constructor: PositionInterpolator2D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec2f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec2f ()),
-		]),
-		getTypeName: function ()
-		{
-			return "PositionInterpolator2D";
-		},
-		getComponentName: function ()
-		{
-			return "Interpolation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DInterpolatorNode .prototype .initialize .call (this);
+   PositionInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+   {
+      constructor: PositionInterpolator2D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec2f ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "PositionInterpolator2D";
+      },
+      getComponentName: function ()
+      {
+         return "Interpolation";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DInterpolatorNode .prototype .initialize .call (this);
 
-			this .keyValue_ .addInterest ("set_keyValue__", this);
-		},
-		set_keyValue__: function ()
-		{
-			var
-				key      = this .key_,
-				keyValue = this .keyValue_;
+         this .keyValue_ .addInterest ("set_keyValue__", this);
+      },
+      set_keyValue__: function ()
+      {
+         var
+            key      = this .key_,
+            keyValue = this .keyValue_;
 
-			if (keyValue .length < key .length)
-				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec2f ());
-		},
-		interpolate:  (function ()
-		{
-			var keyValue = new Vector2 (0, 0);
+         if (keyValue .length < key .length)
+            keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec2f ());
+      },
+      interpolate:  (function ()
+      {
+         var keyValue = new Vector2 (0, 0);
 
-			return function (index0, index1, weight)
-			{
-				this .value_changed_ = keyValue .assign (this .keyValue_ [index0] .getValue ()) .lerp (this .keyValue_ [index1] .getValue (), weight);
-			};
-		})(),
-	});
+         return function (index0, index1, weight)
+         {
+            this .value_changed_ = keyValue .assign (this .keyValue_ [index0] .getValue ()) .lerp (this .keyValue_ [index1] .getValue (), weight);
+         };
+      })(),
+   });
 
-	return PositionInterpolator2D;
+   return PositionInterpolator2D;
 });
-
-

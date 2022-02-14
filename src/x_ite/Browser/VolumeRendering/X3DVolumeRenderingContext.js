@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Components/Texturing/PixelTexture",
-	"x_ite/Components/Texturing/TextureProperties",
-	"x_ite/Components/VolumeRendering/OpacityMapVolumeStyle",
+   "x_ite/Components/Texturing/PixelTexture",
+   "x_ite/Components/Texturing/TextureProperties",
+   "x_ite/Components/VolumeRendering/OpacityMapVolumeStyle",
 ],
 function (PixelTexture,
           TextureProperties,
@@ -58,57 +58,57 @@ function (PixelTexture,
 {
 "use strict";
 
-	function X3DVolumeRenderingContext () { }
+   function X3DVolumeRenderingContext () { }
 
-	X3DVolumeRenderingContext .prototype =
-	{
-		getDefaultVolumeStyle: function ()
-		{
-			this .defaultVolumeStyle = new OpacityMapVolumeStyle (this .getPrivateScene ());
-			this .defaultVolumeStyle .setup ();
+   X3DVolumeRenderingContext .prototype =
+   {
+      getDefaultVolumeStyle: function ()
+      {
+         this .defaultVolumeStyle = new OpacityMapVolumeStyle (this .getPrivateScene ());
+         this .defaultVolumeStyle .setup ();
 
-			this .getDefaultVolumeStyle = function () { return this .defaultVolumeStyle; };
+         this .getDefaultVolumeStyle = function () { return this .defaultVolumeStyle; };
 
-			return this .defaultVolumeStyle;
-		},
-		getDefaultBlendedVolumeStyle: function ()
-		{
-			this .defaultBlendedVolumeStyle = new OpacityMapVolumeStyle (this .getPrivateScene ());
-			this .defaultBlendedVolumeStyle .setup ();
+         return this .defaultVolumeStyle;
+      },
+      getDefaultBlendedVolumeStyle: function ()
+      {
+         this .defaultBlendedVolumeStyle = new OpacityMapVolumeStyle (this .getPrivateScene ());
+         this .defaultBlendedVolumeStyle .setup ();
 
-			this .getDefaultBlendedVolumeStyle = function () { return this .defaultBlendedVolumeStyle; };
+         this .getDefaultBlendedVolumeStyle = function () { return this .defaultBlendedVolumeStyle; };
 
-			return this .defaultBlendedVolumeStyle;
-		},
-		getDefaultTransferFunction: function ()
-		{
-			this .defaultTransferFunction = new PixelTexture (this .getPrivateScene ());
+         return this .defaultBlendedVolumeStyle;
+      },
+      getDefaultTransferFunction: function ()
+      {
+         this .defaultTransferFunction = new PixelTexture (this .getPrivateScene ());
 
-			var textureProperties = new TextureProperties (this .getPrivateScene ());
+         var textureProperties = new TextureProperties (this .getPrivateScene ());
 
-			textureProperties .generateMipMaps_ = true;
-			textureProperties .boundaryModeS_   = "CLAMP_TO_EDGE";
-			textureProperties .boundaryModeT_   = "REPEAT";
+         textureProperties .generateMipMaps_ = true;
+         textureProperties .boundaryModeS_   = "CLAMP_TO_EDGE";
+         textureProperties .boundaryModeT_   = "REPEAT";
 
-			this .defaultTransferFunction .textureProperties_ = textureProperties;
+         this .defaultTransferFunction .textureProperties_ = textureProperties;
 
-			this .defaultTransferFunction .image_ .width  = 256;
-			this .defaultTransferFunction .image_ .height = 1;
-			this .defaultTransferFunction .image_ .comp   = 2;
+         this .defaultTransferFunction .image_ .width  = 256;
+         this .defaultTransferFunction .image_ .height = 1;
+         this .defaultTransferFunction .image_ .comp   = 2;
 
-			var array = this .defaultTransferFunction .image_ .array;
+         var array = this .defaultTransferFunction .image_ .array;
 
-			for (var i = 0; i < 256; ++ i)
-				array [i] = (i << 8) | i;
+         for (var i = 0; i < 256; ++ i)
+            array [i] = (i << 8) | i;
 
-			textureProperties             .setup ();
-			this .defaultTransferFunction .setup ();
+         textureProperties             .setup ();
+         this .defaultTransferFunction .setup ();
 
-			this .getDefaultTransferFunction = function () { return this .defaultTransferFunction; };
+         this .getDefaultTransferFunction = function () { return this .defaultTransferFunction; };
 
-			return this .defaultTransferFunction;
-		},
-	};
+         return this .defaultTransferFunction;
+      },
+   };
 
-	return X3DVolumeRenderingContext;
+   return X3DVolumeRenderingContext;
 });

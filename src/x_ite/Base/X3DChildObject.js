@@ -48,75 +48,75 @@
 
 
 define ([
-	"x_ite/Base/X3DObject",
+   "x_ite/Base/X3DObject",
 ],
 function (X3DObject)
 {
 "use strict";
 
-	function X3DChildObject ()
-	{
-		X3DObject .call (this);
-	}
+   function X3DChildObject ()
+   {
+      X3DObject .call (this);
+   }
 
-	X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
-	{
-		constructor: X3DChildObject,
-		_modificationTime: 0,
-		_tainted: false,
-		_parents: new Set (),
-		setModificationTime: function (value)
-		{
-			this ._modificationTime = value;
-		},
-		getModificationTime: function ()
-		{
-			return this ._modificationTime;
-		},
-		setTainted: function (value)
-		{
-			this ._tainted = value;
-		},
-		getTainted: function ()
-		{
-			return this ._tainted;
-		},
-		addEvent: function ()
-		{
-			this .setModificationTime (performance .now ());
+   X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
+   {
+      constructor: X3DChildObject,
+      _modificationTime: 0,
+      _tainted: false,
+      _parents: new Set (),
+      setModificationTime: function (value)
+      {
+         this ._modificationTime = value;
+      },
+      getModificationTime: function ()
+      {
+         return this ._modificationTime;
+      },
+      setTainted: function (value)
+      {
+         this ._tainted = value;
+      },
+      getTainted: function ()
+      {
+         return this ._tainted;
+      },
+      addEvent: function ()
+      {
+         this .setModificationTime (performance .now ());
 
-			for (const parent of this ._parents)
-				parent .addEvent (this);
-		},
-		addEventObject: function (field, event)
-		{
-			this .setModificationTime (performance .now ());
+         for (const parent of this ._parents)
+            parent .addEvent (this);
+      },
+      addEventObject: function (field, event)
+      {
+         this .setModificationTime (performance .now ());
 
-			for (const parent of this ._parents)
-				parent .addEventObject (this, event);
-		},
-		addParent: function (parent)
-		{
-			if (! this .hasOwnProperty ("_parents"))
-				this ._parents = new Set ();
+         for (const parent of this ._parents)
+            parent .addEventObject (this, event);
+      },
+      addParent: function (parent)
+      {
+         if (! this .hasOwnProperty ("_parents"))
+            this ._parents = new Set ();
 
-			this ._parents .add (parent);
-		},
-		removeParent: function (parent)
-		{
-			this ._parents .delete (parent);
-		},
-		getParents: function ()
-		{
-			return this ._parents;
-		},
-		dispose: function ()
-		{
-			this ._parents .clear ();
+         this ._parents .add (parent);
+      },
+      removeParent: function (parent)
+      {
+         this ._parents .delete (parent);
+      },
+      getParents: function ()
+      {
+         return this ._parents;
+      },
+      dispose: function ()
+      {
+         this ._parents .clear ();
 
-			X3DObject .prototype .dispose .call (this);
-		},
-	});
+         X3DObject .prototype .dispose .call (this);
+      },
+   });
 
-	return X3DChildObject;
+   return X3DChildObject;
 });

@@ -51,14 +51,14 @@ define (function ()
 {
 "use strict";
 
-	let i = 0;
+   let i = 0;
 
-	const TextureQuality =
-	{
-		LOW:    i ++,
-		MEDIUM: i ++,
-		HIGH:   i ++,
-	};
+   const TextureQuality =
+   {
+      LOW:    i ++,
+      MEDIUM: i ++,
+      HIGH:   i ++,
+   };
 
-	return TextureQuality;
+   return TextureQuality;
 });

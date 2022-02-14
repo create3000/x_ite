@@ -49,11 +49,11 @@
 
 
 define ([
-	"x_ite/Basic/X3DField",
-	"x_ite/Fields/SFMatrixPrototypeTemplate",
-	"x_ite/Fields/SFVec2",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Matrix3",
+   "x_ite/Basic/X3DField",
+   "x_ite/Fields/SFMatrixPrototypeTemplate",
+   "x_ite/Fields/SFVec2",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Matrix3",
 ],
 function (X3DField,
           SFMatrixPrototypeTemplate,
@@ -63,79 +63,79 @@ function (X3DField,
 {
 "use strict";
 
-	function SFMatrix3Template (TypeName, Type, SFVec2, double)
-	{
-		function SFMatrix3 (m00, m01, m02,
-		                    m10, m11, m12,
-		                    m20, m21, m22)
-		{
-			switch (arguments .length)
-			{
-				case 0:
-					return X3DField .call (this, new Matrix3 ());
+   function SFMatrix3Template (TypeName, Type, SFVec2, double)
+   {
+      function SFMatrix3 (m00, m01, m02,
+                          m10, m11, m12,
+                          m20, m21, m22)
+      {
+         switch (arguments .length)
+         {
+            case 0:
+               return X3DField .call (this, new Matrix3 ());
 
-				case 1:
-					return X3DField .call (this, arguments [0]);
+            case 1:
+               return X3DField .call (this, arguments [0]);
 
-				case 9:
-					return X3DField .call (this, new Matrix3 (m00 * 1, m01 * 1, m02 * 1,
-					                                          m10 * 1, m11 * 1, m12 * 1,
-					                                          m20 * 1, m21 * 1, m22 * 1));
-			}
+            case 9:
+               return X3DField .call (this, new Matrix3 (m00 * 1, m01 * 1, m02 * 1,
+                                                         m10 * 1, m11 * 1, m12 * 1,
+                                                         m20 * 1, m21 * 1, m22 * 1));
+         }
 
-			throw new Error ("Invalid arguments.");
-		}
+         throw new Error ("Invalid arguments.");
+      }
 
-		SFMatrix3 .prototype = Object .assign (Object .create (X3DField .prototype),
-			SFMatrixPrototypeTemplate (Matrix3, SFVec2, double),
-		{
-			constructor: SFMatrix3,
-			getTypeName: function ()
-			{
-				return TypeName;
-			},
-			getType: function ()
-			{
-				return Type;
-			},
-			setTransform: function (translation, rotation, scale, scaleOrientation, center)
-			{
-				translation      = translation      ? translation      .getValue () : null;
-				rotation         = rotation         ? rotation                      : 0;
-				scale            = scale            ? scale            .getValue () : null;
-				scaleOrientation = scaleOrientation ? scaleOrientation              : 0;
-				center           = center           ? center           .getValue () : null;
+      SFMatrix3 .prototype = Object .assign (Object .create (X3DField .prototype),
+         SFMatrixPrototypeTemplate (Matrix3, SFVec2, double),
+      {
+         constructor: SFMatrix3,
+         getTypeName: function ()
+         {
+            return TypeName;
+         },
+         getType: function ()
+         {
+            return Type;
+         },
+         setTransform: function (translation, rotation, scale, scaleOrientation, center)
+         {
+            translation      = translation      ? translation      .getValue () : null;
+            rotation         = rotation         ? rotation                      : 0;
+            scale            = scale            ? scale            .getValue () : null;
+            scaleOrientation = scaleOrientation ? scaleOrientation              : 0;
+            center           = center           ? center           .getValue () : null;
 
-				this .getValue () .set (translation, rotation, scale, scaleOrientation, center);
-			},
-		});
+            this .getValue () .set (translation, rotation, scale, scaleOrientation, center);
+         },
+      });
 
-		function defineProperty (i)
-		{
-			Object .defineProperty (SFMatrix3 .prototype, i,
-			{
-				get: function ()
-				{
-					return this .getValue () [i];
-				},
-				set: function (value)
-				{
-					this .getValue () [i] = value * 1;
-					this .addEvent ();
-				},
-				enumerable: false,
-				configurable: false
-			});
-		}
+      function defineProperty (i)
+      {
+         Object .defineProperty (SFMatrix3 .prototype, i,
+         {
+            get: function ()
+            {
+               return this .getValue () [i];
+            },
+            set: function (value)
+            {
+               this .getValue () [i] = value * 1;
+               this .addEvent ();
+            },
+            enumerable: false,
+            configurable: false
+         });
+      }
 
-		for (let i = 0; i < Matrix3 .prototype .length; ++ i)
-			defineProperty (i);
+      for (let i = 0; i < Matrix3 .prototype .length; ++ i)
+         defineProperty (i);
 
-		return SFMatrix3;
-	}
+      return SFMatrix3;
+   }
 
-	return {
-		SFMatrix3d: SFMatrix3Template ("SFMatrix3d", X3DConstants .SFMatrix3d, SFVec2 .SFVec2d, true),
-		SFMatrix3f: SFMatrix3Template ("SFMatrix3f", X3DConstants .SFMatrix3f, SFVec2 .SFVec2f, false),
-	};
+   return {
+      SFMatrix3d: SFMatrix3Template ("SFMatrix3d", X3DConstants .SFMatrix3d, SFVec2 .SFVec2d, true),
+      SFMatrix3f: SFMatrix3Template ("SFMatrix3f", X3DConstants .SFMatrix3f, SFVec2 .SFVec2f, false),
+   };
 });

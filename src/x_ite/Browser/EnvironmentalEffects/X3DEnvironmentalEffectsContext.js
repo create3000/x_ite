@@ -48,41 +48,41 @@
 
 
 define ([
-	"x_ite/Components/Texturing/TextureProperties",
+   "x_ite/Components/Texturing/TextureProperties",
 ],
 function (TextureProperties)
 {
 "use strict";
 
-	function X3DEnvironmentalEffectsContext () { }
+   function X3DEnvironmentalEffectsContext () { }
 
-	X3DEnvironmentalEffectsContext .prototype =
-	{
-		initialize: function () { },
-		getBackgroundSphereShader: function ()
-		{
-			this .backgroundSphereShader = this .createShader ("BackgroundSphereShader", "Background");
+   X3DEnvironmentalEffectsContext .prototype =
+   {
+      initialize: function () { },
+      getBackgroundSphereShader: function ()
+      {
+         this .backgroundSphereShader = this .createShader ("BackgroundSphereShader", "Background");
 
-			this .getBackgroundSphereShader = function () { return this .backgroundSphereShader; };
+         this .getBackgroundSphereShader = function () { return this .backgroundSphereShader; };
 
-			return this .backgroundSphereShader;
-		},
-		getBackgroundTextureProperties: function ()
-		{
-			this .backgroundTextureProperties = new TextureProperties (this .getPrivateScene ());
+         return this .backgroundSphereShader;
+      },
+      getBackgroundTextureProperties: function ()
+      {
+         this .backgroundTextureProperties = new TextureProperties (this .getPrivateScene ());
 
-			this .backgroundTextureProperties .boundaryModeS_       = "CLAMP_TO_EDGE";
-			this .backgroundTextureProperties .boundaryModeT_       = "CLAMP_TO_EDGE";
-			this .backgroundTextureProperties .boundaryModeR_       = "CLAMP_TO_EDGE";
-			this .backgroundTextureProperties .minificationFilter_  = "NICEST";
-			this .backgroundTextureProperties .magnificationFilter_ = "NICEST";
-			this .backgroundTextureProperties .setup ();
+         this .backgroundTextureProperties .boundaryModeS_       = "CLAMP_TO_EDGE";
+         this .backgroundTextureProperties .boundaryModeT_       = "CLAMP_TO_EDGE";
+         this .backgroundTextureProperties .boundaryModeR_       = "CLAMP_TO_EDGE";
+         this .backgroundTextureProperties .minificationFilter_  = "NICEST";
+         this .backgroundTextureProperties .magnificationFilter_ = "NICEST";
+         this .backgroundTextureProperties .setup ();
 
-			this .getBackgroundTextureProperties = function () { return this .backgroundTextureProperties; };
+         this .getBackgroundTextureProperties = function () { return this .backgroundTextureProperties; };
 
-			return this .backgroundTextureProperties;
-		},
-	};
+         return this .backgroundTextureProperties;
+      },
+   };
 
-	return X3DEnvironmentalEffectsContext;
+   return X3DEnvironmentalEffectsContext;
 });

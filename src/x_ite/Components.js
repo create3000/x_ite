@@ -48,28 +48,28 @@
 
 
 define ([
-	"x_ite/DEBUG",
-	"x_ite/Browser/X3DBrowserContext",
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Core",
-	"x_ite/Components/EnvironmentalEffects",
-	"x_ite/Components/EnvironmentalSensor",
-	"x_ite/Components/Followers",
-	"x_ite/Components/Geometry3D",
-	"x_ite/Components/Grouping",
-	"x_ite/Components/Interpolation",
-	"x_ite/Components/Layering",
-	"x_ite/Components/Lighting",
-	"x_ite/Components/Navigation",
-	"x_ite/Components/Networking",
-	"x_ite/Components/PointingDeviceSensor",
-	"x_ite/Components/Rendering",
-	"x_ite/Components/Shaders",
-	"x_ite/Components/Shape",
-	"x_ite/Components/Sound",
-	"x_ite/Components/Text",
-	"x_ite/Components/Texturing",
-	"x_ite/Components/Time",
+   "x_ite/DEBUG",
+   "x_ite/Browser/X3DBrowserContext",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/Core",
+   "x_ite/Components/EnvironmentalEffects",
+   "x_ite/Components/EnvironmentalSensor",
+   "x_ite/Components/Followers",
+   "x_ite/Components/Geometry3D",
+   "x_ite/Components/Grouping",
+   "x_ite/Components/Interpolation",
+   "x_ite/Components/Layering",
+   "x_ite/Components/Lighting",
+   "x_ite/Components/Navigation",
+   "x_ite/Components/Networking",
+   "x_ite/Components/PointingDeviceSensor",
+   "x_ite/Components/Rendering",
+   "x_ite/Components/Shaders",
+   "x_ite/Components/Shape",
+   "x_ite/Components/Sound",
+   "x_ite/Components/Text",
+   "x_ite/Components/Texturing",
+   "x_ite/Components/Time",
 ],
 function (DEBUG,
           X3DBrowserContext,
@@ -77,34 +77,34 @@ function (DEBUG,
 {
 "use strict";
 
-	function Components () { }
+   function Components () { }
 
-	Components .prototype =
-	{
-		addComponent: function (component)
-		{
-			if (component .types)
-			{
-				for (const typeName in component .types)
-					SupportedNodes .addType (typeName, component .types [typeName]);
-			}
+   Components .prototype =
+   {
+      addComponent: function (component)
+      {
+         if (component .types)
+         {
+            for (const typeName in component .types)
+               SupportedNodes .addType (typeName, component .types [typeName]);
+         }
 
-			if (component .abstractTypes)
-			{
-				for (const typeName in component .abstractTypes)
-					SupportedNodes .addAbstractType (typeName, component .abstractTypes [typeName]);
-			}
+         if (component .abstractTypes)
+         {
+            for (const typeName in component .abstractTypes)
+               SupportedNodes .addAbstractType (typeName, component .abstractTypes [typeName]);
+         }
 
-			if (component .browser)
-				X3DBrowserContext .addContext (component .browser);
+         if (component .browser)
+            X3DBrowserContext .addContext (component .browser);
 
-			if (component .name)
-			{
-				if (DEBUG)
-					console .log ("Done loading external component '" + component .name + "'.");
-			}
-		},
-	};
+         if (component .name)
+         {
+            if (DEBUG)
+               console .log ("Done loading external component '" + component .name + "'.");
+         }
+      },
+   };
 
-	return new Components ();
+   return new Components ();
 });

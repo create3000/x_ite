@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,198 +64,198 @@ function (Fields,
 {
 "use strict";
 
-	function ComposedCubeMapTexture (executionContext)
-	{
-		X3DEnvironmentTextureNode .call (this, executionContext);
+   function ComposedCubeMapTexture (executionContext)
+   {
+      X3DEnvironmentTextureNode .call (this, executionContext);
 
-		this .addType (X3DConstants .ComposedCubeMapTexture);
+      this .addType (X3DConstants .ComposedCubeMapTexture);
 
-		this .addAlias ("front",  this .frontTexture_);
-		this .addAlias ("back",   this .backTexture_);
-		this .addAlias ("left",   this .leftTexture_);
-		this .addAlias ("right",  this .rightTexture_);
-		this .addAlias ("bottom", this .bottomTexture_);
-		this .addAlias ("top",    this .topTexture_);
+      this .addAlias ("front",  this .frontTexture_);
+      this .addAlias ("back",   this .backTexture_);
+      this .addAlias ("left",   this .leftTexture_);
+      this .addAlias ("right",  this .rightTexture_);
+      this .addAlias ("bottom", this .bottomTexture_);
+      this .addAlias ("top",    this .topTexture_);
 
-		this .textures   = [null, null, null, null, null, null];
-		this .loadStates = 0;
-	}
+      this .textures   = [null, null, null, null, null, null];
+      this .loadStates = 0;
+   }
 
-	ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
-	{
-		constructor: ComposedCubeMapTexture,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "frontTexture",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "backTexture",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "leftTexture",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "rightTexture",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bottomTexture",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "topTexture",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "ComposedCubeMapTexture";
-		},
-		getComponentName: function ()
-		{
-			return "CubeMapTexturing";
-		},
-		getContainerField: function ()
-		{
-			return "texture";
-		},
-		initialize: function ()
-		{
-			X3DEnvironmentTextureNode .prototype .initialize .call (this);
+   ComposedCubeMapTexture .prototype = Object .assign (Object .create (X3DEnvironmentTextureNode .prototype),
+   {
+      constructor: ComposedCubeMapTexture,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "frontTexture",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "backTexture",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "leftTexture",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "rightTexture",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bottomTexture",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "topTexture",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "ComposedCubeMapTexture";
+      },
+      getComponentName: function ()
+      {
+         return "CubeMapTexturing";
+      },
+      getContainerField: function ()
+      {
+         return "texture";
+      },
+      initialize: function ()
+      {
+         X3DEnvironmentTextureNode .prototype .initialize .call (this);
 
-			// Upload default data.
+         // Upload default data.
 
-			this .clearTexture ();
+         this .clearTexture ();
 
-			// Initialize.
+         // Initialize.
 
-			this .frontTexture_  .addInterest ("set_texture__", this, 0);
-			this .backTexture_   .addInterest ("set_texture__", this, 1);
-			this .leftTexture_   .addInterest ("set_texture__", this, 2);
-			this .rightTexture_  .addInterest ("set_texture__", this, 3);
-			this .topTexture_    .addInterest ("set_texture__", this, 5);
-			this .bottomTexture_ .addInterest ("set_texture__", this, 4);
+         this .frontTexture_  .addInterest ("set_texture__", this, 0);
+         this .backTexture_   .addInterest ("set_texture__", this, 1);
+         this .leftTexture_   .addInterest ("set_texture__", this, 2);
+         this .rightTexture_  .addInterest ("set_texture__", this, 3);
+         this .topTexture_    .addInterest ("set_texture__", this, 5);
+         this .bottomTexture_ .addInterest ("set_texture__", this, 4);
 
-			this .set_texture__ (this .frontTexture_,  0);
-			this .set_texture__ (this .backTexture_,   1);
-			this .set_texture__ (this .leftTexture_,   2);
-			this .set_texture__ (this .rightTexture_,  3);
-			this .set_texture__ (this .topTexture_,    4);
-			this .set_texture__ (this .bottomTexture_, 5);
-		},
-		set_texture__: function (node, index)
-		{
-			var texture = this .textures [index];
+         this .set_texture__ (this .frontTexture_,  0);
+         this .set_texture__ (this .backTexture_,   1);
+         this .set_texture__ (this .leftTexture_,   2);
+         this .set_texture__ (this .rightTexture_,  3);
+         this .set_texture__ (this .topTexture_,    4);
+         this .set_texture__ (this .bottomTexture_, 5);
+      },
+      set_texture__: function (node, index)
+      {
+         var texture = this .textures [index];
 
-			if (texture)
-			{
-				var callbackName = "set_loadState__" + texture .getId () + "_" + index;
+         if (texture)
+         {
+            var callbackName = "set_loadState__" + texture .getId () + "_" + index;
 
-				texture .removeInterest ("set_loadState__", this);
-				texture .loadState_ .removeFieldCallback (callbackName);
-			}
+            texture .removeInterest ("set_loadState__", this);
+            texture .loadState_ .removeFieldCallback (callbackName);
+         }
 
-			var texture = this .textures [index] = X3DCast (X3DConstants .X3DTexture2DNode, node);
+         var texture = this .textures [index] = X3DCast (X3DConstants .X3DTexture2DNode, node);
 
-			if (texture)
-			{
-				var callbackName = "set_loadState__" + texture .getId () + "_" + index;
+         if (texture)
+         {
+            var callbackName = "set_loadState__" + texture .getId () + "_" + index;
 
-				texture .addInterest ("set_loadState__", this, texture, index);
-				texture .loadState_ .addFieldCallback (callbackName, this .set_loadState__ .bind (this, null, texture, index));
-			}
+            texture .addInterest ("set_loadState__", this, texture, index);
+            texture .loadState_ .addFieldCallback (callbackName, this .set_loadState__ .bind (this, null, texture, index));
+         }
 
-			this .set_loadState__ (null, texture, index);
-		},
-		set_loadState__: function (output, texture, index)
-		{
-			if (texture)
-				this .setLoadStateBit (texture .checkLoadState (), texture .getData (), index);
-			else
-				this .setLoadStateBit (X3DConstants .NOT_STARTED, null, index);
+         this .set_loadState__ (null, texture, index);
+      },
+      set_loadState__: function (output, texture, index)
+      {
+         if (texture)
+            this .setLoadStateBit (texture .checkLoadState (), texture .getData (), index);
+         else
+            this .setLoadStateBit (X3DConstants .NOT_STARTED, null, index);
 
-			this .setTextures ();
-		},
-		setLoadStateBit: function (loadState, data, bit)
-		{
-			if (loadState === X3DConstants .COMPLETE_STATE || data)
-				this .loadStates |= 1 << bit;
-			else
-				this .loadStates &= ~(1 << bit);
-		},
-		isComplete: function ()
-		{
-			if (this .loadStates !== 0x3f) // 0b111111
-				return false;
+         this .setTextures ();
+      },
+      setLoadStateBit: function (loadState, data, bit)
+      {
+         if (loadState === X3DConstants .COMPLETE_STATE || data)
+            this .loadStates |= 1 << bit;
+         else
+            this .loadStates &= ~(1 << bit);
+      },
+      isComplete: function ()
+      {
+         if (this .loadStates !== 0x3f) // 0b111111
+            return false;
 
-			var
-				textures = this .textures,
-				size     = textures [0] .getWidth ();
+         var
+            textures = this .textures,
+            size     = textures [0] .getWidth ();
 
-			for (var i = 0; i < 6; ++ i)
-			{
-				var texture = textures [i];
+         for (var i = 0; i < 6; ++ i)
+         {
+            var texture = textures [i];
 
-				if (texture .getWidth () !== size)
-					return false;
+            if (texture .getWidth () !== size)
+               return false;
 
-				if (texture .getHeight () !== size)
-					return false;
-			}
+            if (texture .getHeight () !== size)
+               return false;
+         }
 
-			return true;
-		},
-		setTextures: function ()
-		{
-			var gl = this .getBrowser () .getContext ();
+         return true;
+      },
+      setTextures: function ()
+      {
+         var gl = this .getBrowser () .getContext ();
 
-			gl .bindTexture (this .getTarget (), this .getTexture ());
-			gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
+         gl .bindTexture (this .getTarget (), this .getTexture ());
+         gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
-			if (this .isComplete ())
-			{
-				var textures = this .textures;
+         if (this .isComplete ())
+         {
+            var textures = this .textures;
 
-				for (var i = 0; i < 6; ++ i)
-				{
-					var
-						gl      = this .getBrowser () .getContext (),
-						texture = textures [i],
-						width   = texture .getWidth (),
-						height  = texture .getHeight (),
-						data    = texture .getData ();
+            for (var i = 0; i < 6; ++ i)
+            {
+               var
+                  gl      = this .getBrowser () .getContext (),
+                  texture = textures [i],
+                  width   = texture .getWidth (),
+                  height  = texture .getHeight (),
+                  data    = texture .getData ();
 
-					gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, !texture .getFlipY ());
-					gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
+               gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, !texture .getFlipY ());
+               gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
 
-					if (data instanceof Uint8Array)
-					{
-						gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, false, gl .RGBA, gl .UNSIGNED_BYTE, data);
-					}
-					else
-					{
-						gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, data);
-					}
-				}
+               if (data instanceof Uint8Array)
+               {
+                  gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, false, gl .RGBA, gl .UNSIGNED_BYTE, data);
+               }
+               else
+               {
+                  gl .texImage2D  (this .getTargets () [i], 0, gl .RGBA, gl .RGBA, gl .UNSIGNED_BYTE, data);
+               }
+            }
 
-				this .updateTextureProperties ();
-			}
-			else
-			{
-				this .clearTexture ();
-			}
+            this .updateTextureProperties ();
+         }
+         else
+         {
+            this .clearTexture ();
+         }
 
-			this .set_transparent__ ();
-		},
-		set_transparent__: function ()
-		{
-			var
-				textures    = this .textures,
-				transparent = false;
+         this .set_transparent__ ();
+      },
+      set_transparent__: function ()
+      {
+         var
+            textures    = this .textures,
+            transparent = false;
 
-			if (this .isComplete ())
-			{
-				for (var i = 0; i < 6; ++ i)
-				{
-					if (textures [i] .transparent_ .getValue ())
-					{
-						transparent = true;
-						break;
-					}
-				}
-			}
+         if (this .isComplete ())
+         {
+            for (var i = 0; i < 6; ++ i)
+            {
+               if (textures [i] .transparent_ .getValue ())
+               {
+                  transparent = true;
+                  break;
+               }
+            }
+         }
 
-			this .setTransparent (transparent);
-		},
-	});
+         this .setTransparent (transparent);
+      },
+   });
 
-	return ComposedCubeMapTexture;
+   return ComposedCubeMapTexture;
 });

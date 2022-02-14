@@ -48,13 +48,13 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Fields/SFNode",
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Components/Layering/LayerSet",
-	"x_ite/Components/Layering/Layer",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Fields/SFNode",
+   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Components/Layering/LayerSet",
+   "x_ite/Components/Layering/Layer",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Bits/X3DConstants",
 ],
 function (SupportedNodes,
           SFNode,
@@ -66,103 +66,103 @@ function (SupportedNodes,
 {
 "use strict";
 
-	SupportedNodes .addAbstractType ("X3DWorld");
+   SupportedNodes .addAbstractType ("X3DWorld");
 
-	function X3DWorld (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
+   function X3DWorld (executionContext)
+   {
+      X3DBaseNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DWorld)
+      this .addType (X3DConstants .X3DWorld)
 
-		this .addChildObjects ("activeLayer", new SFNode (this .layer0));
+      this .addChildObjects ("activeLayer", new SFNode (this .layer0));
 
-		this .defaultLayerSet = new LayerSet (executionContext);
-		this .layerSet        = this .defaultLayerSet;
-		this .layer0          = new Layer (executionContext);
-	}
+      this .defaultLayerSet = new LayerSet (executionContext);
+      this .layerSet        = this .defaultLayerSet;
+      this .layer0          = new Layer (executionContext);
+   }
 
-	X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: X3DWorld,
-		getTypeName: function ()
-		{
-			return "X3DWorld";
-		},
-		initialize: function ()
-		{
-			X3DBaseNode .prototype .initialize .call (this);
+   X3DWorld .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   {
+      constructor: X3DWorld,
+      getTypeName: function ()
+      {
+         return "X3DWorld";
+      },
+      initialize: function ()
+      {
+         X3DBaseNode .prototype .initialize .call (this);
 
-			this .layerSet .setPrivate (true);
-			this .layerSet .setup ();
-			this .layerSet .setLayer0 (this .layer0);
-			this .layerSet .activeLayer_ .addInterest ("set_rootNodes__", this);
+         this .layerSet .setPrivate (true);
+         this .layerSet .setup ();
+         this .layerSet .setLayer0 (this .layer0);
+         this .layerSet .activeLayer_ .addInterest ("set_rootNodes__", this);
 
-			this .getExecutionContext () .getRootNodes () .addInterest ("set_rootNodes__", this);
+         this .getExecutionContext () .getRootNodes () .addInterest ("set_rootNodes__", this);
 
-			this .set_rootNodes__ ();
+         this .set_rootNodes__ ();
 
-			this .layer0 .setPrivate (true);
-			this .layer0 .isLayer0 (true);
-			this .layer0 .setup ();
+         this .layer0 .setPrivate (true);
+         this .layer0 .isLayer0 (true);
+         this .layer0 .setup ();
 
-			this .set_activeLayer__ ();
-		},
-		getCache: function ()
-		{
-			return true;
-		},
-		getLayerSet: function ()
-		{
-			return this .layerSet;
-		},
-		getActiveLayer: function ()
-		{
-			return this .activeLayer_ .getValue ();
-		},
-		set_rootNodes__: function ()
-		{
-			const
-				oldLayerSet = this .layerSet,
-				rootNodes   = this .getExecutionContext () .getRootNodes ();
+         this .set_activeLayer__ ();
+      },
+      getCache: function ()
+      {
+         return true;
+      },
+      getLayerSet: function ()
+      {
+         return this .layerSet;
+      },
+      getActiveLayer: function ()
+      {
+         return this .activeLayer_ .getValue ();
+      },
+      set_rootNodes__: function ()
+      {
+         const
+            oldLayerSet = this .layerSet,
+            rootNodes   = this .getExecutionContext () .getRootNodes ();
 
-			this .layerSet          = this .defaultLayerSet;
-			this .layer0 .children_ = rootNodes;
+         this .layerSet          = this .defaultLayerSet;
+         this .layer0 .children_ = rootNodes;
 
-			for (const rootNode of rootNodes)
-			{
-				const layerSet = X3DCast (X3DConstants .LayerSet, rootNode);
+         for (const rootNode of rootNodes)
+         {
+            const layerSet = X3DCast (X3DConstants .LayerSet, rootNode);
 
-				if (layerSet)
-					this .layerSet = layerSet;
-			}
+            if (layerSet)
+               this .layerSet = layerSet;
+         }
 
-			if (this .layerSet === oldLayerSet)
-				return;
+         if (this .layerSet === oldLayerSet)
+            return;
 
-			this .layerSet .setLayer0 (this .layer0);
+         this .layerSet .setLayer0 (this .layer0);
 
-			oldLayerSet    .activeLayer_ .removeInterest ("set_activeLayer__", this);
-			this .layerSet .activeLayer_ .addInterest ("set_activeLayer__", this);
+         oldLayerSet    .activeLayer_ .removeInterest ("set_activeLayer__", this);
+         this .layerSet .activeLayer_ .addInterest ("set_activeLayer__", this);
 
-			this .set_activeLayer__ ();
-		},
-		set_activeLayer__: function ()
-		{
-			this .activeLayer_ = this .layerSet .getActiveLayer ();
-		},
-		bind: function ()
-		{
-			// Bind first X3DBindableNodes found in each layer.
+         this .set_activeLayer__ ();
+      },
+      set_activeLayer__: function ()
+      {
+         this .activeLayer_ = this .layerSet .getActiveLayer ();
+      },
+      bind: function ()
+      {
+         // Bind first X3DBindableNodes found in each layer.
 
-			const worldURL = this .getExecutionContext () .getWorldURL ();
+         const worldURL = this .getExecutionContext () .getWorldURL ();
 
-			this .layerSet .bind (new URL (worldURL, worldURL) .hash .substr (1));
-		},
-		traverse: function (type, renderObject)
-		{
-			this .layerSet .traverse (type, renderObject);
-		},
-	});
+         this .layerSet .bind (new URL (worldURL, worldURL) .hash .substr (1));
+      },
+      traverse: function (type, renderObject)
+      {
+         this .layerSet .traverse (type, renderObject);
+      },
+   });
 
-	return X3DWorld;
+   return X3DWorld;
 });

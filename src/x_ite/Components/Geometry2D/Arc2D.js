@@ -48,13 +48,13 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DLineGeometryNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Complex",
-	"standard/Math/Algorithm",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Rendering/X3DLineGeometryNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Complex",
+   "standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -66,110 +66,110 @@ function (Fields,
 {
 "use strict";
 
-	function Arc2D (executionContext)
-	{
-		X3DLineGeometryNode .call (this, executionContext);
+   function Arc2D (executionContext)
+   {
+      X3DLineGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .Arc2D);
+      this .addType (X3DConstants .Arc2D);
 
-		this .setGeometryType (1);
+      this .setGeometryType (1);
 
-		this .startAngle_ .setUnit ("angle");
-		this .endAngle_   .setUnit ("angle");
-		this .radius_     .setUnit ("length");
-	}
+      this .startAngle_ .setUnit ("angle");
+      this .endAngle_   .setUnit ("angle");
+      this .radius_     .setUnit ("length");
+   }
 
-	Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
-	{
-		constructor: Arc2D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "startAngle", new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "endAngle",   new Fields .SFFloat (1.5708)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",     new Fields .SFFloat (1)),
-		]),
-		getTypeName: function ()
-		{
-			return "Arc2D";
-		},
-		getComponentName: function ()
-		{
-			return "Geometry2D";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-		set_live__: function ()
-		{
-			X3DLineGeometryNode .prototype .set_live__ .call (this);
+   Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
+   {
+      constructor: Arc2D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "startAngle", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "endAngle",   new Fields .SFFloat (1.5708)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",     new Fields .SFFloat (1)),
+      ]),
+      getTypeName: function ()
+      {
+         return "Arc2D";
+      },
+      getComponentName: function ()
+      {
+         return "Geometry2D";
+      },
+      getContainerField: function ()
+      {
+         return "geometry";
+      },
+      set_live__: function ()
+      {
+         X3DLineGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .isLive () .getValue ())
-				this .getBrowser () .getArc2DOptions () .addInterest ("requestRebuild", this);
-			else
-				this .getBrowser () .getArc2DOptions () .removeInterest ("requestRebuild", this);
-		},
-		getSweepAngle: function ()
-		{
-			var
-				start = Algorithm .interval (this .startAngle_ .getValue (), 0, Math .PI * 2),
-				end   = Algorithm .interval (this .endAngle_   .getValue (), 0, Math .PI * 2);
+         if (this .isLive () .getValue ())
+            this .getBrowser () .getArc2DOptions () .addInterest ("requestRebuild", this);
+         else
+            this .getBrowser () .getArc2DOptions () .removeInterest ("requestRebuild", this);
+      },
+      getSweepAngle: function ()
+      {
+         var
+            start = Algorithm .interval (this .startAngle_ .getValue (), 0, Math .PI * 2),
+            end   = Algorithm .interval (this .endAngle_   .getValue (), 0, Math .PI * 2);
 
-			if (start === end)
-				return Math .PI * 2;
+         if (start === end)
+            return Math .PI * 2;
 
-			var sweepAngle = Math .abs (end - start);
+         var sweepAngle = Math .abs (end - start);
 
-			if (start > end)
-				return (Math .PI * 2) - sweepAngle;
+         if (start > end)
+            return (Math .PI * 2) - sweepAngle;
 
-			if (! isNaN (sweepAngle))
-				return sweepAngle;
+         if (! isNaN (sweepAngle))
+            return sweepAngle;
 
-			// We must test for NAN, as NAN to int is undefined.
-			return 0;
-		},
-		build: function ()
-		{
-			var
-				gl          = this .getBrowser () .getContext (),
-				options     = this .getBrowser () .getArc2DOptions (),
-				dimension   = options .dimension_ .getValue (),
-				startAngle  = this .startAngle_ .getValue  (),
-				radius      = Math .abs (this .radius_ .getValue ()),
-				sweepAngle  = this .getSweepAngle (),
-				circle      = sweepAngle == (Math .PI * 2),
-				steps       = Math .floor (sweepAngle * dimension / (Math .PI * 2)),
-				vertexArray = this .getVertices ();
+         // We must test for NAN, as NAN to int is undefined.
+         return 0;
+      },
+      build: function ()
+      {
+         var
+            gl          = this .getBrowser () .getContext (),
+            options     = this .getBrowser () .getArc2DOptions (),
+            dimension   = options .dimension_ .getValue (),
+            startAngle  = this .startAngle_ .getValue  (),
+            radius      = Math .abs (this .radius_ .getValue ()),
+            sweepAngle  = this .getSweepAngle (),
+            circle      = sweepAngle == (Math .PI * 2),
+            steps       = Math .floor (sweepAngle * dimension / (Math .PI * 2)),
+            vertexArray = this .getVertices ();
 
-			steps = Math .max (3, steps);
+         steps = Math .max (3, steps);
 
-			if (! circle)
-			{
-				++ steps;
-				this .setPrimitiveMode (gl .LINE_STRIP);
-			}
-			else
-				this .setPrimitiveMode (gl .LINE_LOOP);
+         if (! circle)
+         {
+            ++ steps;
+            this .setPrimitiveMode (gl .LINE_STRIP);
+         }
+         else
+            this .setPrimitiveMode (gl .LINE_LOOP);
 
-			var steps_1 = circle ? steps : steps - 1;
+         var steps_1 = circle ? steps : steps - 1;
 
-			for (var n = 0; n < steps; ++ n)
-			{
-				var
-					t     = n / steps_1,
-					theta = startAngle + (sweepAngle * t),
-					point = Complex .Polar (radius, theta);
+         for (var n = 0; n < steps; ++ n)
+         {
+            var
+               t     = n / steps_1,
+               theta = startAngle + (sweepAngle * t),
+               point = Complex .Polar (radius, theta);
 
-				vertexArray .push (point .real, point .imag, 0, 1);
-			}
+            vertexArray .push (point .real, point .imag, 0, 1);
+         }
 
-			this .getMin () .set (-radius, -radius, 0);
-			this .getMax () .set ( radius,  radius, 0);
+         this .getMin () .set (-radius, -radius, 0);
+         this .getMax () .set ( radius,  radius, 0);
 
-			this .setSolid (false);
-		},
-	});
+         this .setSolid (false);
+      },
+   });
 
-	return Arc2D;
+   return Arc2D;
 });

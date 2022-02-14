@@ -48,15 +48,15 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Browser/Shaders/Shader",
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Components/Networking/X3DUrlObject",
-	"x_ite/InputOutput/FileLoader",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/DEBUG",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Browser/Shaders/Shader",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Components/Networking/X3DUrlObject",
+   "x_ite/InputOutput/FileLoader",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/DEBUG",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -70,129 +70,129 @@ function (Fields,
 {
 "use strict";
 
-	function ShaderPart (executionContext)
-	{
-		X3DNode      .call (this, executionContext);
-		X3DUrlObject .call (this, executionContext);
+   function ShaderPart (executionContext)
+   {
+      X3DNode      .call (this, executionContext);
+      X3DUrlObject .call (this, executionContext);
 
-		this .addType (X3DConstants .ShaderPart);
+      this .addType (X3DConstants .ShaderPart);
 
-		this .valid = false;
-	}
+      this .valid = false;
+   }
 
-	ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
-		X3DUrlObject .prototype,
-	{
-		constructor: ShaderPart,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-		]),
-		getTypeName: function ()
-		{
-			return "ShaderPart";
-		},
-		getComponentName: function ()
-		{
-			return "Shaders";
-		},
-		getContainerField: function ()
-		{
-			return "parts";
-		},
-		initialize: function ()
-		{
-			X3DNode      .prototype .initialize .call (this);
-			X3DUrlObject .prototype .initialize .call (this);
+   ShaderPart .prototype = Object .assign (Object .create (X3DNode .prototype),
+      X3DUrlObject .prototype,
+   {
+      constructor: ShaderPart,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+      ]),
+      getTypeName: function ()
+      {
+         return "ShaderPart";
+      },
+      getComponentName: function ()
+      {
+         return "Shaders";
+      },
+      getContainerField: function ()
+      {
+         return "parts";
+      },
+      initialize: function ()
+      {
+         X3DNode      .prototype .initialize .call (this);
+         X3DUrlObject .prototype .initialize .call (this);
 
-			const gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
-			this .shader = gl .createShader (gl [this .getShaderType ()]);
+         this .shader = gl .createShader (gl [this .getShaderType ()]);
 
-			this .requestImmediateLoad ();
-		},
-		isValid: function ()
-		{
-			return this .valid;
-		},
-		getShader: function ()
-		{
-			return this .shader;
-		},
-		getShaderType: (function ()
-		{
-			const shaderTypes =
-			{
-				VERTEX:          "VERTEX_SHADER",
-				TESS_CONTROL:    "TESS_CONTROL_SHADER",
-				TESS_EVALUATION: "TESS_EVALUATION_SHADER",
-				GEOMETRY:        "GEOMETRY_SHADER",
-				FRAGMENT:        "FRAGMENT_SHADER",
-				COMPUTE:         "COMPUTE_SHADER",
-			};
+         this .requestImmediateLoad ();
+      },
+      isValid: function ()
+      {
+         return this .valid;
+      },
+      getShader: function ()
+      {
+         return this .shader;
+      },
+      getShaderType: (function ()
+      {
+         const shaderTypes =
+         {
+            VERTEX:          "VERTEX_SHADER",
+            TESS_CONTROL:    "TESS_CONTROL_SHADER",
+            TESS_EVALUATION: "TESS_EVALUATION_SHADER",
+            GEOMETRY:        "GEOMETRY_SHADER",
+            FRAGMENT:        "FRAGMENT_SHADER",
+            COMPUTE:         "COMPUTE_SHADER",
+         };
 
-			return function ()
-			{
-				const type = shaderTypes [this .type_ .getValue ()];
+         return function ()
+         {
+            const type = shaderTypes [this .type_ .getValue ()];
 
-				if (type)
-					return type;
+            if (type)
+               return type;
 
-				return "VERTEX_SHADER";
-			};
-		})(),
-		getSourceText: function ()
-		{
-			return this .url_;
-		},
-		setShadow: function (value)
-		{
-			this .shadow = value;
-		},
-		getShadow: function ()
-		{
-			return this .shadow;
-		},
-		unloadNow: function ()
-		{
-			this .valid = false;
-		},
-		loadNow: function ()
-		{
-			this .valid = false;
+            return "VERTEX_SHADER";
+         };
+      })(),
+      getSourceText: function ()
+      {
+         return this .url_;
+      },
+      setShadow: function (value)
+      {
+         this .shadow = value;
+      },
+      getShadow: function ()
+      {
+         return this .shadow;
+      },
+      unloadNow: function ()
+      {
+         this .valid = false;
+      },
+      loadNow: function ()
+      {
+         this .valid = false;
 
-			new FileLoader (this) .loadDocument (this .urlBuffer_,
-			function (data)
-			{
-				if (data === null)
-				{
-					// No URL could be loaded.
-					this .setLoadState (X3DConstants .FAILED_STATE);
-				}
-				else
-				{
-					const
-						gl     = this .getBrowser () .getContext (),
-						source = Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .shadow);
+         new FileLoader (this) .loadDocument (this .urlBuffer_,
+         function (data)
+         {
+            if (data === null)
+            {
+               // No URL could be loaded.
+               this .setLoadState (X3DConstants .FAILED_STATE);
+            }
+            else
+            {
+               const
+                  gl     = this .getBrowser () .getContext (),
+                  source = Shader .getShaderSource (this .getBrowser (), this .getName (), data, this .shadow);
 
-					gl .shaderSource (this .shader, source);
-					gl .compileShader (this .shader);
+               gl .shaderSource (this .shader, source);
+               gl .compileShader (this .shader);
 
-					this .valid = gl .getShaderParameter (this .shader, gl .COMPILE_STATUS);
+               this .valid = gl .getShaderParameter (this .shader, gl .COMPILE_STATUS);
 
-					if (! this .valid)
-						throw new Error (this .getTypeName () + " '" + this .getName () + "': " + gl .getShaderInfoLog (this .shader));
+               if (! this .valid)
+                  throw new Error (this .getTypeName () + " '" + this .getName () + "': " + gl .getShaderInfoLog (this .shader));
 
-					this .setLoadState (X3DConstants .COMPLETE_STATE);
-				}
-			}
-			.bind (this));
-		},
-	});
+               this .setLoadState (X3DConstants .COMPLETE_STATE);
+            }
+         }
+         .bind (this));
+      },
+   });
 
-	return ShaderPart;
+   return ShaderPart;
 });

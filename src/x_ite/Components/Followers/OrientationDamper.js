@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Followers/X3DDamperNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Rotation4",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Followers/X3DDamperNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Rotation4",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,65 +64,65 @@ function (Fields,
 {
 "use strict";
 
-	var
-		a        = new Rotation4 (0, 0, 1, 0),
-		rotation = new Rotation4 (0, 0, 1, 0);
+   var
+      a        = new Rotation4 (0, 0, 1, 0),
+      rotation = new Rotation4 (0, 0, 1, 0);
 
-	function OrientationDamper (executionContext)
-	{
-		X3DDamperNode .call (this, executionContext);
+   function OrientationDamper (executionContext)
+   {
+      X3DDamperNode .call (this, executionContext);
 
-		this .addType (X3DConstants .OrientationDamper);
+      this .addType (X3DConstants .OrientationDamper);
 
-		this .set_value_          .setUnit ("angle");
-		this .set_destination_    .setUnit ("angle");
-		this .initialValue_       .setUnit ("angle");
-		this .initialDestination_ .setUnit ("angle");
-		this .value_changed_      .setUnit ("angle");
-	}
+      this .set_value_          .setUnit ("angle");
+      this .set_destination_    .setUnit ("angle");
+      this .initialValue_       .setUnit ("angle");
+      this .initialDestination_ .setUnit ("angle");
+      this .value_changed_      .setUnit ("angle");
+   }
 
-	OrientationDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
-	{
-		constructor: OrientationDamper,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "order",              new Fields .SFInt32 (3)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "tau",                new Fields .SFTime (0.3)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "tolerance",          new Fields .SFFloat (-1)),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFRotation ()),
-		]),
-		getTypeName: function ()
-		{
-			return "OrientationDamper";
-		},
-		getComponentName: function ()
-		{
-			return "Followers";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		getVector: function ()
-		{
-			return new Rotation4 (0, 0, 1, 0);
-		},
-		equals: function (lhs, rhs, tolerance)
-		{
-			a .assign (lhs) .inverse () .multRight (rhs);
+   OrientationDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
+   {
+      constructor: OrientationDamper,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "order",              new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "tau",                new Fields .SFTime (0.3)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "tolerance",          new Fields .SFFloat (-1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFRotation ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "OrientationDamper";
+      },
+      getComponentName: function ()
+      {
+         return "Followers";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      getVector: function ()
+      {
+         return new Rotation4 (0, 0, 1, 0);
+      },
+      equals: function (lhs, rhs, tolerance)
+      {
+         a .assign (lhs) .inverse () .multRight (rhs);
 
-			return Math .abs (a .angle) < tolerance;
-		},
-		interpolate: function (source, destination, weight)
-		{
-			return rotation .assign (source) .slerp (destination, weight);
-		},
-	});
+         return Math .abs (a .angle) < tolerance;
+      },
+      interpolate: function (source, destination, weight)
+      {
+         return rotation .assign (source) .slerp (destination, weight);
+      },
+   });
 
-	return OrientationDamper;
+   return OrientationDamper;
 });

@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Matrix3",
-	"standard/Utility/ObjectCache",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Matrix3",
+   "standard/Utility/ObjectCache",
 ],
 function (X3DConstants,
           Matrix3,
@@ -58,106 +58,106 @@ function (X3DConstants,
 {
 "use strict";
 
-	var Fogs = ObjectCache (FogContainer);
+   var Fogs = ObjectCache (FogContainer);
 
-	function FogContainer ()
-	{
-		this .fogMatrix = new Float32Array (9);
-	}
+   function FogContainer ()
+   {
+      this .fogMatrix = new Float32Array (9);
+   }
 
-	FogContainer .prototype =
-	{
-		constructor: FogContainer,
-		set: function (fogNode, modelViewMatrix)
-		{
-			this .fogNode = fogNode;
+   FogContainer .prototype =
+   {
+      constructor: FogContainer,
+      set: function (fogNode, modelViewMatrix)
+      {
+         this .fogNode = fogNode;
 
-			try
-			{
-				this .fogMatrix .set (modelViewMatrix .submatrix .inverse ());
-			}
-			catch (error)
-			{
-				this .fogMatrix .set (Matrix3 .Identity);
-			}
-		},
-		setShaderUniforms: function (gl, shaderObject)
-		{
-			if (shaderObject .hasFog (this))
-				return;
+         try
+         {
+            this .fogMatrix .set (modelViewMatrix .submatrix .inverse ());
+         }
+         catch (error)
+         {
+            this .fogMatrix .set (Matrix3 .Identity);
+         }
+      },
+      setShaderUniforms: function (gl, shaderObject)
+      {
+         if (shaderObject .hasFog (this))
+            return;
 
-			var
-				fogNode         = this .fogNode,
-				visibilityRange = Math .max (0, fogNode .visibilityRange_ .getValue ());
+         var
+            fogNode         = this .fogNode,
+            visibilityRange = Math .max (0, fogNode .visibilityRange_ .getValue ());
 
-			if (fogNode .getHidden () || visibilityRange === 0)
-			{
-				gl .uniform1i (shaderObject .x3d_FogType, 0); // NO_FOG
-			}
-			else
-			{
-				var color  = fogNode .color_ .getValue ();
+         if (fogNode .getHidden () || visibilityRange === 0)
+         {
+            gl .uniform1i (shaderObject .x3d_FogType, 0); // NO_FOG
+         }
+         else
+         {
+            var color  = fogNode .color_ .getValue ();
 
-				gl .uniform1i        (shaderObject .x3d_FogType,            fogNode .fogType);
-				gl .uniform3f        (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
-				gl .uniform1f        (shaderObject .x3d_FogVisibilityRange, visibilityRange);
-				gl .uniformMatrix3fv (shaderObject .x3d_FogMatrix, false,   this .fogMatrix);
-			}
-		},
-		dispose: function ()
-		{
-		   Fogs .push (this);
-		},
-	};
+            gl .uniform1i        (shaderObject .x3d_FogType,            fogNode .fogType);
+            gl .uniform3f        (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
+            gl .uniform1f        (shaderObject .x3d_FogVisibilityRange, visibilityRange);
+            gl .uniformMatrix3fv (shaderObject .x3d_FogMatrix, false,   this .fogMatrix);
+         }
+      },
+      dispose: function ()
+      {
+         Fogs .push (this);
+      },
+   };
 
-	function X3DFogObject (executionContext)
-	{
-		this .addType (X3DConstants .X3DFogObject);
+   function X3DFogObject (executionContext)
+   {
+      this .addType (X3DConstants .X3DFogObject);
 
-		this .visibilityRange_ .setUnit ("length");
+      this .visibilityRange_ .setUnit ("length");
 
-		this .hidden = false;
-	}
+      this .hidden = false;
+   }
 
-	X3DFogObject .prototype =
-	{
-		constructor: X3DFogObject,
-		initialize: function ()
-		{
-			this .fogType_ .addInterest ("set_fogType__", this);
+   X3DFogObject .prototype =
+   {
+      constructor: X3DFogObject,
+      initialize: function ()
+      {
+         this .fogType_ .addInterest ("set_fogType__", this);
 
-			this .set_fogType__ ();
-		},
-		set_fogType__: function ()
-		{
-			switch (this .fogType_ .getValue ())
-			{
-				case "EXPONENTIAL":
-					this .fogType = 2;
-					break;
-				//case "EXPONENTIAL2":
-				//	this .fogType = 3;
-				//	break;
-				default:
-					this .fogType = 1;
-					break;
-			}
-		},
-		setHidden: function (value)
-		{
-			this .hidden = value;
+         this .set_fogType__ ();
+      },
+      set_fogType__: function ()
+      {
+         switch (this .fogType_ .getValue ())
+         {
+            case "EXPONENTIAL":
+               this .fogType = 2;
+               break;
+            //case "EXPONENTIAL2":
+            //	this .fogType = 3;
+            //	break;
+            default:
+               this .fogType = 1;
+               break;
+         }
+      },
+      setHidden: function (value)
+      {
+         this .hidden = value;
 
-			this .getBrowser () .addBrowserEvent ();
-		},
-		getHidden: function ()
-		{
-			return this .hidden;
-		},
-		getFogs: function ()
-		{
-			return Fogs;
-		},
-	};
+         this .getBrowser () .addBrowserEvent ();
+      },
+      getHidden: function ()
+      {
+         return this .hidden;
+      },
+      getFogs: function ()
+      {
+         return Fogs;
+      },
+   };
 
-	return X3DFogObject;
+   return X3DFogObject;
 });

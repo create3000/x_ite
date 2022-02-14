@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,115 +64,115 @@ function (Fields,
 {
 "use strict";
 
-	function EdgeEnhancementVolumeStyle (executionContext)
-	{
-		X3DComposableVolumeRenderStyleNode .call (this, executionContext);
+   function EdgeEnhancementVolumeStyle (executionContext)
+   {
+      X3DComposableVolumeRenderStyleNode .call (this, executionContext);
 
-		this .addType (X3DConstants .EdgeEnhancementVolumeStyle);
-	}
+      this .addType (X3DConstants .EdgeEnhancementVolumeStyle);
+   }
 
-	EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
-	{
-		constructor: EdgeEnhancementVolumeStyle,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "edgeColor",         new Fields .SFColorRGBA (0, 0, 0, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "gradientThreshold", new Fields .SFFloat (0.4)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceNormals",    new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "EdgeEnhancementVolumeStyle";
-		},
-		getComponentName: function ()
-		{
-			return "VolumeRendering";
-		},
-		getContainerField: function ()
-		{
-			return "renderStyle";
-		},
-		initialize: function ()
-		{
-			X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
+   EdgeEnhancementVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
+   {
+      constructor: EdgeEnhancementVolumeStyle,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "edgeColor",         new Fields .SFColorRGBA (0, 0, 0, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "gradientThreshold", new Fields .SFFloat (0.4)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceNormals",    new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "EdgeEnhancementVolumeStyle";
+      },
+      getComponentName: function ()
+      {
+         return "VolumeRendering";
+      },
+      getContainerField: function ()
+      {
+         return "renderStyle";
+      },
+      initialize: function ()
+      {
+         X3DComposableVolumeRenderStyleNode .prototype .initialize .call (this);
 
-			var gl = this .getBrowser () .getContext ();
+         var gl = this .getBrowser () .getContext ();
 
-			if (gl .getVersion () < 2)
-				return;
+         if (gl .getVersion () < 2)
+            return;
 
-			this .surfaceNormals_ .addInterest ("set_surfaceNormals__", this);
+         this .surfaceNormals_ .addInterest ("set_surfaceNormals__", this);
 
-			this .set_surfaceNormals__ ();
-		},
-		set_surfaceNormals__: function ()
-		{
-			this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .surfaceNormals_);
-		},
-		addShaderFields: function (shaderNode)
-		{
-			if (! this .enabled_ .getValue ())
-				return;
+         this .set_surfaceNormals__ ();
+      },
+      set_surfaceNormals__: function ()
+      {
+         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .surfaceNormals_);
+      },
+      addShaderFields: function (shaderNode)
+      {
+         if (! this .enabled_ .getValue ())
+            return;
 
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "edgeColor_"         + this .getId (), this .edgeColor_         .copy ());
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "gradientThreshold_" + this .getId (), this .gradientThreshold_ .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "edgeColor_"         + this .getId (), this .edgeColor_         .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "gradientThreshold_" + this .getId (), this .gradientThreshold_ .copy ());
 
-			if (this .surfaceNormalsNode)
-				shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));
-		},
-		getUniformsText: function ()
-		{
-			if (! this .enabled_ .getValue ())
-				return "";
+         if (this .surfaceNormalsNode)
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));
+      },
+      getUniformsText: function ()
+      {
+         if (! this .enabled_ .getValue ())
+            return "";
 
-			var string = "";
+         var string = "";
 
-			string += "\n";
-			string += "// EdgeEnhancementVolumeStyle\n";
-			string += "\n";
-			string += "uniform vec4  edgeColor_" + this .getId () + ";\n";
-			string += "uniform float gradientThreshold_" + this .getId () + ";\n";
+         string += "\n";
+         string += "// EdgeEnhancementVolumeStyle\n";
+         string += "\n";
+         string += "uniform vec4  edgeColor_" + this .getId () + ";\n";
+         string += "uniform float gradientThreshold_" + this .getId () + ";\n";
 
-			string += this .getNormalText (this .surfaceNormalsNode);
+         string += this .getNormalText (this .surfaceNormalsNode);
 
-			string += "\n";
-			string += "vec4\n";
-			string += "getEdgeEnhacementStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
-			string += "{\n";
-			string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
-			string += "\n";
-			string += "	if (surfaceNormal .w == 0.0)\n";
-			string += "		return vec4 (0.0);\n";
-			string += "\n";
-			string += "	vec4  edgeColor         = edgeColor_" + this .getId () + ";\n";
-			string += "	float gradientThreshold = gradientThreshold_" + this .getId () + ";\n";
-			string += "\n";
-			string += "	float angle = abs (dot (surfaceNormal .xyz, normalize (vertex)));\n";
-			string += "\n";
-			string += "	if (angle >= cos (gradientThreshold))\n";
-			string += "		return originalColor;\n";
-			string += "	else\n";
-			string += "		return vec4 (mix (edgeColor .rgb, originalColor.rgb, angle), originalColor .a);\n";
-			string += "}\n";
+         string += "\n";
+         string += "vec4\n";
+         string += "getEdgeEnhacementStyle_" + this .getId () + " (in vec4 originalColor, in vec3 texCoord)\n";
+         string += "{\n";
+         string += "	vec4 surfaceNormal = getNormal_" + this .getId () + " (texCoord);\n";
+         string += "\n";
+         string += "	if (surfaceNormal .w == 0.0)\n";
+         string += "		return vec4 (0.0);\n";
+         string += "\n";
+         string += "	vec4  edgeColor         = edgeColor_" + this .getId () + ";\n";
+         string += "	float gradientThreshold = gradientThreshold_" + this .getId () + ";\n";
+         string += "\n";
+         string += "	float angle = abs (dot (surfaceNormal .xyz, normalize (vertex)));\n";
+         string += "\n";
+         string += "	if (angle >= cos (gradientThreshold))\n";
+         string += "		return originalColor;\n";
+         string += "	else\n";
+         string += "		return vec4 (mix (edgeColor .rgb, originalColor.rgb, angle), originalColor .a);\n";
+         string += "}\n";
 
-			return string;
-		},
-		getFunctionsText: function ()
-		{
-			if (! this .enabled_ .getValue ())
-				return "";
+         return string;
+      },
+      getFunctionsText: function ()
+      {
+         if (! this .enabled_ .getValue ())
+            return "";
 
-			var string = "";
+         var string = "";
 
-			string += "\n";
-			string += "	// EdgeEnhancementVolumeStyle\n";
-			string += "\n";
-			string += "	textureColor = getEdgeEnhacementStyle_" + this .getId () + " (textureColor, texCoord);\n";
+         string += "\n";
+         string += "	// EdgeEnhancementVolumeStyle\n";
+         string += "\n";
+         string += "	textureColor = getEdgeEnhacementStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
-			return string;
-		},
-	});
+         return string;
+      },
+   });
 
-	return EdgeEnhancementVolumeStyle;
+   return EdgeEnhancementVolumeStyle;
 });

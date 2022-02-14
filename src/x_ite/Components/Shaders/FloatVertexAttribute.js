@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Shaders/X3DVertexAttributeNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Algorithm",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Shaders/X3DVertexAttributeNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,88 +64,88 @@ function (Fields,
 {
 "use strict";
 
-	function FloatVertexAttribute (executionContext)
-	{
-		X3DVertexAttributeNode .call (this, executionContext);
+   function FloatVertexAttribute (executionContext)
+   {
+      X3DVertexAttributeNode .call (this, executionContext);
 
-		this .addType (X3DConstants .FloatVertexAttribute);
-	}
+      this .addType (X3DConstants .FloatVertexAttribute);
+   }
 
-	FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
-	{
-		constructor: FloatVertexAttribute,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "name",          new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "numComponents", new Fields .SFInt32 (4)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "value",         new Fields .MFFloat ()),
-		]),
-		getTypeName: function ()
-		{
-			return "FloatVertexAttribute";
-		},
-		getComponentName: function ()
-		{
-			return "Shaders";
-		},
-		getContainerField: function ()
-		{
-			return "attrib";
-		},
-		initialize: function ()
-		{
-			X3DVertexAttributeNode .prototype .initialize .call (this);
+   FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
+   {
+      constructor: FloatVertexAttribute,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "name",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "numComponents", new Fields .SFInt32 (4)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "value",         new Fields .MFFloat ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "FloatVertexAttribute";
+      },
+      getComponentName: function ()
+      {
+         return "Shaders";
+      },
+      getContainerField: function ()
+      {
+         return "attrib";
+      },
+      initialize: function ()
+      {
+         X3DVertexAttributeNode .prototype .initialize .call (this);
 
-			this .numComponents_ .addInterest ("set_numComponents", this);
-			this .value_         .addInterest ("set_value",         this);
+         this .numComponents_ .addInterest ("set_numComponents", this);
+         this .value_         .addInterest ("set_value",         this);
 
-			this .set_numComponents ();
-			this .set_value ();
-		},
-		set_numComponents: function ()
-		{
-			this .numComponents = Algorithm .clamp (this .numComponents_ .getValue (), 1, 4);
-		},
-		set_value: function ()
-		{
-			this .value  = this .value_ .getValue ();
-			this .length = this .value_ .length;
-		},
-		addValue: function (index, array)
-		{
-			var
-				value = this .value,
-				first = index * this .numComponents,
-				last  = first + this .numComponents;
+         this .set_numComponents ();
+         this .set_value ();
+      },
+      set_numComponents: function ()
+      {
+         this .numComponents = Algorithm .clamp (this .numComponents_ .getValue (), 1, 4);
+      },
+      set_value: function ()
+      {
+         this .value  = this .value_ .getValue ();
+         this .length = this .value_ .length;
+      },
+      addValue: function (index, array)
+      {
+         var
+            value = this .value,
+            first = index * this .numComponents,
+            last  = first + this .numComponents;
 
-			if (last <= this .length)
-			{
-				for (; first < last; ++ first)
-					array .push (value [first]);
-			}
-			else if (this .numComponents <= this .length)
-			{
-				last  = value .length;
-				first = last - this .numComponents;
+         if (last <= this .length)
+         {
+            for (; first < last; ++ first)
+               array .push (value [first]);
+         }
+         else if (this .numComponents <= this .length)
+         {
+            last  = value .length;
+            first = last - this .numComponents;
 
-				for (; first < last; ++ first)
-					array .push (value [first]);
-			}
-			else
-			{
-				for (; first < last; ++ first)
-					array .push (0);
-			}
-		},
-		enable: function (gl, shaderNode, buffer)
-		{
-			shaderNode .enableFloatAttrib (gl, this .name_ .getValue (), buffer, this .numComponents);
-		},
-		disable: function (gl, shaderNode)
-		{
-			shaderNode .disableFloatAttrib (gl, this .name_ .getValue ());
-		},
-	});
+            for (; first < last; ++ first)
+               array .push (value [first]);
+         }
+         else
+         {
+            for (; first < last; ++ first)
+               array .push (0);
+         }
+      },
+      enable: function (gl, shaderNode, buffer)
+      {
+         shaderNode .enableFloatAttrib (gl, this .name_ .getValue (), buffer, this .numComponents);
+      },
+      disable: function (gl, shaderNode)
+      {
+         shaderNode .disableFloatAttrib (gl, this .name_ .getValue ());
+      },
+   });
 
-	return FloatVertexAttribute;
+   return FloatVertexAttribute;
 });

@@ -48,10 +48,10 @@
 
 
 define ([
-	"x_ite/Basic/X3DField",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/InputOutput/Generator",
-	"x_ite/Fields/SFNodeCache",
+   "x_ite/Basic/X3DField",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/InputOutput/Generator",
+   "x_ite/Fields/SFNodeCache",
 ],
 function (X3DField,
           X3DConstants,
@@ -60,341 +60,341 @@ function (X3DField,
 {
 "use strict";
 
-	const handler =
-	{
-		get: function (target, key)
-		{
-			try
-			{
-				const value = target [key];
+   const handler =
+   {
+      get: function (target, key)
+      {
+         try
+         {
+            const value = target [key];
 
-				if (value !== undefined)
-					return value;
+            if (value !== undefined)
+               return value;
 
-				const
-					field      = target .getValue () .getField (key),
-					accessType = field .getAccessType ();
+            const
+               field      = target .getValue () .getField (key),
+               accessType = field .getAccessType ();
 
-				// Specification conform would be: accessType & X3DConstants .outputOnly.
-				// But we allow read access to plain fields, too.
-				if (accessType === X3DConstants .inputOnly)
-					return undefined;
+            // Specification conform would be: accessType & X3DConstants .outputOnly.
+            // But we allow read access to plain fields, too.
+            if (accessType === X3DConstants .inputOnly)
+               return undefined;
 
-				return field .valueOf ();
-			}
-			catch (error)
-			{
-				return undefined;
-			}
- 		},
-		set: function (target, key, value)
-		{
-			if (key in target)
-			{
-				target [key] = value;
-				return true;
-			}
+            return field .valueOf ();
+         }
+         catch (error)
+         {
+            return undefined;
+         }
+       },
+      set: function (target, key, value)
+      {
+         if (key in target)
+         {
+            target [key] = value;
+            return true;
+         }
 
-			try
-			{
-				const
-					field      = target .getValue () .getField (key),
-					accessType = field .getAccessType ();
+         try
+         {
+            const
+               field      = target .getValue () .getField (key),
+               accessType = field .getAccessType ();
 
-				if (accessType !== X3DConstants .outputOnly)
-					field .setValue (value);
+            if (accessType !== X3DConstants .outputOnly)
+               field .setValue (value);
 
-	 			return true;
-			}
-			catch (error)
-			{
-				console .error (target, key, error);
-				return false;
-			}
-		},
-		has: function (target, key)
-		{
-			try
-			{
-				return Boolean (target .getValue () .getField (key));
-			}
-			catch (error)
-			{
-				return key in target;
-			}
-		},
-	};
+             return true;
+         }
+         catch (error)
+         {
+            console .error (target, key, error);
+            return false;
+         }
+      },
+      has: function (target, key)
+      {
+         try
+         {
+            return Boolean (target .getValue () .getField (key));
+         }
+         catch (error)
+         {
+            return key in target;
+         }
+      },
+   };
 
-	function SFNode (value)
-	{
-		// Node need to test for X3DBaseNode, because there is a special version of SFNode in Script.
+   function SFNode (value)
+   {
+      // Node need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
-		const proxy = new Proxy (this, handler);
+      const proxy = new Proxy (this, handler);
 
-		this ._target = this;
-		this ._proxy  = proxy;
+      this ._target = this;
+      this ._proxy  = proxy;
 
-		if (value)
-		{
-			value .addParent (proxy);
+      if (value)
+      {
+         value .addParent (proxy);
 
-			X3DField .call (this, value);
-		}
-		else
-		{
-			X3DField .call (this, null);
-		}
+         X3DField .call (this, value);
+      }
+      else
+      {
+         X3DField .call (this, null);
+      }
 
-		return proxy;
-	}
+      return proxy;
+   }
 
-	SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
-	{
-		constructor: SFNode,
-		_cloneCount: 0,
-		clone: function ()
-		{
-			const target = this ._target;
+   SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
+   {
+      constructor: SFNode,
+      _cloneCount: 0,
+      clone: function ()
+      {
+         const target = this ._target;
 
-			return new SFNode (target .getValue ());
-		},
-		copy: function (instance)
-		{
-			const
-				target = this ._target,
-				value  = target .getValue ();
+         return new SFNode (target .getValue ());
+      },
+      copy: function (instance)
+      {
+         const
+            target = this ._target,
+            value  = target .getValue ();
 
-			if (value)
-				return new SFNode (value .copy (instance));
+         if (value)
+            return new SFNode (value .copy (instance));
 
-			return new SFNode ();
-		},
-		getTypeName: function ()
-		{
-			return "SFNode";
-		},
-		getType: function ()
-		{
-			return X3DConstants .SFNode;
-		},
-		equals: function (node)
-		{
-			const target = this ._target;
+         return new SFNode ();
+      },
+      getTypeName: function ()
+      {
+         return "SFNode";
+      },
+      getType: function ()
+      {
+         return X3DConstants .SFNode;
+      },
+      equals: function (node)
+      {
+         const target = this ._target;
 
-			if (node)
-				return target .getValue () === node .getValue ();
+         if (node)
+            return target .getValue () === node .getValue ();
 
-			return target .getValue () === null;
-		},
-		isDefaultValue: function ()
-		{
-			const target = this ._target;
+         return target .getValue () === null;
+      },
+      isDefaultValue: function ()
+      {
+         const target = this ._target;
 
-			return target .getValue () === null;
-		},
-		set: function (value)
-		{
-			const
-				target  = this ._target,
-				current = target .getValue ();
+         return target .getValue () === null;
+      },
+      set: function (value)
+      {
+         const
+            target  = this ._target,
+            current = target .getValue ();
 
-			if (current)
-			{
-				current .removeCloneCount (target ._cloneCount);
-				current .removeParent (target ._proxy);
-			}
+         if (current)
+         {
+            current .removeCloneCount (target ._cloneCount);
+            current .removeParent (target ._proxy);
+         }
 
-			// No need to test for X3DBaseNode, because there is a special version of SFNode in Script.
+         // No need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
-			if (value)
-			{
-				value .addParent (target ._proxy);
-				value .addCloneCount (target ._cloneCount);
+         if (value)
+         {
+            value .addParent (target ._proxy);
+            value .addCloneCount (target ._cloneCount);
 
-				X3DField .prototype .set .call (target, value);
-			}
-			else
-			{
-				X3DField .prototype .set .call (target, null);
-			}
-		},
-		getNodeTypeName: function ()
-		{
-			const
-				target = this ._target,
-			 	value  = target .getValue ();
+            X3DField .prototype .set .call (target, value);
+         }
+         else
+         {
+            X3DField .prototype .set .call (target, null);
+         }
+      },
+      getNodeTypeName: function ()
+      {
+         const
+            target = this ._target,
+             value  = target .getValue ();
 
-			if (value)
-				return value .getTypeName ();
+         if (value)
+            return value .getTypeName ();
 
-			throw new Error ("SFNode.getNodeTypeName: node is null.");
-		},
-		getNodeName: function ()
-		{
-			const
-				target = this ._target,
-			 	value  = target .getValue ();
+         throw new Error ("SFNode.getNodeTypeName: node is null.");
+      },
+      getNodeName: function ()
+      {
+         const
+            target = this ._target,
+             value  = target .getValue ();
 
-			if (value)
-				return value .getName ();
+         if (value)
+            return value .getName ();
 
-			throw new Error ("SFNode.getNodeName: node is null.");
-		},
-		getNodeType: function ()
-		{
-			const
-				target = this ._target,
-			 	value  = target .getValue ();
+         throw new Error ("SFNode.getNodeName: node is null.");
+      },
+      getNodeType: function ()
+      {
+         const
+            target = this ._target,
+             value  = target .getValue ();
 
-			if (value)
-				return value .getType () .slice ();
+         if (value)
+            return value .getType () .slice ();
 
-			throw new Error ("SFNode.getNodeType: node is null.");
-		},
-		getFieldDefinitions: function ()
-		{
-			const
-				target = this ._target,
-			 	value  = target .getValue ();
+         throw new Error ("SFNode.getNodeType: node is null.");
+      },
+      getFieldDefinitions: function ()
+      {
+         const
+            target = this ._target,
+             value  = target .getValue ();
 
-			if (value)
-				return value .getFieldDefinitions ();
+         if (value)
+            return value .getFieldDefinitions ();
 
-			throw new Error ("SFNode.getFieldDefinitions: node is null.");
-		},
-		addFieldCallback: function (name, string, object)
-		{
-			const target = this ._target;
+         throw new Error ("SFNode.getFieldDefinitions: node is null.");
+      },
+      addFieldCallback: function (name, string, object)
+      {
+         const target = this ._target;
 
-			switch (arguments .length)
-			{
-				case 2:
-				{
-					return X3DField .prototype .addFieldCallback .apply (target, arguments);
-				}
-				case 3:
-				{
-					const value = target .getValue ();
+         switch (arguments .length)
+         {
+            case 2:
+            {
+               return X3DField .prototype .addFieldCallback .apply (target, arguments);
+            }
+            case 3:
+            {
+               const value = target .getValue ();
 
-					if (value)
-						return value .getField (name) .addFieldCallback (string, object);
+               if (value)
+                  return value .getField (name) .addFieldCallback (string, object);
 
-					throw new Error ("SFNode.addFieldCallback: node is null.");
-				}
-			}
-		},
-		removeFieldCallback: function (name, string)
-		{
-			const target = this ._target;
+               throw new Error ("SFNode.addFieldCallback: node is null.");
+            }
+         }
+      },
+      removeFieldCallback: function (name, string)
+      {
+         const target = this ._target;
 
-			switch (arguments .length)
-			{
-				case 1:
-				{
-					return X3DField .prototype .removeFieldCallback .apply (target, arguments);
-				}
-				case 2:
-				{
-					const value = target .getValue ();
+         switch (arguments .length)
+         {
+            case 1:
+            {
+               return X3DField .prototype .removeFieldCallback .apply (target, arguments);
+            }
+            case 2:
+            {
+               const value = target .getValue ();
 
-					if (value)
-						return value .getField (name) .removeFieldCallback (string);
+               if (value)
+                  return value .getField (name) .removeFieldCallback (string);
 
-					throw new Error ("SFNode.removeFieldCallback: node is null.");
-				}
-			}
-		},
-		addCloneCount: function (count)
-		{
-			const
-				target = this ._target,
-				value  = target .getValue ();
+               throw new Error ("SFNode.removeFieldCallback: node is null.");
+            }
+         }
+      },
+      addCloneCount: function (count)
+      {
+         const
+            target = this ._target,
+            value  = target .getValue ();
 
-			target ._cloneCount += count;
+         target ._cloneCount += count;
 
-			if (value)
-				value .addCloneCount (count);
-		},
-		removeCloneCount: function (count)
-		{
-			const
-				target = this ._target,
-				value  = target .getValue ();
+         if (value)
+            value .addCloneCount (count);
+      },
+      removeCloneCount: function (count)
+      {
+         const
+            target = this ._target,
+            value  = target .getValue ();
 
-			target ._cloneCount -= count;
+         target ._cloneCount -= count;
 
-			if (value)
-				value .removeCloneCount (count);
-		},
-		valueOf: function ()
-		{
-			const
-				target = this ._target,
-			 	value  = target .getValue ();
+         if (value)
+            value .removeCloneCount (count);
+      },
+      valueOf: function ()
+      {
+         const
+            target = this ._target,
+             value  = target .getValue ();
 
-			if (value)
-				return SFNodeCache .get (value);
+         if (value)
+            return SFNodeCache .get (value);
 
-			return null;
-		},
-		toStream: function (stream)
-		{
-			const
-				target = this ._target,
-			 	value  = target .getValue ();
+         return null;
+      },
+      toStream: function (stream)
+      {
+         const
+            target = this ._target,
+             value  = target .getValue ();
 
-			if (value)
-				value .toStream (stream);
-			else
-				stream .string += "NULL";
-		},
-		toVRMLStream: function (stream)
-		{
-			const
-				target = this ._target,
-			 	value  = target .getValue ();
+         if (value)
+            value .toStream (stream);
+         else
+            stream .string += "NULL";
+      },
+      toVRMLStream: function (stream)
+      {
+         const
+            target = this ._target,
+             value  = target .getValue ();
 
-			if (value)
-				value .toVRMLStream (stream);
-			else
-				stream .string += "NULL";
-		},
-		toXMLString: function ()
-		{
-			const
-				target    = this ._target,
-				stream    = { string: "" },
-				generator = Generator .Get (stream),
-				value     = target .getValue ();
+         if (value)
+            value .toVRMLStream (stream);
+         else
+            stream .string += "NULL";
+      },
+      toXMLString: function ()
+      {
+         const
+            target    = this ._target,
+            stream    = { string: "" },
+            generator = Generator .Get (stream),
+            value     = target .getValue ();
 
-			generator .PushExecutionContext (value .getExecutionContext ());
+         generator .PushExecutionContext (value .getExecutionContext ());
 
-			target .toXMLStream (stream);
+         target .toXMLStream (stream);
 
-			generator .PopExecutionContext ();
+         generator .PopExecutionContext ();
 
-			return stream .string;
-		},
-		toXMLStream: function (stream)
-		{
-			const
-				target = this ._target,
-			 	value  = target .getValue ();
+         return stream .string;
+      },
+      toXMLStream: function (stream)
+      {
+         const
+            target = this ._target,
+             value  = target .getValue ();
 
-			if (value)
-				value .toXMLStream (stream);
-			else
-				stream .string += "<!-- NULL -->";
-		},
-		dispose: function ()
-		{
-			const target = this ._target;
+         if (value)
+            value .toXMLStream (stream);
+         else
+            stream .string += "<!-- NULL -->";
+      },
+      dispose: function ()
+      {
+         const target = this ._target;
 
-			target .set (null);
+         target .set (null);
 
-			X3DField .prototype .dispose .call (target);
-		},
-	});
+         X3DField .prototype .dispose .call (target);
+      },
+   });
 
-	return SFNode;
+   return SFNode;
 });

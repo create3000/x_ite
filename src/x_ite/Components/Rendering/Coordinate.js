@@ -48,51 +48,49 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DCoordinateNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Rendering/X3DCoordinateNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DCoordinateNode, 
+          X3DCoordinateNode,
           X3DConstants)
 {
 "use strict";
 
-	function Coordinate (executionContext)
-	{
-		X3DCoordinateNode .call (this, executionContext);
+   function Coordinate (executionContext)
+   {
+      X3DCoordinateNode .call (this, executionContext);
 
-		this .addType (X3DConstants .Coordinate);
+      this .addType (X3DConstants .Coordinate);
 
-		this .point_ .setUnit ("length");
-	}
+      this .point_ .setUnit ("length");
+   }
 
-	Coordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
-	{
-		constructor: Coordinate,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3f ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Coordinate";
-		},
-		getComponentName: function ()
-		{
-			return "Rendering";
-		},
-		getContainerField: function ()
-		{
-			return "coord";
-		},
-	});
+   Coordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
+   {
+      constructor: Coordinate,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3f ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "Coordinate";
+      },
+      getComponentName: function ()
+      {
+         return "Rendering";
+      },
+      getContainerField: function ()
+      {
+         return "coord";
+      },
+   });
 
-	return Coordinate;
+   return Coordinate;
 });
-
-

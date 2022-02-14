@@ -48,18 +48,18 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Shape/X3DShapeNode",
-	"x_ite/Bits/TraverseType",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Algorithm",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Matrix4",
-	"standard/Math/Geometry/Box3",
-	"standard/Math/Geometry/Line3",
-	"standard/Math/Algorithms/QuickSort",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Shape/X3DShapeNode",
+   "x_ite/Bits/TraverseType",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Algorithm",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Matrix4",
+   "standard/Math/Geometry/Box3",
+   "standard/Math/Geometry/Line3",
+   "standard/Math/Algorithms/QuickSort",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -76,198 +76,198 @@ function (Fields,
 {
 "use strict";
 
-	function Shape (executionContext)
-	{
-		X3DShapeNode .call (this, executionContext);
+   function Shape (executionContext)
+   {
+      X3DShapeNode .call (this, executionContext);
 
-		this .addType (X3DConstants .Shape);
-	}
+      this .addType (X3DConstants .Shape);
+   }
 
-	Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
-	{
-		constructor: Shape,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",  new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "appearance",  new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",    new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Shape";
-		},
-		getComponentName: function ()
-		{
-			return "Shape";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DShapeNode .prototype .initialize .call (this);
+   Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
+   {
+      constructor: Shape,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "appearance",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",    new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "Shape";
+      },
+      getComponentName: function ()
+      {
+         return "Shape";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DShapeNode .prototype .initialize .call (this);
 
-			this .transformSensors_changed_ .addInterest ("set_transformSensors__", this);
+         this .transformSensors_changed_ .addInterest ("set_transformSensors__", this);
 
-			this .set_transformSensors__ ();
-		},
-		set_geometry__: function ()
-		{
-			X3DShapeNode .prototype .set_geometry__ .call (this);
+         this .set_transformSensors__ ();
+      },
+      set_geometry__: function ()
+      {
+         X3DShapeNode .prototype .set_geometry__ .call (this);
 
-			if (this .getGeometry ())
-				delete this .traverse;
-			else
-				this .traverse = Function .prototype;
-		},
-		set_transformSensors__: function ()
-		{
-			this .setPickableObject (this .getTransformSensors () .size);
-		},
-		intersectsBox: function (box, clipPlanes, modelViewMatrix)
-		{
-			return this .getGeometry () .intersectsBox (box, clipPlanes, modelViewMatrix);
-		},
-		traverse: function (type, renderObject)
-		{
-			// Always look at ParticleSystem if you do modify something here and there.
+         if (this .getGeometry ())
+            delete this .traverse;
+         else
+            this .traverse = Function .prototype;
+      },
+      set_transformSensors__: function ()
+      {
+         this .setPickableObject (this .getTransformSensors () .size);
+      },
+      intersectsBox: function (box, clipPlanes, modelViewMatrix)
+      {
+         return this .getGeometry () .intersectsBox (box, clipPlanes, modelViewMatrix);
+      },
+      traverse: function (type, renderObject)
+      {
+         // Always look at ParticleSystem if you do modify something here and there.
 
-			switch (type)
-			{
-				case TraverseType .POINTER:
-				{
-					this .pointer (renderObject);
-					break;
-				}
-				case TraverseType .PICKING:
-				{
-					this .picking (renderObject);
-					break;
-				}
-				case TraverseType .COLLISION:
-				{
-					renderObject .addCollisionShape (this);
-					break;
-				}
-				case TraverseType .SHADOW:
-				{
-					if (this .castShadow_ .getValue ())
-						renderObject .addDepthShape (this);
+         switch (type)
+         {
+            case TraverseType .POINTER:
+            {
+               this .pointer (renderObject);
+               break;
+            }
+            case TraverseType .PICKING:
+            {
+               this .picking (renderObject);
+               break;
+            }
+            case TraverseType .COLLISION:
+            {
+               renderObject .addCollisionShape (this);
+               break;
+            }
+            case TraverseType .SHADOW:
+            {
+               if (this .castShadow_ .getValue ())
+                  renderObject .addDepthShape (this);
 
-					break;
-				}
-				case TraverseType .DISPLAY:
-				{
-					if (renderObject .addDisplayShape (this))
-						this .getAppearance () .traverse (type, renderObject); // Currently used for GeneratedCubeMapTexture.
+               break;
+            }
+            case TraverseType .DISPLAY:
+            {
+               if (renderObject .addDisplayShape (this))
+                  this .getAppearance () .traverse (type, renderObject); // Currently used for GeneratedCubeMapTexture.
 
-					break;
-				}
-			}
+               break;
+            }
+         }
 
-			this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
-		},
-		pointer: (function ()
-		{
-			const
-				modelViewMatrix    = new Matrix4 (),
-				invModelViewMatrix = new Matrix4 (),
-				hitRay             = new Line3 (new Vector3 (0, 0, 0), new Vector3 (0, 0, 0)),
-				intersections      = [ ],
-				intersectionSorter = new QuickSort (intersections, function (lhs, rhs)
-				{
-					return lhs .point .z > rhs .point .z;
-				});
+         this .getGeometry () .traverse (type, renderObject); // Currently used for ScreenText.
+      },
+      pointer: (function ()
+      {
+         const
+            modelViewMatrix    = new Matrix4 (),
+            invModelViewMatrix = new Matrix4 (),
+            hitRay             = new Line3 (new Vector3 (0, 0, 0), new Vector3 (0, 0, 0)),
+            intersections      = [ ],
+            intersectionSorter = new QuickSort (intersections, function (lhs, rhs)
+            {
+               return lhs .point .z > rhs .point .z;
+            });
 
-			return function (renderObject)
-			{
-				try
-				{
-					const geometryNode = this .getGeometry ();
+         return function (renderObject)
+         {
+            try
+            {
+               const geometryNode = this .getGeometry ();
 
-					if (geometryNode .getGeometryType () < 2)
-						return;
+               if (geometryNode .getGeometryType () < 2)
+                  return;
 
-					const browser = renderObject .getBrowser ();
+               const browser = renderObject .getBrowser ();
 
-					modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
-					invModelViewMatrix .assign (modelViewMatrix) .inverse ();
+               modelViewMatrix    .assign (renderObject .getModelViewMatrix () .get ());
+               invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-					hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
+               hitRay .assign (browser .getHitRay ()) .multLineMatrix (invModelViewMatrix);
 
-					if (geometryNode .intersectsLine (hitRay, renderObject .getLocalObjects (), modelViewMatrix, intersections))
-					{
-						// Finally we have intersections and must now find the closest hit in front of the camera.
+               if (geometryNode .intersectsLine (hitRay, renderObject .getLocalObjects (), modelViewMatrix, intersections))
+               {
+                  // Finally we have intersections and must now find the closest hit in front of the camera.
 
-						// Transform hitPoints to absolute space.
-						for (const intersection of intersections)
-							modelViewMatrix .multVecMatrix (intersection .point);
+                  // Transform hitPoints to absolute space.
+                  for (const intersection of intersections)
+                     modelViewMatrix .multVecMatrix (intersection .point);
 
-						intersectionSorter .sort (0, intersections .length);
+                  intersectionSorter .sort (0, intersections .length);
 
-						// Find first point that is not greater than near plane;
-						const index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
-						function (lhs, rhs)
-						{
-						   return lhs .point .z > rhs;
-						});
+                  // Find first point that is not greater than near plane;
+                  const index = Algorithm .lowerBound (intersections, 0, intersections .length, -renderObject .getNavigationInfo () .getNearValue (),
+                  function (lhs, rhs)
+                  {
+                     return lhs .point .z > rhs;
+                  });
 
-						// Are there intersections before the camera?
-						if (index !== intersections .length)
-						{
-							// Transform hitNormal to absolute space.
-							invModelViewMatrix .multMatrixDir (intersections [index] .normal) .normalize ();
+                  // Are there intersections before the camera?
+                  if (index !== intersections .length)
+                  {
+                     // Transform hitNormal to absolute space.
+                     invModelViewMatrix .multMatrixDir (intersections [index] .normal) .normalize ();
 
-							browser .addHit (intersections [index], renderObject .getLayer (), this, modelViewMatrix .multRight (renderObject .getCameraSpaceMatrix () .get ()));
-						}
+                     browser .addHit (intersections [index], renderObject .getLayer (), this, modelViewMatrix .multRight (renderObject .getCameraSpaceMatrix () .get ()));
+                  }
 
-						intersections .length = 0;
-					}
-				}
-				catch (error)
-				{
-					console .log (error);
-				}
-			};
-		})(),
-		picking: function (renderObject)
-		{
-			if (this .getTransformSensors () .size)
-			{
-				const modelMatrix = renderObject .getModelViewMatrix () .get ();
+                  intersections .length = 0;
+               }
+            }
+            catch (error)
+            {
+               console .log (error);
+            }
+         };
+      })(),
+      picking: function (renderObject)
+      {
+         if (this .getTransformSensors () .size)
+         {
+            const modelMatrix = renderObject .getModelViewMatrix () .get ();
 
-				for (const transformSensorNode of this .getTransformSensors ())
-					transformSensorNode .collect (modelMatrix);
-			}
+            for (const transformSensorNode of this .getTransformSensors ())
+               transformSensorNode .collect (modelMatrix);
+         }
 
-			const
-				browser          = renderObject .getBrowser (),
-				pickSensorStack  = browser .getPickSensors (),
-				pickingHierarchy = browser .getPickingHierarchy ();
+         const
+            browser          = renderObject .getBrowser (),
+            pickSensorStack  = browser .getPickSensors (),
+            pickingHierarchy = browser .getPickingHierarchy ();
 
-			pickingHierarchy .push (this);
+         pickingHierarchy .push (this);
 
-			for (const pickSensor of pickSensorStack .at (-1))
-			{
-				pickSensor .collect (this .getGeometry (), renderObject .getModelViewMatrix () .get (), browser .getPickingHierarchy ());
-			}
+         for (const pickSensor of pickSensorStack .at (-1))
+         {
+            pickSensor .collect (this .getGeometry (), renderObject .getModelViewMatrix () .get (), browser .getPickingHierarchy ());
+         }
 
-			pickingHierarchy .pop ();
-		},
-		depth: function (gl, context, shaderNode)
-		{
-			this .getGeometry () .depth (gl, context, shaderNode);
-		},
-		display: function (gl, context)
-		{
-			this .getGeometry () .display (gl, context);
-		},
-	});
+         pickingHierarchy .pop ();
+      },
+      depth: function (gl, context, shaderNode)
+      {
+         this .getGeometry () .depth (gl, context, shaderNode);
+      },
+      display: function (gl, context)
+      {
+         this .getGeometry () .display (gl, context);
+      },
+   });
 
-	return Shape;
+   return Shape;
 });

@@ -47,21 +47,21 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Core/MetadataBoolean",
-	"x_ite/Components/Core/MetadataDouble",
-	"x_ite/Components/Core/MetadataFloat",
-	"x_ite/Components/Core/MetadataInteger",
-	"x_ite/Components/Core/MetadataSet",
-	"x_ite/Components/Core/MetadataString",
-	"x_ite/Components/Core/WorldInfo",
-	"x_ite/Components/Core/X3DBindableNode",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Components/Core/X3DInfoNode",
-	"x_ite/Components/Core/X3DMetadataObject",
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Components/Core/X3DPrototypeInstance",
-	"x_ite/Components/Core/X3DSensorNode",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/Core/MetadataBoolean",
+   "x_ite/Components/Core/MetadataDouble",
+   "x_ite/Components/Core/MetadataFloat",
+   "x_ite/Components/Core/MetadataInteger",
+   "x_ite/Components/Core/MetadataSet",
+   "x_ite/Components/Core/MetadataString",
+   "x_ite/Components/Core/WorldInfo",
+   "x_ite/Components/Core/X3DBindableNode",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Components/Core/X3DInfoNode",
+   "x_ite/Components/Core/X3DMetadataObject",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Components/Core/X3DPrototypeInstance",
+   "x_ite/Components/Core/X3DSensorNode",
 ],
 function (SupportedNodes,
           MetadataBoolean,
@@ -81,31 +81,31 @@ function (SupportedNodes,
 {
 "use strict";
 
-	const Types =
-	{
-		MetadataBoolean: MetadataBoolean,
-		MetadataDouble:  MetadataDouble,
-		MetadataFloat:   MetadataFloat,
-		MetadataInteger: MetadataInteger,
-		MetadataSet:     MetadataSet,
-		MetadataString:  MetadataString,
-		WorldInfo:       WorldInfo,
-	};
+   const Types =
+   {
+      MetadataBoolean: MetadataBoolean,
+      MetadataDouble:  MetadataDouble,
+      MetadataFloat:   MetadataFloat,
+      MetadataInteger: MetadataInteger,
+      MetadataSet:     MetadataSet,
+      MetadataString:  MetadataString,
+      WorldInfo:       WorldInfo,
+   };
 
-	const AbstractTypes =
-	{
-		X3DBindableNode:      X3DBindableNode,
-		X3DChildNode:         X3DChildNode,
-		X3DInfoNode:          X3DInfoNode,
-		X3DMetadataObject:    X3DMetadataObject,
-		X3DNode:              X3DNode,
-		X3DPrototypeInstance: X3DPrototypeInstance,
-		X3DSensorNode:        X3DSensorNode,
-	};
+   const AbstractTypes =
+   {
+      X3DBindableNode:      X3DBindableNode,
+      X3DChildNode:         X3DChildNode,
+      X3DInfoNode:          X3DInfoNode,
+      X3DMetadataObject:    X3DMetadataObject,
+      X3DNode:              X3DNode,
+      X3DPrototypeInstance: X3DPrototypeInstance,
+      X3DSensorNode:        X3DSensorNode,
+   };
 
-	for (const typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]);
+   for (const typeName in Types)
+      SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (const typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   for (const typeName in AbstractTypes)
+      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

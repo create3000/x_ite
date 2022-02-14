@@ -48,106 +48,106 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Matrix4",
-	"standard/Math/Geometry/Box3",
+   "x_ite/Fields",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Matrix4",
+   "standard/Math/Geometry/Box3",
 ],
 function (Fields,
           X3DCast,
           X3DConstants,
           Vector3,
-			 Matrix4,
+          Matrix4,
           Box3)
 {
 "use strict";
 
-	function X3DBoundedObject (executionContext)
-	{
-		this .addType (X3DConstants .X3DBoundedObject);
+   function X3DBoundedObject (executionContext)
+   {
+      this .addType (X3DConstants .X3DBoundedObject);
 
-		this .addChildObjects ("transformSensors_changed", new Fields .SFTime ());
+      this .addChildObjects ("transformSensors_changed", new Fields .SFTime ());
 
-		this .bboxSize_   .setUnit ("length");
-		this .bboxCenter_ .setUnit ("length");
+      this .bboxSize_   .setUnit ("length");
+      this .bboxCenter_ .setUnit ("length");
 
-		this .childBBox            = new Box3 (); // Must be unique for each X3DBoundedObject.
-		this .transformSensorNodes = new Set ();
-	}
+      this .childBBox            = new Box3 (); // Must be unique for each X3DBoundedObject.
+      this .transformSensorNodes = new Set ();
+   }
 
-	X3DBoundedObject .prototype =
-	{
-		constructor: X3DBoundedObject,
-		initialize: function () { },
-		getDefaultBBoxSize: (function ()
-		{
-			const defaultBBoxSize = new Vector3 (-1, -1, -1);
+   X3DBoundedObject .prototype =
+   {
+      constructor: X3DBoundedObject,
+      initialize: function () { },
+      getDefaultBBoxSize: (function ()
+      {
+         const defaultBBoxSize = new Vector3 (-1, -1, -1);
 
-			return function ()
-			{
-				return defaultBBoxSize;
-			};
-		})(),
-		getBBox: function (nodes, bbox, shadow)
-		{
-			// Must be unique for each X3DBoundedObject.
-			const childBBox = this .childBBox;
+         return function ()
+         {
+            return defaultBBoxSize;
+         };
+      })(),
+      getBBox: function (nodes, bbox, shadow)
+      {
+         // Must be unique for each X3DBoundedObject.
+         const childBBox = this .childBBox;
 
-			// Add bounding boxes.
+         // Add bounding boxes.
 
-			bbox .set ();
+         bbox .set ();
 
-			for (var i = 0, length = nodes .length; i < length; ++ i)
-			{
-				const node = nodes [i];
+         for (var i = 0, length = nodes .length; i < length; ++ i)
+         {
+            const node = nodes [i];
 
-				if (node .getBBox)
-					bbox .add (node .getBBox (childBBox, shadow));
-			}
+            if (node .getBBox)
+               bbox .add (node .getBBox (childBBox, shadow));
+         }
 
-			return bbox;
-		},
-		displayBBox: (function ()
-		{
-			const
-				bbox   = new Box3 (),
-				matrix = new Matrix4 ();
+         return bbox;
+      },
+      displayBBox: (function ()
+      {
+         const
+            bbox   = new Box3 (),
+            matrix = new Matrix4 ();
 
-			return function (type, renderObject)
-			{
-				const modelViewMatrix = renderObject .getModelViewMatrix ();
+         return function (type, renderObject)
+         {
+            const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-				this .getBBox (bbox);
+            this .getBBox (bbox);
 
-				matrix .set (bbox .center, null, bbox .size);
+            matrix .set (bbox .center, null, bbox .size);
 
-				modelViewMatrix .push ();
-				modelViewMatrix .multLeft (matrix);
+            modelViewMatrix .push ();
+            modelViewMatrix .multLeft (matrix);
 
-				this .getBrowser () .getBBoxNode () .traverse (type, renderObject);
+            this .getBrowser () .getBBoxNode () .traverse (type, renderObject);
 
-				modelViewMatrix .pop ();
-			};
-		})(),
-		addTransformSensor: function (transformSensorNode)
-		{
-			this .transformSensorNodes .add (transformSensorNode);
+            modelViewMatrix .pop ();
+         };
+      })(),
+      addTransformSensor: function (transformSensorNode)
+      {
+         this .transformSensorNodes .add (transformSensorNode);
 
-			this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
-		},
-		removeTransformSensor: function (transformSensorNode)
-		{
-			this .transformSensorNodes .delete (transformSensorNode);
+         this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
+      },
+      removeTransformSensor: function (transformSensorNode)
+      {
+         this .transformSensorNodes .delete (transformSensorNode);
 
-			this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
-		},
-		getTransformSensors: function ()
-		{
-			return this .transformSensorNodes;
-		},
-	};
+         this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
+      },
+      getTransformSensors: function ()
+      {
+         return this .transformSensorNodes;
+      },
+   };
 
-	return X3DBoundedObject;
+   return X3DBoundedObject;
 });

@@ -48,38 +48,38 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DBaseNode",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DBaseNode",
 ],
 function (Fields,
           X3DBaseNode)
 {
 "use strict";
-	
-	function ConeOptions (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
 
-		this .addChildObjects ("xDimension", new Fields .SFInt32 (20),
-		                       "yDimension", new Fields .SFInt32 (1))
-	}
+   function ConeOptions (executionContext)
+   {
+      X3DBaseNode .call (this, executionContext);
 
-	ConeOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: ConeOptions,
-		getTypeName: function ()
-		{
-			return "ConeOptions";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "coneOptions";
-		},
-	});
+      this .addChildObjects ("xDimension", new Fields .SFInt32 (20),
+                             "yDimension", new Fields .SFInt32 (1))
+   }
 
-	return ConeOptions;
+   ConeOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   {
+      constructor: ConeOptions,
+      getTypeName: function ()
+      {
+         return "ConeOptions";
+      },
+      getComponentName: function ()
+      {
+         return "X_ITE";
+      },
+      getContainerField: function ()
+      {
+         return "coneOptions";
+      },
+   });
+
+   return ConeOptions;
 });

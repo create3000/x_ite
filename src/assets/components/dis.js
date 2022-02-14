@@ -47,13 +47,13 @@
 
 
 define ([
-	"x_ite/Components",
-	"x_ite/Components/DIS/DISEntityManager",
-	"x_ite/Components/DIS/DISEntityTypeMapping",
-	"x_ite/Components/DIS/EspduTransform",
-	"x_ite/Components/DIS/ReceiverPdu",
-	"x_ite/Components/DIS/SignalPdu",
-	"x_ite/Components/DIS/TransmitterPdu",
+   "x_ite/Components",
+   "x_ite/Components/DIS/DISEntityManager",
+   "x_ite/Components/DIS/DISEntityTypeMapping",
+   "x_ite/Components/DIS/EspduTransform",
+   "x_ite/Components/DIS/ReceiverPdu",
+   "x_ite/Components/DIS/SignalPdu",
+   "x_ite/Components/DIS/TransmitterPdu",
 ],
 function (Components,
           DISEntityManager,
@@ -65,20 +65,19 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "DIS",
-		types:
-		{
-			DISEntityManager:     DISEntityManager,
-			DISEntityTypeMapping: DISEntityTypeMapping,
-			EspduTransform:       EspduTransform,
-			ReceiverPdu:          ReceiverPdu,
-			SignalPdu:            SignalPdu,
-			TransmitterPdu:       TransmitterPdu,
-		},
-		abstractTypes:
-		{
-		},
-	});
+   Components .addComponent ({
+      name: "DIS",
+      types:
+      {
+         DISEntityManager:     DISEntityManager,
+         DISEntityTypeMapping: DISEntityTypeMapping,
+         EspduTransform:       EspduTransform,
+         ReceiverPdu:          ReceiverPdu,
+         SignalPdu:            SignalPdu,
+         TransmitterPdu:       TransmitterPdu,
+      },
+      abstractTypes:
+      {
+      },
+   });
 });
-

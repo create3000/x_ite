@@ -48,115 +48,113 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/NURBS/X3DNurbsControlCurveNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/NURBS/X3DNurbsControlCurveNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNurbsControlCurveNode, 
+          X3DNurbsControlCurveNode,
           X3DConstants,
           Vector3)
 {
 "use strict";
 
-	function ContourPolyline2D (executionContext)
-	{
-		X3DNurbsControlCurveNode .call (this, executionContext);
+   function ContourPolyline2D (executionContext)
+   {
+      X3DNurbsControlCurveNode .call (this, executionContext);
 
-		this .addType (X3DConstants .ContourPolyline2D);
+      this .addType (X3DConstants .ContourPolyline2D);
 
-		this .controlPoints = [ ];
-	}
+      this .controlPoints = [ ];
+   }
 
-	ContourPolyline2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
-	{
-		constructor: ContourPolyline2D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint", new Fields .MFVec2d ()),
-		]),
-		getTypeName: function ()
-		{
-			return "ContourPolyline2D";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		tessellate: function (type)
-		{
-			switch (type)
-			{
-				case 0:
-				{
-					var
-						controlPointArray = this .controlPoint_ .getValue (),
-						controlPoints     = this .controlPoints;
+   ContourPolyline2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
+   {
+      constructor: ContourPolyline2D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint", new Fields .MFVec2d ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "ContourPolyline2D";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      tessellate: function (type)
+      {
+         switch (type)
+         {
+            case 0:
+            {
+               var
+                  controlPointArray = this .controlPoint_ .getValue (),
+                  controlPoints     = this .controlPoints;
 
-					for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
-					{
-						var i2 = i * 2;
-	
-						controlPoints [i2 + 0] = controlPointArray [i2 + 0];
-						controlPoints [i2 + 1] = controlPointArray [i2 + 1];
-					}
-	
-					controlPoints .length = length * 2;
+               for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+               {
+                  var i2 = i * 2;
 
-					return controlPoints;
-				}
-				case 1:
-				{
-					var
-						controlPointArray = this .controlPoint_ .getValue (),
-						controlPoints     = this .controlPoints;
+                  controlPoints [i2 + 0] = controlPointArray [i2 + 0];
+                  controlPoints [i2 + 1] = controlPointArray [i2 + 1];
+               }
 
-					for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
-					{
-						var
-							i2 = i * 2,
-							i3 = i * 3;
-	
-						controlPoints [i3 + 0] = controlPointArray [i2 + 0];
-						controlPoints [i3 + 1] = 0;
-						controlPoints [i3 + 2] = controlPointArray [i2 + 1];
-					}
-	
-					controlPoints .length = length * 3;
+               controlPoints .length = length * 2;
 
-					return controlPoints;
-				}
-				case 3:
-				{
-					var
-						controlPointArray = this .controlPoint_ .getValue (),
-						controlPoints     = this .controlPoints;
+               return controlPoints;
+            }
+            case 1:
+            {
+               var
+                  controlPointArray = this .controlPoint_ .getValue (),
+                  controlPoints     = this .controlPoints;
 
-					for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
-					{
-						var i2 = i * 2;
+               for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+               {
+                  var
+                     i2 = i * 2,
+                     i3 = i * 3;
 
-						controlPoints [i] = new Vector3 (controlPointArray [i2 + 0], controlPointArray [i2 + 1], 0);
-					}
-	
-					controlPoints .length = length;
+                  controlPoints [i3 + 0] = controlPointArray [i2 + 0];
+                  controlPoints [i3 + 1] = 0;
+                  controlPoints [i3 + 2] = controlPointArray [i2 + 1];
+               }
 
-					return controlPoints;
-				}
-			}
-		},
-	});
+               controlPoints .length = length * 3;
 
-	return ContourPolyline2D;
+               return controlPoints;
+            }
+            case 3:
+            {
+               var
+                  controlPointArray = this .controlPoint_ .getValue (),
+                  controlPoints     = this .controlPoints;
+
+               for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+               {
+                  var i2 = i * 2;
+
+                  controlPoints [i] = new Vector3 (controlPointArray [i2 + 0], controlPointArray [i2 + 1], 0);
+               }
+
+               controlPoints .length = length;
+
+               return controlPoints;
+            }
+         }
+      },
+   });
+
+   return ContourPolyline2D;
 });
-
-

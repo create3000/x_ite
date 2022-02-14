@@ -51,17 +51,17 @@ define (function ()
 {
 "use strict";
 
-	var i = 0;
+   var i = 0;
 
-	var TraverseType =
-	{
-		POINTER:   i ++,
-		CAMERA:    i ++,
-		PICKING:   i ++,
-		COLLISION: i ++,
-		SHADOW:    i ++,
-		DISPLAY:   i ++,
-	};
+   var TraverseType =
+   {
+      POINTER:   i ++,
+      CAMERA:    i ++,
+      PICKING:   i ++,
+      COLLISION: i ++,
+      SHADOW:    i ++,
+      DISPLAY:   i ++,
+   };
 
-	return TraverseType;
+   return TraverseType;
 });

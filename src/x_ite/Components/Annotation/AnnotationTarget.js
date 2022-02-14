@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -62,40 +62,40 @@ function (Fields,
 {
 "use strict";
 
-	function AnnotationTarget (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
+   function AnnotationTarget (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .AnnotationTarget);
-	}
+      this .addType (X3DConstants .AnnotationTarget);
+   }
 
-	AnnotationTarget .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: AnnotationTarget,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "referencePoint", new Fields .SFVec3f (0, 0, 0)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "leadLineStyle",  new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "marker",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "annotations",    new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "AnnotationTarget";
-		},
-		getComponentName: function ()
-		{
-			return "Annotation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
-		},
-	});
+   AnnotationTarget .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: AnnotationTarget,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "referencePoint", new Fields .SFVec3f (0, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "leadLineStyle",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "marker",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "annotations",    new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "AnnotationTarget";
+      },
+      getComponentName: function ()
+      {
+         return "Annotation";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DChildNode .prototype .initialize .call (this);
+      },
+   });
 
-	return AnnotationTarget;
+   return AnnotationTarget;
 });

@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Components/Shape/X3DAppearanceChildNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Matrix4",
+   "x_ite/Components/Shape/X3DAppearanceChildNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Matrix4",
 ],
 function (X3DAppearanceChildNode,
           X3DConstants,
@@ -58,27 +58,27 @@ function (X3DAppearanceChildNode,
 {
 "use strict";
 
-	function X3DTextureTransformNode (executionContext)
-	{
-		X3DAppearanceChildNode .call (this, executionContext);
+   function X3DTextureTransformNode (executionContext)
+   {
+      X3DAppearanceChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DTextureTransformNode);
+      this .addType (X3DConstants .X3DTextureTransformNode);
 
-		this .matrixArray = new Float32Array (Matrix4 .Identity);
-	}
+      this .matrixArray = new Float32Array (Matrix4 .Identity);
+   }
 
-	X3DTextureTransformNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
-	{
-		constructor: X3DTextureTransformNode,
-		setMatrix: function (value)
-		{
-			this .matrixArray .set (value);
-		},
-		setShaderUniformsToChannel: function (gl, shaderObject, i)
-		{
-			gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [i], false, this .matrixArray);
-		},
-	});
+   X3DTextureTransformNode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+   {
+      constructor: X3DTextureTransformNode,
+      setMatrix: function (value)
+      {
+         this .matrixArray .set (value);
+      },
+      setShaderUniformsToChannel: function (gl, shaderObject, i)
+      {
+         gl .uniformMatrix4fv (shaderObject .x3d_TextureMatrix [i], false, this .matrixArray);
+      },
+   });
 
-	return X3DTextureTransformNode;
+   return X3DTextureTransformNode;
 });

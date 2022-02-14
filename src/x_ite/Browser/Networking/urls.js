@@ -50,39 +50,39 @@ define (function ()
 {
 "use strict";
 
-	function URLs () { }
+   function URLs () { }
 
-	URLs .prototype =
-	{
-		getProviderUrl: function (file)
-		{
-			if (file)
-			{
-				if (getScriptURL () .match (/\.min\.js$/))
-					file += ".min";
+   URLs .prototype =
+   {
+      getProviderUrl: function (file)
+      {
+         if (file)
+         {
+            if (getScriptURL () .match (/\.min\.js$/))
+               file += ".min";
 
-				return new URL ("assets/components/" + file + ".js", getScriptURL ()) .href;
-			}
+            return new URL ("assets/components/" + file + ".js", getScriptURL ()) .href;
+         }
 
-			return "https://create3000.github.io/x_ite/";
-		},
-		getShaderUrl: function (file)
-		{
-			return new URL ("assets/shaders/" + file, getScriptURL ()) .href;
-		},
-		getFontsUrl: function (file)
-		{
-			return new URL ("assets/fonts/" + file, getScriptURL ()) .href;
-		},
-		getLinetypeUrl: function (index)
-		{
-			return new URL ("assets/linetype/" + index + ".png", getScriptURL ()) .href;
-		},
-		getHatchingUrl: function (index)
-		{
-			return new URL ("assets/hatching/" + index + ".png", getScriptURL ()) .href;
-		},
-	};
+         return "https://create3000.github.io/x_ite/";
+      },
+      getShaderUrl: function (file)
+      {
+         return new URL ("assets/shaders/" + file, getScriptURL ()) .href;
+      },
+      getFontsUrl: function (file)
+      {
+         return new URL ("assets/fonts/" + file, getScriptURL ()) .href;
+      },
+      getLinetypeUrl: function (index)
+      {
+         return new URL ("assets/linetype/" + index + ".png", getScriptURL ()) .href;
+      },
+      getHatchingUrl: function (index)
+      {
+         return new URL ("assets/hatching/" + index + ".png", getScriptURL ()) .href;
+      },
+   };
 
-	return new URLs ();
+   return new URLs ();
 });

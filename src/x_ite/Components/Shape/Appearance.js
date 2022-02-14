@@ -48,13 +48,13 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Shape/X3DAppearanceNode",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Shape/AlphaMode",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Shape/X3DAppearanceNode",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Browser/Shape/AlphaMode",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -62,318 +62,318 @@ function (Fields,
           X3DAppearanceNode,
           X3DCast,
           X3DConstants,
-			 AlphaMode)
+          AlphaMode)
 {
 "use strict";
 
-	function Appearance (executionContext)
-	{
-		X3DAppearanceNode .call (this, executionContext);
+   function Appearance (executionContext)
+   {
+      X3DAppearanceNode .call (this, executionContext);
 
-		this .addType (X3DConstants .Appearance);
+      this .addType (X3DConstants .Appearance);
 
-		this .stylePropertiesNode  = [ ];
-		this .materialNode         = null;
-		this .backMaterialNode     = null;
-		this .textureNode          = null;
-		this .textureTransformNode = null;
-		this .shaderNodes          = [ ];
-		this .shaderNode           = null;
-		this .blendModeNode        = null;
-	}
+      this .stylePropertiesNode  = [ ];
+      this .materialNode         = null;
+      this .backMaterialNode     = null;
+      this .textureNode          = null;
+      this .textureTransformNode = null;
+      this .shaderNodes          = [ ];
+      this .shaderNode           = null;
+      this .blendModeNode        = null;
+   }
 
-	Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .prototype),
-	{
-		constructor: Appearance,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "alphaMode",        new Fields .SFString ("AUTO")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "alphaCutoff",      new Fields .SFFloat (0.5)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "pointProperties",  new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "lineProperties",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "fillProperties",   new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "material",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "backMaterial",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "texture",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "shaders",          new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "blendMode",        new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Appearance";
-		},
-		getComponentName: function ()
-		{
-			return "Shape";
-		},
-		getContainerField: function ()
-		{
-			return "appearance";
-		},
-		initialize: function ()
-		{
-			X3DAppearanceNode .prototype .initialize .call (this);
+   Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .prototype),
+   {
+      constructor: Appearance,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "alphaMode",        new Fields .SFString ("AUTO")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "alphaCutoff",      new Fields .SFFloat (0.5)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "pointProperties",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "lineProperties",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fillProperties",   new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "material",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "backMaterial",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "texture",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "shaders",          new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "blendMode",        new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "Appearance";
+      },
+      getComponentName: function ()
+      {
+         return "Shape";
+      },
+      getContainerField: function ()
+      {
+         return "appearance";
+      },
+      initialize: function ()
+      {
+         X3DAppearanceNode .prototype .initialize .call (this);
 
-			this .isLive () .addInterest ("set_live__", this);
+         this .isLive () .addInterest ("set_live__", this);
 
-			this .alphaMode_  		.addInterest ("set_alphaMode__",        this);
-			this .alphaCutoff_  		.addInterest ("set_alphaCutoff__",      this);
-			this .pointProperties_  .addInterest ("set_pointProperties__",  this);
-			this .lineProperties_   .addInterest ("set_lineProperties__",   this);
-			this .fillProperties_   .addInterest ("set_fillProperties__",   this);
-			this .material_         .addInterest ("set_material__",         this);
-			this .backMaterial_     .addInterest ("set_backMaterial__",     this);
-			this .texture_          .addInterest ("set_texture__",          this);
-			this .textureTransform_ .addInterest ("set_textureTransform__", this);
-			this .shaders_          .addInterest ("set_shaders__",          this);
-			this .blendMode_        .addInterest ("set_blendMode__",        this);
+         this .alphaMode_  		.addInterest ("set_alphaMode__",        this);
+         this .alphaCutoff_  		.addInterest ("set_alphaCutoff__",      this);
+         this .pointProperties_  .addInterest ("set_pointProperties__",  this);
+         this .lineProperties_   .addInterest ("set_lineProperties__",   this);
+         this .fillProperties_   .addInterest ("set_fillProperties__",   this);
+         this .material_         .addInterest ("set_material__",         this);
+         this .backMaterial_     .addInterest ("set_backMaterial__",     this);
+         this .texture_          .addInterest ("set_texture__",          this);
+         this .textureTransform_ .addInterest ("set_textureTransform__", this);
+         this .shaders_          .addInterest ("set_shaders__",          this);
+         this .blendMode_        .addInterest ("set_blendMode__",        this);
 
-			this .alphaMode_      .addInterest ("set_transparent__", this);
-			this .fillProperties_ .addInterest ("set_transparent__", this);
-			this .material_       .addInterest ("set_transparent__", this);
-			this .texture_        .addInterest ("set_transparent__", this);
-			this .blendMode_      .addInterest ("set_transparent__", this);
+         this .alphaMode_      .addInterest ("set_transparent__", this);
+         this .fillProperties_ .addInterest ("set_transparent__", this);
+         this .material_       .addInterest ("set_transparent__", this);
+         this .texture_        .addInterest ("set_transparent__", this);
+         this .blendMode_      .addInterest ("set_transparent__", this);
 
-			this .set_live__ ();
-			this .set_alphaMode__ ();
-			this .set_pointProperties__ ();
-			this .set_lineProperties__ ();
-			this .set_fillProperties__ ();
-			this .set_material__ ();
-			this .set_backMaterial__ ();
-			this .set_texture__ ();
-			this .set_textureTransform__ ();
-			this .set_shaders__ ();
-			this .set_blendMode__ ();
-			this .set_transparent__ ();
-		},
-		getAlphaMode: function ()
-		{
-			return this .alphaMode;
-		},
-		set_live__: function ()
-		{
-			if (this .isLive () .getValue ())
-			{
-				this .getBrowser () .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
+         this .set_live__ ();
+         this .set_alphaMode__ ();
+         this .set_pointProperties__ ();
+         this .set_lineProperties__ ();
+         this .set_fillProperties__ ();
+         this .set_material__ ();
+         this .set_backMaterial__ ();
+         this .set_texture__ ();
+         this .set_textureTransform__ ();
+         this .set_shaders__ ();
+         this .set_blendMode__ ();
+         this .set_transparent__ ();
+      },
+      getAlphaMode: function ()
+      {
+         return this .alphaMode;
+      },
+      set_live__: function ()
+      {
+         if (this .isLive () .getValue ())
+         {
+            this .getBrowser () .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
 
-				if (this .shaderNode)
-					this .getBrowser () .addShader (this .shaderNode);
-			}
-			else
-			{
-				this .getBrowser () .getBrowserOptions () .Shading_ .removeInterest ("set_shading__", this);
+            if (this .shaderNode)
+               this .getBrowser () .addShader (this .shaderNode);
+         }
+         else
+         {
+            this .getBrowser () .getBrowserOptions () .Shading_ .removeInterest ("set_shading__", this);
 
-				if (this .shaderNode)
-					this .getBrowser () .removeShader (this .shaderNode);
-			}
-		},
-		set_alphaMode__: function ()
-		{
-			this .alphaMode = AlphaMode [this .alphaMode_ .getValue ()] || AlphaMode .AUTO;
+            if (this .shaderNode)
+               this .getBrowser () .removeShader (this .shaderNode);
+         }
+      },
+      set_alphaMode__: function ()
+      {
+         this .alphaMode = AlphaMode [this .alphaMode_ .getValue ()] || AlphaMode .AUTO;
 
-			this .set_alphaCutoff__ ();
-		},
-		set_alphaCutoff__: function ()
-		{
-			this .alphaCutoff = this .alphaMode === AlphaMode .MASK ? this .alphaCutoff_ .getValue () : 0;
-		},
-		set_pointProperties__: function ()
-		{
-			this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this .pointProperties_);
+         this .set_alphaCutoff__ ();
+      },
+      set_alphaCutoff__: function ()
+      {
+         this .alphaCutoff = this .alphaMode === AlphaMode .MASK ? this .alphaCutoff_ .getValue () : 0;
+      },
+      set_pointProperties__: function ()
+      {
+         this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this .pointProperties_);
 
-			if (! this .stylePropertiesNode [0])
-				this .stylePropertiesNode [0] = this .getBrowser () .getDefaultPointProperties ();
-		},
-		set_lineProperties__: function ()
-		{
-			this .stylePropertiesNode [1] = X3DCast (X3DConstants .LineProperties, this .lineProperties_);
+         if (! this .stylePropertiesNode [0])
+            this .stylePropertiesNode [0] = this .getBrowser () .getDefaultPointProperties ();
+      },
+      set_lineProperties__: function ()
+      {
+         this .stylePropertiesNode [1] = X3DCast (X3DConstants .LineProperties, this .lineProperties_);
 
-			if (! this .stylePropertiesNode [1])
-				this .stylePropertiesNode [1] = this .getBrowser () .getDefaultLineProperties ();
-		},
-		set_fillProperties__: function ()
-		{
-			if (this .stylePropertiesNode [2])
-				this .stylePropertiesNode [2] .transparent_ .removeInterest ("set_transparent__", this);
+         if (! this .stylePropertiesNode [1])
+            this .stylePropertiesNode [1] = this .getBrowser () .getDefaultLineProperties ();
+      },
+      set_fillProperties__: function ()
+      {
+         if (this .stylePropertiesNode [2])
+            this .stylePropertiesNode [2] .transparent_ .removeInterest ("set_transparent__", this);
 
-			this .stylePropertiesNode [2] = X3DCast (X3DConstants .FillProperties, this .fillProperties_);
+         this .stylePropertiesNode [2] = X3DCast (X3DConstants .FillProperties, this .fillProperties_);
 
-			if (! this .stylePropertiesNode [2])
-				this .stylePropertiesNode [2] = this .getBrowser () .getDefaultFillProperties ();
+         if (! this .stylePropertiesNode [2])
+            this .stylePropertiesNode [2] = this .getBrowser () .getDefaultFillProperties ();
 
-			if (this .stylePropertiesNode [2])
-				this .stylePropertiesNode [2] .transparent_ .addInterest ("set_transparent__", this);
+         if (this .stylePropertiesNode [2])
+            this .stylePropertiesNode [2] .transparent_ .addInterest ("set_transparent__", this);
 
-			this .stylePropertiesNode [3] = this .stylePropertiesNode [2];
-		},
-		set_material__: function ()
-		{
-			if (this .materialNode)
-				this .materialNode .transparent_ .removeInterest ("set_transparent__", this);
+         this .stylePropertiesNode [3] = this .stylePropertiesNode [2];
+      },
+      set_material__: function ()
+      {
+         if (this .materialNode)
+            this .materialNode .transparent_ .removeInterest ("set_transparent__", this);
 
-			this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this .material_);
+         this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this .material_);
 
-			if (! this .materialNode)
-				this .materialNode = this .getBrowser () .getDefaultMaterial ();
+         if (! this .materialNode)
+            this .materialNode = this .getBrowser () .getDefaultMaterial ();
 
-			if (this .materialNode)
-				this .materialNode .transparent_ .addInterest ("set_transparent__", this);
+         if (this .materialNode)
+            this .materialNode .transparent_ .addInterest ("set_transparent__", this);
 
-			// Depreciated TwoSidedMaterial handling.
+         // Depreciated TwoSidedMaterial handling.
 
-			if (this .materialNode .getTypeName () === "TwoSidedMaterial")
-			{
-				console .warn ("TwoSidedMaterial is depreciated, please use Appearance backMaterial.");
-				this .set_backMaterial__ ();
-			}
-		},
-		set_backMaterial__: function ()
-		{
-			if (this .backMaterialNode)
-				this .backMaterialNode .transparent_ .removeInterest ("set_transparent__", this);
+         if (this .materialNode .getTypeName () === "TwoSidedMaterial")
+         {
+            console .warn ("TwoSidedMaterial is depreciated, please use Appearance backMaterial.");
+            this .set_backMaterial__ ();
+         }
+      },
+      set_backMaterial__: function ()
+      {
+         if (this .backMaterialNode)
+            this .backMaterialNode .transparent_ .removeInterest ("set_transparent__", this);
 
-			this .backMaterialNode = X3DCast (X3DConstants .X3DOneSidedMaterialNode, this .backMaterial_);
+         this .backMaterialNode = X3DCast (X3DConstants .X3DOneSidedMaterialNode, this .backMaterial_);
 
-			if (this .backMaterialNode)
-				this .backMaterialNode .transparent_ .addInterest ("set_transparent__", this);
+         if (this .backMaterialNode)
+            this .backMaterialNode .transparent_ .addInterest ("set_transparent__", this);
 
-			// Depreciated TwoSidedMaterial handling.
+         // Depreciated TwoSidedMaterial handling.
 
-			if (!this .backMaterialNode && this .materialNode .getTypeName () === "TwoSidedMaterial")
-				this .backMaterialNode = this .materialNode;
-		},
-		set_texture__: function ()
-		{
-			if (this .textureNode)
-				this .textureNode .transparent_ .removeInterest ("set_transparent__", this);
+         if (!this .backMaterialNode && this .materialNode .getTypeName () === "TwoSidedMaterial")
+            this .backMaterialNode = this .materialNode;
+      },
+      set_texture__: function ()
+      {
+         if (this .textureNode)
+            this .textureNode .transparent_ .removeInterest ("set_transparent__", this);
 
-			this .textureNode = X3DCast (X3DConstants .X3DTextureNode, this .texture_);
+         this .textureNode = X3DCast (X3DConstants .X3DTextureNode, this .texture_);
 
-			if (this .textureNode)
-				this .textureNode .transparent_ .addInterest ("set_transparent__", this);
-		},
-		set_textureTransform__: function ()
-		{
-			this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this .textureTransform_);
+         if (this .textureNode)
+            this .textureNode .transparent_ .addInterest ("set_transparent__", this);
+      },
+      set_textureTransform__: function ()
+      {
+         this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this .textureTransform_);
 
-			if (this .textureTransformNode)
-				return;
+         if (this .textureTransformNode)
+            return;
 
-			this .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
-		},
-		set_shaders__: function ()
-		{
-			const shaderNodes = this .shaderNodes;
+         this .textureTransformNode = this .getBrowser () .getDefaultTextureTransform ();
+      },
+      set_shaders__: function ()
+      {
+         const shaderNodes = this .shaderNodes;
 
-			for (const shaderNode of shaderNodes)
-			{
-				shaderNode .isValid_        .removeInterest ("set_shader__", this);
-				shaderNode .activationTime_ .removeInterest ("set_shader__", this);
-			}
+         for (const shaderNode of shaderNodes)
+         {
+            shaderNode .isValid_        .removeInterest ("set_shader__", this);
+            shaderNode .activationTime_ .removeInterest ("set_shader__", this);
+         }
 
-			shaderNodes .length = 0;
+         shaderNodes .length = 0;
 
-			for (const node of this .shaders_)
-			{
-				const shaderNode = X3DCast (X3DConstants .X3DShaderNode, node);
+         for (const node of this .shaders_)
+         {
+            const shaderNode = X3DCast (X3DConstants .X3DShaderNode, node);
 
-				if (shaderNode)
-				{
-					shaderNodes .push (shaderNode);
+            if (shaderNode)
+            {
+               shaderNodes .push (shaderNode);
 
-					shaderNode .isValid_        .addInterest ("set_shader__", this);
-					shaderNode .activationTime_ .addInterest ("set_shader__", this);
-				}
-			}
+               shaderNode .isValid_        .addInterest ("set_shader__", this);
+               shaderNode .activationTime_ .addInterest ("set_shader__", this);
+            }
+         }
 
-			this .set_shader__ ();
-		},
-		set_shader__: function ()
-		{
-			const shaderNodes = this .shaderNodes;
+         this .set_shader__ ();
+      },
+      set_shader__: function ()
+      {
+         const shaderNodes = this .shaderNodes;
 
-			if (this .shaderNode)
-			{
-				this .getBrowser () .removeShader (this .shaderNode);
-				this .shaderNode .deselect ();
-			}
+         if (this .shaderNode)
+         {
+            this .getBrowser () .removeShader (this .shaderNode);
+            this .shaderNode .deselect ();
+         }
 
-			this .shaderNode = null;
+         this .shaderNode = null;
 
-			for (const shaderNode of shaderNodes)
-			{
-				if (shaderNode .isValid_ .getValue ())
-				{
-					if (shaderNode .activationTime_ .getValue () === this .getBrowser () .getCurrentTime ())
-					{
-						this .shaderNode = shaderNode;
-						break;
-					}
-				}
-			}
+         for (const shaderNode of shaderNodes)
+         {
+            if (shaderNode .isValid_ .getValue ())
+            {
+               if (shaderNode .activationTime_ .getValue () === this .getBrowser () .getCurrentTime ())
+               {
+                  this .shaderNode = shaderNode;
+                  break;
+               }
+            }
+         }
 
-			if (!this .shaderNode)
-			{
-				for (const shaderNode of shaderNodes)
-				{
-					if (shaderNode .isValid_ .getValue ())
-					{
-						this .shaderNode = shaderNode;
-						break;
-					}
-				}
-			}
+         if (!this .shaderNode)
+         {
+            for (const shaderNode of shaderNodes)
+            {
+               if (shaderNode .isValid_ .getValue ())
+               {
+                  this .shaderNode = shaderNode;
+                  break;
+               }
+            }
+         }
 
-			if (this .isLive () .getValue ())
-			{
-				if (this .shaderNode)
-				{
-					this .getBrowser () .addShader (this .shaderNode);
-					this .shaderNode .select ();
-				}
-			}
-		},
-		set_shading__: function ()
-		{
-			this .set_shader__ ();
-		},
-		set_blendMode__: function ()
-		{
-			this .blendModeNode = X3DCast (X3DConstants .BlendMode, this .blendMode_);
-		},
-		set_transparent__: function ()
-		{
-			switch (this .alphaMode)
-			{
-				case AlphaMode .AUTO:
-					this .setTransparent (Boolean (this .stylePropertiesNode [3] .getTransparent () ||
-												 (this .materialNode && this .materialNode .getTransparent ()) ||
-												 (this .backMaterialNode && this .backMaterialNode .getTransparent ()) ||
-												 (this .textureNode && this .textureNode .getTransparent ()) ||
-												 this .blendModeNode));
-					break;
-				case AlphaMode .OPAQUE:
-					this .setTransparent (false);
-					break;
-				case AlphaMode .MASK:
-					this .setTransparent (false);
-					break;
-				case AlphaMode .BLEND:
-					this .setTransparent (true);
-					break;
-			}
-		},
-		traverse: function (type, renderObject)
-		{
-			if (this .textureNode)
-				this .textureNode .traverse (type, renderObject);
+         if (this .isLive () .getValue ())
+         {
+            if (this .shaderNode)
+            {
+               this .getBrowser () .addShader (this .shaderNode);
+               this .shaderNode .select ();
+            }
+         }
+      },
+      set_shading__: function ()
+      {
+         this .set_shader__ ();
+      },
+      set_blendMode__: function ()
+      {
+         this .blendModeNode = X3DCast (X3DConstants .BlendMode, this .blendMode_);
+      },
+      set_transparent__: function ()
+      {
+         switch (this .alphaMode)
+         {
+            case AlphaMode .AUTO:
+               this .setTransparent (Boolean (this .stylePropertiesNode [3] .getTransparent () ||
+                                     (this .materialNode && this .materialNode .getTransparent ()) ||
+                                     (this .backMaterialNode && this .backMaterialNode .getTransparent ()) ||
+                                     (this .textureNode && this .textureNode .getTransparent ()) ||
+                                     this .blendModeNode));
+               break;
+            case AlphaMode .OPAQUE:
+               this .setTransparent (false);
+               break;
+            case AlphaMode .MASK:
+               this .setTransparent (false);
+               break;
+            case AlphaMode .BLEND:
+               this .setTransparent (true);
+               break;
+         }
+      },
+      traverse: function (type, renderObject)
+      {
+         if (this .textureNode)
+            this .textureNode .traverse (type, renderObject);
 
-			if (this .shaderNode)
-				this .shaderNode .traverse (type, renderObject);
-		},
-	});
+         if (this .shaderNode)
+            this .shaderNode .traverse (type, renderObject);
+      },
+   });
 
-	return Appearance;
+   return Appearance;
 });

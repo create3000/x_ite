@@ -48,37 +48,37 @@
 
 
 define ([
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Fields",
+   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Fields",
 ],
 function (X3DBaseNode,
           Fields)
 {
 "use strict";
-	
-	function ArcClose2DOptions (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
 
-		this .addChildObjects ("dimension", new Fields .SFInt32 (40))
-	}
+   function ArcClose2DOptions (executionContext)
+   {
+      X3DBaseNode .call (this, executionContext);
 
-	ArcClose2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: ArcClose2DOptions,
-		getTypeName: function ()
-		{
-			return "ArcClose2DOptions";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "arcClose2DOptions";
-		},
-	});
+      this .addChildObjects ("dimension", new Fields .SFInt32 (40))
+   }
 
-	return ArcClose2DOptions;
+   ArcClose2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   {
+      constructor: ArcClose2DOptions,
+      getTypeName: function ()
+      {
+         return "ArcClose2DOptions";
+      },
+      getComponentName: function ()
+      {
+         return "X_ITE";
+      },
+      getContainerField: function ()
+      {
+         return "arcClose2DOptions";
+      },
+   });
+
+   return ArcClose2DOptions;
 });

@@ -51,87 +51,87 @@ define (function ()
 {
 "use strict";
 
-	const
-		storages   = new WeakMap (),
-		namespaces = new WeakMap (),
-		defaults   = new WeakMap ();
+   const
+      storages   = new WeakMap (),
+      namespaces = new WeakMap (),
+      defaults   = new WeakMap ();
 
-	const handler =
-	{
-		get: function (target, key)
-		{
-			var value = target [key];
+   const handler =
+   {
+      get: function (target, key)
+      {
+         var value = target [key];
 
-			if (value !== undefined)
-				return value;
+         if (value !== undefined)
+            return value;
 
-			var value = target .getStorage () [target .getNameSpace () + key];
+         var value = target .getStorage () [target .getNameSpace () + key];
 
-			if (value === undefined || value === "undefined" || value === null)
-			   return target .getDefaultValue (key);
+         if (value === undefined || value === "undefined" || value === null)
+            return target .getDefaultValue (key);
 
-			return JSON .parse (value);
-		},
-		set: function (target, key, value)
-		{
-			if (value === undefined)
-				target .getStorage () .removeItem (target .getNameSpace () + key);
+         return JSON .parse (value);
+      },
+      set: function (target, key, value)
+      {
+         if (value === undefined)
+            target .getStorage () .removeItem (target .getNameSpace () + key);
 
-			else
-				target .getStorage () [target .getNameSpace () + key] = JSON .stringify (value);
+         else
+            target .getStorage () [target .getNameSpace () + key] = JSON .stringify (value);
 
-			return true;
-		},
-	};
+         return true;
+      },
+   };
 
-	function DataStorage (storage, namespace)
-	{
-		this .target  = this;
+   function DataStorage (storage, namespace)
+   {
+      this .target  = this;
 
-		storages   .set (this, storage);
-		namespaces .set (this, namespace);
-		defaults   .set (this, { });
+      storages   .set (this, storage);
+      namespaces .set (this, namespace);
+      defaults   .set (this, { });
 
-		return new Proxy (this, handler);
-	}
+      return new Proxy (this, handler);
+   }
 
-	DataStorage .prototype = {
-		constructor: DataStorage,
-		getStorage: function ()
-		{
-			return storages .get (this .target);
-		},
-		getNameSpace: function ()
-		{
-			return namespaces .get (this .target);
-		},
-		addNameSpace: function (namespace)
-		{
-			return new DataStorage (this .getStorage (), this .getNameSpace () + namespace);
-		},
-		addDefaultValues: function (defaults)
-		{
-			Object .assign (defaults .get (this .target), object);
-		},
-		getDefaultValue (key)
-		{
-			const value = defaults .get (this .target) [key];
+   DataStorage .prototype = {
+      constructor: DataStorage,
+      getStorage: function ()
+      {
+         return storages .get (this .target);
+      },
+      getNameSpace: function ()
+      {
+         return namespaces .get (this .target);
+      },
+      addNameSpace: function (namespace)
+      {
+         return new DataStorage (this .getStorage (), this .getNameSpace () + namespace);
+      },
+      addDefaultValues: function (defaults)
+      {
+         Object .assign (defaults .get (this .target), object);
+      },
+      getDefaultValue (key)
+      {
+         const value = defaults .get (this .target) [key];
 
-			return value === undefined ? undefined : JSON .parse (JSON .stringify (value));
-		},
-		clear: function ()
-		{
-			const
-				storage   = this .getStorage (),
-				namespace = this .getNameSpace ();
+         return value === undefined ? undefined : JSON .parse (JSON .stringify (value));
+      },
+      clear: function ()
+      {
+         const
+            storage   = this .getStorage (),
+            namespace = this .getNameSpace ();
 
-			for (const key of Object .keys (storage))
-			{
-				if (key .startsWith (namespace))
-					storage .removeItem (key)
-			}
-		},
-	}
+         for (const key of Object .keys (storage))
+         {
+            if (key .startsWith (namespace))
+               storage .removeItem (key)
+         }
+      },
+   }
 
-	return DataStorage;
+   return DataStorage;
 });

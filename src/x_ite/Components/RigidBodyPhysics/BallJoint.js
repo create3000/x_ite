@@ -48,14 +48,14 @@
 
 
 define ([
-	"jquery",
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"lib/ammojs/AmmoJS",
+   "jquery",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
+   "lib/ammojs/AmmoJS",
 ],
 function ($,
           Fields,
@@ -68,145 +68,145 @@ function ($,
 {
 "use strict";
 
-	function BallJoint (executionContext)
-	{
-		X3DRigidJointNode .call (this, executionContext);
+   function BallJoint (executionContext)
+   {
+      X3DRigidJointNode .call (this, executionContext);
 
-		this .addType (X3DConstants .BallJoint);
+      this .addType (X3DConstants .BallJoint);
 
-		this .anchorPoint_ .setUnit ("length");
+      this .anchorPoint_ .setUnit ("length");
 
-		this .joint             = null;
-		this .outputs           = { };
-		this .localAnchorPoint1 = new Vector3 (0, 0, 0);
-		this .localAnchorPoint2 = new Vector3 (0, 0, 0);
-	}
+      this .joint             = null;
+      this .outputs           = { };
+      this .localAnchorPoint1 = new Vector3 (0, 0, 0);
+      this .localAnchorPoint2 = new Vector3 (0, 0, 0);
+   }
 
-	BallJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
-	{
-		constructor: BallJoint,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",      new Fields .MFString ("NONE")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",      new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint", new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint", new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body1",            new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body2",            new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "BallJoint";
-		},
-		getComponentName: function ()
-		{
-			return "RigidBodyPhysics";
-		},
-		getContainerField: function ()
-		{
-			return "joints";
-		},
-		initialize: function ()
-		{
-			X3DRigidJointNode .prototype .initialize .call (this);
+   BallJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
+   {
+      constructor: BallJoint,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",      new Fields .MFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",      new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint", new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint", new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body1",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body2",            new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "BallJoint";
+      },
+      getComponentName: function ()
+      {
+         return "RigidBodyPhysics";
+      },
+      getContainerField: function ()
+      {
+         return "joints";
+      },
+      initialize: function ()
+      {
+         X3DRigidJointNode .prototype .initialize .call (this);
 
-			this .anchorPoint_ .addInterest ("set_anchorPoint__", this);
-		},
-		addJoint: function ()
-		{
-			if (! this .getCollection ())
-				return;
+         this .anchorPoint_ .addInterest ("set_anchorPoint__", this);
+      },
+      addJoint: function ()
+      {
+         if (! this .getCollection ())
+            return;
 
-			if (! this .getBody1 ())
-				return;
+         if (! this .getBody1 ())
+            return;
 
-			if (! this .getBody2 ())
-				return;
+         if (! this .getBody2 ())
+            return;
 
-		   if (this .getBody1 () .getCollection () !== this .getCollection ())
-				return;
+         if (this .getBody1 () .getCollection () !== this .getCollection ())
+            return;
 
-		   if (this .getBody2 () .getCollection () !== this .getCollection ())
-				return;
+         if (this .getBody2 () .getCollection () !== this .getCollection ())
+            return;
 
-			this .joint = new Ammo .btPoint2PointConstraint (this .getBody1 () .getRigidBody (),
-			                                                 this .getBody2 () .getRigidBody (),
-			                                                 new Ammo .btVector3 (),
-			                                                 new Ammo .btVector3 ());
+         this .joint = new Ammo .btPoint2PointConstraint (this .getBody1 () .getRigidBody (),
+                                                          this .getBody2 () .getRigidBody (),
+                                                          new Ammo .btVector3 (),
+                                                          new Ammo .btVector3 ());
 
-			this .set_anchorPoint__ ();
+         this .set_anchorPoint__ ();
 
-			this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
-		},
-		removeJoint: function ()
-		{
-			if (! this .joint)
-				return;
+         this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
+      },
+      removeJoint: function ()
+      {
+         if (! this .joint)
+            return;
 
-			if (this .getCollection ())
-				this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+         if (this .getCollection ())
+            this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
 
-			Ammo .destroy (this .joint);
-			this .joint = null;
-		},
-		set_forceOutput__: function ()
-		{
-			for (var key in this .outputs)
-				delete this .outputs [key];
+         Ammo .destroy (this .joint);
+         this .joint = null;
+      },
+      set_forceOutput__: function ()
+      {
+         for (var key in this .outputs)
+            delete this .outputs [key];
 
-			for (var i = 0, length = this .forceOutput_ .length; i < length; ++ i)
-			{
-				var value = this .forceOutput_ [i];
+         for (var i = 0, length = this .forceOutput_ .length; i < length; ++ i)
+         {
+            var value = this .forceOutput_ [i];
 
-				if (value == "ALL")
-				{
-					this .outputs .body1AnchorPoint = true;
-					this .outputs .body2AnchorPoint = true;
-				}
-				else
-				{
-					this .outputs [value] = true;
-				}
-			}
+            if (value == "ALL")
+            {
+               this .outputs .body1AnchorPoint = true;
+               this .outputs .body2AnchorPoint = true;
+            }
+            else
+            {
+               this .outputs [value] = true;
+            }
+         }
 
-			this .setOutput (! $.isEmptyObject (this .outputs));
-		},
-		set_anchorPoint__: function ()
-		{
-			if (this .joint)
-			{
-				var
-					localAnchorPoint1 = this .localAnchorPoint1,
-					localAnchorPoint2 = this .localAnchorPoint2;
+         this .setOutput (! $.isEmptyObject (this .outputs));
+      },
+      set_anchorPoint__: function ()
+      {
+         if (this .joint)
+         {
+            var
+               localAnchorPoint1 = this .localAnchorPoint1,
+               localAnchorPoint2 = this .localAnchorPoint2;
 
-				this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .anchorPoint_ .getValue ()));
-				this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .anchorPoint_ .getValue ()));
+            this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .anchorPoint_ .getValue ()));
+            this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .anchorPoint_ .getValue ()));
 
-				this .joint .setPivotA (new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z));
-				this .joint .setPivotB (new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z));
-			}
-		},
-		update1: (function ()
-		{
-			var localAnchorPoint1 = new Vector3 (0, 0, 0);
+            this .joint .setPivotA (new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z));
+            this .joint .setPivotB (new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z));
+         }
+      },
+      update1: (function ()
+      {
+         var localAnchorPoint1 = new Vector3 (0, 0, 0);
 
-			return function ()
-			{
-				if (this .outputs .body1AnchorPoint)
-					this .body1AnchorPoint_ = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
-			};
-		})(),
-		update2: (function ()
-		{
-			var localAnchorPoint2 = new Vector3 (0, 0, 0);
+         return function ()
+         {
+            if (this .outputs .body1AnchorPoint)
+               this .body1AnchorPoint_ = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
+         };
+      })(),
+      update2: (function ()
+      {
+         var localAnchorPoint2 = new Vector3 (0, 0, 0);
 
-			return function ()
-			{
-				if (this .outputs .body2AnchorPoint)
-					this .body2AnchorPoint_ = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
-			};
-		})(),
-	});
+         return function ()
+         {
+            if (this .outputs .body2AnchorPoint)
+               this .body2AnchorPoint_ = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
+         };
+      })(),
+   });
 
-	return BallJoint;
+   return BallJoint;
 });

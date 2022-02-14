@@ -48,25 +48,25 @@
 
 
 define ([
-	"x_ite/Configuration/X3DInfoArray",
+   "x_ite/Configuration/X3DInfoArray",
 ],
 function (X3DInfoArray)
 {
 "use strict";
 
-	function RouteArray ()
-	{
-		return X3DInfoArray .call (this);
-	}
+   function RouteArray ()
+   {
+      return X3DInfoArray .call (this);
+   }
 
-	RouteArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-	{
-		constructor: RouteArray,
-		getTypeName: function ()
-		{
-			return "RouteArray";
-		},
-	});
+   RouteArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+   {
+      constructor: RouteArray,
+      getTypeName: function ()
+      {
+         return "RouteArray";
+      },
+   });
 
-	return RouteArray;
+   return RouteArray;
 });

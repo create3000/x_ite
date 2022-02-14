@@ -48,80 +48,78 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DParticleEmitterNode, 
+          X3DParticleEmitterNode,
           X3DConstants)
 {
 "use strict";
 
-	function ExplosionEmitter (executionContext)
-	{
-		X3DParticleEmitterNode .call (this, executionContext);
+   function ExplosionEmitter (executionContext)
+   {
+      X3DParticleEmitterNode .call (this, executionContext);
 
-		this .addType (X3DConstants .ExplosionEmitter);
+      this .addType (X3DConstants .ExplosionEmitter);
 
-		this .position_    .setUnit ("length");
-		this .speed_       .setUnit ("speed");
-		this .mass_        .setUnit ("mass");
-		this .surfaceArea_ .setUnit ("area");
+      this .position_    .setUnit ("length");
+      this .speed_       .setUnit ("speed");
+      this .mass_        .setUnit ("mass");
+      this .surfaceArea_ .setUnit ("area");
 
-		this .getRandomVelocity = this .getSphericalRandomVelocity;
-	}
+      this .getRandomVelocity = this .getSphericalRandomVelocity;
+   }
 
-	ExplosionEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
-	{
-		constructor: ExplosionEmitter,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "position",    new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",   new Fields .SFFloat (0.25)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "mass",        new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "surfaceArea", new Fields .SFFloat ()),
-		]),
-		getTypeName: function ()
-		{
-			return "ExplosionEmitter";
-		},
-		getComponentName: function ()
-		{
-			return "ParticleSystems";
-		},
-		getContainerField: function ()
-		{
-			return "emitter";
-		},
-		initialize: function ()
-		{
-			X3DParticleEmitterNode .prototype .initialize .call (this);
+   ExplosionEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+   {
+      constructor: ExplosionEmitter,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "position",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",   new Fields .SFFloat (0.25)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "mass",        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "surfaceArea", new Fields .SFFloat ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "ExplosionEmitter";
+      },
+      getComponentName: function ()
+      {
+         return "ParticleSystems";
+      },
+      getContainerField: function ()
+      {
+         return "emitter";
+      },
+      initialize: function ()
+      {
+         X3DParticleEmitterNode .prototype .initialize .call (this);
 
-			this .position_ .addInterest ("set_position__", this);
+         this .position_ .addInterest ("set_position__", this);
 
-			this .set_position__ ();
-		},
-		set_position__: function ()
-		{
-			this .position = this .position_ .getValue ()
-		},
-		isExplosive: function ()
-		{
-			return true;
-		},
-		getRandomPosition: function (position)
-		{
-			return position .assign (this .position);
-		},
-	});
+         this .set_position__ ();
+      },
+      set_position__: function ()
+      {
+         this .position = this .position_ .getValue ()
+      },
+      isExplosive: function ()
+      {
+         return true;
+      },
+      getRandomPosition: function (position)
+      {
+         return position .assign (this .position);
+      },
+   });
 
-	return ExplosionEmitter;
+   return ExplosionEmitter;
 });
-
-

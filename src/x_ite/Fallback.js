@@ -48,47 +48,47 @@
 
 
 define ([
-	"jquery",
+   "jquery",
 ],
 function ($)
 {
 "use strict";
 
-	// Everything went wrong when the Error function is called.
+   // Everything went wrong when the Error function is called.
 
-	const Fallback =
-	{
-		error: function (error, fallbacks)
-		{
-			$(function ()
-			{
-				const elements = $("X3DCanvas");
+   const Fallback =
+   {
+      error: function (error, fallbacks)
+      {
+         $(function ()
+         {
+            const elements = $("X3DCanvas");
 
-				this .show (elements, error);
+            this .show (elements, error);
 
-				for (const fallback of fallbacks)
-				{
-					if (typeof fallback === "function")
-						fallback (elements, error);
-				}
-			}
-			.bind (this));
-		},
-		show: function (elements, error)
-		{
-			console .log (error);
+            for (const fallback of fallbacks)
+            {
+               if (typeof fallback === "function")
+                  fallback (elements, error);
+            }
+         }
+         .bind (this));
+      },
+      show: function (elements, error)
+      {
+         console .log (error);
 
-			const consoleElement = $(".x_ite-console");
+         const consoleElement = $(".x_ite-console");
 
-			if (consoleElement .length)
-				consoleElement .append (document .createTextNode (error));
+         if (consoleElement .length)
+            consoleElement .append (document .createTextNode (error));
 
-			elements .addClass ("x_ite-browser-fallback");
-			elements .children (".x_ite-private-browser") .hide ();
-			elements .children (":not(.x_ite-private-browser)") .addClass ("x_ite-fallback");
-			elements .children (":not(.x_ite-private-browser)") .show ();
-		},
-	};
+         elements .addClass ("x_ite-browser-fallback");
+         elements .children (".x_ite-private-browser") .hide ();
+         elements .children (":not(.x_ite-private-browser)") .addClass ("x_ite-fallback");
+         elements .children (":not(.x_ite-private-browser)") .show ();
+      },
+   };
 
-	return Fallback;
+   return Fallback;
 });

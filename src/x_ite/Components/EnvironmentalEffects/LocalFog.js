@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Components/EnvironmentalEffects/X3DFogObject",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Components/EnvironmentalEffects/X3DFogObject",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,59 +64,59 @@ function (Fields,
 {
 "use strict";
 
-	function LocalFog (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
-		X3DFogObject .call (this, executionContext);
+   function LocalFog (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
+      X3DFogObject .call (this, executionContext);
 
-		this .addType (X3DConstants .LocalFog);
-	}
+      this .addType (X3DConstants .LocalFog);
+   }
 
-	LocalFog .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-		X3DFogObject .prototype,
-	{
-		constructor: LocalFog,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "fogType",         new Fields .SFString ("LINEAR")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "color",           new Fields .SFColor (1, 1, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "visibilityRange", new Fields .SFFloat ()),
-		]),
-		getTypeName: function ()
-		{
-			return "LocalFog";
-		},
-		getComponentName: function ()
-		{
-			return "EnvironmentalEffects";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
-			X3DFogObject .prototype .initialize .call (this);
-		},
-		push: function (renderObject)
-		{
-			if (this .enabled_ .getValue ())
-			{
-				var fogContainer = this .getFogs () .pop ();
+   LocalFog .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+      X3DFogObject .prototype,
+   {
+      constructor: LocalFog,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fogType",         new Fields .SFString ("LINEAR")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "color",           new Fields .SFColor (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "visibilityRange", new Fields .SFFloat ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "LocalFog";
+      },
+      getComponentName: function ()
+      {
+         return "EnvironmentalEffects";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DChildNode .prototype .initialize .call (this);
+         X3DFogObject .prototype .initialize .call (this);
+      },
+      push: function (renderObject)
+      {
+         if (this .enabled_ .getValue ())
+         {
+            var fogContainer = this .getFogs () .pop ();
 
-				fogContainer .set (this, renderObject .getModelViewMatrix () .get ());
+            fogContainer .set (this, renderObject .getModelViewMatrix () .get ());
 
-				renderObject .pushLocalFog (fogContainer);
-			}
-		},
-		pop: function (renderObject)
-		{
-			if (this .enabled_ .getValue ())
-				renderObject .getBrowser () .getLocalObjects () .push (renderObject .popLocalFog ());
-		},
-	});
+            renderObject .pushLocalFog (fogContainer);
+         }
+      },
+      pop: function (renderObject)
+      {
+         if (this .enabled_ .getValue ())
+            renderObject .getBrowser () .getLocalObjects () .push (renderObject .popLocalFog ());
+      },
+   });
 
-	return LocalFog;
+   return LocalFog;
 });

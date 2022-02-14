@@ -48,15 +48,15 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Vector4",
-	"standard/Math/Geometry/Plane3",
-	"standard/Utility/ObjectCache",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Vector4",
+   "standard/Math/Geometry/Plane3",
+   "standard/Utility/ObjectCache",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -70,115 +70,115 @@ function (Fields,
 {
 "use strict";
 
-	const ClipPlanes = ObjectCache (ClipPlaneContainer);
+   const ClipPlanes = ObjectCache (ClipPlaneContainer);
 
-	function ClipPlaneContainer ()
-	{
-		this .plane = new Plane3 (Vector3 .Zero, Vector3 .Zero);
-	}
+   function ClipPlaneContainer ()
+   {
+      this .plane = new Plane3 (Vector3 .Zero, Vector3 .Zero);
+   }
 
-	ClipPlaneContainer .prototype =
-	{
-		constructor: ClipPlaneContainer,
-		isClipped: function (point)
-		{
-			return this .plane .getDistanceToPoint (point) < 0;
-		},
-		set: function (clipPlane, modelViewMatrix)
-		{
-			const
-				plane      = this .plane,
-				localPlane = clipPlane .plane;
+   ClipPlaneContainer .prototype =
+   {
+      constructor: ClipPlaneContainer,
+      isClipped: function (point)
+      {
+         return this .plane .getDistanceToPoint (point) < 0;
+      },
+      set: function (clipPlane, modelViewMatrix)
+      {
+         const
+            plane      = this .plane,
+            localPlane = clipPlane .plane;
 
-			try
-			{
-				plane .normal .assign (localPlane);
-				plane .distanceFromOrigin = -localPlane .w;
+         try
+         {
+            plane .normal .assign (localPlane);
+            plane .distanceFromOrigin = -localPlane .w;
 
-				plane .multRight (modelViewMatrix);
-			}
-			catch (error)
-			{
-				plane .normal .set (0, 0, 0);
-				plane .distanceFromOrigin = 0;
-			}
-		},
-		setShaderUniforms: function (gl, shaderObject)
-		{
-			const
-				plane  = this .plane,
-				normal = plane .normal;
+            plane .multRight (modelViewMatrix);
+         }
+         catch (error)
+         {
+            plane .normal .set (0, 0, 0);
+            plane .distanceFromOrigin = 0;
+         }
+      },
+      setShaderUniforms: function (gl, shaderObject)
+      {
+         const
+            plane  = this .plane,
+            normal = plane .normal;
 
-			gl .uniform4f (shaderObject .x3d_ClipPlane [shaderObject .numClipPlanes ++], normal .x, normal .y, normal .z, plane .distanceFromOrigin);
-		},
-		dispose: function ()
-		{
-		   ClipPlanes .push (this);
-		},
-	};
+         gl .uniform4f (shaderObject .x3d_ClipPlane [shaderObject .numClipPlanes ++], normal .x, normal .y, normal .z, plane .distanceFromOrigin);
+      },
+      dispose: function ()
+      {
+         ClipPlanes .push (this);
+      },
+   };
 
-	function ClipPlane (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
+   function ClipPlane (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .ClipPlane);
+      this .addType (X3DConstants .ClipPlane);
 
-		this .enabled = false;
-		this .plane   = new Vector4 (0, 0, 0, 0);
-	}
+      this .enabled = false;
+      this .plane   = new Vector4 (0, 0, 0, 0);
+   }
 
-	ClipPlane .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: ClipPlane,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "plane",    new Fields .SFVec4f (0, 1, 0, 0)),
-		]),
-		getTypeName: function ()
-		{
-			return "ClipPlane";
-		},
-		getComponentName: function ()
-		{
-			return "Rendering";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
+   ClipPlane .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: ClipPlane,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "plane",    new Fields .SFVec4f (0, 1, 0, 0)),
+      ]),
+      getTypeName: function ()
+      {
+         return "ClipPlane";
+      },
+      getComponentName: function ()
+      {
+         return "Rendering";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DChildNode .prototype .initialize .call (this);
 
-			this .enabled_ .addInterest ("set_enabled__", this);
-			this .plane_   .addInterest ("set_enabled__", this);
+         this .enabled_ .addInterest ("set_enabled__", this);
+         this .plane_   .addInterest ("set_enabled__", this);
 
-			this .set_enabled__ ();
-		},
-		set_enabled__: function ()
-		{
-			this .plane .assign (this .plane_ .getValue ());
+         this .set_enabled__ ();
+      },
+      set_enabled__: function ()
+      {
+         this .plane .assign (this .plane_ .getValue ());
 
-			this .enabled = this .enabled_ .getValue () && ! this .plane .equals (Vector4 .Zero);
-		},
-		push: function (renderObject)
-		{
-			if (this .enabled)
-			{
-				const clipPlaneContainer = ClipPlanes .pop ();
+         this .enabled = this .enabled_ .getValue () && ! this .plane .equals (Vector4 .Zero);
+      },
+      push: function (renderObject)
+      {
+         if (this .enabled)
+         {
+            const clipPlaneContainer = ClipPlanes .pop ();
 
-				clipPlaneContainer .set (this, renderObject .getModelViewMatrix () .get ());
+            clipPlaneContainer .set (this, renderObject .getModelViewMatrix () .get ());
 
-				renderObject .getLocalObjects () .push (clipPlaneContainer);
-			}
-		},
-		pop: function (renderObject)
-		{
-			if (this .enabled)
-				renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
-		},
-	});
+            renderObject .getLocalObjects () .push (clipPlaneContainer);
+         }
+      },
+      pop: function (renderObject)
+      {
+         if (this .enabled)
+            renderObject .getBrowser () .getLocalObjects () .push (renderObject .getLocalObjects () .pop ());
+      },
+   });
 
-	return ClipPlane;
+   return ClipPlane;
 });

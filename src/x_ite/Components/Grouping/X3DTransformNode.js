@@ -48,48 +48,48 @@
 
 
 define ([
-	"x_ite/Components/Grouping/X3DTransformMatrix3DNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Components/Grouping/X3DTransformMatrix3DNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DTransformMatrix3DNode,
           X3DConstants)
 {
 "use strict";
 
-	function X3DTransformNode (executionContext)
-	{
-		X3DTransformMatrix3DNode .call (this, executionContext);
+   function X3DTransformNode (executionContext)
+   {
+      X3DTransformMatrix3DNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DTransformNode);
+      this .addType (X3DConstants .X3DTransformNode);
 
-		this .translation_ .setUnit ("length");
-		this .center_      .setUnit ("length");
-	}
+      this .translation_ .setUnit ("length");
+      this .center_      .setUnit ("length");
+   }
 
-	X3DTransformNode .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
-	{
-		constructor: X3DTransformNode,
-		initialize: function ()
-		{
-			X3DTransformMatrix3DNode .prototype .initialize .call (this);
+   X3DTransformNode .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
+   {
+      constructor: X3DTransformNode,
+      initialize: function ()
+      {
+         X3DTransformMatrix3DNode .prototype .initialize .call (this);
 
-			this .addInterest ("eventsProcessed", this);
+         this .addInterest ("eventsProcessed", this);
 
-			this .eventsProcessed ();
-		},
-		eventsProcessed: function ()
-		{
-			this .setHidden (this .scale_ .x === 0 ||
-			                 this .scale_ .y === 0 ||
-			                 this .scale_ .z === 0);
+         this .eventsProcessed ();
+      },
+      eventsProcessed: function ()
+      {
+         this .setHidden (this .scale_ .x === 0 ||
+                          this .scale_ .y === 0 ||
+                          this .scale_ .z === 0);
 
-			this .setTransform (this .translation_      .getValue (),
-			                    this .rotation_         .getValue (),
-			                    this .scale_            .getValue (),
-			                    this .scaleOrientation_ .getValue (),
-			                    this .center_           .getValue ());
-		},
-	});
+         this .setTransform (this .translation_      .getValue (),
+                             this .rotation_         .getValue (),
+                             this .scale_            .getValue (),
+                             this .scaleOrientation_ .getValue (),
+                             this .center_           .getValue ());
+      },
+   });
 
-	return X3DTransformNode;
+   return X3DTransformNode;
 });

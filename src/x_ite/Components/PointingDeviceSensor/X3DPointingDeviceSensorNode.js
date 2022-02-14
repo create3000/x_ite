@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Components/Core/X3DSensorNode",
-	"x_ite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Components/Core/X3DSensorNode",
+   "x_ite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DSensorNode,
           PointingDeviceSensorContainer,
@@ -58,67 +58,65 @@ function (X3DSensorNode,
 {
 "use strict";
 
-	function X3DPointingDeviceSensorNode (executionContext)
-	{
-		X3DSensorNode .call (this, executionContext);
+   function X3DPointingDeviceSensorNode (executionContext)
+   {
+      X3DSensorNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DPointingDeviceSensorNode);
-	}
+      this .addType (X3DConstants .X3DPointingDeviceSensorNode);
+   }
 
-	X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
-	{
-		constructor: X3DPointingDeviceSensorNode,
-		initialize: function ()
-		{
-			X3DSensorNode .prototype .initialize .call (this);
+   X3DPointingDeviceSensorNode .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+   {
+      constructor: X3DPointingDeviceSensorNode,
+      initialize: function ()
+      {
+         X3DSensorNode .prototype .initialize .call (this);
 
-			this .enabled_ .addInterest ("set_enabled__", this);
-		},
-		getMatrices: function ()
-		{
-			return this .matrices;
-		},
-		set_enabled__: function ()
-		{
-			if (this .enabled_ .getValue ())
-				return;
+         this .enabled_ .addInterest ("set_enabled__", this);
+      },
+      getMatrices: function ()
+      {
+         return this .matrices;
+      },
+      set_enabled__: function ()
+      {
+         if (this .enabled_ .getValue ())
+            return;
 
-			if (this .isActive_ .getValue ())
-				this .isActive_ = false;
+         if (this .isActive_ .getValue ())
+            this .isActive_ = false;
 
-			if (this .isOver_ .getValue ())
-				this .isOver_ = false;
-		},
-		set_over__: function (over, hit)
-		{
-			if (over !== this .isOver_ .getValue ())
-			{
-				this .isOver_ = over;
+         if (this .isOver_ .getValue ())
+            this .isOver_ = false;
+      },
+      set_over__: function (over, hit)
+      {
+         if (over !== this .isOver_ .getValue ())
+         {
+            this .isOver_ = over;
 
-				if (over)
-					this .getBrowser () .getNotification () .string_ = this .description_;
-			}
-		},
-		set_active__: function (active, hit)
-		{
-			if (active !== this .isActive_ .getValue ())
-				this .isActive_ = active
-		},
-		set_motion__: function (hit)
-		{ },
-		push: function (renderObject, sensors)
-		{
-			if (this .enabled_ .getValue ())
-			{
-				sensors [this .getId ()] = new PointingDeviceSensorContainer (this,
-				                                                              renderObject .getModelViewMatrix  () .get (),
-				                                                              renderObject .getProjectionMatrix () .get (),
-				                                                              renderObject .getViewVolume () .getViewport ());
-			}
-		},
-	});
+            if (over)
+               this .getBrowser () .getNotification () .string_ = this .description_;
+         }
+      },
+      set_active__: function (active, hit)
+      {
+         if (active !== this .isActive_ .getValue ())
+            this .isActive_ = active
+      },
+      set_motion__: function (hit)
+      { },
+      push: function (renderObject, sensors)
+      {
+         if (this .enabled_ .getValue ())
+         {
+            sensors [this .getId ()] = new PointingDeviceSensorContainer (this,
+                                                                          renderObject .getModelViewMatrix  () .get (),
+                                                                          renderObject .getProjectionMatrix () .get (),
+                                                                          renderObject .getViewVolume () .getViewport ());
+         }
+      },
+   });
 
-	return X3DPointingDeviceSensorNode;
+   return X3DPointingDeviceSensorNode;
 });
-
-

@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DGeometryNode",
-	"x_ite/Components/Rendering/X3DLineGeometryNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Rendering/X3DGeometryNode",
+   "x_ite/Components/Rendering/X3DLineGeometryNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,211 +64,211 @@ function (Fields,
 {
 "use strict";
 
-	function Disk2D (executionContext)
-	{
-		X3DLineGeometryNode .call (this, executionContext);
+   function Disk2D (executionContext)
+   {
+      X3DLineGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .Disk2D);
+      this .addType (X3DConstants .Disk2D);
 
-		this .innerRadius_ .setUnit ("length");
-		this .outerRadius_ .setUnit ("length");
-	}
+      this .innerRadius_ .setUnit ("length");
+      this .outerRadius_ .setUnit ("length");
+   }
 
-	Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
-		//X3DLineGeometryNode .prototype, // Considered X3DLineGeometryNode.
-	{
-		constructor: Disk2D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "innerRadius", new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "outerRadius", new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",       new Fields .SFBool ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Disk2D";
-		},
-		getComponentName: function ()
-		{
-			return "Geometry2D";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-		initialize: function ()
-		{
-			X3DGeometryNode .prototype .initialize .call (this);
+   Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+      //X3DLineGeometryNode .prototype, // Considered X3DLineGeometryNode.
+   {
+      constructor: Disk2D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "innerRadius", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "outerRadius", new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",       new Fields .SFBool ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "Disk2D";
+      },
+      getComponentName: function ()
+      {
+         return "Geometry2D";
+      },
+      getContainerField: function ()
+      {
+         return "geometry";
+      },
+      initialize: function ()
+      {
+         X3DGeometryNode .prototype .initialize .call (this);
 
-			this .setPrimitiveMode (this .getBrowser () .getContext () .LINE_LOOP);
-		},
-		set_live__: function ()
-		{
-			X3DGeometryNode .prototype .set_live__ .call (this);
+         this .setPrimitiveMode (this .getBrowser () .getContext () .LINE_LOOP);
+      },
+      set_live__: function ()
+      {
+         X3DGeometryNode .prototype .set_live__ .call (this);
 
-			if (this .isLive () .getValue ())
-				this .getBrowser () .getDisk2DOptions () .addInterest ("requestRebuild", this);
-			else
-				this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);
-		},
-		getShader: X3DLineGeometryNode .prototype .getShader,
-		build: function ()
-		{
-			const
-				options     = this .getBrowser () .getDisk2DOptions (),
-				innerRadius = Math .min (Math .abs (this .innerRadius_ .getValue ()), Math .abs (this .outerRadius_ .getValue ())),
-				outerRadius = Math .max (Math .abs (this .innerRadius_ .getValue ()), Math .abs (this .outerRadius_ .getValue ()));
+         if (this .isLive () .getValue ())
+            this .getBrowser () .getDisk2DOptions () .addInterest ("requestRebuild", this);
+         else
+            this .getBrowser () .getDisk2DOptions () .removeInterest ("requestRebuild", this);
+      },
+      getShader: X3DLineGeometryNode .prototype .getShader,
+      build: function ()
+      {
+         const
+            options     = this .getBrowser () .getDisk2DOptions (),
+            innerRadius = Math .min (Math .abs (this .innerRadius_ .getValue ()), Math .abs (this .outerRadius_ .getValue ())),
+            outerRadius = Math .max (Math .abs (this .innerRadius_ .getValue ()), Math .abs (this .outerRadius_ .getValue ()));
 
-			if (innerRadius === outerRadius)
-			{
-				const vertexArray = this .getVertices ();
+         if (innerRadius === outerRadius)
+         {
+            const vertexArray = this .getVertices ();
 
-				// Point
+            // Point
 
-				if (outerRadius === 0)
-				{
-					// vertexArray .push (0, 0, 0, 1);
-					// this .setGeometryType (0);
-					return;
-				}
+            if (outerRadius === 0)
+            {
+               // vertexArray .push (0, 0, 0, 1);
+               // this .setGeometryType (0);
+               return;
+            }
 
-				// Circle
+            // Circle
 
-				if (outerRadius === 1)
-				{
-					this .setVertices (options .getCircleVertices ());
-				}
-				else
-				{
-					const defaultVertices = options .getCircleVertices () .getValue ();
+            if (outerRadius === 1)
+            {
+               this .setVertices (options .getCircleVertices ());
+            }
+            else
+            {
+               const defaultVertices = options .getCircleVertices () .getValue ();
 
-					for (let i = 0, length = defaultVertices .length; i < length; i += 4)
-						vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
-				}
+               for (let i = 0, length = defaultVertices .length; i < length; i += 4)
+                  vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
+            }
 
-				this .getMin () .set (-outerRadius, -outerRadius, 0);
-				this .getMax () .set ( outerRadius,  outerRadius, 0);
+            this .getMin () .set (-outerRadius, -outerRadius, 0);
+            this .getMax () .set ( outerRadius,  outerRadius, 0);
 
-				this .setGeometryType (1);
-				return;
-			}
+            this .setGeometryType (1);
+            return;
+         }
 
-			if (innerRadius === 0)
-			{
-				// Disk
+         if (innerRadius === 0)
+         {
+            // Disk
 
-				this .getMultiTexCoords () .push (options .getDiskTexCoords ());
-				this .setNormals (options .getDiskNormals ());
+            this .getMultiTexCoords () .push (options .getDiskTexCoords ());
+            this .setNormals (options .getDiskNormals ());
 
-				if (outerRadius === 1)
-				{
-					this .setVertices (options .getDiskVertices ());
-				}
-				else
-				{
-					const
-						defaultVertices = options .getDiskVertices () .getValue (),
-						vertexArray     = this .getVertices ();
+            if (outerRadius === 1)
+            {
+               this .setVertices (options .getDiskVertices ());
+            }
+            else
+            {
+               const
+                  defaultVertices = options .getDiskVertices () .getValue (),
+                  vertexArray     = this .getVertices ();
 
-					for (let i = 0, length = defaultVertices .length; i < length; i += 4)
-						vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
-				}
+               for (let i = 0, length = defaultVertices .length; i < length; i += 4)
+                  vertexArray .push (defaultVertices [i] * outerRadius, defaultVertices [i + 1] * outerRadius, 0, 1);
+            }
 
-				this .getMin () .set (-outerRadius, -outerRadius, 0);
-				this .getMax () .set ( outerRadius,  outerRadius, 0);
+            this .getMin () .set (-outerRadius, -outerRadius, 0);
+            this .getMax () .set ( outerRadius,  outerRadius, 0);
 
-				this .setGeometryType (2);
-				this .setSolid (this .solid_ .getValue ());
+            this .setGeometryType (2);
+            this .setSolid (this .solid_ .getValue ());
 
-				return;
-			}
+            return;
+         }
 
-			// Disk with hole
+         // Disk with hole
 
-			const
-				scale            = innerRadius / outerRadius,
-				offset           = (1 - scale) / 2,
-				defaultTexCoords = options .getDiskTexCoords () .getValue (),
-				defaultVertices  = options .getDiskVertices () .getValue (),
-				texCoordArray    = this .getTexCoords (),
-				normalArray      = this .getNormals (),
-				vertexArray      = this .getVertices ();
+         const
+            scale            = innerRadius / outerRadius,
+            offset           = (1 - scale) / 2,
+            defaultTexCoords = options .getDiskTexCoords () .getValue (),
+            defaultVertices  = options .getDiskVertices () .getValue (),
+            texCoordArray    = this .getTexCoords (),
+            normalArray      = this .getNormals (),
+            vertexArray      = this .getVertices ();
 
-			this .getMultiTexCoords () .push (texCoordArray);
+         this .getMultiTexCoords () .push (texCoordArray);
 
-			for (let i = 0, length = defaultVertices .length; i < length; i += 12)
-			{
-				texCoordArray .push (defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
-				                     defaultTexCoords [i + 4], defaultTexCoords [i + 5], 0, 1,
-				                     defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
+         for (let i = 0, length = defaultVertices .length; i < length; i += 12)
+         {
+            texCoordArray .push (defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
+                                 defaultTexCoords [i + 4], defaultTexCoords [i + 5], 0, 1,
+                                 defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
 
-				                     defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
-				                     defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
-				                     defaultTexCoords [i + 8] * scale + offset, defaultTexCoords [i + 9] * scale + offset, 0, 1);
+                                 defaultTexCoords [i + 4] * scale + offset, defaultTexCoords [i + 5] * scale + offset, 0, 1,
+                                 defaultTexCoords [i + 8], defaultTexCoords [i + 9], 0, 1,
+                                 defaultTexCoords [i + 8] * scale + offset, defaultTexCoords [i + 9] * scale + offset, 0, 1);
 
-				normalArray .push (0, 0, 1,  0, 0, 1,  0, 0, 1,
+            normalArray .push (0, 0, 1,  0, 0, 1,  0, 0, 1,
                                0, 0, 1,  0, 0, 1,  0, 0, 1);
 
-				vertexArray .push (defaultVertices [i + 4] * innerRadius, defaultVertices [i + 5] * innerRadius, 0, 1,
-				                   defaultVertices [i + 4] * outerRadius, defaultVertices [i + 5] * outerRadius, 0, 1,
-				                   defaultVertices [i + 8] * outerRadius, defaultVertices [i + 9] * outerRadius, 0, 1,
+            vertexArray .push (defaultVertices [i + 4] * innerRadius, defaultVertices [i + 5] * innerRadius, 0, 1,
+                               defaultVertices [i + 4] * outerRadius, defaultVertices [i + 5] * outerRadius, 0, 1,
+                               defaultVertices [i + 8] * outerRadius, defaultVertices [i + 9] * outerRadius, 0, 1,
 
-				                   defaultVertices [i + 4] * innerRadius, defaultVertices [i + 5] * innerRadius, 0, 1,
-				                   defaultVertices [i + 8] * outerRadius, defaultVertices [i + 9] * outerRadius, 0, 1,
-				                   defaultVertices [i + 8] * innerRadius, defaultVertices [i + 9] * innerRadius, 0, 1);
-			}
+                               defaultVertices [i + 4] * innerRadius, defaultVertices [i + 5] * innerRadius, 0, 1,
+                               defaultVertices [i + 8] * outerRadius, defaultVertices [i + 9] * outerRadius, 0, 1,
+                               defaultVertices [i + 8] * innerRadius, defaultVertices [i + 9] * innerRadius, 0, 1);
+         }
 
-			this .getMin () .set (-outerRadius, -outerRadius, 0);
-			this .getMax () .set ( outerRadius,  outerRadius, 0);
+         this .getMin () .set (-outerRadius, -outerRadius, 0);
+         this .getMax () .set ( outerRadius,  outerRadius, 0);
 
-			this .setGeometryType (2);
-			this .setSolid (this .solid_ .getValue ());
-		},
-		intersectsLine: function (line, clipPlanes, modelViewMatrix, intersections)
-		{
-			if (this .getGeometryType () < 2)
-			{
-				return X3DLineGeometryNode .prototype .intersectsLine .call (this, line, clipPlanes, modelViewMatrix, intersections);
-			}
-			else
-			{
-				return X3DGeometryNode .prototype .intersectsLine .call (this, line, clipPlanes, modelViewMatrix, intersections);
-			}
-		},
-		intersectsBox: function (box, clipPlanes, modelViewMatrix)
-		{
-			if (this .getGeometryType () < 2)
-			{
-				return X3DLineGeometryNode .prototype .intersectsBox .call (this, box, clipPlanes, modelViewMatrix);
-			}
-			else
-			{
-				return X3DGeometryNode .prototype .intersectsBox .call (this, box, clipPlanes, modelViewMatrix);
-			}
-		},
-		display: function (gl, context)
-		{
-			if (this .getGeometryType () < 2)
-			{
-				return X3DLineGeometryNode .prototype .display .call (this, gl, context);
-			}
-			else
-			{
-				return X3DGeometryNode .prototype .display .call (this, gl, context);
-			}
-		},
-		displayParticles: function (gl, context, particles, numParticles)
-		{
-			if (this .getGeometryType () < 2)
-			{
-				return X3DLineGeometryNode .prototype .displayParticles .call (this, gl, context, particles, numParticles);
-			}
-			else
-			{
-				return X3DGeometryNode .prototype .displayParticles .call (this, gl, context, particles, numParticles);
-			}
-		}
-	});
+         this .setGeometryType (2);
+         this .setSolid (this .solid_ .getValue ());
+      },
+      intersectsLine: function (line, clipPlanes, modelViewMatrix, intersections)
+      {
+         if (this .getGeometryType () < 2)
+         {
+            return X3DLineGeometryNode .prototype .intersectsLine .call (this, line, clipPlanes, modelViewMatrix, intersections);
+         }
+         else
+         {
+            return X3DGeometryNode .prototype .intersectsLine .call (this, line, clipPlanes, modelViewMatrix, intersections);
+         }
+      },
+      intersectsBox: function (box, clipPlanes, modelViewMatrix)
+      {
+         if (this .getGeometryType () < 2)
+         {
+            return X3DLineGeometryNode .prototype .intersectsBox .call (this, box, clipPlanes, modelViewMatrix);
+         }
+         else
+         {
+            return X3DGeometryNode .prototype .intersectsBox .call (this, box, clipPlanes, modelViewMatrix);
+         }
+      },
+      display: function (gl, context)
+      {
+         if (this .getGeometryType () < 2)
+         {
+            return X3DLineGeometryNode .prototype .display .call (this, gl, context);
+         }
+         else
+         {
+            return X3DGeometryNode .prototype .display .call (this, gl, context);
+         }
+      },
+      displayParticles: function (gl, context, particles, numParticles)
+      {
+         if (this .getGeometryType () < 2)
+         {
+            return X3DLineGeometryNode .prototype .displayParticles .call (this, gl, context, particles, numParticles);
+         }
+         else
+         {
+            return X3DGeometryNode .prototype .displayParticles .call (this, gl, context, particles, numParticles);
+         }
+      }
+   });
 
-	return Disk2D;
+   return Disk2D;
 });

@@ -47,11 +47,11 @@
 
 
 define ([
-	"x_ite/Components",
-	"x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext",
-	"x_ite/Components/KeyDeviceSensor/KeySensor",
-	"x_ite/Components/KeyDeviceSensor/StringSensor",
-	"x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
+   "x_ite/Components",
+   "x_ite/Browser/KeyDeviceSensor/X3DKeyDeviceSensorContext",
+   "x_ite/Components/KeyDeviceSensor/KeySensor",
+   "x_ite/Components/KeyDeviceSensor/StringSensor",
+   "x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
 ],
 function (Components,
           X3DKeyDeviceSensorContext,
@@ -61,18 +61,17 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "KeyDeviceSensor",
-		types:
-		{
-			KeySensor:    KeySensor,
-			StringSensor: StringSensor,
-		},
-		abstractTypes:
-		{
-			X3DKeyDeviceSensorNode: X3DKeyDeviceSensorNode,
-		},
-		browser: X3DKeyDeviceSensorContext,
-	});
+   Components .addComponent ({
+      name: "KeyDeviceSensor",
+      types:
+      {
+         KeySensor:    KeySensor,
+         StringSensor: StringSensor,
+      },
+      abstractTypes:
+      {
+         X3DKeyDeviceSensorNode: X3DKeyDeviceSensorNode,
+      },
+      browser: X3DKeyDeviceSensorContext,
+   });
 });
-

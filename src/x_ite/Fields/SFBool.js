@@ -48,59 +48,59 @@
 
 
 define ([
-	"x_ite/Basic/X3DField",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Basic/X3DField",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DField,
           X3DConstants)
 {
 "use strict";
 
-	function SFBool (value)
-	{
-		return X3DField .call (this, !! value);
-	}
+   function SFBool (value)
+   {
+      return X3DField .call (this, !! value);
+   }
 
-	SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
-	{
-		constructor: SFBool,
-		copy: function ()
-		{
-			return new SFBool (this .getValue ());
-		},
-		isDefaultValue: function ()
-		{
-			return this .getValue () === false;
-		},
-		set: function (value)
-		{
-			X3DField .prototype .set .call (this, !! value);
-		},
-		getTypeName: function ()
-		{
-			return "SFBool";
-		},
-		getType: function ()
-		{
-			return X3DConstants .SFBool;
-		},
-		valueOf: function ()
-		{
-			return this .getValue ();
-		},
-		toStream: function (stream)
-		{
-			stream .string += this .getValue () ? "TRUE" : "FALSE";
-		},
-		toVRMLStream: function (stream)
-		{
-			this .toStream (stream);
-		},
-		toXMLStream: function (stream)
-		{
-			stream .string += this .getValue () ? "true" : "false";
-		},
-	});
+   SFBool .prototype = Object .assign (Object .create (X3DField .prototype),
+   {
+      constructor: SFBool,
+      copy: function ()
+      {
+         return new SFBool (this .getValue ());
+      },
+      isDefaultValue: function ()
+      {
+         return this .getValue () === false;
+      },
+      set: function (value)
+      {
+         X3DField .prototype .set .call (this, !! value);
+      },
+      getTypeName: function ()
+      {
+         return "SFBool";
+      },
+      getType: function ()
+      {
+         return X3DConstants .SFBool;
+      },
+      valueOf: function ()
+      {
+         return this .getValue ();
+      },
+      toStream: function (stream)
+      {
+         stream .string += this .getValue () ? "TRUE" : "FALSE";
+      },
+      toVRMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+      toXMLStream: function (stream)
+      {
+         stream .string += this .getValue () ? "true" : "false";
+      },
+   });
 
-	return SFBool;
+   return SFBool;
 });

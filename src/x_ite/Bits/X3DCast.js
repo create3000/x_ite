@@ -48,33 +48,33 @@
 
 
 define ([
-	"x_ite/Fields",
+   "x_ite/Fields",
 ],
 function (Fields)
 {
 "use strict";
 
-	return function (type, node)
-	{
-		try
-		{
-			if (node)
-			{
-				if (node instanceof Fields .SFNode)
-					node = node .getValue ();
+   return function (type, node)
+   {
+      try
+      {
+         if (node)
+         {
+            if (node instanceof Fields .SFNode)
+               node = node .getValue ();
 
-				if (node)
-				{
-					node = node .getInnerNode ();
-				
-					if (node .getType () .indexOf (type) !== -1)
-						return node;
-				}
-			}
-		}
-		catch (error)
-		{ }
+            if (node)
+            {
+               node = node .getInnerNode ();
 
-		return null;
-	};
+               if (node .getType () .indexOf (type) !== -1)
+                  return node;
+            }
+         }
+      }
+      catch (error)
+      { }
+
+      return null;
+   };
 });

@@ -40,27 +40,27 @@ varying float depth;
 void
 main ()
 {
- 	clip ();
+    clip ();
 
-	vec4 finalColor = gl_FrontFacing ? frontColor : backColor;
+   vec4 finalColor = gl_FrontFacing ? frontColor : backColor;
 
-	finalColor      = getTextureColor (finalColor, vec4 (1.0));
-	finalColor      = getProjectiveTextureColor (finalColor);
-	finalColor      = getHatchColor (finalColor);
-	finalColor .rgb = getFogColor (finalColor .rgb);
+   finalColor      = getTextureColor (finalColor, vec4 (1.0));
+   finalColor      = getProjectiveTextureColor (finalColor);
+   finalColor      = getHatchColor (finalColor);
+   finalColor .rgb = getFogColor (finalColor .rgb);
 
    if (finalColor .a < x3d_AlphaCutoff)
    {
       discard;
    }
 
-	gl_FragColor = finalColor;
+   gl_FragColor = finalColor;
 
-	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-	//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-	if (x3d_LogarithmicFarFactor1_2 > 0.0)
-		gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
-	else
-		gl_FragDepthEXT = gl_FragCoord .z;
-	#endif
+   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+   //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
+   if (x3d_LogarithmicFarFactor1_2 > 0.0)
+      gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+   else
+      gl_FragDepthEXT = gl_FragCoord .z;
+   #endif
 }

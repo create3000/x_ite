@@ -47,26 +47,26 @@
 
 
 define ([
-	"x_ite/Components",
-	"x_ite/Browser/VolumeRendering/X3DVolumeRenderingContext",
-	"x_ite/Components/VolumeRendering/BlendedVolumeStyle",
-	"x_ite/Components/VolumeRendering/BoundaryEnhancementVolumeStyle",
-	"x_ite/Components/VolumeRendering/CartoonVolumeStyle",
-	"x_ite/Components/VolumeRendering/ComposedVolumeStyle",
-	"x_ite/Components/VolumeRendering/EdgeEnhancementVolumeStyle",
-	"x_ite/Components/VolumeRendering/IsoSurfaceVolumeData",
-	"x_ite/Components/VolumeRendering/OpacityMapVolumeStyle",
-	"x_ite/Components/VolumeRendering/ProjectionVolumeStyle",
-	"x_ite/Components/VolumeRendering/SegmentedVolumeData",
-	"x_ite/Components/VolumeRendering/ShadedVolumeStyle",
-	"x_ite/Components/VolumeRendering/SilhouetteEnhancementVolumeStyle",
-	"x_ite/Components/VolumeRendering/ToneMappedVolumeStyle",
-	"x_ite/Components/VolumeRendering/VolumeData",
-	"x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
-	"x_ite/Components/VolumeRendering/X3DVolumeDataNode",
-	"x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode",
-	require .getComponentUrl ("cad-geometry"),
-	require .getComponentUrl ("texturing-3d"),
+   "x_ite/Components",
+   "x_ite/Browser/VolumeRendering/X3DVolumeRenderingContext",
+   "x_ite/Components/VolumeRendering/BlendedVolumeStyle",
+   "x_ite/Components/VolumeRendering/BoundaryEnhancementVolumeStyle",
+   "x_ite/Components/VolumeRendering/CartoonVolumeStyle",
+   "x_ite/Components/VolumeRendering/ComposedVolumeStyle",
+   "x_ite/Components/VolumeRendering/EdgeEnhancementVolumeStyle",
+   "x_ite/Components/VolumeRendering/IsoSurfaceVolumeData",
+   "x_ite/Components/VolumeRendering/OpacityMapVolumeStyle",
+   "x_ite/Components/VolumeRendering/ProjectionVolumeStyle",
+   "x_ite/Components/VolumeRendering/SegmentedVolumeData",
+   "x_ite/Components/VolumeRendering/ShadedVolumeStyle",
+   "x_ite/Components/VolumeRendering/SilhouetteEnhancementVolumeStyle",
+   "x_ite/Components/VolumeRendering/ToneMappedVolumeStyle",
+   "x_ite/Components/VolumeRendering/VolumeData",
+   "x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
+   "x_ite/Components/VolumeRendering/X3DVolumeDataNode",
+   "x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode",
+   require .getComponentUrl ("cad-geometry"),
+   require .getComponentUrl ("texturing-3d"),
 ],
 function (Components,
           X3DVolumeRenderingContext,
@@ -89,30 +89,30 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "VolumeRendering",
-		types:
-		{
-			BlendedVolumeStyle:               BlendedVolumeStyle,
-			BoundaryEnhancementVolumeStyle:   BoundaryEnhancementVolumeStyle,
-			CartoonVolumeStyle:               CartoonVolumeStyle,
-			ComposedVolumeStyle:              ComposedVolumeStyle,
-			EdgeEnhancementVolumeStyle:       EdgeEnhancementVolumeStyle,
-			IsoSurfaceVolumeData:             IsoSurfaceVolumeData,
-			OpacityMapVolumeStyle:            OpacityMapVolumeStyle,
-			ProjectionVolumeStyle:            ProjectionVolumeStyle,
-			SegmentedVolumeData:              SegmentedVolumeData,
-			ShadedVolumeStyle:                ShadedVolumeStyle,
-			SilhouetteEnhancementVolumeStyle: SilhouetteEnhancementVolumeStyle,
-			ToneMappedVolumeStyle:            ToneMappedVolumeStyle,
-			VolumeData:                       VolumeData,
-		},
-		abstractTypes:
-		{
-			X3DComposableVolumeRenderStyleNode: X3DComposableVolumeRenderStyleNode,
-			X3DVolumeDataNode:                  X3DVolumeDataNode,
-			X3DVolumeRenderStyleNode:           X3DVolumeRenderStyleNode,
-		},
-		browser: X3DVolumeRenderingContext,
-	});
+   Components .addComponent ({
+      name: "VolumeRendering",
+      types:
+      {
+         BlendedVolumeStyle:               BlendedVolumeStyle,
+         BoundaryEnhancementVolumeStyle:   BoundaryEnhancementVolumeStyle,
+         CartoonVolumeStyle:               CartoonVolumeStyle,
+         ComposedVolumeStyle:              ComposedVolumeStyle,
+         EdgeEnhancementVolumeStyle:       EdgeEnhancementVolumeStyle,
+         IsoSurfaceVolumeData:             IsoSurfaceVolumeData,
+         OpacityMapVolumeStyle:            OpacityMapVolumeStyle,
+         ProjectionVolumeStyle:            ProjectionVolumeStyle,
+         SegmentedVolumeData:              SegmentedVolumeData,
+         ShadedVolumeStyle:                ShadedVolumeStyle,
+         SilhouetteEnhancementVolumeStyle: SilhouetteEnhancementVolumeStyle,
+         ToneMappedVolumeStyle:            ToneMappedVolumeStyle,
+         VolumeData:                       VolumeData,
+      },
+      abstractTypes:
+      {
+         X3DComposableVolumeRenderStyleNode: X3DComposableVolumeRenderStyleNode,
+         X3DVolumeDataNode:                  X3DVolumeDataNode,
+         X3DVolumeRenderStyleNode:           X3DVolumeRenderStyleNode,
+      },
+      browser: X3DVolumeRenderingContext,
+   });
 });

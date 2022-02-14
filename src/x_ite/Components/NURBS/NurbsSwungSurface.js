@@ -48,135 +48,133 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Geometry3D/Extrusion",
-	"x_ite/Components/NURBS/X3DParametricGeometryNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Geometry3D/Extrusion",
+   "x_ite/Components/NURBS/X3DParametricGeometryNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          Extrusion, 
-          X3DParametricGeometryNode, 
+          Extrusion,
+          X3DParametricGeometryNode,
           X3DConstants,
           X3DCast)
 {
 "use strict";
 
-	function NurbsSwungSurface (executionContext)
-	{
-		X3DParametricGeometryNode .call (this, executionContext);
+   function NurbsSwungSurface (executionContext)
+   {
+      X3DParametricGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .NurbsSwungSurface);
+      this .addType (X3DConstants .NurbsSwungSurface);
 
-		this .extrusion = new Extrusion (executionContext);
-	}
+      this .extrusion = new Extrusion (executionContext);
+   }
 
-	NurbsSwungSurface .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
-	{
-		constructor: NurbsSwungSurface,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "profileCurve",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "trajectoryCurve", new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "NurbsSwungSurface";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-		initialize: function ()
-		{
-			X3DParametricGeometryNode .prototype .initialize .call (this);
+   NurbsSwungSurface .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
+   {
+      constructor: NurbsSwungSurface,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "profileCurve",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "trajectoryCurve", new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "NurbsSwungSurface";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "geometry";
+      },
+      initialize: function ()
+      {
+         X3DParametricGeometryNode .prototype .initialize .call (this);
 
-			this .profileCurve_    .addInterest ("set_profileCurve__",    this);
-			this .trajectoryCurve_ .addInterest ("set_trajectoryCurve__", this);
+         this .profileCurve_    .addInterest ("set_profileCurve__",    this);
+         this .trajectoryCurve_ .addInterest ("set_trajectoryCurve__", this);
 
-			var extrusion = this .extrusion;
+         var extrusion = this .extrusion;
 
-			extrusion .beginCap_     = false;
-			extrusion .endCap_       = false;
-			extrusion .solid_        = true;
-			extrusion .ccw_          = true;
-			extrusion .convex_       = true;
-			extrusion .creaseAngle_  = Math .PI;
+         extrusion .beginCap_     = false;
+         extrusion .endCap_       = false;
+         extrusion .solid_        = true;
+         extrusion .ccw_          = true;
+         extrusion .convex_       = true;
+         extrusion .creaseAngle_  = Math .PI;
 
-			extrusion .setup ();
+         extrusion .setup ();
 
-			extrusion .crossSection_ .setTainted (true);
-			extrusion .spine_        .setTainted (true);
+         extrusion .crossSection_ .setTainted (true);
+         extrusion .spine_        .setTainted (true);
 
-			this .set_profileCurve__ ();
-			this .set_trajectoryCurve__ ();
-		},
-		set_profileCurve__: function ()
-		{
-			if (this .profileCurveNode)
-				this .profileCurveNode .removeInterest ("requestRebuild", this);
+         this .set_profileCurve__ ();
+         this .set_trajectoryCurve__ ();
+      },
+      set_profileCurve__: function ()
+      {
+         if (this .profileCurveNode)
+            this .profileCurveNode .removeInterest ("requestRebuild", this);
 
-			this .profileCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this .profileCurve_);
+         this .profileCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this .profileCurve_);
 
-			if (this .profileCurveNode)
-				this .profileCurveNode .addInterest ("requestRebuild", this);
-		},
-		set_trajectoryCurve__: function ()
-		{
-			if (this .trajectoryCurveNode)
-				this .trajectoryCurveNode .removeInterest ("requestRebuild", this);
+         if (this .profileCurveNode)
+            this .profileCurveNode .addInterest ("requestRebuild", this);
+      },
+      set_trajectoryCurve__: function ()
+      {
+         if (this .trajectoryCurveNode)
+            this .trajectoryCurveNode .removeInterest ("requestRebuild", this);
 
-			this .trajectoryCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this .trajectoryCurve_);
+         this .trajectoryCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this .trajectoryCurve_);
 
-			if (this .trajectoryCurveNode)
-				this .trajectoryCurveNode .addInterest ("requestRebuild", this);
-		},
-		build: function ()
-		{
-			if (! this .profileCurveNode)
-				return;
-		
-			if (! this .trajectoryCurveNode)
-				return;
+         if (this .trajectoryCurveNode)
+            this .trajectoryCurveNode .addInterest ("requestRebuild", this);
+      },
+      build: function ()
+      {
+         if (! this .profileCurveNode)
+            return;
 
-			var extrusion = this .extrusion;
+         if (! this .trajectoryCurveNode)
+            return;
 
-			extrusion .crossSection_ = this .profileCurveNode    .tessellate (0);
-			extrusion .spine_        = this .trajectoryCurveNode .tessellate (1);
+         var extrusion = this .extrusion;
 
-			extrusion .rebuild ();
+         extrusion .crossSection_ = this .profileCurveNode    .tessellate (0);
+         extrusion .spine_        = this .trajectoryCurveNode .tessellate (1);
 
-			this .getColors ()    .assign (extrusion .getColors ());
-			this .getTexCoords () .assign (extrusion .getTexCoords ());
-			this .getNormals ()   .assign (extrusion .getNormals ());
-			this .getVertices ()  .assign (extrusion .getVertices ());
+         extrusion .rebuild ();
 
-			this .getMultiTexCoords () .push (this .getTexCoords ());
+         this .getColors ()    .assign (extrusion .getColors ());
+         this .getTexCoords () .assign (extrusion .getTexCoords ());
+         this .getNormals ()   .assign (extrusion .getNormals ());
+         this .getVertices ()  .assign (extrusion .getVertices ());
 
-			if (! this .ccw_ .getValue ())
-			{
-				var normals = this .getNormals ();
+         this .getMultiTexCoords () .push (this .getTexCoords ());
 
-				for (var i = 0, length = normals .length; i < length; ++ i)
-					normals [i] = -normals [i];
-			}
+         if (! this .ccw_ .getValue ())
+         {
+            var normals = this .getNormals ();
 
-			this .setSolid (this .solid_ .getValue ());
-			this .setCCW (this .ccw_ .getValue ());
-		},
-	});
+            for (var i = 0, length = normals .length; i < length; ++ i)
+               normals [i] = -normals [i];
+         }
 
-	return NurbsSwungSurface;
+         this .setSolid (this .solid_ .getValue ());
+         this .setCCW (this .ccw_ .getValue ());
+      },
+   });
+
+   return NurbsSwungSurface;
 });
-
-

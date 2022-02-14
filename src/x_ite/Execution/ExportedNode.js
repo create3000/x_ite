@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Base/X3DObject",
-	"x_ite/InputOutput/Generator",
+   "x_ite/Fields",
+   "x_ite/Base/X3DObject",
+   "x_ite/InputOutput/Generator",
 ],
 function (Fields,
           X3DObject,
@@ -58,72 +58,72 @@ function (Fields,
 {
 "use strict";
 
-	function ExportedNode (exportedName, localNode)
-	{
-		X3DObject .call (this);
+   function ExportedNode (exportedName, localNode)
+   {
+      X3DObject .call (this);
 
-		this .exportedName = exportedName;
-		this .localNode    = localNode;
-	}
+      this .exportedName = exportedName;
+      this .localNode    = localNode;
+   }
 
-	ExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
-	{
-		constructor: ExportedNode,
-		getTypeName: function ()
-		{
-			return "ExportedNode";
-		},
-		getExportedName: function ()
-		{
-			return this .exportedName;
-		},
-		getLocalNode: function ()
-		{
-			return this .localNode;
-		},
-		toVRMLStream: function (stream)
-		{
-			const
-				generator = Generator .Get (stream),
-				localName = generator .LocalName (this .localNode);
+   ExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
+   {
+      constructor: ExportedNode,
+      getTypeName: function ()
+      {
+         return "ExportedNode";
+      },
+      getExportedName: function ()
+      {
+         return this .exportedName;
+      },
+      getLocalNode: function ()
+      {
+         return this .localNode;
+      },
+      toVRMLStream: function (stream)
+      {
+         const
+            generator = Generator .Get (stream),
+            localName = generator .LocalName (this .localNode);
 
-			stream .string += generator .Indent ();
-			stream .string += "EXPORT";
-			stream .string += " ";
-			stream .string += localName;
+         stream .string += generator .Indent ();
+         stream .string += "EXPORT";
+         stream .string += " ";
+         stream .string += localName;
 
-			if (this .exportedName !== localName)
-			{
-				stream .string += " ";
-				stream .string += "AS";
-				stream .string += " ";
-				stream .string += this .exportedName;
-			}
-		},
-		toXMLStream: function (stream)
-		{
-			const
-				generator = Generator .Get (stream),
-				localName = generator .LocalName (this .localNode);
+         if (this .exportedName !== localName)
+         {
+            stream .string += " ";
+            stream .string += "AS";
+            stream .string += " ";
+            stream .string += this .exportedName;
+         }
+      },
+      toXMLStream: function (stream)
+      {
+         const
+            generator = Generator .Get (stream),
+            localName = generator .LocalName (this .localNode);
 
-			stream .string += generator .Indent ();
-			stream .string += "<EXPORT";
-			stream .string += " ";
-			stream .string += "localDEF='";
-			stream .string += generator .XMLEncode (localName);
-			stream .string += "'";
+         stream .string += generator .Indent ();
+         stream .string += "<EXPORT";
+         stream .string += " ";
+         stream .string += "localDEF='";
+         stream .string += generator .XMLEncode (localName);
+         stream .string += "'";
 
-			if (this .exportedName !== localName)
-			{
-				stream .string += " ";
-				stream .string += "AS='";
-				stream .string += generator .XMLEncode (this .exportedName);
-				stream .string += "'";
-			}
+         if (this .exportedName !== localName)
+         {
+            stream .string += " ";
+            stream .string += "AS='";
+            stream .string += generator .XMLEncode (this .exportedName);
+            stream .string += "'";
+         }
 
-			stream .string += "/>";
-		},
-	});
+         stream .string += "/>";
+      },
+   });
 
-	return ExportedNode;
+   return ExportedNode;
 });

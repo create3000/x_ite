@@ -47,15 +47,15 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Grouping/Group",
-	"x_ite/Components/Grouping/StaticGroup",
-	"x_ite/Components/Grouping/Switch",
-	"x_ite/Components/Grouping/Transform",
-	"x_ite/Components/Grouping/X3DBoundedObject",
-	"x_ite/Components/Grouping/X3DGroupingNode",
-	"x_ite/Components/Grouping/X3DTransformMatrix3DNode",
-	"x_ite/Components/Grouping/X3DTransformNode",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/Grouping/Group",
+   "x_ite/Components/Grouping/StaticGroup",
+   "x_ite/Components/Grouping/Switch",
+   "x_ite/Components/Grouping/Transform",
+   "x_ite/Components/Grouping/X3DBoundedObject",
+   "x_ite/Components/Grouping/X3DGroupingNode",
+   "x_ite/Components/Grouping/X3DTransformMatrix3DNode",
+   "x_ite/Components/Grouping/X3DTransformNode",
 ],
 function (SupportedNodes,
           Group,
@@ -69,25 +69,25 @@ function (SupportedNodes,
 {
 "use strict";
 
-	const Types =
-	{
-		Group:       Group,
-		StaticGroup: StaticGroup,
-		Switch:      Switch,
-		Transform:   Transform,
-	};
+   const Types =
+   {
+      Group:       Group,
+      StaticGroup: StaticGroup,
+      Switch:      Switch,
+      Transform:   Transform,
+   };
 
-	const AbstractTypes =
-	{
-		X3DBoundedObject:         X3DBoundedObject,
-		X3DGroupingNode:          X3DGroupingNode,
-		X3DTransformMatrix3DNode: X3DTransformMatrix3DNode,
-		X3DTransformNode:         X3DTransformNode,
-	};
+   const AbstractTypes =
+   {
+      X3DBoundedObject:         X3DBoundedObject,
+      X3DGroupingNode:          X3DGroupingNode,
+      X3DTransformMatrix3DNode: X3DTransformMatrix3DNode,
+      X3DTransformNode:         X3DTransformNode,
+   };
 
-	for (const typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]);
+   for (const typeName in Types)
+      SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (const typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   for (const typeName in AbstractTypes)
+      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

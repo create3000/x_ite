@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Basic/X3DField",
-	"x_ite/Fields/SFMatrixPrototypeTemplate",
-	"x_ite/Fields/SFVec3",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Matrix4",
+   "x_ite/Basic/X3DField",
+   "x_ite/Fields/SFMatrixPrototypeTemplate",
+   "x_ite/Fields/SFVec3",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Matrix4",
 ],
 function (X3DField,
           SFMatrixPrototypeTemplate,
@@ -62,72 +62,72 @@ function (X3DField,
 {
 "use strict";
 
-	function SFMatrix4Template (TypeName, Type, SFVec3, double)
-	{
-		function SFMatrix4 (m00, m01, m02, m03,
-		                    m10, m11, m12, m13,
-		                    m20, m21, m22, m23,
-		                    m30, m31, m32, m33)
-		{
-			switch (arguments .length)
-			{
-				case 0:
-					return X3DField .call (this, new Matrix4 ());
+   function SFMatrix4Template (TypeName, Type, SFVec3, double)
+   {
+      function SFMatrix4 (m00, m01, m02, m03,
+                          m10, m11, m12, m13,
+                          m20, m21, m22, m23,
+                          m30, m31, m32, m33)
+      {
+         switch (arguments .length)
+         {
+            case 0:
+               return X3DField .call (this, new Matrix4 ());
 
-				case 1:
-					return X3DField .call (this, arguments [0]);
+            case 1:
+               return X3DField .call (this, arguments [0]);
 
-				case 16:
-					return X3DField .call (this, new Matrix4 (m00 * 1, m01 * 1, m02 * 1, m03 * 1,
-					                                          m10 * 1, m11 * 1, m12 * 1, m13 * 1,
-					                                          m20 * 1, m21 * 1, m22 * 1, m23 * 1,
-					                                          m30 * 1, m31 * 1, m32 * 1, m33 * 1));
-			}
+            case 16:
+               return X3DField .call (this, new Matrix4 (m00 * 1, m01 * 1, m02 * 1, m03 * 1,
+                                                         m10 * 1, m11 * 1, m12 * 1, m13 * 1,
+                                                         m20 * 1, m21 * 1, m22 * 1, m23 * 1,
+                                                         m30 * 1, m31 * 1, m32 * 1, m33 * 1));
+         }
 
-			throw new Error ("Invalid arguments.");
-		}
+         throw new Error ("Invalid arguments.");
+      }
 
-		SFMatrix4 .prototype = Object .assign (Object .create (X3DField .prototype),
-			SFMatrixPrototypeTemplate (Matrix4, SFVec3, double),
-		{
-			constructor: SFMatrix4,
-			getTypeName: function ()
-			{
-				return TypeName;
-			},
-			getType: function ()
-			{
-				return Type;
-			},
-		});
+      SFMatrix4 .prototype = Object .assign (Object .create (X3DField .prototype),
+         SFMatrixPrototypeTemplate (Matrix4, SFVec3, double),
+      {
+         constructor: SFMatrix4,
+         getTypeName: function ()
+         {
+            return TypeName;
+         },
+         getType: function ()
+         {
+            return Type;
+         },
+      });
 
-		function defineProperty (i)
-		{
-			Object .defineProperty (SFMatrix4 .prototype, i,
-			{
-				get: function ()
-				{
-					return this .getValue () [i];
-				},
-				set: function (value)
-				{
-					this .getValue () [i] = value;
-					this .addEvent ();
-				},
-				enumerable: false,
-				configurable: false
-			});
-		}
+      function defineProperty (i)
+      {
+         Object .defineProperty (SFMatrix4 .prototype, i,
+         {
+            get: function ()
+            {
+               return this .getValue () [i];
+            },
+            set: function (value)
+            {
+               this .getValue () [i] = value;
+               this .addEvent ();
+            },
+            enumerable: false,
+            configurable: false
+         });
+      }
 
-		for (let i = 0; i < Matrix4 .prototype .length; ++ i)
-			defineProperty (i);
+      for (let i = 0; i < Matrix4 .prototype .length; ++ i)
+         defineProperty (i);
 
-		return SFMatrix4;
-	}
+      return SFMatrix4;
+   }
 
-	return {
-		SFMatrix4d: SFMatrix4Template ("SFMatrix4d", X3DConstants .SFMatrix4d, SFVec3 .SFVec3d, true),
-		SFMatrix4f: SFMatrix4Template ("SFMatrix4f", X3DConstants .SFMatrix4f, SFVec3 .SFVec3f, false),
-		VrmlMatrix: SFMatrix4Template ("VrmlMatrix", X3DConstants .VrmlMatrix, SFVec3 .SFVec3f, false),
-	};
+   return {
+      SFMatrix4d: SFMatrix4Template ("SFMatrix4d", X3DConstants .SFMatrix4d, SFVec3 .SFVec3d, true),
+      SFMatrix4f: SFMatrix4Template ("SFMatrix4f", X3DConstants .SFMatrix4f, SFVec3 .SFVec3f, false),
+      VrmlMatrix: SFMatrix4Template ("VrmlMatrix", X3DConstants .VrmlMatrix, SFVec3 .SFVec3f, false),
+   };
 });

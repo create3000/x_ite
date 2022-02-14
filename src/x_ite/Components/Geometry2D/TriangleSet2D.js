@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DGeometryNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Rendering/X3DGeometryNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,78 +64,78 @@ function (Fields,
 {
 "use strict";
 
-	function TriangleSet2D (executionContext)
-	{
-		X3DGeometryNode .call (this, executionContext);
+   function TriangleSet2D (executionContext)
+   {
+      X3DGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .TriangleSet2D);
+      this .addType (X3DConstants .TriangleSet2D);
 
-		this .setGeometryType (2);
+      this .setGeometryType (2);
 
-		this .vertices_ .setUnit ("length");
-	}
+      this .vertices_ .setUnit ("length");
+   }
 
-	TriangleSet2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
-	{
-		constructor: TriangleSet2D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "vertices", new Fields .MFVec2f ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool ()),
-		]),
-		getTypeName: function ()
-		{
-			return "TriangleSet2D";
-		},
-		getComponentName: function ()
-		{
-			return "Geometry2D";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-		build: function ()
-		{
-			var
-				vertices    = this .vertices_ .getValue (),
-				normalArray = this .getNormals (),
-				vertexArray = this .getVertices ();
+   TriangleSet2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+   {
+      constructor: TriangleSet2D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "vertices", new Fields .MFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "TriangleSet2D";
+      },
+      getComponentName: function ()
+      {
+         return "Geometry2D";
+      },
+      getContainerField: function ()
+      {
+         return "geometry";
+      },
+      build: function ()
+      {
+         var
+            vertices    = this .vertices_ .getValue (),
+            normalArray = this .getNormals (),
+            vertexArray = this .getVertices ();
 
-			for (var i = 0, length = this .vertices_ .length * 2; i < length; i += 2)
-			{
-				normalArray .push (0, 0, 1);
-				vertexArray .push (vertices [i], vertices [i + 1], 0, 1);
-			}
+         for (var i = 0, length = this .vertices_ .length * 2; i < length; i += 2)
+         {
+            normalArray .push (0, 0, 1);
+            vertexArray .push (vertices [i], vertices [i + 1], 0, 1);
+         }
 
-			this .setSolid (this .solid_ .getValue ());
-		},
-		buildTexCoords: function ()
-		{
-			var texCoordArray = this .getTexCoords ();
+         this .setSolid (this .solid_ .getValue ());
+      },
+      buildTexCoords: function ()
+      {
+         var texCoordArray = this .getTexCoords ();
 
-			if (texCoordArray .length === 0)
-			{
-				var
-					p             = this .getTexCoordParams (),
-					min           = p .min,
-					Ssize         = p .Ssize,
-					vertexArray   = this .getVertices () .getValue ();
+         if (texCoordArray .length === 0)
+         {
+            var
+               p             = this .getTexCoordParams (),
+               min           = p .min,
+               Ssize         = p .Ssize,
+               vertexArray   = this .getVertices () .getValue ();
 
-				for (var i = 0, length = vertexArray .length; i < length; i += 4)
-				{
-					texCoordArray .push ((vertexArray [i]     - min [0]) / Ssize,
-					                     (vertexArray [i + 1] - min [1]) / Ssize,
-					                     0,
-					                     1);
-				}
+            for (var i = 0, length = vertexArray .length; i < length; i += 4)
+            {
+               texCoordArray .push ((vertexArray [i]     - min [0]) / Ssize,
+                                    (vertexArray [i + 1] - min [1]) / Ssize,
+                                    0,
+                                    1);
+            }
 
-				texCoordArray .shrinkToFit ();
-			}
+            texCoordArray .shrinkToFit ();
+         }
 
-			return texCoordArray;
-		},
-	});
+         return texCoordArray;
+      },
+   });
 
-	return TriangleSet2D;
+   return TriangleSet2D;
 });

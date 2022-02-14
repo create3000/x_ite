@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Rendering/X3DGeometricPropertyNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -62,89 +62,89 @@ function (Fields,
 {
 "use strict";
 
-	function FogCoordinate (executionContext)
-	{
-		X3DGeometricPropertyNode .call (this, executionContext);
+   function FogCoordinate (executionContext)
+   {
+      X3DGeometricPropertyNode .call (this, executionContext);
 
-		this .addType (X3DConstants .FogCoordinate);
+      this .addType (X3DConstants .FogCoordinate);
 
-		this .depth_ .setUnit ("length");
-	}
+      this .depth_ .setUnit ("length");
+   }
 
-	FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
-	{
-		constructor: FogCoordinate,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "depth",    new Fields .MFFloat ()),
-		]),
-		getTypeName: function ()
-		{
-			return "FogCoordinate";
-		},
-		getComponentName: function ()
-		{
-			return "EnvironmentalEffects";
-		},
-		getContainerField: function ()
-		{
-			return "fogCoord";
-		},
-		initialize: function ()
-		{
-			X3DGeometricPropertyNode .prototype .initialize .call (this);
+   FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
+   {
+      constructor: FogCoordinate,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "depth",    new Fields .MFFloat ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "FogCoordinate";
+      },
+      getComponentName: function ()
+      {
+         return "EnvironmentalEffects";
+      },
+      getContainerField: function ()
+      {
+         return "fogCoord";
+      },
+      initialize: function ()
+      {
+         X3DGeometricPropertyNode .prototype .initialize .call (this);
 
-			this .depth_ .addInterest ("set_depth__", this);
+         this .depth_ .addInterest ("set_depth__", this);
 
-			this .set_depth__ ();
-		},
-		set_depth__: function ()
-		{
-			this .depth  = this .depth_ .getValue ();
-			this .length = this .depth_ .length;
-		},
-		isEmpty: function ()
-		{
-			return this .length === 0;
-		},
-		getSize: function ()
-		{
-			return this .length;
-		},
-		addDepth: function (index, array)
-		{
-			if (index < this .length)
-				array .push (this .depth [index]);
+         this .set_depth__ ();
+      },
+      set_depth__: function ()
+      {
+         this .depth  = this .depth_ .getValue ();
+         this .length = this .depth_ .length;
+      },
+      isEmpty: function ()
+      {
+         return this .length === 0;
+      },
+      getSize: function ()
+      {
+         return this .length;
+      },
+      addDepth: function (index, array)
+      {
+         if (index < this .length)
+            array .push (this .depth [index]);
 
-			else if (this .length)
-				array .push (this .depth [this .length - 1]);
+         else if (this .length)
+            array .push (this .depth [this .length - 1]);
 
-			else
-				array .push (0);
-		},
-		addDepths: function (array, min)
-		{
-			var length = this .length;
+         else
+            array .push (0);
+      },
+      addDepths: function (array, min)
+      {
+         var length = this .length;
 
-			if (length)
-			{
-				const depth = this .depth;
+         if (length)
+         {
+            const depth = this .depth;
 
-				for (var index = 0; index < length; ++ index)
-					array .push (depth [index]);
+            for (var index = 0; index < length; ++ index)
+               array .push (depth [index]);
 
-				var last = depth [length - 1];
+            var last = depth [length - 1];
 
-				for (var index = length; index < min; ++ index)
-					array .push (last);
-			}
-			else
-			{
-				for (var index = 0; index < min; ++ index)
-					array .push (0);
-			}
-		},
-	});
+            for (var index = length; index < min; ++ index)
+               array .push (last);
+         }
+         else
+         {
+            for (var index = 0; index < min; ++ index)
+               array .push (0);
+         }
+      },
+   });
 
-	return FogCoordinate;
+   return FogCoordinate;
 });

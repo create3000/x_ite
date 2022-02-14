@@ -48,14 +48,14 @@
 
 
 define ([
-	"jquery",
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Fields",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Networking/X3DUrlObject",
-	"x_ite/Prototype/X3DProtoDeclarationNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/InputOutput/Generator",
+   "jquery",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Fields",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Networking/X3DUrlObject",
+   "x_ite/Prototype/X3DProtoDeclarationNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/InputOutput/Generator",
 ],
 function ($,
           SupportedNodes,
@@ -68,278 +68,278 @@ function ($,
 {
 "use strict";
 
-	SupportedNodes .addAbstractType ("X3DExternProtoDeclaration");
+   SupportedNodes .addAbstractType ("X3DExternProtoDeclaration");
 
-	function X3DExternProtoDeclaration (executionContext, url)
-	{
-		X3DProtoDeclarationNode .call (this, executionContext);
-		X3DUrlObject            .call (this, executionContext);
+   function X3DExternProtoDeclaration (executionContext, url)
+   {
+      X3DProtoDeclarationNode .call (this, executionContext);
+      X3DUrlObject            .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DExternProtoDeclaration)
+      this .addType (X3DConstants .X3DExternProtoDeclaration)
 
-		this .addChildObjects ("load",                 new Fields .SFBool (true),
-		                       "url",                  url .copy (), // Must be of type MFString.
-		                       "autoRefresh",          new Fields .SFTime (),
-									  "autoRefreshTimeLimit", new Fields .SFTime (3600));
+      this .addChildObjects ("load",                 new Fields .SFBool (true),
+                             "url",                  url .copy (), // Must be of type MFString.
+                             "autoRefresh",          new Fields .SFTime (),
+                             "autoRefreshTimeLimit", new Fields .SFTime (3600));
 
-		this .deferred = $.Deferred ();
-	}
+      this .deferred = $.Deferred ();
+   }
 
-	X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
-		X3DUrlObject .prototype,
-	{
-		constructor: X3DExternProtoDeclaration,
-		fieldDefinitions: new FieldDefinitionArray ([ ]),
-		getTypeName: function ()
-		{
-			return "X3DExternProtoDeclaration";
-		},
-		initialize: function ()
-		{
-			X3DProtoDeclarationNode .prototype .initialize .call (this);
-			X3DUrlObject            .prototype .initialize .call (this);
-		},
-		set_live__: function ()
-		{
-			X3DUrlObject .prototype .set_live__ .call (this);
+   X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
+      X3DUrlObject .prototype,
+   {
+      constructor: X3DExternProtoDeclaration,
+      fieldDefinitions: new FieldDefinitionArray ([ ]),
+      getTypeName: function ()
+      {
+         return "X3DExternProtoDeclaration";
+      },
+      initialize: function ()
+      {
+         X3DProtoDeclarationNode .prototype .initialize .call (this);
+         X3DUrlObject            .prototype .initialize .call (this);
+      },
+      set_live__: function ()
+      {
+         X3DUrlObject .prototype .set_live__ .call (this);
 
-			if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
-				return;
+         if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
+            return;
 
-			this .scene .setLive (this .isLive () .getValue ());
-		},
-		hasUserDefinedFields: function ()
-		{
-			return true;
-		},
-		setProtoDeclaration: function (proto)
-		{
-			this .proto = proto;
+         this .scene .setLive (this .isLive () .getValue ());
+      },
+      hasUserDefinedFields: function ()
+      {
+         return true;
+      },
+      setProtoDeclaration: function (proto)
+      {
+         this .proto = proto;
 
-			if (!this .proto)
-				return
+         if (!this .proto)
+            return
 
-			const fieldDefinitions = this .getFieldDefinitions ();
+         const fieldDefinitions = this .getFieldDefinitions ();
 
-			for (const protoFieldDefinition of proto .getFieldDefinitions ())
-			{
-				const fieldDefinition = fieldDefinitions .get (protoFieldDefinition .name);
+         for (const protoFieldDefinition of proto .getFieldDefinitions ())
+         {
+            const fieldDefinition = fieldDefinitions .get (protoFieldDefinition .name);
 
-				if (fieldDefinition)
-					fieldDefinition .value .setValue (protoFieldDefinition .value);
-			}
-		},
-		getProtoDeclaration: function ()
-		{
-			return this .proto;
-		},
-		addCallback: function (callback)
-		{
-			this .deferred .done (callback);
-		},
-		loadNow: function ()
-		{
-			// 7.73 — ExternProtoDeclaration function
+            if (fieldDefinition)
+               fieldDefinition .value .setValue (protoFieldDefinition .value);
+         }
+      },
+      getProtoDeclaration: function ()
+      {
+         return this .proto;
+      },
+      addCallback: function (callback)
+      {
+         this .deferred .done (callback);
+      },
+      loadNow: function ()
+      {
+         // 7.73 — ExternProtoDeclaration function
 
-			this .getScene () .addInitLoadCount (this);
+         this .getScene () .addInitLoadCount (this);
 
-			const FileLoader = require ("x_ite/InputOutput/FileLoader");
+         const FileLoader = require ("x_ite/InputOutput/FileLoader");
 
-			new FileLoader (this) .createX3DFromURL (this .urlBuffer_, null, this .setInternalSceneAsync .bind (this));
-		},
-		setInternalSceneAsync: function (value)
-		{
-			if (value)
-				this .setInternalScene (value);
+         new FileLoader (this) .createX3DFromURL (this .urlBuffer_, null, this .setInternalSceneAsync .bind (this));
+      },
+      setInternalSceneAsync: function (value)
+      {
+         if (value)
+            this .setInternalScene (value);
 
-			else
-				this .setError (new Error ("File could not be loaded."));
+         else
+            this .setError (new Error ("File could not be loaded."));
 
-			this .getScene () .removeInitLoadCount (this);
-		},
-		setInternalScene: function (value)
-		{
-			this .scene = value;
+         this .getScene () .removeInitLoadCount (this);
+      },
+      setInternalScene: function (value)
+      {
+         this .scene = value;
 
-			const
-				protoName = new URL (this .scene .getWorldURL ()) .hash .substr (1) || 0,
-				proto     = this .scene .protos [protoName];
+         const
+            protoName = new URL (this .scene .getWorldURL ()) .hash .substr (1) || 0,
+            proto     = this .scene .protos [protoName];
 
-			if (! proto)
-				throw new Error ("PROTO not found");
+         if (! proto)
+            throw new Error ("PROTO not found");
 
-			this .scene .setLive (this .isLive () .getValue ());
-			this .scene .setPrivate (this .getScene () .getPrivate ());
-			this .scene .setExecutionContext (this .getExecutionContext ());
+         this .scene .setLive (this .isLive () .getValue ());
+         this .scene .setPrivate (this .getScene () .getPrivate ());
+         this .scene .setExecutionContext (this .getExecutionContext ());
 
-			this .setLoadState (X3DConstants .COMPLETE_STATE);
-			this .setProtoDeclaration (proto);
+         this .setLoadState (X3DConstants .COMPLETE_STATE);
+         this .setProtoDeclaration (proto);
 
-			this .deferred .resolve ();
-		},
-		getInternalScene: function ()
-		{
-			///  Returns the internal X3DScene of this extern proto, that is loaded from the url given.
+         this .deferred .resolve ();
+      },
+      getInternalScene: function ()
+      {
+         ///  Returns the internal X3DScene of this extern proto, that is loaded from the url given.
 
-			return this .scene;
-		},
-		setError: function (error)
-		{
-			console .error ("Error loading extern prototype:", error);
+         return this .scene;
+      },
+      setError: function (error)
+      {
+         console .error ("Error loading extern prototype:", error);
 
-			this .scene = this .getBrowser () .getPrivateScene ();
+         this .scene = this .getBrowser () .getPrivateScene ();
 
-			this .setLoadState (X3DConstants .FAILED_STATE);
-			this .setProtoDeclaration (null);
+         this .setLoadState (X3DConstants .FAILED_STATE);
+         this .setProtoDeclaration (null);
 
-			this .deferred .resolve ();
-			this .deferred = $.Deferred ();
-		},
-		toVRMLStream: function (stream)
-		{
-			const generator = Generator .Get (stream);
+         this .deferred .resolve ();
+         this .deferred = $.Deferred ();
+      },
+      toVRMLStream: function (stream)
+      {
+         const generator = Generator .Get (stream);
 
-			stream .string += generator .Indent ();
-			stream .string += "EXTERNPROTO";
-			stream .string += " ";
-			stream .string += this .getName ();
-			stream .string += " ";
-			stream .string += "[";
+         stream .string += generator .Indent ();
+         stream .string += "EXTERNPROTO";
+         stream .string += " ";
+         stream .string += this .getName ();
+         stream .string += " ";
+         stream .string += "[";
 
-			const userDefinedFields = this .getUserDefinedFields ();
+         const userDefinedFields = this .getUserDefinedFields ();
 
-			let
-				fieldTypeLength   = 0,
-				accessTypeLength  = 0;
+         let
+            fieldTypeLength   = 0,
+            accessTypeLength  = 0;
 
-			if (userDefinedFields .size === 0)
-			{
-				stream .string += " ";
-			}
-			else
-			{
-				userDefinedFields .forEach (function (field)
-				{
-					fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
-					accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
-				});
+         if (userDefinedFields .size === 0)
+         {
+            stream .string += " ";
+         }
+         else
+         {
+            userDefinedFields .forEach (function (field)
+            {
+               fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
+               accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
+            });
 
-				stream .string += "\n";
+            stream .string += "\n";
 
-				generator .IncIndent ();
+            generator .IncIndent ();
 
-				userDefinedFields .forEach (function (field)
-				{
-					this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
-					stream .string += "\n";
-				},
-				this);
+            userDefinedFields .forEach (function (field)
+            {
+               this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
+               stream .string += "\n";
+            },
+            this);
 
-				generator .DecIndent ();
+            generator .DecIndent ();
 
-				stream .string += generator .Indent ();
-			}
+            stream .string += generator .Indent ();
+         }
 
-			stream .string += "]";
-			stream .string += "\n";
+         stream .string += "]";
+         stream .string += "\n";
 
-			stream .string += generator .Indent ();
+         stream .string += generator .Indent ();
 
-			this .url_ .toVRMLStream (stream);
-		},
-		toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
-		{
-			const generator = Generator .Get (stream);
+         this .url_ .toVRMLStream (stream);
+      },
+      toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
+      {
+         const generator = Generator .Get (stream);
 
-			stream .string += generator .Indent ();
-			stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
-			stream .string += " ";
-			stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
-			stream .string += " ";
-			stream .string += field .getName ();
-		},
-		toXMLStream: function (stream)
-		{
-			const generator = Generator .Get (stream);
+         stream .string += generator .Indent ();
+         stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
+         stream .string += " ";
+         stream .string += generator .PadRight (field .getTypeName (), fieldTypeLength);
+         stream .string += " ";
+         stream .string += field .getName ();
+      },
+      toXMLStream: function (stream)
+      {
+         const generator = Generator .Get (stream);
 
-			stream .string += generator .Indent ();
-			stream .string += "<ExternProtoDeclare";
-			stream .string += " ";
-			stream .string += "name='";
-			stream .string += generator .XMLEncode (this .getName ());
-			stream .string += "'";
-			stream .string += " ";
-			stream .string += "url='";
+         stream .string += generator .Indent ();
+         stream .string += "<ExternProtoDeclare";
+         stream .string += " ";
+         stream .string += "name='";
+         stream .string += generator .XMLEncode (this .getName ());
+         stream .string += "'";
+         stream .string += " ";
+         stream .string += "url='";
 
-			this .url_ .toXMLStream (stream);
+         this .url_ .toXMLStream (stream);
 
-			stream .string += "'";
-			stream .string += ">\n";
+         stream .string += "'";
+         stream .string += ">\n";
 
-			generator .IncIndent ();
+         generator .IncIndent ();
 
-			const userDefinedFields = this .getUserDefinedFields ();
+         const userDefinedFields = this .getUserDefinedFields ();
 
-			userDefinedFields .forEach (function (field)
-			{
-				stream .string += generator .Indent ();
-				stream .string += "<field";
-				stream .string += " ";
-				stream .string += "accessType='";
-				stream .string += generator .AccessType (field .getAccessType ());
-				stream .string += "'";
-				stream .string += " ";
-				stream .string += "type='";
-				stream .string += field .getTypeName ();
-				stream .string += "'";
-				stream .string += " ";
-				stream .string += "name='";
-				stream .string += generator .XMLEncode (field .getName ());
-				stream .string += "'";
-				stream .string += "/>\n";
-			});
+         userDefinedFields .forEach (function (field)
+         {
+            stream .string += generator .Indent ();
+            stream .string += "<field";
+            stream .string += " ";
+            stream .string += "accessType='";
+            stream .string += generator .AccessType (field .getAccessType ());
+            stream .string += "'";
+            stream .string += " ";
+            stream .string += "type='";
+            stream .string += field .getTypeName ();
+            stream .string += "'";
+            stream .string += " ";
+            stream .string += "name='";
+            stream .string += generator .XMLEncode (field .getName ());
+            stream .string += "'";
+            stream .string += "/>\n";
+         });
 
-			generator .DecIndent ();
+         generator .DecIndent ();
 
-			stream .string += generator .Indent ();
-			stream .string += "</ExternProtoDeclare>";
-		},
-	});
+         stream .string += generator .Indent ();
+         stream .string += "</ExternProtoDeclare>";
+      },
+   });
 
-	Object .defineProperty (X3DExternProtoDeclaration .prototype, "name",
-	{
-		get: function () { return this .getName (); },
-		enumerable: true,
-		configurable: false
-	});
+   Object .defineProperty (X3DExternProtoDeclaration .prototype, "name",
+   {
+      get: function () { return this .getName (); },
+      enumerable: true,
+      configurable: false
+   });
 
-	Object .defineProperty (X3DExternProtoDeclaration .prototype, "fields",
-	{
-		get: function () { return this .getFieldDefinitions (); },
-		enumerable: true,
-		configurable: false
-	});
+   Object .defineProperty (X3DExternProtoDeclaration .prototype, "fields",
+   {
+      get: function () { return this .getFieldDefinitions (); },
+      enumerable: true,
+      configurable: false
+   });
 
-	Object .defineProperty (X3DExternProtoDeclaration .prototype, "isExternProto",
-	{
-		get: function () { return true; },
-		enumerable: true,
-		configurable: false
-	});
+   Object .defineProperty (X3DExternProtoDeclaration .prototype, "isExternProto",
+   {
+      get: function () { return true; },
+      enumerable: true,
+      configurable: false
+   });
 
-	Object .defineProperty (X3DExternProtoDeclaration .prototype, "urls",
-	{
-		get: function () { return this .url_ .copy (); },
-		enumerable: true,
-		configurable: false
-	});
+   Object .defineProperty (X3DExternProtoDeclaration .prototype, "urls",
+   {
+      get: function () { return this .url_ .copy (); },
+      enumerable: true,
+      configurable: false
+   });
 
-	Object .defineProperty (X3DExternProtoDeclaration .prototype, "loadState",
-	{
-		get: function () { return this .checkLoadState (); },
-		enumerable: true,
-		configurable: false
-	});
+   Object .defineProperty (X3DExternProtoDeclaration .prototype, "loadState",
+   {
+      get: function () { return this .checkLoadState (); },
+      enumerable: true,
+      configurable: false
+   });
 
-	return X3DExternProtoDeclaration;
+   return X3DExternProtoDeclaration;
 });

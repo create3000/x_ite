@@ -48,165 +48,165 @@
 
 
 define ([
-	"x_ite/Basic/X3DBaseNode",
+   "x_ite/Basic/X3DBaseNode",
 ],
 function (X3DBaseNode)
 {
 "use strict";
 
-	function BindableList (executionContext, defaultNode)
-	{
-		X3DBaseNode .call (this, executionContext);
+   function BindableList (executionContext, defaultNode)
+   {
+      X3DBaseNode .call (this, executionContext);
 
-		this .collected    = [ defaultNode ];
-		this .array        = [ defaultNode ];
-		this .updateTime   = 0;
-		this .removedNodes = [ ];
-	}
+      this .collected    = [ defaultNode ];
+      this .array        = [ defaultNode ];
+      this .updateTime   = 0;
+      this .removedNodes = [ ];
+   }
 
-	BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: BindableList,
-		getTypeName: function ()
-		{
-			return "BindableList";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "bindableList";
-		},
-		get: function ()
-		{
-			return this .array;
-		},
-		getBound: function (name)
-		{
-			if (this .array .length > 1)
-			{
-				const
-					enableInlineBindables = false,
-					mainScene             = this .getMainScene ();
+   BindableList .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   {
+      constructor: BindableList,
+      getTypeName: function ()
+      {
+         return "BindableList";
+      },
+      getComponentName: function ()
+      {
+         return "X_ITE";
+      },
+      getContainerField: function ()
+      {
+         return "bindableList";
+      },
+      get: function ()
+      {
+         return this .array;
+      },
+      getBound: function (name)
+      {
+         if (this .array .length > 1)
+         {
+            const
+               enableInlineBindables = false,
+               mainScene             = this .getMainScene ();
 
-				if (name && name .length)
-				{
-					// Return first viewpoint with @name.
+            if (name && name .length)
+            {
+               // Return first viewpoint with @name.
 
-					for (let i = 1, length = this .array .length; i < length; ++ i)
-					{
-						const
-							node     = this .array [i],
-							instance = node .getExecutionContext () .getInstance (),
-							scene    = instance ?  instance .getScene () : node .getScene ();
+               for (let i = 1, length = this .array .length; i < length; ++ i)
+               {
+                  const
+                     node     = this .array [i],
+                     instance = node .getExecutionContext () .getInstance (),
+                     scene    = instance ?  instance .getScene () : node .getScene ();
 
-						if (! enableInlineBindables && scene !== mainScene)
-							continue;
+                  if (! enableInlineBindables && scene !== mainScene)
+                     continue;
 
-						if (node .getName () == name)
-							return node;
-					}
-				}
+                  if (node .getName () == name)
+                     return node;
+               }
+            }
 
-				// Return first bound viewpoint in scene.
+            // Return first bound viewpoint in scene.
 
-				for (let i = 1, length = this .array .length; i < length; ++ i)
-				{
-					const
-						node     = this .array [i],
-						instance = node .getExecutionContext () .getInstance (),
-						scene    = instance ?  instance .getScene () : node .getScene ();
+            for (let i = 1, length = this .array .length; i < length; ++ i)
+            {
+               const
+                  node     = this .array [i],
+                  instance = node .getExecutionContext () .getInstance (),
+                  scene    = instance ?  instance .getScene () : node .getScene ();
 
-					if (! enableInlineBindables && scene !== mainScene)
-						continue;
+               if (! enableInlineBindables && scene !== mainScene)
+                  continue;
 
-					if (node .isBound_ .getValue ())
-						return node;
-				}
+               if (node .isBound_ .getValue ())
+                  return node;
+            }
 
-				// Return first viewpoint in scene.
+            // Return first viewpoint in scene.
 
-				for (let i = 1, length = this .array .length; i < length; ++ i)
-				{
-					const
-						node     = this .array [i],
-						instance = node .getExecutionContext () .getInstance (),
-						scene    = instance ?  instance .getScene () : node .getScene ();
+            for (let i = 1, length = this .array .length; i < length; ++ i)
+            {
+               const
+                  node     = this .array [i],
+                  instance = node .getExecutionContext () .getInstance (),
+                  scene    = instance ?  instance .getScene () : node .getScene ();
 
-					if (! enableInlineBindables && scene !== mainScene)
-						continue;
+               if (! enableInlineBindables && scene !== mainScene)
+                  continue;
 
-					return node;
-				}
-			}
+               return node;
+            }
+         }
 
-			// Return default viewpoint.
+         // Return default viewpoint.
 
-			return this .array [0];
-		},
-		push: function (node)
-		{
-			return this .collected .push (node);
-		},
-		update: function (layerNode, stack)
-		{
-			const
-				changedNodes = this .collected .filter (node => node .set_bind_ .getModificationTime () > this .updateTime),
-				removedNodes = this .removedNodes;
+         return this .array [0];
+      },
+      push: function (node)
+      {
+         return this .collected .push (node);
+      },
+      update: function (layerNode, stack)
+      {
+         const
+            changedNodes = this .collected .filter (node => node .set_bind_ .getModificationTime () > this .updateTime),
+            removedNodes = this .removedNodes;
 
-			if (! equals (this .collected, this .array))
-			{
-				// Unbind nodes not in current list (collected);
+         if (! equals (this .collected, this .array))
+         {
+            // Unbind nodes not in current list (collected);
 
-				for (const node of this .array)
-				{
-					if (this .collected .indexOf (node) === -1)
-					{
-						removedNodes .push (node);
-					}
-				}
+            for (const node of this .array)
+            {
+               if (this .collected .indexOf (node) === -1)
+               {
+                  removedNodes .push (node);
+               }
+            }
 
-				// Swap arrays.
+            // Swap arrays.
 
-				const tmp = this .array;
+            const tmp = this .array;
 
-				this .array     = this .collected;
-				this .collected = tmp;
-			}
+            this .array     = this .collected;
+            this .collected = tmp;
+         }
 
-			// Clear collected array.
+         // Clear collected array.
 
-			this .collected .length = 1;
+         this .collected .length = 1;
 
-			// Update stack.
+         // Update stack.
 
-			stack .update (layerNode, removedNodes, changedNodes)
+         stack .update (layerNode, removedNodes, changedNodes)
 
-			removedNodes .length = 0;
+         removedNodes .length = 0;
 
-			// Advance updateTime time.
+         // Advance updateTime time.
 
-			this .updateTime = performance .now ();
-		},
-	});
+         this .updateTime = performance .now ();
+      },
+   });
 
-	// Compares two arrays.
+   // Compares two arrays.
 
-	function equals (lhs, rhs)
-	{
-		if (lhs .length !== rhs .length)
-			return false;
+   function equals (lhs, rhs)
+   {
+      if (lhs .length !== rhs .length)
+         return false;
 
-		for (let i = 0; i < lhs .length; ++ i)
-		{
-			if (lhs [i] !== rhs [i])
-				return false
-		}
+      for (let i = 0; i < lhs .length; ++ i)
+      {
+         if (lhs [i] !== rhs [i])
+            return false
+      }
 
-		return true;
-	}
+      return true;
+   }
 
-	return BindableList;
+   return BindableList;
 });

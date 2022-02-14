@@ -48,157 +48,157 @@
 
 
 define ([
-	"standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Vector3",
 ],
 function (Vector3)
 {
 "use strict";
 
-	function Sphere3 (radius, center)
-	{
-		this .radius = radius;
-		this .center = center .copy ();
-	}
+   function Sphere3 (radius, center)
+   {
+      this .radius = radius;
+      this .center = center .copy ();
+   }
 
-	Sphere3 .prototype =
-	{
-		constructor: Sphere3,
-		set: function (radius, center)
-		{
-			this .radius = radius;
-			this .center .assign (center);
-		},
-		intersectsLine: function (line, enterPoint, exitPoint)
-		{
-			// https://github.com/Alexpux/Coin3D/blob/master/src/base/SbSphere.cpp
+   Sphere3 .prototype =
+   {
+      constructor: Sphere3,
+      set: function (radius, center)
+      {
+         this .radius = radius;
+         this .center .assign (center);
+      },
+      intersectsLine: function (line, enterPoint, exitPoint)
+      {
+         // https://github.com/Alexpux/Coin3D/blob/master/src/base/SbSphere.cpp
 
-			const
-				linepos = line .point,
-				linedir = line .direction;
+         const
+            linepos = line .point,
+            linedir = line .direction;
 
-			const
-				scenter = this .center,
-				r       = this .radius;
+         const
+            scenter = this .center,
+            r       = this .radius;
 
-			const
-				b = 2 * (linepos .dot (linedir) - scenter .dot (linedir)),
-				c = (linepos .x * linepos .x + linepos .y * linepos .y + linepos .z * linepos .z) +
-			       (scenter .x * scenter .x + scenter .y * scenter .y + scenter .z * scenter .z) -
-			       2 * linepos .dot (scenter) - r * r;
+         const
+            b = 2 * (linepos .dot (linedir) - scenter .dot (linedir)),
+            c = (linepos .x * linepos .x + linepos .y * linepos .y + linepos .z * linepos .z) +
+                (scenter .x * scenter .x + scenter .y * scenter .y + scenter .z * scenter .z) -
+                2 * linepos .dot (scenter) - r * r;
 
-			const core = b * b - 4 * c;
+         const core = b * b - 4 * c;
 
-			if (core >= 0)
-			{
-				let
-					t1 = (-b + Math .sqrt (core)) / 2,
-					t2 = (-b - Math .sqrt (core)) / 2;
+         if (core >= 0)
+         {
+            let
+               t1 = (-b + Math .sqrt (core)) / 2,
+               t2 = (-b - Math .sqrt (core)) / 2;
 
-				if (t1 > t2)
-				{
-					const tmp = t1;
-					t1 = t2;
-					t2 = tmp;
-				}
+            if (t1 > t2)
+            {
+               const tmp = t1;
+               t1 = t2;
+               t2 = tmp;
+            }
 
-				enterPoint .assign (linedir) .multiply (t1) .add (linepos);
-				exitPoint  .assign (linedir) .multiply (t2) .add (linepos);
+            enterPoint .assign (linedir) .multiply (t1) .add (linepos);
+            exitPoint  .assign (linedir) .multiply (t2) .add (linepos);
 
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		},
-		intersectsTriangle: (function ()
-		{
-			const
-				AB = new Vector3 (0, 0, 0),
-				AC = new Vector3 (0, 0, 0),
-				BC = new Vector3 (0, 0, 0),
-				CA = new Vector3 (0, 0, 0),
-				Q1 = new Vector3 (0, 0, 0),
-				Q2 = new Vector3 (0, 0, 0),
-				Q3 = new Vector3 (0, 0, 0);
+            return true;
+         }
+         else
+         {
+            return false;
+         }
+      },
+      intersectsTriangle: (function ()
+      {
+         const
+            AB = new Vector3 (0, 0, 0),
+            AC = new Vector3 (0, 0, 0),
+            BC = new Vector3 (0, 0, 0),
+            CA = new Vector3 (0, 0, 0),
+            Q1 = new Vector3 (0, 0, 0),
+            Q2 = new Vector3 (0, 0, 0),
+            Q3 = new Vector3 (0, 0, 0);
 
-			return function (A, B, C)
-			{
-				const
-					P = this .center,
-					r = this .radius;
+         return function (A, B, C)
+         {
+            const
+               P = this .center,
+               r = this .radius;
 
-				A .subtract (P);
-				B .subtract (P);
-				C .subtract (P);
+            A .subtract (P);
+            B .subtract (P);
+            C .subtract (P);
 
-				// Testing if sphere lies outside the triangle plane.
+            // Testing if sphere lies outside the triangle plane.
 
-				AB .assign (B) .subtract (A);
-				AC .assign (C) .subtract (A);
+            AB .assign (B) .subtract (A);
+            AC .assign (C) .subtract (A);
 
-				const
-					rr   = r * r,
-					V    = AB .cross (AC),
-					d    = Vector3 .dot (A, V),
-					e    = Vector3 .dot (V, V),
-					sep1 = d * d > rr * e;
+            const
+               rr   = r * r,
+               V    = AB .cross (AC),
+               d    = Vector3 .dot (A, V),
+               e    = Vector3 .dot (V, V),
+               sep1 = d * d > rr * e;
 
-				if (sep1)
-					return false;
+            if (sep1)
+               return false;
 
-				// Testing if sphere lies outside a triangle vertex.
-				const
-					aa   = Vector3 .dot (A, A),
-					ab   = Vector3 .dot (A, B),
-					ac   = Vector3 .dot (A, C),
-					bb   = Vector3 .dot (B, B),
-					bc   = Vector3 .dot (B, C),
-					cc   = Vector3 .dot (C, C),
-					sep2 = (aa > rr) && (ab > aa) && (ac > aa),
-					sep3 = (bb > rr) && (ab > bb) && (bc > bb),
-					sep4 = (cc > rr) && (ac > cc) && (bc > cc);
+            // Testing if sphere lies outside a triangle vertex.
+            const
+               aa   = Vector3 .dot (A, A),
+               ab   = Vector3 .dot (A, B),
+               ac   = Vector3 .dot (A, C),
+               bb   = Vector3 .dot (B, B),
+               bc   = Vector3 .dot (B, C),
+               cc   = Vector3 .dot (C, C),
+               sep2 = (aa > rr) && (ab > aa) && (ac > aa),
+               sep3 = (bb > rr) && (ab > bb) && (bc > bb),
+               sep4 = (cc > rr) && (ac > cc) && (bc > cc);
 
-				if (sep2 || sep3 || sep4)
-					return false;
+            if (sep2 || sep3 || sep4)
+               return false;
 
-				// Testing if sphere lies outside a triangle edge.
+            // Testing if sphere lies outside a triangle edge.
 
-				AB .assign (B) .subtract (A);
-				BC .assign (C) .subtract (B);
-				CA .assign (A) .subtract (C);
+            AB .assign (B) .subtract (A);
+            BC .assign (C) .subtract (B);
+            CA .assign (A) .subtract (C);
 
-				const
-					d1   = ab - aa,
-					d2   = bc - bb,
-					d3   = ac - cc,
-					e1   = Vector3 .dot (AB, AB),
-					e2   = Vector3 .dot (BC, BC),
-					e3   = Vector3 .dot (CA, CA);
+            const
+               d1   = ab - aa,
+               d2   = bc - bb,
+               d3   = ac - cc,
+               e1   = Vector3 .dot (AB, AB),
+               e2   = Vector3 .dot (BC, BC),
+               e3   = Vector3 .dot (CA, CA);
 
-				Q1 .assign (A) .multiply (e1) .subtract (AB .multiply (d1));
-				Q2 .assign (B) .multiply (e2) .subtract (BC .multiply (d2));
-				Q3 .assign (C) .multiply (e3) .subtract (CA .multiply (d3));
+            Q1 .assign (A) .multiply (e1) .subtract (AB .multiply (d1));
+            Q2 .assign (B) .multiply (e2) .subtract (BC .multiply (d2));
+            Q3 .assign (C) .multiply (e3) .subtract (CA .multiply (d3));
 
-				const
-					QC   = C .multiply (e1) .subtract (Q1),
-					QA   = A .multiply (e2) .subtract (Q2),
-					QB   = B .multiply (e3) .subtract (Q3),
-					sep5 = (Vector3 .dot (Q1, Q1) > rr * e1 * e1) && (Vector3 .dot (Q1, QC) > 0),
-					sep6 = (Vector3 .dot (Q2, Q2) > rr * e2 * e2) && (Vector3 .dot (Q2, QA) > 0),
-					sep7 = (Vector3 .dot (Q3, Q3) > rr * e3 * e3) && (Vector3 .dot (Q3, QB) > 0);
+            const
+               QC   = C .multiply (e1) .subtract (Q1),
+               QA   = A .multiply (e2) .subtract (Q2),
+               QB   = B .multiply (e3) .subtract (Q3),
+               sep5 = (Vector3 .dot (Q1, Q1) > rr * e1 * e1) && (Vector3 .dot (Q1, QC) > 0),
+               sep6 = (Vector3 .dot (Q2, Q2) > rr * e2 * e2) && (Vector3 .dot (Q2, QA) > 0),
+               sep7 = (Vector3 .dot (Q3, Q3) > rr * e3 * e3) && (Vector3 .dot (Q3, QB) > 0);
 
-				if (sep5 || sep6 || sep7)
-					return false;
+            if (sep5 || sep6 || sep7)
+               return false;
 
-				return true;
-			};
-		})(),
-		toString: function ()
-		{
-			return this .radius + " " + this .center .toString ();
-		},
-	};
+            return true;
+         };
+      })(),
+      toString: function ()
+      {
+         return this .radius + " " + this .center .toString ();
+      },
+   };
 
-	return Sphere3;
+   return Sphere3;
 });

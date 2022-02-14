@@ -48,85 +48,85 @@
 
 
 define ([
-	"standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Vector3",
 ],
 function (Vector3)
 {
 "use strict";
 
-	return {
-		frustum: function (l, r, b, t, n, f, matrix)
-		{
-			const
-				r_l = r - l,
-				t_b = t - b,
-				f_n = f - n,
-				n_2 = 2 * n,
+   return {
+      frustum: function (l, r, b, t, n, f, matrix)
+      {
+         const
+            r_l = r - l,
+            t_b = t - b,
+            f_n = f - n,
+            n_2 = 2 * n,
 
-				A = (r + l) / r_l,
-				B = (t + b) / t_b,
-				C = -(f + n) / f_n,
-				D = -(n_2 * f) / f_n,
-				E = n_2 / r_l,
-				F = n_2 / t_b;
+            A = (r + l) / r_l,
+            B = (t + b) / t_b,
+            C = -(f + n) / f_n,
+            D = -(n_2 * f) / f_n,
+            E = n_2 / r_l,
+            F = n_2 / t_b;
 
-			return matrix .set (E, 0, 0, 0,
-			                    0, F, 0, 0,
-			                    A, B, C, -1,
-									  0, 0, D, 0);
-		},
-		perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
-		{
-			const ratio = Math .tan (fieldOfView / 2) * zNear;
+         return matrix .set (E, 0, 0, 0,
+                             0, F, 0, 0,
+                             A, B, C, -1,
+                             0, 0, D, 0);
+      },
+      perspective: function (fieldOfView, zNear, zFar, width, height, matrix)
+      {
+         const ratio = Math .tan (fieldOfView / 2) * zNear;
 
-			if (width > height)
-			{
-				const aspect = width * ratio / height;
-				return this .frustum (-aspect, aspect, -ratio, ratio, zNear, zFar, matrix);
-			}
-			else
-			{
-				const aspect = height * ratio / width;
-				return this .frustum (-ratio, ratio, -aspect, aspect, zNear, zFar, matrix);
-			}
-		},
-		perspective2: function (fieldOfView, zNear, zFar, width, height, matrix)
-		{
-			const ratio = Math .tan (fieldOfView / 2) * zNear;
+         if (width > height)
+         {
+            const aspect = width * ratio / height;
+            return this .frustum (-aspect, aspect, -ratio, ratio, zNear, zFar, matrix);
+         }
+         else
+         {
+            const aspect = height * ratio / width;
+            return this .frustum (-ratio, ratio, -aspect, aspect, zNear, zFar, matrix);
+         }
+      },
+      perspective2: function (fieldOfView, zNear, zFar, width, height, matrix)
+      {
+         const ratio = Math .tan (fieldOfView / 2) * zNear;
 
-			return this .frustum (-ratio, ratio, -ratio, ratio, zNear, zFar, matrix);
-		},
-		ortho: function (l, r, b, t, n, f, matrix)
-		{
-			const
-				r_l = r - l,
-				t_b = t - b,
-				f_n = f - n,
+         return this .frustum (-ratio, ratio, -ratio, ratio, zNear, zFar, matrix);
+      },
+      ortho: function (l, r, b, t, n, f, matrix)
+      {
+         const
+            r_l = r - l,
+            t_b = t - b,
+            f_n = f - n,
 
-				A =  2 / r_l,
-				B =  2 / t_b,
-				C = -2 / f_n,
-				D = -(r + l) / r_l,
-				E = -(t + b) / t_b,
-				F = -(f + n) / f_n;
+            A =  2 / r_l,
+            B =  2 / t_b,
+            C = -2 / f_n,
+            D = -(r + l) / r_l,
+            E = -(t + b) / t_b,
+            F = -(f + n) / f_n;
 
-			return matrix .set (A, 0, 0, 0,
-			                    0, B, 0, 0,
-			                    0, 0, C, 0,
-			                    D, E, F, 1);
-		},
-		orthoBox: (function ()
-		{
-			const
-				min = new Vector3 (0, 0, 0),
-				max = new Vector3 (0, 0, 0);
+         return matrix .set (A, 0, 0, 0,
+                             0, B, 0, 0,
+                             0, 0, C, 0,
+                             D, E, F, 1);
+      },
+      orthoBox: (function ()
+      {
+         const
+            min = new Vector3 (0, 0, 0),
+            max = new Vector3 (0, 0, 0);
 
-			return function (box, matrix)
-			{
-				box .getExtents (min, max);
+         return function (box, matrix)
+         {
+            box .getExtents (min, max);
 
-				return this .ortho (min .x, max .x, min .y, max .y, -max .z, -min .z, matrix);
-			};
-		})(),
-	};
+            return this .ortho (min .x, max .x, min .y, max .y, -max .z, -min .z, matrix);
+         };
+      })(),
+   };
 });

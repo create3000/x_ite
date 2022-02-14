@@ -48,16 +48,16 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Navigation/X3DViewpointNode",
-	"x_ite/Components/Interpolation/ScalarInterpolator",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Geometry/Camera",
-	"standard/Math/Numbers/Vector2",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Matrix4",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Navigation/X3DViewpointNode",
+   "x_ite/Components/Interpolation/ScalarInterpolator",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Geometry/Camera",
+   "standard/Math/Numbers/Vector2",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -72,252 +72,252 @@ function (Fields,
 {
 "use strict";
 
-	function OrthoViewpoint (executionContext)
-	{
-		X3DViewpointNode .call (this, executionContext);
+   function OrthoViewpoint (executionContext)
+   {
+      X3DViewpointNode .call (this, executionContext);
 
-		this .addType (X3DConstants .OrthoViewpoint);
+      this .addType (X3DConstants .OrthoViewpoint);
 
-		this .addChildObjects ("fieldOfViewOffset", new Fields .MFFloat (0, 0, 0, 0));
+      this .addChildObjects ("fieldOfViewOffset", new Fields .MFFloat (0, 0, 0, 0));
 
-		this .position_         .setUnit ("length");
-		this .centerOfRotation_ .setUnit ("length");
-		this .fieldOfView_      .setUnit ("length");
+      this .position_         .setUnit ("length");
+      this .centerOfRotation_ .setUnit ("length");
+      this .fieldOfView_      .setUnit ("length");
 
-		this .projectionMatrix               = new Matrix4 ();
-		this .fieldOfViewOffsetInterpolator0 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
-		this .fieldOfViewOffsetInterpolator1 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
-		this .fieldOfViewOffsetInterpolator2 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
-		this .fieldOfViewOffsetInterpolator3 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
-		this .fieldOfViewScaleInterpolator   = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
-	}
+      this .projectionMatrix               = new Matrix4 ();
+      this .fieldOfViewOffsetInterpolator0 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
+      this .fieldOfViewOffsetInterpolator1 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
+      this .fieldOfViewOffsetInterpolator2 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
+      this .fieldOfViewOffsetInterpolator3 = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
+      this .fieldOfViewScaleInterpolator   = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
+   }
 
-	OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
-	{
-		constructor: OrthoViewpoint,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",          new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "position",          new Fields .SFVec3f (0, 0, 10)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",       new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfRotation",  new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView",       new Fields .MFFloat (-1, -1, 1, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "jump",              new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",          new Fields .SFTime ()),
-		]),
-		getTypeName: function ()
-		{
-			return "OrthoViewpoint";
-		},
-		getComponentName: function ()
-		{
-			return "Navigation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DViewpointNode .prototype .initialize .call (this);
+   OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
+   {
+      constructor: OrthoViewpoint,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "position",          new Fields .SFVec3f (0, 0, 10)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",       new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfRotation",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fieldOfView",       new Fields .MFFloat (-1, -1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "jump",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "retainUserOffsets", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isBound",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "bindTime",          new Fields .SFTime ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "OrthoViewpoint";
+      },
+      getComponentName: function ()
+      {
+         return "Navigation";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DViewpointNode .prototype .initialize .call (this);
 
-			this .fieldOfView_       .addInterest ("set_fieldOfView__", this);
-			this .fieldOfViewOffset_ .addInterest ("set_fieldOfView__", this);
-			this .fieldOfViewScale_  .addInterest ("set_fieldOfView__", this);
+         this .fieldOfView_       .addInterest ("set_fieldOfView__", this);
+         this .fieldOfViewOffset_ .addInterest ("set_fieldOfView__", this);
+         this .fieldOfViewScale_  .addInterest ("set_fieldOfView__", this);
 
-			this .fieldOfViewOffsetInterpolator0 .key_ = new Fields .MFFloat (0, 1);
-			this .fieldOfViewOffsetInterpolator1 .key_ = new Fields .MFFloat (0, 1);
-			this .fieldOfViewOffsetInterpolator2 .key_ = new Fields .MFFloat (0, 1);
-			this .fieldOfViewOffsetInterpolator3 .key_ = new Fields .MFFloat (0, 1);
-			this .fieldOfViewScaleInterpolator   .key_ = new Fields .MFFloat (0, 1);
+         this .fieldOfViewOffsetInterpolator0 .key_ = new Fields .MFFloat (0, 1);
+         this .fieldOfViewOffsetInterpolator1 .key_ = new Fields .MFFloat (0, 1);
+         this .fieldOfViewOffsetInterpolator2 .key_ = new Fields .MFFloat (0, 1);
+         this .fieldOfViewOffsetInterpolator3 .key_ = new Fields .MFFloat (0, 1);
+         this .fieldOfViewScaleInterpolator   .key_ = new Fields .MFFloat (0, 1);
 
-			this .fieldOfViewOffsetInterpolator0 .setup ();
-			this .fieldOfViewOffsetInterpolator1 .setup ();
-			this .fieldOfViewOffsetInterpolator2 .setup ();
-			this .fieldOfViewOffsetInterpolator3 .setup ();
-			this .fieldOfViewScaleInterpolator   .setup ();
+         this .fieldOfViewOffsetInterpolator0 .setup ();
+         this .fieldOfViewOffsetInterpolator1 .setup ();
+         this .fieldOfViewOffsetInterpolator2 .setup ();
+         this .fieldOfViewOffsetInterpolator3 .setup ();
+         this .fieldOfViewScaleInterpolator   .setup ();
 
-			this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewOffsetInterpolator0 .set_fraction_);
-			this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewOffsetInterpolator1 .set_fraction_);
-			this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewOffsetInterpolator2 .set_fraction_);
-			this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewOffsetInterpolator3 .set_fraction_);
-			this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewScaleInterpolator   .set_fraction_);
+         this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewOffsetInterpolator0 .set_fraction_);
+         this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewOffsetInterpolator1 .set_fraction_);
+         this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewOffsetInterpolator2 .set_fraction_);
+         this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewOffsetInterpolator3 .set_fraction_);
+         this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewScaleInterpolator   .set_fraction_);
 
-			this .fieldOfViewOffsetInterpolator0 .value_changed_ .addInterest ("set_fieldOfViewOffset__", this);
-			this .fieldOfViewOffsetInterpolator1 .value_changed_ .addInterest ("set_fieldOfViewOffset__", this);
-			this .fieldOfViewOffsetInterpolator2 .value_changed_ .addInterest ("set_fieldOfViewOffset__", this);
-			this .fieldOfViewOffsetInterpolator3 .value_changed_ .addInterest ("set_fieldOfViewOffset__", this);
+         this .fieldOfViewOffsetInterpolator0 .value_changed_ .addInterest ("set_fieldOfViewOffset__", this);
+         this .fieldOfViewOffsetInterpolator1 .value_changed_ .addInterest ("set_fieldOfViewOffset__", this);
+         this .fieldOfViewOffsetInterpolator2 .value_changed_ .addInterest ("set_fieldOfViewOffset__", this);
+         this .fieldOfViewOffsetInterpolator3 .value_changed_ .addInterest ("set_fieldOfViewOffset__", this);
 
-			this .fieldOfViewScaleInterpolator .value_changed_ .addFieldInterest (this .fieldOfViewScale_);
+         this .fieldOfViewScaleInterpolator .value_changed_ .addFieldInterest (this .fieldOfViewScale_);
 
-			this .set_fieldOfView__ ();
-		},
-		set_fieldOfView__: function ()
-		{
-			var
-				length           = this .fieldOfView_ .length,
-				fieldOfViewScale = this .fieldOfViewScale_ .getValue ();
+         this .set_fieldOfView__ ();
+      },
+      set_fieldOfView__: function ()
+      {
+         var
+            length           = this .fieldOfView_ .length,
+            fieldOfViewScale = this .fieldOfViewScale_ .getValue ();
 
-			this .minimumX = ((length > 0 ? this .fieldOfView_ [0] : -1) + this .fieldOfViewOffset_ [0]) * fieldOfViewScale;
-			this .minimumY = ((length > 1 ? this .fieldOfView_ [1] : -1) + this .fieldOfViewOffset_ [1]) * fieldOfViewScale;
-			this .maximumX = ((length > 2 ? this .fieldOfView_ [2] :  1) + this .fieldOfViewOffset_ [2]) * fieldOfViewScale;
-			this .maximumY = ((length > 3 ? this .fieldOfView_ [3] :  1) + this .fieldOfViewOffset_ [3]) * fieldOfViewScale;
+         this .minimumX = ((length > 0 ? this .fieldOfView_ [0] : -1) + this .fieldOfViewOffset_ [0]) * fieldOfViewScale;
+         this .minimumY = ((length > 1 ? this .fieldOfView_ [1] : -1) + this .fieldOfViewOffset_ [1]) * fieldOfViewScale;
+         this .maximumX = ((length > 2 ? this .fieldOfView_ [2] :  1) + this .fieldOfViewOffset_ [2]) * fieldOfViewScale;
+         this .maximumY = ((length > 3 ? this .fieldOfView_ [3] :  1) + this .fieldOfViewOffset_ [3]) * fieldOfViewScale;
 
-			this .sizeX = this .maximumX - this .minimumX;
-			this .sizeY = this .maximumY - this .minimumY;
-		},
-		set_fieldOfViewOffset__: function ()
-		{
-			this .fieldOfViewOffset_ [0] = this .fieldOfViewOffsetInterpolator0 .value_changed_ .getValue ();
-			this .fieldOfViewOffset_ [1] = this .fieldOfViewOffsetInterpolator1 .value_changed_ .getValue ();
-			this .fieldOfViewOffset_ [2] = this .fieldOfViewOffsetInterpolator2 .value_changed_ .getValue ();
-			this .fieldOfViewOffset_ [3] = this .fieldOfViewOffsetInterpolator3 .value_changed_ .getValue ();
-		},
-		setInterpolators: function (fromViewpointNode, toViewpointNode)
-		{
-			if (fromViewpointNode .getType () .indexOf (X3DConstants .OrthoViewpoint) >= 0)
-			{
-				const
-					toLength   = toViewpointNode   .fieldOfView_ .length,
-					fromLength = fromViewpointNode .fieldOfView_ .length;
+         this .sizeX = this .maximumX - this .minimumX;
+         this .sizeY = this .maximumY - this .minimumY;
+      },
+      set_fieldOfViewOffset__: function ()
+      {
+         this .fieldOfViewOffset_ [0] = this .fieldOfViewOffsetInterpolator0 .value_changed_ .getValue ();
+         this .fieldOfViewOffset_ [1] = this .fieldOfViewOffsetInterpolator1 .value_changed_ .getValue ();
+         this .fieldOfViewOffset_ [2] = this .fieldOfViewOffsetInterpolator2 .value_changed_ .getValue ();
+         this .fieldOfViewOffset_ [3] = this .fieldOfViewOffsetInterpolator3 .value_changed_ .getValue ();
+      },
+      setInterpolators: function (fromViewpointNode, toViewpointNode)
+      {
+         if (fromViewpointNode .getType () .indexOf (X3DConstants .OrthoViewpoint) >= 0)
+         {
+            const
+               toLength   = toViewpointNode   .fieldOfView_ .length,
+               fromLength = fromViewpointNode .fieldOfView_ .length;
 
-				const
-					offset0 = (fromLength > 0 ? fromViewpointNode .fieldOfView_ [0] : -1) - (toLength > 0 ? toViewpointNode .fieldOfView_ [0] : -1),
-					offset1 = (fromLength > 1 ? fromViewpointNode .fieldOfView_ [1] : -1) - (toLength > 1 ? toViewpointNode .fieldOfView_ [1] : -1),
-					offset2 = (fromLength > 2 ? fromViewpointNode .fieldOfView_ [2] :  1) - (toLength > 2 ? toViewpointNode .fieldOfView_ [2] :  1),
-					offset3 = (fromLength > 3 ? fromViewpointNode .fieldOfView_ [3] :  1) - (toLength > 3 ? toViewpointNode .fieldOfView_ [3] :  1);
+            const
+               offset0 = (fromLength > 0 ? fromViewpointNode .fieldOfView_ [0] : -1) - (toLength > 0 ? toViewpointNode .fieldOfView_ [0] : -1),
+               offset1 = (fromLength > 1 ? fromViewpointNode .fieldOfView_ [1] : -1) - (toLength > 1 ? toViewpointNode .fieldOfView_ [1] : -1),
+               offset2 = (fromLength > 2 ? fromViewpointNode .fieldOfView_ [2] :  1) - (toLength > 2 ? toViewpointNode .fieldOfView_ [2] :  1),
+               offset3 = (fromLength > 3 ? fromViewpointNode .fieldOfView_ [3] :  1) - (toLength > 3 ? toViewpointNode .fieldOfView_ [3] :  1);
 
-				this .fieldOfViewOffsetInterpolator0 .keyValue_ = new Fields .MFFloat (offset0, toViewpointNode .fieldOfViewOffset_ [0]);
-				this .fieldOfViewOffsetInterpolator1 .keyValue_ = new Fields .MFFloat (offset1, toViewpointNode .fieldOfViewOffset_ [1]);
-				this .fieldOfViewOffsetInterpolator2 .keyValue_ = new Fields .MFFloat (offset2, toViewpointNode .fieldOfViewOffset_ [2]);
-				this .fieldOfViewOffsetInterpolator3 .keyValue_ = new Fields .MFFloat (offset3, toViewpointNode .fieldOfViewOffset_ [3]);
+            this .fieldOfViewOffsetInterpolator0 .keyValue_ = new Fields .MFFloat (offset0, toViewpointNode .fieldOfViewOffset_ [0]);
+            this .fieldOfViewOffsetInterpolator1 .keyValue_ = new Fields .MFFloat (offset1, toViewpointNode .fieldOfViewOffset_ [1]);
+            this .fieldOfViewOffsetInterpolator2 .keyValue_ = new Fields .MFFloat (offset2, toViewpointNode .fieldOfViewOffset_ [2]);
+            this .fieldOfViewOffsetInterpolator3 .keyValue_ = new Fields .MFFloat (offset3, toViewpointNode .fieldOfViewOffset_ [3]);
 
-				this .fieldOfViewScaleInterpolator .keyValue_ = new Fields .MFFloat (fromViewpointNode .fieldOfViewScale_ .getValue (), toViewpointNode .fieldOfViewScale_ .getValue ());
+            this .fieldOfViewScaleInterpolator .keyValue_ = new Fields .MFFloat (fromViewpointNode .fieldOfViewScale_ .getValue (), toViewpointNode .fieldOfViewScale_ .getValue ());
 
-				this .fieldOfViewOffset_ [0] = offset0;
-				this .fieldOfViewOffset_ [1] = offset1;
-				this .fieldOfViewOffset_ [2] = offset2;
-				this .fieldOfViewOffset_ [3] = offset3;
+            this .fieldOfViewOffset_ [0] = offset0;
+            this .fieldOfViewOffset_ [1] = offset1;
+            this .fieldOfViewOffset_ [2] = offset2;
+            this .fieldOfViewOffset_ [3] = offset3;
 
-				this .fieldOfViewScale_ = fromViewpointNode .fieldOfViewScale_ .getValue ();
-			}
-			else
-			{
-				this .fieldOfViewOffsetInterpolator0 .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewOffset_ [0], toViewpointNode .fieldOfViewOffset_ [0]);
-				this .fieldOfViewOffsetInterpolator1 .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewOffset_ [1], toViewpointNode .fieldOfViewOffset_ [1]);
-				this .fieldOfViewOffsetInterpolator2 .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewOffset_ [2], toViewpointNode .fieldOfViewOffset_ [2]);
-				this .fieldOfViewOffsetInterpolator3 .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewOffset_ [3], toViewpointNode .fieldOfViewOffset_ [3]);
+            this .fieldOfViewScale_ = fromViewpointNode .fieldOfViewScale_ .getValue ();
+         }
+         else
+         {
+            this .fieldOfViewOffsetInterpolator0 .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewOffset_ [0], toViewpointNode .fieldOfViewOffset_ [0]);
+            this .fieldOfViewOffsetInterpolator1 .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewOffset_ [1], toViewpointNode .fieldOfViewOffset_ [1]);
+            this .fieldOfViewOffsetInterpolator2 .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewOffset_ [2], toViewpointNode .fieldOfViewOffset_ [2]);
+            this .fieldOfViewOffsetInterpolator3 .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewOffset_ [3], toViewpointNode .fieldOfViewOffset_ [3]);
 
-				this .fieldOfViewScaleInterpolator .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewScale_ .getValue (), toViewpointNode .fieldOfViewScale_ .getValue ());
+            this .fieldOfViewScaleInterpolator .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewScale_ .getValue (), toViewpointNode .fieldOfViewScale_ .getValue ());
 
-				this .fieldOfViewOffset_ = toViewpointNode .fieldOfViewOffset_ .getValue ();
-				this .fieldOfViewScale_  = toViewpointNode .fieldOfViewScale_  .getValue ();
-			}
-		},
-		getMinimumX: function ()
-		{
-			return this .minimumX;
-		},
-		getMinimumY: function ()
-		{
-			return this .minimumY;
-		},
-		getMaximumX: function ()
-		{
-			return this .maximumX;
-		},
-		getMaximumY: function ()
-		{
-			return this .maximumY;
-		},
-		getSizeX: function ()
-		{
-			return this .sizeX;
-		},
-		getSizeY: function ()
-		{
-			return this .sizeY;
-		},
-		getMaxFarValue: function ()
-		{
-			return 1e5;
-		},
-		getScreenScale: (function ()
-		{
-			var screenScale = new Vector3 (0, 0, 0);
+            this .fieldOfViewOffset_ = toViewpointNode .fieldOfViewOffset_ .getValue ();
+            this .fieldOfViewScale_  = toViewpointNode .fieldOfViewScale_  .getValue ();
+         }
+      },
+      getMinimumX: function ()
+      {
+         return this .minimumX;
+      },
+      getMinimumY: function ()
+      {
+         return this .minimumY;
+      },
+      getMaximumX: function ()
+      {
+         return this .maximumX;
+      },
+      getMaximumY: function ()
+      {
+         return this .maximumY;
+      },
+      getSizeX: function ()
+      {
+         return this .sizeX;
+      },
+      getSizeY: function ()
+      {
+         return this .sizeY;
+      },
+      getMaxFarValue: function ()
+      {
+         return 1e5;
+      },
+      getScreenScale: (function ()
+      {
+         var screenScale = new Vector3 (0, 0, 0);
 
-			return function (point, viewport)
-			{
-				var
-					width  = viewport [2],
-					height = viewport [3],
-					sizeX  = this .sizeX,
-					sizeY  = this .sizeY,
-					aspect = width / height;
+         return function (point, viewport)
+         {
+            var
+               width  = viewport [2],
+               height = viewport [3],
+               sizeX  = this .sizeX,
+               sizeY  = this .sizeY,
+               aspect = width / height;
 
-				if (aspect > sizeX / sizeY)
-				{
-					var s = sizeY / height;
+            if (aspect > sizeX / sizeY)
+            {
+               var s = sizeY / height;
 
-					return screenScale .set (s, s, s);
-				}
+               return screenScale .set (s, s, s);
+            }
 
-				var s = sizeX / width;
+            var s = sizeX / width;
 
-				return screenScale .set (s, s, s);
-			};
-		})(),
-		getViewportSize: (function ()
-		{
-			var viewportSize = new Vector2 (0, 0);
+            return screenScale .set (s, s, s);
+         };
+      })(),
+      getViewportSize: (function ()
+      {
+         var viewportSize = new Vector2 (0, 0);
 
-			return function (viewport, nearValue)
-			{
-				var
-					width  = viewport [2],
-					height = viewport [3],
-					sizeX  = this .sizeX,
-					sizeY  = this .sizeY,
-					aspect = width / height;
+         return function (viewport, nearValue)
+         {
+            var
+               width  = viewport [2],
+               height = viewport [3],
+               sizeX  = this .sizeX,
+               sizeY  = this .sizeY,
+               aspect = width / height;
 
-				if (aspect > sizeX / sizeY)
-					return viewportSize .set (sizeY * aspect, sizeY);
+            if (aspect > sizeX / sizeY)
+               return viewportSize .set (sizeY * aspect, sizeY);
 
-				return viewportSize .set (sizeX, sizeX / aspect);
-			};
-		})(),
-		getLookAtDistance: function (bbox)
-		{
-			return bbox .size .abs () / 2 + 10;
-		},
-		getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
-		{
-			var
-				width  = viewport [2],
-				height = viewport [3],
-				aspect = width / height,
-				sizeX  = this .sizeX,
-				sizeY  = this .sizeY;
+            return viewportSize .set (sizeX, sizeX / aspect);
+         };
+      })(),
+      getLookAtDistance: function (bbox)
+      {
+         return bbox .size .abs () / 2 + 10;
+      },
+      getProjectionMatrixWithLimits: function (nearValue, farValue, viewport)
+      {
+         var
+            width  = viewport [2],
+            height = viewport [3],
+            aspect = width / height,
+            sizeX  = this .sizeX,
+            sizeY  = this .sizeY;
 
-			if (aspect > sizeX / sizeY)
-			{
-				var
-					center  = (this .minimumX + this .maximumX) / 2,
-					size1_2 = (sizeY * aspect) / 2;
+         if (aspect > sizeX / sizeY)
+         {
+            var
+               center  = (this .minimumX + this .maximumX) / 2,
+               size1_2 = (sizeY * aspect) / 2;
 
-				return Camera .ortho (center - size1_2, center + size1_2, this .minimumY, this .maximumY, nearValue, farValue, this .projectionMatrix);
-			}
+            return Camera .ortho (center - size1_2, center + size1_2, this .minimumY, this .maximumY, nearValue, farValue, this .projectionMatrix);
+         }
 
-			var
-				center  = (this .minimumY + this .maximumY) / 2,
-				size1_2 = (sizeX / aspect) / 2;
+         var
+            center  = (this .minimumY + this .maximumY) / 2,
+            size1_2 = (sizeX / aspect) / 2;
 
-			return Camera .ortho (this .minimumX, this .maximumX, center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
-		},
-	});
+         return Camera .ortho (this .minimumX, this .maximumX, center - size1_2, center + size1_2, nearValue, farValue, this .projectionMatrix);
+      },
+   });
 
-	return OrthoViewpoint;
+   return OrthoViewpoint;
 });

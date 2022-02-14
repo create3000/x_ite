@@ -48,9 +48,9 @@
 
 
 define ([
-	"jquery",
-	"x_ite/Components/Text/FontStyle",
-	"opentype",
+   "jquery",
+   "x_ite/Components/Text/FontStyle",
+   "opentype",
 ],
 function ($,
           FontStyle,
@@ -58,76 +58,76 @@ function ($,
 {
 "use strict";
 
-	function X3DTextContext ()
-	{
-		this .fontCache  = new Map ();
-		this .glyphCache = new Map (); // [font] [primitveQuality] [glyphIndex]
-	}
+   function X3DTextContext ()
+   {
+      this .fontCache  = new Map ();
+      this .glyphCache = new Map (); // [font] [primitveQuality] [glyphIndex]
+   }
 
-	X3DTextContext .prototype =
-	{
-		initialize: function ()
-		{ },
-		getDefaultFontStyle: function ()
-		{
-			this .defaultFontStyle = new FontStyle (this .getPrivateScene ());
-			this .defaultFontStyle .setup ();
+   X3DTextContext .prototype =
+   {
+      initialize: function ()
+      { },
+      getDefaultFontStyle: function ()
+      {
+         this .defaultFontStyle = new FontStyle (this .getPrivateScene ());
+         this .defaultFontStyle .setup ();
 
-			this .getDefaultFontStyle = function () { return this .defaultFontStyle; };
+         this .getDefaultFontStyle = function () { return this .defaultFontStyle; };
 
-			return this .defaultFontStyle;
-		},
-		getFont: function (url)
-		{
-			url = url .toString ();
+         return this .defaultFontStyle;
+      },
+      getFont: function (url)
+      {
+         url = url .toString ();
 
-			var deferred = this .fontCache .get (url);
+         var deferred = this .fontCache .get (url);
 
-			if (deferred === undefined)
-			{
-				this .fontCache .set (url, deferred = $.Deferred ());
+         if (deferred === undefined)
+         {
+            this .fontCache .set (url, deferred = $.Deferred ());
 
-				opentype .load (url, this .setFont .bind (this, deferred));
-			}
+            opentype .load (url, this .setFont .bind (this, deferred));
+         }
 
-			return deferred;
-		},
-		setFont: function (deferred, error, font)
-		{
-			if (error)
-			{
-				deferred .reject (error);
-			}
-			else
-			{
+         return deferred;
+      },
+      setFont: function (deferred, error, font)
+      {
+         if (error)
+         {
+            deferred .reject (error);
+         }
+         else
+         {
 //				// Workaround to initialize composite glyphs.
 //				for (var i = 0, length = font .numGlyphs; i < length; ++ i)
 //					font .glyphs .get (i) .getPath (0, 0, 1);
 
-				// Resolve callbacks.
-				deferred .resolve (font);
-			}
-		},
-		getGlyph: function (font, primitveQuality, glyphIndex)
-		{
-			var cachedFont = this .glyphCache .get (font);
+            // Resolve callbacks.
+            deferred .resolve (font);
+         }
+      },
+      getGlyph: function (font, primitveQuality, glyphIndex)
+      {
+         var cachedFont = this .glyphCache .get (font);
 
-			if (! cachedFont)
-				this .glyphCache .set (font, cachedFont = [ ]);
+         if (! cachedFont)
+            this .glyphCache .set (font, cachedFont = [ ]);
 
-			var cachedQuality = cachedFont [primitveQuality];
+         var cachedQuality = cachedFont [primitveQuality];
 
-			if (! cachedQuality)
-				cachedQuality = cachedFont [primitveQuality] = [ ];
+         if (! cachedQuality)
+            cachedQuality = cachedFont [primitveQuality] = [ ];
 
-			var cachedGlyph = cachedQuality [glyphIndex];
+         var cachedGlyph = cachedQuality [glyphIndex];
 
-			if (! cachedGlyph)
-				cachedGlyph = cachedQuality [glyphIndex] = { };
+         if (! cachedGlyph)
+            cachedGlyph = cachedQuality [glyphIndex] = { };
 
-		   return cachedGlyph;
-		},
-	};
+         return cachedGlyph;
+      },
+   };
 
-	return X3DTextContext;
+   return X3DTextContext;
 });

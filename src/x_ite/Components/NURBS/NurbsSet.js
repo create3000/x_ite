@@ -48,13 +48,13 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Components/Grouping/X3DBoundedObject",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Components/Grouping/X3DBoundedObject",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -66,122 +66,122 @@ function (Fields,
 {
 "use strict";
 
-	function remove (array, first, last, range, rfirst, rlast)
-	{
-		var set = { };
+   function remove (array, first, last, range, rfirst, rlast)
+   {
+      var set = { };
 
-		for (var i = rfirst; i < rlast; ++ i)
-			set [getId (range [i])] = true;
+      for (var i = rfirst; i < rlast; ++ i)
+         set [getId (range [i])] = true;
 
-		function compare (value) { return set [getId (value)]; }
+      function compare (value) { return set [getId (value)]; }
 
-		return array .remove (first, last, compare);
-	}
+      return array .remove (first, last, compare);
+   }
 
-	function NurbsSet (executionContext)
-	{
-		X3DChildNode     .call (this, executionContext);
-		X3DBoundedObject .call (this, executionContext);
+   function NurbsSet (executionContext)
+   {
+      X3DChildNode     .call (this, executionContext);
+      X3DBoundedObject .call (this, executionContext);
 
-		this .addType (X3DConstants .NurbsSet);
+      this .addType (X3DConstants .NurbsSet);
 
-		this .geometryNodes = [ ];
-	}
+      this .geometryNodes = [ ];
+   }
 
-	NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-		X3DBoundedObject .prototype,
-	{
-		constructor: NurbsSet,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellationScale", new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",       new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",          new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",        new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addGeometry",       new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeGeometry",    new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",          new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "NurbsSet";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DChildNode     .prototype .initialize .call (this);
-			X3DBoundedObject .prototype .initialize .call (this);
+   NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+      X3DBoundedObject .prototype,
+   {
+      constructor: NurbsSet,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellationScale", new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",          new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",        new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addGeometry",       new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeGeometry",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",          new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "NurbsSet";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DChildNode     .prototype .initialize .call (this);
+         X3DBoundedObject .prototype .initialize .call (this);
 
-			this .tessellationScale_ .addInterest ("set_tessellationScale__", this);
-			this .addGeometry_       .addInterest ("set_addGeometry__",       this);
-			this .removeGeometry_    .addInterest ("set_removeGeometry__",    this);
-			this .geometry_          .addInterest ("set_geometry__",          this);
+         this .tessellationScale_ .addInterest ("set_tessellationScale__", this);
+         this .addGeometry_       .addInterest ("set_addGeometry__",       this);
+         this .removeGeometry_    .addInterest ("set_removeGeometry__",    this);
+         this .geometry_          .addInterest ("set_geometry__",          this);
 
-			this .set_geometry__ ();
-		},
-		getBBox: function (bbox, shadow)
-		{
-			// Add bounding boxes
+         this .set_geometry__ ();
+      },
+      getBBox: function (bbox, shadow)
+      {
+         // Add bounding boxes
 
-			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-			{
-				bbox .add (this .geometryNodes [i] .getBBox ());
-			}
+         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+         {
+            bbox .add (this .geometryNodes [i] .getBBox ());
+         }
 
-			return bbox;
-		},
-		set_tessellationScale__: function ()
-		{
-			var tessellationScale = Math .max (0, this .tessellationScale_ .getValue ());
+         return bbox;
+      },
+      set_tessellationScale__: function ()
+      {
+         var tessellationScale = Math .max (0, this .tessellationScale_ .getValue ());
 
-			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-				this .geometryNodes [i] .setTessellationScale (tessellationScale);
-		},
-		set_addGeometry__: function ()
-		{
-			this .addGeometry_ .setTainted (true);
+         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+            this .geometryNodes [i] .setTessellationScale (tessellationScale);
+      },
+      set_addGeometry__: function ()
+      {
+         this .addGeometry_ .setTainted (true);
 
-			this .addGeometry_ .erase (remove (this .addGeometry_, 0, this .addGeometry_ .length,
-			                                   this .geometry_, 0, this .geometry_ .length),
-			                           this .addGeometry_ .length);
+         this .addGeometry_ .erase (remove (this .addGeometry_, 0, this .addGeometry_ .length,
+                                            this .geometry_, 0, this .geometry_ .length),
+                                    this .addGeometry_ .length);
 
-			for (var i = 0, length = this .addGeometry_ .length; i < length; ++ i)
-				this .geometry_ .push (this .addGeometry_ [i]);
+         for (var i = 0, length = this .addGeometry_ .length; i < length; ++ i)
+            this .geometry_ .push (this .addGeometry_ [i]);
 
-			this .addGeometry_ .setTainted (false);
-		},
-		set_removeGeometry__: function ()
-		{
-			this .geometry_ .erase (remove (this .geometry_,       0, this .geometry_ .length,
-			                                this .removeGeometry_, 0, this .removeGeometry_ .length),
-			                        this .geometry__ .length);
-		},
-		set_geometry__: function ()
-		{
-			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-				this .geometryNodes [i] .setTessellationScale (1);
+         this .addGeometry_ .setTainted (false);
+      },
+      set_removeGeometry__: function ()
+      {
+         this .geometry_ .erase (remove (this .geometry_,       0, this .geometry_ .length,
+                                         this .removeGeometry_, 0, this .removeGeometry_ .length),
+                                 this .geometry__ .length);
+      },
+      set_geometry__: function ()
+      {
+         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+            this .geometryNodes [i] .setTessellationScale (1);
 
-			this .geometryNodes .length = 0;
+         this .geometryNodes .length = 0;
 
-			for (var i = 0, length = this .geometry_ .length; i < length; ++ i)
-			{
-				var geometryNode = X3DCast (X3DConstants .X3DNurbsSurfaceGeometryNode, this .geometry_ [i]);
+         for (var i = 0, length = this .geometry_ .length; i < length; ++ i)
+         {
+            var geometryNode = X3DCast (X3DConstants .X3DNurbsSurfaceGeometryNode, this .geometry_ [i]);
 
-				if (geometryNode)
-					this .geometryNodes .push (geometryNode);
-			}
+            if (geometryNode)
+               this .geometryNodes .push (geometryNode);
+         }
 
-			this .set_tessellationScale__ ();
-		},
-	});
+         this .set_tessellationScale__ ();
+      },
+   });
 
-	return NurbsSet;
+   return NurbsSet;
 });

@@ -47,9 +47,9 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Time/TimeSensor",
-	"x_ite/Components/Time/X3DTimeDependentNode",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/Time/TimeSensor",
+   "x_ite/Components/Time/X3DTimeDependentNode",
 ],
 function (SupportedNodes,
           TimeSensor,
@@ -57,19 +57,19 @@ function (SupportedNodes,
 {
 "use strict";
 
-	const Types =
-	{
-		TimeSensor: TimeSensor,
-	};
+   const Types =
+   {
+      TimeSensor: TimeSensor,
+   };
 
-	const AbstractTypes =
-	{
-		X3DTimeDependentNode: X3DTimeDependentNode,
-	};
+   const AbstractTypes =
+   {
+      X3DTimeDependentNode: X3DTimeDependentNode,
+   };
 
-	for (const typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]);
+   for (const typeName in Types)
+      SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (const typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   for (const typeName in AbstractTypes)
+      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

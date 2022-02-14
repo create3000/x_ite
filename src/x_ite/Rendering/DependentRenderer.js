@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Rendering/X3DRenderObject",
-	"x_ite/Bits/TraverseType",
+   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Rendering/X3DRenderObject",
+   "x_ite/Bits/TraverseType",
 ],
 function (X3DBaseNode,
           X3DRenderObject,
@@ -58,87 +58,87 @@ function (X3DBaseNode,
 {
 "use strict";
 
-	function DependentRenderer (executionContext)
-	{
-		X3DBaseNode     .call (this, executionContext);
-		X3DRenderObject .call (this, executionContext);
+   function DependentRenderer (executionContext)
+   {
+      X3DBaseNode     .call (this, executionContext);
+      X3DRenderObject .call (this, executionContext);
 
-		this .renderObject = null;
-	}
+      this .renderObject = null;
+   }
 
-	DependentRenderer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-		X3DRenderObject .prototype,
-	{
-		constructor: DependentRenderer,
-		initialize: function ()
-		{
-			X3DBaseNode     .prototype .initialize .call (this);
-			X3DRenderObject .prototype .initialize .call (this);
-		},
-		isIndependent: function ()
-		{
-			return false;
-		},
-		setRenderer: function (value)
-		{
-			this .renderObject = value;
-		},
-		getBrowser: function ()
-		{
-			return this .renderObject .getBrowser ();
-		},
-		getLayer: function ()
-		{
-			return this .renderObject .getLayer ();
-		},
-		getBackground: function ()
-		{
-			return this .renderObject .getBackground ();
-		},
-		getFog: function ()
-		{
-			return this .renderObject .getFog ();
-		},
-		getNavigationInfo: function ()
-		{
-			return this .renderObject .getNavigationInfo ();
-		},
-		getViewpoint: function ()
-		{
-			return this .renderObject .getViewpoint ();
-		},
-		getLightContainer: function ()
-		{
-			return this .renderObject .getLights () [this .lightIndex ++];
-		},
-		render: function (type, callback, group)
-		{
-			switch (type)
-			{
-				case TraverseType .COLLISION:
-				{
-					X3DRenderObject .prototype .render .call (this, type, callback, group);
-					break;
-				}
-				case TraverseType .SHADOW:
-				{
-					X3DRenderObject .prototype .render .call (this, type, callback, group);
-					break;
-				}
-				case TraverseType .DISPLAY:
-				{
-					this .lightIndex = 0;
+   DependentRenderer .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+      X3DRenderObject .prototype,
+   {
+      constructor: DependentRenderer,
+      initialize: function ()
+      {
+         X3DBaseNode     .prototype .initialize .call (this);
+         X3DRenderObject .prototype .initialize .call (this);
+      },
+      isIndependent: function ()
+      {
+         return false;
+      },
+      setRenderer: function (value)
+      {
+         this .renderObject = value;
+      },
+      getBrowser: function ()
+      {
+         return this .renderObject .getBrowser ();
+      },
+      getLayer: function ()
+      {
+         return this .renderObject .getLayer ();
+      },
+      getBackground: function ()
+      {
+         return this .renderObject .getBackground ();
+      },
+      getFog: function ()
+      {
+         return this .renderObject .getFog ();
+      },
+      getNavigationInfo: function ()
+      {
+         return this .renderObject .getNavigationInfo ();
+      },
+      getViewpoint: function ()
+      {
+         return this .renderObject .getViewpoint ();
+      },
+      getLightContainer: function ()
+      {
+         return this .renderObject .getLights () [this .lightIndex ++];
+      },
+      render: function (type, callback, group)
+      {
+         switch (type)
+         {
+            case TraverseType .COLLISION:
+            {
+               X3DRenderObject .prototype .render .call (this, type, callback, group);
+               break;
+            }
+            case TraverseType .SHADOW:
+            {
+               X3DRenderObject .prototype .render .call (this, type, callback, group);
+               break;
+            }
+            case TraverseType .DISPLAY:
+            {
+               this .lightIndex = 0;
 
-					X3DRenderObject .prototype .render .call (this, type, callback, group);
+               X3DRenderObject .prototype .render .call (this, type, callback, group);
 
-					for (const light of this .renderObject .getLights ())
-						light .getModelViewMatrix () .pop ();
+               for (const light of this .renderObject .getLights ())
+                  light .getModelViewMatrix () .pop ();
 
-					break;
-				}
-			}
-		},
-	});
+               break;
+            }
+         }
+      },
+   });
 
-	return DependentRenderer;
+   return DependentRenderer;
 });

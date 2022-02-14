@@ -48,15 +48,15 @@
 
 
 define ([
-	"jquery",
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DTexture2DNode",
-	"x_ite/Components/Networking/X3DUrlObject",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Algorithm",
-	"x_ite/DEBUG",
+   "jquery",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Texturing/X3DTexture2DNode",
+   "x_ite/Components/Networking/X3DUrlObject",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Algorithm",
+   "x_ite/DEBUG",
 ],
 function ($,
           Fields,
@@ -70,173 +70,173 @@ function ($,
 {
 "use strict";
 
-	function ImageTexture (executionContext)
-	{
-		X3DTexture2DNode .call (this, executionContext);
-		X3DUrlObject     .call (this, executionContext);
+   function ImageTexture (executionContext)
+   {
+      X3DTexture2DNode .call (this, executionContext);
+      X3DUrlObject     .call (this, executionContext);
 
-		this .addType (X3DConstants .ImageTexture);
+      this .addType (X3DConstants .ImageTexture);
 
-		this .urlStack = new Fields .MFString ();
-	}
+      this .urlStack = new Fields .MFString ();
+   }
 
-	ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
-		X3DUrlObject .prototype,
-	{
-		constructor: ImageTexture,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "ImageTexture";
-		},
-		getComponentName: function ()
-		{
-			return "Texturing";
-		},
-		getContainerField: function ()
-		{
-			return "texture";
-		},
-		initialize: function ()
-		{
-			X3DTexture2DNode .prototype .initialize .call (this);
-			X3DUrlObject     .prototype .initialize .call (this);
+   ImageTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
+      X3DUrlObject .prototype,
+   {
+      constructor: ImageTexture,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "ImageTexture";
+      },
+      getComponentName: function ()
+      {
+         return "Texturing";
+      },
+      getContainerField: function ()
+      {
+         return "texture";
+      },
+      initialize: function ()
+      {
+         X3DTexture2DNode .prototype .initialize .call (this);
+         X3DUrlObject     .prototype .initialize .call (this);
 
-			this .canvas = $("<canvas></canvas>");
+         this .canvas = $("<canvas></canvas>");
 
-			this .image = $("<img></img>");
-			this .image .on ("load", this .setImage .bind (this));
-			this .image .on ("error", this .setError .bind (this));
-			this .image .bind ("abort", this .setError .bind (this));
+         this .image = $("<img></img>");
+         this .image .on ("load", this .setImage .bind (this));
+         this .image .on ("error", this .setError .bind (this));
+         this .image .bind ("abort", this .setError .bind (this));
 
-			this .image [0] .crossOrigin = "Anonymous";
+         this .image [0] .crossOrigin = "Anonymous";
 
-			this .requestImmediateLoad ();
-		},
-		unloadNow: function ()
-		{
-			this .clearTexture ();
-		},
-		loadNow: function ()
-		{
-			this .urlStack .setValue (this .urlBuffer_);
-			this .loadNext ();
-		},
-		loadNext: function ()
-		{
-			if (this .urlStack .length === 0)
-			{
-				this .clearTexture ();
-				this .setLoadState (X3DConstants .FAILED_STATE);
-				return;
-			}
+         this .requestImmediateLoad ();
+      },
+      unloadNow: function ()
+      {
+         this .clearTexture ();
+      },
+      loadNow: function ()
+      {
+         this .urlStack .setValue (this .urlBuffer_);
+         this .loadNext ();
+      },
+      loadNext: function ()
+      {
+         if (this .urlStack .length === 0)
+         {
+            this .clearTexture ();
+            this .setLoadState (X3DConstants .FAILED_STATE);
+            return;
+         }
 
-			// Get URL.
+         // Get URL.
 
-			this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
+         this .URL = new URL (this .urlStack .shift (), this .getExecutionContext () .getWorldURL ());
 
-			if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
-				this .URL .searchParams .set ("_", Date .now ());
+         if (!this .getBrowser () .getBrowserOptions () .getCache () || !this .getCache ())
+            this .URL .searchParams .set ("_", Date .now ());
 
-			this .image .attr ("src", this .URL .href);
-		},
-		setError: function ()
-		{
-			if (this .URL .protocol !== "data:")
-				console .warn ("Error loading image:", this .URL .href);
+         this .image .attr ("src", this .URL .href);
+      },
+      setError: function ()
+      {
+         if (this .URL .protocol !== "data:")
+            console .warn ("Error loading image:", this .URL .href);
 
-			this .loadNext ();
-		},
-		setImage: function ()
-		{
-			if (DEBUG)
-			{
-				 if (this .URL .protocol !== "data:")
-			   	console .info ("Done loading image:", this .URL .href);
-			}
+         this .loadNext ();
+      },
+      setImage: function ()
+      {
+         if (DEBUG)
+         {
+             if (this .URL .protocol !== "data:")
+               console .info ("Done loading image:", this .URL .href);
+         }
 
-			try
-			{
-				const
-					gl     = this .getBrowser () .getContext (),
-					image  = this .image [0],
-					canvas = this .canvas [0],
-					cx     = canvas .getContext ("2d");
+         try
+         {
+            const
+               gl     = this .getBrowser () .getContext (),
+               image  = this .image [0],
+               canvas = this .canvas [0],
+               cx     = canvas .getContext ("2d");
 
-				let
-					width  = image .width,
-					height = image .height;
+            let
+               width  = image .width,
+               height = image .height;
 
-				// Scale image if needed and flip vertically.
+            // Scale image if needed and flip vertically.
 
-				if (gl .getVersion () >= 2 || (Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
-				{
-					// Flip Y
+            if (gl .getVersion () >= 2 || (Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
+            {
+               // Flip Y
 
-					canvas .width  = width;
-					canvas .height = height;
+               canvas .width  = width;
+               canvas .height = height;
 
-					cx .clearRect (0, 0, width, height);
-					cx .save ();
-					cx .translate (0, height);
-					cx .scale (1, -1);
-					cx .drawImage (image, 0, 0);
-					cx .restore ();
-				}
-				else
-				{
-					// Flip Y and scale image to next power of two.
+               cx .clearRect (0, 0, width, height);
+               cx .save ();
+               cx .translate (0, height);
+               cx .scale (1, -1);
+               cx .drawImage (image, 0, 0);
+               cx .restore ();
+            }
+            else
+            {
+               // Flip Y and scale image to next power of two.
 
-					width  = Algorithm .nextPowerOfTwo (width);
-					height = Algorithm .nextPowerOfTwo (height);
+               width  = Algorithm .nextPowerOfTwo (width);
+               height = Algorithm .nextPowerOfTwo (height);
 
-					canvas .width  = width;
-					canvas .height = height;
+               canvas .width  = width;
+               canvas .height = height;
 
-					cx .clearRect (0, 0, width, height);
-					cx .save ();
-					cx .translate (0, height);
-					cx .scale (1, -1);
-					cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
-					cx .restore ();
-				}
+               cx .clearRect (0, 0, width, height);
+               cx .save ();
+               cx .translate (0, height);
+               cx .scale (1, -1);
+               cx .drawImage (image, 0, 0, image .width, image .height, 0, 0, width, height);
+               cx .restore ();
+            }
 
-				// Determine image alpha.
+            // Determine image alpha.
 
-				const data = cx .getImageData (0, 0, width, height) .data;
+            const data = cx .getImageData (0, 0, width, height) .data;
 
-				let transparent = false;
+            let transparent = false;
 
-				for (let i = 3; i < data .length; i += 4)
-				{
-					if (data [i] !== 255)
-					{
-						transparent = true;
-						break;
-					}
-				}
+            for (let i = 3; i < data .length; i += 4)
+            {
+               if (data [i] !== 255)
+               {
+                  transparent = true;
+                  break;
+               }
+            }
 
-				this .setTexture (width, height, transparent, new Uint8Array (data), false);
-				this .setLoadState (X3DConstants .COMPLETE_STATE);
-			}
-			catch (error)
-			{
-				// Catch security error from cross origin requests.
-				console .log (error .message);
-				this .setError ();
-			}
-		},
-	});
+            this .setTexture (width, height, transparent, new Uint8Array (data), false);
+            this .setLoadState (X3DConstants .COMPLETE_STATE);
+         }
+         catch (error)
+         {
+            // Catch security error from cross origin requests.
+            console .log (error .message);
+            this .setError ();
+         }
+      },
+   });
 
-	return ImageTexture;
+   return ImageTexture;
 });

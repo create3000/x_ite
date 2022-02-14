@@ -48,80 +48,80 @@
 
 
 define ([
-	"x_ite/Components/Texturing/X3DSingleTextureNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Components/Texturing/X3DSingleTextureNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DSingleTextureNode,
           X3DConstants)
 {
 "use strict";
 
-	function X3DEnvironmentTextureNode (executionContext)
-	{
-		X3DSingleTextureNode .call (this, executionContext);
+   function X3DEnvironmentTextureNode (executionContext)
+   {
+      X3DSingleTextureNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DEnvironmentTextureNode);
+      this .addType (X3DConstants .X3DEnvironmentTextureNode);
 
-		const gl = this .getBrowser () .getContext ();
+      const gl = this .getBrowser () .getContext ();
 
-		this .target = gl .TEXTURE_CUBE_MAP;
+      this .target = gl .TEXTURE_CUBE_MAP;
 
-		this .targets = [
-			gl .TEXTURE_CUBE_MAP_POSITIVE_Z, // Front
-			gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, // Back
-			gl .TEXTURE_CUBE_MAP_NEGATIVE_X, // Left
-			gl .TEXTURE_CUBE_MAP_POSITIVE_X, // Right
-			gl .TEXTURE_CUBE_MAP_POSITIVE_Y, // Top
-			gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, // Bottom
-		];
+      this .targets = [
+         gl .TEXTURE_CUBE_MAP_POSITIVE_Z, // Front
+         gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, // Back
+         gl .TEXTURE_CUBE_MAP_NEGATIVE_X, // Left
+         gl .TEXTURE_CUBE_MAP_POSITIVE_X, // Right
+         gl .TEXTURE_CUBE_MAP_POSITIVE_Y, // Top
+         gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, // Bottom
+      ];
 }
 
-	X3DEnvironmentTextureNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
-	{
-		constructor: X3DEnvironmentTextureNode,
-		getTarget: function ()
-		{
-			return this .target;
-		},
-		getTargets: function ()
-		{
-			return this .targets;
-		},
-		clearTexture: (function ()
-		{
-			var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+   X3DEnvironmentTextureNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
+   {
+      constructor: X3DEnvironmentTextureNode,
+      getTarget: function ()
+      {
+         return this .target;
+      },
+      getTargets: function ()
+      {
+         return this .targets;
+      },
+      clearTexture: (function ()
+      {
+         var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
-			return function ()
-			{
-				var
-					gl      = this .getBrowser () .getContext (),
-					targets = this .getTargets ();
+         return function ()
+         {
+            var
+               gl      = this .getBrowser () .getContext (),
+               targets = this .getTargets ();
 
-				gl .bindTexture (this .getTarget (), this .getTexture ());
+            gl .bindTexture (this .getTarget (), this .getTexture ());
 
-				for (var i = 0, length = targets .length; i < length; ++ i)
-					gl .texImage2D (targets [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-			};
-		})(),
-		updateTextureProperties: function ()
-		{
-			X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
-			                                                                this .target,
-			                                                                this .textureProperties_ .getValue (),
-			                                                                this .texturePropertiesNode,
-			                                                                128,
-			                                                                128,
-			                                                                false,
-			                                                                false,
-			                                                                false);
-		},
-		setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
-		{
-			gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getCubeMapTextureUnits () [i]);
-			gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
-			gl .uniform1i (shaderObject .x3d_TextureType [i], 4);
-		},
-	});
+            for (var i = 0, length = targets .length; i < length; ++ i)
+               gl .texImage2D (targets [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+         };
+      })(),
+      updateTextureProperties: function ()
+      {
+         X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
+                                                                         this .target,
+                                                                         this .textureProperties_ .getValue (),
+                                                                         this .texturePropertiesNode,
+                                                                         128,
+                                                                         128,
+                                                                         false,
+                                                                         false,
+                                                                         false);
+      },
+      setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
+      {
+         gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getCubeMapTextureUnits () [i]);
+         gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .getTexture ());
+         gl .uniform1i (shaderObject .x3d_TextureType [i], 4);
+      },
+   });
 
-	return X3DEnvironmentTextureNode;
+   return X3DEnvironmentTextureNode;
 });

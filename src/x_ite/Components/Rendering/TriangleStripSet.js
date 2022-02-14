@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DComposedGeometryNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Rendering/X3DComposedGeometryNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -62,87 +62,87 @@ function (Fields,
 {
 "use strict";
 
-	function TriangleStripSet (executionContext)
-	{
-		X3DComposedGeometryNode .call (this, executionContext);
+   function TriangleStripSet (executionContext)
+   {
+      X3DComposedGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .TriangleStripSet);
+      this .addType (X3DConstants .TriangleStripSet);
 
-		this .triangleIndex = [ ];
-	}
+      this .triangleIndex = [ ];
+   }
 
-	TriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
-	{
-		constructor: TriangleStripSet,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "stripCount",      new Fields .MFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "TriangleStripSet";
-		},
-		getComponentName: function ()
-		{
-			return "Rendering";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-		initialize: function ()
-		{
-			X3DComposedGeometryNode .prototype .initialize .call (this);
+   TriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+   {
+      constructor: TriangleStripSet,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "stripCount",      new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "TriangleStripSet";
+      },
+      getComponentName: function ()
+      {
+         return "Rendering";
+      },
+      getContainerField: function ()
+      {
+         return "geometry";
+      },
+      initialize: function ()
+      {
+         X3DComposedGeometryNode .prototype .initialize .call (this);
 
-			this .stripCount_ .addInterest ("set_stripCount__", this);
+         this .stripCount_ .addInterest ("set_stripCount__", this);
 
-			this .set_stripCount__ ();
-		},
-		set_stripCount__: function ()
-		{
-			// Build coordIndex
+         this .set_stripCount__ ();
+      },
+      set_stripCount__: function ()
+      {
+         // Build coordIndex
 
-			const
-				stripCount    = this .stripCount_,
-				triangleIndex = this .triangleIndex;
+         const
+            stripCount    = this .stripCount_,
+            triangleIndex = this .triangleIndex;
 
-			triangleIndex .length = 0;
+         triangleIndex .length = 0;
 
-			for (var s = 0, strips = stripCount .length, index = 0; s < strips; ++ s)
-			{
-				const vertexCount = stripCount [s];
+         for (var s = 0, strips = stripCount .length, index = 0; s < strips; ++ s)
+         {
+            const vertexCount = stripCount [s];
 
-				for (var i = 0, count = vertexCount - 2; i < count; ++ i)
-				{
-					const is_odd = i & 1;
+            for (var i = 0, count = vertexCount - 2; i < count; ++ i)
+            {
+               const is_odd = i & 1;
 
-					triangleIndex .push (index + (is_odd ? i + 1 : i),
-					                     index + (is_odd ? i : i + 1),
-					                     index + (i + 2));
-				}
+               triangleIndex .push (index + (is_odd ? i + 1 : i),
+                                    index + (is_odd ? i : i + 1),
+                                    index + (i + 2));
+            }
 
-				index += vertexCount;
-			}
-		},
-		getPolygonIndex: function (index)
-		{
-			return this .triangleIndex [index];
-		},
-		build: function ()
-		{
-			X3DComposedGeometryNode .prototype .build .call (this, 3, this .triangleIndex .length, 3, this .triangleIndex .length);
-		},
-	});
+            index += vertexCount;
+         }
+      },
+      getPolygonIndex: function (index)
+      {
+         return this .triangleIndex [index];
+      },
+      build: function ()
+      {
+         X3DComposedGeometryNode .prototype .build .call (this, 3, this .triangleIndex .length, 3, this .triangleIndex .length);
+      },
+   });
 
-	return TriangleStripSet;
+   return TriangleStripSet;
 });

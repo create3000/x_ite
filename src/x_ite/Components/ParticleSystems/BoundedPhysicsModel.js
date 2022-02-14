@@ -48,85 +48,83 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DParticlePhysicsModelNode, 
+          X3DParticlePhysicsModelNode,
           X3DConstants,
           X3DCast)
 {
 "use strict";
 
-	function BoundedPhysicsModel (executionContext)
-	{
-		X3DParticlePhysicsModelNode .call (this, executionContext);
+   function BoundedPhysicsModel (executionContext)
+   {
+      X3DParticlePhysicsModelNode .call (this, executionContext);
 
-		this .addType (X3DConstants .BoundedPhysicsModel);
-	}
+      this .addType (X3DConstants .BoundedPhysicsModel);
+   }
 
-	BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
-	{
-		constructor: BoundedPhysicsModel,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "geometry", new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "BoundedPhysicsModel";
-		},
-		getComponentName: function ()
-		{
-			return "ParticleSystems";
-		},
-		getContainerField: function ()
-		{
-			return "physics";
-		},
-		initialize: function ()
-		{
-			X3DParticlePhysicsModelNode .prototype .initialize .call (this);
+   BoundedPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
+   {
+      constructor: BoundedPhysicsModel,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "geometry", new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "BoundedPhysicsModel";
+      },
+      getComponentName: function ()
+      {
+         return "ParticleSystems";
+      },
+      getContainerField: function ()
+      {
+         return "physics";
+      },
+      initialize: function ()
+      {
+         X3DParticlePhysicsModelNode .prototype .initialize .call (this);
 
-			this .geometry_ .addInterest ("set_geometry__", this);
+         this .geometry_ .addInterest ("set_geometry__", this);
 
-			this .set_geometry__ ();
-		},
-		set_geometry__: function ()
-		{
-			if (this .geometryNode)
-				this .geometryNode .rebuild_ .removeInterest ("addNodeEvent", this);
+         this .set_geometry__ ();
+      },
+      set_geometry__: function ()
+      {
+         if (this .geometryNode)
+            this .geometryNode .rebuild_ .removeInterest ("addNodeEvent", this);
 
-			this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this .geometry_);
+         this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this .geometry_);
 
-			if (this .geometryNode)
-				this .geometryNode .rebuild_ .addInterest ("addNodeEvent", this);
-		},
-		addGeometry: function (boundedNormals, boundedVertices)
-		{
-			if (this .geometryNode)
-			{
-				var
-					normals  = this .geometryNode .getNormals ()  .getValue (),
-					vertices = this .geometryNode .getVertices () .getValue ();
-	
-				for (var i = 0, length = normals .length; i < length; ++ i)
-					boundedNormals .push (normals [i]);
-	
-				for (var i = 0, length = vertices .length; i < length; ++ i)
-					boundedVertices .push (vertices [i]);
-			}
-		},
-	});
+         if (this .geometryNode)
+            this .geometryNode .rebuild_ .addInterest ("addNodeEvent", this);
+      },
+      addGeometry: function (boundedNormals, boundedVertices)
+      {
+         if (this .geometryNode)
+         {
+            var
+               normals  = this .geometryNode .getNormals ()  .getValue (),
+               vertices = this .geometryNode .getVertices () .getValue ();
 
-	return BoundedPhysicsModel;
+            for (var i = 0, length = normals .length; i < length; ++ i)
+               boundedNormals .push (normals [i]);
+
+            for (var i = 0, length = vertices .length; i < length; ++ i)
+               boundedVertices .push (vertices [i]);
+         }
+      },
+   });
+
+   return BoundedPhysicsModel;
 });
-
-

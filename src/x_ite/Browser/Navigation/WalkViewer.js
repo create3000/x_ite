@@ -48,13 +48,13 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Browser/Navigation/X3DFlyViewer",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Browser/Navigation/X3DFlyViewer",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Rotation4",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -66,67 +66,67 @@ function (Fields,
 {
 "use strict";
 
-	function WalkViewer (executionContext)
-	{
-		X3DFlyViewer .call (this, executionContext);
-	}
+   function WalkViewer (executionContext)
+   {
+      X3DFlyViewer .call (this, executionContext);
+   }
 
-	WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
-	{
-		constructor: WalkViewer,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-		]),
-		initialize: function ()
-		{
-			X3DFlyViewer .prototype .initialize .call (this);
+   WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
+   {
+      constructor: WalkViewer,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+      ]),
+      initialize: function ()
+      {
+         X3DFlyViewer .prototype .initialize .call (this);
 
-			this .getBrowser () .addCollision (this);
-		},
-		getStraightenHorizon: function ()
-		{
-			return true;
-		},
-		getFlyDirection: function (fromVector, toVector, direction)
-		{
-			return direction .assign (toVector) .subtract (fromVector);
-		},
-		getTranslationOffset: (function ()
-		{
-			var
-				localYAxis      = new Vector3 (0, 0, 0),
-				userOrientation = new Rotation4 (0, 0, 1, 0),
-				rotation        = new Rotation4 (0, 0, 1, 0);
+         this .getBrowser () .addCollision (this);
+      },
+      getStraightenHorizon: function ()
+      {
+         return true;
+      },
+      getFlyDirection: function (fromVector, toVector, direction)
+      {
+         return direction .assign (toVector) .subtract (fromVector);
+      },
+      getTranslationOffset: (function ()
+      {
+         var
+            localYAxis      = new Vector3 (0, 0, 0),
+            userOrientation = new Rotation4 (0, 0, 1, 0),
+            rotation        = new Rotation4 (0, 0, 1, 0);
 
-			return function (velocity)
-			{
-				var
-					viewpoint = this .getActiveViewpoint (),
-					upVector  = viewpoint .getUpVector ();
+         return function (velocity)
+         {
+            var
+               viewpoint = this .getActiveViewpoint (),
+               upVector  = viewpoint .getUpVector ();
 
-				userOrientation .assign (viewpoint .getUserOrientation ());
-				userOrientation .multVecRot (localYAxis .assign (Vector3 .yAxis));
-				rotation        .setFromToVec (localYAxis, upVector);
+            userOrientation .assign (viewpoint .getUserOrientation ());
+            userOrientation .multVecRot (localYAxis .assign (Vector3 .yAxis));
+            rotation        .setFromToVec (localYAxis, upVector);
 
-				var orientation = userOrientation .multRight (rotation);
+            var orientation = userOrientation .multRight (rotation);
 
-				return orientation .multVecRot (velocity);
-			};
-		})(),
-		constrainPanDirection: function (direction)
-		{
-			if (direction .y < 0)
-				direction .y = 0;
+            return orientation .multVecRot (velocity);
+         };
+      })(),
+      constrainPanDirection: function (direction)
+      {
+         if (direction .y < 0)
+            direction .y = 0;
 
-			return direction;
-		},
-		dispose: function ()
-		{
-			this .getBrowser () .removeCollision (this);
+         return direction;
+      },
+      dispose: function ()
+      {
+         this .getBrowser () .removeCollision (this);
 
-			X3DFlyViewer .prototype .dispose .call (this);
-		},
-	});
+         X3DFlyViewer .prototype .dispose .call (this);
+      },
+   });
 
-	return WalkViewer;
+   return WalkViewer;
 });

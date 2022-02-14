@@ -53,32 +53,32 @@ define (function ()
 
    return function (Type)
    {
-	   return {
-	      stack: [ ],
-	      last: -1,
-	      pop: function ()
-	      {
-				if (this .last > -1)
-				{
-					const object = this .stack [this .last];
+      return {
+         stack: [ ],
+         last: -1,
+         pop: function ()
+         {
+            if (this .last > -1)
+            {
+               const object = this .stack [this .last];
 
-					this .last --;
+               this .last --;
 
-	            return object;
-				}
+               return object;
+            }
 
-				return new Type ();
-	      },
-			push: function (object)
-	      {
-	         this .last ++;
-	         return this .stack [this .last] = object;
-	      },
-			clear: function ()
-			{
-			   this .stack .length = 0;
-			   this .last          = -1;
-			},
-	   };
+            return new Type ();
+         },
+         push: function (object)
+         {
+            this .last ++;
+            return this .stack [this .last] = object;
+         },
+         clear: function ()
+         {
+            this .stack .length = 0;
+            this .last          = -1;
+         },
+      };
    };
 });

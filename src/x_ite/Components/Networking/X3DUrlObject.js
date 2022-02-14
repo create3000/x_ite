@@ -48,179 +48,179 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DConstants)
 {
 "use strict";
 
-	function X3DUrlObject (executionContext)
-	{
-		this .addType (X3DConstants .X3DUrlObject);
+   function X3DUrlObject (executionContext)
+   {
+      this .addType (X3DConstants .X3DUrlObject);
 
-		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE),
-		                       "urlBuffer", new Fields .MFString ());
+      this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE),
+                             "urlBuffer", new Fields .MFString ());
 
-		this .cache                = true;
-		this .autoRefreshStartTime = performance .now ();
-	}
+      this .cache                = true;
+      this .autoRefreshStartTime = performance .now ();
+   }
 
-	X3DUrlObject .prototype =
-	{
-		constructor: X3DUrlObject,
-		initialize: function ()
-		{
-			this .isLive () .addInterest ("set_live__", this);
+   X3DUrlObject .prototype =
+   {
+      constructor: X3DUrlObject,
+      initialize: function ()
+      {
+         this .isLive () .addInterest ("set_live__", this);
 
-			this .load_                 .addInterest ("set_load__",        this);
-			this .url_                  .addInterest ("set_url__",         this);
-			this .urlBuffer_            .addInterest ("loadNow",           this);
-			this .autoRefresh_          .addInterest ("set_autoRefresh__", this);
-			this .autoRefreshTimeLimit_ .addInterest ("set_autoRefresh__", this);
-		},
-		setLoadState: function (value, notify = true)
-		{
-			this .loadState_ = value;
+         this .load_                 .addInterest ("set_load__",        this);
+         this .url_                  .addInterest ("set_url__",         this);
+         this .urlBuffer_            .addInterest ("loadNow",           this);
+         this .autoRefresh_          .addInterest ("set_autoRefresh__", this);
+         this .autoRefreshTimeLimit_ .addInterest ("set_autoRefresh__", this);
+      },
+      setLoadState: function (value, notify = true)
+      {
+         this .loadState_ = value;
 
-			if (value === X3DConstants .COMPLETE_STATE)
-			{
-				this .autoRefreshCompleteTime = performance .now ();
-				this .setAutoRefreshTimer (this .autoRefresh_ .getValue ());
-			}
+         if (value === X3DConstants .COMPLETE_STATE)
+         {
+            this .autoRefreshCompleteTime = performance .now ();
+            this .setAutoRefreshTimer (this .autoRefresh_ .getValue ());
+         }
 
-			if (!notify)
-				return;
+         if (!notify)
+            return;
 
-			switch (value)
-			{
-				case X3DConstants .NOT_STARTED_STATE:
-					break;
-				case X3DConstants .IN_PROGRESS_STATE:
-				{
-					this .getScene () .addLoadCount (this);
-					break;
-				}
-				case X3DConstants .COMPLETE_STATE:
-				case X3DConstants .FAILED_STATE:
-				{
-					this .getScene () .removeLoadCount (this);
-					break;
-				}
-			}
-		},
-		checkLoadState: function ()
-		{
-			return this .loadState_ .getValue ();
-		},
-		getLoadState: function ()
-		{
-			return this .loadState_;
-		},
-		setCache: function (value)
-		{
-			this .cache = value;
-		},
-		getCache: function ()
-		{
-			return this .cache;
-		},
-		requestImmediateLoad: function (cache = true)
-		{
-			if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
-				return;
+         switch (value)
+         {
+            case X3DConstants .NOT_STARTED_STATE:
+               break;
+            case X3DConstants .IN_PROGRESS_STATE:
+            {
+               this .getScene () .addLoadCount (this);
+               break;
+            }
+            case X3DConstants .COMPLETE_STATE:
+            case X3DConstants .FAILED_STATE:
+            {
+               this .getScene () .removeLoadCount (this);
+               break;
+            }
+         }
+      },
+      checkLoadState: function ()
+      {
+         return this .loadState_ .getValue ();
+      },
+      getLoadState: function ()
+      {
+         return this .loadState_;
+      },
+      setCache: function (value)
+      {
+         this .cache = value;
+      },
+      getCache: function ()
+      {
+         return this .cache;
+      },
+      requestImmediateLoad: function (cache = true)
+      {
+         if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
+            return;
 
-			if (!this .load_ .getValue ())
-				return;
+         if (!this .load_ .getValue ())
+            return;
 
-			if (this .url_ .length === 0)
-				return;
+         if (this .url_ .length === 0)
+            return;
 
-			this .setCache (cache);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
+         this .setCache (cache);
+         this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
-			// Buffer prevents double load of the scene if load and url field are set at the same time.
-			this .urlBuffer_ = this .url_;
-		},
-		loadNow: function ()
-		{ },
-		requestUnload: function ()
-		{
-			if (this .checkLoadState () === X3DConstants .NOT_STARTED_STATE || this .checkLoadState () === X3DConstants .FAILED_STATE)
-				return;
+         // Buffer prevents double load of the scene if load and url field are set at the same time.
+         this .urlBuffer_ = this .url_;
+      },
+      loadNow: function ()
+      { },
+      requestUnload: function ()
+      {
+         if (this .checkLoadState () === X3DConstants .NOT_STARTED_STATE || this .checkLoadState () === X3DConstants .FAILED_STATE)
+            return;
 
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-			this .unloadNow ();
-		},
-		unloadNow: function ()
-		{ },
-		setAutoRefreshTimer: function (autoRefreshInterval)
-		{
-			clearTimeout (this .autoRefreshId);
+         this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+         this .unloadNow ();
+      },
+      unloadNow: function ()
+      { },
+      setAutoRefreshTimer: function (autoRefreshInterval)
+      {
+         clearTimeout (this .autoRefreshId);
 
-			if (this .autoRefresh_ .getValue () <= 0)
-				return;
+         if (this .autoRefresh_ .getValue () <= 0)
+            return;
 
-			const autoRefreshTimeLimit = this .autoRefreshTimeLimit_ .getValue ();
+         const autoRefreshTimeLimit = this .autoRefreshTimeLimit_ .getValue ();
 
-			if (autoRefreshTimeLimit !== 0)
-			{
-				if ((performance .now () - this .autoRefreshStartTime) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
-					return;
-			}
+         if (autoRefreshTimeLimit !== 0)
+         {
+            if ((performance .now () - this .autoRefreshStartTime) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
+               return;
+         }
 
-			this .autoRefreshId = setTimeout (this .performAutoRefresh .bind (this), autoRefreshInterval * 1000);
-		},
-		performAutoRefresh: function ()
-		{
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
-			this .requestImmediateLoad (false);
-		},
-		set_live__: function ()
-		{
-			if (this .isLive () .getValue ())
-				this .set_autoRefresh__ ();
-			else
-				clearTimeout (this .autoRefreshId);
-		},
-		set_load__: function ()
-		{
-			if (this .load_ .getValue ())
-			{
-				this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+         this .autoRefreshId = setTimeout (this .performAutoRefresh .bind (this), autoRefreshInterval * 1000);
+      },
+      performAutoRefresh: function ()
+      {
+         this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+         this .requestImmediateLoad (false);
+      },
+      set_live__: function ()
+      {
+         if (this .isLive () .getValue ())
+            this .set_autoRefresh__ ();
+         else
+            clearTimeout (this .autoRefreshId);
+      },
+      set_load__: function ()
+      {
+         if (this .load_ .getValue ())
+         {
+            this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
-				this .requestImmediateLoad ();
-			}
-			else
-				this .requestUnload ();
-		},
-		set_url__: function ()
-		{
-			if (!this .load_ .getValue ())
-				return;
+            this .requestImmediateLoad ();
+         }
+         else
+            this .requestUnload ();
+      },
+      set_url__: function ()
+      {
+         if (!this .load_ .getValue ())
+            return;
 
-			this .setLoadState (X3DConstants .NOT_STARTED_STATE);
+         this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
-			this .requestImmediateLoad ();
-		},
-		set_autoRefresh__: function ()
-		{
-			if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
-				return;
+         this .requestImmediateLoad ();
+      },
+      set_autoRefresh__: function ()
+      {
+         if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
+            return;
 
-			const
-				elapsedTime = (performance .now () - this .autoRefreshCompleteTime) / 1000,
-				autoRefresh = this .autoRefresh_ .getValue ();
+         const
+            elapsedTime = (performance .now () - this .autoRefreshCompleteTime) / 1000,
+            autoRefresh = this .autoRefresh_ .getValue ();
 
-			let autoRefreshInterval = autoRefresh - elapsedTime;
+         let autoRefreshInterval = autoRefresh - elapsedTime;
 
-			if (autoRefreshInterval < 0)
-				autoRefreshInterval = Math .ceil (elapsedTime / autoRefresh) * autoRefresh - elapsedTime;
+         if (autoRefreshInterval < 0)
+            autoRefreshInterval = Math .ceil (elapsedTime / autoRefresh) * autoRefresh - elapsedTime;
 
-			this .setAutoRefreshTimer (autoRefreshInterval);
-		}
-	};
+         this .setAutoRefreshTimer (autoRefreshInterval);
+      }
+   };
 
-	return X3DUrlObject;
+   return X3DUrlObject;
 });

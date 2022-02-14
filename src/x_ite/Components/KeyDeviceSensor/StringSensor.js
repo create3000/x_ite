@@ -48,116 +48,114 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DKeyDeviceSensorNode, 
+          X3DKeyDeviceSensorNode,
           X3DConstants)
 {
 "use strict";
 
-	function StringSensor (executionContext)
-	{
-		X3DKeyDeviceSensorNode .call (this, executionContext);
+   function StringSensor (executionContext)
+   {
+      X3DKeyDeviceSensorNode .call (this, executionContext);
 
-		this .addType (X3DConstants .StringSensor);
-	}
+      this .addType (X3DConstants .StringSensor);
+   }
 
-	StringSensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .prototype),
-	{
-		constructor: StringSensor,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "deletionAllowed", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "enteredText",     new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "finalText",       new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",        new Fields .SFBool ()),
-		]),
-		getTypeName: function ()
-		{
-			return "StringSensor";
-		},
-		getComponentName: function ()
-		{
-			return "KeyDeviceSensor";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		keydown: function (event)
-		{
-			event .preventDefault ();
+   StringSensor .prototype = Object .assign (Object .create (X3DKeyDeviceSensorNode .prototype),
+   {
+      constructor: StringSensor,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "deletionAllowed", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "enteredText",     new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "finalText",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",        new Fields .SFBool ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "StringSensor";
+      },
+      getComponentName: function ()
+      {
+         return "KeyDeviceSensor";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      keydown: function (event)
+      {
+         event .preventDefault ();
 
-			switch (event .key)
-			{
-				case "Backspace":
-				{
-					if (this .isActive_ .getValue ())
-					{
-						if (this .deletionAllowed_ .getValue ())
-						{
-							if (this .enteredText_ .length)
-								this .enteredText_  = this .enteredText_ .getValue () .substr (0, this .enteredText_ .length - 1);
-						}
-					}
+         switch (event .key)
+         {
+            case "Backspace":
+            {
+               if (this .isActive_ .getValue ())
+               {
+                  if (this .deletionAllowed_ .getValue ())
+                  {
+                     if (this .enteredText_ .length)
+                        this .enteredText_  = this .enteredText_ .getValue () .substr (0, this .enteredText_ .length - 1);
+                  }
+               }
 
-					break;
-				}
-				case "Enter":
-				{
-					this .finalText_ = this .enteredText_;
+               break;
+            }
+            case "Enter":
+            {
+               this .finalText_ = this .enteredText_;
 
-					this .enteredText_ .set ("");
+               this .enteredText_ .set ("");
 
-					if (this .isActive_ .getValue ())
-						this .isActive_ = false;
+               if (this .isActive_ .getValue ())
+                  this .isActive_ = false;
 
-					break;
-				}
-				case "Escape":
-				{
-					this .enteredText_ .set ("");
+               break;
+            }
+            case "Escape":
+            {
+               this .enteredText_ .set ("");
 
-					if (this .isActive_ .getValue ())
-						this .isActive_ = false;
+               if (this .isActive_ .getValue ())
+                  this .isActive_ = false;
 
-					break;
-				}
-				case "Tab":
-				{
-					break;
-				}
-				default:
-				{
-					if (event .charCode || event .keyCode)
-					{
-						if (event .key .length === 1)
-						{
-							if (! this .isActive_ .getValue ())
-							{
-								this .isActive_    = true;
-								this .enteredText_ = "";
-							}
-	
-							this .enteredText_ = this .enteredText_ .getValue () + event .key;
-						}
-					}
+               break;
+            }
+            case "Tab":
+            {
+               break;
+            }
+            default:
+            {
+               if (event .charCode || event .keyCode)
+               {
+                  if (event .key .length === 1)
+                  {
+                     if (! this .isActive_ .getValue ())
+                     {
+                        this .isActive_    = true;
+                        this .enteredText_ = "";
+                     }
 
-					break;
-				}
-			}
-		},
-	});
+                     this .enteredText_ = this .enteredText_ .getValue () + event .key;
+                  }
+               }
 
-	return StringSensor;
+               break;
+            }
+         }
+      },
+   });
+
+   return StringSensor;
 });
-
-

@@ -48,11 +48,11 @@
 
 
 define ([
-	"lib/ammojs/ammo",
+   "lib/ammojs/ammo",
 ],
 function (Ammo)
 {
 "use strict";
 
-	return new Ammo ();
+   return new Ammo ();
 });

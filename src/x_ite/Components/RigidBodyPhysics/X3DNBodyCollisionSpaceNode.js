@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Components/Grouping/X3DBoundedObject",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Components/Grouping/X3DBoundedObject",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DNode,
           X3DBoundedObject,
@@ -58,19 +58,19 @@ function (X3DNode,
 {
 "use strict";
 
-	function X3DNBodyCollisionSpaceNode (executionContext)
-	{
-		X3DNode          .call (this, executionContext);
-		X3DBoundedObject .call (this, executionContext);
+   function X3DNBodyCollisionSpaceNode (executionContext)
+   {
+      X3DNode          .call (this, executionContext);
+      X3DBoundedObject .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DNBodyCollisionSpaceNode);
-	}
+      this .addType (X3DConstants .X3DNBodyCollisionSpaceNode);
+   }
 
-	X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-		X3DBoundedObject .prototype,
-	{
-		constructor: X3DNBodyCollisionSpaceNode,
-	});
+   X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+      X3DBoundedObject .prototype,
+   {
+      constructor: X3DNBodyCollisionSpaceNode,
+   });
 
-	return X3DNBodyCollisionSpaceNode;
+   return X3DNBodyCollisionSpaceNode;
 });

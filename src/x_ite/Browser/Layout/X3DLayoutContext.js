@@ -48,47 +48,47 @@
 
 
 define ([
-	"jquery",
-	"x_ite/Components/Texturing/TextureProperties",
+   "jquery",
+   "x_ite/Components/Texturing/TextureProperties",
 ],
 function ($,
           TextureProperties)
 {
 "use strict";
 
-	function X3DLayoutContext () { }
+   function X3DLayoutContext () { }
 
-	X3DLayoutContext .prototype =
-	{
-		getScreenTextureProperties: function ()
-		{
-			this .screenTextureProperties = new TextureProperties (this .getPrivateScene ());
+   X3DLayoutContext .prototype =
+   {
+      getScreenTextureProperties: function ()
+      {
+         this .screenTextureProperties = new TextureProperties (this .getPrivateScene ());
 
-			this .screenTextureProperties .boundaryModeS_       = "CLAMP";
-			this .screenTextureProperties .boundaryModeT_       = "CLAMP";
-			this .screenTextureProperties .boundaryModeR_       = "CLAMP";
-			this .screenTextureProperties .minificationFilter_  = "NEAREST";
-			this .screenTextureProperties .magnificationFilter_ = "NEAREST";
-			this .screenTextureProperties .generateMipMaps_     = false;
+         this .screenTextureProperties .boundaryModeS_       = "CLAMP";
+         this .screenTextureProperties .boundaryModeT_       = "CLAMP";
+         this .screenTextureProperties .boundaryModeR_       = "CLAMP";
+         this .screenTextureProperties .minificationFilter_  = "NEAREST";
+         this .screenTextureProperties .magnificationFilter_ = "NEAREST";
+         this .screenTextureProperties .generateMipMaps_     = false;
 
-			this .screenTextureProperties .setup ();
+         this .screenTextureProperties .setup ();
 
-			this .getScreenTextureProperties = function () { return this .screenTextureProperties; };
+         this .getScreenTextureProperties = function () { return this .screenTextureProperties; };
 
-		   return this .screenTextureProperties;
-		},
-		getPointSize: function ()
-		{
-			if (this .pointSize === undefined)
-			{
-				var div = $("<div></div>") .css ("height", "1in") .css ("display", "none");
-				this .pointSize = div .appendTo ($("body")) .height () / 72;
-				div .remove ();
-			}
+         return this .screenTextureProperties;
+      },
+      getPointSize: function ()
+      {
+         if (this .pointSize === undefined)
+         {
+            var div = $("<div></div>") .css ("height", "1in") .css ("display", "none");
+            this .pointSize = div .appendTo ($("body")) .height () / 72;
+            div .remove ();
+         }
 
-		   return this .pointSize;
-		},
-	};
+         return this .pointSize;
+      },
+   };
 
-	return X3DLayoutContext;
+   return X3DLayoutContext;
 });

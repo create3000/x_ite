@@ -52,20 +52,20 @@ define (function ()
 "use strict";
 
    return function shuffle (array)
-	{
-		let i = array .length;
+   {
+      let i = array .length;
 
-		while (i > 1)
-		{
-			const
-				a = -- i,
-				b = Math .floor (Math .random () * a),
-				t = array [a];
+      while (i > 1)
+      {
+         const
+            a = -- i,
+            b = Math .floor (Math .random () * a),
+            t = array [a];
 
-			array [a] = array [b];
-			array [b] = t;
-		}
+         array [a] = array [b];
+         array [b] = t;
+      }
 
-		return array;
-	};
+      return array;
+   };
 });

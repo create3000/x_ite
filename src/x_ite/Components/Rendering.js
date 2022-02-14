@@ -47,28 +47,28 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Rendering/ClipPlane",
-	"x_ite/Components/Rendering/Color",
-	"x_ite/Components/Rendering/ColorRGBA",
-	"x_ite/Components/Rendering/Coordinate",
-	"x_ite/Components/Rendering/IndexedLineSet",
-	"x_ite/Components/Rendering/IndexedTriangleFanSet",
-	"x_ite/Components/Rendering/IndexedTriangleSet",
-	"x_ite/Components/Rendering/IndexedTriangleStripSet",
-	"x_ite/Components/Rendering/LineSet",
-	"x_ite/Components/Rendering/Normal",
-	"x_ite/Components/Rendering/PointSet",
-	"x_ite/Components/Rendering/TriangleFanSet",
-	"x_ite/Components/Rendering/TriangleSet",
-	"x_ite/Components/Rendering/TriangleStripSet",
-	"x_ite/Components/Rendering/X3DColorNode",
-	"x_ite/Components/Rendering/X3DComposedGeometryNode",
-	"x_ite/Components/Rendering/X3DCoordinateNode",
-	"x_ite/Components/Rendering/X3DGeometricPropertyNode",
-	"x_ite/Components/Rendering/X3DGeometryNode",
-	"x_ite/Components/Rendering/X3DLineGeometryNode",
-	"x_ite/Components/Rendering/X3DNormalNode",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/Rendering/ClipPlane",
+   "x_ite/Components/Rendering/Color",
+   "x_ite/Components/Rendering/ColorRGBA",
+   "x_ite/Components/Rendering/Coordinate",
+   "x_ite/Components/Rendering/IndexedLineSet",
+   "x_ite/Components/Rendering/IndexedTriangleFanSet",
+   "x_ite/Components/Rendering/IndexedTriangleSet",
+   "x_ite/Components/Rendering/IndexedTriangleStripSet",
+   "x_ite/Components/Rendering/LineSet",
+   "x_ite/Components/Rendering/Normal",
+   "x_ite/Components/Rendering/PointSet",
+   "x_ite/Components/Rendering/TriangleFanSet",
+   "x_ite/Components/Rendering/TriangleSet",
+   "x_ite/Components/Rendering/TriangleStripSet",
+   "x_ite/Components/Rendering/X3DColorNode",
+   "x_ite/Components/Rendering/X3DComposedGeometryNode",
+   "x_ite/Components/Rendering/X3DCoordinateNode",
+   "x_ite/Components/Rendering/X3DGeometricPropertyNode",
+   "x_ite/Components/Rendering/X3DGeometryNode",
+   "x_ite/Components/Rendering/X3DLineGeometryNode",
+   "x_ite/Components/Rendering/X3DNormalNode",
 ],
 function (SupportedNodes,
           ClipPlane,
@@ -95,38 +95,38 @@ function (SupportedNodes,
 {
 "use strict";
 
-	const Types =
-	{
-		ClipPlane:               ClipPlane,
-		Color:                   Color,
-		ColorRGBA:               ColorRGBA,
-		Coordinate:              Coordinate,
-		IndexedLineSet:          IndexedLineSet,
-		IndexedTriangleFanSet:   IndexedTriangleFanSet,
-		IndexedTriangleSet:      IndexedTriangleSet,
-		IndexedTriangleStripSet: IndexedTriangleStripSet,
-		LineSet:                 LineSet,
-		Normal:                  Normal,
-		PointSet:                PointSet,
-		TriangleFanSet:          TriangleFanSet,
-		TriangleSet:             TriangleSet,
-		TriangleStripSet:        TriangleStripSet,
-	};
+   const Types =
+   {
+      ClipPlane:               ClipPlane,
+      Color:                   Color,
+      ColorRGBA:               ColorRGBA,
+      Coordinate:              Coordinate,
+      IndexedLineSet:          IndexedLineSet,
+      IndexedTriangleFanSet:   IndexedTriangleFanSet,
+      IndexedTriangleSet:      IndexedTriangleSet,
+      IndexedTriangleStripSet: IndexedTriangleStripSet,
+      LineSet:                 LineSet,
+      Normal:                  Normal,
+      PointSet:                PointSet,
+      TriangleFanSet:          TriangleFanSet,
+      TriangleSet:             TriangleSet,
+      TriangleStripSet:        TriangleStripSet,
+   };
 
-	const AbstractTypes =
-	{
-		X3DColorNode:             X3DColorNode,
-		X3DComposedGeometryNode:  X3DComposedGeometryNode,
-		X3DCoordinateNode:        X3DCoordinateNode,
-		X3DGeometricPropertyNode: X3DGeometricPropertyNode,
-		X3DGeometryNode:          X3DGeometryNode,
-		X3DLineGeometryNode:      X3DLineGeometryNode,
-		X3DNormalNode:            X3DNormalNode,
-	};
+   const AbstractTypes =
+   {
+      X3DColorNode:             X3DColorNode,
+      X3DComposedGeometryNode:  X3DComposedGeometryNode,
+      X3DCoordinateNode:        X3DCoordinateNode,
+      X3DGeometricPropertyNode: X3DGeometricPropertyNode,
+      X3DGeometryNode:          X3DGeometryNode,
+      X3DLineGeometryNode:      X3DLineGeometryNode,
+      X3DNormalNode:            X3DNormalNode,
+   };
 
-	for (const typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]);
+   for (const typeName in Types)
+      SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (const typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   for (const typeName in AbstractTypes)
+      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

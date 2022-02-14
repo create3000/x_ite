@@ -47,11 +47,11 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Sound/AudioClip",
-	"x_ite/Components/Sound/Sound",
-	"x_ite/Components/Sound/X3DSoundNode",
-	"x_ite/Components/Sound/X3DSoundSourceNode",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/Sound/AudioClip",
+   "x_ite/Components/Sound/Sound",
+   "x_ite/Components/Sound/X3DSoundNode",
+   "x_ite/Components/Sound/X3DSoundSourceNode",
 ],
 function (SupportedNodes,
           AudioClip,
@@ -61,21 +61,21 @@ function (SupportedNodes,
 {
 "use strict";
 
-	const Types =
-	{
-		AudioClip: AudioClip,
-		Sound:     Sound,
-	};
+   const Types =
+   {
+      AudioClip: AudioClip,
+      Sound:     Sound,
+   };
 
-	const AbstractTypes =
-	{
-		X3DSoundNode:       X3DSoundNode,
-		X3DSoundSourceNode: X3DSoundSourceNode,
-	};
+   const AbstractTypes =
+   {
+      X3DSoundNode:       X3DSoundNode,
+      X3DSoundSourceNode: X3DSoundSourceNode,
+   };
 
-	for (const typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]);
+   for (const typeName in Types)
+      SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (const typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   for (const typeName in AbstractTypes)
+      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

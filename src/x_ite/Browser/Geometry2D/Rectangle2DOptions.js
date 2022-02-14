@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Components/Geometry3D/IndexedFaceSet",
-	"x_ite/Components/Rendering/Coordinate",
-	"x_ite/Components/Texturing/TextureCoordinate",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Components/Geometry3D/IndexedFaceSet",
+   "x_ite/Components/Rendering/Coordinate",
+   "x_ite/Components/Texturing/TextureCoordinate",
 ],
 function (Fields,
           X3DBaseNode,
@@ -61,68 +61,68 @@ function (Fields,
           TextureCoordinate)
 {
 "use strict";
-	
-	function Rectangle2DOptions (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
-	}
 
-	Rectangle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: Rectangle2DOptions,
-		getTypeName: function ()
-		{
-			return "Rectangle2DOptions";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "rectangle2DOptions";
-		},
-		initialize: function ()
-		{
-			X3DBaseNode .prototype .initialize .call (this);
-		},
-		getGeometry: function ()
-		{
-			if (this .geometry)
-				return this .geometry;
+   function Rectangle2DOptions (executionContext)
+   {
+      X3DBaseNode .call (this, executionContext);
+   }
 
-			this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
-			this .geometry .texCoord_ = new TextureCoordinate (this .getExecutionContext ());
-			this .geometry .coord_    = new Coordinate (this .getExecutionContext ());
+   Rectangle2DOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   {
+      constructor: Rectangle2DOptions,
+      getTypeName: function ()
+      {
+         return "Rectangle2DOptions";
+      },
+      getComponentName: function ()
+      {
+         return "X_ITE";
+      },
+      getContainerField: function ()
+      {
+         return "rectangle2DOptions";
+      },
+      initialize: function ()
+      {
+         X3DBaseNode .prototype .initialize .call (this);
+      },
+      getGeometry: function ()
+      {
+         if (this .geometry)
+            return this .geometry;
 
-			var
-				geometry = this .geometry,
-				texCoord = this .geometry .texCoord_ .getValue (),
-				coord    = this .geometry .coord_ .getValue ();
+         this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
+         this .geometry .texCoord_ = new TextureCoordinate (this .getExecutionContext ());
+         this .geometry .coord_    = new Coordinate (this .getExecutionContext ());
 
-			geometry .texCoordIndex_ = new Fields .MFInt32 (
-				0, 1, 2, 3, -1
-			);
+         var
+            geometry = this .geometry,
+            texCoord = this .geometry .texCoord_ .getValue (),
+            coord    = this .geometry .coord_ .getValue ();
 
-			geometry .coordIndex_ = new Fields .MFInt32 (
-				0, 1, 2, 3, -1
-			);
+         geometry .texCoordIndex_ = new Fields .MFInt32 (
+            0, 1, 2, 3, -1
+         );
 
-			texCoord .point_ = new Fields .MFVec2f (
-				new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0)
-			);
+         geometry .coordIndex_ = new Fields .MFInt32 (
+            0, 1, 2, 3, -1
+         );
 
-			coord .point_ = new Fields .MFVec3f (
-				new Fields .SFVec3f (1, 1, 0), new Fields .SFVec3f (-1, 1, 0), new Fields .SFVec3f (-1, -1, 0), new Fields .SFVec3f (1, -1, 0)
-			);
+         texCoord .point_ = new Fields .MFVec2f (
+            new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0)
+         );
 
-			texCoord .setup ();
-			coord    .setup ();
-			geometry .setup ();
+         coord .point_ = new Fields .MFVec3f (
+            new Fields .SFVec3f (1, 1, 0), new Fields .SFVec3f (-1, 1, 0), new Fields .SFVec3f (-1, -1, 0), new Fields .SFVec3f (1, -1, 0)
+         );
 
-			return this .geometry;
-		},
-	});
+         texCoord .setup ();
+         coord    .setup ();
+         geometry .setup ();
 
-	return Rectangle2DOptions;
+         return this .geometry;
+      },
+   });
+
+   return Rectangle2DOptions;
 });

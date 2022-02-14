@@ -51,16 +51,16 @@ define (function ()
 {
 "use strict";
 
-	let i = 0;
+   let i = 0;
 
-	const Shading =
-	{
-		POINT:     i ++,
-		WIREFRAME: i ++,
-		FLAT:      i ++,
-		GOURAUD:   i ++,
-		PHONG:     i ++,
-	};
+   const Shading =
+   {
+      POINT:     i ++,
+      WIREFRAME: i ++,
+      FLAT:      i ++,
+      GOURAUD:   i ++,
+      PHONG:     i ++,
+   };
 
-	return Shading;
+   return Shading;
 });

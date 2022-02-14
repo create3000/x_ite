@@ -51,13 +51,13 @@ define (function ()
 {
 "use strict";
 
-	var i = 0;
+   var i = 0;
 
-	var IntersectionType =
-	{
-		BOUNDS:   i ++,
-		GEOMETRY: i ++,
-	};
+   var IntersectionType =
+   {
+      BOUNDS:   i ++,
+      GEOMETRY: i ++,
+   };
 
-	return IntersectionType;
+   return IntersectionType;
 });

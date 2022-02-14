@@ -48,20 +48,20 @@
 
 
 define ([
-	"text!assets/shaders/webgl1/include/ClipPlanes.glsl",
-	"text!assets/shaders/webgl1/include/Fog.glsl",
-	"text!assets/shaders/webgl1/include/Hatch.glsl",
-	"text!assets/shaders/webgl1/include/Pack.glsl",
-	"text!assets/shaders/webgl1/include/Perlin.glsl",
-	"text!assets/shaders/webgl1/include/Shadow.glsl",
-	"text!assets/shaders/webgl1/include/Texture.glsl",
-	"text!assets/shaders/webgl2/include/ClipPlanes.glsl",
-	"text!assets/shaders/webgl2/include/Fog.glsl",
-	"text!assets/shaders/webgl2/include/Hatch.glsl",
-	"text!assets/shaders/webgl2/include/Pack.glsl",
-	"text!assets/shaders/webgl2/include/Perlin.glsl",
-	"text!assets/shaders/webgl2/include/Shadow.glsl",
-	"text!assets/shaders/webgl2/include/Texture.glsl",
+   "text!assets/shaders/webgl1/include/ClipPlanes.glsl",
+   "text!assets/shaders/webgl1/include/Fog.glsl",
+   "text!assets/shaders/webgl1/include/Hatch.glsl",
+   "text!assets/shaders/webgl1/include/Pack.glsl",
+   "text!assets/shaders/webgl1/include/Perlin.glsl",
+   "text!assets/shaders/webgl1/include/Shadow.glsl",
+   "text!assets/shaders/webgl1/include/Texture.glsl",
+   "text!assets/shaders/webgl2/include/ClipPlanes.glsl",
+   "text!assets/shaders/webgl2/include/Fog.glsl",
+   "text!assets/shaders/webgl2/include/Hatch.glsl",
+   "text!assets/shaders/webgl2/include/Pack.glsl",
+   "text!assets/shaders/webgl2/include/Perlin.glsl",
+   "text!assets/shaders/webgl2/include/Shadow.glsl",
+   "text!assets/shaders/webgl2/include/Texture.glsl",
 ],
 function (ClipPlanes1,
           Fog1,
@@ -80,61 +80,61 @@ function (ClipPlanes1,
 {
 "use strict";
 
-	const include = /^#pragma\s+X3D\s+include\s+".*?([^\/]+)\.glsl"\s*$/;
+   const include = /^#pragma\s+X3D\s+include\s+".*?([^\/]+)\.glsl"\s*$/;
 
-	const includes1 = {
-		ClipPlanes: ClipPlanes1,
-		Fog: Fog1,
-		Hatch: Hatch1,
-		Pack: Pack1,
-		Perlin: Perlin1,
-		Shadow: Shadow1,
-		Texture: Texture1,
-	};
+   const includes1 = {
+      ClipPlanes: ClipPlanes1,
+      Fog: Fog1,
+      Hatch: Hatch1,
+      Pack: Pack1,
+      Perlin: Perlin1,
+      Shadow: Shadow1,
+      Texture: Texture1,
+   };
 
-	const includes2 = {
-		ClipPlanes: ClipPlanes2,
-		Fog: Fog2,
-		Hatch: Hatch2,
-		Pack: Pack2,
-		Perlin: Perlin2,
-		Shadow: Shadow2,
-		Texture: Texture2,
-	};
+   const includes2 = {
+      ClipPlanes: ClipPlanes2,
+      Fog: Fog2,
+      Hatch: Hatch2,
+      Pack: Pack2,
+      Perlin: Perlin2,
+      Shadow: Shadow2,
+      Texture: Texture2,
+   };
 
-	const ShaderSource =
-	{
-		get: function (gl, source)
-		{
-			const
-				includes = gl .getVersion () <= 1 ? includes1 : includes2,
-				lines    = source .split ("\n");
+   const ShaderSource =
+   {
+      get: function (gl, source)
+      {
+         const
+            includes = gl .getVersion () <= 1 ? includes1 : includes2,
+            lines    = source .split ("\n");
 
-			source = "";
+         source = "";
 
-			for (let i = 0, length = lines .length; i < length; ++ i)
-			{
-				const
-					line  = lines [i],
-					match = line .match (include);
+         for (let i = 0, length = lines .length; i < length; ++ i)
+         {
+            const
+               line  = lines [i],
+               match = line .match (include);
 
-				if (match)
-				{
-					source += "#line 1\n";
-					source += this .get (gl, includes [match [1]]);
-					source += "\n";
-					source += "#line " + (i + 1) + "\n";
-				}
-				else
-				{
-					source += line;
-					source += "\n";
-				}
-			}
+            if (match)
+            {
+               source += "#line 1\n";
+               source += this .get (gl, includes [match [1]]);
+               source += "\n";
+               source += "#line " + (i + 1) + "\n";
+            }
+            else
+            {
+               source += line;
+               source += "\n";
+            }
+         }
 
-			return source;
-		},
-	};
+         return source;
+      },
+   };
 
-	return ShaderSource;
+   return ShaderSource;
 });

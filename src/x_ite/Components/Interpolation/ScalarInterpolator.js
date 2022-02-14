@@ -48,73 +48,71 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Interpolation/X3DInterpolatorNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Algorithm",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Interpolation/X3DInterpolatorNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DInterpolatorNode, 
+          X3DInterpolatorNode,
           X3DConstants,
           Algorithm)
 {
 "use strict";
 
-	function ScalarInterpolator (executionContext)
-	{
-		X3DInterpolatorNode .call (this, executionContext);
+   function ScalarInterpolator (executionContext)
+   {
+      X3DInterpolatorNode .call (this, executionContext);
 
-		this .addType (X3DConstants .ScalarInterpolator);
-	}
+      this .addType (X3DConstants .ScalarInterpolator);
+   }
 
-	ScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
-	{
-		constructor: ScalarInterpolator,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFFloat ()),
-		]),
-		getTypeName: function ()
-		{
-			return "ScalarInterpolator";
-		},
-		getComponentName: function ()
-		{
-			return "Interpolation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DInterpolatorNode .prototype .initialize .call (this);
+   ScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
+   {
+      constructor: ScalarInterpolator,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "keyValue",      new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFFloat ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "ScalarInterpolator";
+      },
+      getComponentName: function ()
+      {
+         return "Interpolation";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DInterpolatorNode .prototype .initialize .call (this);
 
-			this .keyValue_ .addInterest ("set_keyValue__", this);
-		},
-		set_keyValue__: function ()
-		{
-			var
-				key      = this .key_,
-				keyValue = this .keyValue_;
+         this .keyValue_ .addInterest ("set_keyValue__", this);
+      },
+      set_keyValue__: function ()
+      {
+         var
+            key      = this .key_,
+            keyValue = this .keyValue_;
 
-			if (keyValue .length < key .length)
-				keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : 0);
-		},
-		interpolate: function (index0, index1, weight)
-		{
-			this .value_changed_ = Algorithm .lerp (this .keyValue_ [index0], this .keyValue_ [index1], weight);
-		},
-	});
+         if (keyValue .length < key .length)
+            keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : 0);
+      },
+      interpolate: function (index0, index1, weight)
+      {
+         this .value_changed_ = Algorithm .lerp (this .keyValue_ [index0], this .keyValue_ [index1], weight);
+      },
+   });
 
-	return ScalarInterpolator;
+   return ScalarInterpolator;
 });
-
-

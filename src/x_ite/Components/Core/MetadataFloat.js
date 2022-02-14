@@ -48,55 +48,53 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Components/Core/X3DMetadataObject",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Components/Core/X3DMetadataObject",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNode, 
-          X3DMetadataObject, 
+          X3DNode,
+          X3DMetadataObject,
           X3DConstants)
 {
 "use strict";
 
-	function MetadataFloat (executionContext)
-	{
-		X3DNode           .call (this, executionContext);
-		X3DMetadataObject .call (this, executionContext);
+   function MetadataFloat (executionContext)
+   {
+      X3DNode           .call (this, executionContext);
+      X3DMetadataObject .call (this, executionContext);
 
-		this .addType (X3DConstants .MetadataFloat);
-	}
+      this .addType (X3DConstants .MetadataFloat);
+   }
 
-	MetadataFloat .prototype = Object .assign (Object .create (X3DNode .prototype),
-		X3DMetadataObject .prototype,
-	{
-		constructor: MetadataFloat,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "name",      new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "value",     new Fields .MFFloat ()),
-		]),
-		getTypeName: function ()
-		{
-			return "MetadataFloat";
-		},
-		getComponentName: function ()
-		{
-			return "Core";
-		},
-		getContainerField: function ()
-		{
-			return "metadata";
-		},
-	});
+   MetadataFloat .prototype = Object .assign (Object .create (X3DNode .prototype),
+      X3DMetadataObject .prototype,
+   {
+      constructor: MetadataFloat,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "name",      new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "value",     new Fields .MFFloat ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "MetadataFloat";
+      },
+      getComponentName: function ()
+      {
+         return "Core";
+      },
+      getContainerField: function ()
+      {
+         return "metadata";
+      },
+   });
 
-	return MetadataFloat;
+   return MetadataFloat;
 });
-
-

@@ -48,26 +48,26 @@
 
 
 define ([
-	"x_ite/Components/ParticleSystems/PointEmitter",
+   "x_ite/Components/ParticleSystems/PointEmitter",
 ],
 function (PointEmitter)
 {
 "use strict";
 
-	function X3DParticleSystemsContext () { }
+   function X3DParticleSystemsContext () { }
 
-	X3DParticleSystemsContext .prototype =
-	{
-		getDefaultEmitter: function ()
-		{
-			this .defaultEmitter = new PointEmitter (this .getPrivateScene ());
-			this .defaultEmitter .setup ();
+   X3DParticleSystemsContext .prototype =
+   {
+      getDefaultEmitter: function ()
+      {
+         this .defaultEmitter = new PointEmitter (this .getPrivateScene ());
+         this .defaultEmitter .setup ();
 
-			this .getDefaultEmitter = function () { return this .defaultEmitter; };
+         this .getDefaultEmitter = function () { return this .defaultEmitter; };
 
-			return this .defaultEmitter;
-		},
-	};
+         return this .defaultEmitter;
+      },
+   };
 
-	return X3DParticleSystemsContext;
+   return X3DParticleSystemsContext;
 });

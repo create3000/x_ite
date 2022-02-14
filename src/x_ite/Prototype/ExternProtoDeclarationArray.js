@@ -48,42 +48,42 @@
 
 
 define ([
-	"x_ite/Configuration/X3DInfoArray",
+   "x_ite/Configuration/X3DInfoArray",
 ],
 function (X3DInfoArray)
 {
 "use strict";
 
-	function ExternProtoDeclarationArray (array)
-	{
-		return X3DInfoArray .call (this);
-	}
+   function ExternProtoDeclarationArray (array)
+   {
+      return X3DInfoArray .call (this);
+   }
 
-	ExternProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-	{
-		constructor: ExternProtoDeclarationArray,
-		getTypeName: function ()
-		{
-			return "ExternProtoDeclarationArray";
-		},
-		toVRMLStream: function (stream)
-		{
-			this .array .forEach (function (value)
-			{
-				try
-				{
-					value .toVRMLStream (stream);
+   ExternProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+   {
+      constructor: ExternProtoDeclarationArray,
+      getTypeName: function ()
+      {
+         return "ExternProtoDeclarationArray";
+      },
+      toVRMLStream: function (stream)
+      {
+         this .array .forEach (function (value)
+         {
+            try
+            {
+               value .toVRMLStream (stream);
 
-					stream .string += "\n";
-					stream .string += "\n";
-				}
-				catch (error)
-				{
-					console .log (error);
-				}
-			});
-		},
-	});
+               stream .string += "\n";
+               stream .string += "\n";
+            }
+            catch (error)
+            {
+               console .log (error);
+            }
+         });
+      },
+   });
 
-	return ExternProtoDeclarationArray;
+   return ExternProtoDeclarationArray;
 });

@@ -48,14 +48,14 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Core/PrimitiveQuality",
-	"x_ite/Browser/Core/Shading",
-	"x_ite/Browser/Core/TextureQuality",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Browser/Core/PrimitiveQuality",
+   "x_ite/Browser/Core/Shading",
+   "x_ite/Browser/Core/TextureQuality",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -68,390 +68,390 @@ function (Fields,
 {
 "use strict";
 
-	function toBoolean (value, defaultValue)
-	{
-		if (value === "true" || value === "TRUE")
-			return true;
+   function toBoolean (value, defaultValue)
+   {
+      if (value === "true" || value === "TRUE")
+         return true;
 
-		if (value === "false" || value === "FALSE")
-			return false;
+      if (value === "false" || value === "FALSE")
+         return false;
 
-		return defaultValue;
-	}
+      return defaultValue;
+   }
 
-	function BrowserOptions (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
+   function BrowserOptions (executionContext)
+   {
+      X3DBaseNode .call (this, executionContext);
 
-		this .addAlias ("AntiAliased", this .Antialiased_);
+      this .addAlias ("AntiAliased", this .Antialiased_);
 
-		this .textureQuality   = TextureQuality .MEDIUM
-		this .primitiveQuality = PrimitiveQuality .MEDIUM;
-		this .shading          = Shading .GOURAUD;
+      this .textureQuality   = TextureQuality .MEDIUM
+      this .primitiveQuality = PrimitiveQuality .MEDIUM;
+      this .shading          = Shading .GOURAUD;
 
-		this .setAttributeSplashScreen ();
-	}
+      this .setAttributeSplashScreen ();
+   }
 
-	BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: BrowserOptions,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "SplashScreen",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "Dashboard",              new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "Rubberband",             new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "EnableInlineViewpoints", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "Antialiased",            new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "TextureQuality",         new Fields .SFString ("MEDIUM")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "PrimitiveQuality",       new Fields .SFString ("MEDIUM")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "QualityWhenMoving",      new Fields .SFString ("MEDIUM")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "Shading",                new Fields .SFString ("GOURAUD")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFFloat (9.80665)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                new Fields .SFBool (false)),
-		]),
-		getTypeName: function ()
-		{
-			return "BrowserOptions";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "browserOptions";
-		},
-		initialize: function ()
-		{
-			X3DBaseNode .prototype .initialize .call (this);
+   BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   {
+      constructor: BrowserOptions,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "SplashScreen",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Dashboard",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Rubberband",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "EnableInlineViewpoints", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Antialiased",            new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "TextureQuality",         new Fields .SFString ("MEDIUM")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "PrimitiveQuality",       new Fields .SFString ("MEDIUM")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "QualityWhenMoving",      new Fields .SFString ("MEDIUM")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Shading",                new Fields .SFString ("GOURAUD")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "MotionBlur",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Gravity",                new Fields .SFFloat (9.80665)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "StraightenHorizon",      new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "LogarithmicDepthBuffer", new Fields .SFBool (false)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "Timings",                new Fields .SFBool (false)),
+      ]),
+      getTypeName: function ()
+      {
+         return "BrowserOptions";
+      },
+      getComponentName: function ()
+      {
+         return "X_ITE";
+      },
+      getContainerField: function ()
+      {
+         return "browserOptions";
+      },
+      initialize: function ()
+      {
+         X3DBaseNode .prototype .initialize .call (this);
 
-			this .SplashScreen_              .addInterest ("set_splashScreen__",           this);
-			this .Rubberband_                .addInterest ("set_rubberband__",             this);
-			this .PrimitiveQuality_          .addInterest ("set_primitiveQuality__",       this);
-			this .TextureQuality_            .addInterest ("set_textureQuality__",         this);
-			this .Shading_                   .addInterest ("set_shading__",                this);
-			this .StraightenHorizon_         .addInterest ("set_straightenHorizon__",      this);
-			this .LogarithmicDepthBuffer_    .addInterest ("set_logarithmicDepthBuffer__", this);
-			this .Timings_                   .addInterest ("set_timings__",                this);
+         this .SplashScreen_              .addInterest ("set_splashScreen__",           this);
+         this .Rubberband_                .addInterest ("set_rubberband__",             this);
+         this .PrimitiveQuality_          .addInterest ("set_primitiveQuality__",       this);
+         this .TextureQuality_            .addInterest ("set_textureQuality__",         this);
+         this .Shading_                   .addInterest ("set_shading__",                this);
+         this .StraightenHorizon_         .addInterest ("set_straightenHorizon__",      this);
+         this .LogarithmicDepthBuffer_    .addInterest ("set_logarithmicDepthBuffer__", this);
+         this .Timings_                   .addInterest ("set_timings__",                this);
 
-			this .configure ();
-		},
-		configure: function ()
-		{
-			if (!this .isInitialized ())
-				return;
+         this .configure ();
+      },
+      configure: function ()
+      {
+         if (!this .isInitialized ())
+            return;
 
-			const
-				browser          = this .getBrowser (),
-				localStorage     = browser .getLocalStorage (),
-				fieldDefinitions = this .getFieldDefinitions ();
+         const
+            browser          = this .getBrowser (),
+            localStorage     = browser .getLocalStorage (),
+            fieldDefinitions = this .getFieldDefinitions ();
 
-			for (const fieldDefinition of fieldDefinitions)
-			{
-				const field = this .getField (fieldDefinition .name);
+         for (const fieldDefinition of fieldDefinitions)
+         {
+            const field = this .getField (fieldDefinition .name);
 
-				if (localStorage ["BrowserOptions." + fieldDefinition .name] !== undefined)
-					continue;
+            if (localStorage ["BrowserOptions." + fieldDefinition .name] !== undefined)
+               continue;
 
-				if (!field .equals (fieldDefinition .value))
-					field .setValue (fieldDefinition .value);
-			}
+            if (!field .equals (fieldDefinition .value))
+               field .setValue (fieldDefinition .value);
+         }
 
-			const
-				rubberband        = localStorage ["BrowserOptions.Rubberband"],
-				primitiveQuality  = localStorage ["BrowserOptions.PrimitiveQuality"],
-				textureQuality    = localStorage ["BrowserOptions.TextureQuality"],
-				straightenHorizon = localStorage ["BrowserOptions.StraightenHorizon"],
-				timings           = localStorage ["BrowserOptions.Timings"];
+         const
+            rubberband        = localStorage ["BrowserOptions.Rubberband"],
+            primitiveQuality  = localStorage ["BrowserOptions.PrimitiveQuality"],
+            textureQuality    = localStorage ["BrowserOptions.TextureQuality"],
+            straightenHorizon = localStorage ["BrowserOptions.StraightenHorizon"],
+            timings           = localStorage ["BrowserOptions.Timings"];
 
-			this .setAttributeSplashScreen ();
+         this .setAttributeSplashScreen ();
 
-			if (rubberband !== undefined && rubberband !== this .Rubberband_ .getValue ())
-				this .Rubberband_ = rubberband;
+         if (rubberband !== undefined && rubberband !== this .Rubberband_ .getValue ())
+            this .Rubberband_ = rubberband;
 
-			if (primitiveQuality !== undefined && primitiveQuality !== this .PrimitiveQuality_ .getValue () .toUpperCase ())
-				this .PrimitiveQuality_ = primitiveQuality;
+         if (primitiveQuality !== undefined && primitiveQuality !== this .PrimitiveQuality_ .getValue () .toUpperCase ())
+            this .PrimitiveQuality_ = primitiveQuality;
 
-			if (textureQuality !== undefined && textureQuality !== this .TextureQuality_ .getValue () .toUpperCase ())
-				this .TextureQuality_ = textureQuality;
+         if (textureQuality !== undefined && textureQuality !== this .TextureQuality_ .getValue () .toUpperCase ())
+            this .TextureQuality_ = textureQuality;
 
-			if (straightenHorizon !== undefined && straightenHorizon !== this .StraightenHorizon_ .getValue ())
-				this .StraightenHorizon_ = straightenHorizon;
+         if (straightenHorizon !== undefined && straightenHorizon !== this .StraightenHorizon_ .getValue ())
+            this .StraightenHorizon_ = straightenHorizon;
 
-			if (timings !== undefined && timings !== this .Timings_ .getValue ())
-				this .Timings_ = timings;
-		},
-		setAttributeSplashScreen: function ()
-		{
-			this .SplashScreen_ .set (this .getSplashScreen ());
-		},
-		getCache: function ()
-		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("cache"), true);
-		},
-		getContextMenu: function ()
-		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("contextMenu"), true);
-		},
-		getDebug: function ()
-		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("debug"), false);
-		},
-		getNotifications: function ()
-		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("notifications"), true);
-		},
-		getSplashScreen: function ()
-		{
-			return toBoolean (this .getBrowser () .getElement () .attr ("splashScreen"), true);
-		},
-		getPrimitiveQuality: function ()
-		{
-			return this .primitiveQuality;
-		},
-		getShading: function ()
-		{
-			return this .shading;
-		},
-		getTextureQuality: function ()
-		{
-			return this .textureQuality;
-		},
-		set_splashScreen__: function (splashScreen)
-		{
-			this .getBrowser () .getElement () .attr ("splashScreen", splashScreen .getValue () ? "true" : "false");
-		},
-		set_rubberband__: function (rubberband)
-		{
-			this .getBrowser () .getLocalStorage () ["BrowserOptions.Rubberband"] = rubberband .getValue ();
-			this .getBrowser () .getViewer () .initShaders ();
-		},
-		set_primitiveQuality__: function (value)
-		{
-			const
-				browser          = this .getBrowser (),
-				localStorage     = browser .getLocalStorage (),
-				primitiveQuality = value .getValue () .toUpperCase ();
+         if (timings !== undefined && timings !== this .Timings_ .getValue ())
+            this .Timings_ = timings;
+      },
+      setAttributeSplashScreen: function ()
+      {
+         this .SplashScreen_ .set (this .getSplashScreen ());
+      },
+      getCache: function ()
+      {
+         return toBoolean (this .getBrowser () .getElement () .attr ("cache"), true);
+      },
+      getContextMenu: function ()
+      {
+         return toBoolean (this .getBrowser () .getElement () .attr ("contextMenu"), true);
+      },
+      getDebug: function ()
+      {
+         return toBoolean (this .getBrowser () .getElement () .attr ("debug"), false);
+      },
+      getNotifications: function ()
+      {
+         return toBoolean (this .getBrowser () .getElement () .attr ("notifications"), true);
+      },
+      getSplashScreen: function ()
+      {
+         return toBoolean (this .getBrowser () .getElement () .attr ("splashScreen"), true);
+      },
+      getPrimitiveQuality: function ()
+      {
+         return this .primitiveQuality;
+      },
+      getShading: function ()
+      {
+         return this .shading;
+      },
+      getTextureQuality: function ()
+      {
+         return this .textureQuality;
+      },
+      set_splashScreen__: function (splashScreen)
+      {
+         this .getBrowser () .getElement () .attr ("splashScreen", splashScreen .getValue () ? "true" : "false");
+      },
+      set_rubberband__: function (rubberband)
+      {
+         this .getBrowser () .getLocalStorage () ["BrowserOptions.Rubberband"] = rubberband .getValue ();
+         this .getBrowser () .getViewer () .initShaders ();
+      },
+      set_primitiveQuality__: function (value)
+      {
+         const
+            browser          = this .getBrowser (),
+            localStorage     = browser .getLocalStorage (),
+            primitiveQuality = value .getValue () .toUpperCase ();
 
-			localStorage ["BrowserOptions.PrimitiveQuality"] = primitiveQuality;
+         localStorage ["BrowserOptions.PrimitiveQuality"] = primitiveQuality;
 
-			const
-				cone     = browser .getConeOptions (),
-				cylinder = browser .getCylinderOptions (),
-				sphere   = browser .getSphereOptions ();
+         const
+            cone     = browser .getConeOptions (),
+            cylinder = browser .getCylinderOptions (),
+            sphere   = browser .getSphereOptions ();
 
-			switch (primitiveQuality)
-			{
-				case "LOW":
-				{
-					if (this .primitiveQuality === PrimitiveQuality .LOW)
-						break;
+         switch (primitiveQuality)
+         {
+            case "LOW":
+            {
+               if (this .primitiveQuality === PrimitiveQuality .LOW)
+                  break;
 
-					this .primitiveQuality = PrimitiveQuality .LOW;
+               this .primitiveQuality = PrimitiveQuality .LOW;
 
-					if (browser .setGeometry2DPrimitiveQuality)
-						browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
+               if (browser .setGeometry2DPrimitiveQuality)
+                  browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
 
-					cone     .xDimension_ = 16;
-					cylinder .xDimension_ = 16;
-					sphere   .xDimension_ = 20;
-					sphere   .yDimension_ = 9;
-					break;
-				}
-				case "HIGH":
-				{
-					if (this .primitiveQuality === PrimitiveQuality .HIGH)
-						break;
+               cone     .xDimension_ = 16;
+               cylinder .xDimension_ = 16;
+               sphere   .xDimension_ = 20;
+               sphere   .yDimension_ = 9;
+               break;
+            }
+            case "HIGH":
+            {
+               if (this .primitiveQuality === PrimitiveQuality .HIGH)
+                  break;
 
-					this .primitiveQuality = PrimitiveQuality .HIGH;
+               this .primitiveQuality = PrimitiveQuality .HIGH;
 
-					if (browser .setGeometry2DPrimitiveQuality)
-						browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
+               if (browser .setGeometry2DPrimitiveQuality)
+                  browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
 
-					cone     .xDimension_ = 32;
-					cylinder .xDimension_ = 32;
-					sphere   .xDimension_ = 64;
-					sphere   .yDimension_ = 31;
-					break;
-				}
-				default:
-				{
-					if (this .primitiveQuality === PrimitiveQuality .MEDIUM)
-						break;
+               cone     .xDimension_ = 32;
+               cylinder .xDimension_ = 32;
+               sphere   .xDimension_ = 64;
+               sphere   .yDimension_ = 31;
+               break;
+            }
+            default:
+            {
+               if (this .primitiveQuality === PrimitiveQuality .MEDIUM)
+                  break;
 
-					this .primitiveQuality = PrimitiveQuality .MEDIUM;
+               this .primitiveQuality = PrimitiveQuality .MEDIUM;
 
-					if (browser .setGeometry2DPrimitiveQuality)
-						browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
+               if (browser .setGeometry2DPrimitiveQuality)
+                  browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
 
-					cone     .xDimension_ = 20;
-					cylinder .xDimension_ = 20;
-					sphere   .xDimension_ = 32;
-					sphere   .yDimension_ = 15;
-					break;
-				}
-			}
-		},
-		set_textureQuality__: function (value)
-		{
-			const
-				browser        = this .getBrowser (),
-				localStorage   = browser .getLocalStorage (),
-				textureQuality = value .getValue () .toUpperCase ();
+               cone     .xDimension_ = 20;
+               cylinder .xDimension_ = 20;
+               sphere   .xDimension_ = 32;
+               sphere   .yDimension_ = 15;
+               break;
+            }
+         }
+      },
+      set_textureQuality__: function (value)
+      {
+         const
+            browser        = this .getBrowser (),
+            localStorage   = browser .getLocalStorage (),
+            textureQuality = value .getValue () .toUpperCase ();
 
-			localStorage ["BrowserOptions.TextureQuality"] = textureQuality;
+         localStorage ["BrowserOptions.TextureQuality"] = textureQuality;
 
-			const textureProperties = this .getBrowser () .getDefaultTextureProperties ();
+         const textureProperties = this .getBrowser () .getDefaultTextureProperties ();
 
-			switch (textureQuality)
-			{
-				case "LOW":
-				{
-					if (this .textureQuality === TextureQuality .LOW)
-						break;
+         switch (textureQuality)
+         {
+            case "LOW":
+            {
+               if (this .textureQuality === TextureQuality .LOW)
+                  break;
 
-					this .textureQuality = TextureQuality .LOW;
+               this .textureQuality = TextureQuality .LOW;
 
-					textureProperties .magnificationFilter_ = "AVG_PIXEL";
-					textureProperties .minificationFilter_  = "AVG_PIXEL";
-					textureProperties .textureCompression_  = "FASTEST";
-					textureProperties .generateMipMaps_     = true;
+               textureProperties .magnificationFilter_ = "AVG_PIXEL";
+               textureProperties .minificationFilter_  = "AVG_PIXEL";
+               textureProperties .textureCompression_  = "FASTEST";
+               textureProperties .generateMipMaps_     = true;
 
-					//glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
-					//glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-					break;
-				}
-				case "HIGH":
-				{
-					if (this .textureQuality === TextureQuality .HIGH)
-						break;
+               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
+               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+               break;
+            }
+            case "HIGH":
+            {
+               if (this .textureQuality === TextureQuality .HIGH)
+                  break;
 
-					this .textureQuality = TextureQuality .HIGH;
+               this .textureQuality = TextureQuality .HIGH;
 
-					textureProperties .magnificationFilter_ = "NICEST";
-					textureProperties .minificationFilter_  = "NICEST";
-					textureProperties .textureCompression_  = "NICEST";
-					textureProperties .generateMipMaps_     = true;
+               textureProperties .magnificationFilter_ = "NICEST";
+               textureProperties .minificationFilter_  = "NICEST";
+               textureProperties .textureCompression_  = "NICEST";
+               textureProperties .generateMipMaps_     = true;
 
-					//glHint (GL_GENERATE_MIPMAP_HINT,        GL_NICEST);
-					//glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-					break;
-				}
-				default:
-				{
-					if (this .textureQuality === TextureQuality .MEDIUM)
-						break;
+               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_NICEST);
+               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
+               break;
+            }
+            default:
+            {
+               if (this .textureQuality === TextureQuality .MEDIUM)
+                  break;
 
-					this .textureQuality = TextureQuality .MEDIUM;
+               this .textureQuality = TextureQuality .MEDIUM;
 
-					textureProperties .magnificationFilter_ = "NICEST";
-					textureProperties .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
-					textureProperties .textureCompression_  = "NICEST";
-					textureProperties .generateMipMaps_     = true;
+               textureProperties .magnificationFilter_ = "NICEST";
+               textureProperties .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
+               textureProperties .textureCompression_  = "NICEST";
+               textureProperties .generateMipMaps_     = true;
 
-					//glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
-					//glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
-					break;
-				}
-			}
-		},
-		set_shading__: function (value)
-		{
-			const shading = value .getValue () .toUpperCase ();
+               //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
+               //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
+               break;
+            }
+         }
+      },
+      set_shading__: function (value)
+      {
+         const shading = value .getValue () .toUpperCase ();
 
-			switch (shading)
-			{
-				case "POINT":
-				case "POINTSET":
-				{
-					this .shading = Shading .POINT;
-					break;
-				}
-				case "WIREFRAME":
-				{
-					this .shading = Shading .WIREFRAME;
-					break;
-				}
-				case "FLAT":
-				{
-					this .shading = Shading .FLAT;
-					break;
-				}
-				case "PHONG":
-				{
-					this .shading = Shading .PHONG;
-					break;
-				}
-				default:
-				{
-					this .shading = Shading .GOURAUD;
-					break;
-				}
-			}
+         switch (shading)
+         {
+            case "POINT":
+            case "POINTSET":
+            {
+               this .shading = Shading .POINT;
+               break;
+            }
+            case "WIREFRAME":
+            {
+               this .shading = Shading .WIREFRAME;
+               break;
+            }
+            case "FLAT":
+            {
+               this .shading = Shading .FLAT;
+               break;
+            }
+            case "PHONG":
+            {
+               this .shading = Shading .PHONG;
+               break;
+            }
+            default:
+            {
+               this .shading = Shading .GOURAUD;
+               break;
+            }
+         }
 
-			this .getBrowser () .setShading (this .shading);
-		},
-		set_straightenHorizon__: function (straightenHorizon)
-		{
-			this .getBrowser () .getLocalStorage () ["BrowserOptions.StraightenHorizon"] = straightenHorizon .getValue ();
-		},
-		set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
-		{
-			const
-				browser = this .getBrowser (),
-				gl      = browser .getContext ();
+         this .getBrowser () .setShading (this .shading);
+      },
+      set_straightenHorizon__: function (straightenHorizon)
+      {
+         this .getBrowser () .getLocalStorage () ["BrowserOptions.StraightenHorizon"] = straightenHorizon .getValue ();
+      },
+      set_logarithmicDepthBuffer__: function (logarithmicDepthBuffer)
+      {
+         const
+            browser = this .getBrowser (),
+            gl      = browser .getContext ();
 
-			logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && (gl .getVersion () >= 2 || Boolean (browser .getExtension ("EXT_frag_depth")));
+         logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && (gl .getVersion () >= 2 || Boolean (browser .getExtension ("EXT_frag_depth")));
 
-			if (logarithmicDepthBuffer === browser .getRenderingProperties () .LogarithmicDepthBuffer_ .getValue ())
-				return;
+         if (logarithmicDepthBuffer === browser .getRenderingProperties () .LogarithmicDepthBuffer_ .getValue ())
+            return;
 
-			browser .getRenderingProperties () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer;
+         browser .getRenderingProperties () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer;
 
-			// Recompile shaders.
+         // Recompile shaders.
 
-			// There's no need to update background shader.
+         // There's no need to update background shader.
 
-			if (browser .hasPointShader ())
-			{
-				browser .getPointShader () .parts_ [0] .getValue () .url_ .addEvent ();
-				browser .getPointShader () .parts_ [1] .getValue () .url_ .addEvent ();
-			}
+         if (browser .hasPointShader ())
+         {
+            browser .getPointShader () .parts_ [0] .getValue () .url_ .addEvent ();
+            browser .getPointShader () .parts_ [1] .getValue () .url_ .addEvent ();
+         }
 
-			if (browser .hasLineShader ())
-			{
-				browser .getLineShader () .parts_ [0] .getValue () .url_ .addEvent ();
-				browser .getLineShader () .parts_ [1] .getValue () .url_ .addEvent ();
-			}
+         if (browser .hasLineShader ())
+         {
+            browser .getLineShader () .parts_ [0] .getValue () .url_ .addEvent ();
+            browser .getLineShader () .parts_ [1] .getValue () .url_ .addEvent ();
+         }
 
-			if (browser .hasGouraudShader ())
-			{
-				browser .getGouraudShader () .parts_ [0] .getValue () .url_ .addEvent ();
-				browser .getGouraudShader () .parts_ [1] .getValue () .url_ .addEvent ();
-			}
+         if (browser .hasGouraudShader ())
+         {
+            browser .getGouraudShader () .parts_ [0] .getValue () .url_ .addEvent ();
+            browser .getGouraudShader () .parts_ [1] .getValue () .url_ .addEvent ();
+         }
 
-			if (browser .hasPhongShader ())
-			{
-				browser .getPhongShader () .parts_ [0] .getValue () .url_ .addEvent ();
-				browser .getPhongShader () .parts_ [1] .getValue () .url_ .addEvent ();
-			}
+         if (browser .hasPhongShader ())
+         {
+            browser .getPhongShader () .parts_ [0] .getValue () .url_ .addEvent ();
+            browser .getPhongShader () .parts_ [1] .getValue () .url_ .addEvent ();
+         }
 
-			if (browser .hasShadowShader ())
-			{
-				browser .getShadowShader () .parts_ [0] .getValue () .url_ .addEvent ();
-				browser .getShadowShader () .parts_ [1] .getValue () .url_ .addEvent ();
-			}
-		},
-		set_timings__: function (timings)
-		{
-			const browser = this .getBrowser ();
+         if (browser .hasShadowShader ())
+         {
+            browser .getShadowShader () .parts_ [0] .getValue () .url_ .addEvent ();
+            browser .getShadowShader () .parts_ [1] .getValue () .url_ .addEvent ();
+         }
+      },
+      set_timings__: function (timings)
+      {
+         const browser = this .getBrowser ();
 
-			browser .getLocalStorage () ["BrowserOptions.Timings"] = timings .getValue ();
-			browser .getBrowserTimings () .setEnabled (timings .getValue ());
-		},
-	});
+         browser .getLocalStorage () ["BrowserOptions.Timings"] = timings .getValue ();
+         browser .getBrowserTimings () .setEnabled (timings .getValue ());
+      },
+   });
 
-	return BrowserOptions;
+   return BrowserOptions;
 });

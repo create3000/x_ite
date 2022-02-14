@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DChildNode,
@@ -58,25 +58,25 @@ function (Fields,
 {
 "use strict";
 
-	function X3DBindableNode (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
+   function X3DBindableNode (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DBindableNode);
+      this .addType (X3DConstants .X3DBindableNode);
 
-		this .addChildObjects ("transitionActive", new Fields .SFBool ());
-	}
+      this .addChildObjects ("transitionActive", new Fields .SFBool ());
+   }
 
-	X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: X3DBindableNode,
-		getCameraObject: function ()
-		{
-		   return true;
-		},
-		transitionStart: function ()
-		{ },
-	});
+   X3DBindableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: X3DBindableNode,
+      getCameraObject: function ()
+      {
+         return true;
+      },
+      transitionStart: function ()
+      { },
+   });
 
-	return X3DBindableNode;
+   return X3DBindableNode;
 });

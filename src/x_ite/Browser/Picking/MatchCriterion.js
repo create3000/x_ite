@@ -51,14 +51,14 @@ define (function ()
 {
 "use strict";
 
-	var i = 0;
+   var i = 0;
 
-	var MatchCriterion =
-	{
-		MATCH_ANY:      i ++,
-		MATCH_EVERY:    i ++,
-		MATCH_ONLY_ONE: i ++,
-	};
+   var MatchCriterion =
+   {
+      MATCH_ANY:      i ++,
+      MATCH_EVERY:    i ++,
+      MATCH_ONLY_ONE: i ++,
+   };
 
-	return MatchCriterion;
+   return MatchCriterion;
 });

@@ -48,13 +48,13 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Shaders/X3DShaderNode",
-	"x_ite/Components/Networking/X3DUrlObject",
-	"x_ite/Components/Shaders/X3DProgrammableShaderObject",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Shaders/X3DShaderNode",
+   "x_ite/Components/Networking/X3DUrlObject",
+   "x_ite/Components/Shaders/X3DProgrammableShaderObject",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -66,52 +66,52 @@ function (Fields,
 {
 "use strict";
 
-	function PackagedShader (executionContext)
-	{
-		X3DShaderNode               .call (this, executionContext);
-		X3DUrlObject                .call (this, executionContext);
-		X3DProgrammableShaderObject .call (this, executionContext);
+   function PackagedShader (executionContext)
+   {
+      X3DShaderNode               .call (this, executionContext);
+      X3DUrlObject                .call (this, executionContext);
+      X3DProgrammableShaderObject .call (this, executionContext);
 
-		this .addType (X3DConstants .PackagedShader);
-	}
+      this .addType (X3DConstants .PackagedShader);
+   }
 
-	PackagedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
-		X3DUrlObject .prototype,
-		X3DProgrammableShaderObject .prototype,
-	{
-		constructor: PackagedShader,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",             new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "isValid",              new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "language",             new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-		]),
-		getTypeName: function ()
-		{
-			return "PackagedShader";
-		},
-		getComponentName: function ()
-		{
-			return "Shaders";
-		},
-		getContainerField: function ()
-		{
-			return "shaders";
-		},
-		getSourceText: function ()
-		{
-			return this .url_;
-		},
-		requestImmediateLoad: function (cache = true)
-		{ },
-		requestUnload: function ()
-		{ },
-	});
+   PackagedShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
+      X3DUrlObject .prototype,
+      X3DProgrammableShaderObject .prototype,
+   {
+      constructor: PackagedShader,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isValid",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "language",             new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+      ]),
+      getTypeName: function ()
+      {
+         return "PackagedShader";
+      },
+      getComponentName: function ()
+      {
+         return "Shaders";
+      },
+      getContainerField: function ()
+      {
+         return "shaders";
+      },
+      getSourceText: function ()
+      {
+         return this .url_;
+      },
+      requestImmediateLoad: function (cache = true)
+      { },
+      requestUnload: function ()
+      { },
+   });
 
-	return PackagedShader;
+   return PackagedShader;
 });

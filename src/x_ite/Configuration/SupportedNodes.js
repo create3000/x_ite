@@ -48,55 +48,55 @@
 
 
 define ([
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Parser/HTMLSupport",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Parser/HTMLSupport",
 ],
 function (X3DConstants,
           HTMLSupport)
 {
 "use strict";
 
-	let nodeType = 0;
+   let nodeType = 0;
 
-	function SupportedNodes ()
-	{
-		this .types         = new Map ();
-		this .abstractTypes = new Map ();
-	}
+   function SupportedNodes ()
+   {
+      this .types         = new Map ();
+      this .abstractTypes = new Map ();
+   }
 
-	SupportedNodes .prototype =
-	{
-		addType: function (typeName, Type)
-		{
-			X3DConstants [typeName] = ++ nodeType; // Start with 1, as X3DBaseNode is 0.
+   SupportedNodes .prototype =
+   {
+      addType: function (typeName, Type)
+      {
+         X3DConstants [typeName] = ++ nodeType; // Start with 1, as X3DBaseNode is 0.
 
-			this .types .set (typeName,                 Type);
-			this .types .set (typeName .toUpperCase (), Type);
+         this .types .set (typeName,                 Type);
+         this .types .set (typeName .toUpperCase (), Type);
 
-			// HTMLSupport
+         // HTMLSupport
 
-			for (const fieldDefinition of Type .prototype .fieldDefinitions)
-			{
-				const
-					name       = fieldDefinition .name,
-					accessType = fieldDefinition .accessType;
+         for (const fieldDefinition of Type .prototype .fieldDefinitions)
+         {
+            const
+               name       = fieldDefinition .name,
+               accessType = fieldDefinition .accessType;
 
-				if (accessType & X3DConstants .initializeOnly)
-				{
-					HTMLSupport .fields .set (name,                 name);
-					HTMLSupport .fields .set (name .toLowerCase (), name);
-				}
-			}
-		},
-		addAbstractType: function (typeName, Type)
-		{
-			X3DConstants [typeName] = ++ nodeType;
-		},
-		getType: function (typeName)
-		{
-			return this .types .get (typeName);
-		},
-	};
+            if (accessType & X3DConstants .initializeOnly)
+            {
+               HTMLSupport .fields .set (name,                 name);
+               HTMLSupport .fields .set (name .toLowerCase (), name);
+            }
+         }
+      },
+      addAbstractType: function (typeName, Type)
+      {
+         X3DConstants [typeName] = ++ nodeType;
+      },
+      getType: function (typeName)
+      {
+         return this .types .get (typeName);
+      },
+   };
 
-	return new SupportedNodes ();
+   return new SupportedNodes ();
 });

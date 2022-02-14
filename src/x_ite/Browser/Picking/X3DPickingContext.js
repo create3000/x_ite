@@ -48,83 +48,83 @@
 
 
 define ([
-	"x_ite/Bits/TraverseType",
+   "x_ite/Bits/TraverseType",
 ],
 function (TraverseType)
 {
 "use strict";
 
-	function X3DPickingContext ()
-	{
-		this .transformSensorNodes = new Set ();
-		this .pickSensorNodes      = [ new Set () ];
-		this .pickingHierarchy     = [ ];
-		this .pickable             = [ false ];
-		this .pickingTime          = 0;
-	}
+   function X3DPickingContext ()
+   {
+      this .transformSensorNodes = new Set ();
+      this .pickSensorNodes      = [ new Set () ];
+      this .pickingHierarchy     = [ ];
+      this .pickable             = [ false ];
+      this .pickingTime          = 0;
+   }
 
-	X3DPickingContext .prototype =
-	{
-		initialize: function ()
-		{ },
-		addTransformSensor: function (transformSensorNode)
-		{
-			this .transformSensorNodes .add (transformSensorNode);
-			this .enablePicking ();
-		},
-		removeTransformSensor: function (transformSensorNode)
-		{
-			this .transformSensorNodes .delete (transformSensorNode);
-			this .enablePicking ();
-		},
-		addPickSensor: function (pickSensorNode)
-		{
-			this .pickSensorNodes [0] .add (pickSensorNode);
-			this .enablePicking ();
-		},
-		removePickSensor: function (pickSensorNode)
-		{
-			this .pickSensorNodes [0] .delete (pickSensorNode);
-			this .enablePicking ();
-		},
-		getPickSensors: function ()
-		{
-			return this .pickSensorNodes;
-		},
-		getPickingHierarchy: function ()
-		{
-			return this .pickingHierarchy;
-		},
-		getPickable: function ()
-		{
-			return this .pickable;
-		},
-		enablePicking: function ()
-		{
-			if (this .transformSensorNodes .size || this .pickSensorNodes [0] .size)
-				this .sensorEvents_ .addInterest ("picking", this);
-			else
-				this .sensorEvents_ .removeInterest ("picking", this);
-		},
-		picking: function ()
-		{
-			var t0 = performance .now ();
-		
-			this .getWorld () .traverse (TraverseType .PICKING, null);
+   X3DPickingContext .prototype =
+   {
+      initialize: function ()
+      { },
+      addTransformSensor: function (transformSensorNode)
+      {
+         this .transformSensorNodes .add (transformSensorNode);
+         this .enablePicking ();
+      },
+      removeTransformSensor: function (transformSensorNode)
+      {
+         this .transformSensorNodes .delete (transformSensorNode);
+         this .enablePicking ();
+      },
+      addPickSensor: function (pickSensorNode)
+      {
+         this .pickSensorNodes [0] .add (pickSensorNode);
+         this .enablePicking ();
+      },
+      removePickSensor: function (pickSensorNode)
+      {
+         this .pickSensorNodes [0] .delete (pickSensorNode);
+         this .enablePicking ();
+      },
+      getPickSensors: function ()
+      {
+         return this .pickSensorNodes;
+      },
+      getPickingHierarchy: function ()
+      {
+         return this .pickingHierarchy;
+      },
+      getPickable: function ()
+      {
+         return this .pickable;
+      },
+      enablePicking: function ()
+      {
+         if (this .transformSensorNodes .size || this .pickSensorNodes [0] .size)
+            this .sensorEvents_ .addInterest ("picking", this);
+         else
+            this .sensorEvents_ .removeInterest ("picking", this);
+      },
+      picking: function ()
+      {
+         var t0 = performance .now ();
 
-			this .transformSensorNodes .forEach (function (transformSensorNode)
-			{
-				transformSensorNode .process ();
-			});
+         this .getWorld () .traverse (TraverseType .PICKING, null);
 
-			this .pickSensorNodes [0] .forEach (function (pickSensorNode)
-			{
-				pickSensorNode .process ();
-			});
+         this .transformSensorNodes .forEach (function (transformSensorNode)
+         {
+            transformSensorNode .process ();
+         });
 
-			this .pickingTime = performance .now () - t0;
-		},
-	};
+         this .pickSensorNodes [0] .forEach (function (pickSensorNode)
+         {
+            pickSensorNode .process ();
+         });
 
-	return X3DPickingContext;
+         this .pickingTime = performance .now () - t0;
+      },
+   };
+
+   return X3DPickingContext;
 });

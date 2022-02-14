@@ -17,8 +17,8 @@ varying vec4 color;
 void
 main ()
 {
-	texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;
-	color    = x3d_ColorMaterial ? x3d_Color : vec4 (1.0);
+   texCoord = x3d_TextureMatrix [0] * x3d_TexCoord0;
+   color    = x3d_ColorMaterial ? x3d_Color : vec4 (1.0);
 
-	gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_Vertex;
+   gl_Position = x3d_ProjectionMatrix * x3d_ModelViewMatrix * x3d_Vertex;
 }

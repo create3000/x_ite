@@ -48,172 +48,170 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Algorithm",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Algorithm",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNode, 
-          X3DConstants, 
+          X3DNode,
+          X3DConstants,
           Algorithm)
 {
 "use strict";
 
-	function TextureProperties (executionContext)
-	{
-		X3DNode .call (this, executionContext);
+   function TextureProperties (executionContext)
+   {
+      X3DNode .call (this, executionContext);
 
-		this .addType (X3DConstants .TextureProperties);
-	}
+      this .addType (X3DConstants .TextureProperties);
+   }
 
-	TextureProperties .prototype = Object .assign (Object .create (X3DNode .prototype),
-	{
-		constructor: TextureProperties,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",            new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "borderColor",         new Fields .SFColorRGBA ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "borderWidth",         new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "anisotropicDegree",   new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "generateMipMaps",     new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "minificationFilter",  new Fields .SFString ("FASTEST")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "magnificationFilter", new Fields .SFString ("FASTEST")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeS",       new Fields .SFString ("REPEAT")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeT",       new Fields .SFString ("REPEAT")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeR",       new Fields .SFString ("REPEAT")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "textureCompression",  new Fields .SFString ("FASTEST")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "texturePriority",     new Fields .SFFloat ()),
-		]),
-		getTypeName: function ()
-		{
-			return "TextureProperties";
-		},
-		getComponentName: function ()
-		{
-			return "Texturing";
-		},
-		getContainerField: function ()
-		{
-			return "textureProperties";
-		},
-		getBorderWidth: function ()
-		{
-			// https://stackoverflow.com/questions/27760277/webgl-border-color-shader?lq=1
-			return Algorithm .clamp (this .borderWidth_ .getValue (), 0, 1);
-		},
-		getBoundaryMode: (function ()
-		{
-			var boundaryModes = new Map ([
-				["CLAMP",             "CLAMP_TO_EDGE"], // "CLAMP"
-				["CLAMP_TO_EDGE",     "CLAMP_TO_EDGE"], 
-				["CLAMP_TO_BOUNDARY", "CLAMP_TO_EDGE"], // "CLAMP_TO_BORDER"
-				["MIRRORED_REPEAT",   "MIRRORED_REPEAT"],
-				["REPEAT",            "REPEAT"],
-			]);
+   TextureProperties .prototype = Object .assign (Object .create (X3DNode .prototype),
+   {
+      constructor: TextureProperties,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "borderColor",         new Fields .SFColorRGBA ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "borderWidth",         new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "anisotropicDegree",   new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "generateMipMaps",     new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "minificationFilter",  new Fields .SFString ("FASTEST")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "magnificationFilter", new Fields .SFString ("FASTEST")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeS",       new Fields .SFString ("REPEAT")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeT",       new Fields .SFString ("REPEAT")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "boundaryModeR",       new Fields .SFString ("REPEAT")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "textureCompression",  new Fields .SFString ("FASTEST")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "texturePriority",     new Fields .SFFloat ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "TextureProperties";
+      },
+      getComponentName: function ()
+      {
+         return "Texturing";
+      },
+      getContainerField: function ()
+      {
+         return "textureProperties";
+      },
+      getBorderWidth: function ()
+      {
+         // https://stackoverflow.com/questions/27760277/webgl-border-color-shader?lq=1
+         return Algorithm .clamp (this .borderWidth_ .getValue (), 0, 1);
+      },
+      getBoundaryMode: (function ()
+      {
+         var boundaryModes = new Map ([
+            ["CLAMP",             "CLAMP_TO_EDGE"], // "CLAMP"
+            ["CLAMP_TO_EDGE",     "CLAMP_TO_EDGE"],
+            ["CLAMP_TO_BOUNDARY", "CLAMP_TO_EDGE"], // "CLAMP_TO_BORDER"
+            ["MIRRORED_REPEAT",   "MIRRORED_REPEAT"],
+            ["REPEAT",            "REPEAT"],
+         ]);
 
-			return function (string)
-			{
-				var boundaryMode = boundaryModes .get (string);
+         return function (string)
+         {
+            var boundaryMode = boundaryModes .get (string);
 
-				if (boundaryMode !== undefined)
-					return boundaryMode;
-	
-				return "REPEAT";
-			};
-		})(),
-		getBoundaryModeS: function ()
-		{
-			return this .getBoundaryMode (this .boundaryModeS_ .getValue ());
-		},
-		getBoundaryModeT: function ()
-		{
-			return this .getBoundaryMode (this .boundaryModeT_ .getValue ());
-		},
-		getBoundaryModeR: function ()
-		{
-			return this .getBoundaryMode (this .boundaryModeR_ .getValue ());
-		},
-		getMinificationFilter: (function ()
-		{
-			var minificationFilters = new Map ([
-				["AVG_PIXEL_AVG_MIPMAP",         "LINEAR_MIPMAP_LINEAR"],
-				["AVG_PIXEL",                    "LINEAR"],
-				["AVG_PIXEL_NEAREST_MIPMAP",     "LINEAR_MIPMAP_NEAREST"],
-				["NEAREST_PIXEL_AVG_MIPMAP",     "NEAREST_MIPMAP_LINEAR"],
-				["NEAREST_PIXEL_NEAREST_MIPMAP", "NEAREST_MIPMAP_NEAREST"],
-				["NEAREST_PIXEL",                "NEAREST"],
-				["NICEST",                       "LINEAR_MIPMAP_LINEAR"],
-				["FASTEST",                      "NEAREST"],
-			]);
+            if (boundaryMode !== undefined)
+               return boundaryMode;
 
-			return function ()
-			{
-				if (this .generateMipMaps_ .getValue ())
-				{
-					var minificationFilter = minificationFilters .get (this .minificationFilter_ .getValue ());
-				
-					if (minificationFilter !== undefined)
-						return minificationFilter;
+            return "REPEAT";
+         };
+      })(),
+      getBoundaryModeS: function ()
+      {
+         return this .getBoundaryMode (this .boundaryModeS_ .getValue ());
+      },
+      getBoundaryModeT: function ()
+      {
+         return this .getBoundaryMode (this .boundaryModeT_ .getValue ());
+      },
+      getBoundaryModeR: function ()
+      {
+         return this .getBoundaryMode (this .boundaryModeR_ .getValue ());
+      },
+      getMinificationFilter: (function ()
+      {
+         var minificationFilters = new Map ([
+            ["AVG_PIXEL_AVG_MIPMAP",         "LINEAR_MIPMAP_LINEAR"],
+            ["AVG_PIXEL",                    "LINEAR"],
+            ["AVG_PIXEL_NEAREST_MIPMAP",     "LINEAR_MIPMAP_NEAREST"],
+            ["NEAREST_PIXEL_AVG_MIPMAP",     "NEAREST_MIPMAP_LINEAR"],
+            ["NEAREST_PIXEL_NEAREST_MIPMAP", "NEAREST_MIPMAP_NEAREST"],
+            ["NEAREST_PIXEL",                "NEAREST"],
+            ["NICEST",                       "LINEAR_MIPMAP_LINEAR"],
+            ["FASTEST",                      "NEAREST"],
+         ]);
 
-					return this .getBrowser () .getDefaultTextureProperties () .getMinificationFilter ();
-				}
-	
-				return "LINEAR";
-			};
-		})(),
-		getMagnificationFilter: (function ()
-		{
-			var magnificationFilters = new Map ([
-				["AVG_PIXEL",     "LINEAR"],
-				["NEAREST_PIXEL", "NEAREST"],
-				["NICEST",        "LINEAR"],
-				["FASTEST",       "NEAREST"],
-			]);
+         return function ()
+         {
+            if (this .generateMipMaps_ .getValue ())
+            {
+               var minificationFilter = minificationFilters .get (this .minificationFilter_ .getValue ());
 
-			return function ()
-			{
-				var magnificationFilter = magnificationFilters .get (this .magnificationFilter_ .getValue ());
-			
-				if (magnificationFilter !== undefined)
-					return magnificationFilter;
-	
-				// DEFAULT
-				return this .getBrowser () .getDefaultTextureProperties () .getMagnificationFilter ();
-			};
-		})(),
-		getTextureCompression: (function ()
-		{
-			var textureCompressions = new Map ([
-				["DEFAULT", "RGBA"],
-				["NICEST",  "RGBA"],
-				["FASTEST", "RGBA"],
-				["LOW",     "RGBA"],
-				["MEDIUM",  "RGBA"],
-				["HIGH",    "RGBA"],
-			]);
+               if (minificationFilter !== undefined)
+                  return minificationFilter;
 
-			return function ()
-			{
-				var
-					browser            = this .getBrowser (),
-					gl                 = browser .getContext (),
-					compressedTexture  = browser .getExtension ("WEBGL_compressed_texture_etc"), // TODO: find suitable compression.
-					textureCompression = compressedTexture ? compressedTexture [textureCompressions .get (this .textureCompression_ .getValue ())] : undefined;
+               return this .getBrowser () .getDefaultTextureProperties () .getMinificationFilter ();
+            }
 
-				if (textureCompression !== undefined)
-					return textureCompression;
+            return "LINEAR";
+         };
+      })(),
+      getMagnificationFilter: (function ()
+      {
+         var magnificationFilters = new Map ([
+            ["AVG_PIXEL",     "LINEAR"],
+            ["NEAREST_PIXEL", "NEAREST"],
+            ["NICEST",        "LINEAR"],
+            ["FASTEST",       "NEAREST"],
+         ]);
 
-				// DEFAULT
-				return gl .RGBA;
-			};
-		})(),
-	});
+         return function ()
+         {
+            var magnificationFilter = magnificationFilters .get (this .magnificationFilter_ .getValue ());
 
-	return TextureProperties;
+            if (magnificationFilter !== undefined)
+               return magnificationFilter;
+
+            // DEFAULT
+            return this .getBrowser () .getDefaultTextureProperties () .getMagnificationFilter ();
+         };
+      })(),
+      getTextureCompression: (function ()
+      {
+         var textureCompressions = new Map ([
+            ["DEFAULT", "RGBA"],
+            ["NICEST",  "RGBA"],
+            ["FASTEST", "RGBA"],
+            ["LOW",     "RGBA"],
+            ["MEDIUM",  "RGBA"],
+            ["HIGH",    "RGBA"],
+         ]);
+
+         return function ()
+         {
+            var
+               browser            = this .getBrowser (),
+               gl                 = browser .getContext (),
+               compressedTexture  = browser .getExtension ("WEBGL_compressed_texture_etc"), // TODO: find suitable compression.
+               textureCompression = compressedTexture ? compressedTexture [textureCompressions .get (this .textureCompression_ .getValue ())] : undefined;
+
+            if (textureCompression !== undefined)
+               return textureCompression;
+
+            // DEFAULT
+            return gl .RGBA;
+         };
+      })(),
+   });
+
+   return TextureProperties;
 });
-
-

@@ -48,42 +48,42 @@
 
 
 define ([
-	"x_ite/Configuration/X3DInfoArray",
+   "x_ite/Configuration/X3DInfoArray",
 ],
 function (X3DInfoArray)
 {
 "use strict";
 
-	function ProtoDeclarationArray (array)
-	{
-		return X3DInfoArray .call (this);
-	}
+   function ProtoDeclarationArray (array)
+   {
+      return X3DInfoArray .call (this);
+   }
 
-	ProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-	{
-		constructor: ProtoDeclarationArray,
-		getTypeName: function ()
-		{
-			return "ProtoDeclarationArray";
-		},
-		toVRMLStream: function (stream)
-		{
-			this .array .forEach (function (value)
-			{
-				try
-				{
-					value .toVRMLStream (stream);
+   ProtoDeclarationArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+   {
+      constructor: ProtoDeclarationArray,
+      getTypeName: function ()
+      {
+         return "ProtoDeclarationArray";
+      },
+      toVRMLStream: function (stream)
+      {
+         this .array .forEach (function (value)
+         {
+            try
+            {
+               value .toVRMLStream (stream);
 
-					stream .string += "\n";
-					stream .string += "\n";
-				}
-				catch (error)
-				{
-					console .log (error);
-				}
-			});
-		},
-	});
+               stream .string += "\n";
+               stream .string += "\n";
+            }
+            catch (error)
+            {
+               console .log (error);
+            }
+         });
+      },
+   });
 
-	return ProtoDeclarationArray;
+   return ProtoDeclarationArray;
 });

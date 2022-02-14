@@ -48,56 +48,56 @@
 
 
 define ([
-	"x_ite/Basic/X3DField",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Basic/X3DField",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DField,
           X3DConstants)
 {
 "use strict";
 
-	function SFTime (value)
-	{
-		return X3DField .call (this, arguments .length ? value * 1 : 0);
-	}
+   function SFTime (value)
+   {
+      return X3DField .call (this, arguments .length ? value * 1 : 0);
+   }
 
-	SFTime .prototype = Object .assign (Object .create (X3DField .prototype),
-	{
-		constructor: SFTime,
-		copy: function ()
-		{
-			return new SFTime (this .getValue ());
-		},
-		getTypeName: function ()
-		{
-			return "SFTime";
-		},
-		getType: function ()
-		{
-			return X3DConstants .SFTime;
-		},
-		isDefaultValue: function ()
-		{
-			return this .getValue () === 0;
-		},
-		set: function (value)
-		{
-			X3DField .prototype .set .call (this, value * 1);
-		},
-		valueOf: X3DField .prototype .getValue,
-		toStream: function (stream)
-		{
-			stream .string += this .getValue ();
-		},
-		toVRMLStream: function (stream)
-		{
-			this .toStream (stream);
-		},
-		toXMLStream: function (stream)
-		{
-			this .toStream (stream);
-		},
-	});
+   SFTime .prototype = Object .assign (Object .create (X3DField .prototype),
+   {
+      constructor: SFTime,
+      copy: function ()
+      {
+         return new SFTime (this .getValue ());
+      },
+      getTypeName: function ()
+      {
+         return "SFTime";
+      },
+      getType: function ()
+      {
+         return X3DConstants .SFTime;
+      },
+      isDefaultValue: function ()
+      {
+         return this .getValue () === 0;
+      },
+      set: function (value)
+      {
+         X3DField .prototype .set .call (this, value * 1);
+      },
+      valueOf: X3DField .prototype .getValue,
+      toStream: function (stream)
+      {
+         stream .string += this .getValue ();
+      },
+      toVRMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+      toXMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+   });
 
-	return SFTime;
+   return SFTime;
 });

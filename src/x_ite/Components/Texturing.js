@@ -47,24 +47,24 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Texturing/ImageTexture",
-	"x_ite/Components/Texturing/MovieTexture",
-	"x_ite/Components/Texturing/MultiTexture",
-	"x_ite/Components/Texturing/MultiTextureCoordinate",
-	"x_ite/Components/Texturing/MultiTextureTransform",
-	"x_ite/Components/Texturing/PixelTexture",
-	"x_ite/Components/Texturing/TextureCoordinate",
-	"x_ite/Components/Texturing/TextureCoordinateGenerator",
-	"x_ite/Components/Texturing/TextureProperties",
-	"x_ite/Components/Texturing/TextureTransform",
-	"x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
-	"x_ite/Components/Texturing/X3DSingleTextureNode",
-	"x_ite/Components/Texturing/X3DSingleTextureTransformNode",
-	"x_ite/Components/Texturing/X3DTexture2DNode",
-	"x_ite/Components/Texturing/X3DTextureCoordinateNode",
-	"x_ite/Components/Texturing/X3DTextureNode",
-	"x_ite/Components/Texturing/X3DTextureTransformNode",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/Texturing/ImageTexture",
+   "x_ite/Components/Texturing/MovieTexture",
+   "x_ite/Components/Texturing/MultiTexture",
+   "x_ite/Components/Texturing/MultiTextureCoordinate",
+   "x_ite/Components/Texturing/MultiTextureTransform",
+   "x_ite/Components/Texturing/PixelTexture",
+   "x_ite/Components/Texturing/TextureCoordinate",
+   "x_ite/Components/Texturing/TextureCoordinateGenerator",
+   "x_ite/Components/Texturing/TextureProperties",
+   "x_ite/Components/Texturing/TextureTransform",
+   "x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
+   "x_ite/Components/Texturing/X3DSingleTextureNode",
+   "x_ite/Components/Texturing/X3DSingleTextureTransformNode",
+   "x_ite/Components/Texturing/X3DTexture2DNode",
+   "x_ite/Components/Texturing/X3DTextureCoordinateNode",
+   "x_ite/Components/Texturing/X3DTextureNode",
+   "x_ite/Components/Texturing/X3DTextureTransformNode",
 ],
 function (SupportedNodes,
           ImageTexture,
@@ -87,34 +87,34 @@ function (SupportedNodes,
 {
 "use strict";
 
-	const Types =
-	{
-		ImageTexture:               ImageTexture,
-		MovieTexture:               MovieTexture,
-		MultiTexture:               MultiTexture,
-		MultiTextureCoordinate:     MultiTextureCoordinate,
-		MultiTextureTransform:      MultiTextureTransform,
-		PixelTexture:               PixelTexture,
-		TextureCoordinate:          TextureCoordinate,
-		TextureCoordinateGenerator: TextureCoordinateGenerator,
-		TextureProperties:          TextureProperties,
-		TextureTransform:           TextureTransform,
-	};
+   const Types =
+   {
+      ImageTexture:               ImageTexture,
+      MovieTexture:               MovieTexture,
+      MultiTexture:               MultiTexture,
+      MultiTextureCoordinate:     MultiTextureCoordinate,
+      MultiTextureTransform:      MultiTextureTransform,
+      PixelTexture:               PixelTexture,
+      TextureCoordinate:          TextureCoordinate,
+      TextureCoordinateGenerator: TextureCoordinateGenerator,
+      TextureProperties:          TextureProperties,
+      TextureTransform:           TextureTransform,
+   };
 
-	const AbstractTypes =
-	{
-		X3DSingleTextureCoordinateNode: X3DSingleTextureCoordinateNode,
-		X3DSingleTextureNode:           X3DSingleTextureNode,
-		X3DSingleTextureTransformNode:  X3DSingleTextureTransformNode,
-		X3DTexture2DNode:               X3DTexture2DNode,
-		X3DTextureCoordinateNode:       X3DTextureCoordinateNode,
-		X3DTextureNode:                 X3DTextureNode,
-		X3DTextureTransformNode:        X3DTextureTransformNode,
-	};
+   const AbstractTypes =
+   {
+      X3DSingleTextureCoordinateNode: X3DSingleTextureCoordinateNode,
+      X3DSingleTextureNode:           X3DSingleTextureNode,
+      X3DSingleTextureTransformNode:  X3DSingleTextureTransformNode,
+      X3DTexture2DNode:               X3DTexture2DNode,
+      X3DTextureCoordinateNode:       X3DTextureCoordinateNode,
+      X3DTextureNode:                 X3DTextureNode,
+      X3DTextureTransformNode:        X3DTextureTransformNode,
+   };
 
-	for (const typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]);
+   for (const typeName in Types)
+      SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (const typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   for (const typeName in AbstractTypes)
+      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

@@ -47,15 +47,15 @@
 
 
 define ([
-	"x_ite/Components",
-	"x_ite/Components/Picking/LinePickSensor",
-	"x_ite/Components/Picking/PickableGroup",
-	"x_ite/Components/Picking/PointPickSensor",
-	"x_ite/Components/Picking/PrimitivePickSensor",
-	"x_ite/Components/Picking/VolumePickSensor",
-	"x_ite/Components/Picking/X3DPickSensorNode",
-	"x_ite/Components/Picking/X3DPickableObject",
-	require .getComponentUrl ("rigid-body-physics"),
+   "x_ite/Components",
+   "x_ite/Components/Picking/LinePickSensor",
+   "x_ite/Components/Picking/PickableGroup",
+   "x_ite/Components/Picking/PointPickSensor",
+   "x_ite/Components/Picking/PrimitivePickSensor",
+   "x_ite/Components/Picking/VolumePickSensor",
+   "x_ite/Components/Picking/X3DPickSensorNode",
+   "x_ite/Components/Picking/X3DPickableObject",
+   require .getComponentUrl ("rigid-body-physics"),
 ],
 function (Components,
           LinePickSensor,
@@ -68,20 +68,20 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "Picking",
-		types:
-		{
-			LinePickSensor:      LinePickSensor,
-			PickableGroup:       PickableGroup,
-			PointPickSensor:     PointPickSensor,
-			PrimitivePickSensor: PrimitivePickSensor,
-			VolumePickSensor:    VolumePickSensor,
-		},
-		abstractTypes:
-		{
-			X3DPickSensorNode: X3DPickSensorNode,
-			X3DPickableObject: X3DPickableObject,
-		},
-	});
+   Components .addComponent ({
+      name: "Picking",
+      types:
+      {
+         LinePickSensor:      LinePickSensor,
+         PickableGroup:       PickableGroup,
+         PointPickSensor:     PointPickSensor,
+         PrimitivePickSensor: PrimitivePickSensor,
+         VolumePickSensor:    VolumePickSensor,
+      },
+      abstractTypes:
+      {
+         X3DPickSensorNode: X3DPickSensorNode,
+         X3DPickableObject: X3DPickableObject,
+      },
+   });
 });

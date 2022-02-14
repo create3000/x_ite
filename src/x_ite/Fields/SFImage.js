@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Basic/X3DField",
-	"x_ite/Fields/SFInt32",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Basic/X3DField",
+   "x_ite/Fields/SFInt32",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DField,
           SFInt32,
@@ -58,233 +58,233 @@ function (X3DField,
 {
 "use strict";
 
-	/*
-	 *  Image
-	 */
+   /*
+    *  Image
+    */
 
-	function Image (width, height, comp, array)
-	{
-	   const MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
+   function Image (width, height, comp, array)
+   {
+      const MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
 
-		this .width  = ~~width;
-		this .height = ~~height;
-		this .comp   = ~~comp;
-		this .array  = new MFInt32 ();
-		this .array .setValue (array);
-		this .array .length = this .width * this .height;
-	}
+      this .width  = ~~width;
+      this .height = ~~height;
+      this .comp   = ~~comp;
+      this .array  = new MFInt32 ();
+      this .array .setValue (array);
+      this .array .length = this .width * this .height;
+   }
 
-	Image .prototype =
-	{
-		constructor: Image,
-		copy: function ()
-		{
-			return new Image (this .width, this .height, this .comp, this .array);
-		},
-		equals: function (image)
-		{
-			return this .width  === image .width &&
-			       this .height === image .height &&
-			       this .comp   === image .comp &&
-			       this .array .equals (image .array);
-		},
-		assign: function (image)
-		{
-			this .width  = image .width;
-			this .height = image .height;
-			this .comp   = image .comp;
-			this .array .assign (image .array);
-		},
-		set: function (width, height, comp, array)
-		{
-			this .width  = ~~width;
-			this .height = ~~height;
-			this .comp   = ~~comp;
-			this .array .assign (array);
-		},
-		setWidth: function (value)
-		{
-			this .width = ~~value;
-			this .array .length = this .width  * this .height;
-		},
-		getWidth: function ()
-		{
-			return this .width;
-		},
-		setHeight: function (value)
-		{
-			this .height = ~~value;
-			this .array .length = this .width  * this .height;
-		},
-		getHeight: function ()
-		{
-			return this .height;
-		},
-		setComp: function (value)
-		{
-			this .comp = ~~value;
-		},
-		getComp: function ()
-		{
-			return this .comp;
-		},
-		setArray: function (value)
-		{
-			this .array .assign (value);
-			this .array .length = this .width  * this .height;
-		},
-		getArray: function ()
-		{
-			return this .array;
-		},
-	};
+   Image .prototype =
+   {
+      constructor: Image,
+      copy: function ()
+      {
+         return new Image (this .width, this .height, this .comp, this .array);
+      },
+      equals: function (image)
+      {
+         return this .width  === image .width &&
+                this .height === image .height &&
+                this .comp   === image .comp &&
+                this .array .equals (image .array);
+      },
+      assign: function (image)
+      {
+         this .width  = image .width;
+         this .height = image .height;
+         this .comp   = image .comp;
+         this .array .assign (image .array);
+      },
+      set: function (width, height, comp, array)
+      {
+         this .width  = ~~width;
+         this .height = ~~height;
+         this .comp   = ~~comp;
+         this .array .assign (array);
+      },
+      setWidth: function (value)
+      {
+         this .width = ~~value;
+         this .array .length = this .width  * this .height;
+      },
+      getWidth: function ()
+      {
+         return this .width;
+      },
+      setHeight: function (value)
+      {
+         this .height = ~~value;
+         this .array .length = this .width  * this .height;
+      },
+      getHeight: function ()
+      {
+         return this .height;
+      },
+      setComp: function (value)
+      {
+         this .comp = ~~value;
+      },
+      getComp: function ()
+      {
+         return this .comp;
+      },
+      setArray: function (value)
+      {
+         this .array .assign (value);
+         this .array .length = this .width  * this .height;
+      },
+      getArray: function ()
+      {
+         return this .array;
+      },
+   };
 
-	/*
-	 *  SFImage
-	 */
+   /*
+    *  SFImage
+    */
 
-	function SFImage (width, height, comp, array)
-	{
-		const MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
+   function SFImage (width, height, comp, array)
+   {
+      const MFInt32 = require ("x_ite/Fields/ArrayFields") .MFInt32;
 
-		if (arguments [0] instanceof Image)
-			X3DField .call (this, arguments [0]);
-		else if (arguments .length === 4)
-			X3DField .call (this, new Image (width, height, comp, array));
-		else
-			X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
+      if (arguments [0] instanceof Image)
+         X3DField .call (this, arguments [0]);
+      else if (arguments .length === 4)
+         X3DField .call (this, new Image (width, height, comp, array));
+      else
+         X3DField .call (this, new Image (0, 0, 0, new MFInt32 ()));
 
-		this .getValue () .getArray () .addParent (this);
-		this .addInterest ("set_size__", this);
-		return this;
-	}
+      this .getValue () .getArray () .addParent (this);
+      this .addInterest ("set_size__", this);
+      return this;
+   }
 
-	SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
-	{
-		constructor: SFImage,
-		set_size__: function ()
-		{
-			this .getValue () .getArray () .length = this .width * this .height;
-		},
-		copy: function ()
-		{
-			return new SFImage (this .getValue () .copy ());
-		},
-		equals: function (image)
-		{
-			return this .getValue () .equals (image .getValue ());
-		},
-		isDefaultValue: function ()
-		{
-			return (
-				this .width  === 0 &&
-				this .height === 0 &&
-				this .comp   === 0);
-		},
-		set: function (image)
-		{
-			this .getValue () .assign (image);
-		},
-		getTypeName: function ()
-		{
-			return "SFImage";
-		},
-		getType: function ()
-		{
-			return X3DConstants .SFImage;
-		},
-		toStream: function (stream)
-		{
-		   const
-				array = this .array,
-				int   = new SFInt32 ();
+   SFImage .prototype = Object .assign (Object .create (X3DField .prototype),
+   {
+      constructor: SFImage,
+      set_size__: function ()
+      {
+         this .getValue () .getArray () .length = this .width * this .height;
+      },
+      copy: function ()
+      {
+         return new SFImage (this .getValue () .copy ());
+      },
+      equals: function (image)
+      {
+         return this .getValue () .equals (image .getValue ());
+      },
+      isDefaultValue: function ()
+      {
+         return (
+            this .width  === 0 &&
+            this .height === 0 &&
+            this .comp   === 0);
+      },
+      set: function (image)
+      {
+         this .getValue () .assign (image);
+      },
+      getTypeName: function ()
+      {
+         return "SFImage";
+      },
+      getType: function ()
+      {
+         return X3DConstants .SFImage;
+      },
+      toStream: function (stream)
+      {
+         const
+            array = this .array,
+            int   = new SFInt32 ();
 
-			stream .string += this .width + " " + this .height + " " + this .comp;
+         stream .string += this .width + " " + this .height + " " + this .comp;
 
-			for (let i = 0, length = this .width * this .height; i < length; ++ i)
-			{
-				stream .string += " 0x";
+         for (let i = 0, length = this .width * this .height; i < length; ++ i)
+         {
+            stream .string += " 0x";
 
-				int .set (array [i]);
-				int .toXMLStream (stream);
-			}
-		},
-		toVRMLStream: function (stream)
-		{
-			this .toStream (stream);
-		},
-		toXMLStream: function (stream)
-		{
-			this .toStream (stream);
-		},
-	});
+            int .set (array [i]);
+            int .toXMLStream (stream);
+         }
+      },
+      toVRMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+      toXMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+   });
 
-	const width = {
-		get: function ()
-		{
-			return this .getValue () .getWidth ();
-		},
-		set: function (value)
-		{
-			this .getValue () .setWidth (value);
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
+   const width = {
+      get: function ()
+      {
+         return this .getValue () .getWidth ();
+      },
+      set: function (value)
+      {
+         this .getValue () .setWidth (value);
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
+   };
 
-	const height = {
-		get: function ()
-		{
-			return this .getValue () .getHeight ();
-		},
-		set: function (value)
-		{
-			this .getValue () .setHeight (value);
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
+   const height = {
+      get: function ()
+      {
+         return this .getValue () .getHeight ();
+      },
+      set: function (value)
+      {
+         this .getValue () .setHeight (value);
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
+   };
 
-	const comp = {
-		get: function ()
-		{
-			return this .getValue () .getComp ();
-		},
-		set: function (value)
-		{
-			this .getValue () .setComp (value);
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
+   const comp = {
+      get: function ()
+      {
+         return this .getValue () .getComp ();
+      },
+      set: function (value)
+      {
+         this .getValue () .setComp (value);
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
+   };
 
-	const array = {
-		get: function ()
-		{
-			return this .getValue () .getArray ();
-		},
-		set: function (value)
-		{
-			this .getValue () .setArray (value);
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
+   const array = {
+      get: function ()
+      {
+         return this .getValue () .getArray ();
+      },
+      set: function (value)
+      {
+         this .getValue () .setArray (value);
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
+   };
 
-	Object .defineProperty (SFImage .prototype, "width",  width);
-	Object .defineProperty (SFImage .prototype, "height", height);
-	Object .defineProperty (SFImage .prototype, "comp",   comp);
-	Object .defineProperty (SFImage .prototype, "array",  array);
+   Object .defineProperty (SFImage .prototype, "width",  width);
+   Object .defineProperty (SFImage .prototype, "height", height);
+   Object .defineProperty (SFImage .prototype, "comp",   comp);
+   Object .defineProperty (SFImage .prototype, "array",  array);
 
-	width  .enumerable = false;
-	height .enumerable = false;
+   width  .enumerable = false;
+   height .enumerable = false;
 
-	Object .defineProperty (SFImage .prototype, "x", width);
-	Object .defineProperty (SFImage .prototype, "y", height);
+   Object .defineProperty (SFImage .prototype, "x", width);
+   Object .defineProperty (SFImage .prototype, "y", height);
 
-	return SFImage;
+   return SFImage;
 });

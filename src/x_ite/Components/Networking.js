@@ -47,12 +47,12 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Networking/Anchor",
-	"x_ite/Components/Networking/Inline",
-	"x_ite/Components/Networking/LoadSensor",
-	"x_ite/Components/Networking/X3DNetworkSensorNode",
-	"x_ite/Components/Networking/X3DUrlObject",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/Networking/Anchor",
+   "x_ite/Components/Networking/Inline",
+   "x_ite/Components/Networking/LoadSensor",
+   "x_ite/Components/Networking/X3DNetworkSensorNode",
+   "x_ite/Components/Networking/X3DUrlObject",
 ],
 function (SupportedNodes,
           Anchor,
@@ -63,22 +63,22 @@ function (SupportedNodes,
 {
 "use strict";
 
-	const Types =
-	{
-		Anchor:     Anchor,
-		Inline:     Inline,
-		LoadSensor: LoadSensor,
-	};
+   const Types =
+   {
+      Anchor:     Anchor,
+      Inline:     Inline,
+      LoadSensor: LoadSensor,
+   };
 
-	const AbstractTypes =
-	{
-		X3DNetworkSensorNode: X3DNetworkSensorNode,
-		X3DUrlObject:         X3DUrlObject,
-	};
+   const AbstractTypes =
+   {
+      X3DNetworkSensorNode: X3DNetworkSensorNode,
+      X3DUrlObject:         X3DUrlObject,
+   };
 
-	for (const typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]);
+   for (const typeName in Types)
+      SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (const typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   for (const typeName in AbstractTypes)
+      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

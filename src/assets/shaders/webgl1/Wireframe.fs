@@ -31,44 +31,44 @@ varying float depth;
 void
 stipple ()
 {
-	if (x3d_LineProperties .applied)
-	{
-		vec2  direction = (vertexPosition .xy - startPosition .xy) * vec2 (x3d_Viewport .zw) * 0.5;
-		float distance  = length (direction) / 16.0;
-		float color     = texture2D (x3d_LineProperties .linetype, vec2 (distance, distance)) .a;
+   if (x3d_LineProperties .applied)
+   {
+      vec2  direction = (vertexPosition .xy - startPosition .xy) * vec2 (x3d_Viewport .zw) * 0.5;
+      float distance  = length (direction) / 16.0;
+      float color     = texture2D (x3d_LineProperties .linetype, vec2 (distance, distance)) .a;
 
-		if (color == 0.0)
-			discard;
-	}
+      if (color == 0.0)
+         discard;
+   }
 }
 #endif
 
 void
 main ()
 {
-	clip ();
+   clip ();
 
-	#ifdef X_ITE
-	stipple ();
-	#endif
+   #ifdef X_ITE
+   stipple ();
+   #endif
 
-	vec4 finalColor = vec4 (0.0);
+   vec4 finalColor = vec4 (0.0);
 
-	finalColor .rgb = getFogColor (color .rgb);
-	finalColor .a   = color .a;
+   finalColor .rgb = getFogColor (color .rgb);
+   finalColor .a   = color .a;
 
    if (finalColor .a < x3d_AlphaCutoff)
    {
       discard;
    }
 
-	gl_FragColor = finalColor;
+   gl_FragColor = finalColor;
 
-	#ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
-	//http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
-	if (x3d_LogarithmicFarFactor1_2 > 0.0)
-		gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
-	else
-		gl_FragDepthEXT = gl_FragCoord .z;
-	#endif
+   #ifdef X3D_LOGARITHMIC_DEPTH_BUFFER
+   //http://outerra.blogspot.com/2013/07/logarithmic-depth-buffer-optimizations.html
+   if (x3d_LogarithmicFarFactor1_2 > 0.0)
+      gl_FragDepthEXT = log2 (depth) * x3d_LogarithmicFarFactor1_2;
+   else
+      gl_FragDepthEXT = gl_FragCoord .z;
+   #endif
 }

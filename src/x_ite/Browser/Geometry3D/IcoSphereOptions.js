@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DBaseNode",
-	"x_ite/Components/Geometry3D/IndexedFaceSet",
-	"x_ite/Components/Rendering/Coordinate",
-	"x_ite/Components/Texturing/TextureCoordinate",
-	"x_ite/Browser/Geometry3D/IcoSphere",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Components/Geometry3D/IndexedFaceSet",
+   "x_ite/Components/Rendering/Coordinate",
+   "x_ite/Components/Texturing/TextureCoordinate",
+   "x_ite/Browser/Geometry3D/IcoSphere",
 ],
 function (Fields,
           X3DBaseNode,
@@ -63,69 +63,69 @@ function (Fields,
           IcoSphere)
 {
 "use strict";
-	
-	function IcoSphereOptions (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
 
-		this .addChildObjects ("type",  new Fields .SFString ("ICOSAHEDRON"),
-		                       "order", new Fields .SFInt32 (2))
-	}
+   function IcoSphereOptions (executionContext)
+   {
+      X3DBaseNode .call (this, executionContext);
 
-	IcoSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: IcoSphereOptions,
-		getTypeName: function ()
-		{
-			return "IcoSphereOptions";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "quadSphereOptions";
-		},
-		initialize: function ()
-		{
-			X3DBaseNode .prototype .initialize .call (this);
+      this .addChildObjects ("type",  new Fields .SFString ("ICOSAHEDRON"),
+                             "order", new Fields .SFInt32 (2))
+   }
 
-			this .addInterest ("eventsProcessed", this);
-		},
-		getGeometry: function ()
-		{
-			if (! this .geometry)
-				this .eventsProcessed ();
-			
-			return this .geometry;
-		},
-		eventsProcessed: function ()
-		{
-			this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
-			this .geometry .texCoord_ = new TextureCoordinate (this .getExecutionContext ());
-			this .geometry .coord_    = new Coordinate (this .getExecutionContext ());
+   IcoSphereOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   {
+      constructor: IcoSphereOptions,
+      getTypeName: function ()
+      {
+         return "IcoSphereOptions";
+      },
+      getComponentName: function ()
+      {
+         return "X_ITE";
+      },
+      getContainerField: function ()
+      {
+         return "quadSphereOptions";
+      },
+      initialize: function ()
+      {
+         X3DBaseNode .prototype .initialize .call (this);
 
-			var
-				geometry = this .geometry,
-				texCoord = this .geometry .texCoord_ .getValue (),
-				coord    = this .geometry .coord_ .getValue ();
+         this .addInterest ("eventsProcessed", this);
+      },
+      getGeometry: function ()
+      {
+         if (! this .geometry)
+            this .eventsProcessed ();
 
-			var icoSphere = new IcoSphere (this .type_ .getValue (), this .order_ .getValue (), 1);
+         return this .geometry;
+      },
+      eventsProcessed: function ()
+      {
+         this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
+         this .geometry .texCoord_ = new TextureCoordinate (this .getExecutionContext ());
+         this .geometry .coord_    = new Coordinate (this .getExecutionContext ());
 
-			geometry .creaseAngle_ = Math .PI;
+         var
+            geometry = this .geometry,
+            texCoord = this .geometry .texCoord_ .getValue (),
+            coord    = this .geometry .coord_ .getValue ();
 
-			texCoord .point_ = icoSphere .getTexPoint ();
-			coord .point_    = icoSphere .getPoint ();
+         var icoSphere = new IcoSphere (this .type_ .getValue (), this .order_ .getValue (), 1);
 
-			geometry .texCoordIndex_ = icoSphere .getTexCoordIndex ();
-			geometry .coordIndex_    = icoSphere .getCoordIndex ();
+         geometry .creaseAngle_ = Math .PI;
 
-			texCoord .setup ();
-			coord    .setup ();
-			geometry .setup ();
-		},
-	});
+         texCoord .point_ = icoSphere .getTexPoint ();
+         coord .point_    = icoSphere .getPoint ();
 
-	return IcoSphereOptions;
+         geometry .texCoordIndex_ = icoSphere .getTexCoordIndex ();
+         geometry .coordIndex_    = icoSphere .getCoordIndex ();
+
+         texCoord .setup ();
+         coord    .setup ();
+         geometry .setup ();
+      },
+   });
+
+   return IcoSphereOptions;
 });

@@ -48,55 +48,55 @@
 
 
 define ([
-	"x_ite/Fields",
+   "x_ite/Fields",
 ],
 function (Fields)
 {
 "use strict";
 
-	function X3DKeyDeviceSensorContext () { }
+   function X3DKeyDeviceSensorContext () { }
 
-	X3DKeyDeviceSensorContext .prototype =
-	{
-		initialize: function ()
-		{
-			this .getElement () .bind ("keydown.X3DKeyDeviceSensorContext", this .keydown_X3DKeyDeviceSensorContext .bind (this));
-			this .getElement () .bind ("keyup.X3DKeyDeviceSensorContext",   this .keyup_X3DKeyDeviceSensorContext   .bind (this));
-		},
-		addKeyDeviceSensorNode: function (keyDeviceSensorNode)
-		{
-			this .getKeyDeviceSensorNodes () .add (keyDeviceSensorNode);
-		},
-		removeKeyDeviceSensorNode: function (keyDeviceSensorNode)
-		{
-			this .getKeyDeviceSensorNodes () .delete (keyDeviceSensorNode);
-		},
-		getKeyDeviceSensorNodes: function ()
-		{
-			if (this .keyDeviceSensorNodes === undefined)
-				this .keyDeviceSensorNodes = new Set ();
+   X3DKeyDeviceSensorContext .prototype =
+   {
+      initialize: function ()
+      {
+         this .getElement () .bind ("keydown.X3DKeyDeviceSensorContext", this .keydown_X3DKeyDeviceSensorContext .bind (this));
+         this .getElement () .bind ("keyup.X3DKeyDeviceSensorContext",   this .keyup_X3DKeyDeviceSensorContext   .bind (this));
+      },
+      addKeyDeviceSensorNode: function (keyDeviceSensorNode)
+      {
+         this .getKeyDeviceSensorNodes () .add (keyDeviceSensorNode);
+      },
+      removeKeyDeviceSensorNode: function (keyDeviceSensorNode)
+      {
+         this .getKeyDeviceSensorNodes () .delete (keyDeviceSensorNode);
+      },
+      getKeyDeviceSensorNodes: function ()
+      {
+         if (this .keyDeviceSensorNodes === undefined)
+            this .keyDeviceSensorNodes = new Set ();
 
-			return this .keyDeviceSensorNodes;
-		},
-		keydown_X3DKeyDeviceSensorContext: function (event)
-		{
-			//console .log (event .keyCode);
+         return this .keyDeviceSensorNodes;
+      },
+      keydown_X3DKeyDeviceSensorContext: function (event)
+      {
+         //console .log (event .keyCode);
 
-			this .getKeyDeviceSensorNodes () .forEach (function (keyDeviceSensorNode)
-			{
-				keyDeviceSensorNode .keydown (event);
-			});
-		},
-		keyup_X3DKeyDeviceSensorContext: function (event)
-		{
-			//console .log (event .which);
+         this .getKeyDeviceSensorNodes () .forEach (function (keyDeviceSensorNode)
+         {
+            keyDeviceSensorNode .keydown (event);
+         });
+      },
+      keyup_X3DKeyDeviceSensorContext: function (event)
+      {
+         //console .log (event .which);
 
-			this .getKeyDeviceSensorNodes () .forEach (function (keyDeviceSensorNode)
-			{
-				keyDeviceSensorNode .keyup (event);
-			});
-		},
-	};
+         this .getKeyDeviceSensorNodes () .forEach (function (keyDeviceSensorNode)
+         {
+            keyDeviceSensorNode .keyup (event);
+         });
+      },
+   };
 
-	return X3DKeyDeviceSensorContext;
+   return X3DKeyDeviceSensorContext;
 });

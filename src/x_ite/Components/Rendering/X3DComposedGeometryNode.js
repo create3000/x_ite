@@ -48,10 +48,10 @@
 
 
 define ([
-	"x_ite/Components/Rendering/X3DGeometryNode",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
+   "x_ite/Components/Rendering/X3DGeometryNode",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
 ],
 function (X3DGeometryNode,
           X3DCast,
@@ -60,321 +60,321 @@ function (X3DGeometryNode,
 {
 "use strict";
 
-	function X3DComposedGeometryNode (executionContext)
-	{
-		X3DGeometryNode .call (this, executionContext);
+   function X3DComposedGeometryNode (executionContext)
+   {
+      X3DGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DComposedGeometryNode);
+      this .addType (X3DConstants .X3DComposedGeometryNode);
 
-		this .fogCoordNode = null;
-		this .colorNode    = null;
-		this .texCoordNode = null;
-		this .normalNode   = null;
-		this .coordNode    = null;
-	}
+      this .fogCoordNode = null;
+      this .colorNode    = null;
+      this .texCoordNode = null;
+      this .normalNode   = null;
+      this .coordNode    = null;
+   }
 
-	X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
-	{
-		constructor: X3DComposedGeometryNode,
-		initialize: function ()
-		{
-			X3DGeometryNode .prototype .initialize .call (this);
+   X3DComposedGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+   {
+      constructor: X3DComposedGeometryNode,
+      initialize: function ()
+      {
+         X3DGeometryNode .prototype .initialize .call (this);
 
-			this .attrib_   .addInterest ("set_attrib__",   this);
-			this .fogCoord_ .addInterest ("set_fogCoord__", this);
-			this .color_    .addInterest ("set_color__",    this);
-			this .texCoord_ .addInterest ("set_texCoord__", this);
-			this .normal_   .addInterest ("set_normal__",   this);
-			this .coord_    .addInterest ("set_coord__",    this);
+         this .attrib_   .addInterest ("set_attrib__",   this);
+         this .fogCoord_ .addInterest ("set_fogCoord__", this);
+         this .color_    .addInterest ("set_color__",    this);
+         this .texCoord_ .addInterest ("set_texCoord__", this);
+         this .normal_   .addInterest ("set_normal__",   this);
+         this .coord_    .addInterest ("set_coord__",    this);
 
-			this .set_attrib__ ();
-			this .set_fogCoord__ ();
-			this .set_color__ ();
-			this .set_texCoord__ ();
-			this .set_normal__ ();
-			this .set_coord__ ();
-		},
-		getFogCoord: function ()
-		{
-			return this .fogCoordNode;
-		},
-		getColor: function ()
-		{
-			return this .colorNode;
-		},
-		getTexCoord: function ()
-		{
-			return this .texCoordNode;
-		},
-		getNormal: function ()
-		{
-			return this .normalNode;
-		},
-		getCoord: function ()
-		{
-			return this .coordNode;
-		},
-		set_attrib__: function ()
-		{
-			var attribNodes = this .getAttrib ();
+         this .set_attrib__ ();
+         this .set_fogCoord__ ();
+         this .set_color__ ();
+         this .set_texCoord__ ();
+         this .set_normal__ ();
+         this .set_coord__ ();
+      },
+      getFogCoord: function ()
+      {
+         return this .fogCoordNode;
+      },
+      getColor: function ()
+      {
+         return this .colorNode;
+      },
+      getTexCoord: function ()
+      {
+         return this .texCoordNode;
+      },
+      getNormal: function ()
+      {
+         return this .normalNode;
+      },
+      getCoord: function ()
+      {
+         return this .coordNode;
+      },
+      set_attrib__: function ()
+      {
+         var attribNodes = this .getAttrib ();
 
-			for (var i = 0, length = attribNodes .length; i < length; ++ i)
-				attribNodes [i] .removeInterest ("requestRebuild", this);
+         for (var i = 0, length = attribNodes .length; i < length; ++ i)
+            attribNodes [i] .removeInterest ("requestRebuild", this);
 
-			attribNodes .length = 0;
+         attribNodes .length = 0;
 
-			for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
-			{
-				var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+         for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
+         {
+            var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
 
-				if (attribNode)
-					attribNodes .push (attribNode);
-			}
+            if (attribNode)
+               attribNodes .push (attribNode);
+         }
 
-			for (var i = 0; i < this .attribNodes .length; ++ i)
-				attribNodes [i] .addInterest ("requestRebuild", this);
-		},
-		set_fogCoord__: function ()
-		{
-			if (this .fogCoordNode)
-				this .fogCoordNode .removeInterest ("requestRebuild", this);
+         for (var i = 0; i < this .attribNodes .length; ++ i)
+            attribNodes [i] .addInterest ("requestRebuild", this);
+      },
+      set_fogCoord__: function ()
+      {
+         if (this .fogCoordNode)
+            this .fogCoordNode .removeInterest ("requestRebuild", this);
 
-			this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
+         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
 
-			if (this .fogCoordNode)
-				this .fogCoordNode .addInterest ("requestRebuild", this);
-		},
-		set_color__: function ()
-		{
-			if (this .colorNode)
-			{
-				this .colorNode .removeInterest ("requestRebuild", this);
-				this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
-			}
+         if (this .fogCoordNode)
+            this .fogCoordNode .addInterest ("requestRebuild", this);
+      },
+      set_color__: function ()
+      {
+         if (this .colorNode)
+         {
+            this .colorNode .removeInterest ("requestRebuild", this);
+            this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
+         }
 
-			this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
+         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
 
-			if (this .colorNode)
-			{
-				this .colorNode .addInterest ("requestRebuild", this);
-				this .colorNode .transparent_ .addInterest ("set_transparent__", this);
+         if (this .colorNode)
+         {
+            this .colorNode .addInterest ("requestRebuild", this);
+            this .colorNode .transparent_ .addInterest ("set_transparent__", this);
 
-				this .set_transparent__ ();
-			}
-			else
-				this .setTransparent (false);
-		},
-		set_transparent__: function ()
-		{
-			this .setTransparent (this .colorNode .getTransparent ());
-		},
-		set_texCoord__: function ()
-		{
-			if (this .texCoordNode)
-				this .texCoordNode .removeInterest ("requestRebuild", this);
+            this .set_transparent__ ();
+         }
+         else
+            this .setTransparent (false);
+      },
+      set_transparent__: function ()
+      {
+         this .setTransparent (this .colorNode .getTransparent ());
+      },
+      set_texCoord__: function ()
+      {
+         if (this .texCoordNode)
+            this .texCoordNode .removeInterest ("requestRebuild", this);
 
-			this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
+         this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
 
-			if (this .texCoordNode)
-				this .texCoordNode .addInterest ("requestRebuild", this);
+         if (this .texCoordNode)
+            this .texCoordNode .addInterest ("requestRebuild", this);
 
-			this .setTextureCoordinate (this .texCoordNode);
-		},
-		set_normal__: function ()
-		{
-			if (this .normalNode)
-				this .normalNode .removeInterest ("requestRebuild", this);
+         this .setTextureCoordinate (this .texCoordNode);
+      },
+      set_normal__: function ()
+      {
+         if (this .normalNode)
+            this .normalNode .removeInterest ("requestRebuild", this);
 
-			this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this .normal_);
+         this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this .normal_);
 
-			if (this .normalNode)
-				this .normalNode .addInterest ("requestRebuild", this);
-		},
-		set_coord__: function ()
-		{
-			if (this .coordNode)
-				this .coordNode .removeInterest ("requestRebuild", this);
+         if (this .normalNode)
+            this .normalNode .addInterest ("requestRebuild", this);
+      },
+      set_coord__: function ()
+      {
+         if (this .coordNode)
+            this .coordNode .removeInterest ("requestRebuild", this);
 
-			this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
+         this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
 
-			if (this .coordNode)
-				this .coordNode .addInterest ("requestRebuild", this);
-		},
-		getPolygonIndex: function (index)
-		{
-			return index;
-		},
-		getTriangleIndex: function (index)
-		{
-			return index;
-		},
-		build: function (verticesPerPolygon, polygonsSize, verticesPerFace, trianglesSize)
-		{
-			if (! this .coordNode || this .coordNode .isEmpty ())
-				return;
+         if (this .coordNode)
+            this .coordNode .addInterest ("requestRebuild", this);
+      },
+      getPolygonIndex: function (index)
+      {
+         return index;
+      },
+      getTriangleIndex: function (index)
+      {
+         return index;
+      },
+      build: function (verticesPerPolygon, polygonsSize, verticesPerFace, trianglesSize)
+      {
+         if (! this .coordNode || this .coordNode .isEmpty ())
+            return;
 
-			// Set size to a multiple of verticesPerPolygon.
+         // Set size to a multiple of verticesPerPolygon.
 
-			polygonsSize  -= polygonsSize % verticesPerPolygon;
-			trianglesSize -= trianglesSize % verticesPerFace;
+         polygonsSize  -= polygonsSize % verticesPerPolygon;
+         trianglesSize -= trianglesSize % verticesPerFace;
 
-			const
-				colorPerVertex     = this .colorPerVertex_ .getValue (),
-				normalPerVertex    = this .normalPerVertex_ .getValue (),
-				attribNodes        = this .getAttrib (),
-				numAttrib          = attribNodes .length,
-				attribs            = this .getAttribs (),
-				fogCoordNode       = this .getFogCoord (),
-				colorNode          = this .getColor (),
-				texCoordNode       = this .getTexCoord (),
-				normalNode         = this .getNormal (),
-				coordNode          = this .getCoord (),
-				fogDepthArray      = this .getFogDepths (),
-				colorArray         = this .getColors (),
-				multiTexCoordArray = this .getMultiTexCoords (),
-				normalArray        = this .getNormals (),
-				vertexArray        = this .getVertices ();
+         const
+            colorPerVertex     = this .colorPerVertex_ .getValue (),
+            normalPerVertex    = this .normalPerVertex_ .getValue (),
+            attribNodes        = this .getAttrib (),
+            numAttrib          = attribNodes .length,
+            attribs            = this .getAttribs (),
+            fogCoordNode       = this .getFogCoord (),
+            colorNode          = this .getColor (),
+            texCoordNode       = this .getTexCoord (),
+            normalNode         = this .getNormal (),
+            coordNode          = this .getCoord (),
+            fogDepthArray      = this .getFogDepths (),
+            colorArray         = this .getColors (),
+            multiTexCoordArray = this .getMultiTexCoords (),
+            normalArray        = this .getNormals (),
+            vertexArray        = this .getVertices ();
 
-			var face = 0;
+         var face = 0;
 
-			if (texCoordNode)
-				texCoordNode .init (multiTexCoordArray);
+         if (texCoordNode)
+            texCoordNode .init (multiTexCoordArray);
 
-			// Fill GeometryNode
+         // Fill GeometryNode
 
-			for (var i = 0; i < trianglesSize; ++ i)
-			{
-				face = Math .floor (i / verticesPerFace);
+         for (var i = 0; i < trianglesSize; ++ i)
+         {
+            face = Math .floor (i / verticesPerFace);
 
-				const index = this .getPolygonIndex (this .getTriangleIndex (i));
+            const index = this .getPolygonIndex (this .getTriangleIndex (i));
 
-				for (var a = 0; a < numAttrib; ++ a)
-					attribNodes [a] .addValue (index, attribs [a]);
+            for (var a = 0; a < numAttrib; ++ a)
+               attribNodes [a] .addValue (index, attribs [a]);
 
-				if (fogCoordNode)
-					fogCoordNode .addDepth (index, fogDepthArray);
+            if (fogCoordNode)
+               fogCoordNode .addDepth (index, fogDepthArray);
 
-				if (colorNode)
-				{
-					if (colorPerVertex)
-						colorNode .addColor (index, colorArray);
-					else
-						colorNode .addColor (face, colorArray);
-				}
+            if (colorNode)
+            {
+               if (colorPerVertex)
+                  colorNode .addColor (index, colorArray);
+               else
+                  colorNode .addColor (face, colorArray);
+            }
 
-				if (texCoordNode)
-					texCoordNode .addTexCoord (index, multiTexCoordArray);
+            if (texCoordNode)
+               texCoordNode .addTexCoord (index, multiTexCoordArray);
 
-				if (normalNode)
-				{
-					if (normalPerVertex)
-						normalNode .addVector (index, normalArray);
+            if (normalNode)
+            {
+               if (normalPerVertex)
+                  normalNode .addVector (index, normalArray);
 
-					else
-						normalNode .addVector (face, normalArray);
-				}
+               else
+                  normalNode .addVector (face, normalArray);
+            }
 
-				coordNode .addPoint (index, vertexArray);
-			}
+            coordNode .addPoint (index, vertexArray);
+         }
 
-			// Autogenerate normal if not specified.
+         // Autogenerate normal if not specified.
 
-			if (! this .getNormal ())
-				this .buildNormals (verticesPerPolygon, polygonsSize, trianglesSize);
+         if (! this .getNormal ())
+            this .buildNormals (verticesPerPolygon, polygonsSize, trianglesSize);
 
-			this .setSolid (this .solid_ .getValue ());
-			this .setCCW (this .ccw_ .getValue ());
-		},
-		buildNormals: function (verticesPerPolygon, polygonsSize, trianglesSize)
-		{
-			const
-				normals     = this .createNormals (verticesPerPolygon, polygonsSize),
-				normalArray = this .getNormals ();
+         this .setSolid (this .solid_ .getValue ());
+         this .setCCW (this .ccw_ .getValue ());
+      },
+      buildNormals: function (verticesPerPolygon, polygonsSize, trianglesSize)
+      {
+         const
+            normals     = this .createNormals (verticesPerPolygon, polygonsSize),
+            normalArray = this .getNormals ();
 
-			for (var i = 0; i < trianglesSize; ++ i)
-			{
-				const normal = normals [this .getTriangleIndex (i)];
+         for (var i = 0; i < trianglesSize; ++ i)
+         {
+            const normal = normals [this .getTriangleIndex (i)];
 
-				normalArray .push (normal .x, normal .y, normal .z);
-			}
-		},
-		createNormals: function (verticesPerPolygon, polygonsSize)
-		{
-			const normals = this .createFaceNormals (verticesPerPolygon, polygonsSize);
+            normalArray .push (normal .x, normal .y, normal .z);
+         }
+      },
+      createNormals: function (verticesPerPolygon, polygonsSize)
+      {
+         const normals = this .createFaceNormals (verticesPerPolygon, polygonsSize);
 
-			if (this .normalPerVertex_ .getValue ())
-			{
-				const normalIndex = [ ];
+         if (this .normalPerVertex_ .getValue ())
+         {
+            const normalIndex = [ ];
 
-				for (var i = 0; i < polygonsSize; ++ i)
-				{
-					const index = this .getPolygonIndex (i);
+            for (var i = 0; i < polygonsSize; ++ i)
+            {
+               const index = this .getPolygonIndex (i);
 
-					var pointIndex = normalIndex [index];
+               var pointIndex = normalIndex [index];
 
-					if (! pointIndex)
-						pointIndex = normalIndex [index] = [ ];
+               if (! pointIndex)
+                  pointIndex = normalIndex [index] = [ ];
 
-					pointIndex .push (i);
-				}
+               pointIndex .push (i);
+            }
 
-				return this .refineNormals (normalIndex, normals, Math .PI);
-			}
+            return this .refineNormals (normalIndex, normals, Math .PI);
+         }
 
-			return normals;
-		},
-		createFaceNormals: function (verticesPerPolygon, polygonsSize)
-		{
-			const
-				cw      = ! this .ccw_ .getValue (),
-				coord   = this .coordNode,
-				normals = [ ];
+         return normals;
+      },
+      createFaceNormals: function (verticesPerPolygon, polygonsSize)
+      {
+         const
+            cw      = ! this .ccw_ .getValue (),
+            coord   = this .coordNode,
+            normals = [ ];
 
-			for (var i = 0; i < polygonsSize; i += verticesPerPolygon)
-			{
-				const normal = this .getPolygonNormal (i, verticesPerPolygon, coord);
+         for (var i = 0; i < polygonsSize; i += verticesPerPolygon)
+         {
+            const normal = this .getPolygonNormal (i, verticesPerPolygon, coord);
 
-				if (cw)
-					normal .negate ();
+            if (cw)
+               normal .negate ();
 
-				for (var n = 0; n < verticesPerPolygon; ++ n)
-					normals .push (normal);
-			}
+            for (var n = 0; n < verticesPerPolygon; ++ n)
+               normals .push (normal);
+         }
 
-			return normals;
-		},
-		getPolygonNormal: (function ()
-		{
-			var
-				current = new Vector3 (0, 0, 0),
-				next    = new Vector3 (0, 0, 0);
+         return normals;
+      },
+      getPolygonNormal: (function ()
+      {
+         var
+            current = new Vector3 (0, 0, 0),
+            next    = new Vector3 (0, 0, 0);
 
-			return function (index, verticesPerPolygon, coord)
-			{
-				// Determine polygon normal.
-				// We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
+         return function (index, verticesPerPolygon, coord)
+         {
+            // Determine polygon normal.
+            // We use Newell's method https://www.opengl.org/wiki/Calculating_a_Surface_Normal here:
 
-				const normal = new Vector3 (0, 0, 0);
+            const normal = new Vector3 (0, 0, 0);
 
-				coord .get1Point (this .getPolygonIndex (index), next);
+            coord .get1Point (this .getPolygonIndex (index), next);
 
-				for (var i = 0; i < verticesPerPolygon; ++ i)
-				{
-					const tmp = current;
-					current = next;
-					next    = tmp;
+            for (var i = 0; i < verticesPerPolygon; ++ i)
+            {
+               const tmp = current;
+               current = next;
+               next    = tmp;
 
-					coord .get1Point (this .getPolygonIndex (index + (i + 1) % verticesPerPolygon), next);
+               coord .get1Point (this .getPolygonIndex (index + (i + 1) % verticesPerPolygon), next);
 
-					normal .x += (current .y - next .y) * (current .z + next .z);
-					normal .y += (current .z - next .z) * (current .x + next .x);
-					normal .z += (current .x - next .x) * (current .y + next .y);
-				}
+               normal .x += (current .y - next .y) * (current .z + next .z);
+               normal .y += (current .z - next .z) * (current .x + next .x);
+               normal .z += (current .x - next .x) * (current .y + next .y);
+            }
 
-				return normal .normalize ();
-			};
-		})(),
-	});
+            return normal .normalize ();
+         };
+      })(),
+   });
 
-	return X3DComposedGeometryNode;
+   return X3DComposedGeometryNode;
 });

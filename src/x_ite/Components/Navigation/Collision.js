@@ -48,14 +48,14 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Grouping/X3DGroupingNode",
-	"x_ite/Components/Core/X3DSensorNode",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Bits/TraverseType",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Grouping/X3DGroupingNode",
+   "x_ite/Components/Core/X3DSensorNode",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Bits/TraverseType",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -68,112 +68,112 @@ function (Fields,
 {
 "use strict";
 
-	function Collision (executionContext)
-	{
-		X3DGroupingNode .call (this, executionContext);
-		X3DSensorNode   .call (this, executionContext);
+   function Collision (executionContext)
+   {
+      X3DGroupingNode .call (this, executionContext);
+      X3DSensorNode   .call (this, executionContext);
 
-		this .addType (X3DConstants .Collision);
+      this .addType (X3DConstants .Collision);
 
-		if (executionContext .getSpecificationVersion () === "2.0")
-			this .addAlias ("collide", this .enabled_); // VRML2
-	}
+      if (executionContext .getSpecificationVersion () === "2.0")
+         this .addAlias ("collide", this .enabled_); // VRML2
+   }
 
-	Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
-		X3DSensorNode .prototype,
-	{
-		constructor: Collision,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",        new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",       new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "collideTime",    new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "proxy",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Collision";
-		},
-		getComponentName: function ()
-		{
-			return "Navigation";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DGroupingNode .prototype .initialize .call (this);
-			//X3DSensorNode   .prototype .initialize .call (this); // We can only call the base of a *Objects.
+   Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+      X3DSensorNode .prototype,
+   {
+      constructor: Collision,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "collideTime",    new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "proxy",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "Collision";
+      },
+      getComponentName: function ()
+      {
+         return "Navigation";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DGroupingNode .prototype .initialize .call (this);
+         //X3DSensorNode   .prototype .initialize .call (this); // We can only call the base of a *Objects.
 
-			this .isLive () .addInterest ("set_live__", this);
-			this .enabled_  .addInterest ("set_live__", this);
-			this .proxy_    .addInterest ("set_proxy__", this);
+         this .isLive () .addInterest ("set_live__", this);
+         this .enabled_  .addInterest ("set_live__", this);
+         this .proxy_    .addInterest ("set_proxy__", this);
 
-			this .set_live__ ();
-			this .set_proxy__ ();
-		},
-		set_live__: function ()
-		{
-		   if (this .isLive () .getValue () && this .enabled_ .getValue ())
-		      this .getBrowser () .addCollision (this);
+         this .set_live__ ();
+         this .set_proxy__ ();
+      },
+      set_live__: function ()
+      {
+         if (this .isLive () .getValue () && this .enabled_ .getValue ())
+            this .getBrowser () .addCollision (this);
 
-		   else
-		      this .getBrowser () .removeCollision (this);
-		},
-		set_active: function (value)
-		{
-			if (this .isActive_ .getValue () !== value)
-			{
-				this .isActive_ = value;
+         else
+            this .getBrowser () .removeCollision (this);
+      },
+      set_active: function (value)
+      {
+         if (this .isActive_ .getValue () !== value)
+         {
+            this .isActive_ = value;
 
-				if (value)
-					this .collideTime_ = this .getBrowser () .getCurrentTime ();
-			}
-		},
-		set_proxy__: function ()
-		{
-		   this .proxyNode = X3DCast (X3DConstants .X3DChildNode, this .proxy_);
-		},
-		traverse: function (type, renderObject)
-		{
-			switch (type)
-			{
-				case TraverseType .COLLISION:
-				{
-					if (this .enabled_ .getValue ())
-					{
-					   var collisions = renderObject .getCollisions ();
+            if (value)
+               this .collideTime_ = this .getBrowser () .getCurrentTime ();
+         }
+      },
+      set_proxy__: function ()
+      {
+         this .proxyNode = X3DCast (X3DConstants .X3DChildNode, this .proxy_);
+      },
+      traverse: function (type, renderObject)
+      {
+         switch (type)
+         {
+            case TraverseType .COLLISION:
+            {
+               if (this .enabled_ .getValue ())
+               {
+                  var collisions = renderObject .getCollisions ();
 
-						collisions .push (this);
+                  collisions .push (this);
 
-						if (this .proxyNode)
-							this .proxyNode .traverse (type, renderObject);
+                  if (this .proxyNode)
+                     this .proxyNode .traverse (type, renderObject);
 
-						else
-							X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+                  else
+                     X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-						collisions .pop ();
-					}
+                  collisions .pop ();
+               }
 
-					return;
-				}
-				default:
-				{
-					X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-					return;
-				}
-			}
-		},
-	});
+               return;
+            }
+            default:
+            {
+               X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+               return;
+            }
+         }
+      },
+   });
 
-	return Collision;
+   return Collision;
 });

@@ -48,15 +48,15 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Grouping/X3DGroupingNode",
-	"x_ite/Components/Networking/X3DUrlObject",
-	"x_ite/Components/PointingDeviceSensor/TouchSensor",
-	"x_ite/Bits/TraverseType",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/InputOutput/FileLoader",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Grouping/X3DGroupingNode",
+   "x_ite/Components/Networking/X3DUrlObject",
+   "x_ite/Components/PointingDeviceSensor/TouchSensor",
+   "x_ite/Bits/TraverseType",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/InputOutput/FileLoader",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -70,132 +70,132 @@ function (Fields,
 {
 "use strict";
 
-	function Anchor (executionContext)
-	{
-		X3DGroupingNode .call (this, executionContext);
-		X3DUrlObject    .call (this, executionContext);
+   function Anchor (executionContext)
+   {
+      X3DGroupingNode .call (this, executionContext);
+      X3DUrlObject    .call (this, executionContext);
 
-		this .addType (X3DConstants .Anchor);
+      this .addType (X3DConstants .Anchor);
 
-		this .touchSensorNode = new TouchSensor (executionContext);
-	}
+      this .touchSensorNode = new TouchSensor (executionContext);
+   }
 
-	Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
-		X3DUrlObject .prototype,
-	{
-		constructor: Anchor,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "parameter",            new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",              new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",          new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",             new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",           new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",          new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",       new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",             new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Anchor";
-		},
-		getComponentName: function ()
-		{
-			return "Networking";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DGroupingNode .prototype .initialize .call (this);
-			X3DUrlObject    .prototype .initialize .call (this);
+   Anchor .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+      X3DUrlObject .prototype,
+   {
+      constructor: Anchor,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "parameter",            new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",             new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",           new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",          new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",       new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",             new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "Anchor";
+      },
+      getComponentName: function ()
+      {
+         return "Networking";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DGroupingNode .prototype .initialize .call (this);
+         X3DUrlObject    .prototype .initialize .call (this);
 
-			this .description_ .addFieldInterest (this .touchSensorNode .description_);
-			this .load_        .addFieldInterest (this .touchSensorNode .enabled_);
+         this .description_ .addFieldInterest (this .touchSensorNode .description_);
+         this .load_        .addFieldInterest (this .touchSensorNode .enabled_);
 
-			this .touchSensorNode .description_ = this .description_;
-			this .touchSensorNode .enabled_     = this .load_;
-			this .touchSensorNode .setup ();
+         this .touchSensorNode .description_ = this .description_;
+         this .touchSensorNode .enabled_     = this .load_;
+         this .touchSensorNode .setup ();
 
-			// Modify set_active__ to get immediate response to user action (click event), otherwise links are not opened in this window.
+         // Modify set_active__ to get immediate response to user action (click event), otherwise links are not opened in this window.
 
-			const
-				anchor       = this,
-				set_active__ = this .touchSensorNode .set_active__;
+         const
+            anchor       = this,
+            set_active__ = this .touchSensorNode .set_active__;
 
-			this .touchSensorNode .set_active__ = function (active, hit)
-			{
-				set_active__ .call (this, active, hit);
+         this .touchSensorNode .set_active__ = function (active, hit)
+         {
+            set_active__ .call (this, active, hit);
 
-				if (this .isOver_ .getValue () && ! active)
-					anchor .requestImmediateLoad ();
-			};
-		},
-		set_load__: function ()
-		{ },
-		set_url__: function ()
-		{ },
-		requestImmediateLoad: function (cache = true)
-		{
-			this .setCache (cache);
-			this .setLoadState (X3DConstants .IN_PROGRESS_STATE, false);
+            if (this .isOver_ .getValue () && ! active)
+               anchor .requestImmediateLoad ();
+         };
+      },
+      set_load__: function ()
+      { },
+      set_url__: function ()
+      { },
+      requestImmediateLoad: function (cache = true)
+      {
+         this .setCache (cache);
+         this .setLoadState (X3DConstants .IN_PROGRESS_STATE, false);
 
-			new FileLoader (this) .createX3DFromURL (this .url_, this .parameter_,
-			function (scene)
-			{
-				if (scene)
-				{
-					this .getBrowser () .replaceWorld (scene);
-					this .setLoadState (X3DConstants .COMPLETE_STATE, false);
-				}
-				else
-					this .setLoadState (X3DConstants .FAILED_STATE, false);
-			}
-			.bind (this),
-			function (viewpointName)
-			{
-			   this .getBrowser () .changeViewpoint (viewpointName);
-				this .setLoadState (X3DConstants .COMPLETE_STATE, false);
-			}
-			.bind (this),
-			function (url, target)
-			{
-				if (target)
-					window .open (url, target);
-				else
-					location = url;
+         new FileLoader (this) .createX3DFromURL (this .url_, this .parameter_,
+         function (scene)
+         {
+            if (scene)
+            {
+               this .getBrowser () .replaceWorld (scene);
+               this .setLoadState (X3DConstants .COMPLETE_STATE, false);
+            }
+            else
+               this .setLoadState (X3DConstants .FAILED_STATE, false);
+         }
+         .bind (this),
+         function (viewpointName)
+         {
+            this .getBrowser () .changeViewpoint (viewpointName);
+            this .setLoadState (X3DConstants .COMPLETE_STATE, false);
+         }
+         .bind (this),
+         function (url, target)
+         {
+            if (target)
+               window .open (url, target);
+            else
+               location = url;
 
-				this .setLoadState (X3DConstants .COMPLETE_STATE, false);
-			}
-			.bind (this));
-		},
-		requestUnload ()
-		{ },
-		traverse: function (type, renderObject)
-		{
-			if (type === TraverseType .POINTER)
-			{
-			   const sensors = { };
+            this .setLoadState (X3DConstants .COMPLETE_STATE, false);
+         }
+         .bind (this));
+      },
+      requestUnload ()
+      { },
+      traverse: function (type, renderObject)
+      {
+         if (type === TraverseType .POINTER)
+         {
+            const sensors = { };
 
-				renderObject .getBrowser () .getSensors () .push (sensors);
+            renderObject .getBrowser () .getSensors () .push (sensors);
 
-				this .touchSensorNode .push (renderObject, sensors);
+            this .touchSensorNode .push (renderObject, sensors);
 
-				X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+            X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
 
-				renderObject .getBrowser () .getSensors () .pop ();
-			}
-			else
-				X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
-		},
-	});
+            renderObject .getBrowser () .getSensors () .pop ();
+         }
+         else
+            X3DGroupingNode .prototype .traverse .call (this, type, renderObject);
+      },
+   });
 
-	return Anchor;
+   return Anchor;
 });

@@ -47,10 +47,10 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Text/FontStyle",
-	"x_ite/Components/Text/Text",
-	"x_ite/Components/Text/X3DFontStyleNode",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/Text/FontStyle",
+   "x_ite/Components/Text/Text",
+   "x_ite/Components/Text/X3DFontStyleNode",
 ],
 function (SupportedNodes,
           FontStyle,
@@ -59,20 +59,20 @@ function (SupportedNodes,
 {
 "use strict";
 
-	const Types =
-	{
-		FontStyle: FontStyle,
-		Text: Text,
-	};
+   const Types =
+   {
+      FontStyle: FontStyle,
+      Text: Text,
+   };
 
-	const AbstractTypes =
-	{
-		X3DFontStyleNode: X3DFontStyleNode,
-	};
+   const AbstractTypes =
+   {
+      X3DFontStyleNode: X3DFontStyleNode,
+   };
 
-	for (const typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]);
+   for (const typeName in Types)
+      SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (const typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   for (const typeName in AbstractTypes)
+      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

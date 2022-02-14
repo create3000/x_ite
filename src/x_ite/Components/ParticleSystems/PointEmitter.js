@@ -48,102 +48,100 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DParticleEmitterNode, 
+          X3DParticleEmitterNode,
           X3DConstants,
           Vector3)
 {
 "use strict";
 
-	function PointEmitter (executionContext)
-	{
-		X3DParticleEmitterNode .call (this, executionContext);
+   function PointEmitter (executionContext)
+   {
+      X3DParticleEmitterNode .call (this, executionContext);
 
-		this .addType (X3DConstants .PointEmitter);
+      this .addType (X3DConstants .PointEmitter);
 
-		this .position_    .setUnit ("length");
-		this .speed_       .setUnit ("speed");
-		this .mass_        .setUnit ("mass");
-		this .surfaceArea_ .setUnit ("area");
+      this .position_    .setUnit ("length");
+      this .speed_       .setUnit ("speed");
+      this .mass_        .setUnit ("mass");
+      this .surfaceArea_ .setUnit ("area");
 
-		this .direction = new Vector3 (0, 0, 0);
-	}
+      this .direction = new Vector3 (0, 0, 0);
+   }
 
-	PointEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
-	{
-		constructor: PointEmitter,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "position",    new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",   new Fields .SFVec3f (0, 1, 0)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",   new Fields .SFFloat (0.25)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "mass",        new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "surfaceArea", new Fields .SFFloat ()),
-		]),
-		getTypeName: function ()
-		{
-			return "PointEmitter";
-		},
-		getComponentName: function ()
-		{
-			return "ParticleSystems";
-		},
-		getContainerField: function ()
-		{
-			return "emitter";
-		},
-		initialize: function ()
-		{
-			X3DParticleEmitterNode .prototype .initialize .call (this);
+   PointEmitter .prototype = Object .assign (Object .create (X3DParticleEmitterNode .prototype),
+   {
+      constructor: PointEmitter,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "position",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "direction",   new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "speed",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "variation",   new Fields .SFFloat (0.25)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "mass",        new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "surfaceArea", new Fields .SFFloat ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "PointEmitter";
+      },
+      getComponentName: function ()
+      {
+         return "ParticleSystems";
+      },
+      getContainerField: function ()
+      {
+         return "emitter";
+      },
+      initialize: function ()
+      {
+         X3DParticleEmitterNode .prototype .initialize .call (this);
 
-			this .position_  .addInterest ("set_position__", this);
-			this .direction_ .addInterest ("set_direction__", this);
+         this .position_  .addInterest ("set_position__", this);
+         this .direction_ .addInterest ("set_direction__", this);
 
-			this .set_position__ ();
-			this .set_direction__ ();
-		},
-		set_position__: function ()
-		{
-			this .position = this .position_ .getValue ()
-		},
-		set_direction__: function ()
-		{
-			this .direction .assign (this .direction_ .getValue ()) .normalize ();
+         this .set_position__ ();
+         this .set_direction__ ();
+      },
+      set_position__: function ()
+      {
+         this .position = this .position_ .getValue ()
+      },
+      set_direction__: function ()
+      {
+         this .direction .assign (this .direction_ .getValue ()) .normalize ();
 
-			if (this .direction .equals (Vector3 .Zero))
-				this .getRandomVelocity = this .getSphericalRandomVelocity;
-			else
-				delete this .getRandomVelocity;
-		},
-		getRandomPosition: function (position)
-		{
-			return position .assign (this .position);
-		},
-		getRandomVelocity: function (velocity)
-		{
-			var
-				direction = this .direction,
-				speed     = this .getRandomSpeed ();
+         if (this .direction .equals (Vector3 .Zero))
+            this .getRandomVelocity = this .getSphericalRandomVelocity;
+         else
+            delete this .getRandomVelocity;
+      },
+      getRandomPosition: function (position)
+      {
+         return position .assign (this .position);
+      },
+      getRandomVelocity: function (velocity)
+      {
+         var
+            direction = this .direction,
+            speed     = this .getRandomSpeed ();
 
-			velocity .x = direction .x * speed;
-			velocity .y = direction .y * speed;
-			velocity .z = direction .z * speed;
+         velocity .x = direction .x * speed;
+         velocity .y = direction .y * speed;
+         velocity .z = direction .z * speed;
 
-			return velocity;
- 		},
-	});
+         return velocity;
+       },
+   });
 
-	return PointEmitter;
+   return PointEmitter;
 });
-
-

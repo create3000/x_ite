@@ -48,351 +48,351 @@
 
 
 define ([
-	"jquery",
-	"x_ite/Base/X3DChildObject",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Base/Events",
-	"standard/Utility/MapUtilities",
+   "jquery",
+   "x_ite/Base/X3DChildObject",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/Events",
+   "standard/Utility/MapUtilities",
 ],
 function ($,
-	       X3DChildObject,
-	       X3DConstants,
-			 Events,
-			 MapUtilities)
+          X3DChildObject,
+          X3DConstants,
+          Events,
+          MapUtilities)
 {
 "use strict";
 
-	function X3DField (value)
-	{
-		X3DChildObject .call (this);
+   function X3DField (value)
+   {
+      X3DChildObject .call (this);
 
-		this ._value = value;
+      this ._value = value;
 
-		return this;
-	}
+      return this;
+   }
 
-	X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype),
-	{
-		constructor: X3DField,
-		_value: null,
-		_accessType: X3DConstants .initializeOnly,
-		_unit: null,
-		_uniformLocation: null,
-		_references: new Set (),
-		_fieldInterests: new Set (),
-		_fieldCallbacks: new Map (),
-		_inputRoutes: new Set (),
-		_outputRoutes: new Set (),
-		_routeCallbacks: new Map (),
-		clone: function ()
-		{
-			return this .copy ();
-		},
-		equals: function (value)
-		{
-			return this ._value === value .valueOf ();
-		},
-		assign: function (field)
-		{
-			// Assigns field to this field.
-			this .set (field .getValue ());
-			this .addEvent ();
-		},
-		set: function (value)
-		{
-			// Sets internal value without generating event.
-			this ._value = value;
-		},
-		setValue: function (value)
-		{
-			// Sets internal value and generates event.
-			this .set (value instanceof this .constructor ? value .getValue () : value);
-			this .addEvent ();
-		},
-		getValue: function ()
-		{
-			return this ._value;
-		},
-		setAccessType: function (value)
-		{
-			this ._accessType = value;
-		},
-		getAccessType: function ()
-		{
-			return this ._accessType;
-		},
-		isInitializable: function ()
-		{
-			return this .getAccessType () & X3DConstants .initializeOnly;
-		},
-		isInput: function ()
-		{
-			return this .getAccessType () & X3DConstants .inputOnly;
-		},
-		isOutput: function ()
-		{
-			return this .getAccessType () & X3DConstants .outputOnly;
-		},
-		isReadable: function ()
-		{
-			return this .getAccessType () !== X3DConstants .inputOnly;
-		},
-		isWritable: function ()
-		{
-			return this .getAccessType () !== X3DConstants .initializeOnly;
-		},
-		setUnit: function (value)
-		{
-			this ._unit = value;
-		},
-		getUnit: function ()
-		{
-			return this ._unit;
-		},
-		hasReferences: function ()
-		{
-			if (this .hasOwnProperty ("_references"))
-				return this ._references .size !== 0;
+   X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype),
+   {
+      constructor: X3DField,
+      _value: null,
+      _accessType: X3DConstants .initializeOnly,
+      _unit: null,
+      _uniformLocation: null,
+      _references: new Set (),
+      _fieldInterests: new Set (),
+      _fieldCallbacks: new Map (),
+      _inputRoutes: new Set (),
+      _outputRoutes: new Set (),
+      _routeCallbacks: new Map (),
+      clone: function ()
+      {
+         return this .copy ();
+      },
+      equals: function (value)
+      {
+         return this ._value === value .valueOf ();
+      },
+      assign: function (field)
+      {
+         // Assigns field to this field.
+         this .set (field .getValue ());
+         this .addEvent ();
+      },
+      set: function (value)
+      {
+         // Sets internal value without generating event.
+         this ._value = value;
+      },
+      setValue: function (value)
+      {
+         // Sets internal value and generates event.
+         this .set (value instanceof this .constructor ? value .getValue () : value);
+         this .addEvent ();
+      },
+      getValue: function ()
+      {
+         return this ._value;
+      },
+      setAccessType: function (value)
+      {
+         this ._accessType = value;
+      },
+      getAccessType: function ()
+      {
+         return this ._accessType;
+      },
+      isInitializable: function ()
+      {
+         return this .getAccessType () & X3DConstants .initializeOnly;
+      },
+      isInput: function ()
+      {
+         return this .getAccessType () & X3DConstants .inputOnly;
+      },
+      isOutput: function ()
+      {
+         return this .getAccessType () & X3DConstants .outputOnly;
+      },
+      isReadable: function ()
+      {
+         return this .getAccessType () !== X3DConstants .inputOnly;
+      },
+      isWritable: function ()
+      {
+         return this .getAccessType () !== X3DConstants .initializeOnly;
+      },
+      setUnit: function (value)
+      {
+         this ._unit = value;
+      },
+      getUnit: function ()
+      {
+         return this ._unit;
+      },
+      hasReferences: function ()
+      {
+         if (this .hasOwnProperty ("_references"))
+            return this ._references .size !== 0;
 
-			return false;
-		},
-		isReference: function (accessType)
-		{
-			return accessType === this .getAccessType () || accessType === X3DConstants .inputOutput;
-		},
-		addReference: function (reference)
-		{
-			const references = this .getReferences ();
+         return false;
+      },
+      isReference: function (accessType)
+      {
+         return accessType === this .getAccessType () || accessType === X3DConstants .inputOutput;
+      },
+      addReference: function (reference)
+      {
+         const references = this .getReferences ();
 
-			if (references .has (reference))
-				return; // throw ???
+         if (references .has (reference))
+            return; // throw ???
 
-			references .add (reference);
+         references .add (reference);
 
-			// Create IS relationship
+         // Create IS relationship
 
-			switch (this .getAccessType () & reference .getAccessType ())
-			{
-				case X3DConstants .initializeOnly:
-					reference .addFieldInterest (this);
-					this .set (reference .getValue (), reference .length);
-					return;
-				case X3DConstants .inputOnly:
-					reference .addFieldInterest (this);
-					return;
-				case X3DConstants .outputOnly:
-					this .addFieldInterest (reference);
-					return;
-				case X3DConstants .inputOutput:
-					reference .addFieldInterest (this);
-					this .addFieldInterest (reference);
-					this .set (reference .getValue (), reference .length);
-					return;
-			}
-		},
-		removeReference: function (reference)
-		{
-			this .getReferences () .delete (reference);
+         switch (this .getAccessType () & reference .getAccessType ())
+         {
+            case X3DConstants .initializeOnly:
+               reference .addFieldInterest (this);
+               this .set (reference .getValue (), reference .length);
+               return;
+            case X3DConstants .inputOnly:
+               reference .addFieldInterest (this);
+               return;
+            case X3DConstants .outputOnly:
+               this .addFieldInterest (reference);
+               return;
+            case X3DConstants .inputOutput:
+               reference .addFieldInterest (this);
+               this .addFieldInterest (reference);
+               this .set (reference .getValue (), reference .length);
+               return;
+         }
+      },
+      removeReference: function (reference)
+      {
+         this .getReferences () .delete (reference);
 
-			// Create IS relationship
+         // Create IS relationship
 
-			switch (this .getAccessType () & reference .getAccessType ())
-			{
-				case X3DConstants .initializeOnly:
-					reference .removeFieldInterest (this);
-					return;
-				case X3DConstants .inputOnly:
-					reference .removeFieldInterest (this);
-					return;
-				case X3DConstants .outputOnly:
-					this .removeFieldInterest (reference);
-					return;
-				case X3DConstants .inputOutput:
-					reference .removeFieldInterest (this);
-					this .removeFieldInterest (reference);
-					return;
-			}
-		},
-		getReferences: function ()
-		{
-			if (! this .hasOwnProperty ("_references"))
-				this ._references = new Set ();
+         switch (this .getAccessType () & reference .getAccessType ())
+         {
+            case X3DConstants .initializeOnly:
+               reference .removeFieldInterest (this);
+               return;
+            case X3DConstants .inputOnly:
+               reference .removeFieldInterest (this);
+               return;
+            case X3DConstants .outputOnly:
+               this .removeFieldInterest (reference);
+               return;
+            case X3DConstants .inputOutput:
+               reference .removeFieldInterest (this);
+               this .removeFieldInterest (reference);
+               return;
+         }
+      },
+      getReferences: function ()
+      {
+         if (! this .hasOwnProperty ("_references"))
+            this ._references = new Set ();
 
-			return this ._references;
-		},
-		addFieldInterest: function (field)
-		{
-			if (! this .hasOwnProperty ("_fieldInterests"))
-				this ._fieldInterests = new Set ();
+         return this ._references;
+      },
+      addFieldInterest: function (field)
+      {
+         if (! this .hasOwnProperty ("_fieldInterests"))
+            this ._fieldInterests = new Set ();
 
-			this ._fieldInterests .add (field);
-		},
-		removeFieldInterest: function (field)
-		{
-			this ._fieldInterests .delete (field);
-		},
-		getFieldInterests: function ()
-		{
-			return this ._fieldInterests;
-		},
-		addFieldCallback: function (key, object)
-		{
-			if (! this .hasOwnProperty ("_fieldCallbacks"))
-				this ._fieldCallbacks = new Map ();
+         this ._fieldInterests .add (field);
+      },
+      removeFieldInterest: function (field)
+      {
+         this ._fieldInterests .delete (field);
+      },
+      getFieldInterests: function ()
+      {
+         return this ._fieldInterests;
+      },
+      addFieldCallback: function (key, object)
+      {
+         if (! this .hasOwnProperty ("_fieldCallbacks"))
+            this ._fieldCallbacks = new Map ();
 
-			this ._fieldCallbacks .set (key, object);
-		},
-		removeFieldCallback: function (key)
-		{
-			this ._fieldCallbacks .delete (key);
-		},
-		getFieldCallbacks: function ()
-		{
-			return this ._fieldCallbacks;
-		},
-		addInputRoute: function (route)
-		{
-			if (! this .hasOwnProperty ("_inputRoutes"))
-				this ._inputRoutes = new Set ();
+         this ._fieldCallbacks .set (key, object);
+      },
+      removeFieldCallback: function (key)
+      {
+         this ._fieldCallbacks .delete (key);
+      },
+      getFieldCallbacks: function ()
+      {
+         return this ._fieldCallbacks;
+      },
+      addInputRoute: function (route)
+      {
+         if (! this .hasOwnProperty ("_inputRoutes"))
+            this ._inputRoutes = new Set ();
 
-			this ._inputRoutes .add (route);
+         this ._inputRoutes .add (route);
 
-			this .processRouteCallbacks ();
-		},
-		removeInputRoute: function (route)
-		{
-			this ._inputRoutes .delete (route);
+         this .processRouteCallbacks ();
+      },
+      removeInputRoute: function (route)
+      {
+         this ._inputRoutes .delete (route);
 
-			this .processRouteCallbacks ();
-		},
-		getInputRoutes: function ()
-		{
-			return this ._inputRoutes;
-		},
-		addOutputRoute: function (route)
-		{
-			if (! this .hasOwnProperty ("_outputRoutes"))
-				this ._outputRoutes = new Set ();
+         this .processRouteCallbacks ();
+      },
+      getInputRoutes: function ()
+      {
+         return this ._inputRoutes;
+      },
+      addOutputRoute: function (route)
+      {
+         if (! this .hasOwnProperty ("_outputRoutes"))
+            this ._outputRoutes = new Set ();
 
-			this ._outputRoutes .add (route);
+         this ._outputRoutes .add (route);
 
-			this .processRouteCallbacks ();
-		},
-		removeOutputRoute: function (route)
-		{
-			this ._outputRoutes .delete (route);
+         this .processRouteCallbacks ();
+      },
+      removeOutputRoute: function (route)
+      {
+         this ._outputRoutes .delete (route);
 
-			this .processRouteCallbacks ();
-		},
-		getOutputRoutes: function ()
-		{
-			return this ._outputRoutes;
-		},
-		addRouteCallback: function (key, object)
-		{
-			if (! this .hasOwnProperty ("_routeCallbacks"))
-				this ._routeCallbacks = new Map ();
+         this .processRouteCallbacks ();
+      },
+      getOutputRoutes: function ()
+      {
+         return this ._outputRoutes;
+      },
+      addRouteCallback: function (key, object)
+      {
+         if (! this .hasOwnProperty ("_routeCallbacks"))
+            this ._routeCallbacks = new Map ();
 
-			this ._routeCallbacks .set (key, object);
-		},
-		removeRouteCallback: function (key)
-		{
-			this ._routeCallbacks .delete (key);
-		},
-		getRouteCallbacks: function ()
-		{
-			return this ._routeCallbacks;
-		},
-		processRouteCallbacks: (function ()
-		{
-			const routeCallbacks = [ ];
+         this ._routeCallbacks .set (key, object);
+      },
+      removeRouteCallback: function (key)
+      {
+         this ._routeCallbacks .delete (key);
+      },
+      getRouteCallbacks: function ()
+      {
+         return this ._routeCallbacks;
+      },
+      processRouteCallbacks: (function ()
+      {
+         const routeCallbacks = [ ];
 
-			function processRouteCallback (routeCallback)
-			{
-				routeCallback ();
-			}
+         function processRouteCallback (routeCallback)
+         {
+            routeCallback ();
+         }
 
-			return function ()
-			{
-				if (this ._routeCallbacks .size)
-					MapUtilities .values (routeCallbacks, this ._routeCallbacks) .forEach (processRouteCallback);
-			};
-		})(),
-		processEvent: (function ()
-		{
-			const fieldCallbacks = [ ];
+         return function ()
+         {
+            if (this ._routeCallbacks .size)
+               MapUtilities .values (routeCallbacks, this ._routeCallbacks) .forEach (processRouteCallback);
+         };
+      })(),
+      processEvent: (function ()
+      {
+         const fieldCallbacks = [ ];
 
-			function processEvent (fieldCallback)
-			{
-				fieldCallback (this .valueOf ());
-			}
+         function processEvent (fieldCallback)
+         {
+            fieldCallback (this .valueOf ());
+         }
 
-			return function (event)
-			{
-				if (event .has (this))
-					return;
+         return function (event)
+         {
+            if (event .has (this))
+               return;
 
-				event .add (this);
+            event .add (this);
 
-				this .setTainted (false);
+            this .setTainted (false);
 
-				const field = event .field;
+            const field = event .field;
 
-				if (field !== this)
-					this .set (field .getValue (), field .length);
+            if (field !== this)
+               this .set (field .getValue (), field .length);
 
-				// Process interests
+            // Process interests
 
-				this .processInterests ();
+            this .processInterests ();
 
-				// Process routes
+            // Process routes
 
-				let first = true;
+            let first = true;
 
-				this ._fieldInterests .forEach (function (fieldInterest)
-				{
-					if (first)
-					{
-						first = false;
-						fieldInterest .addEventObject (this, event);
-					}
-					else
-						fieldInterest .addEventObject (this, Events .copy (event));
-				},
-				this);
+            this ._fieldInterests .forEach (function (fieldInterest)
+            {
+               if (first)
+               {
+                  first = false;
+                  fieldInterest .addEventObject (this, event);
+               }
+               else
+                  fieldInterest .addEventObject (this, Events .copy (event));
+            },
+            this);
 
-				if (first)
-					Events .push (event);
+            if (first)
+               Events .push (event);
 
-				// Process field callbacks
+            // Process field callbacks
 
-				if (this ._fieldCallbacks .size)
-				{
-					MapUtilities .values (fieldCallbacks, this ._fieldCallbacks) .forEach (processEvent, this);
-				}
-			};
-		})(),
-		addCloneCount: Function .prototype,
-		removeCloneCount: Function .prototype,
-		valueOf: function ()
-		{
-			return this;
-		},
-		fromString: function (string, scene)
-		{
-			const
-				Parser = require ("x_ite/Parser/Parser"),
-				parser = new Parser (scene);
+            if (this ._fieldCallbacks .size)
+            {
+               MapUtilities .values (fieldCallbacks, this ._fieldCallbacks) .forEach (processEvent, this);
+            }
+         };
+      })(),
+      addCloneCount: Function .prototype,
+      removeCloneCount: Function .prototype,
+      valueOf: function ()
+      {
+         return this;
+      },
+      fromString: function (string, scene)
+      {
+         const
+            Parser = require ("x_ite/Parser/Parser"),
+            parser = new Parser (scene);
 
-			parser .setUnits (!! scene);
-			parser .setInput (string);
+         parser .setUnits (!! scene);
+         parser .setInput (string);
 
-			if (parser .fieldValue (this))
-				return;
+         if (parser .fieldValue (this))
+            return;
 
-			throw new Error ("Couldn't read value for field '" + this .getName () + "'.");
-		},
-	});
+         throw new Error ("Couldn't read value for field '" + this .getName () + "'.");
+      },
+   });
 
-	return X3DField;
+   return X3DField;
 });

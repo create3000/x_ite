@@ -48,13 +48,13 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Grouping/X3DTransformMatrix3DNode",
-	"x_ite/Components/Geospatial/X3DGeospatialObject",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Matrix4",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Grouping/X3DTransformMatrix3DNode",
+   "x_ite/Components/Geospatial/X3DGeospatialObject",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -66,86 +66,86 @@ function (Fields,
 {
 "use strict";
 
-	var
-		matrix         = new Matrix4 (),
-		locationMatrix = new Matrix4 ();
+   var
+      matrix         = new Matrix4 (),
+      locationMatrix = new Matrix4 ();
 
-	function GeoTransform (executionContext)
-	{
-		X3DTransformMatrix3DNode .call (this, executionContext);
-		X3DGeospatialObject      .call (this, executionContext);
+   function GeoTransform (executionContext)
+   {
+      X3DTransformMatrix3DNode .call (this, executionContext);
+      X3DGeospatialObject      .call (this, executionContext);
 
-		this .addType (X3DConstants .GeoTransform);
+      this .addType (X3DConstants .GeoTransform);
 
-		this .translation_ .setUnit ("length");
-	}
+      this .translation_ .setUnit ("length");
+   }
 
-	GeoTransform .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
-		X3DGeospatialObject .prototype,
-	{
-		constructor: GeoTransform,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",      new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",         new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",            new Fields .SFVec3f (1, 1, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientation", new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",        new Fields .MFString ("GD", "WE")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "geoCenter",        new Fields .SFVec3d ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "GeoTransform";
-		},
-		getComponentName: function ()
-		{
-			return "Geospatial";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DTransformMatrix3DNode .prototype .initialize .call (this);
-			X3DGeospatialObject      .prototype .initialize .call (this);
+   GeoTransform .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
+      X3DGeospatialObject .prototype,
+   {
+      constructor: GeoTransform,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",      new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",         new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",            new Fields .SFVec3f (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientation", new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoOrigin",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "geoSystem",        new Fields .MFString ("GD", "WE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "geoCenter",        new Fields .SFVec3d ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "GeoTransform";
+      },
+      getComponentName: function ()
+      {
+         return "Geospatial";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DTransformMatrix3DNode .prototype .initialize .call (this);
+         X3DGeospatialObject      .prototype .initialize .call (this);
 
-			this .addInterest ("eventsProcessed", this);
+         this .addInterest ("eventsProcessed", this);
 
-			this .eventsProcessed ();
-		},
-		eventsProcessed: function ()
-		{
-			try
-			{
-				this .setHidden (this .scale_ .x === 0 ||
-				                 this .scale_ .y === 0 ||
-				                 this .scale_ .z === 0);
+         this .eventsProcessed ();
+      },
+      eventsProcessed: function ()
+      {
+         try
+         {
+            this .setHidden (this .scale_ .x === 0 ||
+                             this .scale_ .y === 0 ||
+                             this .scale_ .z === 0);
 
-				this .getLocationMatrix (this .geoCenter_ .getValue (), locationMatrix);
+            this .getLocationMatrix (this .geoCenter_ .getValue (), locationMatrix);
 
-				matrix .set (this .translation_      .getValue (),
-				             this .rotation_         .getValue (),
-				             this .scale_            .getValue (),
-				             this .scaleOrientation_ .getValue ());
+            matrix .set (this .translation_      .getValue (),
+                         this .rotation_         .getValue (),
+                         this .scale_            .getValue (),
+                         this .scaleOrientation_ .getValue ());
 
-				this .setMatrix (matrix .multRight (locationMatrix) .multLeft (locationMatrix .inverse ()));
-			}
-			catch (error)
-			{
-				// Should normally not happen.
-				this .setHidden (true);
-			}
-		},
-	});
+            this .setMatrix (matrix .multRight (locationMatrix) .multLeft (locationMatrix .inverse ()));
+         }
+         catch (error)
+         {
+            // Should normally not happen.
+            this .setHidden (true);
+         }
+      },
+   });
 
-	return GeoTransform;
+   return GeoTransform;
 });

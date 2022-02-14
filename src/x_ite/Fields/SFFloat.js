@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Basic/X3DField",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/InputOutput/Generator",
+   "x_ite/Basic/X3DField",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/InputOutput/Generator",
 ],
 function (X3DField,
           X3DConstants,
@@ -58,52 +58,52 @@ function (X3DField,
 {
 "use strict";
 
-	function SFFloat (value)
-	{
-		return X3DField .call (this, arguments .length ? value * 1 : 0);
-	}
+   function SFFloat (value)
+   {
+      return X3DField .call (this, arguments .length ? value * 1 : 0);
+   }
 
-	SFFloat .prototype = Object .assign (Object .create (X3DField .prototype),
-	{
-		constructor: SFFloat,
-		copy: function ()
-		{
-			return new SFFloat (this .getValue ());
-		},
-		getTypeName: function ()
-		{
-			return "SFFloat";
-		},
-		getType: function ()
-		{
-			return X3DConstants .SFFloat;
-		},
-		isDefaultValue: function ()
-		{
-			return this .getValue () === 0;
-		},
-		set: function (value)
-		{
-			X3DField .prototype .set .call (this, value * 1);
-		},
-		valueOf: X3DField .prototype .getValue,
-		toStream: function (stream)
-		{
-			const
-				generator = Generator .Get (stream),
-				category  = generator .Unit (this .getUnit ());
+   SFFloat .prototype = Object .assign (Object .create (X3DField .prototype),
+   {
+      constructor: SFFloat,
+      copy: function ()
+      {
+         return new SFFloat (this .getValue ());
+      },
+      getTypeName: function ()
+      {
+         return "SFFloat";
+      },
+      getType: function ()
+      {
+         return X3DConstants .SFFloat;
+      },
+      isDefaultValue: function ()
+      {
+         return this .getValue () === 0;
+      },
+      set: function (value)
+      {
+         X3DField .prototype .set .call (this, value * 1);
+      },
+      valueOf: X3DField .prototype .getValue,
+      toStream: function (stream)
+      {
+         const
+            generator = Generator .Get (stream),
+            category  = generator .Unit (this .getUnit ());
 
-			stream .string += generator .Precision (generator .ToUnit (category, this .getValue ()));
-		},
-		toVRMLStream: function (stream)
-		{
-			this .toStream (stream);
-		},
-		toXMLStream: function (stream)
-		{
-			this .toStream (stream);
-		},
-	});
+         stream .string += generator .Precision (generator .ToUnit (category, this .getValue ()));
+      },
+      toVRMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+      toXMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+   });
 
-	return SFFloat;
+   return SFFloat;
 });

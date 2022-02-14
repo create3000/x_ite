@@ -48,28 +48,28 @@
 
 
 define ([
-	"x_ite/Components/Layering/Viewport",
+   "x_ite/Components/Layering/Viewport",
 ],
 function (Viewport)
 {
 "use strict";
-	
-	function X3DLayeringContext ()
-	{
-		this .defaultViewport = new Viewport (this .getPrivateScene ());
-	}
 
-	X3DLayeringContext .prototype =
-	{
-		initialize: function ()
-		{
-			this .defaultViewport .setup ();
-		},
-		getDefaultViewport: function ()
-		{
-			return this .defaultViewport;
-		},
-	};
+   function X3DLayeringContext ()
+   {
+      this .defaultViewport = new Viewport (this .getPrivateScene ());
+   }
 
-	return X3DLayeringContext;
+   X3DLayeringContext .prototype =
+   {
+      initialize: function ()
+      {
+         this .defaultViewport .setup ();
+      },
+      getDefaultViewport: function ()
+      {
+         return this .defaultViewport;
+      },
+   };
+
+   return X3DLayeringContext;
 });

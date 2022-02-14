@@ -47,14 +47,14 @@
 
 
 define ([
-	"x_ite/Components",
-	"x_ite/Browser/Layout/X3DLayoutContext",
-	"x_ite/Components/Layout/Layout",
-	"x_ite/Components/Layout/LayoutGroup",
-	"x_ite/Components/Layout/LayoutLayer",
-	"x_ite/Components/Layout/ScreenFontStyle",
-	"x_ite/Components/Layout/ScreenGroup",
-	"x_ite/Components/Layout/X3DLayoutNode",
+   "x_ite/Components",
+   "x_ite/Browser/Layout/X3DLayoutContext",
+   "x_ite/Components/Layout/Layout",
+   "x_ite/Components/Layout/LayoutGroup",
+   "x_ite/Components/Layout/LayoutLayer",
+   "x_ite/Components/Layout/ScreenFontStyle",
+   "x_ite/Components/Layout/ScreenGroup",
+   "x_ite/Components/Layout/X3DLayoutNode",
 ],
 function (Components,
           X3DLayoutContext,
@@ -67,21 +67,20 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "Layout",
-		types:
-		{
-			Layout:          Layout,
-			LayoutGroup:     LayoutGroup,
-			LayoutLayer:     LayoutLayer,
-			ScreenFontStyle: ScreenFontStyle,
-			ScreenGroup:     ScreenGroup,
-		},
-		abstractTypes:
-		{
-			X3DLayoutNode: X3DLayoutNode,
-		},
-		browser: X3DLayoutContext,
-	});
+   Components .addComponent ({
+      name: "Layout",
+      types:
+      {
+         Layout:          Layout,
+         LayoutGroup:     LayoutGroup,
+         LayoutLayer:     LayoutLayer,
+         ScreenFontStyle: ScreenFontStyle,
+         ScreenGroup:     ScreenGroup,
+      },
+      abstractTypes:
+      {
+         X3DLayoutNode: X3DLayoutNode,
+      },
+      browser: X3DLayoutContext,
+   });
 });
-

@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Shape/X3DAppearanceChildNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Shape/X3DAppearanceChildNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -62,75 +62,75 @@ function (Fields,
 {
 "use strict";
 
-	function LineProperties (executionContext)
-	{
-		X3DAppearanceChildNode .call (this, executionContext);
+   function LineProperties (executionContext)
+   {
+      X3DAppearanceChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .LineProperties);
-	}
+      this .addType (X3DConstants .LineProperties);
+   }
 
-	LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
-	{
-		constructor: LineProperties,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "applied",              new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "linetype",             new Fields .SFInt32 (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "linewidthScaleFactor", new Fields .SFFloat ()),
-		]),
-		getTypeName: function ()
-		{
-			return "LineProperties";
-		},
-		getComponentName: function ()
-		{
-			return "Shape";
-		},
-		getContainerField: function ()
-		{
-			return "lineProperties";
-		},
-		initialize: function ()
-		{
-			X3DAppearanceChildNode .prototype .initialize .call (this);
+   LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
+   {
+      constructor: LineProperties,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "applied",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "linetype",             new Fields .SFInt32 (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "linewidthScaleFactor", new Fields .SFFloat ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "LineProperties";
+      },
+      getComponentName: function ()
+      {
+         return "Shape";
+      },
+      getContainerField: function ()
+      {
+         return "lineProperties";
+      },
+      initialize: function ()
+      {
+         X3DAppearanceChildNode .prototype .initialize .call (this);
 
-			this .applied_              .addInterest ("set_applied__",              this);
-			this .linewidthScaleFactor_ .addInterest ("set_linewidthScaleFactor__", this);
+         this .applied_              .addInterest ("set_applied__",              this);
+         this .linewidthScaleFactor_ .addInterest ("set_linewidthScaleFactor__", this);
 
-			this .set_applied__ ();
-			this .set_linewidthScaleFactor__ ();
-		},
-		set_applied__: function ()
-		{
-			this .applied = this .applied_ .getValue ();
-		},
-		set_linewidthScaleFactor__: function ()
-		{
-			this .linewidthScaleFactor = Math .max (1, this .linewidthScaleFactor_ .getValue ());
-		},
-		setShaderUniforms: function (gl, shaderObject)
-		{
-			if (this .applied)
-			{
-				const
-					browser = shaderObject .getBrowser (),
-					texture = browser .getLinetype (this .linetype_ .getValue ());
+         this .set_applied__ ();
+         this .set_linewidthScaleFactor__ ();
+      },
+      set_applied__: function ()
+      {
+         this .applied = this .applied_ .getValue ();
+      },
+      set_linewidthScaleFactor__: function ()
+      {
+         this .linewidthScaleFactor = Math .max (1, this .linewidthScaleFactor_ .getValue ());
+      },
+      setShaderUniforms: function (gl, shaderObject)
+      {
+         if (this .applied)
+         {
+            const
+               browser = shaderObject .getBrowser (),
+               texture = browser .getLinetype (this .linetype_ .getValue ());
 
-				gl .lineWidth (this .linewidthScaleFactor);
-				gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,              true);
-				gl .uniform1f (shaderObject .x3d_LinePropertiesLinewidthScaleFactor, this .linewidthScaleFactor);
+            gl .lineWidth (this .linewidthScaleFactor);
+            gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,              true);
+            gl .uniform1f (shaderObject .x3d_LinePropertiesLinewidthScaleFactor, this .linewidthScaleFactor);
 
-				gl .activeTexture (gl .TEXTURE0 + browser .getLinetypeUnit ());
-				gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
-			}
-			else
-			{
-				gl .lineWidth (1);
-				gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,              false);
-				gl .uniform1f (shaderObject .x3d_LinePropertiesLinewidthScaleFactor, 1);
-			}
-		},
-	});
+            gl .activeTexture (gl .TEXTURE0 + browser .getLinetypeUnit ());
+            gl .bindTexture (gl .TEXTURE_2D, texture .getTexture ());
+         }
+         else
+         {
+            gl .lineWidth (1);
+            gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,              false);
+            gl .uniform1f (shaderObject .x3d_LinePropertiesLinewidthScaleFactor, 1);
+         }
+      },
+   });
 
-	return LineProperties;
+   return LineProperties;
 });

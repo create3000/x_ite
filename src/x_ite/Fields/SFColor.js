@@ -48,10 +48,10 @@
 
 
 define ([
-	"standard/Math/Numbers/Color3",
-	"x_ite/Basic/X3DField",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/InputOutput/Generator",
+   "standard/Math/Numbers/Color3",
+   "x_ite/Basic/X3DField",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/InputOutput/Generator",
 ],
 function (Color3,
           X3DField,
@@ -60,160 +60,160 @@ function (Color3,
 {
 "use strict";
 
-	function SFColor (r, g, b)
-	{
-		switch (arguments .length)
-		{
-			case 0:
-				return X3DField .call (this, new Color3 ());
+   function SFColor (r, g, b)
+   {
+      switch (arguments .length)
+      {
+         case 0:
+            return X3DField .call (this, new Color3 ());
 
-			case 1:
-				return X3DField .call (this, arguments [0]);
+         case 1:
+            return X3DField .call (this, arguments [0]);
 
-			case 3:
-				return X3DField .call (this, new Color3 (r * 1, g * 1, b * 1));
-		}
+         case 3:
+            return X3DField .call (this, new Color3 (r * 1, g * 1, b * 1));
+      }
 
-		throw new Error ("Invalid arguments.");
-	}
+      throw new Error ("Invalid arguments.");
+   }
 
-	SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
-	{
-		constructor: SFColor,
-		copy: function ()
-		{
-			return new SFColor (this .getValue () .copy ());
-		},
-		getTypeName: function ()
-		{
-			return "SFColor";
-		},
-		getType: function ()
-		{
-			return X3DConstants .SFColor;
-		},
-		equals: function (color)
-		{
-			return this .getValue () .equals (color .getValue ());
-		},
-		isDefaultValue: function ()
-		{
-			return (
-				this .getValue () .r === 0 &&
-				this .getValue () .g === 0 &&
-				this .getValue () .b === 0);
-		},
-		set: function (value)
-		{
-			this .getValue () .assign (value);
-		},
-		getHSV: function ()
-		{
-			return this .getValue () .getHSV ([ ]);
-		},
-		setHSV: function (h, s, v)
-		{
-			this .getValue () .setHSV (h, s, v);
-			this .addEvent ();
-		},
-		lerp: (function ()
-		{
-			const
-				s = [ ],
-				d = [ ],
-				r = [ ];
+   SFColor .prototype = Object .assign (Object .create (X3DField .prototype),
+   {
+      constructor: SFColor,
+      copy: function ()
+      {
+         return new SFColor (this .getValue () .copy ());
+      },
+      getTypeName: function ()
+      {
+         return "SFColor";
+      },
+      getType: function ()
+      {
+         return X3DConstants .SFColor;
+      },
+      equals: function (color)
+      {
+         return this .getValue () .equals (color .getValue ());
+      },
+      isDefaultValue: function ()
+      {
+         return (
+            this .getValue () .r === 0 &&
+            this .getValue () .g === 0 &&
+            this .getValue () .b === 0);
+      },
+      set: function (value)
+      {
+         this .getValue () .assign (value);
+      },
+      getHSV: function ()
+      {
+         return this .getValue () .getHSV ([ ]);
+      },
+      setHSV: function (h, s, v)
+      {
+         this .getValue () .setHSV (h, s, v);
+         this .addEvent ();
+      },
+      lerp: (function ()
+      {
+         const
+            s = [ ],
+            d = [ ],
+            r = [ ];
 
-			return function (destination, t)
-			{
-				const result = new SFColor ();
+         return function (destination, t)
+         {
+            const result = new SFColor ();
 
-				this .getValue () .getHSV (s),
-				destination .getValue () .getHSV (d),
-				Color3 .lerp (s, d, t, r),
+            this .getValue () .getHSV (s),
+            destination .getValue () .getHSV (d),
+            Color3 .lerp (s, d, t, r),
 
-				result .setHSV (r [0], r [1], r [2], r [3]);
+            result .setHSV (r [0], r [1], r [2], r [3]);
 
-				return result;
-			};
-		})(),
-		toStream: function (stream)
-		{
-			const
-				generator = Generator .Get (stream),
-				value     = this .getValue (),
-				last      = value .length - 1;
+            return result;
+         };
+      })(),
+      toStream: function (stream)
+      {
+         const
+            generator = Generator .Get (stream),
+            value     = this .getValue (),
+            last      = value .length - 1;
 
-			for (let i = 0; i < last; ++ i)
-			{
-				stream .string += generator .Precision (value [i]);
-				stream .string += " ";
-			}
+         for (let i = 0; i < last; ++ i)
+         {
+            stream .string += generator .Precision (value [i]);
+            stream .string += " ";
+         }
 
-			stream .string += generator .Precision (value [last]);
-		},
-		toVRMLStream: function (stream)
-		{
-			this .toStream (stream);
-		},
-		toXMLStream: function (stream)
-		{
-			this .toStream (stream);
-		},
-	});
+         stream .string += generator .Precision (value [last]);
+      },
+      toVRMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+      toXMLStream: function (stream)
+      {
+         this .toStream (stream);
+      },
+   });
 
-	const r = {
-		get: function ()
-		{
-			return this .getValue () .r;
-		},
-		set: function (value)
-		{
-			this .getValue () .r = value * 1;
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
+   const r = {
+      get: function ()
+      {
+         return this .getValue () .r;
+      },
+      set: function (value)
+      {
+         this .getValue () .r = value * 1;
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
+   };
 
-	const g = {
-		get: function ()
-		{
-			return this .getValue () .g;
-		},
-		set: function (value)
-		{
-			this .getValue () .g = value * 1;
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
+   const g = {
+      get: function ()
+      {
+         return this .getValue () .g;
+      },
+      set: function (value)
+      {
+         this .getValue () .g = value * 1;
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
+   };
 
-	const b = {
-		get: function ()
-		{
-			return this .getValue () .b;
-		},
-		set: function (value)
-		{
-			this .getValue () .b = value * 1;
-			this .addEvent ();
-		},
-		enumerable: true,
-		configurable: false
-	};
+   const b = {
+      get: function ()
+      {
+         return this .getValue () .b;
+      },
+      set: function (value)
+      {
+         this .getValue () .b = value * 1;
+         this .addEvent ();
+      },
+      enumerable: true,
+      configurable: false
+   };
 
-	Object .defineProperty (SFColor .prototype, "r", r);
-	Object .defineProperty (SFColor .prototype, "g", g);
-	Object .defineProperty (SFColor .prototype, "b", b);
+   Object .defineProperty (SFColor .prototype, "r", r);
+   Object .defineProperty (SFColor .prototype, "g", g);
+   Object .defineProperty (SFColor .prototype, "b", b);
 
-	r .enumerable = false;
-	g .enumerable = false;
-	b .enumerable = false;
+   r .enumerable = false;
+   g .enumerable = false;
+   b .enumerable = false;
 
-	Object .defineProperty (SFColor .prototype, "0", r);
-	Object .defineProperty (SFColor .prototype, "1", g);
-	Object .defineProperty (SFColor .prototype, "2", b);
+   Object .defineProperty (SFColor .prototype, "0", r);
+   Object .defineProperty (SFColor .prototype, "1", g);
+   Object .defineProperty (SFColor .prototype, "2", b);
 
-	return SFColor;
+   return SFColor;
 });

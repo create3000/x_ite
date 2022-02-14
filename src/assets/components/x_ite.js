@@ -48,22 +48,22 @@
 
 
 define ([
-	"x_ite/Components",
-	"x_ite/Components/X_ITE/BlendMode",
+   "x_ite/Components",
+   "x_ite/Components/X_ITE/BlendMode",
 ],
 function (Components,
           BlendMode)
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "X_ITE",
-		types:
-		{
-			BlendMode: BlendMode,
-		},
-		abstractTypes:
-		{
-		},
-	});
+   Components .addComponent ({
+      name: "X_ITE",
+      types:
+      {
+         BlendMode: BlendMode,
+      },
+      abstractTypes:
+      {
+      },
+   });
 });

@@ -47,14 +47,14 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/PointingDeviceSensor/CylinderSensor",
-	"x_ite/Components/PointingDeviceSensor/PlaneSensor",
-	"x_ite/Components/PointingDeviceSensor/SphereSensor",
-	"x_ite/Components/PointingDeviceSensor/TouchSensor",
-	"x_ite/Components/PointingDeviceSensor/X3DDragSensorNode",
-	"x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
-	"x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/PointingDeviceSensor/CylinderSensor",
+   "x_ite/Components/PointingDeviceSensor/PlaneSensor",
+   "x_ite/Components/PointingDeviceSensor/SphereSensor",
+   "x_ite/Components/PointingDeviceSensor/TouchSensor",
+   "x_ite/Components/PointingDeviceSensor/X3DDragSensorNode",
+   "x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
+   "x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode",
 ],
 function (SupportedNodes,
           CylinderSensor,
@@ -67,24 +67,24 @@ function (SupportedNodes,
 {
 "use strict";
 
-	const Types =
-	{
-		CylinderSensor: CylinderSensor,
-		PlaneSensor:    PlaneSensor,
-		SphereSensor:   SphereSensor,
-		TouchSensor:    TouchSensor,
-	};
+   const Types =
+   {
+      CylinderSensor: CylinderSensor,
+      PlaneSensor:    PlaneSensor,
+      SphereSensor:   SphereSensor,
+      TouchSensor:    TouchSensor,
+   };
 
-	const AbstractTypes =
-	{
-		X3DDragSensorNode:           X3DDragSensorNode,
-		X3DPointingDeviceSensorNode: X3DPointingDeviceSensorNode,
-		X3DTouchSensorNode:          X3DTouchSensorNode,
-	};
+   const AbstractTypes =
+   {
+      X3DDragSensorNode:           X3DDragSensorNode,
+      X3DPointingDeviceSensorNode: X3DPointingDeviceSensorNode,
+      X3DTouchSensorNode:          X3DTouchSensorNode,
+   };
 
-	for (const typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]);
+   for (const typeName in Types)
+      SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (const typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   for (const typeName in AbstractTypes)
+      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

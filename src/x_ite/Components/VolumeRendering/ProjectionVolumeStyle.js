@@ -48,11 +48,11 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -62,166 +62,166 @@ function (Fields,
 {
 "use strict";
 
-	function ProjectionVolumeStyle (executionContext)
-	{
-		X3DVolumeRenderStyleNode .call (this, executionContext);
+   function ProjectionVolumeStyle (executionContext)
+   {
+      X3DVolumeRenderStyleNode .call (this, executionContext);
 
-		this .addType (X3DConstants .ProjectionVolumeStyle);
-	}
+      this .addType (X3DConstants .ProjectionVolumeStyle);
+   }
 
-	ProjectionVolumeStyle .prototype = Object .assign (Object .create (X3DVolumeRenderStyleNode .prototype),
-	{
-		constructor: ProjectionVolumeStyle,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "type",               new Fields .SFString ("MAX")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "intensityThreshold", new Fields .SFFloat (0)),
-		]),
-		getTypeName: function ()
-		{
-			return "ProjectionVolumeStyle";
-		},
-		getComponentName: function ()
-		{
-			return "VolumeRendering";
-		},
-		getContainerField: function ()
-		{
-			return "renderStyle";
-		},
-		addShaderFields: function (shaderNode)
-		{
-			if (! this .enabled_ .getValue ())
-				return;
+   ProjectionVolumeStyle .prototype = Object .assign (Object .create (X3DVolumeRenderStyleNode .prototype),
+   {
+      constructor: ProjectionVolumeStyle,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "type",               new Fields .SFString ("MAX")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "intensityThreshold", new Fields .SFFloat (0)),
+      ]),
+      getTypeName: function ()
+      {
+         return "ProjectionVolumeStyle";
+      },
+      getComponentName: function ()
+      {
+         return "VolumeRendering";
+      },
+      getContainerField: function ()
+      {
+         return "renderStyle";
+      },
+      addShaderFields: function (shaderNode)
+      {
+         if (! this .enabled_ .getValue ())
+            return;
 
-			shaderNode .addUserDefinedField (X3DConstants .inputOutput, "intensityThreshold_" + this .getId (), this .intensityThreshold_ .copy ());
-		},
-		getUniformsText: function ()
-		{
-			if (! this .enabled_ .getValue ())
-				return "";
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "intensityThreshold_" + this .getId (), this .intensityThreshold_ .copy ());
+      },
+      getUniformsText: function ()
+      {
+         if (! this .enabled_ .getValue ())
+            return "";
 
-			var string = "";
+         var string = "";
 
-			string += "\n";
-			string += "// ProjectionVolumeStyle\n";
-			string += "\n";
-			string += "uniform float intensityThreshold_" + this .getId () + ";\n";
+         string += "\n";
+         string += "// ProjectionVolumeStyle\n";
+         string += "\n";
+         string += "uniform float intensityThreshold_" + this .getId () + ";\n";
 
-			string += "\n";
-			string += "vec4\n";
-			string += "getProjectionStyle_" + this .getId () + "(in vec4 originalColor, in vec3 texCoord)\n";
-			string += "{\n";
-			switch (this .type_ .getValue ())
-			{
-				default:
-				case "MAX":
-				{
-					string += "	float projectionColor = 0.0;\n";
-					break;
-				}
-				case "MIN":
-				{
-					string += "	float projectionColor = 1.0;\n";
-					break;
-				}
-				case "AVERAGE":
-				{
-					string += "	float projectionColor = 0.0;\n";
-					break;
-				}
-			}
+         string += "\n";
+         string += "vec4\n";
+         string += "getProjectionStyle_" + this .getId () + "(in vec4 originalColor, in vec3 texCoord)\n";
+         string += "{\n";
+         switch (this .type_ .getValue ())
+         {
+            default:
+            case "MAX":
+            {
+               string += "	float projectionColor = 0.0;\n";
+               break;
+            }
+            case "MIN":
+            {
+               string += "	float projectionColor = 1.0;\n";
+               break;
+            }
+            case "AVERAGE":
+            {
+               string += "	float projectionColor = 0.0;\n";
+               break;
+            }
+         }
 
-			string += "	const int samples     = 32;\n";
-			string += "	vec3  step            = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0)) / float (samples);\n";
-			string += "	vec3  ray             = texCoord - step * float (samples) * 0.5;\n";
-			string += "	bool  first           = false;\n";
-			string += "\n";
-			string += "	for (int i = 0; i < samples; ++ i, ray += step)\n";
-			string += "	{\n";
-			string += "		if (ray .s < 0.0 || ray .s > 1.0)\n";
-			string += "			continue;\n";
-			string += "\n";
-			string += "		if (ray .t < 0.0 || ray .t > 1.0)\n";
-			string += "			continue;\n";
-			string += "\n";
-			string += "		if (ray .p < 0.0 || ray .p > 1.0)\n";
-			string += "			continue;\n";
-			string += "\n";
-			string += "		float intensity = texture (x3d_Texture3D [0], ray) .r;\n";
-			string += "\n";
+         string += "	const int samples     = 32;\n";
+         string += "	vec3  step            = normalize (x3d_TextureNormalMatrix * vec3 (0.0, 0.0, 1.0)) / float (samples);\n";
+         string += "	vec3  ray             = texCoord - step * float (samples) * 0.5;\n";
+         string += "	bool  first           = false;\n";
+         string += "\n";
+         string += "	for (int i = 0; i < samples; ++ i, ray += step)\n";
+         string += "	{\n";
+         string += "		if (ray .s < 0.0 || ray .s > 1.0)\n";
+         string += "			continue;\n";
+         string += "\n";
+         string += "		if (ray .t < 0.0 || ray .t > 1.0)\n";
+         string += "			continue;\n";
+         string += "\n";
+         string += "		if (ray .p < 0.0 || ray .p > 1.0)\n";
+         string += "			continue;\n";
+         string += "\n";
+         string += "		float intensity = texture (x3d_Texture3D [0], ray) .r;\n";
+         string += "\n";
 
-			switch (this .type_ .getValue ())
-			{
-				default:
-				case "MAX":
-				{
-					string += "		if (intensity < intensityThreshold_" + this .getId () + ")\n";
-					string += "			continue;\n";
-					string += "\n";
-					string += "		if (intensityThreshold_" + this .getId () + " > 0.0 && first)\n";
-					string += "			break;\n";
-					string += "\n";
-					string += "		if (intensity <= projectionColor)\n";
-					string += "		{\n";
-					string += "			first = true;\n";
-					string += "			continue;\n";
-					string += "		}\n";
-					string += "\n";
-					string += "		projectionColor = intensity;\n";
-					break;
-				}
-				case "MIN":
-				{
-					string += "		if (intensity < intensityThreshold_" + this .getId () + ")\n";
-					string += "			continue;\n";
-					string += "\n";
-					string += "		if (intensityThreshold_" + this .getId () + " > 0.0 && first)\n";
-					string += "			break;\n";
-					string += "\n";
-					string += "		if (intensity >= projectionColor)\n";
-					string += "		{\n";
-					string += "			first = true;\n";
-					string += "			continue;\n";
-					string += "		}\n";
-					string += "\n";
-					string += "		projectionColor = intensity;\n";
-					break;
-				}
-				case "AVERAGE":
-				{
-					string += "		projectionColor += intensity;\n";
-					break;
-				}
-			}
+         switch (this .type_ .getValue ())
+         {
+            default:
+            case "MAX":
+            {
+               string += "		if (intensity < intensityThreshold_" + this .getId () + ")\n";
+               string += "			continue;\n";
+               string += "\n";
+               string += "		if (intensityThreshold_" + this .getId () + " > 0.0 && first)\n";
+               string += "			break;\n";
+               string += "\n";
+               string += "		if (intensity <= projectionColor)\n";
+               string += "		{\n";
+               string += "			first = true;\n";
+               string += "			continue;\n";
+               string += "		}\n";
+               string += "\n";
+               string += "		projectionColor = intensity;\n";
+               break;
+            }
+            case "MIN":
+            {
+               string += "		if (intensity < intensityThreshold_" + this .getId () + ")\n";
+               string += "			continue;\n";
+               string += "\n";
+               string += "		if (intensityThreshold_" + this .getId () + " > 0.0 && first)\n";
+               string += "			break;\n";
+               string += "\n";
+               string += "		if (intensity >= projectionColor)\n";
+               string += "		{\n";
+               string += "			first = true;\n";
+               string += "			continue;\n";
+               string += "		}\n";
+               string += "\n";
+               string += "		projectionColor = intensity;\n";
+               break;
+            }
+            case "AVERAGE":
+            {
+               string += "		projectionColor += intensity;\n";
+               break;
+            }
+         }
 
-			string += "	}\n";
-			string += "\n";
+         string += "	}\n";
+         string += "\n";
 
-			if (this .type_ .getValue () === "AVERAGE")
-				string += "	projectionColor /= float (samples);\n";
+         if (this .type_ .getValue () === "AVERAGE")
+            string += "	projectionColor /= float (samples);\n";
 
-			string += "	return vec4 (vec3 (projectionColor), originalColor .a);\n";
-			string += "}\n";
+         string += "	return vec4 (vec3 (projectionColor), originalColor .a);\n";
+         string += "}\n";
 
-			return string;
-		},
-		getFunctionsText: function ()
-		{
-			if (! this .enabled_ .getValue ())
-				return "";
+         return string;
+      },
+      getFunctionsText: function ()
+      {
+         if (! this .enabled_ .getValue ())
+            return "";
 
-			var string = "";
+         var string = "";
 
-			string += "\n";
-			string += "	// ProjectionVolumeStyle\n";
-			string += "\n";
-			string += "	textureColor = getProjectionStyle_" + this .getId () + " (textureColor, texCoord);\n";
+         string += "\n";
+         string += "	// ProjectionVolumeStyle\n";
+         string += "\n";
+         string += "	textureColor = getProjectionStyle_" + this .getId () + " (textureColor, texCoord);\n";
 
-			return string;
-		},
-	});
+         return string;
+      },
+   });
 
-	return ProjectionVolumeStyle;
+   return ProjectionVolumeStyle;
 });

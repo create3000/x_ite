@@ -48,9 +48,9 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Browser/Networking/urls",
-	"locale/gettext",
+   "x_ite/Fields",
+   "x_ite/Browser/Networking/urls",
+   "locale/gettext",
 ],
 function (Fields,
           urls,
@@ -58,144 +58,144 @@ function (Fields,
 {
 "use strict";
 
-	function getBaseURI (element)
-	{
-		let baseURI = element .baseURI;
+   function getBaseURI (element)
+   {
+      let baseURI = element .baseURI;
 
-		// Fix for Edge.
-		if (baseURI .startsWith ("about:"))
-			baseURI = document .baseURI;
+      // Fix for Edge.
+      if (baseURI .startsWith ("about:"))
+         baseURI = document .baseURI;
 
-		return baseURI;
-	}
+      return baseURI;
+   }
 
-	function X3DNetworkingContext ()
-	{
-		this .addChildObjects ("loadCount", new Fields .SFInt32 ());
+   function X3DNetworkingContext ()
+   {
+      this .addChildObjects ("loadCount", new Fields .SFInt32 ());
 
-		this .loadingTotal   = 0;
-		this .loadingObjects = new Set ();
-		this .loading        = false;
-		this .location       = getBaseURI (this .getElement () [0]);
+      this .loadingTotal   = 0;
+      this .loadingObjects = new Set ();
+      this .loading        = false;
+      this .location       = getBaseURI (this .getElement () [0]);
 
-		this .getCanvas () .fadeOut (0);
+      this .getCanvas () .fadeOut (0);
 
-		if (this .getBrowserOptions () .getSplashScreen ())
-			this .getSplashScreen () .fadeIn (0);
-	}
+      if (this .getBrowserOptions () .getSplashScreen ())
+         this .getSplashScreen () .fadeIn (0);
+   }
 
-	X3DNetworkingContext .prototype =
-	{
-		initialize: function ()
-		{ },
-		getProviderUrl: function ()
-		{
-			return urls .getProviderUrl ();
-		},
-		getLocation: function ()
-		{
-			return this .location;
-		},
-		getDefaultScene: function ()
-		{
-			// Inline node's empty scene.
+   X3DNetworkingContext .prototype =
+   {
+      initialize: function ()
+      { },
+      getProviderUrl: function ()
+      {
+         return urls .getProviderUrl ();
+      },
+      getLocation: function ()
+      {
+         return this .location;
+      },
+      getDefaultScene: function ()
+      {
+         // Inline node's empty scene.
 
-			this .defaultScene = this .createScene ();
+         this .defaultScene = this .createScene ();
 
-			this .defaultScene .setPrivate (true);
-			this .defaultScene .setLive (true);
-			this .defaultScene .setup ();
+         this .defaultScene .setPrivate (true);
+         this .defaultScene .setLive (true);
+         this .defaultScene .setup ();
 
-			this .getDefaultScene = function () { return this .defaultScene; };
+         this .getDefaultScene = function () { return this .defaultScene; };
 
-			return this .defaultScene;
-		},
-		setBrowserLoading: function (value)
-		{
-			this .loading = value;
+         return this .defaultScene;
+      },
+      setBrowserLoading: function (value)
+      {
+         this .loading = value;
 
-			if (value)
-			{
-				this .resetLoadCount ();
+         if (value)
+         {
+            this .resetLoadCount ();
 
-				this .getElement () .find (".x_ite-private-world-info") .remove ();
+            this .getElement () .find (".x_ite-private-world-info") .remove ();
 
-				if (this .getBrowserOptions () .getSplashScreen ())
-				{
-					this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeOut (0);
-					this .getSplashScreen () .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeIn (0);
-				}
-				else
-				{
-					this .getCanvas () .fadeOut (0);
-				}
-			}
-			else
-			{
-				if (this .getBrowserOptions () .getSplashScreen ())
-				{
-					this .getSplashScreen () .stop (true, true) .fadeIn  (0) .fadeOut (2000);
-					this .getCanvas ()       .stop (true, true) .fadeOut (0) .fadeIn  (2000);
-				}
-				else
-				{
-					this .getCanvas () .fadeIn (0);
-				}
-			}
-		},
-		getLoading: function ()
-		{
-			return this .loading;
-		},
-		addLoadCount: function (object)
-		{
-			if (this .loadingObjects .has (object))
-				return;
+            if (this .getBrowserOptions () .getSplashScreen ())
+            {
+               this .getCanvas ()       .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeOut (0);
+               this .getSplashScreen () .stop (true, true) .animate ({ "delay": 1 }, 1) .fadeIn (0);
+            }
+            else
+            {
+               this .getCanvas () .fadeOut (0);
+            }
+         }
+         else
+         {
+            if (this .getBrowserOptions () .getSplashScreen ())
+            {
+               this .getSplashScreen () .stop (true, true) .fadeIn  (0) .fadeOut (2000);
+               this .getCanvas ()       .stop (true, true) .fadeOut (0) .fadeIn  (2000);
+            }
+            else
+            {
+               this .getCanvas () .fadeIn (0);
+            }
+         }
+      },
+      getLoading: function ()
+      {
+         return this .loading;
+      },
+      addLoadCount: function (object)
+      {
+         if (this .loadingObjects .has (object))
+            return;
 
-			++ this .loadingTotal;
+         ++ this .loadingTotal;
 
-			this .loadingObjects .add (object);
+         this .loadingObjects .add (object);
 
-			this .setLoadCount (this .loadingObjects .size);
-			this .setCursor ("DEFAULT");
-		},
-		removeLoadCount: function (object)
-		{
-			if (! this .loadingObjects .has (object))
-				return;
+         this .setLoadCount (this .loadingObjects .size);
+         this .setCursor ("DEFAULT");
+      },
+      removeLoadCount: function (object)
+      {
+         if (! this .loadingObjects .has (object))
+            return;
 
-			this .loadingObjects .delete (object);
+         this .loadingObjects .delete (object);
 
-			this .setLoadCount (this .loadingObjects .size);
-		},
-		setLoadCount: function (value)
-		{
-			this .loadCount_ = value;
+         this .setLoadCount (this .loadingObjects .size);
+      },
+      setLoadCount: function (value)
+      {
+         this .loadCount_ = value;
 
-			if (value)
-			{
-				var string = (value == 1 ? _ ("Loading %1 file") : _ ("Loading %1 files")) .replace ("%1", value);
-			}
-			else
-			{
-				var string = _("Loading done");
-				this .setCursor ("DEFAULT");
-			}
+         if (value)
+         {
+            var string = (value == 1 ? _ ("Loading %1 file") : _ ("Loading %1 files")) .replace ("%1", value);
+         }
+         else
+         {
+            var string = _("Loading done");
+            this .setCursor ("DEFAULT");
+         }
 
-			if (! this .loading)
-				this .getNotification () .string_ = string;
+         if (! this .loading)
+            this .getNotification () .string_ = string;
 
-			this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
-			this .getSplashScreen () .find (".x_ite-private-progressbar div") .css ("width", ((this .loadingTotal - value) * 100 / this .loadingTotal) + "%");
-		},
-		resetLoadCount: function ()
-		{
-			this .loadCount_   = 0;
-			this .loadingTotal = 0;
+         this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
+         this .getSplashScreen () .find (".x_ite-private-progressbar div") .css ("width", ((this .loadingTotal - value) * 100 / this .loadingTotal) + "%");
+      },
+      resetLoadCount: function ()
+      {
+         this .loadCount_   = 0;
+         this .loadingTotal = 0;
 
-			this .loadingObjects .clear ();
-		},
-	};
+         this .loadingObjects .clear ();
+      },
+   };
 
-	return X3DNetworkingContext;
+   return X3DNetworkingContext;
 });

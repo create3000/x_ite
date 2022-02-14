@@ -51,23 +51,23 @@ define (function ()
 {
 "use strict";
 
-	var i = 0;
+   var i = 0;
 
-	var ModeType =
-	{
-		NONE:                        i ++,
-		SPHERE:                      i ++,
-		CAMERASPACENORMAL:           i ++,
-		CAMERASPACEPOSITION:         i ++,
-		CAMERASPACEREFLECTIONVECTOR: i ++,
-		SPHERE_LOCAL:                i ++,
-		COORD:                       i ++,
-		COORD_EYE:                   i ++,
-		NOISE:                       i ++,
-		NOISE_EYE:                   i ++,
-		SPHERE_REFLECT:              i ++,
-		SPHERE_REFLECT_LOCAL:        i ++,
-	};
+   var ModeType =
+   {
+      NONE:                        i ++,
+      SPHERE:                      i ++,
+      CAMERASPACENORMAL:           i ++,
+      CAMERASPACEPOSITION:         i ++,
+      CAMERASPACEREFLECTIONVECTOR: i ++,
+      SPHERE_LOCAL:                i ++,
+      COORD:                       i ++,
+      COORD_EYE:                   i ++,
+      NOISE:                       i ++,
+      NOISE_EYE:                   i ++,
+      SPHERE_REFLECT:              i ++,
+      SPHERE_REFLECT_LOCAL:        i ++,
+   };
 
-	return ModeType;
+   return ModeType;
 });

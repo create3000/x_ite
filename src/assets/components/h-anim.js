@@ -47,13 +47,13 @@
 
 
 define ([
-	"x_ite/Components",
-	"x_ite/Components/HAnim/HAnimDisplacer",
-	"x_ite/Components/HAnim/HAnimHumanoid",
-	"x_ite/Components/HAnim/HAnimJoint",
-	"x_ite/Components/HAnim/HAnimMotion",
-	"x_ite/Components/HAnim/HAnimSegment",
-	"x_ite/Components/HAnim/HAnimSite",
+   "x_ite/Components",
+   "x_ite/Components/HAnim/HAnimDisplacer",
+   "x_ite/Components/HAnim/HAnimHumanoid",
+   "x_ite/Components/HAnim/HAnimJoint",
+   "x_ite/Components/HAnim/HAnimMotion",
+   "x_ite/Components/HAnim/HAnimSegment",
+   "x_ite/Components/HAnim/HAnimSite",
 ],
 function (Components,
           HAnimDisplacer,
@@ -65,19 +65,19 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "HAnim",
-		types:
-		{
-			HAnimDisplacer: HAnimDisplacer,
-			HAnimHumanoid:  HAnimHumanoid,
-			HAnimJoint:     HAnimJoint,
-			HAnimMotion:    HAnimMotion,
-			HAnimSegment:   HAnimSegment,
-			HAnimSite:      HAnimSite,
-		},
-		abstractTypes:
-		{
-		},
-	});
+   Components .addComponent ({
+      name: "HAnim",
+      types:
+      {
+         HAnimDisplacer: HAnimDisplacer,
+         HAnimHumanoid:  HAnimHumanoid,
+         HAnimJoint:     HAnimJoint,
+         HAnimMotion:    HAnimMotion,
+         HAnimSegment:   HAnimSegment,
+         HAnimSite:      HAnimSite,
+      },
+      abstractTypes:
+      {
+      },
+   });
 });

@@ -47,154 +47,154 @@
  ******************************************************************************/
 
 require .config ({
-	"waitSeconds": 0,
+   "waitSeconds": 0,
 });
 
 define .show = function ()
 {
-	this   .define = window .define;
-	window .define = this;
+   this   .define = window .define;
+   window .define = this;
 };
 
 define .hide = function ()
 {
-	if (this .define === undefined)
-		delete window .define;
-	else
-		window .define = this .define;
+   if (this .define === undefined)
+      delete window .define;
+   else
+      window .define = this .define;
 
-	delete this .define;
+   delete this .define;
 };
 
 const getScriptURL = (function ()
 {
-	if (document .currentScript)
-		var src = document .currentScript .src;
-	else if (typeof globalRequire === "function" && typeof __filename === "string")
-		var src = globalRequire ("url") .pathToFileURL (__filename) .href;
+   if (document .currentScript)
+      var src = document .currentScript .src;
+   else if (typeof globalRequire === "function" && typeof __filename === "string")
+      var src = globalRequire ("url") .pathToFileURL (__filename) .href;
 
-	return function ()
-	{
-		return src;
-	};
+   return function ()
+   {
+      return src;
+   };
 })();
 
 (function ()
 {
 "use strict";
 
-	function X_ITE (callback, fallback)
-	{
-		const promise = new Promise (function (resolve, reject)
-		{
-			if (PrivateX3D)
-			{
-				PrivateX3D (resolve, reject);
-				PrivateX3D (callback, fallback);
-			}
-			else
-			{
-				callbacks .push (resolve, callback);
-				fallbacks .push (reject,  fallback);
-			}
-		});
+   function X_ITE (callback, fallback)
+   {
+      const promise = new Promise (function (resolve, reject)
+      {
+         if (PrivateX3D)
+         {
+            PrivateX3D (resolve, reject);
+            PrivateX3D (callback, fallback);
+         }
+         else
+         {
+            callbacks .push (resolve, callback);
+            fallbacks .push (reject,  fallback);
+         }
+      });
 
-		return promise;
-	}
+      return promise;
+   }
 
-	function fallback (error)
-	{
-		require (["x_ite/Fallback"],
-		function (Fallback)
-		{
-			Fallback .error (error, fallbacks);
-		});
-	}
+   function fallback (error)
+   {
+      require (["x_ite/Fallback"],
+      function (Fallback)
+      {
+         Fallback .error (error, fallbacks);
+      });
+   }
 
-	function noConflict ()
-	{
-		if (window .X3D === X_ITE)
-		{
-			if (X3D_ === undefined)
-				delete window .X3D;
-			else
-				window .X3D = X3D_;
-		}
+   function noConflict ()
+   {
+      if (window .X3D === X_ITE)
+      {
+         if (X3D_ === undefined)
+            delete window .X3D;
+         else
+            window .X3D = X3D_;
+      }
 
-		return X_ITE;
-	}
+      return X_ITE;
+   }
 
-	const X3D_ = window .X3D;
+   const X3D_ = window .X3D;
 
-	let PrivateX3D = null;
+   let PrivateX3D = null;
 
-	X_ITE .noConflict = noConflict;
-	X_ITE .require    = require;
-	X_ITE .define     = define;
+   X_ITE .noConflict = noConflict;
+   X_ITE .require    = require;
+   X_ITE .define     = define;
 
-	// Now assign temporary X3D.
-	window .X3D = X_ITE;
+   // Now assign temporary X3D.
+   window .X3D = X_ITE;
 
-	if (typeof globalModule === "object" && typeof globalModule .exports === "object")
-		globalModule .exports = X_ITE;
+   if (typeof globalModule === "object" && typeof globalModule .exports === "object")
+      globalModule .exports = X_ITE;
 
-	// IE fix.
-	document .createElement ("X3DCanvas");
+   // IE fix.
+   document .createElement ("X3DCanvas");
 
-	if (window .Proxy === undefined)
-		return fallback ("Proxy is not defined");
+   if (window .Proxy === undefined)
+      return fallback ("Proxy is not defined");
 
-	const
-		callbacks = [ ],
-		fallbacks = [ ];
+   const
+      callbacks = [ ],
+      fallbacks = [ ];
 
-	require (["jquery", "x_ite/X3D"], function ($, X3D)
-	{
-		$ .noConflict (true);
+   require (["jquery", "x_ite/X3D"], function ($, X3D)
+   {
+      $ .noConflict (true);
 
-		// Now assign real X3D.
-		PrivateX3D = X3D;
+      // Now assign real X3D.
+      PrivateX3D = X3D;
 
-		Object .assign (X_ITE, X3D);
+      Object .assign (X_ITE, X3D);
 
-		// Initialize all X3DCanvas tags.
-		X3D ();
+      // Initialize all X3DCanvas tags.
+      X3D ();
 
-		for (let i = 0; i < callbacks .length; ++ i)
-		   X3D (callbacks [i], fallbacks [i]);
-	},
-	fallback);
+      for (let i = 0; i < callbacks .length; ++ i)
+         X3D (callbacks [i], fallbacks [i]);
+   },
+   fallback);
 
 })();
 
 (function ()
 {
-	// https://github.com/tc39/proposal-relative-indexing-method#polyfill
+   // https://github.com/tc39/proposal-relative-indexing-method#polyfill
 
-	function at (n)
-	{
-		// ToInteger() abstract op
-		n = Math.trunc(n) || 0;
-		// Allow negative indexing from the end
-		if (n < 0) n += this.length;
-		// OOB access is guaranteed to return undefined
-		if (n < 0 || n >= this.length) return undefined;
-		// Otherwise, this is just normal property access
-		return this[n];
-	}
+   function at (n)
+   {
+      // ToInteger() abstract op
+      n = Math.trunc(n) || 0;
+      // Allow negative indexing from the end
+      if (n < 0) n += this.length;
+      // OOB access is guaranteed to return undefined
+      if (n < 0 || n >= this.length) return undefined;
+      // Otherwise, this is just normal property access
+      return this[n];
+   }
 
-	const TypedArray = Reflect .getPrototypeOf (Int8Array);
-	for (const C of [Array, String, TypedArray])
-	{
-		if (C .prototype .at === undefined)
-		{
-			Object .defineProperty (C .prototype, "at",
-			{
-				value: at,
-				writable: true,
-				enumerable: false,
-				configurable: true,
-			});
-		}
-	}
+   const TypedArray = Reflect .getPrototypeOf (Int8Array);
+   for (const C of [Array, String, TypedArray])
+   {
+      if (C .prototype .at === undefined)
+      {
+         Object .defineProperty (C .prototype, "at",
+         {
+            value: at,
+            writable: true,
+            enumerable: false,
+            configurable: true,
+         });
+      }
+   }
 })();

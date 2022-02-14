@@ -48,22 +48,22 @@
 
 
 define ([
-	"x_ite/Fields",
+   "x_ite/Fields",
 ],
 function (Fields)
 {
 "use strict";
 
-	function X3DSoundContext ()
-	{
-		this .addChildObjects ("volume", new Fields .SFFloat (1),
-		                       "mute",   new Fields .SFBool ());
-	}
+   function X3DSoundContext ()
+   {
+      this .addChildObjects ("volume", new Fields .SFFloat (1),
+                             "mute",   new Fields .SFBool ());
+   }
 
-	X3DSoundContext .prototype =
-	{
-		initialize: function () { },
-	};
+   X3DSoundContext .prototype =
+   {
+      initialize: function () { },
+   };
 
-	return X3DSoundContext;
+   return X3DSoundContext;
 });

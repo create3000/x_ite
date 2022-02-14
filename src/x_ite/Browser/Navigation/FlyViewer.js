@@ -48,13 +48,13 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Navigation/X3DFlyViewer",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Browser/Navigation/X3DFlyViewer",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Rotation4",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -66,38 +66,38 @@ function (Fields,
 {
 "use strict";
 
-	function FlyViewer (executionContext)
-	{
-		X3DFlyViewer .call (this, executionContext);
-	}
+   function FlyViewer (executionContext)
+   {
+      X3DFlyViewer .call (this, executionContext);
+   }
 
-	FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
-	{
-		constructor: FlyViewer,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
-		]),
-		addCollision: function ()
-		{
-			this .getBrowser () .addCollision (this);
-		},
-		removeCollision: function ()
-		{
-			this .getBrowser () .removeCollision (this);
-		},
-		getFlyDirection: function (fromVector, toVector, direction)
-		{
-			return direction .assign (toVector) .subtract (fromVector);
-		},
-		getTranslationOffset: function (velocity)
-		{
-			return this .getActiveViewpoint () .getUserOrientation () .multVecRot (velocity);
-		},
-		constrainPanDirection: function (direction)
-		{
-			return direction;
-		},
-	});
+   FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
+   {
+      constructor: FlyViewer,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
+      ]),
+      addCollision: function ()
+      {
+         this .getBrowser () .addCollision (this);
+      },
+      removeCollision: function ()
+      {
+         this .getBrowser () .removeCollision (this);
+      },
+      getFlyDirection: function (fromVector, toVector, direction)
+      {
+         return direction .assign (toVector) .subtract (fromVector);
+      },
+      getTranslationOffset: function (velocity)
+      {
+         return this .getActiveViewpoint () .getUserOrientation () .multVecRot (velocity);
+      },
+      constrainPanDirection: function (direction)
+      {
+         return direction;
+      },
+   });
 
-	return FlyViewer;
+   return FlyViewer;
 });

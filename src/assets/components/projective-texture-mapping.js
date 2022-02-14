@@ -48,10 +48,10 @@
 
 
 define ([
-	"x_ite/Components",
-	"x_ite/Components/ProjectiveTextureMapping/TextureProjectorPerspective",
-	"x_ite/Components/ProjectiveTextureMapping/TextureProjectorParallel",
-	"x_ite/Components/ProjectiveTextureMapping/X3DTextureProjectorNode",
+   "x_ite/Components",
+   "x_ite/Components/ProjectiveTextureMapping/TextureProjectorPerspective",
+   "x_ite/Components/ProjectiveTextureMapping/TextureProjectorParallel",
+   "x_ite/Components/ProjectiveTextureMapping/X3DTextureProjectorNode",
 ],
 function (Components,
           TextureProjectorPerspective,
@@ -60,16 +60,16 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "ProjectiveTextureMapping",
-		types:
-		{
-			TextureProjectorPerspective:  TextureProjectorPerspective,
-			TextureProjectorParallel: TextureProjectorParallel,
-		},
-		abstractTypes:
-		{
-			X3DTextureProjectorNode: X3DTextureProjectorNode,
-		},
-	});
+   Components .addComponent ({
+      name: "ProjectiveTextureMapping",
+      types:
+      {
+         TextureProjectorPerspective:  TextureProjectorPerspective,
+         TextureProjectorParallel: TextureProjectorParallel,
+      },
+      abstractTypes:
+      {
+         X3DTextureProjectorNode: X3DTextureProjectorNode,
+      },
+   });
 });

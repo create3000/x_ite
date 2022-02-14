@@ -48,15 +48,15 @@
 
 
 define ([
-	"jquery",
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DTexture2DNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Algorithm",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Matrix3",
+   "jquery",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Texturing/X3DTexture2DNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Algorithm",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Matrix3",
 ],
 function ($,
           Fields,
@@ -68,216 +68,216 @@ function ($,
 {
 "use strict";
 
-	function PixelTexture (executionContext)
-	{
-		X3DTexture2DNode .call (this, executionContext);
+   function PixelTexture (executionContext)
+   {
+      X3DTexture2DNode .call (this, executionContext);
 
-		this .addType (X3DConstants .PixelTexture);
+      this .addType (X3DConstants .PixelTexture);
 
-		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
-	}
+      this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+   }
 
-	PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
-	{
-		constructor: PixelTexture,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .SFImage (0, 0, 0, new Fields .MFInt32 ())),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "PixelTexture";
-		},
-		getComponentName: function ()
-		{
-			return "Texturing";
-		},
-		getContainerField: function ()
-		{
-			return "texture";
-		},
-		initialize: function ()
-		{
-			X3DTexture2DNode .prototype .initialize .call (this);
+   PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
+   {
+      constructor: PixelTexture,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .SFImage (0, 0, 0, new Fields .MFInt32 ())),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "PixelTexture";
+      },
+      getComponentName: function ()
+      {
+         return "Texturing";
+      },
+      getContainerField: function ()
+      {
+         return "texture";
+      },
+      initialize: function ()
+      {
+         X3DTexture2DNode .prototype .initialize .call (this);
 
-			this .image_ .addInterest ("set_image__", this);
+         this .image_ .addInterest ("set_image__", this);
 
-			this .canvas1 = $("<canvas></canvas>");
-			this .canvas2 = $("<canvas></canvas>");
+         this .canvas1 = $("<canvas></canvas>");
+         this .canvas2 = $("<canvas></canvas>");
 
-			this .set_image__ ();
-		},
-		checkLoadState: function ()
-		{
-			return this .loadState_ .getValue ();
-		},
-		convert: function (data, comp, array, length)
-		{
-			switch (comp)
-			{
-				case 1:
-				{
-					for (var i = 0, index = 0; i < length; ++ i, index += 4)
-					{
-						var pixel = array [i];
+         this .set_image__ ();
+      },
+      checkLoadState: function ()
+      {
+         return this .loadState_ .getValue ();
+      },
+      convert: function (data, comp, array, length)
+      {
+         switch (comp)
+         {
+            case 1:
+            {
+               for (var i = 0, index = 0; i < length; ++ i, index += 4)
+               {
+                  var pixel = array [i];
 
-						data [index]     =
-						data [index + 1] =
-						data [index + 2] = pixel & 255;
-						data [index + 3] = 255;
-					}
+                  data [index]     =
+                  data [index + 1] =
+                  data [index + 2] = pixel & 255;
+                  data [index + 3] = 255;
+               }
 
-					break;
-				}
-				case 2:
-				{
-					for (var i = 0, index = 0; i < length; ++ i, index += 4)
-					{
-						var pixel = array [i];
+               break;
+            }
+            case 2:
+            {
+               for (var i = 0, index = 0; i < length; ++ i, index += 4)
+               {
+                  var pixel = array [i];
 
-						data [index]     =
-						data [index + 1] =
-						data [index + 2] = (pixel >>> 8) & 255;
-						data [index + 3] = pixel & 255;
-					}
+                  data [index]     =
+                  data [index + 1] =
+                  data [index + 2] = (pixel >>> 8) & 255;
+                  data [index + 3] = pixel & 255;
+               }
 
-					break;
-				}
-				case 3:
-				{
-					for (var i = 0, index = 0; i < length; ++ i, index += 4)
-					{
-						var pixel = array [i];
+               break;
+            }
+            case 3:
+            {
+               for (var i = 0, index = 0; i < length; ++ i, index += 4)
+               {
+                  var pixel = array [i];
 
-						data [index]     = (pixel >>> 16) & 255;
-						data [index + 1] = (pixel >>>  8) & 255;
-						data [index + 2] = pixel & 255;
-						data [index + 3] = 255;
-					}
+                  data [index]     = (pixel >>> 16) & 255;
+                  data [index + 1] = (pixel >>>  8) & 255;
+                  data [index + 2] = pixel & 255;
+                  data [index + 3] = 255;
+               }
 
-					break;
-				}
-				case 4:
-				{
-					for (var i = 0, index = 0; i < length; ++ i, index += 4)
-					{
-						var pixel = array [i];
+               break;
+            }
+            case 4:
+            {
+               for (var i = 0, index = 0; i < length; ++ i, index += 4)
+               {
+                  var pixel = array [i];
 
-						data [index]     = (pixel >>> 24);
-						data [index + 1] = (pixel >>> 16) & 255;
-						data [index + 2] = (pixel >>>  8) & 255;
-						data [index + 3] = pixel & 255;
-					}
+                  data [index]     = (pixel >>> 24);
+                  data [index + 1] = (pixel >>> 16) & 255;
+                  data [index + 2] = (pixel >>>  8) & 255;
+                  data [index + 3] = pixel & 255;
+               }
 
-					break;
-				}
-			}
-		},
-		resize: function (input, inputWidth, inputHeight, outputWidth, outputHeight)
-		{
-		   // Nearest neighbor scaling algorithm for very small images.
+               break;
+            }
+         }
+      },
+      resize: function (input, inputWidth, inputHeight, outputWidth, outputHeight)
+      {
+         // Nearest neighbor scaling algorithm for very small images.
 
-			var
-				output = new Uint8Array (outputWidth * outputHeight * 4),
-				scaleX = outputWidth / inputWidth,
-				scaleY = outputHeight / inputHeight;
+         var
+            output = new Uint8Array (outputWidth * outputHeight * 4),
+            scaleX = outputWidth / inputWidth,
+            scaleY = outputHeight / inputHeight;
 
-			for (var y = 0; y < outputHeight; ++ y)
-			{
-				var
-					inputW  = Math .floor (y / scaleY) * inputWidth,
-					outputW = y * outputWidth;
+         for (var y = 0; y < outputHeight; ++ y)
+         {
+            var
+               inputW  = Math .floor (y / scaleY) * inputWidth,
+               outputW = y * outputWidth;
 
-				for (var x = 0; x < outputWidth; ++ x)
-				{
-					var
-						index       = (inputW + Math.floor (x / scaleX)) * 4,
-						indexScaled = (outputW + x) * 4;
+            for (var x = 0; x < outputWidth; ++ x)
+            {
+               var
+                  index       = (inputW + Math.floor (x / scaleX)) * 4,
+                  indexScaled = (outputW + x) * 4;
 
-					output [indexScaled]     = input [index];
-					output [indexScaled + 1] = input [index + 1];
-					output [indexScaled + 2] = input [index + 2];
-					output [indexScaled + 3] = input [index + 3];
-				}
-			}
+               output [indexScaled]     = input [index];
+               output [indexScaled + 1] = input [index + 1];
+               output [indexScaled + 2] = input [index + 2];
+               output [indexScaled + 3] = input [index + 3];
+            }
+         }
 
-			return output;
-		},
-		set_image__: function ()
-		{
-			var
-				gl          = this .getBrowser () .getContext (),
-				width       = this .image_ .width,
-				height      = this .image_ .height,
-				comp        = this .image_ .comp,
-				array       = this .image_ .array,
-				transparent = ! (comp % 2),
-				data        = null;
+         return output;
+      },
+      set_image__: function ()
+      {
+         var
+            gl          = this .getBrowser () .getContext (),
+            width       = this .image_ .width,
+            height      = this .image_ .height,
+            comp        = this .image_ .comp,
+            array       = this .image_ .array,
+            transparent = ! (comp % 2),
+            data        = null;
 
-			if (width > 0 && height > 0 && comp > 0 && comp < 5)
-			{
-				if (gl .getVersion () >= 2 || (Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
-				{
-					data = new Uint8Array (width * height * 4);
+         if (width > 0 && height > 0 && comp > 0 && comp < 5)
+         {
+            if (gl .getVersion () >= 2 || (Algorithm .isPowerOfTwo (width) && Algorithm .isPowerOfTwo (height)))
+            {
+               data = new Uint8Array (width * height * 4);
 
-					this .convert (data, comp, array .getValue (), array .length);
-				}
-				else if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! this .textureProperties_ .getValue ())
-				{
-					data = new Uint8Array (width * height * 4);
+               this .convert (data, comp, array .getValue (), array .length);
+            }
+            else if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! this .textureProperties_ .getValue ())
+            {
+               data = new Uint8Array (width * height * 4);
 
-					this .convert (data, comp, array .getValue (), array .length);
+               this .convert (data, comp, array .getValue (), array .length);
 
-					var
-						inputWidth  = width,
-						inputHeight = height;
+               var
+                  inputWidth  = width,
+                  inputHeight = height;
 
-					width  = Algorithm .nextPowerOfTwo (inputWidth)  * 4;
-					height = Algorithm .nextPowerOfTwo (inputHeight) * 4;
+               width  = Algorithm .nextPowerOfTwo (inputWidth)  * 4;
+               height = Algorithm .nextPowerOfTwo (inputHeight) * 4;
 
-					data = this .resize (data, inputWidth, inputHeight, width, height);
-				}
-				else
-				{
-					var
-						canvas1   = this .canvas1 [0],
-						canvas2   = this .canvas2 [0],
-						cx1       = canvas1 .getContext("2d"),
-						cx2       = canvas2 .getContext("2d"),
-						imageData = cx1 .createImageData (width, height);
+               data = this .resize (data, inputWidth, inputHeight, width, height);
+            }
+            else
+            {
+               var
+                  canvas1   = this .canvas1 [0],
+                  canvas2   = this .canvas2 [0],
+                  cx1       = canvas1 .getContext("2d"),
+                  cx2       = canvas2 .getContext("2d"),
+                  imageData = cx1 .createImageData (width, height);
 
-					canvas1 .width  = width;
-					canvas1 .height = height;
+               canvas1 .width  = width;
+               canvas1 .height = height;
 
-					this .convert (imageData .data, comp, array, array .length);
-					cx1 .putImageData (imageData, 0, 0);
+               this .convert (imageData .data, comp, array, array .length);
+               cx1 .putImageData (imageData, 0, 0);
 
-					width  = Algorithm .nextPowerOfTwo (width);
-					height = Algorithm .nextPowerOfTwo (height);
+               width  = Algorithm .nextPowerOfTwo (width);
+               height = Algorithm .nextPowerOfTwo (height);
 
-					canvas2 .width  = width;
-					canvas2 .height = height;
+               canvas2 .width  = width;
+               canvas2 .height = height;
 
-					cx2 .clearRect (0, 0, width, height);
-					cx2 .drawImage (canvas1, 0, 0, canvas1 .width, canvas1 .height, 0, 0, width, height);
+               cx2 .clearRect (0, 0, width, height);
+               cx2 .drawImage (canvas1, 0, 0, canvas1 .width, canvas1 .height, 0, 0, width, height);
 
-					data = cx2 .getImageData (0, 0, width, height) .data;
-				}
+               data = cx2 .getImageData (0, 0, width, height) .data;
+            }
 
-				this .setTexture (width, height, transparent, new Uint8Array (data), false);
-				this .loadState_ = X3DConstants .COMPLETE_STATE;
-			}
-			else
-			{
-				this .clearTexture ();
-				this .loadState_ = X3DConstants .FAILED_STATE;
-			}
-		},
-	});
+            this .setTexture (width, height, transparent, new Uint8Array (data), false);
+            this .loadState_ = X3DConstants .COMPLETE_STATE;
+         }
+         else
+         {
+            this .clearTexture ();
+            this .loadState_ = X3DConstants .FAILED_STATE;
+         }
+      },
+   });
 
-	return PixelTexture;
+   return PixelTexture;
 });

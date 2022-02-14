@@ -48,14 +48,14 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
-	"x_ite/Bits/TraverseType",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Geometry/Box3",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
+   "x_ite/Bits/TraverseType",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Geometry/Box3",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -68,110 +68,110 @@ function (Fields,
 {
 "use strict";
 
-	function VisibilitySensor (executionContext)
-	{
-		X3DEnvironmentalSensorNode .call (this, executionContext);
+   function VisibilitySensor (executionContext)
+   {
+      X3DEnvironmentalSensorNode .call (this, executionContext);
 
-		this .addType (X3DConstants .VisibilitySensor);
+      this .addType (X3DConstants .VisibilitySensor);
 
-		this .setZeroTest (false);
+      this .setZeroTest (false);
 
-		this .visible = false;
-	}
+      this .visible = false;
+   }
 
-	VisibilitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
-	{
-		constructor: VisibilitySensor,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",   new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "size",      new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "center",    new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "enterTime", new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "exitTime",  new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",  new Fields .SFBool ()),
-		]),
-		getTypeName: function ()
-		{
-			return "VisibilitySensor";
-		},
-		getComponentName: function ()
-		{
-			return "EnvironmentalSensor";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DEnvironmentalSensorNode .prototype .initialize .call (this);
+   VisibilitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
+   {
+      constructor: VisibilitySensor,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",   new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "size",      new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "center",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "enterTime", new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "exitTime",  new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",  new Fields .SFBool ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "VisibilitySensor";
+      },
+      getComponentName: function ()
+      {
+         return "EnvironmentalSensor";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
-			this .enabled_ .addInterest ("set_enabled__", this);
+         this .enabled_ .addInterest ("set_enabled__", this);
 
-			this .set_enabled__ ();
-		},
-		set_enabled__: function ()
-		{
-			if (this .enabled_ .getValue ())
-				delete this .traverse;
-			else
-				this .traverse = Function .prototype;
-		},
-		update: function ()
-		{
-			if (this .visible && this .getTraversed ())
-			{
-				if (! this .isActive_ .getValue ())
-				{
-					this .isActive_  = true;
-					this .enterTime_ = this .getBrowser () .getCurrentTime ();
-				}
+         this .set_enabled__ ();
+      },
+      set_enabled__: function ()
+      {
+         if (this .enabled_ .getValue ())
+            delete this .traverse;
+         else
+            this .traverse = Function .prototype;
+      },
+      update: function ()
+      {
+         if (this .visible && this .getTraversed ())
+         {
+            if (! this .isActive_ .getValue ())
+            {
+               this .isActive_  = true;
+               this .enterTime_ = this .getBrowser () .getCurrentTime ();
+            }
 
-				this .visible = false;
-			}
-			else
-			{
-				if (this .isActive_ .getValue ())
-				{
-					this .isActive_ = false;
-					this .exitTime_ = this .getBrowser () .getCurrentTime ();
-				}
-			}
+            this .visible = false;
+         }
+         else
+         {
+            if (this .isActive_ .getValue ())
+            {
+               this .isActive_ = false;
+               this .exitTime_ = this .getBrowser () .getCurrentTime ();
+            }
+         }
 
-			this .setTraversed (false);
-		},
-		traverse: (function ()
-		{
-			const
-				bbox     = new Box3 (),
-				infinity = new Vector3 (-1, -1, -1);
+         this .setTraversed (false);
+      },
+      traverse: (function ()
+      {
+         const
+            bbox     = new Box3 (),
+            infinity = new Vector3 (-1, -1, -1);
 
-			return function (type, renderObject)
-			{
-				if (type !== TraverseType .DISPLAY)
-					return;
+         return function (type, renderObject)
+         {
+            if (type !== TraverseType .DISPLAY)
+               return;
 
-				this .setTraversed (true);
+            this .setTraversed (true);
 
-				if (this .visible)
-					return;
+            if (this .visible)
+               return;
 
-				if (this .size_ .getValue () .equals (infinity))
-				{
-					this .visible = true;
-				}
-				else
-				{
-					bbox
-						.set (this .size_ .getValue (), this .center_ .getValue ())
-						.multRight (renderObject .getModelViewMatrix () .get ());
+            if (this .size_ .getValue () .equals (infinity))
+            {
+               this .visible = true;
+            }
+            else
+            {
+               bbox
+                  .set (this .size_ .getValue (), this .center_ .getValue ())
+                  .multRight (renderObject .getModelViewMatrix () .get ());
 
-					this .visible = renderObject .getViewVolume () .intersectsBox (bbox);
-				}
-			};
-		})(),
-	});
+               this .visible = renderObject .getViewVolume () .intersectsBox (bbox);
+            }
+         };
+      })(),
+   });
 
-	return VisibilitySensor;
+   return VisibilitySensor;
 });

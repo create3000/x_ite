@@ -47,15 +47,15 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/Navigation/Billboard",
-	"x_ite/Components/Navigation/Collision",
-	"x_ite/Components/Navigation/LOD",
-	"x_ite/Components/Navigation/NavigationInfo",
-	"x_ite/Components/Navigation/OrthoViewpoint",
-	"x_ite/Components/Navigation/Viewpoint",
-	"x_ite/Components/Navigation/ViewpointGroup",
-	"x_ite/Components/Navigation/X3DViewpointNode",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/Navigation/Billboard",
+   "x_ite/Components/Navigation/Collision",
+   "x_ite/Components/Navigation/LOD",
+   "x_ite/Components/Navigation/NavigationInfo",
+   "x_ite/Components/Navigation/OrthoViewpoint",
+   "x_ite/Components/Navigation/Viewpoint",
+   "x_ite/Components/Navigation/ViewpointGroup",
+   "x_ite/Components/Navigation/X3DViewpointNode",
 ],
 function (SupportedNodes,
           Billboard,
@@ -69,25 +69,25 @@ function (SupportedNodes,
 {
 "use strict";
 
-	const Types =
-	{
-		Billboard:      Billboard,
-		Collision:      Collision,
-		LOD:            LOD,
-		NavigationInfo: NavigationInfo,
-		OrthoViewpoint: OrthoViewpoint,
-		Viewpoint:      Viewpoint,
-		ViewpointGroup: ViewpointGroup,
-	};
+   const Types =
+   {
+      Billboard:      Billboard,
+      Collision:      Collision,
+      LOD:            LOD,
+      NavigationInfo: NavigationInfo,
+      OrthoViewpoint: OrthoViewpoint,
+      Viewpoint:      Viewpoint,
+      ViewpointGroup: ViewpointGroup,
+   };
 
-	const AbstractTypes =
-	{
-		X3DViewpointNode: X3DViewpointNode,
-	};
+   const AbstractTypes =
+   {
+      X3DViewpointNode: X3DViewpointNode,
+   };
 
-	for (const typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]);
+   for (const typeName in Types)
+      SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (const typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   for (const typeName in AbstractTypes)
+      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

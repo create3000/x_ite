@@ -48,77 +48,77 @@
 
 
 define ([
-	"x_ite/Base/X3DChildObject",
-	"x_ite/Base/Events",
+   "x_ite/Base/X3DChildObject",
+   "x_ite/Base/Events",
 ],
 function (X3DChildObject,
-	       Events)
+          Events)
 {
 "use strict";
 
-	function X3DEventObject (browser)
-	{
-		X3DChildObject .call (this);
+   function X3DEventObject (browser)
+   {
+      X3DChildObject .call (this);
 
-		this ._browser = browser;
-	}
+      this ._browser = browser;
+   }
 
-	X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prototype),
-	{
-		constructor: X3DEventObject,
-		getBrowser: function ()
-		{
-			return this ._browser;
-		},
-		getExtendedEventHandling: function ()
-		{
-			return true;
-		},
-		addEvent: function (field)
-		{
-			if (field .getTainted ())
-				return;
+   X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prototype),
+   {
+      constructor: X3DEventObject,
+      getBrowser: function ()
+      {
+         return this ._browser;
+      },
+      getExtendedEventHandling: function ()
+      {
+         return true;
+      },
+      addEvent: function (field)
+      {
+         if (field .getTainted ())
+            return;
 
-			field .setTainted (true);
+         field .setTainted (true);
 
-			this .addEventObject (field, Events .create (field));
-		},
-		addEventObject: function (field, event)
-		{
-			const browser = this .getBrowser ();
+         this .addEventObject (field, Events .create (field));
+      },
+      addEventObject: function (field, event)
+      {
+         const browser = this .getBrowser ();
 
-			// Register for processEvent
+         // Register for processEvent
 
-			browser .addBrowserEvent ();
-			browser .addTaintedField (field, event);
+         browser .addBrowserEvent ();
+         browser .addTaintedField (field, event);
 
-			// Register for eventsProcessed
+         // Register for eventsProcessed
 
-			if (this .getTainted ())
-			   return;
+         if (this .getTainted ())
+            return;
 
-			if (field .isInput () || (this .getExtendedEventHandling () && ! field .isOutput ()))
-			{
-				this .addNodeEvent ();
-			}
-		},
-		addNodeEvent: function ()
-		{
-			if (this .getTainted ())
-			   return;
+         if (field .isInput () || (this .getExtendedEventHandling () && ! field .isOutput ()))
+         {
+            this .addNodeEvent ();
+         }
+      },
+      addNodeEvent: function ()
+      {
+         if (this .getTainted ())
+            return;
 
-			const browser = this .getBrowser ();
+         const browser = this .getBrowser ();
 
-			this .setTainted (true);
-			browser .addTaintedNode (this);
-			browser .addBrowserEvent ();
-		},
-		processEvents: function ()
-		{
-			this .setTainted (false);
-			this .processInterests ();
-		},
-	});
+         this .setTainted (true);
+         browser .addTaintedNode (this);
+         browser .addBrowserEvent ();
+      },
+      processEvents: function ()
+      {
+         this .setTainted (false);
+         this .processInterests ();
+      },
+   });
 
-	return X3DEventObject;
+   return X3DEventObject;
 });

@@ -48,12 +48,12 @@
 
 
 define ([
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Followers/X3DChaserNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Followers/X3DChaserNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -64,43 +64,43 @@ function (Fields,
 {
 "use strict";
 
-	function PositionChaser (executionContext)
-	{
-		X3DChaserNode .call (this, executionContext);
+   function PositionChaser (executionContext)
+   {
+      X3DChaserNode .call (this, executionContext);
 
-		this .addType (X3DConstants .PositionChaser);
-	}
+      this .addType (X3DConstants .PositionChaser);
+   }
 
-	PositionChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
-	{
-		constructor: PositionChaser,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFVec3f ()),
-		]),
-		getTypeName: function ()
-		{
-			return "PositionChaser";
-		},
-		getComponentName: function ()
-		{
-			return "Followers";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		getVector: function ()
-		{
-			return new Vector3 (0, 0, 0);
-		},
-	});
+   PositionChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
+   {
+      constructor: PositionChaser,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialValue",       new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "initialDestination", new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "duration",           new Fields .SFTime (1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "value_changed",      new Fields .SFVec3f ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "PositionChaser";
+      },
+      getComponentName: function ()
+      {
+         return "Followers";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      getVector: function ()
+      {
+         return new Vector3 (0, 0, 0);
+      },
+   });
 
-	return PositionChaser;
+   return PositionChaser;
 });

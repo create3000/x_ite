@@ -48,11 +48,11 @@
 
 
 define ([
-	"jquery",
-	"x_ite/Basic/X3DBaseNode",
-	"locale/gettext",
-	"contextMenu",
-	"lib/jquery.fullscreen-min",
+   "jquery",
+   "x_ite/Basic/X3DBaseNode",
+   "locale/gettext",
+   "contextMenu",
+   "lib/jquery.fullscreen-min",
 ],
 function ($,
           X3DBaseNode,
@@ -60,550 +60,550 @@ function ($,
 {
 "use strict";
 
-	function ContextMenu (executionContext)
-	{
-		X3DBaseNode .call (this, executionContext);
+   function ContextMenu (executionContext)
+   {
+      X3DBaseNode .call (this, executionContext);
 
-		this .userMenu = null;
-		this .active   = false;
-	}
+      this .userMenu = null;
+      this .active   = false;
+   }
 
-	ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
-	{
-		constructor: ContextMenu,
-		getTypeName: function ()
-		{
-			return "ContextMenu";
-		},
-		getComponentName: function ()
-		{
-			return "X_ITE";
-		},
-		getContainerField: function ()
-		{
-			return "contextMenu";
-		},
-		initialize: function ()
-		{
-			X3DBaseNode .prototype .initialize .call (this);
+   ContextMenu .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   {
+      constructor: ContextMenu,
+      getTypeName: function ()
+      {
+         return "ContextMenu";
+      },
+      getComponentName: function ()
+      {
+         return "X_ITE";
+      },
+      getContainerField: function ()
+      {
+         return "contextMenu";
+      },
+      initialize: function ()
+      {
+         X3DBaseNode .prototype .initialize .call (this);
 
-			const browser = this .getBrowser ();
+         const browser = this .getBrowser ();
 
-			if (! browser .getBrowserOptions () .getContextMenu ())
-				return;
+         if (! browser .getBrowserOptions () .getContextMenu ())
+            return;
 
-			$.contextMenu ({
-				selector: ".x_ite-private-browser-" + browser .getId (),
-				build: this .build .bind (this),
-				animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
-				hideOnSecondTrigger: true,
-				events:
-				{
-					show: function (options)
-					{
-						this .active = true;
+         $.contextMenu ({
+            selector: ".x_ite-private-browser-" + browser .getId (),
+            build: this .build .bind (this),
+            animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
+            hideOnSecondTrigger: true,
+            events:
+            {
+               show: function (options)
+               {
+                  this .active = true;
 
-						if (browser .getElement () .fullScreen ())
-						{
-							browser .getElement () .append (options .$menu);
+                  if (browser .getElement () .fullScreen ())
+                  {
+                     browser .getElement () .append (options .$menu);
 
-							setTimeout (function ()
-							{
-								browser .getElement () .append (options .$layer .css ({
-									position: "absolute",
-									width: "100%",
-									height: "100%",
-								}));
-							},
-							1);
-						}
-					},
-					activated: function (options)
-					{
-						// Display submenus on left side if there is no space on right side.
+                     setTimeout (function ()
+                     {
+                        browser .getElement () .append (options .$layer .css ({
+                           position: "absolute",
+                           width: "100%",
+                           height: "100%",
+                        }));
+                     },
+                     1);
+                  }
+               },
+               activated: function (options)
+               {
+                  // Display submenus on left side if there is no space on right side.
 
-						if (options .$menu .hasClass ("x_ite-private-menu-submenus-left"))
-						{
-							options .$menu .find (".context-menu-list") .each (function (i, e)
-							{
-								$(e) .css ("right", $(e) .parent () .parent () .css ("width"));
-							});
-						}
-						else
-						{
-							options .$menu .find (".context-menu-list") .each (function (i, e)
-							{
-								$(e) .css ("left", (parseInt ($(e) .parent () .parent () .css ("width")) - 2) + "px");
-							});
-						}
+                  if (options .$menu .hasClass ("x_ite-private-menu-submenus-left"))
+                  {
+                     options .$menu .find (".context-menu-list") .each (function (i, e)
+                     {
+                        $(e) .css ("right", $(e) .parent () .parent () .css ("width"));
+                     });
+                  }
+                  else
+                  {
+                     options .$menu .find (".context-menu-list") .each (function (i, e)
+                     {
+                        $(e) .css ("left", (parseInt ($(e) .parent () .parent () .css ("width")) - 2) + "px");
+                     });
+                  }
 
-						// If the submenu is higher than vh, add scrollbars.
-						options .$menu .find (".context-menu-list") .each (function (i, e)
-						{
-							if ($(e) .height () > $(window) .height ())
-							{
-								$(e) .css ({
-									"overflow-y": "scroll",
-									"max-height": "100vh",
-								});
-							}
-						});
+                  // If the submenu is higher than vh, add scrollbars.
+                  options .$menu .find (".context-menu-list") .each (function (i, e)
+                  {
+                     if ($(e) .height () > $(window) .height ())
+                     {
+                        $(e) .css ({
+                           "overflow-y": "scroll",
+                           "max-height": "100vh",
+                        });
+                     }
+                  });
 
-						// If the submenu is higher than vh, reposition it.
-						options .$menu .find (".context-menu-item") .on ("mouseenter", function (event)
-						{
-							event .stopImmediatePropagation ();
+                  // If the submenu is higher than vh, reposition it.
+                  options .$menu .find (".context-menu-item") .on ("mouseenter", function (event)
+                  {
+                     event .stopImmediatePropagation ();
 
-							const
-								t = $(event .target),
-								e = t .children (".context-menu-list");
+                     const
+                        t = $(event .target),
+                        e = t .children (".context-menu-list");
 
-							if (!e .length)
-								return;
+                     if (!e .length)
+                        return;
 
-							e .css ("top", "");
+                     e .css ("top", "");
 
-							const bottom = e .offset () .top + e .height () - $(window) .scrollTop () - $(window) .height ();
+                     const bottom = e .offset () .top + e .height () - $(window) .scrollTop () - $(window) .height ();
 
-							if (bottom > 0)
-								e .offset ({ "top": e .offset () .top - bottom });
-						});
-					}
-					.bind (this),
-					hide: function (options)
-					{
-						this .active = false;
-					}
-					.bind (this),
-				},
-			});
-		},
-		getUserMenu: function ()
-		{
-			return this .userMenu;
-		},
-		setUserMenu: function (userMenu)
-		{
-			this .userMenu = userMenu;
-		},
-		getActive: function ()
-		{
-			return this .active;
-		},
-		build: function (trigger, event)
-		{
-			const
-				browser          = this .getBrowser (),
-				activeLayer      = browser .getActiveLayer (),
-				currentViewpoint = activeLayer ? activeLayer .getViewpoint () : null,
-				currentViewer    = browser .viewer_ .getValue (),
-				fullscreen       = browser .getElement () .fullScreen (),
-				leftSubMenus     = $(document) .width () - event .pageX < 370;
+                     if (bottom > 0)
+                        e .offset ({ "top": e .offset () .top - bottom });
+                  });
+               }
+               .bind (this),
+               hide: function (options)
+               {
+                  this .active = false;
+               }
+               .bind (this),
+            },
+         });
+      },
+      getUserMenu: function ()
+      {
+         return this .userMenu;
+      },
+      setUserMenu: function (userMenu)
+      {
+         this .userMenu = userMenu;
+      },
+      getActive: function ()
+      {
+         return this .active;
+      },
+      build: function (trigger, event)
+      {
+         const
+            browser          = this .getBrowser (),
+            activeLayer      = browser .getActiveLayer (),
+            currentViewpoint = activeLayer ? activeLayer .getViewpoint () : null,
+            currentViewer    = browser .viewer_ .getValue (),
+            fullscreen       = browser .getElement () .fullScreen (),
+            leftSubMenus     = $(document) .width () - event .pageX < 370;
 
-			const menu = {
-				className: "x_ite-private-menu x_ite-private-menu-title",
-				items: {
-					"separator0": "--------",
-					"viewpoints": {
-						name: _("Viewpoints"),
-						className: "context-menu-icon x_ite-private-icon-viewpoint",
-						items: this .getViewpoints (),
-						callback: function (viewpoint)
-						{
-							if (! viewpoint)
-								return;
+         const menu = {
+            className: "x_ite-private-menu x_ite-private-menu-title",
+            items: {
+               "separator0": "--------",
+               "viewpoints": {
+                  name: _("Viewpoints"),
+                  className: "context-menu-icon x_ite-private-icon-viewpoint",
+                  items: this .getViewpoints (),
+                  callback: function (viewpoint)
+                  {
+                     if (! viewpoint)
+                        return;
 
-							browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
-							browser .getSurface () .focus ();
-						}
-						.bind (this, currentViewpoint),
-					},
-					"separator1": "--------",
-					"viewer": {
-						name: _(this .getViewerName (currentViewer)),
-						className: "context-menu-icon x_ite-private-icon-" + currentViewer .toLowerCase () + "-viewer",
-						callback: function (viewer)
-						{
-							browser .viewer_ = viewer;
-							browser .getNotification () .string_ = _(this .getViewerName (viewer));
-							browser .getSurface () .focus ();
-						}
-						.bind (this, currentViewer),
-					},
-					"available-viewers": {
-						name: _("Available Viewers"),
-						items: this .getAvailableViewers (),
-					},
-					"straighten-horizon": {
-						name: _("Straighten Horizon"),
-						type: "checkbox",
-						selected: browser .getBrowserOption ("StraightenHorizon"),
-						events: {
-							click: function (event)
-							{
-								const straightenHorizon = $(event .target) .is (":checked");
+                     browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
+                     browser .getSurface () .focus ();
+                  }
+                  .bind (this, currentViewpoint),
+               },
+               "separator1": "--------",
+               "viewer": {
+                  name: _(this .getViewerName (currentViewer)),
+                  className: "context-menu-icon x_ite-private-icon-" + currentViewer .toLowerCase () + "-viewer",
+                  callback: function (viewer)
+                  {
+                     browser .viewer_ = viewer;
+                     browser .getNotification () .string_ = _(this .getViewerName (viewer));
+                     browser .getSurface () .focus ();
+                  }
+                  .bind (this, currentViewer),
+               },
+               "available-viewers": {
+                  name: _("Available Viewers"),
+                  items: this .getAvailableViewers (),
+               },
+               "straighten-horizon": {
+                  name: _("Straighten Horizon"),
+                  type: "checkbox",
+                  selected: browser .getBrowserOption ("StraightenHorizon"),
+                  events: {
+                     click: function (event)
+                     {
+                        const straightenHorizon = $(event .target) .is (":checked");
 
-								browser .setBrowserOption ("StraightenHorizon", straightenHorizon);
+                        browser .setBrowserOption ("StraightenHorizon", straightenHorizon);
 
-								if (straightenHorizon)
-								{
-									browser .getNotification () .string_ = _("Straighten Horizon") + ": " + _("on");
+                        if (straightenHorizon)
+                        {
+                           browser .getNotification () .string_ = _("Straighten Horizon") + ": " + _("on");
 
-									const activeViewpoint = browser .getActiveViewpoint ();
+                           const activeViewpoint = browser .getActiveViewpoint ();
 
-									if (activeViewpoint)
-										activeViewpoint .straighten (browser .getActiveLayer (), true);
-								}
-								else
-								{
-									browser .getNotification () .string_ = _("Straighten Horizon") + ": " + _("off");
-								}
-							}
-							.bind (this),
-						},
-					},
-					"separator2": "--------",
-					"primitive-quality": {
-						name: _("Primitive Quality"),
-						className: "context-menu-icon x_ite-private-icon-primitive-quality",
-						items: {
-							"high": {
-								name: _("High"),
-								type: "radio",
-								radio: "primitive-quality",
-								selected: browser .getBrowserOption ("PrimitiveQuality") === "HIGH",
-								events: {
-									click: function ()
-									{
-										browser .setBrowserOption ("PrimitiveQuality", "HIGH");
-										browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("high");
-									}
-									.bind (this),
-								},
-							},
-							"medium": {
-								name: _("Medium"),
-								type: "radio",
-								radio: "primitive-quality",
-								selected: browser .getBrowserOption ("PrimitiveQuality") === "MEDIUM",
-								events: {
-									click: function ()
-									{
-										browser .setBrowserOption ("PrimitiveQuality", "MEDIUM");
-										browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("medium");
-									}
-									.bind (this),
-								},
-							},
-							"low": {
-								name: _("Low"),
-								type: "radio",
-								radio: "primitive-quality",
-								selected: browser .getBrowserOption ("PrimitiveQuality") === "LOW",
-								events: {
-									click: function ()
-									{
-										browser .setBrowserOption ("PrimitiveQuality", "LOW");
-										browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("low");
-									}
-									.bind (this),
-								},
-							},
-						},
-					},
-					"texture-quality": {
-						name: _("Texture Quality"),
-						className: "context-menu-icon x_ite-private-icon-texture-quality",
-						items: {
-							"high": {
-								name: _("High"),
-								type: "radio",
-								radio: "texture-quality",
-								selected: browser .getBrowserOption ("TextureQuality") === "HIGH",
-								events: {
-									click: function ()
-									{
-										browser .setBrowserOption ("TextureQuality", "HIGH");
-										browser .getNotification () .string_ = _("Texture Quality") + ": " + _("high");
-									}
-									.bind (this),
-								},
-							},
-							"medium": {
-								name: _("Medium"),
-								type: "radio",
-								radio: "texture-quality",
-								selected: browser .getBrowserOption ("TextureQuality") === "MEDIUM",
-								events: {
-									click: function ()
-									{
-										browser .setBrowserOption ("TextureQuality", "MEDIUM");
-										browser .getNotification () .string_ = _("Texture Quality") + ": " + _("medium");
-									}
-									.bind (this),
-								},
-							},
-							"low": {
-								name: _("Low"),
-								type: "radio",
-								radio: "texture-quality",
-								selected: browser .getBrowserOption ("TextureQuality") === "LOW",
-								events: {
-									click: function ()
-									{
-										browser .setBrowserOption ("TextureQuality", "LOW");
-										browser .getNotification () .string_ = _("Texture Quality") + ": " + _("low");
-									}
-									.bind (this),
-								},
-							},
-						},
-					},
-					"display-rubberband": {
-						name: _("Display Rubberband"),
-						type: "checkbox",
-						selected: browser .getBrowserOption ("Rubberband"),
-						events: {
-							click: function (event)
-							{
-								const rubberband = $(event .target) .is (":checked");
+                           if (activeViewpoint)
+                              activeViewpoint .straighten (browser .getActiveLayer (), true);
+                        }
+                        else
+                        {
+                           browser .getNotification () .string_ = _("Straighten Horizon") + ": " + _("off");
+                        }
+                     }
+                     .bind (this),
+                  },
+               },
+               "separator2": "--------",
+               "primitive-quality": {
+                  name: _("Primitive Quality"),
+                  className: "context-menu-icon x_ite-private-icon-primitive-quality",
+                  items: {
+                     "high": {
+                        name: _("High"),
+                        type: "radio",
+                        radio: "primitive-quality",
+                        selected: browser .getBrowserOption ("PrimitiveQuality") === "HIGH",
+                        events: {
+                           click: function ()
+                           {
+                              browser .setBrowserOption ("PrimitiveQuality", "HIGH");
+                              browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("high");
+                           }
+                           .bind (this),
+                        },
+                     },
+                     "medium": {
+                        name: _("Medium"),
+                        type: "radio",
+                        radio: "primitive-quality",
+                        selected: browser .getBrowserOption ("PrimitiveQuality") === "MEDIUM",
+                        events: {
+                           click: function ()
+                           {
+                              browser .setBrowserOption ("PrimitiveQuality", "MEDIUM");
+                              browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("medium");
+                           }
+                           .bind (this),
+                        },
+                     },
+                     "low": {
+                        name: _("Low"),
+                        type: "radio",
+                        radio: "primitive-quality",
+                        selected: browser .getBrowserOption ("PrimitiveQuality") === "LOW",
+                        events: {
+                           click: function ()
+                           {
+                              browser .setBrowserOption ("PrimitiveQuality", "LOW");
+                              browser .getNotification () .string_ = _("Primitive Quality") + ": " + _("low");
+                           }
+                           .bind (this),
+                        },
+                     },
+                  },
+               },
+               "texture-quality": {
+                  name: _("Texture Quality"),
+                  className: "context-menu-icon x_ite-private-icon-texture-quality",
+                  items: {
+                     "high": {
+                        name: _("High"),
+                        type: "radio",
+                        radio: "texture-quality",
+                        selected: browser .getBrowserOption ("TextureQuality") === "HIGH",
+                        events: {
+                           click: function ()
+                           {
+                              browser .setBrowserOption ("TextureQuality", "HIGH");
+                              browser .getNotification () .string_ = _("Texture Quality") + ": " + _("high");
+                           }
+                           .bind (this),
+                        },
+                     },
+                     "medium": {
+                        name: _("Medium"),
+                        type: "radio",
+                        radio: "texture-quality",
+                        selected: browser .getBrowserOption ("TextureQuality") === "MEDIUM",
+                        events: {
+                           click: function ()
+                           {
+                              browser .setBrowserOption ("TextureQuality", "MEDIUM");
+                              browser .getNotification () .string_ = _("Texture Quality") + ": " + _("medium");
+                           }
+                           .bind (this),
+                        },
+                     },
+                     "low": {
+                        name: _("Low"),
+                        type: "radio",
+                        radio: "texture-quality",
+                        selected: browser .getBrowserOption ("TextureQuality") === "LOW",
+                        events: {
+                           click: function ()
+                           {
+                              browser .setBrowserOption ("TextureQuality", "LOW");
+                              browser .getNotification () .string_ = _("Texture Quality") + ": " + _("low");
+                           }
+                           .bind (this),
+                        },
+                     },
+                  },
+               },
+               "display-rubberband": {
+                  name: _("Display Rubberband"),
+                  type: "checkbox",
+                  selected: browser .getBrowserOption ("Rubberband"),
+                  events: {
+                     click: function (event)
+                     {
+                        const rubberband = $(event .target) .is (":checked");
 
-								browser .setBrowserOption ("Rubberband", rubberband);
+                        browser .setBrowserOption ("Rubberband", rubberband);
 
-								if (rubberband)
-									browser .getNotification () .string_ = _("Rubberband") + ": " + _("on");
-								else
-									browser .getNotification () .string_ = _("Rubberband") + ": " + _("off");
-							}
-							.bind (this),
-						},
-					},
-					"browser-timings": {
-						name: _("Browser Timings"),
-						type: "checkbox",
-						selected: browser .getBrowserOption ("Timings"),
-						events: {
-							click: function (event)
-							{
-								browser .setBrowserOption ("Timings", $(event .target) .is (":checked"));
-								browser .getSurface () .focus ();
-							}
-							.bind (this),
-						},
-					},
-					"fullscreen": {
-						name: fullscreen ? _("Leave Fullscreen") : _("Fullscreen"),
-						className: "context-menu-icon " + (fullscreen ? "x_ite-private-icon-leave-fullscreen" : "x_ite-private-icon-fullscreen"),
-						callback: function ()
-						{
-							browser .getElement () .toggleFullScreen ();
-						}
-						.bind (this),
-					},
-					"separator3": "--------",
-					"world-info": {
-						name: _("Show World Info"),
-						className: "context-menu-icon x_ite-private-icon-world-info",
-						callback: function ()
-						{
-							define .show ();
+                        if (rubberband)
+                           browser .getNotification () .string_ = _("Rubberband") + ": " + _("on");
+                        else
+                           browser .getNotification () .string_ = _("Rubberband") + ": " + _("off");
+                     }
+                     .bind (this),
+                  },
+               },
+               "browser-timings": {
+                  name: _("Browser Timings"),
+                  type: "checkbox",
+                  selected: browser .getBrowserOption ("Timings"),
+                  events: {
+                     click: function (event)
+                     {
+                        browser .setBrowserOption ("Timings", $(event .target) .is (":checked"));
+                        browser .getSurface () .focus ();
+                     }
+                     .bind (this),
+                  },
+               },
+               "fullscreen": {
+                  name: fullscreen ? _("Leave Fullscreen") : _("Fullscreen"),
+                  className: "context-menu-icon " + (fullscreen ? "x_ite-private-icon-leave-fullscreen" : "x_ite-private-icon-fullscreen"),
+                  callback: function ()
+                  {
+                     browser .getElement () .toggleFullScreen ();
+                  }
+                  .bind (this),
+               },
+               "separator3": "--------",
+               "world-info": {
+                  name: _("Show World Info"),
+                  className: "context-menu-icon x_ite-private-icon-world-info",
+                  callback: function ()
+                  {
+                     define .show ();
 
-							require (["https://cdn.jsdelivr.net/gh/showdownjs/showdown@1.9.1/dist/showdown.min.js"], function (showdown)
-							{
-								define .hide ();
+                     require (["https://cdn.jsdelivr.net/gh/showdownjs/showdown@1.9.1/dist/showdown.min.js"], function (showdown)
+                     {
+                        define .hide ();
 
-								browser .getElement () .find (".x_ite-private-world-info") .remove ();
+                        browser .getElement () .find (".x_ite-private-world-info") .remove ();
 
-								const
-									converter = new showdown .Converter (),
-									priv      = browser .getElement () .find (".x_ite-private-browser"),
-									overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
-									div       = $("<div></div>") .addClass ("x_ite-private-world-info") .appendTo (overlay),
-									worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
-									title     = worldInfo .title,
-									info      = worldInfo .info;
+                        const
+                           converter = new showdown .Converter (),
+                           priv      = browser .getElement () .find (".x_ite-private-browser"),
+                           overlay   = $("<div></div>") .addClass ("x_ite-private-world-info-overlay") .appendTo (priv),
+                           div       = $("<div></div>") .addClass ("x_ite-private-world-info") .appendTo (overlay),
+                           worldInfo = browser .getExecutionContext () .getWorldInfos () [0],
+                           title     = worldInfo .title,
+                           info      = worldInfo .info;
 
-								converter .setOption ("omitExtraWLInCodeBlocks",            true);
-								converter .setOption ("simplifiedAutoLink",                 true);
-								converter .setOption ("excludeTrailingPunctuationFromURLs", true);
-								converter .setOption ("literalMidWordUnderscores",          true);
-								converter .setOption ("strikethrough",                      true);
-								converter .setOption ("openLinksInNewWindow",               false);
+                        converter .setOption ("omitExtraWLInCodeBlocks",            true);
+                        converter .setOption ("simplifiedAutoLink",                 true);
+                        converter .setOption ("excludeTrailingPunctuationFromURLs", true);
+                        converter .setOption ("literalMidWordUnderscores",          true);
+                        converter .setOption ("strikethrough",                      true);
+                        converter .setOption ("openLinksInNewWindow",               false);
 
-								$("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
+                        $("<div></div>") .addClass ("x_ite-private-world-info-top") .text ("World Info") .appendTo (div);
 
-								if (title .length)
-								{
-									$("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
-								}
+                        if (title .length)
+                        {
+                           $("<div></div>") .addClass ("x_ite-private-world-info-title") .text (title) .appendTo (div);
+                        }
 
-								for (const line of info)
-								{
-									$("<div></div>") .addClass ("x_ite-private-world-info-info") .html (converter .makeHtml (line)) .appendTo (div);
-								}
+                        for (const line of info)
+                        {
+                           $("<div></div>") .addClass ("x_ite-private-world-info-info") .html (converter .makeHtml (line)) .appendTo (div);
+                        }
 
-								div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
+                        div .find ("a") .on ("click", function (event) { event .stopPropagation (); });
 
-								// Open external link in new tab.
-								div .find ("a[href^=http]") .each (function ()
-								{
-									if (this .href .indexOf (location .hostname) !== -1)
-										return;
+                        // Open external link in new tab.
+                        div .find ("a[href^=http]") .each (function ()
+                        {
+                           if (this .href .indexOf (location .hostname) !== -1)
+                              return;
 
-									$(this) .attr ("target", "_blank");
-								});
+                           $(this) .attr ("target", "_blank");
+                        });
 
-								overlay .on ("click", function () { overlay .remove (); });
-							})
-						},
-					},
-					"about": {
-						name: _("About X_ITE"),
-						className: "context-menu-icon x_ite-private-icon-help-about",
-						callback: function ()
-						{
-							window .open (browser .getProviderUrl ());
-						},
-					},
-				},
-			};
+                        overlay .on ("click", function () { overlay .remove (); });
+                     })
+                  },
+               },
+               "about": {
+                  name: _("About X_ITE"),
+                  className: "context-menu-icon x_ite-private-icon-help-about",
+                  callback: function ()
+                  {
+                     window .open (browser .getProviderUrl ());
+                  },
+               },
+            },
+         };
 
-			if ($.isFunction (this .userMenu))
-			{
-				const userMenu = this .userMenu ();
+         if ($.isFunction (this .userMenu))
+         {
+            const userMenu = this .userMenu ();
 
-				if ($.isPlainObject (userMenu))
-				{
-					Object .assign (menu .items, { "separator4": "--------" });
+            if ($.isPlainObject (userMenu))
+            {
+               Object .assign (menu .items, { "separator4": "--------" });
 
-					for (const key in userMenu)
-						menu .items ["user-" + key] = userMenu [key];
-				}
-			}
+               for (const key in userMenu)
+                  menu .items ["user-" + key] = userMenu [key];
+            }
+         }
 
-			if (leftSubMenus)
-				menu .className += " x_ite-private-menu-submenus-left";
+         if (leftSubMenus)
+            menu .className += " x_ite-private-menu-submenus-left";
 
-			if ($.isEmptyObject (menu .items .viewpoints .items))
-			{
-				delete menu .items ["separator0"];
-				delete menu .items ["viewpoints"];
-			}
+         if ($.isEmptyObject (menu .items .viewpoints .items))
+         {
+            delete menu .items ["separator0"];
+            delete menu .items ["viewpoints"];
+         }
 
-			if (Object .keys (menu .items ["available-viewers"] .items) .length < 2)
-			{
-				delete menu .items ["available-viewers"];
-			}
+         if (Object .keys (menu .items ["available-viewers"] .items) .length < 2)
+         {
+            delete menu .items ["available-viewers"];
+         }
 
-			if (!browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/) || (currentViewpoint && currentViewpoint .getTypeName () === "GeoViewpoint"))
-			{
-				delete menu .items ["straighten-horizon"];
-			}
+         if (!browser .getCurrentViewer () .match (/^(?:EXAMINE|FLY)$/) || (currentViewpoint && currentViewpoint .getTypeName () === "GeoViewpoint"))
+         {
+            delete menu .items ["straighten-horizon"];
+         }
 
-			const worldInfo = browser .getExecutionContext () .getWorldInfos () [0];
+         const worldInfo = browser .getExecutionContext () .getWorldInfos () [0];
 
-			if (!worldInfo || (worldInfo .title .length === 0 && worldInfo .info .length === 0))
-			{
-				delete menu .items ["world-info"];
-			}
+         if (!worldInfo || (worldInfo .title .length === 0 && worldInfo .info .length === 0))
+         {
+            delete menu .items ["world-info"];
+         }
 
-			return menu;
-		},
-		getViewpoints: function ()
-		{
-			var
-				browser     = this .getBrowser (),
-				activeLayer = browser .getActiveLayer ();
+         return menu;
+      },
+      getViewpoints: function ()
+      {
+         var
+            browser     = this .getBrowser (),
+            activeLayer = browser .getActiveLayer ();
 
-			if (! activeLayer)
-				return { };
+         if (! activeLayer)
+            return { };
 
-			var
-				enableInlineViewpoints = browser .getBrowserOption ("EnableInlineViewpoints"),
-				currentScene           = browser .currentScene,
-				viewpoints             = activeLayer .getViewpoints () .get (),
-				currentViewpoint       = activeLayer .getViewpoint (),
-				menu                   = { };
+         var
+            enableInlineViewpoints = browser .getBrowserOption ("EnableInlineViewpoints"),
+            currentScene           = browser .currentScene,
+            viewpoints             = activeLayer .getViewpoints () .get (),
+            currentViewpoint       = activeLayer .getViewpoint (),
+            menu                   = { };
 
-			for (var i = 0; i < viewpoints .length; ++ i)
-			{
-				var
-					viewpoint   = viewpoints [i],
-					description = viewpoint .description_ .getValue ();
+         for (var i = 0; i < viewpoints .length; ++ i)
+         {
+            var
+               viewpoint   = viewpoints [i],
+               description = viewpoint .description_ .getValue ();
 
-				if (description === "")
-					continue;
+            if (description === "")
+               continue;
 
-				if (! enableInlineViewpoints && viewpoint .getScene () !== currentScene)
-					continue;
+            if (! enableInlineViewpoints && viewpoint .getScene () !== currentScene)
+               continue;
 
-				var item = {
-					name: description,
-					callback: function (viewpoint)
-					{
-						browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
-						browser .getSurface () .focus ();
-					}
-					.bind (this, viewpoint),
-				};
+            var item = {
+               name: description,
+               callback: function (viewpoint)
+               {
+                  browser .bindViewpoint (browser .getActiveLayer (), viewpoint);
+                  browser .getSurface () .focus ();
+               }
+               .bind (this, viewpoint),
+            };
 
-				if (viewpoint === currentViewpoint)
-					item .className = "context-menu-selected";
+            if (viewpoint === currentViewpoint)
+               item .className = "context-menu-selected";
 
-				menu ["Viewpoint" + viewpoint .getId ()] = item;
-			}
+            menu ["Viewpoint" + viewpoint .getId ()] = item;
+         }
 
-			return menu;
-		},
-		getAvailableViewers: function ()
-		{
-			var
-				browser          = this .getBrowser (),
-				currentViewer    = browser .viewer_ .getValue (),
-				availableViewers = browser .availableViewers_,
-				menu             = { };
+         return menu;
+      },
+      getAvailableViewers: function ()
+      {
+         var
+            browser          = this .getBrowser (),
+            currentViewer    = browser .viewer_ .getValue (),
+            availableViewers = browser .availableViewers_,
+            menu             = { };
 
-			for (var i = 0; i < availableViewers .length; ++ i)
-			{
-				var viewer = availableViewers [i];
+         for (var i = 0; i < availableViewers .length; ++ i)
+         {
+            var viewer = availableViewers [i];
 
-				menu [viewer] = {
-					name: _(this .getViewerName (viewer)),
-					className: "context-menu-icon x_ite-private-icon-" + viewer .toLowerCase () + "-viewer",
-					callback: function (viewer)
-					{
-						browser .viewer_ = viewer;
-						browser .getNotification () .string_ = _(this .getViewerName (viewer));
-						browser .getSurface () .focus ();
-					}
-					.bind (this, viewer),
-				};
+            menu [viewer] = {
+               name: _(this .getViewerName (viewer)),
+               className: "context-menu-icon x_ite-private-icon-" + viewer .toLowerCase () + "-viewer",
+               callback: function (viewer)
+               {
+                  browser .viewer_ = viewer;
+                  browser .getNotification () .string_ = _(this .getViewerName (viewer));
+                  browser .getSurface () .focus ();
+               }
+               .bind (this, viewer),
+            };
 
-				if (viewer === currentViewer)
-				   menu [viewer] .className += " context-menu-selected";
-			}
+            if (viewer === currentViewer)
+               menu [viewer] .className += " context-menu-selected";
+         }
 
-		   return menu;
-		},
-		getViewerName: function (viewer)
-		{
-			switch (viewer)
-			{
-				case "EXAMINE":
-					return _("Examine Viewer");
-				case "WALK":
-					return _("Walk Viewer");
-				case "FLY":
-					return _("Fly Viewer");
-				case "PLANE":
-					return _("Plane Viewer");
-				case "LOOKAT":
-					return _("Look At Viewer");
-				case "NONE":
-					return _("None Viewer");
-			}
-		},
-	});
+         return menu;
+      },
+      getViewerName: function (viewer)
+      {
+         switch (viewer)
+         {
+            case "EXAMINE":
+               return _("Examine Viewer");
+            case "WALK":
+               return _("Walk Viewer");
+            case "FLY":
+               return _("Fly Viewer");
+            case "PLANE":
+               return _("Plane Viewer");
+            case "LOOKAT":
+               return _("Look At Viewer");
+            case "NONE":
+               return _("None Viewer");
+         }
+      },
+   });
 
-	return ContextMenu;
+   return ContextMenu;
 });

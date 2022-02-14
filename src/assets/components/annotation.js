@@ -48,14 +48,14 @@
 
 
 define ([
-	"x_ite/Components",
-	"x_ite/Components/Annotation/AnnotationLayer",
-	"x_ite/Components/Annotation/AnnotationTarget",
-	"x_ite/Components/Annotation/GroupAnnotation",
-	"x_ite/Components/Annotation/IconAnnotation",
-	"x_ite/Components/Annotation/TextAnnotation",
-	"x_ite/Components/Annotation/URLAnnotation",
-	"x_ite/Components/Annotation/X3DAnnotationNode",
+   "x_ite/Components",
+   "x_ite/Components/Annotation/AnnotationLayer",
+   "x_ite/Components/Annotation/AnnotationTarget",
+   "x_ite/Components/Annotation/GroupAnnotation",
+   "x_ite/Components/Annotation/IconAnnotation",
+   "x_ite/Components/Annotation/TextAnnotation",
+   "x_ite/Components/Annotation/URLAnnotation",
+   "x_ite/Components/Annotation/X3DAnnotationNode",
 ],
 function (Components,
           AnnotationLayer,
@@ -68,20 +68,20 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "Annotation",
-		types:
-		{
-			AnnotationLayer:  AnnotationLayer,
-			AnnotationTarget: AnnotationTarget,
-			GroupAnnotation:  GroupAnnotation,
-			IconAnnotation:   IconAnnotation,
-			TextAnnotation:   TextAnnotation,
-			URLAnnotation:    URLAnnotation,
-		},
-		abstractTypes:
-		{
-			X3DAnnotationNode: X3DAnnotationNode,
-		},
-	});
+   Components .addComponent ({
+      name: "Annotation",
+      types:
+      {
+         AnnotationLayer:  AnnotationLayer,
+         AnnotationTarget: AnnotationTarget,
+         GroupAnnotation:  GroupAnnotation,
+         IconAnnotation:   IconAnnotation,
+         TextAnnotation:   TextAnnotation,
+         URLAnnotation:    URLAnnotation,
+      },
+      abstractTypes:
+      {
+         X3DAnnotationNode: X3DAnnotationNode,
+      },
+   });
 });

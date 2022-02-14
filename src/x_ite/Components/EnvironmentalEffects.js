@@ -47,14 +47,14 @@
 
 
 define ([
-	"x_ite/Configuration/SupportedNodes",
-	"x_ite/Components/EnvironmentalEffects/Background",
-	"x_ite/Components/EnvironmentalEffects/Fog",
-	"x_ite/Components/EnvironmentalEffects/FogCoordinate",
-	"x_ite/Components/EnvironmentalEffects/LocalFog",
-	"x_ite/Components/EnvironmentalEffects/TextureBackground",
-	"x_ite/Components/EnvironmentalEffects/X3DBackgroundNode",
-	"x_ite/Components/EnvironmentalEffects/X3DFogObject",
+   "x_ite/Configuration/SupportedNodes",
+   "x_ite/Components/EnvironmentalEffects/Background",
+   "x_ite/Components/EnvironmentalEffects/Fog",
+   "x_ite/Components/EnvironmentalEffects/FogCoordinate",
+   "x_ite/Components/EnvironmentalEffects/LocalFog",
+   "x_ite/Components/EnvironmentalEffects/TextureBackground",
+   "x_ite/Components/EnvironmentalEffects/X3DBackgroundNode",
+   "x_ite/Components/EnvironmentalEffects/X3DFogObject",
 ],
 function (SupportedNodes,
           Background,
@@ -67,24 +67,24 @@ function (SupportedNodes,
 {
 "use strict";
 
-	const Types =
-	{
-		Background:        Background,
-		Fog:               Fog,
-		FogCoordinate:     FogCoordinate,
-		LocalFog:          LocalFog,
-		TextureBackground: TextureBackground,
-	};
+   const Types =
+   {
+      Background:        Background,
+      Fog:               Fog,
+      FogCoordinate:     FogCoordinate,
+      LocalFog:          LocalFog,
+      TextureBackground: TextureBackground,
+   };
 
-	const AbstractTypes =
-	{
-		X3DBackgroundNode: X3DBackgroundNode,
-		X3DFogObject:      X3DFogObject,
-	};
+   const AbstractTypes =
+   {
+      X3DBackgroundNode: X3DBackgroundNode,
+      X3DFogObject:      X3DFogObject,
+   };
 
-	for (const typeName in Types)
-		SupportedNodes .addType (typeName, Types [typeName]);
+   for (const typeName in Types)
+      SupportedNodes .addType (typeName, Types [typeName]);
 
-	for (const typeName in AbstractTypes)
-		SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
+   for (const typeName in AbstractTypes)
+      SupportedNodes .addAbstractType (typeName, AbstractTypes [typeName]);
 });

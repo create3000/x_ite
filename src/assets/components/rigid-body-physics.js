@@ -48,25 +48,25 @@
 
 
 define ([
-	"x_ite/Components",
-	"x_ite/Components/RigidBodyPhysics/BallJoint",
-	"x_ite/Components/RigidBodyPhysics/CollidableOffset",
-	"x_ite/Components/RigidBodyPhysics/CollidableShape",
-	"x_ite/Components/RigidBodyPhysics/CollisionCollection",
-	"x_ite/Components/RigidBodyPhysics/CollisionSensor",
-	"x_ite/Components/RigidBodyPhysics/CollisionSpace",
-	"x_ite/Components/RigidBodyPhysics/Contact",
-	"x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint",
-	"x_ite/Components/RigidBodyPhysics/MotorJoint",
-	"x_ite/Components/RigidBodyPhysics/RigidBody",
-	"x_ite/Components/RigidBodyPhysics/RigidBodyCollection",
-	"x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint",
-	"x_ite/Components/RigidBodyPhysics/SliderJoint",
-	"x_ite/Components/RigidBodyPhysics/UniversalJoint",
-	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
-	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode",
-	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
-	"lib/ammojs/AmmoJS",
+   "x_ite/Components",
+   "x_ite/Components/RigidBodyPhysics/BallJoint",
+   "x_ite/Components/RigidBodyPhysics/CollidableOffset",
+   "x_ite/Components/RigidBodyPhysics/CollidableShape",
+   "x_ite/Components/RigidBodyPhysics/CollisionCollection",
+   "x_ite/Components/RigidBodyPhysics/CollisionSensor",
+   "x_ite/Components/RigidBodyPhysics/CollisionSpace",
+   "x_ite/Components/RigidBodyPhysics/Contact",
+   "x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint",
+   "x_ite/Components/RigidBodyPhysics/MotorJoint",
+   "x_ite/Components/RigidBodyPhysics/RigidBody",
+   "x_ite/Components/RigidBodyPhysics/RigidBodyCollection",
+   "x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint",
+   "x_ite/Components/RigidBodyPhysics/SliderJoint",
+   "x_ite/Components/RigidBodyPhysics/UniversalJoint",
+   "x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
+   "x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode",
+   "x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
+   "lib/ammojs/AmmoJS",
 ],
 function (Components,
           BallJoint,
@@ -90,34 +90,34 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "RigidBodyPhysics",
-		types:
-		{
-			BallJoint:            BallJoint,
-			CollidableOffset:     CollidableOffset,
-			CollidableShape:      CollidableShape,
-			CollisionCollection:  CollisionCollection,
-			CollisionSensor:      CollisionSensor,
-			CollisionSpace:       CollisionSpace,
-			Contact:              Contact,
-			DoubleAxisHingeJoint: DoubleAxisHingeJoint,
-			MotorJoint:           MotorJoint,
-			RigidBody:            RigidBody,
-			RigidBodyCollection:  RigidBodyCollection,
-			SingleAxisHingeJoint: SingleAxisHingeJoint,
-			SliderJoint:          SliderJoint,
-			UniversalJoint:       UniversalJoint,
-		},
-		abstractTypes:
-		{
-			X3DNBodyCollidableNode:     X3DNBodyCollidableNode,
-			X3DNBodyCollisionSpaceNode: X3DNBodyCollisionSpaceNode,
-			X3DRigidJointNode:          X3DRigidJointNode,
-		},
-	});
+   Components .addComponent ({
+      name: "RigidBodyPhysics",
+      types:
+      {
+         BallJoint:            BallJoint,
+         CollidableOffset:     CollidableOffset,
+         CollidableShape:      CollidableShape,
+         CollisionCollection:  CollisionCollection,
+         CollisionSensor:      CollisionSensor,
+         CollisionSpace:       CollisionSpace,
+         Contact:              Contact,
+         DoubleAxisHingeJoint: DoubleAxisHingeJoint,
+         MotorJoint:           MotorJoint,
+         RigidBody:            RigidBody,
+         RigidBodyCollection:  RigidBodyCollection,
+         SingleAxisHingeJoint: SingleAxisHingeJoint,
+         SliderJoint:          SliderJoint,
+         UniversalJoint:       UniversalJoint,
+      },
+      abstractTypes:
+      {
+         X3DNBodyCollidableNode:     X3DNBodyCollidableNode,
+         X3DNBodyCollisionSpaceNode: X3DNBodyCollisionSpaceNode,
+         X3DRigidJointNode:          X3DRigidJointNode,
+      },
+   });
 
-	return {
-		Ammo: Ammo,
-	};
+   return {
+      Ammo: Ammo,
+   };
 });
