@@ -73,7 +73,7 @@ function (X3DChildObject,
 
       const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
-      if (executionContext .getParent () instanceof X3DProtoDeclaration)
+      if (executionContext .getNode () instanceof X3DProtoDeclaration)
          return;
 
       if (!protoNode .isExternProto)
@@ -109,7 +109,7 @@ function (X3DChildObject,
          if (!proto)
          {
             this .body = new X3DExecutionContext (this .getExecutionContext ());
-            this .body .setParent (this);
+            this .body .setNode (this);
             this .body .setup ();
 
             if (this .isInitialized ())
@@ -167,7 +167,7 @@ function (X3DChildObject,
          // Create execution context.
 
          this .body = new X3DExecutionContext (proto .getExecutionContext ());
-         this .body .setParent (this);
+         this .body .setNode (this);
 
          // Copy proto.
 

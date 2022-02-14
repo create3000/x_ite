@@ -101,7 +101,7 @@ function (X3DBaseNode,
                {
                   const
                      node   = this .array [i],
-                     parent = node .getExecutionContext () .getParent (),
+                     parent = node .getExecutionContext () .getNode (),
                      scene  = parent instanceof X3DPrototypeInstance ?  parent .getScene () : node .getScene ();
 
                   if (! enableInlineBindables && scene !== mainScene)
@@ -118,7 +118,7 @@ function (X3DBaseNode,
             {
                const
                   node   = this .array [i],
-                  parent = node .getExecutionContext () .getParent (),
+                  parent = node .getExecutionContext () .getNode (),
                   scene  = parent instanceof X3DPrototypeInstance ?  parent .getScene () : node .getScene ();
 
                if (! enableInlineBindables && scene !== mainScene)
@@ -134,7 +134,7 @@ function (X3DBaseNode,
             {
                const
                   node   = this .array [i],
-                  parent = node .getExecutionContext () .getParent (),
+                  parent = node .getExecutionContext () .getNode (),
                   scene  = parent instanceof X3DPrototypeInstance ?  parent .getScene () : node .getScene ();
 
                if (! enableInlineBindables && scene !== mainScene)

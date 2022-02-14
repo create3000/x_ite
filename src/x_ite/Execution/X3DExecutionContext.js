@@ -116,14 +116,14 @@ function (SupportedNodes,
       {
          return false;
       },
-      getParent: function ()
+      getNode: function ()
       {
          // Can be either of type X3DProtoDeclaration or X3DPrototypeInstance, or null.
-         return this ._parent || null;
+         return this ._node || null;
       },
-      setParent: function (value)
+      setNode: function (value)
       {
-         this ._parent = value;
+         this ._node = value;
       },
       getSpecificationVersion: function ()
       {

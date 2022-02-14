@@ -79,7 +79,7 @@ function (SupportedNodes,
       this .setLive (false);
 
       this .body = new X3DExecutionContext (executionContext);
-      this .body .setParent (this);
+      this .body .setNode (this);
    }
 
    X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
