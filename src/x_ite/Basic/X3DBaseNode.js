@@ -97,15 +97,14 @@ function (X3DEventObject,
       _private: false,
       _live: true,
       _initialized: false,
-      setExecutionContext: function (value)
+      getMainScene: function ()
       {
-         // Currently only useful for Sene.
+         let scene = this ._executionContext .getScene ();
 
-         this ._executionContext = value;
-      },
-      getExecutionContext: function ()
-      {
-         return this ._executionContext;
+         while (! scene .isMainScene ())
+            scene = scene .getScene ();
+
+         return scene;
       },
       getScene: function ()
       {
@@ -116,14 +115,14 @@ function (X3DEventObject,
 
          return executionContext;
       },
-      getMainScene: function ()
+      getExecutionContext: function ()
       {
-         let scene = this ._executionContext .getScene ();
-
-         while (! scene .isMainScene ())
-            scene = scene .getScene ();
-
-         return scene;
+         return this ._executionContext;
+      },
+      setExecutionContext: function (value)
+      {
+         // Currently only useful for Scene.
+         this ._executionContext = value;
       },
       addType: function (value)
       {
