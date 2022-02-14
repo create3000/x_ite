@@ -118,11 +118,11 @@ function (SupportedNodes,
       },
       getParent: function ()
       {
-         return this .parent || null;
+         return this ._parent || null;
       },
       setParent: function (value)
       {
-         this .parent = value;
+         this ._parent = value;
       },
       getSpecificationVersion: function ()
       {
