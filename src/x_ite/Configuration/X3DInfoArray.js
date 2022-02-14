@@ -94,22 +94,36 @@ function (X3DObject)
 	X3DInfoArray .prototype = Object .assign (Object .create (X3DObject .prototype),
 	{
 		constructor: X3DInfoArray,
-		add: function (key, value)
+		getValue: function ()
 		{
-			this .array .push (value);
-			this .index .set (key, value);
-		},
-		addAlias: function (key, value)
-		{
-			this .index .set (key, this .index .get (value));
+			return this .array;
 		},
 		get: function (key)
 		{
 			return this .index .get (key);
 		},
-		getValue: function ()
+		add: function (key, value)
 		{
-			return this .array;
+			this .array .push (value);
+			this .index .set (key, value);
+		},
+		addAlias: function (alias, key)
+		{
+			this .index .set (alias, this .index .get (key));
+		},
+		remove: function (key)
+		{
+			const value = this .index .get (key);
+
+			if (value === undefined)
+				return;
+
+			const index = this .array .indexOf (value);
+
+			this .index .delete (key);
+
+			if (index > -1)
+				this .array .splice (index, 1);
 		},
 		toVRMLStream: function (stream)
 		{

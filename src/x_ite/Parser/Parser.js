@@ -867,10 +867,9 @@ function (Fields,
 
 								if (Grammar .CloseBrace .parse (this))
 								{
-									proto .setName (nodeTypeId);
 									proto .setup ();
 
-									this .getExecutionContext () .protos .add (nodeTypeId, proto);
+									this .getExecutionContext () .updateProtoDeclaration (nodeTypeId, proto);
 									return true;
 								}
 
@@ -1103,10 +1102,9 @@ function (Fields,
 									externproto .addUserDefinedField (field .getAccessType (), field .getName (), field);
 								}
 
-								externproto .setName (nodeTypeId);
 								externproto .setup ();
 
-								this .getExecutionContext () .externprotos .add (nodeTypeId, externproto);
+								this .getExecutionContext () .updateExternProtoDeclaration (nodeTypeId, externproto);
 								return true;
 							}
 

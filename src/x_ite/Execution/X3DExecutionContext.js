@@ -421,6 +421,45 @@ function (SupportedNodes,
 
 			throw new Error ("Proto declaration '" + name + "' not found.");
 		},
+		addProtoDeclaration (name, proto)
+		{
+			const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
+
+			if (!(proto instanceof X3DProtoDeclaration))
+				throw new Error ("Couldn't add proto declaration: proto must be of type X3DProtoDeclaration.");
+
+			if (this ._protos .get (name))
+				throw new Error ("Couldn't add proto declaration: proto '" + name + "' already in use.");
+
+			name = String (name);
+
+			if (name .length === 0)
+				throw new Error ("Couldn't add proto declaration: proto name is empty.");
+
+			this ._protos .add (name, proto);
+			proto .setName (name);
+		},
+		updateProtoDeclaration (name, proto)
+		{
+			const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
+
+			if (!(proto instanceof X3DProtoDeclaration))
+				throw new Error ("Couldn't add proto declaration: proto must be of type X3DProtoDeclaration.");
+
+			name = String (name);
+
+			if (name .length === 0)
+				throw new Error ("Couldn't add proto declaration: proto name is empty.");
+
+			this ._protos .remove (proto .getName ());
+			this ._protos .remove (name);
+			this ._protos .add (name, proto);
+			proto .setName (name);
+		},
+		removeProtoDeclaration (name)
+		{
+			this ._protos .remove (name);
+		},
 		getProtoDeclarations: function ()
 		{
 			return this ._protos;
@@ -433,6 +472,45 @@ function (SupportedNodes,
 				return externproto;
 
 			throw new Error ("Extern proto declaration '" + name + "' not found.");
+		},
+		addExternProtoDeclaration (name, externproto)
+		{
+			const X3DExternProtoDeclaration = require ("x_ite/Prototype/X3DExternProtoDeclaration");
+
+			if (!(externproto instanceof X3DExternProtoDeclaration))
+				throw new Error ("Couldn't add extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
+
+			if (this ._externprotos .get (name))
+				throw new Error ("Couldn't add extern proto declaration: extern proto '" + name + "' already in use.");
+
+			name = String (name);
+
+			if (name .length === 0)
+				throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
+
+			this ._externprotos .add (name, externproto);
+			externproto .setName (name);
+		},
+		updateExternProtoDeclaration (name, externproto)
+		{
+			const X3DExternProtoDeclaration = require ("x_ite/Prototype/X3DExternProtoDeclaration");
+
+			if (!(externproto instanceof X3DExternProtoDeclaration))
+				throw new Error ("Couldn't add extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
+
+			name = String (name);
+
+			if (name .length === 0)
+				throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
+
+			this ._externprotos .remove (externproto .getName ());
+			this ._externprotos .remove (name);
+			this ._externprotos .add (name, externproto);
+			externproto .setName (name);
+		},
+		removeExternProtoDeclaration (name)
+		{
+			this ._externprotos .remove (name);
 		},
 		getExternProtoDeclarations: function ()
 		{

@@ -505,10 +505,9 @@ function ($,
 				this .protoInterfaceElement (xmlElement); // parse fields
 				this .popParent ();
 
-				externproto .setName (name);
 				externproto .setup ();
 
-				this .getExecutionContext () .externprotos .add (name, externproto);
+				this .getExecutionContext () .updateExternProtoDeclaration (name, externproto);
 			}
 		},
 		protoDeclareElement: function (xmlElement)
@@ -567,10 +566,9 @@ function ($,
 					break;
 				}
 
-				proto .setName (name);
 				proto .setup ();
 
-				this .getExecutionContext () .protos .add (name, proto);
+				this .getExecutionContext () .updateProtoDeclaration (name, proto);
 			}
 		},
 		protoInterfaceElement: function (xmlElement)
