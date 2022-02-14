@@ -56,178 +56,176 @@ const
 
 
 define ('x_ite/Components/RigidBodyPhysics/X3DRigidJointNode',[
-	"x_ite/Fields",
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
-	"standard/Math/Numbers/Matrix4",
+   "x_ite/Fields",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
+   "standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
-          X3DNode, 
+          X3DNode,
           X3DConstants,
           X3DCast,
           Matrix4)
 {
 "use strict";
 
-	function X3DRigidJointNode (executionContext)
-	{
-		X3DNode .call (this, executionContext);
+   function X3DRigidJointNode (executionContext)
+   {
+      X3DNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DRigidJointNode);
+      this .addType (X3DConstants .X3DRigidJointNode);
 
-		this .addChildObjects ("collection", new Fields .SFNode ());
+      this .addChildObjects ("collection", new Fields .SFNode ());
 
-		this .bodyNode1             = null;
-		this .bodyNode2             = null;
-		this .initialInverseMatrix1 = new Matrix4 ();
-		this .initialInverseMatrix2 = new Matrix4 ();
-		this .output                = false;
-	}
+      this .bodyNode1             = null;
+      this .bodyNode2             = null;
+      this .initialInverseMatrix1 = new Matrix4 ();
+      this .initialInverseMatrix2 = new Matrix4 ();
+      this .output                = false;
+   }
 
-	X3DRigidJointNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-	{
-		constructor: X3DRigidJointNode,
-		initialize: function ()
-		{
-			X3DNode .prototype .initialize .call (this);
+   X3DRigidJointNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+   {
+      constructor: X3DRigidJointNode,
+      initialize: function ()
+      {
+         X3DNode .prototype .initialize .call (this);
 
-			this .forceOutput_ .addInterest ("set_forceOutput__", this);
-			this .body1_       .addInterest ("set_body1__",       this);
-			this .body2_       .addInterest ("set_body2__",       this);
-		
-			this .set_forceOutput__ ();
-			this .set_body1__ ();
-			this .set_body2__ ();
-		},
-		setCollection: function (value)
-		{
-			this .removeJoint ();
+         this .forceOutput_ .addInterest ("set_forceOutput__", this);
+         this .body1_       .addInterest ("set_body1__",       this);
+         this .body2_       .addInterest ("set_body2__",       this);
 
-			this .collection_ = value;
+         this .set_forceOutput__ ();
+         this .set_body1__ ();
+         this .set_body2__ ();
+      },
+      setCollection: function (value)
+      {
+         this .removeJoint ();
 
-			this .addJoint ();
-		},
-		getCollection: function ()
-		{
-			return this .collection_ .getValue ();
-		},
-		getBody1: function ()
-		{
-			return this .bodyNode1;
-		},
-		getBody2: function ()
-		{
-			return this .bodyNode2;
-		},
-		getInitialInverseMatrix1: function ()
-		{
-			return this .initialInverseMatrix1;
-		},
-		getInitialInverseMatrix2: function ()
-		{
-			return this .initialInverseMatrix2;
-		},
-		setOutput: function (value)
-		{
-			this .output = value;
+         this .collection_ = value;
 
-			if (value)
-			{
-				if (this .bodyNode1)
-					this .bodyNode1 .addInterest ("update1", this);
+         this .addJoint ();
+      },
+      getCollection: function ()
+      {
+         return this .collection_ .getValue ();
+      },
+      getBody1: function ()
+      {
+         return this .bodyNode1;
+      },
+      getBody2: function ()
+      {
+         return this .bodyNode2;
+      },
+      getInitialInverseMatrix1: function ()
+      {
+         return this .initialInverseMatrix1;
+      },
+      getInitialInverseMatrix2: function ()
+      {
+         return this .initialInverseMatrix2;
+      },
+      setOutput: function (value)
+      {
+         this .output = value;
 
-				if (this .bodyNode2)
-					this .bodyNode2 .addInterest ("update2", this);
-			}
-			else
-			{
-				if (this .bodyNode1)
-					this .bodyNode1 .removeInterest ("update1", this);
+         if (value)
+         {
+            if (this .bodyNode1)
+               this .bodyNode1 .addInterest ("update1", this);
 
-				if (this .bodyNode2)
-					this .bodyNode2 .removeInterest ("update2", this);
-			}
-		},
-		addJoint: function ()
-		{ },
-		removeJoint: function ()
-		{ },
-		set_forceOutput__: function ()
-		{ },
-		set_joint__: function ()
-		{
-			this .removeJoint ();
-			this .addJoint ();
-		},
-		set_body1__: function ()
-		{
-			this .removeJoint ();
-		
-			if (this .bodyNode1)
-			{
-				this .bodyNode1 .removeInterest ("update1", this);
-				this .bodyNode1 .collection_ .removeInterest ("set_joint__", this);
-			}
-		
-			this .bodyNode1 = X3DCast (X3DConstants .RigidBody, this .body1_);
-		
-			if (this .bodyNode1)
-			{
-				this .bodyNode1 .collection_ .addInterest ("set_joint__", this);
+            if (this .bodyNode2)
+               this .bodyNode2 .addInterest ("update2", this);
+         }
+         else
+         {
+            if (this .bodyNode1)
+               this .bodyNode1 .removeInterest ("update1", this);
 
-				this .initialize1 ();
-				this .addJoint ();
-				this .setOutput (this .output);
-			}
-		},
-		set_body2__: function ()
-		{
-			this .removeJoint ();
-		
-			if (this .bodyNode2)
-			{
-				this .bodyNode2 .removeInterest ("update2", this);
-				this .bodyNode2 .collection_ .removeInterest ("set_joint__", this);
-			}
-		
-			this .bodyNode2 = X3DCast (X3DConstants .RigidBody, this .body2_);
-		
-			if (this .bodyNode2)
-			{
-				this .bodyNode2 .collection_ .addInterest ("set_joint__", this);
+            if (this .bodyNode2)
+               this .bodyNode2 .removeInterest ("update2", this);
+         }
+      },
+      addJoint: function ()
+      { },
+      removeJoint: function ()
+      { },
+      set_forceOutput__: function ()
+      { },
+      set_joint__: function ()
+      {
+         this .removeJoint ();
+         this .addJoint ();
+      },
+      set_body1__: function ()
+      {
+         this .removeJoint ();
 
-				this .initialize2 ();
-				this .addJoint ();
-				this .setOutput (this .output);
-			}
-		},
-		initialize1: function ()
-		{
-			this .initialInverseMatrix1 .set (this .bodyNode1 .position_ .getValue (), this .bodyNode1 .orientation_ .getValue ());
-			this .initialInverseMatrix1 .inverse ();
-		},
-		initialize2: function ()
-		{
-			this .initialInverseMatrix2 .set (this .bodyNode2 .position_ .getValue (), this .bodyNode2 .orientation_ .getValue ());
-			this .initialInverseMatrix2 .inverse ();
-		},
-		update1: function ()
-		{ },
-		update2: function ()
-		{ },
-		dispose: function ()
-		{
-			this .removeJoint ();
+         if (this .bodyNode1)
+         {
+            this .bodyNode1 .removeInterest ("update1", this);
+            this .bodyNode1 .collection_ .removeInterest ("set_joint__", this);
+         }
 
-			X3DNode .prototype .dispose .call (this);
-		},
-	});
+         this .bodyNode1 = X3DCast (X3DConstants .RigidBody, this .body1_);
 
-	return X3DRigidJointNode;
+         if (this .bodyNode1)
+         {
+            this .bodyNode1 .collection_ .addInterest ("set_joint__", this);
+
+            this .initialize1 ();
+            this .addJoint ();
+            this .setOutput (this .output);
+         }
+      },
+      set_body2__: function ()
+      {
+         this .removeJoint ();
+
+         if (this .bodyNode2)
+         {
+            this .bodyNode2 .removeInterest ("update2", this);
+            this .bodyNode2 .collection_ .removeInterest ("set_joint__", this);
+         }
+
+         this .bodyNode2 = X3DCast (X3DConstants .RigidBody, this .body2_);
+
+         if (this .bodyNode2)
+         {
+            this .bodyNode2 .collection_ .addInterest ("set_joint__", this);
+
+            this .initialize2 ();
+            this .addJoint ();
+            this .setOutput (this .output);
+         }
+      },
+      initialize1: function ()
+      {
+         this .initialInverseMatrix1 .set (this .bodyNode1 .position_ .getValue (), this .bodyNode1 .orientation_ .getValue ());
+         this .initialInverseMatrix1 .inverse ();
+      },
+      initialize2: function ()
+      {
+         this .initialInverseMatrix2 .set (this .bodyNode2 .position_ .getValue (), this .bodyNode2 .orientation_ .getValue ());
+         this .initialInverseMatrix2 .inverse ();
+      },
+      update1: function ()
+      { },
+      update2: function ()
+      { },
+      dispose: function ()
+      {
+         this .removeJoint ();
+
+         X3DNode .prototype .dispose .call (this);
+      },
+   });
+
+   return X3DRigidJointNode;
 });
-
-
 
 
   // This is ammo.js, a port of Bullet Physics to JavaScript. zlib licensed.
@@ -319,13 +317,13 @@ if (typeof exports === 'object' && typeof module === 'object')
 
 
 define ('lib/ammojs/AmmoJS',[
-	"lib/ammojs/ammo",
+   "lib/ammojs/ammo",
 ],
 function (Ammo)
 {
 "use strict";
 
-	return new Ammo ();
+   return new Ammo ();
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -378,14 +376,14 @@ function (Ammo)
 
 
 define ('x_ite/Components/RigidBodyPhysics/BallJoint',[
-	"jquery",
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"lib/ammojs/AmmoJS",
+   "jquery",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
+   "lib/ammojs/AmmoJS",
 ],
 function ($,
           Fields,
@@ -398,147 +396,147 @@ function ($,
 {
 "use strict";
 
-	function BallJoint (executionContext)
-	{
-		X3DRigidJointNode .call (this, executionContext);
+   function BallJoint (executionContext)
+   {
+      X3DRigidJointNode .call (this, executionContext);
 
-		this .addType (X3DConstants .BallJoint);
+      this .addType (X3DConstants .BallJoint);
 
-		this .anchorPoint_ .setUnit ("length");
+      this .anchorPoint_ .setUnit ("length");
 
-		this .joint             = null;
-		this .outputs           = { };
-		this .localAnchorPoint1 = new Vector3 (0, 0, 0);
-		this .localAnchorPoint2 = new Vector3 (0, 0, 0);
-	}
+      this .joint             = null;
+      this .outputs           = { };
+      this .localAnchorPoint1 = new Vector3 (0, 0, 0);
+      this .localAnchorPoint2 = new Vector3 (0, 0, 0);
+   }
 
-	BallJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
-	{
-		constructor: BallJoint,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",      new Fields .MFString ("NONE")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",      new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint", new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint", new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body1",            new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body2",            new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "BallJoint";
-		},
-		getComponentName: function ()
-		{
-			return "RigidBodyPhysics";
-		},
-		getContainerField: function ()
-		{
-			return "joints";
-		},
-		initialize: function ()
-		{
-			X3DRigidJointNode .prototype .initialize .call (this);
+   BallJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
+   {
+      constructor: BallJoint,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",      new Fields .MFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",      new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint", new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint", new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body1",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body2",            new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "BallJoint";
+      },
+      getComponentName: function ()
+      {
+         return "RigidBodyPhysics";
+      },
+      getContainerField: function ()
+      {
+         return "joints";
+      },
+      initialize: function ()
+      {
+         X3DRigidJointNode .prototype .initialize .call (this);
 
-			this .anchorPoint_ .addInterest ("set_anchorPoint__", this);
-		},
-		addJoint: function ()
-		{
-			if (! this .getCollection ())
-				return;
+         this .anchorPoint_ .addInterest ("set_anchorPoint__", this);
+      },
+      addJoint: function ()
+      {
+         if (! this .getCollection ())
+            return;
 
-			if (! this .getBody1 ())
-				return;
+         if (! this .getBody1 ())
+            return;
 
-			if (! this .getBody2 ())
-				return;
+         if (! this .getBody2 ())
+            return;
 
-		   if (this .getBody1 () .getCollection () !== this .getCollection ())
-				return;
+         if (this .getBody1 () .getCollection () !== this .getCollection ())
+            return;
 
-		   if (this .getBody2 () .getCollection () !== this .getCollection ())
-				return;
+         if (this .getBody2 () .getCollection () !== this .getCollection ())
+            return;
 
-			this .joint = new Ammo .btPoint2PointConstraint (this .getBody1 () .getRigidBody (),
-			                                                 this .getBody2 () .getRigidBody (),
-			                                                 new Ammo .btVector3 (),
-			                                                 new Ammo .btVector3 ());
+         this .joint = new Ammo .btPoint2PointConstraint (this .getBody1 () .getRigidBody (),
+                                                          this .getBody2 () .getRigidBody (),
+                                                          new Ammo .btVector3 (),
+                                                          new Ammo .btVector3 ());
 
-			this .set_anchorPoint__ ();
+         this .set_anchorPoint__ ();
 
-			this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
-		},
-		removeJoint: function ()
-		{
-			if (! this .joint)
-				return;
+         this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
+      },
+      removeJoint: function ()
+      {
+         if (! this .joint)
+            return;
 
-			if (this .getCollection ())
-				this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+         if (this .getCollection ())
+            this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
 
-			Ammo .destroy (this .joint);
-			this .joint = null;
-		},
-		set_forceOutput__: function ()
-		{
-			for (var key in this .outputs)
-				delete this .outputs [key];
+         Ammo .destroy (this .joint);
+         this .joint = null;
+      },
+      set_forceOutput__: function ()
+      {
+         for (var key in this .outputs)
+            delete this .outputs [key];
 
-			for (var i = 0, length = this .forceOutput_ .length; i < length; ++ i)
-			{
-				var value = this .forceOutput_ [i];
+         for (var i = 0, length = this .forceOutput_ .length; i < length; ++ i)
+         {
+            var value = this .forceOutput_ [i];
 
-				if (value == "ALL")
-				{
-					this .outputs .body1AnchorPoint = true;
-					this .outputs .body2AnchorPoint = true;
-				}
-				else
-				{
-					this .outputs [value] = true;
-				}
-			}
+            if (value == "ALL")
+            {
+               this .outputs .body1AnchorPoint = true;
+               this .outputs .body2AnchorPoint = true;
+            }
+            else
+            {
+               this .outputs [value] = true;
+            }
+         }
 
-			this .setOutput (! $.isEmptyObject (this .outputs));
-		},
-		set_anchorPoint__: function ()
-		{
-			if (this .joint)
-			{
-				var
-					localAnchorPoint1 = this .localAnchorPoint1,
-					localAnchorPoint2 = this .localAnchorPoint2;
+         this .setOutput (! $.isEmptyObject (this .outputs));
+      },
+      set_anchorPoint__: function ()
+      {
+         if (this .joint)
+         {
+            var
+               localAnchorPoint1 = this .localAnchorPoint1,
+               localAnchorPoint2 = this .localAnchorPoint2;
 
-				this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .anchorPoint_ .getValue ()));
-				this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .anchorPoint_ .getValue ()));
+            this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .anchorPoint_ .getValue ()));
+            this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .anchorPoint_ .getValue ()));
 
-				this .joint .setPivotA (new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z));
-				this .joint .setPivotB (new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z));
-			}
-		},
-		update1: (function ()
-		{
-			var localAnchorPoint1 = new Vector3 (0, 0, 0);
+            this .joint .setPivotA (new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z));
+            this .joint .setPivotB (new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z));
+         }
+      },
+      update1: (function ()
+      {
+         var localAnchorPoint1 = new Vector3 (0, 0, 0);
 
-			return function ()
-			{
-				if (this .outputs .body1AnchorPoint)
-					this .body1AnchorPoint_ = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
-			};
-		})(),
-		update2: (function ()
-		{
-			var localAnchorPoint2 = new Vector3 (0, 0, 0);
+         return function ()
+         {
+            if (this .outputs .body1AnchorPoint)
+               this .body1AnchorPoint_ = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
+         };
+      })(),
+      update2: (function ()
+      {
+         var localAnchorPoint2 = new Vector3 (0, 0, 0);
 
-			return function ()
-			{
-				if (this .outputs .body2AnchorPoint)
-					this .body2AnchorPoint_ = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
-			};
-		})(),
-	});
+         return function ()
+         {
+            if (this .outputs .body2AnchorPoint)
+               this .body2AnchorPoint_ = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
+         };
+      })(),
+   });
 
-	return BallJoint;
+   return BallJoint;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -591,13 +589,13 @@ function ($,
 
 
 define ('x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode',[
-	"x_ite/Fields",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Components/Grouping/X3DBoundedObject",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Matrix4",
-	"lib/ammojs/AmmoJS",
+   "x_ite/Fields",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Components/Grouping/X3DBoundedObject",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Matrix4",
+   "lib/ammojs/AmmoJS",
 ],
 function (Fields,
           X3DChildNode,
@@ -609,100 +607,100 @@ function (Fields,
 {
 "use strict";
 
-	function X3DNBodyCollidableNode (executionContext)
-	{
-		X3DChildNode     .call (this, executionContext);
-		X3DBoundedObject .call (this, executionContext);
+   function X3DNBodyCollidableNode (executionContext)
+   {
+      X3DChildNode     .call (this, executionContext);
+      X3DBoundedObject .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DNBodyCollidableNode);
+      this .addType (X3DConstants .X3DNBodyCollidableNode);
 
-		this .addChildObjects ("body",                  new Fields .SFNode (),
-		                       "compoundShape_changed", new Fields .SFTime ());
+      this .addChildObjects ("body",                  new Fields .SFNode (),
+                             "compoundShape_changed", new Fields .SFTime ());
 
-		// Units
+      // Units
 
-		this .translation_ .setUnit ("length");
+      this .translation_ .setUnit ("length");
 
-		// Members
+      // Members
 
-		this .compoundShape  = new Ammo .btCompoundShape ()
-		this .offset         = new Vector3 (0, 0, 0);
-		this .matrix         = new Matrix4 ();
-	}
+      this .compoundShape  = new Ammo .btCompoundShape ()
+      this .offset         = new Vector3 (0, 0, 0);
+      this .matrix         = new Matrix4 ();
+   }
 
-	X3DNBodyCollidableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-		X3DBoundedObject .prototype,
-	{
-		constructor: X3DNBodyCollidableNode,
-		initialize: function ()
-		{
-			X3DChildNode     .prototype .initialize .call (this);
-			X3DBoundedObject .prototype .initialize .call (this);
+   X3DNBodyCollidableNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+      X3DBoundedObject .prototype,
+   {
+      constructor: X3DNBodyCollidableNode,
+      initialize: function ()
+      {
+         X3DChildNode     .prototype .initialize .call (this);
+         X3DBoundedObject .prototype .initialize .call (this);
 
-			this .addInterest ("eventsProcessed", this);
+         this .addInterest ("eventsProcessed", this);
 
-			this .eventsProcessed ();
-		},
-		getLocalTransform: (function ()
-		{
-			var
-				m = new Matrix4 (),
-				o = new Ammo .btVector3 (0, 0, 0),
-				l = new Ammo .btTransform ();
+         this .eventsProcessed ();
+      },
+      getLocalTransform: (function ()
+      {
+         var
+            m = new Matrix4 (),
+            o = new Ammo .btVector3 (0, 0, 0),
+            l = new Ammo .btTransform ();
 
-			return function ()
-			{
-				m .assign (this .getMatrix ());
-				m .translate (this .offset);
+         return function ()
+         {
+            m .assign (this .getMatrix ());
+            m .translate (this .offset);
 
-				//this .localTransform .setFromOpenGLMatrix (m);
+            //this .localTransform .setFromOpenGLMatrix (m);
 
-				o .setValue (m [12], m [13], m [14]);
+            o .setValue (m [12], m [13], m [14]);
 
-				l .getBasis () .setValue (m [0], m [4], m [8],
-				                          m [1], m [5], m [9],
-				                          m [2], m [6], m [10]);
+            l .getBasis () .setValue (m [0], m [4], m [8],
+                                      m [1], m [5], m [9],
+                                      m [2], m [6], m [10]);
 
-				l .setOrigin (o);
+            l .setOrigin (o);
 
-				return l;
-			};
-		})(),
-		setBody: function (value)
-		{
-			this .body_ = value;
-		},
-		getBody: function ()
-		{
-			return this .body_ .getValue ();
-		},
-		getCompoundShape: function ()
-		{
-			return this .compoundShape;
-		},
-		setOffset: function (x, y, z)
-		{
-			this .offset .set (x, y, z);
-		},
-		getOffset: function ()
-		{
-			return this .offset;
-		},
-		getMatrix: function ()
-		{
-			return this .matrix;
-		},
-		eventsProcessed: function ()
-		{
-			this .matrix .set (this .translation_ .getValue (),
-			                   this .rotation_    .getValue ());
+            return l;
+         };
+      })(),
+      setBody: function (value)
+      {
+         this .body_ = value;
+      },
+      getBody: function ()
+      {
+         return this .body_ .getValue ();
+      },
+      getCompoundShape: function ()
+      {
+         return this .compoundShape;
+      },
+      setOffset: function (x, y, z)
+      {
+         this .offset .set (x, y, z);
+      },
+      getOffset: function ()
+      {
+         return this .offset;
+      },
+      getMatrix: function ()
+      {
+         return this .matrix;
+      },
+      eventsProcessed: function ()
+      {
+         this .matrix .set (this .translation_ .getValue (),
+                            this .rotation_    .getValue ());
 
-			if (this .compoundShape .getNumChildShapes ())
-				this .compoundShape .updateChildTransform (0, this .getLocalTransform (), true);
-		},
-	});
+         if (this .compoundShape .getNumChildShapes ())
+            this .compoundShape .updateChildTransform (0, this .getLocalTransform (), true);
+      },
+   });
 
-	return X3DNBodyCollidableNode;
+   return X3DNBodyCollidableNode;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -755,13 +753,13 @@ function (Fields,
 
 
 define ('x_ite/Components/RigidBodyPhysics/CollidableOffset',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Bits/TraverseType",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Bits/TraverseType",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -773,228 +771,228 @@ function (Fields,
 {
 "use strict";
 
-	function CollidableOffset (executionContext)
-	{
-		X3DNBodyCollidableNode .call (this, executionContext);
+   function CollidableOffset (executionContext)
+   {
+      X3DNBodyCollidableNode .call (this, executionContext);
 
-		this .addType (X3DConstants .CollidableOffset);
+      this .addType (X3DConstants .CollidableOffset);
 
-		this .collidableNode = null;
-	}
+      this .collidableNode = null;
+   }
 
-	CollidableOffset .prototype = Object .assign (Object .create (X3DNBodyCollidableNode .prototype),
-	{
-		constructor: CollidableOffset,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "translation", new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",    new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "collidable",  new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "CollidableOffset";
-		},
-		getComponentName: function ()
-		{
-			return "RigidBodyPhysics";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DNBodyCollidableNode .prototype .initialize .call (this);
+   CollidableOffset .prototype = Object .assign (Object .create (X3DNBodyCollidableNode .prototype),
+   {
+      constructor: CollidableOffset,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "translation", new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",    new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "collidable",  new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "CollidableOffset";
+      },
+      getComponentName: function ()
+      {
+         return "RigidBodyPhysics";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DNBodyCollidableNode .prototype .initialize .call (this);
 
-			this .enabled_    .addInterest ("set_collidableGeometry__", this);
-			this .collidable_ .addInterest ("set_collidable__",         this);
+         this .enabled_    .addInterest ("set_collidableGeometry__", this);
+         this .collidable_ .addInterest ("set_collidable__",         this);
 
-			this .set_collidable__ ();
-		},
-		getBBox: function (bbox, shadow)
-		{
-			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
-			{
-				const boundedObject = this .visibleNode;
+         this .set_collidable__ ();
+      },
+      getBBox: function (bbox, shadow)
+      {
+         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         {
+            const boundedObject = this .visibleNode;
 
-				if (boundedObject)
-					return boundedObject .getBBox (bbox, shadow);
+            if (boundedObject)
+               return boundedObject .getBBox (bbox, shadow);
 
-				return bbox .set ();
-			}
+            return bbox .set ();
+         }
 
-			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
-		},
-		set_collidable__: function ()
-		{
-			if (this .collidableNode)
-			{
-				this .collidableNode .removeInterest ("addNodeEvent", this);
-				this .collidableNode .compoundShape_changed_ .removeFieldInterest (this .compoundShape_changed_);
+         return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+      },
+      set_collidable__: function ()
+      {
+         if (this .collidableNode)
+         {
+            this .collidableNode .removeInterest ("addNodeEvent", this);
+            this .collidableNode .compoundShape_changed_ .removeFieldInterest (this .compoundShape_changed_);
 
-				this .collidableNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
-				this .collidableNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
+            this .collidableNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
+            this .collidableNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
 
-				this .collidableNode .visible_     .removeInterest ("set_visible__",     this);
-				this .collidableNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
-			}
+            this .collidableNode .visible_     .removeInterest ("set_visible__",     this);
+            this .collidableNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+         }
 
-			this .collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .collidable_);
+         this .collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .collidable_);
 
-			if (this .collidableNode)
-			{
-				this .collidableNode .addInterest ("addNodeEvent", this);
-				this .collidableNode .compoundShape_changed_ .addFieldInterest (this .compoundShape_changed_);
+         if (this .collidableNode)
+         {
+            this .collidableNode .addInterest ("addNodeEvent", this);
+            this .collidableNode .compoundShape_changed_ .addFieldInterest (this .compoundShape_changed_);
 
-				this .collidableNode .isCameraObject_   .addFieldInterest (this .isCameraObject_);
-				this .collidableNode .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+            this .collidableNode .isCameraObject_   .addFieldInterest (this .isCameraObject_);
+            this .collidableNode .isPickableObject_ .addFieldInterest (this .isPickableObject_);
 
-				this .collidableNode .visible_     .addInterest ("set_visible__",     this);
-				this .collidableNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
+            this .collidableNode .visible_     .addInterest ("set_visible__",     this);
+            this .collidableNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
 
-				this .setCameraObject   (this .collidableNode .getCameraObject ());
-				this .setPickableObject (this .collidableNode .getPickableObject ());
+            this .setCameraObject   (this .collidableNode .getCameraObject ());
+            this .setPickableObject (this .collidableNode .getPickableObject ());
 
-				delete this .traverse;
-			}
-			else
-			{
-				this .setCameraObject   (false);
-				this .setPickableObject (false);
+            delete this .traverse;
+         }
+         else
+         {
+            this .setCameraObject   (false);
+            this .setPickableObject (false);
 
-				this .traverse = Function .prototype;
-			}
+            this .traverse = Function .prototype;
+         }
 
-			this .set_visible__ ();
-			this .set_bboxDisplay__ ();
-			this .set_collidableGeometry__ ();
-		},
-		set_cameraObject__: function ()
-		{
-			if (this .collidableNode && this .collidableNode .getCameraObject ())
-			{
-				this .setCameraObject (this .collidableNode .visible_ .getValue ());
-			}
-			else
-			{
-				this .setCameraObject (false);
-			}
-		},
-		set_visible__: function ()
-		{
-			if (this .collidableNode)
-			{
-				this .visibleNode = this .collidableNode .visible_ .getValue () ? this .collidableNode : null;
-			}
-			else
-			{
-				this .visibleNode = this .collidableNode;
-			}
+         this .set_visible__ ();
+         this .set_bboxDisplay__ ();
+         this .set_collidableGeometry__ ();
+      },
+      set_cameraObject__: function ()
+      {
+         if (this .collidableNode && this .collidableNode .getCameraObject ())
+         {
+            this .setCameraObject (this .collidableNode .visible_ .getValue ());
+         }
+         else
+         {
+            this .setCameraObject (false);
+         }
+      },
+      set_visible__: function ()
+      {
+         if (this .collidableNode)
+         {
+            this .visibleNode = this .collidableNode .visible_ .getValue () ? this .collidableNode : null;
+         }
+         else
+         {
+            this .visibleNode = this .collidableNode;
+         }
 
-			this .set_cameraObject__ ();
-		},
-		set_bboxDisplay__: function ()
-		{
-			if (this .collidableNode)
-			{
-				this .boundedObject = this .collidableNode .bboxDisplay_ .getValue () ? this .collidableNode : null;
-			}
-			else
-			{
-				this .boundedObject = null;
-			}
-		},
-		set_collidableGeometry__: function ()
-		{
-			if (this .getCompoundShape () .getNumChildShapes ())
-				this .getCompoundShape () .removeChildShapeByIndex (0);
+         this .set_cameraObject__ ();
+      },
+      set_bboxDisplay__: function ()
+      {
+         if (this .collidableNode)
+         {
+            this .boundedObject = this .collidableNode .bboxDisplay_ .getValue () ? this .collidableNode : null;
+         }
+         else
+         {
+            this .boundedObject = null;
+         }
+      },
+      set_collidableGeometry__: function ()
+      {
+         if (this .getCompoundShape () .getNumChildShapes ())
+            this .getCompoundShape () .removeChildShapeByIndex (0);
 
-			if (this .collidableNode && this .enabled_ .getValue ())
-				this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collidableNode .getCompoundShape ());
+         if (this .collidableNode && this .enabled_ .getValue ())
+            this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collidableNode .getCompoundShape ());
 
-			this .compoundShape_changed_ = this .getBrowser () .getCurrentTime ();
-		},
-		traverse: function (type, renderObject)
-		{
-			switch (type)
-			{
-				case TraverseType .POINTER:
-				case TraverseType .CAMERA:
-				case TraverseType .SHADOW:
-				{
-					const modelViewMatrix = renderObject .getModelViewMatrix ();
+         this .compoundShape_changed_ = this .getBrowser () .getCurrentTime ();
+      },
+      traverse: function (type, renderObject)
+      {
+         switch (type)
+         {
+            case TraverseType .POINTER:
+            case TraverseType .CAMERA:
+            case TraverseType .SHADOW:
+            {
+               const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-					modelViewMatrix .push ();
-					modelViewMatrix .multLeft (this .getMatrix ());
+               modelViewMatrix .push ();
+               modelViewMatrix .multLeft (this .getMatrix ());
 
-					const visibleNode = this .visibleNode;
+               const visibleNode = this .visibleNode;
 
-					if (visibleNode)
-						visibleNode .traverse (type, renderObject);
+               if (visibleNode)
+                  visibleNode .traverse (type, renderObject);
 
-					modelViewMatrix .pop ();
-					return;
-				}
-				case TraverseType .PICKING:
-				{
-					const
-						browser          = renderObject .getBrowser (),
-						pickingHierarchy = browser .getPickingHierarchy (),
-						modelViewMatrix  = renderObject .getModelViewMatrix ();
+               modelViewMatrix .pop ();
+               return;
+            }
+            case TraverseType .PICKING:
+            {
+               const
+                  browser          = renderObject .getBrowser (),
+                  pickingHierarchy = browser .getPickingHierarchy (),
+                  modelViewMatrix  = renderObject .getModelViewMatrix ();
 
-					pickingHierarchy .push (this);
-					modelViewMatrix .push ();
-					modelViewMatrix .multLeft (this .getMatrix ());
+               pickingHierarchy .push (this);
+               modelViewMatrix .push ();
+               modelViewMatrix .multLeft (this .getMatrix ());
 
-					this .collidableNode .traverse (type, renderObject);
+               this .collidableNode .traverse (type, renderObject);
 
-					modelViewMatrix .pop ();
-					pickingHierarchy .pop ();
-					break;
-				}
-				case TraverseType .COLLISION:
-				{
-					const modelViewMatrix = renderObject .getModelViewMatrix ();
+               modelViewMatrix .pop ();
+               pickingHierarchy .pop ();
+               break;
+            }
+            case TraverseType .COLLISION:
+            {
+               const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-					modelViewMatrix .push ();
-					modelViewMatrix .multLeft (this .getMatrix ());
+               modelViewMatrix .push ();
+               modelViewMatrix .multLeft (this .getMatrix ());
 
-					this .collidableNode .traverse (type, renderObject);
+               this .collidableNode .traverse (type, renderObject);
 
-					modelViewMatrix .pop ();
-					break;
-				}
-				case TraverseType .DISPLAY:
-				{
-					const modelViewMatrix = renderObject .getModelViewMatrix ();
+               modelViewMatrix .pop ();
+               break;
+            }
+            case TraverseType .DISPLAY:
+            {
+               const modelViewMatrix = renderObject .getModelViewMatrix ();
 
-					modelViewMatrix .push ();
-					modelViewMatrix .multLeft (this .getMatrix ());
+               modelViewMatrix .push ();
+               modelViewMatrix .multLeft (this .getMatrix ());
 
-					const visibleNode = this .visibleNode;
+               const visibleNode = this .visibleNode;
 
-					if (visibleNode)
-						visibleNode .traverse (type, renderObject);
+               if (visibleNode)
+                  visibleNode .traverse (type, renderObject);
 
-					const boundedObject = this .boundedObject;
+               const boundedObject = this .boundedObject;
 
-					if (boundedObject)
-						boundedObject .displayBBox (type, renderObject);
+               if (boundedObject)
+                  boundedObject .displayBBox (type, renderObject);
 
-					modelViewMatrix .pop ();
-					return;
-				}
-			}
-		},
-	});
+               modelViewMatrix .pop ();
+               return;
+            }
+         }
+      },
+   });
 
-	return CollidableOffset;
+   return CollidableOffset;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -1047,14 +1045,14 @@ function (Fields,
 
 
 define ('x_ite/Components/RigidBodyPhysics/CollidableShape',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Bits/TraverseType",
-	"lib/ammojs/AmmoJS",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Bits/TraverseType",
+   "lib/ammojs/AmmoJS",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -1067,463 +1065,463 @@ function (Fields,
 {
 "use strict";
 
-	function CollidableShape (executionContext)
-	{
-		X3DNBodyCollidableNode .call (this, executionContext);
-
-		this .addType (X3DConstants .CollidableShape);
-
-		this .convex         = false;
-		this .shapeNode      = null;
-		this .visibleNode    = null;
-		this .boundedObject  = null;
-		this .geometryNode   = null;
-		this .collisionShape = null;
-		this .triangleMesh   = null;
-	}
-
-	CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableNode .prototype),
-	{
-		constructor: CollidableShape,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "translation", new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",    new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "shape",       new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "CollidableShape";
-		},
-		getComponentName: function ()
-		{
-			return "RigidBodyPhysics";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DNBodyCollidableNode .prototype .initialize .call (this);
-
-			this .enabled_ .addInterest ("set_collidableGeometry__", this);
-			this .shape_   .addInterest ("set_shape__",              this);
-
-			this .set_shape__ ();
-		},
-		getBBox: function (bbox, shadow)
-		{
-			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
-			{
-				const boundedObject = this .visibleNode;
-
-				if (boundedObject)
-					return boundedObject .getBBox (bbox, shadow);
-
-				return bbox .set ();
-			}
-
-			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
-		},
-		setConvex: function (value)
-		{
-			this .convex = value;
-		},
-		getConvex: function ()
-		{
-			return this .convex;
-		},
-		createConvexGeometry: (function ()
-		{
-			var p = new Ammo .btVector3 ();
-
-			return function ()
-			{
-				var vertices = this .geometryNode .getVertices () .getValue ();
-
-				if (vertices .length === 0)
-					return null;
-
-				var convexHull = new Ammo .btConvexHullShape ();
-
-				for (var i = 0, length = vertices .length; i < length; i += 4)
-				{
-					p .setValue (vertices [i], vertices [i + 1], vertices [i + 2]);
-					convexHull .addPoint (p, false);
-				}
-
-				convexHull .recalcLocalAabb ();
-
-				return convexHull;
-			};
-		})(),
-		createConcaveGeometry: (function ()
-		{
-			var
-				p1 = new Ammo .btVector3 (),
-				p2 = new Ammo .btVector3 (),
-				p3 = new Ammo .btVector3 ();
-
-			return function ()
-			{
-				var vertices = this .geometryNode .getVertices () .getValue ();
-
-				if (vertices .length === 0)
-					return null;
-
-				this .triangleMesh = new Ammo .btTriangleMesh ();
-
-				for (var i = 0, length = vertices .length; i < length; i += 12)
-				{
-					p1 .setValue (vertices [i],     vertices [i + 1], vertices [i + 2]);
-					p2 .setValue (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
-					p3 .setValue (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
-
-					this .triangleMesh .addTriangle (p1, p2, p3);
-				}
-
-				return new Ammo .btBvhTriangleMeshShape (this .triangleMesh, false);
-			};
-		})(),
-		set_shape__: function ()
-		{
-			if (this .shapeNode)
-			{
-				this .shapeNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
-				this .shapeNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
-
-				this .shapeNode .visible_     .removeInterest ("set_visible__",     this);
-				this .shapeNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
-
-				this .shapeNode .geometry_ .removeInterest ("set_geometry__", this);
-			}
-
-			this .shapeNode = X3DCast (X3DConstants .Shape, this .shape_);
-
-			if (this .shapeNode)
-			{
-				this .shapeNode .isCameraObject_   .addFieldInterest (this .isCameraObject_);
-				this .shapeNode .isPickableObject_ .addFieldInterest (this .isPickableObject_);
-
-				this .shapeNode .visible_     .addInterest ("set_visible__",     this);
-				this .shapeNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
-
-				this .shapeNode .geometry_ .addInterest ("set_geometry__", this);
-
-				this .setCameraObject   (this .shapeNode .getCameraObject ());
-				this .setPickableObject (this .shapeNode .getPickableObject ());
-
-				delete this .traverse;
-			}
-			else
-			{
-				this .setCameraObject   (false);
-				this .setPickableObject (false);
-
-				this .traverse = Function .prototype;
-			}
-
-			this .set_visible__ ();
-			this .set_bboxDisplay__ ();
-			this .set_geometry__ ();
-		},
-		set_cameraObject__: function ()
-		{
-			if (this .shapeNode && this .shapeNode .getCameraObject ())
-			{
-				this .setCameraObject (this .shapeNode .visible_ .getValue ());
-			}
-			else
-			{
-				this .setCameraObject (false);
-			}
-		},
-		set_visible__: function ()
-		{
-			if (this .shapeNode)
-			{
-				this .visibleNode = this .shapeNode .visible_ .getValue () ? this .shapeNode : null;
-			}
-			else
-			{
-				this .visibleNode = this .shapeNode;
-			}
-
-			this .set_cameraObject__ ();
-		},
-		set_bboxDisplay__: function ()
-		{
-			if (this .shapeNode)
-			{
-				this .boundedObject = this .shapeNode .bboxDisplay_ .getValue () ? this .shapeNode : null;
-			}
-			else
-			{
-				this .boundedObject = null;
-			}
-		},
-		set_geometry__: function ()
-		{
-			if (this .geometryNode)
-				this .geometryNode .rebuild_ .removeInterest ("set_collidableGeometry__", this);
-
-			if (this .shapeNode)
-				this .geometryNode = this .shapeNode .getGeometry ();
-			else
-				this .geometryNode = null;
-
-			if (this .geometryNode)
-				this .geometryNode .rebuild_ .addInterest ("set_collidableGeometry__", this);
-
-			this .set_collidableGeometry__ ();
-		},
-		set_collidableGeometry__: (function ()
-		{
-			var
-				localScaling   = new Ammo .btVector3 (),
-				defaultScaling = new Ammo .btVector3 (1, 1, 1);
-
-			return function ()
-			{
-				var ls = this .getCompoundShape () .getLocalScaling ();
-				localScaling .setValue (ls .x (), ls .y (), ls .z ());
-
-				this .removeCollidableGeometry ();
-				this .setOffset (0, 0, 0);
-				this .getCompoundShape () .setLocalScaling (defaultScaling);
-
-				if (this .enabled_ .getValue () && this .geometryNode && this .geometryNode .getGeometryType () > 1)
-				{
-					var type = this .geometryNode .getType ();
-
-					for (var t = type .length - 1; t >= 0; -- t)
-					{
-						switch (type [t])
-						{
-							case X3DConstants .Box:
-							{
-								var
-									box  = this .geometryNode,
-									size = box .size_ .getValue ();
-
-								this .collisionShape = new Ammo .btBoxShape (new Ammo .btVector3 (size .x / 2, size .y / 2, size .z / 2));
-								break;
-							}
-							case X3DConstants .Cone:
-							{
-								var cone = this .geometryNode;
-
-								if (cone .side_ .getValue () && cone .bottom_ .getValue ())
-									this .collisionShape = new Ammo .btConeShape (cone .bottomRadius_ .getValue (), cone .height_ .getValue ());
-								else
-									this .collisionShape = this .createConcaveGeometry ();
-
-								break;
-							}
-							case X3DConstants .Cylinder:
-							{
-								var
-									cylinder  = this .geometryNode,
-									radius    = cylinder .radius_ .getValue (),
-									height1_2 = cylinder .height_ .getValue () * 0.5;
-
-								if (cylinder .side_ .getValue () && cylinder .top_ .getValue () && cylinder .bottom_ .getValue ())
-									this .collisionShape = new Ammo .btCylinderShape (new Ammo .btVector3 (radius, height1_2, radius));
-								else
-									this .collisionShape = this .createConcaveGeometry ();
-
-								break;
-							}
-							case X3DConstants .ElevationGrid:
-							{
-								var elevationGrid = this .geometryNode;
-
-								if (elevationGrid .xDimension_ .getValue () > 1 && elevationGrid .zDimension_ .getValue () > 1)
-								{
-									var
-										min         = Number .POSITIVE_INFINITY,
-										max         = Number .NEGATIVE_INFINITY,
-										heightField = this .heightField = Ammo ._malloc (4 * elevationGrid .xDimension_ .getValue () * elevationGrid .zDimension_ .getValue ()),
-										i4          = 0;
-
-									for (var i = 0, length = elevationGrid .height_ .length; i < length; ++ i)
-									{
-										var value = elevationGrid .height_ [i];
-
-										min = Math .min (min, value);
-										max = Math .max (max, value);
-
-										Ammo .HEAPF32 [heightField + i4 >> 2] = elevationGrid .height_ [i];
-
-										i4 += 4;
-									}
-
-									this .collisionShape = new Ammo .btHeightfieldTerrainShape (elevationGrid .xDimension_ .getValue (),
-									                                                            elevationGrid .zDimension_ .getValue (),
-									                                                            heightField,
-									                                                            1,
-									                                                            min,
-									                                                            max,
-									                                                            1,
-									                                                            "PHY_FLOAT",
-									                                                            true);
-
-									this .collisionShape .setLocalScaling (new Ammo .btVector3 (elevationGrid .xSpacing_ .getValue (), 1, elevationGrid .zSpacing_ .getValue ()));
-
-									this .setOffset (elevationGrid .xSpacing_ .getValue () * (elevationGrid .xDimension_ .getValue () - 1) * 0.5,
-									                 (min + max) * 0.5,
-									                 elevationGrid .zSpacing_ .getValue () * (elevationGrid .zDimension_ .getValue () - 1) * 0.5);
-								}
-
-								break;
-							}
-							case X3DConstants .Sphere:
-							{
-								var sphere = this .geometryNode;
-
-								this .collisionShape = new Ammo .btSphereShape (sphere .radius_ .getValue ());
-								break;
-							}
-							case X3DConstants .X3DGeometryNode:
-							{
-								if (this .convex)
-									this .collisionShape = this .createConvexGeometry ();
-								else
-									this .collisionShape = this .createConcaveGeometry ();
-
-								break;
-							}
-							default:
-							{
-								continue;
-							}
-						}
-
-						break;
-					}
-				}
-				else
-				{
-					this .collisionShape = null;
-				}
-
-				if (this .collisionShape)
-					this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collisionShape);
-
-				this .getCompoundShape () .setLocalScaling (localScaling);
-
-				this .addNodeEvent ();
-				this .compoundShape_changed_ = this .getBrowser () .getCurrentTime ();
-			};
-		})(),
-		removeCollidableGeometry: function ()
-		{
-			if (this .collisionShape)
-			{
-				this .getCompoundShape () .removeChildShapeByIndex (0);
-				Ammo .destroy (this .collisionShape);
-				this .collisionShape = null;;
-			}
-
-			if (this .heightField)
-			{
-				Ammo ._free (this .heightField);
-				this .heightField = null;
-			}
-
-			if (this .triangleMesh)
-			{
-				Ammo .destroy (this .triangleMesh);
-				this .triangleMesh = null;
-			}
-		},
-		traverse: function (type, renderObject)
-		{
-			switch (type)
-			{
-				case TraverseType .POINTER:
-				case TraverseType .CAMERA:
-				case TraverseType .SHADOW:
-				{
-					const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-					modelViewMatrix .push ();
-					modelViewMatrix .multLeft (this .getMatrix ());
-
-					const visibleNode = this .visibleNode;
-
-					if (visibleNode)
-						visibleNode .traverse (type, renderObject);
-
-					modelViewMatrix .pop ();
-					return;
-				}
-				case TraverseType .PICKING:
-				{
-					const
-						browser          = renderObject .getBrowser (),
-						pickingHierarchy = browser .getPickingHierarchy (),
-						modelViewMatrix  = renderObject .getModelViewMatrix ();
-
-					pickingHierarchy .push (this);
-					modelViewMatrix .push ();
-					modelViewMatrix .multLeft (this .getMatrix ());
-
-					this .shapeNode .traverse (type, renderObject);
-
-					modelViewMatrix .pop ();
-					pickingHierarchy .pop ();
-					return;
-				}
-				case TraverseType .COLLISION:
-				{
-					const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-					modelViewMatrix .push ();
-					modelViewMatrix .multLeft (this .getMatrix ());
-
-					this .shapeNode .traverse (type, renderObject);
-
-					modelViewMatrix .pop ();
-					return;
-				}
-				case TraverseType .DISPLAY:
-				{
-					const modelViewMatrix = renderObject .getModelViewMatrix ();
-
-					modelViewMatrix .push ();
-					modelViewMatrix .multLeft (this .getMatrix ());
-
-					const visibleNode = this .visibleNode;
-
-					if (visibleNode)
-						visibleNode .traverse (type, renderObject);
-
-					const boundedObject = this .boundedObject;
-
-					if (boundedObject)
-						boundedObject .displayBBox (type, renderObject);
-
-					modelViewMatrix .pop ();
-					return;
-				}
-			}
-		},
-		dispose: function ()
-		{
-			this .removeCollidableGeometry ();
-
-			X3DNBodyCollidableNode .prototype .dispose .call (this);
-		},
-	});
-
-	return CollidableShape;
+   function CollidableShape (executionContext)
+   {
+      X3DNBodyCollidableNode .call (this, executionContext);
+
+      this .addType (X3DConstants .CollidableShape);
+
+      this .convex         = false;
+      this .shapeNode      = null;
+      this .visibleNode    = null;
+      this .boundedObject  = null;
+      this .geometryNode   = null;
+      this .collisionShape = null;
+      this .triangleMesh   = null;
+   }
+
+   CollidableShape .prototype = Object .assign (Object .create (X3DNBodyCollidableNode .prototype),
+   {
+      constructor: CollidableShape,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "translation", new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",    new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "shape",       new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "CollidableShape";
+      },
+      getComponentName: function ()
+      {
+         return "RigidBodyPhysics";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DNBodyCollidableNode .prototype .initialize .call (this);
+
+         this .enabled_ .addInterest ("set_collidableGeometry__", this);
+         this .shape_   .addInterest ("set_shape__",              this);
+
+         this .set_shape__ ();
+      },
+      getBBox: function (bbox, shadow)
+      {
+         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         {
+            const boundedObject = this .visibleNode;
+
+            if (boundedObject)
+               return boundedObject .getBBox (bbox, shadow);
+
+            return bbox .set ();
+         }
+
+         return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+      },
+      setConvex: function (value)
+      {
+         this .convex = value;
+      },
+      getConvex: function ()
+      {
+         return this .convex;
+      },
+      createConvexGeometry: (function ()
+      {
+         var p = new Ammo .btVector3 ();
+
+         return function ()
+         {
+            var vertices = this .geometryNode .getVertices () .getValue ();
+
+            if (vertices .length === 0)
+               return null;
+
+            var convexHull = new Ammo .btConvexHullShape ();
+
+            for (var i = 0, length = vertices .length; i < length; i += 4)
+            {
+               p .setValue (vertices [i], vertices [i + 1], vertices [i + 2]);
+               convexHull .addPoint (p, false);
+            }
+
+            convexHull .recalcLocalAabb ();
+
+            return convexHull;
+         };
+      })(),
+      createConcaveGeometry: (function ()
+      {
+         var
+            p1 = new Ammo .btVector3 (),
+            p2 = new Ammo .btVector3 (),
+            p3 = new Ammo .btVector3 ();
+
+         return function ()
+         {
+            var vertices = this .geometryNode .getVertices () .getValue ();
+
+            if (vertices .length === 0)
+               return null;
+
+            this .triangleMesh = new Ammo .btTriangleMesh ();
+
+            for (var i = 0, length = vertices .length; i < length; i += 12)
+            {
+               p1 .setValue (vertices [i],     vertices [i + 1], vertices [i + 2]);
+               p2 .setValue (vertices [i + 4], vertices [i + 5], vertices [i + 6]);
+               p3 .setValue (vertices [i + 8], vertices [i + 9], vertices [i + 10]);
+
+               this .triangleMesh .addTriangle (p1, p2, p3);
+            }
+
+            return new Ammo .btBvhTriangleMeshShape (this .triangleMesh, false);
+         };
+      })(),
+      set_shape__: function ()
+      {
+         if (this .shapeNode)
+         {
+            this .shapeNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
+            this .shapeNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
+
+            this .shapeNode .visible_     .removeInterest ("set_visible__",     this);
+            this .shapeNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+
+            this .shapeNode .geometry_ .removeInterest ("set_geometry__", this);
+         }
+
+         this .shapeNode = X3DCast (X3DConstants .Shape, this .shape_);
+
+         if (this .shapeNode)
+         {
+            this .shapeNode .isCameraObject_   .addFieldInterest (this .isCameraObject_);
+            this .shapeNode .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+
+            this .shapeNode .visible_     .addInterest ("set_visible__",     this);
+            this .shapeNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
+
+            this .shapeNode .geometry_ .addInterest ("set_geometry__", this);
+
+            this .setCameraObject   (this .shapeNode .getCameraObject ());
+            this .setPickableObject (this .shapeNode .getPickableObject ());
+
+            delete this .traverse;
+         }
+         else
+         {
+            this .setCameraObject   (false);
+            this .setPickableObject (false);
+
+            this .traverse = Function .prototype;
+         }
+
+         this .set_visible__ ();
+         this .set_bboxDisplay__ ();
+         this .set_geometry__ ();
+      },
+      set_cameraObject__: function ()
+      {
+         if (this .shapeNode && this .shapeNode .getCameraObject ())
+         {
+            this .setCameraObject (this .shapeNode .visible_ .getValue ());
+         }
+         else
+         {
+            this .setCameraObject (false);
+         }
+      },
+      set_visible__: function ()
+      {
+         if (this .shapeNode)
+         {
+            this .visibleNode = this .shapeNode .visible_ .getValue () ? this .shapeNode : null;
+         }
+         else
+         {
+            this .visibleNode = this .shapeNode;
+         }
+
+         this .set_cameraObject__ ();
+      },
+      set_bboxDisplay__: function ()
+      {
+         if (this .shapeNode)
+         {
+            this .boundedObject = this .shapeNode .bboxDisplay_ .getValue () ? this .shapeNode : null;
+         }
+         else
+         {
+            this .boundedObject = null;
+         }
+      },
+      set_geometry__: function ()
+      {
+         if (this .geometryNode)
+            this .geometryNode .rebuild_ .removeInterest ("set_collidableGeometry__", this);
+
+         if (this .shapeNode)
+            this .geometryNode = this .shapeNode .getGeometry ();
+         else
+            this .geometryNode = null;
+
+         if (this .geometryNode)
+            this .geometryNode .rebuild_ .addInterest ("set_collidableGeometry__", this);
+
+         this .set_collidableGeometry__ ();
+      },
+      set_collidableGeometry__: (function ()
+      {
+         var
+            localScaling   = new Ammo .btVector3 (),
+            defaultScaling = new Ammo .btVector3 (1, 1, 1);
+
+         return function ()
+         {
+            var ls = this .getCompoundShape () .getLocalScaling ();
+            localScaling .setValue (ls .x (), ls .y (), ls .z ());
+
+            this .removeCollidableGeometry ();
+            this .setOffset (0, 0, 0);
+            this .getCompoundShape () .setLocalScaling (defaultScaling);
+
+            if (this .enabled_ .getValue () && this .geometryNode && this .geometryNode .getGeometryType () > 1)
+            {
+               var type = this .geometryNode .getType ();
+
+               for (var t = type .length - 1; t >= 0; -- t)
+               {
+                  switch (type [t])
+                  {
+                     case X3DConstants .Box:
+                     {
+                        var
+                           box  = this .geometryNode,
+                           size = box .size_ .getValue ();
+
+                        this .collisionShape = new Ammo .btBoxShape (new Ammo .btVector3 (size .x / 2, size .y / 2, size .z / 2));
+                        break;
+                     }
+                     case X3DConstants .Cone:
+                     {
+                        var cone = this .geometryNode;
+
+                        if (cone .side_ .getValue () && cone .bottom_ .getValue ())
+                           this .collisionShape = new Ammo .btConeShape (cone .bottomRadius_ .getValue (), cone .height_ .getValue ());
+                        else
+                           this .collisionShape = this .createConcaveGeometry ();
+
+                        break;
+                     }
+                     case X3DConstants .Cylinder:
+                     {
+                        var
+                           cylinder  = this .geometryNode,
+                           radius    = cylinder .radius_ .getValue (),
+                           height1_2 = cylinder .height_ .getValue () * 0.5;
+
+                        if (cylinder .side_ .getValue () && cylinder .top_ .getValue () && cylinder .bottom_ .getValue ())
+                           this .collisionShape = new Ammo .btCylinderShape (new Ammo .btVector3 (radius, height1_2, radius));
+                        else
+                           this .collisionShape = this .createConcaveGeometry ();
+
+                        break;
+                     }
+                     case X3DConstants .ElevationGrid:
+                     {
+                        var elevationGrid = this .geometryNode;
+
+                        if (elevationGrid .xDimension_ .getValue () > 1 && elevationGrid .zDimension_ .getValue () > 1)
+                        {
+                           var
+                              min         = Number .POSITIVE_INFINITY,
+                              max         = Number .NEGATIVE_INFINITY,
+                              heightField = this .heightField = Ammo ._malloc (4 * elevationGrid .xDimension_ .getValue () * elevationGrid .zDimension_ .getValue ()),
+                              i4          = 0;
+
+                           for (var i = 0, length = elevationGrid .height_ .length; i < length; ++ i)
+                           {
+                              var value = elevationGrid .height_ [i];
+
+                              min = Math .min (min, value);
+                              max = Math .max (max, value);
+
+                              Ammo .HEAPF32 [heightField + i4 >> 2] = elevationGrid .height_ [i];
+
+                              i4 += 4;
+                           }
+
+                           this .collisionShape = new Ammo .btHeightfieldTerrainShape (elevationGrid .xDimension_ .getValue (),
+                                                                                       elevationGrid .zDimension_ .getValue (),
+                                                                                       heightField,
+                                                                                       1,
+                                                                                       min,
+                                                                                       max,
+                                                                                       1,
+                                                                                       "PHY_FLOAT",
+                                                                                       true);
+
+                           this .collisionShape .setLocalScaling (new Ammo .btVector3 (elevationGrid .xSpacing_ .getValue (), 1, elevationGrid .zSpacing_ .getValue ()));
+
+                           this .setOffset (elevationGrid .xSpacing_ .getValue () * (elevationGrid .xDimension_ .getValue () - 1) * 0.5,
+                                            (min + max) * 0.5,
+                                            elevationGrid .zSpacing_ .getValue () * (elevationGrid .zDimension_ .getValue () - 1) * 0.5);
+                        }
+
+                        break;
+                     }
+                     case X3DConstants .Sphere:
+                     {
+                        var sphere = this .geometryNode;
+
+                        this .collisionShape = new Ammo .btSphereShape (sphere .radius_ .getValue ());
+                        break;
+                     }
+                     case X3DConstants .X3DGeometryNode:
+                     {
+                        if (this .convex)
+                           this .collisionShape = this .createConvexGeometry ();
+                        else
+                           this .collisionShape = this .createConcaveGeometry ();
+
+                        break;
+                     }
+                     default:
+                     {
+                        continue;
+                     }
+                  }
+
+                  break;
+               }
+            }
+            else
+            {
+               this .collisionShape = null;
+            }
+
+            if (this .collisionShape)
+               this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collisionShape);
+
+            this .getCompoundShape () .setLocalScaling (localScaling);
+
+            this .addNodeEvent ();
+            this .compoundShape_changed_ = this .getBrowser () .getCurrentTime ();
+         };
+      })(),
+      removeCollidableGeometry: function ()
+      {
+         if (this .collisionShape)
+         {
+            this .getCompoundShape () .removeChildShapeByIndex (0);
+            Ammo .destroy (this .collisionShape);
+            this .collisionShape = null;;
+         }
+
+         if (this .heightField)
+         {
+            Ammo ._free (this .heightField);
+            this .heightField = null;
+         }
+
+         if (this .triangleMesh)
+         {
+            Ammo .destroy (this .triangleMesh);
+            this .triangleMesh = null;
+         }
+      },
+      traverse: function (type, renderObject)
+      {
+         switch (type)
+         {
+            case TraverseType .POINTER:
+            case TraverseType .CAMERA:
+            case TraverseType .SHADOW:
+            {
+               const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+               modelViewMatrix .push ();
+               modelViewMatrix .multLeft (this .getMatrix ());
+
+               const visibleNode = this .visibleNode;
+
+               if (visibleNode)
+                  visibleNode .traverse (type, renderObject);
+
+               modelViewMatrix .pop ();
+               return;
+            }
+            case TraverseType .PICKING:
+            {
+               const
+                  browser          = renderObject .getBrowser (),
+                  pickingHierarchy = browser .getPickingHierarchy (),
+                  modelViewMatrix  = renderObject .getModelViewMatrix ();
+
+               pickingHierarchy .push (this);
+               modelViewMatrix .push ();
+               modelViewMatrix .multLeft (this .getMatrix ());
+
+               this .shapeNode .traverse (type, renderObject);
+
+               modelViewMatrix .pop ();
+               pickingHierarchy .pop ();
+               return;
+            }
+            case TraverseType .COLLISION:
+            {
+               const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+               modelViewMatrix .push ();
+               modelViewMatrix .multLeft (this .getMatrix ());
+
+               this .shapeNode .traverse (type, renderObject);
+
+               modelViewMatrix .pop ();
+               return;
+            }
+            case TraverseType .DISPLAY:
+            {
+               const modelViewMatrix = renderObject .getModelViewMatrix ();
+
+               modelViewMatrix .push ();
+               modelViewMatrix .multLeft (this .getMatrix ());
+
+               const visibleNode = this .visibleNode;
+
+               if (visibleNode)
+                  visibleNode .traverse (type, renderObject);
+
+               const boundedObject = this .boundedObject;
+
+               if (boundedObject)
+                  boundedObject .displayBBox (type, renderObject);
+
+               modelViewMatrix .pop ();
+               return;
+            }
+         }
+      },
+      dispose: function ()
+      {
+         this .removeCollidableGeometry ();
+
+         X3DNBodyCollidableNode .prototype .dispose .call (this);
+      },
+   });
+
+   return CollidableShape;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -1579,22 +1577,22 @@ define ('x_ite/Browser/RigidBodyPhysics/AppliedParametersType',[],function ()
 {
 "use strict";
 
-	var i = 0;
+   var i = 0;
 
-	var AppliedParametersType =
-	{
-		BOUNCE:                 i ++,
-		USER_FRICTION:          i ++,
-		FRICTION_COEFFICIENT_2: i ++,
-		ERROR_REDUCTION:        i ++,
-		CONSTANT_FORCE:         i ++,
-		SPEED_1:                i ++,
-		SPEED_2:                i ++,
-		SLIP_1:                 i ++,
-		SLIP_2:                 i ++,
-	};
+   var AppliedParametersType =
+   {
+      BOUNCE:                 i ++,
+      USER_FRICTION:          i ++,
+      FRICTION_COEFFICIENT_2: i ++,
+      ERROR_REDUCTION:        i ++,
+      CONSTANT_FORCE:         i ++,
+      SPEED_1:                i ++,
+      SPEED_2:                i ++,
+      SLIP_1:                 i ++,
+      SLIP_2:                 i ++,
+   };
 
-	return AppliedParametersType;
+   return AppliedParametersType;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -1647,171 +1645,169 @@ define ('x_ite/Browser/RigidBodyPhysics/AppliedParametersType',[],function ()
 
 
 define ('x_ite/Components/RigidBodyPhysics/CollisionCollection',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Browser/RigidBodyPhysics/AppliedParametersType",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Browser/RigidBodyPhysics/AppliedParametersType",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChildNode, 
+          X3DChildNode,
           X3DConstants,
           X3DCast,
           AppliedParametersType)
 {
 "use strict";
 
-	function CollisionCollection (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
+   function CollisionCollection (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .CollisionCollection);
+      this .addType (X3DConstants .CollisionCollection);
 
-		this .minBounceSpeed_           .setUnit ("speed");
-		this .surfaceSpeed_             .setUnit ("speed");
-		this .softnessConstantForceMix_ .setUnit ("force");
+      this .minBounceSpeed_           .setUnit ("speed");
+      this .surfaceSpeed_             .setUnit ("speed");
+      this .softnessConstantForceMix_ .setUnit ("force");
 
-		this .appliedParameters   = new Set ();
-		this .collidableNodes     = [ ];
-		this .collisionSpaceNodes = [ ];
-	}
+      this .appliedParameters   = new Set ();
+      this .collidableNodes     = [ ];
+      this .collisionSpaceNodes = [ ];
+   }
 
-	CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: CollisionCollection,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                  new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "appliedParameters",        new Fields .MFString ("BOUNCE")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "bounce",                   new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "minBounceSpeed",           new Fields .SFFloat (0.1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "frictionCoefficients",     new Fields .SFVec2f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceSpeed",             new Fields .SFVec2f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "slipFactors",              new Fields .SFVec2f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "softnessConstantForceMix", new Fields .SFFloat (0.0001)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "softnessErrorCorrection",  new Fields .SFFloat (0.8)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "collidables",              new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "CollisionCollection";
-		},
-		getComponentName: function ()
-		{
-			return "RigidBodyPhysics";
-		},
-		getContainerField: function ()
-		{
-			return "collider";
-		},
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
+   CollisionCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: CollisionCollection,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "appliedParameters",        new Fields .MFString ("BOUNCE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "bounce",                   new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "minBounceSpeed",           new Fields .SFFloat (0.1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "frictionCoefficients",     new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceSpeed",             new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "slipFactors",              new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "softnessConstantForceMix", new Fields .SFFloat (0.0001)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "softnessErrorCorrection",  new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "collidables",              new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "CollisionCollection";
+      },
+      getComponentName: function ()
+      {
+         return "RigidBodyPhysics";
+      },
+      getContainerField: function ()
+      {
+         return "collider";
+      },
+      initialize: function ()
+      {
+         X3DChildNode .prototype .initialize .call (this);
 
-			this .appliedParameters_ .addInterest ("set_appliedParameters__", this);
-			this .collidables_       .addInterest ("set_collidables__",       this);
+         this .appliedParameters_ .addInterest ("set_appliedParameters__", this);
+         this .collidables_       .addInterest ("set_collidables__",       this);
 
-			this .set_appliedParameters__ ();
-			this .set_collidables__ ();
-		},
-		getAppliedParameters: function ()
-		{
-			return this .appliedParameters;
-		},
-		getCollidables: function ()
-		{
-			return this .collidableNodes;
-		},
-		set_appliedParameters__: (function ()
-		{
-			var appliedParametersIndex = new Map ([
-				["BOUNCE",                 AppliedParametersType .BOUNCE],
-				["USER_FRICTION",          AppliedParametersType .USER_FRICTION],
-				["FRICTION_COEFFICIENT-2", AppliedParametersType .FRICTION_COEFFICIENT_2],
-				["ERROR_REDUCTION",        AppliedParametersType .ERROR_REDUCTION],
-				["CONSTANT_FORCE",         AppliedParametersType .CONSTANT_FORCE],
-				["SPEED-1",                AppliedParametersType .SPEED_1],
-				["SPEED-2",                AppliedParametersType .SPEED_2],
-				["SLIP-1",                 AppliedParametersType .SLIP_1],
-				["SLIP-2",                 AppliedParametersType .SLIP_2],
-			]);
+         this .set_appliedParameters__ ();
+         this .set_collidables__ ();
+      },
+      getAppliedParameters: function ()
+      {
+         return this .appliedParameters;
+      },
+      getCollidables: function ()
+      {
+         return this .collidableNodes;
+      },
+      set_appliedParameters__: (function ()
+      {
+         var appliedParametersIndex = new Map ([
+            ["BOUNCE",                 AppliedParametersType .BOUNCE],
+            ["USER_FRICTION",          AppliedParametersType .USER_FRICTION],
+            ["FRICTION_COEFFICIENT-2", AppliedParametersType .FRICTION_COEFFICIENT_2],
+            ["ERROR_REDUCTION",        AppliedParametersType .ERROR_REDUCTION],
+            ["CONSTANT_FORCE",         AppliedParametersType .CONSTANT_FORCE],
+            ["SPEED-1",                AppliedParametersType .SPEED_1],
+            ["SPEED-2",                AppliedParametersType .SPEED_2],
+            ["SLIP-1",                 AppliedParametersType .SLIP_1],
+            ["SLIP-2",                 AppliedParametersType .SLIP_2],
+         ]);
 
-			return function ()
-			{
-				this .appliedParameters .clear ();
-	
-				for (var i = 0, length = this .appliedParameters_ .length; i < length; ++ i)
-				{
-					var appliedParameter = appliedParametersIndex .get (this .appliedParameters_ [i]);
+         return function ()
+         {
+            this .appliedParameters .clear ();
 
-					if (appliedParameter !== undefined)
-						this .appliedParameters .add (appliedParameter);
-				}
-			};
-		})(),
-		set_collidables__: function ()
-		{
-			var collisionSpaceNodes = this .collisionSpaceNodes;
+            for (var i = 0, length = this .appliedParameters_ .length; i < length; ++ i)
+            {
+               var appliedParameter = appliedParametersIndex .get (this .appliedParameters_ [i]);
 
-			for (var i = 0, length = collisionSpaceNodes .length; i < length; ++ i)
-				collisionSpaceNodes [i] .removeInterest ("collect", this);
+               if (appliedParameter !== undefined)
+                  this .appliedParameters .add (appliedParameter);
+            }
+         };
+      })(),
+      set_collidables__: function ()
+      {
+         var collisionSpaceNodes = this .collisionSpaceNodes;
 
-			collisionSpaceNodes .length = 0;
+         for (var i = 0, length = collisionSpaceNodes .length; i < length; ++ i)
+            collisionSpaceNodes [i] .removeInterest ("collect", this);
 
-			for (var i = 0, length = this .collidables_ .length; i < length; ++ i)
-			{
-				var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this .collidables_ [i]);
+         collisionSpaceNodes .length = 0;
 
-				if (collisionSpaceNode)
-				{
-					collisionSpaceNode .addInterest ("collect", this);
+         for (var i = 0, length = this .collidables_ .length; i < length; ++ i)
+         {
+            var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this .collidables_ [i]);
 
-					collisionSpaceNodes .push (collisionSpaceNode);
-				}
-			}
+            if (collisionSpaceNode)
+            {
+               collisionSpaceNode .addInterest ("collect", this);
 
-			this .collect ();
-		},
-		collect: function ()
-		{
-			var
-				collidableNodes     = this .collidableNodes,
-				collisionSpaceNodes = this .collisionSpaceNodes;
+               collisionSpaceNodes .push (collisionSpaceNode);
+            }
+         }
 
-			collidableNodes     .length = 0;
-			collisionSpaceNodes .length = 0;
+         this .collect ();
+      },
+      collect: function ()
+      {
+         var
+            collidableNodes     = this .collidableNodes,
+            collisionSpaceNodes = this .collisionSpaceNodes;
 
-			for (var i = 0, length = this .collidables_ .length; i < length; ++ i)
-			{
-				var collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .collidables_ [i]);
+         collidableNodes     .length = 0;
+         collisionSpaceNodes .length = 0;
 
-				if (collidableNode)
-				{
-					collidableNodes .push (collidableNode);
-					continue;
-				}
+         for (var i = 0, length = this .collidables_ .length; i < length; ++ i)
+         {
+            var collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .collidables_ [i]);
 
-				var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this .collidables_ [i]);
+            if (collidableNode)
+            {
+               collidableNodes .push (collidableNode);
+               continue;
+            }
 
-				if (collisionSpaceNode)
-				{
-					Array .prototype .push .apply (collidableNodes, collisionSpaceNode .getCollidables ());
-					continue;
-				}
-			}
+            var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this .collidables_ [i]);
 
-			this .addNodeEvent ();
-		},
-	});
+            if (collisionSpaceNode)
+            {
+               Array .prototype .push .apply (collidableNodes, collisionSpaceNode .getCollidables ());
+               continue;
+            }
+         }
 
-	return CollisionCollection;
+         this .addNodeEvent ();
+      },
+   });
+
+   return CollisionCollection;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -1863,13 +1859,13 @@ function (Fields,
 
 
 define ('x_ite/Components/RigidBodyPhysics/CollisionSensor',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DSensorNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
-	"standard/Math/Numbers/Vector3",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DSensorNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
+   "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -1881,222 +1877,222 @@ function (Fields,
 {
 "use strict";
 
-	function CollisionSensor (executionContext)
-	{
-		X3DSensorNode .call (this, executionContext);
+   function CollisionSensor (executionContext)
+   {
+      X3DSensorNode .call (this, executionContext);
 
-		this .addType (X3DConstants .CollisionSensor);
+      this .addType (X3DConstants .CollisionSensor);
 
-		this .colliderNode = null;
-		this .contactCache = [ ];
-	}
+      this .colliderNode = null;
+      this .contactCache = [ ];
+   }
 
-	CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
-	{
-		constructor: CollisionSensor,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",       new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",      new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "intersections", new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "contacts",      new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "collider",      new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "CollisionSensor";
-		},
-		getComponentName: function ()
-		{
-			return "RigidBodyPhysics";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DSensorNode .prototype .initialize .call (this);
+   CollisionSensor .prototype = Object .assign (Object .create (X3DSensorNode .prototype),
+   {
+      constructor: CollisionSensor,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",       new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "isActive",      new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "intersections", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "contacts",      new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "collider",      new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "CollisionSensor";
+      },
+      getComponentName: function ()
+      {
+         return "RigidBodyPhysics";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DSensorNode .prototype .initialize .call (this);
 
-			this .isLive () .addInterest ("set_live__", this);
+         this .isLive () .addInterest ("set_live__", this);
 
-			this .collider_ .addInterest ("set_collider__", this);
+         this .collider_ .addInterest ("set_collider__", this);
 
-			this .set_collider__ ();
-		},
-		set_live__: function ()
-		{
-			if (this .isLive () .getValue () && this .enabled_ .getValue () && this .colliderNode)
-			{
-				this .getBrowser () .sensorEvents () .addInterest ("update", this);
-			}
-			else
-			{
-				this .getBrowser () .sensorEvents () .removeInterest ("update", this);
-			}
-		},
-		set_collider__: function ()
-		{
-			this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this .collider_);
+         this .set_collider__ ();
+      },
+      set_live__: function ()
+      {
+         if (this .isLive () .getValue () && this .enabled_ .getValue () && this .colliderNode)
+         {
+            this .getBrowser () .sensorEvents () .addInterest ("update", this);
+         }
+         else
+         {
+            this .getBrowser () .sensorEvents () .removeInterest ("update", this);
+         }
+      },
+      set_collider__: function ()
+      {
+         this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this .collider_);
 
-			this .set_live__ ();
-		},
-		update: (function ()
-		{
-			var
-				collidableNodesIndex = new Map (),
-				collisionWorlds      = new Set (),
-				intersectionNodes    = new Set (),
-				contactNodes         = [ ],
-				position             = new Vector3 (0, 0, 0),
-				contactNormal        = new Vector3 (0, 0, 0);
+         this .set_live__ ();
+      },
+      update: (function ()
+      {
+         var
+            collidableNodesIndex = new Map (),
+            collisionWorlds      = new Set (),
+            intersectionNodes    = new Set (),
+            contactNodes         = [ ],
+            position             = new Vector3 (0, 0, 0),
+            contactNormal        = new Vector3 (0, 0, 0);
 
-			return function ()
-			{
-				var
-					colliderNode    = this .colliderNode,
-					collidableNodes = colliderNode .getCollidables ();
+         return function ()
+         {
+            var
+               colliderNode    = this .colliderNode,
+               collidableNodes = colliderNode .getCollidables ();
 
-				collidableNodesIndex .clear ();
-				collisionWorlds      .clear ();
+            collidableNodesIndex .clear ();
+            collisionWorlds      .clear ();
 
-				for (var i = 0, length = collidableNodes .length; i < length; ++ i)
-				{
-					var
-						collidableNode = collidableNodes [i],
-						bodyNode       = collidableNodes [i] .getBody ();
+            for (var i = 0, length = collidableNodes .length; i < length; ++ i)
+            {
+               var
+                  collidableNode = collidableNodes [i],
+                  bodyNode       = collidableNodes [i] .getBody ();
 
-					if (bodyNode)
-					{
-						collidableNodesIndex .set (bodyNode .getRigidBody () .ptr, collidableNode);
+               if (bodyNode)
+               {
+                  collidableNodesIndex .set (bodyNode .getRigidBody () .ptr, collidableNode);
 
-						var collection = bodyNode .getCollection ();
+                  var collection = bodyNode .getCollection ();
 
-						if (collection)
-							collisionWorlds .add (collection .getDynamicsWorld ());
-					}
-				}
+                  if (collection)
+                     collisionWorlds .add (collection .getDynamicsWorld ());
+               }
+            }
 
-				intersectionNodes .clear ();
-				contactNodes .length = 0;
+            intersectionNodes .clear ();
+            contactNodes .length = 0;
 
-				collisionWorlds .forEach (function (collisionWorld)
-				{
-					//collisionWorld .performDiscreteCollisionDetection ();
+            collisionWorlds .forEach (function (collisionWorld)
+            {
+               //collisionWorld .performDiscreteCollisionDetection ();
 
-					var
-						dispatcher   = collisionWorld .getDispatcher (),
-						numManifolds = dispatcher .getNumManifolds ();
+               var
+                  dispatcher   = collisionWorld .getDispatcher (),
+                  numManifolds = dispatcher .getNumManifolds ();
 
-					for (var i = 0; i < numManifolds; ++ i)
-					{
-						var
-							contactManifold = dispatcher .getManifoldByIndexInternal (i),
-							numContacts     = contactManifold .getNumContacts ();
+               for (var i = 0; i < numManifolds; ++ i)
+               {
+                  var
+                     contactManifold = dispatcher .getManifoldByIndexInternal (i),
+                     numContacts     = contactManifold .getNumContacts ();
 
-						for (var j = 0; j < numContacts; ++ j)
-						{
-							var pt = contactManifold .getContactPoint (j);
+                  for (var j = 0; j < numContacts; ++ j)
+                  {
+                     var pt = contactManifold .getContactPoint (j);
 
-							if (pt .getDistance () <= 0)
-							{
-								var
-									collidableNode1 = collidableNodesIndex .get (contactManifold .getBody0 () .ptr),
-									collidableNode2 = collidableNodesIndex .get (contactManifold .getBody1 () .ptr);
+                     if (pt .getDistance () <= 0)
+                     {
+                        var
+                           collidableNode1 = collidableNodesIndex .get (contactManifold .getBody0 () .ptr),
+                           collidableNode2 = collidableNodesIndex .get (contactManifold .getBody1 () .ptr);
 
-								if (! collidableNode1 && ! collidableNode2)
-									continue;
+                        if (! collidableNode1 && ! collidableNode2)
+                           continue;
 
-								var contactNode = this .getContact (contactNodes .length);
+                        var contactNode = this .getContact (contactNodes .length);
 
-								var
-									btPosition      = pt .getPositionWorldOnA (),
-									btContactNormal = pt .get_m_normalWorldOnB ();
+                        var
+                           btPosition      = pt .getPositionWorldOnA (),
+                           btContactNormal = pt .get_m_normalWorldOnB ();
 
-								contactNode .position_                 = position .set (btPosition .x (), btPosition .y (), btPosition .z ());
-								contactNode .contactNormal_            = contactNormal .set (btContactNormal .x (), btContactNormal .y (), btContactNormal .z ());
-								contactNode .depth_                    = -pt .getDistance ();
+                        contactNode .position_                 = position .set (btPosition .x (), btPosition .y (), btPosition .z ());
+                        contactNode .contactNormal_            = contactNormal .set (btContactNormal .x (), btContactNormal .y (), btContactNormal .z ());
+                        contactNode .depth_                    = -pt .getDistance ();
 //								contactNode .frictionDirection_        = context .frictionDirection;
-								contactNode .appliedParameters_        = colliderNode .appliedParameters_;
-								contactNode .bounce_                   = colliderNode .bounce_;
-								contactNode .minBounceSpeed_           = colliderNode .minBounceSpeed_;
-								contactNode .frictionCoefficients_     = colliderNode .frictionCoefficients_;
-								contactNode .surfaceSpeed_             = colliderNode .surfaceSpeed_;
-								contactNode .slipCoefficients_         = colliderNode .slipFactors_;
-								contactNode .softnessConstantForceMix_ = colliderNode .softnessConstantForceMix_;
-								contactNode .softnessErrorCorrection_  = colliderNode .softnessErrorCorrection_;
+                        contactNode .appliedParameters_        = colliderNode .appliedParameters_;
+                        contactNode .bounce_                   = colliderNode .bounce_;
+                        contactNode .minBounceSpeed_           = colliderNode .minBounceSpeed_;
+                        contactNode .frictionCoefficients_     = colliderNode .frictionCoefficients_;
+                        contactNode .surfaceSpeed_             = colliderNode .surfaceSpeed_;
+                        contactNode .slipCoefficients_         = colliderNode .slipFactors_;
+                        contactNode .softnessConstantForceMix_ = colliderNode .softnessConstantForceMix_;
+                        contactNode .softnessErrorCorrection_  = colliderNode .softnessErrorCorrection_;
 
-								if (collidableNode1)
-								{
-									intersectionNodes .add (collidableNode1);
+                        if (collidableNode1)
+                        {
+                           intersectionNodes .add (collidableNode1);
 
-									contactNode .geometry1_ = collidableNode1;
-									contactNode .body1_     = collidableNode1 .getBody ();
-								}
+                           contactNode .geometry1_ = collidableNode1;
+                           contactNode .body1_     = collidableNode1 .getBody ();
+                        }
 
-								if (collidableNode2)
-								{
-									intersectionNodes .add (collidableNode2);
+                        if (collidableNode2)
+                        {
+                           intersectionNodes .add (collidableNode2);
 
-									contactNode .geometry2_ = collidableNode2;
-									contactNode .body2_     = collidableNode2 .getBody ();
-								}
+                           contactNode .geometry2_ = collidableNode2;
+                           contactNode .body2_     = collidableNode2 .getBody ();
+                        }
 
-								contactNodes .push (contactNode);
-							}
-						}
-					}
-				},
-				this);
+                        contactNodes .push (contactNode);
+                     }
+                  }
+               }
+            },
+            this);
 
-				var active = Boolean (contactNodes .length);
+            var active = Boolean (contactNodes .length);
 
-				if (this .isActive_ .getValue () !== active)
-					this .isActive_ = active;
+            if (this .isActive_ .getValue () !== active)
+               this .isActive_ = active;
 
-				if (intersectionNodes .size)
-				{
-					var i = 0;
+            if (intersectionNodes .size)
+            {
+               var i = 0;
 
-					intersectionNodes .forEach (function (intersectionNode)
-					{
-						this .intersections_ [i ++] = intersectionNode;
-					},
-					this);
+               intersectionNodes .forEach (function (intersectionNode)
+               {
+                  this .intersections_ [i ++] = intersectionNode;
+               },
+               this);
 
-					this .intersections_ .length = i;
-				}
+               this .intersections_ .length = i;
+            }
 
-				if (contactNodes .length)
-				{
-					var i = 0;
+            if (contactNodes .length)
+            {
+               var i = 0;
 
-					contactNodes .forEach (function (contactNode)
-					{
-						this .contacts_ [i ++] = contactNode;
-					},
-					this);
+               contactNodes .forEach (function (contactNode)
+               {
+                  this .contacts_ [i ++] = contactNode;
+               },
+               this);
 
-					this .contacts_ .length = i;
-				}
-			};
-		})(),
-		getContact: function (index)
-		{
-			var contactNode = this .contactCache [index];
+               this .contacts_ .length = i;
+            }
+         };
+      })(),
+      getContact: function (index)
+      {
+         var contactNode = this .contactCache [index];
 
-			if (contactNode)
-				return contactNode;
+         if (contactNode)
+            return contactNode;
 
-			contactNode = this .contactCache [index] = this .getExecutionContext () .createNode ("Contact", false);
+         contactNode = this .contactCache [index] = this .getExecutionContext () .createNode ("Contact", false);
 
-			contactNode .setup ();
+         contactNode .setup ();
 
-			return contactNode;
-		},
-	});
+         return contactNode;
+      },
+   });
 
-	return CollisionSensor;
+   return CollisionSensor;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -2149,9 +2145,9 @@ function (Fields,
 
 
 define ('x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode',[
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Components/Grouping/X3DBoundedObject",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Components/Grouping/X3DBoundedObject",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DNode,
           X3DBoundedObject,
@@ -2159,21 +2155,21 @@ function (X3DNode,
 {
 "use strict";
 
-	function X3DNBodyCollisionSpaceNode (executionContext)
-	{
-		X3DNode          .call (this, executionContext);
-		X3DBoundedObject .call (this, executionContext);
+   function X3DNBodyCollisionSpaceNode (executionContext)
+   {
+      X3DNode          .call (this, executionContext);
+      X3DBoundedObject .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DNBodyCollisionSpaceNode);
-	}
+      this .addType (X3DConstants .X3DNBodyCollisionSpaceNode);
+   }
 
-	X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-		X3DBoundedObject .prototype,
-	{
-		constructor: X3DNBodyCollisionSpaceNode,
-	});
+   X3DNBodyCollisionSpaceNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+      X3DBoundedObject .prototype,
+   {
+      constructor: X3DNBodyCollisionSpaceNode,
+   });
 
-	return X3DNBodyCollisionSpaceNode;
+   return X3DNBodyCollisionSpaceNode;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -2226,12 +2222,12 @@ function (X3DNode,
 
 
 define ('x_ite/Components/RigidBodyPhysics/CollisionSpace',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -2242,117 +2238,117 @@ function (Fields,
 {
 "use strict";
 
-	function CollisionSpace (executionContext)
-	{
-		X3DNBodyCollisionSpaceNode .call (this, executionContext);
+   function CollisionSpace (executionContext)
+   {
+      X3DNBodyCollisionSpaceNode .call (this, executionContext);
 
-		this .addType (X3DConstants .CollisionSpace);
+      this .addType (X3DConstants .CollisionSpace);
 
-		this .collidableNodes     = [ ];
-		this .collisionSpaceNodes = [ ];
-	}
+      this .collidableNodes     = [ ];
+      this .collisionSpaceNodes = [ ];
+   }
 
-	CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpaceNode .prototype),
-	{
-		constructor: CollisionSpace,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "useGeometry", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "collidables", new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "CollisionSpace";
-		},
-		getComponentName: function ()
-		{
-			return "RigidBodyPhysics";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DNBodyCollisionSpaceNode .prototype .initialize .call (this);
+   CollisionSpace .prototype = Object .assign (Object .create (X3DNBodyCollisionSpaceNode .prototype),
+   {
+      constructor: CollisionSpace,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "useGeometry", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "collidables", new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "CollisionSpace";
+      },
+      getComponentName: function ()
+      {
+         return "RigidBodyPhysics";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DNBodyCollisionSpaceNode .prototype .initialize .call (this);
 
-			this .collidables_ .addInterest ("set_collidables__", this);
+         this .collidables_ .addInterest ("set_collidables__", this);
 
-			this .set_collidables__ ();
-		},
-		getBBox: function (bbox, shadow)
-		{
-			// TODO: add space node.
-			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
-				return X3DBoundedObject .getBBox (this .collidableNodes, bbox, shadow);
+         this .set_collidables__ ();
+      },
+      getBBox: function (bbox, shadow)
+      {
+         // TODO: add space node.
+         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+            return X3DBoundedObject .getBBox (this .collidableNodes, bbox, shadow);
 
-			return bbox;
-		},
-		getCollidables: function ()
-		{
-			return this .collidableNodes;
-		},
-		set_collidables__: function ()
-		{
-			var collisionSpaceNodes = this .collisionSpaceNodes;
+         return bbox;
+      },
+      getCollidables: function ()
+      {
+         return this .collidableNodes;
+      },
+      set_collidables__: function ()
+      {
+         var collisionSpaceNodes = this .collisionSpaceNodes;
 
-			for (var i = 0, length = collisionSpaceNodes .length; i < length; ++ i)
-				collisionSpaceNodes [i] .removeInterest ("collect", this);
+         for (var i = 0, length = collisionSpaceNodes .length; i < length; ++ i)
+            collisionSpaceNodes [i] .removeInterest ("collect", this);
 
-			collisionSpaceNodes .length = 0;
+         collisionSpaceNodes .length = 0;
 
-			for (var i = 0, length = this .collidables_ .length; i < length; ++ i)
-			{
-				var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this .collidables_ [i]);
+         for (var i = 0, length = this .collidables_ .length; i < length; ++ i)
+         {
+            var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this .collidables_ [i]);
 
-				if (collisionSpaceNode)
-				{
-					collisionSpaceNode .addInterest ("collect", this);
+            if (collisionSpaceNode)
+            {
+               collisionSpaceNode .addInterest ("collect", this);
 
-					collisionSpaceNodes .push (collisionSpaceNode);
-				}
-			}
+               collisionSpaceNodes .push (collisionSpaceNode);
+            }
+         }
 
-			this .collect ();
-		},
-		collect: function ()
-		{
-			var
-				collidableNodes     = this .collidableNodes,
-				collisionSpaceNodes = this .collisionSpaceNodes;
+         this .collect ();
+      },
+      collect: function ()
+      {
+         var
+            collidableNodes     = this .collidableNodes,
+            collisionSpaceNodes = this .collisionSpaceNodes;
 
-			collidableNodes     .length = 0;
-			collisionSpaceNodes .length = 0;
+         collidableNodes     .length = 0;
+         collisionSpaceNodes .length = 0;
 
-			for (var i = 0, length = this .collidables_ .length; i < length; ++ i)
-			{
-				var collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .collidables_ [i]);
+         for (var i = 0, length = this .collidables_ .length; i < length; ++ i)
+         {
+            var collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .collidables_ [i]);
 
-				if (collidableNode)
-				{
-					collidableNodes .push (collidableNode);
-					continue;
-				}
+            if (collidableNode)
+            {
+               collidableNodes .push (collidableNode);
+               continue;
+            }
 
-				var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this .collidables_ [i]);
+            var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this .collidables_ [i]);
 
-				if (collisionSpaceNode)
-				{
-					Array .prototype .push .apply (collidableNodes, collisionSpaceNode .getCollidables ());
-					continue;
-				}
-			}
+            if (collisionSpaceNode)
+            {
+               Array .prototype .push .apply (collidableNodes, collisionSpaceNode .getCollidables ());
+               continue;
+            }
+         }
 
-			this .addNodeEvent ();
-		},
-	});
+         this .addNodeEvent ();
+      },
+   });
 
-	return CollisionSpace;
+   return CollisionSpace;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -2405,75 +2401,73 @@ function (Fields,
 
 
 define ('x_ite/Components/RigidBodyPhysics/Contact',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNode, 
+          X3DNode,
           X3DConstants)
 {
 "use strict";
 
-	function Contact (executionContext)
-	{
-		X3DNode .call (this, executionContext);
+   function Contact (executionContext)
+   {
+      X3DNode .call (this, executionContext);
 
-		this .addType (X3DConstants .Contact);
+      this .addType (X3DConstants .Contact);
 
-		// Units
-	
-		this .position_                 .setUnit ("length");
-		this .depth_                    .setUnit ("length");
-		this .minBounceSpeed_           .setUnit ("speed");
-		this .surfaceSpeed_             .setUnit ("speed");
-		this .softnessConstantForceMix_ .setUnit ("force");
-	}
+      // Units
 
-	Contact .prototype = Object .assign (Object .create (X3DNode .prototype),
-	{
-		constructor: Contact,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "position",                 new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "contactNormal",            new Fields .SFVec3f (0, 1, 0)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "depth",                    new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "frictionDirection",        new Fields .SFVec3f (0, 1, 0)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "appliedParameters",        new Fields .MFString ("BOUNCE")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "bounce",                   new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "minBounceSpeed",           new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "frictionCoefficients",     new Fields .SFVec2f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceSpeed",             new Fields .SFVec2f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "slipCoefficients",         new Fields .SFVec2f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "softnessConstantForceMix", new Fields .SFFloat (0.0001)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "softnessErrorCorrection",  new Fields .SFFloat (0.8)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "geometry1",                new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "geometry2",                new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                    new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Contact";
-		},
-		getComponentName: function ()
-		{
-			return "RigidBodyPhysics";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-	});
+      this .position_                 .setUnit ("length");
+      this .depth_                    .setUnit ("length");
+      this .minBounceSpeed_           .setUnit ("speed");
+      this .surfaceSpeed_             .setUnit ("speed");
+      this .softnessConstantForceMix_ .setUnit ("force");
+   }
 
-	return Contact;
+   Contact .prototype = Object .assign (Object .create (X3DNode .prototype),
+   {
+      constructor: Contact,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "position",                 new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "contactNormal",            new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "depth",                    new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "frictionDirection",        new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "appliedParameters",        new Fields .MFString ("BOUNCE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "bounce",                   new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "minBounceSpeed",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "frictionCoefficients",     new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "surfaceSpeed",             new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "slipCoefficients",         new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "softnessConstantForceMix", new Fields .SFFloat (0.0001)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "softnessErrorCorrection",  new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "geometry1",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "geometry2",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                    new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "Contact";
+      },
+      getComponentName: function ()
+      {
+         return "RigidBodyPhysics";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+   });
+
+   return Contact;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -2525,16 +2519,16 @@ function (Fields,
 
 
 define ('x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint',[
-	"jquery",
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
-	"standard/Math/Numbers/Matrix4",
-	"lib/ammojs/AmmoJS",
+   "jquery",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Rotation4",
+   "standard/Math/Numbers/Matrix4",
+   "lib/ammojs/AmmoJS",
 ],
 function ($,
           Fields,
@@ -2549,241 +2543,241 @@ function ($,
 {
 "use strict";
 
-	function DoubleAxisHingeJoint (executionContext)
-	{
-		X3DRigidJointNode .call (this, executionContext);
+   function DoubleAxisHingeJoint (executionContext)
+   {
+      X3DRigidJointNode .call (this, executionContext);
 
-		this .addType (X3DConstants .DoubleAxisHingeJoint);
+      this .addType (X3DConstants .DoubleAxisHingeJoint);
 
-		this .anchorPoint_             .setUnit ("length");
-		this .minAngle1_               .setUnit ("angle");
-		this .maxAngle1_               .setUnit ("angle");
-		this .desiredAngularVelocity1_ .setUnit ("angularRate");
-		this .desiredAngularVelocity2_ .setUnit ("angularRate");
-		this .stopConstantForceMix1_   .setUnit ("force");
-		this .suspensionForce_         .setUnit ("force");
+      this .anchorPoint_             .setUnit ("length");
+      this .minAngle1_               .setUnit ("angle");
+      this .maxAngle1_               .setUnit ("angle");
+      this .desiredAngularVelocity1_ .setUnit ("angularRate");
+      this .desiredAngularVelocity2_ .setUnit ("angularRate");
+      this .stopConstantForceMix1_   .setUnit ("force");
+      this .suspensionForce_         .setUnit ("force");
 
-		this .joint             = null;
-		this .outputs           = { };
-		this .localAnchorPoint1 = new Vector3 (0, 0, 0);
-		this .localAnchorPoint2 = new Vector3 (0, 0, 0);
-		this .localAxis1        = new Vector3 (0, 0, 0);
-		this .localAxis2        = new Vector3 (0, 0, 0);
-	}
+      this .joint             = null;
+      this .outputs           = { };
+      this .localAnchorPoint1 = new Vector3 (0, 0, 0);
+      this .localAnchorPoint2 = new Vector3 (0, 0, 0);
+      this .localAxis1        = new Vector3 (0, 0, 0);
+      this .localAxis2        = new Vector3 (0, 0, 0);
+   }
 
-	DoubleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
-	{
-		constructor: DoubleAxisHingeJoint,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                  new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",               new Fields .MFString ("NONE")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",               new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "axis1",                     new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "axis2",                     new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle1",                 new Fields .SFFloat (-3.14159)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle1",                 new Fields .SFFloat (3.14159)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "desiredAngularVelocity1",   new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "desiredAngularVelocity2",   new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "maxTorque1",                new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "maxTorque2",                new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce1",               new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "stopConstantForceMix1",     new Fields .SFFloat (0.001)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "stopErrorCorrection1",      new Fields .SFFloat (0.8)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionForce",           new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionErrorCorrection", new Fields .SFFloat (0.8)),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint",          new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint",          new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "body1Axis",                 new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "body2Axis",                 new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge1Angle",               new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge2Angle",               new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge1AngleRate",           new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge2AngleRate",           new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                     new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "DoubleAxisHingeJoint";
-		},
-		getComponentName: function ()
-		{
-			return "RigidBodyPhysics";
-		},
-		getContainerField: function ()
-		{
-			return "joints";
-		},
-		initialize: function ()
-		{
-			X3DRigidJointNode .prototype .initialize .call (this);
+   DoubleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
+   {
+      constructor: DoubleAxisHingeJoint,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",               new Fields .MFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",               new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axis1",                     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axis2",                     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle1",                 new Fields .SFFloat (-3.14159)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle1",                 new Fields .SFFloat (3.14159)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "desiredAngularVelocity1",   new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "desiredAngularVelocity2",   new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "maxTorque1",                new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "maxTorque2",                new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce1",               new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopConstantForceMix1",     new Fields .SFFloat (0.001)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopErrorCorrection1",      new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionForce",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "suspensionErrorCorrection", new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint",          new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint",          new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body1Axis",                 new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body2Axis",                 new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge1Angle",               new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge2Angle",               new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge1AngleRate",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "hinge2AngleRate",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                     new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "DoubleAxisHingeJoint";
+      },
+      getComponentName: function ()
+      {
+         return "RigidBodyPhysics";
+      },
+      getContainerField: function ()
+      {
+         return "joints";
+      },
+      initialize: function ()
+      {
+         X3DRigidJointNode .prototype .initialize .call (this);
 
-			this .anchorPoint_ .addInterest ("set_joint__", this);
-			this .axis1_       .addInterest ("set_joint__", this);
-			this .axis2_       .addInterest ("set_joint__", this);
-		},
-		addJoint: (function ()
-		{
-			var
-				localAnchorPoint1 = new Vector3 (0, 0, 0),
-				localAnchorPoint2 = new Vector3 (0, 0, 0),
-				localAxis1        = new Vector3 (0, 0, 0),
-				localAxis2        = new Vector3 (0, 0, 0);
+         this .anchorPoint_ .addInterest ("set_joint__", this);
+         this .axis1_       .addInterest ("set_joint__", this);
+         this .axis2_       .addInterest ("set_joint__", this);
+      },
+      addJoint: (function ()
+      {
+         var
+            localAnchorPoint1 = new Vector3 (0, 0, 0),
+            localAnchorPoint2 = new Vector3 (0, 0, 0),
+            localAxis1        = new Vector3 (0, 0, 0),
+            localAxis2        = new Vector3 (0, 0, 0);
 
-			return function ()
-			{
-				if (! this .getCollection ())
-					return;
+         return function ()
+         {
+            if (! this .getCollection ())
+               return;
 
-				if (! this .getBody1 ())
-					return;
+            if (! this .getBody1 ())
+               return;
 
-				if (! this .getBody2 ())
-					return;
+            if (! this .getBody2 ())
+               return;
 
-			   if (this .getBody1 () .getCollection () !== this .getCollection ())
-					return;
+            if (this .getBody1 () .getCollection () !== this .getCollection ())
+               return;
 
-			   if (this .getBody2 () .getCollection () !== this .getCollection ())
-					return;
+            if (this .getBody2 () .getCollection () !== this .getCollection ())
+               return;
 
-				localAnchorPoint1 .assign (this .anchorPoint_ .getValue ());
-				localAnchorPoint2 .assign (this .anchorPoint_ .getValue ());
-				localAxis1        .assign (this .axis1_ .getValue ());
-				localAxis2        .assign (this .axis2_ .getValue ());
+            localAnchorPoint1 .assign (this .anchorPoint_ .getValue ());
+            localAnchorPoint2 .assign (this .anchorPoint_ .getValue ());
+            localAxis1        .assign (this .axis1_ .getValue ());
+            localAxis2        .assign (this .axis2_ .getValue ());
 
-				this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1);
-				this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2);
-				this .getInitialInverseMatrix1 () .multDirMatrix (localAxis1) .normalize ();
-				this .getInitialInverseMatrix2 () .multDirMatrix (localAxis2) .normalize ();
+            this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1);
+            this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2);
+            this .getInitialInverseMatrix1 () .multDirMatrix (localAxis1) .normalize ();
+            this .getInitialInverseMatrix2 () .multDirMatrix (localAxis2) .normalize ();
 
-				this .joint = new Ammo .btHingeConstraint (this .getBody1 () .getRigidBody (),
-				                                           this .getBody2 () .getRigidBody (),
-				                                           new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
-				                                           new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
-				                                           new Ammo .btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
-				                                           new Ammo .btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
-				                                           false);
+            this .joint = new Ammo .btHingeConstraint (this .getBody1 () .getRigidBody (),
+                                                       this .getBody2 () .getRigidBody (),
+                                                       new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
+                                                       new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
+                                                       new Ammo .btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
+                                                       new Ammo .btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
+                                                       false);
 
-				this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
-			};
-		})(),
-		removeJoint: function ()
-		{
-			if (! this .joint)
-				return;
+            this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
+         };
+      })(),
+      removeJoint: function ()
+      {
+         if (! this .joint)
+            return;
 
-			if (this .getCollection ())
-				this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+         if (this .getCollection ())
+            this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
 
-			Ammo .destroy (this .joint);
-			this .joint = null;
-		},
-		set_forceOutput__: function ()
-		{
-			for (var key in this .outputs)
-				delete this .outputs [key];
+         Ammo .destroy (this .joint);
+         this .joint = null;
+      },
+      set_forceOutput__: function ()
+      {
+         for (var key in this .outputs)
+            delete this .outputs [key];
 
-			for (var i = 0, length = this .forceOutput_ .length; i < length; ++ i)
-			{
-				var value = this .forceOutput_ [i];
+         for (var i = 0, length = this .forceOutput_ .length; i < length; ++ i)
+         {
+            var value = this .forceOutput_ [i];
 
-				if (value == "ALL")
-				{
-					this .outputs .body1AnchorPoint = true;
-					this .outputs .body2AnchorPoint = true;
-					this .outputs .body1Axis        = true;
-					this .outputs .body2Axis        = true;
-					this .outputs .hinge1Angle      = true;
-					this .outputs .hinge2Angle      = true;
-					this .outputs .hinge1AngleRate  = true;
-					this .outputs .hinge2AngleRate  = true;
-				}
-				else
-				{
-					this .outputs [value] = true;
-				}
-			}
+            if (value == "ALL")
+            {
+               this .outputs .body1AnchorPoint = true;
+               this .outputs .body2AnchorPoint = true;
+               this .outputs .body1Axis        = true;
+               this .outputs .body2Axis        = true;
+               this .outputs .hinge1Angle      = true;
+               this .outputs .hinge2Angle      = true;
+               this .outputs .hinge1AngleRate  = true;
+               this .outputs .hinge2AngleRate  = true;
+            }
+            else
+            {
+               this .outputs [value] = true;
+            }
+         }
 
-			this .setOutput (! $.isEmptyObject (this .outputs));
-		},
-		update1: (function ()
-		{
-			var
-				localAnchorPoint1 = new Vector3 (0, 0, 0),
-				localAxis1        = new Vector3 (0, 0, 0),
-				difference        = new Matrix4 (),
-				rotation          = new Rotation4 (0, 0, 1, 0);
+         this .setOutput (! $.isEmptyObject (this .outputs));
+      },
+      update1: (function ()
+      {
+         var
+            localAnchorPoint1 = new Vector3 (0, 0, 0),
+            localAxis1        = new Vector3 (0, 0, 0),
+            difference        = new Matrix4 (),
+            rotation          = new Rotation4 (0, 0, 1, 0);
 
-			return function ()
-			{
-				try
-				{
-					if (this .outputs .body1AnchorPoint)
-						this .body1AnchorPoint_ = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
+         return function ()
+         {
+            try
+            {
+               if (this .outputs .body1AnchorPoint)
+                  this .body1AnchorPoint_ = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
 
-					if (this .outputs .body1Axis)
-						this .body1Axis_ = this .getInitialInverseMatrix1 () .multDirMatrix (this .getBody1 () .getMatrix () .multDirMatrix (localAxis1 .assign (this .localAxis1))) .normalize ();
+               if (this .outputs .body1Axis)
+                  this .body1Axis_ = this .getInitialInverseMatrix1 () .multDirMatrix (this .getBody1 () .getMatrix () .multDirMatrix (localAxis1 .assign (this .localAxis1))) .normalize ();
 
-					if (this .outputs .hinge1Angle)
-					{
-						var lastAngle  = this .hinge1Angle_ .getValue ();
+               if (this .outputs .hinge1Angle)
+               {
+                  var lastAngle  = this .hinge1Angle_ .getValue ();
 
-						difference .assign (this .getInitialInverseMatrix1 ()) .multRight (this .getBody1 () .getMatrix ());
-						difference .get (null, rotation);
+                  difference .assign (this .getInitialInverseMatrix1 ()) .multRight (this .getBody1 () .getMatrix ());
+                  difference .get (null, rotation);
 
-						this .hinge1Angle_ = rotation .angle;
+                  this .hinge1Angle_ = rotation .angle;
 
-						if (this .outputs .angleRate)
-							this .hinge1AngleRate_ = (this .hinge1Angle_ .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
-					}
-				}
-				catch (error)
-				{
-					// matrix .get
-				}
-			};
-		})(),
-		update2: (function ()
-		{
-			var
-				localAnchorPoint2 = new Vector3 (0, 0, 0),
-				localAxis2        = new Vector3 (0, 0, 0),
-				difference        = new Matrix4 (),
-				rotation          = new Rotation4 (0, 0, 1, 0);
+                  if (this .outputs .angleRate)
+                     this .hinge1AngleRate_ = (this .hinge1Angle_ .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
+               }
+            }
+            catch (error)
+            {
+               // matrix .get
+            }
+         };
+      })(),
+      update2: (function ()
+      {
+         var
+            localAnchorPoint2 = new Vector3 (0, 0, 0),
+            localAxis2        = new Vector3 (0, 0, 0),
+            difference        = new Matrix4 (),
+            rotation          = new Rotation4 (0, 0, 1, 0);
 
-			return function ()
-			{
-				try
-				{
-					if (this .outputs .body2AnchorPoint)
-						this .body2AnchorPoint_ = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
+         return function ()
+         {
+            try
+            {
+               if (this .outputs .body2AnchorPoint)
+                  this .body2AnchorPoint_ = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
 
-					if (this .outputs .body2Axis)
-						this .body2Axis_ = this .getInitialInverseMatrix2 () .multDirMatrix (this .getBody2 () .getMatrix () .multDirMatrix (localAxis2 .assign (this .localAxis2))) .normalize ();
+               if (this .outputs .body2Axis)
+                  this .body2Axis_ = this .getInitialInverseMatrix2 () .multDirMatrix (this .getBody2 () .getMatrix () .multDirMatrix (localAxis2 .assign (this .localAxis2))) .normalize ();
 
-					if (this .outputs .hinge2Angle)
-					{
-						var lastAngle  = this .hinge2Angle_ .getValue ();
+               if (this .outputs .hinge2Angle)
+               {
+                  var lastAngle  = this .hinge2Angle_ .getValue ();
 
-						difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
-						difference .get (null, rotation);
+                  difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
+                  difference .get (null, rotation);
 
-						this .hinge2Angle_ = rotation .angle;
+                  this .hinge2Angle_ = rotation .angle;
 
-						if (this .outputs .angleRate)
-							this .hinge2AngleRate_ = (this .hinge2Angle_ .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
-					}
-				}
-				catch (error)
-				{
-					// matrix .get
-				}
-			};
-		})(),
-	});
+                  if (this .outputs .angleRate)
+                     this .hinge2AngleRate_ = (this .hinge2Angle_ .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
+               }
+            }
+            catch (error)
+            {
+               // matrix .get
+            }
+         };
+      })(),
+   });
 
-	return DoubleAxisHingeJoint;
+   return DoubleAxisHingeJoint;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -2836,89 +2830,87 @@ function ($,
 
 
 define ('x_ite/Components/RigidBodyPhysics/MotorJoint',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DRigidJointNode, 
+          X3DRigidJointNode,
           X3DConstants)
 {
 "use strict";
 
-	function MotorJoint (executionContext)
-	{
-		X3DRigidJointNode .call (this, executionContext);
+   function MotorJoint (executionContext)
+   {
+      X3DRigidJointNode .call (this, executionContext);
 
-		this .addType (X3DConstants .MotorJoint);
+      this .addType (X3DConstants .MotorJoint);
 
-		// Units
-	
-		this .axis1angle_      .setunit ("angle");
-		this .axis2Angle_      .setUnit ("angle");
-		this .axis3Angle_      .setUnit ("angle");
-		this .motor1Angle_     .setUnit ("angle");
-		this .motor2Angle_     .setUnit ("angle");
-		this .motor3Angle_     .setUnit ("angle");
-		this .motor1AngleRate_ .setUnit ("angularRate");
-		this .motor2AngleRate_ .setUnit ("angularRate");
-		this .motor3AngleRate_ .setUnit ("angularRate");
-	}
+      // Units
 
-	MotorJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
-	{
-		constructor: MotorJoint,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "body1",                new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "body2",                new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "forceOutput",          new Fields .MFString ("NONE")),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "axis1Angle",           new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "axis1Torque",          new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "axis2Angle",           new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "axis2Torque",          new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "axis3Angle",           new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "axis3Torque",          new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabledAxes",          new Fields .SFInt32 (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "motor1Axis",           new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "motor2Axis",           new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "motor3Axis",           new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "stop1Bounce",          new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "stop1ErrorCorrection", new Fields .SFFloat (0.8)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "stop2Bounce",          new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "stop2ErrorCorrection", new Fields .SFFloat (0.8)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "stop3Bounce",          new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "stop3ErrorCorrection", new Fields .SFFloat (0.8)),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "motor1Angle",          new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "motor1AngleRate",      new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "motor2Angle",          new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "motor2AngleRate",      new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "motor3Angle",          new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "motor3AngleRate",      new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "autoCalc",             new Fields .SFBool ()),
-		]),
-		getTypeName: function ()
-		{
-			return "MotorJoint";
-		},
-		getComponentName: function ()
-		{
-			return "RigidBodyPhysics";
-		},
-		getContainerField: function ()
-		{
-			return "joints";
-		},
-	});
+      this .axis1angle_      .setunit ("angle");
+      this .axis2Angle_      .setUnit ("angle");
+      this .axis3Angle_      .setUnit ("angle");
+      this .motor1Angle_     .setUnit ("angle");
+      this .motor2Angle_     .setUnit ("angle");
+      this .motor3Angle_     .setUnit ("angle");
+      this .motor1AngleRate_ .setUnit ("angularRate");
+      this .motor2AngleRate_ .setUnit ("angularRate");
+      this .motor3AngleRate_ .setUnit ("angularRate");
+   }
 
-	return MotorJoint;
+   MotorJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
+   {
+      constructor: MotorJoint,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "body1",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "body2",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "forceOutput",          new Fields .MFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "axis1Angle",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "axis1Torque",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "axis2Angle",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "axis2Torque",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "axis3Angle",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "axis3Torque",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabledAxes",          new Fields .SFInt32 (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "motor1Axis",           new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "motor2Axis",           new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "motor3Axis",           new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "stop1Bounce",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "stop1ErrorCorrection", new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "stop2Bounce",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "stop2ErrorCorrection", new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "stop3Bounce",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "stop3ErrorCorrection", new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "motor1Angle",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "motor1AngleRate",      new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "motor2Angle",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "motor2AngleRate",      new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "motor3Angle",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "motor3AngleRate",      new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "autoCalc",             new Fields .SFBool ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "MotorJoint";
+      },
+      getComponentName: function ()
+      {
+         return "RigidBodyPhysics";
+      },
+      getContainerField: function ()
+      {
+         return "joints";
+      },
+   });
+
+   return MotorJoint;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -2970,16 +2962,16 @@ function (Fields,
 
 
 define ('x_ite/Components/RigidBodyPhysics/RigidBody',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
-	"standard/Math/Numbers/Matrix4",
-	"lib/ammojs/AmmoJS",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Rotation4",
+   "standard/Math/Numbers/Matrix4",
+   "lib/ammojs/AmmoJS",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -2994,449 +2986,449 @@ function (Fields,
 {
 "use strict";
 
-	function RigidBody (executionContext)
-	{
-		X3DNode .call (this, executionContext);
-
-		this .addType (X3DConstants .RigidBody);
-
-		this .addChildObjects ("collection",    new Fields .SFNode (),
-		                       "transform",     new Fields .SFTime (),
-		                       "otherGeometry", new Fields .MFNode ());
-
-		this .position_            .setUnit ("length");
-		this .linearVelocity_      .setUnit ("speed");
-		this .angularVelocity_     .setUnit ("angularRate");
-		this .mass_                .setUnit ("mass");
-		this .forces_              .setUnit ("force");
-		this .torques_             .setUnit ("force");
-		this .disableLinearSpeed_  .setUnit ("speed");
-		this .disableAngularSpeed_ .setUnit ("angularRate");
-
-		this .compoundShape      = new Ammo .btCompoundShape ();
-		this .motionState        = new Ammo .btDefaultMotionState ();
-		this .constructionInfo   = new Ammo .btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape);
-		this .rigidBody          = new Ammo .btRigidBody (this .constructionInfo);
-		this .geometryNodes      = [ ];
-		this .otherGeometryNodes = [ ];
-		this .matrix             = new Matrix4 ();
-		this .force              = new Vector3 (0, 0, 0);
-		this .torque             = new Vector3 (0, 0, 0);
-	}
-
-	RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
-	{
-		constructor: RigidBody,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "fixed",                new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "position",             new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",          new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "linearVelocity",       new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "angularVelocity",      new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "useFiniteRotation",    new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "finiteRotationAxis",   new Fields .SFVec3f (0, 1, 0)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "autoDamp",             new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "linearDampingFactor",  new Fields .SFFloat (0.001)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "angularDampingFactor", new Fields .SFFloat (0.001)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "mass",                 new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfMass",         new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "massDensityModel",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "useGlobalGravity",     new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "forces",               new Fields .MFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "torques",              new Fields .MFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "inertia",              new Fields .SFMatrix3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "autoDisable",          new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "disableTime",          new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "disableLinearSpeed",   new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "disableAngularSpeed",  new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "geometry",             new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "RigidBody";
-		},
-		getComponentName: function ()
-		{
-			return "RigidBodyPhysics";
-		},
-		getContainerField: function ()
-		{
-			return "bodies";
-		},
-		initialize: function ()
-		{
-			X3DNode .prototype .initialize .call (this);
-
-			this .linearVelocity_       .addInterest ("set_linearVelocity__",     this);
-			this .angularVelocity_      .addInterest ("set_angularVelocity__",    this);
-			this .useFiniteRotation_    .addInterest ("set_finiteRotationAxis__", this);
-			this .finiteRotationAxis_   .addInterest ("set_finiteRotationAxis__", this);
-			this .autoDamp_             .addInterest ("set_damping__",            this);
-			this .linearDampingFactor_  .addInterest ("set_damping__",            this);
-			this .angularDampingFactor_ .addInterest ("set_damping__",            this);
-			this .forces_               .addInterest ("set_forces__",             this);
-			this .torques_              .addInterest ("set_torques__",            this);
-			this .disableTime_          .addInterest ("set_disable__",            this);
-			this .disableTime_          .addInterest ("set_disable__",            this);
-			this .disableLinearSpeed_   .addInterest ("set_disable__",            this);
-			this .disableAngularSpeed_  .addInterest ("set_disable__",            this);
-			this .geometry_             .addInterest ("set_geometry__",           this);
-			this .otherGeometry_        .addInterest ("set_geometry__",           this);
-
-			this .fixed_   .addInterest ("set_massProps__", this);
-			this .mass_    .addInterest ("set_massProps__", this);
-			this .inertia_ .addInterest ("set_massProps__", this);
-
-			this .transform_ .addInterest ("set_transform__", this);
-
-			this .set_forces__ ();
-			this .set_torques__ ();
-			this .set_geometry__ ();
-		},
-		setCollection: function (value)
-		{
-			this .collection_ = value;
-		},
-		getCollection: function ()
-		{
-			return this .collection_ .getValue ();
-		},
-		getRigidBody: function ()
-		{
-			return this .rigidBody;
-		},
-		getMatrix: function ()
-		{
-			return this .matrix;
-		},
-		set_position__: function ()
-		{
-			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-				this .geometryNodes [i] .translation_ = this .position_;
-		},
-		set_orientation__: function ()
-		{
-			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-				this .geometryNodes [i] .rotation_ = this .orientation_;
-		},
-		set_transform__: (function ()
-		{
-			var
-				o  = new Ammo .btVector3 (0, 0, 0),
-				t  = new Ammo .btTransform (),
-				im = new Matrix4 (),
-				it = new Ammo .btTransform (),
-				io = new Ammo .btVector3 (0, 0, 0);
-
-			return function ()
-			{
-				var m = this .matrix;
-
-				m .set (this .position_ .getValue (), this .orientation_ .getValue ());
-
-				//t .setFromOpenGLMatrix (m);
-
-				o .setValue (m [12], m [13], m [14]);
-
-				t .getBasis () .setValue (m [0], m [4], m [8],
-				                          m [1], m [5], m [9],
-				                          m [2], m [6], m [10]);
-
-				t .setOrigin (o);
-
-				//
-
-				im .assign (m);
-				im .inverse ();
-
-				//it .setFromOpenGLMatrix (im);
-
-				io .setValue (im [12], im [13], im [14]);
-
-				it .getBasis () .setValue (im [0], im [4], im [8],
-				                           im [1], im [5], im [9],
-				                           im [2], im [6], im [10]);
-
-				it .setOrigin (io);
-
-				var compoundShape = this .compoundShape;
-
-				for (var i = 0, length = this .compoundShape .getNumChildShapes (); i < length; ++ i)
-					compoundShape .updateChildTransform (i, it, false);
-
-				this .compoundShape .recalculateLocalAabb ();
-				this .motionState .setWorldTransform (t);
-
-				this .rigidBody .setMotionState (this .motionState);
-			};
-		})(),
-		set_linearVelocity__: (function ()
-		{
-			var lv = new Ammo .btVector3 (0, 0, 0);
-
-			return function ()
-			{
-				if (this .fixed_ .getValue ())
-					lv .setValue (0, 0, 0);
-				else
-					lv .setValue (this .linearVelocity_ .x, this .linearVelocity_ .y, this .linearVelocity_ .z);
-
-				this .rigidBody .setLinearVelocity (lv);
-				this .rigidBody .activate ();
-			};
-		}) (),
-		set_angularVelocity__: (function ()
-		{
-			var av = new Ammo .btVector3 (0, 0, 0);
-
-			return function ()
-			{
-				if (this .fixed_ .getValue ())
-					av .setValue (0, 0, 0);
-				else
-					av .setValue (this .angularVelocity_ .x, this .angularVelocity_ .y, this .angularVelocity_ .z);
-
-				this .rigidBody .setAngularVelocity (av);
-				this .rigidBody .activate ();
-			};
-		})(),
-		set_finiteRotationAxis__: (function ()
-		{
-			var angularFactor = new Ammo .btVector3 (1, 1, 1);
-
-			return function ()
-			{
-				if (this .useFiniteRotation_ .getValue ())
-					angularFactor .setValue (this .finiteRotationAxis_ .x, this .finiteRotationAxis_ .y, this .finiteRotationAxis_ .z);
-				else
-					angularFactor .setValue (1, 1, 1);
-
-				this .rigidBody .setAngularFactor (angularFactor);
-			};
-		})(),
-		set_damping__: function ()
-		{
-			if (this .autoDamp_ .getValue ())
-				this .rigidBody .setDamping (this .linearDampingFactor_ .getValue (), this .angularDampingFactor_ .getValue ());
-			else
-				this .rigidBody .setDamping (0, 0);
-
-			this .rigidBody .activate ();
-		},
-		set_centerOfMass__: (function ()
-		{
-			var
-				rotation     = new Ammo .btQuaternion (0, 0, 0, 1),
-				origin       = new Ammo .btVector3 (0, 0, 0),
-				centerOfMass = new Ammo .btTransform (rotation, origin);
-
-			return function ()
-			{
-				origin .setValue (this .centerOfMass_ .x, this .centerOfMass_ .y, this .centerOfMass_ .z);
-				centerOfMass .setOrigin (origin);
-
-				this .rigidBody .setCenterOfMassTransform (centerOfMass);
-			};
-		})(),
-		set_massProps__: (function ()
-		{
-			var localInertia = new Ammo .btVector3 (0, 0, 0);
-
-			return function ()
-			{
-				var inertia = this .inertia_;
-
-				localInertia .setValue (inertia [0] + inertia [1] + inertia [2],
-				                        inertia [3] + inertia [4] + inertia [5],
-				                        inertia [6] + inertia [7] + inertia [8]);
-
-				this .compoundShape .calculateLocalInertia (this .fixed_ .getValue () ? 0 : this .mass_ .getValue (), localInertia);
-
-				this .rigidBody .setMassProps (this .fixed_ .getValue () ? 0 : this .mass_ .getValue (), localInertia);
-			};
-		})(),
-		set_forces__: function ()
-		{
-			this .force .set (0, 0, 0);
-
-			for (var i = 0, length = this .forces_ .length; i < length; ++ i)
-				this .force .add (this .forces_ [i] .getValue ());
-		},
-		set_torques__: function ()
-		{
-			this .torque .set (0, 0, 0);
-
-			for (var i = 0, length = this .torques_ .length; i < length; ++ i)
-				this .torque .add (this .torques_ [i] .getValue ());
-		},
-		set_disable__: function ()
-		{
-			if (this .autoDisable_ .getValue ())
-			{
-				this .rigidBody .setSleepingThresholds (this .disableLinearSpeed_ .getValue (), this .disableAngularSpeed_ .getValue ());
-			}
-			else
-			{
-				this .rigidBody .setSleepingThresholds (0, 0);
-			}
-		},
-		set_geometry__: function ()
-		{
-			var geometryNodes = this .geometryNodes;
-
-			for (var i = 0, length = geometryNodes .length; i < length; ++ i)
-			{
-				var geometryNode = geometryNodes [i];
-
-				geometryNode .removeInterest ("addEvent", this .transform_);
-				geometryNode .compoundShape_changed_ .removeInterest ("set_compoundShape__", this);
-
-				geometryNode .setBody (null);
-
-				geometryNode .translation_ .removeFieldInterest (this .position_);
-				geometryNode .rotation_    .removeFieldInterest (this .orientation_);
-
-				this .position_    .removeFieldInterest (geometryNode .translation_);
-				this .orientation_ .removeFieldInterest (geometryNode .rotation_);
-			}
-
-			for (var i = 0, length = this .otherGeometryNodes .length; i < length; ++ i)
-				this .otherGeometryNodes [i] .body_ .removeInterest ("set_body__", this);
-
-			geometryNodes .length = 0;
-
-			for (var i = 0, length = this .geometry_ .length; i < length; ++ i)
-			{
-				var geometryNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .geometry_ [i]);
-
-				if (! geometryNode)
-					continue;
-
-				if (geometryNode .getBody ())
-				{
-					geometryNode .body_ .addInterest ("set_body__", this);
-					this .otherGeometryNodes .push (geometryNode);
-					continue;
-				}
-
-				geometryNode .setBody (this);
-
-				geometryNodes .push (geometryNode);
-			}
-
-			for (var i = 0, length = geometryNodes .length; i < length; ++ i)
-			{
-				var geometryNode = geometryNodes [i];
-
-				geometryNode .addInterest ("addEvent", this .transform_);
-				geometryNode .compoundShape_changed_ .addInterest ("set_compoundShape__", this);
-
-				geometryNode .translation_ .addFieldInterest (this .position_);
-				geometryNode .rotation_    .addFieldInterest (this .orientation_);
-
-				this .position_    .addFieldInterest (geometryNode .translation_);
-				this .orientation_ .addFieldInterest (geometryNode .rotation_);
-			}
-
-			this .set_compoundShape__ ();
-		},
-		set_body__: function ()
-		{
-			this .otherGeometry_ .addEvent ();
-		},
-		set_compoundShape__: (function ()
-		{
-			var transform = new Ammo .btTransform ();
-
-			return function ()
-			{
-				var compoundShape = this .compoundShape;
-
-				for (var i = compoundShape .getNumChildShapes () - 1; i >= 0; -- i)
-					compoundShape .removeChildShapeByIndex (i);
-
-				for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-					compoundShape .addChildShape (transform, this .geometryNodes [i] .getCompoundShape ());
-
-				this .set_position__ ();
-				this .set_orientation__ ();
-				this .set_transform__ ();
-				this .set_linearVelocity__ ();
-				this .set_angularVelocity__ ();
-				this .set_finiteRotationAxis__ ();
-				this .set_damping__ ();
-				this .set_centerOfMass__ ();
-				this .set_massProps__ ();
-				this .set_disable__ ();
-			};
-		})(),
-		applyForces: (function ()
-		{
-			var
-				g = new Ammo .btVector3 (0, 0, 0),
-				f = new Ammo .btVector3 (0, 0, 0),
-				t = new Ammo .btVector3 (0, 0, 0),
-				z = new Ammo .btVector3 (0, 0, 0);
-
-			return function (gravity)
-			{
-				if (this .fixed_ .getValue ())
-					return;
-
-				if (this .useGlobalGravity_ .getValue ())
-					g .setValue (gravity .x, gravity .y, gravity .z);
-				else
-					g .setValue (0, 0, 0);
-
-				f .setValue (this .force  .x, this .force  .y, this .force  .z);
-				t .setValue (this .torque .x, this .torque .y, this .torque .z);
-
-				this .rigidBody .setGravity (g);
-				this .rigidBody .applyForce (f, z);
-				this .rigidBody .applyTorque (t);
-			};
-		})(),
-		update: (function ()
-		{
-			var
-				transform       = new Ammo .btTransform (),
-				position        = new Vector3 (0, 0, 0),
-				orientation     = new Rotation4 (0, 0, 1, 0),
-				linearVelocity  = new Vector3 (0, 0, 0),
-				angularVelocity = new Vector3 (0, 0, 0);
-
-			return function ()
-			{
-				this .motionState .getWorldTransform (transform);
-
-				var
-					btOrigin          = transform .getOrigin (),
-					btQuaternion      = transform .getRotation (),
-					btLinearVeloctity = this .rigidBody .getLinearVelocity (),
-					btAngularVelocity = this .rigidBody .getAngularVelocity ();
-
-				orientation .value .set (btQuaternion .x (), btQuaternion .y (), btQuaternion .z (), btQuaternion .w ());
-
-				this .position_        = position .set (btOrigin .x (), btOrigin .y (), btOrigin .z ());
-				this .orientation_     = orientation;
-				this .linearVelocity_  = linearVelocity .set (btLinearVeloctity .x (), btLinearVeloctity .y (), btLinearVeloctity .z ());
-				this .angularVelocity_ = angularVelocity .set (btAngularVelocity .x (), btAngularVelocity .y (), btAngularVelocity .z ());
-			};
-		})(),
-		dispose: function ()
-		{
-			Ammo .destroy (this .rigidBody);
-			Ammo .destroy (this .constructionInfo);
-			Ammo .destroy (this .motionState);
-			Ammo .destroy (this .compoundShape);
-
-			X3DNode .prototype .dispose .call (this);
-		},
-	});
-
-	return RigidBody;
+   function RigidBody (executionContext)
+   {
+      X3DNode .call (this, executionContext);
+
+      this .addType (X3DConstants .RigidBody);
+
+      this .addChildObjects ("collection",    new Fields .SFNode (),
+                             "transform",     new Fields .SFTime (),
+                             "otherGeometry", new Fields .MFNode ());
+
+      this .position_            .setUnit ("length");
+      this .linearVelocity_      .setUnit ("speed");
+      this .angularVelocity_     .setUnit ("angularRate");
+      this .mass_                .setUnit ("mass");
+      this .forces_              .setUnit ("force");
+      this .torques_             .setUnit ("force");
+      this .disableLinearSpeed_  .setUnit ("speed");
+      this .disableAngularSpeed_ .setUnit ("angularRate");
+
+      this .compoundShape      = new Ammo .btCompoundShape ();
+      this .motionState        = new Ammo .btDefaultMotionState ();
+      this .constructionInfo   = new Ammo .btRigidBodyConstructionInfo (0, this .motionState, this .compoundShape);
+      this .rigidBody          = new Ammo .btRigidBody (this .constructionInfo);
+      this .geometryNodes      = [ ];
+      this .otherGeometryNodes = [ ];
+      this .matrix             = new Matrix4 ();
+      this .force              = new Vector3 (0, 0, 0);
+      this .torque             = new Vector3 (0, 0, 0);
+   }
+
+   RigidBody .prototype = Object .assign (Object .create (X3DNode .prototype),
+   {
+      constructor: RigidBody,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "fixed",                new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "position",             new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "orientation",          new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "linearVelocity",       new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "angularVelocity",      new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "useFiniteRotation",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "finiteRotationAxis",   new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoDamp",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "linearDampingFactor",  new Fields .SFFloat (0.001)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "angularDampingFactor", new Fields .SFFloat (0.001)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mass",                 new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "centerOfMass",         new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "massDensityModel",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "useGlobalGravity",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "forces",               new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "torques",              new Fields .MFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "inertia",              new Fields .SFMatrix3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "autoDisable",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "disableTime",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "disableLinearSpeed",   new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "disableAngularSpeed",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "geometry",             new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "RigidBody";
+      },
+      getComponentName: function ()
+      {
+         return "RigidBodyPhysics";
+      },
+      getContainerField: function ()
+      {
+         return "bodies";
+      },
+      initialize: function ()
+      {
+         X3DNode .prototype .initialize .call (this);
+
+         this .linearVelocity_       .addInterest ("set_linearVelocity__",     this);
+         this .angularVelocity_      .addInterest ("set_angularVelocity__",    this);
+         this .useFiniteRotation_    .addInterest ("set_finiteRotationAxis__", this);
+         this .finiteRotationAxis_   .addInterest ("set_finiteRotationAxis__", this);
+         this .autoDamp_             .addInterest ("set_damping__",            this);
+         this .linearDampingFactor_  .addInterest ("set_damping__",            this);
+         this .angularDampingFactor_ .addInterest ("set_damping__",            this);
+         this .forces_               .addInterest ("set_forces__",             this);
+         this .torques_              .addInterest ("set_torques__",            this);
+         this .disableTime_          .addInterest ("set_disable__",            this);
+         this .disableTime_          .addInterest ("set_disable__",            this);
+         this .disableLinearSpeed_   .addInterest ("set_disable__",            this);
+         this .disableAngularSpeed_  .addInterest ("set_disable__",            this);
+         this .geometry_             .addInterest ("set_geometry__",           this);
+         this .otherGeometry_        .addInterest ("set_geometry__",           this);
+
+         this .fixed_   .addInterest ("set_massProps__", this);
+         this .mass_    .addInterest ("set_massProps__", this);
+         this .inertia_ .addInterest ("set_massProps__", this);
+
+         this .transform_ .addInterest ("set_transform__", this);
+
+         this .set_forces__ ();
+         this .set_torques__ ();
+         this .set_geometry__ ();
+      },
+      setCollection: function (value)
+      {
+         this .collection_ = value;
+      },
+      getCollection: function ()
+      {
+         return this .collection_ .getValue ();
+      },
+      getRigidBody: function ()
+      {
+         return this .rigidBody;
+      },
+      getMatrix: function ()
+      {
+         return this .matrix;
+      },
+      set_position__: function ()
+      {
+         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+            this .geometryNodes [i] .translation_ = this .position_;
+      },
+      set_orientation__: function ()
+      {
+         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+            this .geometryNodes [i] .rotation_ = this .orientation_;
+      },
+      set_transform__: (function ()
+      {
+         var
+            o  = new Ammo .btVector3 (0, 0, 0),
+            t  = new Ammo .btTransform (),
+            im = new Matrix4 (),
+            it = new Ammo .btTransform (),
+            io = new Ammo .btVector3 (0, 0, 0);
+
+         return function ()
+         {
+            var m = this .matrix;
+
+            m .set (this .position_ .getValue (), this .orientation_ .getValue ());
+
+            //t .setFromOpenGLMatrix (m);
+
+            o .setValue (m [12], m [13], m [14]);
+
+            t .getBasis () .setValue (m [0], m [4], m [8],
+                                      m [1], m [5], m [9],
+                                      m [2], m [6], m [10]);
+
+            t .setOrigin (o);
+
+            //
+
+            im .assign (m);
+            im .inverse ();
+
+            //it .setFromOpenGLMatrix (im);
+
+            io .setValue (im [12], im [13], im [14]);
+
+            it .getBasis () .setValue (im [0], im [4], im [8],
+                                       im [1], im [5], im [9],
+                                       im [2], im [6], im [10]);
+
+            it .setOrigin (io);
+
+            var compoundShape = this .compoundShape;
+
+            for (var i = 0, length = this .compoundShape .getNumChildShapes (); i < length; ++ i)
+               compoundShape .updateChildTransform (i, it, false);
+
+            this .compoundShape .recalculateLocalAabb ();
+            this .motionState .setWorldTransform (t);
+
+            this .rigidBody .setMotionState (this .motionState);
+         };
+      })(),
+      set_linearVelocity__: (function ()
+      {
+         var lv = new Ammo .btVector3 (0, 0, 0);
+
+         return function ()
+         {
+            if (this .fixed_ .getValue ())
+               lv .setValue (0, 0, 0);
+            else
+               lv .setValue (this .linearVelocity_ .x, this .linearVelocity_ .y, this .linearVelocity_ .z);
+
+            this .rigidBody .setLinearVelocity (lv);
+            this .rigidBody .activate ();
+         };
+      }) (),
+      set_angularVelocity__: (function ()
+      {
+         var av = new Ammo .btVector3 (0, 0, 0);
+
+         return function ()
+         {
+            if (this .fixed_ .getValue ())
+               av .setValue (0, 0, 0);
+            else
+               av .setValue (this .angularVelocity_ .x, this .angularVelocity_ .y, this .angularVelocity_ .z);
+
+            this .rigidBody .setAngularVelocity (av);
+            this .rigidBody .activate ();
+         };
+      })(),
+      set_finiteRotationAxis__: (function ()
+      {
+         var angularFactor = new Ammo .btVector3 (1, 1, 1);
+
+         return function ()
+         {
+            if (this .useFiniteRotation_ .getValue ())
+               angularFactor .setValue (this .finiteRotationAxis_ .x, this .finiteRotationAxis_ .y, this .finiteRotationAxis_ .z);
+            else
+               angularFactor .setValue (1, 1, 1);
+
+            this .rigidBody .setAngularFactor (angularFactor);
+         };
+      })(),
+      set_damping__: function ()
+      {
+         if (this .autoDamp_ .getValue ())
+            this .rigidBody .setDamping (this .linearDampingFactor_ .getValue (), this .angularDampingFactor_ .getValue ());
+         else
+            this .rigidBody .setDamping (0, 0);
+
+         this .rigidBody .activate ();
+      },
+      set_centerOfMass__: (function ()
+      {
+         var
+            rotation     = new Ammo .btQuaternion (0, 0, 0, 1),
+            origin       = new Ammo .btVector3 (0, 0, 0),
+            centerOfMass = new Ammo .btTransform (rotation, origin);
+
+         return function ()
+         {
+            origin .setValue (this .centerOfMass_ .x, this .centerOfMass_ .y, this .centerOfMass_ .z);
+            centerOfMass .setOrigin (origin);
+
+            this .rigidBody .setCenterOfMassTransform (centerOfMass);
+         };
+      })(),
+      set_massProps__: (function ()
+      {
+         var localInertia = new Ammo .btVector3 (0, 0, 0);
+
+         return function ()
+         {
+            var inertia = this .inertia_;
+
+            localInertia .setValue (inertia [0] + inertia [1] + inertia [2],
+                                    inertia [3] + inertia [4] + inertia [5],
+                                    inertia [6] + inertia [7] + inertia [8]);
+
+            this .compoundShape .calculateLocalInertia (this .fixed_ .getValue () ? 0 : this .mass_ .getValue (), localInertia);
+
+            this .rigidBody .setMassProps (this .fixed_ .getValue () ? 0 : this .mass_ .getValue (), localInertia);
+         };
+      })(),
+      set_forces__: function ()
+      {
+         this .force .set (0, 0, 0);
+
+         for (var i = 0, length = this .forces_ .length; i < length; ++ i)
+            this .force .add (this .forces_ [i] .getValue ());
+      },
+      set_torques__: function ()
+      {
+         this .torque .set (0, 0, 0);
+
+         for (var i = 0, length = this .torques_ .length; i < length; ++ i)
+            this .torque .add (this .torques_ [i] .getValue ());
+      },
+      set_disable__: function ()
+      {
+         if (this .autoDisable_ .getValue ())
+         {
+            this .rigidBody .setSleepingThresholds (this .disableLinearSpeed_ .getValue (), this .disableAngularSpeed_ .getValue ());
+         }
+         else
+         {
+            this .rigidBody .setSleepingThresholds (0, 0);
+         }
+      },
+      set_geometry__: function ()
+      {
+         var geometryNodes = this .geometryNodes;
+
+         for (var i = 0, length = geometryNodes .length; i < length; ++ i)
+         {
+            var geometryNode = geometryNodes [i];
+
+            geometryNode .removeInterest ("addEvent", this .transform_);
+            geometryNode .compoundShape_changed_ .removeInterest ("set_compoundShape__", this);
+
+            geometryNode .setBody (null);
+
+            geometryNode .translation_ .removeFieldInterest (this .position_);
+            geometryNode .rotation_    .removeFieldInterest (this .orientation_);
+
+            this .position_    .removeFieldInterest (geometryNode .translation_);
+            this .orientation_ .removeFieldInterest (geometryNode .rotation_);
+         }
+
+         for (var i = 0, length = this .otherGeometryNodes .length; i < length; ++ i)
+            this .otherGeometryNodes [i] .body_ .removeInterest ("set_body__", this);
+
+         geometryNodes .length = 0;
+
+         for (var i = 0, length = this .geometry_ .length; i < length; ++ i)
+         {
+            var geometryNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .geometry_ [i]);
+
+            if (! geometryNode)
+               continue;
+
+            if (geometryNode .getBody ())
+            {
+               geometryNode .body_ .addInterest ("set_body__", this);
+               this .otherGeometryNodes .push (geometryNode);
+               continue;
+            }
+
+            geometryNode .setBody (this);
+
+            geometryNodes .push (geometryNode);
+         }
+
+         for (var i = 0, length = geometryNodes .length; i < length; ++ i)
+         {
+            var geometryNode = geometryNodes [i];
+
+            geometryNode .addInterest ("addEvent", this .transform_);
+            geometryNode .compoundShape_changed_ .addInterest ("set_compoundShape__", this);
+
+            geometryNode .translation_ .addFieldInterest (this .position_);
+            geometryNode .rotation_    .addFieldInterest (this .orientation_);
+
+            this .position_    .addFieldInterest (geometryNode .translation_);
+            this .orientation_ .addFieldInterest (geometryNode .rotation_);
+         }
+
+         this .set_compoundShape__ ();
+      },
+      set_body__: function ()
+      {
+         this .otherGeometry_ .addEvent ();
+      },
+      set_compoundShape__: (function ()
+      {
+         var transform = new Ammo .btTransform ();
+
+         return function ()
+         {
+            var compoundShape = this .compoundShape;
+
+            for (var i = compoundShape .getNumChildShapes () - 1; i >= 0; -- i)
+               compoundShape .removeChildShapeByIndex (i);
+
+            for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+               compoundShape .addChildShape (transform, this .geometryNodes [i] .getCompoundShape ());
+
+            this .set_position__ ();
+            this .set_orientation__ ();
+            this .set_transform__ ();
+            this .set_linearVelocity__ ();
+            this .set_angularVelocity__ ();
+            this .set_finiteRotationAxis__ ();
+            this .set_damping__ ();
+            this .set_centerOfMass__ ();
+            this .set_massProps__ ();
+            this .set_disable__ ();
+         };
+      })(),
+      applyForces: (function ()
+      {
+         var
+            g = new Ammo .btVector3 (0, 0, 0),
+            f = new Ammo .btVector3 (0, 0, 0),
+            t = new Ammo .btVector3 (0, 0, 0),
+            z = new Ammo .btVector3 (0, 0, 0);
+
+         return function (gravity)
+         {
+            if (this .fixed_ .getValue ())
+               return;
+
+            if (this .useGlobalGravity_ .getValue ())
+               g .setValue (gravity .x, gravity .y, gravity .z);
+            else
+               g .setValue (0, 0, 0);
+
+            f .setValue (this .force  .x, this .force  .y, this .force  .z);
+            t .setValue (this .torque .x, this .torque .y, this .torque .z);
+
+            this .rigidBody .setGravity (g);
+            this .rigidBody .applyForce (f, z);
+            this .rigidBody .applyTorque (t);
+         };
+      })(),
+      update: (function ()
+      {
+         var
+            transform       = new Ammo .btTransform (),
+            position        = new Vector3 (0, 0, 0),
+            orientation     = new Rotation4 (0, 0, 1, 0),
+            linearVelocity  = new Vector3 (0, 0, 0),
+            angularVelocity = new Vector3 (0, 0, 0);
+
+         return function ()
+         {
+            this .motionState .getWorldTransform (transform);
+
+            var
+               btOrigin          = transform .getOrigin (),
+               btQuaternion      = transform .getRotation (),
+               btLinearVeloctity = this .rigidBody .getLinearVelocity (),
+               btAngularVelocity = this .rigidBody .getAngularVelocity ();
+
+            orientation .value .set (btQuaternion .x (), btQuaternion .y (), btQuaternion .z (), btQuaternion .w ());
+
+            this .position_        = position .set (btOrigin .x (), btOrigin .y (), btOrigin .z ());
+            this .orientation_     = orientation;
+            this .linearVelocity_  = linearVelocity .set (btLinearVeloctity .x (), btLinearVeloctity .y (), btLinearVeloctity .z ());
+            this .angularVelocity_ = angularVelocity .set (btAngularVelocity .x (), btAngularVelocity .y (), btAngularVelocity .z ());
+         };
+      })(),
+      dispose: function ()
+      {
+         Ammo .destroy (this .rigidBody);
+         Ammo .destroy (this .constructionInfo);
+         Ammo .destroy (this .motionState);
+         Ammo .destroy (this .compoundShape);
+
+         X3DNode .prototype .dispose .call (this);
+      },
+   });
+
+   return RigidBody;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -3489,14 +3481,14 @@ function (Fields,
 
 
 define ('x_ite/Components/RigidBodyPhysics/RigidBodyCollection',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Browser/RigidBodyPhysics/AppliedParametersType",
-	"lib/ammojs/AmmoJS",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Browser/RigidBodyPhysics/AppliedParametersType",
+   "lib/ammojs/AmmoJS",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -3509,324 +3501,324 @@ function (Fields,
 {
 "use strict";
 
-	function RigidBodyCollection (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
+   function RigidBodyCollection (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .RigidBodyCollection);
+      this .addType (X3DConstants .RigidBodyCollection);
 
-		// Units
+      // Units
 
-		this .gravity_                 .setUnit ("acceleration");
-		this .constantForceMix_        .setUnit ("force");
-		this .maxCorrectionSpeed_      .setUnit ("speed");
-		this .contactSurfaceThickness_ .setUnit ("length");
-		this .disableLinearSpeed_      .setUnit ("length");
-		this .disableAngularSpeed_     .setUnit ("angularRate");
+      this .gravity_                 .setUnit ("acceleration");
+      this .constantForceMix_        .setUnit ("force");
+      this .maxCorrectionSpeed_      .setUnit ("speed");
+      this .contactSurfaceThickness_ .setUnit ("length");
+      this .disableLinearSpeed_      .setUnit ("length");
+      this .disableAngularSpeed_     .setUnit ("angularRate");
 
-		// Members
+      // Members
 
-		this .broadphase             = new Ammo .btDbvtBroadphase ();
-		this .collisionConfiguration = new Ammo .btDefaultCollisionConfiguration ();
-		this .dispatcher             = new Ammo .btCollisionDispatcher (this .collisionConfiguration);
-		this .solver                 = new Ammo .btSequentialImpulseConstraintSolver ();
-		this .dynamicsWorld          = new Ammo .btDiscreteDynamicsWorld (this .dispatcher, this .broadphase, this .solver, this .collisionConfiguration);
-		this .deltaTime              = 0;
-		this .colliderNode           = null;
-		this .bodyNodes              = [ ];
-		this .otherBodyNodes         = [ ];
-		this .rigidBodies            = [ ];
-		this .jointNodes             = [ ];
-		this .otherJointNodes        = [ ];
-	}
+      this .broadphase             = new Ammo .btDbvtBroadphase ();
+      this .collisionConfiguration = new Ammo .btDefaultCollisionConfiguration ();
+      this .dispatcher             = new Ammo .btCollisionDispatcher (this .collisionConfiguration);
+      this .solver                 = new Ammo .btSequentialImpulseConstraintSolver ();
+      this .dynamicsWorld          = new Ammo .btDiscreteDynamicsWorld (this .dispatcher, this .broadphase, this .solver, this .collisionConfiguration);
+      this .deltaTime              = 0;
+      this .colliderNode           = null;
+      this .bodyNodes              = [ ];
+      this .otherBodyNodes         = [ ];
+      this .rigidBodies            = [ ];
+      this .jointNodes             = [ ];
+      this .otherJointNodes        = [ ];
+   }
 
-	RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: RigidBodyCollection,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",                new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                 new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_contacts",            new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "gravity",                 new Fields .SFVec3f (0, -9.8, 0)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "preferAccuracy",          new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "errorCorrection",         new Fields .SFFloat (0.8)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "iterations",              new Fields .SFInt32 (10)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "constantForceMix",        new Fields .SFFloat (0.0001)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "maxCorrectionSpeed",      new Fields .SFFloat (-1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "contactSurfaceThickness", new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoDisable",             new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "disableTime",             new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "disableLinearSpeed",      new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "disableAngularSpeed",     new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "collider",                new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bodies",                  new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "joints",                  new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "RigidBodyCollection";
-		},
-		getComponentName: function ()
-		{
-			return "RigidBodyPhysics";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
+   RigidBodyCollection .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: RigidBodyCollection,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_contacts",            new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "gravity",                 new Fields .SFVec3f (0, -9.8, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "preferAccuracy",          new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "errorCorrection",         new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "iterations",              new Fields .SFInt32 (10)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "constantForceMix",        new Fields .SFFloat (0.0001)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "maxCorrectionSpeed",      new Fields .SFFloat (-1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "contactSurfaceThickness", new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoDisable",             new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "disableTime",             new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "disableLinearSpeed",      new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "disableAngularSpeed",     new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "collider",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bodies",                  new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "joints",                  new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "RigidBodyCollection";
+      },
+      getComponentName: function ()
+      {
+         return "RigidBodyPhysics";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DChildNode .prototype .initialize .call (this);
 
-			this .isLive () .addInterest ("set_enabled__", this);
+         this .isLive () .addInterest ("set_enabled__", this);
 
-			this .enabled_                 .addInterest ("set_enabled__",                 this);
-			this .set_contacts_            .addInterest ("set_contacts__",                this);
-			this .gravity_                 .addInterest ("set_gravity__",                 this);
-			this .contactSurfaceThickness_ .addInterest ("set_contactSurfaceThickness__", this);
-			this .collider_                .addInterest ("set_collider__",                this);
-			this .bodies_                  .addInterest ("set_bodies__",                  this);
-			this .joints_                  .addInterest ("set_joints__",                  this);
+         this .enabled_                 .addInterest ("set_enabled__",                 this);
+         this .set_contacts_            .addInterest ("set_contacts__",                this);
+         this .gravity_                 .addInterest ("set_gravity__",                 this);
+         this .contactSurfaceThickness_ .addInterest ("set_contactSurfaceThickness__", this);
+         this .collider_                .addInterest ("set_collider__",                this);
+         this .bodies_                  .addInterest ("set_bodies__",                  this);
+         this .joints_                  .addInterest ("set_joints__",                  this);
 
-			this .set_enabled__ ();
-			this .set_gravity__ ();
-			this .set_collider__ ();
-			this .set_bodies__ ();
-		},
-		getDynamicsWorld: function ()
-		{
-			return this .dynamicsWorld;
-		},
-		getTimeStep: function ()
-		{
-			const DELAY = 15; // Delay in frames when dt full applies.
+         this .set_enabled__ ();
+         this .set_gravity__ ();
+         this .set_collider__ ();
+         this .set_bodies__ ();
+      },
+      getDynamicsWorld: function ()
+      {
+         return this .dynamicsWorld;
+      },
+      getTimeStep: function ()
+      {
+         const DELAY = 15; // Delay in frames when dt full applies.
 
-			var
-				dt        = 1 / Math .max (10, this .getBrowser () .getCurrentFrameRate ()),
-				deltaTime = this .deltaTime = ((DELAY - 1) * this .deltaTime + dt) / DELAY; // Moving average about DELAY frames.
+         var
+            dt        = 1 / Math .max (10, this .getBrowser () .getCurrentFrameRate ()),
+            deltaTime = this .deltaTime = ((DELAY - 1) * this .deltaTime + dt) / DELAY; // Moving average about DELAY frames.
 
-			return deltaTime;
-		},
-		set_enabled__: function ()
-		{
-			if (this .isLive () .getValue () && this .enabled_ .getValue ())
-				this .getBrowser () .sensorEvents () .addInterest ("update", this);
-			else
-				this .getBrowser () .sensorEvents () .removeInterest ("update", this);
-		},
-		set_contacts__: function ()
-		{
-		},
-		set_gravity__: (function ()
-		{
-			var gravity = new Ammo .btVector3 (0, 0, 0);
+         return deltaTime;
+      },
+      set_enabled__: function ()
+      {
+         if (this .isLive () .getValue () && this .enabled_ .getValue ())
+            this .getBrowser () .sensorEvents () .addInterest ("update", this);
+         else
+            this .getBrowser () .sensorEvents () .removeInterest ("update", this);
+      },
+      set_contacts__: function ()
+      {
+      },
+      set_gravity__: (function ()
+      {
+         var gravity = new Ammo .btVector3 (0, 0, 0);
 
-			return function ()
-			{
-				gravity .setValue (this .gravity_ .x,
-				                   this .gravity_ .y,
-				                   this .gravity_ .z);
+         return function ()
+         {
+            gravity .setValue (this .gravity_ .x,
+                               this .gravity_ .y,
+                               this .gravity_ .z);
 
-				this .dynamicsWorld .setGravity (gravity);
-			};
-		})(),
-		set_contactSurfaceThickness__: function ()
-		{
-			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-				this .bodyNodes [i] .getRigidBody () .getCollisionShape () .setMargin (this .contactSurfaceThickness_ .getValue ());
-		},
-		set_collider__: function ()
-		{
-			this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this .collider_);
-		},
-		set_bounce__: function ()
-		{
-			var
-				colliderNode = this .colliderNode,
-				bodyNodes    = this .bodyNodes;
+            this .dynamicsWorld .setGravity (gravity);
+         };
+      })(),
+      set_contactSurfaceThickness__: function ()
+      {
+         for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+            this .bodyNodes [i] .getRigidBody () .getCollisionShape () .setMargin (this .contactSurfaceThickness_ .getValue ());
+      },
+      set_collider__: function ()
+      {
+         this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this .collider_);
+      },
+      set_bounce__: function ()
+      {
+         var
+            colliderNode = this .colliderNode,
+            bodyNodes    = this .bodyNodes;
 
-			if (colliderNode && colliderNode .enabled_ .getValue ())
-			{
-				if (colliderNode .getAppliedParameters () .has (AppliedParametersType .BOUNCE))
-				{
-					for (var i = 0, length = bodyNodes .length; i < length; ++ i)
-					{
-						var rigidBody = bodyNodes [i] .getRigidBody ();
+         if (colliderNode && colliderNode .enabled_ .getValue ())
+         {
+            if (colliderNode .getAppliedParameters () .has (AppliedParametersType .BOUNCE))
+            {
+               for (var i = 0, length = bodyNodes .length; i < length; ++ i)
+               {
+                  var rigidBody = bodyNodes [i] .getRigidBody ();
 
-						if (rigidBody .getLinearVelocity () .length () >= colliderNode .minBounceSpeed_ .getValue ())
-							rigidBody .setRestitution (colliderNode .bounce_ .getValue ());
-						else
-							rigidBody .setRestitution (0);
-					}
+                  if (rigidBody .getLinearVelocity () .length () >= colliderNode .minBounceSpeed_ .getValue ())
+                     rigidBody .setRestitution (colliderNode .bounce_ .getValue ());
+                  else
+                     rigidBody .setRestitution (0);
+               }
 
-					return;
-				}
-			}
+               return;
+            }
+         }
 
-			for (var i = 0, length = bodyNodes .length; i < length; ++ i)
-				bodyNodes [i] .getRigidBody () .setRestitution (0);
-		},
-		set_frictionCoefficients__: function ()
-		{
-			if (this .colliderNode && this .colliderNode .enabled_ .getValue ())
-			{
-				if (this .colliderNode .getAppliedParameters () .has (AppliedParametersType .FRICTION_COEFFICIENT_2))
-				{
-					for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-					{
-						var rigidBody = this .bodyNodes [i] .getRigidBody ();
+         for (var i = 0, length = bodyNodes .length; i < length; ++ i)
+            bodyNodes [i] .getRigidBody () .setRestitution (0);
+      },
+      set_frictionCoefficients__: function ()
+      {
+         if (this .colliderNode && this .colliderNode .enabled_ .getValue ())
+         {
+            if (this .colliderNode .getAppliedParameters () .has (AppliedParametersType .FRICTION_COEFFICIENT_2))
+            {
+               for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+               {
+                  var rigidBody = this .bodyNodes [i] .getRigidBody ();
 
-						rigidBody .setFriction (this .colliderNode .frictionCoefficients_ .x);
-						rigidBody .setRollingFriction (this .colliderNode .frictionCoefficients_ .y);
-					}
+                  rigidBody .setFriction (this .colliderNode .frictionCoefficients_ .x);
+                  rigidBody .setRollingFriction (this .colliderNode .frictionCoefficients_ .y);
+               }
 
-					return;
-				}
-			}
+               return;
+            }
+         }
 
-			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-			{
-				var rigidBody = this .bodyNodes [i] .getRigidBody ();
+         for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+         {
+            var rigidBody = this .bodyNodes [i] .getRigidBody ();
 
-				rigidBody .setFriction (0.5);
-				rigidBody .setRollingFriction (0);
-			}
-		},
-		set_bodies__: function ()
-		{
-			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-			{
-				var bodyNode = this .bodyNodes [i];
+            rigidBody .setFriction (0.5);
+            rigidBody .setRollingFriction (0);
+         }
+      },
+      set_bodies__: function ()
+      {
+         for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+         {
+            var bodyNode = this .bodyNodes [i];
 
-				bodyNode .enabled_ .removeInterest ("set_dynamicsWorld__", this);
-				bodyNode .setCollection (null);
-			}
+            bodyNode .enabled_ .removeInterest ("set_dynamicsWorld__", this);
+            bodyNode .setCollection (null);
+         }
 
-			for (var i = 0, length = this .otherBodyNodes .length; i < length; ++ i)
-				this .otherBodyNodes [i] .collection_ .removeInterest ("set_bodies__", this);
+         for (var i = 0, length = this .otherBodyNodes .length; i < length; ++ i)
+            this .otherBodyNodes [i] .collection_ .removeInterest ("set_bodies__", this);
 
-			this .bodyNodes .length = 0;
+         this .bodyNodes .length = 0;
 
-			for (var i = 0, length = this .bodies_ .length; i < length; ++ i)
-			{
-				var bodyNode = X3DCast (X3DConstants .RigidBody, this .bodies_ [i]);
+         for (var i = 0, length = this .bodies_ .length; i < length; ++ i)
+         {
+            var bodyNode = X3DCast (X3DConstants .RigidBody, this .bodies_ [i]);
 
-				if (! bodyNode)
-					continue;
+            if (! bodyNode)
+               continue;
 
-				if (bodyNode .getCollection ())
-				{
-					bodyNode .collection_ .addInterest ("set_bodies__", this);
-					this .otherBodyNodes .push (bodyNode);
-					continue;
-				}
+            if (bodyNode .getCollection ())
+            {
+               bodyNode .collection_ .addInterest ("set_bodies__", this);
+               this .otherBodyNodes .push (bodyNode);
+               continue;
+            }
 
-				bodyNode .setCollection (this);
+            bodyNode .setCollection (this);
 
-				this .bodyNodes .push (bodyNode);
-			}
+            this .bodyNodes .push (bodyNode);
+         }
 
-			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-				this .bodyNodes [i] .enabled_ .addInterest ("set_dynamicsWorld__", this);
+         for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+            this .bodyNodes [i] .enabled_ .addInterest ("set_dynamicsWorld__", this);
 
-			this .set_contactSurfaceThickness__ ();
-			this .set_dynamicsWorld__ ();
-			this .set_joints__ ();
-		},
-		set_dynamicsWorld__: function ()
-		{
-			for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
-				this .dynamicsWorld .removeRigidBody (this .rigidBodies [i]);
+         this .set_contactSurfaceThickness__ ();
+         this .set_dynamicsWorld__ ();
+         this .set_joints__ ();
+      },
+      set_dynamicsWorld__: function ()
+      {
+         for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
+            this .dynamicsWorld .removeRigidBody (this .rigidBodies [i]);
 
-			this .rigidBodies .length = 0;
+         this .rigidBodies .length = 0;
 
-			for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-			{
-				var bodyNode = this .bodyNodes [i];
+         for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+         {
+            var bodyNode = this .bodyNodes [i];
 
-				if (! bodyNode .enabled_ .getValue ())
-					continue;
+            if (! bodyNode .enabled_ .getValue ())
+               continue;
 
-				this .rigidBodies .push (bodyNode .getRigidBody ());
-			}
+            this .rigidBodies .push (bodyNode .getRigidBody ());
+         }
 
-			for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
-				this .dynamicsWorld .addRigidBody (this .rigidBodies [i]);
-		},
-		set_joints__: function ()
-		{
-			for (var i = 0, length = this .jointNodes .length; i < length; ++ i)
-				this .jointNodes [i] .setCollection (null);
+         for (var i = 0, length = this .rigidBodies .length; i < length; ++ i)
+            this .dynamicsWorld .addRigidBody (this .rigidBodies [i]);
+      },
+      set_joints__: function ()
+      {
+         for (var i = 0, length = this .jointNodes .length; i < length; ++ i)
+            this .jointNodes [i] .setCollection (null);
 
-			this .jointNodes .length = 0;
+         this .jointNodes .length = 0;
 
-			for (var i = 0, length = this .otherJointNodes .length; i < length; ++ i)
-				this .otherJointNodes [i] .collection_ .removeInterest ("set_joints__", this);
+         for (var i = 0, length = this .otherJointNodes .length; i < length; ++ i)
+            this .otherJointNodes [i] .collection_ .removeInterest ("set_joints__", this);
 
-			this .otherJointNodes .length = 0;
+         this .otherJointNodes .length = 0;
 
-			for (var i = 0, length = this .joints_ .length; i < length; ++ i)
-			{
-				var jointNode = X3DCast (X3DConstants .X3DRigidJointNode, this .joints_ [i]);
+         for (var i = 0, length = this .joints_ .length; i < length; ++ i)
+         {
+            var jointNode = X3DCast (X3DConstants .X3DRigidJointNode, this .joints_ [i]);
 
-				if (! jointNode)
-					continue;
+            if (! jointNode)
+               continue;
 
-				if (jointNode .getCollection ())
-				{
-					jointNode .collection_ .addInterest ("set_joints__", this);
-					this .otherJointNodes .push (bodyNode);
-					continue;
-				}
+            if (jointNode .getCollection ())
+            {
+               jointNode .collection_ .addInterest ("set_joints__", this);
+               this .otherJointNodes .push (bodyNode);
+               continue;
+            }
 
-				jointNode .setCollection (this);
+            jointNode .setCollection (this);
 
-				this .jointNodes .push (jointNode);
-			}
-		},
-		update: function ()
-		{
-			try
-			{
-				var
-					deltaTime  = this .getTimeStep (),
-					iterations = this .iterations_ .getValue (),
-					gravity    = this .gravity_ .getValue ();
+            this .jointNodes .push (jointNode);
+         }
+      },
+      update: function ()
+      {
+         try
+         {
+            var
+               deltaTime  = this .getTimeStep (),
+               iterations = this .iterations_ .getValue (),
+               gravity    = this .gravity_ .getValue ();
 
-				this .set_bounce__ ();
-				this .set_frictionCoefficients__ ();
+            this .set_bounce__ ();
+            this .set_frictionCoefficients__ ();
 
-				if (this .preferAccuracy_ .getValue ())
-				{
-					deltaTime /= iterations;
+            if (this .preferAccuracy_ .getValue ())
+            {
+               deltaTime /= iterations;
 
-					for (var i = 0; i < iterations; ++ i)
-					{
-						for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-							this .bodyNodes [i] .applyForces (gravity);
+               for (var i = 0; i < iterations; ++ i)
+               {
+                  for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+                     this .bodyNodes [i] .applyForces (gravity);
 
-						this .dynamicsWorld .stepSimulation (deltaTime, 0);
-					}
-				}
-				else
-				{
-					for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-						this .bodyNodes [i] .applyForces (gravity);
+                  this .dynamicsWorld .stepSimulation (deltaTime, 0);
+               }
+            }
+            else
+            {
+               for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+                  this .bodyNodes [i] .applyForces (gravity);
 
-					this .dynamicsWorld .stepSimulation (deltaTime, iterations + 2, deltaTime / iterations);
-				}
+               this .dynamicsWorld .stepSimulation (deltaTime, iterations + 2, deltaTime / iterations);
+            }
 
-				for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-					this .bodyNodes [i] .update ();
-			}
-			catch (error)
-			{
-				console .error (error);
-			}
-		},
-	});
+            for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
+               this .bodyNodes [i] .update ();
+         }
+         catch (error)
+         {
+            console .error (error);
+         }
+      },
+   });
 
-	return RigidBodyCollection;
+   return RigidBodyCollection;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -3879,16 +3871,16 @@ function (Fields,
 
 
 define ('x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint',[
-	"jquery",
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
-	"standard/Math/Numbers/Matrix4",
-	"lib/ammojs/AmmoJS",
+   "jquery",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Rotation4",
+   "standard/Math/Numbers/Matrix4",
+   "lib/ammojs/AmmoJS",
 ],
 function ($,
           Fields,
@@ -3903,193 +3895,193 @@ function ($,
 {
 "use strict";
 
-	function SingleAxisHingeJoint (executionContext)
-	{
-		X3DRigidJointNode .call (this, executionContext);
+   function SingleAxisHingeJoint (executionContext)
+   {
+      X3DRigidJointNode .call (this, executionContext);
 
-		this .addType (X3DConstants .SingleAxisHingeJoint);
+      this .addType (X3DConstants .SingleAxisHingeJoint);
 
-		this .anchorPoint_      .setUnit ("length");
-		this .minAngle_         .setUnit ("angle");
-		this .maxAngle_         .setUnit ("angle");
-		this .body1AnchorPoint_ .setUnit ("length");
-		this .body2AnchorPoint_ .setUnit ("length");
-		this .angle_            .setUnit ("angle");
-		this .angleRate_        .setUnit ("angularRate");
+      this .anchorPoint_      .setUnit ("length");
+      this .minAngle_         .setUnit ("angle");
+      this .maxAngle_         .setUnit ("angle");
+      this .body1AnchorPoint_ .setUnit ("length");
+      this .body2AnchorPoint_ .setUnit ("length");
+      this .angle_            .setUnit ("angle");
+      this .angleRate_        .setUnit ("angularRate");
 
-		this .joint             = null;
-		this .outputs           = { };
-		this .localAnchorPoint1 = new Vector3 (0, 0, 0);
-		this .localAnchorPoint2 = new Vector3 (0, 0, 0);
-	}
+      this .joint             = null;
+      this .outputs           = { };
+      this .localAnchorPoint1 = new Vector3 (0, 0, 0);
+      this .localAnchorPoint2 = new Vector3 (0, 0, 0);
+   }
 
-	SingleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
-	{
-		constructor: SingleAxisHingeJoint,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",         new Fields .MFString ("NONE")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",         new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "axis",                new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle",            new Fields .SFFloat (-3.14159)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle",            new Fields .SFFloat (3.14159)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce",          new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "stopErrorCorrection", new Fields .SFFloat (0.8)),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint",    new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint",    new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "angle",               new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "angleRate",           new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body1",               new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body2",               new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "SingleAxisHingeJoint";
-		},
-		getComponentName: function ()
-		{
-			return "RigidBodyPhysics";
-		},
-		getContainerField: function ()
-		{
-			return "joints";
-		},
-		initialize: function ()
-		{
-			X3DRigidJointNode .prototype .initialize .call (this);
+   SingleAxisHingeJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
+   {
+      constructor: SingleAxisHingeJoint,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",         new Fields .MFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",         new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axis",                new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "minAngle",            new Fields .SFFloat (-3.14159)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "maxAngle",            new Fields .SFFloat (3.14159)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopErrorCorrection", new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint",    new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "angle",               new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "angleRate",           new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body1",               new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body2",               new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "SingleAxisHingeJoint";
+      },
+      getComponentName: function ()
+      {
+         return "RigidBodyPhysics";
+      },
+      getContainerField: function ()
+      {
+         return "joints";
+      },
+      initialize: function ()
+      {
+         X3DRigidJointNode .prototype .initialize .call (this);
 
-			this .anchorPoint_ .addInterest ("set_joint__", this);
-			this .axis_        .addInterest ("set_joint__", this);
-		},
-		addJoint: (function ()
-		{
-			var
-				localAxis1 = new Vector3 (0, 0, 0),
-				localAxis2 = new Vector3 (0, 0, 0);
+         this .anchorPoint_ .addInterest ("set_joint__", this);
+         this .axis_        .addInterest ("set_joint__", this);
+      },
+      addJoint: (function ()
+      {
+         var
+            localAxis1 = new Vector3 (0, 0, 0),
+            localAxis2 = new Vector3 (0, 0, 0);
 
-			return function ()
-			{
-				if (! this .getCollection ())
-					return;
+         return function ()
+         {
+            if (! this .getCollection ())
+               return;
 
-				if (! this .getBody1 ())
-					return;
+            if (! this .getBody1 ())
+               return;
 
-				if (! this .getBody2 ())
-					return;
+            if (! this .getBody2 ())
+               return;
 
-			   if (this .getBody1 () .getCollection () !== this .getCollection ())
-					return;
+            if (this .getBody1 () .getCollection () !== this .getCollection ())
+               return;
 
-			   if (this .getBody2 () .getCollection () !== this .getCollection ())
-					return;
+            if (this .getBody2 () .getCollection () !== this .getCollection ())
+               return;
 
-				var
-					localAnchorPoint1 = this .localAnchorPoint1,
-					localAnchorPoint2 = this .localAnchorPoint2;
+            var
+               localAnchorPoint1 = this .localAnchorPoint1,
+               localAnchorPoint2 = this .localAnchorPoint2;
 
-				localAnchorPoint1 .assign (this .anchorPoint_ .getValue ());
-				localAnchorPoint2 .assign (this .anchorPoint_ .getValue ());
-				localAxis1        .assign (this .axis_ .getValue ());
-				localAxis2        .assign (this .axis_ .getValue ());
+            localAnchorPoint1 .assign (this .anchorPoint_ .getValue ());
+            localAnchorPoint2 .assign (this .anchorPoint_ .getValue ());
+            localAxis1        .assign (this .axis_ .getValue ());
+            localAxis2        .assign (this .axis_ .getValue ());
 
-				this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1);
-				this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2);
-				this .getInitialInverseMatrix1 () .multDirMatrix (localAxis1) .normalize ();
-				this .getInitialInverseMatrix2 () .multDirMatrix (localAxis2) .normalize ();
+            this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1);
+            this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2);
+            this .getInitialInverseMatrix1 () .multDirMatrix (localAxis1) .normalize ();
+            this .getInitialInverseMatrix2 () .multDirMatrix (localAxis2) .normalize ();
 
-				this .joint = new Ammo .btHingeConstraint (this .getBody1 () .getRigidBody (),
-				                                           this .getBody2 () .getRigidBody (),
-				                                           new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
-				                                           new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
-				                                           new Ammo .btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
-				                                           new Ammo .btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
-				                                           false);
+            this .joint = new Ammo .btHingeConstraint (this .getBody1 () .getRigidBody (),
+                                                       this .getBody2 () .getRigidBody (),
+                                                       new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z),
+                                                       new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z),
+                                                       new Ammo .btVector3 (localAxis1 .x, localAxis1 .y, localAxis1 .z),
+                                                       new Ammo .btVector3 (localAxis2 .x, localAxis2 .y, localAxis2 .z),
+                                                       false);
 
-				this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
-			};
-		})(),
-		removeJoint: function ()
-		{
-			if (this .joint)
-			{
-				if (this .getCollection ())
-					this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+            this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
+         };
+      })(),
+      removeJoint: function ()
+      {
+         if (this .joint)
+         {
+            if (this .getCollection ())
+               this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
 
-				Ammo .destroy (this .joint);
-				this .joint = null;
-			}
-		},
-		set_forceOutput__: function ()
-		{
-			for (var key in this .outputs)
-				delete this .outputs [key];
+            Ammo .destroy (this .joint);
+            this .joint = null;
+         }
+      },
+      set_forceOutput__: function ()
+      {
+         for (var key in this .outputs)
+            delete this .outputs [key];
 
-			for (var i = 0, length = this .forceOutput_ .length; i < length; ++ i)
-			{
-				var value = this .forceOutput_ [i];
+         for (var i = 0, length = this .forceOutput_ .length; i < length; ++ i)
+         {
+            var value = this .forceOutput_ [i];
 
-				if (value == "ALL")
-				{
-					this .outputs .body1AnchorPoint = true;
-					this .outputs .body2AnchorPoint = true;
-					this .outputs .angle            = true;
-					this .outputs .angularRate      = true;
-				}
-				else
-				{
-					this .outputs [value] = true;
-				}
-			}
+            if (value == "ALL")
+            {
+               this .outputs .body1AnchorPoint = true;
+               this .outputs .body2AnchorPoint = true;
+               this .outputs .angle            = true;
+               this .outputs .angularRate      = true;
+            }
+            else
+            {
+               this .outputs [value] = true;
+            }
+         }
 
-			this .setOutput (! $.isEmptyObject (this .outputs));
-		},
-		update1: (function ()
-		{
-			var localAnchorPoint1 = new Vector3 (0, 0, 0);
+         this .setOutput (! $.isEmptyObject (this .outputs));
+      },
+      update1: (function ()
+      {
+         var localAnchorPoint1 = new Vector3 (0, 0, 0);
 
-			return function ()
-			{
-				if (this .outputs .body1AnchorPoint)
-					this .body1AnchorPoint_ = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
-			};
-		})(),
-		update2: (function ()
-		{
-			var
-				localAnchorPoint2 = new Vector3 (0, 0, 0),
-				difference        = new Matrix4 (),
-				rotation          = new Rotation4 (0, 0, 1, 0);
+         return function ()
+         {
+            if (this .outputs .body1AnchorPoint)
+               this .body1AnchorPoint_ = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
+         };
+      })(),
+      update2: (function ()
+      {
+         var
+            localAnchorPoint2 = new Vector3 (0, 0, 0),
+            difference        = new Matrix4 (),
+            rotation          = new Rotation4 (0, 0, 1, 0);
 
-			return function ()
-			{
-				try
-				{
-					if (this .outputs .body2AnchorPoint)
-						this .body2AnchorPoint_ = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
+         return function ()
+         {
+            try
+            {
+               if (this .outputs .body2AnchorPoint)
+                  this .body2AnchorPoint_ = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
 
-					if (this .outputs .angle)
-					{
-						var lastAngle  = this .angle_ .getValue ();
+               if (this .outputs .angle)
+               {
+                  var lastAngle  = this .angle_ .getValue ();
 
-						difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
-						difference .get (null, rotation);
+                  difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
+                  difference .get (null, rotation);
 
-						this .angle_ = rotation .angle;
+                  this .angle_ = rotation .angle;
 
-						if (this .outputs .angleRate)
-							this .angleRate_ = (this .angle_ .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
-					}
-				}
-				catch (error)
-				{
-					// matrix .get
-				}
-			};
-		})(),
-	});
+                  if (this .outputs .angleRate)
+                     this .angleRate_ = (this .angle_ .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
+               }
+            }
+            catch (error)
+            {
+               // matrix .get
+            }
+         };
+      })(),
+   });
 
-	return SingleAxisHingeJoint;
+   return SingleAxisHingeJoint;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -4142,16 +4134,16 @@ function ($,
 
 
 define ('x_ite/Components/RigidBodyPhysics/SliderJoint',[
-	"jquery",
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
-	"standard/Math/Numbers/Matrix4",
-	"lib/ammojs/AmmoJS"
+   "jquery",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Rotation4",
+   "standard/Math/Numbers/Matrix4",
+   "lib/ammojs/AmmoJS"
 ],
 function ($,
           Fields,
@@ -4166,165 +4158,165 @@ function ($,
 {
 "use strict";
 
-	function SliderJoint (executionContext)
-	{
-		X3DRigidJointNode .call (this, executionContext);
+   function SliderJoint (executionContext)
+   {
+      X3DRigidJointNode .call (this, executionContext);
 
-		this .addType (X3DConstants .SliderJoint);
+      this .addType (X3DConstants .SliderJoint);
 
-		this .minSeparation_  .setUnit ("length");
-		this .maxSeparation_  .setUnit ("length");
-		this .sliderForce_    .setUnit ("force");
-		this .separation_     .setUnit ("force");
-		this .separationRate_ .setUnit ("speed");
+      this .minSeparation_  .setUnit ("length");
+      this .maxSeparation_  .setUnit ("length");
+      this .sliderForce_    .setUnit ("force");
+      this .separation_     .setUnit ("force");
+      this .separationRate_ .setUnit ("speed");
 
-		this .joint   = null;
-		this .outputs = { };
-	}
+      this .joint   = null;
+      this .outputs = { };
+   }
 
-	SliderJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
-	{
-		constructor: SliderJoint,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",         new Fields .MFString ("NONE")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "axis",                new Fields .SFVec3f (0, 1, 0)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "minSeparation",       new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "maxSeparation",       new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "sliderForce",         new Fields .SFFloat (0)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce",          new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "stopErrorCorrection", new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "separation",          new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "separationRate",      new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body1",               new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body2",               new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "SliderJoint";
-		},
-		getComponentName: function ()
-		{
-			return "RigidBodyPhysics";
-		},
-		getContainerField: function ()
-		{
-			return "joints";
-		},
-		initialize: function ()
-		{
-			X3DRigidJointNode .prototype .initialize .call (this);
+   SliderJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
+   {
+      constructor: SliderJoint,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",         new Fields .MFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axis",                new Fields .SFVec3f (0, 1, 0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "minSeparation",       new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "maxSeparation",       new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "sliderForce",         new Fields .SFFloat (0)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopErrorCorrection", new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "separation",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "separationRate",      new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body1",               new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body2",               new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "SliderJoint";
+      },
+      getComponentName: function ()
+      {
+         return "RigidBodyPhysics";
+      },
+      getContainerField: function ()
+      {
+         return "joints";
+      },
+      initialize: function ()
+      {
+         X3DRigidJointNode .prototype .initialize .call (this);
 
-			this .axis_          .addInterest ("set_joint__",       this);
-			this .minSeparation_ .addInterest ("set_separation__",  this);
-			this .maxSeparation_ .addInterest ("set_separation__",  this);
-		},
-		addJoint: (function ()
-		{
-			var
-				axisRotation = new Rotation4 (0, 0, 1, 0),
-				matrixA      = new Matrix4 (),
-				matrixB      = new Matrix4 (),
-				origin       = new Ammo .btVector3 (0, 0, 0),
-				frameInA     = new Ammo .btTransform (),
-				frameInB     = new Ammo .btTransform ();
+         this .axis_          .addInterest ("set_joint__",       this);
+         this .minSeparation_ .addInterest ("set_separation__",  this);
+         this .maxSeparation_ .addInterest ("set_separation__",  this);
+      },
+      addJoint: (function ()
+      {
+         var
+            axisRotation = new Rotation4 (0, 0, 1, 0),
+            matrixA      = new Matrix4 (),
+            matrixB      = new Matrix4 (),
+            origin       = new Ammo .btVector3 (0, 0, 0),
+            frameInA     = new Ammo .btTransform (),
+            frameInB     = new Ammo .btTransform ();
 
-			return function ()
-			{
-				if (! this .getCollection ())
-					return;
+         return function ()
+         {
+            if (! this .getCollection ())
+               return;
 
-				if (! this .getBody1 ())
-					return;
+            if (! this .getBody1 ())
+               return;
 
-				if (! this .getBody2 ())
-					return;
+            if (! this .getBody2 ())
+               return;
 
-			   if (this .getBody1 () .getCollection () !== this .getCollection ())
-					return;
+            if (this .getBody1 () .getCollection () !== this .getCollection ())
+               return;
 
-			   if (this .getBody2 () .getCollection () !== this .getCollection ())
-					return;
+            if (this .getBody2 () .getCollection () !== this .getCollection ())
+               return;
 
-				axisRotation .setFromToVec (Vector3 .xAxis, this .axis_ .getValue ());
+            axisRotation .setFromToVec (Vector3 .xAxis, this .axis_ .getValue ());
 
-				matrixA .set (this .getBody1 () .position_ .getValue (), Rotation4 .multRight (this .getBody1 () .orientation_ .getValue (), axisRotation));
-				matrixB .set (this .getBody1 () .position_ .getValue (), Rotation4 .multRight (this .getBody1 () .orientation_ .getValue (), axisRotation));
+            matrixA .set (this .getBody1 () .position_ .getValue (), Rotation4 .multRight (this .getBody1 () .orientation_ .getValue (), axisRotation));
+            matrixB .set (this .getBody1 () .position_ .getValue (), Rotation4 .multRight (this .getBody1 () .orientation_ .getValue (), axisRotation));
 
-				origin .setValue (matrixA [12], matrixA [13], matrixA [14]);
+            origin .setValue (matrixA [12], matrixA [13], matrixA [14]);
 
-				frameInA .getBasis () .setValue (matrixA [0], matrixA [4], matrixA [8],
-				                                 matrixA [1], matrixA [5], matrixA [9],
-				                                 matrixA [2], matrixA [6], matrixA [10]);
+            frameInA .getBasis () .setValue (matrixA [0], matrixA [4], matrixA [8],
+                                             matrixA [1], matrixA [5], matrixA [9],
+                                             matrixA [2], matrixA [6], matrixA [10]);
 
-				frameInA .setOrigin (origin);
+            frameInA .setOrigin (origin);
 
-				origin .setValue (matrixB [12], matrixB [13], matrixB [14]);
+            origin .setValue (matrixB [12], matrixB [13], matrixB [14]);
 
-				frameInA .getBasis () .setValue (matrixB [0], matrixB [4], matrixB [8],
-				                                 matrixB [1], matrixB [5], matrixB [9],
-				                                 matrixB [2], matrixB [6], matrixB [10]);
+            frameInA .getBasis () .setValue (matrixB [0], matrixB [4], matrixB [8],
+                                             matrixB [1], matrixB [5], matrixB [9],
+                                             matrixB [2], matrixB [6], matrixB [10]);
 
-				frameInB .setOrigin (origin);
+            frameInB .setOrigin (origin);
 
-				this .joint = new Ammo .btSliderConstraint (this .getBody1 () .getRigidBody (),
-				                                            this .getBody2 () .getRigidBody (),
-				                                            frameInA,
-				                                            frameInB,
-				                                            true);
+            this .joint = new Ammo .btSliderConstraint (this .getBody1 () .getRigidBody (),
+                                                        this .getBody2 () .getRigidBody (),
+                                                        frameInA,
+                                                        frameInB,
+                                                        true);
 
-				this .joint .setLowerAngLimit (0);
-				this .joint .setUpperAngLimit (0);
+            this .joint .setLowerAngLimit (0);
+            this .joint .setUpperAngLimit (0);
 
-				this .set_separation__ ();
+            this .set_separation__ ();
 
-				this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
-			};
-		})(),
-		removeJoint: function ()
-		{
-			if (! this .joint)
-				return;
+            this .getCollection () .getDynamicsWorld () .addConstraint (this .joint, true);
+         };
+      })(),
+      removeJoint: function ()
+      {
+         if (! this .joint)
+            return;
 
-			if (this .getCollection ())
-				this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
+         if (this .getCollection ())
+            this .getCollection () .getDynamicsWorld () .removeConstraint (this .joint);
 
-			Ammo .destroy (this .joint);
-			this .joint = null;
-		},
-		set_forceOutput__: function ()
-		{
-			for (var key in this .outputs)
-				delete this .outputs [key];
+         Ammo .destroy (this .joint);
+         this .joint = null;
+      },
+      set_forceOutput__: function ()
+      {
+         for (var key in this .outputs)
+            delete this .outputs [key];
 
-			for (var i = 0, length = this .forceOutput_ .length; i < length; ++ i)
-			{
-				var value = this .forceOutput_ [i];
+         for (var i = 0, length = this .forceOutput_ .length; i < length; ++ i)
+         {
+            var value = this .forceOutput_ [i];
 
-				if (value == "ALL")
-				{
-					this .outputs .separation     = true;
-					this .outputs .separationRate = true;
-				}
-				else
-				{
-					this .outputs [value] = true;
-				}
-			}
+            if (value == "ALL")
+            {
+               this .outputs .separation     = true;
+               this .outputs .separationRate = true;
+            }
+            else
+            {
+               this .outputs [value] = true;
+            }
+         }
 
-			this .setOutput (! $.isEmptyObject (this .outputs));
-		},
-		set_separation__: function ()
-		{
-			if (! this .joint)
-				return;
+         this .setOutput (! $.isEmptyObject (this .outputs));
+      },
+      set_separation__: function ()
+      {
+         if (! this .joint)
+            return;
 
-			this .joint .setLowerLinLimit (this .minSeparation_ .getValue ());
-			this .joint .setUpperLinLimit (this .maxSeparation_ .getValue ());
-		},
-	});
+         this .joint .setLowerLinLimit (this .minSeparation_ .getValue ());
+         this .joint .setUpperLinLimit (this .maxSeparation_ .getValue ());
+      },
+   });
 
-	return SliderJoint;
+   return SliderJoint;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -4377,71 +4369,69 @@ function ($,
 
 
 define ('x_ite/Components/RigidBodyPhysics/UniversalJoint',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DRigidJointNode, 
+          X3DRigidJointNode,
           X3DConstants)
 {
 "use strict";
 
-	function UniversalJoint (executionContext)
-	{
-		X3DRigidJointNode .call (this, executionContext);
+   function UniversalJoint (executionContext)
+   {
+      X3DRigidJointNode .call (this, executionContext);
 
-		this .addType (X3DConstants .UniversalJoint);
+      this .addType (X3DConstants .UniversalJoint);
 
-		// Units
-	
-		this .anchorPoint_      .setUnit ("length");
-		this .body1AnchorPoint_ .setUnit ("length");
-		this .body2AnchorPoint_ .setUnit ("length");
-	}
+      // Units
 
-	UniversalJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
-	{
-		constructor: UniversalJoint,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",          new Fields .MFString ("NONE")),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",          new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "axis1",                new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "axis2",                new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce1",          new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "stop1ErrorCorrection", new Fields .SFFloat (0.8)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "stop2Bounce",          new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "stop2ErrorCorrection", new Fields .SFFloat (0.8)),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint",     new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "body1Axis",            new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint",     new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "body2Axis",            new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "UniversalJoint";
-		},
-		getComponentName: function ()
-		{
-			return "RigidBodyPhysics";
-		},
-		getContainerField: function ()
-		{
-			return "joints";
-		},
-	});
+      this .anchorPoint_      .setUnit ("length");
+      this .body1AnchorPoint_ .setUnit ("length");
+      this .body2AnchorPoint_ .setUnit ("length");
+   }
 
-	return UniversalJoint;
+   UniversalJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),
+   {
+      constructor: UniversalJoint,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "forceOutput",          new Fields .MFString ("NONE")),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "anchorPoint",          new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axis1",                new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "axis2",                new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stopBounce1",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stop1ErrorCorrection", new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stop2Bounce",          new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "stop2ErrorCorrection", new Fields .SFFloat (0.8)),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body1AnchorPoint",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body1Axis",            new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body2AnchorPoint",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "body2Axis",            new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body1",                new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "body2",                new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "UniversalJoint";
+      },
+      getComponentName: function ()
+      {
+         return "RigidBodyPhysics";
+      },
+      getContainerField: function ()
+      {
+         return "joints";
+      },
+   });
+
+   return UniversalJoint;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -4493,25 +4483,25 @@ function (Fields,
 
 
 define (require .getComponentUrl ("rigid-body-physics"), [
-	"x_ite/Components",
-	"x_ite/Components/RigidBodyPhysics/BallJoint",
-	"x_ite/Components/RigidBodyPhysics/CollidableOffset",
-	"x_ite/Components/RigidBodyPhysics/CollidableShape",
-	"x_ite/Components/RigidBodyPhysics/CollisionCollection",
-	"x_ite/Components/RigidBodyPhysics/CollisionSensor",
-	"x_ite/Components/RigidBodyPhysics/CollisionSpace",
-	"x_ite/Components/RigidBodyPhysics/Contact",
-	"x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint",
-	"x_ite/Components/RigidBodyPhysics/MotorJoint",
-	"x_ite/Components/RigidBodyPhysics/RigidBody",
-	"x_ite/Components/RigidBodyPhysics/RigidBodyCollection",
-	"x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint",
-	"x_ite/Components/RigidBodyPhysics/SliderJoint",
-	"x_ite/Components/RigidBodyPhysics/UniversalJoint",
-	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
-	"x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode",
-	"x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
-	"lib/ammojs/AmmoJS",
+   "x_ite/Components",
+   "x_ite/Components/RigidBodyPhysics/BallJoint",
+   "x_ite/Components/RigidBodyPhysics/CollidableOffset",
+   "x_ite/Components/RigidBodyPhysics/CollidableShape",
+   "x_ite/Components/RigidBodyPhysics/CollisionCollection",
+   "x_ite/Components/RigidBodyPhysics/CollisionSensor",
+   "x_ite/Components/RigidBodyPhysics/CollisionSpace",
+   "x_ite/Components/RigidBodyPhysics/Contact",
+   "x_ite/Components/RigidBodyPhysics/DoubleAxisHingeJoint",
+   "x_ite/Components/RigidBodyPhysics/MotorJoint",
+   "x_ite/Components/RigidBodyPhysics/RigidBody",
+   "x_ite/Components/RigidBodyPhysics/RigidBodyCollection",
+   "x_ite/Components/RigidBodyPhysics/SingleAxisHingeJoint",
+   "x_ite/Components/RigidBodyPhysics/SliderJoint",
+   "x_ite/Components/RigidBodyPhysics/UniversalJoint",
+   "x_ite/Components/RigidBodyPhysics/X3DNBodyCollidableNode",
+   "x_ite/Components/RigidBodyPhysics/X3DNBodyCollisionSpaceNode",
+   "x_ite/Components/RigidBodyPhysics/X3DRigidJointNode",
+   "lib/ammojs/AmmoJS",
 ],
 function (Components,
           BallJoint,
@@ -4535,36 +4525,36 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "RigidBodyPhysics",
-		types:
-		{
-			BallJoint:            BallJoint,
-			CollidableOffset:     CollidableOffset,
-			CollidableShape:      CollidableShape,
-			CollisionCollection:  CollisionCollection,
-			CollisionSensor:      CollisionSensor,
-			CollisionSpace:       CollisionSpace,
-			Contact:              Contact,
-			DoubleAxisHingeJoint: DoubleAxisHingeJoint,
-			MotorJoint:           MotorJoint,
-			RigidBody:            RigidBody,
-			RigidBodyCollection:  RigidBodyCollection,
-			SingleAxisHingeJoint: SingleAxisHingeJoint,
-			SliderJoint:          SliderJoint,
-			UniversalJoint:       UniversalJoint,
-		},
-		abstractTypes:
-		{
-			X3DNBodyCollidableNode:     X3DNBodyCollidableNode,
-			X3DNBodyCollisionSpaceNode: X3DNBodyCollisionSpaceNode,
-			X3DRigidJointNode:          X3DRigidJointNode,
-		},
-	});
+   Components .addComponent ({
+      name: "RigidBodyPhysics",
+      types:
+      {
+         BallJoint:            BallJoint,
+         CollidableOffset:     CollidableOffset,
+         CollidableShape:      CollidableShape,
+         CollisionCollection:  CollisionCollection,
+         CollisionSensor:      CollisionSensor,
+         CollisionSpace:       CollisionSpace,
+         Contact:              Contact,
+         DoubleAxisHingeJoint: DoubleAxisHingeJoint,
+         MotorJoint:           MotorJoint,
+         RigidBody:            RigidBody,
+         RigidBodyCollection:  RigidBodyCollection,
+         SingleAxisHingeJoint: SingleAxisHingeJoint,
+         SliderJoint:          SliderJoint,
+         UniversalJoint:       UniversalJoint,
+      },
+      abstractTypes:
+      {
+         X3DNBodyCollidableNode:     X3DNBodyCollidableNode,
+         X3DNBodyCollisionSpaceNode: X3DNBodyCollisionSpaceNode,
+         X3DRigidJointNode:          X3DRigidJointNode,
+      },
+   });
 
-	return {
-		Ammo: Ammo,
-	};
+   return {
+      Ammo: Ammo,
+   };
 });
 
 

@@ -56,30 +56,28 @@ const
 
 
 define ('x_ite/Components/CADGeometry/X3DProductStructureChildNode',[
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Bits/X3DConstants",
 ],
-function (X3DChildNode, 
+function (X3DChildNode,
           X3DConstants)
 {
 "use strict";
 
-	function X3DProductStructureChildNode (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
+   function X3DProductStructureChildNode (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DProductStructureChildNode);
-	}
+      this .addType (X3DConstants .X3DProductStructureChildNode);
+   }
 
-	X3DProductStructureChildNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: X3DProductStructureChildNode,
-	});
+   X3DProductStructureChildNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: X3DProductStructureChildNode,
+   });
 
-	return X3DProductStructureChildNode;
+   return X3DProductStructureChildNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -131,12 +129,12 @@ function (X3DChildNode,
 
 
 define ('x_ite/Components/CADGeometry/CADAssembly',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Grouping/X3DGroupingNode",
-	"x_ite/Components/CADGeometry/X3DProductStructureChildNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Grouping/X3DGroupingNode",
+   "x_ite/Components/CADGeometry/X3DProductStructureChildNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -147,44 +145,44 @@ function (Fields,
 {
 "use strict";
 
-	function CADAssembly (executionContext)
-	{
-		X3DGroupingNode              .call (this, executionContext);
-		X3DProductStructureChildNode .call (this, executionContext);
+   function CADAssembly (executionContext)
+   {
+      X3DGroupingNode              .call (this, executionContext);
+      X3DProductStructureChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .CADAssembly);
-	}
+      this .addType (X3DConstants .CADAssembly);
+   }
 
-	CADAssembly .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
-		//X3DProductStructureChildNode .prototype,
-	{
-		constructor: CADAssembly,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "name",           new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "CADAssembly";
-		},
-		getComponentName: function ()
-		{
-			return "CADGeometry";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-	});
+   CADAssembly .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+      //X3DProductStructureChildNode .prototype,
+   {
+      constructor: CADAssembly,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "name",           new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "CADAssembly";
+      },
+      getComponentName: function ()
+      {
+         return "CADGeometry";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+   });
 
-	return CADAssembly;
+   return CADAssembly;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -237,13 +235,13 @@ function (Fields,
 
 
 define ('x_ite/Components/CADGeometry/CADFace',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/CADGeometry/X3DProductStructureChildNode",
-	"x_ite/Components/Grouping/X3DBoundedObject",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/TraverseType",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/CADGeometry/X3DProductStructureChildNode",
+   "x_ite/Components/Grouping/X3DBoundedObject",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/TraverseType",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -255,216 +253,216 @@ function (Fields,
 {
 "use strict";
 
-	function CADFace (executionContext)
-	{
-		X3DProductStructureChildNode .call (this, executionContext);
-		X3DBoundedObject             .call (this, executionContext);
+   function CADFace (executionContext)
+   {
+      X3DProductStructureChildNode .call (this, executionContext);
+      X3DBoundedObject             .call (this, executionContext);
 
-		this .addType (X3DConstants .CADFace);
+      this .addType (X3DConstants .CADFace);
 
-		this .childNode     = null;
-		this .visibleNode   = null;
-		this .boundedObject = null;
-	}
+      this .childNode     = null;
+      this .visibleNode   = null;
+      this .boundedObject = null;
+   }
 
-	CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNode .prototype),
-		X3DBoundedObject .prototype,
-	{
-		constructor: CADFace,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "name",        new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "shape",       new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "CADFace";
-		},
-		getComponentName: function ()
-		{
-			return "CADGeometry";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DProductStructureChildNode .prototype .initialize .call (this);
-			X3DBoundedObject             .prototype .initialize .call (this);
+   CADFace .prototype = Object .assign (Object .create (X3DProductStructureChildNode .prototype),
+      X3DBoundedObject .prototype,
+   {
+      constructor: CADFace,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "name",        new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",    new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",  new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "shape",       new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "CADFace";
+      },
+      getComponentName: function ()
+      {
+         return "CADGeometry";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DProductStructureChildNode .prototype .initialize .call (this);
+         X3DBoundedObject             .prototype .initialize .call (this);
 
-			this .shape_ .addInterest ("set_shape__", this);
+         this .shape_ .addInterest ("set_shape__", this);
 
-			this .set_shape__ ();
-		},
-		getBBox: function (bbox, shadow)
-		{
-			if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
-			{
-				const boundedObject = this .visibleNode;
+         this .set_shape__ ();
+      },
+      getBBox: function (bbox, shadow)
+      {
+         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         {
+            const boundedObject = this .visibleNode;
 
-				if (boundedObject)
-					return boundedObject .getBBox (bbox, shadow);
+            if (boundedObject)
+               return boundedObject .getBBox (bbox, shadow);
 
-				return bbox .set ();
-			}
+            return bbox .set ();
+         }
 
-			return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
-		},
-		set_shape__: function ()
-		{
-			if (this .childNode)
-			{
-				this .childNode .isCameraObject_   .removeInterest ("set_cameraObject__",     this);
-				this .childNode .isPickableObject_ .removeInterest ("set_transformSensors__", this);
+         return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+      },
+      set_shape__: function ()
+      {
+         if (this .childNode)
+         {
+            this .childNode .isCameraObject_   .removeInterest ("set_cameraObject__",     this);
+            this .childNode .isPickableObject_ .removeInterest ("set_transformSensors__", this);
 
-				this .childNode .visible_     .removeInterest ("set_visible__",     this);
-				this .childNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
-			}
+            this .childNode .visible_     .removeInterest ("set_visible__",     this);
+            this .childNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+         }
 
-			this .childNode = null;
+         this .childNode = null;
 
-			try
-			{
-				const
-					node = this .shape_ .getValue () .getInnerNode (),
-					type = node .getType ();
+         try
+         {
+            const
+               node = this .shape_ .getValue () .getInnerNode (),
+               type = node .getType ();
 
-				for (var t = type .length - 1; t >= 0; -- t)
-				{
-					switch (type [t])
-					{
-						case X3DConstants .LOD:
-						case X3DConstants .Transform:
-						case X3DConstants .X3DShapeNode:
-						{
-							node .isCameraObject_   .addInterest ("set_cameraObject__",     this);
-							node .isPickableObject_ .addInterest ("set_transformSensors__", this);
+            for (var t = type .length - 1; t >= 0; -- t)
+            {
+               switch (type [t])
+               {
+                  case X3DConstants .LOD:
+                  case X3DConstants .Transform:
+                  case X3DConstants .X3DShapeNode:
+                  {
+                     node .isCameraObject_   .addInterest ("set_cameraObject__",     this);
+                     node .isPickableObject_ .addInterest ("set_transformSensors__", this);
 
-							node .visible_     .addInterest ("set_visible__",     this);
-							node .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
+                     node .visible_     .addInterest ("set_visible__",     this);
+                     node .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
 
-							this .childNode = node;
-							break;
-						}
-						default:
-							continue;
-					}
+                     this .childNode = node;
+                     break;
+                  }
+                  default:
+                     continue;
+               }
 
-					break;
-				}
-			}
-			catch (error)
-			{ }
+               break;
+            }
+         }
+         catch (error)
+         { }
 
-			if (this .childNode)
-			{
-				delete this .traverse;
-			}
-			else
-			{
-				this .traverse = Function .prototype;
-			}
+         if (this .childNode)
+         {
+            delete this .traverse;
+         }
+         else
+         {
+            this .traverse = Function .prototype;
+         }
 
-			this .set_transformSensors__ ();
-			this .set_visible__ ();
-			this .set_bboxDisplay__ ();
-		},
-		set_cameraObject__: function ()
-		{
-			if (this .childNode && this .childNode .getCameraObject ())
-			{
-				this .setCameraObject (this .childNode .visible_ .getValue ());
-			}
-			else
-			{
-				this .setCameraObject (false);
-			}
-		},
-		set_transformSensors__: function ()
-		{
-			this .setPickableObject (Boolean (this .childNode && this .childNode .getPickableObject ()));
-		},
-		set_visible__: function ()
-		{
-			if (this .childNode)
-			{
-				this .visibleNode = this .childNode .visible_ .getValue () ? this .childNode : null;
-			}
-			else
-			{
-				this .visibleNode = null;
-			}
+         this .set_transformSensors__ ();
+         this .set_visible__ ();
+         this .set_bboxDisplay__ ();
+      },
+      set_cameraObject__: function ()
+      {
+         if (this .childNode && this .childNode .getCameraObject ())
+         {
+            this .setCameraObject (this .childNode .visible_ .getValue ());
+         }
+         else
+         {
+            this .setCameraObject (false);
+         }
+      },
+      set_transformSensors__: function ()
+      {
+         this .setPickableObject (Boolean (this .childNode && this .childNode .getPickableObject ()));
+      },
+      set_visible__: function ()
+      {
+         if (this .childNode)
+         {
+            this .visibleNode = this .childNode .visible_ .getValue () ? this .childNode : null;
+         }
+         else
+         {
+            this .visibleNode = null;
+         }
 
-			this .set_cameraObject__ ();
-		},
-		set_bboxDisplay__: function ()
-		{
-			if (this .childNode)
-			{
-				this .boundedObject = this .childNode .bboxDisplay_ .getValue () ? this .childNode : null;
-			}
-			else
-			{
-				this .boundedObject = null;
-			}
-		},
-		traverse: function (type, renderObject)
-		{
-			switch (type)
-			{
-				case TraverseType .POINTER:
-				case TraverseType .CAMERA:
-				case TraverseType .SHADOW:
-				{
-					const visibleNode = this .visibleNode;
+         this .set_cameraObject__ ();
+      },
+      set_bboxDisplay__: function ()
+      {
+         if (this .childNode)
+         {
+            this .boundedObject = this .childNode .bboxDisplay_ .getValue () ? this .childNode : null;
+         }
+         else
+         {
+            this .boundedObject = null;
+         }
+      },
+      traverse: function (type, renderObject)
+      {
+         switch (type)
+         {
+            case TraverseType .POINTER:
+            case TraverseType .CAMERA:
+            case TraverseType .SHADOW:
+            {
+               const visibleNode = this .visibleNode;
 
-					if (visibleNode)
-						visibleNode .traverse (type, renderObject);
+               if (visibleNode)
+                  visibleNode .traverse (type, renderObject);
 
-					return;
-				}
-				case TraverseType .PICKING:
-				{
-					const
-						browser          = renderObject .getBrowser (),
-						pickingHierarchy = browser .getPickingHierarchy ();
+               return;
+            }
+            case TraverseType .PICKING:
+            {
+               const
+                  browser          = renderObject .getBrowser (),
+                  pickingHierarchy = browser .getPickingHierarchy ();
 
-					pickingHierarchy .push (this);
+               pickingHierarchy .push (this);
 
-					this .childNode .traverse (type, renderObject);
+               this .childNode .traverse (type, renderObject);
 
-					pickingHierarchy .pop ();
-					return;
-				}
-				case TraverseType .COLLISION:
-				{
-					this .childNode .traverse (type, renderObject);
-					return;
-				}
-				case TraverseType .DISPLAY:
-				{
-					const visibleNode = this .visibleNode;
+               pickingHierarchy .pop ();
+               return;
+            }
+            case TraverseType .COLLISION:
+            {
+               this .childNode .traverse (type, renderObject);
+               return;
+            }
+            case TraverseType .DISPLAY:
+            {
+               const visibleNode = this .visibleNode;
 
-					if (visibleNode)
-						visibleNode .traverse (type, renderObject);
+               if (visibleNode)
+                  visibleNode .traverse (type, renderObject);
 
-					const boundedObject = this .boundedObject;
+               const boundedObject = this .boundedObject;
 
-					if (boundedObject)
-						boundedObject .displayBBox (type, renderObject);
+               if (boundedObject)
+                  boundedObject .displayBBox (type, renderObject);
 
-					return;
-				}
-			}
-		},
-	});
+               return;
+            }
+         }
+      },
+   });
 
-	return CADFace;
+   return CADFace;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -517,11 +515,11 @@ function (Fields,
 
 
 define ('x_ite/Components/CADGeometry/CADLayer',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Grouping/X3DGroupingNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Grouping/X3DGroupingNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -531,42 +529,42 @@ function (Fields,
 {
 "use strict";
 
-	function CADLayer (executionContext)
-	{
-		X3DGroupingNode .call (this, executionContext);
+   function CADLayer (executionContext)
+   {
+      X3DGroupingNode .call (this, executionContext);
 
-		this .addType (X3DConstants .CADLayer);
-	}
+      this .addType (X3DConstants .CADLayer);
+   }
 
-	CADLayer .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
-	{
-		constructor: CADLayer,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "name",           new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "CADLayer";
-		},
-		getComponentName: function ()
-		{
-			return "CADGeometry";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-	});
+   CADLayer .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
+   {
+      constructor: CADLayer,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "name",           new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",       new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",     new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",       new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "CADLayer";
+      },
+      getComponentName: function ()
+      {
+         return "CADGeometry";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+   });
 
-	return CADLayer;
+   return CADLayer;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -619,12 +617,12 @@ function (Fields,
 
 
 define ('x_ite/Components/CADGeometry/CADPart',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Grouping/X3DTransformNode",
-	"x_ite/Components/CADGeometry/X3DProductStructureChildNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Grouping/X3DTransformNode",
+   "x_ite/Components/CADGeometry/X3DProductStructureChildNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -635,49 +633,49 @@ function (Fields,
 {
 "use strict";
 
-	function CADPart (executionContext)
-	{
-		X3DTransformNode             .call (this, executionContext);
-		X3DProductStructureChildNode .call (this, executionContext);
+   function CADPart (executionContext)
+   {
+      X3DTransformNode             .call (this, executionContext);
+      X3DProductStructureChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .CADPart);
-	}
+      this .addType (X3DConstants .CADPart);
+   }
 
-	CADPart .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
-		//X3DProductStructureChildNode .prototype,
-	{
-		constructor: CADPart,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "name",             new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",      new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",         new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",            new Fields .SFVec3f (1, 1, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientation", new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "center",           new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "CADPart";
-		},
-		getComponentName: function ()
-		{
-			return "CADGeometry";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-	});
+   CADPart .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
+      //X3DProductStructureChildNode .prototype,
+   {
+      constructor: CADPart,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "name",             new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",      new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",         new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scale",            new Fields .SFVec3f (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "scaleOrientation", new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "center",           new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",          new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",      new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",         new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",       new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addChildren",      new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeChildren",   new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "children",         new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "CADPart";
+      },
+      getComponentName: function ()
+      {
+         return "CADGeometry";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+   });
 
-	return CADPart;
+   return CADPart;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -730,11 +728,11 @@ function (Fields,
 
 
 define ('x_ite/Components/CADGeometry/IndexedQuadSet',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DComposedGeometryNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Rendering/X3DComposedGeometryNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -744,76 +742,76 @@ function (Fields,
 {
 "use strict";
 
-	function IndexedQuadSet (executionContext)
-	{
-		X3DComposedGeometryNode .call (this, executionContext);
+   function IndexedQuadSet (executionContext)
+   {
+      X3DComposedGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .IndexedQuadSet);
-	}
+      this .addType (X3DConstants .IndexedQuadSet);
+   }
 
-	IndexedQuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
-	{
-		constructor: IndexedQuadSet,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_index",       new Fields .MFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "index",           new Fields .MFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "IndexedQuadSet";
-		},
-		getComponentName: function ()
-		{
-			return "CADGeometry";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-		initialize: function ()
-		{
-			X3DComposedGeometryNode .prototype .initialize .call (this);
+   IndexedQuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+   {
+      constructor: IndexedQuadSet,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_index",       new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "index",           new Fields .MFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "IndexedQuadSet";
+      },
+      getComponentName: function ()
+      {
+         return "CADGeometry";
+      },
+      getContainerField: function ()
+      {
+         return "geometry";
+      },
+      initialize: function ()
+      {
+         X3DComposedGeometryNode .prototype .initialize .call (this);
 
-			this .set_index_ .addFieldInterest (this .index_);
-		},
-		getTriangleIndex: (function ()
-		{
-			// Define two triangles.
-			var indexMap = [0, 1, 2,   0, 2, 3];
+         this .set_index_ .addFieldInterest (this .index_);
+      },
+      getTriangleIndex: (function ()
+      {
+         // Define two triangles.
+         var indexMap = [0, 1, 2,   0, 2, 3];
 
-			return function (i)
-			{
-				var mod = i % 6;
+         return function (i)
+         {
+            var mod = i % 6;
 
-				return (i - mod) / 6 * 4 + indexMap [mod];
-			};
-		})(),
-		getPolygonIndex: function (i)
-		{
-			return this .index_ [i];
-		},
-		build: function ()
-		{
-			var length = this .index_ .length;
+            return (i - mod) / 6 * 4 + indexMap [mod];
+         };
+      })(),
+      getPolygonIndex: function (i)
+      {
+         return this .index_ [i];
+      },
+      build: function ()
+      {
+         var length = this .index_ .length;
 
-			length -= length % 4;
+         length -= length % 4;
 
-			X3DComposedGeometryNode .prototype .build .call (this, 4, length, 6, length / 4 * 6);
-		},
-	});
+         X3DComposedGeometryNode .prototype .build .call (this, 4, length, 6, length / 4 * 6);
+      },
+   });
 
-	return IndexedQuadSet;
+   return IndexedQuadSet;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -866,85 +864,83 @@ function (Fields,
 
 
 define ('x_ite/Components/CADGeometry/QuadSet',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DComposedGeometryNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Rendering/X3DComposedGeometryNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DComposedGeometryNode, 
+          X3DComposedGeometryNode,
           X3DConstants)
 {
 "use strict";
 
-	// Define two triangles.
-	var indexMap = [0, 1, 2,   0, 2, 3];
+   // Define two triangles.
+   var indexMap = [0, 1, 2,   0, 2, 3];
 
-	function QuadSet (executionContext)
-	{
-		X3DComposedGeometryNode .call (this, executionContext);
+   function QuadSet (executionContext)
+   {
+      X3DComposedGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .QuadSet);
-	}
+      this .addType (X3DConstants .QuadSet);
+   }
 
-	QuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
-	{
-		constructor: QuadSet,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "QuadSet";
-		},
-		getComponentName: function ()
-		{
-			return "CADGeometry";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-		getTriangleIndex: function (i)
-		{
-			var mod = i % 6;
+   QuadSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
+   {
+      constructor: QuadSet,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "colorPerVertex",  new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "normalPerVertex", new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "attrib",          new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "fogCoord",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "color",           new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "normal",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "coord",           new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "QuadSet";
+      },
+      getComponentName: function ()
+      {
+         return "CADGeometry";
+      },
+      getContainerField: function ()
+      {
+         return "geometry";
+      },
+      getTriangleIndex: function (i)
+      {
+         var mod = i % 6;
 
-			return (i - mod) / 6 * 4 + indexMap [mod];
-		},
-		build: function ()
-		{
-			if (! this .getCoord ())
-				return;
+         return (i - mod) / 6 * 4 + indexMap [mod];
+      },
+      build: function ()
+      {
+         if (! this .getCoord ())
+            return;
 
-			var length = this .getCoord () .getSize ();
-	
-			length -= length % 4;
+         var length = this .getCoord () .getSize ();
 
-			X3DComposedGeometryNode .prototype .build .call (this, 4, length, 6, length / 4 * 6);
-		},
-		createNormals: function (verticesPerPolygon, polygonsSize)
-		{
-			return this .createFaceNormals (verticesPerPolygon, polygonsSize);
-		},
-	});
+         length -= length % 4;
 
-	return QuadSet;
+         X3DComposedGeometryNode .prototype .build .call (this, 4, length, 6, length / 4 * 6);
+      },
+      createNormals: function (verticesPerPolygon, polygonsSize)
+      {
+         return this .createFaceNormals (verticesPerPolygon, polygonsSize);
+      },
+   });
+
+   return QuadSet;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -996,14 +992,14 @@ function (Fields,
 
 
 define (require .getComponentUrl ("cad-geometry"), [
-	"x_ite/Components",
-	"x_ite/Components/CADGeometry/CADAssembly",
-	"x_ite/Components/CADGeometry/CADFace",
-	"x_ite/Components/CADGeometry/CADLayer",
-	"x_ite/Components/CADGeometry/CADPart",
-	"x_ite/Components/CADGeometry/IndexedQuadSet",
-	"x_ite/Components/CADGeometry/QuadSet",
-	"x_ite/Components/CADGeometry/X3DProductStructureChildNode",
+   "x_ite/Components",
+   "x_ite/Components/CADGeometry/CADAssembly",
+   "x_ite/Components/CADGeometry/CADFace",
+   "x_ite/Components/CADGeometry/CADLayer",
+   "x_ite/Components/CADGeometry/CADPart",
+   "x_ite/Components/CADGeometry/IndexedQuadSet",
+   "x_ite/Components/CADGeometry/QuadSet",
+   "x_ite/Components/CADGeometry/X3DProductStructureChildNode",
 ],
 function (Components,
           CADAssembly,
@@ -1016,24 +1012,23 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "CADGeometry",
-		types:
-		{
-			CADAssembly:    CADAssembly,
-			CADFace:        CADFace,
-			CADLayer:       CADLayer,
-			CADPart:        CADPart,
-			IndexedQuadSet: IndexedQuadSet,
-			QuadSet:        QuadSet,
-		},
-		abstractTypes:
-		{
-			X3DProductStructureChildNode: X3DProductStructureChildNode,
-		},
-	});
+   Components .addComponent ({
+      name: "CADGeometry",
+      types:
+      {
+         CADAssembly:    CADAssembly,
+         CADFace:        CADFace,
+         CADLayer:       CADLayer,
+         CADPart:        CADPart,
+         IndexedQuadSet: IndexedQuadSet,
+         QuadSet:        QuadSet,
+      },
+      abstractTypes:
+      {
+         X3DProductStructureChildNode: X3DProductStructureChildNode,
+      },
+   });
 });
-
 
 
 })();

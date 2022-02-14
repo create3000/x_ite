@@ -56,98 +56,96 @@ const
 
 
 define ('x_ite/Components/NURBS/Contour2D',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNode, 
-          X3DConstants, 
+          X3DNode,
+          X3DConstants,
           X3DCast)
 {
 "use strict";
 
-	function Contour2D (executionContext)
-	{
-		X3DNode .call (this, executionContext);
+   function Contour2D (executionContext)
+   {
+      X3DNode .call (this, executionContext);
 
-		this .addType (X3DConstants .Contour2D);
+      this .addType (X3DConstants .Contour2D);
 
-		this .childNodes = [ ];
-	}
+      this .childNodes = [ ];
+   }
 
-	Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
-	{
-		constructor: Contour2D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "addChildren",    new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "removeChildren", new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "children",       new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "Contour2D";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "trimmingContour";
-		},
-		initialize: function ()
-		{
-			X3DNode .prototype .initialize .call (this);
+   Contour2D .prototype = Object .assign (Object .create (X3DNode .prototype),
+   {
+      constructor: Contour2D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "addChildren",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "removeChildren", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "children",       new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "Contour2D";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "trimmingContour";
+      },
+      initialize: function ()
+      {
+         X3DNode .prototype .initialize .call (this);
 
-			this .children_ .addInterest ("set_children__", this);
+         this .children_ .addInterest ("set_children__", this);
 
-			this .set_children__ ();
-		},
-		set_children__: function ()
-		{
-			var childNodes = this .childNodes;
+         this .set_children__ ();
+      },
+      set_children__: function ()
+      {
+         var childNodes = this .childNodes;
 
-			childNodes .length = 0;
+         childNodes .length = 0;
 
-			for (var i = 0, length = this .children_ .length; i < length; ++ i)
-			{
-				var childNode = X3DCast (X3DConstants .NurbsCurve2D, this .children_ [i]);
+         for (var i = 0, length = this .children_ .length; i < length; ++ i)
+         {
+            var childNode = X3DCast (X3DConstants .NurbsCurve2D, this .children_ [i]);
 
-				if (childNode)
-				{
-					childNodes .push (childNode);
-					continue;
-				}
+            if (childNode)
+            {
+               childNodes .push (childNode);
+               continue;
+            }
 
-				var childNode = X3DCast (X3DConstants .ContourPolyline2D, this .children_ [i]);
+            var childNode = X3DCast (X3DConstants .ContourPolyline2D, this .children_ [i]);
 
-				if (childNode)
-				{
-					childNodes .push (childNode);
-					continue;
-				}
-			}
-		},
-		addTrimmingContour: function (trimmingContours)
-		{
-			var childNodes = this .childNodes;
+            if (childNode)
+            {
+               childNodes .push (childNode);
+               continue;
+            }
+         }
+      },
+      addTrimmingContour: function (trimmingContours)
+      {
+         var childNodes = this .childNodes;
 
-			for (var i = 0, length = childNodes .length; i < length; ++ i)
-				trimmingContours .push (childNodes [i] .tessellate (2));
-		}
-	});
+         for (var i = 0, length = childNodes .length; i < length; ++ i)
+            trimmingContours .push (childNodes [i] .tessellate (2));
+      }
+   });
 
-	return Contour2D;
+   return Contour2D;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -199,30 +197,28 @@ function (Fields,
 
 
 define ('x_ite/Components/NURBS/X3DNurbsControlCurveNode',[
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Bits/X3DConstants",
 ],
-function (X3DNode, 
+function (X3DNode,
           X3DConstants)
 {
 "use strict";
 
-	function X3DNurbsControlCurveNode (executionContext)
-	{
-		X3DNode .call (this, executionContext);
+   function X3DNurbsControlCurveNode (executionContext)
+   {
+      X3DNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DNurbsControlCurveNode);
-	}
+      this .addType (X3DConstants .X3DNurbsControlCurveNode);
+   }
 
-	X3DNurbsControlCurveNode .prototype = Object .assign (Object .create (X3DNode .prototype),
-	{
-		constructor: X3DNurbsControlCurveNode,
-	});
+   X3DNurbsControlCurveNode .prototype = Object .assign (Object .create (X3DNode .prototype),
+   {
+      constructor: X3DNurbsControlCurveNode,
+   });
 
-	return X3DNurbsControlCurveNode;
+   return X3DNurbsControlCurveNode;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -274,118 +270,116 @@ function (X3DNode,
 
 
 define ('x_ite/Components/NURBS/ContourPolyline2D',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/NURBS/X3DNurbsControlCurveNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/NURBS/X3DNurbsControlCurveNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNurbsControlCurveNode, 
+          X3DNurbsControlCurveNode,
           X3DConstants,
           Vector3)
 {
 "use strict";
 
-	function ContourPolyline2D (executionContext)
-	{
-		X3DNurbsControlCurveNode .call (this, executionContext);
+   function ContourPolyline2D (executionContext)
+   {
+      X3DNurbsControlCurveNode .call (this, executionContext);
 
-		this .addType (X3DConstants .ContourPolyline2D);
+      this .addType (X3DConstants .ContourPolyline2D);
 
-		this .controlPoints = [ ];
-	}
+      this .controlPoints = [ ];
+   }
 
-	ContourPolyline2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
-	{
-		constructor: ContourPolyline2D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint", new Fields .MFVec2d ()),
-		]),
-		getTypeName: function ()
-		{
-			return "ContourPolyline2D";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		tessellate: function (type)
-		{
-			switch (type)
-			{
-				case 0:
-				{
-					var
-						controlPointArray = this .controlPoint_ .getValue (),
-						controlPoints     = this .controlPoints;
+   ContourPolyline2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
+   {
+      constructor: ContourPolyline2D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint", new Fields .MFVec2d ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "ContourPolyline2D";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      tessellate: function (type)
+      {
+         switch (type)
+         {
+            case 0:
+            {
+               var
+                  controlPointArray = this .controlPoint_ .getValue (),
+                  controlPoints     = this .controlPoints;
 
-					for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
-					{
-						var i2 = i * 2;
-	
-						controlPoints [i2 + 0] = controlPointArray [i2 + 0];
-						controlPoints [i2 + 1] = controlPointArray [i2 + 1];
-					}
-	
-					controlPoints .length = length * 2;
+               for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+               {
+                  var i2 = i * 2;
 
-					return controlPoints;
-				}
-				case 1:
-				{
-					var
-						controlPointArray = this .controlPoint_ .getValue (),
-						controlPoints     = this .controlPoints;
+                  controlPoints [i2 + 0] = controlPointArray [i2 + 0];
+                  controlPoints [i2 + 1] = controlPointArray [i2 + 1];
+               }
 
-					for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
-					{
-						var
-							i2 = i * 2,
-							i3 = i * 3;
-	
-						controlPoints [i3 + 0] = controlPointArray [i2 + 0];
-						controlPoints [i3 + 1] = 0;
-						controlPoints [i3 + 2] = controlPointArray [i2 + 1];
-					}
-	
-					controlPoints .length = length * 3;
+               controlPoints .length = length * 2;
 
-					return controlPoints;
-				}
-				case 3:
-				{
-					var
-						controlPointArray = this .controlPoint_ .getValue (),
-						controlPoints     = this .controlPoints;
+               return controlPoints;
+            }
+            case 1:
+            {
+               var
+                  controlPointArray = this .controlPoint_ .getValue (),
+                  controlPoints     = this .controlPoints;
 
-					for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
-					{
-						var i2 = i * 2;
+               for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+               {
+                  var
+                     i2 = i * 2,
+                     i3 = i * 3;
 
-						controlPoints [i] = new Vector3 (controlPointArray [i2 + 0], controlPointArray [i2 + 1], 0);
-					}
-	
-					controlPoints .length = length;
+                  controlPoints [i3 + 0] = controlPointArray [i2 + 0];
+                  controlPoints [i3 + 1] = 0;
+                  controlPoints [i3 + 2] = controlPointArray [i2 + 1];
+               }
 
-					return controlPoints;
-				}
-			}
-		},
-	});
+               controlPoints .length = length * 3;
 
-	return ContourPolyline2D;
+               return controlPoints;
+            }
+            case 3:
+            {
+               var
+                  controlPointArray = this .controlPoint_ .getValue (),
+                  controlPoints     = this .controlPoints;
+
+               for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+               {
+                  var i2 = i * 2;
+
+                  controlPoints [i] = new Vector3 (controlPointArray [i2 + 0], controlPointArray [i2 + 1], 0);
+               }
+
+               controlPoints .length = length;
+
+               return controlPoints;
+            }
+         }
+      },
+   });
+
+   return ContourPolyline2D;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -437,52 +431,50 @@ function (Fields,
 
 
 define ('x_ite/Components/NURBS/CoordinateDouble',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Rendering/X3DCoordinateNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Rendering/X3DCoordinateNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DCoordinateNode, 
+          X3DCoordinateNode,
           X3DConstants)
 {
 "use strict";
 
-	function CoordinateDouble (executionContext)
-	{
-		X3DCoordinateNode .call (this, executionContext);
+   function CoordinateDouble (executionContext)
+   {
+      X3DCoordinateNode .call (this, executionContext);
 
-		this .addType (X3DConstants .CoordinateDouble);
-	}
+      this .addType (X3DConstants .CoordinateDouble);
+   }
 
-	CoordinateDouble .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
-	{
-		constructor: CoordinateDouble,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3d ()),
-		]),
-		getTypeName: function ()
-		{
-			return "CoordinateDouble";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "coord";
-		},
-	});
+   CoordinateDouble .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
+   {
+      constructor: CoordinateDouble,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3d ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "CoordinateDouble";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "coord";
+      },
+   });
 
-	return CoordinateDouble;
+   return CoordinateDouble;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -534,9 +526,9 @@ function (Fields,
 
 
 define ('x_ite/Browser/NURBS/NURBS',[
-	"standard/Math/Numbers/Vector2",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Vector4",
+   "standard/Math/Numbers/Vector2",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Vector4",
 ],
 function (Vector2,
           Vector3,
@@ -544,426 +536,426 @@ function (Vector2,
 {
 "use strict";
 
-	var NURBS = {
-		getTessellation: function (tessellation, dimension)
-		{
-			if (tessellation > 0)
-				return tessellation + 1;
-
-			if (tessellation < 0)
-				return -tessellation * dimension + 1;
-
-			return 2 * dimension + 1;
-		},
-		getClosed2D: function (order, knot, weight, controlPoint)
-		{
-			var
-				dimension   = controlPoint .length,
-				haveWeights = weight .length === dimension;
-
-			// Check if first and last weights are unitary.
-
-			if (haveWeights)
-			{
-				if (weight [0] !== weight [dimension - 1])
-					return false;
-			}
-
-			// Check if first and last point are coincident.
-
-			if (! controlPoint [0] .equals (controlPoint [dimension - 1]))
-				return false;
-
-			// Check if knots are periodic.
-
-			if (! this .isPeriodic (order, dimension, knot))
-				return false;
-
-			return true;
-		},
-		getClosed: (function ()
-		{
-			var
-				firstPoint = new Vector3 (0, 0, 0),
-				lastPoint  = new Vector3 (0, 0, 0);
-
-			return function (order, knot, weight, controlPointNode)
-			{
-				var
-					dimension   = controlPointNode .getSize (),
-					haveWeights = weight .length === dimension;
-
-				// Check if first and last weights are unitary.
-
-				if (haveWeights)
-				{
-					if (weight [0] !== weight [dimension - 1])
-						return false;
-				}
-
-				// Check if first and last point are coincident.
-
-				if (! controlPointNode .get1Point (0, firstPoint) .equals (controlPointNode .get1Point (dimension - 1, lastPoint)))
-					return false;
-
-				// Check if knots are periodic.
-
-				if (! this .isPeriodic (order, dimension, knot))
-					return false;
-
-				return true;
-			};
-		})(),
-		getUClosed: (function ()
-		{
-			var
-				firstPoint = new Vector3 (0, 0, 0),
-				lastPoint  = new Vector3 (0, 0, 0);
-
-			return function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
-			{
-				var haveWeights = weight .length === controlPointNode .getSize ();
-
-				for (var v = 0, length = vDimension; v < length; ++ v)
-				{
-					var
-						first = v * uDimension,
-						last  = v * uDimension + uDimension - 1;
-
-					// Check if first and last weights are unitary.
-
-					if (haveWeights)
-					{
-						if (weight [first] !== weight [last])
-							return false;
-					}
-
-					// Check if first and last point are coincident.
-
-					if (! controlPointNode .get1Point (first, firstPoint) .equals (controlPointNode .get1Point (last, lastPoint)))
-						return false;
-				}
-
-				// Check if knots are periodic.
-
-				if (! this .isPeriodic (uOrder, uDimension, uKnot))
-					return false;
-
-				return true;
-			};
-		})(),
-		getVClosed: (function ()
-		{
-			var
-				firstPoint = new Vector3 (0, 0, 0),
-				lastPoint  = new Vector3 (0, 0, 0);
-
-			return function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
-			{
-				var haveWeights = weight .length === controlPointNode .getSize ();
-
-				for (var u = 0, size = uDimension; u < size; ++ u)
-				{
-					var
-						first = u,
-						last  = (vDimension - 1) * uDimension + u;
-
-					// Check if first and last weights are unitary.
-
-					if (haveWeights)
-					{
-						if (weight [first] !== weight [last])
-							return false;
-					}
-
-					// Check if first and last point are coincident.
-
-					if (! controlPointNode .get1Point (first, firstPoint) .equals (controlPointNode .get1Point (last, lastPoint)))
-						return false;
-				}
-
-				// Check if knots are periodic.
-
-				if (! this .isPeriodic (vOrder, vDimension, vKnot))
-					return false;
-
-				return true;
-			};
-		})(),
-		isPeriodic: function (order, dimension, knot)
-		{
-			// Check if knots are periodic.
-
-			if (knot .length === dimension + order)
-			{
-				{
-					var count = 1;
-
-					for (var i = 1, size = order; i < size; ++ i)
-					{
-						count += knot [i] === knot [0];
-					}
-
-					if (count === order)
-						return false;
-				}
-
-				{
-					var count = 1;
-
-					for (var i = knot .length - order, size = knot .length - 1; i < size; ++ i)
-					{
-						count += knot [i] === knot [size];
-					}
-
-					if (count === order)
-						return false;
-				}
-			}
-
-			return true;
-		},
-		getKnots: function (result, closed, order, dimension, knot)
-		{
-			var knots = result || [ ];
-
-			for (var i = 0, length = knot .length; i < length; ++ i)
-				knots [i] = knot [i];
-
-			knots .length = knot .length;
-
-			// check the knot-vectors. If they are not according to standard
-			// default uniform knot vectors will be generated.
-
-			var generateUniform = true;
-
-			if (knots .length === dimension + order)
-			{
-				generateUniform = false;
-
-				var consecutiveKnots = 0;
-
-				for (var i = 1, length = knots .length; i < length; ++ i)
-				{
-					if (knots [i] == knots [i - 1])
-						++ consecutiveKnots;
-					else
-						consecutiveKnots = 0;
-
-					if (consecutiveKnots > order - 1)
-						generateUniform = true;
-
-					if (knots [i - 1] > knots [i])
-						generateUniform = true;
-				}
-			}
-
-			if (generateUniform)
-			{
-				for (var i = 0, length = dimension + order; i < length; ++ i)
-					knots [i] = i / (length - 1);
-			}
-
-			if (closed)
-			{
-				for (var i = 1, length = order - 1; i < length; ++ i)
-					knots .push (knots .at (-1) + (knots [i] - knots [i - 1]));
-			}
-
-			return knots;
-		},
-		getWeights: function (result, dimension, weight)
-		{
-			if (weight .length !== dimension)
-				return undefined;
-
-			var weights = result || [ ];
-
-			for (var i = 0; i < dimension; ++ i)
-			{
-				weights [i] = weight [i];
-			}
-
-			weights .length = dimension;
-
-			return weights;
-		},
-		getUVWeights: function (result, uDimension, vDimension, weight)
-		{
-			var dimension = uDimension * vDimension;
-
-			if (weight .length !== dimension)
-				return undefined;
-
-			var weights = result || [ ];
-
-			for (var u = 0, i = 0; u < uDimension; ++ u)
-			{
-				for (var v = 0; v < vDimension; ++ v, ++ i)
-				{
-					weights [i] = weight [i];
-				}
-			}
-
-			weights .length = dimension;
-
-			return weights;
-		},
-		getControlPoints2D: function (result, closed, order, weights, controlPoint)
-		{
-			var
-				controlPoints     = result || [ ],
-				controlPointArray = controlPoint .getValue (),
-				dimension         = controlPoint .length,
-				haveWeights       = Boolean (weights),
-				Vector            = haveWeights ? Vector3 : Vector2;
-
-			if (controlPoints .haveWeights !== haveWeights)
-			{
-				controlPoints .haveWeights = haveWeights;
-				controlPoints .length      = 0;
-			}
-
-			for (var i = 0; i < dimension; ++ i)
-			{
-				var
-					i2 = i * 2,
-					p  = controlPoints [i] || new Vector (0, 0, 0);
-
-				controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1], haveWeights ? weights [i] : 0);
-			}
-
-			controlPoints .length = dimension;
-
-			if (closed)
-			{
-				for (var i = 1, size = order - 1; i < size; ++ i)
-					controlPoints .push (controlPoints [i]);
-			}
-
-			return controlPoints;
-		},
-		getControlPoints: function (result, closed, order, weights, controlPointNode)
-		{
-			var
-				controlPoints = result || [ ],
-				dimension     = controlPointNode .getSize (),
-				haveWeights   = Boolean (weights),
-				Vector        = haveWeights ? Vector4 : Vector3;
-
-			if (controlPoints .haveWeights !== haveWeights)
-			{
-				controlPoints .haveWeights = haveWeights;
-				controlPoints .length      = 0;
-			}
-
-			for (var i = 0; i < dimension; ++ i)
-			{
-				var cp = controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector (0, 0, 0, 0));
-
-				if (haveWeights)
-					cp .w = weights [i];
-			}
-
-			controlPoints .length = dimension;
-
-			if (closed)
-			{
-				for (var i = 1, size = order - 1; i < size; ++ i)
-					controlPoints .push (controlPoints [i]);
-			}
-
-			return controlPoints;
-		},
-		getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
-		{
-			var
-				controlPoints = result || [ ],
-				haveWeights   = Boolean (weights),
-				Vector        = haveWeights ? Vector4 : Vector3;
-
-			if (controlPoints .haveWeights !== haveWeights)
-			{
-				controlPoints .haveWeights = haveWeights;
-				controlPoints .length      = 0;
-			}
-
-			for (var u = 0; u < uDimension; ++ u)
-			{
-				var cp = controlPoints [u];
-
-				if (! cp)
-					cp = controlPoints [u] = [ ];
-
-				for (var v = 0; v < vDimension; ++ v)
-				{
-					var index = v * uDimension + u;
-
-					cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector (0, 0, 0, 0));
-
-					if (haveWeights)
-						cp [v] .w = weights [index];
-				}
-
-				cp .length = vDimension;
-
-				if (vClosed)
-				{
-					for (var i = 1, length = vOrder - 1; i < length; ++ i)
-						cp .push (cp [i]);
-				}
-			}
-
-			controlPoints .length = uDimension;
-
-			if (uClosed)
-			{
-				for (var i = 1, length = uOrder - 1; i < length; ++ i)
-					controlPoints .push (controlPoints [i]);
-			}
-
-			return controlPoints;
-		},
-		getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
-		{
-			var controlPoints = result || [ ];
-
-			for (var u = 0; u < uDimension; ++ u)
-			{
-				var cp = controlPoints [u];
-
-				if (! cp)
-					cp = controlPoints [u] = [ ];
-
-				for (var v = 0; v < vDimension; ++ v)
-				{
-					var index = v * uDimension + u;
-
-					cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector4 (0, 0, 0, 0));
-				}
-
-				cp .length = vDimension;
-
-				if (vClosed)
-				{
-					for (var i = 1, length = vOrder - 1; i < length; ++ i)
-						cp .push (cp [i]);
-				}
-			}
-
-			controlPoints .length = uDimension;
-
-			if (uClosed)
-			{
-				for (var i = 1, length = uOrder - 1; i < length; ++ i)
-					controlPoints .push (controlPoints [i]);
-			}
-
-			return controlPoints;
-		},
-	};
-
-	return NURBS;
+   var NURBS = {
+      getTessellation: function (tessellation, dimension)
+      {
+         if (tessellation > 0)
+            return tessellation + 1;
+
+         if (tessellation < 0)
+            return -tessellation * dimension + 1;
+
+         return 2 * dimension + 1;
+      },
+      getClosed2D: function (order, knot, weight, controlPoint)
+      {
+         var
+            dimension   = controlPoint .length,
+            haveWeights = weight .length === dimension;
+
+         // Check if first and last weights are unitary.
+
+         if (haveWeights)
+         {
+            if (weight [0] !== weight [dimension - 1])
+               return false;
+         }
+
+         // Check if first and last point are coincident.
+
+         if (! controlPoint [0] .equals (controlPoint [dimension - 1]))
+            return false;
+
+         // Check if knots are periodic.
+
+         if (! this .isPeriodic (order, dimension, knot))
+            return false;
+
+         return true;
+      },
+      getClosed: (function ()
+      {
+         var
+            firstPoint = new Vector3 (0, 0, 0),
+            lastPoint  = new Vector3 (0, 0, 0);
+
+         return function (order, knot, weight, controlPointNode)
+         {
+            var
+               dimension   = controlPointNode .getSize (),
+               haveWeights = weight .length === dimension;
+
+            // Check if first and last weights are unitary.
+
+            if (haveWeights)
+            {
+               if (weight [0] !== weight [dimension - 1])
+                  return false;
+            }
+
+            // Check if first and last point are coincident.
+
+            if (! controlPointNode .get1Point (0, firstPoint) .equals (controlPointNode .get1Point (dimension - 1, lastPoint)))
+               return false;
+
+            // Check if knots are periodic.
+
+            if (! this .isPeriodic (order, dimension, knot))
+               return false;
+
+            return true;
+         };
+      })(),
+      getUClosed: (function ()
+      {
+         var
+            firstPoint = new Vector3 (0, 0, 0),
+            lastPoint  = new Vector3 (0, 0, 0);
+
+         return function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
+         {
+            var haveWeights = weight .length === controlPointNode .getSize ();
+
+            for (var v = 0, length = vDimension; v < length; ++ v)
+            {
+               var
+                  first = v * uDimension,
+                  last  = v * uDimension + uDimension - 1;
+
+               // Check if first and last weights are unitary.
+
+               if (haveWeights)
+               {
+                  if (weight [first] !== weight [last])
+                     return false;
+               }
+
+               // Check if first and last point are coincident.
+
+               if (! controlPointNode .get1Point (first, firstPoint) .equals (controlPointNode .get1Point (last, lastPoint)))
+                  return false;
+            }
+
+            // Check if knots are periodic.
+
+            if (! this .isPeriodic (uOrder, uDimension, uKnot))
+               return false;
+
+            return true;
+         };
+      })(),
+      getVClosed: (function ()
+      {
+         var
+            firstPoint = new Vector3 (0, 0, 0),
+            lastPoint  = new Vector3 (0, 0, 0);
+
+         return function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
+         {
+            var haveWeights = weight .length === controlPointNode .getSize ();
+
+            for (var u = 0, size = uDimension; u < size; ++ u)
+            {
+               var
+                  first = u,
+                  last  = (vDimension - 1) * uDimension + u;
+
+               // Check if first and last weights are unitary.
+
+               if (haveWeights)
+               {
+                  if (weight [first] !== weight [last])
+                     return false;
+               }
+
+               // Check if first and last point are coincident.
+
+               if (! controlPointNode .get1Point (first, firstPoint) .equals (controlPointNode .get1Point (last, lastPoint)))
+                  return false;
+            }
+
+            // Check if knots are periodic.
+
+            if (! this .isPeriodic (vOrder, vDimension, vKnot))
+               return false;
+
+            return true;
+         };
+      })(),
+      isPeriodic: function (order, dimension, knot)
+      {
+         // Check if knots are periodic.
+
+         if (knot .length === dimension + order)
+         {
+            {
+               var count = 1;
+
+               for (var i = 1, size = order; i < size; ++ i)
+               {
+                  count += knot [i] === knot [0];
+               }
+
+               if (count === order)
+                  return false;
+            }
+
+            {
+               var count = 1;
+
+               for (var i = knot .length - order, size = knot .length - 1; i < size; ++ i)
+               {
+                  count += knot [i] === knot [size];
+               }
+
+               if (count === order)
+                  return false;
+            }
+         }
+
+         return true;
+      },
+      getKnots: function (result, closed, order, dimension, knot)
+      {
+         var knots = result || [ ];
+
+         for (var i = 0, length = knot .length; i < length; ++ i)
+            knots [i] = knot [i];
+
+         knots .length = knot .length;
+
+         // check the knot-vectors. If they are not according to standard
+         // default uniform knot vectors will be generated.
+
+         var generateUniform = true;
+
+         if (knots .length === dimension + order)
+         {
+            generateUniform = false;
+
+            var consecutiveKnots = 0;
+
+            for (var i = 1, length = knots .length; i < length; ++ i)
+            {
+               if (knots [i] == knots [i - 1])
+                  ++ consecutiveKnots;
+               else
+                  consecutiveKnots = 0;
+
+               if (consecutiveKnots > order - 1)
+                  generateUniform = true;
+
+               if (knots [i - 1] > knots [i])
+                  generateUniform = true;
+            }
+         }
+
+         if (generateUniform)
+         {
+            for (var i = 0, length = dimension + order; i < length; ++ i)
+               knots [i] = i / (length - 1);
+         }
+
+         if (closed)
+         {
+            for (var i = 1, length = order - 1; i < length; ++ i)
+               knots .push (knots .at (-1) + (knots [i] - knots [i - 1]));
+         }
+
+         return knots;
+      },
+      getWeights: function (result, dimension, weight)
+      {
+         if (weight .length !== dimension)
+            return undefined;
+
+         var weights = result || [ ];
+
+         for (var i = 0; i < dimension; ++ i)
+         {
+            weights [i] = weight [i];
+         }
+
+         weights .length = dimension;
+
+         return weights;
+      },
+      getUVWeights: function (result, uDimension, vDimension, weight)
+      {
+         var dimension = uDimension * vDimension;
+
+         if (weight .length !== dimension)
+            return undefined;
+
+         var weights = result || [ ];
+
+         for (var u = 0, i = 0; u < uDimension; ++ u)
+         {
+            for (var v = 0; v < vDimension; ++ v, ++ i)
+            {
+               weights [i] = weight [i];
+            }
+         }
+
+         weights .length = dimension;
+
+         return weights;
+      },
+      getControlPoints2D: function (result, closed, order, weights, controlPoint)
+      {
+         var
+            controlPoints     = result || [ ],
+            controlPointArray = controlPoint .getValue (),
+            dimension         = controlPoint .length,
+            haveWeights       = Boolean (weights),
+            Vector            = haveWeights ? Vector3 : Vector2;
+
+         if (controlPoints .haveWeights !== haveWeights)
+         {
+            controlPoints .haveWeights = haveWeights;
+            controlPoints .length      = 0;
+         }
+
+         for (var i = 0; i < dimension; ++ i)
+         {
+            var
+               i2 = i * 2,
+               p  = controlPoints [i] || new Vector (0, 0, 0);
+
+            controlPoints [i] = p .set (controlPointArray [i2 + 0], controlPointArray [i2 + 1], haveWeights ? weights [i] : 0);
+         }
+
+         controlPoints .length = dimension;
+
+         if (closed)
+         {
+            for (var i = 1, size = order - 1; i < size; ++ i)
+               controlPoints .push (controlPoints [i]);
+         }
+
+         return controlPoints;
+      },
+      getControlPoints: function (result, closed, order, weights, controlPointNode)
+      {
+         var
+            controlPoints = result || [ ],
+            dimension     = controlPointNode .getSize (),
+            haveWeights   = Boolean (weights),
+            Vector        = haveWeights ? Vector4 : Vector3;
+
+         if (controlPoints .haveWeights !== haveWeights)
+         {
+            controlPoints .haveWeights = haveWeights;
+            controlPoints .length      = 0;
+         }
+
+         for (var i = 0; i < dimension; ++ i)
+         {
+            var cp = controlPoints [i] = controlPointNode .get1Point (i, controlPoints [i] || new Vector (0, 0, 0, 0));
+
+            if (haveWeights)
+               cp .w = weights [i];
+         }
+
+         controlPoints .length = dimension;
+
+         if (closed)
+         {
+            for (var i = 1, size = order - 1; i < size; ++ i)
+               controlPoints .push (controlPoints [i]);
+         }
+
+         return controlPoints;
+      },
+      getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
+      {
+         var
+            controlPoints = result || [ ],
+            haveWeights   = Boolean (weights),
+            Vector        = haveWeights ? Vector4 : Vector3;
+
+         if (controlPoints .haveWeights !== haveWeights)
+         {
+            controlPoints .haveWeights = haveWeights;
+            controlPoints .length      = 0;
+         }
+
+         for (var u = 0; u < uDimension; ++ u)
+         {
+            var cp = controlPoints [u];
+
+            if (! cp)
+               cp = controlPoints [u] = [ ];
+
+            for (var v = 0; v < vDimension; ++ v)
+            {
+               var index = v * uDimension + u;
+
+               cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector (0, 0, 0, 0));
+
+               if (haveWeights)
+                  cp [v] .w = weights [index];
+            }
+
+            cp .length = vDimension;
+
+            if (vClosed)
+            {
+               for (var i = 1, length = vOrder - 1; i < length; ++ i)
+                  cp .push (cp [i]);
+            }
+         }
+
+         controlPoints .length = uDimension;
+
+         if (uClosed)
+         {
+            for (var i = 1, length = uOrder - 1; i < length; ++ i)
+               controlPoints .push (controlPoints [i]);
+         }
+
+         return controlPoints;
+      },
+      getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, controlPointNode)
+      {
+         var controlPoints = result || [ ];
+
+         for (var u = 0; u < uDimension; ++ u)
+         {
+            var cp = controlPoints [u];
+
+            if (! cp)
+               cp = controlPoints [u] = [ ];
+
+            for (var v = 0; v < vDimension; ++ v)
+            {
+               var index = v * uDimension + u;
+
+               cp [v] = controlPointNode .get1Point (index, cp [v] || new Vector4 (0, 0, 0, 0));
+            }
+
+            cp .length = vDimension;
+
+            if (vClosed)
+            {
+               for (var i = 1, length = vOrder - 1; i < length; ++ i)
+                  cp .push (cp [i]);
+            }
+         }
+
+         controlPoints .length = uDimension;
+
+         if (uClosed)
+         {
+            for (var i = 1, length = uOrder - 1; i < length; ++ i)
+               controlPoints .push (controlPoints [i]);
+         }
+
+         return controlPoints;
+      },
+   };
+
+   return NURBS;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -1016,57 +1008,55 @@ function (Vector2,
 
 
 define ('x_ite/Components/NURBS/X3DParametricGeometryNode',[
-	"x_ite/Components/Rendering/X3DGeometryNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/NURBS/NURBS",
+   "x_ite/Components/Rendering/X3DGeometryNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Browser/NURBS/NURBS",
 ],
-function (X3DGeometryNode, 
+function (X3DGeometryNode,
           X3DConstants,
           NURBS)
 {
 "use strict";
 
-	function X3DParametricGeometryNode (executionContext)
-	{
-		X3DGeometryNode .call (this, executionContext);
+   function X3DParametricGeometryNode (executionContext)
+   {
+      X3DGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DParametricGeometryNode);
-	}
+      this .addType (X3DConstants .X3DParametricGeometryNode);
+   }
 
-	X3DParametricGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
-	{
-		constructor: X3DParametricGeometryNode,
-		getKnots: function (result, closed, order, dimension, knot)
-		{
-			return NURBS .getKnots (result, closed, order, dimension, knot);
-		},
-	});
+   X3DParametricGeometryNode .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
+   {
+      constructor: X3DParametricGeometryNode,
+      getKnots: function (result, closed, order, dimension, knot)
+      {
+         return NURBS .getKnots (result, closed, order, dimension, knot);
+      },
+   });
 
-	return X3DParametricGeometryNode;
+   return X3DParametricGeometryNode;
 });
-
-
 
 
 define ('nurbs/src/utils/is-ndarray',[],function ()
 {
 'use strict';
-	
-	// Source: https://github.com/scijs/isndarray
-	// By Kyle Robinson Young, MIT Licensed.
-	
-	return function (arr)
-	{
-		if (! arr)
-			return false;
 
-		if (! arr .dtype)
-			return false;
+   // Source: https://github.com/scijs/isndarray
+   // By Kyle Robinson Young, MIT Licensed.
 
-		var re = new RegExp ('function View[0-9]+d(:?' + arr .dtype + ')+');
+   return function (arr)
+   {
+      if (! arr)
+         return false;
 
-		return re .test (String (arr .constructor));
-	};
+      if (! arr .dtype)
+         return false;
+
+      var re = new RegExp ('function View[0-9]+d(:?' + arr .dtype + ')+');
+
+      return re .test (String (arr .constructor));
+   };
 });
 
 
@@ -1074,283 +1064,282 @@ define ('nurbs/src/utils/is-ndarray-like',[],function ()
 {
 'use strict';
 
-	return function (arr)
-	{
-		if (!arr)
-			return false;
+   return function (arr)
+   {
+      if (!arr)
+         return false;
 
-		return (
-			arr .data   !== undefined &&
-			Array .isArray (arr .shape) &&
-			arr .offset !== undefined &&
-			arr .stride !== undefined
-		);
-	};
+      return (
+         arr .data   !== undefined &&
+         Array .isArray (arr .shape) &&
+         arr .offset !== undefined &&
+         arr .stride !== undefined
+      );
+   };
 });
 
 
 define ('nurbs/src/utils/is-array-like',[],function ()
 {
 'use strict';
-	
-	return function isArrayLike (data)
-	{
-		return Array .isArray (data) || ArrayBuffer .isView (data) || data .length !== undefined;
-	};
+
+   return function isArrayLike (data)
+   {
+      return Array .isArray (data) || ArrayBuffer .isView (data) || data .length !== undefined;
+   };
 });
 
 
 define ('nurbs/src/utils/infer-type',[
-	'nurbs/src/utils/is-ndarray',
-	'nurbs/src/utils/is-ndarray-like',
-	'nurbs/src/utils/is-array-like',
+   'nurbs/src/utils/is-ndarray',
+   'nurbs/src/utils/is-ndarray-like',
+   'nurbs/src/utils/is-array-like',
 ],
 function (isNdarray,
           isNdarrayLike,
           isArrayLike)
 {
 'use strict';
-	
-	function inferType (x)
-	{
-		if (! x)
-			return undefined;
 
-		if (isNdarray (x) || isNdarrayLike (x))
-		{
-			if (x.dtype === 'generic')
-				return inferType .GENERIC_NDARRAY;
+   function inferType (x)
+   {
+      if (! x)
+         return undefined;
 
-			return inferType .NDARRAY;
-		}
-		else
-		{
-			if (isArrayLike (x))
-			{
-				for (var ptr = x; isArrayLike (ptr [0]); ptr = ptr [0])
-					;
+      if (isNdarray (x) || isNdarrayLike (x))
+      {
+         if (x.dtype === 'generic')
+            return inferType .GENERIC_NDARRAY;
 
-				if ('x' in ptr)
-					return inferType .ARRAY_OF_OBJECTS;
-	
-				// if (isArrayLike(x[0])) {
-				return inferType .ARRAY_OF_ARRAYS;
-				// }
-				// return inferType.PACKED;
-			}
+         return inferType .NDARRAY;
+      }
+      else
+      {
+         if (isArrayLike (x))
+         {
+            for (var ptr = x; isArrayLike (ptr [0]); ptr = ptr [0])
+               ;
 
-			throw new Error('Unhandled data type. Got type: ' + (typeof x));
-		}
-	}
-	
-	inferType .ARRAY_OF_OBJECTS = 'Obj';
-	inferType .ARRAY_OF_ARRAYS  = 'Arr';
-	inferType .NDARRAY          = 'Nd';
-	inferType .GENERIC_NDARRAY  = 'GenNd';
-	inferType .PACKED           = 'PackArr';
-	
-	return inferType;
+            if ('x' in ptr)
+               return inferType .ARRAY_OF_OBJECTS;
+
+            // if (isArrayLike(x[0])) {
+            return inferType .ARRAY_OF_ARRAYS;
+            // }
+            // return inferType.PACKED;
+         }
+
+         throw new Error('Unhandled data type. Got type: ' + (typeof x));
+      }
+   }
+
+   inferType .ARRAY_OF_OBJECTS = 'Obj';
+   inferType .ARRAY_OF_ARRAYS  = 'Arr';
+   inferType .NDARRAY          = 'Nd';
+   inferType .GENERIC_NDARRAY  = 'GenNd';
+   inferType .PACKED           = 'PackArr';
+
+   return inferType;
 });
 
 
 define ('nurbs/src/utils/cache-key',[
-	'nurbs/src/utils/is-array-like',
+   'nurbs/src/utils/is-array-like',
 ],
 function (isArrayLike)
 {
 'use strict';
-	
-	function capitalize (str) {
-		return str[0].toUpperCase() + str.slice(1);
-	}
-	
-	return function (nurbs, debug, checkBounds, pointType, weightType, knotType) {
-		var d;
-		var degreeParts = [];
-		var hasAnyKnots = false;
-		for (d = 0; d < nurbs.splineDimension; d++) {
-			var hasKnots = isArrayLike(nurbs.knots) && isArrayLike(nurbs.knots[d]);
-			if (hasKnots) hasAnyKnots = true;
-			degreeParts.push(
-				'Deg' +
-				nurbs.degree[d] +
-				(hasKnots ? '' : 'Uniform') +
-				capitalize(nurbs.boundary[d])
-			);
-		}
-		var parts = [
-			[
-				hasAnyKnots ? 'NU' : '',
-				nurbs.weights ? 'RBS' : 'BS'
-			].join('') +
-			nurbs.dimension + 'D',
-			degreeParts.join('_')
-		];
-	
-		if (pointType) {
-			parts.push(pointType + 'Pts');
-		}
-		if (weightType) {
-			parts.push(weightType + 'Wts');
-		}
-		if (knotType) {
-			parts.push(knotType + 'Kts');
-		}
-	
-		if (debug) {
-			parts.push('debug');
-		}
-	
-		if (checkBounds) {
-			parts.push('chk');
-		}
-	
-		return parts.join('_');
-	};
-});
 
+   function capitalize (str) {
+      return str[0].toUpperCase() + str.slice(1);
+   }
+
+   return function (nurbs, debug, checkBounds, pointType, weightType, knotType) {
+      var d;
+      var degreeParts = [];
+      var hasAnyKnots = false;
+      for (d = 0; d < nurbs.splineDimension; d++) {
+         var hasKnots = isArrayLike(nurbs.knots) && isArrayLike(nurbs.knots[d]);
+         if (hasKnots) hasAnyKnots = true;
+         degreeParts.push(
+            'Deg' +
+            nurbs.degree[d] +
+            (hasKnots ? '' : 'Uniform') +
+            capitalize(nurbs.boundary[d])
+         );
+      }
+      var parts = [
+         [
+            hasAnyKnots ? 'NU' : '',
+            nurbs.weights ? 'RBS' : 'BS'
+         ].join('') +
+         nurbs.dimension + 'D',
+         degreeParts.join('_')
+      ];
+
+      if (pointType) {
+         parts.push(pointType + 'Pts');
+      }
+      if (weightType) {
+         parts.push(weightType + 'Wts');
+      }
+      if (knotType) {
+         parts.push(knotType + 'Kts');
+      }
+
+      if (debug) {
+         parts.push('debug');
+      }
+
+      if (checkBounds) {
+         parts.push('chk');
+      }
+
+      return parts.join('_');
+   };
+});
 
 
 define ('nurbs/src/utils/variable',[],function ()
 {
 'use strict';
 
-	var createVariable = function createVariable (name, nurbs) {
-		return function (i, period) {
-			if (i !== undefined && !Array.isArray(i)) i = [i];
-			var dimAccessors = [];
-			for (var j = 0; j < i.length; j++) {
-				dimAccessors.push(createVariable.sum(i[j]));
-			}
-			if (period) {
-				for (i = 0; i < dimAccessors.length; i++) {
-					if (period[i] === undefined) continue;
-					dimAccessors[i] = '(' + dimAccessors[i] + ' + ' + period[i] + ') % ' + period[i];
-				}
-			}
-			return name + dimAccessors.join('_');
-		};
-	};
-	
-	createVariable.sum = function (parts) {
-		parts = Array.isArray(parts) ? parts : [parts];
-		parts = parts.filter(function (part) { return part !== undefined && part !== 0; });
-		if (parts.length === 0) parts.push(0);
-		return parts.join(' + ');
-	};
-	
-	return createVariable;
+   var createVariable = function createVariable (name, nurbs) {
+      return function (i, period) {
+         if (i !== undefined && !Array.isArray(i)) i = [i];
+         var dimAccessors = [];
+         for (var j = 0; j < i.length; j++) {
+            dimAccessors.push(createVariable.sum(i[j]));
+         }
+         if (period) {
+            for (i = 0; i < dimAccessors.length; i++) {
+               if (period[i] === undefined) continue;
+               dimAccessors[i] = '(' + dimAccessors[i] + ' + ' + period[i] + ') % ' + period[i];
+            }
+         }
+         return name + dimAccessors.join('_');
+      };
+   };
+
+   createVariable.sum = function (parts) {
+      parts = Array.isArray(parts) ? parts : [parts];
+      parts = parts.filter(function (part) { return part !== undefined && part !== 0; });
+      if (parts.length === 0) parts.push(0);
+      return parts.join(' + ');
+   };
+
+   return createVariable;
 });
 
 
 define ('nurbs/src/utils/create-accessors',[
-	'nurbs/src/utils/infer-type',
-	'nurbs/src/utils/variable',
+   'nurbs/src/utils/infer-type',
+   'nurbs/src/utils/variable',
 ],
 function (inferType,
           createVariable)
 {
 'use strict';
 
-	var properties = ['.x', '.y', '.z', '.w'];
+   var properties = ['.x', '.y', '.z', '.w'];
 
-	function wrapAccessor (callback)
-	{
-		return function (i, period)
-		{
-			if (i !== undefined && ! Array .isArray(i))
-				i = [i];
+   function wrapAccessor (callback)
+   {
+      return function (i, period)
+      {
+         if (i !== undefined && ! Array .isArray(i))
+            i = [i];
 
-			var dimAccessors = [ ];
+         var dimAccessors = [ ];
 
-			for (var j = 0; j < i .length; j ++)
-				dimAccessors .push (createVariable .sum (i [j]));
+         for (var j = 0; j < i .length; j ++)
+            dimAccessors .push (createVariable .sum (i [j]));
 
-			if (period)
-			{
-				for (i = 0; i < dimAccessors .length; i++)
-				{
-					if (period [i] === undefined)
-						continue;
+         if (period)
+         {
+            for (i = 0; i < dimAccessors .length; i++)
+            {
+               if (period [i] === undefined)
+                  continue;
 
-					dimAccessors [i] = '(' + dimAccessors [i] + ' + ' + period [i] + ') % ' + period [i];
-				}
-			}
-			return callback (dimAccessors);
-		};
-	}
+               dimAccessors [i] = '(' + dimAccessors [i] + ' + ' + period [i] + ') % ' + period [i];
+            }
+         }
+         return callback (dimAccessors);
+      };
+   }
 
-	function createAccessor (name, data)
-	{
-		if (! data)
-			return undefined;
+   function createAccessor (name, data)
+   {
+      if (! data)
+         return undefined;
 
-		switch (inferType(data))
-		{
-			case inferType .ARRAY_OF_OBJECTS:
-			{
-				return wrapAccessor (function (accessors)
-				{
-					var e = accessors .pop ();
+      switch (inferType(data))
+      {
+         case inferType .ARRAY_OF_OBJECTS:
+         {
+            return wrapAccessor (function (accessors)
+            {
+               var e = accessors .pop ();
 
-					return name + '[' + accessors .join ('][') + ']' + properties [e];
-				});
-			}
-			case inferType .ARRAY_OF_ARRAYS:
-			{
-				return wrapAccessor (function (accessors)
-				{
-					return name + '[' + accessors .join ('][') + ']';
-				});
-			}
-			case inferType .GENERIC_NDARRAY:
-			{
-				return wrapAccessor(function (accessors)
-				{
-					return name + '.get(' + accessors.join(',') + ')';
-				});
-			}
-			case inferType .NDARRAY:
-			{
-				return wrapAccessor(function (accessors)
-				{
-					var code = [name + 'Offset'];
+               return name + '[' + accessors .join ('][') + ']' + properties [e];
+            });
+         }
+         case inferType .ARRAY_OF_ARRAYS:
+         {
+            return wrapAccessor (function (accessors)
+            {
+               return name + '[' + accessors .join ('][') + ']';
+            });
+         }
+         case inferType .GENERIC_NDARRAY:
+         {
+            return wrapAccessor(function (accessors)
+            {
+               return name + '.get(' + accessors.join(',') + ')';
+            });
+         }
+         case inferType .NDARRAY:
+         {
+            return wrapAccessor(function (accessors)
+            {
+               var code = [name + 'Offset'];
 
-					for (var i = 0; i < accessors.length; i++)
-					{
-						code.push(name + 'Stride' + i + ' * (' + accessors[i] + ')');
-					}
+               for (var i = 0; i < accessors.length; i++)
+               {
+                  code.push(name + 'Stride' + i + ' * (' + accessors[i] + ')');
+               }
 
-					return name + '[' + code.join(' + ') + ']';
-				});
-			}
-			case inferType.PACKED:
-			default:
-				return undefined;
-		}
-	}
-	
-	return function (nurbs)
-	{
-		var accessors = { };
-		
-		var accessor = createAccessor ('x', nurbs .points);
+               return name + '[' + code.join(' + ') + ']';
+            });
+         }
+         case inferType.PACKED:
+         default:
+            return undefined;
+      }
+   }
 
-		if (accessor)
-			accessors .point = accessor;
-		
-		var accessor = createAccessor ('w', nurbs .weights);
+   return function (nurbs)
+   {
+      var accessors = { };
 
-		if (accessor)
-			accessors .weight = accessor;
-		
-		var accessor = createAccessor ('k', nurbs .knots);
+      var accessor = createAccessor ('x', nurbs .points);
 
-		if (accessor)
-			accessors .knot = accessor;
-		
-		return accessors;
-	};
+      if (accessor)
+         accessors .point = accessor;
+
+      var accessor = createAccessor ('w', nurbs .weights);
+
+      if (accessor)
+         accessors .weight = accessor;
+
+      var accessor = createAccessor ('k', nurbs .knots);
+
+      if (accessor)
+         accessors .knot = accessor;
+
+      return accessors;
+   };
 });
 
 
@@ -1358,1040 +1347,1041 @@ define ('nurbs/src/numerical-derivative',[],function ()
 {
 'use strict';
 
-	var args = [];
-	var tmp = [];
+   var args = [];
+   var tmp = [];
 
-	return function numericalDerivative (out, order, dimension) {
-		if (order !== 1) {
-			throw new Error('Numerical derivative not implemented for order n = ' + order + '.');
-		}
-	
-		var i;
-		var h = arguments[this.splineDimension + 3] === undefined ? 1e-4 : arguments[this.splineDimension + 3];
-	
-		args.length = this.splineDimension;
-		for (i = 0; i < this.splineDimension; i++) {
-			args[i + 1] = arguments[i + 3];
-		}
-	
-		var domain = this.domain;
-		var k0 = domain[dimension][0];
-		var k1 = domain[dimension][1];
-	
-		var tm, tp, T;
-		var t0 = args[dimension + 1];
-		var dt = (k1 - k0) * h;
-		if (this.boundary[dimension] === 'closed') {
-			T = k1 - k0;
-			tm = k0 + ((t0 - k0 - dt + T) % T);
-			tp = k0 + ((t0 - k0 + dt + T) % T);
-			dt *= 2;
-		} else {
-			tm = Math.min(k1, Math.max(k0, t0 - dt));
-			tp = Math.min(k1, Math.max(k0, t0 + dt));
-			dt = tp - tm;
-		}
-	
-		args[dimension + 1] = tm;
-		args[0] = tmp;
-		this.evaluate.apply(null, args);
-	
-		args[dimension + 1] = tp;
-		args[0] = out;
-		this.evaluate.apply(null, args);
-	
-		for (i = 0; i < this.dimension; i++) {
-			out[i] = (out[i] - tmp[i]) / dt;
-		}
-	
-		return out;
-	};
+   return function numericalDerivative (out, order, dimension) {
+      if (order !== 1) {
+         throw new Error('Numerical derivative not implemented for order n = ' + order + '.');
+      }
+
+      var i;
+      var h = arguments[this.splineDimension + 3] === undefined ? 1e-4 : arguments[this.splineDimension + 3];
+
+      args.length = this.splineDimension;
+      for (i = 0; i < this.splineDimension; i++) {
+         args[i + 1] = arguments[i + 3];
+      }
+
+      var domain = this.domain;
+      var k0 = domain[dimension][0];
+      var k1 = domain[dimension][1];
+
+      var tm, tp, T;
+      var t0 = args[dimension + 1];
+      var dt = (k1 - k0) * h;
+      if (this.boundary[dimension] === 'closed') {
+         T = k1 - k0;
+         tm = k0 + ((t0 - k0 - dt + T) % T);
+         tp = k0 + ((t0 - k0 + dt + T) % T);
+         dt *= 2;
+      } else {
+         tm = Math.min(k1, Math.max(k0, t0 - dt));
+         tp = Math.min(k1, Math.max(k0, t0 + dt));
+         dt = tp - tm;
+      }
+
+      args[dimension + 1] = tm;
+      args[0] = tmp;
+      this.evaluate.apply(null, args);
+
+      args[dimension + 1] = tp;
+      args[0] = out;
+      this.evaluate.apply(null, args);
+
+      for (i = 0; i < this.dimension; i++) {
+         out[i] = (out[i] - tmp[i]) / dt;
+      }
+
+      return out;
+   };
 });
 
 
 define ('nurbs/src/utils/ndloop',[],function ()
 {
 'use strict';
-	
-	return function ndloop (n, callback) {
-		for (var m = 1, k = 0, i = []; k < n.length; k++) {
-			m *= Array.isArray(n[k]) ? (n[k][1] - n[k][0]) : n[k];
-			i[k] = Array.isArray(n[k]) ? n[k][0] : 0;
-		}
-		for (var ptr = 0; ptr < m; ptr++) {
-			callback(i.slice());
-			for (k = n.length - 1; k >= 0; k--) {
-				if (i[k] === (Array.isArray(n[k]) ? n[k][1] : n[k]) - 1) {
-					i[k] = Array.isArray(n[k]) ? n[k][0] : 0;
-				} else {
-					i[k]++;
-					break;
-				}
-			}
-		}
-	};
+
+   return function ndloop (n, callback) {
+      for (var m = 1, k = 0, i = []; k < n.length; k++) {
+         m *= Array.isArray(n[k]) ? (n[k][1] - n[k][0]) : n[k];
+         i[k] = Array.isArray(n[k]) ? n[k][0] : 0;
+      }
+      for (var ptr = 0; ptr < m; ptr++) {
+         callback(i.slice());
+         for (k = n.length - 1; k >= 0; k--) {
+            if (i[k] === (Array.isArray(n[k]) ? n[k][1] : n[k]) - 1) {
+               i[k] = Array.isArray(n[k]) ? n[k][0] : 0;
+            } else {
+               i[k]++;
+               break;
+            }
+         }
+      }
+   };
 });
 
 
 define ('nurbs/src/utils/accessor-preamble',[
-	'nurbs/src/utils/infer-type',
+   'nurbs/src/utils/infer-type',
 ],
 function (inferType)
 {
 'use strict';
 
-	return function (nurbs, variableName, propertyName, data)
-	{
-		var code = [ ];
-		
-		switch (inferType (data))
-		{
-			case inferType .NDARRAY:
-			{
-				code .push ('  var ' + variableName + ' = ' + propertyName + '.data;');
-				code .push ('  var ' + variableName + 'Offset = ' + propertyName + '.offset;');
-			
-				for (var i = 0; i < data .dimension; i++) {
-					code .push ('  var ' + variableName + 'Stride' + i + ' = ' + propertyName + '.stride[' + i + '];');
-				}
+   return function (nurbs, variableName, propertyName, data)
+   {
+      var code = [ ];
 
-				break;
-			}
-			case inferType .ARRAY_OF_OBJECTS:
-			case inferType .ARRAY_OF_ARRAYS:
-				code .push ('  var ' + variableName + ' = ' + propertyName + ';');
-		}
+      switch (inferType (data))
+      {
+         case inferType .NDARRAY:
+         {
+            code .push ('  var ' + variableName + ' = ' + propertyName + '.data;');
+            code .push ('  var ' + variableName + 'Offset = ' + propertyName + '.offset;');
 
-		return code .join ('\n');
-	};
+            for (var i = 0; i < data .dimension; i++) {
+               code .push ('  var ' + variableName + 'Stride' + i + ' = ' + propertyName + '.stride[' + i + '];');
+            }
+
+            break;
+         }
+         case inferType .ARRAY_OF_OBJECTS:
+         case inferType .ARRAY_OF_ARRAYS:
+            code .push ('  var ' + variableName + ' = ' + propertyName + ';');
+      }
+
+      return code .join ('\n');
+   };
 });
 
 
 define ('nurbs/src/utils/size-getter',[
-	'nurbs/src/utils/is-ndarray-like',
+   'nurbs/src/utils/is-ndarray-like',
 ],
 function (isNdarrayLike)
 {
 'use strict';
-	
-	return function (data, dataVariableName, dimension) {
-		if (!data) {
-			return 'this.size[' + dimension + ']';
-		} else if (isNdarrayLike(data)) {
-			return dataVariableName + '.shape[' + dimension + ']';
-		} else {
-			var str = dataVariableName;
-			for (var i = 0; i < dimension; i++) {
-				str += '[0]';
-			}
-			return str + '.length';
-		}
-	};
+
+   return function (data, dataVariableName, dimension) {
+      if (!data) {
+         return 'this.size[' + dimension + ']';
+      } else if (isNdarrayLike(data)) {
+         return dataVariableName + '.shape[' + dimension + ']';
+      } else {
+         var str = dataVariableName;
+         for (var i = 0; i < dimension; i++) {
+            str += '[0]';
+         }
+         return str + '.length';
+      }
+   };
 });
 
 
 define ('nurbs/src/evaluate',[
-	'nurbs/src/utils/ndloop',
-	'nurbs/src/utils/variable',
-	'nurbs/src/utils/accessor-preamble',
-	'nurbs/src/utils/infer-type',
-	'nurbs/src/utils/is-array-like',
-	'nurbs/src/utils/size-getter',
+   'nurbs/src/utils/ndloop',
+   'nurbs/src/utils/variable',
+   'nurbs/src/utils/accessor-preamble',
+   'nurbs/src/utils/infer-type',
+   'nurbs/src/utils/is-array-like',
+   'nurbs/src/utils/size-getter',
 ],
 function (ndloop,
-          variable, 
-          accessorPreamble, 
-          inferType, 
-          isArrayLike, 
+          variable,
+          accessorPreamble,
+          inferType,
+          isArrayLike,
           sizeGetter)
 {
 'use strict';
-	
-	var evaluatorCache = {};
-	var codeCache = {};
-	
-	return function (cacheKey, nurbs, accessors, debug, checkBounds, isBasis, derivative) {
-		var splineDimension = nurbs.splineDimension;
-		var i, j, n, m, d, kvar;
-	
-		var points = nurbs.points;
-		var degree = nurbs.degree;
-		var weights = nurbs.weights;
-		var hasWeights = weights !== undefined;
-		var knots = nurbs.knots;
-		var spaceDimension = nurbs.dimension;
-		var boundary = nurbs.boundary;
-	
-		if (derivative !== undefined && derivative !== null) {
-			if (!Array.isArray(derivative)) {
-				derivative = [derivative];
-			}
-			var totalDerivativeOrder = 0;
-			for (i = 0; i < splineDimension; i++) {
-				if (derivative[i] === undefined) derivative[i] = 0;
-				totalDerivativeOrder += derivative[i];
-			}
-			if (hasWeights && totalDerivativeOrder > 1) {
-				throw new Error('Analytical derivative not implemented for rational b-splines with order n = ' + totalDerivativeOrder + '.');
-			}
-		}
-	
-		if (isBasis) cacheKey = 'Basis' + cacheKey;
-		if (derivative) cacheKey = 'Der' + derivative.join('_') + '_' + cacheKey;
-		var cachedEvaluator = evaluatorCache[cacheKey];
-		if (debug) {
-			var logger = typeof debug === 'function' ? debug : console.log;
-		}
-	
-		if (cachedEvaluator) {
-			if (debug) {
-				logger(codeCache[cacheKey]);
-			}
-	
-			return cachedEvaluator.bind(nurbs);
-		}
-	
-		var code = [];
-		var functionName = 'evaluate' + cacheKey;
-	
-		var pointAccessor = accessors.point;
-		if (isBasis) {
-			pointAccessor = function (src, period) {
-				var terms = [];
-				for (var i = 0; i < src.length; i++) {
-					var accessor = src[i];
-					var terms2 = [];
-					for (var j = 0; j < accessor.length; j++) {
-						if (accessor[j] !== 0) terms2.push(accessor[j]);
-					}
-					accessor = terms2.join(' + ');
-					if (period[i]) {
-						accessor = '(' + accessor + ' + ' + period[i] + ') % ' + period[i];
-					}
-					terms.push(accessor + ' === ' + indexVar(i));
-				}
-				return '((' + terms.join(' && ') + ') ? 1 : 0)';
-			};
-		}
-		var weightAccessor = accessors.weight;
-		var knotAccessor = accessors.knot;
-	
-		var knotVar = variable('k');
-		var pointVar = variable('x');
-		var weightVar = variable('w');
-		var indexVar = variable('i');
-		var tVar = variable('t');
-		var domainVar = debug ? 'domain' : 'd';
-		var sizeVar = variable(debug ? 'size' : 's');
-		var knotIndex = variable(debug ? 'knotIndex' : 'j');
-	
-		var allDimensionUniform = true;
-		for (d = 0; d < splineDimension; d++) {
-			if (isArrayLike(knots) && isArrayLike(knots[d])) {
-				allDimensionUniform = false;
-			}
-		}
-	
-		// Just to indent properly and save lots of typing
-		function line (str) {
-			code.push('  ' + (str || ''));
-		}
-		function debugLine (str) {
-			if (debug) line(str);
-		}
-		// function clog (str) {
-			// if (debug) code.push('console.log("' + str + ' =", ' + str + ');');
-		// }
-	
-		if (isBasis) {
-			var indexArgs = [];
-		}
-		var parameterArgs = [];
-		for (i = 0; i < splineDimension; i++) {
-			if (isBasis) {
-				indexArgs.push(indexVar([i]));
-			}
-			parameterArgs.push(tVar([i]));
-		}
-	
-		code.push('function ' + functionName + ' (' +
-			(isBasis ? '' : 'out, ') +
-			parameterArgs.join(', ') +
-			(isBasis ? ', ' + indexArgs.join(', ') : '') +
-			') {');
-	
-		line('var h, m, a, b;');
-	
-		if (checkBounds) {
-			line('var ' + domainVar + ' = this.domain;');
-			line('for (var i = 0; i < this.splineDimension; i++) {');
-			line('  a = arguments[i + 1];');
-			line('  if (a < ' + domainVar + '[i][0] || a > ' + domainVar + '[i][1] || a === undefined || isNaN(a)) {');
-			line('    throw new Error(\'Invalid Spline parameter in dimension \'+i+\'. Valid domain is [\'+' + domainVar + '[i][0]+\', \'+' + domainVar + '[i][1]+\']. but got t\'+i+\' = \'+arguments[i + 1]+\'.\');');
-			line('  }');
-			line('}');
-		}
-	
-		for (d = 0; d < splineDimension; d++) {
-			line('var ' + sizeVar(d) + ' = ' + sizeGetter(points, 'this.points', d) + ';');
-		}
-		code.push(accessorPreamble(nurbs, 'x', 'this.points', points));
-	
-		if (hasWeights) {
-			code.push(accessorPreamble(nurbs, 'w', 'this.weights', weights));
-		}
-	
-		if (!allDimensionUniform) {
-			code.push(accessorPreamble(nurbs, 'k', 'this.knots', knots));
-		}
-	
-		function ternary (cond, a, b) {
-			return '(' + cond + ') ? (' + a + ') : (' + b + ')';
-		}
-	
-		var hasKnots = [];
-		for (d = 0; d < splineDimension; d++) {
-			switch (inferType(knots)) {
-				case inferType.NDARRAY:
-					hasKnots[d] = true;
-					break;
-				case inferType.ARRAY_OF_ARRAYS:
-					hasKnots[d] = isArrayLike(knots[d]);
-					break;
-			}
-		}
-	
-		for (d = 0; d < splineDimension; d++) {
-			if (hasKnots[d]) {
-				//
-				// LOCATE KNOTS
-				//
-				debugLine('\n  // Bisect to locate the knot interval in dimension ' + d + '\n');
-				line('var ' + knotIndex(d) + ' = 0;');
-				line('h = ' + sizeVar(d) + ';');
-				line('while(h > ' + knotIndex(d) + ' + 1) {');
-				line('  m = 0.5 * (h + ' + knotIndex(d) + ') | 0;');
-				line('  if (' + knotAccessor([d, 'm']) + ' > ' + tVar(d) + ') h = m;');
-				line('  else ' + knotIndex(d) + ' = m;');
-				line('}');
-	
-				debugLine('\n  // Fetch knots for dimension ' + d + '\n');
-	
-				for (i = -degree[d] + 1; i <= degree[d]; i++) {
-					if (boundary[d] === 'closed') {
-						if (i < 0) {
-							// line('var ' + knotVar([d, i + degree[d] - 1]) + ' = ' + knotAccessor([d, [knotIndex(d), i]]) + ';');
-							// EDIT THIS SECTION
-							line('var ' + knotVar([d, i + degree[d] - 1]) + ' = ' + ternary(
-								knotIndex(d) + ' < ' + (-i),
-								knotAccessor([d, 0]) + ' + ' + knotAccessor([d, [sizeVar(d), knotIndex(d), i]]) + ' - ' + knotAccessor([d, [sizeVar(d)]]),
-								knotAccessor([d, [knotIndex(d), i]])
-							) + ';');
-						} else if (i > 0) {
-							line('var ' + knotVar([d, i + degree[d] - 1]) + ' = ' + ternary(
-								knotIndex(d) + ' + ' + i + ' > ' + sizeVar(d),
-								// knotAccessor([d, sizeVar(d)]) + ' + ' + knotAccessor([d, i]) + ' - ' + knotAccessor([d, 0]),
-								knotAccessor([d, sizeVar(d)]) + ' + ' + knotAccessor([d, i + ' + ' + knotIndex(d) + ' - ' + sizeVar(d)]) + ' - ' + knotAccessor([d, 0]),
-								knotAccessor([d, [knotIndex(d), i]])
-							) + ';');
-						} else {
-							line('var ' + knotVar([d, i + degree[d] - 1]) + ' = ' + knotAccessor([d, [knotIndex(d), i]]) + ';');
-						}
-					} else {
-						line('var ' + knotVar([d, i + degree[d] - 1]) + ' = ' + knotAccessor([d, [knotIndex(d), i]]) + ';');
-					}
-				}
-			} else {
-				//
-				// UNIFORM B-SPLINE
-				//
-				debugLine('\n  // Directly compute knot interval for dimension ' + d + '\n');
-	
-				if (boundary[d] === 'closed') {
-					line(knotIndex(d) + ' = (' + tVar(d) + ' | 0) % ' + sizeVar(d) + ';');
-				} else {
-					line(knotIndex(d) + ' = (' + tVar(d) + ' | 0);');
-					line('if (' + knotIndex(d) + ' < ' + degree[d] + ') ' + knotIndex(d) + ' = ' + degree[d] + ';');
-					line('if (' + knotIndex(d) + ' > ' + sizeVar(d) + ' - 1) ' + knotIndex(d) + ' = ' + sizeVar(d) + ' - 1;');
-				}
-	
-				debugLine('\n  // Compute and clamp knots for dimension ' + d + '\n');
-				for (i = -degree[d] + 1; i <= degree[d]; i++) {
-					kvar = knotVar([d, i + degree[d] - 1]);
-					line('var ' + kvar + ' = ' + knotIndex(d) + ' + ' + (i) + ';');
-				}
-	
-				if (boundary[d] === 'clamped') {
-					for (i = -degree[d] + 1; i <= degree[d]; i++) {
-						kvar = knotVar([d, i + degree[d] - 1]);
-						if (i < 0) {
-							line('if (' + kvar + ' < ' + degree[d] + ') ' + kvar + ' = ' + degree[d] + ';');
-						}
-						if (i > 0) {
-							line('if (' + kvar + ' > ' + sizeVar(d) + ') ' + kvar + ' = ' + sizeVar(d) + ';');
-						}
-					}
-				}
-	
-				if (boundary[d] === 'closed') {
-					debugLine('\n  // Wrap the B-Spline parameter for closed boundary');
-					line(tVar(d) + ' %= ' + sizeVar(d) + ';');
-				}
-			}
-		}
-	
-		for (d = 0, n = []; d < splineDimension; d++) {
-			n[d] = degree[d] + 1;
-		}
-	
-		if (hasWeights) {
-			debugLine('\n  // Fetch weights\n');
-			ndloop(n, function (dst) {
-				var readIdx = [];
-				var period = [];
-				for (var d = 0; d < splineDimension; d++) {
-					readIdx[d] = [knotIndex(d), dst[d] - degree[d]];
-					if (boundary[d] === 'closed' && dst[d] - degree[d] < 0) period[d] = sizeVar(d);
-				}
-				line('var ' + weightVar(dst) + ' = ' + weightAccessor(readIdx, period) + ';');
-			});
-		}
-	
-		if (debug) {
-			if (hasWeights) {
-				line('\n  // Fetch points and project into homogeneous (weighted) coordinates\n');
-			} else {
-				line('\n  // Fetch points\n');
-			}
-		}
-	
-		ndloop(n, function (dst) {
-			var readIdx = [];
-			var period = [];
-			for (var d = 0; d < splineDimension; d++) {
-				readIdx[d] = [knotIndex(d), dst[d] - degree[d]];
-				if (boundary[d] === 'closed' && dst[d] - degree[d] < 0) period[d] = sizeVar(d);
-			}
-			if (isBasis) {
-				if (hasWeights) {
-					line('var ' + pointVar(dst) + ' = ' + pointAccessor(readIdx, period) + ' * ' + weightVar(dst) + ';');
-				} else {
-					line('var ' + pointVar(dst) + ' = ' + pointAccessor(readIdx, period) + ';');
-				}
-			} else {
-				for (d = 0; d < spaceDimension; d++) {
-					var dstWithDim = dst.concat(d);
-					readIdx[splineDimension] = d;
-					if (hasWeights) {
-						line('var ' + pointVar(dstWithDim) + ' = ' + pointAccessor(readIdx, period) + ' * ' + weightVar(dst) + ';');
-					} else {
-						line('var ' + pointVar(dstWithDim) + ' = ' + pointAccessor(readIdx, period) + ';');
-					}
-				}
-			}
-		});
-		debugLine('\n');
-	
-		debugLine('// Perform De Boor\'s algorithm');
-		for (d = n.length - 1; d >= 0; d--) {
-			n[d] = [degree[d], degree[d] + 1];
-			for (i = 0; i < degree[d]; i++) {
-				debugLine('\n  // Degree ' + degree[d] + ' evaluation in dimension ' + d + ', step ' + (i + 1) + '\n');
-				for (j = degree[d]; j > i; j--) {
-					var isDerivative = derivative && (degree[d] - i - derivative[d] <= 0);
-	
-					if (isDerivative) {
-						line('m = 1 / (' + knotVar([d, j - i + degree[d] - 1]) + ' - ' + knotVar([d, j - 1]) + ');');
-						if (hasWeights) {
-							line('a = (' + tVar(d) + ' - ' + knotVar([d, j - 1]) + ') * m;');
-							line('b = 1 - a;');
-						}
-					} else {
-						line('a = (' + tVar(d) + ' - ' + knotVar([d, j - 1]) + ') / (' + knotVar([d, j - i + degree[d] - 1]) + ' - ' + knotVar([d, j - 1]) + ');');
-						line('b = 1 - a;');
-					}
-	
-					if (hasWeights) {
-						ndloop(n, function (ii) {
-							var ij = ii.slice();
-							var ij1 = ii.slice();
-							ij[d] = j;
-							ij1[d] = j - 1;
-							if (isDerivative && hasWeights) line('h = ' + weightVar(ij) + ';');
-							line(weightVar(ij) + ' = b * ' + weightVar(ij1) + ' + a * ' + weightVar(ij) + ';');
-						});
-					}
-					ndloop(n, function (ii) {
-						var weightFactor, pt1, pt2;
-						var ij = ii.slice();
-						var ij1 = ii.slice();
-						// Replace the dimension being interpolated with the interpolation indices
-						ij[d] = j;
-						ij1[d] = j - 1;
-						// Create a version to which we can append the dimension when we loop over spatial dimension
-						if (isDerivative) {
-							var derivCoeff = i + 1;
-							if (isBasis) {
-								weightFactor = hasWeights ? 'h * ' + weightVar(ij1) + ' / ' + weightVar(ij) + ' * ' : '';
-								pt1 = pointVar(ij) + (hasWeights ? ' / h' : '');
-								pt2 = pointVar(ij1) + (hasWeights ? ' / ' + weightVar(ij1) : '');
-								line(pointVar(ij) + ' = ' + derivCoeff + ' * ' + weightFactor + '(' + pt1 + ' - ' + pt2 + ') * m;');
-							} else {
-								var ijWithDimension = ij.slice();
-								var ij1WithDimension = ij1.slice();
-								for (m = 0; m < spaceDimension; m++) {
-									ijWithDimension[splineDimension] = ij1WithDimension[splineDimension] = m;
-									weightFactor = hasWeights ? 'h * ' + weightVar(ij1) + ' / ' + weightVar(ij) + ' * ' : '';
-									pt1 = pointVar(ijWithDimension) + (hasWeights ? ' / h' : '');
-									pt2 = pointVar(ij1WithDimension) + (hasWeights ? ' / ' + weightVar(ij1) : '');
-									line(pointVar(ijWithDimension) + ' = ' + derivCoeff + ' * ' + weightFactor + '(' + pt1 + ' - ' + pt2 + ') * m;');
-								}
-							}
-						} else {
-							if (isBasis) {
-								line(pointVar(ij) + ' = b * ' + pointVar(ij1) + ' + a * ' + pointVar(ij) + ';');
-							} else {
-								for (m = 0; m < spaceDimension; m++) {
-									ij[splineDimension] = ij1[splineDimension] = m;
-									line(pointVar(ij) + ' = b * ' + pointVar(ij1) + ' + a * ' + pointVar(ij) + ';');
-								}
-							}
-						}
-					});
-					debugLine('\n');
-				}
-			}
-		}
-	
-		if (debug) {
-			if (hasWeights) {
-				line('\n  // Project back from homogeneous coordinates and return final output\n');
-			} else {
-				line('\n  // Return final output\n');
-			}
-		}
-		if (isBasis) {
-			if (hasWeights) {
-				line('return ' + pointVar(degree) + ' / ' + weightVar(degree) + ';');
-			} else {
-				line('return ' + pointVar(degree) + ';');
-			}
-		} else {
-			for (d = 0; d < spaceDimension; d++) {
-				if (hasWeights) {
-					line('out[' + d + '] = ' + pointVar(degree.concat([d])) + ' / ' + weightVar(degree) + ';');
-				} else {
-					line('out[' + d + '] = ' + pointVar(degree.concat([d])) + ';');
-				}
-			}
-		}
-		if (!isBasis) {
-			line('return out;');
-		}
-		code.push('}');
-	
-		if (debug) {
-			var codeStr = code.join('\n');
-			logger(codeStr);
-	
-			codeCache[cacheKey] = codeStr;
-		}
-	
-		var evaluator = new Function([code.join('\n'), '; return ', functionName].join(''))();
-		evaluatorCache[cacheKey] = evaluator;
-		return evaluator.bind(nurbs);
-	};
+
+   var evaluatorCache = {};
+   var codeCache = {};
+
+   return function (cacheKey, nurbs, accessors, debug, checkBounds, isBasis, derivative) {
+      var splineDimension = nurbs.splineDimension;
+      var i, j, n, m, d, kvar;
+
+      var points = nurbs.points;
+      var degree = nurbs.degree;
+      var weights = nurbs.weights;
+      var hasWeights = weights !== undefined;
+      var knots = nurbs.knots;
+      var spaceDimension = nurbs.dimension;
+      var boundary = nurbs.boundary;
+
+      if (derivative !== undefined && derivative !== null) {
+         if (!Array.isArray(derivative)) {
+            derivative = [derivative];
+         }
+         var totalDerivativeOrder = 0;
+         for (i = 0; i < splineDimension; i++) {
+            if (derivative[i] === undefined) derivative[i] = 0;
+            totalDerivativeOrder += derivative[i];
+         }
+         if (hasWeights && totalDerivativeOrder > 1) {
+            throw new Error('Analytical derivative not implemented for rational b-splines with order n = ' + totalDerivativeOrder + '.');
+         }
+      }
+
+      if (isBasis) cacheKey = 'Basis' + cacheKey;
+      if (derivative) cacheKey = 'Der' + derivative.join('_') + '_' + cacheKey;
+      var cachedEvaluator = evaluatorCache[cacheKey];
+      if (debug) {
+         var logger = typeof debug === 'function' ? debug : console.log;
+      }
+
+      if (cachedEvaluator) {
+         if (debug) {
+            logger(codeCache[cacheKey]);
+         }
+
+         return cachedEvaluator.bind(nurbs);
+      }
+
+      var code = [];
+      var functionName = 'evaluate' + cacheKey;
+
+      var pointAccessor = accessors.point;
+      if (isBasis) {
+         pointAccessor = function (src, period) {
+            var terms = [];
+            for (var i = 0; i < src.length; i++) {
+               var accessor = src[i];
+               var terms2 = [];
+               for (var j = 0; j < accessor.length; j++) {
+                  if (accessor[j] !== 0) terms2.push(accessor[j]);
+               }
+               accessor = terms2.join(' + ');
+               if (period[i]) {
+                  accessor = '(' + accessor + ' + ' + period[i] + ') % ' + period[i];
+               }
+               terms.push(accessor + ' === ' + indexVar(i));
+            }
+            return '((' + terms.join(' && ') + ') ? 1 : 0)';
+         };
+      }
+      var weightAccessor = accessors.weight;
+      var knotAccessor = accessors.knot;
+
+      var knotVar = variable('k');
+      var pointVar = variable('x');
+      var weightVar = variable('w');
+      var indexVar = variable('i');
+      var tVar = variable('t');
+      var domainVar = debug ? 'domain' : 'd';
+      var sizeVar = variable(debug ? 'size' : 's');
+      var knotIndex = variable(debug ? 'knotIndex' : 'j');
+
+      var allDimensionUniform = true;
+      for (d = 0; d < splineDimension; d++) {
+         if (isArrayLike(knots) && isArrayLike(knots[d])) {
+            allDimensionUniform = false;
+         }
+      }
+
+      // Just to indent properly and save lots of typing
+      function line (str) {
+         code.push('  ' + (str || ''));
+      }
+      function debugLine (str) {
+         if (debug) line(str);
+      }
+      // function clog (str) {
+         // if (debug) code.push('console.log("' + str + ' =", ' + str + ');');
+      // }
+
+      if (isBasis) {
+         var indexArgs = [];
+      }
+      var parameterArgs = [];
+      for (i = 0; i < splineDimension; i++) {
+         if (isBasis) {
+            indexArgs.push(indexVar([i]));
+         }
+         parameterArgs.push(tVar([i]));
+      }
+
+      code.push('function ' + functionName + ' (' +
+         (isBasis ? '' : 'out, ') +
+         parameterArgs.join(', ') +
+         (isBasis ? ', ' + indexArgs.join(', ') : '') +
+         ') {');
+
+      line('var h, m, a, b;');
+
+      if (checkBounds) {
+         line('var ' + domainVar + ' = this.domain;');
+         line('for (var i = 0; i < this.splineDimension; i++) {');
+         line('  a = arguments[i + 1];');
+         line('  if (a < ' + domainVar + '[i][0] || a > ' + domainVar + '[i][1] || a === undefined || isNaN(a)) {');
+         line('    throw new Error(\'Invalid Spline parameter in dimension \'+i+\'. Valid domain is [\'+' + domainVar + '[i][0]+\', \'+' + domainVar + '[i][1]+\']. but got t\'+i+\' = \'+arguments[i + 1]+\'.\');');
+         line('  }');
+         line('}');
+      }
+
+      for (d = 0; d < splineDimension; d++) {
+         line('var ' + sizeVar(d) + ' = ' + sizeGetter(points, 'this.points', d) + ';');
+      }
+      code.push(accessorPreamble(nurbs, 'x', 'this.points', points));
+
+      if (hasWeights) {
+         code.push(accessorPreamble(nurbs, 'w', 'this.weights', weights));
+      }
+
+      if (!allDimensionUniform) {
+         code.push(accessorPreamble(nurbs, 'k', 'this.knots', knots));
+      }
+
+      function ternary (cond, a, b) {
+         return '(' + cond + ') ? (' + a + ') : (' + b + ')';
+      }
+
+      var hasKnots = [];
+      for (d = 0; d < splineDimension; d++) {
+         switch (inferType(knots)) {
+            case inferType.NDARRAY:
+               hasKnots[d] = true;
+               break;
+            case inferType.ARRAY_OF_ARRAYS:
+               hasKnots[d] = isArrayLike(knots[d]);
+               break;
+         }
+      }
+
+      for (d = 0; d < splineDimension; d++) {
+         if (hasKnots[d]) {
+            //
+            // LOCATE KNOTS
+            //
+            debugLine('\n  // Bisect to locate the knot interval in dimension ' + d + '\n');
+            line('var ' + knotIndex(d) + ' = 0;');
+            line('h = ' + sizeVar(d) + ';');
+            line('while(h > ' + knotIndex(d) + ' + 1) {');
+            line('  m = 0.5 * (h + ' + knotIndex(d) + ') | 0;');
+            line('  if (' + knotAccessor([d, 'm']) + ' > ' + tVar(d) + ') h = m;');
+            line('  else ' + knotIndex(d) + ' = m;');
+            line('}');
+
+            debugLine('\n  // Fetch knots for dimension ' + d + '\n');
+
+            for (i = -degree[d] + 1; i <= degree[d]; i++) {
+               if (boundary[d] === 'closed') {
+                  if (i < 0) {
+                     // line('var ' + knotVar([d, i + degree[d] - 1]) + ' = ' + knotAccessor([d, [knotIndex(d), i]]) + ';');
+                     // EDIT THIS SECTION
+                     line('var ' + knotVar([d, i + degree[d] - 1]) + ' = ' + ternary(
+                        knotIndex(d) + ' < ' + (-i),
+                        knotAccessor([d, 0]) + ' + ' + knotAccessor([d, [sizeVar(d), knotIndex(d), i]]) + ' - ' + knotAccessor([d, [sizeVar(d)]]),
+                        knotAccessor([d, [knotIndex(d), i]])
+                     ) + ';');
+                  } else if (i > 0) {
+                     line('var ' + knotVar([d, i + degree[d] - 1]) + ' = ' + ternary(
+                        knotIndex(d) + ' + ' + i + ' > ' + sizeVar(d),
+                        // knotAccessor([d, sizeVar(d)]) + ' + ' + knotAccessor([d, i]) + ' - ' + knotAccessor([d, 0]),
+                        knotAccessor([d, sizeVar(d)]) + ' + ' + knotAccessor([d, i + ' + ' + knotIndex(d) + ' - ' + sizeVar(d)]) + ' - ' + knotAccessor([d, 0]),
+                        knotAccessor([d, [knotIndex(d), i]])
+                     ) + ';');
+                  } else {
+                     line('var ' + knotVar([d, i + degree[d] - 1]) + ' = ' + knotAccessor([d, [knotIndex(d), i]]) + ';');
+                  }
+               } else {
+                  line('var ' + knotVar([d, i + degree[d] - 1]) + ' = ' + knotAccessor([d, [knotIndex(d), i]]) + ';');
+               }
+            }
+         } else {
+            //
+            // UNIFORM B-SPLINE
+            //
+            debugLine('\n  // Directly compute knot interval for dimension ' + d + '\n');
+
+            if (boundary[d] === 'closed') {
+               line(knotIndex(d) + ' = (' + tVar(d) + ' | 0) % ' + sizeVar(d) + ';');
+            } else {
+               line(knotIndex(d) + ' = (' + tVar(d) + ' | 0);');
+               line('if (' + knotIndex(d) + ' < ' + degree[d] + ') ' + knotIndex(d) + ' = ' + degree[d] + ';');
+               line('if (' + knotIndex(d) + ' > ' + sizeVar(d) + ' - 1) ' + knotIndex(d) + ' = ' + sizeVar(d) + ' - 1;');
+            }
+
+            debugLine('\n  // Compute and clamp knots for dimension ' + d + '\n');
+            for (i = -degree[d] + 1; i <= degree[d]; i++) {
+               kvar = knotVar([d, i + degree[d] - 1]);
+               line('var ' + kvar + ' = ' + knotIndex(d) + ' + ' + (i) + ';');
+            }
+
+            if (boundary[d] === 'clamped') {
+               for (i = -degree[d] + 1; i <= degree[d]; i++) {
+                  kvar = knotVar([d, i + degree[d] - 1]);
+                  if (i < 0) {
+                     line('if (' + kvar + ' < ' + degree[d] + ') ' + kvar + ' = ' + degree[d] + ';');
+                  }
+                  if (i > 0) {
+                     line('if (' + kvar + ' > ' + sizeVar(d) + ') ' + kvar + ' = ' + sizeVar(d) + ';');
+                  }
+               }
+            }
+
+            if (boundary[d] === 'closed') {
+               debugLine('\n  // Wrap the B-Spline parameter for closed boundary');
+               line(tVar(d) + ' %= ' + sizeVar(d) + ';');
+            }
+         }
+      }
+
+      for (d = 0, n = []; d < splineDimension; d++) {
+         n[d] = degree[d] + 1;
+      }
+
+      if (hasWeights) {
+         debugLine('\n  // Fetch weights\n');
+         ndloop(n, function (dst) {
+            var readIdx = [];
+            var period = [];
+            for (var d = 0; d < splineDimension; d++) {
+               readIdx[d] = [knotIndex(d), dst[d] - degree[d]];
+               if (boundary[d] === 'closed' && dst[d] - degree[d] < 0) period[d] = sizeVar(d);
+            }
+            line('var ' + weightVar(dst) + ' = ' + weightAccessor(readIdx, period) + ';');
+         });
+      }
+
+      if (debug) {
+         if (hasWeights) {
+            line('\n  // Fetch points and project into homogeneous (weighted) coordinates\n');
+         } else {
+            line('\n  // Fetch points\n');
+         }
+      }
+
+      ndloop(n, function (dst) {
+         var readIdx = [];
+         var period = [];
+         for (var d = 0; d < splineDimension; d++) {
+            readIdx[d] = [knotIndex(d), dst[d] - degree[d]];
+            if (boundary[d] === 'closed' && dst[d] - degree[d] < 0) period[d] = sizeVar(d);
+         }
+         if (isBasis) {
+            if (hasWeights) {
+               line('var ' + pointVar(dst) + ' = ' + pointAccessor(readIdx, period) + ' * ' + weightVar(dst) + ';');
+            } else {
+               line('var ' + pointVar(dst) + ' = ' + pointAccessor(readIdx, period) + ';');
+            }
+         } else {
+            for (d = 0; d < spaceDimension; d++) {
+               var dstWithDim = dst.concat(d);
+               readIdx[splineDimension] = d;
+               if (hasWeights) {
+                  line('var ' + pointVar(dstWithDim) + ' = ' + pointAccessor(readIdx, period) + ' * ' + weightVar(dst) + ';');
+               } else {
+                  line('var ' + pointVar(dstWithDim) + ' = ' + pointAccessor(readIdx, period) + ';');
+               }
+            }
+         }
+      });
+      debugLine('\n');
+
+      debugLine('// Perform De Boor\'s algorithm');
+      for (d = n.length - 1; d >= 0; d--) {
+         n[d] = [degree[d], degree[d] + 1];
+         for (i = 0; i < degree[d]; i++) {
+            debugLine('\n  // Degree ' + degree[d] + ' evaluation in dimension ' + d + ', step ' + (i + 1) + '\n');
+            for (j = degree[d]; j > i; j--) {
+               var isDerivative = derivative && (degree[d] - i - derivative[d] <= 0);
+
+               if (isDerivative) {
+                  line('m = 1 / (' + knotVar([d, j - i + degree[d] - 1]) + ' - ' + knotVar([d, j - 1]) + ');');
+                  if (hasWeights) {
+                     line('a = (' + tVar(d) + ' - ' + knotVar([d, j - 1]) + ') * m;');
+                     line('b = 1 - a;');
+                  }
+               } else {
+                  line('a = (' + tVar(d) + ' - ' + knotVar([d, j - 1]) + ') / (' + knotVar([d, j - i + degree[d] - 1]) + ' - ' + knotVar([d, j - 1]) + ');');
+                  line('b = 1 - a;');
+               }
+
+               if (hasWeights) {
+                  ndloop(n, function (ii) {
+                     var ij = ii.slice();
+                     var ij1 = ii.slice();
+                     ij[d] = j;
+                     ij1[d] = j - 1;
+                     if (isDerivative && hasWeights) line('h = ' + weightVar(ij) + ';');
+                     line(weightVar(ij) + ' = b * ' + weightVar(ij1) + ' + a * ' + weightVar(ij) + ';');
+                  });
+               }
+               ndloop(n, function (ii) {
+                  var weightFactor, pt1, pt2;
+                  var ij = ii.slice();
+                  var ij1 = ii.slice();
+                  // Replace the dimension being interpolated with the interpolation indices
+                  ij[d] = j;
+                  ij1[d] = j - 1;
+                  // Create a version to which we can append the dimension when we loop over spatial dimension
+                  if (isDerivative) {
+                     var derivCoeff = i + 1;
+                     if (isBasis) {
+                        weightFactor = hasWeights ? 'h * ' + weightVar(ij1) + ' / ' + weightVar(ij) + ' * ' : '';
+                        pt1 = pointVar(ij) + (hasWeights ? ' / h' : '');
+                        pt2 = pointVar(ij1) + (hasWeights ? ' / ' + weightVar(ij1) : '');
+                        line(pointVar(ij) + ' = ' + derivCoeff + ' * ' + weightFactor + '(' + pt1 + ' - ' + pt2 + ') * m;');
+                     } else {
+                        var ijWithDimension = ij.slice();
+                        var ij1WithDimension = ij1.slice();
+                        for (m = 0; m < spaceDimension; m++) {
+                           ijWithDimension[splineDimension] = ij1WithDimension[splineDimension] = m;
+                           weightFactor = hasWeights ? 'h * ' + weightVar(ij1) + ' / ' + weightVar(ij) + ' * ' : '';
+                           pt1 = pointVar(ijWithDimension) + (hasWeights ? ' / h' : '');
+                           pt2 = pointVar(ij1WithDimension) + (hasWeights ? ' / ' + weightVar(ij1) : '');
+                           line(pointVar(ijWithDimension) + ' = ' + derivCoeff + ' * ' + weightFactor + '(' + pt1 + ' - ' + pt2 + ') * m;');
+                        }
+                     }
+                  } else {
+                     if (isBasis) {
+                        line(pointVar(ij) + ' = b * ' + pointVar(ij1) + ' + a * ' + pointVar(ij) + ';');
+                     } else {
+                        for (m = 0; m < spaceDimension; m++) {
+                           ij[splineDimension] = ij1[splineDimension] = m;
+                           line(pointVar(ij) + ' = b * ' + pointVar(ij1) + ' + a * ' + pointVar(ij) + ';');
+                        }
+                     }
+                  }
+               });
+               debugLine('\n');
+            }
+         }
+      }
+
+      if (debug) {
+         if (hasWeights) {
+            line('\n  // Project back from homogeneous coordinates and return final output\n');
+         } else {
+            line('\n  // Return final output\n');
+         }
+      }
+      if (isBasis) {
+         if (hasWeights) {
+            line('return ' + pointVar(degree) + ' / ' + weightVar(degree) + ';');
+         } else {
+            line('return ' + pointVar(degree) + ';');
+         }
+      } else {
+         for (d = 0; d < spaceDimension; d++) {
+            if (hasWeights) {
+               line('out[' + d + '] = ' + pointVar(degree.concat([d])) + ' / ' + weightVar(degree) + ';');
+            } else {
+               line('out[' + d + '] = ' + pointVar(degree.concat([d])) + ';');
+            }
+         }
+      }
+      if (!isBasis) {
+         line('return out;');
+      }
+      code.push('}');
+
+      if (debug) {
+         var codeStr = code.join('\n');
+         logger(codeStr);
+
+         codeCache[cacheKey] = codeStr;
+      }
+
+      var evaluator = new Function([code.join('\n'), '; return ', functionName].join(''))();
+      evaluatorCache[cacheKey] = evaluator;
+      return evaluator.bind(nurbs);
+   };
 });
 
 
 define ('nurbs/src/transform',[
-	'nurbs/src/utils/accessor-preamble',
-	'nurbs/src/utils/size-getter',
-	'nurbs/src/utils/variable',
+   'nurbs/src/utils/accessor-preamble',
+   'nurbs/src/utils/size-getter',
+   'nurbs/src/utils/variable',
 ],
 function (accessorPreamble,
-          sizeGetter, 
+          sizeGetter,
           variable)
 {
 'use strict';
 
-	var transformerCache = {};
-	
-	return function createTransform (cacheKey, nurbs, accessors, debug) {
-		var i, j, iterator, iterators, terms, n, rvalue, lvalue;
-		var cachedTransformer = transformerCache[cacheKey];
-		if (cachedTransformer) {
-			return cachedTransformer.bind(nurbs);
-		}
-	
-		var code = [];
-		var functionName = 'transform' + cacheKey;
-	
-		code.push('function ' + functionName + '(m) {');
-		code.push('var i, w;');
-		code.push(accessorPreamble(nurbs, 'x', 'this.points', nurbs.points));
-	
-		var sizeVar = variable(debug ? 'size' : 's');
-		for (i = 0; i < nurbs.splineDimension; i++) {
-			code.push('var ' + sizeVar(i) + ' = ' + sizeGetter(nurbs.points, 'this.points', i) + ';');
-		}
-	
-		iterators = [];
-		for (i = 0; i < nurbs.splineDimension; i++) {
-			iterator = 'i' + i;
-			iterators.push(iterator);
-			code.push('for (' + iterator + ' = ' + sizeVar(i) + '- 1; ' + iterator + ' >= 0; ' + iterator + '--) {');
-		}
-	
-		for (i = 0; i < nurbs.dimension; i++) {
-			code.push('x' + i + ' = ' + accessors.point(iterators.concat([i])));
-		}
-	
-		terms = [];
-		for (i = 0; i < nurbs.dimension; i++) {
-			terms.push('m[' + ((nurbs.dimension + 1) * (i + 1) - 1) + '] * x' + i);
-		}
-		terms.push('m[' + ((nurbs.dimension + 1) * (nurbs.dimension + 1) - 1) + ']');
-		code.push('var w = (' + terms.join(' + ') + ') || 1.0;');
-	
-		for (i = 0; i < nurbs.dimension; i++) {
-			terms = [];
-			n = nurbs.dimension;
-			for (j = 0; j < n; j++) {
-				terms.push('m[' + (j * (n + 1) + i) + '] * x' + j);
-			}
-			terms.push('m[' + (j * (n + 1) + i) + ']');
-			lvalue = accessors.point(iterators.concat([i]));
-			rvalue = '(' + terms.join(' + ') + ') / w';
-			code.push(lvalue + ' = ' + rvalue + ';');
-		}
-	
-		for (i = nurbs.splineDimension - 1; i >= 0; i--) {
-			code.push('}');
-		}
-	
-		code.push('return this;');
-		code.push('}');
-	
-		var transform = new Function([code.join('\n'), '; return ', functionName].join(''))();
-	
-		if (debug) console.log(code.join('\n'));
-	
-		transformerCache[cacheKey] = transform;
-		return transform.bind(nurbs);
-	};
+   var transformerCache = {};
+
+   return function createTransform (cacheKey, nurbs, accessors, debug) {
+      var i, j, iterator, iterators, terms, n, rvalue, lvalue;
+      var cachedTransformer = transformerCache[cacheKey];
+      if (cachedTransformer) {
+         return cachedTransformer.bind(nurbs);
+      }
+
+      var code = [];
+      var functionName = 'transform' + cacheKey;
+
+      code.push('function ' + functionName + '(m) {');
+      code.push('var i, w;');
+      code.push(accessorPreamble(nurbs, 'x', 'this.points', nurbs.points));
+
+      var sizeVar = variable(debug ? 'size' : 's');
+      for (i = 0; i < nurbs.splineDimension; i++) {
+         code.push('var ' + sizeVar(i) + ' = ' + sizeGetter(nurbs.points, 'this.points', i) + ';');
+      }
+
+      iterators = [];
+      for (i = 0; i < nurbs.splineDimension; i++) {
+         iterator = 'i' + i;
+         iterators.push(iterator);
+         code.push('for (' + iterator + ' = ' + sizeVar(i) + '- 1; ' + iterator + ' >= 0; ' + iterator + '--) {');
+      }
+
+      for (i = 0; i < nurbs.dimension; i++) {
+         code.push('x' + i + ' = ' + accessors.point(iterators.concat([i])));
+      }
+
+      terms = [];
+      for (i = 0; i < nurbs.dimension; i++) {
+         terms.push('m[' + ((nurbs.dimension + 1) * (i + 1) - 1) + '] * x' + i);
+      }
+      terms.push('m[' + ((nurbs.dimension + 1) * (nurbs.dimension + 1) - 1) + ']');
+      code.push('var w = (' + terms.join(' + ') + ') || 1.0;');
+
+      for (i = 0; i < nurbs.dimension; i++) {
+         terms = [];
+         n = nurbs.dimension;
+         for (j = 0; j < n; j++) {
+            terms.push('m[' + (j * (n + 1) + i) + '] * x' + j);
+         }
+         terms.push('m[' + (j * (n + 1) + i) + ']');
+         lvalue = accessors.point(iterators.concat([i]));
+         rvalue = '(' + terms.join(' + ') + ') / w';
+         code.push(lvalue + ' = ' + rvalue + ';');
+      }
+
+      for (i = nurbs.splineDimension - 1; i >= 0; i--) {
+         code.push('}');
+      }
+
+      code.push('return this;');
+      code.push('}');
+
+      var transform = new Function([code.join('\n'), '; return ', functionName].join(''))();
+
+      if (debug) console.log(code.join('\n'));
+
+      transformerCache[cacheKey] = transform;
+      return transform.bind(nurbs);
+   };
 });
 
+
 define ('nurbs/src/support',[
-	'nurbs/src/utils/ndloop',
-	'nurbs/src/utils/variable',
-	'nurbs/src/utils/accessor-preamble',
-	'nurbs/src/utils/infer-type',
-	'nurbs/src/utils/is-array-like',
-	'nurbs/src/utils/size-getter',
+   'nurbs/src/utils/ndloop',
+   'nurbs/src/utils/variable',
+   'nurbs/src/utils/accessor-preamble',
+   'nurbs/src/utils/infer-type',
+   'nurbs/src/utils/is-array-like',
+   'nurbs/src/utils/size-getter',
 ],
 function (ndloop,
-          variable, 
-          accessorPreamble, 
-          inferType, 
-          isArrayLike, 
+          variable,
+          accessorPreamble,
+          inferType,
+          isArrayLike,
           sizeGetter)
 {
 'use strict';
-	
-	var supportCache = {};
-	
-	return function (cacheKey, nurbs, accessors, debug, checkBounds) {
-		var cachedSupport = supportCache[cacheKey];
-		if (cachedSupport) {
-			return cachedSupport.bind(nurbs);
-		}
-	
-		var degree = nurbs.degree;
-		var knots = nurbs.knots;
-		var splineDimension = nurbs.splineDimension;
-		var boundary = nurbs.boundary;
-	
-		var i, n, d;
-		var code = [];
-		var functionName = 'support' + cacheKey;
-	
-		var knotAccessor = accessors.knot;
-	
-		var tVar = variable('t');
-		var domainVar = debug ? 'domain' : 'd';
-		var sizeVar = variable(debug ? 'size' : 's');
-		var knotIndex = variable(debug ? 'knotIndex' : 'i');
-	
-		var allDimensionUniform = true;
-		for (d = 0; d < splineDimension; d++) {
-			if (isArrayLike(knots) && isArrayLike(knots[d])) {
-				allDimensionUniform = false;
-			}
-		}
-	
-		// Just to indent properly and save lots of typing
-		function line (str) {
-			code.push('  ' + (str || ''));
-		}
-	
-		var parameterArgs = [];
-		for (i = 0; i < splineDimension; i++) {
-			parameterArgs.push(tVar([i]));
-		}
-	
-		code.push('function ' + functionName + ' (out, ' + parameterArgs.join(', ') + ') {');
-	
-		var c = 0;
-		function pushSupport (args, period) {
-			if (period === undefined) {
-				line('out[' + (c++) + '] = ' + args.join(' + ') + ';');
-			} else {
-				line('out[' + (c++) + '] = (' + args.join(' + ') + ' + ' + period + ') % ' + period + ';');
-			}
-		}
-	
-		line('var h, m;');
-		line('var c = 0;');
-	
-		if (checkBounds) {
-			line('var ' + domainVar + ' = this.domain;');
-			line('for (var i = 0; i < this.splineDimension; i++) {');
-			line('  a = arguments[i + 1];');
-			line('  if (a < ' + domainVar + '[i][0] || a > ' + domainVar + '[i][1] || a === undefined || isNaN(a)) {');
-			line('    throw new Error(\'Invalid Spline parameter in dimension \'+i+\'. Valid domain is [\'+' + domainVar + '[i][0]+\', \'+' + domainVar + '[i][1]+\']. but got t\'+i+\' = \'+arguments[i + 1]+\'.\');');
-			line('  }');
-			line('}');
-		}
-	
-		for (d = 0; d < splineDimension; d++) {
-			line('var ' + sizeVar(d) + ' = ' + sizeGetter(nurbs.points, 'this.points', d) + ';');
-		}
-	
-		if (!allDimensionUniform) {
-			code.push(accessorPreamble(nurbs, 'k', 'this.knots', knots));
-		}
-	
-		var hasKnots = [];
-		for (d = 0; d < splineDimension; d++) {
-			switch (inferType(knots)) {
-				case inferType.NDARRAY:
-					hasKnots[d] = true;
-					break;
-				case inferType.ARRAY_OF_ARRAYS:
-					hasKnots[d] = isArrayLike(knots[d]);
-					break;
-			}
-		}
-	
-		for (d = 0; d < splineDimension; d++) {
-			if (hasKnots[d]) {
-				line('var ' + knotIndex(d) + ' = 0;');
-				line('h = ' + sizeVar(d) + ';');
-				line('while(h > ' + knotIndex(d) + ' + 1) {');
-				line('  m = 0.5 * (h + ' + knotIndex(d) + ') | 0;');
-				line('  if (' + knotAccessor([d, 'm']) + ' > ' + tVar(d) + ') h = m;');
-				line('  else ' + knotIndex(d) + ' = m;');
-				line('}');
-			} else {
-				if (boundary[d] === 'closed') {
-					line(knotIndex(d) + ' = (' + tVar(d) + ' | 0) % ' + sizeVar(d) + ';');
-				} else {
-					line(knotIndex(d) + ' = (' + tVar(d) + ' | 0);');
-					line('if (' + knotIndex(d) + ' < ' + degree[d] + ') ' + knotIndex(d) + ' = ' + degree[d] + ';');
-					line('if (' + knotIndex(d) + ' > ' + sizeVar(d) + ' - 1) ' + knotIndex(d) + ' = ' + sizeVar(d) + ' - 1;');
-				}
-			}
-		}
-	
-		for (d = 0, n = []; d < splineDimension; d++) {
-			n[d] = degree[d] + 1;
-		}
-	
-		ndloop(n, function (dst) {
-			var readIdx = [];
-			var period = [];
-			for (var d = 0; d < splineDimension; d++) {
-				readIdx[d] = [knotIndex(d), dst[d] - degree[d]];
-				if (boundary[d] === 'closed' && dst[d] - degree[d] < 0) period[d] = sizeVar(d);
-			}
-			for (d = 0; d < splineDimension; d++) {
-				pushSupport(readIdx[d], period[d]);
-			}
-		});
-	
-		line('out.length = ' + c + ';');
-	
-		line('return out;');
-		code.push('}');
-	
-		if (debug) console.log(code.join('\n'));
-	
-		var evaluator = new Function([code.join('\n'), '; return ', functionName].join(''))();
-		supportCache[cacheKey] = evaluator;
-		return evaluator.bind(nurbs);
-	};
+
+   var supportCache = {};
+
+   return function (cacheKey, nurbs, accessors, debug, checkBounds) {
+      var cachedSupport = supportCache[cacheKey];
+      if (cachedSupport) {
+         return cachedSupport.bind(nurbs);
+      }
+
+      var degree = nurbs.degree;
+      var knots = nurbs.knots;
+      var splineDimension = nurbs.splineDimension;
+      var boundary = nurbs.boundary;
+
+      var i, n, d;
+      var code = [];
+      var functionName = 'support' + cacheKey;
+
+      var knotAccessor = accessors.knot;
+
+      var tVar = variable('t');
+      var domainVar = debug ? 'domain' : 'd';
+      var sizeVar = variable(debug ? 'size' : 's');
+      var knotIndex = variable(debug ? 'knotIndex' : 'i');
+
+      var allDimensionUniform = true;
+      for (d = 0; d < splineDimension; d++) {
+         if (isArrayLike(knots) && isArrayLike(knots[d])) {
+            allDimensionUniform = false;
+         }
+      }
+
+      // Just to indent properly and save lots of typing
+      function line (str) {
+         code.push('  ' + (str || ''));
+      }
+
+      var parameterArgs = [];
+      for (i = 0; i < splineDimension; i++) {
+         parameterArgs.push(tVar([i]));
+      }
+
+      code.push('function ' + functionName + ' (out, ' + parameterArgs.join(', ') + ') {');
+
+      var c = 0;
+      function pushSupport (args, period) {
+         if (period === undefined) {
+            line('out[' + (c++) + '] = ' + args.join(' + ') + ';');
+         } else {
+            line('out[' + (c++) + '] = (' + args.join(' + ') + ' + ' + period + ') % ' + period + ';');
+         }
+      }
+
+      line('var h, m;');
+      line('var c = 0;');
+
+      if (checkBounds) {
+         line('var ' + domainVar + ' = this.domain;');
+         line('for (var i = 0; i < this.splineDimension; i++) {');
+         line('  a = arguments[i + 1];');
+         line('  if (a < ' + domainVar + '[i][0] || a > ' + domainVar + '[i][1] || a === undefined || isNaN(a)) {');
+         line('    throw new Error(\'Invalid Spline parameter in dimension \'+i+\'. Valid domain is [\'+' + domainVar + '[i][0]+\', \'+' + domainVar + '[i][1]+\']. but got t\'+i+\' = \'+arguments[i + 1]+\'.\');');
+         line('  }');
+         line('}');
+      }
+
+      for (d = 0; d < splineDimension; d++) {
+         line('var ' + sizeVar(d) + ' = ' + sizeGetter(nurbs.points, 'this.points', d) + ';');
+      }
+
+      if (!allDimensionUniform) {
+         code.push(accessorPreamble(nurbs, 'k', 'this.knots', knots));
+      }
+
+      var hasKnots = [];
+      for (d = 0; d < splineDimension; d++) {
+         switch (inferType(knots)) {
+            case inferType.NDARRAY:
+               hasKnots[d] = true;
+               break;
+            case inferType.ARRAY_OF_ARRAYS:
+               hasKnots[d] = isArrayLike(knots[d]);
+               break;
+         }
+      }
+
+      for (d = 0; d < splineDimension; d++) {
+         if (hasKnots[d]) {
+            line('var ' + knotIndex(d) + ' = 0;');
+            line('h = ' + sizeVar(d) + ';');
+            line('while(h > ' + knotIndex(d) + ' + 1) {');
+            line('  m = 0.5 * (h + ' + knotIndex(d) + ') | 0;');
+            line('  if (' + knotAccessor([d, 'm']) + ' > ' + tVar(d) + ') h = m;');
+            line('  else ' + knotIndex(d) + ' = m;');
+            line('}');
+         } else {
+            if (boundary[d] === 'closed') {
+               line(knotIndex(d) + ' = (' + tVar(d) + ' | 0) % ' + sizeVar(d) + ';');
+            } else {
+               line(knotIndex(d) + ' = (' + tVar(d) + ' | 0);');
+               line('if (' + knotIndex(d) + ' < ' + degree[d] + ') ' + knotIndex(d) + ' = ' + degree[d] + ';');
+               line('if (' + knotIndex(d) + ' > ' + sizeVar(d) + ' - 1) ' + knotIndex(d) + ' = ' + sizeVar(d) + ' - 1;');
+            }
+         }
+      }
+
+      for (d = 0, n = []; d < splineDimension; d++) {
+         n[d] = degree[d] + 1;
+      }
+
+      ndloop(n, function (dst) {
+         var readIdx = [];
+         var period = [];
+         for (var d = 0; d < splineDimension; d++) {
+            readIdx[d] = [knotIndex(d), dst[d] - degree[d]];
+            if (boundary[d] === 'closed' && dst[d] - degree[d] < 0) period[d] = sizeVar(d);
+         }
+         for (d = 0; d < splineDimension; d++) {
+            pushSupport(readIdx[d], period[d]);
+         }
+      });
+
+      line('out.length = ' + c + ';');
+
+      line('return out;');
+      code.push('}');
+
+      if (debug) console.log(code.join('\n'));
+
+      var evaluator = new Function([code.join('\n'), '; return ', functionName].join(''))();
+      supportCache[cacheKey] = evaluator;
+      return evaluator.bind(nurbs);
+   };
 });
 
 
 define ('nurbs/extras/sample',[
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Geometry/Triangle3",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Geometry/Triangle3",
 ],
 function (Vector3,
           Triangle3)
 {
 'use strict';
 
-	var tmp1 = [ ];
+   var tmp1 = [ ];
 
-	return function (mesh, surface, opts)
-	{
-		mesh = mesh || { };
-		opts = opts || { };
+   return function (mesh, surface, opts)
+   {
+      mesh = mesh || { };
+      opts = opts || { };
 
-		var
-			points      = mesh .points = mesh .points || [ ],
-			faces       = mesh .faces  = mesh .faces  || [ ],
-			haveWeights = opts .haveWeights;
+      var
+         points      = mesh .points = mesh .points || [ ],
+         faces       = mesh .faces  = mesh .faces  || [ ],
+         haveWeights = opts .haveWeights;
 
-		var dimension = surface .dimension - haveWeights;
+      var dimension = surface .dimension - haveWeights;
 
-		if (Array .isArray (opts .resolution))
-		{
-			var resolution = opts .resolution;
-		}
-		else
-		{
-			var
-				res        = opts .resolution === undefined ? 31 : opts .resolution,
-				resolution = new Array (surface .splineDimension) .fill (res);
-		}
+      if (Array .isArray (opts .resolution))
+      {
+         var resolution = opts .resolution;
+      }
+      else
+      {
+         var
+            res        = opts .resolution === undefined ? 31 : opts .resolution,
+            resolution = new Array (surface .splineDimension) .fill (res);
+      }
 
-		switch (surface .splineDimension)
-		{
-			case 1:
-			{
-				var
-					nu         = resolution [0],
-					uClosed    = surface .boundary [0] === 'closed',
-					nuBound    = nu + ! uClosed,
-					nbVertices = nuBound * dimension,
-					domain     = opts .domain || surface .domain,
-					uDomain    = domain [0],
-					uDistance  = uDomain [1] - uDomain [0];
+      switch (surface .splineDimension)
+      {
+         case 1:
+         {
+            var
+               nu         = resolution [0],
+               uClosed    = surface .boundary [0] === 'closed',
+               nuBound    = nu + ! uClosed,
+               nbVertices = nuBound * dimension,
+               domain     = opts .domain || surface .domain,
+               uDomain    = domain [0],
+               uDistance  = uDomain [1] - uDomain [0];
 
-				for (var i = 0; i < nuBound; ++ i)
-				{
-					var
-						u   = uDomain [0] + uDistance * i / nu,
-						ptr = i * dimension;
+            for (var i = 0; i < nuBound; ++ i)
+            {
+               var
+                  u   = uDomain [0] + uDistance * i / nu,
+                  ptr = i * dimension;
 
-					surface .evaluate (tmp1, u);
+               surface .evaluate (tmp1, u);
 
-					if (haveWeights)
-					{
-						var w = tmp1 [dimension];
+               if (haveWeights)
+               {
+                  var w = tmp1 [dimension];
 
-						for (var d = 0; d < dimension; ++ d)
-							points [ptr + d] = tmp1 [d] / w;
-					}
-					else
-					{
-						for (var d = 0; d < dimension; ++ d)
-							points [ptr + d] = tmp1 [d];
-					}
-				}
+                  for (var d = 0; d < dimension; ++ d)
+                     points [ptr + d] = tmp1 [d] / w;
+               }
+               else
+               {
+                  for (var d = 0; d < dimension; ++ d)
+                     points [ptr + d] = tmp1 [d];
+               }
+            }
 
-				points .length = nbVertices;
-				break;
-			}
-			case 2:
-			{
-				var
-					nu         = resolution [0],
-					nv         = resolution [1],
-					uClosed    = surface .boundary [0] === 'closed',
-					vClosed    = surface .boundary [1] === 'closed',
-					nuBound    = nu + ! uClosed,
-					nvBound    = nv + ! vClosed,
-					nbVertices = nuBound * nvBound * dimension,
-					domain     = opts .domain || surface .domain,
-					uDomain    = domain [0],
-					vDomain    = domain [1],
-					uDistance  = uDomain [1] - uDomain [0],
-					vDistance  = vDomain [1] - vDomain [0];
+            points .length = nbVertices;
+            break;
+         }
+         case 2:
+         {
+            var
+               nu         = resolution [0],
+               nv         = resolution [1],
+               uClosed    = surface .boundary [0] === 'closed',
+               vClosed    = surface .boundary [1] === 'closed',
+               nuBound    = nu + ! uClosed,
+               nvBound    = nv + ! vClosed,
+               nbVertices = nuBound * nvBound * dimension,
+               domain     = opts .domain || surface .domain,
+               uDomain    = domain [0],
+               vDomain    = domain [1],
+               uDistance  = uDomain [1] - uDomain [0],
+               vDistance  = vDomain [1] - vDomain [0];
 
-				// Generate points.
+            // Generate points.
 
-				for (var i = 0; i < nuBound; ++ i)
-				{
-					var u = uDomain [0] + uDistance * i / nu;
+            for (var i = 0; i < nuBound; ++ i)
+            {
+               var u = uDomain [0] + uDistance * i / nu;
 
-					for (var j = 0; j < nvBound; ++ j)
-					{
-						var
-							v   = vDomain [0] + vDistance * j / nv,
-							ptr = (i + nuBound * j) * dimension;
+               for (var j = 0; j < nvBound; ++ j)
+               {
+                  var
+                     v   = vDomain [0] + vDistance * j / nv,
+                     ptr = (i + nuBound * j) * dimension;
 
-						surface .evaluate (tmp1, u, v);
+                  surface .evaluate (tmp1, u, v);
 
-						if (haveWeights)
-						{
-							var w = tmp1 [dimension];
+                  if (haveWeights)
+                  {
+                     var w = tmp1 [dimension];
 
-							for (var d = 0; d < dimension; ++ d)
-								points [ptr + d] = tmp1 [d] / w;
-						}
-						else
-						{
-							for (var d = 0; d < dimension; ++ d)
-								points [ptr + d] = tmp1 [d];
-						}
-					}
-				}
+                     for (var d = 0; d < dimension; ++ d)
+                        points [ptr + d] = tmp1 [d] / w;
+                  }
+                  else
+                  {
+                     for (var d = 0; d < dimension; ++ d)
+                        points [ptr + d] = tmp1 [d];
+                  }
+               }
+            }
 
-				points .length = nbVertices;
+            points .length = nbVertices;
 
-				// Generate faces.
+            // Generate faces.
 
-				var
-					uClosed = opts .closed [0],
-					vClosed = opts .closed [1];
+            var
+               uClosed = opts .closed [0],
+               vClosed = opts .closed [1];
 
-				var c = 0;
+            var c = 0;
 
-				for (var i = 0; i < nu; ++ i)
-				{
-		        var
-						i0 = i,
-						i1 = i + 1;
+            for (var i = 0; i < nu; ++ i)
+            {
+              var
+                  i0 = i,
+                  i1 = i + 1;
 
-					if (uClosed)
-						i1 = i1 % nu;
+               if (uClosed)
+                  i1 = i1 % nu;
 
-	            for (var j = 0; j < nv; ++ j)
-					{
-						var j0 = j;
-						var j1 = j + 1;
+               for (var j = 0; j < nv; ++ j)
+               {
+                  var j0 = j;
+                  var j1 = j + 1;
 
-						if (vClosed)
-							j1 = j1 % nv;
+                  if (vClosed)
+                     j1 = j1 % nv;
 
-						// Triangle 1
+                  // Triangle 1
 
-						faces [c ++] = i0 + nuBound * j0; // 1
-						faces [c ++] = i1 + nuBound * j0; // 2
-						faces [c ++] = i1 + nuBound * j1; // 3
+                  faces [c ++] = i0 + nuBound * j0; // 1
+                  faces [c ++] = i1 + nuBound * j0; // 2
+                  faces [c ++] = i1 + nuBound * j1; // 3
 
-						// Triangle 2
+                  // Triangle 2
 
-						faces [c ++] = i0 + nuBound * j0; // 1
-						faces [c ++] = i1 + nuBound * j1; // 3
-						faces [c ++] = i0 + nuBound * j1; // 4
-					}
-				}
+                  faces [c ++] = i0 + nuBound * j0; // 1
+                  faces [c ++] = i1 + nuBound * j1; // 3
+                  faces [c ++] = i0 + nuBound * j1; // 4
+               }
+            }
 
-				faces .length = c;
+            faces .length = c;
 
-				/*
-				// Trimming Contours
+            /*
+            // Trimming Contours
 
-				if (opts .trimmingContours)
-				{
-					var holes = [ ];
+            if (opts .trimmingContours)
+            {
+               var holes = [ ];
 
-					var trimmingContours = opts .trimmingContours;
+               var trimmingContours = opts .trimmingContours;
 
-					for (var t = 0, iLength = trimmingContours .length; t < iLength; ++ t)
-					{
-						var
-							trimmingContour = trimmingContours [t],
-							hole            = [ ];
+               for (var t = 0, iLength = trimmingContours .length; t < iLength; ++ t)
+               {
+                  var
+                     trimmingContour = trimmingContours [t],
+                     hole            = [ ];
 
-						for (var p = 0, pLength = trimmingContour .length; p < pLength; ++ p)
-						{
-							var point = trimmingContour [p];
+                  for (var p = 0, pLength = trimmingContour .length; p < pLength; ++ p)
+                  {
+                     var point = trimmingContour [p];
 
-							surface .evaluate (tmp1, point .x, point .y);
+                     surface .evaluate (tmp1, point .x, point .y);
 
-							for (var d = 0; d < dimension; ++ d)
-								points .push (tmp1 [d]);
+                     for (var d = 0; d < dimension; ++ d)
+                        points .push (tmp1 [d]);
 
-							var vertex = new Vector3 (tmp1 [0], tmp1 [1], tmp1 [2]);
+                     var vertex = new Vector3 (tmp1 [0], tmp1 [1], tmp1 [2]);
 
-							vertex .index = c ++;
+                     vertex .index = c ++;
 
-							hole .push (vertex);
-						}
+                     hole .push (vertex);
+                  }
 
-						holes .push (hole);
-					}
+                  holes .push (hole);
+               }
 
-					var
-						curves    = [ ],
-						triangles = [ ],
-						trimmed   = [ ];
+               var
+                  curves    = [ ],
+                  triangles = [ ],
+                  trimmed   = [ ];
 
-					for (var v = 0, fLength = faces .length; v < fLength; v += 3)
-					{
-						curves    .length = 0;
-						triangles .length = 0;
+               for (var v = 0, fLength = faces .length; v < fLength; v += 3)
+               {
+                  curves    .length = 0;
+                  triangles .length = 0;
 
-						var
-							index1 = faces [v]     * 3,
-							index2 = faces [v + 1] * 3,
-							index3 = faces [v + 2] * 3;
+                  var
+                     index1 = faces [v]     * 3,
+                     index2 = faces [v + 1] * 3,
+                     index3 = faces [v + 2] * 3;
 
-						var
-							vertex1 = new Vector3 (points [index1], points [index1 + 1], points [index1 + 2]),
-							vertex2 = new Vector3 (points [index2], points [index2 + 1], points [index2 + 2]),
-							vertex3 = new Vector3 (points [index3], points [index3 + 1], points [index3 + 2]);
+                  var
+                     vertex1 = new Vector3 (points [index1], points [index1 + 1], points [index1 + 2]),
+                     vertex2 = new Vector3 (points [index2], points [index2 + 1], points [index2 + 2]),
+                     vertex3 = new Vector3 (points [index3], points [index3 + 1], points [index3 + 2]);
 
-						vertex1 .index = v;
-						vertex2 .index = v + 1;
-						vertex3 .index = v + 2;
+                  vertex1 .index = v;
+                  vertex2 .index = v + 1;
+                  vertex3 .index = v + 2;
 
-						curves .push ([ vertex1, vertex2, vertex3 ]);
-						curves .push .apply (curves, holes);
-						curves .push (triangles);
+                  curves .push ([ vertex1, vertex2, vertex3 ]);
+                  curves .push .apply (curves, holes);
+                  curves .push (triangles);
 
-						Triangle3 .triangulatePolygon .apply (Triangle3, curves);
+                  Triangle3 .triangulatePolygon .apply (Triangle3, curves);
 
-						for (var t = 0, tLength = triangles .length; t < tLength; ++ t)
-							trimmed .push (triangles [t] .index);
-					}
+                  for (var t = 0, tLength = triangles .length; t < tLength; ++ t)
+                     trimmed .push (triangles [t] .index);
+               }
 
-					mesh .faces = trimmed;
-				}
-				*/
+               mesh .faces = trimmed;
+            }
+            */
 
-				break;
-			}
-			default:
-				throw new Error('Can only sample curves and surfaces');
-		}
+            break;
+         }
+         default:
+            throw new Error('Can only sample curves and surfaces');
+      }
 
-		return mesh;
-	};
+      return mesh;
+   };
 });
 
 
 define ('nurbs/nurbs',[
-	'nurbs/src/utils/infer-type',
-	'nurbs/src/utils/cache-key',
-	'nurbs/src/utils/is-ndarray',
-	'nurbs/src/utils/is-ndarray-like',
-	'nurbs/src/utils/create-accessors',
-	'nurbs/src/numerical-derivative',
-	'nurbs/src/utils/is-array-like',
-	'nurbs/src/evaluate',
-	'nurbs/src/transform',
-	'nurbs/src/support',
-	"nurbs/extras/sample",
+   'nurbs/src/utils/infer-type',
+   'nurbs/src/utils/cache-key',
+   'nurbs/src/utils/is-ndarray',
+   'nurbs/src/utils/is-ndarray-like',
+   'nurbs/src/utils/create-accessors',
+   'nurbs/src/numerical-derivative',
+   'nurbs/src/utils/is-array-like',
+   'nurbs/src/evaluate',
+   'nurbs/src/transform',
+   'nurbs/src/support',
+   "nurbs/extras/sample",
 ],
 function (inferType,
-          computeCacheKey, 
+          computeCacheKey,
           isNdarray,
           isNdarrayLike,
           createAccessors,
@@ -2404,320 +2394,321 @@ function (inferType,
 {
 'use strict';
 
-	var BOUNDARY_TYPES = {
-		open: 'open',
-		closed: 'closed',
-		clamped: 'clamped'
-	};
-	
-	function isBlank (x) {
-		return x === undefined || x === null;
-	}
-	
-	function parseNURBS (points, degree, knots, weights, boundary, opts) {
-		var i, dflt;
+   var BOUNDARY_TYPES = {
+      open: 'open',
+      closed: 'closed',
+      clamped: 'clamped'
+   };
 
-		if (points && !isArrayLike(points) && !isNdarray(points)) {
-			opts = points;
-			this.debug = points.debug;
-			this.checkBounds = !!points.checkBounds;
-			this.weights = points.weights;
-			this.knots = points.knots;
-			this.degree = points.degree;
-			this.boundary = points.boundary;
-			this.points = points.points;
-			Object.defineProperty(this, 'size', {value: opts.size, writable: true, configurable: true});
-		} else {
-			opts = opts || {};
-			this.weights = weights;
-			this.knots = knots;
-			this.degree = degree;
-			this.points = points;
-			this.boundary = boundary;
-			this.debug = opts.debug;
-			this.checkBounds = !!opts.checkBounds;
-			Object.defineProperty(this, 'size', {value: opts.size, writable: true, configurable: true});
-		}
+   function isBlank (x) {
+      return x === undefined || x === null;
+   }
 
-		var pointType  = inferType(this.points);
-		var weightType = inferType(this.weights);
-		var knotType   = inferType(this.knots);
-	
-		if (this.points) {
-			//
-			// Sanitize the points
-			//
-			switch (pointType) {
-				case inferType.GENERIC_NDARRAY:
-				case inferType.NDARRAY:
-					Object.defineProperties(this, {
-						splineDimension: {
-							value: this.points.shape.length - 1,
-							writable: false,
-							configurable: true
-						},
-						dimension: {
-							value: this.points.shape[this.points.shape.length - 1],
-							writable: false,
-							configurable: true
-						},
-						size: {
-							get: function () {
-								return this.points.shape.slice(0, this.points.shape.length - 1);
-							},
-							set: function () {
-								throw new Error("Cannot assign to read only property 'size'");
-							},
-							configurable: true
-						}
-					});
-					break;
-	
-				case inferType.ARRAY_OF_OBJECTS:
-				case inferType.ARRAY_OF_ARRAYS:
-					// Follow the zeroth entries until we hit something that's not an array
-					var splineDimension = 0;
-					var size = this.size || [];
-					size.length = 0;
-					for (var ptr = this.points; isArrayLike(ptr[0]); ptr = ptr[0]) {
-						splineDimension++;
-						size.push(ptr.length);
-					}
-					if (splineDimension === 0) {
-						throw new Error('Expected an array of points');
-					}
-	
-					Object.defineProperties(this, {
-						splineDimension: {
-							value: splineDimension,
-							writable: false,
-							configurable: true
-						},
-						dimension: {
-							value: ptr.length,
-							writable: false,
-							configurable: true
-						},
-						size: {
-							get: function () {
-								var size = [];
-								size.length = 0;
-								for (var i = 0, ptr = this.points; i < this.splineDimension; i++, ptr = ptr[0]) {
-									size[i] = ptr.length;
-								}
-								return size;
-							},
-							set: function () {
-								throw new Error("Cannot assign to read only property 'size'");
-							},
-							configurable: true
-						}
-					});
-	
-					break;
-				case inferType.PACKED:
-				default:
-					throw new Error('Expected either a packed array, array of arrays, or ndarray of points');
-			}
-		} else {
-			if (this.size === undefined || this.size === null) {
-				throw new Error('Either points or a control hull size must be provided.');
-			}
-			if (!isArrayLike(this.size)) {
-				Object.defineProperty(this, 'size', {
-					value: [this.size],
-					writable: true,
-					configurable: true
-				});
-			}
-			if (this.size.length === 0) {
-				throw new Error('`size` must be a number or an array of length at least one.');
-			}
-	
-			Object.defineProperties(this, {
-				splineDimension: {
-					value: this.size.length,
-					writable: false,
-					configurable: true
-				},
-				dimension: {
-					value: 0,
-					writable: false,
-					configurable: true
-				}
-			});
-		}
-	
-		//
-		// Sanitize the degree into an array
-		//
-		if (isArrayLike(this.degree)) {
-			for (i = 0; i < this.splineDimension; i++) {
-				if (isBlank(this.degree[i])) {
-					throw new Error('Missing degree in dimension ' + (i + 1));
-				}
-			}
-		} else {
-			var hasBaseDegree = !isBlank(this.degree);
-			var baseDegree = isBlank(this.degree) ? 2 : this.degree;
-			this.degree = [];
-			for (i = 0; i < this.splineDimension; i++) {
-				if (this.size[i] <= baseDegree) {
-					if (hasBaseDegree) {
-						throw new Error('Expected at least ' + (baseDegree + 1) + ' points for degree ' + baseDegree + ' spline in dimension ' + (i + 1) + ' but got only ' + this.size[i]);
-					} else {
-						this.degree[i] = this.size[i] - 1;
-					}
-				} else {
-					this.degree[i] = baseDegree;
-				}
-			}
-		}
-	
-		//
-		// Sanitize boundaries
-		//
-		dflt = (typeof this.boundary !== 'string') ? 'open' : this.boundary;
-		if (!BOUNDARY_TYPES[dflt]) {
-			throw new Error('Boundary type must be one of ' + Object.keys(BOUNDARY_TYPES) + '. Got ' + dflt);
-		}
-		this.boundary = isArrayLike(this.boundary) ? this.boundary : [];
-		this.boundary.length = this.splineDimension;
-		for (i = 0; i < this.splineDimension; i++) {
-			this.boundary[i] = isBlank(this.boundary[i]) ? dflt : this.boundary[i];
-	
-			if (!BOUNDARY_TYPES[dflt]) {
-				throw new Error('Boundary type must be one of ' + Object.keys(BOUNDARY_TYPES) + '. Got ' + dflt + ' for dimension ' + (i + 1));
-			}
-		}
-	
-		//
-		// Sanitize knots
-		//
-		switch (knotType) {
-			case inferType.ARRAY_OF_ARRAYS:
-				// Wrap flat arrays in an array so that curves are more natural
-				if (isArrayLike(this.knots) && this.knots.length > 0 && !isArrayLike(this.knots[0])) {
-					this.knots = [this.knots];
-				}
-	
-				for (i = 0; i < this.splineDimension; i++) {
-					if (this.size[i] <= this.degree[i]) {
-						throw new Error('Expected at least ' + (this.degree[i] + 1) + ' points in dimension ' + (i + 1) + ' but got ' + this.size[i] + '.');
-					}
-	
-					if (isArrayLike(this.knots[i])) {
-						if (this.boundary[i] !== 'closed' && this.knots[i].length !== this.degree[i] + this.size[i] + 1) {
-							throw new Error('Expected ' + (this.degree[i] + this.size[i] + 1) + ' knots in dimension ' + (i + 1) + ' but got ' + this.knots[i].length + '.');
-						} else if (this.boundary[i] === 'closed' && this.knots[i].length !== this.size[i] + 1) {
-							// Fudge factor allowance for just ignoring extra knots. This makes some allowance
-							// for passing regular clamped/open spline knots to a closed spline by ignoring extra
-							// knots instead of simply truncating.
-							var canBeFudged = this.knots[i].length === this.size[i] + this.degree[i] + 1;
-							if (!canBeFudged) {
-								throw new Error('Expected ' + (this.size[i] + 1) + ' knots for closed spline in dimension ' + (i + 1) + ' but got ' + this.knots[i].length + '.');
-							}
-						}
-					}
-				}
-				break;
-			case inferType.NDARRAY:
-				break;
-		}
-	
-		//
-		// Create evaluator
-		//
-		var newCacheKey = computeCacheKey(this, this.debug, this.checkBounds, pointType, weightType, knotType);
-	
-		if (newCacheKey !== this.__cacheKey) {
-			this.__cacheKey = newCacheKey;
-	
-			var accessors = createAccessors(this);
-	
-			this.evaluate = createEvaluator(this.__cacheKey, this, accessors, this.debug, this.checkBounds, false);
-			this.transform = createTransform(this.__cacheKey, this, accessors, this.debug);
-			this.support = createSupport(this.__cacheKey, this, accessors, this.debug, this.checkBounds);
-	
-			this.evaluator = function (derivativeOrder, isBasis) {
-				return createEvaluator(this.__cacheKey, this, accessors, this.debug, this.checkBounds, isBasis, derivativeOrder);
-			};
-		}
-	
-		this.numericalDerivative = numericalDerivative.bind(this);
-	
-		return this;
-	}
-	
-	function domainGetter () {
-		var sizeArray;
-		var ret = [];
-	
-		// If the reference to size is hard-coded, then the size cannot change, or
-		// if you change points manually (like by appending a point) without re-running
-		// the constructor, then it'll be incorrect. This aims for middle-ground
-		// by querying the size directly, based on the point data type
-		//
-		// A pointer to the point array-of-arrays:
-		var ptr = this.points;
-	
-		if (!ptr) {
-			// If there are no points, then just use this.size
-			sizeArray = this.size;
-		} else if (isNdarrayLike(ptr)) {
-			// If it's an ndarray, use the ndarray's shape property
-			sizeArray = ptr.shape;
-		}
-	
-		for (var d = 0; d < this.splineDimension; d++) {
-			var size = sizeArray ? sizeArray[d] : ptr.length;
-			var p = this.degree[d];
-			var isClosed = this.boundary[d] === 'closed';
-	
-			if (this.knots && this.knots[d]) {
-				var k = this.knots[d];
-				ret[d] = [k[isClosed ? 0 : p], k[size]];
-			} else {
-				ret[d] = [isClosed ? 0 : p, size];
-			}
-	
-			// Otherwise if it's an array of arrays, we get the size of the next
-			// dimension by recursing into the points
-			if (ptr) ptr = ptr[0];
-		}
-		return ret;
-	}
-	
-	// Evaluate Non-Uniform Rational B-Splines (NURBS)
-	// @param points {Array} - data array
-	// @param degree {Array} - spline curve degree
-	// @param knots {Array} - knot vector
-	// @param weights {Array} - weight vector
-	// @param opts {object} - additional options
-	function nurbs (points, degree, knots, weights, boundary, opts)
-	{
-		var ctor = function (points, degree, knots, weights, boundary, opts)
-		{
-			parseFcn (points, degree, knots, weights, boundary, opts);
-			return ctor;
-		};
-	
-		var parseFcn = parseNURBS .bind (ctor);
-		
-		Object .defineProperty (ctor, 'domain',
-		{
-			get: domainGetter
-		});
-		
-		parseFcn (points, degree, knots, weights, boundary, opts);
-		
-		return ctor;
-	}
-	
-	nurbs .sample = sample;
+   function parseNURBS (points, degree, knots, weights, boundary, opts) {
+      var i, dflt;
 
-	return nurbs;
+      if (points && !isArrayLike(points) && !isNdarray(points)) {
+         opts = points;
+         this.debug = points.debug;
+         this.checkBounds = !!points.checkBounds;
+         this.weights = points.weights;
+         this.knots = points.knots;
+         this.degree = points.degree;
+         this.boundary = points.boundary;
+         this.points = points.points;
+         Object.defineProperty(this, 'size', {value: opts.size, writable: true, configurable: true});
+      } else {
+         opts = opts || {};
+         this.weights = weights;
+         this.knots = knots;
+         this.degree = degree;
+         this.points = points;
+         this.boundary = boundary;
+         this.debug = opts.debug;
+         this.checkBounds = !!opts.checkBounds;
+         Object.defineProperty(this, 'size', {value: opts.size, writable: true, configurable: true});
+      }
+
+      var pointType  = inferType(this.points);
+      var weightType = inferType(this.weights);
+      var knotType   = inferType(this.knots);
+
+      if (this.points) {
+         //
+         // Sanitize the points
+         //
+         switch (pointType) {
+            case inferType.GENERIC_NDARRAY:
+            case inferType.NDARRAY:
+               Object.defineProperties(this, {
+                  splineDimension: {
+                     value: this.points.shape.length - 1,
+                     writable: false,
+                     configurable: true
+                  },
+                  dimension: {
+                     value: this.points.shape[this.points.shape.length - 1],
+                     writable: false,
+                     configurable: true
+                  },
+                  size: {
+                     get: function () {
+                        return this.points.shape.slice(0, this.points.shape.length - 1);
+                     },
+                     set: function () {
+                        throw new Error("Cannot assign to read only property 'size'");
+                     },
+                     configurable: true
+                  }
+               });
+               break;
+
+            case inferType.ARRAY_OF_OBJECTS:
+            case inferType.ARRAY_OF_ARRAYS:
+               // Follow the zeroth entries until we hit something that's not an array
+               var splineDimension = 0;
+               var size = this.size || [];
+               size.length = 0;
+               for (var ptr = this.points; isArrayLike(ptr[0]); ptr = ptr[0]) {
+                  splineDimension++;
+                  size.push(ptr.length);
+               }
+               if (splineDimension === 0) {
+                  throw new Error('Expected an array of points');
+               }
+
+               Object.defineProperties(this, {
+                  splineDimension: {
+                     value: splineDimension,
+                     writable: false,
+                     configurable: true
+                  },
+                  dimension: {
+                     value: ptr.length,
+                     writable: false,
+                     configurable: true
+                  },
+                  size: {
+                     get: function () {
+                        var size = [];
+                        size.length = 0;
+                        for (var i = 0, ptr = this.points; i < this.splineDimension; i++, ptr = ptr[0]) {
+                           size[i] = ptr.length;
+                        }
+                        return size;
+                     },
+                     set: function () {
+                        throw new Error("Cannot assign to read only property 'size'");
+                     },
+                     configurable: true
+                  }
+               });
+
+               break;
+            case inferType.PACKED:
+            default:
+               throw new Error('Expected either a packed array, array of arrays, or ndarray of points');
+         }
+      } else {
+         if (this.size === undefined || this.size === null) {
+            throw new Error('Either points or a control hull size must be provided.');
+         }
+         if (!isArrayLike(this.size)) {
+            Object.defineProperty(this, 'size', {
+               value: [this.size],
+               writable: true,
+               configurable: true
+            });
+         }
+         if (this.size.length === 0) {
+            throw new Error('`size` must be a number or an array of length at least one.');
+         }
+
+         Object.defineProperties(this, {
+            splineDimension: {
+               value: this.size.length,
+               writable: false,
+               configurable: true
+            },
+            dimension: {
+               value: 0,
+               writable: false,
+               configurable: true
+            }
+         });
+      }
+
+      //
+      // Sanitize the degree into an array
+      //
+      if (isArrayLike(this.degree)) {
+         for (i = 0; i < this.splineDimension; i++) {
+            if (isBlank(this.degree[i])) {
+               throw new Error('Missing degree in dimension ' + (i + 1));
+            }
+         }
+      } else {
+         var hasBaseDegree = !isBlank(this.degree);
+         var baseDegree = isBlank(this.degree) ? 2 : this.degree;
+         this.degree = [];
+         for (i = 0; i < this.splineDimension; i++) {
+            if (this.size[i] <= baseDegree) {
+               if (hasBaseDegree) {
+                  throw new Error('Expected at least ' + (baseDegree + 1) + ' points for degree ' + baseDegree + ' spline in dimension ' + (i + 1) + ' but got only ' + this.size[i]);
+               } else {
+                  this.degree[i] = this.size[i] - 1;
+               }
+            } else {
+               this.degree[i] = baseDegree;
+            }
+         }
+      }
+
+      //
+      // Sanitize boundaries
+      //
+      dflt = (typeof this.boundary !== 'string') ? 'open' : this.boundary;
+      if (!BOUNDARY_TYPES[dflt]) {
+         throw new Error('Boundary type must be one of ' + Object.keys(BOUNDARY_TYPES) + '. Got ' + dflt);
+      }
+      this.boundary = isArrayLike(this.boundary) ? this.boundary : [];
+      this.boundary.length = this.splineDimension;
+      for (i = 0; i < this.splineDimension; i++) {
+         this.boundary[i] = isBlank(this.boundary[i]) ? dflt : this.boundary[i];
+
+         if (!BOUNDARY_TYPES[dflt]) {
+            throw new Error('Boundary type must be one of ' + Object.keys(BOUNDARY_TYPES) + '. Got ' + dflt + ' for dimension ' + (i + 1));
+         }
+      }
+
+      //
+      // Sanitize knots
+      //
+      switch (knotType) {
+         case inferType.ARRAY_OF_ARRAYS:
+            // Wrap flat arrays in an array so that curves are more natural
+            if (isArrayLike(this.knots) && this.knots.length > 0 && !isArrayLike(this.knots[0])) {
+               this.knots = [this.knots];
+            }
+
+            for (i = 0; i < this.splineDimension; i++) {
+               if (this.size[i] <= this.degree[i]) {
+                  throw new Error('Expected at least ' + (this.degree[i] + 1) + ' points in dimension ' + (i + 1) + ' but got ' + this.size[i] + '.');
+               }
+
+               if (isArrayLike(this.knots[i])) {
+                  if (this.boundary[i] !== 'closed' && this.knots[i].length !== this.degree[i] + this.size[i] + 1) {
+                     throw new Error('Expected ' + (this.degree[i] + this.size[i] + 1) + ' knots in dimension ' + (i + 1) + ' but got ' + this.knots[i].length + '.');
+                  } else if (this.boundary[i] === 'closed' && this.knots[i].length !== this.size[i] + 1) {
+                     // Fudge factor allowance for just ignoring extra knots. This makes some allowance
+                     // for passing regular clamped/open spline knots to a closed spline by ignoring extra
+                     // knots instead of simply truncating.
+                     var canBeFudged = this.knots[i].length === this.size[i] + this.degree[i] + 1;
+                     if (!canBeFudged) {
+                        throw new Error('Expected ' + (this.size[i] + 1) + ' knots for closed spline in dimension ' + (i + 1) + ' but got ' + this.knots[i].length + '.');
+                     }
+                  }
+               }
+            }
+            break;
+         case inferType.NDARRAY:
+            break;
+      }
+
+      //
+      // Create evaluator
+      //
+      var newCacheKey = computeCacheKey(this, this.debug, this.checkBounds, pointType, weightType, knotType);
+
+      if (newCacheKey !== this.__cacheKey) {
+         this.__cacheKey = newCacheKey;
+
+         var accessors = createAccessors(this);
+
+         this.evaluate = createEvaluator(this.__cacheKey, this, accessors, this.debug, this.checkBounds, false);
+         this.transform = createTransform(this.__cacheKey, this, accessors, this.debug);
+         this.support = createSupport(this.__cacheKey, this, accessors, this.debug, this.checkBounds);
+
+         this.evaluator = function (derivativeOrder, isBasis) {
+            return createEvaluator(this.__cacheKey, this, accessors, this.debug, this.checkBounds, isBasis, derivativeOrder);
+         };
+      }
+
+      this.numericalDerivative = numericalDerivative.bind(this);
+
+      return this;
+   }
+
+   function domainGetter () {
+      var sizeArray;
+      var ret = [];
+
+      // If the reference to size is hard-coded, then the size cannot change, or
+      // if you change points manually (like by appending a point) without re-running
+      // the constructor, then it'll be incorrect. This aims for middle-ground
+      // by querying the size directly, based on the point data type
+      //
+      // A pointer to the point array-of-arrays:
+      var ptr = this.points;
+
+      if (!ptr) {
+         // If there are no points, then just use this.size
+         sizeArray = this.size;
+      } else if (isNdarrayLike(ptr)) {
+         // If it's an ndarray, use the ndarray's shape property
+         sizeArray = ptr.shape;
+      }
+
+      for (var d = 0; d < this.splineDimension; d++) {
+         var size = sizeArray ? sizeArray[d] : ptr.length;
+         var p = this.degree[d];
+         var isClosed = this.boundary[d] === 'closed';
+
+         if (this.knots && this.knots[d]) {
+            var k = this.knots[d];
+            ret[d] = [k[isClosed ? 0 : p], k[size]];
+         } else {
+            ret[d] = [isClosed ? 0 : p, size];
+         }
+
+         // Otherwise if it's an array of arrays, we get the size of the next
+         // dimension by recursing into the points
+         if (ptr) ptr = ptr[0];
+      }
+      return ret;
+   }
+
+   // Evaluate Non-Uniform Rational B-Splines (NURBS)
+   // @param points {Array} - data array
+   // @param degree {Array} - spline curve degree
+   // @param knots {Array} - knot vector
+   // @param weights {Array} - weight vector
+   // @param opts {object} - additional options
+   function nurbs (points, degree, knots, weights, boundary, opts)
+   {
+      var ctor = function (points, degree, knots, weights, boundary, opts)
+      {
+         parseFcn (points, degree, knots, weights, boundary, opts);
+         return ctor;
+      };
+
+      var parseFcn = parseNURBS .bind (ctor);
+
+      Object .defineProperty (ctor, 'domain',
+      {
+         get: domainGetter
+      });
+
+      parseFcn (points, degree, knots, weights, boundary, opts);
+
+      return ctor;
+   }
+
+   nurbs .sample = sample;
+
+   return nurbs;
 });
+
 define('nurbs', ['nurbs/nurbs'], function (main) { return main; });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -2770,15 +2761,15 @@ define('nurbs', ['nurbs/nurbs'], function (main) { return main; });
 
 
 define ('x_ite/Components/NURBS/NurbsCurve',[
-	"x_ite/Bits/X3DCast",
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/NURBS/X3DParametricGeometryNode",
-	"x_ite/Components/Rendering/X3DLineGeometryNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/NURBS/NURBS",
-	"nurbs",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/NURBS/X3DParametricGeometryNode",
+   "x_ite/Components/Rendering/X3DLineGeometryNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Browser/NURBS/NURBS",
+   "nurbs",
 ],
 function (X3DCast,
           Fields,
@@ -2792,166 +2783,166 @@ function (X3DCast,
 {
 "use strict";
 
-	function NurbsCurve (executionContext)
-	{
-		X3DParametricGeometryNode .call (this, executionContext);
+   function NurbsCurve (executionContext)
+   {
+      X3DParametricGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .NurbsCurve);
+      this .addType (X3DConstants .NurbsCurve);
 
-		this .setGeometryType (1);
+      this .setGeometryType (1);
 
-		this .knots         = [ ];
-		this .weights       = [ ];
-		this .controlPoints = [ ];
-		this .mesh          = { };
-		this .sampleOptions = { resolution: [ ] };
-	}
+      this .knots         = [ ];
+      this .weights       = [ ];
+      this .controlPoints = [ ];
+      this .mesh          = { };
+      this .sampleOptions = { resolution: [ ] };
+   }
 
-	NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
-		X3DLineGeometryNode .prototype,
-	{
-		constructor: NurbsCurve,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellation", new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "closed",       new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "order",        new Fields .SFInt32 (3)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "knot",         new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "NurbsCurve";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-		initialize: function ()
-		{
-			X3DParametricGeometryNode .prototype .initialize .call (this);
+   NurbsCurve .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
+      X3DLineGeometryNode .prototype,
+   {
+      constructor: NurbsCurve,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellation", new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "closed",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "order",        new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "knot",         new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "NurbsCurve";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "geometry";
+      },
+      initialize: function ()
+      {
+         X3DParametricGeometryNode .prototype .initialize .call (this);
 
-			this .controlPoint_ .addInterest ("set_controlPoint__", this);
+         this .controlPoint_ .addInterest ("set_controlPoint__", this);
 
-			this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
-			this .setSolid (false);
+         this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
+         this .setSolid (false);
 
-			this .set_controlPoint__ ();
-		},
-		set_controlPoint__: function ()
-		{
-			if (this .controlPointNode)
-				this .controlPointNode .removeInterest ("requestRebuild", this);
+         this .set_controlPoint__ ();
+      },
+      set_controlPoint__: function ()
+      {
+         if (this .controlPointNode)
+            this .controlPointNode .removeInterest ("requestRebuild", this);
 
-			this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+         this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
 
-			if (this .controlPointNode)
-				this .controlPointNode .addInterest ("requestRebuild", this);
-		},
-		getTessellation: function (numKnots)
-		{
-			return NURBS .getTessellation (this .tessellation_ .getValue (), numKnots - this .order_ .getValue ());
-		},
-		getClosed: function (order, knot, weight, controlPointNode)
-		{
-			if (! this .closed_ .getValue ())
-				return false;
+         if (this .controlPointNode)
+            this .controlPointNode .addInterest ("requestRebuild", this);
+      },
+      getTessellation: function (numKnots)
+      {
+         return NURBS .getTessellation (this .tessellation_ .getValue (), numKnots - this .order_ .getValue ());
+      },
+      getClosed: function (order, knot, weight, controlPointNode)
+      {
+         if (! this .closed_ .getValue ())
+            return false;
 
-			return NURBS .getClosed (order, knot, weight, controlPointNode);
-		},
-		getWeights: function (result, dimension, weight)
-		{
-			return NURBS .getWeights (result, dimension, weight);
-		},
-		getControlPoints: function (result, closed, order, weights, controlPointNode)
-		{
-			return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
-		},
-		tessellate: function ()
-		{
-			if (this .order_ .getValue () < 2)
-				return [ ];
+         return NURBS .getClosed (order, knot, weight, controlPointNode);
+      },
+      getWeights: function (result, dimension, weight)
+      {
+         return NURBS .getWeights (result, dimension, weight);
+      },
+      getControlPoints: function (result, closed, order, weights, controlPointNode)
+      {
+         return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
+      },
+      tessellate: function ()
+      {
+         if (this .order_ .getValue () < 2)
+            return [ ];
 
-			if (! this .controlPointNode)
-				return [ ];
+         if (! this .controlPointNode)
+            return [ ];
 
-			if (this .controlPointNode .getSize () < this .order_ .getValue ())
-				return [ ];
+         if (this .controlPointNode .getSize () < this .order_ .getValue ())
+            return [ ];
 
-			var
-				vertexArray = this .getVertices (),
-				array       = [ ];
+         var
+            vertexArray = this .getVertices (),
+            array       = [ ];
 
-			if (vertexArray .length)
-			{
-				for (var i = 0, length = vertexArray .length; i < length; i += 8)
-					array .push (vertexArray [i], vertexArray [i + 1], vertexArray [i + 2]);
+         if (vertexArray .length)
+         {
+            for (var i = 0, length = vertexArray .length; i < length; i += 8)
+               array .push (vertexArray [i], vertexArray [i + 1], vertexArray [i + 2]);
 
-				array .push (vertexArray [length - 4], vertexArray [length - 3], vertexArray [length - 2]);
-			}
+            array .push (vertexArray [length - 4], vertexArray [length - 3], vertexArray [length - 2]);
+         }
 
-			return array;
-		},
-		build: function ()
-		{
-			if (this .order_ .getValue () < 2)
-				return;
+         return array;
+      },
+      build: function ()
+      {
+         if (this .order_ .getValue () < 2)
+            return;
 
-			if (! this .controlPointNode)
-				return;
+         if (! this .controlPointNode)
+            return;
 
-			if (this .controlPointNode .getSize () < this .order_ .getValue ())
-				return;
+         if (this .controlPointNode .getSize () < this .order_ .getValue ())
+            return;
 
-			// Order and dimension are now positive numbers.
+         // Order and dimension are now positive numbers.
 
-			var
-				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
-				weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this .weight_),
-				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPointNode);
+         var
+            closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
+            weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this .weight_),
+            controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPointNode);
 
-			// Knots
+         // Knots
 
-			var
-				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
-				scale = knots .at (-1) - knots [0];
+         var
+            knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+            scale = knots .at (-1) - knots [0];
 
-			// Initialize NURBS tessellator
+         // Initialize NURBS tessellator
 
-			var degree = this .order_ .getValue () - 1;
+         var degree = this .order_ .getValue () - 1;
 
-			var surface = this .surface = (this .surface || nurbs) ({
-				boundary: ["open"],
-				degree: [degree],
-				knots: [knots],
-				points: controlPoints,
-				debug: false,
-			});
+         var surface = this .surface = (this .surface || nurbs) ({
+            boundary: ["open"],
+            degree: [degree],
+            knots: [knots],
+            points: controlPoints,
+            debug: false,
+         });
 
-			this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
-			this .sampleOptions .haveWeights    = Boolean (weights);
+         this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
+         this .sampleOptions .haveWeights    = Boolean (weights);
 
-			var
-				mesh        = nurbs .sample (this .mesh, surface, this .sampleOptions),
-				points      = mesh .points,
-				vertexArray = this .getVertices ();
+         var
+            mesh        = nurbs .sample (this .mesh, surface, this .sampleOptions),
+            points      = mesh .points,
+            vertexArray = this .getVertices ();
 
-			for (var i2 = 3, length = points .length; i2 < length; i2 += 3)
-			{
-				var i1 = i2 - 3;
+         for (var i2 = 3, length = points .length; i2 < length; i2 += 3)
+         {
+            var i1 = i2 - 3;
 
-				vertexArray .push (points [i1], points [i1 + 1], points [i1 + 2], 1);
-				vertexArray .push (points [i2], points [i2 + 1], points [i2 + 2], 1);
-			}
-		},
-	});
+            vertexArray .push (points [i1], points [i1 + 1], points [i1 + 2], 1);
+            vertexArray .push (points [i2], points [i2 + 1], points [i2 + 2], 1);
+         }
+      },
+   });
 
-	return NurbsCurve;
+   return NurbsCurve;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -3004,14 +2995,14 @@ function (X3DCast,
 
 
 define ('x_ite/Components/NURBS/NurbsCurve2D',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/NURBS/X3DNurbsControlCurveNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/NURBS/NURBS",
-	"standard/Math/Numbers/Vector3",
-	"nurbs",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/NURBS/X3DNurbsControlCurveNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Browser/NURBS/NURBS",
+   "standard/Math/Numbers/Vector3",
+   "nurbs",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -3024,147 +3015,147 @@ function (Fields,
 {
 "use strict";
 
-	function NurbsCurve2D (executionContext)
-	{
-		X3DNurbsControlCurveNode .call (this, executionContext);
+   function NurbsCurve2D (executionContext)
+   {
+      X3DNurbsControlCurveNode .call (this, executionContext);
 
-		this .addType (X3DConstants .NurbsCurve2D);
+      this .addType (X3DConstants .NurbsCurve2D);
 
-		this .knots         = [ ];
-		this .weights       = [ ];
-		this .controlPoints = [ ];
-		this .mesh          = { };
-		this .sampleOptions = { resolution: [ ] };
-		this .array         = [ ];
-	}
+      this .knots         = [ ];
+      this .weights       = [ ];
+      this .controlPoints = [ ];
+      this .mesh          = { };
+      this .sampleOptions = { resolution: [ ] };
+      this .array         = [ ];
+   }
 
-	NurbsCurve2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
-	{
-		constructor: NurbsCurve2D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellation", new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "closed",       new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "order",        new Fields .SFInt32 (3)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "knot",         new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .MFVec2d ()),
-		]),
-		getTypeName: function ()
-		{
-			return "NurbsCurve2D";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		getTessellation: function (numKnots)
-		{
-			return NURBS .getTessellation (this .tessellation_ .getValue (), numKnots - this .order_ .getValue ());
-		},
-		getClosed: function (order, knot, weight, controlPoint)
-		{
-			if (! this .closed_ .getValue ())
-				return false;
+   NurbsCurve2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
+   {
+      constructor: NurbsCurve2D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellation", new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "closed",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "order",        new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "knot",         new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .MFVec2d ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "NurbsCurve2D";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      getTessellation: function (numKnots)
+      {
+         return NURBS .getTessellation (this .tessellation_ .getValue (), numKnots - this .order_ .getValue ());
+      },
+      getClosed: function (order, knot, weight, controlPoint)
+      {
+         if (! this .closed_ .getValue ())
+            return false;
 
-			return NURBS .getClosed2D (order, knot, weight, controlPoint);
-		},
-		getKnots: function (result, closed, order, dimension, knot)
-		{
-			return NURBS .getKnots (result, closed, order, dimension, knot);
-		},
-		getWeights: function (result, dimension, weight)
-		{
-			return NURBS .getWeights (result, dimension, weight);
-		},
-		getControlPoints: function (result, closed, order, weights, controlPoint)
-		{
-			return NURBS .getControlPoints2D (result, closed, order, weights, controlPoint);
-		},
-		tessellate: function (type)
-		{
-			var array = this .array;
+         return NURBS .getClosed2D (order, knot, weight, controlPoint);
+      },
+      getKnots: function (result, closed, order, dimension, knot)
+      {
+         return NURBS .getKnots (result, closed, order, dimension, knot);
+      },
+      getWeights: function (result, dimension, weight)
+      {
+         return NURBS .getWeights (result, dimension, weight);
+      },
+      getControlPoints: function (result, closed, order, weights, controlPoint)
+      {
+         return NURBS .getControlPoints2D (result, closed, order, weights, controlPoint);
+      },
+      tessellate: function (type)
+      {
+         var array = this .array;
 
-			array .length = 0;
+         array .length = 0;
 
-			if (this .order_ .getValue () < 2)
-				return array;
+         if (this .order_ .getValue () < 2)
+            return array;
 
-			if (this .controlPoint_ .length < this .order_ .getValue ())
-				return array;
+         if (this .controlPoint_ .length < this .order_ .getValue ())
+            return array;
 
-			// Order and dimension are now positive numbers.
+         // Order and dimension are now positive numbers.
 
-			var
-				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPoint_),
-				weights       = this .getWeights (this .weights, this .controlPoint_ .length, this .weight_),
-				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPoint_);
+         var
+            closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPoint_),
+            weights       = this .getWeights (this .weights, this .controlPoint_ .length, this .weight_),
+            controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPoint_);
 
-			// Knots
+         // Knots
 
-			var
-				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPoint_ .length, this .knot_),
-				scale = knots .at (-1) - knots [0];
+         var
+            knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPoint_ .length, this .knot_),
+            scale = knots .at (-1) - knots [0];
 
-			// Initialize NURBS tessellator
+         // Initialize NURBS tessellator
 
-			var degree = this .order_ .getValue () - 1;
+         var degree = this .order_ .getValue () - 1;
 
-			var surface = this .surface = (this .surface || nurbs) ({
-				boundary: ["open"],
-				degree: [degree],
-				knots: [knots],
-				points: controlPoints,
-				debug: false,
-			});
+         var surface = this .surface = (this .surface || nurbs) ({
+            boundary: ["open"],
+            degree: [degree],
+            knots: [knots],
+            points: controlPoints,
+            debug: false,
+         });
 
-			this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
-			this .sampleOptions .haveWeights    = Boolean (weights);
+         this .sampleOptions .resolution [0] = this .getTessellation (knots .length);
+         this .sampleOptions .haveWeights    = Boolean (weights);
 
-			var
-				mesh   = nurbs .sample (this .mesh, surface, this .sampleOptions),
-				points = mesh .points;
+         var
+            mesh   = nurbs .sample (this .mesh, surface, this .sampleOptions),
+            points = mesh .points;
 
-			switch (type)
-			{
-				case 0:
-				{
-					for (var i = 0, length = points .length; i < length; i += 2)
-					{
-						array .push (points [i], points [i + 1]);
-					}
+         switch (type)
+         {
+            case 0:
+            {
+               for (var i = 0, length = points .length; i < length; i += 2)
+               {
+                  array .push (points [i], points [i + 1]);
+               }
 
-					break;
-				}
-				case 1:
-				{
-					for (var i = 0, length = points .length; i < length; i += 2)
-					{
-						array .push (points [i], 0, points [i + 1]);
-					}
+               break;
+            }
+            case 1:
+            {
+               for (var i = 0, length = points .length; i < length; i += 2)
+               {
+                  array .push (points [i], 0, points [i + 1]);
+               }
 
-					break;
-				}
-				case 2:
-				{
-					for (var i = 0, length = points .length; i < length; i += 2)
-					{
-						array .push (new Vector3 (points [i], points [i + 1], 0));
-					}
+               break;
+            }
+            case 2:
+            {
+               for (var i = 0, length = points .length; i < length; i += 2)
+               {
+                  array .push (new Vector3 (points [i], points [i + 1], 0));
+               }
 
-					break;
-				}
-			}
+               break;
+            }
+         }
 
-			return array;
-		},
-	});
+         return array;
+      },
+   });
 
-	return NurbsCurve2D;
+   return NurbsCurve2D;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -3217,17 +3208,17 @@ function (Fields,
 
 
 define ('x_ite/Components/NURBS/NurbsOrientationInterpolator',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Components/Interpolation/OrientationInterpolator",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Browser/NURBS/NURBS",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
-	"nurbs",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Components/Interpolation/OrientationInterpolator",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Browser/NURBS/NURBS",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Rotation4",
+   "nurbs",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -3243,161 +3234,161 @@ function (Fields,
 {
 "use strict";
 
-	function NurbsOrientationInterpolator (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
+   function NurbsOrientationInterpolator (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .NurbsOrientationInterpolator);
+      this .addType (X3DConstants .NurbsOrientationInterpolator);
 
-		this .addChildObjects ("rebuild", new Fields .SFTime ());
+      this .addChildObjects ("rebuild", new Fields .SFTime ());
 
-	   this .interpolator  = new OrientationInterpolator (executionContext);
-		this .knots         = [ ];
-		this .weights       = [ ];
-		this .controlPoints = [ ];
-		this .mesh          = { };
-		this .sampleOptions = { resolution: [ 128 ] };
-	}
+      this .interpolator  = new OrientationInterpolator (executionContext);
+      this .knots         = [ ];
+      this .weights       = [ ];
+      this .controlPoints = [ ];
+      this .mesh          = { };
+      this .sampleOptions = { resolution: [ 128 ] };
+   }
 
-	NurbsOrientationInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: NurbsOrientationInterpolator,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "order",         new Fields .SFInt32 (3)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "knot",          new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint",  new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
-		]),
-		getTypeName: function ()
-		{
-			return "NurbsOrientationInterpolator";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
+   NurbsOrientationInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: NurbsOrientationInterpolator,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "order",         new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "knot",          new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFRotation ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "NurbsOrientationInterpolator";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DChildNode .prototype .initialize .call (this);
 
-			this .order_        .addInterest ("requestRebuild",     this);
-			this .knot_         .addInterest ("requestRebuild",     this);
-			this .weight_       .addInterest ("requestRebuild",     this);
-			this .controlPoint_ .addInterest ("set_controlPoint__", this);
+         this .order_        .addInterest ("requestRebuild",     this);
+         this .knot_         .addInterest ("requestRebuild",     this);
+         this .weight_       .addInterest ("requestRebuild",     this);
+         this .controlPoint_ .addInterest ("set_controlPoint__", this);
 
-			this .rebuild_ .addInterest ("build", this);
+         this .rebuild_ .addInterest ("build", this);
 
-			this .set_fraction_ .addFieldInterest (this .interpolator .set_fraction_);
-			this .interpolator .value_changed_ .addFieldInterest (this .value_changed_);
+         this .set_fraction_ .addFieldInterest (this .interpolator .set_fraction_);
+         this .interpolator .value_changed_ .addFieldInterest (this .value_changed_);
 
-			this .interpolator .setup ();
+         this .interpolator .setup ();
 
-			this .set_controlPoint__ ();
-		},
-		set_controlPoint__: function ()
-		{
-			if (this .controlPointNode)
-				this .controlPointNode .removeInterest ("requestRebuild", this);
+         this .set_controlPoint__ ();
+      },
+      set_controlPoint__: function ()
+      {
+         if (this .controlPointNode)
+            this .controlPointNode .removeInterest ("requestRebuild", this);
 
-			this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+         this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
 
-			if (this .controlPointNode)
-				this .controlPointNode .addInterest ("requestRebuild", this);
+         if (this .controlPointNode)
+            this .controlPointNode .addInterest ("requestRebuild", this);
 
-			this .requestRebuild ();
-		},
-		getClosed: function (order, knot, weight, controlPointNode)
-		{
-			return false && NURBS .getClosed (order, knot, weight, controlPointNode);
-		},
-		getKnots: function (result, closed, order, dimension, knot)
-		{
-			return NURBS .getKnots (result, closed, order, dimension, knot);
-		},
-		getWeights: function (result, dimension, weight)
-		{
-			return NURBS .getWeights (result, dimension, weight);
-		},
-		getControlPoints: function (result, closed, order, weights, controlPointNode)
-		{
-			return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
-		},
-		requestRebuild: function ()
-		{
-			this .rebuild_ .addEvent ();
-		},
-		build: function ()
-		{
-			if (this .order_ .getValue () < 2)
-				return;
+         this .requestRebuild ();
+      },
+      getClosed: function (order, knot, weight, controlPointNode)
+      {
+         return false && NURBS .getClosed (order, knot, weight, controlPointNode);
+      },
+      getKnots: function (result, closed, order, dimension, knot)
+      {
+         return NURBS .getKnots (result, closed, order, dimension, knot);
+      },
+      getWeights: function (result, dimension, weight)
+      {
+         return NURBS .getWeights (result, dimension, weight);
+      },
+      getControlPoints: function (result, closed, order, weights, controlPointNode)
+      {
+         return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
+      },
+      requestRebuild: function ()
+      {
+         this .rebuild_ .addEvent ();
+      },
+      build: function ()
+      {
+         if (this .order_ .getValue () < 2)
+            return;
 
-			if (! this .controlPointNode)
-				return;
+         if (! this .controlPointNode)
+            return;
 
-			if (this .controlPointNode .getSize () < this .order_ .getValue ())
-				return;
+         if (this .controlPointNode .getSize () < this .order_ .getValue ())
+            return;
 
-			// Order and dimension are now positive numbers.
+         // Order and dimension are now positive numbers.
 
-			var
-				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
-				weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this .weight_),
-				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPointNode);
+         var
+            closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
+            weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this .weight_),
+            controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPointNode);
 
-			// Knots
+         // Knots
 
-			var
-				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
-				scale = knots .at (-1) - knots [0];
+         var
+            knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+            scale = knots .at (-1) - knots [0];
 
-			// Initialize NURBS tessellator
+         // Initialize NURBS tessellator
 
-			var degree = this .order_ .getValue () - 1;
+         var degree = this .order_ .getValue () - 1;
 
-			var surface = this .surface = (this .surface || nurbs) ({
-				boundary: ["open"],
-				degree: [degree],
-				knots: [knots],
-				points: controlPoints,
-				debug: false,
-			});
+         var surface = this .surface = (this .surface || nurbs) ({
+            boundary: ["open"],
+            degree: [degree],
+            knots: [knots],
+            points: controlPoints,
+            debug: false,
+         });
 
-			this .sampleOptions .haveWeights = Boolean (weights);
+         this .sampleOptions .haveWeights = Boolean (weights);
 
-			var
-				mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
-				points       = mesh .points,
-				interpolator = this .interpolator;
+         var
+            mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
+            points       = mesh .points,
+            interpolator = this .interpolator;
 
-			interpolator .key_      .length = 0;
-			interpolator .keyValue_ .length = 0;
+         interpolator .key_      .length = 0;
+         interpolator .keyValue_ .length = 0;
 
-			for (var i = 0, length = points .length - 3; i < length; i += 3)
-			{
-				var direction = new Vector3 (points [i + 3] - points [i + 0],
-				                             points [i + 4] - points [i + 1],
-				                             points [i + 5] - points [i + 2]);
+         for (var i = 0, length = points .length - 3; i < length; i += 3)
+         {
+            var direction = new Vector3 (points [i + 3] - points [i + 0],
+                                         points [i + 4] - points [i + 1],
+                                         points [i + 5] - points [i + 2]);
 
-				interpolator .key_      .push (knots [0] + i / (length - 3 + (3 * closed)) * scale);
-				interpolator .keyValue_. push (new Rotation4 (Vector3 .zAxis, direction));
-			}
+            interpolator .key_      .push (knots [0] + i / (length - 3 + (3 * closed)) * scale);
+            interpolator .keyValue_. push (new Rotation4 (Vector3 .zAxis, direction));
+         }
 
-			if (closed)
-			{
-				interpolator .key_      .push (knots [0] + scale);
-				interpolator .keyValue_. push (interpolator .keyValue_ [0]);
-			}
-		},
-	});
+         if (closed)
+         {
+            interpolator .key_      .push (knots [0] + scale);
+            interpolator .keyValue_. push (interpolator .keyValue_ [0]);
+         }
+      },
+   });
 
-	return NurbsOrientationInterpolator;
+   return NurbsOrientationInterpolator;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -3450,14 +3441,14 @@ function (Fields,
 
 
 define ('x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode',[
-	"x_ite/Components/NURBS/X3DParametricGeometryNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Browser/NURBS/NURBS",
-	"standard/Math/Algorithm",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Geometry/Triangle3",
-	"nurbs",
+   "x_ite/Components/NURBS/X3DParametricGeometryNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Browser/NURBS/NURBS",
+   "standard/Math/Algorithm",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Geometry/Triangle3",
+   "nurbs",
 ],
 function (X3DParametricGeometryNode,
           X3DConstants,
@@ -3470,337 +3461,337 @@ function (X3DParametricGeometryNode,
 {
 "use strict";
 
-	function X3DNurbsSurfaceGeometryNode (executionContext)
-	{
-		X3DParametricGeometryNode .call (this, executionContext);
+   function X3DNurbsSurfaceGeometryNode (executionContext)
+   {
+      X3DParametricGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DNurbsSurfaceGeometryNode);
+      this .addType (X3DConstants .X3DNurbsSurfaceGeometryNode);
 
-		this .tessellationScale = 1;
-		this .uKnots            = [ ];
-		this .vKnots            = [ ];
-		this .weights           = [ ];
-		this .controlPoints     = [ ];
-		this .mesh              = { };
-		this .sampleOptions     = { resolution: [ ], closed: [ ] };
-		this .textUKnots        = [ ];
-		this .textVKnots        = [ ];
-		this .textWeights       = [ ];
-		this .texControlPoints  = [ ];
-		this .texMesh           = { };
-	}
+      this .tessellationScale = 1;
+      this .uKnots            = [ ];
+      this .vKnots            = [ ];
+      this .weights           = [ ];
+      this .controlPoints     = [ ];
+      this .mesh              = { };
+      this .sampleOptions     = { resolution: [ ], closed: [ ] };
+      this .textUKnots        = [ ];
+      this .textVKnots        = [ ];
+      this .textWeights       = [ ];
+      this .texControlPoints  = [ ];
+      this .texMesh           = { };
+   }
 
-	X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
-	{
-		constructor: X3DNurbsSurfaceGeometryNode,
-		initialize: function ()
-		{
-			X3DParametricGeometryNode .prototype .initialize .call (this);
+   X3DNurbsSurfaceGeometryNode .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
+   {
+      constructor: X3DNurbsSurfaceGeometryNode,
+      initialize: function ()
+      {
+         X3DParametricGeometryNode .prototype .initialize .call (this);
 
-			this .texCoord_     .addInterest ("set_texCoord__",     this);
-			this .controlPoint_ .addInterest ("set_controlPoint__", this);
+         this .texCoord_     .addInterest ("set_texCoord__",     this);
+         this .controlPoint_ .addInterest ("set_controlPoint__", this);
 
-			this .set_texCoord__ ();
-			this .set_controlPoint__ ();
-		},
-		set_texCoord__: function ()
-		{
-			if (this .texCoordNode)
-				this .texCoordNode .removeInterest ("requestRebuild", this);
+         this .set_texCoord__ ();
+         this .set_controlPoint__ ();
+      },
+      set_texCoord__: function ()
+      {
+         if (this .texCoordNode)
+            this .texCoordNode .removeInterest ("requestRebuild", this);
 
-			if (this .nurbsTexCoordNode)
-				this .nurbsTexCoordNode .removeInterest ("requestRebuild", this);
+         if (this .nurbsTexCoordNode)
+            this .nurbsTexCoordNode .removeInterest ("requestRebuild", this);
 
-			this .texCoordNode      = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
-			this .nurbsTexCoordNode = X3DCast (X3DConstants .NurbsTextureCoordinate,   this .texCoord_);
+         this .texCoordNode      = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
+         this .nurbsTexCoordNode = X3DCast (X3DConstants .NurbsTextureCoordinate,   this .texCoord_);
 
-			if (this .texCoordNode)
-				this .texCoordNode .addInterest ("requestRebuild", this);
+         if (this .texCoordNode)
+            this .texCoordNode .addInterest ("requestRebuild", this);
 
-			if (this .nurbsTexCoordNode)
-				this .nurbsTexCoordNode .addInterest ("requestRebuild", this);
-		},
-		set_controlPoint__: function ()
-		{
-			if (this .controlPointNode)
-				this .controlPointNode .removeInterest ("requestRebuild", this);
+         if (this .nurbsTexCoordNode)
+            this .nurbsTexCoordNode .addInterest ("requestRebuild", this);
+      },
+      set_controlPoint__: function ()
+      {
+         if (this .controlPointNode)
+            this .controlPointNode .removeInterest ("requestRebuild", this);
 
-			this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+         this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
 
-			if (this .controlPointNode)
-				this .controlPointNode .addInterest ("requestRebuild", this);
-		},
-		setTessellationScale: function (value)
-		{
-			this .tessellationScale = value;
+         if (this .controlPointNode)
+            this .controlPointNode .addInterest ("requestRebuild", this);
+      },
+      setTessellationScale: function (value)
+      {
+         this .tessellationScale = value;
 
-			this .requestRebuild ();
-		},
-		getUTessellation: function (numKnots)
-		{
-			return Math .floor (NURBS .getTessellation (this .uTessellation_ .getValue (), numKnots - this .uOrder_ .getValue ()) * this .tessellationScale);
-		},
-		getVTessellation: function (numKnots)
-		{
-			return Math .floor (NURBS .getTessellation (this .vTessellation_ .getValue (), numKnots - this .vOrder_ .getValue ()) * this .tessellationScale);
-		},
-		getUClosed: function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
-		{
-			if (this .uClosed_ .getValue ())
-				return NURBS .getUClosed (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode);
+         this .requestRebuild ();
+      },
+      getUTessellation: function (numKnots)
+      {
+         return Math .floor (NURBS .getTessellation (this .uTessellation_ .getValue (), numKnots - this .uOrder_ .getValue ()) * this .tessellationScale);
+      },
+      getVTessellation: function (numKnots)
+      {
+         return Math .floor (NURBS .getTessellation (this .vTessellation_ .getValue (), numKnots - this .vOrder_ .getValue ()) * this .tessellationScale);
+      },
+      getUClosed: function (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode)
+      {
+         if (this .uClosed_ .getValue ())
+            return NURBS .getUClosed (uOrder, uDimension, vDimension, uKnot, weight, controlPointNode);
 
-			return false;
-		},
-		getVClosed: function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
-		{
-			if (this .vClosed_ .getValue ())
-				return NURBS .getVClosed (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode);
+         return false;
+      },
+      getVClosed: function (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode)
+      {
+         if (this .vClosed_ .getValue ())
+            return NURBS .getVClosed (vOrder, uDimension, vDimension, vKnot, weight, controlPointNode);
 
-			return false;
-		},
-		getUVWeights: function (result, uDimension, vDimension, weight)
-		{
-			return NURBS .getUVWeights (result, uDimension, vDimension, weight);
-		},
-		getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode)
-		{
-			return NURBS .getTexControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode);
-		},
-		getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
-		{
-			return NURBS .getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode);
-		},
-		getTrimmingContours: function ()
-		{
-			return undefined;
-		},
-		build: function ()
-		{
-			if (this .uOrder_ .getValue () < 2)
-				return;
+         return false;
+      },
+      getUVWeights: function (result, uDimension, vDimension, weight)
+      {
+         return NURBS .getUVWeights (result, uDimension, vDimension, weight);
+      },
+      getTexControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode)
+      {
+         return NURBS .getTexControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, texCoordNode);
+      },
+      getUVControlPoints: function (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode)
+      {
+         return NURBS .getUVControlPoints (result, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, weights, controlPointNode);
+      },
+      getTrimmingContours: function ()
+      {
+         return undefined;
+      },
+      build: function ()
+      {
+         if (this .uOrder_ .getValue () < 2)
+            return;
 
-			if (this .vOrder_ .getValue () < 2)
-				return;
+         if (this .vOrder_ .getValue () < 2)
+            return;
 
-			if (this .uDimension_ .getValue () < this .uOrder_ .getValue ())
-				return;
+         if (this .uDimension_ .getValue () < this .uOrder_ .getValue ())
+            return;
 
-			if (this .vDimension_ .getValue () < this .vOrder_ .getValue ())
-				return;
+         if (this .vDimension_ .getValue () < this .vOrder_ .getValue ())
+            return;
 
-			if (! this .controlPointNode)
-				return;
+         if (! this .controlPointNode)
+            return;
 
-			if (this .controlPointNode .getSize () !== this .uDimension_ .getValue () * this .vDimension_ .getValue ())
-				return;
+         if (this .controlPointNode .getSize () !== this .uDimension_ .getValue () * this .vDimension_ .getValue ())
+            return;
 
-			// Order and dimension are now positive numbers.
+         // Order and dimension are now positive numbers.
 
-			// ControlPoints
+         // ControlPoints
 
-			var
-				uClosed       = this .getUClosed (this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .uKnot_, this .weight_, this .controlPointNode),
-				vClosed       = this .getVClosed (this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .vKnot_, this .weight_, this .controlPointNode),
-				weights       = this .getUVWeights (this .weights, this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .weight_),
-				controlPoints = this .getUVControlPoints (this .controlPoints, uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), weights, this .controlPointNode);
+         var
+            uClosed       = this .getUClosed (this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .uKnot_, this .weight_, this .controlPointNode),
+            vClosed       = this .getVClosed (this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .vKnot_, this .weight_, this .controlPointNode),
+            weights       = this .getUVWeights (this .weights, this .uDimension_ .getValue (), this .vDimension_ .getValue (), this .weight_),
+            controlPoints = this .getUVControlPoints (this .controlPoints, uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), this .uDimension_ .getValue (), this .vDimension_ .getValue (), weights, this .controlPointNode);
 
-			// Knots
+         // Knots
 
-			var
-				uKnots = this .getKnots (this .uKnots, uClosed, this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .uKnot_),
-				vKnots = this .getKnots (this .vKnots, vClosed, this .vOrder_ .getValue (), this .vDimension_ .getValue (), this .vKnot_),
-				uScale = uKnots .at (-1) - uKnots [0],
-				vScale = vKnots .at (-1) - vKnots [0];
+         var
+            uKnots = this .getKnots (this .uKnots, uClosed, this .uOrder_ .getValue (), this .uDimension_ .getValue (), this .uKnot_),
+            vKnots = this .getKnots (this .vKnots, vClosed, this .vOrder_ .getValue (), this .vDimension_ .getValue (), this .vKnot_),
+            uScale = uKnots .at (-1) - uKnots [0],
+            vScale = vKnots .at (-1) - vKnots [0];
 
-			// Initialize NURBS tessellator
+         // Initialize NURBS tessellator
 
-			var
-				uDegree = this .uOrder_ .getValue () - 1,
-				vDegree = this .vOrder_ .getValue () - 1;
+         var
+            uDegree = this .uOrder_ .getValue () - 1,
+            vDegree = this .vOrder_ .getValue () - 1;
 
-			var surface = this .surface = (this .surface || nurbs) ({
-				boundary: ["open", "open"],
-				degree: [uDegree, vDegree],
-				knots: [uKnots, vKnots],
-				points: controlPoints,
-				debug: false,
-			});
+         var surface = this .surface = (this .surface || nurbs) ({
+            boundary: ["open", "open"],
+            degree: [uDegree, vDegree],
+            knots: [uKnots, vKnots],
+            points: controlPoints,
+            debug: false,
+         });
 
-			var sampleOptions = this .sampleOptions;
+         var sampleOptions = this .sampleOptions;
 
-			sampleOptions .resolution [0]   = this .getUTessellation (uKnots .length);
-			sampleOptions .resolution [1]   = this .getVTessellation (vKnots .length);
-			sampleOptions .closed [0]       = uClosed;
-			sampleOptions .closed [1]       = vClosed;
-			sampleOptions .domain           = undefined;
-			sampleOptions .haveWeights      = Boolean (weights);
-			sampleOptions .trimmingContours = this .getTrimmingContours ();
+         sampleOptions .resolution [0]   = this .getUTessellation (uKnots .length);
+         sampleOptions .resolution [1]   = this .getVTessellation (vKnots .length);
+         sampleOptions .closed [0]       = uClosed;
+         sampleOptions .closed [1]       = vClosed;
+         sampleOptions .domain           = undefined;
+         sampleOptions .haveWeights      = Boolean (weights);
+         sampleOptions .trimmingContours = this .getTrimmingContours ();
 
-			var
-				mesh        = nurbs .sample (this .mesh, surface, sampleOptions),
-				faces       = mesh .faces,
-				points      = mesh .points,
-				vertexArray = this .getVertices ();
+         var
+            mesh        = nurbs .sample (this .mesh, surface, sampleOptions),
+            faces       = mesh .faces,
+            points      = mesh .points,
+            vertexArray = this .getVertices ();
 
-			for (var i = 0, length = faces .length; i < length; ++ i)
-			{
-				var index = faces [i] * 3;
+         for (var i = 0, length = faces .length; i < length; ++ i)
+         {
+            var index = faces [i] * 3;
 
-				vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
-			}
+            vertexArray .push (points [index], points [index + 1], points [index + 2], 1);
+         }
 
-			this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue (), surface .domain);
-			this .buildNormals (faces, points);
-			this .setSolid (this .solid_ .getValue ());
-			this .setCCW (true);
-		},
-		buildNurbsTexCoords: (function ()
-		{
-			var
-				defaultTexUKnots        = [ ],
-				defaultTexVKnots        = [ ],
-				defaultTexControlPoints = [[[0, 0, 0, 1], [0, 1, 0, 1]], [[1, 0, 0, 1], [1, 1, 0, 1]]];
+         this .buildNurbsTexCoords (uClosed, vClosed, this .uOrder_ .getValue (), this .vOrder_ .getValue (), uKnots, vKnots, this .uDimension_ .getValue (), this .vDimension_ .getValue (), surface .domain);
+         this .buildNormals (faces, points);
+         this .setSolid (this .solid_ .getValue ());
+         this .setCCW (true);
+      },
+      buildNurbsTexCoords: (function ()
+      {
+         var
+            defaultTexUKnots        = [ ],
+            defaultTexVKnots        = [ ],
+            defaultTexControlPoints = [[[0, 0, 0, 1], [0, 1, 0, 1]], [[1, 0, 0, 1], [1, 1, 0, 1]]];
 
-			function getDefaultTexKnots (result, knots)
-			{
-				result [0] = result [1] = knots [0];
-				result [2] = result [3] = knots .at (-1);
-				return result;
-			}
+         function getDefaultTexKnots (result, knots)
+         {
+            result [0] = result [1] = knots [0];
+            result [2] = result [3] = knots .at (-1);
+            return result;
+         }
 
-			return function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, domain)
-			{
-				var sampleOptions = this .sampleOptions;
+         return function (uClosed, vClosed, uOrder, vOrder, uKnots, vKnots, uDimension, vDimension, domain)
+         {
+            var sampleOptions = this .sampleOptions;
 
-				if (this .texCoordNode && this .texCoordNode .getSize () === uDimension * vDimension)
-				{
-					var
-						texUDegree       = uOrder - 1,
-						texVDegree       = vOrder - 1,
-						texUKnots        = uKnots,
-						texVKnots        = vKnots,
-						texControlPoints = this .getTexControlPoints (this .texControlPoints, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, this .texCoordNode);
-				}
-				else if (this .nurbsTexCoordNode && this .nurbsTexCoordNode .isValid ())
-				{
-					var
-						node             = this .nurbsTexCoordNode,
-						texUDegree       = node .uOrder_ .getValue () - 1,
-						texVDegree       = node .vOrder_ .getValue () - 1,
-						texUKnots        = this .getKnots (this .texUKnots, false, node .uOrder_ .getValue (), node .uDimension_ .getValue (), node .uKnot_),
-						texVKnots        = this .getKnots (this .texVKnots, false, node .vOrder_ .getValue (), node .vDimension_ .getValue (), node .vKnot_),
-						texWeights       = this .getUVWeights (this .texWeights, node .uDimension_ .getValue (), node .vDimension_ .getValue (), node .weight_);
-						texControlPoints = node .getControlPoints (texWeights);
-				}
-				else
-				{
-					var
-						texUDegree       = 1,
-						texVDegree       = 1,
-						texUKnots        = getDefaultTexKnots (defaultTexUKnots, uKnots),
-						texVKnots        = getDefaultTexKnots (defaultTexVKnots, vKnots),
-						texControlPoints = defaultTexControlPoints;
+            if (this .texCoordNode && this .texCoordNode .getSize () === uDimension * vDimension)
+            {
+               var
+                  texUDegree       = uOrder - 1,
+                  texVDegree       = vOrder - 1,
+                  texUKnots        = uKnots,
+                  texVKnots        = vKnots,
+                  texControlPoints = this .getTexControlPoints (this .texControlPoints, uClosed, vClosed, uOrder, vOrder, uDimension, vDimension, this .texCoordNode);
+            }
+            else if (this .nurbsTexCoordNode && this .nurbsTexCoordNode .isValid ())
+            {
+               var
+                  node             = this .nurbsTexCoordNode,
+                  texUDegree       = node .uOrder_ .getValue () - 1,
+                  texVDegree       = node .vOrder_ .getValue () - 1,
+                  texUKnots        = this .getKnots (this .texUKnots, false, node .uOrder_ .getValue (), node .uDimension_ .getValue (), node .uKnot_),
+                  texVKnots        = this .getKnots (this .texVKnots, false, node .vOrder_ .getValue (), node .vDimension_ .getValue (), node .vKnot_),
+                  texWeights       = this .getUVWeights (this .texWeights, node .uDimension_ .getValue (), node .vDimension_ .getValue (), node .weight_);
+                  texControlPoints = node .getControlPoints (texWeights);
+            }
+            else
+            {
+               var
+                  texUDegree       = 1,
+                  texVDegree       = 1,
+                  texUKnots        = getDefaultTexKnots (defaultTexUKnots, uKnots),
+                  texVKnots        = getDefaultTexKnots (defaultTexVKnots, vKnots),
+                  texControlPoints = defaultTexControlPoints;
 
-					sampleOptions .domain = domain;
-				}
+               sampleOptions .domain = domain;
+            }
 
-				var texSurface = this .texSurface = (this .texSurface || nurbs) ({
-					boundary: ["open", "open"],
-					degree: [texUDegree, texVDegree],
-					knots: [texUKnots, texVKnots],
-					points: texControlPoints,
-				});
+            var texSurface = this .texSurface = (this .texSurface || nurbs) ({
+               boundary: ["open", "open"],
+               degree: [texUDegree, texVDegree],
+               knots: [texUKnots, texVKnots],
+               points: texControlPoints,
+            });
 
-				sampleOptions .closed [0]  = false;
-				sampleOptions .closed [1]  = false;
-				sampleOptions .haveWeights = false;
+            sampleOptions .closed [0]  = false;
+            sampleOptions .closed [1]  = false;
+            sampleOptions .haveWeights = false;
 
-				var
-					texMesh       = nurbs .sample (this .texMesh, texSurface, sampleOptions),
-					faces         = texMesh .faces,
-					points        = texMesh .points,
-					texCoordArray = this .getTexCoords ();
+            var
+               texMesh       = nurbs .sample (this .texMesh, texSurface, sampleOptions),
+               faces         = texMesh .faces,
+               points        = texMesh .points,
+               texCoordArray = this .getTexCoords ();
 
-				for (var i = 0, length = faces .length; i < length; ++ i)
-				{
-					var index = faces [i] * 4;
+            for (var i = 0, length = faces .length; i < length; ++ i)
+            {
+               var index = faces [i] * 4;
 
-					texCoordArray .push (points [index], points [index + 1], points [index + 2], points [index + 3]);
-				}
+               texCoordArray .push (points [index], points [index + 1], points [index + 2], points [index + 3]);
+            }
 
-				this .getMultiTexCoords () .push (this .getTexCoords ());
-			};
-		})(),
-		buildNormals: function (faces, points)
-		{
-			var
-				normals     = this .createNormals (faces, points),
-				normalArray = this .getNormals ();
+            this .getMultiTexCoords () .push (this .getTexCoords ());
+         };
+      })(),
+      buildNormals: function (faces, points)
+      {
+         var
+            normals     = this .createNormals (faces, points),
+            normalArray = this .getNormals ();
 
-			for (var i = 0, length = normals .length; i < length; ++ i)
-			{
-				var normal = normals [i];
+         for (var i = 0, length = normals .length; i < length; ++ i)
+         {
+            var normal = normals [i];
 
-				normalArray .push (normal .x, normal .y, normal .z);
-			}
-		},
-		createNormals: function (faces, points)
-		{
-			var normals = this .createFaceNormals (faces, points);
+            normalArray .push (normal .x, normal .y, normal .z);
+         }
+      },
+      createNormals: function (faces, points)
+      {
+         var normals = this .createFaceNormals (faces, points);
 
-			var normalIndex = [ ];
+         var normalIndex = [ ];
 
-			for (var i = 0, length = faces .length; i < length; ++ i)
-			{
-				var
-					index      = faces [i],
-					pointIndex = normalIndex [index];
+         for (var i = 0, length = faces .length; i < length; ++ i)
+         {
+            var
+               index      = faces [i],
+               pointIndex = normalIndex [index];
 
-				if (! pointIndex)
-					pointIndex = normalIndex [index] = [ ];
+            if (! pointIndex)
+               pointIndex = normalIndex [index] = [ ];
 
-				pointIndex .push (i);
-			}
+            pointIndex .push (i);
+         }
 
-			return this .refineNormals (normalIndex, normals, Algorithm .radians (85));
-		},
-		createFaceNormals: (function ()
-		{
-			var
-				v1 = new Vector3 (0, 0, 0),
-				v2 = new Vector3 (0, 0, 0),
-				v3 = new Vector3 (0, 0, 0);
+         return this .refineNormals (normalIndex, normals, Algorithm .radians (85));
+      },
+      createFaceNormals: (function ()
+      {
+         var
+            v1 = new Vector3 (0, 0, 0),
+            v2 = new Vector3 (0, 0, 0),
+            v3 = new Vector3 (0, 0, 0);
 
-			return function (faces, points)
-			{
-				var normals = this .faceNormals || [ ];
+         return function (faces, points)
+         {
+            var normals = this .faceNormals || [ ];
 
-				for (var i = 0, length = faces .length; i < length; i += 3)
-				{
-					var
-						index1 = faces [i]     * 3,
-						index2 = faces [i + 1] * 3,
-						index3 = faces [i + 2] * 3;
+            for (var i = 0, length = faces .length; i < length; i += 3)
+            {
+               var
+                  index1 = faces [i]     * 3,
+                  index2 = faces [i + 1] * 3,
+                  index3 = faces [i + 2] * 3;
 
-					v1 .set (points [index1], points [index1 + 1], points [index1 + 2]);
-					v2 .set (points [index2], points [index2 + 1], points [index2 + 2]);
-					v3 .set (points [index3], points [index3 + 1], points [index3 + 2]);
+               v1 .set (points [index1], points [index1 + 1], points [index1 + 2]);
+               v2 .set (points [index2], points [index2 + 1], points [index2 + 2]);
+               v3 .set (points [index3], points [index3 + 1], points [index3 + 2]);
 
-					var normal = Triangle3 .normal (v1, v2 ,v3, normals [i] || new Vector3 (0, 0, 0));
+               var normal = Triangle3 .normal (v1, v2 ,v3, normals [i] || new Vector3 (0, 0, 0));
 
-					normals [i]     = normal;
-					normals [i + 1] = normal;
-					normals [i + 2] = normal;
-				}
+               normals [i]     = normal;
+               normals [i + 1] = normal;
+               normals [i + 2] = normal;
+            }
 
-				normals .length = length;
+            normals .length = length;
 
-				return normals;
-			};
-		})(),
-	});
+            return normals;
+         };
+      })(),
+   });
 
-	return X3DNurbsSurfaceGeometryNode;
+   return X3DNurbsSurfaceGeometryNode;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -3853,65 +3844,63 @@ function (X3DParametricGeometryNode,
 
 
 define ('x_ite/Components/NURBS/NurbsPatchSurface',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNurbsSurfaceGeometryNode, 
+          X3DNurbsSurfaceGeometryNode,
           X3DConstants)
 {
 "use strict";
 
-	function NurbsPatchSurface (executionContext)
-	{
-		X3DNurbsSurfaceGeometryNode .call (this, executionContext);
+   function NurbsPatchSurface (executionContext)
+   {
+      X3DNurbsSurfaceGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .NurbsPatchSurface);
-	}
+      this .addType (X3DConstants .NurbsPatchSurface);
+   }
 
-	NurbsPatchSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
-	{
-		constructor: NurbsPatchSurface,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",         new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "uTessellation", new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "vTessellation", new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uClosed",       new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vClosed",       new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",        new Fields .SFInt32 (3)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",        new Fields .SFInt32 (3)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",    new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",    new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",         new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",         new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",        new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint",  new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "NurbsPatchSurface";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-	});
+   NurbsPatchSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
+   {
+      constructor: NurbsPatchSurface,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",         new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "uTessellation", new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "vTessellation", new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uClosed",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vClosed",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",        new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",        new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",    new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",    new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",         new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",         new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",        new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint",  new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "NurbsPatchSurface";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "geometry";
+      },
+   });
 
-	return NurbsPatchSurface;
+   return NurbsPatchSurface;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -3963,15 +3952,15 @@ function (Fields,
 
 
 define ('x_ite/Components/NURBS/NurbsPositionInterpolator',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Components/Interpolation/PositionInterpolator",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
-	"x_ite/Browser/NURBS/NURBS",
-	"nurbs",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Components/Interpolation/PositionInterpolator",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
+   "x_ite/Browser/NURBS/NURBS",
+   "nurbs",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -3985,151 +3974,151 @@ function (Fields,
 {
 "use strict";
 
-	function NurbsPositionInterpolator (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
+   function NurbsPositionInterpolator (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .NurbsPositionInterpolator);
+      this .addType (X3DConstants .NurbsPositionInterpolator);
 
-		this .addChildObjects ("rebuild", new Fields .SFTime ());
+      this .addChildObjects ("rebuild", new Fields .SFTime ());
 
-	   this .interpolator  = new PositionInterpolator (executionContext);
-		this .knots         = [ ];
-		this .weights       = [ ];
-		this .controlPoints = [ ];
-		this .mesh          = { };
-		this .sampleOptions = { resolution: [ 128 ] };
-	}
+      this .interpolator  = new PositionInterpolator (executionContext);
+      this .knots         = [ ];
+      this .weights       = [ ];
+      this .controlPoints = [ ];
+      this .mesh          = { };
+      this .sampleOptions = { resolution: [ 128 ] };
+   }
 
-	NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: NurbsPositionInterpolator,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "order",         new Fields .SFInt32 (3)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "knot",          new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint",  new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec3f ()),
-		]),
-		getTypeName: function ()
-		{
-			return "NurbsPositionInterpolator";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DChildNode .prototype .initialize .call (this);
+   NurbsPositionInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: NurbsPositionInterpolator,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "order",         new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "knot",          new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "weight",        new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "controlPoint",  new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,  "value_changed", new Fields .SFVec3f ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "NurbsPositionInterpolator";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DChildNode .prototype .initialize .call (this);
 
-			this .order_        .addInterest ("requestRebuild",     this);
-			this .knot_         .addInterest ("requestRebuild",     this);
-			this .weight_       .addInterest ("requestRebuild",     this);
-			this .controlPoint_ .addInterest ("set_controlPoint__", this);
+         this .order_        .addInterest ("requestRebuild",     this);
+         this .knot_         .addInterest ("requestRebuild",     this);
+         this .weight_       .addInterest ("requestRebuild",     this);
+         this .controlPoint_ .addInterest ("set_controlPoint__", this);
 
-			this .rebuild_ .addInterest ("build", this);
+         this .rebuild_ .addInterest ("build", this);
 
-			this .set_fraction_ .addFieldInterest (this .interpolator .set_fraction_);
-			this .interpolator .value_changed_ .addFieldInterest (this .value_changed_);
+         this .set_fraction_ .addFieldInterest (this .interpolator .set_fraction_);
+         this .interpolator .value_changed_ .addFieldInterest (this .value_changed_);
 
-			this .interpolator .setup ();
+         this .interpolator .setup ();
 
-			this .set_controlPoint__ ();
-		},
-		set_controlPoint__: function ()
-		{
-			if (this .controlPointNode)
-				this .controlPointNode .removeInterest ("requestRebuild", this);
+         this .set_controlPoint__ ();
+      },
+      set_controlPoint__: function ()
+      {
+         if (this .controlPointNode)
+            this .controlPointNode .removeInterest ("requestRebuild", this);
 
-			this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+         this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
 
-			if (this .controlPointNode)
-				this .controlPointNode .addInterest ("requestRebuild", this);
+         if (this .controlPointNode)
+            this .controlPointNode .addInterest ("requestRebuild", this);
 
-			this .requestRebuild ();
-		},
-		getClosed: function (order, knot, weight, controlPointNode)
-		{
-			return false && NURBS .getClosed (order, knot, weight, controlPointNode);
-		},
-		getKnots: function (result, closed, order, dimension, knot)
-		{
-			return NURBS .getKnots (result, closed, order, dimension, knot);
-		},
-		getWeights: function (result, dimension, weight)
-		{
-			return NURBS .getWeights (result, dimension, weight);
-		},
-		getControlPoints: function (result, closed, order, weights, controlPointNode)
-		{
-			return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
-		},
-		requestRebuild: function ()
-		{
-			this .rebuild_ .addEvent ();
-		},
-		build: function ()
-		{
-			if (this .order_ .getValue () < 2)
-				return;
+         this .requestRebuild ();
+      },
+      getClosed: function (order, knot, weight, controlPointNode)
+      {
+         return false && NURBS .getClosed (order, knot, weight, controlPointNode);
+      },
+      getKnots: function (result, closed, order, dimension, knot)
+      {
+         return NURBS .getKnots (result, closed, order, dimension, knot);
+      },
+      getWeights: function (result, dimension, weight)
+      {
+         return NURBS .getWeights (result, dimension, weight);
+      },
+      getControlPoints: function (result, closed, order, weights, controlPointNode)
+      {
+         return NURBS .getControlPoints (result, closed, order, weights, controlPointNode);
+      },
+      requestRebuild: function ()
+      {
+         this .rebuild_ .addEvent ();
+      },
+      build: function ()
+      {
+         if (this .order_ .getValue () < 2)
+            return;
 
-			if (! this .controlPointNode)
-				return;
+         if (! this .controlPointNode)
+            return;
 
-			if (this .controlPointNode .getSize () < this .order_ .getValue ())
-				return;
+         if (this .controlPointNode .getSize () < this .order_ .getValue ())
+            return;
 
-			// Order and dimension are now positive numbers.
+         // Order and dimension are now positive numbers.
 
-			var
-				closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
-				weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this .weight_),
-				controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPointNode);
+         var
+            closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
+            weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this .weight_),
+            controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPointNode);
 
-			// Knots
+         // Knots
 
-			var
-				knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
-				scale = knots .at (-1) - knots [0];
+         var
+            knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+            scale = knots .at (-1) - knots [0];
 
-			// Initialize NURBS tessellator
+         // Initialize NURBS tessellator
 
-			var degree = this .order_ .getValue () - 1;
+         var degree = this .order_ .getValue () - 1;
 
-			var surface = this .surface = (this .surface || nurbs) ({
-				boundary: ["open"],
-				degree: [degree],
-				knots: [knots],
-				points: controlPoints,
-				debug: false,
-			});
+         var surface = this .surface = (this .surface || nurbs) ({
+            boundary: ["open"],
+            degree: [degree],
+            knots: [knots],
+            points: controlPoints,
+            debug: false,
+         });
 
-			this .sampleOptions .haveWeights = Boolean (weights);
+         this .sampleOptions .haveWeights = Boolean (weights);
 
-			var
-				mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
-				points       = mesh .points,
-				interpolator = this .interpolator;
+         var
+            mesh         = nurbs .sample (this .mesh, surface, this .sampleOptions),
+            points       = mesh .points,
+            interpolator = this .interpolator;
 
-			interpolator .key_      .length = 0;
-			interpolator .keyValue_ .length = 0;
+         interpolator .key_      .length = 0;
+         interpolator .keyValue_ .length = 0;
 
-			for (var i = 0, length = points .length; i < length; i += 3)
-			{
-				interpolator .key_      .push (knots [0] + i / (length - 3) * scale);
-				interpolator .keyValue_. push (new Fields .SFVec3f (points [i], points [i + 1], points [i + 2]));
-			}
-		},
-	});
+         for (var i = 0, length = points .length; i < length; i += 3)
+         {
+            interpolator .key_      .push (knots [0] + i / (length - 3) * scale);
+            interpolator .keyValue_. push (new Fields .SFVec3f (points [i], points [i + 1], points [i + 2]));
+         }
+      },
+   });
 
-	return NurbsPositionInterpolator;
+   return NurbsPositionInterpolator;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -4182,13 +4171,13 @@ function (Fields,
 
 
 define ('x_ite/Components/NURBS/NurbsSet',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Components/Grouping/X3DBoundedObject",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Components/Grouping/X3DBoundedObject",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -4200,124 +4189,124 @@ function (Fields,
 {
 "use strict";
 
-	function remove (array, first, last, range, rfirst, rlast)
-	{
-		var set = { };
+   function remove (array, first, last, range, rfirst, rlast)
+   {
+      var set = { };
 
-		for (var i = rfirst; i < rlast; ++ i)
-			set [getId (range [i])] = true;
+      for (var i = rfirst; i < rlast; ++ i)
+         set [getId (range [i])] = true;
 
-		function compare (value) { return set [getId (value)]; }
+      function compare (value) { return set [getId (value)]; }
 
-		return array .remove (first, last, compare);
-	}
+      return array .remove (first, last, compare);
+   }
 
-	function NurbsSet (executionContext)
-	{
-		X3DChildNode     .call (this, executionContext);
-		X3DBoundedObject .call (this, executionContext);
+   function NurbsSet (executionContext)
+   {
+      X3DChildNode     .call (this, executionContext);
+      X3DBoundedObject .call (this, executionContext);
 
-		this .addType (X3DConstants .NurbsSet);
+      this .addType (X3DConstants .NurbsSet);
 
-		this .geometryNodes = [ ];
-	}
+      this .geometryNodes = [ ];
+   }
 
-	NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-		X3DBoundedObject .prototype,
-	{
-		constructor: NurbsSet,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellationScale", new Fields .SFFloat (1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",       new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",          new Fields .SFVec3f (-1, -1, -1)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",        new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addGeometry",       new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeGeometry",    new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",          new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "NurbsSet";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			X3DChildNode     .prototype .initialize .call (this);
-			X3DBoundedObject .prototype .initialize .call (this);
+   NurbsSet .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+      X3DBoundedObject .prototype,
+   {
+      constructor: NurbsSet,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellationScale", new Fields .SFFloat (1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",       new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxSize",          new Fields .SFVec3f (-1, -1, -1)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "bboxCenter",        new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addGeometry",       new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeGeometry",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "geometry",          new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "NurbsSet";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         X3DChildNode     .prototype .initialize .call (this);
+         X3DBoundedObject .prototype .initialize .call (this);
 
-			this .tessellationScale_ .addInterest ("set_tessellationScale__", this);
-			this .addGeometry_       .addInterest ("set_addGeometry__",       this);
-			this .removeGeometry_    .addInterest ("set_removeGeometry__",    this);
-			this .geometry_          .addInterest ("set_geometry__",          this);
+         this .tessellationScale_ .addInterest ("set_tessellationScale__", this);
+         this .addGeometry_       .addInterest ("set_addGeometry__",       this);
+         this .removeGeometry_    .addInterest ("set_removeGeometry__",    this);
+         this .geometry_          .addInterest ("set_geometry__",          this);
 
-			this .set_geometry__ ();
-		},
-		getBBox: function (bbox, shadow)
-		{
-			// Add bounding boxes
+         this .set_geometry__ ();
+      },
+      getBBox: function (bbox, shadow)
+      {
+         // Add bounding boxes
 
-			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-			{
-				bbox .add (this .geometryNodes [i] .getBBox ());
-			}
+         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+         {
+            bbox .add (this .geometryNodes [i] .getBBox ());
+         }
 
-			return bbox;
-		},
-		set_tessellationScale__: function ()
-		{
-			var tessellationScale = Math .max (0, this .tessellationScale_ .getValue ());
+         return bbox;
+      },
+      set_tessellationScale__: function ()
+      {
+         var tessellationScale = Math .max (0, this .tessellationScale_ .getValue ());
 
-			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-				this .geometryNodes [i] .setTessellationScale (tessellationScale);
-		},
-		set_addGeometry__: function ()
-		{
-			this .addGeometry_ .setTainted (true);
+         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+            this .geometryNodes [i] .setTessellationScale (tessellationScale);
+      },
+      set_addGeometry__: function ()
+      {
+         this .addGeometry_ .setTainted (true);
 
-			this .addGeometry_ .erase (remove (this .addGeometry_, 0, this .addGeometry_ .length,
-			                                   this .geometry_, 0, this .geometry_ .length),
-			                           this .addGeometry_ .length);
+         this .addGeometry_ .erase (remove (this .addGeometry_, 0, this .addGeometry_ .length,
+                                            this .geometry_, 0, this .geometry_ .length),
+                                    this .addGeometry_ .length);
 
-			for (var i = 0, length = this .addGeometry_ .length; i < length; ++ i)
-				this .geometry_ .push (this .addGeometry_ [i]);
+         for (var i = 0, length = this .addGeometry_ .length; i < length; ++ i)
+            this .geometry_ .push (this .addGeometry_ [i]);
 
-			this .addGeometry_ .setTainted (false);
-		},
-		set_removeGeometry__: function ()
-		{
-			this .geometry_ .erase (remove (this .geometry_,       0, this .geometry_ .length,
-			                                this .removeGeometry_, 0, this .removeGeometry_ .length),
-			                        this .geometry__ .length);
-		},
-		set_geometry__: function ()
-		{
-			for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-				this .geometryNodes [i] .setTessellationScale (1);
+         this .addGeometry_ .setTainted (false);
+      },
+      set_removeGeometry__: function ()
+      {
+         this .geometry_ .erase (remove (this .geometry_,       0, this .geometry_ .length,
+                                         this .removeGeometry_, 0, this .removeGeometry_ .length),
+                                 this .geometry__ .length);
+      },
+      set_geometry__: function ()
+      {
+         for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
+            this .geometryNodes [i] .setTessellationScale (1);
 
-			this .geometryNodes .length = 0;
+         this .geometryNodes .length = 0;
 
-			for (var i = 0, length = this .geometry_ .length; i < length; ++ i)
-			{
-				var geometryNode = X3DCast (X3DConstants .X3DNurbsSurfaceGeometryNode, this .geometry_ [i]);
+         for (var i = 0, length = this .geometry_ .length; i < length; ++ i)
+         {
+            var geometryNode = X3DCast (X3DConstants .X3DNurbsSurfaceGeometryNode, this .geometry_ [i]);
 
-				if (geometryNode)
-					this .geometryNodes .push (geometryNode);
-			}
+            if (geometryNode)
+               this .geometryNodes .push (geometryNode);
+         }
 
-			this .set_tessellationScale__ ();
-		},
-	});
+         this .set_tessellationScale__ ();
+      },
+   });
 
-	return NurbsSet;
+   return NurbsSet;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -4373,34 +4362,34 @@ define ('standard/Math/Geometry/Triangle2',[],function ()
 {
 "use strict";
 
-	return {
-		isPointInTriangle: function (a, b, c, point)
-		{
-		   // https://en.wikipedia.org/wiki/Barycentric_coordinate_system
+   return {
+      isPointInTriangle: function (a, b, c, point)
+      {
+         // https://en.wikipedia.org/wiki/Barycentric_coordinate_system
 
-		   const det = (b.y - c.y) * (a.x - c.x) + (c.x - b.x) * (a.y - c.y);
+         const det = (b.y - c.y) * (a.x - c.x) + (c.x - b.x) * (a.y - c.y);
 
-			if (det == 0)
-				return false;
+         if (det == 0)
+            return false;
 
-			const u = ((b.y - c.y) * (point .x - c.x) + (c.x - b.x) * (point .y - c.y)) / det;
+         const u = ((b.y - c.y) * (point .x - c.x) + (c.x - b.x) * (point .y - c.y)) / det;
 
-		   if (u < 0 || u > 1)
-		      return false;
+         if (u < 0 || u > 1)
+            return false;
 
-			const v = ((c.y - a.y) * (point .x - c.x) + (a.x - c.x) * (point .y - c.y)) / det;
+         const v = ((c.y - a.y) * (point .x - c.x) + (a.x - c.x) * (point .y - c.y)) / det;
 
-		   if (v < 0 || v > 1)
-		      return false;
+         if (v < 0 || v > 1)
+            return false;
 
-			const t = 1 - u - v;
+         const t = 1 - u - v;
 
-		   if (t < 0 || t > 1)
-		      return false;
+         if (t < 0 || t > 1)
+            return false;
 
-			return true;
-		},
-	};
+         return true;
+      },
+   };
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -4453,21 +4442,21 @@ define ('standard/Math/Geometry/Triangle2',[],function ()
 
 
 define ('x_ite/Components/NURBS/NurbsSurfaceInterpolator',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DChildNode",
-	"x_ite/Components/NURBS/NurbsPatchSurface",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Geometry/Line3",
-	"standard/Math/Geometry/Triangle2",
-	"standard/Math/Numbers/Vector3",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DChildNode",
+   "x_ite/Components/NURBS/NurbsPatchSurface",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Geometry/Line3",
+   "standard/Math/Geometry/Triangle2",
+   "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DChildNode, 
-          NurbsPatchSurface, 
+          X3DChildNode,
+          NurbsPatchSurface,
           X3DConstants,
           Line3,
           Triangle2,
@@ -4475,126 +4464,124 @@ function (Fields,
 {
 "use strict";
 
-	function NurbsSurfaceInterpolator (executionContext)
-	{
-		X3DChildNode .call (this, executionContext);
+   function NurbsSurfaceInterpolator (executionContext)
+   {
+      X3DChildNode .call (this, executionContext);
 
-		this .addType (X3DConstants .NurbsSurfaceInterpolator);
+      this .addType (X3DConstants .NurbsSurfaceInterpolator);
 
-		this .geometry = new NurbsPatchSurface (executionContext);
-	}
+      this .geometry = new NurbsPatchSurface (executionContext);
+   }
 
-	NurbsSurfaceInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
-	{
-		constructor: NurbsSurfaceInterpolator,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "set_fraction",     new Fields .SFVec2f ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",           new Fields .SFInt32 (3)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",           new Fields .SFInt32 (3)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",       new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",       new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",            new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",            new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",           new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "normal_changed",   new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .outputOnly,     "position_changed", new Fields .SFVec3f ()),
-		]),
-		getTypeName: function ()
-		{
-			return "NurbsSurfaceInterpolator";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "children";
-		},
-		initialize: function ()
-		{
-			this .set_fraction_ .addInterest ("set_fraction__", this);
+   NurbsSurfaceInterpolator .prototype = Object .assign (Object .create (X3DChildNode .prototype),
+   {
+      constructor: NurbsSurfaceInterpolator,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "set_fraction",     new Fields .SFVec2f ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",           new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",           new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",       new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",       new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",            new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",            new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",           new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "normal_changed",   new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .outputOnly,     "position_changed", new Fields .SFVec3f ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "NurbsSurfaceInterpolator";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "children";
+      },
+      initialize: function ()
+      {
+         this .set_fraction_ .addInterest ("set_fraction__", this);
 
-			this .uOrder_       .addFieldInterest (this .geometry .uOrder_);
-			this .vOrder_       .addFieldInterest (this .geometry .vOrder_);
-			this .uDimension_   .addFieldInterest (this .geometry .uDimension_);
-			this .vDimension_   .addFieldInterest (this .geometry .vDimension_);
-			this .uKnot_        .addFieldInterest (this .geometry .uKnot_);
-			this .vKnot_        .addFieldInterest (this .geometry .vKnot_);
-			this .weight_       .addFieldInterest (this .geometry .weight_);
-			this .controlPoint_ .addFieldInterest (this .geometry .controlPoint_);
+         this .uOrder_       .addFieldInterest (this .geometry .uOrder_);
+         this .vOrder_       .addFieldInterest (this .geometry .vOrder_);
+         this .uDimension_   .addFieldInterest (this .geometry .uDimension_);
+         this .vDimension_   .addFieldInterest (this .geometry .vDimension_);
+         this .uKnot_        .addFieldInterest (this .geometry .uKnot_);
+         this .vKnot_        .addFieldInterest (this .geometry .vKnot_);
+         this .weight_       .addFieldInterest (this .geometry .weight_);
+         this .controlPoint_ .addFieldInterest (this .geometry .controlPoint_);
 
-			this .geometry .uTessellation_ = 128;
-			this .geometry .vTessellation_ = 128;
-			this .geometry .uOrder_        = this .uOrder_;
-			this .geometry .vOrder_        = this .vOrder_;
-			this .geometry .uDimension_    = this .uDimension_;
-			this .geometry .vDimension_    = this .vDimension_;
-			this .geometry .uKnot_         = this .uKnot_;
-			this .geometry .vKnot_         = this .vKnot_;
-			this .geometry .weight_        = this .weight_;
-			this .geometry .controlPoint_  = this .controlPoint_;
+         this .geometry .uTessellation_ = 128;
+         this .geometry .vTessellation_ = 128;
+         this .geometry .uOrder_        = this .uOrder_;
+         this .geometry .vOrder_        = this .vOrder_;
+         this .geometry .uDimension_    = this .uDimension_;
+         this .geometry .vDimension_    = this .vDimension_;
+         this .geometry .uKnot_         = this .uKnot_;
+         this .geometry .vKnot_         = this .vKnot_;
+         this .geometry .weight_        = this .weight_;
+         this .geometry .controlPoint_  = this .controlPoint_;
 
-			this .geometry .setup ();
-		},
-		set_fraction__: (function ()
-		{
-			var
-				a     = new Vector3 (0, 0, 0),
-				b     = new Vector3 (0, 0, 0),
-				c     = new Vector3 (0, 0, 0),
-				point = new Vector3 (0, 0, 0),
-				line  = new Line3 (Vector3 .Zero, Vector3 .zAxis),
-				uvt   = { };
+         this .geometry .setup ();
+      },
+      set_fraction__: (function ()
+      {
+         var
+            a     = new Vector3 (0, 0, 0),
+            b     = new Vector3 (0, 0, 0),
+            c     = new Vector3 (0, 0, 0),
+            point = new Vector3 (0, 0, 0),
+            line  = new Line3 (Vector3 .Zero, Vector3 .zAxis),
+            uvt   = { };
 
-			return function ()
-			{
-				var
-					fraction       = this .set_fraction_ .getValue (),
-					texCoordsArray = this .geometry .getTexCoords (),
-					normalArray    = this .geometry .getNormals (),
-					verticesArray  = this .geometry .getVertices ();
-	
-				for (var i4 = 0, i3 = 0, length = texCoordsArray .length; i4 < length; i4 += 12, i3 += 9)
-				{
-					a .set (texCoordsArray [i4 + 0], texCoordsArray [i4 + 1], 0);
-					b .set (texCoordsArray [i4 + 4], texCoordsArray [i4 + 5], 0);
-					c .set (texCoordsArray [i4 + 7], texCoordsArray [i4 + 9], 0);
-	
-					if (Triangle2 .isPointInTriangle (a, b, c, fraction))
-					{
-						line .set (point .set (fraction .x, fraction .y, 0), Vector3 .zAxis);
+         return function ()
+         {
+            var
+               fraction       = this .set_fraction_ .getValue (),
+               texCoordsArray = this .geometry .getTexCoords (),
+               normalArray    = this .geometry .getNormals (),
+               verticesArray  = this .geometry .getVertices ();
 
-						if (line .intersectsTriangle (a, b, c, uvt))
-						{
-							var
-								u = uvt .u,
-								v = uvt .v,
-								t = uvt .t;
+            for (var i4 = 0, i3 = 0, length = texCoordsArray .length; i4 < length; i4 += 12, i3 += 9)
+            {
+               a .set (texCoordsArray [i4 + 0], texCoordsArray [i4 + 1], 0);
+               b .set (texCoordsArray [i4 + 4], texCoordsArray [i4 + 5], 0);
+               c .set (texCoordsArray [i4 + 7], texCoordsArray [i4 + 9], 0);
 
-							var normal = new Vector3 (t * normalArray [i3 + 0] + u * normalArray [i3 + 3] + v * normalArray [i3 + 6],
-							                          t * normalArray [i3 + 1] + u * normalArray [i3 + 4] + v * normalArray [i3 + 7],
-							                          t * normalArray [i3 + 2] + u * normalArray [i3 + 5] + v * normalArray [i3 + 8]);
+               if (Triangle2 .isPointInTriangle (a, b, c, fraction))
+               {
+                  line .set (point .set (fraction .x, fraction .y, 0), Vector3 .zAxis);
 
-							var position = new Vector3 (t * verticesArray [i4 + 0] + u * verticesArray [i4 + 4] + v * verticesArray [i4 +  8],
-							                            t * verticesArray [i4 + 1] + u * verticesArray [i4 + 5] + v * verticesArray [i4 +  9],
-							                            t * verticesArray [i4 + 2] + u * verticesArray [i4 + 6] + v * verticesArray [i4 + 10]);
+                  if (line .intersectsTriangle (a, b, c, uvt))
+                  {
+                     var
+                        u = uvt .u,
+                        v = uvt .v,
+                        t = uvt .t;
 
-							this .normal_changed_   = normal;
-							this .position_changed_ = position;
-						}
-					}
-				}
-			};
-		})(),
-	});
+                     var normal = new Vector3 (t * normalArray [i3 + 0] + u * normalArray [i3 + 3] + v * normalArray [i3 + 6],
+                                               t * normalArray [i3 + 1] + u * normalArray [i3 + 4] + v * normalArray [i3 + 7],
+                                               t * normalArray [i3 + 2] + u * normalArray [i3 + 5] + v * normalArray [i3 + 8]);
 
-	return NurbsSurfaceInterpolator;
+                     var position = new Vector3 (t * verticesArray [i4 + 0] + u * verticesArray [i4 + 4] + v * verticesArray [i4 +  8],
+                                                 t * verticesArray [i4 + 1] + u * verticesArray [i4 + 5] + v * verticesArray [i4 +  9],
+                                                 t * verticesArray [i4 + 2] + u * verticesArray [i4 + 6] + v * verticesArray [i4 + 10]);
+
+                     this .normal_changed_   = normal;
+                     this .position_changed_ = position;
+                  }
+               }
+            }
+         };
+      })(),
+   });
+
+   return NurbsSurfaceInterpolator;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -4646,138 +4633,136 @@ function (Fields,
 
 
 define ('x_ite/Components/NURBS/NurbsSweptSurface',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Geometry3D/Extrusion",
-	"x_ite/Components/NURBS/X3DParametricGeometryNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Geometry3D/Extrusion",
+   "x_ite/Components/NURBS/X3DParametricGeometryNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          Extrusion, 
-          X3DParametricGeometryNode, 
+          Extrusion,
+          X3DParametricGeometryNode,
           X3DConstants,
           X3DCast)
 {
 "use strict";
 
-	function NurbsSweptSurface (executionContext)
-	{
-		X3DParametricGeometryNode .call (this, executionContext);
+   function NurbsSweptSurface (executionContext)
+   {
+      X3DParametricGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .NurbsSweptSurface);
+      this .addType (X3DConstants .NurbsSweptSurface);
 
-		this .extrusion = new Extrusion (executionContext);
-	}
+      this .extrusion = new Extrusion (executionContext);
+   }
 
-	NurbsSweptSurface .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
-	{
-		constructor: NurbsSweptSurface,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",             new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",               new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "crossSectionCurve", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "trajectoryCurve",   new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "NurbsSweptSurface";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-		initialize: function ()
-		{
-			X3DParametricGeometryNode .prototype .initialize .call (this);
+   NurbsSweptSurface .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
+   {
+      constructor: NurbsSweptSurface,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",               new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "crossSectionCurve", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "trajectoryCurve",   new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "NurbsSweptSurface";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "geometry";
+      },
+      initialize: function ()
+      {
+         X3DParametricGeometryNode .prototype .initialize .call (this);
 
-			this .crossSectionCurve_ .addInterest ("set_crossSectionCurve__", this);
-			this .trajectoryCurve_   .addInterest ("set_trajectoryCurve__",   this);
+         this .crossSectionCurve_ .addInterest ("set_crossSectionCurve__", this);
+         this .trajectoryCurve_   .addInterest ("set_trajectoryCurve__",   this);
 
-			var extrusion = this .extrusion;
+         var extrusion = this .extrusion;
 
-			extrusion .beginCap_     = false;
-			extrusion .endCap_       = false;
-			extrusion .solid_        = true;
-			extrusion .ccw_          = true;
-			extrusion .convex_       = true;
-			extrusion .creaseAngle_  = Math .PI;
+         extrusion .beginCap_     = false;
+         extrusion .endCap_       = false;
+         extrusion .solid_        = true;
+         extrusion .ccw_          = true;
+         extrusion .convex_       = true;
+         extrusion .creaseAngle_  = Math .PI;
 
-			extrusion .setup ();
+         extrusion .setup ();
 
-			extrusion .crossSection_ .setTainted (true);
-			extrusion .spine_        .setTainted (true);
+         extrusion .crossSection_ .setTainted (true);
+         extrusion .spine_        .setTainted (true);
 
-			this .set_crossSectionCurve__ ();
-			this .set_trajectoryCurve__ ();
-		},
-		set_crossSectionCurve__: function ()
-		{
-			if (this .crossSectionCurveNode)
-				this .crossSectionCurveNode .removeInterest ("requestRebuild", this);
+         this .set_crossSectionCurve__ ();
+         this .set_trajectoryCurve__ ();
+      },
+      set_crossSectionCurve__: function ()
+      {
+         if (this .crossSectionCurveNode)
+            this .crossSectionCurveNode .removeInterest ("requestRebuild", this);
 
-			this .crossSectionCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this .crossSectionCurve_);
+         this .crossSectionCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this .crossSectionCurve_);
 
-			if (this .crossSectionCurveNode)
-				this .crossSectionCurveNode .addInterest ("requestRebuild", this);
-		},
-		set_trajectoryCurve__: function ()
-		{
-			if (this .trajectoryCurveNode)
-				this .trajectoryCurveNode .rebuild_ .removeInterest ("requestRebuild", this);
+         if (this .crossSectionCurveNode)
+            this .crossSectionCurveNode .addInterest ("requestRebuild", this);
+      },
+      set_trajectoryCurve__: function ()
+      {
+         if (this .trajectoryCurveNode)
+            this .trajectoryCurveNode .rebuild_ .removeInterest ("requestRebuild", this);
 
-			this .trajectoryCurveNode = X3DCast (X3DConstants .NurbsCurve, this .trajectoryCurve_);
+         this .trajectoryCurveNode = X3DCast (X3DConstants .NurbsCurve, this .trajectoryCurve_);
 
-			if (this .trajectoryCurveNode)
-				this .trajectoryCurveNode .rebuild_ .addInterest ("requestRebuild", this);
-		},
-		build: function ()
-		{
-			if (! this .crossSectionCurveNode)
-				return;
-		
-			if (! this .trajectoryCurveNode)
-				return;
+         if (this .trajectoryCurveNode)
+            this .trajectoryCurveNode .rebuild_ .addInterest ("requestRebuild", this);
+      },
+      build: function ()
+      {
+         if (! this .crossSectionCurveNode)
+            return;
 
-			var extrusion = this .extrusion;
+         if (! this .trajectoryCurveNode)
+            return;
 
-			extrusion .crossSection_ = this .crossSectionCurveNode .tessellate (0);
-			extrusion .spine_        = this .trajectoryCurveNode   .tessellate (0);
+         var extrusion = this .extrusion;
 
-			extrusion .rebuild ();
+         extrusion .crossSection_ = this .crossSectionCurveNode .tessellate (0);
+         extrusion .spine_        = this .trajectoryCurveNode   .tessellate (0);
 
-			this .getColors ()    .assign (extrusion .getColors ());
-			this .getTexCoords () .assign (extrusion .getTexCoords ());
-			this .getNormals ()   .assign (extrusion .getNormals ());
-			this .getVertices ()  .assign (extrusion .getVertices ());
+         extrusion .rebuild ();
 
-			this .getMultiTexCoords () .push (this .getTexCoords ());
+         this .getColors ()    .assign (extrusion .getColors ());
+         this .getTexCoords () .assign (extrusion .getTexCoords ());
+         this .getNormals ()   .assign (extrusion .getNormals ());
+         this .getVertices ()  .assign (extrusion .getVertices ());
 
-			if (! this .ccw_ .getValue ())
-			{
-				var normals = this .getNormals ();
+         this .getMultiTexCoords () .push (this .getTexCoords ());
 
-				for (var i = 0, length = normals .length; i < length; ++ i)
-					normals [i] = -normals [i];
-			}
+         if (! this .ccw_ .getValue ())
+         {
+            var normals = this .getNormals ();
 
-			this .setSolid (this .solid_ .getValue ());
-			this .setCCW (this .ccw_ .getValue ());
-		},
-	});
+            for (var i = 0, length = normals .length; i < length; ++ i)
+               normals [i] = -normals [i];
+         }
 
-	return NurbsSweptSurface;
+         this .setSolid (this .solid_ .getValue ());
+         this .setCCW (this .ccw_ .getValue ());
+      },
+   });
+
+   return NurbsSweptSurface;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -4829,138 +4814,136 @@ function (Fields,
 
 
 define ('x_ite/Components/NURBS/NurbsSwungSurface',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Geometry3D/Extrusion",
-	"x_ite/Components/NURBS/X3DParametricGeometryNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Geometry3D/Extrusion",
+   "x_ite/Components/NURBS/X3DParametricGeometryNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          Extrusion, 
-          X3DParametricGeometryNode, 
+          Extrusion,
+          X3DParametricGeometryNode,
           X3DConstants,
           X3DCast)
 {
 "use strict";
 
-	function NurbsSwungSurface (executionContext)
-	{
-		X3DParametricGeometryNode .call (this, executionContext);
+   function NurbsSwungSurface (executionContext)
+   {
+      X3DParametricGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .NurbsSwungSurface);
+      this .addType (X3DConstants .NurbsSwungSurface);
 
-		this .extrusion = new Extrusion (executionContext);
-	}
+      this .extrusion = new Extrusion (executionContext);
+   }
 
-	NurbsSwungSurface .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
-	{
-		constructor: NurbsSwungSurface,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "profileCurve",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "trajectoryCurve", new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "NurbsSwungSurface";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-		initialize: function ()
-		{
-			X3DParametricGeometryNode .prototype .initialize .call (this);
+   NurbsSwungSurface .prototype = Object .assign (Object .create (X3DParametricGeometryNode .prototype),
+   {
+      constructor: NurbsSwungSurface,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "profileCurve",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "trajectoryCurve", new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "NurbsSwungSurface";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "geometry";
+      },
+      initialize: function ()
+      {
+         X3DParametricGeometryNode .prototype .initialize .call (this);
 
-			this .profileCurve_    .addInterest ("set_profileCurve__",    this);
-			this .trajectoryCurve_ .addInterest ("set_trajectoryCurve__", this);
+         this .profileCurve_    .addInterest ("set_profileCurve__",    this);
+         this .trajectoryCurve_ .addInterest ("set_trajectoryCurve__", this);
 
-			var extrusion = this .extrusion;
+         var extrusion = this .extrusion;
 
-			extrusion .beginCap_     = false;
-			extrusion .endCap_       = false;
-			extrusion .solid_        = true;
-			extrusion .ccw_          = true;
-			extrusion .convex_       = true;
-			extrusion .creaseAngle_  = Math .PI;
+         extrusion .beginCap_     = false;
+         extrusion .endCap_       = false;
+         extrusion .solid_        = true;
+         extrusion .ccw_          = true;
+         extrusion .convex_       = true;
+         extrusion .creaseAngle_  = Math .PI;
 
-			extrusion .setup ();
+         extrusion .setup ();
 
-			extrusion .crossSection_ .setTainted (true);
-			extrusion .spine_        .setTainted (true);
+         extrusion .crossSection_ .setTainted (true);
+         extrusion .spine_        .setTainted (true);
 
-			this .set_profileCurve__ ();
-			this .set_trajectoryCurve__ ();
-		},
-		set_profileCurve__: function ()
-		{
-			if (this .profileCurveNode)
-				this .profileCurveNode .removeInterest ("requestRebuild", this);
+         this .set_profileCurve__ ();
+         this .set_trajectoryCurve__ ();
+      },
+      set_profileCurve__: function ()
+      {
+         if (this .profileCurveNode)
+            this .profileCurveNode .removeInterest ("requestRebuild", this);
 
-			this .profileCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this .profileCurve_);
+         this .profileCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this .profileCurve_);
 
-			if (this .profileCurveNode)
-				this .profileCurveNode .addInterest ("requestRebuild", this);
-		},
-		set_trajectoryCurve__: function ()
-		{
-			if (this .trajectoryCurveNode)
-				this .trajectoryCurveNode .removeInterest ("requestRebuild", this);
+         if (this .profileCurveNode)
+            this .profileCurveNode .addInterest ("requestRebuild", this);
+      },
+      set_trajectoryCurve__: function ()
+      {
+         if (this .trajectoryCurveNode)
+            this .trajectoryCurveNode .removeInterest ("requestRebuild", this);
 
-			this .trajectoryCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this .trajectoryCurve_);
+         this .trajectoryCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this .trajectoryCurve_);
 
-			if (this .trajectoryCurveNode)
-				this .trajectoryCurveNode .addInterest ("requestRebuild", this);
-		},
-		build: function ()
-		{
-			if (! this .profileCurveNode)
-				return;
-		
-			if (! this .trajectoryCurveNode)
-				return;
+         if (this .trajectoryCurveNode)
+            this .trajectoryCurveNode .addInterest ("requestRebuild", this);
+      },
+      build: function ()
+      {
+         if (! this .profileCurveNode)
+            return;
 
-			var extrusion = this .extrusion;
+         if (! this .trajectoryCurveNode)
+            return;
 
-			extrusion .crossSection_ = this .profileCurveNode    .tessellate (0);
-			extrusion .spine_        = this .trajectoryCurveNode .tessellate (1);
+         var extrusion = this .extrusion;
 
-			extrusion .rebuild ();
+         extrusion .crossSection_ = this .profileCurveNode    .tessellate (0);
+         extrusion .spine_        = this .trajectoryCurveNode .tessellate (1);
 
-			this .getColors ()    .assign (extrusion .getColors ());
-			this .getTexCoords () .assign (extrusion .getTexCoords ());
-			this .getNormals ()   .assign (extrusion .getNormals ());
-			this .getVertices ()  .assign (extrusion .getVertices ());
+         extrusion .rebuild ();
 
-			this .getMultiTexCoords () .push (this .getTexCoords ());
+         this .getColors ()    .assign (extrusion .getColors ());
+         this .getTexCoords () .assign (extrusion .getTexCoords ());
+         this .getNormals ()   .assign (extrusion .getNormals ());
+         this .getVertices ()  .assign (extrusion .getVertices ());
 
-			if (! this .ccw_ .getValue ())
-			{
-				var normals = this .getNormals ();
+         this .getMultiTexCoords () .push (this .getTexCoords ());
 
-				for (var i = 0, length = normals .length; i < length; ++ i)
-					normals [i] = -normals [i];
-			}
+         if (! this .ccw_ .getValue ())
+         {
+            var normals = this .getNormals ();
 
-			this .setSolid (this .solid_ .getValue ());
-			this .setCCW (this .ccw_ .getValue ());
-		},
-	});
+            for (var i = 0, length = normals .length; i < length; ++ i)
+               normals [i] = -normals [i];
+         }
 
-	return NurbsSwungSurface;
+         this .setSolid (this .solid_ .getValue ());
+         this .setCCW (this .ccw_ .getValue ());
+      },
+   });
+
+   return NurbsSwungSurface;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -5012,12 +4995,12 @@ function (Fields,
 
 
 define ('x_ite/Components/NURBS/NurbsTextureCoordinate',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Core/X3DNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector4",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Core/X3DNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector4",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -5028,93 +5011,93 @@ function (Fields,
 {
 "use strict";
 
-	function NurbsTextureCoordinate (executionContext)
-	{
-		X3DNode .call (this, executionContext);
+   function NurbsTextureCoordinate (executionContext)
+   {
+      X3DNode .call (this, executionContext);
 
-		this .addType (X3DConstants .NurbsTextureCoordinate);
+      this .addType (X3DConstants .NurbsTextureCoordinate);
 
-		this .controlPoints = [ ];
-	}
+      this .controlPoints = [ ];
+   }
 
-	NurbsTextureCoordinate .prototype = Object .assign (Object .create (X3DNode .prototype),
-	{
-		constructor: NurbsTextureCoordinate,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",       new Fields .SFInt32 (3)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",       new Fields .SFInt32 (3)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",   new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",   new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",        new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",        new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFFloat ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .MFVec2f ()),
-		]),
-		getTypeName: function ()
-		{
-			return "NurbsTextureCoordinate";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "texCoord";
-		},
-		initialize: function ()
-		{
-			X3DNode .prototype .initialize .call (this);
-		},
-		getControlPoints: function (texWeights)
-		{
-			var
-				controlPointArray = this .controlPoint_ .getValue (),
-				controlPoints     = this .controlPoints;
+   NurbsTextureCoordinate .prototype = Object .assign (Object .create (X3DNode .prototype),
+   {
+      constructor: NurbsTextureCoordinate,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",       new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",       new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",   new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",   new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",        new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",        new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",       new Fields .MFFloat ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint", new Fields .MFVec2f ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "NurbsTextureCoordinate";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "texCoord";
+      },
+      initialize: function ()
+      {
+         X3DNode .prototype .initialize .call (this);
+      },
+      getControlPoints: function (texWeights)
+      {
+         var
+            controlPointArray = this .controlPoint_ .getValue (),
+            controlPoints     = this .controlPoints;
 
-			for (var u = 0, uDimension = this .uDimension_ .getValue (); u < uDimension; ++ u)
-			{
-				var cp = controlPoints [u];
+         for (var u = 0, uDimension = this .uDimension_ .getValue (); u < uDimension; ++ u)
+         {
+            var cp = controlPoints [u];
 
-				if (! cp)
-					cp = controlPoints [u] = [ ];
+            if (! cp)
+               cp = controlPoints [u] = [ ];
 
-				for (var v = 0, vDimension = this .vDimension_ .getValue (); v < vDimension; ++ v)
-				{
-					var
-						index = v * uDimension + u,
-						p     = cp [v] || new Vector4 (),
-						i     = index * 2;
+            for (var v = 0, vDimension = this .vDimension_ .getValue (); v < vDimension; ++ v)
+            {
+               var
+                  index = v * uDimension + u,
+                  p     = cp [v] || new Vector4 (),
+                  i     = index * 2;
 
-					cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, texWeights ? texWeights [index] : 1);
-				}
-			}
+               cp [v] = p .set (controlPointArray [i], controlPointArray [i + 1], 0, texWeights ? texWeights [index] : 1);
+            }
+         }
 
-			return controlPoints;
-		},
-		isValid: function ()
-		{
-			if (this .uOrder_ .getValue () < 2)
-				return false;
+         return controlPoints;
+      },
+      isValid: function ()
+      {
+         if (this .uOrder_ .getValue () < 2)
+            return false;
 
-			if (this .vOrder_ .getValue () < 2)
-				return false;
+         if (this .vOrder_ .getValue () < 2)
+            return false;
 
-			if (this .uDimension_ .getValue () < this .uOrder_ .getValue ())
-				return false;
+         if (this .uDimension_ .getValue () < this .uOrder_ .getValue ())
+            return false;
 
-			if (this .vDimension_ .getValue () < this .vOrder_ .getValue ())
-				return false;
+         if (this .vDimension_ .getValue () < this .vOrder_ .getValue ())
+            return false;
 
-			if (this .controlPoint_ .length !== this .uDimension_ .getValue () * this .vDimension_ .getValue ())
-				return false;
+         if (this .controlPoint_ .length !== this .uDimension_ .getValue () * this .vDimension_ .getValue ())
+            return false;
 
-			return true;
-		}
-	});
+         return true;
+      }
+   });
 
-	return NurbsTextureCoordinate;
+   return NurbsTextureCoordinate;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -5167,105 +5150,103 @@ function (Fields,
 
 
 define ('x_ite/Components/NURBS/NurbsTrimmedSurface',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
           FieldDefinitionArray,
-          X3DNurbsSurfaceGeometryNode, 
-          X3DConstants, 
+          X3DNurbsSurfaceGeometryNode,
+          X3DConstants,
           X3DCast)
 {
 "use strict";
 
-	function NurbsTrimmedSurface (executionContext)
-	{
-		X3DNurbsSurfaceGeometryNode .call (this, executionContext);
+   function NurbsTrimmedSurface (executionContext)
+   {
+      X3DNurbsSurfaceGeometryNode .call (this, executionContext);
 
-		this .addType (X3DConstants .NurbsTrimmedSurface);
+      this .addType (X3DConstants .NurbsTrimmedSurface);
 
-		this .trimmingContourNodes = [ ];
-	}
+      this .trimmingContourNodes = [ ];
+   }
 
-	NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
-	{
-		constructor: NurbsTrimmedSurface,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",              new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",                 new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "uTessellation",         new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "vTessellation",         new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uClosed",               new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vClosed",               new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",                new Fields .SFInt32 (3)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",                new Fields .SFInt32 (3)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",            new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",            new Fields .SFInt32 ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",                 new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",                 new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",                new Fields .MFDouble ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",              new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "addTrimmingContour",    new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOnly,      "removeTrimmingContour", new Fields .MFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "trimmingContour",       new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "NurbsTrimmedSurface";
-		},
-		getComponentName: function ()
-		{
-			return "NURBS";
-		},
-		getContainerField: function ()
-		{
-			return "geometry";
-		},
-		initialize: function ()
-		{
-			X3DNurbsSurfaceGeometryNode .prototype .initialize .call (this);
+   NurbsTrimmedSurface .prototype = Object .assign (Object .create (X3DNurbsSurfaceGeometryNode .prototype),
+   {
+      constructor: NurbsTrimmedSurface,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",              new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "uTessellation",         new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "vTessellation",         new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uClosed",               new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vClosed",               new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uOrder",                new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vOrder",                new Fields .SFInt32 (3)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uDimension",            new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vDimension",            new Fields .SFInt32 ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "uKnot",                 new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "vKnot",                 new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "weight",                new Fields .MFDouble ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "texCoord",              new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "controlPoint",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "addTrimmingContour",    new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOnly,      "removeTrimmingContour", new Fields .MFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "trimmingContour",       new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "NurbsTrimmedSurface";
+      },
+      getComponentName: function ()
+      {
+         return "NURBS";
+      },
+      getContainerField: function ()
+      {
+         return "geometry";
+      },
+      initialize: function ()
+      {
+         X3DNurbsSurfaceGeometryNode .prototype .initialize .call (this);
 
-			this .trimmingContour_ .addInterest ("set_trimmingContour__", this);
+         this .trimmingContour_ .addInterest ("set_trimmingContour__", this);
 
-			this .set_trimmingContour__ ();
-		},
-		set_trimmingContour__: function ()
-		{
-			var trimmingContourNodes = this .trimmingContourNodes;
+         this .set_trimmingContour__ ();
+      },
+      set_trimmingContour__: function ()
+      {
+         var trimmingContourNodes = this .trimmingContourNodes;
 
-			trimmingContourNodes .length = 0;
+         trimmingContourNodes .length = 0;
 
-			for (var i = 0, length = this .trimmingContour_ .length; i < length; ++ i)
-			{
-				var trimmingContourNode = X3DCast (X3DConstants .Contour2D, this .trimmingContour_ [i]);
+         for (var i = 0, length = this .trimmingContour_ .length; i < length; ++ i)
+         {
+            var trimmingContourNode = X3DCast (X3DConstants .Contour2D, this .trimmingContour_ [i]);
 
-				if (trimmingContourNode)
-					trimmingContourNodes .push (trimmingContourNode);
-			}
-		},
-		getTrimmingContours: function ()
-		{
-			var
-				trimmingContourNodes = this .trimmingContourNodes,
-				trimmingContours     = [ ];
+            if (trimmingContourNode)
+               trimmingContourNodes .push (trimmingContourNode);
+         }
+      },
+      getTrimmingContours: function ()
+      {
+         var
+            trimmingContourNodes = this .trimmingContourNodes,
+            trimmingContours     = [ ];
 
-			for (var i = 0, length = trimmingContourNodes .length; i < length; ++ i)
-				trimmingContourNodes [i] .addTrimmingContour (trimmingContours);
+         for (var i = 0, length = trimmingContourNodes .length; i < length; ++ i)
+            trimmingContourNodes [i] .addTrimmingContour (trimmingContours);
 
-			return trimmingContours;
-		},
-	});
+         return trimmingContours;
+      },
+   });
 
-	return NurbsTrimmedSurface;
+   return NurbsTrimmedSurface;
 });
-
-
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
  *******************************************************************************
@@ -5317,24 +5298,24 @@ function (Fields,
 
 
 define (require .getComponentUrl ("nurbs"), [
-	"x_ite/Components",
-	"x_ite/Components/NURBS/Contour2D",
-	"x_ite/Components/NURBS/ContourPolyline2D",
-	"x_ite/Components/NURBS/CoordinateDouble",
-	"x_ite/Components/NURBS/NurbsCurve",
-	"x_ite/Components/NURBS/NurbsCurve2D",
-	"x_ite/Components/NURBS/NurbsOrientationInterpolator",
-	"x_ite/Components/NURBS/NurbsPatchSurface",
-	"x_ite/Components/NURBS/NurbsPositionInterpolator",
-	"x_ite/Components/NURBS/NurbsSet",
-	"x_ite/Components/NURBS/NurbsSurfaceInterpolator",
-	"x_ite/Components/NURBS/NurbsSweptSurface",
-	"x_ite/Components/NURBS/NurbsSwungSurface",
-	"x_ite/Components/NURBS/NurbsTextureCoordinate",
-	"x_ite/Components/NURBS/NurbsTrimmedSurface",
-	"x_ite/Components/NURBS/X3DNurbsControlCurveNode",
-	"x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode",
-	"x_ite/Components/NURBS/X3DParametricGeometryNode",
+   "x_ite/Components",
+   "x_ite/Components/NURBS/Contour2D",
+   "x_ite/Components/NURBS/ContourPolyline2D",
+   "x_ite/Components/NURBS/CoordinateDouble",
+   "x_ite/Components/NURBS/NurbsCurve",
+   "x_ite/Components/NURBS/NurbsCurve2D",
+   "x_ite/Components/NURBS/NurbsOrientationInterpolator",
+   "x_ite/Components/NURBS/NurbsPatchSurface",
+   "x_ite/Components/NURBS/NurbsPositionInterpolator",
+   "x_ite/Components/NURBS/NurbsSet",
+   "x_ite/Components/NURBS/NurbsSurfaceInterpolator",
+   "x_ite/Components/NURBS/NurbsSweptSurface",
+   "x_ite/Components/NURBS/NurbsSwungSurface",
+   "x_ite/Components/NURBS/NurbsTextureCoordinate",
+   "x_ite/Components/NURBS/NurbsTrimmedSurface",
+   "x_ite/Components/NURBS/X3DNurbsControlCurveNode",
+   "x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode",
+   "x_ite/Components/NURBS/X3DParametricGeometryNode",
 ],
 function (Components,
           Contour2D,
@@ -5357,34 +5338,33 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "NURBS",
-		types:
-		{
-			Contour2D:                    Contour2D,
-			ContourPolyline2D:            ContourPolyline2D,
-			CoordinateDouble:             CoordinateDouble,
-			NurbsCurve:                   NurbsCurve,
-			NurbsCurve2D:                 NurbsCurve2D,
-			NurbsOrientationInterpolator: NurbsOrientationInterpolator,
-			NurbsPatchSurface:            NurbsPatchSurface,
-			NurbsPositionInterpolator:    NurbsPositionInterpolator,
-			NurbsSet:                     NurbsSet,
-			NurbsSurfaceInterpolator:     NurbsSurfaceInterpolator,
-			NurbsSweptSurface:            NurbsSweptSurface,
-			NurbsSwungSurface:            NurbsSwungSurface,
-			NurbsTextureCoordinate:       NurbsTextureCoordinate,
-			NurbsTrimmedSurface:          NurbsTrimmedSurface,
-		},
-		abstractTypes:
-		{
-			X3DNurbsControlCurveNode:    X3DNurbsControlCurveNode,
-			X3DNurbsSurfaceGeometryNode: X3DNurbsSurfaceGeometryNode,
-			X3DParametricGeometryNode:   X3DParametricGeometryNode,
-		},
-	});
+   Components .addComponent ({
+      name: "NURBS",
+      types:
+      {
+         Contour2D:                    Contour2D,
+         ContourPolyline2D:            ContourPolyline2D,
+         CoordinateDouble:             CoordinateDouble,
+         NurbsCurve:                   NurbsCurve,
+         NurbsCurve2D:                 NurbsCurve2D,
+         NurbsOrientationInterpolator: NurbsOrientationInterpolator,
+         NurbsPatchSurface:            NurbsPatchSurface,
+         NurbsPositionInterpolator:    NurbsPositionInterpolator,
+         NurbsSet:                     NurbsSet,
+         NurbsSurfaceInterpolator:     NurbsSurfaceInterpolator,
+         NurbsSweptSurface:            NurbsSweptSurface,
+         NurbsSwungSurface:            NurbsSwungSurface,
+         NurbsTextureCoordinate:       NurbsTextureCoordinate,
+         NurbsTrimmedSurface:          NurbsTrimmedSurface,
+      },
+      abstractTypes:
+      {
+         X3DNurbsControlCurveNode:    X3DNurbsControlCurveNode,
+         X3DNurbsSurfaceGeometryNode: X3DNurbsSurfaceGeometryNode,
+         X3DParametricGeometryNode:   X3DParametricGeometryNode,
+      },
+   });
 });
-
 
 
 })();

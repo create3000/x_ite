@@ -56,133 +56,133 @@ const
 
 
 define ('x_ite/Components/Texturing3D/X3DTexture3DNode',[
-	"x_ite/Components/Texturing/X3DSingleTextureNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Components/Texturing/X3DSingleTextureNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (X3DSingleTextureNode,
           X3DConstants)
 {
 "use strict";
 
-	var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+   var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
-	function X3DTexture3DNode (executionContext)
-	{
-		X3DSingleTextureNode .call (this, executionContext);
+   function X3DTexture3DNode (executionContext)
+   {
+      X3DSingleTextureNode .call (this, executionContext);
 
-		this .addType (X3DConstants .X3DTexture3DNode);
+      this .addType (X3DConstants .X3DTexture3DNode);
 
-		const gl = this .getBrowser () .getContext ();
+      const gl = this .getBrowser () .getContext ();
 
-		this .target = gl .TEXTURE_3D;
-		this .width  = 0;
-		this .height = 0;
-		this .depth  = 0;
-		this .data   = null;
-	}
+      this .target = gl .TEXTURE_3D;
+      this .width  = 0;
+      this .height = 0;
+      this .depth  = 0;
+      this .data   = null;
+   }
 
-	X3DTexture3DNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
-	{
-		constructor: X3DTexture3DNode,
-		initialize: function ()
-		{
-			X3DSingleTextureNode .prototype .initialize .call (this);
+   X3DTexture3DNode .prototype = Object .assign (Object .create (X3DSingleTextureNode .prototype),
+   {
+      constructor: X3DTexture3DNode,
+      initialize: function ()
+      {
+         X3DSingleTextureNode .prototype .initialize .call (this);
 
-			this .repeatS_ .addInterest ("updateTextureProperties", this);
-			this .repeatT_ .addInterest ("updateTextureProperties", this);
-			this .repeatR_ .addInterest ("updateTextureProperties", this);
+         this .repeatS_ .addInterest ("updateTextureProperties", this);
+         this .repeatT_ .addInterest ("updateTextureProperties", this);
+         this .repeatR_ .addInterest ("updateTextureProperties", this);
 
-			const gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
-			if (gl .getVersion () < 2)
-				return;
+         if (gl .getVersion () < 2)
+            return;
 
-			gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-			gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
-		},
-		getTarget: function ()
-		{
-			return this .target;
-		},
-		getWidth: function ()
-		{
-			return this .width;
-		},
-		getHeight: function ()
-		{
-			return this .height;
-		},
-		getDepth: function ()
-		{
-			return this .depth;
-		},
-		getFlipY: function ()
-		{
-			return false;
-		},
-		getData: function ()
-		{
-			return this .data;
-		},
-		clearTexture: function ()
-		{
-			var gl = this .getBrowser () .getContext ();
+         gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+         gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+      },
+      getTarget: function ()
+      {
+         return this .target;
+      },
+      getWidth: function ()
+      {
+         return this .width;
+      },
+      getHeight: function ()
+      {
+         return this .height;
+      },
+      getDepth: function ()
+      {
+         return this .depth;
+      },
+      getFlipY: function ()
+      {
+         return false;
+      },
+      getData: function ()
+      {
+         return this .data;
+      },
+      clearTexture: function ()
+      {
+         var gl = this .getBrowser () .getContext ();
 
-			this .setTexture (1, 1, 1, false, gl .RGBA, defaultData);
+         this .setTexture (1, 1, 1, false, gl .RGBA, defaultData);
 
-			this .data = null;
-		},
-		setTexture: function (width, height, depth, transparent, format, data)
-		{
-			try
-			{
-				this .width  = width;
-				this .height = height;
-				this .depth  = depth;
-				this .data   = data;
+         this .data = null;
+      },
+      setTexture: function (width, height, depth, transparent, format, data)
+      {
+         try
+         {
+            this .width  = width;
+            this .height = height;
+            this .depth  = depth;
+            this .data   = data;
 
-				var gl = this .getBrowser () .getContext ();
+            var gl = this .getBrowser () .getContext ();
 
-				if (gl .getVersion () < 2)
-					return;
+            if (gl .getVersion () < 2)
+               return;
 
-				gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
-				gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
-				gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-				gl .texImage3D  (gl .TEXTURE_3D, 0, format, width, height, depth, 0, format, gl .UNSIGNED_BYTE, data);
+            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
+            gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
+            gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+            gl .texImage3D  (gl .TEXTURE_3D, 0, format, width, height, depth, 0, format, gl .UNSIGNED_BYTE, data);
 
-				this .setTransparent (transparent);
-				this .updateTextureProperties ();
-				this .addNodeEvent ();
-			}
-			catch (error)
-			{ }
-		},
-		updateTextureProperties: function ()
-		{
-			X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
-			                                                                this .target,
-			                                                                this .textureProperties_ .getValue (),
-			                                                                this .texturePropertiesNode,
-			                                                                this .width,
-			                                                                this .height,
-			                                                                this .repeatS_ .getValue (),
-			                                                                this .repeatT_ .getValue (),
-			                                                                this .repeatR_ .getValue ());
-		},
-		setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
-		{
-			if (gl .getVersion () >= 2)
-			{
-				gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getTexture3DUnits () [i]);
-				gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
-			}
+            this .setTransparent (transparent);
+            this .updateTextureProperties ();
+            this .addNodeEvent ();
+         }
+         catch (error)
+         { }
+      },
+      updateTextureProperties: function ()
+      {
+         X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
+                                                                         this .target,
+                                                                         this .textureProperties_ .getValue (),
+                                                                         this .texturePropertiesNode,
+                                                                         this .width,
+                                                                         this .height,
+                                                                         this .repeatS_ .getValue (),
+                                                                         this .repeatT_ .getValue (),
+                                                                         this .repeatR_ .getValue ());
+      },
+      setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
+      {
+         if (gl .getVersion () >= 2)
+         {
+            gl .activeTexture (gl .TEXTURE0 + shaderObject .getBrowser () .getTexture3DUnits () [i]);
+            gl .bindTexture (gl .TEXTURE_3D, this .getTexture ());
+         }
 
-			gl .uniform1i (shaderObject .x3d_TextureType [i], 3);
-		},
-	});
+         gl .uniform1i (shaderObject .x3d_TextureType [i], 3);
+      },
+   });
 
-	return X3DTexture3DNode;
+   return X3DTexture3DNode;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -235,12 +235,12 @@ function (X3DSingleTextureNode,
 
 
 define ('x_ite/Components/Texturing3D/ComposedTexture3D',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing3D/X3DTexture3DNode",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Bits/X3DCast",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Texturing3D/X3DTexture3DNode",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Bits/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -251,123 +251,123 @@ function (Fields,
 {
 "use strict";
 
-	function ComposedTexture3D (executionContext)
-	{
-		X3DTexture3DNode .call (this, executionContext);
+   function ComposedTexture3D (executionContext)
+   {
+      X3DTexture3DNode .call (this, executionContext);
 
-		this .addType (X3DConstants .ComposedTexture3D);
+      this .addType (X3DConstants .ComposedTexture3D);
 
-		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+      this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 
-		this .textureNodes = [ ];
-	}
+      this .textureNodes = [ ];
+   }
 
-	ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
-	{
-		constructor: ComposedTexture3D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "texture",           new Fields .MFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "ComposedTexture3D";
-		},
-		getComponentName: function ()
-		{
-			return "Texturing3D";
-		},
-		getContainerField: function ()
-		{
-			return "texture";
-		},
-		initialize: function ()
-		{
-			X3DTexture3DNode .prototype .initialize .call (this);
+   ComposedTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+   {
+      constructor: ComposedTexture3D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "texture",           new Fields .MFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "ComposedTexture3D";
+      },
+      getComponentName: function ()
+      {
+         return "Texturing3D";
+      },
+      getContainerField: function ()
+      {
+         return "texture";
+      },
+      initialize: function ()
+      {
+         X3DTexture3DNode .prototype .initialize .call (this);
 
-			this .texture_ .addInterest ("set_texture__", this);
+         this .texture_ .addInterest ("set_texture__", this);
 
-			this .set_texture__ ();
-		},
-		checkLoadState: function ()
-		{
-			return this .loadState_ .getValue ();
-		},
-		set_texture__: function ()
-		{
-			var textureNodes = this .textureNodes;
+         this .set_texture__ ();
+      },
+      checkLoadState: function ()
+      {
+         return this .loadState_ .getValue ();
+      },
+      set_texture__: function ()
+      {
+         var textureNodes = this .textureNodes;
 
-			for (var i = 0, length = textureNodes .length; i < length; ++ i)
-				textureNodes [i] .removeInterest ("update", this);
+         for (var i = 0, length = textureNodes .length; i < length; ++ i)
+            textureNodes [i] .removeInterest ("update", this);
 
-			textureNodes .length = 0;
+         textureNodes .length = 0;
 
-			for (var i = 0, length = this .texture_ .length; i < length; ++ i)
-			{
-				var textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this .texture_ [i]);
+         for (var i = 0, length = this .texture_ .length; i < length; ++ i)
+         {
+            var textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this .texture_ [i]);
 
-				if (textureNode)
-					textureNodes .push (textureNode);
-			}
+            if (textureNode)
+               textureNodes .push (textureNode);
+         }
 
-			for (var i = 0, length = textureNodes .length; i < length; ++ i)
-				textureNodes [i] .addInterest ("update", this);
+         for (var i = 0, length = textureNodes .length; i < length; ++ i)
+            textureNodes [i] .addInterest ("update", this);
 
-			this .update ();
-		},
-		update: function ()
-		{
-			var
-				textureNodes = this .textureNodes,
-				complete     = 0;
+         this .update ();
+      },
+      update: function ()
+      {
+         var
+            textureNodes = this .textureNodes,
+            complete     = 0;
 
-			for (var i = 0, length = textureNodes .length; i < length; ++ i)
-				complete += textureNodes [i] .checkLoadState () === X3DConstants .COMPLETE_STATE;
+         for (var i = 0, length = textureNodes .length; i < length; ++ i)
+            complete += textureNodes [i] .checkLoadState () === X3DConstants .COMPLETE_STATE;
 
-			if (textureNodes .length === 0 || complete !== textureNodes .length)
-			{
-				this .clearTexture ();
+         if (textureNodes .length === 0 || complete !== textureNodes .length)
+         {
+            this .clearTexture ();
 
-				this .loadState_ = X3DConstants .FAILED_STATE;
-			}
-			else
-			{
-				var
-					gl           = this .getBrowser () .getContext (),
-					textureNode0 = textureNodes [0],
-					width        = textureNode0 .getWidth (),
-					height       = textureNode0 .getHeight (),
-					depth        = textureNodes .length,
-					transparent  = 0,
-					size         = width * height * 4,
-					data         = new Uint8Array (size * depth);
+            this .loadState_ = X3DConstants .FAILED_STATE;
+         }
+         else
+         {
+            var
+               gl           = this .getBrowser () .getContext (),
+               textureNode0 = textureNodes [0],
+               width        = textureNode0 .getWidth (),
+               height       = textureNode0 .getHeight (),
+               depth        = textureNodes .length,
+               transparent  = 0,
+               size         = width * height * 4,
+               data         = new Uint8Array (size * depth);
 
-				for (var i = 0, d = 0; i < depth; ++ i)
-				{
-					var
-						textureNode = this .textureNodes [i],
-						tData       = textureNode .getData ();
+            for (var i = 0, d = 0; i < depth; ++ i)
+            {
+               var
+                  textureNode = this .textureNodes [i],
+                  tData       = textureNode .getData ();
 
-					transparent += textureNode .getTransparent ();
+               transparent += textureNode .getTransparent ();
 
-					for (var t = 0; t < size; ++ t, ++ d)
-					{
-						data [d] = tData [t];
-					}
-				}
+               for (var t = 0; t < size; ++ t, ++ d)
+               {
+                  data [d] = tData [t];
+               }
+            }
 
-				this .setTexture (width, height, depth, !! transparent, gl .RGBA, data);
-				this .loadState_ = X3DConstants .COMPLETE_STATE;
-			}
-		},
-	});
+            this .setTexture (width, height, depth, !! transparent, gl .RGBA, data);
+            this .loadState_ = X3DConstants .COMPLETE_STATE;
+         }
+      },
+   });
 
-	return ComposedTexture3D;
+   return ComposedTexture3D;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -420,641 +420,641 @@ function (Fields,
 
 
 define ('x_ite/Browser/Texturing3D/NRRDParser',[
-	"pako_inflate",
+   "pako_inflate",
 ],
 function (pako)
 {
 "use strict";
 
-	// Grammar
-
-	var Grammar =
-	{
-		NRRD: new RegExp ("^NRRD(\\d+)\\n", 'gy'),
-		field: new RegExp ("([\\w\\s]+):\\s*(.+?)\\n", 'gy'),
-		comment: new RegExp ("#[^\\n]*\\n", 'gy'),
-		newLine: new RegExp ("\n", 'gy'),
-		data: new RegExp ("([^]*)$", 'gy'),
-	};
-
-	function parse (parser)
-	{
-		this .lastIndex = parser .lastIndex;
-
-		parser .result = this .exec (parser .input);
-
-		if (parser .result)
-		{
-			parser .lastIndex = this .lastIndex;
-			return true;
-		}
-
-		return false;
-	}
-
-	for (var key in Grammar)
-		Grammar [key] .parse = parse;
-
-	// Parser
-
-	function NRRDParser ()
-	{
-		this .fieldFunction = new Map ([
-			["type",      this .getType],
-			["encoding",  this .getEncoding],
-			["dimension", this .getDimension],
-			["sizes",     this .getSizes],
-			["endian",    this .getEndian],
-		]);
-	}
-
-	NRRDParser .prototype =
-	{
-		parse: function (input)
-		{
-			this .setInput (input);
-
-			if (this .getNRRD ())
-			{
-				this .getFields ();
-				this .getData ();
-			}
-
-			return this .nrrd;
-		},
-		setInput: function (value)
-		{
-			this .input     = value;
-			this .lastIndex = 0;
-			this .nrrd      = { };
-			this .endian    = "little";
-		},
-		getNRRD: function ()
-		{
-			if (Grammar .NRRD .parse (this))
-			{
-				this .nrrd .nrrd    = true;
-				this .nrrd .version = parseInt (this .result [1]);
-				this .endian        = this .getEndianess ();
-				return true;
-			}
-
-			this .nrrd .nrrd = false;
-			return false;
-		},
-		getFields: function ()
-		{
-			while (Grammar .comment .parse (this))
-				;
-
-			while (Grammar .field .parse (this))
-			{
-				var
-					key   = this .result [1] .toLowerCase (),
-					value = this .result [2] .trim () .toLowerCase (),
-					fun   = this .fieldFunction .get (key);
-
-				if (fun)
-					fun .call (this, value);
-
-				while (Grammar .comment .parse (this))
-					;
-			}
-		},
-		getType: (function ()
-		{
-			var types = new Map ([
-				["signed char",        ["signed char", 1]],
-				["int8",               ["signed char", 1]],
-				["int8_t",             ["signed char", 1]],
-				["uchar",              ["unsigned char", 1]],
-				["unsigned char",      ["unsigned char", 1]],
-				["uint8",              ["unsigned char", 1]],
-				["uint8_t",            ["unsigned char", 1]],
-				["short",              ["signed short", 2]],
-				["short int",          ["signed short", 2]],
-				["signed short",       ["signed short", 2]],
-				["signed short int",   ["signed short", 2]],
-				["int16",              ["signed short", 2]],
-				["int16_t",            ["signed short", 2]],
-				["ushort",             ["unsigned short", 2]],
-				["unsigned short",     ["unsigned short", 2]],
-				["unsigned short int", ["unsigned short", 2]],
-				["uint16",             ["unsigned short", 2]],
-				["uint16_t",           ["unsigned short", 2]],
-				["int",                ["signed int", 4]],
-				["signed int",         ["signed int", 4]],
-				["int32",              ["signed int", 4]],
-				["int32_t",            ["signed int", 4]],
-				["uint",               ["unsigned int", 4]],
-				["unsigned int",       ["unsigned int", 4]],
-				["uint32",             ["unsigned int", 4]],
-				["uint32_t",           ["unsigned int", 4]],
-				["float",              ["float", 4]],
-				["double",             ["double", 8]],
-			]);
-
-			return function (value)
-			{
-				var type = types .get (value);
-
-				if (type === undefined)
-					throw new Error ("Unsupported NRRD type '" + value + "'.");
-
-				this .byteType = type [0];
-				this .bytes    = type [1];
-			};
-		})(),
-		getEncoding: (function ()
-		{
-			var encodings = new Map ([
-				["ascii", "ascii"],
-				["txt",   "ascii"],
-				["text",  "ascii"],
-				["raw",   "raw"],
-				["hex",   "hex"],
-				["gz",    "gzip"],
-				["gzip",  "gzip"],
-			]);
-
-			return function (value)
-			{
-				var encoding = encodings .get (value);
-
-				if (encoding === undefined)
-					throw new Error ("Unsupported NRRD encoding '" + value + "'.");
-
-				this .encoding = encoding;
-			};
-		})(),
-		getDimension: function (value)
-		{
-			var
-				result    = value .match (/(\d+)/),
-				dimension = 0;
-
-			if (result)
-			{
-				dimension = parseInt (result [1]);
-
-				switch (dimension)
-				{
-					case 1:
-					case 2:
-					case 3:
-					case 4:
-						this .dimension = dimension;
-						return;
-				}
-			}
-
-			throw new Error ("Unsupported NRRD dimension '" + dimension + "', must be 1, 2, 3, or 4.");
-		},
-		getSizes: function (value)
-		{
-			var
-				num    = new RegExp ("\\s*(\\d+)", 'gy'),
-				result = null,
-				sizes  = [ ];
-
-			while (result = num .exec (value))
-			{
-				sizes .push (parseInt (result [1]));
-			}
-
-			switch (sizes .length)
-			{
-				case 1:
-				{
-					this .nrrd .components = 1;
-					this .nrrd .width      = sizes [0];
-					this .nrrd .height     = 1;
-					this .nrrd .depth      = 1;
-					return;
-				}
-				case 2:
-				{
-					this .nrrd .components = 1;
-					this .nrrd .width      = sizes [0];
-					this .nrrd .height     = sizes [1];
-					this .nrrd .depth      = 1;
-					return;
-				}
-				case 3:
-				{
-					this .nrrd .components = 1;
-					this .nrrd .width      = sizes [0];
-					this .nrrd .height     = sizes [1];
-					this .nrrd .depth      = sizes [2];
-					return;
-				}
-				case 4:
-				{
-					this .nrrd .components = sizes [0];
-					this .nrrd .width      = sizes [1];
-					this .nrrd .height     = sizes [2];
-					this .nrrd .depth      = sizes [3];
-					return;
-				}
-				default:
-					throw new Error ("Unsupported NRRD sizes.");
-			}
-		},
-		getEndian: function (value)
-		{
-			if (value === 'little' || value === 'big')
-			{
-				this .endian = value;
-				return;
-			}
-
-			throw new Error ("Unsupported NRRD endian, must be 'little' or 'big'.");
-		},
-		getData: function ()
-		{
-			switch (this .encoding)
-			{
-				case "ascii":
-				{
-					this .ascii ();
-					break;
-				}
-				case "raw":
-				{
-					this .rawString (this .input);
-					break;
-				}
-				case "hex":
-				{
-					this .hex ();
-					break;
-				}
-				case "gzip":
-				{
-					this .gzip ();
-					break;
-				}
-			}
-		},
-		ascii: function ()
-		{
-			var
-				dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
-				data       = new Uint8Array (dataLength);
-
-			this .nrrd .data = data;
-
-			if (! Grammar .data .parse (this))
-				return;
-
-			var numbers = this .result [1] .trim () .split (/\s+/);
-
-			switch (this .byteType)
-			{
-				case "signed char":
-				case "unsigned char":
-				{
-					numbers .forEach (function (value, i)
-					{
-						data [i] = parseInt (value);
-					});
-
-					return;
-				}
-				case "signed short":
-				case "unsigned short":
-				{
-					numbers .forEach (function (value, i)
-					{
-						data [i] = parseInt (value) / 256;
-					});
-
-					return;
-				}
-				case "signed int":
-				case "unsigned int":
-				{
-					numbers .forEach (function (value, i)
-					{
-						data [i] = parseInt (value) / 16777216;
-					});
-
-					return;
-				}
-				case "float":
-				{
-					numbers .forEach (function (value, i)
-					{
-						data [i] = parseFloat (value) / 256;
-					});
-
-					return;
-				}
-				case "double":
-				{
-					numbers .forEach (function (value, i)
-					{
-						data [i] = parseFloat (value) / 16777216;
-					});
-
-					return;
-				}
-			}
-		},
-		rawString: function (input)
-		{
-			var
-				dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
-				length     = dataLength * this .bytes,
-				data       = new Uint8Array (dataLength);
-
-			this .nrrd .data = data;
-
-			switch (this .byteType)
-			{
-				case "signed char":
-				case "unsigned char":
-				{
-					for (var i = input .length - length, d = 0; i < input .length; ++ i, ++ d)
-						data [d] = input .charCodeAt (i);
-
-					return;
-				}
-				case "signed short":
-				case "unsigned short":
-				{
-					if (this .getEndianess () === this .endian)
-						var e0 = 0, e1 = 1;
-					else
-						var e0 = 1, e1 = 0;
-
-					for (var i = input .length - length, d = 0; i < input .length; i += 2, ++ d)
-						data [d] = this .short2byte (input .charCodeAt (i + e0),
-						                             input .charCodeAt (i + e1));
-
-					return;
-				}
-				case "signed int":
-				case "unsigned int":
-				{
-					if (this .getEndianess () === this .endian)
-						var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
-					else
-						var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
-
-					for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
-						data [d] = this .int2byte (input .charCodeAt (i + e0),
-						                           input .charCodeAt (i + e1),
-						                           input .charCodeAt (i + e2),
-						                           input .charCodeAt (i + e3));
-
-					return;
-				}
-				case "float":
-				{
-					if (this .getEndianess () === this .endian)
-						var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
-					else
-						var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
-
-					for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
-						data [d] = this .float2byte (input .charCodeAt (i + e0),
-						                             input .charCodeAt (i + e1),
-						                             input .charCodeAt (i + e2),
-						                             input .charCodeAt (i + e3));
-
-					return;
-				}
-				case "double":
-				{
-					if (this .getEndianess () === this .endian)
-						var e0 = 0, e1 = 1, e2 = 2, e3 = 3, e4 = 4, e5 = 5, e6 = 6, e7 = 7;
-					else
-						var e0 = 7, e1 = 6, e2 = 5, e3 = 4, e4 = 3, e5 = 2, e6 = 1, e7 = 0;
-
-					for (var i = input .length - length, d = 0; i < input .length; i += 8, ++ d)
-						data [d] = this .double2byte (input .charCodeAt (i + e0),
-																input .charCodeAt (i + e1),
-																input .charCodeAt (i + e2),
-																input .charCodeAt (i + e3),
-																input .charCodeAt (i + e4),
-																input .charCodeAt (i + e5),
-																input .charCodeAt (i + e6),
-																input .charCodeAt (i + e7));
-
-					return;
-				}
-			}
-		},
-		rawArray: function (input)
-		{
-			var
-				dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
-				length     = dataLength * this .bytes,
-				data       = new Uint8Array (dataLength);
-
-			this .nrrd .data = data;
-
-			switch (this .byteType)
-			{
-				case "signed char":
-				case "unsigned char":
-				{
-					for (var i = input .length - length, d = 0; i < input .length; ++ i, ++ d)
-						data [d] = input [i];
-
-					return;
-				}
-				case "signed short":
-				case "unsigned short":
-				{
-					if (this .getEndianess () === this .endian)
-						var e0 = 0, e1 = 1;
-					else
-						var e0 = 1, e1 = 0;
-
-						for (var i = input .length - length, d = 0; i < input .length; i += 2, ++ d)
-							data [d] = this .short2byte (input [i + e0],
-							                             input [i + e1]);
-
-					return;
-				}
-				case "signed int":
-				case "unsigned int":
-				{
-					if (this .getEndianess () === this .endian)
-						var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
-					else
-						var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
-
-					for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
-						data [d] = this .int2byte (input [i + e0],
-						                           input [i + e1],
-						                           input [i + e2],
-						                           input [i + e3]);
-
-					return;
-				}
-				case "float":
-				{
-					if (this .getEndianess () === this .endian)
-						var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
-					else
-						var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
-
-					for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
-						data [d] = this .float2byte (input [i + e0],
-						                             input [i + e1],
-						                             input [i + e2],
-						                             input [i + e3]);
-
-					return;
-				}
-				case "double":
-				{
-					if (this .getEndianess () === this .endian)
-						var e0 = 0, e1 = 1, e2 = 2, e3 = 3, e4 = 4, e5 = 5, e6 = 6, e7 = 7;
-					else
-						var e0 = 7, e1 = 6, e2 = 5, e3 = 4, e4 = 3, e5 = 2, e6 = 1, e7 = 0;
-
-					for (var i = input .length - length, d = 0; i < input .length; i += 8, ++ d)
-						data [d] = this .double2byte (input [i + e0],
-																input [i + e1],
-																input [i + e2],
-																input [i + e3],
-																input [i + e4],
-																input [i + e5],
-																input [i + e6],
-																input [i + e7]);
-
-					return;
-				}
-			}
-		},
-		hex: function ()
-		{
-			if (Grammar .data .parse (this))
-			{
-				var match = this .result [1] .match (/([0-9a-fA-F]{2})/g);
-
-				if (match)
-				{
-					var raw = match .map (function (value)
-					{
-						return parseInt (value, 16);
-					});
-
-					this .rawArray (raw);
-					return;
-				}
-			}
-
-			throw new Error ("Invalid NRRD data.");
-		},
-		gzip: function ()
-		{
-			try
-			{
-				if (! Grammar .newLine .parse (this))
-					throw new Error ("Invalid NRRD data.");
-
-				Grammar .data .parse (this);
-
-				var raw = pako .ungzip (this .result [1], { to: "raw" });
-
-				this .rawArray (raw);
-			}
-			catch (error)
-			{
-				throw new Error ("Invalid NRRD data.");
-			}
-		},
-		getEndianess: function ()
-		{
-			var
-				buffer = new ArrayBuffer (4),
-				int    = new Uint32Array (buffer),
-				bytes  = new Uint8Array (buffer);
-
-			int [0] = 0x01020304;
-
-			if (bytes [0] == 1 && bytes [1] == 2 && bytes [2] == 3 && bytes [3] == 4)
-				return 'big';
-
-			if (bytes [0] == 4 && bytes [1] == 3 && bytes [2] == 2 && bytes [3] == 1)
-				return 'little';
-
-			throw new Error ("NRRD: unkown system endianess,");
-		},
-		short2byte: (function ()
-		{
-			var
-				bytes  = new Uint8Array (2),
-				number = new Uint16Array (bytes .buffer);
-
-			return function (b0, b1)
-			{
-				bytes [0] = b0;
-				bytes [1] = b1;
-
-				return number [0] / 256;
-			};
-		})(),
-		int2byte: (function ()
-		{
-			var
-				bytes  = new Uint8Array (4),
-				number = new Uint32Array (bytes .buffer);
-
-			return function (b0, b1, b2, b3)
-			{
-				bytes [0] = b0;
-				bytes [1] = b1;
-				bytes [2] = b2;
-				bytes [3] = b3;
-
-				return number [0] / 16777216;
-			};
-		})(),
-		float2byte: (function ()
-		{
-			var
-				bytes  = new Uint8Array (4),
-				number = new Float32Array (bytes .buffer);
-
-			return function (b0, b1, b2, b3)
-			{
-				bytes [0] = b0;
-				bytes [1] = b1;
-				bytes [2] = b2;
-				bytes [3] = b3;
-
-				return number [0] / 256;
-			};
-		})(),
-		double2byte: (function ()
-		{
-			var
-				bytes  = new Uint8Array (8),
-				number = new Float64Array (bytes .buffer);
-
-			return function (b0, b1, b2, b3, b4, b5, b6, b7)
-			{
-				bytes [0] = b0;
-				bytes [1] = b1;
-				bytes [2] = b2;
-				bytes [3] = b3;
-				bytes [4] = b4;
-				bytes [5] = b5;
-				bytes [6] = b6;
-				bytes [7] = b7;
-
-				return number [0] / 16777216;
-			};
-		})(),
-	};
-
-	return NRRDParser;
+   // Grammar
+
+   var Grammar =
+   {
+      NRRD: new RegExp ("^NRRD(\\d+)\\n", 'gy'),
+      field: new RegExp ("([\\w\\s]+):\\s*(.+?)\\n", 'gy'),
+      comment: new RegExp ("#[^\\n]*\\n", 'gy'),
+      newLine: new RegExp ("\n", 'gy'),
+      data: new RegExp ("([^]*)$", 'gy'),
+   };
+
+   function parse (parser)
+   {
+      this .lastIndex = parser .lastIndex;
+
+      parser .result = this .exec (parser .input);
+
+      if (parser .result)
+      {
+         parser .lastIndex = this .lastIndex;
+         return true;
+      }
+
+      return false;
+   }
+
+   for (var key in Grammar)
+      Grammar [key] .parse = parse;
+
+   // Parser
+
+   function NRRDParser ()
+   {
+      this .fieldFunction = new Map ([
+         ["type",      this .getType],
+         ["encoding",  this .getEncoding],
+         ["dimension", this .getDimension],
+         ["sizes",     this .getSizes],
+         ["endian",    this .getEndian],
+      ]);
+   }
+
+   NRRDParser .prototype =
+   {
+      parse: function (input)
+      {
+         this .setInput (input);
+
+         if (this .getNRRD ())
+         {
+            this .getFields ();
+            this .getData ();
+         }
+
+         return this .nrrd;
+      },
+      setInput: function (value)
+      {
+         this .input     = value;
+         this .lastIndex = 0;
+         this .nrrd      = { };
+         this .endian    = "little";
+      },
+      getNRRD: function ()
+      {
+         if (Grammar .NRRD .parse (this))
+         {
+            this .nrrd .nrrd    = true;
+            this .nrrd .version = parseInt (this .result [1]);
+            this .endian        = this .getEndianess ();
+            return true;
+         }
+
+         this .nrrd .nrrd = false;
+         return false;
+      },
+      getFields: function ()
+      {
+         while (Grammar .comment .parse (this))
+            ;
+
+         while (Grammar .field .parse (this))
+         {
+            var
+               key   = this .result [1] .toLowerCase (),
+               value = this .result [2] .trim () .toLowerCase (),
+               fun   = this .fieldFunction .get (key);
+
+            if (fun)
+               fun .call (this, value);
+
+            while (Grammar .comment .parse (this))
+               ;
+         }
+      },
+      getType: (function ()
+      {
+         var types = new Map ([
+            ["signed char",        ["signed char", 1]],
+            ["int8",               ["signed char", 1]],
+            ["int8_t",             ["signed char", 1]],
+            ["uchar",              ["unsigned char", 1]],
+            ["unsigned char",      ["unsigned char", 1]],
+            ["uint8",              ["unsigned char", 1]],
+            ["uint8_t",            ["unsigned char", 1]],
+            ["short",              ["signed short", 2]],
+            ["short int",          ["signed short", 2]],
+            ["signed short",       ["signed short", 2]],
+            ["signed short int",   ["signed short", 2]],
+            ["int16",              ["signed short", 2]],
+            ["int16_t",            ["signed short", 2]],
+            ["ushort",             ["unsigned short", 2]],
+            ["unsigned short",     ["unsigned short", 2]],
+            ["unsigned short int", ["unsigned short", 2]],
+            ["uint16",             ["unsigned short", 2]],
+            ["uint16_t",           ["unsigned short", 2]],
+            ["int",                ["signed int", 4]],
+            ["signed int",         ["signed int", 4]],
+            ["int32",              ["signed int", 4]],
+            ["int32_t",            ["signed int", 4]],
+            ["uint",               ["unsigned int", 4]],
+            ["unsigned int",       ["unsigned int", 4]],
+            ["uint32",             ["unsigned int", 4]],
+            ["uint32_t",           ["unsigned int", 4]],
+            ["float",              ["float", 4]],
+            ["double",             ["double", 8]],
+         ]);
+
+         return function (value)
+         {
+            var type = types .get (value);
+
+            if (type === undefined)
+               throw new Error ("Unsupported NRRD type '" + value + "'.");
+
+            this .byteType = type [0];
+            this .bytes    = type [1];
+         };
+      })(),
+      getEncoding: (function ()
+      {
+         var encodings = new Map ([
+            ["ascii", "ascii"],
+            ["txt",   "ascii"],
+            ["text",  "ascii"],
+            ["raw",   "raw"],
+            ["hex",   "hex"],
+            ["gz",    "gzip"],
+            ["gzip",  "gzip"],
+         ]);
+
+         return function (value)
+         {
+            var encoding = encodings .get (value);
+
+            if (encoding === undefined)
+               throw new Error ("Unsupported NRRD encoding '" + value + "'.");
+
+            this .encoding = encoding;
+         };
+      })(),
+      getDimension: function (value)
+      {
+         var
+            result    = value .match (/(\d+)/),
+            dimension = 0;
+
+         if (result)
+         {
+            dimension = parseInt (result [1]);
+
+            switch (dimension)
+            {
+               case 1:
+               case 2:
+               case 3:
+               case 4:
+                  this .dimension = dimension;
+                  return;
+            }
+         }
+
+         throw new Error ("Unsupported NRRD dimension '" + dimension + "', must be 1, 2, 3, or 4.");
+      },
+      getSizes: function (value)
+      {
+         var
+            num    = new RegExp ("\\s*(\\d+)", 'gy'),
+            result = null,
+            sizes  = [ ];
+
+         while (result = num .exec (value))
+         {
+            sizes .push (parseInt (result [1]));
+         }
+
+         switch (sizes .length)
+         {
+            case 1:
+            {
+               this .nrrd .components = 1;
+               this .nrrd .width      = sizes [0];
+               this .nrrd .height     = 1;
+               this .nrrd .depth      = 1;
+               return;
+            }
+            case 2:
+            {
+               this .nrrd .components = 1;
+               this .nrrd .width      = sizes [0];
+               this .nrrd .height     = sizes [1];
+               this .nrrd .depth      = 1;
+               return;
+            }
+            case 3:
+            {
+               this .nrrd .components = 1;
+               this .nrrd .width      = sizes [0];
+               this .nrrd .height     = sizes [1];
+               this .nrrd .depth      = sizes [2];
+               return;
+            }
+            case 4:
+            {
+               this .nrrd .components = sizes [0];
+               this .nrrd .width      = sizes [1];
+               this .nrrd .height     = sizes [2];
+               this .nrrd .depth      = sizes [3];
+               return;
+            }
+            default:
+               throw new Error ("Unsupported NRRD sizes.");
+         }
+      },
+      getEndian: function (value)
+      {
+         if (value === 'little' || value === 'big')
+         {
+            this .endian = value;
+            return;
+         }
+
+         throw new Error ("Unsupported NRRD endian, must be 'little' or 'big'.");
+      },
+      getData: function ()
+      {
+         switch (this .encoding)
+         {
+            case "ascii":
+            {
+               this .ascii ();
+               break;
+            }
+            case "raw":
+            {
+               this .rawString (this .input);
+               break;
+            }
+            case "hex":
+            {
+               this .hex ();
+               break;
+            }
+            case "gzip":
+            {
+               this .gzip ();
+               break;
+            }
+         }
+      },
+      ascii: function ()
+      {
+         var
+            dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
+            data       = new Uint8Array (dataLength);
+
+         this .nrrd .data = data;
+
+         if (! Grammar .data .parse (this))
+            return;
+
+         var numbers = this .result [1] .trim () .split (/\s+/);
+
+         switch (this .byteType)
+         {
+            case "signed char":
+            case "unsigned char":
+            {
+               numbers .forEach (function (value, i)
+               {
+                  data [i] = parseInt (value);
+               });
+
+               return;
+            }
+            case "signed short":
+            case "unsigned short":
+            {
+               numbers .forEach (function (value, i)
+               {
+                  data [i] = parseInt (value) / 256;
+               });
+
+               return;
+            }
+            case "signed int":
+            case "unsigned int":
+            {
+               numbers .forEach (function (value, i)
+               {
+                  data [i] = parseInt (value) / 16777216;
+               });
+
+               return;
+            }
+            case "float":
+            {
+               numbers .forEach (function (value, i)
+               {
+                  data [i] = parseFloat (value) / 256;
+               });
+
+               return;
+            }
+            case "double":
+            {
+               numbers .forEach (function (value, i)
+               {
+                  data [i] = parseFloat (value) / 16777216;
+               });
+
+               return;
+            }
+         }
+      },
+      rawString: function (input)
+      {
+         var
+            dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
+            length     = dataLength * this .bytes,
+            data       = new Uint8Array (dataLength);
+
+         this .nrrd .data = data;
+
+         switch (this .byteType)
+         {
+            case "signed char":
+            case "unsigned char":
+            {
+               for (var i = input .length - length, d = 0; i < input .length; ++ i, ++ d)
+                  data [d] = input .charCodeAt (i);
+
+               return;
+            }
+            case "signed short":
+            case "unsigned short":
+            {
+               if (this .getEndianess () === this .endian)
+                  var e0 = 0, e1 = 1;
+               else
+                  var e0 = 1, e1 = 0;
+
+               for (var i = input .length - length, d = 0; i < input .length; i += 2, ++ d)
+                  data [d] = this .short2byte (input .charCodeAt (i + e0),
+                                               input .charCodeAt (i + e1));
+
+               return;
+            }
+            case "signed int":
+            case "unsigned int":
+            {
+               if (this .getEndianess () === this .endian)
+                  var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
+               else
+                  var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
+
+               for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
+                  data [d] = this .int2byte (input .charCodeAt (i + e0),
+                                             input .charCodeAt (i + e1),
+                                             input .charCodeAt (i + e2),
+                                             input .charCodeAt (i + e3));
+
+               return;
+            }
+            case "float":
+            {
+               if (this .getEndianess () === this .endian)
+                  var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
+               else
+                  var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
+
+               for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
+                  data [d] = this .float2byte (input .charCodeAt (i + e0),
+                                               input .charCodeAt (i + e1),
+                                               input .charCodeAt (i + e2),
+                                               input .charCodeAt (i + e3));
+
+               return;
+            }
+            case "double":
+            {
+               if (this .getEndianess () === this .endian)
+                  var e0 = 0, e1 = 1, e2 = 2, e3 = 3, e4 = 4, e5 = 5, e6 = 6, e7 = 7;
+               else
+                  var e0 = 7, e1 = 6, e2 = 5, e3 = 4, e4 = 3, e5 = 2, e6 = 1, e7 = 0;
+
+               for (var i = input .length - length, d = 0; i < input .length; i += 8, ++ d)
+                  data [d] = this .double2byte (input .charCodeAt (i + e0),
+                                                input .charCodeAt (i + e1),
+                                                input .charCodeAt (i + e2),
+                                                input .charCodeAt (i + e3),
+                                                input .charCodeAt (i + e4),
+                                                input .charCodeAt (i + e5),
+                                                input .charCodeAt (i + e6),
+                                                input .charCodeAt (i + e7));
+
+               return;
+            }
+         }
+      },
+      rawArray: function (input)
+      {
+         var
+            dataLength = this .nrrd .components * this .nrrd .width * this .nrrd .height * this .nrrd .depth,
+            length     = dataLength * this .bytes,
+            data       = new Uint8Array (dataLength);
+
+         this .nrrd .data = data;
+
+         switch (this .byteType)
+         {
+            case "signed char":
+            case "unsigned char":
+            {
+               for (var i = input .length - length, d = 0; i < input .length; ++ i, ++ d)
+                  data [d] = input [i];
+
+               return;
+            }
+            case "signed short":
+            case "unsigned short":
+            {
+               if (this .getEndianess () === this .endian)
+                  var e0 = 0, e1 = 1;
+               else
+                  var e0 = 1, e1 = 0;
+
+                  for (var i = input .length - length, d = 0; i < input .length; i += 2, ++ d)
+                     data [d] = this .short2byte (input [i + e0],
+                                                  input [i + e1]);
+
+               return;
+            }
+            case "signed int":
+            case "unsigned int":
+            {
+               if (this .getEndianess () === this .endian)
+                  var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
+               else
+                  var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
+
+               for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
+                  data [d] = this .int2byte (input [i + e0],
+                                             input [i + e1],
+                                             input [i + e2],
+                                             input [i + e3]);
+
+               return;
+            }
+            case "float":
+            {
+               if (this .getEndianess () === this .endian)
+                  var e0 = 0, e1 = 1, e2 = 2, e3 = 3;
+               else
+                  var e0 = 3, e1 = 2, e2 = 1, e3 = 0;
+
+               for (var i = input .length - length, d = 0; i < input .length; i += 4, ++ d)
+                  data [d] = this .float2byte (input [i + e0],
+                                               input [i + e1],
+                                               input [i + e2],
+                                               input [i + e3]);
+
+               return;
+            }
+            case "double":
+            {
+               if (this .getEndianess () === this .endian)
+                  var e0 = 0, e1 = 1, e2 = 2, e3 = 3, e4 = 4, e5 = 5, e6 = 6, e7 = 7;
+               else
+                  var e0 = 7, e1 = 6, e2 = 5, e3 = 4, e4 = 3, e5 = 2, e6 = 1, e7 = 0;
+
+               for (var i = input .length - length, d = 0; i < input .length; i += 8, ++ d)
+                  data [d] = this .double2byte (input [i + e0],
+                                                input [i + e1],
+                                                input [i + e2],
+                                                input [i + e3],
+                                                input [i + e4],
+                                                input [i + e5],
+                                                input [i + e6],
+                                                input [i + e7]);
+
+               return;
+            }
+         }
+      },
+      hex: function ()
+      {
+         if (Grammar .data .parse (this))
+         {
+            var match = this .result [1] .match (/([0-9a-fA-F]{2})/g);
+
+            if (match)
+            {
+               var raw = match .map (function (value)
+               {
+                  return parseInt (value, 16);
+               });
+
+               this .rawArray (raw);
+               return;
+            }
+         }
+
+         throw new Error ("Invalid NRRD data.");
+      },
+      gzip: function ()
+      {
+         try
+         {
+            if (! Grammar .newLine .parse (this))
+               throw new Error ("Invalid NRRD data.");
+
+            Grammar .data .parse (this);
+
+            var raw = pako .ungzip (this .result [1], { to: "raw" });
+
+            this .rawArray (raw);
+         }
+         catch (error)
+         {
+            throw new Error ("Invalid NRRD data.");
+         }
+      },
+      getEndianess: function ()
+      {
+         var
+            buffer = new ArrayBuffer (4),
+            int    = new Uint32Array (buffer),
+            bytes  = new Uint8Array (buffer);
+
+         int [0] = 0x01020304;
+
+         if (bytes [0] == 1 && bytes [1] == 2 && bytes [2] == 3 && bytes [3] == 4)
+            return 'big';
+
+         if (bytes [0] == 4 && bytes [1] == 3 && bytes [2] == 2 && bytes [3] == 1)
+            return 'little';
+
+         throw new Error ("NRRD: unkown system endianess,");
+      },
+      short2byte: (function ()
+      {
+         var
+            bytes  = new Uint8Array (2),
+            number = new Uint16Array (bytes .buffer);
+
+         return function (b0, b1)
+         {
+            bytes [0] = b0;
+            bytes [1] = b1;
+
+            return number [0] / 256;
+         };
+      })(),
+      int2byte: (function ()
+      {
+         var
+            bytes  = new Uint8Array (4),
+            number = new Uint32Array (bytes .buffer);
+
+         return function (b0, b1, b2, b3)
+         {
+            bytes [0] = b0;
+            bytes [1] = b1;
+            bytes [2] = b2;
+            bytes [3] = b3;
+
+            return number [0] / 16777216;
+         };
+      })(),
+      float2byte: (function ()
+      {
+         var
+            bytes  = new Uint8Array (4),
+            number = new Float32Array (bytes .buffer);
+
+         return function (b0, b1, b2, b3)
+         {
+            bytes [0] = b0;
+            bytes [1] = b1;
+            bytes [2] = b2;
+            bytes [3] = b3;
+
+            return number [0] / 256;
+         };
+      })(),
+      double2byte: (function ()
+      {
+         var
+            bytes  = new Uint8Array (8),
+            number = new Float64Array (bytes .buffer);
+
+         return function (b0, b1, b2, b3, b4, b5, b6, b7)
+         {
+            bytes [0] = b0;
+            bytes [1] = b1;
+            bytes [2] = b2;
+            bytes [3] = b3;
+            bytes [4] = b4;
+            bytes [5] = b5;
+            bytes [6] = b6;
+            bytes [7] = b7;
+
+            return number [0] / 16777216;
+         };
+      })(),
+   };
+
+   return NRRDParser;
 });
 
 // Dummy file instead of zlib needed by dicom-parser.
@@ -7846,1081 +7846,1081 @@ define("OpenJPEG/build/openJPEG-FixedMemory-browser", function(){});
 
 
 define ('x_ite/Browser/Texturing3D/DICOMParser',[
-	"dicom-parser",
-	"lib/jpeg/jpeg",
-	"jpegLossless",
-	"CharLS",
-	"OpenJPEG",
-	"x_ite/DEBUG",
+   "dicom-parser",
+   "lib/jpeg/jpeg",
+   "jpegLossless",
+   "CharLS",
+   "OpenJPEG",
+   "x_ite/DEBUG",
 ],
 function (dicomParser,
           jpeg,
           jpegLossless,
-			 charLS,
+          charLS,
           openJPEG,
           DEBUG)
 {
 "use strict";
 
-	// Global instances of JPEG libraries.
-
-	var
-		charLS   = undefined,
-		openJPEG = undefined;
-
-	// DicomParser
-
-	function DicomParser ()
-	{
-		this .dicom = { dicom: false };
-	}
-
-	DicomParser .prototype =
-	{
-		parse: function (input)
-		{
-			try
-			{
-				var inputArray = new Uint8Array (input .length);
-
-				for (var i = 0, length = input .length; i < length; ++ i)
-					inputArray [i] = input .charCodeAt (i);
-
-				this .dataSet      = dicomParser .parseDicom (inputArray);
-				this .dicom .dicom = true;
-			}
-			catch (error)
-			{
-				console .log (error);
-				this .dicom .dicom = false;
-				return this .dicom;
-			}
-
-			this .getPhotometricInterpretation ();
-			this .getComponents ();
-			this .getWidth ();
-			this .getHeight ();
-			this .getDepth ();
-			this .getBitsAllocated ();
-			this .getBitsStored ();
-			this .getPixelRepresentation ();
-			this .getPlanarConfiguration ();
-			this .getTansferSyntax ();
-			this .getPixelData ();
-
-			if (DEBUG)
-				console .log (this);
-
-			return this .dicom;
-		},
-		getPhotometricInterpretation: function ()
-		{
-			// https://dicom.innolitics.com/ciods/ct-image/image-pixel/00280004
-			this .photometricInterpretation = this .dataSet .string ("x00280004");
-		},
-		getComponents: function ()
-		{
-			// https://dicom.innolitics.com/ciods/ct-image/image-pixel/00280002
-			this .dicom .components = this .dataSet .uint16 ("x00280002");
-		},
-		getWidth: function ()
-		{
-			this .dicom .width = this .dataSet .uint16 ("x00280011");
-		},
-		getHeight: function ()
-		{
-			this .dicom .height = this .dataSet .uint16 ("x00280010");
-		},
-		getDepth: function ()
-		{
-			if (this .dataSet .elements .x00280008)
-			{
-				this .dicom .depth = this .dataSet .intString ("x00280008");
-			}
-			else
-				this .dicom .depth = 1;
-		},
-		getBitsAllocated: function ()
-		{
-			this .bitsAllocated  = this .dataSet .uint16 ("x00280100");
-		},
-		getBitsStored: function ()
-		{
-			this .bitsStored  = this .dataSet .uint16 ("x00280101");
-		},
-		getPixelRepresentation: function ()
-		{
-			this .pixelRepresentation = this .dataSet .uint16 ("x00280103") || 0;
-		},
-		getPlanarConfiguration: function ()
-		{
-			this .planarConfiguration = this .dataSet .uint16 ("x00280006") || 0;
-		},
-		getTansferSyntax: function ()
-		{
-			this .transferSyntax = this .dataSet .string ("x00020010");
-		},
-		getPixelData: function ()
-		{
-			var
-				dicom        = this .dicom,
-				pixelElement = this .dataSet .elements .x7fe00010 || this .dataSet .elements .x7fe00008, // pixel or float pixel
-				components   = this .photometricInterpretation === "PALETTE COLOR" ? 3 : this .dicom .components,
-				imageLength  = dicom .width * dicom .height * components,
-				byteLength   = imageLength * dicom .depth,
-				bytes        = new Uint8Array (byteLength),
-				frames       = this .getFrames (pixelElement);
-
-			frames .forEach (function (frame, f)
-			{
-				// Handle transfer syntax.
-
-				// https://www.dicomlibrary.com/dicom/transfer-syntax/
-
-				switch (this .transferSyntax)
-				{
-					case "1.2.840.10008.1.2":      // Implicit VR Little Endian
-					case "1.2.840.10008.1.2.1":    // Explicit VR Little Endian
-					case "1.2.840.10008.1.2.1.99": // Deflated Explicit VR Little Endian
-					{
-						frame = this .decodeLittleEndian (frame);
-						break;
-					}
-					case "1.2.840.10008.1.2.2": // Explicit VR Big Endian (retired)
-					{
-						frame = this .decodeBigEndian (frame);
-						break;
-					}
-					case "1.2.840.10008.1.2.5": // RLE Lossless
-					{
-						frame = this .decodeRLE (frame);
-						break;
-					}
-					case "1.2.840.10008.1.2.4.50": // JPEG Baseline lossy process 1 (8 bit)
-					case "1.2.840.10008.1.2.4.51": // JPEG Baseline lossy process 2 & 4 (12 bit)
-					{
-						frame = this .decodeJPEGBaseline (frame);
-						break;
-					}
-					case "1.2.840.10008.1.2.4.57": // JPEG Lossless, Nonhierarchical (Processes 14)
-					case "1.2.840.10008.1.2.4.70": // JPEG Lossless, Nonhierarchical (Processes 14 [Selection 1])
-					{
-						frame = this .decodeJPEGLossless (frame);
-						break;
-					}
-					case "1.2.840.10008.1.2.4.80": // JPEG-LS Lossless Image Compression
-					case "1.2.840.10008.1.2.4.81": // JPEG-LS Lossy (Near-Lossless) Image Compression
-					{
-						frame = this .decodeJPEGLS (frame);
-						break;
-					}
-					case "1.2.840.10008.1.2.4.90": // JPEG 2000 Lossless
-					case "1.2.840.10008.1.2.4.91": // JPEG 2000 Lossy
-					{
-						frame = this .decodeJPEG2000 (frame);
-						break;
-					}
-					case "1.2.840.10008.1.2.4.52":
-					case "1.2.840.10008.1.2.4.53":
-					case "1.2.840.10008.1.2.4.54":
-					case "1.2.840.10008.1.2.4.55":
-					case "1.2.840.10008.1.2.4.56":
-					case "1.2.840.10008.1.2.4.58":
-					case "1.2.840.10008.1.2.4.59":
-					case "1.2.840.10008.1.2.4.60":
-					case "1.2.840.10008.1.2.4.61":
-					case "1.2.840.10008.1.2.4.62":
-					case "1.2.840.10008.1.2.4.63":
-					case "1.2.840.10008.1.2.4.64":
-					case "1.2.840.10008.1.2.4.65":
-					case "1.2.840.10008.1.2.4.66":
-					case "1.2.840.10008.1.2.4.92":
-					case "1.2.840.10008.1.2.4.93":
-					{
-						// JPEG
-						throw new Error ("DICOM: this JPEG encoding (" + this .transferSyntax + ") is not supported.");
-					}
-					default:
-					{
-						throw new Error ("DICOM: unsupported transfer syntax '" + this .transferSyntax + "'.");
-					}
-				}
-
-				// Convert to stored type array (int, uint, float, 8/16 bit).
-
-				frame = this .getTypedArray (frame);
-
-				// Handle bits stored.
-
-				if (this .pixelRepresentation === 1 && this .bitsStored !== undefined)
-				{
-					var shift = 32 - this .bitsStored;
-
-					for (var i = 0, length = frame .length; i < length; ++ i)
-						frame [i] = frame [i] << shift >> shift;
-				}
-
-				// Handle photometric interpretation.
-
-				switch (this .photometricInterpretation)
-				{
-					case "MONOCHROME1":
-					case "MONOCHROME2":
-					{
-						break;
-					}
-					case "RGB":
-					case "YBR_RCT":
-					case "YBR_ICT":
-					case "YBR_FULL_422":
-					{
-						if (this .planarConfiguration === 1)
-							frame = this .convertRGBColorByPlane (frame);
-
-						break;
-					}
-					case "YBR_FULL":
-					{
-						if (this .planarConfiguration === 0)
-							frame = this .convertYBRFullByPixel (frame);
-						else
-							frame = this .convertYBRFullByPlane (frame);
-
-						break;
-					}
-					case "PALETTE COLOR":
-					{
-						frame = this .convertPaletteColor (frame);
-						break;
-					}
-					default:
-					{
-						throw new Error ("DICOM: unsupported image type '" + this .photometricInterpretation + "'.");
-					}
-				}
-
-				// Normalize frame pixel data in the range [0, 255], and assign to image block;
-
-				frame = this .flipImage (frame, components);
-
-				var
-					normalize = this .getNormalizeOffsetAndFactor (frame),
-					b         = f * imageLength;
-
-				for (var i = 0, length = frame .length; i < length; ++ i, ++ b)
-					bytes [b] = (frame [i] - normalize .offset) * normalize .factor;
-			},
-			this);
-
-			// Invert MONOCHROME1 pixels.
-
-			if (this .photometricInterpretation === "MONOCHROME1")
-			{
-				for (var i = 0, length = bytes .length; i < length; ++ i)
-					bytes [i] = 255 - bytes [i];
-			}
-
-			// Set Uint8Array.
-
-			dicom .components = components;
-			dicom .data       = bytes;
-		},
-		getFrames: function (pixelElement)
-		{
-			var frames = [ ];
-
-			if (pixelElement .encapsulatedPixelData)
-			{
-				if (pixelElement .basicOffsetTable .length)
-				{
-					for (var i = 0, length = this .dicom .depth; i < length; ++ i)
-						frames .push (dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i));
-				}
-				else if (this .dicom .depth !== pixelElement .fragments .length)
-				{
-					var basicOffsetTable = dicomParser .createJPEGBasicOffsetTable (this .dataSet, pixelElement);
-
-					for (var i = 0, length = this .dicom .depth; i < length; ++ i)
-						frames .push (dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i, basicOffsetTable));
-				}
-				else
-				{
-					for (var i = 0, length = this .dicom .depth; i < length; ++ i)
-						frames .push (dicomParser .readEncapsulatedPixelDataFromFragments (this .dataSet, pixelElement, i));
-				}
-			}
-			else
-			{
-				var pixelsPerFrame = this .dicom .width * this .dicom .height * this .dicom .components;
-
-				switch (this .bitsAllocated)
-				{
-					case 1:
-					{
-						for (var i = 0, length = this .dicom .depth; i < length; ++ i)
-						{
-							var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame / 8;
-
-							frames .push (this .unpackBinaryFrame (this .dataSet .byteArray, frameOffset, pixelsPerFrame));
-						}
-
-						this .bitsAllocated = 8;
-						break;
-					}
-					case 8:
-					case 16:
-					case 32:
-					{
-						var bytesAllocated = this .bitsAllocated / 8;
-
-						for (var i = 0, length = this .dicom .depth; i < length; ++ i)
-						{
-							var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame * bytesAllocated;
-
-							frames .push (new Uint8Array (this .dataSet .byteArray .buffer, frameOffset, pixelsPerFrame * bytesAllocated));
-						}
-
-						break;
-					}
-					default:
-						throw new Error ("DICOM: unsupported pixel format.");
-				}
-			}
-
-			return frames;
-		},
-		getTypedArray: function (frame)
-		{
-			switch (this .bitsAllocated)
-			{
-				case 8:
-					return new (this .pixelRepresentation ? Int8Array : Uint8Array) (frame .buffer, frame .byteOffset, frame .length);
-				case 16:
-					return new (this .pixelRepresentation ? Int16Array : Uint16Array) (frame .buffer, frame .byteOffset, frame .length / 2);
-				case 32:
-					return new Float32Array (frame .buffer, frame .byteOffset, frame .length / 4);
-				default:
-					throw new Error ("DICOM: unsupported pixel format.");
-			}
-		},
-		flipImage: function (frame, components)
-		{
-			var
-				width  = this .dicom .width,
-				height = this .dicom .height,
-				out    = new (frame .constructor) (frame .length);
-
-			for (var y = 0; y < height; ++ y)
-			{
-				var
-					inputRow  = components * width * (height - 1 - y),
-					outputRow = components * width * y;
-
-				for (var x = 0, w = components * width; x < w; ++ x)
-				{
-					out [outputRow + x] = frame [inputRow + x];
-				}
-			}
-
-			return out;
-		},
-		getNormalizeOffsetAndFactor: function (data)
-		{
-			var
-				min = Number .POSITIVE_INFINITY,
-				max = Number .NEGATIVE_INFINITY;
-
-			for (var i = 0, length = data .length; i < length; ++ i)
-			{
-				min = Math .min (min, data [i]);
-				max = Math .max (max, data [i]);
-			}
-
-			var diverence = max - min;
-
-			return { offset: min, factor: diverence ? 1 / diverence * 255 : 0 };
-		},
-		unpackBinaryFrame: function (byteArray, frameOffset, pixelsPerFrame)
-		{
-			function isBitSet (byte, bitPos)
-			{
-				return byte & (1 << bitPos);
-			}
-
-			// Create a new pixel array given the image size
-			var pixelData = new Uint8Array (pixelsPerFrame);
-
-			for (var i = 0; i < pixelsPerFrame; ++ i)
-			{
-				// Compute byte position
-				var bytePos = Math .floor (i / 8);
-
-				// Get the current byte
-				var byte = byteArray [bytePos + frameOffset];
-
-				// Bit position (0-7) within byte
-				var bitPos = (i % 8);
-
-				// Check whether bit at bitpos is set
-				pixelData [i] = isBitSet (byte, bitPos) ? 1 : 0;
-			}
-
-			return pixelData;
-		},
-		decodeLittleEndian: function (pixelData)
-		{
-			var
-				buffer = pixelData .buffer,
-				offset = pixelData .byteOffset,
-				length = pixelData .length;
-
-			if (this .bitsAllocated === 16)
-			{
-			  // if pixel data is not aligned on even boundary, shift it so we can create the 16 bit array
-			  // buffers on it
-
-			  if (offset % 2)
-			  {
-					buffer = buffer .slice (offset);
-					offset = 0;
-				}
-
-				return new Uint8Array (buffer, offset, length);
-
-			}
-			else if (this .bitsAllocated === 32)
-			{
-				// if pixel data is not aligned on even boundary, shift it
-				if (offset % 4)
-				{
-					buffer = buffer .slice (offset);
-					offset = 0;
-				}
-
-				return new Uint8Array (buffer, offset, length);
-			}
-
-			return pixelData;
-		},
-		decodeBigEndian: function (pixelData)
-		{
-			function swap16 (value)
-			{
-				return ((value & 0xFF) << 8) | ((value >> 8) & 0xFF);
-			}
-
-			if (this .bitsAllocated === 16)
-			{
-				var
-					buffer = pixelData .buffer,
-					offset = pixelData .byteOffset,
-					length = pixelData .length;
-
-				// if pixel data is not aligned on even boundary, shift it so we can create the 16 bit array
-				// buffers on it
-
-				if (offset % 2)
-				{
-					buffer = buffer .slice (offset);
-					offset = 0;
-				}
-
-				pixelData = new Uint16Array (buffer, offset, length / 2);
-
-				// Do the byte swap
-				for (var i = 0, l = pixelData .length; i < l; ++ i)
-					pixelData [i] = swap16 (pixelData [i]);
-
-				return new Uint8Array (buffer, offset, length);
-			}
-
-			return pixelData;
-		},
-		decodeRLE: function  (pixelData)
-		{
-			if (this .bitsAllocated === 8)
-			{
-				if (this .planarConfiguration)
-					 return this .decodeRLE8Planar (pixelData);
-
-				return this .decodeRLE8 (pixelData);
-			}
-
-			if (this .bitsAllocated === 16)
-				return this .decodeRLE16 (pixelData);
-
-			throw new Error ("DICOM: unsupported pixel format for RLE.");
-		},
-		decodeRLE8: function  (pixelData)
-		{
-			const frameData  = pixelData;
-			const frameSize  = this .dicom .width * this .dicom .height;
-			const components = this .dicom .components;
-			const outFrame   = new ArrayBuffer (frameSize * this .dicom .components);
-			const header     = new DataView (frameData .buffer, frameData .byteOffset);
-			const data       = new Int8Array(frameData .buffer, frameData .byteOffset);
-			const out        = new Int8Array (outFrame);
-
-			let   outIndex    = 0;
-			const numSegments = header .getInt32 (0, true);
-
-			for (let s = 0; s < numSegments; ++ s)
-			{
-				outIndex = s;
-
-				let inIndex  = header .getInt32 ((s + 1) * 4, true);
-				let maxIndex = header .getInt32 ((s + 2) * 4, true);
-
-				if (maxIndex === 0)
-					maxIndex = frameData.length;
-
-				const endOfSegment = frameSize * numSegments;
-
-				while (inIndex < maxIndex)
-				{
-					const n = data [inIndex ++];
-
-					if (n >= 0 && n <= 127)
-					{
-						// copy n bytes
-						for (let i = 0; i < n + 1 && outIndex < endOfSegment; ++ i)
-						{
-							out [outIndex] = data [inIndex ++];
-							outIndex += components;
-						}
-					}
-					else if (n <= -1 && n >= -127)
-					{
-						const value = data [inIndex ++];
-
-						// run of n bytes
-						for (let j = 0; j < -n + 1 && outIndex < endOfSegment; ++ j)
-						{
-							out [outIndex] = value;
-							outIndex += components;
-						}
-				 	}
-				}
-			}
-
-			return out;
-		},
-		decodeRLE8Planar: function  (pixelData)
-		{
-			const frameData = pixelData;
-			const frameSize = this .dicom .width * this .dicom .height;
-			const outFrame  = new ArrayBuffer (frameSize * this .dicom .components);
-			const header    = new DataView (frameData .buffer, frameData .byteOffset);
-			const data      = new Int8Array (frameData .buffer, frameData .byteOffset);
-			const out       = new Int8Array (outFrame);
-
-			let   outIndex    = 0;
-			const numSegments = header .getInt32 (0, true);
-
-			for (let s = 0; s < numSegments; ++ s)
-			{
-				outIndex = s * frameSize;
-
-				let inIndex  = header .getInt32 ((s + 1) * 4, true);
-				let maxIndex = header .getInt32 ((s + 2) * 4, true);
-
-				if (maxIndex === 0)
-					maxIndex = frameData .length;
-
-				const endOfSegment = frameSize * numSegments;
-
-				while (inIndex < maxIndex)
-				{
-					const n = data [inIndex ++];
-
-					if (n >= 0 && n <= 127)
-					{
-						// copy n bytes
-						for (let i = 0; i < n + 1 && outIndex < endOfSegment; ++ i)
-						{
-							out [outIndex] = data [inIndex ++];
-							++ outIndex;
-						}
-					}
-					else if (n <= -1 && n >= -127)
-					{
-						const value = data[inIndex++];
-
-						// run of n bytes
-						for (let j = 0; j < -n + 1 && outIndex < endOfSegment; ++ j)
-						{
-							out [outIndex] = value;
-							++ outIndex;
-						}
-				 	}
-				}
-			}
-
-			return out;
-		},
-		decodeRLE16: function  (pixelData)
-		{
-			const frameData = pixelData;
-			const frameSize = this .dicom .width * this .dicom .height;
-			const outFrame  = new ArrayBuffer (frameSize * this .dicom .components * 2);
-			const header    = new DataView (frameData.buffer, frameData.byteOffset);
-			const data      = new Int8Array (frameData.buffer, frameData.byteOffset);
-			const out       = new Int8Array (outFrame);
-
-			const numSegments = header .getInt32 (0, true);
-
-			for (let s = 0; s < numSegments; ++ s)
-			{
-				let   outIndex = 0;
-				const highByte = (s === 0 ? 1 : 0);
-
-			  	let inIndex  = header .getInt32 ((s + 1) * 4, true);
-			  	let maxIndex = header .getInt32 ((s + 2) * 4, true);
-
-				if (maxIndex === 0)
-					maxIndex = frameData.length;
-
-				while (inIndex < maxIndex)
-				{
-					const n = data [inIndex ++];
-
-					if (n >= 0 && n <= 127)
-					{
-						for (let i = 0; i < n + 1 && outIndex < frameSize; ++ i)
-						{
-							out[(outIndex * 2) + highByte] = data[inIndex++];
-							++ outIndex;
-						}
-					}
-					else if (n <= -1 && n >= -127)
-					{
-						const value = data [inIndex ++];
-
-						for (let j = 0; j < -n + 1 && outIndex < frameSize; ++ j)
-						{
-							out [(outIndex * 2) + highByte] = value;
-							++ outIndex;
-						}
-					}
-				}
-			}
-
-			return out;
-		},
-		decodeJPEGBaseline: function (pixelData)
-		{
-			var jpeg = new JpegImage ();
-
-			jpeg .parse (pixelData);
-
-			jpeg .colorTransform = true; // default is true
-
-			var data = jpeg .getData (this .dicom .width, this .dicom .height);
-
-			this .bitsAllocated = 8;
-
-			return data;
-		 },
-		 decodeJPEGLossless: function (pixelData)
-		 {
-			var
-				decoder = new jpegLossless .lossless .Decoder (),
-				buffer  = decoder .decompress (pixelData);
-
-			return new Uint8Array (buffer);
-		},
-		decodeJPEGLS: function (pixelData)
-		{
-			var image = this .jpegLSDecode (pixelData, this .pixelRepresentation === 1);
-
-			// throw error if not success or too much data
-			if (image .result !== 0 && image .result !== 6)
-				throw new Error (`DICOM: JPEG-LS decoder failed to decode frame (error code ${image.result}).`);
-
-			return new Uint8Array (image .pixelData .buffer);
-		},
-		jpegLSDecode: function (data, isSigned)
-		{
-			// Init global instance.
-			charLS = charLS || CharLS ();
-
-			// prepare input parameters
-			const dataPtr = charLS._malloc(data.length);
-
-			charLS.writeArrayToMemory(data, dataPtr);
-
-			// prepare output parameters
-			const imagePtrPtr = charLS._malloc(4);
-			const imageSizePtr = charLS._malloc(4);
-			const widthPtr = charLS._malloc(4);
-			const heightPtr = charLS._malloc(4);
-			const bitsPerSamplePtr = charLS._malloc(4);
-			const stridePtr = charLS._malloc(4);
-			const allowedLossyErrorPtr = charLS._malloc(4);
-			const componentsPtr = charLS._malloc(4);
-			const interleaveModePtr = charLS._malloc(4);
-
-			// Decode the image
-			const result = charLS.ccall(
-				'jpegls_decode',
-				'number',
-				['number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number'],
-				[dataPtr, data.length, imagePtrPtr, imageSizePtr, widthPtr, heightPtr, bitsPerSamplePtr, stridePtr, componentsPtr, allowedLossyErrorPtr, interleaveModePtr]
-			);
-
-			// Extract result values into object
-			const image = {
-				result,
-				width: charLS.getValue(widthPtr, 'i32'),
-				height: charLS.getValue(heightPtr, 'i32'),
-				bitsPerSample: charLS.getValue(bitsPerSamplePtr, 'i32'),
-				stride: charLS.getValue(stridePtr, 'i32'),
-				components: charLS.getValue(componentsPtr, 'i32'),
-				allowedLossyError: charLS.getValue(allowedLossyErrorPtr, 'i32'),
-				interleaveMode: charLS.getValue(interleaveModePtr, 'i32'),
-				pixelData: undefined
-			};
-
-			// Copy image from emscripten heap into appropriate array buffer type
-			const imagePtr = charLS.getValue(imagePtrPtr, '*');
-
-			if (image.bitsPerSample <= 8) {
-				image.pixelData = new Uint8Array(image.width * image.height * image.components);
-				image.pixelData.set(new Uint8Array(charLS.HEAP8.buffer, imagePtr, image.pixelData.length));
-			} else if (isSigned) {
-				image.pixelData = new Int16Array(image.width * image.height * image.components);
-				image.pixelData.set(new Int16Array(charLS.HEAP16.buffer, imagePtr, image.pixelData.length));
-			} else {
-				image.pixelData = new Uint16Array(image.width * image.height * image.components);
-				image.pixelData.set(new Uint16Array(charLS.HEAP16.buffer, imagePtr, image.pixelData.length));
-			}
-
-			// free memory and return image object
-			charLS._free(dataPtr);
-			charLS._free(imagePtr);
-			charLS._free(imagePtrPtr);
-			charLS._free(imageSizePtr);
-			charLS._free(widthPtr);
-			charLS._free(heightPtr);
-			charLS._free(bitsPerSamplePtr);
-			charLS._free(stridePtr);
-			charLS._free(componentsPtr);
-			charLS._free(interleaveModePtr);
-
-			return image;
-		},
-		decodeJPEG2000: function (pixelData)
-		{
-			var
-				bytesPerPixel = this .bitsAllocated <= 8 ? 1 : 2,
-				signed        = this .pixelRepresentation === 1,
-				image         = this .decodeOpenJPEG (pixelData, bytesPerPixel, signed);
-
-			if (image .nbChannels > 1)
-				this .photometricInterpretation = "RGB";
-
-			return new Uint8Array (image .pixelData .buffer);
-		},
-		decodeOpenJPEG: function  (data, bytesPerPixel, signed)
-		{
-			// Init global instance.
-			openJPEG = openJPEG || OpenJPEG ();
-
-			const dataPtr = openJPEG._malloc(data.length);
-
-			openJPEG.writeArrayToMemory(data, dataPtr);
-
-			// create param outpout
-			const imagePtrPtr = openJPEG._malloc(4);
-			const imageSizePtr = openJPEG._malloc(4);
-			const imageSizeXPtr = openJPEG._malloc(4);
-			const imageSizeYPtr = openJPEG._malloc(4);
-			const imageSizeCompPtr = openJPEG._malloc(4);
-
-			const t0 = new Date().getTime();
-			const ret = openJPEG.ccall('jp2_decode', 'number', ['number', 'number', 'number', 'number', 'number', 'number', 'number'],
-			  [dataPtr, data.length, imagePtrPtr, imageSizePtr, imageSizeXPtr, imageSizeYPtr, imageSizeCompPtr]);
-			// add num vomp..etc
-
-			if (ret !== 0) {
-				console.log('[opj_decode] decoding failed!');
-				openJPEG._free(dataPtr);
-				openJPEG._free(openJPEG.getValue(imagePtrPtr, '*'));
-				openJPEG._free(imageSizeXPtr);
-				openJPEG._free(imageSizeYPtr);
-				openJPEG._free(imageSizePtr);
-				openJPEG._free(imageSizeCompPtr);
-
-				return;
-			}
-
-			const imagePtr = openJPEG.getValue(imagePtrPtr, '*');
-
-			const image = {
-				length: openJPEG.getValue(imageSizePtr, 'i32'),
-				sx: openJPEG.getValue(imageSizeXPtr, 'i32'),
-				sy: openJPEG.getValue(imageSizeYPtr, 'i32'),
-				nbChannels: openJPEG.getValue(imageSizeCompPtr, 'i32'), // hard coded for now
-				perf_timetodecode: undefined,
-				pixelData: undefined
-			};
-
-			// Copy the data from the EMSCRIPTEN heap into the correct type array
-			const length = image.sx * image.sy * image.nbChannels;
-			const src32 = new Int32Array(openJPEG.HEAP32.buffer, imagePtr, length);
-
-			if (bytesPerPixel === 1) {
-				if (Uint8Array.from) {
-					image.pixelData = Uint8Array.from(src32);
-				} else {
-					image.pixelData = new Uint8Array(length);
-					for (let i = 0; i < length; i++) {
-						image.pixelData[i] = src32[i];
-					}
-				}
-			} else if (signed) {
-				if (Int16Array.from) {
-					image.pixelData = Int16Array.from(src32);
-				} else {
-					image.pixelData = new Int16Array(length);
-					for (let i = 0; i < length; i++) {
-						image.pixelData[i] = src32[i];
-					}
-				}
-			} else if (Uint16Array.from) {
-				image.pixelData = Uint16Array.from(src32);
-			} else {
-				image.pixelData = new Uint16Array(length);
-				for (let i = 0; i < length; i++) {
-					image.pixelData[i] = src32[i];
-				}
-			}
-
-			const t1 = new Date().getTime();
-
-			image.perf_timetodecode = t1 - t0;
-
-			// free
-			openJPEG._free(dataPtr);
-			openJPEG._free(imagePtrPtr);
-			openJPEG._free(imagePtr);
-			openJPEG._free(imageSizePtr);
-			openJPEG._free(imageSizeXPtr);
-			openJPEG._free(imageSizeYPtr);
-			openJPEG._free(imageSizeCompPtr);
-
-			return image;
-		 },
-		convertRGBColorByPlane: function (pixelData)
-		{
-			if (pixelData .length % 3 !== 0)
-				throw new Error ("DICOM: convertRGBColorByPlane: RGB buffer length must be divisble by 3.");
-
-			var
-				numPixels = pixelData .length / 3,
-				rgbIndex  = 0,
-				rIndex    = 0,
-				gIndex    = numPixels,
-				bIndex    = numPixels * 2,
-				out       = new (pixelData .constructor) (pixelData .length);
-
-			for (var i = 0; i < numPixels; ++ i)
-			{
-			  out [rgbIndex ++] = pixelData [rIndex ++]; // red
-			  out [rgbIndex ++] = pixelData [gIndex ++]; // green
-			  out [rgbIndex ++] = pixelData [bIndex ++]; // blue
-			}
-
-			return out;
-		 },
-		 convertYBRFullByPixel: function (pixelData)
-		 {
-			if (pixelData .length % 3 !== 0)
-				throw new Error ("DICOM: convertYBRFullByPixel: YBR buffer length must be divisble by 3.");
-
-			console .log (pixelData);
-
-			var
-				numPixels = pixelData .length / 3,
-				ybrIndex  = 0,
-				rgbIndex  = 0,
-				out       = new (pixelData .constructor) (pixelData .length);
-
-			for (var i = 0; i < numPixels; ++ i)
-			{
-				var
-					y  = pixelData [ybrIndex ++],
-					cb = pixelData [ybrIndex ++],
-					cr = pixelData [ybrIndex ++];
-
-				out [rgbIndex ++] = y + 1.40200 * (cr - 128);                        // red
-				out [rgbIndex ++] = y - 0.34414 * (cb - 128) - 0.71414 * (cr - 128); // green
-				out [rgbIndex ++] = y + 1.77200 * (cb - 128);                        // blue
-			}
-
-			return out;
-		 },
-		 convertYBRFullByPlane: function (pixelData)
-		 {
-			if (pixelData .length % 3 !== 0)
-				throw new Error ("DICOM: convertYBRFullByPlane: YBR buffer length must be divisble by 3.");
-
-			var
-				numPixels = pixelData .length / 3,
-				rgbIndex  = 0,
-				yIndex    = 0,
-				cbIndex   = numPixels,
-				crIndex   = numPixels * 2,
-				out       = new (pixelData .constructor) (pixelData .length);
-
-			for (var i = 0; i < numPixels; ++ i)
-			{
-				var
-					y  = pixelData [yIndex ++],
-					cb = pixelData [cbIndex ++],
-					cr = pixelData [crIndex ++];
-
-			  out [rgbIndex++] = y + 1.40200 * (cr - 128);                        // red
-			  out [rgbIndex++] = y - 0.34414 * (cb - 128) - 0.71414 * (cr - 128); // green
-			  out [rgbIndex++] = y + 1.77200 * (cb - 128);                        // blue
-			}
-
-			return out;
-		},
-		convertPaletteColor: function (pixelData)
-		{
-			function convertLUTto8Bit (lut, shift)
-			{
-				if (lut .cleaned)
-					return lut .cleaned;
-
-				const numEntries = lut .length;
-				const cleanedLUT = new Uint8ClampedArray (numEntries);
-
-				for (let i = 0; i < numEntries; ++i)
-					cleanedLUT [i] = lut [i] >> shift;
-
-				lut .cleaned = cleanedLUT;
-
-				return cleanedLUT;
-			}
-
-			const LUT       = this .getLUT ();
-			const numPixels = this .dicom .width * this .dicom .height;
-			const rData     = LUT .redPaletteColorLookupTableData;
-			const gData     = LUT .greenPaletteColorLookupTableData;
-			const bData     = LUT .bluePaletteColorLookupTableData;
-			const len       = LUT .redPaletteColorLookupTableData .length;
-
-			let palIndex = 0;
-			let rgbIndex = 0;
-
-			const start = LUT .redPaletteColorLookupTableDescriptor [1];
-			const shift = LUT .redPaletteColorLookupTableDescriptor [2] === 8 ? 0 : 8;
-
-			const rDataCleaned = convertLUTto8Bit (rData, shift);
-			const gDataCleaned = convertLUTto8Bit (gData, shift);
-			const bDataCleaned = convertLUTto8Bit (bData, shift);
-
-			let out = new Uint8Array (pixelData .length * 3);
-
-			for (let i = 0; i < numPixels; ++ i)
-			{
-				let value = pixelData [palIndex++];
-
-				if (value < start)
-					value = 0;
-				else if (value > start + len - 1)
-					value = len - 1;
-				else
-					value -= start;
-
-				out [rgbIndex++] = rDataCleaned [value];
-				out [rgbIndex++] = gDataCleaned [value];
-				out [rgbIndex++] = bDataCleaned [value];
-			}
-
-			return out;
-		},
-		getLUT: function ()
-		{
-			if (this .LUT)
-				 return this .LUT;
-
-			this .LUT = { };
-
-			this .populatePaletteColorLut (this .dataSet, this .LUT);
-
-			return this .LUT;
-		},
-		populatePaletteColorLut: function (dataSet, imagePixelModule)
-		{
-			imagePixelModule .redPaletteColorLookupTableDescriptor   = this .getLutDescriptor (dataSet, 'x00281101');
-			imagePixelModule .greenPaletteColorLookupTableDescriptor = this .getLutDescriptor (dataSet, 'x00281102');
-			imagePixelModule .bluePaletteColorLookupTableDescriptor  = this .getLutDescriptor (dataSet, 'x00281103');
-
-			// The first Palette Color Lookup Table Descriptor value is the number of entries in the lookup table.
-			// When the number of table entries is equal to 2ˆ16 then this value shall be 0.
-			// See http://dicom.nema.org/MEDICAL/DICOM/current/output/chtml/part03/sect_C.7.6.3.html#sect_C.7.6.3.1.5
-			if (imagePixelModule .redPaletteColorLookupTableDescriptor [0] === 0)
-			{
-				imagePixelModule .redPaletteColorLookupTableDescriptor   [0] = 65536;
-				imagePixelModule .greenPaletteColorLookupTableDescriptor [0] = 65536;
-				imagePixelModule .bluePaletteColorLookupTableDescriptor  [0] = 65536;
-			}
-
-			// The third Palette Color Lookup Table Descriptor value specifies the number of bits for each entry in the Lookup Table Data.
-			// It shall take the value of 8 or 16.
-			// The LUT Data shall be stored in a format equivalent to 8 bits allocated when the number of bits for each entry is 8, and 16 bits allocated when the number of bits for each entry is 16, where in both cases the high bit is equal to bits allocated-1.
-			// The third value shall be identical for each of the Red, Green and Blue Palette Color Lookup Table Descriptors.
-			//
-			// Note: Some implementations have encoded 8 bit entries with 16 bits allocated, padding the high bits;
-			// this can be detected by comparing the number of entries specified in the LUT Descriptor with the actual value length of the LUT Data entry.
-			// The value length in bytes should equal the number of entries if bits allocated is 8, and be twice as long if bits allocated is 16.
-			const numLutEntries    = imagePixelModule .redPaletteColorLookupTableDescriptor [0];
-			const lutData          = dataSet .elements .x00281201;
-			const lutBitsAllocated = lutData .length === numLutEntries ? 8 : 16;
-
-			// If the descriptors do not appear to have the correct values, correct them
-			if (imagePixelModule.redPaletteColorLookupTableDescriptor [2] !== lutBitsAllocated)
-			{
-				imagePixelModule .redPaletteColorLookupTableDescriptor   [2] = lutBitsAllocated;
-				imagePixelModule .greenPaletteColorLookupTableDescriptor [2] = lutBitsAllocated;
-				imagePixelModule .bluePaletteColorLookupTableDescriptor  [2] = lutBitsAllocated;
-			}
-
-			imagePixelModule .redPaletteColorLookupTableData   = this .getLutData (dataSet, 'x00281201', imagePixelModule .redPaletteColorLookupTableDescriptor);
-			imagePixelModule .greenPaletteColorLookupTableData = this .getLutData (dataSet, 'x00281202', imagePixelModule .greenPaletteColorLookupTableDescriptor);
-			imagePixelModule .bluePaletteColorLookupTableData  = this .getLutData (dataSet, 'x00281203', imagePixelModule .bluePaletteColorLookupTableDescriptor);
-		},
-		getLutDescriptor: function  (dataSet, tag)
-		{
-			if (! dataSet .elements [tag] || dataSet .elements [tag] .length !== 6)
-				return;
-
-			return [dataSet .uint16 (tag, 0), dataSet .uint16 (tag, 1), dataSet .uint16 (tag, 2)];
-		},
-		getLutData: function  (lutDataSet, tag, lutDescriptor)
-		{
-			const lut     = [];
-			const lutData = lutDataSet .elements [tag];
-
-			for (let i = 0; i < lutDescriptor [0]; ++ i)
-			{
-				// Output range is always unsigned
-				if (lutDescriptor [2] === 16)
-					lut [i] = lutDataSet .uint16 (tag, i);
-				else
-					lut [i] = lutDataSet .byteArray [i + lutData .dataOffset];
-			}
-
-			return lut;
-		},
-	};
-
-	// ftp://medical.nema.org/medical/dicom/DataSets/WG04/
-
-	return DicomParser;
+   // Global instances of JPEG libraries.
+
+   var
+      charLS   = undefined,
+      openJPEG = undefined;
+
+   // DicomParser
+
+   function DicomParser ()
+   {
+      this .dicom = { dicom: false };
+   }
+
+   DicomParser .prototype =
+   {
+      parse: function (input)
+      {
+         try
+         {
+            var inputArray = new Uint8Array (input .length);
+
+            for (var i = 0, length = input .length; i < length; ++ i)
+               inputArray [i] = input .charCodeAt (i);
+
+            this .dataSet      = dicomParser .parseDicom (inputArray);
+            this .dicom .dicom = true;
+         }
+         catch (error)
+         {
+            console .log (error);
+            this .dicom .dicom = false;
+            return this .dicom;
+         }
+
+         this .getPhotometricInterpretation ();
+         this .getComponents ();
+         this .getWidth ();
+         this .getHeight ();
+         this .getDepth ();
+         this .getBitsAllocated ();
+         this .getBitsStored ();
+         this .getPixelRepresentation ();
+         this .getPlanarConfiguration ();
+         this .getTansferSyntax ();
+         this .getPixelData ();
+
+         if (DEBUG)
+            console .log (this);
+
+         return this .dicom;
+      },
+      getPhotometricInterpretation: function ()
+      {
+         // https://dicom.innolitics.com/ciods/ct-image/image-pixel/00280004
+         this .photometricInterpretation = this .dataSet .string ("x00280004");
+      },
+      getComponents: function ()
+      {
+         // https://dicom.innolitics.com/ciods/ct-image/image-pixel/00280002
+         this .dicom .components = this .dataSet .uint16 ("x00280002");
+      },
+      getWidth: function ()
+      {
+         this .dicom .width = this .dataSet .uint16 ("x00280011");
+      },
+      getHeight: function ()
+      {
+         this .dicom .height = this .dataSet .uint16 ("x00280010");
+      },
+      getDepth: function ()
+      {
+         if (this .dataSet .elements .x00280008)
+         {
+            this .dicom .depth = this .dataSet .intString ("x00280008");
+         }
+         else
+            this .dicom .depth = 1;
+      },
+      getBitsAllocated: function ()
+      {
+         this .bitsAllocated  = this .dataSet .uint16 ("x00280100");
+      },
+      getBitsStored: function ()
+      {
+         this .bitsStored  = this .dataSet .uint16 ("x00280101");
+      },
+      getPixelRepresentation: function ()
+      {
+         this .pixelRepresentation = this .dataSet .uint16 ("x00280103") || 0;
+      },
+      getPlanarConfiguration: function ()
+      {
+         this .planarConfiguration = this .dataSet .uint16 ("x00280006") || 0;
+      },
+      getTansferSyntax: function ()
+      {
+         this .transferSyntax = this .dataSet .string ("x00020010");
+      },
+      getPixelData: function ()
+      {
+         var
+            dicom        = this .dicom,
+            pixelElement = this .dataSet .elements .x7fe00010 || this .dataSet .elements .x7fe00008, // pixel or float pixel
+            components   = this .photometricInterpretation === "PALETTE COLOR" ? 3 : this .dicom .components,
+            imageLength  = dicom .width * dicom .height * components,
+            byteLength   = imageLength * dicom .depth,
+            bytes        = new Uint8Array (byteLength),
+            frames       = this .getFrames (pixelElement);
+
+         frames .forEach (function (frame, f)
+         {
+            // Handle transfer syntax.
+
+            // https://www.dicomlibrary.com/dicom/transfer-syntax/
+
+            switch (this .transferSyntax)
+            {
+               case "1.2.840.10008.1.2":      // Implicit VR Little Endian
+               case "1.2.840.10008.1.2.1":    // Explicit VR Little Endian
+               case "1.2.840.10008.1.2.1.99": // Deflated Explicit VR Little Endian
+               {
+                  frame = this .decodeLittleEndian (frame);
+                  break;
+               }
+               case "1.2.840.10008.1.2.2": // Explicit VR Big Endian (retired)
+               {
+                  frame = this .decodeBigEndian (frame);
+                  break;
+               }
+               case "1.2.840.10008.1.2.5": // RLE Lossless
+               {
+                  frame = this .decodeRLE (frame);
+                  break;
+               }
+               case "1.2.840.10008.1.2.4.50": // JPEG Baseline lossy process 1 (8 bit)
+               case "1.2.840.10008.1.2.4.51": // JPEG Baseline lossy process 2 & 4 (12 bit)
+               {
+                  frame = this .decodeJPEGBaseline (frame);
+                  break;
+               }
+               case "1.2.840.10008.1.2.4.57": // JPEG Lossless, Nonhierarchical (Processes 14)
+               case "1.2.840.10008.1.2.4.70": // JPEG Lossless, Nonhierarchical (Processes 14 [Selection 1])
+               {
+                  frame = this .decodeJPEGLossless (frame);
+                  break;
+               }
+               case "1.2.840.10008.1.2.4.80": // JPEG-LS Lossless Image Compression
+               case "1.2.840.10008.1.2.4.81": // JPEG-LS Lossy (Near-Lossless) Image Compression
+               {
+                  frame = this .decodeJPEGLS (frame);
+                  break;
+               }
+               case "1.2.840.10008.1.2.4.90": // JPEG 2000 Lossless
+               case "1.2.840.10008.1.2.4.91": // JPEG 2000 Lossy
+               {
+                  frame = this .decodeJPEG2000 (frame);
+                  break;
+               }
+               case "1.2.840.10008.1.2.4.52":
+               case "1.2.840.10008.1.2.4.53":
+               case "1.2.840.10008.1.2.4.54":
+               case "1.2.840.10008.1.2.4.55":
+               case "1.2.840.10008.1.2.4.56":
+               case "1.2.840.10008.1.2.4.58":
+               case "1.2.840.10008.1.2.4.59":
+               case "1.2.840.10008.1.2.4.60":
+               case "1.2.840.10008.1.2.4.61":
+               case "1.2.840.10008.1.2.4.62":
+               case "1.2.840.10008.1.2.4.63":
+               case "1.2.840.10008.1.2.4.64":
+               case "1.2.840.10008.1.2.4.65":
+               case "1.2.840.10008.1.2.4.66":
+               case "1.2.840.10008.1.2.4.92":
+               case "1.2.840.10008.1.2.4.93":
+               {
+                  // JPEG
+                  throw new Error ("DICOM: this JPEG encoding (" + this .transferSyntax + ") is not supported.");
+               }
+               default:
+               {
+                  throw new Error ("DICOM: unsupported transfer syntax '" + this .transferSyntax + "'.");
+               }
+            }
+
+            // Convert to stored type array (int, uint, float, 8/16 bit).
+
+            frame = this .getTypedArray (frame);
+
+            // Handle bits stored.
+
+            if (this .pixelRepresentation === 1 && this .bitsStored !== undefined)
+            {
+               var shift = 32 - this .bitsStored;
+
+               for (var i = 0, length = frame .length; i < length; ++ i)
+                  frame [i] = frame [i] << shift >> shift;
+            }
+
+            // Handle photometric interpretation.
+
+            switch (this .photometricInterpretation)
+            {
+               case "MONOCHROME1":
+               case "MONOCHROME2":
+               {
+                  break;
+               }
+               case "RGB":
+               case "YBR_RCT":
+               case "YBR_ICT":
+               case "YBR_FULL_422":
+               {
+                  if (this .planarConfiguration === 1)
+                     frame = this .convertRGBColorByPlane (frame);
+
+                  break;
+               }
+               case "YBR_FULL":
+               {
+                  if (this .planarConfiguration === 0)
+                     frame = this .convertYBRFullByPixel (frame);
+                  else
+                     frame = this .convertYBRFullByPlane (frame);
+
+                  break;
+               }
+               case "PALETTE COLOR":
+               {
+                  frame = this .convertPaletteColor (frame);
+                  break;
+               }
+               default:
+               {
+                  throw new Error ("DICOM: unsupported image type '" + this .photometricInterpretation + "'.");
+               }
+            }
+
+            // Normalize frame pixel data in the range [0, 255], and assign to image block;
+
+            frame = this .flipImage (frame, components);
+
+            var
+               normalize = this .getNormalizeOffsetAndFactor (frame),
+               b         = f * imageLength;
+
+            for (var i = 0, length = frame .length; i < length; ++ i, ++ b)
+               bytes [b] = (frame [i] - normalize .offset) * normalize .factor;
+         },
+         this);
+
+         // Invert MONOCHROME1 pixels.
+
+         if (this .photometricInterpretation === "MONOCHROME1")
+         {
+            for (var i = 0, length = bytes .length; i < length; ++ i)
+               bytes [i] = 255 - bytes [i];
+         }
+
+         // Set Uint8Array.
+
+         dicom .components = components;
+         dicom .data       = bytes;
+      },
+      getFrames: function (pixelElement)
+      {
+         var frames = [ ];
+
+         if (pixelElement .encapsulatedPixelData)
+         {
+            if (pixelElement .basicOffsetTable .length)
+            {
+               for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+                  frames .push (dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i));
+            }
+            else if (this .dicom .depth !== pixelElement .fragments .length)
+            {
+               var basicOffsetTable = dicomParser .createJPEGBasicOffsetTable (this .dataSet, pixelElement);
+
+               for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+                  frames .push (dicomParser .readEncapsulatedImageFrame (this .dataSet, pixelElement, i, basicOffsetTable));
+            }
+            else
+            {
+               for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+                  frames .push (dicomParser .readEncapsulatedPixelDataFromFragments (this .dataSet, pixelElement, i));
+            }
+         }
+         else
+         {
+            var pixelsPerFrame = this .dicom .width * this .dicom .height * this .dicom .components;
+
+            switch (this .bitsAllocated)
+            {
+               case 1:
+               {
+                  for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+                  {
+                     var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame / 8;
+
+                     frames .push (this .unpackBinaryFrame (this .dataSet .byteArray, frameOffset, pixelsPerFrame));
+                  }
+
+                  this .bitsAllocated = 8;
+                  break;
+               }
+               case 8:
+               case 16:
+               case 32:
+               {
+                  var bytesAllocated = this .bitsAllocated / 8;
+
+                  for (var i = 0, length = this .dicom .depth; i < length; ++ i)
+                  {
+                     var frameOffset = pixelElement .dataOffset + i * pixelsPerFrame * bytesAllocated;
+
+                     frames .push (new Uint8Array (this .dataSet .byteArray .buffer, frameOffset, pixelsPerFrame * bytesAllocated));
+                  }
+
+                  break;
+               }
+               default:
+                  throw new Error ("DICOM: unsupported pixel format.");
+            }
+         }
+
+         return frames;
+      },
+      getTypedArray: function (frame)
+      {
+         switch (this .bitsAllocated)
+         {
+            case 8:
+               return new (this .pixelRepresentation ? Int8Array : Uint8Array) (frame .buffer, frame .byteOffset, frame .length);
+            case 16:
+               return new (this .pixelRepresentation ? Int16Array : Uint16Array) (frame .buffer, frame .byteOffset, frame .length / 2);
+            case 32:
+               return new Float32Array (frame .buffer, frame .byteOffset, frame .length / 4);
+            default:
+               throw new Error ("DICOM: unsupported pixel format.");
+         }
+      },
+      flipImage: function (frame, components)
+      {
+         var
+            width  = this .dicom .width,
+            height = this .dicom .height,
+            out    = new (frame .constructor) (frame .length);
+
+         for (var y = 0; y < height; ++ y)
+         {
+            var
+               inputRow  = components * width * (height - 1 - y),
+               outputRow = components * width * y;
+
+            for (var x = 0, w = components * width; x < w; ++ x)
+            {
+               out [outputRow + x] = frame [inputRow + x];
+            }
+         }
+
+         return out;
+      },
+      getNormalizeOffsetAndFactor: function (data)
+      {
+         var
+            min = Number .POSITIVE_INFINITY,
+            max = Number .NEGATIVE_INFINITY;
+
+         for (var i = 0, length = data .length; i < length; ++ i)
+         {
+            min = Math .min (min, data [i]);
+            max = Math .max (max, data [i]);
+         }
+
+         var diverence = max - min;
+
+         return { offset: min, factor: diverence ? 1 / diverence * 255 : 0 };
+      },
+      unpackBinaryFrame: function (byteArray, frameOffset, pixelsPerFrame)
+      {
+         function isBitSet (byte, bitPos)
+         {
+            return byte & (1 << bitPos);
+         }
+
+         // Create a new pixel array given the image size
+         var pixelData = new Uint8Array (pixelsPerFrame);
+
+         for (var i = 0; i < pixelsPerFrame; ++ i)
+         {
+            // Compute byte position
+            var bytePos = Math .floor (i / 8);
+
+            // Get the current byte
+            var byte = byteArray [bytePos + frameOffset];
+
+            // Bit position (0-7) within byte
+            var bitPos = (i % 8);
+
+            // Check whether bit at bitpos is set
+            pixelData [i] = isBitSet (byte, bitPos) ? 1 : 0;
+         }
+
+         return pixelData;
+      },
+      decodeLittleEndian: function (pixelData)
+      {
+         var
+            buffer = pixelData .buffer,
+            offset = pixelData .byteOffset,
+            length = pixelData .length;
+
+         if (this .bitsAllocated === 16)
+         {
+           // if pixel data is not aligned on even boundary, shift it so we can create the 16 bit array
+           // buffers on it
+
+           if (offset % 2)
+           {
+               buffer = buffer .slice (offset);
+               offset = 0;
+            }
+
+            return new Uint8Array (buffer, offset, length);
+
+         }
+         else if (this .bitsAllocated === 32)
+         {
+            // if pixel data is not aligned on even boundary, shift it
+            if (offset % 4)
+            {
+               buffer = buffer .slice (offset);
+               offset = 0;
+            }
+
+            return new Uint8Array (buffer, offset, length);
+         }
+
+         return pixelData;
+      },
+      decodeBigEndian: function (pixelData)
+      {
+         function swap16 (value)
+         {
+            return ((value & 0xFF) << 8) | ((value >> 8) & 0xFF);
+         }
+
+         if (this .bitsAllocated === 16)
+         {
+            var
+               buffer = pixelData .buffer,
+               offset = pixelData .byteOffset,
+               length = pixelData .length;
+
+            // if pixel data is not aligned on even boundary, shift it so we can create the 16 bit array
+            // buffers on it
+
+            if (offset % 2)
+            {
+               buffer = buffer .slice (offset);
+               offset = 0;
+            }
+
+            pixelData = new Uint16Array (buffer, offset, length / 2);
+
+            // Do the byte swap
+            for (var i = 0, l = pixelData .length; i < l; ++ i)
+               pixelData [i] = swap16 (pixelData [i]);
+
+            return new Uint8Array (buffer, offset, length);
+         }
+
+         return pixelData;
+      },
+      decodeRLE: function  (pixelData)
+      {
+         if (this .bitsAllocated === 8)
+         {
+            if (this .planarConfiguration)
+                return this .decodeRLE8Planar (pixelData);
+
+            return this .decodeRLE8 (pixelData);
+         }
+
+         if (this .bitsAllocated === 16)
+            return this .decodeRLE16 (pixelData);
+
+         throw new Error ("DICOM: unsupported pixel format for RLE.");
+      },
+      decodeRLE8: function  (pixelData)
+      {
+         const frameData  = pixelData;
+         const frameSize  = this .dicom .width * this .dicom .height;
+         const components = this .dicom .components;
+         const outFrame   = new ArrayBuffer (frameSize * this .dicom .components);
+         const header     = new DataView (frameData .buffer, frameData .byteOffset);
+         const data       = new Int8Array(frameData .buffer, frameData .byteOffset);
+         const out        = new Int8Array (outFrame);
+
+         let   outIndex    = 0;
+         const numSegments = header .getInt32 (0, true);
+
+         for (let s = 0; s < numSegments; ++ s)
+         {
+            outIndex = s;
+
+            let inIndex  = header .getInt32 ((s + 1) * 4, true);
+            let maxIndex = header .getInt32 ((s + 2) * 4, true);
+
+            if (maxIndex === 0)
+               maxIndex = frameData.length;
+
+            const endOfSegment = frameSize * numSegments;
+
+            while (inIndex < maxIndex)
+            {
+               const n = data [inIndex ++];
+
+               if (n >= 0 && n <= 127)
+               {
+                  // copy n bytes
+                  for (let i = 0; i < n + 1 && outIndex < endOfSegment; ++ i)
+                  {
+                     out [outIndex] = data [inIndex ++];
+                     outIndex += components;
+                  }
+               }
+               else if (n <= -1 && n >= -127)
+               {
+                  const value = data [inIndex ++];
+
+                  // run of n bytes
+                  for (let j = 0; j < -n + 1 && outIndex < endOfSegment; ++ j)
+                  {
+                     out [outIndex] = value;
+                     outIndex += components;
+                  }
+                }
+            }
+         }
+
+         return out;
+      },
+      decodeRLE8Planar: function  (pixelData)
+      {
+         const frameData = pixelData;
+         const frameSize = this .dicom .width * this .dicom .height;
+         const outFrame  = new ArrayBuffer (frameSize * this .dicom .components);
+         const header    = new DataView (frameData .buffer, frameData .byteOffset);
+         const data      = new Int8Array (frameData .buffer, frameData .byteOffset);
+         const out       = new Int8Array (outFrame);
+
+         let   outIndex    = 0;
+         const numSegments = header .getInt32 (0, true);
+
+         for (let s = 0; s < numSegments; ++ s)
+         {
+            outIndex = s * frameSize;
+
+            let inIndex  = header .getInt32 ((s + 1) * 4, true);
+            let maxIndex = header .getInt32 ((s + 2) * 4, true);
+
+            if (maxIndex === 0)
+               maxIndex = frameData .length;
+
+            const endOfSegment = frameSize * numSegments;
+
+            while (inIndex < maxIndex)
+            {
+               const n = data [inIndex ++];
+
+               if (n >= 0 && n <= 127)
+               {
+                  // copy n bytes
+                  for (let i = 0; i < n + 1 && outIndex < endOfSegment; ++ i)
+                  {
+                     out [outIndex] = data [inIndex ++];
+                     ++ outIndex;
+                  }
+               }
+               else if (n <= -1 && n >= -127)
+               {
+                  const value = data[inIndex++];
+
+                  // run of n bytes
+                  for (let j = 0; j < -n + 1 && outIndex < endOfSegment; ++ j)
+                  {
+                     out [outIndex] = value;
+                     ++ outIndex;
+                  }
+                }
+            }
+         }
+
+         return out;
+      },
+      decodeRLE16: function  (pixelData)
+      {
+         const frameData = pixelData;
+         const frameSize = this .dicom .width * this .dicom .height;
+         const outFrame  = new ArrayBuffer (frameSize * this .dicom .components * 2);
+         const header    = new DataView (frameData.buffer, frameData.byteOffset);
+         const data      = new Int8Array (frameData.buffer, frameData.byteOffset);
+         const out       = new Int8Array (outFrame);
+
+         const numSegments = header .getInt32 (0, true);
+
+         for (let s = 0; s < numSegments; ++ s)
+         {
+            let   outIndex = 0;
+            const highByte = (s === 0 ? 1 : 0);
+
+              let inIndex  = header .getInt32 ((s + 1) * 4, true);
+              let maxIndex = header .getInt32 ((s + 2) * 4, true);
+
+            if (maxIndex === 0)
+               maxIndex = frameData.length;
+
+            while (inIndex < maxIndex)
+            {
+               const n = data [inIndex ++];
+
+               if (n >= 0 && n <= 127)
+               {
+                  for (let i = 0; i < n + 1 && outIndex < frameSize; ++ i)
+                  {
+                     out[(outIndex * 2) + highByte] = data[inIndex++];
+                     ++ outIndex;
+                  }
+               }
+               else if (n <= -1 && n >= -127)
+               {
+                  const value = data [inIndex ++];
+
+                  for (let j = 0; j < -n + 1 && outIndex < frameSize; ++ j)
+                  {
+                     out [(outIndex * 2) + highByte] = value;
+                     ++ outIndex;
+                  }
+               }
+            }
+         }
+
+         return out;
+      },
+      decodeJPEGBaseline: function (pixelData)
+      {
+         var jpeg = new JpegImage ();
+
+         jpeg .parse (pixelData);
+
+         jpeg .colorTransform = true; // default is true
+
+         var data = jpeg .getData (this .dicom .width, this .dicom .height);
+
+         this .bitsAllocated = 8;
+
+         return data;
+       },
+       decodeJPEGLossless: function (pixelData)
+       {
+         var
+            decoder = new jpegLossless .lossless .Decoder (),
+            buffer  = decoder .decompress (pixelData);
+
+         return new Uint8Array (buffer);
+      },
+      decodeJPEGLS: function (pixelData)
+      {
+         var image = this .jpegLSDecode (pixelData, this .pixelRepresentation === 1);
+
+         // throw error if not success or too much data
+         if (image .result !== 0 && image .result !== 6)
+            throw new Error (`DICOM: JPEG-LS decoder failed to decode frame (error code ${image.result}).`);
+
+         return new Uint8Array (image .pixelData .buffer);
+      },
+      jpegLSDecode: function (data, isSigned)
+      {
+         // Init global instance.
+         charLS = charLS || CharLS ();
+
+         // prepare input parameters
+         const dataPtr = charLS._malloc(data.length);
+
+         charLS.writeArrayToMemory(data, dataPtr);
+
+         // prepare output parameters
+         const imagePtrPtr = charLS._malloc(4);
+         const imageSizePtr = charLS._malloc(4);
+         const widthPtr = charLS._malloc(4);
+         const heightPtr = charLS._malloc(4);
+         const bitsPerSamplePtr = charLS._malloc(4);
+         const stridePtr = charLS._malloc(4);
+         const allowedLossyErrorPtr = charLS._malloc(4);
+         const componentsPtr = charLS._malloc(4);
+         const interleaveModePtr = charLS._malloc(4);
+
+         // Decode the image
+         const result = charLS.ccall(
+            'jpegls_decode',
+            'number',
+            ['number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number', 'number'],
+            [dataPtr, data.length, imagePtrPtr, imageSizePtr, widthPtr, heightPtr, bitsPerSamplePtr, stridePtr, componentsPtr, allowedLossyErrorPtr, interleaveModePtr]
+         );
+
+         // Extract result values into object
+         const image = {
+            result,
+            width: charLS.getValue(widthPtr, 'i32'),
+            height: charLS.getValue(heightPtr, 'i32'),
+            bitsPerSample: charLS.getValue(bitsPerSamplePtr, 'i32'),
+            stride: charLS.getValue(stridePtr, 'i32'),
+            components: charLS.getValue(componentsPtr, 'i32'),
+            allowedLossyError: charLS.getValue(allowedLossyErrorPtr, 'i32'),
+            interleaveMode: charLS.getValue(interleaveModePtr, 'i32'),
+            pixelData: undefined
+         };
+
+         // Copy image from emscripten heap into appropriate array buffer type
+         const imagePtr = charLS.getValue(imagePtrPtr, '*');
+
+         if (image.bitsPerSample <= 8) {
+            image.pixelData = new Uint8Array(image.width * image.height * image.components);
+            image.pixelData.set(new Uint8Array(charLS.HEAP8.buffer, imagePtr, image.pixelData.length));
+         } else if (isSigned) {
+            image.pixelData = new Int16Array(image.width * image.height * image.components);
+            image.pixelData.set(new Int16Array(charLS.HEAP16.buffer, imagePtr, image.pixelData.length));
+         } else {
+            image.pixelData = new Uint16Array(image.width * image.height * image.components);
+            image.pixelData.set(new Uint16Array(charLS.HEAP16.buffer, imagePtr, image.pixelData.length));
+         }
+
+         // free memory and return image object
+         charLS._free(dataPtr);
+         charLS._free(imagePtr);
+         charLS._free(imagePtrPtr);
+         charLS._free(imageSizePtr);
+         charLS._free(widthPtr);
+         charLS._free(heightPtr);
+         charLS._free(bitsPerSamplePtr);
+         charLS._free(stridePtr);
+         charLS._free(componentsPtr);
+         charLS._free(interleaveModePtr);
+
+         return image;
+      },
+      decodeJPEG2000: function (pixelData)
+      {
+         var
+            bytesPerPixel = this .bitsAllocated <= 8 ? 1 : 2,
+            signed        = this .pixelRepresentation === 1,
+            image         = this .decodeOpenJPEG (pixelData, bytesPerPixel, signed);
+
+         if (image .nbChannels > 1)
+            this .photometricInterpretation = "RGB";
+
+         return new Uint8Array (image .pixelData .buffer);
+      },
+      decodeOpenJPEG: function  (data, bytesPerPixel, signed)
+      {
+         // Init global instance.
+         openJPEG = openJPEG || OpenJPEG ();
+
+         const dataPtr = openJPEG._malloc(data.length);
+
+         openJPEG.writeArrayToMemory(data, dataPtr);
+
+         // create param outpout
+         const imagePtrPtr = openJPEG._malloc(4);
+         const imageSizePtr = openJPEG._malloc(4);
+         const imageSizeXPtr = openJPEG._malloc(4);
+         const imageSizeYPtr = openJPEG._malloc(4);
+         const imageSizeCompPtr = openJPEG._malloc(4);
+
+         const t0 = new Date().getTime();
+         const ret = openJPEG.ccall('jp2_decode', 'number', ['number', 'number', 'number', 'number', 'number', 'number', 'number'],
+           [dataPtr, data.length, imagePtrPtr, imageSizePtr, imageSizeXPtr, imageSizeYPtr, imageSizeCompPtr]);
+         // add num vomp..etc
+
+         if (ret !== 0) {
+            console.log('[opj_decode] decoding failed!');
+            openJPEG._free(dataPtr);
+            openJPEG._free(openJPEG.getValue(imagePtrPtr, '*'));
+            openJPEG._free(imageSizeXPtr);
+            openJPEG._free(imageSizeYPtr);
+            openJPEG._free(imageSizePtr);
+            openJPEG._free(imageSizeCompPtr);
+
+            return;
+         }
+
+         const imagePtr = openJPEG.getValue(imagePtrPtr, '*');
+
+         const image = {
+            length: openJPEG.getValue(imageSizePtr, 'i32'),
+            sx: openJPEG.getValue(imageSizeXPtr, 'i32'),
+            sy: openJPEG.getValue(imageSizeYPtr, 'i32'),
+            nbChannels: openJPEG.getValue(imageSizeCompPtr, 'i32'), // hard coded for now
+            perf_timetodecode: undefined,
+            pixelData: undefined
+         };
+
+         // Copy the data from the EMSCRIPTEN heap into the correct type array
+         const length = image.sx * image.sy * image.nbChannels;
+         const src32 = new Int32Array(openJPEG.HEAP32.buffer, imagePtr, length);
+
+         if (bytesPerPixel === 1) {
+            if (Uint8Array.from) {
+               image.pixelData = Uint8Array.from(src32);
+            } else {
+               image.pixelData = new Uint8Array(length);
+               for (let i = 0; i < length; i++) {
+                  image.pixelData[i] = src32[i];
+               }
+            }
+         } else if (signed) {
+            if (Int16Array.from) {
+               image.pixelData = Int16Array.from(src32);
+            } else {
+               image.pixelData = new Int16Array(length);
+               for (let i = 0; i < length; i++) {
+                  image.pixelData[i] = src32[i];
+               }
+            }
+         } else if (Uint16Array.from) {
+            image.pixelData = Uint16Array.from(src32);
+         } else {
+            image.pixelData = new Uint16Array(length);
+            for (let i = 0; i < length; i++) {
+               image.pixelData[i] = src32[i];
+            }
+         }
+
+         const t1 = new Date().getTime();
+
+         image.perf_timetodecode = t1 - t0;
+
+         // free
+         openJPEG._free(dataPtr);
+         openJPEG._free(imagePtrPtr);
+         openJPEG._free(imagePtr);
+         openJPEG._free(imageSizePtr);
+         openJPEG._free(imageSizeXPtr);
+         openJPEG._free(imageSizeYPtr);
+         openJPEG._free(imageSizeCompPtr);
+
+         return image;
+       },
+      convertRGBColorByPlane: function (pixelData)
+      {
+         if (pixelData .length % 3 !== 0)
+            throw new Error ("DICOM: convertRGBColorByPlane: RGB buffer length must be divisble by 3.");
+
+         var
+            numPixels = pixelData .length / 3,
+            rgbIndex  = 0,
+            rIndex    = 0,
+            gIndex    = numPixels,
+            bIndex    = numPixels * 2,
+            out       = new (pixelData .constructor) (pixelData .length);
+
+         for (var i = 0; i < numPixels; ++ i)
+         {
+           out [rgbIndex ++] = pixelData [rIndex ++]; // red
+           out [rgbIndex ++] = pixelData [gIndex ++]; // green
+           out [rgbIndex ++] = pixelData [bIndex ++]; // blue
+         }
+
+         return out;
+       },
+       convertYBRFullByPixel: function (pixelData)
+       {
+         if (pixelData .length % 3 !== 0)
+            throw new Error ("DICOM: convertYBRFullByPixel: YBR buffer length must be divisble by 3.");
+
+         console .log (pixelData);
+
+         var
+            numPixels = pixelData .length / 3,
+            ybrIndex  = 0,
+            rgbIndex  = 0,
+            out       = new (pixelData .constructor) (pixelData .length);
+
+         for (var i = 0; i < numPixels; ++ i)
+         {
+            var
+               y  = pixelData [ybrIndex ++],
+               cb = pixelData [ybrIndex ++],
+               cr = pixelData [ybrIndex ++];
+
+            out [rgbIndex ++] = y + 1.40200 * (cr - 128);                        // red
+            out [rgbIndex ++] = y - 0.34414 * (cb - 128) - 0.71414 * (cr - 128); // green
+            out [rgbIndex ++] = y + 1.77200 * (cb - 128);                        // blue
+         }
+
+         return out;
+       },
+       convertYBRFullByPlane: function (pixelData)
+       {
+         if (pixelData .length % 3 !== 0)
+            throw new Error ("DICOM: convertYBRFullByPlane: YBR buffer length must be divisble by 3.");
+
+         var
+            numPixels = pixelData .length / 3,
+            rgbIndex  = 0,
+            yIndex    = 0,
+            cbIndex   = numPixels,
+            crIndex   = numPixels * 2,
+            out       = new (pixelData .constructor) (pixelData .length);
+
+         for (var i = 0; i < numPixels; ++ i)
+         {
+            var
+               y  = pixelData [yIndex ++],
+               cb = pixelData [cbIndex ++],
+               cr = pixelData [crIndex ++];
+
+           out [rgbIndex++] = y + 1.40200 * (cr - 128);                        // red
+           out [rgbIndex++] = y - 0.34414 * (cb - 128) - 0.71414 * (cr - 128); // green
+           out [rgbIndex++] = y + 1.77200 * (cb - 128);                        // blue
+         }
+
+         return out;
+      },
+      convertPaletteColor: function (pixelData)
+      {
+         function convertLUTto8Bit (lut, shift)
+         {
+            if (lut .cleaned)
+               return lut .cleaned;
+
+            const numEntries = lut .length;
+            const cleanedLUT = new Uint8ClampedArray (numEntries);
+
+            for (let i = 0; i < numEntries; ++i)
+               cleanedLUT [i] = lut [i] >> shift;
+
+            lut .cleaned = cleanedLUT;
+
+            return cleanedLUT;
+         }
+
+         const LUT       = this .getLUT ();
+         const numPixels = this .dicom .width * this .dicom .height;
+         const rData     = LUT .redPaletteColorLookupTableData;
+         const gData     = LUT .greenPaletteColorLookupTableData;
+         const bData     = LUT .bluePaletteColorLookupTableData;
+         const len       = LUT .redPaletteColorLookupTableData .length;
+
+         let palIndex = 0;
+         let rgbIndex = 0;
+
+         const start = LUT .redPaletteColorLookupTableDescriptor [1];
+         const shift = LUT .redPaletteColorLookupTableDescriptor [2] === 8 ? 0 : 8;
+
+         const rDataCleaned = convertLUTto8Bit (rData, shift);
+         const gDataCleaned = convertLUTto8Bit (gData, shift);
+         const bDataCleaned = convertLUTto8Bit (bData, shift);
+
+         let out = new Uint8Array (pixelData .length * 3);
+
+         for (let i = 0; i < numPixels; ++ i)
+         {
+            let value = pixelData [palIndex++];
+
+            if (value < start)
+               value = 0;
+            else if (value > start + len - 1)
+               value = len - 1;
+            else
+               value -= start;
+
+            out [rgbIndex++] = rDataCleaned [value];
+            out [rgbIndex++] = gDataCleaned [value];
+            out [rgbIndex++] = bDataCleaned [value];
+         }
+
+         return out;
+      },
+      getLUT: function ()
+      {
+         if (this .LUT)
+             return this .LUT;
+
+         this .LUT = { };
+
+         this .populatePaletteColorLut (this .dataSet, this .LUT);
+
+         return this .LUT;
+      },
+      populatePaletteColorLut: function (dataSet, imagePixelModule)
+      {
+         imagePixelModule .redPaletteColorLookupTableDescriptor   = this .getLutDescriptor (dataSet, 'x00281101');
+         imagePixelModule .greenPaletteColorLookupTableDescriptor = this .getLutDescriptor (dataSet, 'x00281102');
+         imagePixelModule .bluePaletteColorLookupTableDescriptor  = this .getLutDescriptor (dataSet, 'x00281103');
+
+         // The first Palette Color Lookup Table Descriptor value is the number of entries in the lookup table.
+         // When the number of table entries is equal to 2ˆ16 then this value shall be 0.
+         // See http://dicom.nema.org/MEDICAL/DICOM/current/output/chtml/part03/sect_C.7.6.3.html#sect_C.7.6.3.1.5
+         if (imagePixelModule .redPaletteColorLookupTableDescriptor [0] === 0)
+         {
+            imagePixelModule .redPaletteColorLookupTableDescriptor   [0] = 65536;
+            imagePixelModule .greenPaletteColorLookupTableDescriptor [0] = 65536;
+            imagePixelModule .bluePaletteColorLookupTableDescriptor  [0] = 65536;
+         }
+
+         // The third Palette Color Lookup Table Descriptor value specifies the number of bits for each entry in the Lookup Table Data.
+         // It shall take the value of 8 or 16.
+         // The LUT Data shall be stored in a format equivalent to 8 bits allocated when the number of bits for each entry is 8, and 16 bits allocated when the number of bits for each entry is 16, where in both cases the high bit is equal to bits allocated-1.
+         // The third value shall be identical for each of the Red, Green and Blue Palette Color Lookup Table Descriptors.
+         //
+         // Note: Some implementations have encoded 8 bit entries with 16 bits allocated, padding the high bits;
+         // this can be detected by comparing the number of entries specified in the LUT Descriptor with the actual value length of the LUT Data entry.
+         // The value length in bytes should equal the number of entries if bits allocated is 8, and be twice as long if bits allocated is 16.
+         const numLutEntries    = imagePixelModule .redPaletteColorLookupTableDescriptor [0];
+         const lutData          = dataSet .elements .x00281201;
+         const lutBitsAllocated = lutData .length === numLutEntries ? 8 : 16;
+
+         // If the descriptors do not appear to have the correct values, correct them
+         if (imagePixelModule.redPaletteColorLookupTableDescriptor [2] !== lutBitsAllocated)
+         {
+            imagePixelModule .redPaletteColorLookupTableDescriptor   [2] = lutBitsAllocated;
+            imagePixelModule .greenPaletteColorLookupTableDescriptor [2] = lutBitsAllocated;
+            imagePixelModule .bluePaletteColorLookupTableDescriptor  [2] = lutBitsAllocated;
+         }
+
+         imagePixelModule .redPaletteColorLookupTableData   = this .getLutData (dataSet, 'x00281201', imagePixelModule .redPaletteColorLookupTableDescriptor);
+         imagePixelModule .greenPaletteColorLookupTableData = this .getLutData (dataSet, 'x00281202', imagePixelModule .greenPaletteColorLookupTableDescriptor);
+         imagePixelModule .bluePaletteColorLookupTableData  = this .getLutData (dataSet, 'x00281203', imagePixelModule .bluePaletteColorLookupTableDescriptor);
+      },
+      getLutDescriptor: function  (dataSet, tag)
+      {
+         if (! dataSet .elements [tag] || dataSet .elements [tag] .length !== 6)
+            return;
+
+         return [dataSet .uint16 (tag, 0), dataSet .uint16 (tag, 1), dataSet .uint16 (tag, 2)];
+      },
+      getLutData: function  (lutDataSet, tag, lutDescriptor)
+      {
+         const lut     = [];
+         const lutData = lutDataSet .elements [tag];
+
+         for (let i = 0; i < lutDescriptor [0]; ++ i)
+         {
+            // Output range is always unsigned
+            if (lutDescriptor [2] === 16)
+               lut [i] = lutDataSet .uint16 (tag, i);
+            else
+               lut [i] = lutDataSet .byteArray [i + lutData .dataOffset];
+         }
+
+         return lut;
+      },
+   };
+
+   // ftp://medical.nema.org/medical/dicom/DataSets/WG04/
+
+   return DicomParser;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -8973,15 +8973,15 @@ function (dicomParser,
 
 
 define ('x_ite/Components/Texturing3D/ImageTexture3D',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing3D/X3DTexture3DNode",
-	"x_ite/Components/Networking/X3DUrlObject",
-	"x_ite/Bits/X3DConstants",
-	"x_ite/Browser/Texturing3D/NRRDParser",
-	"x_ite/Browser/Texturing3D/DICOMParser",
-	"x_ite/InputOutput/FileLoader",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Texturing3D/X3DTexture3DNode",
+   "x_ite/Components/Networking/X3DUrlObject",
+   "x_ite/Bits/X3DConstants",
+   "x_ite/Browser/Texturing3D/NRRDParser",
+   "x_ite/Browser/Texturing3D/DICOMParser",
+   "x_ite/InputOutput/FileLoader",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -8995,112 +8995,112 @@ function (Fields,
 {
 "use strict";
 
-	function ImageTexture3D (executionContext)
-	{
-		X3DTexture3DNode .call (this, executionContext);
-		X3DUrlObject     .call (this, executionContext);
+   function ImageTexture3D (executionContext)
+   {
+      X3DTexture3DNode .call (this, executionContext);
+      X3DUrlObject     .call (this, executionContext);
 
-		this .addType (X3DConstants .ImageTexture3D);
-	}
+      this .addType (X3DConstants .ImageTexture3D);
+   }
 
-	ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
-		X3DUrlObject .prototype,
-	{
-		constructor: ImageTexture3D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",              new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "ImageTexture3D";
-		},
-		getComponentName: function ()
-		{
-			return "Texturing3D";
-		},
-		getContainerField: function ()
-		{
-			return "texture";
-		},
-		initialize: function ()
-		{
-			X3DTexture3DNode .prototype .initialize .call (this);
-			X3DUrlObject     .prototype .initialize .call (this);
+   ImageTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+      X3DUrlObject .prototype,
+   {
+      constructor: ImageTexture3D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefresh",          new Fields .SFTime ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "autoRefreshTimeLimit", new Fields .SFTime (3600)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",              new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties",    new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "ImageTexture3D";
+      },
+      getComponentName: function ()
+      {
+         return "Texturing3D";
+      },
+      getContainerField: function ()
+      {
+         return "texture";
+      },
+      initialize: function ()
+      {
+         X3DTexture3DNode .prototype .initialize .call (this);
+         X3DUrlObject     .prototype .initialize .call (this);
 
-			this .requestImmediateLoad ();
-		},
-		getInternalType: function (components)
-		{
-			const gl = this .getBrowser () .getContext ();
+         this .requestImmediateLoad ();
+      },
+      getInternalType: function (components)
+      {
+         const gl = this .getBrowser () .getContext ();
 
-			switch (components)
-			{
-				case 1:
-					return gl .LUMINANCE;
-				case 2:
-					return gl .LUMINANCE_ALPHA;
-				case 3:
-					return gl .RGB;
-				case 4:
-					return gl .RGBA;
-			}
-		},
-		unloadNow: function ()
-		{
-			this .clearTexture ();
-		},
-		loadNow: function ()
-		{
-			new FileLoader (this) .loadBinaryDocument (this .urlBuffer_,
-			function (data)
-			{
-				if (data === null)
-				{
-					// No URL could be loaded.
-					this .setLoadState (X3DConstants .FAILED_STATE);
-					this .clearTexture ();
-				}
-				else
-				{
-					const nrrd = new NRRDParser () .parse (data);
+         switch (components)
+         {
+            case 1:
+               return gl .LUMINANCE;
+            case 2:
+               return gl .LUMINANCE_ALPHA;
+            case 3:
+               return gl .RGB;
+            case 4:
+               return gl .RGBA;
+         }
+      },
+      unloadNow: function ()
+      {
+         this .clearTexture ();
+      },
+      loadNow: function ()
+      {
+         new FileLoader (this) .loadBinaryDocument (this .urlBuffer_,
+         function (data)
+         {
+            if (data === null)
+            {
+               // No URL could be loaded.
+               this .setLoadState (X3DConstants .FAILED_STATE);
+               this .clearTexture ();
+            }
+            else
+            {
+               const nrrd = new NRRDParser () .parse (data);
 
-					if (nrrd .nrrd)
-					{
-						const internalType = this .getInternalType (nrrd .components);
+               if (nrrd .nrrd)
+               {
+                  const internalType = this .getInternalType (nrrd .components);
 
-						this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
-						this .setLoadState (X3DConstants .COMPLETE_STATE);
-						return;
-					}
+                  this .setTexture (nrrd .width, nrrd .height, nrrd .depth, false, internalType, nrrd .data);
+                  this .setLoadState (X3DConstants .COMPLETE_STATE);
+                  return;
+               }
 
-					const dicom = new DICOMParser () .parse (data);
+               const dicom = new DICOMParser () .parse (data);
 
-					if (dicom .dicom)
-					{
-						const internalType = this .getInternalType (dicom .components);
+               if (dicom .dicom)
+               {
+                  const internalType = this .getInternalType (dicom .components);
 
-						this .setTexture (dicom .width, dicom .height, dicom .depth, false, internalType, dicom .data);
-						this .setLoadState (X3DConstants .COMPLETE_STATE);
-						return;
-					}
+                  this .setTexture (dicom .width, dicom .height, dicom .depth, false, internalType, dicom .data);
+                  this .setLoadState (X3DConstants .COMPLETE_STATE);
+                  return;
+               }
 
-					throw new Error ("ImageTexture3D: no appropriate file type handler found.");
-				}
-			}
-			.bind (this));
-		},
-	});
+               throw new Error ("ImageTexture3D: no appropriate file type handler found.");
+            }
+         }
+         .bind (this));
+      },
+   });
 
-	return ImageTexture3D;
+   return ImageTexture3D;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -9153,11 +9153,11 @@ function (Fields,
 
 
 define ('x_ite/Components/Texturing3D/PixelTexture3D',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing3D/X3DTexture3DNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Texturing3D/X3DTexture3DNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -9167,161 +9167,161 @@ function (Fields,
 {
 "use strict";
 
-	function PixelTexture3D (executionContext)
-	{
-		X3DTexture3DNode .call (this, executionContext);
+   function PixelTexture3D (executionContext)
+   {
+      X3DTexture3DNode .call (this, executionContext);
 
-		this .addType (X3DConstants .PixelTexture3D);
+      this .addType (X3DConstants .PixelTexture3D);
 
-		this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
-	}
+      this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
+   }
 
-	PixelTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
-	{
-		constructor: PixelTexture3D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .MFInt32 (0, 0, 0, 0)),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
-			new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
-		]),
-		getTypeName: function ()
-		{
-			return "PixelTexture3D";
-		},
-		getComponentName: function ()
-		{
-			return "Texturing3D";
-		},
-		getContainerField: function ()
-		{
-			return "texture";
-		},
-		initialize: function ()
-		{
-			X3DTexture3DNode .prototype .initialize .call (this);
+   PixelTexture3D .prototype = Object .assign (Object .create (X3DTexture3DNode .prototype),
+   {
+      constructor: PixelTexture3D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .MFInt32 (0, 0, 0, 0)),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatS",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatT",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "repeatR",           new Fields .SFBool ()),
+         new X3DFieldDefinition (X3DConstants .initializeOnly, "textureProperties", new Fields .SFNode ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "PixelTexture3D";
+      },
+      getComponentName: function ()
+      {
+         return "Texturing3D";
+      },
+      getContainerField: function ()
+      {
+         return "texture";
+      },
+      initialize: function ()
+      {
+         X3DTexture3DNode .prototype .initialize .call (this);
 
-			this .image_ .addInterest ("set_image__", this);
+         this .image_ .addInterest ("set_image__", this);
 
-			this .set_image__ ();
-		},
-		checkLoadState: function ()
-		{
-			return this .loadState_ .getValue ();
-		},
-		set_image__: (function ()
-		{
-			var
-				OFFSET     = 4,
-				COMPONENTS = 0,
-				WIDTH      = 1,
-				HEIGHT     = 2,
-				DEPTH      = 3;
+         this .set_image__ ();
+      },
+      checkLoadState: function ()
+      {
+         return this .loadState_ .getValue ();
+      },
+      set_image__: (function ()
+      {
+         var
+            OFFSET     = 4,
+            COMPONENTS = 0,
+            WIDTH      = 1,
+            HEIGHT     = 2,
+            DEPTH      = 3;
 
-			return function ()
-			{
-				var image = this .image_;
+         return function ()
+         {
+            var image = this .image_;
 
-				if (image .length < OFFSET)
-				{
-					this .clearTexture ();
-					this .loadState_ = X3DConstants .FAILED_STATE;
-					return;
-				}
+            if (image .length < OFFSET)
+            {
+               this .clearTexture ();
+               this .loadState_ = X3DConstants .FAILED_STATE;
+               return;
+            }
 
-				var
-					gl          = this .getBrowser () .getContext (),
-					components  = image [COMPONENTS],
-					width       = image [WIDTH],
-					height      = image [HEIGHT],
-					depth       = image [DEPTH],
-					transparent = ! (components & 1),
-					size3D      = width * height * depth;
+            var
+               gl          = this .getBrowser () .getContext (),
+               components  = image [COMPONENTS],
+               width       = image [WIDTH],
+               height      = image [HEIGHT],
+               depth       = image [DEPTH],
+               transparent = ! (components & 1),
+               size3D      = width * height * depth;
 
-				switch (components)
-				{
-					case 1:
-					{
-						var
-							format = gl .LUMINANCE,
-							data   = new Uint8Array (size3D);
+            switch (components)
+            {
+               case 1:
+               {
+                  var
+                     format = gl .LUMINANCE,
+                     data   = new Uint8Array (size3D);
 
-						for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-						{
-							data [d ++] = image [i];
-						}
+                  for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  {
+                     data [d ++] = image [i];
+                  }
 
-						break;
-					}
-					case 2:
-					{
-						var
-							format = gl .LUMINANCE_ALPHA,
-							data   = new Uint8Array (size3D * 2);
+                  break;
+               }
+               case 2:
+               {
+                  var
+                     format = gl .LUMINANCE_ALPHA,
+                     data   = new Uint8Array (size3D * 2);
 
-							for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-							{
-								var p = image [i];
+                     for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                     {
+                        var p = image [i];
 
-								data [d ++ ] = (p >>> 8) & 0xff;
-								data [d ++ ] = p & 0xff;
-							}
+                        data [d ++ ] = (p >>> 8) & 0xff;
+                        data [d ++ ] = p & 0xff;
+                     }
 
-							break;
-					}
-					case 3:
-					{
-						var
-							format = gl .RGB,
-							data   = new Uint8Array (size3D * 3);
+                     break;
+               }
+               case 3:
+               {
+                  var
+                     format = gl .RGB,
+                     data   = new Uint8Array (size3D * 3);
 
-						for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-						{
-							var p = image [i];
+                  for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  {
+                     var p = image [i];
 
-							data [d ++ ] = (p >>> 16) & 0xff;
-							data [d ++ ] = (p >>> 8)  & 0xff;
-							data [d ++ ] = p & 0xff;
-						}
+                     data [d ++ ] = (p >>> 16) & 0xff;
+                     data [d ++ ] = (p >>> 8)  & 0xff;
+                     data [d ++ ] = p & 0xff;
+                  }
 
-						break;
-					}
-					case 4:
-					{
-						var
-							format = gl .RGBA,
-							data   = new Uint8Array (size3D * 4);
+                  break;
+               }
+               case 4:
+               {
+                  var
+                     format = gl .RGBA,
+                     data   = new Uint8Array (size3D * 4);
 
-						for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-						{
-							var p = image [i];
+                  for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  {
+                     var p = image [i];
 
-							data [d ++ ] = (p >>> 24) & 0xff;
-							data [d ++ ] = (p >>> 16) & 0xff;
-							data [d ++ ] = (p >>> 8)  & 0xff;
-							data [d ++ ] = p & 0xff;
-						}
+                     data [d ++ ] = (p >>> 24) & 0xff;
+                     data [d ++ ] = (p >>> 16) & 0xff;
+                     data [d ++ ] = (p >>> 8)  & 0xff;
+                     data [d ++ ] = p & 0xff;
+                  }
 
-						break;
-					}
-					default:
-					{
-						this .clearTexture ();
-						this .loadState_ = X3DConstants .FAILED_STATE;
-						return;
-					}
-				}
+                  break;
+               }
+               default:
+               {
+                  this .clearTexture ();
+                  this .loadState_ = X3DConstants .FAILED_STATE;
+                  return;
+               }
+            }
 
-				this .setTexture (width, height, depth, transparent, format, data);
-				this .loadState_ = X3DConstants .COMPLETE_STATE;
-			};
-		})(),
-	});
+            this .setTexture (width, height, depth, transparent, format, data);
+            this .loadState_ = X3DConstants .COMPLETE_STATE;
+         };
+      })(),
+   });
 
-	return PixelTexture3D;
+   return PixelTexture3D;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -9374,12 +9374,12 @@ function (Fields,
 
 
 define ('x_ite/Components/Texturing3D/TextureCoordinate3D',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector4",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector4",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -9390,116 +9390,116 @@ function (Fields,
 {
 "use strict";
 
-	function TextureCoordinate3D (executionContext)
-	{
-		X3DSingleTextureCoordinateNode .call (this, executionContext);
+   function TextureCoordinate3D (executionContext)
+   {
+      X3DSingleTextureCoordinateNode .call (this, executionContext);
 
-		this .addType (X3DConstants .TextureCoordinate3D);
-	}
+      this .addType (X3DConstants .TextureCoordinate3D);
+   }
 
-	TextureCoordinate3D .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
-	{
-		constructor: TextureCoordinate3D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3f ()),
-		]),
-		getTypeName: function ()
-		{
-			return "TextureCoordinate3D";
-		},
-		getComponentName: function ()
-		{
-			return "Texturing3D";
-		},
-		getContainerField: function ()
-		{
-			return "texCoord";
-		},
-		initialize: function ()
-		{
-			X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
+   TextureCoordinate3D .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
+   {
+      constructor: TextureCoordinate3D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3f ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "TextureCoordinate3D";
+      },
+      getComponentName: function ()
+      {
+         return "Texturing3D";
+      },
+      getContainerField: function ()
+      {
+         return "texCoord";
+      },
+      initialize: function ()
+      {
+         X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
-			this .point_ .addInterest ("set_point__", this);
+         this .point_ .addInterest ("set_point__", this);
 
-			this .set_point__ ();
-		},
-		set_point__: function ()
-		{
-			this .point  = this .point_ .getValue ();
-			this .length = this .point_ .length;
-		},
-		isEmpty: function ()
-		{
-			return this .length === 0;
-		},
-		getSize: function ()
-		{
-			return this .length;
-		},
-		get1Point: function (index, vector)
-		{
-			if (index >= 0 && index < this .length)
-			{
-				const point = this .point;
+         this .set_point__ ();
+      },
+      set_point__: function ()
+      {
+         this .point  = this .point_ .getValue ();
+         this .length = this .point_ .length;
+      },
+      isEmpty: function ()
+      {
+         return this .length === 0;
+      },
+      getSize: function ()
+      {
+         return this .length;
+      },
+      get1Point: function (index, vector)
+      {
+         if (index >= 0 && index < this .length)
+         {
+            const point = this .point;
 
-				index *= 3;
+            index *= 3;
 
-				return vector .set (point [index], point [index + 1], point [index + 2], 1);
-			}
-			else if (index >= 0 && this .length)
-			{
-				const point = this .point;
+            return vector .set (point [index], point [index + 1], point [index + 2], 1);
+         }
+         else if (index >= 0 && this .length)
+         {
+            const point = this .point;
 
-				index %= this .length;
-				index *= 3;
+            index %= this .length;
+            index *= 3;
 
-				return vector .set (point [index], point [index + 1], point [index + 2], 1);
-			}
-			else
-			{
-				return vector .set (0, 0, 0, 1);
-			}
-		},
-		addTexCoordToChannel: function (index, array)
-		{
-			if (index >= 0 && index < this .length)
-			{
-				const point = this .point;
+            return vector .set (point [index], point [index + 1], point [index + 2], 1);
+         }
+         else
+         {
+            return vector .set (0, 0, 0, 1);
+         }
+      },
+      addTexCoordToChannel: function (index, array)
+      {
+         if (index >= 0 && index < this .length)
+         {
+            const point = this .point;
 
-				index *= 3;
+            index *= 3;
 
-				array .push (point [index], point [index + 1], point [index + 2], 1);
-			}
-			else if (index >= 0 && this .length)
-			{
-				const point = this .point;
+            array .push (point [index], point [index + 1], point [index + 2], 1);
+         }
+         else if (index >= 0 && this .length)
+         {
+            const point = this .point;
 
-				index %= this .length;
-				index *= 3;
+            index %= this .length;
+            index *= 3;
 
-				array .push (point [index], point [index + 1], point [index + 2], 1);
-			}
-			else
-			{
-				array .push (0, 0, 0, 1);
-			}
-		},
-		getTexCoord: function (array)
-		{
-			const point = this .point;
+            array .push (point [index], point [index + 1], point [index + 2], 1);
+         }
+         else
+         {
+            array .push (0, 0, 0, 1);
+         }
+      },
+      getTexCoord: function (array)
+      {
+         const point = this .point;
 
-			for (let i = 0, p = 0, length = this .length; i < length; ++ i, p += 3)
-				array [i] = new Vector4 (point [p], point [p + 1], point [p + 2], 1);
+         for (let i = 0, p = 0, length = this .length; i < length; ++ i, p += 3)
+            array [i] = new Vector4 (point [p], point [p + 1], point [p + 2], 1);
 
-			array .length = this .length;
+         array .length = this .length;
 
-			return array;
-		},
-	});
+         return array;
+      },
+   });
 
-	return TextureCoordinate3D;
+   return TextureCoordinate3D;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -9552,12 +9552,12 @@ function (Fields,
 
 
 define ('x_ite/Components/Texturing3D/TextureCoordinate4D',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector4",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector4",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -9568,116 +9568,116 @@ function (Fields,
 {
 "use strict";
 
-	function TextureCoordinate4D (executionContext)
-	{
-		X3DSingleTextureCoordinateNode .call (this, executionContext);
+   function TextureCoordinate4D (executionContext)
+   {
+      X3DSingleTextureCoordinateNode .call (this, executionContext);
 
-		this .addType (X3DConstants .TextureCoordinate4D);
-	}
+      this .addType (X3DConstants .TextureCoordinate4D);
+   }
 
-	TextureCoordinate4D .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
-	{
-		constructor: TextureCoordinate4D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec4f ()),
-		]),
-		getTypeName: function ()
-		{
-			return "TextureCoordinate4D";
-		},
-		getComponentName: function ()
-		{
-			return "Texturing3D";
-		},
-		getContainerField: function ()
-		{
-			return "texCoord";
-		},
-		initialize: function ()
-		{
-			X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
+   TextureCoordinate4D .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
+   {
+      constructor: TextureCoordinate4D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec4f ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "TextureCoordinate4D";
+      },
+      getComponentName: function ()
+      {
+         return "Texturing3D";
+      },
+      getContainerField: function ()
+      {
+         return "texCoord";
+      },
+      initialize: function ()
+      {
+         X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
-			this .point_ .addInterest ("set_point__", this);
+         this .point_ .addInterest ("set_point__", this);
 
-			this .set_point__ ();
-		},
-		set_point__: function ()
-		{
-			this .point  = this .point_ .getValue ();
-			this .length = this .point_ .length;
-		},
-		isEmpty: function ()
-		{
-			return this .length === 0;
-		},
-		getSize: function ()
-		{
-			return this .length;
-		},
-		get1Point: function (index, vector)
-		{
-			if (index >= 0 && index < this .length)
-			{
-				const point = this .point;
+         this .set_point__ ();
+      },
+      set_point__: function ()
+      {
+         this .point  = this .point_ .getValue ();
+         this .length = this .point_ .length;
+      },
+      isEmpty: function ()
+      {
+         return this .length === 0;
+      },
+      getSize: function ()
+      {
+         return this .length;
+      },
+      get1Point: function (index, vector)
+      {
+         if (index >= 0 && index < this .length)
+         {
+            const point = this .point;
 
-				index *= 4;
+            index *= 4;
 
-				return vector .set (point [index], point [index + 1], point [index + 2], point [index + 3]);
-			}
-			else if (index >= 0 && this .length)
-			{
-				const point = this .point;
+            return vector .set (point [index], point [index + 1], point [index + 2], point [index + 3]);
+         }
+         else if (index >= 0 && this .length)
+         {
+            const point = this .point;
 
-				index %= this .length;
-				index *= 4;
+            index %= this .length;
+            index *= 4;
 
-				return vector .set (point [index], point [index + 1], point [index + 2], point [index + 3]);
-			}
-			else
-			{
-				return vector .set (0, 0, 0, 1);
-			}
-		},
-		addTexCoordToChannel: function (index, array)
-		{
-			if (index >= 0 && index < this .length)
-			{
-				const point = this .point;
+            return vector .set (point [index], point [index + 1], point [index + 2], point [index + 3]);
+         }
+         else
+         {
+            return vector .set (0, 0, 0, 1);
+         }
+      },
+      addTexCoordToChannel: function (index, array)
+      {
+         if (index >= 0 && index < this .length)
+         {
+            const point = this .point;
 
-				index *= 4;
+            index *= 4;
 
-				array .push (point [index], point [index + 1], point [index + 2], point [index + 3]);
-			}
-			else if (index >= 0 && this .length)
-			{
-				const point = this .point;
+            array .push (point [index], point [index + 1], point [index + 2], point [index + 3]);
+         }
+         else if (index >= 0 && this .length)
+         {
+            const point = this .point;
 
-				index %= this .length;
-				index *= 4;
+            index %= this .length;
+            index *= 4;
 
-				array .push (point [index], point [index + 1], point [index + 2], point [index + 3]);
-			}
-			else
-			{
-				array .push (0, 0, 0, 1);
-			}
-		},
-		getTexCoord: function (array)
-		{
-			const point = this .point;
+            array .push (point [index], point [index + 1], point [index + 2], point [index + 3]);
+         }
+         else
+         {
+            array .push (0, 0, 0, 1);
+         }
+      },
+      getTexCoord: function (array)
+      {
+         const point = this .point;
 
-			for (let i = 0, p = 0, length = this .length; i < length; ++ i, p += 4)
-				array [i] = new Vector4 (point [p], point [p + 1], point [p + 2], point [p + 3]);
+         for (let i = 0, p = 0, length = this .length; i < length; ++ i, p += 4)
+            array [i] = new Vector4 (point [p], point [p + 1], point [p + 2], point [p + 3]);
 
-			array .length = this .length;
+         array .length = this .length;
 
-			return array;
-		},
-	});
+         return array;
+      },
+   });
 
-	return TextureCoordinate4D;
+   return TextureCoordinate4D;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -9730,14 +9730,14 @@ function (Fields,
 
 
 define ('x_ite/Components/Texturing3D/TextureTransform3D',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DSingleTextureTransformNode",
-	"x_ite/Bits/X3DConstants",
-	"standard/Math/Numbers/Vector3",
-	"standard/Math/Numbers/Rotation4",
-	"standard/Math/Numbers/Matrix4",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Texturing/X3DSingleTextureTransformNode",
+   "x_ite/Bits/X3DConstants",
+   "standard/Math/Numbers/Vector3",
+   "standard/Math/Numbers/Rotation4",
+   "standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -9750,86 +9750,86 @@ function (Fields,
 {
 "use strict";
 
-	function TextureTransform3D (executionContext)
-	{
-		X3DSingleTextureTransformNode .call (this, executionContext);
+   function TextureTransform3D (executionContext)
+   {
+      X3DSingleTextureTransformNode .call (this, executionContext);
 
-		this .addType (X3DConstants .TextureTransform3D);
+      this .addType (X3DConstants .TextureTransform3D);
 
-		this .matrix = new Matrix4 ();
-	}
+      this .matrix = new Matrix4 ();
+   }
 
-	TextureTransform3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
-	{
-		constructor: TextureTransform3D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",     new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "translation", new Fields .SFVec3f ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "rotation",    new Fields .SFRotation ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "scale",       new Fields .SFVec3f (1, 1, 1)),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "center",      new Fields .SFVec3f ()),
-		]),
-		getTypeName: function ()
-		{
-			return "TextureTransform3D";
-		},
-		getComponentName: function ()
-		{
-			return "Texturing3D";
-		},
-		getContainerField: function ()
-		{
-			return "textureTransform";
-		},
-		initialize: function ()
-		{
-			X3DSingleTextureTransformNode .prototype .initialize .call (this);
+   TextureTransform3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
+   {
+      constructor: TextureTransform3D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",     new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "translation", new Fields .SFVec3f ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "rotation",    new Fields .SFRotation ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "scale",       new Fields .SFVec3f (1, 1, 1)),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "center",      new Fields .SFVec3f ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "TextureTransform3D";
+      },
+      getComponentName: function ()
+      {
+         return "Texturing3D";
+      },
+      getContainerField: function ()
+      {
+         return "textureTransform";
+      },
+      initialize: function ()
+      {
+         X3DSingleTextureTransformNode .prototype .initialize .call (this);
 
-			this .addInterest ("eventsProcessed", this);
+         this .addInterest ("eventsProcessed", this);
 
-			this .eventsProcessed ();
-		},
-		getMatrix: function ()
-		{
-			return this .matrix;
-		},
-		eventsProcessed: (function ()
-		{
-			const vector = new Vector3 (0, 0, 0);
+         this .eventsProcessed ();
+      },
+      getMatrix: function ()
+      {
+         return this .matrix;
+      },
+      eventsProcessed: (function ()
+      {
+         const vector = new Vector3 (0, 0, 0);
 
-			return function ()
-			{
-				const
-					translation = this .translation_ .getValue (),
-					rotation    = this .rotation_ .getValue (),
-					scale       = this .scale_ .getValue (),
-					center      = this .center_ .getValue (),
-					matrix4     = this .matrix;
+         return function ()
+         {
+            const
+               translation = this .translation_ .getValue (),
+               rotation    = this .rotation_ .getValue (),
+               scale       = this .scale_ .getValue (),
+               center      = this .center_ .getValue (),
+               matrix4     = this .matrix;
 
-				matrix4 .identity ();
+            matrix4 .identity ();
 
-				if (! center .equals (Vector3 .Zero))
-					matrix4 .translate (vector .assign (center) .negate ());
+            if (! center .equals (Vector3 .Zero))
+               matrix4 .translate (vector .assign (center) .negate ());
 
-				if (! scale .equals (Vector3 .One))
-					matrix4 .scale (scale);
+            if (! scale .equals (Vector3 .One))
+               matrix4 .scale (scale);
 
-				if (! rotation .equals (Rotation4 .Identity))
-					matrix4 .rotate (rotation);
+            if (! rotation .equals (Rotation4 .Identity))
+               matrix4 .rotate (rotation);
 
-				if (! center .equals (Vector3 .Zero))
-					matrix4 .translate (center);
+            if (! center .equals (Vector3 .Zero))
+               matrix4 .translate (center);
 
-				if (! translation .equals (Vector3 .Zero))
-					matrix4 .translate (translation);
+            if (! translation .equals (Vector3 .Zero))
+               matrix4 .translate (translation);
 
-				this .setMatrix (matrix4);
-			};
-		})(),
-	});
+            this .setMatrix (matrix4);
+         };
+      })(),
+   });
 
-	return TextureTransform3D;
+   return TextureTransform3D;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -9882,11 +9882,11 @@ function (Fields,
 
 
 define ('x_ite/Components/Texturing3D/TextureTransformMatrix3D',[
-	"x_ite/Fields",
-	"x_ite/Basic/X3DFieldDefinition",
-	"x_ite/Basic/FieldDefinitionArray",
-	"x_ite/Components/Texturing/X3DSingleTextureTransformNode",
-	"x_ite/Bits/X3DConstants",
+   "x_ite/Fields",
+   "x_ite/Basic/X3DFieldDefinition",
+   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Components/Texturing/X3DSingleTextureTransformNode",
+   "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -9896,52 +9896,52 @@ function (Fields,
 {
 "use strict";
 
-	function TextureTransformMatrix3D (executionContext)
-	{
-		X3DSingleTextureTransformNode .call (this, executionContext);
+   function TextureTransformMatrix3D (executionContext)
+   {
+      X3DSingleTextureTransformNode .call (this, executionContext);
 
-		this .addType (X3DConstants .TextureTransformMatrix3D);
-	}
+      this .addType (X3DConstants .TextureTransformMatrix3D);
+   }
 
-	TextureTransformMatrix3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
-	{
-		constructor: TextureTransformMatrix3D,
-		fieldDefinitions: new FieldDefinitionArray ([
-			new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
-			new X3DFieldDefinition (X3DConstants .inputOutput, "matrix",   new Fields .SFMatrix4f ()),
-		]),
-		getTypeName: function ()
-		{
-			return "TextureTransformMatrix3D";
-		},
-		getComponentName: function ()
-		{
-			return "Texturing3D";
-		},
-		getContainerField: function ()
-		{
-			return "textureTransform";
-		},
-		initialize: function ()
-		{
-			X3DSingleTextureTransformNode .prototype .initialize .call (this);
+   TextureTransformMatrix3D .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
+   {
+      constructor: TextureTransformMatrix3D,
+      fieldDefinitions: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
+         new X3DFieldDefinition (X3DConstants .inputOutput, "matrix",   new Fields .SFMatrix4f ()),
+      ]),
+      getTypeName: function ()
+      {
+         return "TextureTransformMatrix3D";
+      },
+      getComponentName: function ()
+      {
+         return "Texturing3D";
+      },
+      getContainerField: function ()
+      {
+         return "textureTransform";
+      },
+      initialize: function ()
+      {
+         X3DSingleTextureTransformNode .prototype .initialize .call (this);
 
-			this .addInterest ("eventsProcessed", this);
+         this .addInterest ("eventsProcessed", this);
 
-			this .eventsProcessed ();
-		},
-		getMatrix: function ()
-		{
-			return this .matrix_ .getValue ();
-		},
-		eventsProcessed: function ()
-		{
-			this .setMatrix (this .matrix_ .getValue ());
-		},
-	});
+         this .eventsProcessed ();
+      },
+      getMatrix: function ()
+      {
+         return this .matrix_ .getValue ();
+      },
+      eventsProcessed: function ()
+      {
+         this .setMatrix (this .matrix_ .getValue ());
+      },
+   });
 
-	return TextureTransformMatrix3D;
+   return TextureTransformMatrix3D;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -9994,15 +9994,15 @@ function (Fields,
 
 
 define (require .getComponentUrl ("texturing-3d"), [
-	"x_ite/Components",
-	"x_ite/Components/Texturing3D/ComposedTexture3D",
-	"x_ite/Components/Texturing3D/ImageTexture3D",
-	"x_ite/Components/Texturing3D/PixelTexture3D",
-	"x_ite/Components/Texturing3D/TextureCoordinate3D",
-	"x_ite/Components/Texturing3D/TextureCoordinate4D",
-	"x_ite/Components/Texturing3D/TextureTransform3D",
-	"x_ite/Components/Texturing3D/TextureTransformMatrix3D",
-	"x_ite/Components/Texturing3D/X3DTexture3DNode",
+   "x_ite/Components",
+   "x_ite/Components/Texturing3D/ComposedTexture3D",
+   "x_ite/Components/Texturing3D/ImageTexture3D",
+   "x_ite/Components/Texturing3D/PixelTexture3D",
+   "x_ite/Components/Texturing3D/TextureCoordinate3D",
+   "x_ite/Components/Texturing3D/TextureCoordinate4D",
+   "x_ite/Components/Texturing3D/TextureTransform3D",
+   "x_ite/Components/Texturing3D/TextureTransformMatrix3D",
+   "x_ite/Components/Texturing3D/X3DTexture3DNode",
 ],
 function (Components,
           ComposedTexture3D,
@@ -10016,25 +10016,24 @@ function (Components,
 {
 "use strict";
 
-	Components .addComponent ({
-		name: "Texturing3D",
-		types:
-		{
-			ComposedTexture3D:        ComposedTexture3D,        // Not implemented yet.
-			ImageTexture3D:           ImageTexture3D,           // Not implemented yet.
-			PixelTexture3D:           PixelTexture3D,           // Not implemented yet.
-			TextureCoordinate3D:      TextureCoordinate3D,
-			TextureCoordinate4D:      TextureCoordinate4D,
-			TextureTransform3D:       TextureTransform3D,
-			TextureTransformMatrix3D: TextureTransformMatrix3D,
-		},
-		abstractTypes:
-		{
-	   	X3DTexture3DNode: X3DTexture3DNode, // Not implemented yet.
-		},
-	});
+   Components .addComponent ({
+      name: "Texturing3D",
+      types:
+      {
+         ComposedTexture3D:        ComposedTexture3D,        // Not implemented yet.
+         ImageTexture3D:           ImageTexture3D,           // Not implemented yet.
+         PixelTexture3D:           PixelTexture3D,           // Not implemented yet.
+         TextureCoordinate3D:      TextureCoordinate3D,
+         TextureCoordinate4D:      TextureCoordinate4D,
+         TextureTransform3D:       TextureTransform3D,
+         TextureTransformMatrix3D: TextureTransformMatrix3D,
+      },
+      abstractTypes:
+      {
+         X3DTexture3DNode: X3DTexture3DNode, // Not implemented yet.
+      },
+   });
 });
-
 
 
 })();
