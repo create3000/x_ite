@@ -329,10 +329,10 @@ function ($,
 
 			return function (event)
 			{
-				if (event .has (this .getId ()))
+				if (event .has (this))
 					return;
 
-				event .add (this .getId ());
+				event .add (this);
 
 				this .setTainted (false);
 
