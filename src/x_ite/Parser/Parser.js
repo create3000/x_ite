@@ -620,10 +620,10 @@ function (Fields,
 						throw new Error ("Expected unit conversion factor.");
 					}
 
-					throw new Error ("Expected unit name identificator.");
+					throw new Error ("Expected unit name identifier.");
 				}
 
-				throw new Error ("Expected category name identificator after UNIT statement.");
+				throw new Error ("Expected category name identifier after UNIT statement.");
 			}
 
 			return false;
