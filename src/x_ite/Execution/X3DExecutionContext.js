@@ -108,11 +108,11 @@ function (SupportedNodes,
       {
          return "X3DExecutionContext";
       },
-      isMainContext: function ()
+      isMainScene: function ()
       {
          return false;
       },
-      isRootContext: function ()
+      isScene: function ()
       {
          return false;
       },
@@ -198,7 +198,7 @@ function (SupportedNodes,
             if (externproto)
                return externproto .createInstance (this, setup);
 
-            if (executionContext .isRootContext ())
+            if (executionContext .isScene ())
                break;
 
             executionContext = executionContext .getExecutionContext ();

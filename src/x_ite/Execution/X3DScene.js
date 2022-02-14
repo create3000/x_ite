@@ -109,17 +109,17 @@ function (SupportedNodes,
       {
          return "X3DScene";
       },
-      isMainContext: function ()
+      isMainScene: function ()
       {
          return this === this .getExecutionContext ();
       },
-      isRootContext: function ()
+      isScene: function ()
       {
          return true;
       },
       getScene: function ()
       {
-         if (this .isMainContext ())
+         if (this .isMainScene ())
             return this;
 
          return this .getExecutionContext () .getScene ();

@@ -73,7 +73,7 @@ function (Fields,
       constructor: Scene,
       setExecutionContext: function (value)
       {
-         if (! this .isMainContext ())
+         if (! this .isMainScene ())
          {
             const scene = this .getScene ();
 
@@ -83,7 +83,7 @@ function (Fields,
 
          X3DScene .prototype .setExecutionContext .call (this, value);
 
-         if (! this .isMainContext ())
+         if (! this .isMainScene ())
          {
             const scene = this .getScene ();
 
@@ -115,7 +115,7 @@ function (Fields,
          if (this === browser .getExecutionContext () || this .loader === browser .loader)
             browser .addLoadCount (node);
 
-         if (! this .isMainContext ())
+         if (! this .isMainScene ())
             scene .addLoadCount (node);
       },
       removeLoadCount: function (node)
@@ -134,7 +134,7 @@ function (Fields,
          if (this === browser .getExecutionContext () || this .loader === browser .loader)
             browser .removeLoadCount (node);
 
-         if (! this .isMainContext ())
+         if (! this .isMainScene ())
             scene .removeLoadCount (node);
       },
       getLoadingObjects: function ()

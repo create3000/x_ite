@@ -111,7 +111,7 @@ function (X3DEventObject,
       {
          let executionContext = this ._executionContext;
 
-         while (! executionContext .isRootContext ())
+         while (! executionContext .isScene ())
             executionContext = executionContext .getExecutionContext ();
 
          return executionContext;
@@ -120,7 +120,7 @@ function (X3DEventObject,
       {
          let scene = this ._executionContext .getScene ();
 
-         while (! scene .isMainContext ())
+         while (! scene .isMainScene ())
             scene = scene .getScene ();
 
          return scene;
