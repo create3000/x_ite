@@ -99,7 +99,6 @@ function (SupportedNodes,
 		this ._protos         = new ProtoDeclarationArray ();
 		this ._externprotos   = new ExternProtoDeclarationArray ();
 		this ._routes         = new RouteArray ();
-		this ._routeIndex     = new Map ();
 	}
 
 	X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -654,16 +653,14 @@ function (SupportedNodes,
 
 				const id = sourceField .getId () + "." + destinationField .getId ();
 
-				let route = this ._routeIndex .get (id);
+				let route = this ._routes .get (id);
 
 				if (route)
 					return route;
 
 				route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
 
-				this ._routes .getValue () .push (route);
-				this ._routes .processInterests ();
-				this ._routeIndex .set (id, route);
+				this ._routes .add (id, route);
 
 				return route;
 			}
@@ -693,18 +690,10 @@ function (SupportedNodes,
 				const
 					sourceField      = route ._sourceField,
 					destinationField = route ._destinationField,
-					id               = sourceField .getId () + "." + destinationField .getId (),
-					index            = this ._routes .getValue () .indexOf (route);
+					id               = sourceField .getId () + "." + destinationField .getId ();
 
+				this ._routes .remove (id);
 				route .disconnect ();
-
-				if (index !== -1)
-				{
-					this ._routes .getValue () .splice (index, 1);
-					this ._routes .processInterests ();
-				}
-
-				this ._routeIndex .delete (id);
 
 				return true;
 			}
@@ -771,7 +760,7 @@ function (SupportedNodes,
 
 			const id = sourceField .getId () + "." + destinationField .getId ();
 
-			return this ._routeIndex .get (id);
+			return this ._routes .get (id);
 		},
 		getRoutes: function ()
 		{

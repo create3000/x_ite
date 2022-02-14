@@ -48,79 +48,29 @@
 
 
 define ([
-	"x_ite/Base/X3DObject",
+	"x_ite/Configuration/X3DInfoArray",
 ],
-function (X3DObject)
+function (X3DInfoArray)
 {
 "use strict";
 
-	const handler =
+	function FieldDefinitionArray (fieldDefinitions)
 	{
-		get: function (target, key)
-		{
-			const value = target [key];
+		const proxy = X3DInfoArray .call (this);
 
-			if (value !== undefined)
-				return value;
+		for (const fieldDefinition of fieldDefinitions)
+			this .add (fieldDefinition .name, fieldDefinition);
 
-			return target .array [key];
-		},
-		set: function (target, key, value)
-		{
-			return false;
-		},
-		has: function (target, key)
-		{
-			if (Number .isInteger (+key))
-				return key < target .array .length;
-
-			return key in target;
-		},
-	};
-
-	function FieldDefinitionArray (value)
-	{
-		this .array = value;
-		this .index = new Map ();
-
-		for (const fieldDefinition of value)
-			this .index .set (fieldDefinition .name, fieldDefinition);
-
-		return new Proxy (this, handler);
+		return proxy;
 	}
 
-	FieldDefinitionArray .prototype = Object .assign (Object .create (X3DObject .prototype),
+	FieldDefinitionArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: FieldDefinitionArray,
 		getTypeName: function ()
 		{
 			return "FieldDefinitionArray";
 		},
-		getValue: function ()
-		{
-			return this .array;
-		},
-		has: function (key)
-		{
-			return this .index .has (key);
-		},
-		get: function (key)
-		{
-			return this .index .get (key);
-		},
-		add: function (fieldDefinition)
-		{
-			this .array .push (fieldDefinition);
-			this .index .set (fieldDefinition .name, fieldDefinition);
-			this .processInterests ();
-		},
-	});
-
-	Object .defineProperty (FieldDefinitionArray .prototype, "length",
-	{
-		get: function () { return this .array .length; },
-		enumerable: false,
-		configurable: false
 	});
 
 	return FieldDefinitionArray;

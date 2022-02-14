@@ -70,9 +70,12 @@ function (ComponentInfoArray,
 		{
 			return "ProfileInfoArray";
 		},
-		addProfile: function (value)
+		addProfile: function (profile)
 		{
-			this .add (value .name, new ProfileInfo (value .name, value .title, value .providerUrl, new ComponentInfoArray (value .components)));
+			this .add (profile .name, new ProfileInfo (profile .name,
+			                                           profile .title,
+			                                           profile .providerUrl,
+			                                           new ComponentInfoArray (profile .components)));
 		},
 	});
 

@@ -56,11 +56,11 @@ function (ComponentInfo,
 {
 "use strict";
 
-	function ComponentInfoArray (array)
+	function ComponentInfoArray (componentInfos)
 	{
 		const proxy = X3DInfoArray .call (this);
 
-		for (const componentInfo of array)
+		for (const componentInfo of componentInfos)
 			this .add (componentInfo .name, componentInfo);
 
 		return proxy;

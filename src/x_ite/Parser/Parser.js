@@ -484,6 +484,7 @@ function (Fields,
 					}
 					catch (error)
 					{
+						console .log (error);
 						this .error (new Error (this .getError (error)));
 					}
 				}

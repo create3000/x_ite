@@ -48,85 +48,23 @@
 
 
 define ([
-	"x_ite/Base/X3DObject",
+	"x_ite/Configuration/X3DInfoArray",
 ],
-function (X3DObject)
+function (X3DInfoArray)
 {
 "use strict";
 
-	const handler =
-	{
-		get: function (target, key)
-		{
-			const value = target [key];
-
-			if (value !== undefined)
-				return value;
-
-			return target .array [key];
-		},
-		set: function (target, key, value)
-		{
-			return false;
-		},
-		has: function (target, key)
-		{
-			if (Number .isInteger (+key))
-				return key < target .array .length;
-
-			return key in target;
-		},
-	};
-
 	function RouteArray ()
 	{
-		this .array = [ ];
-
-		return new Proxy (this, handler);
+		return X3DInfoArray .call (this);
 	}
 
-	RouteArray .prototype = Object .assign (Object .create (X3DObject .prototype),
+	RouteArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
 	{
 		constructor: RouteArray,
 		getTypeName: function ()
 		{
 			return "RouteArray";
-		},
-		getValue: function ()
-		{
-			return this .array;
-		},
-		toVRMLStream: function (stream)
-		{
-			this .array .forEach (function (route)
-			{
-				try
-				{
-					route .toVRMLStream (stream);
-
-					stream .string += "\n";
-				}
-				catch (error)
-				{
-					console .log (error);
-				}
-			});
-		},
-		toXMLStream: function (stream)
-		{
-			this .array .forEach (function (route)
-			{
-				try
-				{
-					route .toXMLStream (stream);
-
-					stream .string += "\n";
-				}
-				catch (error)
-				{
-					console .log (error);
-				}
-			});
 		},
 	});
 

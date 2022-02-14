@@ -434,17 +434,7 @@ function (X3DEventObject,
 			{
 				this ._fields            .delete (name);
 				this ._userDefinedFields .delete (name);
-
-				const fieldDefinitions = this .fieldDefinitions .getValue ();
-
-				for (let i = 0, length = fieldDefinitions .length; i < length; ++ i)
-				{
-					if (fieldDefinitions [i] .name === name)
-					{
-						fieldDefinitions .splice (i, 1);
-						break;
-					}
-				}
+				this .fieldDefinition    .remove (name);
 
 				if (! this .getPrivate ())
 					field .removeCloneCount (1);
@@ -518,7 +508,7 @@ function (X3DEventObject,
 			field .setName (name);
 			field .setAccessType (accessType);
 
-			this .fieldDefinitions .add (new X3DFieldDefinition (accessType, name, field));
+			this .fieldDefinitions .add (name, new X3DFieldDefinition (accessType, name, field));
 
 			this .setField (name, field, true);
 		},
