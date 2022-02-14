@@ -507,6 +507,15 @@ function ($,
 
 				externproto .setup ();
 
+				try
+				{
+					const existingExternProto = this .getExecutionContext () .getExternProtoDeclaration (name);
+
+					this .getExecutionContext () .updateExternProtoDeclaration (this .getExecutionContext () .getUniqueExternProtoName (name), existingExternProto);
+				}
+				catch (error)
+				{ }
+
 				this .getExecutionContext () .updateExternProtoDeclaration (name, externproto);
 			}
 		},
@@ -567,6 +576,15 @@ function ($,
 				}
 
 				proto .setup ();
+
+				try
+				{
+					const existingProto = this .getExecutionContext () .getProtoDeclaration (name);
+
+					this .getExecutionContext () .updateProtoDeclaration (this .getExecutionContext () .getUniqueProtoName (name), existingProto);
+				}
+				catch (error)
+				{ }
 
 				this .getExecutionContext () .updateProtoDeclaration (name, proto);
 			}

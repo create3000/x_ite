@@ -98,6 +98,10 @@ function (X3DObject)
 		{
 			return this .array;
 		},
+		has: function (key)
+		{
+			return this .index .has (key);
+		},
 		get: function (key)
 		{
 			return this .index .get (key);

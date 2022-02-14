@@ -869,7 +869,17 @@ function (Fields,
 								{
 									proto .setup ();
 
+									try
+									{
+										const existingProto = this .getExecutionContext () .getProtoDeclaration (nodeTypeId);
+
+										this .getExecutionContext () .updateProtoDeclaration (this .getExecutionContext () .getUniqueProtoName (nodeTypeId), existingProto);
+									}
+									catch (error)
+									{ }
+
 									this .getExecutionContext () .updateProtoDeclaration (nodeTypeId, proto);
+
 									return true;
 								}
 
@@ -1103,6 +1113,15 @@ function (Fields,
 								}
 
 								externproto .setup ();
+
+								try
+								{
+									const existingExternProto = this .getExecutionContext () .getExternProtoDeclaration (nodeTypeId);
+
+									this .getExecutionContext () .updateExternProtoDeclaration (this .getExecutionContext () .getUniqueExternProtoName (nodeTypeId), existingExternProto);
+								}
+								catch (error)
+								{ }
 
 								this .getExecutionContext () .updateExternProtoDeclaration (nodeTypeId, externproto);
 								return true;

@@ -280,7 +280,7 @@ function (SupportedNodes,
 		},
 		getUniqueName: function (name)
 		{
-			const _TrailingNumbers = /(_\d+$)/;
+			const _TrailingNumbers = /_\d+$/;
 
 			name = name .replace (_TrailingNumbers, "");
 
@@ -464,6 +464,33 @@ function (SupportedNodes,
 		{
 			return this ._protos;
 		},
+		getUniqueProtoName: function (name)
+		{
+			const TrailingNumbers = /\d+$/;
+
+			name = name .replace (TrailingNumbers, "");
+
+			let
+				newName = name,
+				i       = 64;
+
+			for (; i;)
+			{
+				if (this ._protos .has (newName))
+				{
+					const
+						min = i,
+						max = i <<= 1;
+
+					newName  = name;
+					newName += Math .round (Algorithm .random (min, max));
+				}
+				else
+					break;
+			}
+
+			return newName;
+		},
 		getExternProtoDeclaration: function (name)
 		{
 			const externproto = this ._externprotos .get (name);
@@ -515,6 +542,33 @@ function (SupportedNodes,
 		getExternProtoDeclarations: function ()
 		{
 			return this ._externprotos;
+		},
+		getUniqueExternProtoName: function (name)
+		{
+			const TrailingNumbers = /\d+$/;
+
+			name = name .replace (TrailingNumbers, "");
+
+			let
+				newName = name,
+				i       = 64;
+
+			for (; i;)
+			{
+				if (this ._externprotos .has (newName))
+				{
+					const
+						min = i,
+						max = i <<= 1;
+
+					newName  = name;
+					newName += Math .round (Algorithm .random (min, max));
+				}
+				else
+					break;
+			}
+
+			return newName;
 		},
 		addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
 		{
