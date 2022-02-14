@@ -372,6 +372,8 @@ function ($,
 				}
 			};
 		})(),
+		addCloneCount: Function .prototype,
+		removeCloneCount: Function .prototype,
 		valueOf: function ()
 		{
 			return this;

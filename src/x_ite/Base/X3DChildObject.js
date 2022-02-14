@@ -110,8 +110,6 @@ function (X3DObject)
 		{
 			return this ._parents;
 		},
-		addCloneCount: Function .prototype,
-		removeCloneCount: Function .prototype,
 		dispose: function ()
 		{
 			this ._parents .clear ();
