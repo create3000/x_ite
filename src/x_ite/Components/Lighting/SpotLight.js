@@ -309,6 +309,18 @@ function (Fields,
 
 		this .addType (X3DConstants .SpotLight);
 
+		switch (executionContext .getSpecificationVersion ())
+		{
+			case "2.0":
+			case "3.0":
+			case "3.1":
+			case "3.2":
+			{
+				this .beamWidth_   = 1.5708;
+				this .cutOffAngle_ = 0.785398;
+			}
+		}
+
 		this .location_    .setUnit ("length");
 		this .radius_      .setUnit ("length");
 		this .beamWidth_   .setUnit ("angle");
