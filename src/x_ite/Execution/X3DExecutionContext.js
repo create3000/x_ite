@@ -290,18 +290,16 @@ function (SupportedNodes,
 
 			for (; i;)
 			{
-				if (this ._namedNodes .has (newName) || newName .length === 0)
-				{
-					const
-						min = i,
-						max = i <<= 1;
-
-					newName  = name;
-					newName += '_';
-					newName += Math .round (Algorithm .random (min, max));
-				}
-				else
+				if (!(this ._namedNodes .has (newName) || newName .length === 0))
 					break;
+
+				const
+					min = i,
+					max = i <<= 1;
+
+				newName  = name;
+				newName += '_';
+				newName += Math .round (Algorithm .random (min, max));
 			}
 
 			return newName;
@@ -476,17 +474,15 @@ function (SupportedNodes,
 
 			for (; i;)
 			{
-				if (this ._protos .has (newName))
-				{
-					const
-						min = i,
-						max = i <<= 1;
-
-					newName  = name;
-					newName += Math .round (Algorithm .random (min, max));
-				}
-				else
+				if (!this ._protos .has (newName))
 					break;
+
+				const
+					min = i,
+					max = i <<= 1;
+
+				newName  = name;
+				newName += Math .round (Algorithm .random (min, max));
 			}
 
 			return newName;
@@ -555,17 +551,15 @@ function (SupportedNodes,
 
 			for (; i;)
 			{
-				if (this ._externprotos .has (newName))
-				{
-					const
-						min = i,
-						max = i <<= 1;
-
-					newName  = name;
-					newName += Math .round (Algorithm .random (min, max));
-				}
-				else
+				if (!this ._externprotos .has (newName))
 					break;
+
+				const
+					min = i,
+					max = i <<= 1;
+
+				newName  = name;
+				newName += Math .round (Algorithm .random (min, max));
 			}
 
 			return newName;

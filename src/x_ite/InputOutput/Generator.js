@@ -210,7 +210,7 @@ function (X3DConstants)
 		},
 		Name: (function ()
 		{
-			const _TrailingNumbers = /(_\d+$)/;
+			const _TrailingNumbers = /_\d+$/;
 
 			return function (baseNode)
 			{
