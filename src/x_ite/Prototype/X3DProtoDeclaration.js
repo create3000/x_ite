@@ -76,10 +76,10 @@ function (SupportedNodes,
 
       this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 
-      this .setLive (false);
-
       this .body = new X3DExecutionContext (executionContext);
       this .body .setNode (this);
+      this .body .setLive (false);
+      this .setLive (false);
    }
 
    X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),

@@ -14662,10 +14662,6 @@ function ($,
       _inputRoutes: new Set (),
       _outputRoutes: new Set (),
       _routeCallbacks: new Map (),
-      clone: function ()
-      {
-         return this .copy ();
-      },
       equals: function (value)
       {
          return this ._value === value .valueOf ();
@@ -22211,12 +22207,6 @@ function (X3DField,
    {
       constructor: SFNode,
       _cloneCount: 0,
-      clone: function ()
-      {
-         const target = this ._target;
-
-         return new SFNode (target .getValue ());
-      },
       copy: function (instance)
       {
          const
@@ -22224,7 +22214,7 @@ function (X3DField,
             value  = target .getValue ();
 
          if (value)
-            return new SFNode (value .copy (instance));
+            return new SFNode (instance ? value .copy (instance) : value);
 
          return new SFNode ();
       },
@@ -24654,23 +24644,23 @@ function (SFBool,
       {
          return X3DConstants .MFNode;
       },
-      clone: function ()
-      {
-         const clone = new MFNode ();
-         clone .setValue (this);
-         clone .setModificationTime (0);
-         return clone;
-      },
       copy: function (instance)
       {
-         const copy = new MFNode ();
+         if (instance)
+         {
+            const copy = new MFNode ();
 
-         for (const node of this .getValue ())
-            copy .push (node .copy (instance));
+            for (const node of this .getValue ())
+               copy .push (node .copy (instance));
 
-         copy .setModificationTime (0);
+            copy .setModificationTime (0);
 
-         return copy;
+            return copy;
+         }
+         else
+         {
+            return X3DObjectArrayField .prototype .copy .call (this);
+         }
       },
       addCloneCount: function (count)
       {
@@ -25791,7 +25781,7 @@ function (X3DEventObject,
          const
             accessType = fieldDefinition .accessType,
             name       = fieldDefinition .name,
-            field      = fieldDefinition .value .clone ();
+            field      = fieldDefinition .value .copy ();
 
          field .setTainted (true);
          field .addParent (this);
@@ -36040,10 +36030,10 @@ function (SupportedNodes,
 
       this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 
-      this .setLive (false);
-
       this .body = new X3DExecutionContext (executionContext);
       this .body .setNode (this);
+      this .body .setLive (false);
+      this .setLive (false);
    }
 
    X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
