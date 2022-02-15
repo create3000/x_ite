@@ -255,32 +255,35 @@ function (SupportedNodes,
       {
          return this ._namedNodes;
       },
-      getUniqueName: function (name)
+      getUniqueName: (function ()
       {
          const _TrailingNumbers = /_\d+$/;
 
-         name = name .replace (_TrailingNumbers, "");
-
-         let
-            newName = name,
-            i       = 64;
-
-         for (; i;)
+         return function (name)
          {
-            if (!(this ._namedNodes .has (newName) || newName .length === 0))
-               break;
+            name = name .replace (_TrailingNumbers, "");
 
-            const
-               min = i,
-               max = i <<= 1;
+            let
+               newName = name,
+               i       = 64;
 
-            newName  = name;
-            newName += '_';
-            newName += Math .round (Algorithm .random (min, max));
-         }
+            for (; i;)
+            {
+               if (!(this ._namedNodes .has (newName) || newName .length === 0))
+                  break;
 
-         return newName;
-      },
+               const
+                  min = i,
+                  max = i <<= 1;
+
+               newName  = name;
+               newName += '_';
+               newName += Math .round (Algorithm .random (min, max));
+            }
+
+            return newName;
+         };
+      })(),
       addImportedNode: function (inlineNode, exportedName, importedName)
       {
          if (importedName === undefined)
@@ -437,31 +440,34 @@ function (SupportedNodes,
       {
          return this ._protos;
       },
-      getUniqueProtoName: function (name)
+      getUniqueProtoName: (function ()
       {
          const TrailingNumbers = /\d+$/;
 
-         name = name .replace (TrailingNumbers, "");
-
-         let
-            newName = name,
-            i       = 64;
-
-         for (; i;)
+         return function (name)
          {
-            if (!this ._protos .has (newName))
-               break;
+            name = name .replace (TrailingNumbers, "");
 
-            const
-               min = i,
-               max = i <<= 1;
+            let
+               newName = name,
+               i       = 64;
 
-            newName  = name;
-            newName += Math .round (Algorithm .random (min, max));
-         }
+            for (; i;)
+            {
+               if (!this ._protos .has (newName))
+                  break;
 
-         return newName;
-      },
+               const
+                  min = i,
+                  max = i <<= 1;
+
+               newName  = name;
+               newName += Math .round (Algorithm .random (min, max));
+            }
+
+            return newName;
+         };
+      })(),
       getExternProtoDeclaration: function (name)
       {
          const externproto = this ._externprotos .get (name);
@@ -512,31 +518,34 @@ function (SupportedNodes,
       {
          return this ._externprotos;
       },
-      getUniqueExternProtoName: function (name)
+      getUniqueExternProtoName: (function ()
       {
          const TrailingNumbers = /\d+$/;
 
-         name = name .replace (TrailingNumbers, "");
-
-         let
-            newName = name,
-            i       = 64;
-
-         for (; i;)
+         return function (name)
          {
-            if (!this ._externprotos .has (newName))
-               break;
+            name = name .replace (TrailingNumbers, "");
 
-            const
-               min = i,
-               max = i <<= 1;
+            let
+               newName = name,
+               i       = 64;
 
-            newName  = name;
-            newName += Math .round (Algorithm .random (min, max));
-         }
+            for (; i;)
+            {
+               if (!this ._externprotos .has (newName))
+                  break;
 
-         return newName;
-      },
+               const
+                  min = i,
+                  max = i <<= 1;
+
+               newName  = name;
+               newName += Math .round (Algorithm .random (min, max));
+            }
+
+            return newName;
+         };
+      })(),
       addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
       {
          sourceField      = String (sourceField);
