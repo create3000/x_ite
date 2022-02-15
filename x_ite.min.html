@@ -255,14 +255,19 @@ X3D (function ()
       bookmarks .loadURL ($(".location-entry") .val ());
    }
 
-   function toXMLString ()
-   {
-      console .log (X3D .getBrowser ("#browser") .currentScene .toXMLString ());
-   }
-
    function toVRMLString ()
    {
-      console .log (X3D .getBrowser ("#browser") .currentScene .toVRMLString ());
+      console .log (Browser .toVRMLString ());
+   }
+
+   function toXMLString ()
+   {
+      console .log (Browser .toXMLString ());
+   }
+
+   function toJSONString ()
+   {
+      console .log (Browser .toJSONString ());
    }
 
    const bookmarks = new Bookmarks (Browser, $(".examples-box"));
@@ -273,14 +278,15 @@ X3D (function ()
    $(".version") .text (Browser .name + " v" + Browser .version);
    $(".location-entry") .keydown (function (event) { if (event .key == "Enter") loadURL (); });
    $(".location-go") .click (loadURL);
-   $(".print-xml") .click (toXMLString);
    $(".print-vrml") .click (toVRMLString);
+   $(".print-xml") .click (toXMLString);
+   $(".print-json") .click (toJSONString);
 
    // Restore location entry.
 
-   const defaultLocaton = "http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d";
+   const defaultLocation = "http://www.web3d.org/x3d/content/examples/Basic/ChemicalMarkupLanguage/ButanedioicAcid.x3d";
 
-   $(".location-entry") .val (Browser .getLocalStorage () ["Bookmarks.location"] || defaultLocaton)
+   $(".location-entry") .val (Browser .getLocalStorage () ["Bookmarks.location"] || defaultLocation)
 
    $(window) .on ("unload", function ()
    {
@@ -320,7 +326,7 @@ function (error)
                <button class="location-go" type="button">Load URL</button>
             </div>
             <div class="buttons">
-               <a class="print-xml" href="#">XML</a><a class="print-vrml" href="#">VRML</a>
+               <a class="print-xml" href="#">XML</a><a class="print-vrml" href="#">VRML</a><a class="print-json" href="#">JSON</a>
             </div>
             <div class="links min-links">
                <a href="src/x_ite.html">src/x_ite.html</a><a href="http://rawgit.com/create3000/x_ite/main/x_ite.min.html">github</a>
