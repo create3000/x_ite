@@ -152,12 +152,6 @@ function (X3DField,
    {
       constructor: SFNode,
       _cloneCount: 0,
-      clone: function ()
-      {
-         const target = this ._target;
-
-         return new SFNode (target .getValue ());
-      },
       copy: function (instance)
       {
          const
@@ -165,7 +159,7 @@ function (X3DField,
             value  = target .getValue ();
 
          if (value)
-            return new SFNode (value .copy (instance));
+            return new SFNode (instance ? value .copy (instance) : value);
 
          return new SFNode ();
       },

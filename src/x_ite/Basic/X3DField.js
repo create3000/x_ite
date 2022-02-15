@@ -84,10 +84,6 @@ function ($,
       _inputRoutes: new Set (),
       _outputRoutes: new Set (),
       _routeCallbacks: new Map (),
-      clone: function ()
-      {
-         return this .copy ();
-      },
       equals: function (value)
       {
          return this ._value === value .valueOf ();

@@ -392,7 +392,7 @@ function (X3DEventObject,
          const
             accessType = fieldDefinition .accessType,
             name       = fieldDefinition .name,
-            field      = fieldDefinition .value .clone ();
+            field      = fieldDefinition .value .copy ();
 
          field .setTainted (true);
          field .addParent (this);

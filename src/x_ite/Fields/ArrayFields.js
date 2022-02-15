@@ -141,23 +141,23 @@ function (SFBool,
       {
          return X3DConstants .MFNode;
       },
-      clone: function ()
-      {
-         const clone = new MFNode ();
-         clone .setValue (this);
-         clone .setModificationTime (0);
-         return clone;
-      },
       copy: function (instance)
       {
-         const copy = new MFNode ();
+         if (instance)
+         {
+            const copy = new MFNode ();
 
-         for (const node of this .getValue ())
-            copy .push (node .copy (instance));
+            for (const node of this .getValue ())
+               copy .push (node .copy (instance));
 
-         copy .setModificationTime (0);
+            copy .setModificationTime (0);
 
-         return copy;
+            return copy;
+         }
+         else
+         {
+            return X3DObjectArrayField .prototype .copy .call (this);
+         }
       },
       addCloneCount: function (count)
       {
