@@ -113,17 +113,6 @@ function (SupportedNodes,
       {
          return this === this .getExecutionContext ();
       },
-      isScene: function ()
-      {
-         return true;
-      },
-      getScene: function ()
-      {
-         if (this .isMainScene ())
-            return this;
-
-         return this .getExecutionContext () .getScene ();
-      },
       setSpecificationVersion: function (specificationVersion)
       {
          this ._specificationVersion = specificationVersion;
@@ -170,7 +159,7 @@ function (SupportedNodes,
 
          const unit = this ._units .get (category);
 
-         if (! unit)
+         if (!unit)
             return;
 
          unit .name             = name;
@@ -238,7 +227,7 @@ function (SupportedNodes,
       },
       setMetaData: function (name, value)
       {
-         if (! name .length)
+         if (!name .length)
             return;
 
          this ._metadata .set (name, String (value));
@@ -269,10 +258,10 @@ function (SupportedNodes,
          if (exportedName .length === 0)
             throw new Error ("Couldn't update exported node: node exported name is empty.");
 
-         if (! (node instanceof Fields .SFNode))
+         if (!(node instanceof Fields .SFNode))
             throw new Error ("Couldn't update exported node: node must be of type SFNode.");
 
-         if (! node .getValue ())
+         if (!node .getValue ())
             throw new Error ("Couldn't update exported node: node IS NULL.");
 
          //if (node .getValue () .getExecutionContext () !== this)
@@ -304,7 +293,7 @@ function (SupportedNodes,
          if (node === null)
             node = new Fields .SFNode ();
 
-         if (! (node instanceof Fields .SFNode))
+         if (!(node instanceof Fields .SFNode))
             throw new Error ("Couldn't add root node: node must be of type SFNode.");
 
          const rootNodes = this .getRootNodes ();
@@ -322,7 +311,7 @@ function (SupportedNodes,
          if (node === null)
             node = new Fields .SFNode ();
 
-         if (! (node instanceof Fields .SFNode))
+         if (!(node instanceof Fields .SFNode))
             throw new Error ("Couldn't remove root node: node must be of type SFNode.");
 
          const
@@ -391,7 +380,7 @@ function (SupportedNodes,
                }
             }
 
-            if (! empty)
+            if (!empty)
                stream .string += "\n";
          }
 

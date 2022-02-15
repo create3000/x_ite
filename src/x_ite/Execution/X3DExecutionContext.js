@@ -106,18 +106,11 @@ function (SupportedNodes,
       {
          return "X3DExecutionContext";
       },
-      isMainScene: function ()
-      {
-         return false;
-      },
-      isScene: function ()
-      {
-         return false;
-      },
+      _node: null,
       getNode: function ()
       {
          // Can be either of type X3DProtoDeclaration or X3DPrototypeInstance, or null.
-         return this ._node || null;
+         return this ._node;
       },
       setNode: function (value)
       {
@@ -161,7 +154,7 @@ function (SupportedNodes,
          {
             const Type = this .getBrowser () .getSupportedNode (typeName);
 
-            if (! Type)
+            if (!Type)
                return null;
 
             return new Type (this);
@@ -170,7 +163,7 @@ function (SupportedNodes,
          {
             const Type = this .getBrowser () .getSupportedNode (typeName);
 
-            if (! Type)
+            if (!Type)
                throw new Error ("Unknown node type '" + typeName + "'.");
 
             const baseNode = new Type (this);
@@ -196,7 +189,9 @@ function (SupportedNodes,
             if (externproto)
                return externproto .createInstance (this, setup);
 
-            if (executionContext .isScene ())
+            const X3DScene = require ("x_ite/Execution/X3DScene");
+
+            if (executionContext instanceof X3DScene)
                break;
 
             executionContext = executionContext .getExecutionContext ();
@@ -216,14 +211,14 @@ function (SupportedNodes,
       },
       updateNamedNode: function (name, node)
       {
-         if (! (node instanceof Fields .SFNode || node instanceof X3DBaseNode))
+         if (!(node instanceof Fields .SFNode || node instanceof X3DBaseNode))
             throw new Error ("Couldn't update named node: node must be of type SFNode.");
 
          name = String (name);
 
          const baseNode = node instanceof Fields .SFNode ? node .getValue () : node;
 
-         if (! baseNode)
+         if (!baseNode)
             throw new Error ("Couldn't update named node: node IS NULL.");
 
          if (baseNode .getExecutionContext () !== this)
@@ -302,7 +297,7 @@ function (SupportedNodes,
          exportedName = String (exportedName);
          importedName = importedName === undefined ? exportedName : String (importedName);
 
-         if (! inlineNode)
+         if (!inlineNode)
             throw new Error ("Node named is not an Inline node.");
 
          if (inlineNode .getExecutionContext () !== this)
@@ -328,7 +323,7 @@ function (SupportedNodes,
       {
          const importedNode = this ._importedNodes .get (importedName);
 
-         if (! importedNode)
+         if (!importedNode)
             return;
 
          importedNode .dispose ();
@@ -366,7 +361,7 @@ function (SupportedNodes,
       },
       getLocalName: function (node)
       {
-         if (! (node instanceof Fields .SFNode))
+         if (!(node instanceof Fields .SFNode))
             throw new Error ("Couldn't get local name: node is NULL.");
 
          if (node .getValue () .getExecutionContext () === this)
@@ -547,20 +542,20 @@ function (SupportedNodes,
          sourceField      = String (sourceField);
          destinationField = String (destinationField);
 
-         if (! (sourceNode instanceof Fields .SFNode))
+         if (!(sourceNode instanceof Fields .SFNode))
             throw new Error ("Bad ROUTE specification: source node must be of type SFNode.");
 
-         if (! (destinationNode instanceof Fields .SFNode))
+         if (!(destinationNode instanceof Fields .SFNode))
             throw new Error ("Bad ROUTE specification: destination node must be of type SFNode.");
 
          const
             sourceNodeValue      = sourceNode      .getValue (),
             destinationNodeValue = destinationNode .getValue ();
 
-         if (! sourceNodeValue)
+         if (!sourceNodeValue)
             throw new Error ("Bad ROUTE specification: source node is NULL.");
 
-         if (! destinationNodeValue)
+         if (!destinationNodeValue)
             throw new Error ("Bad ROUTE specification: destination node is NULL.");
 
          // Imported nodes handling.
@@ -625,10 +620,10 @@ function (SupportedNodes,
             sourceField      = sourceNode      .getField (sourceField),
             destinationField = destinationNode .getField (destinationField);
 
-            if (! sourceField .isOutput ())
+            if (!sourceField .isOutput ())
                throw new Error ("Field named '" + sourceField .getName () + "' in node named '" + sourceNode .getName () + "' of type " + sourceNode .getTypeName () + " is not an output field.");
 
-            if (! destinationField .isInput ())
+            if (!destinationField .isInput ())
                throw new Error ("Field named '" + destinationField .getName () + "' in node named '" + destinationNode .getName () + "' of type " + destinationNode .getTypeName () + " is not an input field.");
 
             if (sourceField .getType () !== destinationField .getType ())
@@ -659,7 +654,7 @@ function (SupportedNodes,
          {
             route = this .getRoute .apply (this, arguments);
 
-            if (! route)
+            if (!route)
                return false;
          }
 
@@ -732,10 +727,10 @@ function (SupportedNodes,
       },
       getRoute: function (sourceNode, sourceField, destinationNode, destinationField)
       {
-         if (! sourceNode .getValue ())
+         if (!sourceNode .getValue ())
             throw new Error ("Bad ROUTE specification: sourceNode is NULL.");
 
-         if (! destinationNode .getValue ())
+         if (!destinationNode .getValue ())
             throw new Error ("Bad ROUTE specification: destinationNode is NULL.");
 
          sourceField      = sourceNode .getValue () .getField (sourceField);

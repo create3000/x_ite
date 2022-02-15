@@ -99,16 +99,18 @@ function (X3DEventObject,
       {
          let scene = this ._executionContext .getScene ();
 
-         while (! scene .isMainScene ())
+         while (!scene .isMainScene ())
             scene = scene .getScene ();
 
          return scene;
       },
       getScene: function ()
       {
+         const X3DScene = require ("x_ite/Execution/X3DScene");
+
          let executionContext = this ._executionContext;
 
-         while (! executionContext .isScene ())
+         while (!(executionContext instanceof X3DScene))
             executionContext = executionContext .getExecutionContext ();
 
          return executionContext;
