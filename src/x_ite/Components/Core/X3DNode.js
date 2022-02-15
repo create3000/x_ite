@@ -184,7 +184,7 @@ function (X3DBaseNode,
       {
          const generator = Generator .Get (stream);
 
-         if (field .getReferences () .size === 0 || ! generator .ExecutionContext ())
+         if (field .getReferences () .size === 0 || !generator .ExecutionContext ())
          {
             if (field .isInitializable ())
             {
@@ -220,7 +220,7 @@ function (X3DBaseNode,
                   stream .string += "\n";
             });
 
-            if (field .getAccessType () === X3DConstants .inputOutput && ! initializableReference && ! this .isDefaultValue (field))
+            if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !this .isDefaultValue (field))
             {
                // Output build in field
 
@@ -237,7 +237,7 @@ function (X3DBaseNode,
       {
          const generator = Generator .Get (stream);
 
-         if (field .getReferences () .size === 0 || ! generator .ExecutionContext ())
+         if (field .getReferences () .size === 0 || !generator .ExecutionContext ())
          {
             stream .string += generator .Indent ();
             stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
@@ -282,7 +282,7 @@ function (X3DBaseNode,
                   stream .string += "\n";
             });
 
-            if (field .getAccessType () === X3DConstants .inputOutput && ! initializableReference && ! field .isDefaultValue ())
+            if (field .getAccessType () === X3DConstants .inputOutput && !initializableReference && !field .isDefaultValue ())
             {
                stream .string += "\n";
                stream .string += generator .Indent ();
@@ -409,15 +409,15 @@ function (X3DBaseNode,
                      initializableReference = initializableReference || fieldReference .isInitializable ();
                   });
 
-                  if (! initializableReference)
-                     mustOutputValue = ! this .isDefaultValue (field);
+                  if (!initializableReference)
+                     mustOutputValue = !this .isDefaultValue (field);
                }
             }
 
             // If we have no execution context we are not in a proto and must not generate IS references the same is true
             // if the node is a shared node as the node does not belong to the execution context.
 
-            if (field .getReferences () .size === 0 || ! generator .ExecutionContext () || mustOutputValue)
+            if (field .getReferences () .size === 0 || !generator .ExecutionContext () || mustOutputValue)
             {
                if (mustOutputValue)
                   references .push (field);
@@ -459,7 +459,7 @@ function (X3DBaseNode,
          generator .DecIndent ();
          generator .DecIndent ();
 
-         if ((! this .hasUserDefinedFields () || userDefinedFields .size === 0) && references .length === 0 && childNodes .length === 0 && ! cdata)
+         if ((!this .hasUserDefinedFields () || userDefinedFields .size === 0) && references .length === 0 && childNodes .length === 0 && !cdata)
          {
             stream .string += "/>";
          }
@@ -502,16 +502,16 @@ function (X3DBaseNode,
                         initializableReference = initializableReference || fieldReference .isInitializable ();
                      });
 
-                     if (! initializableReference)
+                     if (!initializableReference)
                         mustOutputValue = true;
                   }
 
-                  if ((field .getReferences () .size === 0 || ! generator .ExecutionContext ()) || mustOutputValue)
+                  if ((field .getReferences () .size === 0 || !generator .ExecutionContext ()) || mustOutputValue)
                   {
                      if (mustOutputValue && generator .ExecutionContext ())
                         references .push (field);
 
-                     if (! field .isInitializable () || field .isDefaultValue ())
+                     if (!field .isInitializable () || field .isDefaultValue ())
                      {
                         stream .string += "/>\n";
                      }

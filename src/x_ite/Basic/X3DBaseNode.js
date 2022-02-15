@@ -405,7 +405,7 @@ function (X3DEventObject,
       {
          this ._fields .set (name, field);
 
-         if (! this .getPrivate ())
+         if (!this .getPrivate ())
             field .addCloneCount (1);
 
          if (userDefined)
@@ -507,7 +507,7 @@ function (X3DEventObject,
             this ._userDefinedFields .delete (name);
             this .fieldDefinitions   .remove (name);
 
-            if (! this .getPrivate ())
+            if (!this .getPrivate ())
                field .removeCloneCount (1);
          }
       },
@@ -550,7 +550,7 @@ function (X3DEventObject,
 
             if (field .getReferences () .size === 0)
             {
-               if (! field .isInitializable ())
+               if (!field .isInitializable ())
                   return;
 
                if (this .isDefaultValue (field))
@@ -570,7 +570,7 @@ function (X3DEventObject,
          if (fieldDefinition)
             return fieldDefinition .value .equals (field);
 
-         return ! field .getModificationTime ();
+         return !field .getModificationTime ();
       },
       getFields: function ()
       {
