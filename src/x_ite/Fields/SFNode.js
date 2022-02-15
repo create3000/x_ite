@@ -222,7 +222,7 @@ function (X3DField,
       {
          const
             target = this ._target,
-             value  = target .getValue ();
+            value  = target .getValue ();
 
          if (value)
             return value .getTypeName ();
@@ -233,12 +233,23 @@ function (X3DField,
       {
          const
             target = this ._target,
-             value  = target .getValue ();
+            value  = target .getValue ();
 
          if (value)
             return value .getName ();
 
          throw new Error ("SFNode.getNodeName: node is null.");
+      },
+      getNodeDisplayName: function ()
+      {
+         const
+            target = this ._target,
+            value  = target .getValue ();
+
+         if (value)
+            return value .getDisplayName ();
+
+         throw new Error ("SFNode.getNodeDisplayName: node is null.");
       },
       getNodeType: function ()
       {
@@ -255,7 +266,7 @@ function (X3DField,
       {
          const
             target = this ._target,
-             value  = target .getValue ();
+            value  = target .getValue ();
 
          if (value)
             return value .getFieldDefinitions ();
@@ -330,7 +341,7 @@ function (X3DField,
       {
          const
             target = this ._target,
-             value  = target .getValue ();
+            value  = target .getValue ();
 
          if (value)
             return SFNodeCache .get (value);
@@ -341,7 +352,7 @@ function (X3DField,
       {
          const
             target = this ._target,
-             value  = target .getValue ();
+            value  = target .getValue ();
 
          if (value)
             value .toStream (stream);
@@ -352,7 +363,7 @@ function (X3DField,
       {
          const
             target = this ._target,
-             value  = target .getValue ();
+            value  = target .getValue ();
 
          if (value)
             value .toVRMLStream (stream);
@@ -379,7 +390,7 @@ function (X3DField,
       {
          const
             target = this ._target,
-             value  = target .getValue ();
+            value  = target .getValue ();
 
          if (value)
             value .toXMLStream (stream);
