@@ -199,8 +199,8 @@ function (SupportedNodes,
 
          if (setup === false)
             return null;
-         else
-            throw new Error ("Unknown proto or externproto type '" + name + "'.");
+
+         throw new Error ("Unknown proto or externproto type '" + name + "'.");
       },
       addNamedNode: function (name, node)
       {
