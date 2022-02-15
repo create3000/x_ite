@@ -109,7 +109,7 @@ define (function ()
       {
          return new DataStorage (this .getStorage (), this .getNameSpace () + namespace);
       },
-      addDefaultValues: function (defaults)
+      addDefaultValues: function (object)
       {
          Object .assign (defaults .get (this .target), object);
       },

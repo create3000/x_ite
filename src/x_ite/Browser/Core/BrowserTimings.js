@@ -64,7 +64,8 @@ function ($,
    {
       X3DBaseNode .call (this, executionContext);
 
-      this .enabled = false;
+      this .localStorage = this .getBrowser () .getLocalStorage () .addNameSpace ("BrowserTimings.");
+      this .enabled      = false;
    }
 
    BrowserTimings .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -86,8 +87,9 @@ function ($,
       {
          X3DBaseNode .prototype .initialize .call (this);
 
+         this .localStorage .addDefaultValues ({ type: "LESS" });
+
          this .localeOptions = { minimumFractionDigits: 2, maximumFractionDigits: 2 };
-         this .type          = this .getBrowser () .getLocalStorage () ["BrowserTimings.type"] || "LESS";
          this .startTime     = 0;
          this .frames        = 0;
 
@@ -126,19 +128,17 @@ function ($,
       },
       set_type__: function ()
       {
-         if (this .type === "MORE")
-            this .type = "LESS";
+         if (this .localStorage .type === "MORE")
+            this .localStorage .type = "LESS";
          else
-            this .type = "MORE";
-
-         this .getBrowser () .getLocalStorage () ["BrowserTimings.type"] = this .type;
+            this .localStorage .type = "MORE";
 
          this .set_button__ ();
          this .build ();
       },
       set_button__: function ()
       {
-         if (this .type === "MORE")
+         if (this .localStorage .type === "MORE")
             this .button .text (_("Less Properties"));
          else
             this .button .text (_("More Properties"));
@@ -170,7 +170,7 @@ function ($,
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Frame rate") + ":")) .append ($("<td></td>") .text (f2(this .frames / (currentTime - this .startTime)) .toLocaleString (language, fixed) + " " + _("fps")));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Speed")      + ":")) .append ($("<td></td>") .text (f2(this .getSpeed (browser .currentSpeed))         .toLocaleString (language, fixed) + " " + this .getSpeedUnit (browser .currentSpeed)));
 
-         if (this .type === "MORE")
+         if (this .localStorage .type === "MORE")
          {
             var
                layers            = browser .getWorld () .getLayerSet () .getLayers (),
