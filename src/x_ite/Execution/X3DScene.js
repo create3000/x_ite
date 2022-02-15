@@ -80,8 +80,6 @@ function (SupportedNodes,
 
       this .addType (X3DConstants .X3DScene)
 
-      this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
-
       this ._specificationVersion = "3.3";
       this ._encoding             = "SCRIPTED";
       this ._profile              = null;
@@ -97,7 +95,7 @@ function (SupportedNodes,
       this ._metadata      = new Map ();
       this ._exportedNodes = new Map ();
 
-      this .rootNodes_ .setAccessType (X3DConstants .inputOutput);
+      this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 
       this .setLive (false);
    }
@@ -298,9 +296,9 @@ function (SupportedNodes,
 
          const rootNodes = this .getRootNodes ();
 
-         for (let i = 0, length = rootNodes .length; i < length; ++ i)
+         for (const rootNode of rootNodes)
          {
-            if (rootNodes [i] .equals (node))
+            if (rootNode .equals (node))
                return;
          }
 
