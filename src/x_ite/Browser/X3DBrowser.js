@@ -764,6 +764,18 @@ function ($,
          if (element .length)
             element .append (document .createTextNode (string));
       },
+      toVRMLStream: function (stream)
+      {
+         this .currentScene .toVRMLStream (stream);
+      },
+      toXMLStream: function (stream)
+      {
+         this .currentScene .toXMLStream (stream);
+      },
+      toJSONStream: function (stream)
+      {
+         this .currentScene .toJSONStream (stream);
+      },
    });
 
    Object .defineProperty (X3DBrowser .prototype, "name",

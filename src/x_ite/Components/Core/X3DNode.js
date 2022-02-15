@@ -68,6 +68,10 @@ function (X3DBaseNode,
    X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       constructor: X3DNode,
+      getDisplayName: function ()
+      {
+         return this .getName () .replace (/_\d+$/, "");
+      },
       traverse: function () { },
       toStream: function (stream)
       {

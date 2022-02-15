@@ -63,7 +63,7 @@ function (Generator,
       constructor: X3DObject,
       _name: "",
       _interests: new Map (),
-      _interestsTemp: new Map (),
+      _interestsTemp: [ ],
       getId: function ()
       {
          return X3DObject .getId (this);
@@ -77,6 +77,10 @@ function (Generator,
          this ._name = value;
       },
       getName: function ()
+      {
+         return this ._name;
+      },
+      getDisplayName: function ()
       {
          return this ._name;
       },
