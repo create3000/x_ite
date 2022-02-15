@@ -175,6 +175,8 @@ function (SupportedNodes,
       },
       createProto: function (name, setup = true)
       {
+         const X3DScene = require ("x_ite/Execution/X3DScene");
+
          let executionContext = this;
 
          for (;;)
@@ -188,8 +190,6 @@ function (SupportedNodes,
 
             if (externproto)
                return externproto .createInstance (this, setup);
-
-            const X3DScene = require ("x_ite/Execution/X3DScene");
 
             if (executionContext instanceof X3DScene)
                break;
