@@ -76,7 +76,7 @@ function (X3DChildObject,
       },
       addEvent: function (field)
       {
-         if (field .getTainted ())
+         if (field .isTainted ())
             return;
 
          field .setTainted (true);
@@ -94,7 +94,7 @@ function (X3DChildObject,
 
          // Register for eventsProcessed
 
-         if (this .getTainted ())
+         if (this .isTainted ())
             return;
 
          if (field .isInput () || (this .getExtendedEventHandling () && ! field .isOutput ()))
@@ -104,7 +104,7 @@ function (X3DChildObject,
       },
       addNodeEvent: function ()
       {
-         if (this .getTainted ())
+         if (this .isTainted ())
             return;
 
          const browser = this .getBrowser ();

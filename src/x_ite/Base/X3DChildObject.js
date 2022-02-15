@@ -77,7 +77,7 @@ function (X3DObject)
       {
          this ._tainted = value;
       },
-      getTainted: function ()
+      isTainted: function ()
       {
          return this ._tainted;
       },

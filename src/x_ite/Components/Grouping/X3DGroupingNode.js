@@ -153,7 +153,7 @@ function (X3DChildNode,
                                             this .children_,    0, this .children_    .length),
                                     this .addChildren_ .length);
 
-         if (! this .children_ .getTainted ())
+         if (! this .children_ .isTainted ())
          {
             this .children_ .removeInterest ("set_children__", this);
             this .children_ .addInterest ("connectChildren", this);
@@ -172,7 +172,7 @@ function (X3DChildNode,
 
          if (this .children_ .length > 0)
          {
-            if (! this .children_ .getTainted ())
+            if (! this .children_ .isTainted ())
             {
                this .children_ .removeInterest ("set_children__", this);
                this .children_ .addInterest ("connectChildren", this);

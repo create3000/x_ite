@@ -68,10 +68,15 @@ function (X3DBaseNode,
    X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       constructor: X3DNode,
-      getDisplayName: function ()
+      getDisplayName: (function ()
       {
-         return this .getName () .replace (/_\d+$/, "");
-      },
+         const _TrailingNumber = /_\d+$/;
+
+         return function ()
+         {
+            return this .getName () .replace (_TrailingNumber, "");
+         };
+      })(),
       traverse: function () { },
       toStream: function (stream)
       {
