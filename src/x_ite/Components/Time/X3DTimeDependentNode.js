@@ -130,13 +130,13 @@ function (Fields,
             {
                this .disabled = false;
 
-               if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
+               if (this .isActive_ .getValue () && !this .isPaused_ .getValue ())
                   this .real_resume ();
             }
          }
          else
          {
-            if (! this .disabled && this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
+            if (!this .disabled && this .isActive_ .getValue () && !this .isPaused_ .getValue ())
             {
                // Only disable if needed, ie. if running!
                this .disabled = true;
@@ -237,7 +237,7 @@ function (Fields,
       },
       do_start: function ()
       {
-         if (! this .isActive_ .getValue ())
+         if (!this .isActive_ .getValue ())
          {
             this .resetElapsedTime ();
 
@@ -262,7 +262,7 @@ function (Fields,
       },
       do_pause: function ()
       {
-         if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
+         if (this .isActive_ .getValue () && !this .isPaused_ .getValue ())
          {
             this .isPaused_ = true;
 
@@ -324,8 +324,7 @@ function (Fields,
 
             this .isActive_ = false;
 
-            if (this .isLive () .getValue ())
-               this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
+            this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
          }
       },
       timeout: function (callback)

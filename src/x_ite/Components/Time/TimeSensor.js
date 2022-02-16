@@ -148,7 +148,7 @@ function (Fields,
          {
             this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
 
-            if (! this .isPaused_ .getValue ())
+            if (!this .isPaused_ .getValue ())
                this .set_fraction (this .getBrowser () .getCurrentTime ());
          }
       },
@@ -156,8 +156,11 @@ function (Fields,
       {
          this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
 
-         this .fraction_changed_ = this .fraction;
-         this .time_             = this .getBrowser () .getCurrentTime ();
+         if (this .isLive () .getValue ())
+         {
+            this .fraction_changed_ = this .fraction;
+            this .time_             = this .getBrowser () .getCurrentTime ();
+         }
       },
       set_resume: function (pauseInterval)
       {

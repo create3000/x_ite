@@ -41378,13 +41378,13 @@ function (Fields,
             {
                this .disabled = false;
 
-               if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
+               if (this .isActive_ .getValue () && !this .isPaused_ .getValue ())
                   this .real_resume ();
             }
          }
          else
          {
-            if (! this .disabled && this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
+            if (!this .disabled && this .isActive_ .getValue () && !this .isPaused_ .getValue ())
             {
                // Only disable if needed, ie. if running!
                this .disabled = true;
@@ -41485,7 +41485,7 @@ function (Fields,
       },
       do_start: function ()
       {
-         if (! this .isActive_ .getValue ())
+         if (!this .isActive_ .getValue ())
          {
             this .resetElapsedTime ();
 
@@ -41510,7 +41510,7 @@ function (Fields,
       },
       do_pause: function ()
       {
-         if (this .isActive_ .getValue () && ! this .isPaused_ .getValue ())
+         if (this .isActive_ .getValue () && !this .isPaused_ .getValue ())
          {
             this .isPaused_ = true;
 
@@ -41572,8 +41572,7 @@ function (Fields,
 
             this .isActive_ = false;
 
-            if (this .isLive () .getValue ())
-               this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
+            this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
          }
       },
       timeout: function (callback)
@@ -41755,7 +41754,7 @@ function (Fields,
          {
             this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
 
-            if (! this .isPaused_ .getValue ())
+            if (!this .isPaused_ .getValue ())
                this .set_fraction (this .getBrowser () .getCurrentTime ());
          }
       },
@@ -41763,8 +41762,11 @@ function (Fields,
       {
          this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
 
-         this .fraction_changed_ = this .fraction;
-         this .time_             = this .getBrowser () .getCurrentTime ();
+         if (this .isLive () .getValue ())
+         {
+            this .fraction_changed_ = this .fraction;
+            this .time_             = this .getBrowser () .getCurrentTime ();
+         }
       },
       set_resume: function (pauseInterval)
       {
