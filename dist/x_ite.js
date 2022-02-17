@@ -46051,6 +46051,12 @@ function ($,
       },
       xmlElement: function (xmlElement)
       {
+         if (xmlElement === null)
+         {
+            if (this .success)
+               return this .success (this .getScene ());
+         }
+
          switch (xmlElement .nodeName)
          {
             case "#document":
