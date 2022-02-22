@@ -36,10 +36,32 @@ define (function ()
 {
 "use strict";
 
+   // Maps are set when component is registered.
+
+   const
+      nodeTypeNames = new Map (), // (TYPENAME -> TypeName)
+      fieldNames    = new Map (); // (fieldname -> fieldName)
+
    const HTMLSupport =
    {
-      // Fields are set when component is registered.
-      fields: new Map (),
+      addNodeTypeName: function (typeName)
+      {
+         nodeTypeNames .set (typeName,                 typeName);
+         nodeTypeNames .set (typeName .toUpperCase (), typeName);
+      },
+      getNodeTypeName: function (typeName)
+      {
+         return nodeTypeNames .get (typeName);
+      },
+      addFieldName: function (name)
+      {
+         fieldNames .set (name,                 name);
+         fieldNames .set (name .toLowerCase (), name);
+      },
+      getFieldName: function (name)
+      {
+         return fieldNames .get (name);
+      },
    };
 
    return HTMLSupport;

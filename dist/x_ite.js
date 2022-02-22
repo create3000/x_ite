@@ -30624,10 +30624,32 @@ define ('x_ite/Parser/HTMLSupport',[],function ()
 {
 "use strict";
 
+   // Maps are set when component is registered.
+
+   const
+      nodeTypeNames = new Map (), // (TYPENAME -> TypeName)
+      fieldNames    = new Map (); // (fieldname -> fieldName)
+
    const HTMLSupport =
    {
-      // Fields are set when component is registered.
-      fields: new Map (),
+      addNodeTypeName: function (typeName)
+      {
+         nodeTypeNames .set (typeName,                 typeName);
+         nodeTypeNames .set (typeName .toUpperCase (), typeName);
+      },
+      getNodeTypeName: function (typeName)
+      {
+         return nodeTypeNames .get (typeName);
+      },
+      addFieldName: function (name)
+      {
+         fieldNames .set (name,                 name);
+         fieldNames .set (name .toLowerCase (), name);
+      },
+      getFieldName: function (name)
+      {
+         return fieldNames .get (name);
+      },
    };
 
    return HTMLSupport;
@@ -30691,13 +30713,13 @@ function (X3DConstants,
 {
 "use strict";
 
-   let nodeType = 0;
+   const
+      types         = new Map (),
+      abstractTypes = new Map ();
 
-   function SupportedNodes ()
-   {
-      this .types         = new Map ();
-      this .abstractTypes = new Map ();
-   }
+   let nodeType = X3DConstants .X3DBaseNode;
+
+   function SupportedNodes () { }
 
    SupportedNodes .prototype =
    {
@@ -30705,8 +30727,9 @@ function (X3DConstants,
       {
          X3DConstants [typeName] = ++ nodeType; // Start with 1, as X3DBaseNode is 0.
 
-         this .types .set (typeName,                 Type);
-         this .types .set (typeName .toUpperCase (), Type);
+         types .set (typeName, Type);
+
+         HTMLSupport .addNodeTypeName (typeName);
 
          // HTMLSupport
 
@@ -30717,19 +30740,30 @@ function (X3DConstants,
                accessType = fieldDefinition .accessType;
 
             if (accessType & X3DConstants .initializeOnly)
-            {
-               HTMLSupport .fields .set (name,                 name);
-               HTMLSupport .fields .set (name .toLowerCase (), name);
-            }
+               HTMLSupport .addFieldName (name)
          }
+      },
+      getType: function (typeName)
+      {
+         return types .get (typeName);
+      },
+      getTypes ()
+      {
+         return Array .from (types .values ());
       },
       addAbstractType: function (typeName, Type)
       {
          X3DConstants [typeName] = ++ nodeType;
+
+         abstractTypes .set (typeName, Type);
       },
-      getType: function (typeName)
+      getAbstractType: function (typeName)
       {
-         return this .types .get (typeName);
+         return abstractTypes .get (typeName);
+      },
+      getAbstractTypes ()
+      {
+         return Array .from (abstractTypes .values ());
       },
    };
 
@@ -46735,7 +46769,7 @@ function ($,
             if (this .useAttribute (xmlElement))
                return;
 
-            var node = this .getExecutionContext () .createNode (xmlElement .nodeName, false);
+            var node = this .getExecutionContext () .createNode (this .nodeNameToCamelCase (xmlElement .nodeName), false);
 
             if (! node)
                throw new Error ("Unknown node type '" + xmlElement .nodeName + "', you probably have insufficient component/profile statements.");
@@ -47040,10 +47074,15 @@ function ($,
 
          return true;
       },
+      nodeNameToCamelCase: function (nodeName)
+      {
+         // Function also needed by X_ITE DOM.
+         return HTMLSupport .getNodeTypeName (nodeName);
+      },
       attributeToCamelCase: function (name)
       {
          // Function also needed by X_ITE DOM.
-         return HTMLSupport .fields .get (name);
+         return HTMLSupport .getFieldName (name);
       },
    });
 
@@ -117236,7 +117275,7 @@ function (ProfileInfo,
       name: "Full",
       providerUrl: urls .getProviderUrl (),
       components: [
-         SupportedComponents ["Annotation"],
+         //SupportedComponents ["Annotation"],
          SupportedComponents ["CADGeometry"],
          SupportedComponents ["Core"],
          SupportedComponents ["CubeMapTexturing"],

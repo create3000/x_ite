@@ -278,6 +278,7 @@ X3D (function ()
    bookmarks .restore ("https://rawgit.com/create3000/Library/main/Tests/Components/Layout/info.x3d");
 
    $(".version") .text (Browser .name + " v" + Browser .version);
+   $(".file") .append ($("<a/>") .attr ('href', "tests/d3/ParticlePlot.html") .text ("d3"));
    $(".location-entry") .keydown (function (event) { if (event .key == "Enter") loadURL (); });
    $(".location-go") .click (loadURL);
    $(".print-vrml") .click (toVRMLString);

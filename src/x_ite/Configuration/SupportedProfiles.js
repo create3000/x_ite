@@ -96,7 +96,7 @@ function (ProfileInfo,
       name: "Full",
       providerUrl: urls .getProviderUrl (),
       components: [
-         SupportedComponents ["Annotation"],
+         //SupportedComponents ["Annotation"],
          SupportedComponents ["CADGeometry"],
          SupportedComponents ["Core"],
          SupportedComponents ["CubeMapTexturing"],

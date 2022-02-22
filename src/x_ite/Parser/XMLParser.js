@@ -810,7 +810,7 @@ function ($,
             if (this .useAttribute (xmlElement))
                return;
 
-            var node = this .getExecutionContext () .createNode (xmlElement .nodeName, false);
+            var node = this .getExecutionContext () .createNode (this .nodeNameToCamelCase (xmlElement .nodeName), false);
 
             if (! node)
                throw new Error ("Unknown node type '" + xmlElement .nodeName + "', you probably have insufficient component/profile statements.");
@@ -1115,10 +1115,15 @@ function ($,
 
          return true;
       },
+      nodeNameToCamelCase: function (nodeName)
+      {
+         // Function also needed by X_ITE DOM.
+         return HTMLSupport .getNodeTypeName (nodeName);
+      },
       attributeToCamelCase: function (name)
       {
          // Function also needed by X_ITE DOM.
-         return HTMLSupport .fields .get (name);
+         return HTMLSupport .getFieldName (name);
       },
    });
 
