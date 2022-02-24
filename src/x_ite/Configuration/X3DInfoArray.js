@@ -58,17 +58,25 @@ function (X3DObject)
    {
       get: function (target, key)
       {
-         let value = target [key];
+         const value = target [key];
 
          if (value !== undefined)
             return value;
 
-         value = target .array [key];
+         if (typeof key === "string")
+         {
+            const index = key * 1;
 
-         if (value !== undefined)
-            return value;
+            if (Number .isInteger (index))
+               return target ._array [index];
 
-         return target .index .get (key);
+            return target ._index .get (key);
+         }
+
+         if (key === Symbol .iterator)
+         {
+            return target ._array [key];
+         }
       },
       set: function (target, key, value)
       {
@@ -77,7 +85,7 @@ function (X3DObject)
       has: function (target, key)
       {
          if (Number .isInteger (+key))
-            return key < target .array .length;
+            return key < target ._array .length;
 
          return key in target;
       },
@@ -85,8 +93,8 @@ function (X3DObject)
 
    function X3DInfoArray ()
    {
-      this .array = [ ];
-      this .index = new Map ();
+      this ._array = [ ];
+      this ._index = new Map ();
 
       return new Proxy (this, handler);
    }
@@ -96,66 +104,66 @@ function (X3DObject)
       constructor: X3DInfoArray,
       has: function (key)
       {
-         return this .index .has (key);
+         return this ._index .has (key);
       },
       get: function (key)
       {
-         return this .index .get (key);
+         return this ._index .get (key);
       },
       add: function (key, value)
       {
-         this .array .push (value);
-         this .index .set (key, value);
+         this ._array .push (value);
+         this ._index .set (key, value);
          this .processInterests ();
       },
       addAlias: function (alias, key)
       {
-         this .index .set (alias, this .index .get (key));
+         this ._index .set (alias, this ._index .get (key));
          this .processInterests ();
       },
       update: function (oldKey, newKey, value)
       {
-         const oldValue = this .index .get (oldKey);
+         const oldValue = this ._index .get (oldKey);
 
          if (oldKey !== newKey)
             this .remove (newKey);
 
-         this .index .delete (oldKey);
-         this .index .set (newKey, value);
+         this ._index .delete (oldKey);
+         this ._index .set (newKey, value);
 
          if (oldValue !== undefined)
          {
-            const index = this .array .indexOf (oldValue);
+            const index = this ._array ._indexOf (oldValue);
 
             if (index > -1)
-               this .array [index] = value;
+               this ._array [index] = value;
          }
          else
          {
-            this .array .push (value);
+            this ._array .push (value);
          }
 
          this .processInterests ();
       },
       remove: function (key)
       {
-         const value = this .index .get (key);
+         const value = this ._index .get (key);
 
          if (value === undefined)
             return;
 
-         const index = this .array .indexOf (value);
+         const index = this ._array ._indexOf (value);
 
-         this .index .delete (key);
+         this ._index .delete (key);
 
          if (index > -1)
-            this .array .splice (index, 1);
+            this ._array .splice (index, 1);
 
          this .processInterests ();
       },
       toVRMLStream: function (stream)
       {
-         this .array .forEach (function (value)
+         this ._array .forEach (function (value)
          {
             try
             {
@@ -171,7 +179,7 @@ function (X3DObject)
       },
       toXMLStream: function (stream)
       {
-         this .array .forEach (function (value)
+         this ._array .forEach (function (value)
          {
             try
             {
@@ -185,6 +193,13 @@ function (X3DObject)
             }
          });
       },
+   });
+
+   Object .defineProperty (X3DInfoArray .prototype, "length",
+   {
+      get: function () { return this ._array .length; },
+      enumerable: false,
+      configurable: false,
    });
 
    return X3DInfoArray;
