@@ -13896,7 +13896,7 @@ function (Generator,
 
          if (arguments .length > 2)
          {
-            const args = Array .prototype .slice .call (arguments, 0);
+            const args = Array .from (arguments);
 
             args [0] = object;
             args [1] = this;
@@ -14129,17 +14129,25 @@ function (X3DObject)
    {
       get: function (target, key)
       {
-         let value = target [key];
+         const value = target [key];
 
          if (value !== undefined)
             return value;
 
-         value = target .array [key];
+         if (typeof key === "string")
+         {
+            const index = key * 1;
 
-         if (value !== undefined)
-            return value;
+            if (Number .isInteger (index))
+               return target ._array [index];
 
-         return target .index .get (key);
+            return target ._index .get (key);
+         }
+
+         if (key === Symbol .iterator)
+         {
+            return target ._array [key];
+         }
       },
       set: function (target, key, value)
       {
@@ -14148,7 +14156,7 @@ function (X3DObject)
       has: function (target, key)
       {
          if (Number .isInteger (+key))
-            return key < target .array .length;
+            return key < target ._array .length;
 
          return key in target;
       },
@@ -14156,8 +14164,8 @@ function (X3DObject)
 
    function X3DInfoArray ()
    {
-      this .array = [ ];
-      this .index = new Map ();
+      this ._array = [ ];
+      this ._index = new Map ();
 
       return new Proxy (this, handler);
    }
@@ -14165,72 +14173,68 @@ function (X3DObject)
    X3DInfoArray .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
       constructor: X3DInfoArray,
-      getValue: function ()
-      {
-         return this .array;
-      },
       has: function (key)
       {
-         return this .index .has (key);
+         return this ._index .has (key);
       },
       get: function (key)
       {
-         return this .index .get (key);
+         return this ._index .get (key);
       },
       add: function (key, value)
       {
-         this .array .push (value);
-         this .index .set (key, value);
+         this ._array .push (value);
+         this ._index .set (key, value);
          this .processInterests ();
       },
       addAlias: function (alias, key)
       {
-         this .index .set (alias, this .index .get (key));
+         this ._index .set (alias, this ._index .get (key));
          this .processInterests ();
       },
       update: function (oldKey, newKey, value)
       {
-         const oldValue = this .index .get (oldKey);
+         const oldValue = this ._index .get (oldKey);
 
          if (oldKey !== newKey)
             this .remove (newKey);
 
-         this .index .delete (oldKey);
-         this .index .set (newKey, value);
+         this ._index .delete (oldKey);
+         this ._index .set (newKey, value);
 
          if (oldValue !== undefined)
          {
-            const index = this .array .indexOf (oldValue);
+            const index = this ._array .indexOf (oldValue);
 
             if (index > -1)
-               this .array [index] = value;
+               this ._array [index] = value;
          }
          else
          {
-            this .array .push (value);
+            this ._array .push (value);
          }
 
          this .processInterests ();
       },
       remove: function (key)
       {
-         const value = this .index .get (key);
+         const value = this ._index .get (key);
 
          if (value === undefined)
             return;
 
-         const index = this .array .indexOf (value);
+         const index = this ._array .indexOf (value);
 
-         this .index .delete (key);
+         this ._index .delete (key);
 
          if (index > -1)
-            this .array .splice (index, 1);
+            this ._array .splice (index, 1);
 
          this .processInterests ();
       },
       toVRMLStream: function (stream)
       {
-         this .array .forEach (function (value)
+         this ._array .forEach (function (value)
          {
             try
             {
@@ -14246,7 +14250,7 @@ function (X3DObject)
       },
       toXMLStream: function (stream)
       {
-         this .array .forEach (function (value)
+         this ._array .forEach (function (value)
          {
             try
             {
@@ -14260,6 +14264,13 @@ function (X3DObject)
             }
          });
       },
+   });
+
+   Object .defineProperty (X3DInfoArray .prototype, "length",
+   {
+      get: function () { return this ._array .length; },
+      enumerable: false,
+      configurable: false,
    });
 
    return X3DInfoArray;
@@ -25551,8 +25562,8 @@ function (X3DEventObject,
 
       // Setup fields.
 
-      if (this .hasUserDefinedFields ())
-         this .fieldDefinitions = new FieldDefinitionArray (this .fieldDefinitions .getValue () .slice ());
+      if (this .canUserDefinedFields ())
+         this .fieldDefinitions = new FieldDefinitionArray (this .fieldDefinitions);
 
       for (const fieldDefinition of this .fieldDefinitions)
          this .addField (fieldDefinition);
@@ -25604,13 +25615,7 @@ function (X3DEventObject,
       },
       isType: function (types)
       {
-         for (const type of this ._type)
-         {
-            if (types .has (type))
-               return true;
-         }
-
-         return false;
+         return this ._type .some (function (type) { return types .has (type) });
       },
       getInnerNode: function ()
       {
@@ -25947,7 +25952,7 @@ function (X3DEventObject,
       {
          return this .fieldDefinitions;
       },
-      hasUserDefinedFields: function ()
+      canUserDefinedFields: function ()
       {
          return false;
       },
@@ -34510,7 +34515,7 @@ function (X3DBaseNode,
             fieldTypeLength  = 0,
             accessTypeLength = 0;
 
-         if (this .hasUserDefinedFields ())
+         if (this .canUserDefinedFields ())
          {
             for (const field of userDefinedFields)
             {
@@ -34846,7 +34851,7 @@ function (X3DBaseNode,
          generator .DecIndent ();
          generator .DecIndent ();
 
-         if ((!this .hasUserDefinedFields () || userDefinedFields .length === 0) && references .length === 0 && childNodes .length === 0 && !cdata)
+         if ((!this .canUserDefinedFields () || userDefinedFields .length === 0) && references .length === 0 && childNodes .length === 0 && !cdata)
          {
             stream .string += "/>";
          }
@@ -34856,7 +34861,7 @@ function (X3DBaseNode,
 
             generator .IncIndent ();
 
-            if (this .hasUserDefinedFields ())
+            if (this .canUserDefinedFields ())
             {
                for (const field of userDefinedFields)
                {
@@ -35680,7 +35685,7 @@ function (SupportedNodes,
    X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       constructor: X3DProtoDeclarationNode,
-      hasUserDefinedFields: function ()
+      canUserDefinedFields: function ()
       {
          return true;
       },
@@ -35818,7 +35823,7 @@ function ($,
 
          this .scene .setLive (this .isLive () .getValue ());
       },
-      hasUserDefinedFields: function ()
+      canUserDefinedFields: function ()
       {
          return true;
       },
@@ -36165,7 +36170,7 @@ function (SupportedNodes,
       {
          return this .loadState_ .getValue ();
       },
-      hasUserDefinedFields: function ()
+      canUserDefinedFields: function ()
       {
          return true;
       },
@@ -37778,7 +37783,7 @@ function (Fields,
 
             if (Grammar .OpenBrace .parse (this))
             {
-               if (baseNode .hasUserDefinedFields ())
+               if (baseNode .canUserDefinedFields ())
                   this .scriptBody (baseNode);
 
                else
@@ -43683,7 +43688,7 @@ function (X3DCast,
          this .x3d_MaxLights     = browser .getMaxLights ();
          this .x3d_MaxTextures   = browser .getMaxTextures ();
       },
-      hasUserDefinedFields: function ()
+      canUserDefinedFields: function ()
       {
          return true;
       },
@@ -46639,7 +46644,7 @@ function ($,
             if (! (node instanceof X3DBaseNode))
                return;
 
-            if (! node .hasUserDefinedFields ())
+            if (! node .canUserDefinedFields ())
                return;
 
             var accessType = AccessType [xmlElement .getAttribute ("accessType")];

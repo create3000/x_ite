@@ -291,7 +291,7 @@ function ($,
       {
          return false;
       },
-      hasUserDefinedFields: function ()
+      canUserDefinedFields: function ()
       {
          return true;
       },
@@ -576,7 +576,7 @@ function ($,
             if ($.isFunction (this .context .eventsProcessed))
                this .addInterest ("eventsProcessed__", this);
 
-            this .getUserDefinedFields () .forEach (function (field)
+            for (const field of this .getUserDefinedFields ())
             {
                switch (field .getAccessType ())
                {
@@ -599,8 +599,7 @@ function ($,
                      break;
                   }
                }
-            },
-            this);
+            }
 
             this .processOutstandingEvents ();
          }
