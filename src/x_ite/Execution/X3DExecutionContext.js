@@ -890,6 +890,12 @@ function (SupportedNodes,
          generator .LeaveScope ();
          generator .PopExecutionContext ();
       },
+      dispose: function ()
+      {
+         this .rootNodes_ .dispose ();
+
+         X3DBaseNode .prototype .dispose .call (this);
+      },
    });
 
    Object .defineProperty (X3DExecutionContext .prototype, "specificationVersion",

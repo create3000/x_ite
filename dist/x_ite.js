@@ -24867,6 +24867,12 @@ function (SFBool,
             generator .LeaveScope ();
          }
       },
+      dispose: function ()
+      {
+         this .resize (0);
+
+         X3DObjectArrayField .prototype .dispose .call (this);
+      },
    });
 
    function MFString (value)
@@ -32604,6 +32610,12 @@ function (SupportedNodes,
 
          generator .LeaveScope ();
          generator .PopExecutionContext ();
+      },
+      dispose: function ()
+      {
+         this .rootNodes_ .dispose ();
+
+         X3DBaseNode .prototype .dispose .call (this);
       },
    });
 

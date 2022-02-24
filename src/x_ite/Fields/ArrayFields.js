@@ -364,6 +364,12 @@ function (SFBool,
             generator .LeaveScope ();
          }
       },
+      dispose: function ()
+      {
+         this .resize (0);
+
+         X3DObjectArrayField .prototype .dispose .call (this);
+      },
    });
 
    function MFString (value)
