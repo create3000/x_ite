@@ -52,6 +52,7 @@ define ([
    "x_ite/Base/Events",
    "x_ite/Basic/X3DFieldDefinition",
    "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Basic/FieldArray",
    "x_ite/Fields",
    "x_ite/Bits/X3DConstants",
 ],
@@ -59,6 +60,7 @@ function (X3DEventObject,
           Events,
           X3DFieldDefinition,
           FieldDefinitionArray,
+          FieldArray,
           Fields,
           X3DConstants)
 {
@@ -73,10 +75,10 @@ function (X3DEventObject,
 
       this ._executionContext  = executionContext;
       this ._type              = [ X3DConstants .X3DBaseNode ];
-      this ._fields            = new Map ();
-      this ._predefinedFields  = new Map ();
+      this ._fields            = new FieldArray ();
+      this ._predefinedFields  = new FieldArray ();
       this ._aliases           = new Map ();
-      this ._userDefinedFields = new Map ();
+      this ._userDefinedFields = new FieldArray ();
       this ._cloneCount        = 0;
 
       // Setup fields.
@@ -240,7 +242,8 @@ function (X3DEventObject,
 
          this ._initialized = true;
 
-         this ._fields .forEach (field => field .setTainted (false));
+         for (const field of this ._fields)
+            field .setTainted (false);
 
          this .initialize ();
       },
@@ -274,7 +277,7 @@ function (X3DEventObject,
 
          // Default fields
 
-         this .getPredefinedFields () .forEach (function (sourceField)
+         for (const sourceField of this ._predefinedFields)
          {
             try
             {
@@ -319,12 +322,11 @@ function (X3DEventObject,
             {
                console .log (error .message);
             }
-         },
-         this);
+         }
 
          // User-defined fields
 
-         this .getUserDefinedFields () .forEach (function (sourceField)
+         for (const sourceField of this ._userDefinedFields)
          {
             const destinationField = sourceField .copy (instance);
 
@@ -350,7 +352,7 @@ function (X3DEventObject,
             }
 
             destinationField .setModificationTime (sourceField .getModificationTime ());
-         });
+         }
 
          copy .setup ();
 
@@ -360,10 +362,8 @@ function (X3DEventObject,
       {
          const copy = this .create (executionContext || this .getExecutionContext ());
 
-         this ._fields .forEach (function (field)
-         {
-            copy ._fields .get (field .getName ()) .assign (field);
-         });
+         for (const field of this ._fields)
+            copy .getField (field .getName ()) .assign (field);
 
          copy .setup ();
 
@@ -403,18 +403,18 @@ function (X3DEventObject,
       },
       setField: function (name, field, userDefined)
       {
-         this ._fields .set (name, field);
+         this ._fields .add (name, field);
 
          if (!this .getPrivate ())
             field .addCloneCount (1);
 
          if (userDefined)
          {
-            this ._userDefinedFields .set (name, field);
+            this ._userDefinedFields .add (name, field);
          }
          else
          {
-            this ._predefinedFields .set (name, field);
+            this ._predefinedFields .add (name, field);
 
             Object .defineProperty (this, name + "_",
             {
@@ -503,8 +503,8 @@ function (X3DEventObject,
 
          if (field)
          {
-            this ._fields            .delete (name);
-            this ._userDefinedFields .delete (name);
+            this ._fields            .remove (name);
+            this ._userDefinedFields .remove (name);
             this .fieldDefinitions   .remove (name);
 
             if (!this .getPrivate ())
@@ -523,43 +523,36 @@ function (X3DEventObject,
       {
          /* param routes: also return fields with routes */
 
-         const
-            changedFields    = [ ],
-            predefinedFields = this .getPredefinedFields ();
+         const changedFields = [ ];
 
          if (extended)
          {
-            const userDefinedFields = this .getUserDefinedFields ();
-
-            userDefinedFields .forEach (function (field)
-            {
+            for (const field of this ._userDefinedFields)
                changedFields .push (field);
-            });
          }
 
-         predefinedFields .forEach (function (field)
+         for (const field of this ._predefinedFields)
          {
             if (extended)
             {
                if (field .getInputRoutes () .size || field .getOutputRoutes () .size)
                {
                   changedFields .push (field);
-                  return;
+                  continue;
                }
             }
 
             if (field .getReferences () .size === 0)
             {
                if (!field .isInitializable ())
-                  return;
+                  continue;
 
                if (this .isDefaultValue (field))
-                  return;
+                  continue;
             }
 
             changedFields .push (field);
-         },
-         this);
+         }
 
          return changedFields;
       },
@@ -584,7 +577,7 @@ function (X3DEventObject,
       {
          ///  Returns true if there are any routes from or to fields of this node otherwise false.
 
-         for (const field of this ._fields .values ())
+         for (const field of this ._fields)
          {
             if (field .getInputRoutes () .size)
                return true;
@@ -605,17 +598,13 @@ function (X3DEventObject,
 
          if (value)
          {
-            this ._fields .forEach (function (field)
-            {
+            for (const field of this ._fields)
                field .removeCloneCount (1);
-            });
          }
          else
          {
-            this ._fields .forEach (function (field)
-            {
+            for (const field of this ._fields)
                field .addCloneCount (1);
-            });
          }
       },
       getCloneCount: function ()

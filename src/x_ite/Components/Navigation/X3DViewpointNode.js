@@ -239,11 +239,8 @@ function (Fields,
 
                   if (this !== toViewpointNode)
                   {
-                     toViewpointNode .getFields () .forEach (function (field)
-                     {
-                        this .getFields () .get (field .getName ()) .assign (field);
-                     }
-                     .bind (this));
+                     for (const field of toViewpointNode .getFields ())
+                        this .getField (field .getName ()) .assign (field);
                   }
 
                   // Respect NavigationInfo.

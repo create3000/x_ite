@@ -133,28 +133,27 @@ function (SupportedNodes,
             fieldTypeLength  = 0,
             accessTypeLength = 0;
 
-         if (userDefinedFields .size === 0)
+         if (userDefinedFields .length === 0)
          {
             stream .string += " ";
          }
          else
          {
-            userDefinedFields .forEach (function (field)
+            for (const field of userDefinedFields)
             {
                fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
                accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
-            });
+            }
 
             stream .string += "\n";
 
             generator .IncIndent ();
 
-            userDefinedFields .forEach (function (field)
+            for (const field of userDefinedFields)
             {
                this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
                stream .string += "\n";
-            },
-            this);
+            }
 
             generator .DecIndent ();
 
@@ -216,7 +215,7 @@ function (SupportedNodes,
 
          const userDefinedFields = this .getUserDefinedFields ();
 
-         if (userDefinedFields .size !== 0)
+         if (userDefinedFields .length !== 0)
          {
             generator .IncIndent ();
 
@@ -225,7 +224,7 @@ function (SupportedNodes,
 
             generator .IncIndent ();
 
-            userDefinedFields .forEach (function (field)
+            for (const field of userDefinedFields)
             {
                stream .string += generator .Indent ();
                stream .string += "<field";
@@ -284,7 +283,7 @@ function (SupportedNodes,
                      }
                   }
                }
-            });
+            }
 
             generator .DecIndent ();
 

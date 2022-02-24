@@ -371,13 +371,12 @@ function (X3DCast,
       addShaderFields: function ()
       {
          const
-            gl                = this .getBrowser () .getContext (),
-            program           = this .getProgram (),
-            userDefinedFields = this .getUserDefinedFields ();
+            gl      = this .getBrowser () .getContext (),
+            program = this .getProgram ();
 
          this .textures .clear ();
 
-         userDefinedFields .forEach (function (field)
+         for (const field of this .getUserDefinedFields ())
          {
             const location = gl .getUniformLocation (program, field .getName ());
 
@@ -485,18 +484,12 @@ function (X3DCast,
 
                this .set_field__ (field);
             }
-         },
-         this);
+         }
       },
       removeShaderFields: function ()
       {
-         const userDefinedFields = this .getUserDefinedFields ();
-
-         userDefinedFields .forEach (function (field)
-         {
+         for (const field of this .getUserDefinedFields ())
             field .removeInterest ("set_field__", this);
-         },
-         this);
       },
       set_field__: (function ()
       {

@@ -25442,11 +25442,85 @@ function (X3DChildObject,
  ******************************************************************************/
 
 
+ define ('x_ite/Basic/FieldArray',[
+   "x_ite/Configuration/X3DInfoArray",
+],
+function (X3DInfoArray)
+{
+"use strict";
+
+   function FieldArray ()
+   {
+      return X3DInfoArray .call (this);
+   }
+
+   FieldArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+   {
+      constructor: FieldArray,
+      getTypeName: function ()
+      {
+         return "FieldArray";
+      },
+   });
+
+   return FieldArray;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Basic/X3DBaseNode',[
    "x_ite/Base/X3DEventObject",
    "x_ite/Base/Events",
    "x_ite/Basic/X3DFieldDefinition",
    "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Basic/FieldArray",
    "x_ite/Fields",
    "x_ite/Bits/X3DConstants",
 ],
@@ -25454,6 +25528,7 @@ function (X3DEventObject,
           Events,
           X3DFieldDefinition,
           FieldDefinitionArray,
+          FieldArray,
           Fields,
           X3DConstants)
 {
@@ -25468,10 +25543,10 @@ function (X3DEventObject,
 
       this ._executionContext  = executionContext;
       this ._type              = [ X3DConstants .X3DBaseNode ];
-      this ._fields            = new Map ();
-      this ._predefinedFields  = new Map ();
+      this ._fields            = new FieldArray ();
+      this ._predefinedFields  = new FieldArray ();
       this ._aliases           = new Map ();
-      this ._userDefinedFields = new Map ();
+      this ._userDefinedFields = new FieldArray ();
       this ._cloneCount        = 0;
 
       // Setup fields.
@@ -25635,7 +25710,8 @@ function (X3DEventObject,
 
          this ._initialized = true;
 
-         this ._fields .forEach (field => field .setTainted (false));
+         for (const field of this ._fields)
+            field .setTainted (false);
 
          this .initialize ();
       },
@@ -25669,7 +25745,7 @@ function (X3DEventObject,
 
          // Default fields
 
-         this .getPredefinedFields () .forEach (function (sourceField)
+         for (const sourceField of this ._predefinedFields)
          {
             try
             {
@@ -25714,12 +25790,11 @@ function (X3DEventObject,
             {
                console .log (error .message);
             }
-         },
-         this);
+         }
 
          // User-defined fields
 
-         this .getUserDefinedFields () .forEach (function (sourceField)
+         for (const sourceField of this ._userDefinedFields)
          {
             const destinationField = sourceField .copy (instance);
 
@@ -25745,7 +25820,7 @@ function (X3DEventObject,
             }
 
             destinationField .setModificationTime (sourceField .getModificationTime ());
-         });
+         }
 
          copy .setup ();
 
@@ -25755,10 +25830,8 @@ function (X3DEventObject,
       {
          const copy = this .create (executionContext || this .getExecutionContext ());
 
-         this ._fields .forEach (function (field)
-         {
-            copy ._fields .get (field .getName ()) .assign (field);
-         });
+         for (const field of this ._fields)
+            copy .getField (field .getName ()) .assign (field);
 
          copy .setup ();
 
@@ -25798,18 +25871,18 @@ function (X3DEventObject,
       },
       setField: function (name, field, userDefined)
       {
-         this ._fields .set (name, field);
+         this ._fields .add (name, field);
 
          if (!this .getPrivate ())
             field .addCloneCount (1);
 
          if (userDefined)
          {
-            this ._userDefinedFields .set (name, field);
+            this ._userDefinedFields .add (name, field);
          }
          else
          {
-            this ._predefinedFields .set (name, field);
+            this ._predefinedFields .add (name, field);
 
             Object .defineProperty (this, name + "_",
             {
@@ -25898,8 +25971,8 @@ function (X3DEventObject,
 
          if (field)
          {
-            this ._fields            .delete (name);
-            this ._userDefinedFields .delete (name);
+            this ._fields            .remove (name);
+            this ._userDefinedFields .remove (name);
             this .fieldDefinitions   .remove (name);
 
             if (!this .getPrivate ())
@@ -25918,43 +25991,36 @@ function (X3DEventObject,
       {
          /* param routes: also return fields with routes */
 
-         const
-            changedFields    = [ ],
-            predefinedFields = this .getPredefinedFields ();
+         const changedFields = [ ];
 
          if (extended)
          {
-            const userDefinedFields = this .getUserDefinedFields ();
-
-            userDefinedFields .forEach (function (field)
-            {
+            for (const field of this ._userDefinedFields)
                changedFields .push (field);
-            });
          }
 
-         predefinedFields .forEach (function (field)
+         for (const field of this ._predefinedFields)
          {
             if (extended)
             {
                if (field .getInputRoutes () .size || field .getOutputRoutes () .size)
                {
                   changedFields .push (field);
-                  return;
+                  continue;
                }
             }
 
             if (field .getReferences () .size === 0)
             {
                if (!field .isInitializable ())
-                  return;
+                  continue;
 
                if (this .isDefaultValue (field))
-                  return;
+                  continue;
             }
 
             changedFields .push (field);
-         },
-         this);
+         }
 
          return changedFields;
       },
@@ -25979,7 +26045,7 @@ function (X3DEventObject,
       {
          ///  Returns true if there are any routes from or to fields of this node otherwise false.
 
-         for (const field of this ._fields .values ())
+         for (const field of this ._fields)
          {
             if (field .getInputRoutes () .size)
                return true;
@@ -26000,17 +26066,13 @@ function (X3DEventObject,
 
          if (value)
          {
-            this ._fields .forEach (function (field)
-            {
+            for (const field of this ._fields)
                field .removeCloneCount (1);
-            });
          }
          else
          {
-            this ._fields .forEach (function (field)
-            {
+            for (const field of this ._fields)
                field .addCloneCount (1);
-            });
          }
       },
       getCloneCount: function ()
@@ -34364,10 +34426,12 @@ function (Fields,
 
 define ('x_ite/Components/Core/X3DNode',[
    "x_ite/Basic/X3DBaseNode",
+   "x_ite/Fields",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DBaseNode,
+          Fields,
           X3DConstants,
           Generator)
 {
@@ -34448,24 +34512,23 @@ function (X3DBaseNode,
 
          if (this .hasUserDefinedFields ())
          {
-            userDefinedFields .forEach (function (field)
+            for (const field of userDefinedFields)
             {
                fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
                accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
-            });
+            }
 
-            if (userDefinedFields .size)
+            if (userDefinedFields .length)
             {
                stream .string += "\n";
                generator .IncIndent ();
 
-               userDefinedFields .forEach (function (field)
+               for (const field of userDefinedFields)
                {
                   this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
 
                   stream .string += "\n";
-               },
-               this);
+               }
 
                generator .DecIndent ();
 
@@ -34476,14 +34539,14 @@ function (X3DBaseNode,
 
          if (fields .length === 0)
          {
-            if (userDefinedFields .size)
+            if (userDefinedFields .length)
                stream .string += generator .Indent ();
             else
                stream .string += " ";
          }
          else
          {
-            if (userDefinedFields .size === 0)
+            if (userDefinedFields .length === 0)
                stream .string += "\n";
 
             generator .IncIndent ();
@@ -34783,7 +34846,7 @@ function (X3DBaseNode,
          generator .DecIndent ();
          generator .DecIndent ();
 
-         if ((!this .hasUserDefinedFields () || userDefinedFields .size === 0) && references .length === 0 && childNodes .length === 0 && !cdata)
+         if ((!this .hasUserDefinedFields () || userDefinedFields .length === 0) && references .length === 0 && childNodes .length === 0 && !cdata)
          {
             stream .string += "/>";
          }
@@ -34795,7 +34858,7 @@ function (X3DBaseNode,
 
             if (this .hasUserDefinedFields ())
             {
-               userDefinedFields .forEach (function (field)
+               for (const field of userDefinedFields)
                {
                   stream .string += generator .Indent ();
                   stream .string += "<field";
@@ -34887,7 +34950,7 @@ function (X3DBaseNode,
 
                      stream .string += "/>\n";
                   }
-               });
+               }
             }
 
             if (references .length)
@@ -34962,19 +35025,8 @@ function (X3DBaseNode,
          // TODO: remove exported node if any. (do this in ExportedNode)
          // TODO: remove routes from and to node if any. (do this in Route)
 
-         const
-            predefinedFields  = this .getPredefinedFields (),
-            userDefinedFields = this .getUserDefinedFields ();
-
-         predefinedFields .forEach (function (predefinedField)
-         {
-            predefinedField .dispose ();
-         });
-
-         userDefinedFields .forEach (function (userDefinedField)
-         {
-            userDefinedField .dispose ();
-         });
+         for (const field of this .getFields ())
+            field .dispose ();
 
          // Remove node from entire scene graph.
 
@@ -35870,28 +35922,27 @@ function ($,
             fieldTypeLength   = 0,
             accessTypeLength  = 0;
 
-         if (userDefinedFields .size === 0)
+         if (userDefinedFields .length === 0)
          {
             stream .string += " ";
          }
          else
          {
-            userDefinedFields .forEach (function (field)
+            for (const field of userDefinedFields)
             {
                fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
                accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
-            });
+            }
 
             stream .string += "\n";
 
             generator .IncIndent ();
 
-            userDefinedFields .forEach (function (field)
+            for (const field of userDefinedFields)
             {
                this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
                stream .string += "\n";
-            },
-            this);
+            }
 
             generator .DecIndent ();
 
@@ -35938,7 +35989,7 @@ function ($,
 
          const userDefinedFields = this .getUserDefinedFields ();
 
-         userDefinedFields .forEach (function (field)
+         for (const field of userDefinedFields)
          {
             stream .string += generator .Indent ();
             stream .string += "<field";
@@ -35955,7 +36006,7 @@ function ($,
             stream .string += generator .XMLEncode (field .getName ());
             stream .string += "'";
             stream .string += "/>\n";
-         });
+         }
 
          generator .DecIndent ();
 
@@ -36137,28 +36188,27 @@ function (SupportedNodes,
             fieldTypeLength  = 0,
             accessTypeLength = 0;
 
-         if (userDefinedFields .size === 0)
+         if (userDefinedFields .length === 0)
          {
             stream .string += " ";
          }
          else
          {
-            userDefinedFields .forEach (function (field)
+            for (const field of userDefinedFields)
             {
                fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
                accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
-            });
+            }
 
             stream .string += "\n";
 
             generator .IncIndent ();
 
-            userDefinedFields .forEach (function (field)
+            for (const field of userDefinedFields)
             {
                this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
                stream .string += "\n";
-            },
-            this);
+            }
 
             generator .DecIndent ();
 
@@ -36220,7 +36270,7 @@ function (SupportedNodes,
 
          const userDefinedFields = this .getUserDefinedFields ();
 
-         if (userDefinedFields .size !== 0)
+         if (userDefinedFields .length !== 0)
          {
             generator .IncIndent ();
 
@@ -36229,7 +36279,7 @@ function (SupportedNodes,
 
             generator .IncIndent ();
 
-            userDefinedFields .forEach (function (field)
+            for (const field of userDefinedFields)
             {
                stream .string += generator .Indent ();
                stream .string += "<field";
@@ -36288,7 +36338,7 @@ function (SupportedNodes,
                      }
                   }
                }
-            });
+            }
 
             generator .DecIndent ();
 
@@ -42656,11 +42706,8 @@ function (Fields,
 
                   if (this !== toViewpointNode)
                   {
-                     toViewpointNode .getFields () .forEach (function (field)
-                     {
-                        this .getFields () .get (field .getName ()) .assign (field);
-                     }
-                     .bind (this));
+                     for (const field of toViewpointNode .getFields ())
+                        this .getField (field .getName ()) .assign (field);
                   }
 
                   // Respect NavigationInfo.
@@ -43886,13 +43933,12 @@ function (X3DCast,
       addShaderFields: function ()
       {
          const
-            gl                = this .getBrowser () .getContext (),
-            program           = this .getProgram (),
-            userDefinedFields = this .getUserDefinedFields ();
+            gl      = this .getBrowser () .getContext (),
+            program = this .getProgram ();
 
          this .textures .clear ();
 
-         userDefinedFields .forEach (function (field)
+         for (const field of this .getUserDefinedFields ())
          {
             const location = gl .getUniformLocation (program, field .getName ());
 
@@ -44000,18 +44046,12 @@ function (X3DCast,
 
                this .set_field__ (field);
             }
-         },
-         this);
+         }
       },
       removeShaderFields: function ()
       {
-         const userDefinedFields = this .getUserDefinedFields ();
-
-         userDefinedFields .forEach (function (field)
-         {
+         for (const field of this .getUserDefinedFields ())
             field .removeInterest ("set_field__", this);
-         },
-         this);
       },
       set_field__: (function ()
       {

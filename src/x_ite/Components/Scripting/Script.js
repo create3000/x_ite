@@ -73,7 +73,6 @@ define ([
    "x_ite/Components/Scripting/X3DScriptNode",
    "x_ite/InputOutput/FileLoader",
    "x_ite/Bits/X3DConstants",
-   "x_ite/Fields/SFNodeCache",
 ],
 function ($,
           X3DFieldDefinition,
@@ -99,8 +98,7 @@ function ($,
           evaluate,
           X3DScriptNode,
           FileLoader,
-          X3DConstants,
-          SFNodeCache)
+          X3DConstants)
 {
    function Script (executionContext)
    {
@@ -139,10 +137,8 @@ function ($,
       {
          X3DScriptNode .prototype .initialize .call (this);
 
-         this .getUserDefinedFields () .forEach (function (field)
-         {
+         for (const field of this .getUserDefinedFields ())
             field .setModificationTime (0);
-         });
 
          this .requestImmediateLoad ();
       },
@@ -188,7 +184,7 @@ function ($,
          {
             const callbacks = ["initialize", "prepareEvents", "eventsProcessed", "shutdown"];
 
-            this .getUserDefinedFields () .forEach (function (field)
+            for (const field of this .getUserDefinedFields ())
             {
                switch (field .getAccessType ())
                {
@@ -199,7 +195,7 @@ function ($,
                      callbacks .push ("set_" + field .getName ());
                      break;
                }
-            });
+            }
 
             text += "\n;var " + callbacks .join (",") + ";";
             text += "\n[" + callbacks .join (",") + "];";
@@ -328,12 +324,12 @@ function ($,
             MFVec4f:       { value: Fields .MFVec4f },
          };
 
-         this .getUserDefinedFields () .forEach (function (field)
+         for (const field of this .getUserDefinedFields ())
          {
             const name = field .getName ();
 
             if (field .getAccessType () === X3DConstants .inputOnly)
-               return;
+               continue;
 
             if (! (name in global))
             {
@@ -352,16 +348,16 @@ function ($,
                   set: field .setValue .bind (field),
                };
             }
-         });
+         }
 
          return Object .create (Object .prototype, global);
       },
       processOutstandingEvents: function ()
       {
-         this .getUserDefinedFields () .forEach (function (field)
+         for (const field of this .getUserDefinedFields ())
          {
             if (field .getModificationTime () <= this .pauseTime)
-               return;
+               continue;
 
             switch (field .getAccessType ())
             {
@@ -384,8 +380,7 @@ function ($,
                   break;
                }
             }
-         },
-         this);
+         }
       },
       initialize__: function (text)
       {
@@ -472,7 +467,7 @@ function ($,
             if (this .context .eventsProcessed)
                this .removeInterest ("eventsProcessed__", this);
 
-            this .getUserDefinedFields () .forEach (function (field)
+            for (const field of this .getUserDefinedFields ())
             {
                switch (field .getAccessType ())
                {
@@ -481,8 +476,7 @@ function ($,
                      field .removeInterest ("set_field__", this);
                      break;
                }
-            },
-            this);
+            }
 
             if (this .initialized)
                this .pauseTime = performance .now ();

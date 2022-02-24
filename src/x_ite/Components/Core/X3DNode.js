@@ -49,10 +49,12 @@
 
 define ([
    "x_ite/Basic/X3DBaseNode",
+   "x_ite/Fields",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DBaseNode,
+          Fields,
           X3DConstants,
           Generator)
 {
@@ -133,24 +135,23 @@ function (X3DBaseNode,
 
          if (this .hasUserDefinedFields ())
          {
-            userDefinedFields .forEach (function (field)
+            for (const field of userDefinedFields)
             {
                fieldTypeLength  = Math .max (fieldTypeLength, field .getTypeName () .length);
                accessTypeLength = Math .max (accessTypeLength, generator .AccessType (field .getAccessType ()) .length);
-            });
+            }
 
-            if (userDefinedFields .size)
+            if (userDefinedFields .length)
             {
                stream .string += "\n";
                generator .IncIndent ();
 
-               userDefinedFields .forEach (function (field)
+               for (const field of userDefinedFields)
                {
                   this .toVRMLStreamUserDefinedField (stream, field, fieldTypeLength, accessTypeLength);
 
                   stream .string += "\n";
-               },
-               this);
+               }
 
                generator .DecIndent ();
 
@@ -161,14 +162,14 @@ function (X3DBaseNode,
 
          if (fields .length === 0)
          {
-            if (userDefinedFields .size)
+            if (userDefinedFields .length)
                stream .string += generator .Indent ();
             else
                stream .string += " ";
          }
          else
          {
-            if (userDefinedFields .size === 0)
+            if (userDefinedFields .length === 0)
                stream .string += "\n";
 
             generator .IncIndent ();
@@ -468,7 +469,7 @@ function (X3DBaseNode,
          generator .DecIndent ();
          generator .DecIndent ();
 
-         if ((!this .hasUserDefinedFields () || userDefinedFields .size === 0) && references .length === 0 && childNodes .length === 0 && !cdata)
+         if ((!this .hasUserDefinedFields () || userDefinedFields .length === 0) && references .length === 0 && childNodes .length === 0 && !cdata)
          {
             stream .string += "/>";
          }
@@ -480,7 +481,7 @@ function (X3DBaseNode,
 
             if (this .hasUserDefinedFields ())
             {
-               userDefinedFields .forEach (function (field)
+               for (const field of userDefinedFields)
                {
                   stream .string += generator .Indent ();
                   stream .string += "<field";
@@ -572,7 +573,7 @@ function (X3DBaseNode,
 
                      stream .string += "/>\n";
                   }
-               });
+               }
             }
 
             if (references .length)
@@ -647,19 +648,8 @@ function (X3DBaseNode,
          // TODO: remove exported node if any. (do this in ExportedNode)
          // TODO: remove routes from and to node if any. (do this in Route)
 
-         const
-            predefinedFields  = this .getPredefinedFields (),
-            userDefinedFields = this .getUserDefinedFields ();
-
-         predefinedFields .forEach (function (predefinedField)
-         {
-            predefinedField .dispose ();
-         });
-
-         userDefinedFields .forEach (function (userDefinedField)
-         {
-            userDefinedField .dispose ();
-         });
+         for (const field of this .getFields ())
+            field .dispose ();
 
          // Remove node from entire scene graph.
 
