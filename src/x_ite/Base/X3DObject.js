@@ -100,7 +100,7 @@ function (Generator,
 
          if (arguments .length > 2)
          {
-            const args = Array .prototype .slice .call (arguments, 0);
+            const args = Array .from (arguments);
 
             args [0] = object;
             args [1] = this;
