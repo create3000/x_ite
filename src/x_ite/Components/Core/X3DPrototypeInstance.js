@@ -200,6 +200,10 @@ function (X3DChildObject,
       {
          return false;
       },
+      getProtoNode: function ()
+      {
+         return this .protoNode;
+      },
       getBody: function ()
       {
          return this .body;
