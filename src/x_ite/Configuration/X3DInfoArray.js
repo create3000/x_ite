@@ -94,10 +94,6 @@ function (X3DObject)
    X3DInfoArray .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
       constructor: X3DInfoArray,
-      getValue: function ()
-      {
-         return this .array;
-      },
       has: function (key)
       {
          return this .index .has (key);

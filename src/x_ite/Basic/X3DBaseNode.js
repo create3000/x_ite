@@ -84,7 +84,7 @@ function (X3DEventObject,
       // Setup fields.
 
       if (this .hasUserDefinedFields ())
-         this .fieldDefinitions = new FieldDefinitionArray (this .fieldDefinitions .getValue () .slice ());
+         this .fieldDefinitions = new FieldDefinitionArray (this .fieldDefinitions);
 
       for (const fieldDefinition of this .fieldDefinitions)
          this .addField (fieldDefinition);
@@ -136,13 +136,7 @@ function (X3DEventObject,
       },
       isType: function (types)
       {
-         for (const type of this ._type)
-         {
-            if (types .has (type))
-               return true;
-         }
-
-         return false;
+         return this ._type .some (function (type) { return types .has (type) });
       },
       getInnerNode: function ()
       {
