@@ -152,7 +152,7 @@ function (X3DObject)
          if (value === undefined)
             return;
 
-         const index = this ._array ._indexOf (value);
+         const index = this ._array .indexOf (value);
 
          this ._index .delete (key);
 
