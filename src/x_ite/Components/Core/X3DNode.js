@@ -133,7 +133,7 @@ function (X3DBaseNode,
             fieldTypeLength  = 0,
             accessTypeLength = 0;
 
-         if (this .hasUserDefinedFields ())
+         if (this .canUserDefinedFields ())
          {
             for (const field of userDefinedFields)
             {
@@ -469,7 +469,7 @@ function (X3DBaseNode,
          generator .DecIndent ();
          generator .DecIndent ();
 
-         if ((!this .hasUserDefinedFields () || userDefinedFields .length === 0) && references .length === 0 && childNodes .length === 0 && !cdata)
+         if ((!this .canUserDefinedFields () || userDefinedFields .length === 0) && references .length === 0 && childNodes .length === 0 && !cdata)
          {
             stream .string += "/>";
          }
@@ -479,7 +479,7 @@ function (X3DBaseNode,
 
             generator .IncIndent ();
 
-            if (this .hasUserDefinedFields ())
+            if (this .canUserDefinedFields ())
             {
                for (const field of userDefinedFields)
                {

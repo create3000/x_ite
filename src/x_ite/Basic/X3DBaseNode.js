@@ -83,7 +83,7 @@ function (X3DEventObject,
 
       // Setup fields.
 
-      if (this .hasUserDefinedFields ())
+      if (this .canUserDefinedFields ())
          this .fieldDefinitions = new FieldDefinitionArray (this .fieldDefinitions);
 
       for (const fieldDefinition of this .fieldDefinitions)
@@ -473,7 +473,7 @@ function (X3DEventObject,
       {
          return this .fieldDefinitions;
       },
-      hasUserDefinedFields: function ()
+      canUserDefinedFields: function ()
       {
          return false;
       },

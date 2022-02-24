@@ -624,7 +624,7 @@ function ($,
             if (! (node instanceof X3DBaseNode))
                return;
 
-            if (! node .hasUserDefinedFields ())
+            if (! node .canUserDefinedFields ())
                return;
 
             var accessType = AccessType [xmlElement .getAttribute ("accessType")];

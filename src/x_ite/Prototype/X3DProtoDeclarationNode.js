@@ -74,7 +74,7 @@ function (SupportedNodes,
    X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       constructor: X3DProtoDeclarationNode,
-      hasUserDefinedFields: function ()
+      canUserDefinedFields: function ()
       {
          return true;
       },

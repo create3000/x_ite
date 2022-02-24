@@ -121,7 +121,7 @@ function (X3DCast,
          this .x3d_MaxLights     = browser .getMaxLights ();
          this .x3d_MaxTextures   = browser .getMaxTextures ();
       },
-      hasUserDefinedFields: function ()
+      canUserDefinedFields: function ()
       {
          return true;
       },

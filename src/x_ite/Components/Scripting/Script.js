@@ -146,7 +146,7 @@ function ($,
       {
          return false;
       },
-      hasUserDefinedFields: function ()
+      canUserDefinedFields: function ()
       {
          return true;
       },

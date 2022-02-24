@@ -110,7 +110,7 @@ function (SupportedNodes,
       {
          return this .loadState_ .getValue ();
       },
-      hasUserDefinedFields: function ()
+      canUserDefinedFields: function ()
       {
          return true;
       },

@@ -1375,7 +1375,7 @@ function (Fields,
 
             if (Grammar .OpenBrace .parse (this))
             {
-               if (baseNode .hasUserDefinedFields ())
+               if (baseNode .canUserDefinedFields ())
                   this .scriptBody (baseNode);
 
                else
