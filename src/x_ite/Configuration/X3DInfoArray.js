@@ -133,7 +133,7 @@ function (X3DObject)
 
          if (oldValue !== undefined)
          {
-            const index = this ._array ._indexOf (oldValue);
+            const index = this ._array .indexOf (oldValue);
 
             if (index > -1)
                this ._array [index] = value;
