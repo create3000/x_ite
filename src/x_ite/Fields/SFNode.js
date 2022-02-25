@@ -60,6 +60,11 @@ function (X3DField,
 {
 "use strict";
 
+   const
+      _target     = Symbol (),
+      _proxy      = Symbol (),
+      _cloneCount = Symbol ();
+
    const handler =
    {
       get: function (target, key)
@@ -86,7 +91,7 @@ function (X3DField,
          {
             return undefined;
          }
-       },
+      },
       set: function (target, key, value)
       {
          if (key in target)
@@ -131,8 +136,8 @@ function (X3DField,
 
       const proxy = new Proxy (this, handler);
 
-      this ._target = this;
-      this ._proxy  = proxy;
+      this [_target] = this;
+      this [_proxy]  = proxy;
 
       if (value)
       {
@@ -151,11 +156,13 @@ function (X3DField,
    SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       constructor: SFNode,
-      _cloneCount: 0,
+      [_target]: null,
+      [_proxy]: null,
+      [_cloneCount]: 0,
       copy: function (instance)
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -173,7 +180,7 @@ function (X3DField,
       },
       equals: function (node)
       {
-         const target = this ._target;
+         const target = this [_target];
 
          if (node)
             return target .getValue () === node .getValue ();
@@ -182,28 +189,28 @@ function (X3DField,
       },
       isDefaultValue: function ()
       {
-         const target = this ._target;
+         const target = this [_target];
 
          return target .getValue () === null;
       },
       set: function (value)
       {
          const
-            target  = this ._target,
+            target  = this [_target],
             current = target .getValue ();
 
          if (current)
          {
-            current .removeCloneCount (target ._cloneCount);
-            current .removeParent (target ._proxy);
+            current .removeCloneCount (target [_cloneCount]);
+            current .removeParent (target [_proxy]);
          }
 
          // No need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
          if (value)
          {
-            value .addParent (target ._proxy);
-            value .addCloneCount (target ._cloneCount);
+            value .addParent (target [_proxy]);
+            value .addCloneCount (target [_cloneCount]);
 
             X3DField .prototype .set .call (target, value);
          }
@@ -215,7 +222,7 @@ function (X3DField,
       getNodeTypeName: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -226,7 +233,7 @@ function (X3DField,
       getNodeName: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -237,7 +244,7 @@ function (X3DField,
       getNodeDisplayName: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -248,7 +255,7 @@ function (X3DField,
       getNodeType: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
              value  = target .getValue ();
 
          if (value)
@@ -259,7 +266,7 @@ function (X3DField,
       getFieldDefinitions: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -269,7 +276,7 @@ function (X3DField,
       },
       addFieldCallback: function (name, string, object)
       {
-         const target = this ._target;
+         const target = this [_target];
 
          switch (arguments .length)
          {
@@ -290,7 +297,7 @@ function (X3DField,
       },
       removeFieldCallback: function (name, string)
       {
-         const target = this ._target;
+         const target = this [_target];
 
          switch (arguments .length)
          {
@@ -312,10 +319,10 @@ function (X3DField,
       addCloneCount: function (count)
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
-         target ._cloneCount += count;
+         target [_cloneCount] += count;
 
          if (value)
             value .addCloneCount (count);
@@ -323,10 +330,10 @@ function (X3DField,
       removeCloneCount: function (count)
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
-         target ._cloneCount -= count;
+         target [_cloneCount] -= count;
 
          if (value)
             value .removeCloneCount (count);
@@ -334,7 +341,7 @@ function (X3DField,
       valueOf: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -345,7 +352,7 @@ function (X3DField,
       toStream: function (stream)
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -356,7 +363,7 @@ function (X3DField,
       toVRMLStream: function (stream)
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -367,7 +374,7 @@ function (X3DField,
       toXMLString: function ()
       {
          const
-            target    = this ._target,
+            target    = this [_target],
             stream    = { string: "" },
             generator = Generator .Get (stream),
             value     = target .getValue ();
@@ -383,7 +390,7 @@ function (X3DField,
       toXMLStream: function (stream)
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -393,7 +400,7 @@ function (X3DField,
       },
       dispose: function ()
       {
-         const target = this ._target;
+         const target = this [_target];
 
          target .set (null);
 

@@ -62,11 +62,24 @@ function ($,
 {
 "use strict";
 
+   const
+      _value           = Symbol (),
+      _accessType      = Symbol (),
+      _unit            = Symbol (),
+      _references      = Symbol (),
+      _fieldInterests  = Symbol (),
+      _fieldCallbacks  = Symbol (),
+      _inputRoutes     = Symbol (),
+      _outputRoutes    = Symbol (),
+      _routeCallbacks  = Symbol ();
+
+   const _uniformLocation = Symbol .for ("X3DField.uniformLocation");
+
    function X3DField (value)
    {
       X3DChildObject .call (this);
 
-      this ._value = value;
+      this [_value] = value;
 
       return this;
    }
@@ -74,19 +87,19 @@ function ($,
    X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype),
    {
       constructor: X3DField,
-      _value: null,
-      _accessType: X3DConstants .initializeOnly,
-      _unit: null,
-      _uniformLocation: null,
-      _references: new Set (),
-      _fieldInterests: new Set (),
-      _fieldCallbacks: new Map (),
-      _inputRoutes: new Set (),
-      _outputRoutes: new Set (),
-      _routeCallbacks: new Map (),
-      equals: function (value)
+      [_value]: null,
+      [_accessType]: X3DConstants .initializeOnly,
+      [_unit]: null,
+      [_uniformLocation]: null,
+      [_references]: new Set (),
+      [_fieldInterests]: new Set (),
+      [_fieldCallbacks]: new Map (),
+      [_inputRoutes]: new Set (),
+      [_outputRoutes]: new Set (),
+      [_routeCallbacks]: new Map (),
+      equals: function (field)
       {
-         return this ._value === value .valueOf ();
+         return this [_value] === field .valueOf ();
       },
       assign: function (field)
       {
@@ -97,7 +110,7 @@ function ($,
       set: function (value)
       {
          // Sets internal value without generating event.
-         this ._value = value;
+         this [_value] = value;
       },
       setValue: function (value)
       {
@@ -107,54 +120,54 @@ function ($,
       },
       getValue: function ()
       {
-         return this ._value;
+         return this [_value];
       },
       setAccessType: function (value)
       {
-         this ._accessType = value;
+         this [_accessType] = value;
       },
       getAccessType: function ()
       {
-         return this ._accessType;
+         return this [_accessType];
       },
       isInitializable: function ()
       {
-         return this .getAccessType () & X3DConstants .initializeOnly;
+         return this [_accessType] & X3DConstants .initializeOnly;
       },
       isInput: function ()
       {
-         return this .getAccessType () & X3DConstants .inputOnly;
+         return this [_accessType] & X3DConstants .inputOnly;
       },
       isOutput: function ()
       {
-         return this .getAccessType () & X3DConstants .outputOnly;
+         return this [_accessType] & X3DConstants .outputOnly;
       },
       isReadable: function ()
       {
-         return this .getAccessType () !== X3DConstants .inputOnly;
+         return this [_accessType] !== X3DConstants .inputOnly;
       },
       isWritable: function ()
       {
-         return this .getAccessType () !== X3DConstants .initializeOnly;
+         return this [_accessType] !== X3DConstants .initializeOnly;
       },
       setUnit: function (value)
       {
-         this ._unit = value;
+         this [_unit] = value;
       },
       getUnit: function ()
       {
-         return this ._unit;
+         return this [_unit];
       },
       hasReferences: function ()
       {
-         if (this .hasOwnProperty ("_references"))
-            return this ._references .size !== 0;
+         if (this .hasOwnProperty (_references))
+            return this [_references] .size !== 0;
 
          return false;
       },
       isReference: function (accessType)
       {
-         return accessType === this .getAccessType () || accessType === X3DConstants .inputOutput;
+         return accessType === this [_accessType] || accessType === X3DConstants .inputOutput;
       },
       addReference: function (reference)
       {
@@ -211,117 +224,110 @@ function ($,
       },
       getReferences: function ()
       {
-         if (! this .hasOwnProperty ("_references"))
-            this ._references = new Set ();
+         if (!this .hasOwnProperty (_references))
+            this [_references] = new Set ();
 
-         return this ._references;
+         return this [_references];
       },
       addFieldInterest: function (field)
       {
-         if (! this .hasOwnProperty ("_fieldInterests"))
-            this ._fieldInterests = new Set ();
+         if (!this .hasOwnProperty (_fieldInterests))
+            this [_fieldInterests] = new Set ();
 
-         this ._fieldInterests .add (field);
+         this [_fieldInterests] .add (field);
       },
       removeFieldInterest: function (field)
       {
-         this ._fieldInterests .delete (field);
+         this [_fieldInterests] .delete (field);
       },
       getFieldInterests: function ()
       {
-         return this ._fieldInterests;
+         return this [_fieldInterests];
       },
       addFieldCallback: function (key, object)
       {
-         if (! this .hasOwnProperty ("_fieldCallbacks"))
-            this ._fieldCallbacks = new Map ();
+         if (!this .hasOwnProperty (_fieldCallbacks))
+            this [_fieldCallbacks] = new Map ();
 
-         this ._fieldCallbacks .set (key, object);
+         this [_fieldCallbacks] .set (key, object);
       },
       removeFieldCallback: function (key)
       {
-         this ._fieldCallbacks .delete (key);
+         this [_fieldCallbacks] .delete (key);
       },
       getFieldCallbacks: function ()
       {
-         return this ._fieldCallbacks;
+         return this [_fieldCallbacks];
       },
       addInputRoute: function (route)
       {
-         if (! this .hasOwnProperty ("_inputRoutes"))
-            this ._inputRoutes = new Set ();
+         if (!this .hasOwnProperty (_inputRoutes))
+            this [_inputRoutes] = new Set ();
 
-         this ._inputRoutes .add (route);
+         this [_inputRoutes] .add (route);
 
          this .processRouteCallbacks ();
       },
       removeInputRoute: function (route)
       {
-         this ._inputRoutes .delete (route);
+         this [_inputRoutes] .delete (route);
 
          this .processRouteCallbacks ();
       },
       getInputRoutes: function ()
       {
-         return this ._inputRoutes;
+         return this [_inputRoutes];
       },
       addOutputRoute: function (route)
       {
-         if (! this .hasOwnProperty ("_outputRoutes"))
-            this ._outputRoutes = new Set ();
+         if (!this .hasOwnProperty (_outputRoutes))
+            this [_outputRoutes] = new Set ();
 
-         this ._outputRoutes .add (route);
+         this [_outputRoutes] .add (route);
 
          this .processRouteCallbacks ();
       },
       removeOutputRoute: function (route)
       {
-         this ._outputRoutes .delete (route);
+         this [_outputRoutes] .delete (route);
 
          this .processRouteCallbacks ();
       },
       getOutputRoutes: function ()
       {
-         return this ._outputRoutes;
+         return this [_outputRoutes];
       },
       addRouteCallback: function (key, object)
       {
-         if (! this .hasOwnProperty ("_routeCallbacks"))
-            this ._routeCallbacks = new Map ();
+         if (!this .hasOwnProperty (_routeCallbacks))
+            this [_routeCallbacks] = new Map ();
 
-         this ._routeCallbacks .set (key, object);
+         this [_routeCallbacks] .set (key, object);
       },
       removeRouteCallback: function (key)
       {
-         this ._routeCallbacks .delete (key);
+         this [_routeCallbacks] .delete (key);
       },
       getRouteCallbacks: function ()
       {
-         return this ._routeCallbacks;
+         return this [_routeCallbacks];
       },
       processRouteCallbacks: (function ()
       {
-         const routeCallbacks = [ ];
-
-         function processRouteCallback (routeCallback)
-         {
-            routeCallback ();
-         }
+         const routeCallbacksTemp = [ ];
 
          return function ()
          {
-            if (this ._routeCallbacks .size)
-               MapUtilities .values (routeCallbacks, this ._routeCallbacks) .forEach (processRouteCallback);
+            if (this [_routeCallbacks] .size)
+            {
+               for (const routeCallback of MapUtilities .values (routeCallbacksTemp, this [_routeCallbacks]))
+                  routeCallback ();
+            }
          };
       })(),
       processEvent: (function ()
       {
-         const fieldCallbacks = [ ];
-
-         function processEvent (fieldCallback)
-         {
-            fieldCallback (this .valueOf ());
-         }
+         const fieldCallbacksTemp = [ ];
 
          return function (event)
          {
@@ -345,26 +351,30 @@ function ($,
 
             let first = true;
 
-            this ._fieldInterests .forEach (function (fieldInterest)
+            if (this [_fieldInterests] .size)
             {
-               if (first)
+               this [_fieldInterests] .forEach (function (fieldInterest)
                {
-                  first = false;
-                  fieldInterest .addEventObject (this, event);
-               }
-               else
-                  fieldInterest .addEventObject (this, Events .copy (event));
-            },
-            this);
+                  if (first)
+                  {
+                     first = false;
+                     fieldInterest .addEventObject (this, event);
+                  }
+                  else
+                     fieldInterest .addEventObject (this, Events .copy (event));
+               },
+               this);
+            }
 
             if (first)
                Events .push (event);
 
             // Process field callbacks
 
-            if (this ._fieldCallbacks .size)
+            if (this [_fieldCallbacks] .size)
             {
-               MapUtilities .values (fieldCallbacks, this ._fieldCallbacks) .forEach (processEvent, this);
+               for (const fieldCallback of MapUtilities .values (fieldCallbacksTemp, this [_fieldCallbacks]))
+                  fieldCallback (this .valueOf ());
             }
          };
       })(),
@@ -380,7 +390,7 @@ function ($,
             Parser = require ("x_ite/Parser/Parser"),
             parser = new Parser (scene);
 
-         parser .setUnits (!! scene);
+         parser .setUnits (!!scene);
          parser .setInput (string);
 
          if (parser .fieldValue (this))

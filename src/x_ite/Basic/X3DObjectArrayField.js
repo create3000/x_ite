@@ -51,16 +51,18 @@ define ([
    "jquery",
    "x_ite/Basic/X3DField",
    "x_ite/Basic/X3DArrayField",
-   "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function ($,
           X3DField,
           X3DArrayField,
-          X3DConstants,
           Generator)
 {
 "use strict";
+
+   const
+      _target = Symbol (),
+      _proxy  = Symbol ();
 
    const handler =
    {
@@ -135,8 +137,8 @@ function ($,
 
       X3DArrayField .call (this, [ ]);
 
-      this ._target = this;
-      this ._proxy  = proxy;
+      this [_target] = this;
+      this [_proxy]  = proxy;
 
       if (value [0] instanceof Array)
          value = value [0];
@@ -149,14 +151,16 @@ function ($,
    X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
    {
       constructor: X3DObjectArrayField,
+      [_target]: null,
+      [_proxy]: null,
       getTarget: function ()
       {
-         return this ._target;
+         return this [_target];
       },
       copy: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             copy   = new (target .constructor) (),
             array  = target .getValue ();
 
@@ -169,7 +173,7 @@ function ($,
       equals: function (array)
       {
          const
-            target = this ._target,
+            target = this [_target],
             a      = target .getValue (),
             b      = array .getValue (),
             length = a .length;
@@ -190,7 +194,7 @@ function ($,
       },
       set: function (value)
       {
-         const target = this ._target;
+         const target = this [_target];
 
          target .resize (value .length, undefined, true);
 
@@ -205,7 +209,7 @@ function ($,
       },
       setValue: function (value)
       {
-         const target = this ._target;
+         const target = this [_target];
 
          target .set (value instanceof X3DObjectArrayField ? value .getValue () : value);
          target .addEvent ();
@@ -213,7 +217,7 @@ function ($,
       unshift: function (value)
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue ();
 
          for (let i = arguments .length - 1; i >= 0; -- i)
@@ -232,7 +236,7 @@ function ($,
       shift: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue ();
 
          if (array .length)
@@ -246,7 +250,7 @@ function ($,
       push: function (value)
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue ();
 
          for (const argument of arguments)
@@ -265,7 +269,7 @@ function ($,
       pop: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue ();
 
          if (array .length)
@@ -279,7 +283,7 @@ function ($,
       splice: function (index, deleteCount)
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue ();
 
          if (index > array .length)
@@ -298,7 +302,7 @@ function ($,
       insert: function (index, array, first, last)
       {
          const
-            target = this ._target,
+            target = this [_target],
             args   = [index, 0];
 
          for (let i = first; i < last; ++ i)
@@ -317,7 +321,7 @@ function ($,
       find: function (first, last, value)
       {
          const
-            target = this ._target,
+            target = this [_target],
             values = target .getValue ();;
 
          if ($.isFunction (value))
@@ -342,7 +346,7 @@ function ($,
       remove: function (first, last, value)
       {
          const
-            target = this ._target,
+            target = this [_target],
             values = target .getValue ();
 
          if ($.isFunction (value))
@@ -397,7 +401,7 @@ function ($,
       erase: function (first, last)
       {
          const
-            target = this ._target,
+            target = this [_target],
             values = target .getValue () .splice (first, last - first);
 
          for (const value of values)
@@ -410,7 +414,7 @@ function ($,
       resize: function (size, value, silent)
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue ();
 
          if (size < array .length)
@@ -442,16 +446,16 @@ function ($,
       },
       addChildObject: function (value)
       {
-         value .addParent (this ._proxy);
+         value .addParent (this [_proxy]);
       },
       removeChildObject: function (value)
       {
-         value .removeParent (this ._proxy);
+         value .removeParent (this [_proxy]);
       },
       toStream: function (stream)
       {
          const
-            target    = this ._target,
+            target    = this [_target],
             array     = target .getValue (),
             generator = Generator .Get (stream);
 
@@ -505,7 +509,7 @@ function ($,
       toXMLStream: function (stream)
       {
          const
-            target = this ._target,
+            target = this [_target],
             length = target .length;
 
          if (length)
@@ -530,7 +534,7 @@ function ($,
       dispose: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue ();
 
          for (const value of array)
@@ -544,8 +548,8 @@ function ($,
 
    Object .defineProperty (X3DObjectArrayField .prototype, "length",
    {
-      get: function () { return this ._target .getValue () .length; },
-      set: function (value) { this ._target .resize (value); },
+      get: function () { return this [_target] .getValue () .length; },
+      set: function (value) { this [_target] .resize (value); },
       enumerable: false,
       configurable: false,
    });

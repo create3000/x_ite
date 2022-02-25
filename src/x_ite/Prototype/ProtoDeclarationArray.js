@@ -66,23 +66,6 @@ function (X3DInfoArray)
       {
          return "ProtoDeclarationArray";
       },
-      toVRMLStream: function (stream)
-      {
-         for (const value of this ._array)
-         {
-            try
-            {
-               value .toVRMLStream (stream);
-
-               stream .string += "\n";
-               stream .string += "\n";
-            }
-            catch (error)
-            {
-               console .log (error);
-            }
-         }
-      },
    });
 
    return ProtoDeclarationArray;

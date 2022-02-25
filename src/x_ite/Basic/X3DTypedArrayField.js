@@ -60,6 +60,11 @@ function (X3DArrayField,
 {
 "use strict";
 
+   const
+      _target = Symbol (),
+      _tmp    = Symbol (),
+      _length = Symbol ();
+
    const handler =
    {
       get: function (target, key)
@@ -81,7 +86,7 @@ function (X3DArrayField,
 
                let array = target .getValue ();
 
-               if (index >= target ._length)
+               if (index >= target [_length])
                   array = target .resize (index + 1);
 
                if (components === 1)
@@ -123,14 +128,14 @@ function (X3DArrayField,
                {
                   // Return native JavaScript value.
 
-                  for (let index = 0; index < target ._length; ++ index)
+                  for (let index = 0; index < target [_length]; ++ index)
                      yield valueType (array [index]);
                }
                else
                {
                   // Return reference to index.
 
-                  for (let index = 0; index < target ._length; ++ index)
+                  for (let index = 0; index < target [_length]; ++ index)
                   {
                      const
                         value         = new (valueType) (),
@@ -160,7 +165,7 @@ function (X3DArrayField,
             index = key * 1,
             array = target .getValue ();
 
-         if (index >= target ._length)
+         if (index >= target [_length])
             array = target .resize (index + 1);
 
          if (components === 1)
@@ -182,7 +187,7 @@ function (X3DArrayField,
       has: function (target, key)
       {
          if (Number .isInteger (+key))
-            return key < target ._length;
+            return key < target [_length];
 
          return key in target;
       },
@@ -192,8 +197,8 @@ function (X3DArrayField,
    {
       X3DArrayField .call (this, new (this .getArrayType ()) (2));
 
-      this ._target = this;
-      this ._tmp    = [ ];  // Array with components size.
+      this [_target] = this;
+      this [_tmp]    = [ ];  // Array with components size.
 
       if (value [0] instanceof Array)
          value = value [0];
@@ -206,22 +211,24 @@ function (X3DArrayField,
    X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
    {
       constructor: X3DTypedArrayField,
-      _length: 0,
+      [_target]: null,
+      [_tmp]: null,
+      [_length]: 0,
       getTarget: function ()
       {
-         return this ._target;
+         return this [_target];
       },
       copy: function ()
       {
          const
-            target     = this ._target,
+            target     = this [_target],
             array      = target .getValue (),
             copy       = new (target .constructor) (),
             copyArray  = new (target .getArrayType ()) (array);
 
-         copy ._length = target ._length;
+         copy [_length] = target [_length];
 
-         X3DArrayField .prototype .set .call (copy, copyArray, target ._length);
+         X3DArrayField .prototype .set .call (copy, copyArray, target [_length]);
 
          copy .setModificationTime (0);
 
@@ -233,10 +240,10 @@ function (X3DArrayField,
             return true;
 
          const
-            target = this ._target,
-            length = target ._length;
+            target = this [_target],
+            length = target [_length];
 
-         if (length !== other ._length)
+         if (length !== other [_length])
             return false;
 
          const
@@ -253,7 +260,7 @@ function (X3DArrayField,
       },
       assign: function (value)
       {
-         const target = this ._target;
+         const target = this [_target];
 
          target .set (value .getValue (), value .length);
          target .addEvent ();
@@ -261,9 +268,9 @@ function (X3DArrayField,
       set: function (otherArray /* value of field */, l /* length of field */)
       {
          const
-            target      = this ._target,
+            target      = this [_target],
             components  = target .getComponents (),
-            length      = target ._length;
+            length      = target [_length];
 
          let
             array       = target .getValue (),
@@ -298,15 +305,15 @@ function (X3DArrayField,
                array .fill (0, otherLength * components, length * components);
          }
 
-         target ._length = otherLength;
+         target [_length] = otherLength;
       },
       isDefaultValue: function ()
       {
-         return this ._length === 0;
+         return this [_length] === 0;
       },
       setValue: function (value)
       {
-         const target = this ._target;
+         const target = this [_target];
 
          if (value instanceof target .constructor)
          {
@@ -321,9 +328,9 @@ function (X3DArrayField,
       unshift: function (value)
       {
          const
-            target          = this ._target,
+            target          = this [_target],
             components      = target .getComponents (),
-            length          = target ._length,
+            length          = target [_length],
             argumentsLength = arguments .length,
             array           = target .grow ((length + argumentsLength) * components);
 
@@ -346,7 +353,7 @@ function (X3DArrayField,
             }
          }
 
-         target ._length += argumentsLength;
+         target [_length] += argumentsLength;
 
          target .addEvent ();
 
@@ -355,8 +362,8 @@ function (X3DArrayField,
       shift: function ()
       {
          const
-            target = this ._target,
-            length = target ._length;
+            target = this [_target],
+            length = target [_length];
 
          if (length)
          {
@@ -372,7 +379,7 @@ function (X3DArrayField,
             }
             else
             {
-               const tmp = target ._tmp;
+               const tmp = target [_tmp];
 
                for (let c = 0; c < components; ++ c)
                   tmp [c] = array [c];
@@ -385,7 +392,7 @@ function (X3DArrayField,
             array .copyWithin (0, components, length * components);
             array .fill (0, components * newLength, length * components);
 
-            target ._length = newLength;
+            target [_length] = newLength;
 
             target .addEvent ();
             return value;
@@ -394,9 +401,9 @@ function (X3DArrayField,
       push: function (value)
       {
          const
-            target          = this ._target,
+            target          = this [_target],
             components      = target .getComponents (),
-            length          = target ._length,
+            length          = target [_length],
             argumentsLength = arguments .length,
             array           = target .grow ((length + argumentsLength) * components);
 
@@ -417,17 +424,17 @@ function (X3DArrayField,
             }
          }
 
-         target ._length += argumentsLength;
+         target [_length] += argumentsLength;
 
          target .addEvent ();
 
-         return target ._length;
+         return target [_length];
       },
       pop: function ()
       {
          const
-            target = this ._target,
-            length = target ._length;
+            target = this [_target],
+            length = target [_length];
 
          if (length)
          {
@@ -443,7 +450,7 @@ function (X3DArrayField,
             }
             else
             {
-               const tmp = target ._tmp;
+               const tmp = target [_tmp];
 
                for (let c = 0, a = newLength * components; c < components; ++ c, ++ a)
                   tmp [c] = array [a];
@@ -455,7 +462,7 @@ function (X3DArrayField,
 
             array .fill (0, newLength * components, length * components);
 
-            target ._length = newLength;
+            target [_length] = newLength;
 
             target .addEvent ();
 
@@ -465,8 +472,8 @@ function (X3DArrayField,
       splice: function (index, deleteCount)
       {
          const
-            target = this ._target,
-            length = target ._length;
+            target = this [_target],
+            length = target [_length];
 
          if (index > length)
             index = length;
@@ -486,9 +493,9 @@ function (X3DArrayField,
       spliceInsert: function (index, other)
       {
          const
-            target      = this ._target,
+            target      = this [_target],
             components  = target .getComponents (),
-            length      = target ._length,
+            length      = target [_length],
             otherLength = other .length,
             array       = target .grow ((length + otherLength) * components);
 
@@ -511,13 +518,13 @@ function (X3DArrayField,
             }
          }
 
-         target ._length += otherLength;
+         target [_length] += otherLength;
       },
       insert: function (index, other, first, last)
       {
          const
-            target     = this ._target,
-            length     = target ._length,
+            target     = this [_target],
+            length     = target [_length],
             otherArray = other .getValue (),
             components = target .getComponents (),
             difference = last - first,
@@ -532,18 +539,18 @@ function (X3DArrayField,
          for (; first < last; ++ index, ++ first)
             array [index] = otherArray [first];
 
-         target ._length += difference;
+         target [_length] += difference;
 
          target .addEvent ();
       },
       erase: function (first, last)
       {
          const
-            target      = this ._target,
+            target      = this [_target],
             array       = target .getValue (),
             components  = target .getComponents (),
             difference  = last - first,
-            length      = target ._length,
+            length      = target [_length],
             newLength   = length - difference,
             values      = new (target .constructor) (),
             valuesArray = values .grow (difference * components);
@@ -557,8 +564,8 @@ function (X3DArrayField,
          array .copyWithin (first, last, length * components);
          array .fill (0, newLength * components, length * components);
 
-         target ._length = newLength;
-         values ._length = difference;
+         target [_length] = newLength;
+         values [_length] = difference;
 
          target .addEvent ();
 
@@ -567,8 +574,8 @@ function (X3DArrayField,
       resize: function (newLength, value, silent)
       {
          const
-            target     = this ._target,
-            length     = target ._length,
+            target     = this [_target],
+            length     = target [_length],
             components = target .getComponents ();
 
          let array = target .getValue ();
@@ -606,14 +613,14 @@ function (X3DArrayField,
                target .addEvent ();
          }
 
-         target ._length = newLength;
+         target [_length] = newLength;
 
          return array;
       },
       grow: function (length)
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue ();
 
          if (length < array .length)
@@ -632,9 +639,9 @@ function (X3DArrayField,
       shrinkToFit: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue (),
-            length = target ._length * target .getComponents ();
+            length = target [_length] * target .getComponents ();
 
          if (array .length == length)
             return array;
@@ -648,10 +655,10 @@ function (X3DArrayField,
       toStream: function (stream)
       {
          const
-            target     = this ._target,
+            target     = this [_target],
             generator  = Generator .Get (stream),
             array      = target .getValue (),
-            length     = target ._length,
+            length     = target [_length],
             components = target .getComponents (),
             value      = new (target .getSingleType ()) ();
 
@@ -747,8 +754,8 @@ function (X3DArrayField,
       toXMLStream: function (stream)
       {
          const
-            target = this ._target,
-            length = target ._length;
+            target = this [_target],
+            length = target [_length];
 
          if (length)
          {
@@ -797,14 +804,14 @@ function (X3DArrayField,
       },
       dispose: function ()
       {
-         X3DArrayField .prototype .dispose .call (this ._target);
+         X3DArrayField .prototype .dispose .call (this [_target]);
       },
    });
 
    Object .defineProperty (X3DTypedArrayField .prototype, "length",
    {
-      get: function () { return this ._length; },
-      set: function (value) { this ._target .resize (value); },
+      get: function () { return this [_length]; },
+      set: function (value) { this [_target] .resize (value); },
       enumerable: false,
       configurable: false,
    });
@@ -815,7 +822,7 @@ function (X3DArrayField,
    {
       const
          array = this .getValue (),
-         tmp   = this ._tmp;
+         tmp   = this [_tmp];
 
       for (let c = 0; c < components; ++ c, ++ index)
          tmp [c] = array [index];

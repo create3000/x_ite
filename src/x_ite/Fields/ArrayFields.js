@@ -108,6 +108,8 @@ function (SFBool,
     *  MFNode
     */
 
+   const _cloneCount = Symbol ();
+
    function MFNode (value)
    {
       return X3DObjectArrayField .call (this, arguments);
@@ -116,7 +118,7 @@ function (SFBool,
    MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
    {
       constructor: MFNode,
-      _cloneCount: 0,
+      [_cloneCount]: 0,
       getSingleType: function ()
       {
          return SFNode;
@@ -161,14 +163,14 @@ function (SFBool,
       },
       addCloneCount: function (count)
       {
-         this ._cloneCount += count;
+         this [_cloneCount] += count;
 
          for (const element of this .getValue ())
             element .addCloneCount (count);
       },
       removeCloneCount: function (count)
       {
-         this ._cloneCount -= count;
+         this [_cloneCount] -= count;
 
          for (const element of this .getValue ())
             element .removeCloneCount (count);
@@ -177,18 +179,18 @@ function (SFBool,
       {
          X3DObjectArrayField .prototype .addChildObject .call (this, value);
 
-         value .addCloneCount (this ._cloneCount);
+         value .addCloneCount (this [_cloneCount]);
       },
       removeChildObject: function (value)
       {
          X3DObjectArrayField .prototype .removeChildObject .call (this, value);
 
-         value .removeCloneCount (this ._cloneCount);
+         value .removeCloneCount (this [_cloneCount]);
       },
       toStream: function (stream)
       {
          const
-            target    = this ._target,
+            target    = this .getTarget (),
             array     = target .getValue (),
             generator = Generator .Get (stream);
 
@@ -244,7 +246,7 @@ function (SFBool,
       toVRMLStream: function (stream)
       {
          const
-            target    = this ._target,
+            target    = this .getTarget (),
             array     = target .getValue (),
             generator = Generator .Get (stream);
 

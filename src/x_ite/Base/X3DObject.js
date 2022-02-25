@@ -56,14 +56,19 @@ function (Generator,
 {
 "use strict";
 
+   const
+      _name          = Symbol (),
+      _interests     = Symbol (),
+      _interestsTemp = Symbol ();
+
    function X3DObject () { }
 
    X3DObject .prototype =
    {
       constructor: X3DObject,
-      _name: "",
-      _interests: new Map (),
-      _interestsTemp: [ ],
+      [_name]: "",
+      [_interests]: new Map (),
+      [_interestsTemp]: [ ],
       getId: function ()
       {
          return X3DObject .getId (this);
@@ -74,26 +79,26 @@ function (Generator,
       },
       setName: function (value)
       {
-         this ._name = value;
+         this [_name] = value;
       },
       getName: function ()
       {
-         return this ._name;
+         return this [_name];
       },
       getDisplayName: function ()
       {
-         return this ._name;
+         return this [_name];
       },
       hasInterest: function (callbackName, object)
       {
-         return this ._interests .has (X3DObject .getId (object) + "." + callbackName);
+         return this [_interests] .has (X3DObject .getId (object) + "." + callbackName);
       },
       addInterest: function (callbackName, object)
       {
-         if (!this .hasOwnProperty ("_interests"))
+         if (!this .hasOwnProperty (_interests))
          {
-            this ._interests     = new Map ();
-            this ._interestsTemp = [ ];
+            this [_interests]     = new Map ();
+            this [_interestsTemp] = [ ];
          }
 
          const callback = object [callbackName];
@@ -105,34 +110,29 @@ function (Generator,
             args [0] = object;
             args [1] = this;
 
-            this ._interests .set (X3DObject .getId (object) + "." + callbackName, Function .prototype .bind .apply (callback, args));
+            this [_interests] .set (X3DObject .getId (object) + "." + callbackName, Function .prototype .bind .apply (callback, args));
          }
          else
          {
-            this ._interests .set (X3DObject .getId (object) + "." + callbackName, callback .bind (object, this));
+            this [_interests] .set (X3DObject .getId (object) + "." + callbackName, callback .bind (object, this));
          }
       },
       removeInterest: function (callbackName, object)
       {
-         this ._interests .delete (X3DObject .getId (object) + "." + callbackName);
+         this [_interests] .delete (X3DObject .getId (object) + "." + callbackName);
       },
       getInterests: function ()
       {
-         return this ._interests;
+         return this [_interests];
       },
-      processInterests: (function ()
+      processInterests: function ()
       {
-         function processInterest (interest)
+         if (this [_interests] .size)
          {
-            interest ();
+            for (const interest of MapUtilities .values (this [_interestsTemp], this [_interests])  )
+               interest ();
          }
-
-         return function ()
-         {
-            if (this ._interests .size)
-               MapUtilities .values (this ._interestsTemp, this ._interests) .forEach (processInterest);
-         };
-      })(),
+      },
       toString: function (scene)
       {
          const stream = { string: "" };
@@ -170,7 +170,7 @@ function (Generator,
       },
       toStream: function (stream)
       {
-         stream .string = "[object " + this .getTypeName () + "]";
+         stream .string = "[_object " + this .getTypeName () + "]";
       },
       dispose: function () { },
    };

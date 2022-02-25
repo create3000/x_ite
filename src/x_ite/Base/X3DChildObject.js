@@ -54,6 +54,11 @@ function (X3DObject)
 {
 "use strict";
 
+   const
+      _modificationTime = Symbol (),
+      _tainted          = Symbol (),
+      _parents          = Symbol ();
+
    function X3DChildObject ()
    {
       X3DObject .call (this);
@@ -62,57 +67,57 @@ function (X3DObject)
    X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
       constructor: X3DChildObject,
-      _modificationTime: 0,
-      _tainted: false,
-      _parents: new Set (),
+      [_modificationTime]: 0,
+      [_tainted]: false,
+      [_parents]: new Set (),
       setModificationTime: function (value)
       {
-         this ._modificationTime = value;
+         this [_modificationTime] = value;
       },
       getModificationTime: function ()
       {
-         return this ._modificationTime;
+         return this [_modificationTime];
       },
       setTainted: function (value)
       {
-         this ._tainted = value;
+         this [_tainted] = value;
       },
       isTainted: function ()
       {
-         return this ._tainted;
+         return this [_tainted];
       },
       addEvent: function ()
       {
          this .setModificationTime (performance .now ());
 
-         for (const parent of this ._parents)
+         for (const parent of this [_parents])
             parent .addEvent (this);
       },
       addEventObject: function (field, event)
       {
          this .setModificationTime (performance .now ());
 
-         for (const parent of this ._parents)
+         for (const parent of this [_parents])
             parent .addEventObject (this, event);
       },
       addParent: function (parent)
       {
-         if (! this .hasOwnProperty ("_parents"))
-            this ._parents = new Set ();
+         if (!this .hasOwnProperty (_parents))
+            this [_parents] = new Set ();
 
-         this ._parents .add (parent);
+         this [_parents] .add (parent);
       },
       removeParent: function (parent)
       {
-         this ._parents .delete (parent);
+         this [_parents] .delete (parent);
       },
       getParents: function ()
       {
-         return this ._parents;
+         return this [_parents];
       },
       dispose: function ()
       {
-         this ._parents .clear ();
+         this [_parents] .clear ();
 
          X3DObject .prototype .dispose .call (this);
       },

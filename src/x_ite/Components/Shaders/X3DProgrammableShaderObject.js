@@ -60,6 +60,8 @@ function (X3DCast,
 {
 "use strict";
 
+   const _uniformLocation = Symbol .for ("X3DField.uniformLocation");
+
    function X3DProgrammableShaderObject (executionContext)
    {
       this .addType (X3DConstants .X3DProgrammableShaderObject);
@@ -476,9 +478,9 @@ function (X3DCast,
                }
 
                if (location .array)
-                  field ._uniformLocation = location .array .length ? location : null;
+                  field [_uniformLocation] = location .array .length ? location : null;
                else
-                  field ._uniformLocation = location;
+                  field [_uniformLocation] = location;
 
                field .addInterest ("set_field__", this);
 
@@ -499,7 +501,7 @@ function (X3DCast,
          {
             const
                gl       = this .getBrowser () .getContext (),
-               location = field ._uniformLocation;
+               location = field [_uniformLocation];
 
             if (location)
             {
