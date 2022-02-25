@@ -48,12 +48,10 @@
 
 
 define ([
-   "x_ite/Fields",
    "x_ite/Base/X3DObject",
    "x_ite/InputOutput/Generator",
 ],
-function (Fields,
-          X3DObject,
+function (X3DObject,
           Generator)
 {
 "use strict";
