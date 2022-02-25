@@ -58,7 +58,7 @@ function (ComponentInfoArray,
 
    const SupportedComponents = new ComponentInfoArray ([ ]);
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Annotation",
       name:       "Annotation",
@@ -66,7 +66,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("annotation"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Computer-Aided Design (CAD) model geometry",
       name:       "CADGeometry",
@@ -74,7 +74,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("cad-geometry"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Core",
       name:       "Core",
@@ -82,7 +82,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Cube map environmental texturing",
       name:       "CubeMapTexturing",
@@ -90,7 +90,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("cube-map-texturing"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Distributed interactive simulation (DIS)",
       name:       "DIS",
@@ -98,7 +98,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("dis"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Environmental effects",
       name:       "EnvironmentalEffects",
@@ -106,7 +106,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Environmental sensor",
       name:       "EnvironmentalSensor",
@@ -114,7 +114,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Event utilities",
       name:       "EventUtilities",
@@ -122,7 +122,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("event-utilities"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Followers",
       name:       "Followers",
@@ -130,7 +130,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Geometry2D",
       name:       "Geometry2D",
@@ -138,7 +138,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("geometry2d"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Geometry3D",
       name:       "Geometry3D",
@@ -146,7 +146,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Geospatial",
       name:       "Geospatial",
@@ -154,7 +154,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("geospatial"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Grouping",
       name:       "Grouping",
@@ -162,7 +162,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Humanoid animation (HAnim)",
       name:       "HAnim",
@@ -172,7 +172,7 @@ function (ComponentInfoArray,
 
    SupportedComponents .addAlias ("H-Anim", "HAnim");
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Interpolation",
       name:       "Interpolation",
@@ -180,7 +180,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Key device sensor",
       name:       "KeyDeviceSensor",
@@ -188,7 +188,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("key-device-sensor"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Layering",
       name:       "Layering",
@@ -196,7 +196,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Layout",
       name:       "Layout",
@@ -204,7 +204,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("layout"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Lighting",
       name:       "Lighting",
@@ -212,7 +212,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Navigation",
       name:       "Navigation",
@@ -220,7 +220,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Networking",
       name:       "Networking",
@@ -228,7 +228,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Non-uniform Rational B-Spline (NURBS)",
       name:       "NURBS",
@@ -236,7 +236,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("nurbs"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Particle systems",
       name:       "ParticleSystems",
@@ -244,7 +244,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("particle-systems"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Picking sensor",
       name:       "Picking",
@@ -252,7 +252,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("picking"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Pointing device sensor",
       name:       "PointingDeviceSensor",
@@ -260,7 +260,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Projective Texture Mapping",
       name:       "ProjectiveTextureMapping",
@@ -268,7 +268,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("projective-texture-mapping"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Programmable shaders",
       name:       "Shaders",
@@ -276,7 +276,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Rendering",
       name:       "Rendering",
@@ -284,7 +284,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Rigid body physics",
       name:       "RigidBodyPhysics",
@@ -292,7 +292,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("rigid-body-physics"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Scripting",
       name:       "Scripting",
@@ -300,7 +300,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("scripting"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Shape",
       name:       "Shape",
@@ -308,7 +308,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Sound",
       name:       "Sound",
@@ -316,7 +316,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Text",
       name:       "Text",
@@ -324,7 +324,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Texturing",
       name:       "Texturing",
@@ -332,7 +332,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Texturing3D",
       name:       "Texturing3D",
@@ -340,7 +340,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("texturing-3d"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Time",
       name:       "Time",
@@ -348,7 +348,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Volume rendering",
       name:       "VolumeRendering",
@@ -356,7 +356,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("volume-rendering"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "X_ITE",
       name:       "X_ITE",

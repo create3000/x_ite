@@ -162,10 +162,10 @@ function ($,
          this .scene = value;
 
          const
-            protoName = new URL (this .scene .getWorldURL ()) .hash .substr (1) || 0,
-            proto     = this .scene .protos [protoName];
+            protoName = new URL (this .scene .getWorldURL ()) .hash .substr (1),
+            proto     = protoName ? this .scene .protos .get (protoName) : this .scene .protos [0];
 
-         if (! proto)
+         if (!proto)
             throw new Error ("PROTO not found");
 
          this .scene .setLive (this .isLive () .getValue ());

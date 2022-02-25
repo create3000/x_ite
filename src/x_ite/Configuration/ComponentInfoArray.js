@@ -73,7 +73,7 @@ function (ComponentInfo,
       {
          return "ComponentInfoArray";
       },
-      addBaseComponent: function (value)
+      addComponent: function (value)
       {
          this .add (value .name, new ComponentInfo (value .name, value .level, value .title, value .providerUrl));
       },

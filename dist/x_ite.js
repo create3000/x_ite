@@ -14141,7 +14141,7 @@ function (X3DObject)
             if (Number .isInteger (index))
                return target ._array [index];
 
-            return target ._index .get (key);
+            return;
          }
 
          if (key === Symbol .iterator)
@@ -14160,7 +14160,22 @@ function (X3DObject)
 
          return key in target;
       },
-   };
+      ownKeys: function (target)
+      {
+         return Object .keys (target ._array);
+      },
+      getOwnPropertyDescriptor: function (target, key)
+      {
+         if (Number .isInteger (key * 1))
+         {
+            const propertyDescriptor = Object .getOwnPropertyDescriptor (target ._array, key);
+
+            propertyDescriptor .writable = false;
+
+            return propertyDescriptor;
+         }
+      },
+    };
 
    function X3DInfoArray ()
    {
@@ -14234,7 +14249,7 @@ function (X3DObject)
       },
       toVRMLStream: function (stream)
       {
-         this ._array .forEach (function (value)
+         for (const value of this ._array)
          {
             try
             {
@@ -14246,11 +14261,11 @@ function (X3DObject)
             {
                console .log (error);
             }
-         });
+         }
       },
       toXMLStream: function (stream)
       {
-         this ._array .forEach (function (value)
+         for (const value of this ._array)
          {
             try
             {
@@ -14262,7 +14277,7 @@ function (X3DObject)
             {
                console .log (error);
             }
-         });
+         }
       },
    });
 
@@ -22189,6 +22204,40 @@ function (X3DField,
             return key in target;
          }
       },
+      ownKeys: function (target)
+      {
+         const
+            value = target .getValue (),
+            keys  = [ ];
+
+         if (value)
+         {
+            for (const field of value .getFieldDefinitions ())
+               keys .push (field .name);
+         }
+
+         return keys;
+      },
+      getOwnPropertyDescriptor: function (target, key)
+      {
+         try
+         {
+            const
+               field      = target .getValue () .getField (key),
+               accessType = field .getAccessType ();
+
+            return {
+               value: field .valueOf (),
+               writable: accessType !== X3DConstants .outputOnly,
+               enumerable: true,
+               configurable: true,
+            };
+         }
+         catch (error)
+         {
+            return;
+         }
+      },
    };
 
    function SFNode (value)
@@ -23246,6 +23295,15 @@ function ($,
 
          return key in target;
       },
+      ownKeys: function (target)
+      {
+         return Object .keys (target ._array);
+      },
+      getOwnPropertyDescriptor: function (target, key)
+      {
+         if (Number .isInteger (key * 1))
+            return Object .getOwnPropertyDescriptor (target .getValue (), key);
+      },
    };
 
    function X3DObjectArrayField (value)
@@ -23859,6 +23917,27 @@ function (X3DArrayField,
             return key < target ._length;
 
          return key in target;
+      },
+      ownKeys: function (target)
+      {
+         const keys = [ ];
+
+         for (let i = 0, length = target ._length; i < length; ++ i)
+            keys .push (String (i));
+
+         return keys;
+      },
+      getOwnPropertyDescriptor: function (target, key)
+      {
+         if (Number .isInteger (key * 1))
+         {
+            return {
+               value: this .get (target, key),
+               writable: true,
+               enumerable: true,
+               configurable: true,
+            };
+         }
       },
    };
 
@@ -31289,7 +31368,7 @@ function (X3DInfoArray)
       },
       toVRMLStream: function (stream)
       {
-         this .array .forEach (function (value)
+         for (const value of this ._array)
          {
             try
             {
@@ -31302,7 +31381,7 @@ function (X3DInfoArray)
             {
                console .log (error);
             }
-         });
+         }
       },
    });
 
@@ -31379,7 +31458,7 @@ function (X3DInfoArray)
       },
       toVRMLStream: function (stream)
       {
-         this .array .forEach (function (value)
+         for (const value of this ._array)
          {
             try
             {
@@ -31392,7 +31471,7 @@ function (X3DInfoArray)
             {
                console .log (error);
             }
-         });
+         }
       },
    });
 
@@ -32682,6 +32761,9 @@ function (SupportedNodes,
       {
          this .rootNodes_ .dispose ();
 
+         for (const route of this ._routes)
+            this .deleteRoute (route);
+
          X3DBaseNode .prototype .dispose .call (this);
       },
    });
@@ -32939,7 +33021,7 @@ function (ComponentInfo,
       {
          return "ComponentInfoArray";
       },
-      addBaseComponent: function (value)
+      addComponent: function (value)
       {
          this .add (value .name, new ComponentInfo (value .name, value .level, value .title, value .providerUrl));
       },
@@ -116929,7 +117011,7 @@ function (ComponentInfoArray,
 
    const SupportedComponents = new ComponentInfoArray ([ ]);
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Annotation",
       name:       "Annotation",
@@ -116937,7 +117019,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("annotation"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Computer-Aided Design (CAD) model geometry",
       name:       "CADGeometry",
@@ -116945,7 +117027,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("cad-geometry"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Core",
       name:       "Core",
@@ -116953,7 +117035,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Cube map environmental texturing",
       name:       "CubeMapTexturing",
@@ -116961,7 +117043,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("cube-map-texturing"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Distributed interactive simulation (DIS)",
       name:       "DIS",
@@ -116969,7 +117051,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("dis"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Environmental effects",
       name:       "EnvironmentalEffects",
@@ -116977,7 +117059,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Environmental sensor",
       name:       "EnvironmentalSensor",
@@ -116985,7 +117067,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Event utilities",
       name:       "EventUtilities",
@@ -116993,7 +117075,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("event-utilities"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Followers",
       name:       "Followers",
@@ -117001,7 +117083,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Geometry2D",
       name:       "Geometry2D",
@@ -117009,7 +117091,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("geometry2d"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Geometry3D",
       name:       "Geometry3D",
@@ -117017,7 +117099,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Geospatial",
       name:       "Geospatial",
@@ -117025,7 +117107,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("geospatial"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Grouping",
       name:       "Grouping",
@@ -117033,7 +117115,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Humanoid animation (HAnim)",
       name:       "HAnim",
@@ -117043,7 +117125,7 @@ function (ComponentInfoArray,
 
    SupportedComponents .addAlias ("H-Anim", "HAnim");
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Interpolation",
       name:       "Interpolation",
@@ -117051,7 +117133,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Key device sensor",
       name:       "KeyDeviceSensor",
@@ -117059,7 +117141,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("key-device-sensor"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Layering",
       name:       "Layering",
@@ -117067,7 +117149,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Layout",
       name:       "Layout",
@@ -117075,7 +117157,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("layout"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Lighting",
       name:       "Lighting",
@@ -117083,7 +117165,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Navigation",
       name:       "Navigation",
@@ -117091,7 +117173,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Networking",
       name:       "Networking",
@@ -117099,7 +117181,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Non-uniform Rational B-Spline (NURBS)",
       name:       "NURBS",
@@ -117107,7 +117189,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("nurbs"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Particle systems",
       name:       "ParticleSystems",
@@ -117115,7 +117197,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("particle-systems"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Picking sensor",
       name:       "Picking",
@@ -117123,7 +117205,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("picking"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Pointing device sensor",
       name:       "PointingDeviceSensor",
@@ -117131,7 +117213,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Projective Texture Mapping",
       name:       "ProjectiveTextureMapping",
@@ -117139,7 +117221,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("projective-texture-mapping"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Programmable shaders",
       name:       "Shaders",
@@ -117147,7 +117229,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Rendering",
       name:       "Rendering",
@@ -117155,7 +117237,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Rigid body physics",
       name:       "RigidBodyPhysics",
@@ -117163,7 +117245,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("rigid-body-physics"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Scripting",
       name:       "Scripting",
@@ -117171,7 +117253,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("scripting"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Shape",
       name:       "Shape",
@@ -117179,7 +117261,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Sound",
       name:       "Sound",
@@ -117187,7 +117269,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Text",
       name:       "Text",
@@ -117195,7 +117277,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Texturing",
       name:       "Texturing",
@@ -117203,7 +117285,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Texturing3D",
       name:       "Texturing3D",
@@ -117211,7 +117293,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("texturing-3d"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Time",
       name:       "Time",
@@ -117219,7 +117301,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl (),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "Volume rendering",
       name:       "VolumeRendering",
@@ -117227,7 +117309,7 @@ function (ComponentInfoArray,
       providerUrl: urls .getProviderUrl ("volume-rendering"),
    });
 
-   SupportedComponents .addBaseComponent (
+   SupportedComponents .addComponent (
    {
       title:      "X_ITE",
       name:       "X_ITE",
@@ -117288,15 +117370,11 @@ function (ComponentInfoArray,
 
 
 define ('x_ite/Configuration/SupportedProfiles',[
-   "x_ite/Configuration/ProfileInfo",
    "x_ite/Configuration/ProfileInfoArray",
-   "x_ite/Configuration/ComponentInfoArray",
    "x_ite/Configuration/SupportedComponents",
    "x_ite/Browser/Networking/urls",
 ],
-function (ProfileInfo,
-          ProfileInfoArray,
-          ComponentInfoArray,
+function (ProfileInfoArray,
           SupportedComponents,
           urls)
 {
@@ -117309,16 +117387,16 @@ function (ProfileInfo,
       name: "CADInterchange",
       providerUrl: urls .getProviderUrl (),
       components: [
-         SupportedComponents ["CADGeometry"],
-         SupportedComponents ["Core"],
-         SupportedComponents ["Grouping"],
-         SupportedComponents ["Lighting"],
-         SupportedComponents ["Navigation"],
-         SupportedComponents ["Networking"],
-         SupportedComponents ["Rendering"],
-         SupportedComponents ["Shaders"],
-         SupportedComponents ["Shape"],
-         SupportedComponents ["Texturing"],
+         SupportedComponents .get ("CADGeometry"),
+         SupportedComponents .get ("Core"),
+         SupportedComponents .get ("Grouping"),
+         SupportedComponents .get ("Lighting"),
+         SupportedComponents .get ("Navigation"),
+         SupportedComponents .get ("Networking"),
+         SupportedComponents .get ("Rendering"),
+         SupportedComponents .get ("Shaders"),
+         SupportedComponents .get ("Shape"),
+         SupportedComponents .get ("Texturing"),
       ],
    });
 
@@ -117327,7 +117405,7 @@ function (ProfileInfo,
       name: "Core",
       providerUrl: urls .getProviderUrl (),
       components: [
-         SupportedComponents ["Core"],
+         SupportedComponents .get ("Core"),
       ],
    });
 
@@ -117336,43 +117414,43 @@ function (ProfileInfo,
       name: "Full",
       providerUrl: urls .getProviderUrl (),
       components: [
-         //SupportedComponents ["Annotation"],
-         SupportedComponents ["CADGeometry"],
-         SupportedComponents ["Core"],
-         SupportedComponents ["CubeMapTexturing"],
-         SupportedComponents ["DIS"],
-         SupportedComponents ["EnvironmentalEffects"],
-         SupportedComponents ["EnvironmentalSensor"],
-         SupportedComponents ["EventUtilities"],
-         SupportedComponents ["Followers"],
-         SupportedComponents ["Geometry2D"],
-         SupportedComponents ["Geometry3D"],
-         SupportedComponents ["Geospatial"],
-         SupportedComponents ["Grouping"],
-         SupportedComponents ["HAnim"],
-         SupportedComponents ["Interpolation"],
-         SupportedComponents ["KeyDeviceSensor"],
-         SupportedComponents ["Layering"],
-         SupportedComponents ["Layout"],
-         SupportedComponents ["Lighting"],
-         SupportedComponents ["Navigation"],
-         SupportedComponents ["Networking"],
-         SupportedComponents ["NURBS"],
-         SupportedComponents ["ParticleSystems"],
-         SupportedComponents ["Picking"],
-         SupportedComponents ["PointingDeviceSensor"],
-         SupportedComponents ["ProjectiveTextureMapping"],
-         SupportedComponents ["Rendering"],
-         SupportedComponents ["RigidBodyPhysics"],
-         SupportedComponents ["Scripting"],
-         SupportedComponents ["Shaders"],
-         SupportedComponents ["Shape"],
-         SupportedComponents ["Sound"],
-         SupportedComponents ["Text"],
-         SupportedComponents ["Texturing"],
-         SupportedComponents ["Texturing3D"],
-         SupportedComponents ["Time"],
-         SupportedComponents ["VolumeRendering"],
+         //SupportedComponents .get ("Annotation"),
+         SupportedComponents .get ("CADGeometry"),
+         SupportedComponents .get ("Core"),
+         SupportedComponents .get ("CubeMapTexturing"),
+         SupportedComponents .get ("DIS"),
+         SupportedComponents .get ("EnvironmentalEffects"),
+         SupportedComponents .get ("EnvironmentalSensor"),
+         SupportedComponents .get ("EventUtilities"),
+         SupportedComponents .get ("Followers"),
+         SupportedComponents .get ("Geometry2D"),
+         SupportedComponents .get ("Geometry3D"),
+         SupportedComponents .get ("Geospatial"),
+         SupportedComponents .get ("Grouping"),
+         SupportedComponents .get ("HAnim"),
+         SupportedComponents .get ("Interpolation"),
+         SupportedComponents .get ("KeyDeviceSensor"),
+         SupportedComponents .get ("Layering"),
+         SupportedComponents .get ("Layout"),
+         SupportedComponents .get ("Lighting"),
+         SupportedComponents .get ("Navigation"),
+         SupportedComponents .get ("Networking"),
+         SupportedComponents .get ("NURBS"),
+         SupportedComponents .get ("ParticleSystems"),
+         SupportedComponents .get ("Picking"),
+         SupportedComponents .get ("PointingDeviceSensor"),
+         SupportedComponents .get ("ProjectiveTextureMapping"),
+         SupportedComponents .get ("Rendering"),
+         SupportedComponents .get ("RigidBodyPhysics"),
+         SupportedComponents .get ("Scripting"),
+         SupportedComponents .get ("Shaders"),
+         SupportedComponents .get ("Shape"),
+         SupportedComponents .get ("Sound"),
+         SupportedComponents .get ("Text"),
+         SupportedComponents .get ("Texturing"),
+         SupportedComponents .get ("Texturing3D"),
+         SupportedComponents .get ("Time"),
+         SupportedComponents .get ("VolumeRendering"),
       ],
    });
 
@@ -117381,26 +117459,26 @@ function (ProfileInfo,
       name: "Immersive",
       providerUrl: urls .getProviderUrl (),
       components: [
-         SupportedComponents ["Core"],
-         SupportedComponents ["EnvironmentalEffects"],
-         SupportedComponents ["EnvironmentalSensor"],
-         SupportedComponents ["EventUtilities"],
-         SupportedComponents ["Geometry2D"],
-         SupportedComponents ["Geometry3D"],
-         SupportedComponents ["Grouping"],
-         SupportedComponents ["Interpolation"],
-         SupportedComponents ["KeyDeviceSensor"],
-         SupportedComponents ["Lighting"],
-         SupportedComponents ["Navigation"],
-         SupportedComponents ["Networking"],
-         SupportedComponents ["PointingDeviceSensor"],
-         SupportedComponents ["Rendering"],
-         SupportedComponents ["Scripting"],
-         SupportedComponents ["Shape"],
-         SupportedComponents ["Sound"],
-         SupportedComponents ["Text"],
-         SupportedComponents ["Texturing"],
-         SupportedComponents ["Time"],
+         SupportedComponents .get ("Core"),
+         SupportedComponents .get ("EnvironmentalEffects"),
+         SupportedComponents .get ("EnvironmentalSensor"),
+         SupportedComponents .get ("EventUtilities"),
+         SupportedComponents .get ("Geometry2D"),
+         SupportedComponents .get ("Geometry3D"),
+         SupportedComponents .get ("Grouping"),
+         SupportedComponents .get ("Interpolation"),
+         SupportedComponents .get ("KeyDeviceSensor"),
+         SupportedComponents .get ("Lighting"),
+         SupportedComponents .get ("Navigation"),
+         SupportedComponents .get ("Networking"),
+         SupportedComponents .get ("PointingDeviceSensor"),
+         SupportedComponents .get ("Rendering"),
+         SupportedComponents .get ("Scripting"),
+         SupportedComponents .get ("Shape"),
+         SupportedComponents .get ("Sound"),
+         SupportedComponents .get ("Text"),
+         SupportedComponents .get ("Texturing"),
+         SupportedComponents .get ("Time"),
       ],
    });
 
@@ -117409,22 +117487,22 @@ function (ProfileInfo,
       name: "Interactive",
       providerUrl: urls .getProviderUrl (),
       components: [
-         SupportedComponents ["Core"],
-         SupportedComponents ["EnvironmentalEffects"],
-         SupportedComponents ["EnvironmentalSensor"],
-         SupportedComponents ["EventUtilities"],
-         SupportedComponents ["Geometry3D"],
-         SupportedComponents ["Grouping"],
-         SupportedComponents ["Interpolation"],
-         SupportedComponents ["KeyDeviceSensor"],
-         SupportedComponents ["Lighting"],
-         SupportedComponents ["Navigation"],
-         SupportedComponents ["Networking"],
-         SupportedComponents ["PointingDeviceSensor"],
-         SupportedComponents ["Rendering"],
-         SupportedComponents ["Shape"],
-         SupportedComponents ["Texturing"],
-         SupportedComponents ["Time"],
+         SupportedComponents .get ("Core"),
+         SupportedComponents .get ("EnvironmentalEffects"),
+         SupportedComponents .get ("EnvironmentalSensor"),
+         SupportedComponents .get ("EventUtilities"),
+         SupportedComponents .get ("Geometry3D"),
+         SupportedComponents .get ("Grouping"),
+         SupportedComponents .get ("Interpolation"),
+         SupportedComponents .get ("KeyDeviceSensor"),
+         SupportedComponents .get ("Lighting"),
+         SupportedComponents .get ("Navigation"),
+         SupportedComponents .get ("Networking"),
+         SupportedComponents .get ("PointingDeviceSensor"),
+         SupportedComponents .get ("Rendering"),
+         SupportedComponents .get ("Shape"),
+         SupportedComponents .get ("Texturing"),
+         SupportedComponents .get ("Time"),
       ],
    });
 
@@ -117433,18 +117511,18 @@ function (ProfileInfo,
       name: "Interchange",
       providerUrl: urls .getProviderUrl (),
       components: [
-         SupportedComponents ["Core"],
-         SupportedComponents ["EnvironmentalEffects"],
-         SupportedComponents ["Geometry3D"],
-         SupportedComponents ["Grouping"],
-         SupportedComponents ["Interpolation"],
-         SupportedComponents ["Lighting"],
-         SupportedComponents ["Navigation"],
-         SupportedComponents ["Networking"],
-         SupportedComponents ["Rendering"],
-         SupportedComponents ["Shape"],
-         SupportedComponents ["Texturing"],
-         SupportedComponents ["Time"],
+         SupportedComponents .get ("Core"),
+         SupportedComponents .get ("EnvironmentalEffects"),
+         SupportedComponents .get ("Geometry3D"),
+         SupportedComponents .get ("Grouping"),
+         SupportedComponents .get ("Interpolation"),
+         SupportedComponents .get ("Lighting"),
+         SupportedComponents .get ("Navigation"),
+         SupportedComponents .get ("Networking"),
+         SupportedComponents .get ("Rendering"),
+         SupportedComponents .get ("Shape"),
+         SupportedComponents .get ("Texturing"),
+         SupportedComponents .get ("Time"),
       ],
    });
 
@@ -117453,23 +117531,23 @@ function (ProfileInfo,
       name: "MedicalInterchange",
       providerUrl: urls .getProviderUrl (),
       components: [
-         SupportedComponents ["Core"],
-         SupportedComponents ["EnvironmentalEffects"],
-         SupportedComponents ["EventUtilities"],
-         SupportedComponents ["Geometry2D"],
-         SupportedComponents ["Geometry3D"],
-         SupportedComponents ["Grouping"],
-         SupportedComponents ["Interpolation"],
-         SupportedComponents ["Lighting"],
-         SupportedComponents ["Navigation"],
-         SupportedComponents ["Networking"],
-         SupportedComponents ["Rendering"],
-         SupportedComponents ["Shape"],
-         SupportedComponents ["Text"],
-         SupportedComponents ["Texturing"],
-         SupportedComponents ["Texturing3D"],
-         SupportedComponents ["Time"],
-         SupportedComponents ["VolumeRendering"],
+         SupportedComponents .get ("Core"),
+         SupportedComponents .get ("EnvironmentalEffects"),
+         SupportedComponents .get ("EventUtilities"),
+         SupportedComponents .get ("Geometry2D"),
+         SupportedComponents .get ("Geometry3D"),
+         SupportedComponents .get ("Grouping"),
+         SupportedComponents .get ("Interpolation"),
+         SupportedComponents .get ("Lighting"),
+         SupportedComponents .get ("Navigation"),
+         SupportedComponents .get ("Networking"),
+         SupportedComponents .get ("Rendering"),
+         SupportedComponents .get ("Shape"),
+         SupportedComponents .get ("Text"),
+         SupportedComponents .get ("Texturing"),
+         SupportedComponents .get ("Texturing3D"),
+         SupportedComponents .get ("Time"),
+         SupportedComponents .get ("VolumeRendering"),
       ],
    });
 
@@ -117478,20 +117556,20 @@ function (ProfileInfo,
       name: "MPEG-4",
       providerUrl: urls .getProviderUrl (),
       components: [
-         SupportedComponents ["Core"],
-         SupportedComponents ["EnvironmentalEffects"],
-         SupportedComponents ["EnvironmentalSensor"],
-         SupportedComponents ["Geometry3D"],
-         SupportedComponents ["Grouping"],
-         SupportedComponents ["Interpolation"],
-         SupportedComponents ["Lighting"],
-         SupportedComponents ["Navigation"],
-         SupportedComponents ["Networking"],
-         SupportedComponents ["PointingDeviceSensor"],
-         SupportedComponents ["Rendering"],
-         SupportedComponents ["Shape"],
-         SupportedComponents ["Texturing"],
-         SupportedComponents ["Time"],
+         SupportedComponents .get ("Core"),
+         SupportedComponents .get ("EnvironmentalEffects"),
+         SupportedComponents .get ("EnvironmentalSensor"),
+         SupportedComponents .get ("Geometry3D"),
+         SupportedComponents .get ("Grouping"),
+         SupportedComponents .get ("Interpolation"),
+         SupportedComponents .get ("Lighting"),
+         SupportedComponents .get ("Navigation"),
+         SupportedComponents .get ("Networking"),
+         SupportedComponents .get ("PointingDeviceSensor"),
+         SupportedComponents .get ("Rendering"),
+         SupportedComponents .get ("Shape"),
+         SupportedComponents .get ("Texturing"),
+         SupportedComponents .get ("Time"),
       ],
    });
 

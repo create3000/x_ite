@@ -68,7 +68,7 @@ function (X3DInfoArray)
       },
       toVRMLStream: function (stream)
       {
-         this .array .forEach (function (value)
+         for (const value of this ._array)
          {
             try
             {
@@ -81,7 +81,7 @@ function (X3DInfoArray)
             {
                console .log (error);
             }
-         });
+         }
       },
    });
 

@@ -70,7 +70,7 @@ function (X3DObject)
             if (Number .isInteger (index))
                return target ._array [index];
 
-            return target ._index .get (key);
+            return;
          }
 
          if (key === Symbol .iterator)
@@ -89,7 +89,7 @@ function (X3DObject)
 
          return key in target;
       },
-   };
+    };
 
    function X3DInfoArray ()
    {
@@ -163,7 +163,7 @@ function (X3DObject)
       },
       toVRMLStream: function (stream)
       {
-         this ._array .forEach (function (value)
+         for (const value of this ._array)
          {
             try
             {
@@ -175,11 +175,11 @@ function (X3DObject)
             {
                console .log (error);
             }
-         });
+         }
       },
       toXMLStream: function (stream)
       {
-         this ._array .forEach (function (value)
+         for (const value of this ._array)
          {
             try
             {
@@ -191,7 +191,7 @@ function (X3DObject)
             {
                console .log (error);
             }
-         });
+         }
       },
    });
 

@@ -894,6 +894,9 @@ function (SupportedNodes,
       {
          this .rootNodes_ .dispose ();
 
+         for (const route of this ._routes)
+            this .deleteRoute (route);
+
          X3DBaseNode .prototype .dispose .call (this);
       },
    });
