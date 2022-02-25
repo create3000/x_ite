@@ -13852,14 +13852,19 @@ function (Generator,
 {
 "use strict";
 
+   const
+      _name          = Symbol (),
+      _interests     = Symbol (),
+      _interestsTemp = Symbol ();
+
    function X3DObject () { }
 
    X3DObject .prototype =
    {
       constructor: X3DObject,
-      _name: "",
-      _interests: new Map (),
-      _interestsTemp: [ ],
+      [_name]: "",
+      [_interests]: new Map (),
+      [_interestsTemp]: [ ],
       getId: function ()
       {
          return X3DObject .getId (this);
@@ -13870,26 +13875,26 @@ function (Generator,
       },
       setName: function (value)
       {
-         this ._name = value;
+         this [_name] = value;
       },
       getName: function ()
       {
-         return this ._name;
+         return this [_name];
       },
       getDisplayName: function ()
       {
-         return this ._name;
+         return this [_name];
       },
       hasInterest: function (callbackName, object)
       {
-         return this ._interests .has (X3DObject .getId (object) + "." + callbackName);
+         return this [_interests] .has (X3DObject .getId (object) + "." + callbackName);
       },
       addInterest: function (callbackName, object)
       {
-         if (!this .hasOwnProperty ("_interests"))
+         if (!this .hasOwnProperty (_interests))
          {
-            this ._interests     = new Map ();
-            this ._interestsTemp = [ ];
+            this [_interests]     = new Map ();
+            this [_interestsTemp] = [ ];
          }
 
          const callback = object [callbackName];
@@ -13901,34 +13906,29 @@ function (Generator,
             args [0] = object;
             args [1] = this;
 
-            this ._interests .set (X3DObject .getId (object) + "." + callbackName, Function .prototype .bind .apply (callback, args));
+            this [_interests] .set (X3DObject .getId (object) + "." + callbackName, Function .prototype .bind .apply (callback, args));
          }
          else
          {
-            this ._interests .set (X3DObject .getId (object) + "." + callbackName, callback .bind (object, this));
+            this [_interests] .set (X3DObject .getId (object) + "." + callbackName, callback .bind (object, this));
          }
       },
       removeInterest: function (callbackName, object)
       {
-         this ._interests .delete (X3DObject .getId (object) + "." + callbackName);
+         this [_interests] .delete (X3DObject .getId (object) + "." + callbackName);
       },
       getInterests: function ()
       {
-         return this ._interests;
+         return this [_interests];
       },
-      processInterests: (function ()
+      processInterests: function ()
       {
-         function processInterest (interest)
+         if (this [_interests] .size)
          {
-            interest ();
+            for (const interest of MapUtilities .values (this [_interestsTemp], this [_interests])  )
+               interest ();
          }
-
-         return function ()
-         {
-            if (this ._interests .size)
-               MapUtilities .values (this ._interestsTemp, this ._interests) .forEach (processInterest);
-         };
-      })(),
+      },
       toString: function (scene)
       {
          const stream = { string: "" };
@@ -13966,7 +13966,7 @@ function (Generator,
       },
       toStream: function (stream)
       {
-         stream .string = "[object " + this .getTypeName () + "]";
+         stream .string = "[_object " + this .getTypeName () + "]";
       },
       dispose: function () { },
    };
@@ -14125,6 +14125,10 @@ function (X3DObject)
 {
 "use strict";
 
+   const
+      _array = Symbol (),
+      _index = Symbol ();
+
    const handler =
    {
       get: function (target, key)
@@ -14139,14 +14143,14 @@ function (X3DObject)
             const index = key * 1;
 
             if (Number .isInteger (index))
-               return target ._array [index];
+               return target [_array] [index];
 
             return;
          }
 
          if (key === Symbol .iterator)
          {
-            return target ._array [key];
+            return target [_array] [key];
          }
       },
       set: function (target, key, value)
@@ -14156,31 +14160,16 @@ function (X3DObject)
       has: function (target, key)
       {
          if (Number .isInteger (+key))
-            return key < target ._array .length;
+            return key < target [_array] .length;
 
          return key in target;
-      },
-      ownKeys: function (target)
-      {
-         return Object .keys (target ._array);
-      },
-      getOwnPropertyDescriptor: function (target, key)
-      {
-         if (Number .isInteger (key * 1))
-         {
-            const propertyDescriptor = Object .getOwnPropertyDescriptor (target ._array, key);
-
-            propertyDescriptor .writable = false;
-
-            return propertyDescriptor;
-         }
       },
     };
 
    function X3DInfoArray ()
    {
-      this ._array = [ ];
-      this ._index = new Map ();
+      this [_array] = [ ];
+      this [_index] = new Map ();
 
       return new Proxy (this, handler);
    }
@@ -14190,72 +14179,77 @@ function (X3DObject)
       constructor: X3DInfoArray,
       has: function (key)
       {
-         return this ._index .has (key);
+         return this [_index] .has (key);
       },
       get: function (key)
       {
-         return this ._index .get (key);
+         return this [_index] .get (key);
       },
       add: function (key, value)
       {
-         this ._array .push (value);
-         this ._index .set (key, value);
+         this [_array] .push (value);
+         this [_index] .set (key, value);
          this .processInterests ();
       },
       addAlias: function (alias, key)
       {
-         this ._index .set (alias, this ._index .get (key));
+         this [_index] .set (alias, this [_index] .get (key));
          this .processInterests ();
       },
       update: function (oldKey, newKey, value)
       {
-         const oldValue = this ._index .get (oldKey);
+         const oldValue = this [_index] .get (oldKey);
 
          if (oldKey !== newKey)
             this .remove (newKey);
 
-         this ._index .delete (oldKey);
-         this ._index .set (newKey, value);
+         this [_index] .delete (oldKey);
+         this [_index] .set (newKey, value);
 
          if (oldValue !== undefined)
          {
-            const index = this ._array .indexOf (oldValue);
+            const index = this [_array] .indexOf (oldValue);
 
             if (index > -1)
-               this ._array [index] = value;
+               this [_array] [index] = value;
          }
          else
          {
-            this ._array .push (value);
+            this [_array] .push (value);
          }
 
          this .processInterests ();
       },
       remove: function (key)
       {
-         const value = this ._index .get (key);
+         const value = this [_index] .get (key);
 
          if (value === undefined)
             return;
 
-         const index = this ._array .indexOf (value);
+         const index = this [_array] .indexOf (value);
 
-         this ._index .delete (key);
+         this [_index] .delete (key);
 
          if (index > -1)
-            this ._array .splice (index, 1);
+            this [_array] .splice (index, 1);
 
          this .processInterests ();
       },
       toVRMLStream: function (stream)
       {
-         for (const value of this ._array)
+         const X3DBaseNode = require ("x_ite/Basic/X3DBaseNode");
+
+         for (const value of this [_array])
          {
             try
             {
                value .toVRMLStream (stream);
 
                stream .string += "\n";
+
+               if (value instanceof X3DBaseNode)
+                  stream .string += "\n";
             }
             catch (error)
             {
@@ -14265,7 +14259,7 @@ function (X3DObject)
       },
       toXMLStream: function (stream)
       {
-         for (const value of this ._array)
+         for (const value of this [_array])
          {
             try
             {
@@ -14283,7 +14277,7 @@ function (X3DObject)
 
    Object .defineProperty (X3DInfoArray .prototype, "length",
    {
-      get: function () { return this ._array .length; },
+      get: function () { return this [_array] .length; },
       enumerable: false,
       configurable: false,
    });
@@ -14425,6 +14419,11 @@ function (X3DObject)
 {
 "use strict";
 
+   const
+      _modificationTime = Symbol (),
+      _tainted          = Symbol (),
+      _parents          = Symbol ();
+
    function X3DChildObject ()
    {
       X3DObject .call (this);
@@ -14433,57 +14432,57 @@ function (X3DObject)
    X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
       constructor: X3DChildObject,
-      _modificationTime: 0,
-      _tainted: false,
-      _parents: new Set (),
+      [_modificationTime]: 0,
+      [_tainted]: false,
+      [_parents]: new Set (),
       setModificationTime: function (value)
       {
-         this ._modificationTime = value;
+         this [_modificationTime] = value;
       },
       getModificationTime: function ()
       {
-         return this ._modificationTime;
+         return this [_modificationTime];
       },
       setTainted: function (value)
       {
-         this ._tainted = value;
+         this [_tainted] = value;
       },
       isTainted: function ()
       {
-         return this ._tainted;
+         return this [_tainted];
       },
       addEvent: function ()
       {
          this .setModificationTime (performance .now ());
 
-         for (const parent of this ._parents)
+         for (const parent of this [_parents])
             parent .addEvent (this);
       },
       addEventObject: function (field, event)
       {
          this .setModificationTime (performance .now ());
 
-         for (const parent of this ._parents)
+         for (const parent of this [_parents])
             parent .addEventObject (this, event);
       },
       addParent: function (parent)
       {
-         if (! this .hasOwnProperty ("_parents"))
-            this ._parents = new Set ();
+         if (!this .hasOwnProperty (_parents))
+            this [_parents] = new Set ();
 
-         this ._parents .add (parent);
+         this [_parents] .add (parent);
       },
       removeParent: function (parent)
       {
-         this ._parents .delete (parent);
+         this [_parents] .delete (parent);
       },
       getParents: function ()
       {
-         return this ._parents;
+         return this [_parents];
       },
       dispose: function ()
       {
-         this ._parents .clear ();
+         this [_parents] .clear ();
 
          X3DObject .prototype .dispose .call (this);
       },
@@ -14666,11 +14665,23 @@ function ($,
 {
 "use strict";
 
+   const
+      _value           = Symbol (),
+      _accessType      = Symbol (),
+      _unit            = Symbol (),
+      _references      = Symbol (),
+      _fieldInterests  = Symbol (),
+      _fieldCallbacks  = Symbol (),
+      _inputRoutes     = Symbol (),
+      _outputRoutes    = Symbol (),
+      _routeCallbacks  = Symbol (),
+      _uniformLocation = Symbol .for ("X3DField.uniformLocation");
+
    function X3DField (value)
    {
       X3DChildObject .call (this);
 
-      this ._value = value;
+      this [_value] = value;
 
       return this;
    }
@@ -14678,19 +14689,19 @@ function ($,
    X3DField .prototype = Object .assign (Object .create (X3DChildObject .prototype),
    {
       constructor: X3DField,
-      _value: null,
-      _accessType: X3DConstants .initializeOnly,
-      _unit: null,
-      _uniformLocation: null,
-      _references: new Set (),
-      _fieldInterests: new Set (),
-      _fieldCallbacks: new Map (),
-      _inputRoutes: new Set (),
-      _outputRoutes: new Set (),
-      _routeCallbacks: new Map (),
-      equals: function (value)
+      [_value]: null,
+      [_accessType]: X3DConstants .initializeOnly,
+      [_unit]: null,
+      [_uniformLocation]: null,
+      [_references]: new Set (),
+      [_fieldInterests]: new Set (),
+      [_fieldCallbacks]: new Map (),
+      [_inputRoutes]: new Set (),
+      [_outputRoutes]: new Set (),
+      [_routeCallbacks]: new Map (),
+      equals: function (field)
       {
-         return this ._value === value .valueOf ();
+         return this [_value] === field .valueOf ();
       },
       assign: function (field)
       {
@@ -14701,7 +14712,7 @@ function ($,
       set: function (value)
       {
          // Sets internal value without generating event.
-         this ._value = value;
+         this [_value] = value;
       },
       setValue: function (value)
       {
@@ -14711,54 +14722,54 @@ function ($,
       },
       getValue: function ()
       {
-         return this ._value;
+         return this [_value];
       },
       setAccessType: function (value)
       {
-         this ._accessType = value;
+         this [_accessType] = value;
       },
       getAccessType: function ()
       {
-         return this ._accessType;
+         return this [_accessType];
       },
       isInitializable: function ()
       {
-         return this .getAccessType () & X3DConstants .initializeOnly;
+         return this [_accessType] & X3DConstants .initializeOnly;
       },
       isInput: function ()
       {
-         return this .getAccessType () & X3DConstants .inputOnly;
+         return this [_accessType] & X3DConstants .inputOnly;
       },
       isOutput: function ()
       {
-         return this .getAccessType () & X3DConstants .outputOnly;
+         return this [_accessType] & X3DConstants .outputOnly;
       },
       isReadable: function ()
       {
-         return this .getAccessType () !== X3DConstants .inputOnly;
+         return this [_accessType] !== X3DConstants .inputOnly;
       },
       isWritable: function ()
       {
-         return this .getAccessType () !== X3DConstants .initializeOnly;
+         return this [_accessType] !== X3DConstants .initializeOnly;
       },
       setUnit: function (value)
       {
-         this ._unit = value;
+         this [_unit] = value;
       },
       getUnit: function ()
       {
-         return this ._unit;
+         return this [_unit];
       },
       hasReferences: function ()
       {
-         if (this .hasOwnProperty ("_references"))
-            return this ._references .size !== 0;
+         if (this .hasOwnProperty (_references))
+            return this [_references] .size !== 0;
 
          return false;
       },
       isReference: function (accessType)
       {
-         return accessType === this .getAccessType () || accessType === X3DConstants .inputOutput;
+         return accessType === this [_accessType] || accessType === X3DConstants .inputOutput;
       },
       addReference: function (reference)
       {
@@ -14815,117 +14826,110 @@ function ($,
       },
       getReferences: function ()
       {
-         if (! this .hasOwnProperty ("_references"))
-            this ._references = new Set ();
+         if (!this .hasOwnProperty (_references))
+            this [_references] = new Set ();
 
-         return this ._references;
+         return this [_references];
       },
       addFieldInterest: function (field)
       {
-         if (! this .hasOwnProperty ("_fieldInterests"))
-            this ._fieldInterests = new Set ();
+         if (!this .hasOwnProperty (_fieldInterests))
+            this [_fieldInterests] = new Set ();
 
-         this ._fieldInterests .add (field);
+         this [_fieldInterests] .add (field);
       },
       removeFieldInterest: function (field)
       {
-         this ._fieldInterests .delete (field);
+         this [_fieldInterests] .delete (field);
       },
       getFieldInterests: function ()
       {
-         return this ._fieldInterests;
+         return this [_fieldInterests];
       },
       addFieldCallback: function (key, object)
       {
-         if (! this .hasOwnProperty ("_fieldCallbacks"))
-            this ._fieldCallbacks = new Map ();
+         if (!this .hasOwnProperty (_fieldCallbacks))
+            this [_fieldCallbacks] = new Map ();
 
-         this ._fieldCallbacks .set (key, object);
+         this [_fieldCallbacks] .set (key, object);
       },
       removeFieldCallback: function (key)
       {
-         this ._fieldCallbacks .delete (key);
+         this [_fieldCallbacks] .delete (key);
       },
       getFieldCallbacks: function ()
       {
-         return this ._fieldCallbacks;
+         return this [_fieldCallbacks];
       },
       addInputRoute: function (route)
       {
-         if (! this .hasOwnProperty ("_inputRoutes"))
-            this ._inputRoutes = new Set ();
+         if (!this .hasOwnProperty (_inputRoutes))
+            this [_inputRoutes] = new Set ();
 
-         this ._inputRoutes .add (route);
+         this [_inputRoutes] .add (route);
 
          this .processRouteCallbacks ();
       },
       removeInputRoute: function (route)
       {
-         this ._inputRoutes .delete (route);
+         this [_inputRoutes] .delete (route);
 
          this .processRouteCallbacks ();
       },
       getInputRoutes: function ()
       {
-         return this ._inputRoutes;
+         return this [_inputRoutes];
       },
       addOutputRoute: function (route)
       {
-         if (! this .hasOwnProperty ("_outputRoutes"))
-            this ._outputRoutes = new Set ();
+         if (!this .hasOwnProperty (_outputRoutes))
+            this [_outputRoutes] = new Set ();
 
-         this ._outputRoutes .add (route);
+         this [_outputRoutes] .add (route);
 
          this .processRouteCallbacks ();
       },
       removeOutputRoute: function (route)
       {
-         this ._outputRoutes .delete (route);
+         this [_outputRoutes] .delete (route);
 
          this .processRouteCallbacks ();
       },
       getOutputRoutes: function ()
       {
-         return this ._outputRoutes;
+         return this [_outputRoutes];
       },
       addRouteCallback: function (key, object)
       {
-         if (! this .hasOwnProperty ("_routeCallbacks"))
-            this ._routeCallbacks = new Map ();
+         if (!this .hasOwnProperty (_routeCallbacks))
+            this [_routeCallbacks] = new Map ();
 
-         this ._routeCallbacks .set (key, object);
+         this [_routeCallbacks] .set (key, object);
       },
       removeRouteCallback: function (key)
       {
-         this ._routeCallbacks .delete (key);
+         this [_routeCallbacks] .delete (key);
       },
       getRouteCallbacks: function ()
       {
-         return this ._routeCallbacks;
+         return this [_routeCallbacks];
       },
       processRouteCallbacks: (function ()
       {
-         const routeCallbacks = [ ];
-
-         function processRouteCallback (routeCallback)
-         {
-            routeCallback ();
-         }
+         const routeCallbacksTemp = [ ];
 
          return function ()
          {
-            if (this ._routeCallbacks .size)
-               MapUtilities .values (routeCallbacks, this ._routeCallbacks) .forEach (processRouteCallback);
+            if (this [_routeCallbacks] .size)
+            {
+               for (const routeCallback of MapUtilities .values (routeCallbacksTemp, this [_routeCallbacks]))
+                  routeCallback ();
+            }
          };
       })(),
       processEvent: (function ()
       {
-         const fieldCallbacks = [ ];
-
-         function processEvent (fieldCallback)
-         {
-            fieldCallback (this .valueOf ());
-         }
+         const fieldCallbacksTemp = [ ];
 
          return function (event)
          {
@@ -14949,26 +14953,29 @@ function ($,
 
             let first = true;
 
-            this ._fieldInterests .forEach (function (fieldInterest)
+            if (this [_fieldInterests] .size)
             {
-               if (first)
+               for (const fieldInterest of this [_fieldInterests] .values ())
                {
-                  first = false;
-                  fieldInterest .addEventObject (this, event);
+                  if (first)
+                  {
+                     first = false;
+                     fieldInterest .addEventObject (this, event);
+                  }
+                  else
+                     fieldInterest .addEventObject (this, Events .copy (event));
                }
-               else
-                  fieldInterest .addEventObject (this, Events .copy (event));
-            },
-            this);
+            }
 
             if (first)
                Events .push (event);
 
             // Process field callbacks
 
-            if (this ._fieldCallbacks .size)
+            if (this [_fieldCallbacks] .size)
             {
-               MapUtilities .values (fieldCallbacks, this ._fieldCallbacks) .forEach (processEvent, this);
+               for (const fieldCallback of MapUtilities .values (fieldCallbacksTemp, this [_fieldCallbacks]))
+                  fieldCallback (this .valueOf ());
             }
          };
       })(),
@@ -14984,7 +14991,7 @@ function ($,
             Parser = require ("x_ite/Parser/Parser"),
             parser = new Parser (scene);
 
-         parser .setUnits (!! scene);
+         parser .setUnits (!!scene);
          parser .setInput (string);
 
          if (parser .fieldValue (this))
@@ -22141,6 +22148,11 @@ function (X3DField,
 {
 "use strict";
 
+   const
+      _target     = Symbol (),
+      _proxy      = Symbol (),
+      _cloneCount = Symbol ();
+
    const handler =
    {
       get: function (target, key)
@@ -22167,7 +22179,7 @@ function (X3DField,
          {
             return undefined;
          }
-       },
+      },
       set: function (target, key, value)
       {
          if (key in target)
@@ -22204,40 +22216,6 @@ function (X3DField,
             return key in target;
          }
       },
-      ownKeys: function (target)
-      {
-         const
-            value = target .getValue (),
-            keys  = [ ];
-
-         if (value)
-         {
-            for (const field of value .getFieldDefinitions ())
-               keys .push (field .name);
-         }
-
-         return keys;
-      },
-      getOwnPropertyDescriptor: function (target, key)
-      {
-         try
-         {
-            const
-               field      = target .getValue () .getField (key),
-               accessType = field .getAccessType ();
-
-            return {
-               value: field .valueOf (),
-               writable: accessType !== X3DConstants .outputOnly,
-               enumerable: true,
-               configurable: true,
-            };
-         }
-         catch (error)
-         {
-            return;
-         }
-      },
    };
 
    function SFNode (value)
@@ -22246,8 +22224,8 @@ function (X3DField,
 
       const proxy = new Proxy (this, handler);
 
-      this ._target = this;
-      this ._proxy  = proxy;
+      this [_target] = this;
+      this [_proxy]  = proxy;
 
       if (value)
       {
@@ -22266,11 +22244,13 @@ function (X3DField,
    SFNode .prototype = Object .assign (Object .create (X3DField .prototype),
    {
       constructor: SFNode,
-      _cloneCount: 0,
+      [_target]: null,
+      [_proxy]: null,
+      [_cloneCount]: 0,
       copy: function (instance)
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -22288,7 +22268,7 @@ function (X3DField,
       },
       equals: function (node)
       {
-         const target = this ._target;
+         const target = this [_target];
 
          if (node)
             return target .getValue () === node .getValue ();
@@ -22297,28 +22277,28 @@ function (X3DField,
       },
       isDefaultValue: function ()
       {
-         const target = this ._target;
+         const target = this [_target];
 
          return target .getValue () === null;
       },
       set: function (value)
       {
          const
-            target  = this ._target,
+            target  = this [_target],
             current = target .getValue ();
 
          if (current)
          {
-            current .removeCloneCount (target ._cloneCount);
-            current .removeParent (target ._proxy);
+            current .removeCloneCount (target [_cloneCount]);
+            current .removeParent (target [_proxy]);
          }
 
          // No need to test for X3DBaseNode, because there is a special version of SFNode in Script.
 
          if (value)
          {
-            value .addParent (target ._proxy);
-            value .addCloneCount (target ._cloneCount);
+            value .addParent (target [_proxy]);
+            value .addCloneCount (target [_cloneCount]);
 
             X3DField .prototype .set .call (target, value);
          }
@@ -22330,7 +22310,7 @@ function (X3DField,
       getNodeTypeName: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -22341,7 +22321,7 @@ function (X3DField,
       getNodeName: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -22352,7 +22332,7 @@ function (X3DField,
       getNodeDisplayName: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -22363,7 +22343,7 @@ function (X3DField,
       getNodeType: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
              value  = target .getValue ();
 
          if (value)
@@ -22374,7 +22354,7 @@ function (X3DField,
       getFieldDefinitions: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -22384,7 +22364,7 @@ function (X3DField,
       },
       addFieldCallback: function (name, string, object)
       {
-         const target = this ._target;
+         const target = this [_target];
 
          switch (arguments .length)
          {
@@ -22405,7 +22385,7 @@ function (X3DField,
       },
       removeFieldCallback: function (name, string)
       {
-         const target = this ._target;
+         const target = this [_target];
 
          switch (arguments .length)
          {
@@ -22427,10 +22407,10 @@ function (X3DField,
       addCloneCount: function (count)
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
-         target ._cloneCount += count;
+         target [_cloneCount] += count;
 
          if (value)
             value .addCloneCount (count);
@@ -22438,10 +22418,10 @@ function (X3DField,
       removeCloneCount: function (count)
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
-         target ._cloneCount -= count;
+         target [_cloneCount] -= count;
 
          if (value)
             value .removeCloneCount (count);
@@ -22449,7 +22429,7 @@ function (X3DField,
       valueOf: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -22460,7 +22440,7 @@ function (X3DField,
       toStream: function (stream)
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -22471,7 +22451,7 @@ function (X3DField,
       toVRMLStream: function (stream)
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -22482,7 +22462,7 @@ function (X3DField,
       toXMLString: function ()
       {
          const
-            target    = this ._target,
+            target    = this [_target],
             stream    = { string: "" },
             generator = Generator .Get (stream),
             value     = target .getValue ();
@@ -22498,7 +22478,7 @@ function (X3DField,
       toXMLStream: function (stream)
       {
          const
-            target = this ._target,
+            target = this [_target],
             value  = target .getValue ();
 
          if (value)
@@ -22508,7 +22488,7 @@ function (X3DField,
       },
       dispose: function ()
       {
-         const target = this ._target;
+         const target = this [_target];
 
          target .set (null);
 
@@ -23219,16 +23199,18 @@ define ('x_ite/Basic/X3DObjectArrayField',[
    "jquery",
    "x_ite/Basic/X3DField",
    "x_ite/Basic/X3DArrayField",
-   "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function ($,
           X3DField,
           X3DArrayField,
-          X3DConstants,
           Generator)
 {
 "use strict";
+
+   const
+      _target = Symbol (),
+      _proxy  = Symbol ();
 
    const handler =
    {
@@ -23295,15 +23277,6 @@ function ($,
 
          return key in target;
       },
-      ownKeys: function (target)
-      {
-         return Object .keys (target ._array);
-      },
-      getOwnPropertyDescriptor: function (target, key)
-      {
-         if (Number .isInteger (key * 1))
-            return Object .getOwnPropertyDescriptor (target .getValue (), key);
-      },
    };
 
    function X3DObjectArrayField (value)
@@ -23312,8 +23285,8 @@ function ($,
 
       X3DArrayField .call (this, [ ]);
 
-      this ._target = this;
-      this ._proxy  = proxy;
+      this [_target] = this;
+      this [_proxy]  = proxy;
 
       if (value [0] instanceof Array)
          value = value [0];
@@ -23326,14 +23299,16 @@ function ($,
    X3DObjectArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
    {
       constructor: X3DObjectArrayField,
+      [_target]: null,
+      [_proxy]: null,
       getTarget: function ()
       {
-         return this ._target;
+         return this [_target];
       },
       copy: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             copy   = new (target .constructor) (),
             array  = target .getValue ();
 
@@ -23346,7 +23321,7 @@ function ($,
       equals: function (array)
       {
          const
-            target = this ._target,
+            target = this [_target],
             a      = target .getValue (),
             b      = array .getValue (),
             length = a .length;
@@ -23367,7 +23342,7 @@ function ($,
       },
       set: function (value)
       {
-         const target = this ._target;
+         const target = this [_target];
 
          target .resize (value .length, undefined, true);
 
@@ -23382,7 +23357,7 @@ function ($,
       },
       setValue: function (value)
       {
-         const target = this ._target;
+         const target = this [_target];
 
          target .set (value instanceof X3DObjectArrayField ? value .getValue () : value);
          target .addEvent ();
@@ -23390,7 +23365,7 @@ function ($,
       unshift: function (value)
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue ();
 
          for (let i = arguments .length - 1; i >= 0; -- i)
@@ -23409,7 +23384,7 @@ function ($,
       shift: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue ();
 
          if (array .length)
@@ -23423,7 +23398,7 @@ function ($,
       push: function (value)
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue ();
 
          for (const argument of arguments)
@@ -23442,7 +23417,7 @@ function ($,
       pop: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue ();
 
          if (array .length)
@@ -23456,7 +23431,7 @@ function ($,
       splice: function (index, deleteCount)
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue ();
 
          if (index > array .length)
@@ -23475,7 +23450,7 @@ function ($,
       insert: function (index, array, first, last)
       {
          const
-            target = this ._target,
+            target = this [_target],
             args   = [index, 0];
 
          for (let i = first; i < last; ++ i)
@@ -23494,7 +23469,7 @@ function ($,
       find: function (first, last, value)
       {
          const
-            target = this ._target,
+            target = this [_target],
             values = target .getValue ();;
 
          if ($.isFunction (value))
@@ -23519,7 +23494,7 @@ function ($,
       remove: function (first, last, value)
       {
          const
-            target = this ._target,
+            target = this [_target],
             values = target .getValue ();
 
          if ($.isFunction (value))
@@ -23574,7 +23549,7 @@ function ($,
       erase: function (first, last)
       {
          const
-            target = this ._target,
+            target = this [_target],
             values = target .getValue () .splice (first, last - first);
 
          for (const value of values)
@@ -23587,7 +23562,7 @@ function ($,
       resize: function (size, value, silent)
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue ();
 
          if (size < array .length)
@@ -23619,16 +23594,16 @@ function ($,
       },
       addChildObject: function (value)
       {
-         value .addParent (this ._proxy);
+         value .addParent (this [_proxy]);
       },
       removeChildObject: function (value)
       {
-         value .removeParent (this ._proxy);
+         value .removeParent (this [_proxy]);
       },
       toStream: function (stream)
       {
          const
-            target    = this ._target,
+            target    = this [_target],
             array     = target .getValue (),
             generator = Generator .Get (stream);
 
@@ -23682,7 +23657,7 @@ function ($,
       toXMLStream: function (stream)
       {
          const
-            target = this ._target,
+            target = this [_target],
             length = target .length;
 
          if (length)
@@ -23707,7 +23682,7 @@ function ($,
       dispose: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue ();
 
          for (const value of array)
@@ -23721,8 +23696,8 @@ function ($,
 
    Object .defineProperty (X3DObjectArrayField .prototype, "length",
    {
-      get: function () { return this ._target .getValue () .length; },
-      set: function (value) { this ._target .resize (value); },
+      get: function () { return this [_target] .getValue () .length; },
+      set: function (value) { this [_target] .resize (value); },
       enumerable: false,
       configurable: false,
    });
@@ -23792,6 +23767,11 @@ function (X3DArrayField,
 {
 "use strict";
 
+   const
+      _target = Symbol (),
+      _tmp    = Symbol (),
+      _length = Symbol ();
+
    const handler =
    {
       get: function (target, key)
@@ -23813,7 +23793,7 @@ function (X3DArrayField,
 
                let array = target .getValue ();
 
-               if (index >= target ._length)
+               if (index >= target [_length])
                   array = target .resize (index + 1);
 
                if (components === 1)
@@ -23855,14 +23835,14 @@ function (X3DArrayField,
                {
                   // Return native JavaScript value.
 
-                  for (let index = 0; index < target ._length; ++ index)
+                  for (let index = 0; index < target [_length]; ++ index)
                      yield valueType (array [index]);
                }
                else
                {
                   // Return reference to index.
 
-                  for (let index = 0; index < target ._length; ++ index)
+                  for (let index = 0; index < target [_length]; ++ index)
                   {
                      const
                         value         = new (valueType) (),
@@ -23892,7 +23872,7 @@ function (X3DArrayField,
             index = key * 1,
             array = target .getValue ();
 
-         if (index >= target ._length)
+         if (index >= target [_length])
             array = target .resize (index + 1);
 
          if (components === 1)
@@ -23914,30 +23894,9 @@ function (X3DArrayField,
       has: function (target, key)
       {
          if (Number .isInteger (+key))
-            return key < target ._length;
+            return key < target [_length];
 
          return key in target;
-      },
-      ownKeys: function (target)
-      {
-         const keys = [ ];
-
-         for (let i = 0, length = target ._length; i < length; ++ i)
-            keys .push (String (i));
-
-         return keys;
-      },
-      getOwnPropertyDescriptor: function (target, key)
-      {
-         if (Number .isInteger (key * 1))
-         {
-            return {
-               value: this .get (target, key),
-               writable: true,
-               enumerable: true,
-               configurable: true,
-            };
-         }
       },
    };
 
@@ -23945,8 +23904,8 @@ function (X3DArrayField,
    {
       X3DArrayField .call (this, new (this .getArrayType ()) (2));
 
-      this ._target = this;
-      this ._tmp    = [ ];  // Array with components size.
+      this [_target] = this;
+      this [_tmp]    = [ ];  // Array with components size.
 
       if (value [0] instanceof Array)
          value = value [0];
@@ -23959,22 +23918,24 @@ function (X3DArrayField,
    X3DTypedArrayField .prototype = Object .assign (Object .create (X3DArrayField .prototype),
    {
       constructor: X3DTypedArrayField,
-      _length: 0,
+      [_target]: null,
+      [_tmp]: null,
+      [_length]: 0,
       getTarget: function ()
       {
-         return this ._target;
+         return this [_target];
       },
       copy: function ()
       {
          const
-            target     = this ._target,
+            target     = this [_target],
             array      = target .getValue (),
             copy       = new (target .constructor) (),
             copyArray  = new (target .getArrayType ()) (array);
 
-         copy ._length = target ._length;
+         copy [_length] = target [_length];
 
-         X3DArrayField .prototype .set .call (copy, copyArray, target ._length);
+         X3DArrayField .prototype .set .call (copy, copyArray, target [_length]);
 
          copy .setModificationTime (0);
 
@@ -23986,10 +23947,10 @@ function (X3DArrayField,
             return true;
 
          const
-            target = this ._target,
-            length = target ._length;
+            target = this [_target],
+            length = target [_length];
 
-         if (length !== other ._length)
+         if (length !== other [_length])
             return false;
 
          const
@@ -24006,7 +23967,7 @@ function (X3DArrayField,
       },
       assign: function (value)
       {
-         const target = this ._target;
+         const target = this [_target];
 
          target .set (value .getValue (), value .length);
          target .addEvent ();
@@ -24014,9 +23975,9 @@ function (X3DArrayField,
       set: function (otherArray /* value of field */, l /* length of field */)
       {
          const
-            target      = this ._target,
+            target      = this [_target],
             components  = target .getComponents (),
-            length      = target ._length;
+            length      = target [_length];
 
          let
             array       = target .getValue (),
@@ -24051,15 +24012,15 @@ function (X3DArrayField,
                array .fill (0, otherLength * components, length * components);
          }
 
-         target ._length = otherLength;
+         target [_length] = otherLength;
       },
       isDefaultValue: function ()
       {
-         return this ._length === 0;
+         return this [_length] === 0;
       },
       setValue: function (value)
       {
-         const target = this ._target;
+         const target = this [_target];
 
          if (value instanceof target .constructor)
          {
@@ -24074,9 +24035,9 @@ function (X3DArrayField,
       unshift: function (value)
       {
          const
-            target          = this ._target,
+            target          = this [_target],
             components      = target .getComponents (),
-            length          = target ._length,
+            length          = target [_length],
             argumentsLength = arguments .length,
             array           = target .grow ((length + argumentsLength) * components);
 
@@ -24099,7 +24060,7 @@ function (X3DArrayField,
             }
          }
 
-         target ._length += argumentsLength;
+         target [_length] += argumentsLength;
 
          target .addEvent ();
 
@@ -24108,8 +24069,8 @@ function (X3DArrayField,
       shift: function ()
       {
          const
-            target = this ._target,
-            length = target ._length;
+            target = this [_target],
+            length = target [_length];
 
          if (length)
          {
@@ -24125,7 +24086,7 @@ function (X3DArrayField,
             }
             else
             {
-               const tmp = target ._tmp;
+               const tmp = target [_tmp];
 
                for (let c = 0; c < components; ++ c)
                   tmp [c] = array [c];
@@ -24138,7 +24099,7 @@ function (X3DArrayField,
             array .copyWithin (0, components, length * components);
             array .fill (0, components * newLength, length * components);
 
-            target ._length = newLength;
+            target [_length] = newLength;
 
             target .addEvent ();
             return value;
@@ -24147,9 +24108,9 @@ function (X3DArrayField,
       push: function (value)
       {
          const
-            target          = this ._target,
+            target          = this [_target],
             components      = target .getComponents (),
-            length          = target ._length,
+            length          = target [_length],
             argumentsLength = arguments .length,
             array           = target .grow ((length + argumentsLength) * components);
 
@@ -24170,17 +24131,17 @@ function (X3DArrayField,
             }
          }
 
-         target ._length += argumentsLength;
+         target [_length] += argumentsLength;
 
          target .addEvent ();
 
-         return target ._length;
+         return target [_length];
       },
       pop: function ()
       {
          const
-            target = this ._target,
-            length = target ._length;
+            target = this [_target],
+            length = target [_length];
 
          if (length)
          {
@@ -24196,7 +24157,7 @@ function (X3DArrayField,
             }
             else
             {
-               const tmp = target ._tmp;
+               const tmp = target [_tmp];
 
                for (let c = 0, a = newLength * components; c < components; ++ c, ++ a)
                   tmp [c] = array [a];
@@ -24208,7 +24169,7 @@ function (X3DArrayField,
 
             array .fill (0, newLength * components, length * components);
 
-            target ._length = newLength;
+            target [_length] = newLength;
 
             target .addEvent ();
 
@@ -24218,8 +24179,8 @@ function (X3DArrayField,
       splice: function (index, deleteCount)
       {
          const
-            target = this ._target,
-            length = target ._length;
+            target = this [_target],
+            length = target [_length];
 
          if (index > length)
             index = length;
@@ -24239,9 +24200,9 @@ function (X3DArrayField,
       spliceInsert: function (index, other)
       {
          const
-            target      = this ._target,
+            target      = this [_target],
             components  = target .getComponents (),
-            length      = target ._length,
+            length      = target [_length],
             otherLength = other .length,
             array       = target .grow ((length + otherLength) * components);
 
@@ -24264,13 +24225,13 @@ function (X3DArrayField,
             }
          }
 
-         target ._length += otherLength;
+         target [_length] += otherLength;
       },
       insert: function (index, other, first, last)
       {
          const
-            target     = this ._target,
-            length     = target ._length,
+            target     = this [_target],
+            length     = target [_length],
             otherArray = other .getValue (),
             components = target .getComponents (),
             difference = last - first,
@@ -24285,18 +24246,18 @@ function (X3DArrayField,
          for (; first < last; ++ index, ++ first)
             array [index] = otherArray [first];
 
-         target ._length += difference;
+         target [_length] += difference;
 
          target .addEvent ();
       },
       erase: function (first, last)
       {
          const
-            target      = this ._target,
+            target      = this [_target],
             array       = target .getValue (),
             components  = target .getComponents (),
             difference  = last - first,
-            length      = target ._length,
+            length      = target [_length],
             newLength   = length - difference,
             values      = new (target .constructor) (),
             valuesArray = values .grow (difference * components);
@@ -24310,8 +24271,8 @@ function (X3DArrayField,
          array .copyWithin (first, last, length * components);
          array .fill (0, newLength * components, length * components);
 
-         target ._length = newLength;
-         values ._length = difference;
+         target [_length] = newLength;
+         values [_length] = difference;
 
          target .addEvent ();
 
@@ -24320,8 +24281,8 @@ function (X3DArrayField,
       resize: function (newLength, value, silent)
       {
          const
-            target     = this ._target,
-            length     = target ._length,
+            target     = this [_target],
+            length     = target [_length],
             components = target .getComponents ();
 
          let array = target .getValue ();
@@ -24359,14 +24320,14 @@ function (X3DArrayField,
                target .addEvent ();
          }
 
-         target ._length = newLength;
+         target [_length] = newLength;
 
          return array;
       },
       grow: function (length)
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue ();
 
          if (length < array .length)
@@ -24385,9 +24346,9 @@ function (X3DArrayField,
       shrinkToFit: function ()
       {
          const
-            target = this ._target,
+            target = this [_target],
             array  = target .getValue (),
-            length = target ._length * target .getComponents ();
+            length = target [_length] * target .getComponents ();
 
          if (array .length == length)
             return array;
@@ -24401,10 +24362,10 @@ function (X3DArrayField,
       toStream: function (stream)
       {
          const
-            target     = this ._target,
+            target     = this [_target],
             generator  = Generator .Get (stream),
             array      = target .getValue (),
-            length     = target ._length,
+            length     = target [_length],
             components = target .getComponents (),
             value      = new (target .getSingleType ()) ();
 
@@ -24500,8 +24461,8 @@ function (X3DArrayField,
       toXMLStream: function (stream)
       {
          const
-            target = this ._target,
-            length = target ._length;
+            target = this [_target],
+            length = target [_length];
 
          if (length)
          {
@@ -24550,14 +24511,14 @@ function (X3DArrayField,
       },
       dispose: function ()
       {
-         X3DArrayField .prototype .dispose .call (this ._target);
+         X3DArrayField .prototype .dispose .call (this [_target]);
       },
    });
 
    Object .defineProperty (X3DTypedArrayField .prototype, "length",
    {
-      get: function () { return this ._length; },
-      set: function (value) { this ._target .resize (value); },
+      get: function () { return this [_length]; },
+      set: function (value) { this [_target] .resize (value); },
       enumerable: false,
       configurable: false,
    });
@@ -24568,7 +24529,7 @@ function (X3DArrayField,
    {
       const
          array = this .getValue (),
-         tmp   = this ._tmp;
+         tmp   = this [_tmp];
 
       for (let c = 0; c < components; ++ c, ++ index)
          tmp [c] = array [index];
@@ -24701,6 +24662,8 @@ function (SFBool,
     *  MFNode
     */
 
+   const _cloneCount = Symbol ();
+
    function MFNode (value)
    {
       return X3DObjectArrayField .call (this, arguments);
@@ -24709,7 +24672,7 @@ function (SFBool,
    MFNode .prototype = Object .assign (Object .create (X3DObjectArrayField .prototype),
    {
       constructor: MFNode,
-      _cloneCount: 0,
+      [_cloneCount]: 0,
       getSingleType: function ()
       {
          return SFNode;
@@ -24754,14 +24717,14 @@ function (SFBool,
       },
       addCloneCount: function (count)
       {
-         this ._cloneCount += count;
+         this [_cloneCount] += count;
 
          for (const element of this .getValue ())
             element .addCloneCount (count);
       },
       removeCloneCount: function (count)
       {
-         this ._cloneCount -= count;
+         this [_cloneCount] -= count;
 
          for (const element of this .getValue ())
             element .removeCloneCount (count);
@@ -24770,18 +24733,18 @@ function (SFBool,
       {
          X3DObjectArrayField .prototype .addChildObject .call (this, value);
 
-         value .addCloneCount (this ._cloneCount);
+         value .addCloneCount (this [_cloneCount]);
       },
       removeChildObject: function (value)
       {
          X3DObjectArrayField .prototype .removeChildObject .call (this, value);
 
-         value .removeCloneCount (this ._cloneCount);
+         value .removeCloneCount (this [_cloneCount]);
       },
       toStream: function (stream)
       {
          const
-            target    = this ._target,
+            target    = this .getTarget (),
             array     = target .getValue (),
             generator = Generator .Get (stream);
 
@@ -24837,7 +24800,7 @@ function (SFBool,
       toVRMLStream: function (stream)
       {
          const
-            target    = this ._target,
+            target    = this .getTarget (),
             array     = target .getValue (),
             generator = Generator .Get (stream);
 
@@ -25416,11 +25379,13 @@ function (X3DChildObject,
 {
 "use strict";
 
+   const _browser = Symbol .for ("X3DEventObject.browser");
+
    function X3DEventObject (browser)
    {
       X3DChildObject .call (this);
 
-      this ._browser = browser;
+      this [_browser] = browser;
    }
 
    X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prototype),
@@ -25428,7 +25393,7 @@ function (X3DChildObject,
       constructor: X3DEventObject,
       getBrowser: function ()
       {
-         return this ._browser;
+         return this [_browser];
       },
       getExtendedEventHandling: function ()
       {
@@ -25624,40 +25589,53 @@ function (X3DEventObject,
 {
 "use strict";
 
+   const
+      _executionContext  = Symbol (),
+      _type              = Symbol (),
+      _fieldDefinitions  = Symbol .for ("X3DBaseNode.fieldDefinitions"),
+      _fields            = Symbol (),
+      _predefinedFields  = Symbol (),
+      _aliases           = Symbol (),
+      _userDefinedFields = Symbol (),
+      _initialized       = Symbol (),
+      _live              = Symbol (),
+      _private           = Symbol (),
+      _cloneCount        = Symbol ();
+
    function X3DBaseNode (executionContext)
    {
-      if (this .hasOwnProperty ("_executionContext"))
+      if (this .hasOwnProperty (_executionContext))
          return;
 
       X3DEventObject .call (this, executionContext .getBrowser ());
 
-      this ._executionContext  = executionContext;
-      this ._type              = [ X3DConstants .X3DBaseNode ];
-      this ._fields            = new FieldArray ();
-      this ._predefinedFields  = new FieldArray ();
-      this ._aliases           = new Map ();
-      this ._userDefinedFields = new FieldArray ();
-      this ._cloneCount        = 0;
+      this [_executionContext]  = executionContext;
+      this [_type]              = [ X3DConstants .X3DBaseNode ];
+      this [_fields]            = new FieldArray ();
+      this [_predefinedFields]  = new FieldArray ();
+      this [_aliases]           = new Map ();
+      this [_userDefinedFields] = new FieldArray ();
+      this [_live]              = true;
+      this [_initialized]       = false;
+      this [_private]           = false;
+      this [_cloneCount]        = 0;
 
       // Setup fields.
 
       if (this .canUserDefinedFields ())
-         this .fieldDefinitions = new FieldDefinitionArray (this .fieldDefinitions);
+         this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
 
-      for (const fieldDefinition of this .fieldDefinitions)
+      for (const fieldDefinition of this [_fieldDefinitions])
          this .addField (fieldDefinition);
    }
 
    X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototype),
    {
       constructor: X3DBaseNode,
-      fieldDefinitions: new FieldDefinitionArray ([ ]),
-      _private: false,
-      _live: true,
-      _initialized: false,
+      [_fieldDefinitions]: new FieldDefinitionArray ([ ]),
       getMainScene: function ()
       {
-         let scene = this ._executionContext .getScene ();
+         let scene = this [_executionContext] .getScene ();
 
          while (!scene .isMainScene ())
             scene = scene .getScene ();
@@ -25668,7 +25646,7 @@ function (X3DEventObject,
       {
          const X3DScene = require ("x_ite/Execution/X3DScene");
 
-         let executionContext = this ._executionContext;
+         let executionContext = this [_executionContext];
 
          while (!(executionContext instanceof X3DScene))
             executionContext = executionContext .getExecutionContext ();
@@ -25677,24 +25655,24 @@ function (X3DEventObject,
       },
       getExecutionContext: function ()
       {
-         return this ._executionContext;
+         return this [_executionContext];
       },
       setExecutionContext: function (value)
       {
          // Currently only useful for Scene.
-         this ._executionContext = value;
+         this [_executionContext] = value;
       },
       addType: function (value)
       {
-         this ._type .push (value);
+         this [_type] .push (value);
       },
       getType: function ()
       {
-         return this ._type;
+         return this [_type];
       },
       isType: function (types)
       {
-         return this ._type .some (function (type) { return types .has (type) });
+         return this [_type] .some (function (type) { return types .has (type) });
       },
       getInnerNode: function ()
       {
@@ -25724,8 +25702,8 @@ function (X3DEventObject,
 
             // Connect to execution context.
 
-            if (this ._executionContext !== this)
-               this ._executionContext .isLive () .addInterest ("_set_live__", this);
+            if (this [_executionContext] !== this)
+               this [_executionContext] .isLive () .addInterest ("_set_live__", this);
 
             // Return field
 
@@ -25737,7 +25715,7 @@ function (X3DEventObject,
          ///  Sets the own live state of this node.  Setting the live state to false
          ///  temporarily disables this node completely.
 
-         this ._live = value .valueOf ();
+         this [_live] = value .valueOf ();
 
          this ._set_live__ ();
       },
@@ -25745,14 +25723,14 @@ function (X3DEventObject,
       {
          ///  Returns the own live state of this node.
 
-         return this ._live;
+         return this [_live];
       },
       getLiveState: function ()
       {
          ///  Determines the live state of this node.
 
-         if (this !== this ._executionContext)
-            return this .getLive () && this ._executionContext .isLive () .getValue ();
+         if (this !== this [_executionContext])
+            return this .getLive () && this [_executionContext] .isLive () .getValue ();
 
          return this .getLive ();
       },
@@ -25781,20 +25759,20 @@ function (X3DEventObject,
       },
       setInitialized: function (value)
       {
-         this ._initialized = value;
+         this [_initialized] = value;
       },
       isInitialized: function ()
       {
-         return this ._initialized;
+         return this [_initialized];
       },
       setup: function ()
       {
-         if (this ._initialized)
+         if (this [_initialized])
             return;
 
-         this ._initialized = true;
+         this [_initialized] = true;
 
-         for (const field of this ._fields)
+         for (const field of this [_fields])
             field .setTainted (false);
 
          this .initialize ();
@@ -25829,7 +25807,7 @@ function (X3DEventObject,
 
          // Default fields
 
-         for (const sourceField of this ._predefinedFields)
+         for (const sourceField of this [_predefinedFields])
          {
             try
             {
@@ -25878,7 +25856,7 @@ function (X3DEventObject,
 
          // User-defined fields
 
-         for (const sourceField of this ._userDefinedFields)
+         for (const sourceField of this [_userDefinedFields])
          {
             const destinationField = sourceField .copy (instance);
 
@@ -25914,7 +25892,7 @@ function (X3DEventObject,
       {
          const copy = this .create (executionContext || this .getExecutionContext ());
 
-         for (const field of this ._fields)
+         for (const field of this [_fields])
             copy .getField (field .getName ()) .assign (field);
 
          copy .setup ();
@@ -25955,18 +25933,18 @@ function (X3DEventObject,
       },
       setField: function (name, field, userDefined)
       {
-         this ._fields .add (name, field);
+         this [_fields] .add (name, field);
 
          if (!this .getPrivate ())
             field .addCloneCount (1);
 
          if (userDefined)
          {
-            this ._userDefinedFields .add (name, field);
+            this [_userDefinedFields] .add (name, field);
          }
          else
          {
-            this ._predefinedFields .add (name, field);
+            this [_predefinedFields] .add (name, field);
 
             Object .defineProperty (this, name + "_",
             {
@@ -25985,7 +25963,7 @@ function (X3DEventObject,
 
          return function (name)
          {
-            const field = this ._fields .get (name) || this ._aliases .get (name);
+            const field = this [_fields] .get (name) || this [_aliases] .get (name);
 
             if (field)
                return field;
@@ -25994,7 +25972,7 @@ function (X3DEventObject,
 
             if (match)
             {
-               const field = this ._fields .get (match [1]) || this ._aliases .get (match [1]);
+               const field = this [_fields] .get (match [1]) || this [_aliases] .get (match [1]);
 
                if (field && field .getAccessType () === X3DConstants .inputOutput)
                   return field;
@@ -26005,7 +25983,7 @@ function (X3DEventObject,
 
                if (match)
                {
-                  const field = this ._fields .get (match [1]) || this ._aliases .get (match [1]);
+                  const field = this [_fields] .get (match [1]) || this [_aliases] .get (match [1]);
 
                   if (field && field .getAccessType () === X3DConstants .inputOutput)
                      return field;
@@ -26017,7 +25995,7 @@ function (X3DEventObject,
       })(),
       addAlias: function (alias, field)
       {
-         this ._aliases .set (alias, field);
+         this [_aliases] .set (alias, field);
 
          Object .defineProperty (this, alias + "_",
          {
@@ -26029,7 +26007,7 @@ function (X3DEventObject,
       },
       getFieldDefinitions: function ()
       {
-         return this .fieldDefinitions;
+         return this [_fieldDefinitions];
       },
       canUserDefinedFields: function ()
       {
@@ -26037,7 +26015,7 @@ function (X3DEventObject,
       },
       addUserDefinedField: function (accessType, name, field)
       {
-         if (this ._userDefinedFields .has (name))
+         if (this [_userDefinedFields] .has (name))
             this .removeUserDefinedField (name);
 
          field .setTainted (true);
@@ -26045,19 +26023,19 @@ function (X3DEventObject,
          field .setName (name);
          field .setAccessType (accessType);
 
-         this .fieldDefinitions .add (name, new X3DFieldDefinition (accessType, name, field));
+         this [_fieldDefinitions] .add (name, new X3DFieldDefinition (accessType, name, field));
 
          this .setField (name, field, true);
       },
       removeUserDefinedField: function (name)
       {
-         const field = this ._userDefinedFields .get (name);
+         const field = this [_userDefinedFields] .get (name);
 
          if (field)
          {
-            this ._fields            .remove (name);
-            this ._userDefinedFields .remove (name);
-            this .fieldDefinitions   .remove (name);
+            this [_fields]            .remove (name);
+            this [_userDefinedFields] .remove (name);
+            this [_fieldDefinitions]   .remove (name);
 
             if (!this .getPrivate ())
                field .removeCloneCount (1);
@@ -26065,11 +26043,11 @@ function (X3DEventObject,
       },
       getUserDefinedFields: function ()
       {
-         return this ._userDefinedFields;
+         return this [_userDefinedFields];
       },
       getPredefinedFields: function ()
       {
-         return this ._predefinedFields;
+         return this [_predefinedFields];
       },
       getChangedFields: function (extended)
       {
@@ -26079,11 +26057,11 @@ function (X3DEventObject,
 
          if (extended)
          {
-            for (const field of this ._userDefinedFields)
+            for (const field of this [_userDefinedFields])
                changedFields .push (field);
          }
 
-         for (const field of this ._predefinedFields)
+         for (const field of this [_predefinedFields])
          {
             if (extended)
             {
@@ -26119,7 +26097,7 @@ function (X3DEventObject,
       },
       getFields: function ()
       {
-         return this ._fields;
+         return this [_fields];
       },
       getSourceText: function ()
       {
@@ -26129,7 +26107,7 @@ function (X3DEventObject,
       {
          ///  Returns true if there are any routes from or to fields of this node otherwise false.
 
-         for (const field of this ._fields)
+         for (const field of this [_fields])
          {
             if (field .getInputRoutes () .size)
                return true;
@@ -26142,40 +26120,40 @@ function (X3DEventObject,
       },
       getPrivate: function ()
       {
-         return this ._private;
+         return this [_private];
       },
       setPrivate: function (value)
       {
-         this ._private = value;
+         this [_private] = value;
 
          if (value)
          {
-            for (const field of this ._fields)
+            for (const field of this [_fields])
                field .removeCloneCount (1);
          }
          else
          {
-            for (const field of this ._fields)
+            for (const field of this [_fields])
                field .addCloneCount (1);
          }
       },
       getCloneCount: function ()
       {
-         return this ._cloneCount;
+         return this [_cloneCount];
       },
       addCloneCount: function (count)
       {
          if (count === 0)
             return;
 
-         this ._cloneCount += count;
+         this [_cloneCount] += count;
       },
       removeCloneCount: function (count)
       {
          if (count === 0)
             return;
 
-         this ._cloneCount -= count;
+         this [_cloneCount] -= count;
       },
    });
 
@@ -27261,7 +27239,7 @@ function (Fields,
    BrowserOptions .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       constructor: BrowserOptions,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "SplashScreen",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Dashboard",              new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "Rubberband",             new Fields .SFBool (true)),
@@ -27699,7 +27677,7 @@ function (Fields,
    BrowserProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       constructor: BrowserProperties,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .initializeOnly, "ABSTRACT_NODES",        new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "CONCRETE_NODES",        new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "EXTERNAL_INTERACTIONS", new Fields .SFBool (true)),
@@ -27800,7 +27778,7 @@ function (Fields,
    RenderingProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       constructor: RenderingProperties,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .outputOnly, "Shading",                new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .outputOnly, "MaxTextureSize",         new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .outputOnly, "TextureUnits",           new Fields .SFInt32 ()),
@@ -30885,7 +30863,7 @@ function (X3DConstants,
 
          // HTMLSupport
 
-         for (const fieldDefinition of Type .prototype .fieldDefinitions)
+         for (const fieldDefinition of Type .prototype [Symbol .for ("X3DBaseNode.fieldDefinitions")])
          {
             const
                name       = fieldDefinition .name,
@@ -30989,7 +30967,7 @@ function (X3DBaseNode,
       this .inlineNode   = inlineNode;
       this .exportedName = exportedName;
       this .importedName = importedName;
-      this .routes       = new Map ();
+      this .routes       = new Set ();
 
       this .inlineNode .loadState_ .addInterest ("set_loadState__", this);
    }
@@ -31000,14 +30978,6 @@ function (X3DBaseNode,
       getTypeName: function ()
       {
          return "ImportedNode";
-      },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      getContainerField: function ()
-      {
-         return "importedNodes";
       },
       getInlineNode: function ()
       {
@@ -31033,27 +31003,25 @@ function (X3DBaseNode,
       {
          // Add route.
 
-         const id = sourceNode .getId () + "." + sourceField + " " + destinationNode .getId () + "." + destinationField;
-
-         this .routes .set (id,
-         {
-            sourceNode:       sourceNode,
-            sourceField:      sourceField,
-            destinationNode:  destinationNode,
+         const route = {
+            sourceNode: sourceNode,
+            sourceField: sourceField,
+            destinationNode: destinationNode,
             destinationField: destinationField,
-         });
+         };
+
+         this .routes .add (route);
 
          // Try to resolve source or destination node routes.
 
          if (this .inlineNode .checkLoadState () === X3DConstants .COMPLETE_STATE)
-            this .resolveRoute (id);
+            this .resolveRoute (route);
       },
-      resolveRoute: function (id)
+      resolveRoute: function (route)
       {
          try
          {
             const
-               route            = this .routes .get (id),
                sourceField      = route .sourceField,
                destinationField = route .destinationField;
 
@@ -31061,8 +31029,8 @@ function (X3DBaseNode,
                sourceNode      = route .sourceNode,
                destinationNode = route .destinationNode;
 
-            if (route ._route)
-               route ._route .dispose ();
+            if (route .real)
+               route .real .dispose ();
 
             if (sourceNode instanceof ImportedNode)
                sourceNode = sourceNode .getExportedNode () .getValue ();
@@ -31070,7 +31038,7 @@ function (X3DBaseNode,
             if (destinationNode instanceof ImportedNode)
                destinationNode = destinationNode .getExportedNode () .getValue ();
 
-            route ._route = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
+            route .real = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
          }
          catch (error)
          {
@@ -31079,36 +31047,24 @@ function (X3DBaseNode,
       },
       deleteRoute: function (real)
       {
-         this .routes .forEach (function (route)
+         for (const route of this .routes)
          {
-            if (route ._route === real)
-            {
-               const
-                  sourceNode       = route .sourceNode,
-                  sourceField      = route .sourceField,
-                  destinationNode  = route .destinationNode,
-                  destinationField = route .destinationField;
-
-               const id = sourceNode .getId () + "." + sourceField + " " + destinationNode .getId () + "." + destinationField;
-
-               this .routes .delete (id);
-            }
-         },
-         this);
+            if (route .real === real)
+               this .routes .delete (route);
+         }
       },
       deleteRoutes: function ()
       {
-         this .routes .forEach (function (route)
+         for (const route of this .routes)
          {
-            const real = route ._route
+            const real = route .real
 
             if (real)
             {
-               delete route ._route;
+               delete route .real;
                this .getExecutionContext () .deleteSimpleRoute (real);
             }
-         },
-         this);
+         }
       },
       set_loadState__: function ()
       {
@@ -31124,11 +31080,8 @@ function (X3DBaseNode,
             {
                this .deleteRoutes ();
 
-               this .routes .forEach (function (route, id)
-               {
-                  this .resolveRoute (id);
-               },
-               this);
+               for (const route of this .routes)
+                  this .resolveRoute (route);
 
                break;
             }
@@ -31164,7 +31117,7 @@ function (X3DBaseNode,
             {
                // Output unresolved routes.
 
-               this .routes .forEach (function (route)
+               for (const route of this .routes)
                {
                   const
                      sourceNode       = route .sourceNode,
@@ -31197,7 +31150,7 @@ function (X3DBaseNode,
                      stream .string += ".";
                      stream .string += destinationField;
                   }
-               });
+               }
             }
          }
          else
@@ -31239,7 +31192,7 @@ function (X3DBaseNode,
             {
                // Output unresolved routes.
 
-               this .routes .forEach (function (route)
+               for (const route of this .routes)
                {
                   const
                      sourceNode       = route .sourceNode,
@@ -31279,7 +31232,7 @@ function (X3DBaseNode,
                      stream .string += "'";
                      stream .string += "/>";
                   }
-               });
+               }
             }
          }
          else
@@ -31366,23 +31319,6 @@ function (X3DInfoArray)
       {
          return "ExternProtoDeclarationArray";
       },
-      toVRMLStream: function (stream)
-      {
-         for (const value of this ._array)
-         {
-            try
-            {
-               value .toVRMLStream (stream);
-
-               stream .string += "\n";
-               stream .string += "\n";
-            }
-            catch (error)
-            {
-               console .log (error);
-            }
-         }
-      },
    });
 
    return ExternProtoDeclarationArray;
@@ -31455,23 +31391,6 @@ function (X3DInfoArray)
       getTypeName: function ()
       {
          return "ProtoDeclarationArray";
-      },
-      toVRMLStream: function (stream)
-      {
-         for (const value of this ._array)
-         {
-            try
-            {
-               value .toVRMLStream (stream);
-
-               stream .string += "\n";
-               stream .string += "\n";
-            }
-            catch (error)
-            {
-               console .log (error);
-            }
-         }
       },
    });
 
@@ -31601,27 +31520,34 @@ function (X3DInfoArray)
 
 
 define ('x_ite/Routing/X3DRoute',[
-   "x_ite/Fields",
    "x_ite/Base/X3DObject",
    "x_ite/Bits/X3DConstants",
+   "x_ite/Fields/SFNodeCache",
    "x_ite/InputOutput/Generator",
 ],
-function (Fields,
-          X3DObject,
+function (X3DObject,
           X3DConstants,
+          SFNodeCache,
           Generator)
 {
 "use strict";
+
+   const
+      _executionContext = Symbol (),
+      _sourceNode       = Symbol (),
+      _sourceField      = Symbol (),
+      _destinationNode  = Symbol (),
+      _destinationField = Symbol ();
 
    function X3DRoute (executionContext, sourceNode, sourceField, destinationNode, destinationField)
    {
       X3DObject .call (this, executionContext);
 
-      this ._executionContext = executionContext;
-      this ._sourceNode       = new Fields .SFNode (sourceNode);
-      this ._sourceField      = sourceField;
-      this ._destinationNode  = new Fields .SFNode (destinationNode);
-      this ._destinationField = destinationField;
+      this [_executionContext] = executionContext;
+      this [_sourceNode]       = sourceNode;
+      this [_sourceField]      = sourceField;
+      this [_destinationNode]  = destinationNode;
+      this [_destinationField] = destinationField;
 
       // Must connect in every context, to make X3DBaseNode.hasRoutes work.
 
@@ -31639,50 +31565,50 @@ function (Fields,
       },
       getExecutionContext: function ()
       {
-         return this ._executionContext;
+         return this [_executionContext];
       },
       getSourceNode: function ()
       {
          ///  SAI
-         return this ._sourceNode .valueOf ();
+         return this [_sourceNode];
       },
       getSourceField: function ()
       {
          ///  SAI
-         return this ._sourceField .getName ();
+         return this [_sourceField] .getName ();
       },
       getDestinationNode: function ()
       {
          ///  SAI
-         return this ._destinationNode .valueOf ();
+         return this [_destinationNode];
       },
       getDestinationField: function ()
       {
          ///  SAI
-         return this ._destinationField .getName ();
+         return this [_destinationField] .getName ();
       },
       disconnect: function ()
       {
-         this ._sourceField .removeFieldInterest (this ._destinationField);
+         this [_sourceField] .removeFieldInterest (this [_destinationField]);
 
-         this ._sourceField      .removeOutputRoute (this);
-         this ._destinationField .removeInputRoute (this);
+         this [_sourceField]      .removeOutputRoute (this);
+         this [_destinationField] .removeInputRoute (this);
       },
       toVRMLStream: function (stream)
       {
          const
             generator           = Generator .Get (stream),
-            sourceNodeName      = generator .LocalName (this ._sourceNode .getValue ()),
-            destinationNodeName = generator .LocalName (this ._destinationNode .getValue ());
+            sourceNodeName      = generator .LocalName (this [_sourceNode]),
+            destinationNodeName = generator .LocalName (this [_destinationNode]);
 
          stream .string += generator .Indent ();
          stream .string += "ROUTE";
          stream .string += " ";
          stream .string += sourceNodeName;
          stream .string += ".";
-         stream .string += this ._sourceField .getName ();
+         stream .string += this [_sourceField] .getName ();
 
-         if (this ._sourceField .getAccessType () === X3DConstants .inputOutput)
+         if (this [_sourceField] .getAccessType () === X3DConstants .inputOutput)
             stream .string += "_changed";
 
          stream .string += " ";
@@ -31691,17 +31617,17 @@ function (Fields,
          stream .string += destinationNodeName;
          stream .string += ".";
 
-         if (this ._destinationField .getAccessType () === X3DConstants .inputOutput)
+         if (this [_destinationField] .getAccessType () === X3DConstants .inputOutput)
             stream .string += "set_";
 
-         stream .string += this ._destinationField .getName ();
+         stream .string += this [_destinationField] .getName ();
       },
       toXMLStream: function (stream)
       {
          const
             generator           = Generator .Get (stream),
-            sourceNodeName      = generator .LocalName (this ._sourceNode .getValue ()),
-            destinationNodeName = generator .LocalName (this ._destinationNode .getValue ());
+            sourceNodeName      = generator .LocalName (this [_sourceNode]),
+            destinationNodeName = generator .LocalName (this [_destinationNode]);
 
          stream .string += generator .Indent ();
          stream .string += "<ROUTE";
@@ -31711,9 +31637,9 @@ function (Fields,
          stream .string += "'";
          stream .string += " ";
          stream .string += "fromField='";
-         stream .string += generator .XMLEncode (this ._sourceField .getName ());
+         stream .string += generator .XMLEncode (this [_sourceField] .getName ());
 
-         if (this ._sourceField .getAccessType () === X3DConstants .inputOutput)
+         if (this [_sourceField] .getAccessType () === X3DConstants .inputOutput)
             stream .string += "_changed";
 
          stream .string += "'";
@@ -31724,10 +31650,10 @@ function (Fields,
          stream .string += " ";
          stream .string += "toField='";
 
-         if (this ._destinationField .getAccessType () === X3DConstants .inputOutput)
+         if (this [_destinationField] .getAccessType () === X3DConstants .inputOutput)
             stream .string += "set_";
 
-         stream .string += generator .XMLEncode (this ._destinationField .getName ());
+         stream .string += generator .XMLEncode (this [_destinationField] .getName ());
          stream .string += "'";
          stream .string += "/>";
       },
@@ -31735,7 +31661,7 @@ function (Fields,
       {
          this .disconnect ();
 
-         this ._executionContext .deleteRoute (this);
+         this [_executionContext] .deleteRoute (this);
 
          X3DObject .prototype .dispose .call (this);
       }
@@ -31745,7 +31671,7 @@ function (Fields,
    {
       get: function ()
       {
-         return this ._sourceNode .valueOf ();
+         return SFNodeCache .get (this [_sourceNode]);
       },
       enumerable: true,
       configurable: false
@@ -31755,7 +31681,7 @@ function (Fields,
    {
       get: function ()
       {
-         return this ._sourceField .getName ();
+         return this [_sourceField] .getName ();
       },
       enumerable: true,
       configurable: false
@@ -31765,7 +31691,7 @@ function (Fields,
    {
       get: function ()
       {
-         return this ._destinationNode .valueOf ();
+         return SFNodeCache .get (this [_destinationNode]);
       },
       enumerable: true,
       configurable: false
@@ -31775,7 +31701,7 @@ function (Fields,
    {
       get: function ()
       {
-         return this ._destinationField .getName ();
+         return this [_destinationField] .getName ();
       },
       enumerable: true,
       configurable: false
@@ -31945,6 +31871,14 @@ function (SupportedNodes,
 {
 "use strict";
 
+   const
+      _namedNodes     = Symbol (),
+      _importedNodes  = Symbol (),
+      _protos         = Symbol (),
+      _externprotos   = Symbol (),
+      _routes         = Symbol (),
+      _node           = Symbol ();
+
    SupportedNodes .addAbstractType ("X3DExecutionContext");
 
    function X3DExecutionContext (executionContext)
@@ -31959,11 +31893,11 @@ function (SupportedNodes,
       this .rootNodes_ .setAccessType (X3DConstants .initializeOnly);
       this .rootNodes_ .addCloneCount (1);
 
-      this ._namedNodes     = new Map ();
-      this ._importedNodes  = new Map ();
-      this ._protos         = new ProtoDeclarationArray ();
-      this ._externprotos   = new ExternProtoDeclarationArray ();
-      this ._routes         = new RouteArray ();
+      this [_namedNodes]     = new Map ();
+      this [_importedNodes]  = new Map ();
+      this [_protos]         = new ProtoDeclarationArray ();
+      this [_externprotos]   = new ExternProtoDeclarationArray ();
+      this [_routes]         = new RouteArray ();
    }
 
    X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -31973,15 +31907,15 @@ function (SupportedNodes,
       {
          return "X3DExecutionContext";
       },
-      _node: null,
+      [_node]: null,
       getNode: function ()
       {
          // Can be either of type X3DProtoDeclaration or X3DPrototypeInstance, or null.
-         return this ._node;
+         return this [_node];
       },
       setNode: function (value)
       {
-         this ._node = value;
+         this [_node] = value;
       },
       getSpecificationVersion: function ()
       {
@@ -32071,7 +32005,7 @@ function (SupportedNodes,
       },
       addNamedNode: function (name, node)
       {
-         if (this ._namedNodes .has (name))
+         if (this [_namedNodes] .has (name))
             throw new Error ("Couldn't add named node: node named '" + name + "' is already in use.");
 
          this .updateNamedNode (name, node);
@@ -32103,15 +32037,15 @@ function (SupportedNodes,
 
          baseNode .setName (name);
 
-         this ._namedNodes .set (name, baseNode);
+         this [_namedNodes] .set (name, baseNode);
       },
       removeNamedNode: function (name)
       {
-         this ._namedNodes .delete (name);
+         this [_namedNodes] .delete (name);
       },
       getNamedNode: function (name)
       {
-         const baseNode = this ._namedNodes .get (name);
+         const baseNode = this [_namedNodes] .get (name);
 
          if (baseNode)
             return SFNodeCache .get (baseNode);
@@ -32120,7 +32054,7 @@ function (SupportedNodes,
       },
       getNamedNodes: function ()
       {
-         return this ._namedNodes;
+         return this [_namedNodes];
       },
       getUniqueName: (function ()
       {
@@ -32136,7 +32070,7 @@ function (SupportedNodes,
 
             for (; i;)
             {
-               if (!(this ._namedNodes .has (newName) || newName .length === 0))
+               if (!(this [_namedNodes] .has (newName) || newName .length === 0))
                   break;
 
                const
@@ -32156,7 +32090,7 @@ function (SupportedNodes,
          if (importedName === undefined)
             importedName = exportedName;
 
-         if (this ._importedNodes .has (importedName))
+         if (this [_importedNodes] .has (importedName))
             throw new Error ("Couldn't add imported node: imported name '" + importedName + "' already in use.");
 
          this .updateImportedNode (inlineNode, exportedName, importedName);
@@ -32185,24 +32119,24 @@ function (SupportedNodes,
 
          const importedNode = new ImportedNode (this, inlineNode, exportedName, importedName);
 
-         this ._importedNodes .set (importedName, importedNode);
+         this [_importedNodes] .set (importedName, importedNode);
 
          importedNode .setup ();
       },
       removeImportedNode: function (importedName)
       {
-         const importedNode = this ._importedNodes .get (importedName);
+         const importedNode = this [_importedNodes] .get (importedName);
 
          if (!importedNode)
             return;
 
          importedNode .dispose ();
 
-         this ._importedNodes .delete (importedName);
+         this [_importedNodes] .delete (importedName);
       },
       getImportedNode: function (importedName)
       {
-         const importedNode = this ._importedNodes .get (importedName);
+         const importedNode = this [_importedNodes] .get (importedName);
 
          if (importedNode)
             return importedNode .getExportedNode () .valueOf ();
@@ -32211,7 +32145,7 @@ function (SupportedNodes,
       },
       getImportedNodes: function ()
       {
-         return this ._importedNodes;
+         return this [_importedNodes];
       },
       getLocalNode: function (name)
       {
@@ -32221,7 +32155,7 @@ function (SupportedNodes,
          }
          catch (error)
          {
-            const importedNode = this ._importedNodes .get (name);
+            const importedNode = this [_importedNodes] .get (name);
 
             if (importedNode)
                return SFNodeCache .get (importedNode);
@@ -32237,7 +32171,7 @@ function (SupportedNodes,
          if (node .getValue () .getExecutionContext () === this)
             return node .getValue () .getName ();
 
-         for (const importedNode of this ._importedNodes .values ())
+         for (const importedNode of this [_importedNodes] .values ())
          {
             try
             {
@@ -32259,7 +32193,7 @@ function (SupportedNodes,
       },
       getProtoDeclaration: function (name)
       {
-         const proto = this ._protos .get (name);
+         const proto = this [_protos] .get (name);
 
          if (proto)
             return proto;
@@ -32273,7 +32207,7 @@ function (SupportedNodes,
          if (!(proto instanceof X3DProtoDeclaration))
             throw new Error ("Couldn't add proto declaration: proto must be of type X3DProtoDeclaration.");
 
-         if (this ._protos .get (name))
+         if (this [_protos] .get (name))
             throw new Error ("Couldn't add proto declaration: proto '" + name + "' already in use.");
 
          name = String (name);
@@ -32281,7 +32215,7 @@ function (SupportedNodes,
          if (name .length === 0)
             throw new Error ("Couldn't add proto declaration: proto name is empty.");
 
-         this ._protos .add (name, proto);
+         this [_protos] .add (name, proto);
          proto .setName (name);
       },
       updateProtoDeclaration (name, proto)
@@ -32296,16 +32230,16 @@ function (SupportedNodes,
          if (name .length === 0)
             throw new Error ("Couldn't add proto declaration: proto name is empty.");
 
-         this ._protos .update (proto .getName (), name, proto);
+         this [_protos] .update (proto .getName (), name, proto);
          proto .setName (name);
       },
       removeProtoDeclaration (name)
       {
-         this ._protos .remove (name);
+         this [_protos] .remove (name);
       },
       getProtoDeclarations: function ()
       {
-         return this ._protos;
+         return this [_protos];
       },
       getUniqueProtoName: (function ()
       {
@@ -32321,7 +32255,7 @@ function (SupportedNodes,
 
             for (; i;)
             {
-               if (!this ._protos .has (newName))
+               if (!this [_protos] .has (newName))
                   break;
 
                const
@@ -32337,7 +32271,7 @@ function (SupportedNodes,
       })(),
       getExternProtoDeclaration: function (name)
       {
-         const externproto = this ._externprotos .get (name);
+         const externproto = this [_externprotos] .get (name);
 
          if (externproto)
             return externproto;
@@ -32351,7 +32285,7 @@ function (SupportedNodes,
          if (!(externproto instanceof X3DExternProtoDeclaration))
             throw new Error ("Couldn't add extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
 
-         if (this ._externprotos .get (name))
+         if (this [_externprotos] .get (name))
             throw new Error ("Couldn't add extern proto declaration: extern proto '" + name + "' already in use.");
 
          name = String (name);
@@ -32359,7 +32293,7 @@ function (SupportedNodes,
          if (name .length === 0)
             throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
 
-         this ._externprotos .add (name, externproto);
+         this [_externprotos] .add (name, externproto);
          externproto .setName (name);
       },
       updateExternProtoDeclaration (name, externproto)
@@ -32374,16 +32308,16 @@ function (SupportedNodes,
          if (name .length === 0)
             throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
 
-         this ._externprotos .update (externproto .getName (), name, externproto);
+         this [_externprotos] .update (externproto .getName (), name, externproto);
          externproto .setName (name);
       },
       removeExternProtoDeclaration (name)
       {
-         this ._externprotos .remove (name);
+         this [_externprotos] .remove (name);
       },
       getExternProtoDeclarations: function ()
       {
-         return this ._externprotos;
+         return this [_externprotos];
       },
       getUniqueExternProtoName: (function ()
       {
@@ -32399,7 +32333,7 @@ function (SupportedNodes,
 
             for (; i;)
             {
-               if (!this ._externprotos .has (newName))
+               if (!this [_externprotos] .has (newName))
                   break;
 
                const
@@ -32507,14 +32441,14 @@ function (SupportedNodes,
 
             const id = sourceField .getId () + "." + destinationField .getId ();
 
-            let route = this ._routes .get (id);
+            let route = this [_routes] .get (id);
 
             if (route)
                return route;
 
             route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
 
-            this ._routes .add (id, route);
+            this [_routes] .add (id, route);
 
             return route;
          }
@@ -32535,18 +32469,18 @@ function (SupportedNodes,
          }
 
          if (this .deleteSimpleRoute (route))
-            this .deleteImportedRoute (route .getSourceNode (), route .getDestinationNode (), route);
+            this .deleteImportedRoute (route .sourceNode, route .destinationNode, route);
       },
       deleteSimpleRoute: function (route)
       {
          try
          {
             const
-               sourceField      = route ._sourceField,
-               destinationField = route ._destinationField,
+               sourceField      = route .getSourceNode () .getField (route .getSourceField ()),
+               destinationField = route .getDestinationNode () .getField (route .getDestinationField ()),
                id               = sourceField .getId () + "." + destinationField .getId ();
 
-            this ._routes .remove (id);
+            this [_routes] .remove (id);
             route .disconnect ();
 
             return true;
@@ -32614,11 +32548,11 @@ function (SupportedNodes,
 
          const id = sourceField .getId () + "." + destinationField .getId ();
 
-         return this ._routes .get (id);
+         return this [_routes] .get (id);
       },
       getRoutes: function ()
       {
-         return this ._routes;
+         return this [_routes];
       },
       getWorldInfos: function ()
       {
@@ -32761,7 +32695,7 @@ function (SupportedNodes,
       {
          this .rootNodes_ .dispose ();
 
-         for (const route of this ._routes)
+         for (const route of this [_routes])
             this .deleteRoute (route);
 
          X3DBaseNode .prototype .dispose .call (this);
@@ -33271,12 +33205,10 @@ function (X3DInfoArray)
 
 
 define ('x_ite/Execution/ExportedNode',[
-   "x_ite/Fields",
    "x_ite/Base/X3DObject",
    "x_ite/InputOutput/Generator",
 ],
-function (Fields,
-          X3DObject,
+function (X3DObject,
           Generator)
 {
 "use strict";
@@ -33425,6 +33357,16 @@ function (SupportedNodes,
 {
 "use strict";
 
+   const
+      _specificationVersion = Symbol (),
+      _encoding             = Symbol (),
+      _profile              = Symbol (),
+      _components           = Symbol (),
+      _worldURL             = Symbol (),
+      _units                = Symbol (),
+      _metadata             = Symbol (),
+      _exportedNodes        = Symbol ();
+
    SupportedNodes .addAbstractType ("X3DScene");
 
    function X3DScene (executionContext)
@@ -33433,20 +33375,20 @@ function (SupportedNodes,
 
       this .addType (X3DConstants .X3DScene)
 
-      this ._specificationVersion = "3.3";
-      this ._encoding             = "SCRIPTED";
-      this ._profile              = null;
-      this ._components           = new ComponentInfoArray ([ ]);
-      this ._worldURL             = location .toString ();
-      this ._units                = new UnitInfoArray ();
+      this [_specificationVersion] = "3.3";
+      this [_encoding]             = "SCRIPTED";
+      this [_profile]              = null;
+      this [_components]           = new ComponentInfoArray ([ ]);
+      this [_worldURL]             = location .toString ();
+      this [_units]                = new UnitInfoArray ();
 
-      this ._units .add ("angle",  new UnitInfo ("angle",  "radian",   1));
-      this ._units .add ("force",  new UnitInfo ("force",  "newton",   1));
-      this ._units .add ("length", new UnitInfo ("length", "metre",    1));
-      this ._units .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
+      this [_units] .add ("angle",  new UnitInfo ("angle",  "radian",   1));
+      this [_units] .add ("force",  new UnitInfo ("force",  "newton",   1));
+      this [_units] .add ("length", new UnitInfo ("length", "metre",    1));
+      this [_units] .add ("mass",   new UnitInfo ("mass",   "kilogram", 1));
 
-      this ._metadata      = new Map ();
-      this ._exportedNodes = new Map ();
+      this [_metadata]      = new Map ();
+      this [_exportedNodes] = new Map ();
 
       this .getRootNodes () .setAccessType (X3DConstants .inputOutput);
 
@@ -33466,49 +33408,49 @@ function (SupportedNodes,
       },
       setSpecificationVersion: function (specificationVersion)
       {
-         this ._specificationVersion = specificationVersion;
+         this [_specificationVersion] = specificationVersion;
       },
       getSpecificationVersion: function ()
       {
-         return this ._specificationVersion;
+         return this [_specificationVersion];
       },
       setEncoding: function (encoding)
       {
-         this ._encoding = encoding;
+         this [_encoding] = encoding;
       },
       getEncoding: function ()
       {
-         return this ._encoding;
+         return this [_encoding];
       },
       setWorldURL: function (url)
       {
-         this ._worldURL = url;
+         this [_worldURL] = url;
       },
       getWorldURL: function ()
       {
-         return this ._worldURL;
+         return this [_worldURL];
       },
       setProfile: function (profile)
       {
-         this ._profile = profile;
+         this [_profile] = profile;
       },
       getProfile: function ()
       {
-         return this ._profile;
+         return this [_profile];
       },
       addComponent: function (component)
       {
-         this ._components .add (component .name, component);
+         this [_components] .add (component .name, component);
       },
       getComponents: function ()
       {
-         return this ._components;
+         return this [_components];
       },
       updateUnit: function (category, name, conversionFactor)
       {
          // Private function.
 
-         const unit = this ._units .get (category);
+         const unit = this [_units] .get (category);
 
          if (!unit)
             return;
@@ -33518,7 +33460,7 @@ function (SupportedNodes,
       },
       getUnits: function ()
       {
-         return this ._units;
+         return this [_units];
       },
       fromUnit: function (category, value)
       {
@@ -33581,23 +33523,23 @@ function (SupportedNodes,
          if (!name .length)
             return;
 
-         this ._metadata .set (name, String (value));
+         this [_metadata] .set (name, String (value));
       },
       removeMetaData: function (name)
       {
-         this ._metadata .delete (name);
+         this [_metadata] .delete (name);
       },
       getMetaData: function (name)
       {
-         return this ._metadata .get (name);
+         return this [_metadata] .get (name);
       },
       getMetaDatas: function ()
       {
-         return this ._metadata;
+         return this [_metadata];
       },
       addExportedNode: function (exportedName, node)
       {
-         if (this ._exportedNodes .has (exportedName))
+         if (this [_exportedNodes] .has (exportedName))
             throw new Error ("Couldn't add exported node: exported name '" + exportedName + "' already in use.");
 
          this .updateExportedNode (exportedName, node);
@@ -33620,15 +33562,15 @@ function (SupportedNodes,
 
          const exportedNode = new ExportedNode (exportedName, node .getValue ());
 
-         this ._exportedNodes .set (exportedName, exportedNode);
+         this [_exportedNodes] .set (exportedName, exportedNode);
       },
       removeExportedNode: function (exportedName)
       {
-         this ._exportedNodes .delete (exportedName);
+         this [_exportedNodes] .delete (exportedName);
       },
       getExportedNode: function (exportedName)
       {
-         const exportedNode = this ._exportedNodes .get (exportedName);
+         const exportedNode = this [_exportedNodes] .get (exportedName);
 
          if (exportedNode)
             return SFNodeCache .get (exportedNode .getLocalNode ());
@@ -33637,7 +33579,7 @@ function (SupportedNodes,
       },
       getExportedNodes: function ()
       {
-         return this ._exportedNodes;
+         return this [_exportedNodes];
       },
       addRootNode: function (node)
       {
@@ -33962,9 +33904,11 @@ function (Fields,
 {
 "use strict";
 
+   const _browser = Symbol .for ("X3DEventObject.browser");
+
    function Scene (browser)
    {
-      this ._browser = browser;
+      this [_browser] = browser;
 
       X3DScene .call (this, this);
 
@@ -35208,10 +35152,14 @@ function (X3DChildObject,
 {
 "use strict";
 
+   const
+      _protoNode        = Symbol (),
+      _fieldDefinitions = Symbol .for ("X3DBaseNode.fieldDefinitions");
+
    function X3DPrototypeInstance (executionContext, protoNode)
    {
-      this .protoNode        = protoNode;
-      this .fieldDefinitions = protoNode .getFieldDefinitions ();
+      this [_protoNode]        = protoNode;
+      this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
 
       X3DNode .call (this, executionContext);
 
@@ -35234,11 +35182,11 @@ function (X3DChildObject,
       constructor: X3DPrototypeInstance,
       create: function (executionContext)
       {
-         return new X3DPrototypeInstance (executionContext, this .protoNode);
+         return new X3DPrototypeInstance (executionContext, this [_protoNode]);
       },
       getTypeName: function ()
       {
-         return this .protoNode .getName ();
+         return this [_protoNode] .getName ();
       },
       getComponentName: function ()
       {
@@ -35250,7 +35198,7 @@ function (X3DChildObject,
       },
       construct: function ()
       {
-         const proto = this .protoNode .getProtoDeclaration ();
+         const proto = this [_protoNode] .getProtoDeclaration ();
 
          if (!proto)
          {
@@ -35266,7 +35214,7 @@ function (X3DChildObject,
 
          // If there is a proto the externproto is completely loaded.
 
-         if (this .protoNode .isExternProto)
+         if (this [_protoNode] .isExternProto)
          {
             for (const fieldDefinition of proto .getFieldDefinitions ())
             {
@@ -35334,7 +35282,7 @@ function (X3DChildObject,
          {
             X3DNode .prototype .initialize .call (this);
 
-            if (! this .protoNode .isExternProto)
+            if (! this [_protoNode] .isExternProto)
                this .construct ();
          }
          catch (error)
@@ -35348,7 +35296,7 @@ function (X3DChildObject,
       },
       getProtoNode: function ()
       {
-         return this .protoNode;
+         return this [_protoNode];
       },
       getBody: function ()
       {
@@ -35886,7 +35834,7 @@ function ($,
       X3DUrlObject .prototype,
    {
       constructor: X3DExternProtoDeclaration,
-      fieldDefinitions: new FieldDefinitionArray ([ ]),
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([ ]),
       getTypeName: function ()
       {
          return "X3DExternProtoDeclaration";
@@ -35959,10 +35907,10 @@ function ($,
          this .scene = value;
 
          const
-            protoName = new URL (this .scene .getWorldURL ()) .hash .substr (1) || 0,
-            proto     = this .scene .protos [protoName];
+            protoName = new URL (this .scene .getWorldURL ()) .hash .substr (1),
+            proto     = protoName ? this .scene .protos .get (protoName) : this .scene .protos [0];
 
-         if (! proto)
+         if (!proto)
             throw new Error ("PROTO not found");
 
          this .scene .setLive (this .isLive () .getValue ());
@@ -36227,7 +36175,7 @@ function (SupportedNodes,
    X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
    {
       constructor: X3DProtoDeclaration,
-      fieldDefinitions: new FieldDefinitionArray ([ ]),
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([ ]),
       getTypeName: function ()
       {
          return "X3DProtoDeclaration";
@@ -41880,7 +41828,7 @@ function (Fields,
       X3DTimeDependentNode .prototype,
    {
       constructor: TimeSensor,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",          new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "cycleInterval",    new Fields .SFTime (1)),
@@ -42216,7 +42164,7 @@ function (Fields,
    EaseInEaseOut .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
    {
       constructor: EaseInEaseOut,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",             new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "key",                      new Fields .MFFloat ()),
@@ -42364,7 +42312,7 @@ function (Fields,
    PositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
    {
       constructor: PositionInterpolator,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
@@ -42491,7 +42439,7 @@ function (Fields,
    OrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
    {
       constructor: OrientationInterpolator,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
@@ -43147,7 +43095,7 @@ function (Fields,
    ScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
    {
       constructor: ScalarInterpolator,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
@@ -43420,7 +43368,7 @@ function (Fields,
    OrthoViewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
    {
       constructor: OrthoViewpoint,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",          new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
@@ -43708,6 +43656,8 @@ function (X3DCast,
           Matrix3)
 {
 "use strict";
+
+   const _uniformLocation = Symbol .for ("X3DField.uniformLocation");
 
    function X3DProgrammableShaderObject (executionContext)
    {
@@ -44125,9 +44075,9 @@ function (X3DCast,
                }
 
                if (location .array)
-                  field ._uniformLocation = location .array .length ? location : null;
+                  field [_uniformLocation] = location .array .length ? location : null;
                else
-                  field ._uniformLocation = location;
+                  field [_uniformLocation] = location;
 
                field .addInterest ("set_field__", this);
 
@@ -44148,7 +44098,7 @@ function (X3DCast,
          {
             const
                gl       = this .getBrowser () .getContext (),
-               location = field ._uniformLocation;
+               location = field [_uniformLocation];
 
             if (location)
             {
@@ -45144,7 +45094,7 @@ function (Fields,
    LoadSensor .prototype = Object .assign (Object .create (X3DNetworkSensorNode .prototype),
    {
       constructor: LoadSensor,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",   new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "timeOut",   new Fields .SFTime ()),
@@ -45403,7 +45353,7 @@ function (Fields,
       X3DProgrammableShaderObject .prototype,
    {
       constructor: ComposedShader,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",   new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected", new Fields .SFBool ()),
@@ -56761,14 +56711,6 @@ function (X3DBaseNode)
       {
          return "BindableStack";
       },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      getContainerField: function ()
-      {
-         return "bindableStack";
-      },
       get: function ()
       {
          return this .array;
@@ -56945,14 +56887,6 @@ function (X3DBaseNode,
       getTypeName: function ()
       {
          return "BindableList";
-      },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      getContainerField: function ()
-      {
-         return "bindableList";
       },
       get: function ()
       {
@@ -57177,7 +57111,7 @@ function (Fields,
    NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
    {
       constructor: NavigationInfo,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",           new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "type",               new Fields .MFString ("EXAMINE", "ANY")),
@@ -57766,7 +57700,7 @@ function (Fields,
       X3DFogObject .prototype,
    {
       constructor: Fog,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",        new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "fogType",         new Fields .SFString ("LINEAR")),
@@ -59239,7 +59173,7 @@ function ($,
       X3DUrlObject .prototype,
    {
       constructor: ImageTexture,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
@@ -59472,7 +59406,7 @@ function (Fields,
    Background .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
    {
       constructor: Background,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",     new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "frontUrl",     new Fields .MFString ()),
@@ -60038,7 +59972,7 @@ function (Fields,
    Viewpoint .prototype = Object .assign (Object .create (X3DViewpointNode .prototype),
    {
       constructor: Viewpoint,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",          new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
@@ -60224,7 +60158,7 @@ function (Fields,
    Group .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
    {
       constructor: Group,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",    new Fields .SFBool ()),
@@ -60332,7 +60266,7 @@ function (Fields,
    Layer .prototype = Object .assign (Object .create (X3DLayerNode .prototype),
    {
       constructor: Layer,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",       new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "isPickable",     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "viewport",       new Fields .SFNode ()),
@@ -60453,7 +60387,7 @@ function (Fields,
    LayerSet .prototype = Object .assign (Object .create (X3DNode .prototype),
    {
       constructor: LayerSet,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "activeLayer", new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "order",       new Fields .MFInt32 (0)),
@@ -64785,7 +64719,7 @@ function (Fields,
       X3DUrlObject .prototype,
    {
       constructor: ShaderPart,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
@@ -66157,7 +66091,7 @@ function (Fields,
    Appearance .prototype = Object .assign (Object .create (X3DAppearanceNode .prototype),
    {
       constructor: Appearance,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "alphaMode",        new Fields .SFString ("AUTO")),
          new X3DFieldDefinition (X3DConstants .inputOutput, "alphaCutoff",      new Fields .SFFloat (0.5)),
@@ -66526,7 +66460,7 @@ function (Fields,
    PointProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
    {
       constructor: PointProperties,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeScaleFactor", new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "pointSizeMinValue",    new Fields .SFFloat (1)),
@@ -66687,7 +66621,7 @@ function (Fields,
    LineProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
    {
       constructor: LineProperties,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "applied",              new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "linetype",             new Fields .SFInt32 (1)),
@@ -66830,7 +66764,7 @@ function (Fields,
    FillProperties .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
    {
       constructor: FillProperties,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",   new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "filled",     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "hatched",    new Fields .SFBool (true)),
@@ -67183,7 +67117,7 @@ function (Fields,
    UnlitMaterial .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
    {
       constructor: UnlitMaterial,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",               new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveColor",          new Fields .SFColor (1, 1, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "emissiveTexture",        new Fields .SFNode ()),
@@ -67295,7 +67229,7 @@ function (Fields,
    TextureProperties .prototype = Object .assign (Object .create (X3DNode .prototype),
    {
       constructor: TextureProperties,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",            new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "borderColor",         new Fields .SFColorRGBA ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "borderWidth",         new Fields .SFInt32 ()),
@@ -68241,7 +68175,7 @@ function (Fields,
    Shape .prototype = Object .assign (Object .create (X3DShapeNode .prototype),
    {
       constructor: Shape,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "castShadow",  new Fields .SFBool (true)),
@@ -70029,7 +69963,7 @@ function (Fields,
    IndexedLineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
    {
       constructor: IndexedLineSet,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_colorIndex", new Fields .MFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_coordIndex", new Fields .MFInt32 ()),
@@ -70489,7 +70423,7 @@ function (Fields,
    Color .prototype = Object .assign (Object .create (X3DColorNode .prototype),
    {
       constructor: Color,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .MFColor ()),
       ]),
@@ -70854,7 +70788,7 @@ function (Fields,
    Coordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),
    {
       constructor: Coordinate,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec3f ()),
       ]),
@@ -71437,7 +71371,7 @@ function (Fields,
    IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
    {
       constructor: IndexedFaceSet,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_colorIndex",    new Fields .MFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_texCoordIndex", new Fields .MFInt32 ()),
@@ -72109,7 +72043,7 @@ function (Fields,
    TextureCoordinate .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
    {
       constructor: TextureCoordinate,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",  new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "point",    new Fields .MFVec2f ()),
@@ -74218,7 +74152,7 @@ function (Fields,
    PositionChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
    {
       constructor: PositionChaser,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFVec3f ()),
@@ -74335,7 +74269,7 @@ function (Fields,
    OrientationChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
    {
       constructor: OrientationChaser,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFRotation ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFRotation ()),
@@ -74725,7 +74659,7 @@ function ($,
    ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
    {
       constructor: ExamineViewer,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
       ]),
       initialize: function ()
@@ -76277,7 +76211,7 @@ function (Fields,
    WalkViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
    {
       constructor: WalkViewer,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
       ]),
       initialize: function ()
@@ -76410,7 +76344,7 @@ function (Fields,
    FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
    {
       constructor: FlyViewer,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
       ]),
       addCollision: function ()
@@ -76530,7 +76464,7 @@ function ($,
    PlaneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
    {
       constructor: PlaneViewer,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
       ]),
       initialize: function ()
@@ -76767,7 +76701,7 @@ function (Fields,
    NoneViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
    {
       constructor: NoneViewer,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
       ]),
    });
@@ -76879,7 +76813,7 @@ function ($,
    LookAtViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
    {
       constructor: LookAtViewer,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
       ]),
       initialize: function ()
@@ -77799,7 +77733,7 @@ function (Fields,
    DirectionalLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
    {
       constructor: DirectionalLight,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "global",           new Fields .SFBool (false)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "on",               new Fields .SFBool (true)),
@@ -78167,7 +78101,7 @@ function (Fields,
    Viewport .prototype = Object .assign (Object .create (X3DViewportNode .prototype),
    {
       constructor: Viewport,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "clipBoundary",   new Fields .MFFloat (0, 1, 0, 1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
@@ -80598,7 +80532,7 @@ function (Fields,
    FontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
    {
       constructor: FontStyle,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "language",    new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "family",      new Fields .MFString ("SERIF")),
@@ -95496,7 +95430,7 @@ function (Fields,
    TextureTransform .prototype = Object .assign (Object .create (X3DSingleTextureTransformNode .prototype),
    {
       constructor: TextureTransform,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",     new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "translation", new Fields .SFVec2f ()),
@@ -96427,7 +96361,7 @@ function (Fields,
       X3DMetadataObject .prototype,
    {
       constructor: MetadataBoolean,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "name",      new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
@@ -96528,7 +96462,7 @@ function (Fields,
       X3DMetadataObject .prototype,
    {
       constructor: MetadataDouble,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "name",      new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
@@ -96629,7 +96563,7 @@ function (Fields,
       X3DMetadataObject .prototype,
    {
       constructor: MetadataFloat,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "name",      new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
@@ -96730,7 +96664,7 @@ function (Fields,
       X3DMetadataObject .prototype,
    {
       constructor: MetadataInteger,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "name",      new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
@@ -96831,7 +96765,7 @@ function (Fields,
       X3DMetadataObject .prototype,
    {
       constructor: MetadataSet,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "name",      new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
@@ -96932,7 +96866,7 @@ function (Fields,
       X3DMetadataObject .prototype,
    {
       constructor: MetadataString,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "name",      new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "reference", new Fields .SFString ()),
@@ -97102,7 +97036,7 @@ function (Fields,
    WorldInfo .prototype = Object .assign (Object .create (X3DInfoNode .prototype),
    {
       constructor: WorldInfo,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "title",    new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "info",     new Fields .MFString ()),
@@ -97324,7 +97258,7 @@ function (Fields,
    FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
    {
       constructor: FogCoordinate,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "depth",    new Fields .MFFloat ()),
       ]),
@@ -97477,7 +97411,7 @@ function (Fields,
       X3DFogObject .prototype,
    {
       constructor: LocalFog,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "fogType",         new Fields .SFString ("LINEAR")),
@@ -97598,7 +97532,7 @@ function (Fields,
    TextureBackground .prototype = Object .assign (Object .create (X3DBackgroundNode .prototype),
    {
       constructor: TextureBackground,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_bind",      new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "skyAngle",      new Fields .MFFloat ()),
@@ -98002,7 +97936,7 @@ function (Fields,
    ProximitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
    {
       constructor: ProximitySensor,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                  new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "size",                     new Fields .SFVec3f ()),
@@ -98299,7 +98233,7 @@ function (Fields,
    TransformSensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
    {
       constructor: TransformSensor,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "size",                new Fields .SFVec3f ()),
@@ -98607,7 +98541,7 @@ function (Fields,
    VisibilitySensor .prototype = Object .assign (Object .create (X3DEnvironmentalSensorNode .prototype),
    {
       constructor: VisibilitySensor,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",   new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "size",      new Fields .SFVec3f ()),
@@ -98867,7 +98801,7 @@ function (Fields,
    ColorChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
    {
       constructor: ColorChaser,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFColor ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFColor ()),
@@ -99193,7 +99127,7 @@ function (Fields,
    ColorDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
    {
       constructor: ColorDamper,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFColor ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFColor ()),
@@ -99603,7 +99537,7 @@ function (Fields,
       X3DArrayChaserObject .prototype,
    {
       constructor: CoordinateChaser,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .MFVec3f ()),
@@ -99716,7 +99650,7 @@ function (Fields,
       X3DArrayFollowerObject .prototype,
    {
       constructor: CoordinateDamper,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .MFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .MFVec3f ()),
@@ -99835,7 +99769,7 @@ function (Fields,
    OrientationDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
    {
       constructor: OrientationDamper,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFRotation ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFRotation ()),
@@ -99954,7 +99888,7 @@ function (Fields,
    PositionChaser2D .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
    {
       constructor: PositionChaser2D,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFVec2f ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFVec2f ()),
@@ -100061,7 +99995,7 @@ function (Fields,
    PositionDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
    {
       constructor: PositionDamper,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFVec3f ()),
@@ -100170,7 +100104,7 @@ function (Fields,
    PositionDamper2D .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
    {
       constructor: PositionDamper2D,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFVec2f ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFVec2f ()),
@@ -100279,7 +100213,7 @@ function (Fields,
    ScalarChaser .prototype = Object .assign (Object .create (X3DChaserNode .prototype),
    {
       constructor: ScalarChaser,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFFloat ()),
@@ -100414,7 +100348,7 @@ function (Fields,
    ScalarDamper .prototype = Object .assign (Object .create (X3DDamperNode .prototype),
    {
       constructor: ScalarDamper,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .SFFloat ()),
@@ -100545,7 +100479,7 @@ function (Fields,
       X3DArrayChaserObject .prototype,
    {
       constructor: TexCoordChaser2D,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .MFVec2f ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .MFVec2f ()),
@@ -100658,7 +100592,7 @@ function (Fields,
       X3DArrayFollowerObject .prototype,
    {
       constructor: TexCoordDamper2D,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_value",          new Fields .MFVec2f ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_destination",    new Fields .MFVec2f ()),
@@ -100892,7 +100826,7 @@ function (Fields,
    Box .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    {
       constructor: Box,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "size",     new Fields .SFVec3f (2, 2, 2)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
@@ -101042,7 +100976,7 @@ function (Fields,
    Cone .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    {
       constructor: Cone,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "side",         new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "bottom",       new Fields .SFBool (true)),
@@ -101293,7 +101227,7 @@ function (Fields,
    Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    {
       constructor: Cylinder,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "top",      new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "side",     new Fields .SFBool (true)),
@@ -101613,7 +101547,7 @@ function (Fields,
    ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    {
       constructor: ElevationGrid,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_height",      new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "xDimension",      new Fields .SFInt32 ()),
@@ -102057,7 +101991,7 @@ function (Fields,
    Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    {
       constructor: Extrusion,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_crossSection", new Fields .MFVec2f ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_orientation",  new Fields .MFRotation ()),
@@ -102758,7 +102692,7 @@ function (Fields,
    Sphere .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    {
       constructor: Sphere,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "radius",   new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),
@@ -103015,7 +102949,7 @@ function (Fields,
       X3DBoundedObject .prototype,
    {
       constructor: StaticGroup,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay", new Fields .SFBool ()),
@@ -103321,7 +103255,7 @@ function (Fields,
    Switch .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
    {
       constructor: Switch,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "whichChoice",    new Fields .SFInt32 (-1)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
@@ -103863,7 +103797,7 @@ function (Fields,
    Transform .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
    {
       constructor: Transform,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",      new Fields .SFVec3f ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "rotation",         new Fields .SFRotation ()),
@@ -104067,7 +104001,7 @@ function (Fields,
    ColorInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
    {
       constructor: ColorInterpolator,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
@@ -104196,7 +104130,7 @@ function (Fields,
    CoordinateInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
    {
       constructor: CoordinateInterpolator,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
@@ -104327,7 +104261,7 @@ function (Fields,
    CoordinateInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
    {
       constructor: CoordinateInterpolator2D,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
@@ -104461,7 +104395,7 @@ function (Fields,
    NormalInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
    {
       constructor: NormalInterpolator,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
@@ -104608,7 +104542,7 @@ function (Fields,
    PositionInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
    {
       constructor: PositionInterpolator2D,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),
@@ -105098,7 +105032,7 @@ function (Fields,
    SplinePositionInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
    {
       constructor: SplinePositionInterpolator,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",      new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "closed",            new Fields .SFBool ()),
@@ -105305,7 +105239,7 @@ function (Fields,
    SplinePositionInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
    {
       constructor: SplinePositionInterpolator2D,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",      new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "closed",            new Fields .SFBool ()),
@@ -105549,7 +105483,7 @@ function (Fields,
    SplineScalarInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
    {
       constructor: SplineScalarInterpolator,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",      new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "closed",            new Fields .SFBool ()),
@@ -105815,7 +105749,7 @@ function (Fields,
    SquadOrientationInterpolator .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
    {
       constructor: SquadOrientationInterpolator,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "closed",        new Fields .SFBool ()),
@@ -106393,7 +106327,7 @@ function (Fields,
    PointLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
    {
       constructor: PointLight,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "global",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "on",               new Fields .SFBool (true)),
@@ -106775,7 +106709,7 @@ function (Fields,
    SpotLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
    {
       constructor: SpotLight,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "global",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "on",               new Fields .SFBool (true)),
@@ -107022,7 +106956,7 @@ function (Fields,
    Billboard .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
    {
       constructor: Billboard,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "axisOfRotation", new Fields .SFVec3f (0, 1, 0)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",        new Fields .SFBool (true)),
@@ -107209,7 +107143,7 @@ function (Fields,
       X3DSensorNode .prototype,
    {
       constructor: Collision,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",       new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",        new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isActive",       new Fields .SFBool ()),
@@ -107398,7 +107332,7 @@ function (Fields,
    LOD .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
    {
       constructor: LOD,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "forceTransitions", new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "center",           new Fields .SFVec3f ()),
@@ -107764,7 +107698,7 @@ function (Fields,
    ViewpointGroup .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    {
       constructor: ViewpointGroup,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "description",       new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "displayed",         new Fields .SFBool (true)),
@@ -108407,7 +108341,7 @@ function (Fields,
    TouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .prototype),
    {
       constructor: TouchSensor,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "description",         new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
@@ -108543,7 +108477,7 @@ function (Fields,
       X3DUrlObject .prototype,
    {
       constructor: Anchor,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
@@ -108752,7 +108686,7 @@ function (Fields,
       X3DBoundedObject .prototype,
    {
       constructor: Inline,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "url",                  new Fields .MFString ()),
@@ -109306,7 +109240,7 @@ function (Fields,
    CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
    {
       constructor: CylinderSensor,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "description",        new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
@@ -109640,7 +109574,7 @@ function (Fields,
    PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
    {
       constructor: PlaneSensor,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",            new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "description",         new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",             new Fields .SFBool (true)),
@@ -110148,7 +110082,7 @@ function (Fields,
    SphereSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
    {
       constructor: SphereSensor,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "description",        new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",            new Fields .SFBool (true)),
@@ -110523,7 +110457,7 @@ function (Fields,
    ClipPlane .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    {
       constructor: ClipPlane,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",  new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "plane",    new Fields .SFVec4f (0, 1, 0, 0)),
@@ -110654,7 +110588,7 @@ function (Fields,
    ColorRGBA .prototype = Object .assign (Object .create (X3DColorNode .prototype),
    {
       constructor: ColorRGBA,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "color",    new Fields .MFColorRGBA ()),
       ]),
@@ -110828,7 +110762,7 @@ function (Fields,
    IndexedTriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
    {
       constructor: IndexedTriangleFanSet,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_index",       new Fields .MFInt32 ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
@@ -110989,7 +110923,7 @@ function (Fields,
    IndexedTriangleSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
    {
       constructor: IndexedTriangleSet,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_index",       new Fields .MFInt32 ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
@@ -111111,7 +111045,7 @@ function (Fields,
    IndexedTriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
    {
       constructor: IndexedTriangleStripSet,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_index",       new Fields .MFInt32 ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
@@ -111288,7 +111222,7 @@ function (Fields,
    LineSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
    {
       constructor: LineSet,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "vertexCount", new Fields .MFInt32 ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "attrib",      new Fields .MFNode ()),
@@ -111596,7 +111530,7 @@ function (Fields,
    Normal .prototype = Object .assign (Object .create (X3DNormalNode .prototype),
    {
       constructor: Normal,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "vector",   new Fields .MFVec3f ()),
       ]),
@@ -111765,7 +111699,7 @@ function (Fields,
    PointSet .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
    {
       constructor: PointSet,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "attrib",   new Fields .MFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "fogCoord", new Fields .SFNode ()),
@@ -111973,7 +111907,7 @@ function (Fields,
    TriangleFanSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
    {
       constructor: TriangleFanSet,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
@@ -112116,7 +112050,7 @@ function (Fields,
    TriangleSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
    {
       constructor: TriangleSet,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
@@ -112233,7 +112167,7 @@ function (Fields,
    TriangleStripSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
    {
       constructor: TriangleStripSet,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",           new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "ccw",             new Fields .SFBool (true)),
@@ -112588,7 +112522,7 @@ function (Fields,
    FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
    {
       constructor: FloatVertexAttribute,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "name",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "numComponents", new Fields .SFInt32 (4)),
@@ -112740,7 +112674,7 @@ function (Fields,
    Matrix3VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
    {
       constructor: Matrix3VertexAttribute,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "name",     new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "value",    new Fields .MFMatrix3f ()),
@@ -112883,7 +112817,7 @@ function (Fields,
    Matrix4VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
    {
       constructor: Matrix4VertexAttribute,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "name",     new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "value",    new Fields .MFMatrix4f ()),
@@ -113034,7 +112968,7 @@ function (Fields,
       X3DProgrammableShaderObject .prototype,
    {
       constructor: PackagedShader,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",             new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected",           new Fields .SFBool ()),
@@ -113144,7 +113078,7 @@ function (Fields,
    ProgramShader .prototype = Object .assign (Object .create (X3DShaderNode .prototype),
    {
       constructor: ProgramShader,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "activate",   new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,     "isSelected", new Fields .SFBool ()),
@@ -113251,7 +113185,7 @@ function (Fields,
       X3DProgrammableShaderObject .prototype,
    {
       constructor: ShaderProgram,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "type",                 new Fields .SFString ("VERTEX")),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "load",                 new Fields .SFBool (true)),
@@ -113466,7 +113400,7 @@ function (Fields,
    Material .prototype = Object .assign (Object .create (X3DOneSidedMaterialNode .prototype),
    {
       constructor: Material,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                 new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "ambientIntensity",         new Fields .SFFloat (0.2)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "ambientTexture",           new Fields .SFNode ()),
@@ -113653,7 +113587,7 @@ function (Fields,
    TwoSidedMaterial .prototype = Object .assign (Object .create (X3DMaterialNode .prototype),
    {
       constructor: TwoSidedMaterial,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "separateBackColor",    new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "ambientIntensity",     new Fields .SFFloat (0.2)),
@@ -114280,7 +114214,7 @@ function ($,
       X3DUrlObject .prototype,
    {
       constructor: AudioClip,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "description",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",              new Fields .SFBool (true)),
@@ -114562,7 +114496,7 @@ function (Fields,
    Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
    {
       constructor: Sound,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",  new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "spatialize", new Fields .SFBool (true)),
@@ -114941,7 +114875,7 @@ function (Fields,
    Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    {
       constructor: Text,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "string",     new Fields .MFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "length",     new Fields .MFFloat ()),
@@ -115227,7 +115161,7 @@ function ($,
       X3DUrlObject .prototype,
    {
       constructor: MovieTexture,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",              new Fields .SFBool (true)),
@@ -115473,7 +115407,7 @@ function (Fields,
    MultiTexture .prototype = Object .assign (Object .create (X3DTextureNode .prototype),
    {
       constructor: MultiTexture,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "description", new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "color",       new Fields .SFColor (1, 1, 1)),
@@ -115787,7 +115721,7 @@ function (Fields,
    MultiTextureCoordinate .prototype = Object .assign (Object .create (X3DTextureCoordinateNode .prototype),
    {
       constructor: MultiTextureCoordinate,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "texCoord", new Fields .MFNode ()),
       ]),
@@ -115967,7 +115901,7 @@ function (Fields,
    MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
    {
       constructor: MultiTextureTransform,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .MFNode ()),
       ]),
@@ -116109,7 +116043,7 @@ function ($,
    PixelTexture .prototype = Object .assign (Object .create (X3DTexture2DNode .prototype),
    {
       constructor: PixelTexture,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",          new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",       new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "image",             new Fields .SFImage (0, 0, 0, new Fields .MFInt32 ())),
@@ -116390,7 +116324,7 @@ function (Fields,
    TextureCoordinateGenerator .prototype = Object .assign (Object .create (X3DSingleTextureCoordinateNode .prototype),
    {
       constructor: TextureCoordinateGenerator,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",  new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "mapping",   new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "mode",      new Fields .SFString ("SPHERE")),
@@ -117370,11 +117304,15 @@ function (ComponentInfoArray,
 
 
 define ('x_ite/Configuration/SupportedProfiles',[
+   "x_ite/Configuration/ProfileInfo",
    "x_ite/Configuration/ProfileInfoArray",
+   "x_ite/Configuration/ComponentInfoArray",
    "x_ite/Configuration/SupportedComponents",
    "x_ite/Browser/Networking/urls",
 ],
-function (ProfileInfoArray,
+function (ProfileInfo,
+          ProfileInfoArray,
+          ComponentInfoArray,
           SupportedComponents,
           urls)
 {

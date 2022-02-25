@@ -82,7 +82,7 @@ function (Fields,
    HAnimDisplacer .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
    {
       constructor: HAnimDisplacer,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "name",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "coordIndex",    new Fields .MFInt32 ()),
@@ -211,7 +211,7 @@ function (Fields,
       X3DBoundedObject .prototype,
    {
       constructor: HAnimHumanoid,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "name",             new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "version",          new Fields .SFString ()),
@@ -554,7 +554,7 @@ function (Fields,
    HAnimJoint .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
    {
       constructor: HAnimJoint,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "name",             new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",      new Fields .SFVec3f ()),
@@ -742,7 +742,7 @@ function (Fields,
    HAnimMotion .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    {
       constructor: HAnimMotion,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "description",     new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",         new Fields .SFBool (true)),
@@ -858,7 +858,7 @@ function (Fields,
    HAnimSegment .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
    {
       constructor: HAnimSegment,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "name",             new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "mass",             new Fields .SFFloat ()),
@@ -965,7 +965,7 @@ function (Fields,
    HAnimSite .prototype = Object .assign (Object .create (X3DTransformNode .prototype),
    {
       constructor: HAnimSite,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "name",             new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "translation",      new Fields .SFVec3f ()),

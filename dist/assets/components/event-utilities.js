@@ -80,7 +80,7 @@ function (Fields,
    BooleanFilter .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    {
       constructor: BooleanFilter,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "inputTrue",   new Fields .SFBool ()),
@@ -347,7 +347,7 @@ function (Fields,
    BooleanSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .prototype),
    {
       constructor: BooleanSequencer,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "previous",      new Fields .SFBool ()),
@@ -461,7 +461,7 @@ function (Fields,
    BooleanToggle .prototype = Object .assign (Object .create (X3DChildNode .prototype),
    {
       constructor: BooleanToggle,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "toggle",      new Fields .SFBool ()),
@@ -641,7 +641,7 @@ function (Fields,
    BooleanTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
    {
       constructor: BooleanTrigger,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_triggerTime", new Fields .SFTime ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTrue",     new Fields .SFBool ()),
@@ -747,7 +747,7 @@ function (Fields,
    IntegerSequencer .prototype = Object .assign (Object .create (X3DSequencerNode .prototype),
    {
       constructor: IntegerSequencer,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "previous",      new Fields .SFBool ()),
@@ -861,7 +861,7 @@ function (Fields,
    IntegerTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
    {
       constructor: IntegerTrigger,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean",  new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "integerKey",   new Fields .SFInt32 (-1)),
@@ -968,7 +968,7 @@ function (Fields,
    TimeTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
    {
       constructor: TimeTrigger,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean", new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .outputOnly,  "triggerTime", new Fields .SFTime ()),
