@@ -56,9 +56,11 @@ function (Fields,
 {
 "use strict";
 
+   const _browser = Symbol .for ("X3DEventObject.browser");
+
    function Scene (browser)
    {
-      this ._browser = browser;
+      this [_browser] = browser;
 
       X3DScene .call (this, this);
 

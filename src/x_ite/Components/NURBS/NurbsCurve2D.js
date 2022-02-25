@@ -85,7 +85,7 @@ function (Fields,
    NurbsCurve2D .prototype = Object .assign (Object .create (X3DNurbsControlCurveNode .prototype),
    {
       constructor: NurbsCurve2D,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",     new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "tessellation", new Fields .SFInt32 ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "closed",       new Fields .SFBool ()),

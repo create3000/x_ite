@@ -78,7 +78,7 @@ function (Fields,
    Box .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    {
       constructor: Box,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "size",     new Fields .SFVec3f (2, 2, 2)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool (true)),

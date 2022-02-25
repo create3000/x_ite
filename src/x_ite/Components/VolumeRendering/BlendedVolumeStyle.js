@@ -76,7 +76,7 @@ function (Fields,
    BlendedVolumeStyle .prototype = Object .assign (Object .create (X3DComposableVolumeRenderStyleNode .prototype),
    {
       constructor: BlendedVolumeStyle,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "enabled",                 new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput, "weightConstant1",         new Fields .SFFloat (0.5)),

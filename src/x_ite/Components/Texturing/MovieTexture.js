@@ -90,7 +90,7 @@ function ($,
       X3DUrlObject .prototype,
    {
       constructor: MovieTexture,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",             new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "description",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "enabled",              new Fields .SFBool (true)),

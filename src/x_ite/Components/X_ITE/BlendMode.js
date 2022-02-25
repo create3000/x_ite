@@ -77,7 +77,7 @@ function (Fields,
    BlendMode .prototype = Object .assign (Object .create (X3DAppearanceChildNode .prototype),
    {
       constructor: BlendMode,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",                new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "blendColor",              new Fields .SFColorRGBA ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "sourceColorFactor",       new Fields .SFString ("SRC_ALPHA")),

@@ -74,7 +74,7 @@ function (Fields,
    FlyViewer .prototype = Object .assign (Object .create (X3DFlyViewer .prototype),
    {
       constructor: FlyViewer,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
       ]),
       addCollision: function ()

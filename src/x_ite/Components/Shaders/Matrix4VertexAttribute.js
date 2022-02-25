@@ -72,7 +72,7 @@ function (Fields,
    Matrix4VertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
    {
       constructor: Matrix4VertexAttribute,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "name",     new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "value",    new Fields .MFMatrix4f ()),

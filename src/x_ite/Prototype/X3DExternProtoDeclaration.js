@@ -89,7 +89,7 @@ function ($,
       X3DUrlObject .prototype,
    {
       constructor: X3DExternProtoDeclaration,
-      fieldDefinitions: new FieldDefinitionArray ([ ]),
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([ ]),
       getTypeName: function ()
       {
          return "X3DExternProtoDeclaration";

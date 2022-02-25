@@ -72,7 +72,7 @@ function (Fields,
    IntegerTrigger .prototype = Object .assign (Object .create (X3DTriggerNode .prototype),
    {
       constructor: IntegerTrigger,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",     new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_boolean",  new Fields .SFBool ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "integerKey",   new Fields .SFInt32 (-1)),

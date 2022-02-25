@@ -117,7 +117,7 @@ function ($,
    ExamineViewer .prototype = Object .assign (Object .create (X3DViewer .prototype),
    {
       constructor: ExamineViewer,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .outputOnly, "isActive", new Fields .SFBool ()),
       ]),
       initialize: function ()

@@ -82,7 +82,7 @@ function (Fields,
    Rectangle2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    {
       constructor: Rectangle2D,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata", new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "size",     new Fields .SFVec2f (2, 2)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "solid",    new Fields .SFBool ()),

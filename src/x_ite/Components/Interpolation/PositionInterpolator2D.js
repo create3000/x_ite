@@ -74,7 +74,7 @@ function (Fields,
    PositionInterpolator2D .prototype = Object .assign (Object .create (X3DInterpolatorNode .prototype),
    {
       constructor: PositionInterpolator2D,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,   "set_fraction",  new Fields .SFFloat ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "key",           new Fields .MFFloat ()),

@@ -91,7 +91,7 @@ function (Fields,
    ElevationGrid .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
    {
       constructor: ElevationGrid,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",        new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOnly,      "set_height",      new Fields .MFFloat ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "xDimension",      new Fields .SFInt32 ()),

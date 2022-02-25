@@ -76,7 +76,7 @@ function (Fields,
       X3DBoundedObject .prototype,
    {
       constructor: TransmitterPdu,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",                           new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",                            new Fields .SFBool (true)),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "bboxDisplay",                        new Fields .SFBool ()),

@@ -62,10 +62,14 @@ function (X3DChildObject,
 {
 "use strict";
 
+   const
+      _protoNode        = Symbol (),
+      _fieldDefinitions = Symbol .for ("X3DBaseNode.fieldDefinitions");
+
    function X3DPrototypeInstance (executionContext, protoNode)
    {
-      this .protoNode        = protoNode;
-      this .fieldDefinitions = protoNode .getFieldDefinitions ();
+      this [_protoNode]        = protoNode;
+      this [_fieldDefinitions] = protoNode .getFieldDefinitions ();
 
       X3DNode .call (this, executionContext);
 
@@ -88,11 +92,11 @@ function (X3DChildObject,
       constructor: X3DPrototypeInstance,
       create: function (executionContext)
       {
-         return new X3DPrototypeInstance (executionContext, this .protoNode);
+         return new X3DPrototypeInstance (executionContext, this [_protoNode]);
       },
       getTypeName: function ()
       {
-         return this .protoNode .getName ();
+         return this [_protoNode] .getName ();
       },
       getComponentName: function ()
       {
@@ -104,7 +108,7 @@ function (X3DChildObject,
       },
       construct: function ()
       {
-         const proto = this .protoNode .getProtoDeclaration ();
+         const proto = this [_protoNode] .getProtoDeclaration ();
 
          if (!proto)
          {
@@ -120,7 +124,7 @@ function (X3DChildObject,
 
          // If there is a proto the externproto is completely loaded.
 
-         if (this .protoNode .isExternProto)
+         if (this [_protoNode] .isExternProto)
          {
             for (const fieldDefinition of proto .getFieldDefinitions ())
             {
@@ -188,7 +192,7 @@ function (X3DChildObject,
          {
             X3DNode .prototype .initialize .call (this);
 
-            if (! this .protoNode .isExternProto)
+            if (! this [_protoNode] .isExternProto)
                this .construct ();
          }
          catch (error)
@@ -202,7 +206,7 @@ function (X3DChildObject,
       },
       getProtoNode: function ()
       {
-         return this .protoNode;
+         return this [_protoNode];
       },
       getBody: function ()
       {

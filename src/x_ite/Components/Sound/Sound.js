@@ -98,7 +98,7 @@ function (Fields,
    Sound .prototype = Object .assign (Object .create (X3DSoundNode .prototype),
    {
       constructor: Sound,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",   new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "intensity",  new Fields .SFFloat (1)),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "spatialize", new Fields .SFBool (true)),

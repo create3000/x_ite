@@ -74,7 +74,7 @@ function (Fields,
    FloatVertexAttribute .prototype = Object .assign (Object .create (X3DVertexAttributeNode .prototype),
    {
       constructor: FloatVertexAttribute,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",      new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "name",          new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .initializeOnly, "numComponents", new Fields .SFInt32 (4)),

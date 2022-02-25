@@ -76,7 +76,7 @@ function (Fields,
    MultiTextureTransform .prototype = Object .assign (Object .create (X3DTextureTransformNode .prototype),
    {
       constructor: MultiTextureTransform,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput, "metadata",         new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput, "textureTransform", new Fields .MFNode ()),
       ]),

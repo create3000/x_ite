@@ -82,7 +82,7 @@ function (Fields,
       X3DBoundedObject .prototype,
    {
       constructor: CADFace,
-      fieldDefinitions: new FieldDefinitionArray ([
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
          new X3DFieldDefinition (X3DConstants .inputOutput,    "metadata",    new Fields .SFNode ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "name",        new Fields .SFString ()),
          new X3DFieldDefinition (X3DConstants .inputOutput,    "visible",     new Fields .SFBool (true)),

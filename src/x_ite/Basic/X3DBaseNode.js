@@ -66,40 +66,53 @@ function (X3DEventObject,
 {
 "use strict";
 
+   const
+      _executionContext  = Symbol (),
+      _type              = Symbol (),
+      _fieldDefinitions  = Symbol .for ("X3DBaseNode.fieldDefinitions"),
+      _fields            = Symbol (),
+      _predefinedFields  = Symbol (),
+      _aliases           = Symbol (),
+      _userDefinedFields = Symbol (),
+      _initialized       = Symbol (),
+      _live              = Symbol (),
+      _private           = Symbol (),
+      _cloneCount        = Symbol ();
+
    function X3DBaseNode (executionContext)
    {
-      if (this .hasOwnProperty ("_executionContext"))
+      if (this .hasOwnProperty (_executionContext))
          return;
 
       X3DEventObject .call (this, executionContext .getBrowser ());
 
-      this ._executionContext  = executionContext;
-      this ._type              = [ X3DConstants .X3DBaseNode ];
-      this ._fields            = new FieldArray ();
-      this ._predefinedFields  = new FieldArray ();
-      this ._aliases           = new Map ();
-      this ._userDefinedFields = new FieldArray ();
-      this ._cloneCount        = 0;
+      this [_executionContext]  = executionContext;
+      this [_type]              = [ X3DConstants .X3DBaseNode ];
+      this [_fields]            = new FieldArray ();
+      this [_predefinedFields]  = new FieldArray ();
+      this [_aliases]           = new Map ();
+      this [_userDefinedFields] = new FieldArray ();
+      this [_live]              = true;
+      this [_initialized]       = false;
+      this [_private]           = false;
+      this [_cloneCount]        = 0;
 
       // Setup fields.
 
       if (this .canUserDefinedFields ())
-         this .fieldDefinitions = new FieldDefinitionArray (this .fieldDefinitions);
+         this [_fieldDefinitions] = new FieldDefinitionArray (this [_fieldDefinitions]);
 
-      for (const fieldDefinition of this .fieldDefinitions)
+      for (const fieldDefinition of this [_fieldDefinitions])
          this .addField (fieldDefinition);
    }
 
    X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototype),
    {
       constructor: X3DBaseNode,
-      fieldDefinitions: new FieldDefinitionArray ([ ]),
-      _private: false,
-      _live: true,
-      _initialized: false,
+      [_fieldDefinitions]: new FieldDefinitionArray ([ ]),
       getMainScene: function ()
       {
-         let scene = this ._executionContext .getScene ();
+         let scene = this [_executionContext] .getScene ();
 
          while (!scene .isMainScene ())
             scene = scene .getScene ();
@@ -110,7 +123,7 @@ function (X3DEventObject,
       {
          const X3DScene = require ("x_ite/Execution/X3DScene");
 
-         let executionContext = this ._executionContext;
+         let executionContext = this [_executionContext];
 
          while (!(executionContext instanceof X3DScene))
             executionContext = executionContext .getExecutionContext ();
@@ -119,24 +132,24 @@ function (X3DEventObject,
       },
       getExecutionContext: function ()
       {
-         return this ._executionContext;
+         return this [_executionContext];
       },
       setExecutionContext: function (value)
       {
          // Currently only useful for Scene.
-         this ._executionContext = value;
+         this [_executionContext] = value;
       },
       addType: function (value)
       {
-         this ._type .push (value);
+         this [_type] .push (value);
       },
       getType: function ()
       {
-         return this ._type;
+         return this [_type];
       },
       isType: function (types)
       {
-         return this ._type .some (function (type) { return types .has (type) });
+         return this [_type] .some (function (type) { return types .has (type) });
       },
       getInnerNode: function ()
       {
@@ -166,8 +179,8 @@ function (X3DEventObject,
 
             // Connect to execution context.
 
-            if (this ._executionContext !== this)
-               this ._executionContext .isLive () .addInterest ("_set_live__", this);
+            if (this [_executionContext] !== this)
+               this [_executionContext] .isLive () .addInterest ("_set_live__", this);
 
             // Return field
 
@@ -179,7 +192,7 @@ function (X3DEventObject,
          ///  Sets the own live state of this node.  Setting the live state to false
          ///  temporarily disables this node completely.
 
-         this ._live = value .valueOf ();
+         this [_live] = value .valueOf ();
 
          this ._set_live__ ();
       },
@@ -187,14 +200,14 @@ function (X3DEventObject,
       {
          ///  Returns the own live state of this node.
 
-         return this ._live;
+         return this [_live];
       },
       getLiveState: function ()
       {
          ///  Determines the live state of this node.
 
-         if (this !== this ._executionContext)
-            return this .getLive () && this ._executionContext .isLive () .getValue ();
+         if (this !== this [_executionContext])
+            return this .getLive () && this [_executionContext] .isLive () .getValue ();
 
          return this .getLive ();
       },
@@ -223,20 +236,20 @@ function (X3DEventObject,
       },
       setInitialized: function (value)
       {
-         this ._initialized = value;
+         this [_initialized] = value;
       },
       isInitialized: function ()
       {
-         return this ._initialized;
+         return this [_initialized];
       },
       setup: function ()
       {
-         if (this ._initialized)
+         if (this [_initialized])
             return;
 
-         this ._initialized = true;
+         this [_initialized] = true;
 
-         for (const field of this ._fields)
+         for (const field of this [_fields])
             field .setTainted (false);
 
          this .initialize ();
@@ -271,7 +284,7 @@ function (X3DEventObject,
 
          // Default fields
 
-         for (const sourceField of this ._predefinedFields)
+         for (const sourceField of this [_predefinedFields])
          {
             try
             {
@@ -320,7 +333,7 @@ function (X3DEventObject,
 
          // User-defined fields
 
-         for (const sourceField of this ._userDefinedFields)
+         for (const sourceField of this [_userDefinedFields])
          {
             const destinationField = sourceField .copy (instance);
 
@@ -356,7 +369,7 @@ function (X3DEventObject,
       {
          const copy = this .create (executionContext || this .getExecutionContext ());
 
-         for (const field of this ._fields)
+         for (const field of this [_fields])
             copy .getField (field .getName ()) .assign (field);
 
          copy .setup ();
@@ -397,18 +410,18 @@ function (X3DEventObject,
       },
       setField: function (name, field, userDefined)
       {
-         this ._fields .add (name, field);
+         this [_fields] .add (name, field);
 
          if (!this .getPrivate ())
             field .addCloneCount (1);
 
          if (userDefined)
          {
-            this ._userDefinedFields .add (name, field);
+            this [_userDefinedFields] .add (name, field);
          }
          else
          {
-            this ._predefinedFields .add (name, field);
+            this [_predefinedFields] .add (name, field);
 
             Object .defineProperty (this, name + "_",
             {
@@ -427,7 +440,7 @@ function (X3DEventObject,
 
          return function (name)
          {
-            const field = this ._fields .get (name) || this ._aliases .get (name);
+            const field = this [_fields] .get (name) || this [_aliases] .get (name);
 
             if (field)
                return field;
@@ -436,7 +449,7 @@ function (X3DEventObject,
 
             if (match)
             {
-               const field = this ._fields .get (match [1]) || this ._aliases .get (match [1]);
+               const field = this [_fields] .get (match [1]) || this [_aliases] .get (match [1]);
 
                if (field && field .getAccessType () === X3DConstants .inputOutput)
                   return field;
@@ -447,7 +460,7 @@ function (X3DEventObject,
 
                if (match)
                {
-                  const field = this ._fields .get (match [1]) || this ._aliases .get (match [1]);
+                  const field = this [_fields] .get (match [1]) || this [_aliases] .get (match [1]);
 
                   if (field && field .getAccessType () === X3DConstants .inputOutput)
                      return field;
@@ -459,7 +472,7 @@ function (X3DEventObject,
       })(),
       addAlias: function (alias, field)
       {
-         this ._aliases .set (alias, field);
+         this [_aliases] .set (alias, field);
 
          Object .defineProperty (this, alias + "_",
          {
@@ -471,7 +484,7 @@ function (X3DEventObject,
       },
       getFieldDefinitions: function ()
       {
-         return this .fieldDefinitions;
+         return this [_fieldDefinitions];
       },
       canUserDefinedFields: function ()
       {
@@ -479,7 +492,7 @@ function (X3DEventObject,
       },
       addUserDefinedField: function (accessType, name, field)
       {
-         if (this ._userDefinedFields .has (name))
+         if (this [_userDefinedFields] .has (name))
             this .removeUserDefinedField (name);
 
          field .setTainted (true);
@@ -487,19 +500,19 @@ function (X3DEventObject,
          field .setName (name);
          field .setAccessType (accessType);
 
-         this .fieldDefinitions .add (name, new X3DFieldDefinition (accessType, name, field));
+         this [_fieldDefinitions] .add (name, new X3DFieldDefinition (accessType, name, field));
 
          this .setField (name, field, true);
       },
       removeUserDefinedField: function (name)
       {
-         const field = this ._userDefinedFields .get (name);
+         const field = this [_userDefinedFields] .get (name);
 
          if (field)
          {
-            this ._fields            .remove (name);
-            this ._userDefinedFields .remove (name);
-            this .fieldDefinitions   .remove (name);
+            this [_fields]            .remove (name);
+            this [_userDefinedFields] .remove (name);
+            this [_fieldDefinitions]   .remove (name);
 
             if (!this .getPrivate ())
                field .removeCloneCount (1);
@@ -507,11 +520,11 @@ function (X3DEventObject,
       },
       getUserDefinedFields: function ()
       {
-         return this ._userDefinedFields;
+         return this [_userDefinedFields];
       },
       getPredefinedFields: function ()
       {
-         return this ._predefinedFields;
+         return this [_predefinedFields];
       },
       getChangedFields: function (extended)
       {
@@ -521,11 +534,11 @@ function (X3DEventObject,
 
          if (extended)
          {
-            for (const field of this ._userDefinedFields)
+            for (const field of this [_userDefinedFields])
                changedFields .push (field);
          }
 
-         for (const field of this ._predefinedFields)
+         for (const field of this [_predefinedFields])
          {
             if (extended)
             {
@@ -561,7 +574,7 @@ function (X3DEventObject,
       },
       getFields: function ()
       {
-         return this ._fields;
+         return this [_fields];
       },
       getSourceText: function ()
       {
@@ -571,7 +584,7 @@ function (X3DEventObject,
       {
          ///  Returns true if there are any routes from or to fields of this node otherwise false.
 
-         for (const field of this ._fields)
+         for (const field of this [_fields])
          {
             if (field .getInputRoutes () .size)
                return true;
@@ -584,40 +597,40 @@ function (X3DEventObject,
       },
       getPrivate: function ()
       {
-         return this ._private;
+         return this [_private];
       },
       setPrivate: function (value)
       {
-         this ._private = value;
+         this [_private] = value;
 
          if (value)
          {
-            for (const field of this ._fields)
+            for (const field of this [_fields])
                field .removeCloneCount (1);
          }
          else
          {
-            for (const field of this ._fields)
+            for (const field of this [_fields])
                field .addCloneCount (1);
          }
       },
       getCloneCount: function ()
       {
-         return this ._cloneCount;
+         return this [_cloneCount];
       },
       addCloneCount: function (count)
       {
          if (count === 0)
             return;
 
-         this ._cloneCount += count;
+         this [_cloneCount] += count;
       },
       removeCloneCount: function (count)
       {
          if (count === 0)
             return;
 
-         this ._cloneCount -= count;
+         this [_cloneCount] -= count;
       },
    });
 

@@ -71,9 +71,8 @@ function ($,
       _fieldCallbacks  = Symbol (),
       _inputRoutes     = Symbol (),
       _outputRoutes    = Symbol (),
-      _routeCallbacks  = Symbol ();
-
-   const _uniformLocation = Symbol .for ("X3DField.uniformLocation");
+      _routeCallbacks  = Symbol (),
+      _uniformLocation = Symbol .for ("X3DField.uniformLocation");
 
    function X3DField (value)
    {

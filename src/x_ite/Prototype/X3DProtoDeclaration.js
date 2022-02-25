@@ -85,7 +85,7 @@ function (SupportedNodes,
    X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
    {
       constructor: X3DProtoDeclaration,
-      fieldDefinitions: new FieldDefinitionArray ([ ]),
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([ ]),
       getTypeName: function ()
       {
          return "X3DProtoDeclaration";

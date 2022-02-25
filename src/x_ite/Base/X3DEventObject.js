@@ -56,11 +56,13 @@ function (X3DChildObject,
 {
 "use strict";
 
+   const _browser = Symbol .for ("X3DEventObject.browser");
+
    function X3DEventObject (browser)
    {
       X3DChildObject .call (this);
 
-      this ._browser = browser;
+      this [_browser] = browser;
    }
 
    X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prototype),
@@ -68,7 +70,7 @@ function (X3DChildObject,
       constructor: X3DEventObject,
       getBrowser: function ()
       {
-         return this ._browser;
+         return this [_browser];
       },
       getExtendedEventHandling: function ()
       {
