@@ -78,6 +78,14 @@ function (SupportedNodes,
 {
 "use strict";
 
+   const
+      _namedNodes     = Symbol (),
+      _importedNodes  = Symbol (),
+      _protos         = Symbol (),
+      _externprotos   = Symbol (),
+      _routes         = Symbol (),
+      _node           = Symbol ();
+
    SupportedNodes .addAbstractType ("X3DExecutionContext");
 
    function X3DExecutionContext (executionContext)
@@ -92,11 +100,11 @@ function (SupportedNodes,
       this .rootNodes_ .setAccessType (X3DConstants .initializeOnly);
       this .rootNodes_ .addCloneCount (1);
 
-      this ._namedNodes     = new Map ();
-      this ._importedNodes  = new Map ();
-      this ._protos         = new ProtoDeclarationArray ();
-      this ._externprotos   = new ExternProtoDeclarationArray ();
-      this ._routes         = new RouteArray ();
+      this [_namedNodes]     = new Map ();
+      this [_importedNodes]  = new Map ();
+      this [_protos]         = new ProtoDeclarationArray ();
+      this [_externprotos]   = new ExternProtoDeclarationArray ();
+      this [_routes]         = new RouteArray ();
    }
 
    X3DExecutionContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -106,15 +114,15 @@ function (SupportedNodes,
       {
          return "X3DExecutionContext";
       },
-      _node: null,
+      [_node]: null,
       getNode: function ()
       {
          // Can be either of type X3DProtoDeclaration or X3DPrototypeInstance, or null.
-         return this ._node;
+         return this [_node];
       },
       setNode: function (value)
       {
-         this ._node = value;
+         this [_node] = value;
       },
       getSpecificationVersion: function ()
       {
@@ -204,7 +212,7 @@ function (SupportedNodes,
       },
       addNamedNode: function (name, node)
       {
-         if (this ._namedNodes .has (name))
+         if (this [_namedNodes] .has (name))
             throw new Error ("Couldn't add named node: node named '" + name + "' is already in use.");
 
          this .updateNamedNode (name, node);
@@ -236,15 +244,15 @@ function (SupportedNodes,
 
          baseNode .setName (name);
 
-         this ._namedNodes .set (name, baseNode);
+         this [_namedNodes] .set (name, baseNode);
       },
       removeNamedNode: function (name)
       {
-         this ._namedNodes .delete (name);
+         this [_namedNodes] .delete (name);
       },
       getNamedNode: function (name)
       {
-         const baseNode = this ._namedNodes .get (name);
+         const baseNode = this [_namedNodes] .get (name);
 
          if (baseNode)
             return SFNodeCache .get (baseNode);
@@ -253,7 +261,7 @@ function (SupportedNodes,
       },
       getNamedNodes: function ()
       {
-         return this ._namedNodes;
+         return this [_namedNodes];
       },
       getUniqueName: (function ()
       {
@@ -269,7 +277,7 @@ function (SupportedNodes,
 
             for (; i;)
             {
-               if (!(this ._namedNodes .has (newName) || newName .length === 0))
+               if (!(this [_namedNodes] .has (newName) || newName .length === 0))
                   break;
 
                const
@@ -289,7 +297,7 @@ function (SupportedNodes,
          if (importedName === undefined)
             importedName = exportedName;
 
-         if (this ._importedNodes .has (importedName))
+         if (this [_importedNodes] .has (importedName))
             throw new Error ("Couldn't add imported node: imported name '" + importedName + "' already in use.");
 
          this .updateImportedNode (inlineNode, exportedName, importedName);
@@ -318,24 +326,24 @@ function (SupportedNodes,
 
          const importedNode = new ImportedNode (this, inlineNode, exportedName, importedName);
 
-         this ._importedNodes .set (importedName, importedNode);
+         this [_importedNodes] .set (importedName, importedNode);
 
          importedNode .setup ();
       },
       removeImportedNode: function (importedName)
       {
-         const importedNode = this ._importedNodes .get (importedName);
+         const importedNode = this [_importedNodes] .get (importedName);
 
          if (!importedNode)
             return;
 
          importedNode .dispose ();
 
-         this ._importedNodes .delete (importedName);
+         this [_importedNodes] .delete (importedName);
       },
       getImportedNode: function (importedName)
       {
-         const importedNode = this ._importedNodes .get (importedName);
+         const importedNode = this [_importedNodes] .get (importedName);
 
          if (importedNode)
             return importedNode .getExportedNode () .valueOf ();
@@ -344,7 +352,7 @@ function (SupportedNodes,
       },
       getImportedNodes: function ()
       {
-         return this ._importedNodes;
+         return this [_importedNodes];
       },
       getLocalNode: function (name)
       {
@@ -354,7 +362,7 @@ function (SupportedNodes,
          }
          catch (error)
          {
-            const importedNode = this ._importedNodes .get (name);
+            const importedNode = this [_importedNodes] .get (name);
 
             if (importedNode)
                return SFNodeCache .get (importedNode);
@@ -370,7 +378,7 @@ function (SupportedNodes,
          if (node .getValue () .getExecutionContext () === this)
             return node .getValue () .getName ();
 
-         for (const importedNode of this ._importedNodes .values ())
+         for (const importedNode of this [_importedNodes] .values ())
          {
             try
             {
@@ -392,7 +400,7 @@ function (SupportedNodes,
       },
       getProtoDeclaration: function (name)
       {
-         const proto = this ._protos .get (name);
+         const proto = this [_protos] .get (name);
 
          if (proto)
             return proto;
@@ -406,7 +414,7 @@ function (SupportedNodes,
          if (!(proto instanceof X3DProtoDeclaration))
             throw new Error ("Couldn't add proto declaration: proto must be of type X3DProtoDeclaration.");
 
-         if (this ._protos .get (name))
+         if (this [_protos] .get (name))
             throw new Error ("Couldn't add proto declaration: proto '" + name + "' already in use.");
 
          name = String (name);
@@ -414,7 +422,7 @@ function (SupportedNodes,
          if (name .length === 0)
             throw new Error ("Couldn't add proto declaration: proto name is empty.");
 
-         this ._protos .add (name, proto);
+         this [_protos] .add (name, proto);
          proto .setName (name);
       },
       updateProtoDeclaration (name, proto)
@@ -429,16 +437,16 @@ function (SupportedNodes,
          if (name .length === 0)
             throw new Error ("Couldn't add proto declaration: proto name is empty.");
 
-         this ._protos .update (proto .getName (), name, proto);
+         this [_protos] .update (proto .getName (), name, proto);
          proto .setName (name);
       },
       removeProtoDeclaration (name)
       {
-         this ._protos .remove (name);
+         this [_protos] .remove (name);
       },
       getProtoDeclarations: function ()
       {
-         return this ._protos;
+         return this [_protos];
       },
       getUniqueProtoName: (function ()
       {
@@ -454,7 +462,7 @@ function (SupportedNodes,
 
             for (; i;)
             {
-               if (!this ._protos .has (newName))
+               if (!this [_protos] .has (newName))
                   break;
 
                const
@@ -470,7 +478,7 @@ function (SupportedNodes,
       })(),
       getExternProtoDeclaration: function (name)
       {
-         const externproto = this ._externprotos .get (name);
+         const externproto = this [_externprotos] .get (name);
 
          if (externproto)
             return externproto;
@@ -484,7 +492,7 @@ function (SupportedNodes,
          if (!(externproto instanceof X3DExternProtoDeclaration))
             throw new Error ("Couldn't add extern proto declaration: extern proto must be of type X3DExternProtoDeclaration.");
 
-         if (this ._externprotos .get (name))
+         if (this [_externprotos] .get (name))
             throw new Error ("Couldn't add extern proto declaration: extern proto '" + name + "' already in use.");
 
          name = String (name);
@@ -492,7 +500,7 @@ function (SupportedNodes,
          if (name .length === 0)
             throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
 
-         this ._externprotos .add (name, externproto);
+         this [_externprotos] .add (name, externproto);
          externproto .setName (name);
       },
       updateExternProtoDeclaration (name, externproto)
@@ -507,16 +515,16 @@ function (SupportedNodes,
          if (name .length === 0)
             throw new Error ("Couldn't add extern proto declaration: extern proto name is empty.");
 
-         this ._externprotos .update (externproto .getName (), name, externproto);
+         this [_externprotos] .update (externproto .getName (), name, externproto);
          externproto .setName (name);
       },
       removeExternProtoDeclaration (name)
       {
-         this ._externprotos .remove (name);
+         this [_externprotos] .remove (name);
       },
       getExternProtoDeclarations: function ()
       {
-         return this ._externprotos;
+         return this [_externprotos];
       },
       getUniqueExternProtoName: (function ()
       {
@@ -532,7 +540,7 @@ function (SupportedNodes,
 
             for (; i;)
             {
-               if (!this ._externprotos .has (newName))
+               if (!this [_externprotos] .has (newName))
                   break;
 
                const
@@ -640,14 +648,14 @@ function (SupportedNodes,
 
             const id = sourceField .getId () + "." + destinationField .getId ();
 
-            let route = this ._routes .get (id);
+            let route = this [_routes] .get (id);
 
             if (route)
                return route;
 
             route = new X3DRoute (this, sourceNode, sourceField, destinationNode, destinationField);
 
-            this ._routes .add (id, route);
+            this [_routes] .add (id, route);
 
             return route;
          }
@@ -679,7 +687,7 @@ function (SupportedNodes,
                destinationField = route ._destinationField,
                id               = sourceField .getId () + "." + destinationField .getId ();
 
-            this ._routes .remove (id);
+            this [_routes] .remove (id);
             route .disconnect ();
 
             return true;
@@ -747,11 +755,11 @@ function (SupportedNodes,
 
          const id = sourceField .getId () + "." + destinationField .getId ();
 
-         return this ._routes .get (id);
+         return this [_routes] .get (id);
       },
       getRoutes: function ()
       {
-         return this ._routes;
+         return this [_routes];
       },
       getWorldInfos: function ()
       {
@@ -894,7 +902,7 @@ function (SupportedNodes,
       {
          this .rootNodes_ .dispose ();
 
-         for (const route of this ._routes)
+         for (const route of this [_routes])
             this .deleteRoute (route);
 
          X3DBaseNode .prototype .dispose .call (this);

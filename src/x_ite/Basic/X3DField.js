@@ -352,7 +352,7 @@ function ($,
 
             if (this [_fieldInterests] .size)
             {
-               this [_fieldInterests] .forEach (function (fieldInterest)
+               for (const fieldInterest of this [_fieldInterests] .values ())
                {
                   if (first)
                   {
@@ -361,8 +361,7 @@ function ($,
                   }
                   else
                      fieldInterest .addEventObject (this, Events .copy (event));
-               },
-               this);
+               }
             }
 
             if (first)
