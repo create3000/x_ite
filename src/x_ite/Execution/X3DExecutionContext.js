@@ -676,15 +676,15 @@ function (SupportedNodes,
          }
 
          if (this .deleteSimpleRoute (route))
-            this .deleteImportedRoute (route .getSourceNode (), route .getDestinationNode (), route);
+            this .deleteImportedRoute (route .sourceNode, route .destinationNode, route);
       },
       deleteSimpleRoute: function (route)
       {
          try
          {
             const
-               sourceField      = route ._sourceField,
-               destinationField = route ._destinationField,
+               sourceField      = route .getSourceNode () .getField (route .getSourceField ()),
+               destinationField = route .getDestinationNode () .getField (route .getDestinationField ()),
                id               = sourceField .getId () + "." + destinationField .getId ();
 
             this [_routes] .remove (id);

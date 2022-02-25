@@ -65,7 +65,7 @@ function (X3DBaseNode,
       this .inlineNode   = inlineNode;
       this .exportedName = exportedName;
       this .importedName = importedName;
-      this .routes       = new Map ();
+      this .routes       = new Set ();
 
       this .inlineNode .loadState_ .addInterest ("set_loadState__", this);
    }
@@ -109,27 +109,25 @@ function (X3DBaseNode,
       {
          // Add route.
 
-         const id = sourceNode .getId () + "." + sourceField + " " + destinationNode .getId () + "." + destinationField;
-
-         this .routes .set (id,
-         {
+         const route = {
             sourceNode:       sourceNode,
             sourceField:      sourceField,
             destinationNode:  destinationNode,
             destinationField: destinationField,
-         });
+         };
+
+         this .routes .add (route);
 
          // Try to resolve source or destination node routes.
 
          if (this .inlineNode .checkLoadState () === X3DConstants .COMPLETE_STATE)
-            this .resolveRoute (id);
+            this .resolveRoute (route);
       },
-      resolveRoute: function (id)
+      resolveRoute: function (route)
       {
          try
          {
             const
-               route            = this .routes .get (id),
                sourceField      = route .sourceField,
                destinationField = route .destinationField;
 
@@ -155,7 +153,7 @@ function (X3DBaseNode,
       },
       deleteRoute: function (real)
       {
-         this .routes .forEach (function (route)
+         for (const route of this .routes)
          {
             if (route ._route === real)
             {
@@ -165,16 +163,13 @@ function (X3DBaseNode,
                   destinationNode  = route .destinationNode,
                   destinationField = route .destinationField;
 
-               const id = sourceNode .getId () + "." + sourceField + " " + destinationNode .getId () + "." + destinationField;
-
-               this .routes .delete (id);
+               this .routes .delete (route);
             }
-         },
-         this);
+         }
       },
       deleteRoutes: function ()
       {
-         this .routes .forEach (function (route)
+         for (const route of this .routes)
          {
             const real = route ._route
 
@@ -183,8 +178,7 @@ function (X3DBaseNode,
                delete route ._route;
                this .getExecutionContext () .deleteSimpleRoute (real);
             }
-         },
-         this);
+         }
       },
       set_loadState__: function ()
       {
@@ -200,11 +194,8 @@ function (X3DBaseNode,
             {
                this .deleteRoutes ();
 
-               this .routes .forEach (function (route, id)
-               {
-                  this .resolveRoute (id);
-               },
-               this);
+               for (const route of this .routes)
+                  this .resolveRoute (route);
 
                break;
             }
@@ -240,7 +231,7 @@ function (X3DBaseNode,
             {
                // Output unresolved routes.
 
-               this .routes .forEach (function (route)
+               for (const route of this .routes)
                {
                   const
                      sourceNode       = route .sourceNode,
@@ -273,7 +264,7 @@ function (X3DBaseNode,
                      stream .string += ".";
                      stream .string += destinationField;
                   }
-               });
+               }
             }
          }
          else
@@ -315,7 +306,7 @@ function (X3DBaseNode,
             {
                // Output unresolved routes.
 
-               this .routes .forEach (function (route)
+               for (const route of this .routes)
                {
                   const
                      sourceNode       = route .sourceNode,
@@ -355,7 +346,7 @@ function (X3DBaseNode,
                      stream .string += "'";
                      stream .string += "/>";
                   }
-               });
+               }
             }
          }
          else
