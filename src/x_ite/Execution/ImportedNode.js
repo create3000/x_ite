@@ -77,14 +77,6 @@ function (X3DBaseNode,
       {
          return "ImportedNode";
       },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      getContainerField: function ()
-      {
-         return "importedNodes";
-      },
       getInlineNode: function ()
       {
          return this .inlineNode;

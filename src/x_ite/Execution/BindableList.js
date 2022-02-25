@@ -73,14 +73,6 @@ function (X3DBaseNode,
       {
          return "BindableList";
       },
-      getComponentName: function ()
-      {
-         return "X_ITE";
-      },
-      getContainerField: function ()
-      {
-         return "bindableList";
-      },
       get: function ()
       {
          return this .array;
