@@ -102,9 +102,9 @@ function (X3DBaseNode,
          // Add route.
 
          const route = {
-            sourceNode:       sourceNode,
-            sourceField:      sourceField,
-            destinationNode:  destinationNode,
+            sourceNode: sourceNode,
+            sourceField: sourceField,
+            destinationNode: destinationNode,
             destinationField: destinationField,
          };
 
@@ -148,15 +148,7 @@ function (X3DBaseNode,
          for (const route of this .routes)
          {
             if (route .real === real)
-            {
-               const
-                  sourceNode       = route .sourceNode,
-                  sourceField      = route .sourceField,
-                  destinationNode  = route .destinationNode,
-                  destinationField = route .destinationField;
-
                this .routes .delete (route);
-            }
          }
       },
       deleteRoutes: function ()
