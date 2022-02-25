@@ -127,8 +127,8 @@ function (X3DBaseNode,
                sourceNode      = route .sourceNode,
                destinationNode = route .destinationNode;
 
-            if (route ._route)
-               route ._route .dispose ();
+            if (route .real)
+               route .real .dispose ();
 
             if (sourceNode instanceof ImportedNode)
                sourceNode = sourceNode .getExportedNode () .getValue ();
@@ -136,7 +136,7 @@ function (X3DBaseNode,
             if (destinationNode instanceof ImportedNode)
                destinationNode = destinationNode .getExportedNode () .getValue ();
 
-            route ._route = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
+            route .real = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
          }
          catch (error)
          {
@@ -147,7 +147,7 @@ function (X3DBaseNode,
       {
          for (const route of this .routes)
          {
-            if (route ._route === real)
+            if (route .real === real)
             {
                const
                   sourceNode       = route .sourceNode,
@@ -163,11 +163,11 @@ function (X3DBaseNode,
       {
          for (const route of this .routes)
          {
-            const real = route ._route
+            const real = route .real
 
             if (real)
             {
-               delete route ._route;
+               delete route .real;
                this .getExecutionContext () .deleteSimpleRoute (real);
             }
          }
