@@ -126,7 +126,7 @@ function (X3DField,
                this .getValue () [i] = +value;
                this .addEvent ();
             },
-            enumerable: false,
+            enumerable: true,
             configurable: false
          });
       }
