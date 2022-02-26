@@ -785,7 +785,7 @@ function (X3DBaseNode,
             }
          }
 
-         // Remove routes from and to node if any, and dispose value of field.
+         // Remove routes from and to node if any, and dispose values of fields.
 
          for (const field of this .getFields ())
             field .dispose ();
