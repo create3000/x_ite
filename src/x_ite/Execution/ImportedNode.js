@@ -87,7 +87,7 @@ function (X3DBaseNode,
       },
       getExportedNode: function ()
       {
-         return this .inlineNode .getInternalScene () .getExportedNode (this .exportedName);
+         return this .inlineNode .getInternalScene () .getExportedNode (this .exportedName) .getValue ();
       },
       setImportedName: function (value)
       {
@@ -131,10 +131,10 @@ function (X3DBaseNode,
                route .real .dispose ();
 
             if (sourceNode instanceof ImportedNode)
-               sourceNode = sourceNode .getExportedNode () .getValue ();
+               sourceNode = sourceNode .getExportedNode ();
 
             if (destinationNode instanceof ImportedNode)
-               destinationNode = destinationNode .getExportedNode () .getValue ();
+               destinationNode = destinationNode .getExportedNode ();
 
             route .real = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
          }
@@ -209,7 +209,7 @@ function (X3DBaseNode,
             try
             {
                generator .AddRouteNode (this);
-               generator .AddImportedNode (this .getExportedNode () .getValue  (), this .getImportedName ());
+               generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
             }
             catch (error)
             {
@@ -284,7 +284,7 @@ function (X3DBaseNode,
             try
             {
                generator .AddRouteNode (this);
-               generator .AddImportedNode (this .getExportedNode () .getValue (), this .getImportedName ());
+               generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
             }
             catch (error)
             {

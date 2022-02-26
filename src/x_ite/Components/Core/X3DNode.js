@@ -754,7 +754,25 @@ function (X3DBaseNode,
          if (this .getName ())
             executionContext .removeNamedNode (this .getName ())
 
-         // TODO: remove imported node if any. (do this in ImportedNode)
+         // Remove imported node if any.
+
+         if (!executionContext .isMainScene ())
+         {
+            const parentContext = executionContext .getExecutionContext ();
+
+            for (const [importedName, importedNode] of new Map (parentContext .getImportedNodes ()))
+            {
+               try
+               {
+                  if (importedNode .getExportedNode () === this)
+                     parentContext .removeImportedNode (importedName);
+               }
+               catch (error)
+               {
+                  //console .log (error);
+               }
+            }
+         }
 
          // Remove exported node if any.
 

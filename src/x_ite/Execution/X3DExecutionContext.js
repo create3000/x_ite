@@ -346,7 +346,7 @@ function (SupportedNodes,
          const importedNode = this [_importedNodes] .get (importedName);
 
          if (importedNode)
-            return importedNode .getExportedNode () .valueOf ();
+            return SFNodeCache .get (importedNode .getExportedNode ());
 
          throw new Error ("Imported node '" + importedName + "' not found.");
       },
@@ -382,7 +382,7 @@ function (SupportedNodes,
          {
             try
             {
-               if (importedNode .getExportedNode () .getValue () === node .getValue ())
+               if (importedNode .getExportedNode () === node .getValue ())
                   return importedNode .getImportedName ();
             }
             catch (error)
