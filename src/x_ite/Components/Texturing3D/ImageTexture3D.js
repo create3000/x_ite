@@ -53,7 +53,7 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing3D/X3DTexture3DNode",
    "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Texturing3D/NRRDParser",
    "x_ite/Browser/Texturing3D/DICOMParser",
    "x_ite/InputOutput/FileLoader",

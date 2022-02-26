@@ -50,7 +50,7 @@
 define ([
    "x_ite/Base/X3DBaseNode",
    "x_ite/Rendering/X3DRenderObject",
-   "x_ite/Bits/TraverseType",
+   "x_ite/Rendering/TraverseType",
 ],
 function (X3DBaseNode,
           X3DRenderObject,

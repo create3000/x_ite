@@ -52,7 +52,7 @@ define ([
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix4",
 ],
 function (Fields,

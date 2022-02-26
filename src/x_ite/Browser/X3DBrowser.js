@@ -63,7 +63,7 @@ define ([
    "x_ite/InputOutput/FileLoader",
    "x_ite/Parser/XMLParser",
    "x_ite/Parser/JSONParser",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Utility/MapUtilities",
    "locale/gettext",
 ],

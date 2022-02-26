@@ -49,8 +49,8 @@
 
 define ([
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (X3DGeometryNode,

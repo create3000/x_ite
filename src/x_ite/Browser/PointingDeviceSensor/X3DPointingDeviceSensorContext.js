@@ -50,8 +50,8 @@
 define ([
    "jquery",
    "x_ite/Browser/PointingDeviceSensor/PointingDevice",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/Line3",
    "standard/Math/Geometry/ViewVolume",
    "standard/Math/Numbers/Vector2",

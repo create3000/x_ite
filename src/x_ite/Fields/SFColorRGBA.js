@@ -50,7 +50,7 @@
 define ([
    "x_ite/Base/X3DField",
    "x_ite/Fields/SFColor",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Color4",
 ],
 function (X3DField,

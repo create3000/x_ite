@@ -54,7 +54,7 @@ define ([
    "x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
    "x_ite/Components/Geospatial/X3DGeospatialObject",
    "x_ite/Components/EnvironmentalSensor/ProximitySensor",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,

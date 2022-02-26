@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Base/X3DBaseNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DBaseNode,

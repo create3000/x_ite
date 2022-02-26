@@ -53,7 +53,7 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DTransformNode",
    "x_ite/Components/CADGeometry/X3DProductStructureChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,

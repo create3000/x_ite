@@ -53,7 +53,7 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Execution/X3DExecutionContext",
    "x_ite/Prototype/X3DProtoDeclarationNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (SupportedNodes,

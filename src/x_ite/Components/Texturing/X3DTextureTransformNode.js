@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DAppearanceChildNode,

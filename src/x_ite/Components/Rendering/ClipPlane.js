@@ -52,7 +52,7 @@ define ([
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Vector4",
    "standard/Math/Geometry/Plane3",

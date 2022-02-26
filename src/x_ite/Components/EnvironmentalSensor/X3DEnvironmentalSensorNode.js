@@ -50,7 +50,7 @@
 define ([
    "x_ite/Fields",
    "x_ite/Components/Core/X3DSensorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,

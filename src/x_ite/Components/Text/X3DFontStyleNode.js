@@ -53,7 +53,7 @@ define ([
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Browser/Text/TextAlignment",
    "x_ite/InputOutput/FileLoader",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Networking/urls",
 ],
 function (Fields,

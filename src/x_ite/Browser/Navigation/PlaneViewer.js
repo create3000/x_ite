@@ -52,7 +52,7 @@ define ([
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Navigation/X3DViewer",
    "x_ite/Components/Navigation/Viewpoint",
    "standard/Math/Numbers/Vector3",

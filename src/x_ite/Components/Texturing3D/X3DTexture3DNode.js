@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Components/Texturing/X3DSingleTextureNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DSingleTextureNode,
           X3DConstants)

@@ -49,8 +49,8 @@
 
 define ([
    "x_ite/Components/NURBS/X3DParametricGeometryNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
    "x_ite/Browser/NURBS/NURBS",
    "standard/Math/Algorithm",
    "standard/Math/Numbers/Vector3",

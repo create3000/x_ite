@@ -53,7 +53,7 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DChaserNode",
    "x_ite/Browser/Followers/X3DArrayChaserTemplate",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector2",
 ],
 function (Fields,

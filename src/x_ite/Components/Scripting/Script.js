@@ -72,7 +72,7 @@ define ([
    "x_ite/Browser/Scripting/evaluate",
    "x_ite/Components/Scripting/X3DScriptNode",
    "x_ite/InputOutput/FileLoader",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function ($,
           X3DFieldDefinition,

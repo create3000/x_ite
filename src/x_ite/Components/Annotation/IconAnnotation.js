@@ -53,7 +53,7 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Annotation/X3DAnnotationNode",
    "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,

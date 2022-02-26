@@ -50,7 +50,7 @@
  define ([
    "x_ite/Components/Texturing/X3DTextureCoordinateNode",
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DTextureCoordinateNode,
           X3DGeometryNode,

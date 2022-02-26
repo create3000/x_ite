@@ -52,7 +52,7 @@ define ([
    "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Core/X3DPrototypeInstance",
    "x_ite/Fields/SFNodeCache",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (SupportedNodes,
           X3DBaseNode,

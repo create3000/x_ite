@@ -53,7 +53,7 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DTransformMatrix3DNode",
    "x_ite/Components/Geospatial/X3DGeospatialObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix4",
 ],
 function (Fields,

@@ -50,8 +50,8 @@
 define ([
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/Grouping/X3DBoundedObject",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Shape/AlphaMode",
    "standard/Math/Geometry/Box3",
    "standard/Math/Numbers/Vector3",

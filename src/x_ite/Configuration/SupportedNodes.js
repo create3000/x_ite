@@ -48,7 +48,7 @@
 
 
 define ([
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Parser/HTMLSupport",
 ],
 function (X3DConstants,

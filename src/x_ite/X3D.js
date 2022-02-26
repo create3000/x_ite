@@ -69,7 +69,7 @@ define ([
    "x_ite/Prototype/X3DProtoDeclaration",
    "x_ite/Routing/RouteArray",
    "x_ite/Routing/X3DRoute",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Networking/urls",
    "x_ite/Fallback",
    "standard/Time/MicroTime",

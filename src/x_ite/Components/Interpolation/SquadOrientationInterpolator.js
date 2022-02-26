@@ -53,7 +53,7 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Browser/Interpolation/SquatInterpolator",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,

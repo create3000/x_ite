@@ -55,7 +55,7 @@ define ([
    "x_ite/Components/Geospatial/X3DGeospatialObject",
    "x_ite/Components/Interpolation/ScalarInterpolator",
    "x_ite/Components/Navigation/NavigationInfo",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/Camera",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",

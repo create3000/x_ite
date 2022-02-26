@@ -54,7 +54,7 @@ define ([
    "x_ite/Components/Layering/X3DLayerNode",
    "x_ite/Components/Layout/LayoutGroup",
    "x_ite/Components/Navigation/OrthoViewpoint",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,

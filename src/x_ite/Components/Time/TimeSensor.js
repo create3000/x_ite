@@ -53,7 +53,7 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DSensorNode",
    "x_ite/Components/Time/X3DTimeDependentNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (Fields,

@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DPointingDeviceSensorNode,
           X3DConstants)

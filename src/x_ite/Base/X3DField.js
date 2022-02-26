@@ -50,7 +50,7 @@
 define ([
    "jquery",
    "x_ite/Base/X3DChildObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Base/Events",
    "standard/Utility/MapUtilities",
 ],

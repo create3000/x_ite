@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Components/Followers/X3DFollowerNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (X3DFollowerNode,

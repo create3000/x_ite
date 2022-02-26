@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Base/X3DField",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DField,

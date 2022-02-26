@@ -49,8 +49,8 @@
 
 define ([
    "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Numbers/Matrix4",

@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Base/X3DObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Fields/SFNodeCache",
    "x_ite/InputOutput/Generator",
 ],

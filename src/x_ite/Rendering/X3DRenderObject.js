@@ -50,7 +50,7 @@
 define ([
    "jquery",
    "x_ite/Rendering/TextureBuffer",
-   "x_ite/Bits/TraverseType",
+   "x_ite/Rendering/TraverseType",
    "standard/Math/Algorithm",
    "standard/Math/Algorithms/MergeSort",
    "standard/Math/Geometry/Camera",

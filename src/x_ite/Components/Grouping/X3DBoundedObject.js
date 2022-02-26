@@ -49,8 +49,8 @@
 
 define ([
    "x_ite/Fields",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Geometry/Box3",

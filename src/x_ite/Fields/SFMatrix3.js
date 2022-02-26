@@ -52,7 +52,7 @@ define ([
    "x_ite/Base/X3DField",
    "x_ite/Fields/SFMatrixPrototypeTemplate",
    "x_ite/Fields/SFVec2",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix3",
 ],
 function (X3DField,

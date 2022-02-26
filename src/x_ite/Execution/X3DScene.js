@@ -55,7 +55,7 @@ define ([
    "x_ite/Configuration/UnitInfo",
    "x_ite/Configuration/UnitInfoArray",
    "x_ite/Execution/ExportedNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
    "x_ite/Fields/SFNodeCache",
 ],

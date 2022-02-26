@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Components/Rendering/X3DGeometricPropertyNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/Triangle3",
    "standard/Math/Numbers/Vector3",
 ],

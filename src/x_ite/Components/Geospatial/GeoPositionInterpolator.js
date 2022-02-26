@@ -54,7 +54,7 @@ define ([
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Components/Geospatial/X3DGeospatialObject",
    "x_ite/Browser/Geospatial/Geocentric",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,

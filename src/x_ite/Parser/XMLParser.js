@@ -58,7 +58,7 @@ define ([
    "x_ite/Parser/HTMLSupport",
    "x_ite/Prototype/X3DExternProtoDeclaration",
    "x_ite/Prototype/X3DProtoDeclaration",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function ($,
           X3DField,

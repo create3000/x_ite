@@ -50,7 +50,7 @@
 define ([
    "x_ite/Base/X3DBaseNode",
    "x_ite/Fields",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
    "x_ite/Fields/SFNodeCache",
 ],

@@ -52,7 +52,7 @@ define ([
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DSingleTextureTransformNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Matrix3",
    "standard/Math/Numbers/Matrix4",

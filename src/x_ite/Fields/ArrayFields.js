@@ -66,7 +66,7 @@ define ([
    "x_ite/Fields/SFVec4",
    "x_ite/Base/X3DObjectArrayField",
    "x_ite/Base/X3DTypedArrayField",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (SFBool,

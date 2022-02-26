@@ -52,7 +52,7 @@ define ([
    "x_ite/Parser/X3DParser",
    "x_ite/Prototype/X3DExternProtoDeclaration",
    "x_ite/Prototype/X3DProtoDeclaration",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DParser,

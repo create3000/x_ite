@@ -54,7 +54,7 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Base/FieldArray",
    "x_ite/Fields",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DEventObject,
           Events,

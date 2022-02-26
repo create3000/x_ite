@@ -50,7 +50,7 @@
 define ([
    "x_ite/Base/X3DField",
    "x_ite/Fields/SFVecPrototypeTemplate",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector4",
 ],
 function (X3DField,

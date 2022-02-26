@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (X3DChildNode,

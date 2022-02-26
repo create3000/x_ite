@@ -50,7 +50,7 @@
 define ([
    "x_ite/Fields",
    "x_ite/Components/Rendering/X3DGeometricPropertyNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DGeometricPropertyNode,

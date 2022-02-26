@@ -50,9 +50,9 @@
 define ([
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/Grouping/X3DBoundedObject",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
 ],
 function (X3DChildNode,
           X3DBoundedObject,

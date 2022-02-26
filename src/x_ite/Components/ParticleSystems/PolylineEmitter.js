@@ -53,7 +53,7 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
    "x_ite/Components/Rendering/IndexedLineSet",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Algorithm",
 ],

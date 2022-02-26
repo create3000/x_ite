@@ -48,7 +48,7 @@
 
 
 define ([
-   "x_ite/Bits/TraverseType",
+   "x_ite/Rendering/TraverseType",
 ],
 function (TraverseType)
 {

@@ -48,9 +48,9 @@
 
 
 define ([
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Geospatial/Geospatial",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DCast",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
 ],

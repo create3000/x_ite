@@ -50,7 +50,7 @@
 define ([
    "x_ite/Base/X3DField",
    "x_ite/Fields/SFInt32",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DField,
           SFInt32,

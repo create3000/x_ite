@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DVolumeRenderStyleNode,
           X3DConstants)

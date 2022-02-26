@@ -53,7 +53,7 @@ define ([
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/NURBS/NurbsPatchSurface",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/Line3",
    "standard/Math/Geometry/Triangle2",
    "standard/Math/Numbers/Vector3",

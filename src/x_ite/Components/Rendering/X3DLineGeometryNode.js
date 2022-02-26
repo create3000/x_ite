@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,

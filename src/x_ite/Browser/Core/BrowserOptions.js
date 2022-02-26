@@ -52,7 +52,7 @@ define ([
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Base/X3DBaseNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Core/PrimitiveQuality",
    "x_ite/Browser/Core/Shading",
    "x_ite/Browser/Core/TextureQuality",

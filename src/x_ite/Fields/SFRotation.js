@@ -50,7 +50,7 @@
 define ([
    "x_ite/Fields/SFVec3",
    "x_ite/Base/X3DField",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
    "standard/Math/Numbers/Rotation4",
 ],

@@ -54,7 +54,7 @@ define ([
    "x_ite/Components/Shaders/X3DShaderNode",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Components/Shaders/X3DProgrammableShaderObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,

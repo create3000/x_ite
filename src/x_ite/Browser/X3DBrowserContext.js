@@ -71,7 +71,7 @@ define ([
    "x_ite/Browser/Texturing/X3DTexturingContext",
    "x_ite/Browser/Time/X3DTimeContext",
    "x_ite/Execution/X3DWorld",
-   "x_ite/Bits/TraverseType",
+   "x_ite/Rendering/TraverseType",
 ],
 function ($,
           SFTime,

@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Numbers/Matrix4",

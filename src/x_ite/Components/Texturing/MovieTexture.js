@@ -55,7 +55,7 @@ define ([
    "x_ite/Components/Texturing/X3DTexture2DNode",
    "x_ite/Components/Sound/X3DSoundSourceNode",
    "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
    "x_ite/DEBUG",
 ],

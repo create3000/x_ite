@@ -50,8 +50,8 @@
 define ([
    "x_ite/Fields",
    "x_ite/Components/Core/X3DNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
    "standard/Math/Numbers/Matrix4",
 ],
 function (Fields,

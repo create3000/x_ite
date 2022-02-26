@@ -49,8 +49,8 @@
 
 define ([
    "x_ite/Components/Core/X3DBindableNode",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/ViewVolume",
    "standard/Math/Numbers/Complex",
    "standard/Math/Numbers/Vector3",

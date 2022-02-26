@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Components/Core/X3DNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DNode,
           X3DConstants)

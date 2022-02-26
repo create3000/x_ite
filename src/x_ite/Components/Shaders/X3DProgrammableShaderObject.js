@@ -48,8 +48,8 @@
 
 
 define ([
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
    "x_ite/Components/Navigation/OrthoViewpoint",
    "standard/Math/Numbers/Matrix3",
 ],

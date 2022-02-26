@@ -51,7 +51,7 @@ define ([
    "x_ite/Fields",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/Grouping/X3DBoundedObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
    "lib/ammojs/AmmoJS",
