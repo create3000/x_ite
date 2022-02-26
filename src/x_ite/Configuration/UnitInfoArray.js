@@ -68,8 +68,8 @@ function (X3DInfoArray)
       },
    });
 
-   for (const property of Reflect .ownKeys (UnitInfoArray .prototype))
-      Object .defineProperty (UnitInfoArray .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (UnitInfoArray .prototype))
+      Object .defineProperty (UnitInfoArray .prototype, key, { enumerable: false });
 
    return UnitInfoArray;
 });

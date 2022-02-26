@@ -444,8 +444,8 @@ function (X3DField,
       },
    });
 
-   for (const property of Reflect .ownKeys (SFNode .prototype))
-      Object .defineProperty (SFNode .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SFNode .prototype))
+      Object .defineProperty (SFNode .prototype, key, { enumerable: false });
 
    return SFNode;
 });

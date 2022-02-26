@@ -161,8 +161,8 @@ function (Color3,
       },
    });
 
-   for (const property of Reflect .ownKeys (SFColor .prototype))
-      Object .defineProperty (SFColor .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SFColor .prototype))
+      Object .defineProperty (SFColor .prototype, key, { enumerable: false });
 
    const r = {
       get: function ()

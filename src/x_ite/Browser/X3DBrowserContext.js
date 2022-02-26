@@ -125,7 +125,8 @@ function ($,
       X3DTexturingContext            .call (this);
       X3DTimeContext                 .call (this);
 
-      contexts .forEach (function (context) { context .call (this); }, this);
+      for (const context of contexts)
+         context .call (this);
 
       this .addChildObjects ("initialized",   new SFTime (),
                              "shutdown",      new SFTime (),
@@ -189,12 +190,11 @@ function ($,
          X3DTexturingContext            .prototype .initialize .call (this);
          X3DTimeContext                 .prototype .initialize .call (this);
 
-         contexts .forEach (function (context)
+         for (const context of contexts)
          {
             if (context .prototype .initialize)
                context .prototype .initialize .call (this);
          }
-         .bind (this));
       },
       initialized: function ()
       {
@@ -292,6 +292,9 @@ function ($,
       },
    });
 
+   for (const key of Reflect .ownKeys (X3DBrowserContext .prototype))
+      Object .defineProperty (X3DBrowserContext .prototype, key, { enumerable: false });
+
    Object .assign (X3DBrowserContext,
    {
       addContext: function (context)
@@ -301,6 +304,9 @@ function ($,
          contexts .push (context);
 
          Object .assign (X3DBrowserContext .prototype, context .prototype);
+
+         for (const key of Reflect .ownKeys (context .prototype))
+            Object .defineProperty (X3DBrowserContext .prototype, key, { enumerable: false });
 
          $("X3DCanvas") .each (function (i, canvas)
          {

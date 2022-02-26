@@ -374,8 +374,8 @@ function (SFBool,
       },
    });
 
-   for (const property of Reflect .ownKeys (MFNode .prototype))
-      Object .defineProperty (MFNode .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (MFNode .prototype))
+      Object .defineProperty (MFNode .prototype, key, { enumerable: false });
 
    function MFString (value)
    {
@@ -432,8 +432,8 @@ function (SFBool,
       },
    });
 
-   for (const property of Reflect .ownKeys (MFString .prototype))
-      Object .defineProperty (MFString .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (MFString .prototype))
+      Object .defineProperty (MFString .prototype, key, { enumerable: false });
 
    function ArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
    {
@@ -471,8 +471,8 @@ function (SFBool,
          },
       });
 
-      for (const property of Reflect .ownKeys (ArrayField .prototype))
-         Object .defineProperty (ArrayField .prototype, property, { enumerable: false })
+      for (const key of Reflect .ownKeys (ArrayField .prototype))
+         Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
 
       return ArrayField;
    }
@@ -513,8 +513,8 @@ function (SFBool,
          },
       });
 
-      for (const property of Reflect .ownKeys (ArrayField .prototype))
-         Object .defineProperty (ArrayField .prototype, property, { enumerable: false })
+      for (const key of Reflect .ownKeys (ArrayField .prototype))
+         Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
 
       return ArrayField;
    }

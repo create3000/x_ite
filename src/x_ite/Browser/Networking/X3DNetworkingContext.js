@@ -108,6 +108,8 @@ function (Fields,
 
          this .getDefaultScene = function () { return this .defaultScene; };
 
+         Object .defineProperty (this, "getDefaultScene", { enumerable: false });
+
          return this .defaultScene;
       },
       setBrowserLoading: function (value)

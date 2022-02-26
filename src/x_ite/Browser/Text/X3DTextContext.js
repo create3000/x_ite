@@ -75,6 +75,8 @@ function ($,
 
          this .getDefaultFontStyle = function () { return this .defaultFontStyle; };
 
+         Object .defineProperty (this, "getDefaultFontStyle", { enumerable: false });
+
          return this .defaultFontStyle;
       },
       getFont: function (url)

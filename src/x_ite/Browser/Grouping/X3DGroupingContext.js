@@ -90,6 +90,8 @@ function (Fields,
 
          this .getBBoxNode = function () { return this .bboxNode; };
 
+         Object .defineProperty (this, "getBBoxNode", { enumerable: false });
+
          return bboxNode;
       }
    };

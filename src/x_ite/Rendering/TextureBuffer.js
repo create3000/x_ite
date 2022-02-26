@@ -222,8 +222,8 @@ function (ViewVolume,
       },
    };
 
-   for (const property of Reflect .ownKeys (TextureBuffer .prototype))
-      Object .defineProperty (TextureBuffer .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (TextureBuffer .prototype))
+      Object .defineProperty (TextureBuffer .prototype, key, { enumerable: false });
 
    return TextureBuffer;
 });

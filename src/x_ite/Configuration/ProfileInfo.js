@@ -81,8 +81,8 @@ function (X3DObject)
       },
    });
 
-   for (const property of Reflect .ownKeys (ProfileInfo .prototype))
-      Object .defineProperty (ProfileInfo .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (ProfileInfo .prototype))
+      Object .defineProperty (ProfileInfo .prototype, key, { enumerable: false });
 
    return ProfileInfo;
 });

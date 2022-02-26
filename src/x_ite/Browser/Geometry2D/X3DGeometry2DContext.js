@@ -71,6 +71,8 @@ function (Arc2DOptions,
 
       this [fun] = function () { return this [name]; };
 
+      Object .defineProperty (this, fun, { enumerable: false });
+
       return this [name];
    }
 

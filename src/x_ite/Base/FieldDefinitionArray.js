@@ -73,8 +73,8 @@ function (X3DInfoArray)
       },
    });
 
-   for (const property of Reflect .ownKeys (FieldDefinitionArray .prototype))
-      Object .defineProperty (FieldDefinitionArray .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (FieldDefinitionArray .prototype))
+      Object .defineProperty (FieldDefinitionArray .prototype, key, { enumerable: false });
 
    return FieldDefinitionArray;
 });

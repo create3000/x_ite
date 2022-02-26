@@ -256,6 +256,8 @@ function (TextureProperties,
 
          this .getDefaultTextureProperties = function () { return this .defaultTextureProperties; };
 
+         Object .defineProperty (this, "getDefaultTextureProperties", { enumerable: false });
+
          return this .defaultTextureProperties;
       },
       getDefaultTextureTransform: function ()
@@ -265,6 +267,8 @@ function (TextureProperties,
 
          this .getDefaultTextureTransform = function () { return this .defaultTextureTransform; };
 
+         Object .defineProperty (this, "getDefaultTextureTransform", { enumerable: false });
+
          return this .defaultTextureTransform;
       },
       getDefaultTextureCoordinate: function ()
@@ -273,6 +277,8 @@ function (TextureProperties,
          this .defaultTextureCoordinate .setup ();
 
          this .getDefaultTextureCoordinate = function () { return this .defaultTextureCoordinate; };
+
+         Object .defineProperty (this, "getDefaultTextureCoordinate", { enumerable: false });
 
          return this .defaultTextureCoordinate;
       },

@@ -110,8 +110,8 @@ function (X3DField,
          },
       });
 
-      for (const property of Reflect .ownKeys (SFMatrix3 .prototype))
-         Object .defineProperty (SFMatrix3 .prototype, property, { enumerable: false })
+      for (const key of Reflect .ownKeys (SFMatrix3 .prototype))
+         Object .defineProperty (SFMatrix3 .prototype, key, { enumerable: false });
 
       function defineProperty (i)
       {

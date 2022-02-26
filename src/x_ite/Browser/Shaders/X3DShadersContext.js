@@ -117,6 +117,8 @@ function (Shading,
 
          this .getPointShader = function () { return this .pointShader; };
 
+         Object .defineProperty (this, "getPointShader", { enumerable: false });
+
          return this .pointShader;
       },
       hasLineShader: function ()
@@ -128,6 +130,8 @@ function (Shading,
          this .lineShader = this .createShader ("WireframeShader", "Wireframe");
 
          this .getLineShader = function () { return this .lineShader; };
+
+         Object .defineProperty (this, "getLineShader", { enumerable: false });
 
          return this .lineShader;
       },
@@ -143,6 +147,8 @@ function (Shading,
 
          this .getUnlitShader = function () { return this .unlitShader; };
 
+         Object .defineProperty (this, "getUnlitShader", { enumerable: false });
+
          return this .unlitShader;
       },
       hasGouraudShader: function ()
@@ -156,6 +162,8 @@ function (Shading,
          this .gouraudShader .isValid_ .addInterest ("set_gouraud_shader_valid__", this);
 
          this .getGouraudShader = function () { return this .gouraudShader; };
+
+         Object .defineProperty (this, "getGouraudShader", { enumerable: false });
 
          return this .gouraudShader;
       },
@@ -171,6 +179,8 @@ function (Shading,
 
          this .getPhongShader = function () { return this .phongShader; };
 
+         Object .defineProperty (this, "getPhongShader", { enumerable: false });
+
          return this .phongShader;
       },
       hasShadowShader: function ()
@@ -185,6 +195,8 @@ function (Shading,
 
          this .getShadowShader = function () { return this .shadowShader; };
 
+         Object .defineProperty (this, "getShadowShader", { enumerable: false });
+
          return this .shadowShader;
       },
       hasDepthShader: function ()
@@ -196,6 +208,8 @@ function (Shading,
          this .depthShader = this .createShader ("DepthShader", "Depth");
 
          this .getDepthShader = function () { return this .depthShader; };
+
+         Object .defineProperty (this, "getDepthShader", { enumerable: false });
 
          return this .depthShader;
       },

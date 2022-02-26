@@ -181,8 +181,8 @@ function (Generator,
       dispose: function () { },
    };
 
-   for (const property of Reflect .ownKeys (X3DObject .prototype))
-      Object .defineProperty (X3DObject .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DObject .prototype))
+      Object .defineProperty (X3DObject .prototype, key, { enumerable: false });
 
    X3DObject .getId = (function ()
    {

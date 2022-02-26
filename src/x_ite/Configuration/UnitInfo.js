@@ -106,8 +106,8 @@ function (X3DObject,
       },
    });
 
-   for (const property of Reflect .ownKeys (UnitInfo .prototype))
-      Object .defineProperty (UnitInfo .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (UnitInfo .prototype))
+      Object .defineProperty (UnitInfo .prototype, key, { enumerable: false });
 
    Object .defineProperty (UnitInfo .prototype, "conversion_factor",
    {

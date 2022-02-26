@@ -111,8 +111,8 @@ define (function ()
       },
    };
 
-   for (const property of Reflect .ownKeys (Events .prototype))
-      Object .defineProperty (Events .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (Events .prototype))
+      Object .defineProperty (Events .prototype, key, { enumerable: false });
 
    return new Events ();
 });

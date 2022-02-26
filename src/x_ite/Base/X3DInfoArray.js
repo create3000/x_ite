@@ -225,8 +225,8 @@ function (X3DObject)
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DInfoArray .prototype))
-      Object .defineProperty (X3DInfoArray .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DInfoArray .prototype))
+      Object .defineProperty (X3DInfoArray .prototype, key, { enumerable: false });
 
    Object .defineProperty (X3DInfoArray .prototype, "length",
    {

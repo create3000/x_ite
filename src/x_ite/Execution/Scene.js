@@ -147,8 +147,8 @@ function (Fields,
       },
    });
 
-   for (const property of Reflect .ownKeys (Scene .prototype))
-      Object .defineProperty (Scene .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (Scene .prototype))
+      Object .defineProperty (Scene .prototype, key, { enumerable: false });
 
    return Scene;
 });

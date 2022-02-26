@@ -122,8 +122,8 @@ function (X3DChildObject,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DEventObject .prototype))
-      Object .defineProperty (X3DEventObject .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DEventObject .prototype))
+      Object .defineProperty (X3DEventObject .prototype, key, { enumerable: false });
 
    return X3DEventObject;
 });

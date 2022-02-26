@@ -79,7 +79,7 @@ function (Fields,
       var headlightContainer = headlight .getLights () .pop ();
 
       headlightContainer .set (browser, headlight, null, Matrix4 .Identity);
-      headlightContainer .dispose = function () { };
+      headlightContainer .dispose = Function .prototype;
 
       return headlightContainer;
    };

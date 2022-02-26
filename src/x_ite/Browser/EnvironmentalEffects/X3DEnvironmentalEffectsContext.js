@@ -65,6 +65,8 @@ function (TextureProperties)
 
          this .getBackgroundSphereShader = function () { return this .backgroundSphereShader; };
 
+         Object .defineProperty (this, "getBackgroundSphereShader", { enumerable: false });
+
          return this .backgroundSphereShader;
       },
       getBackgroundTextureProperties: function ()
@@ -79,6 +81,8 @@ function (TextureProperties)
          this .backgroundTextureProperties .setup ();
 
          this .getBackgroundTextureProperties = function () { return this .backgroundTextureProperties; };
+
+         Object .defineProperty (this, "getBackgroundTextureProperties", { enumerable: false });
 
          return this .backgroundTextureProperties;
       },

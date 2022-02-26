@@ -429,7 +429,7 @@ function (Fields,
          {
             this .getCompoundShape () .removeChildShapeByIndex (0);
             Ammo .destroy (this .collisionShape);
-            this .collisionShape = null;;
+            this .collisionShape = null;
          }
 
          if (this .heightField)

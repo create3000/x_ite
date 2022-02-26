@@ -65,6 +65,8 @@ function (PointEmitter)
 
          this .getDefaultEmitter = function () { return this .defaultEmitter; };
 
+         Object .defineProperty (this, "getDefaultEmitter", { enumerable: false });
+v
          return this .defaultEmitter;
       },
    };

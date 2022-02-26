@@ -105,8 +105,8 @@ function (X3DField,
       },
    });
 
-   for (const property of Reflect .ownKeys (SFDouble .prototype))
-      Object .defineProperty (SFDouble .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SFDouble .prototype))
+      Object .defineProperty (SFDouble .prototype, key, { enumerable: false });
 
    return SFDouble;
 });

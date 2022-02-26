@@ -79,8 +79,8 @@ function (ComponentInfo,
       },
    });
 
-   for (const property of Reflect .ownKeys (ComponentInfoArray .prototype))
-      Object .defineProperty (ComponentInfoArray .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (ComponentInfoArray .prototype))
+      Object .defineProperty (ComponentInfoArray .prototype, key, { enumerable: false });
 
    return ComponentInfoArray;
 });

@@ -110,8 +110,8 @@ function (X3DConstants,
       },
    };
 
-   for (const property of Reflect .ownKeys (SupportedNodes .prototype))
-      Object .defineProperty (SupportedNodes .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SupportedNodes .prototype))
+      Object .defineProperty (SupportedNodes .prototype, key, { enumerable: false });
 
    return new SupportedNodes ();
 });

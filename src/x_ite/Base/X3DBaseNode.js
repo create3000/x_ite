@@ -534,8 +534,8 @@ function (X3DEventObject,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DBaseNode .prototype))
-      Object .defineProperty (X3DBaseNode .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DBaseNode .prototype))
+      Object .defineProperty (X3DBaseNode .prototype, key, { enumerable: false });
 
    return X3DBaseNode;
 });

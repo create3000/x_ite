@@ -322,8 +322,8 @@ function (SupportedNodes,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DProtoDeclaration .prototype))
-      Object .defineProperty (X3DProtoDeclaration .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DProtoDeclaration .prototype))
+      Object .defineProperty (X3DProtoDeclaration .prototype, key, { enumerable: false });
 
    Object .defineProperty (X3DProtoDeclaration .prototype, "name",
    {

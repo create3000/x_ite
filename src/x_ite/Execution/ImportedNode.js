@@ -346,8 +346,8 @@ function (X3DBaseNode,
       },
    });
 
-   for (const property of Reflect .ownKeys (ImportedNode .prototype))
-      Object .defineProperty (ImportedNode .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (ImportedNode .prototype))
+      Object .defineProperty (ImportedNode .prototype, key, { enumerable: false });
 
    return ImportedNode;
 });

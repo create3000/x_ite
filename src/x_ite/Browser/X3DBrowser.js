@@ -778,6 +778,9 @@ function ($,
       },
    });
 
+   for (const key of Reflect .ownKeys (X3DBrowser .prototype))
+      Object .defineProperty (X3DBrowser .prototype, key, { enumerable: false });
+
    Object .defineProperty (X3DBrowser .prototype, "name",
    {
       get: function () { return "X_ITE"; },

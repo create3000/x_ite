@@ -825,8 +825,8 @@ function (X3DArrayField,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DTypedArrayField .prototype))
-      Object .defineProperty (X3DTypedArrayField .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DTypedArrayField .prototype))
+      Object .defineProperty (X3DTypedArrayField .prototype, key, { enumerable: false });
 
    Object .defineProperty (X3DTypedArrayField .prototype, "length",
    {

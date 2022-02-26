@@ -140,8 +140,8 @@ function (X3DBaseNode,
       },
    });
 
-   for (const property of Reflect .ownKeys (DependentRenderer .prototype))
-      Object .defineProperty (DependentRenderer .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (DependentRenderer .prototype))
+      Object .defineProperty (DependentRenderer .prototype, key, { enumerable: false });
 
    return DependentRenderer;
 });

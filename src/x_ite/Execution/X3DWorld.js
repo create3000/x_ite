@@ -164,8 +164,8 @@ function (SupportedNodes,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DWorld .prototype))
-      Object .defineProperty (X3DWorld .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DWorld .prototype))
+      Object .defineProperty (X3DWorld .prototype, key, { enumerable: false });
 
    return X3DWorld;
 });

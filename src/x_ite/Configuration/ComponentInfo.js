@@ -99,8 +99,8 @@ function (X3DObject,
       },
    });
 
-   for (const property of Reflect .ownKeys (ComponentInfo .prototype))
-      Object .defineProperty (ComponentInfo .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (ComponentInfo .prototype))
+      Object .defineProperty (ComponentInfo .prototype, key, { enumerable: false });
 
    return ComponentInfo;
 });

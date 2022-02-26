@@ -305,8 +305,8 @@ function ($,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DExternProtoDeclaration .prototype))
-      Object .defineProperty (X3DExternProtoDeclaration .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DExternProtoDeclaration .prototype))
+      Object .defineProperty (X3DExternProtoDeclaration .prototype, key, { enumerable: false });
 
    Object .defineProperty (X3DExternProtoDeclaration .prototype, "name",
    {

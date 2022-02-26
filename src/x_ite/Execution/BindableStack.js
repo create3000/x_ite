@@ -168,8 +168,8 @@ function (X3DBaseNode)
       },
    });
 
-   for (const property of Reflect .ownKeys (BindableStack .prototype))
-      Object .defineProperty (BindableStack .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (BindableStack .prototype))
+      Object .defineProperty (BindableStack .prototype, key, { enumerable: false });
 
    return BindableStack;
 });

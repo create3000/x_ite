@@ -97,8 +97,8 @@ function (X3DField,
          },
       });
 
-      for (const property of Reflect .ownKeys (SFVec3 .prototype))
-         Object .defineProperty (SFVec3 .prototype, property, { enumerable: false })
+      for (const key of Reflect .ownKeys (SFVec3 .prototype))
+         Object .defineProperty (SFVec3 .prototype, key, { enumerable: false });
 
       const x = {
          get: function ()

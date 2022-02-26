@@ -85,6 +85,8 @@ function (Appearance,
 
          this .getDefaultAppearance = function () { return this .defaultAppearance; };
 
+         Object .defineProperty (this, "getDefaultAppearance", { enumerable: false });
+
          return this .defaultAppearance;
       },
       getDefaultPointProperties: function ()
@@ -93,6 +95,8 @@ function (Appearance,
          this .defaultPointProperties .setup ();
 
          this .getDefaultPointProperties = function () { return this .defaultPointProperties; };
+
+         Object .defineProperty (this, "getDefaultPointProperties", { enumerable: false });
 
          return this .defaultPointProperties;
       },
@@ -105,6 +109,8 @@ function (Appearance,
 
          this .getDefaultLineProperties = function () { return this .defaultLineProperties; };
 
+         Object .defineProperty (this, "getDefaultLineProperties", { enumerable: false });
+
          return this .defaultLineProperties;
       },
       getDefaultFillProperties: function ()
@@ -116,6 +122,8 @@ function (Appearance,
 
          this .getDefaultFillProperties = function () { return this .defaultFillProperties; };
 
+         Object .defineProperty (this, "getDefaultFillProperties", { enumerable: false });
+
          return this .defaultFillProperties;
       },
       getDefaultMaterial: function ()
@@ -125,6 +133,8 @@ function (Appearance,
          this .defaultMaterial .setup ();
 
          this .getDefaultMaterial = function () { return this .defaultMaterial; };
+
+         Object .defineProperty (this, "getDefaultMaterial", { enumerable: false });
 
          return this .defaultMaterial;
       },
@@ -170,6 +180,8 @@ function (Appearance,
          this .lineFillTextureProperties .setup ();
 
          this .getLineFillTextureProperties = function () { return this .lineFillTextureProperties; };
+
+         Object .defineProperty (this, "getLineFillTextureProperties", { enumerable: false });
 
          return this .lineFillTextureProperties;
       },

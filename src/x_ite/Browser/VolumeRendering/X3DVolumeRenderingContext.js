@@ -69,6 +69,8 @@ function (PixelTexture,
 
          this .getDefaultVolumeStyle = function () { return this .defaultVolumeStyle; };
 
+         Object .defineProperty (this, "getDefaultVolumeStyle", { enumerable: false });
+
          return this .defaultVolumeStyle;
       },
       getDefaultBlendedVolumeStyle: function ()
@@ -77,6 +79,8 @@ function (PixelTexture,
          this .defaultBlendedVolumeStyle .setup ();
 
          this .getDefaultBlendedVolumeStyle = function () { return this .defaultBlendedVolumeStyle; };
+
+         Object .defineProperty (this, "getDefaultBlendedVolumeStyle", { enumerable: false });
 
          return this .defaultBlendedVolumeStyle;
       },
@@ -105,6 +109,8 @@ function (PixelTexture,
          this .defaultTransferFunction .setup ();
 
          this .getDefaultTransferFunction = function () { return this .defaultTransferFunction; };
+
+         Object .defineProperty (this, "getDefaultTransferFunction", { enumerable: false });
 
          return this .defaultTransferFunction;
       },

@@ -75,6 +75,8 @@ function ($,
 
          this .getScreenTextureProperties = function () { return this .screenTextureProperties; };
 
+         Object .defineProperty (this, "getScreenTextureProperties", { enumerable: false });
+
          return this .screenTextureProperties;
       },
       getPointSize: function ()

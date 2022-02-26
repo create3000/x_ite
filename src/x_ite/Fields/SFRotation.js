@@ -160,8 +160,8 @@ function (SFVec3,
       },
    });
 
-   for (const property of Reflect .ownKeys (SFRotation .prototype))
-      Object .defineProperty (SFRotation .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SFRotation .prototype))
+      Object .defineProperty (SFRotation .prototype, key, { enumerable: false });
 
    const x = {
       get: function ()

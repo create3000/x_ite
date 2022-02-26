@@ -405,8 +405,8 @@ function ($,
       }
    });
 
-   for (const property of Reflect .ownKeys (X3DField .prototype))
-      Object .defineProperty (X3DField .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DField .prototype))
+      Object .defineProperty (X3DField .prototype, key, { enumerable: false });
 
    return X3DField;
 });

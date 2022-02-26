@@ -336,7 +336,7 @@ function ($,
       {
          const
             target = this [_target],
-            values = target .getValue ();;
+            values = target .getValue ();
 
          if ($.isFunction (value))
          {
@@ -560,8 +560,8 @@ function ($,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DObjectArrayField .prototype))
-      Object .defineProperty (X3DObjectArrayField .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DObjectArrayField .prototype))
+      Object .defineProperty (X3DObjectArrayField .prototype, key, { enumerable: false });
 
    Object .defineProperty (X3DObjectArrayField .prototype, "length",
    {

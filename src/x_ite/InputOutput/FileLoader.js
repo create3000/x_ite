@@ -591,8 +591,8 @@ function ($,
       },
    });
 
-   for (const property of Reflect .ownKeys (FileLoader .prototype))
-      Object .defineProperty (FileLoader .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (FileLoader .prototype))
+      Object .defineProperty (FileLoader .prototype, key, { enumerable: false });
 
    return FileLoader;
 });
