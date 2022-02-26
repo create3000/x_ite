@@ -747,10 +747,15 @@ function (X3DBaseNode,
       },
       dispose: function ()
       {
-         // TODO: remove named node if any. (do this in NamedNode)
+         // Remove named node if any.
+
+         if (this .getName ())
+            this .getExecutionContext () .removeNamedNode (this .getName ())
+
          // TODO: remove imported node if any. (do this in ImportedNode)
          // TODO: remove exported node if any. (do this in ExportedNode)
-         // TODO: remove routes from and to node if any. (do this in Route)
+
+         // Remove routes from and to node if any.
 
          for (const field of this .getFields ())
             field .dispose ();

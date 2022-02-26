@@ -393,6 +393,16 @@ function ($,
 
          throw new Error ("Couldn't read value for field '" + this .getName () + "'.");
       },
+      dispose: function ()
+      {
+         for (const route of new Set (this [_inputRoutes]))
+            route .dispose ();
+
+         for (const route of new Set (this [_outputRoutes]))
+            route .dispose ();
+
+         X3DChildObject .prototype .dispose .call (this);
+      }
    });
 
    for (const property of Reflect .ownKeys (X3DField .prototype))
