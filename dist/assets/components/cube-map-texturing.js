@@ -185,8 +185,8 @@ function (X3DSingleTextureNode,
 
 define ('x_ite/Components/CubeMapTexturing/ComposedCubeMapTexture',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
    "x_ite/Bits/X3DCast",
    "x_ite/Bits/X3DConstants",
@@ -446,7 +446,7 @@ function (Fields,
 
 
 define ('x_ite/Rendering/DependentRenderer',[
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Rendering/X3DRenderObject",
    "x_ite/Bits/TraverseType",
 ],
@@ -538,6 +538,9 @@ function (X3DBaseNode,
       },
    });
 
+   for (const property of Reflect .ownKeys (DependentRenderer .prototype))
+      Object .defineProperty (DependentRenderer .prototype, property, { enumerable: false })
+
    return DependentRenderer;
 });
 
@@ -592,8 +595,8 @@ function (X3DBaseNode,
 
 define ('x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
    "x_ite/Rendering/DependentRenderer",
    "x_ite/Rendering/TextureBuffer",
@@ -896,8 +899,8 @@ function (Fields,
 define ('x_ite/Components/CubeMapTexturing/ImageCubeMapTexture',[
    "jquery",
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Bits/X3DConstants",

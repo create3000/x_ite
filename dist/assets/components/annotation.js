@@ -57,8 +57,8 @@ const
 
 define ('x_ite/Components/Annotation/AnnotationLayer',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Layering/X3DLayerNode",
    "x_ite/Components/Navigation/Viewpoint",
    "x_ite/Components/Grouping/Group",
@@ -166,8 +166,8 @@ function (Fields,
 
 define ('x_ite/Components/Annotation/AnnotationTarget',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -345,8 +345,8 @@ function (X3DChildNode,
 
 define ('x_ite/Components/Annotation/GroupAnnotation',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Components/Annotation/X3DAnnotationNode",
    "x_ite/Bits/X3DConstants",
@@ -458,8 +458,8 @@ function (Fields,
 
 define ('x_ite/Components/Annotation/IconAnnotation',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Annotation/X3DAnnotationNode",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Bits/X3DConstants",
@@ -569,8 +569,8 @@ function (Fields,
 
 define ('x_ite/Components/Annotation/TextAnnotation',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Annotation/X3DAnnotationNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -672,8 +672,8 @@ function (Fields,
 
 define ('x_ite/Components/Annotation/URLAnnotation',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Annotation/X3DAnnotationNode",
    "x_ite/Bits/X3DConstants",
 ],

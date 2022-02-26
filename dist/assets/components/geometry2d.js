@@ -56,7 +56,7 @@ const
 
 
 define ('x_ite/Browser/Geometry2D/Arc2DOptions',[
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Fields",
 ],
 function (X3DBaseNode,
@@ -141,7 +141,7 @@ function (X3DBaseNode,
 
 
 define ('x_ite/Browser/Geometry2D/ArcClose2DOptions',[
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Fields",
 ],
 function (X3DBaseNode,
@@ -226,7 +226,7 @@ function (X3DBaseNode,
 
 
 define ('x_ite/Browser/Geometry2D/Circle2DOptions',[
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Fields",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "standard/Math/Numbers/Complex",
@@ -347,7 +347,7 @@ function (X3DBaseNode,
 
 
 define ('x_ite/Browser/Geometry2D/Disk2DOptions',[
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Fields",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "standard/Math/Numbers/Complex",
@@ -524,7 +524,7 @@ function (X3DBaseNode,
 
 define ('x_ite/Browser/Geometry2D/Rectangle2DOptions',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Geometry3D/IndexedFaceSet",
    "x_ite/Components/Rendering/Coordinate",
    "x_ite/Components/Texturing/TextureCoordinate",
@@ -798,8 +798,8 @@ function (Arc2DOptions,
 
 define ('x_ite/Components/Geometry2D/Arc2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Complex",
@@ -974,8 +974,8 @@ function (Fields,
 
 define ('x_ite/Components/Geometry2D/ArcClose2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Complex",
@@ -1203,8 +1203,8 @@ function (Fields,
 
 define ('x_ite/Components/Geometry2D/Circle2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -1339,8 +1339,8 @@ function (Fields,
 
 define ('x_ite/Components/Geometry2D/Disk2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
    "x_ite/Bits/X3DConstants",
@@ -1614,8 +1614,8 @@ function (Fields,
 
 define ('x_ite/Components/Geometry2D/Polyline2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -1732,8 +1732,8 @@ function (Fields,
 
 define ('x_ite/Components/Geometry2D/Polypoint2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -1857,8 +1857,8 @@ function (Fields,
 
 define ('x_ite/Components/Geometry2D/Rectangle2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector2",
@@ -2003,8 +2003,8 @@ function (Fields,
 
 define ('x_ite/Components/Geometry2D/TriangleSet2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector3",

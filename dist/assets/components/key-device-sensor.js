@@ -277,8 +277,8 @@ function (X3DSensorNode,
 
 define ('x_ite/Components/KeyDeviceSensor/KeySensor',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -654,8 +654,8 @@ function (Fields,
 
 define ('x_ite/Components/KeyDeviceSensor/StringSensor',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/KeyDeviceSensor/X3DKeyDeviceSensorNode",
    "x_ite/Bits/X3DConstants",
 ],

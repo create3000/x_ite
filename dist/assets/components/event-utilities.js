@@ -57,8 +57,8 @@ const
 
 define ('x_ite/Components/EventUtilities/BooleanFilter',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -324,8 +324,8 @@ function (X3DChildNode,
 
 define ('x_ite/Components/EventUtilities/BooleanSequencer',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/EventUtilities/X3DSequencerNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -438,8 +438,8 @@ function (Fields,
 
 define ('x_ite/Components/EventUtilities/BooleanToggle',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -618,8 +618,8 @@ function (X3DChildNode,
 
 define ('x_ite/Components/EventUtilities/BooleanTrigger',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/EventUtilities/X3DTriggerNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -724,8 +724,8 @@ function (Fields,
 
 define ('x_ite/Components/EventUtilities/IntegerSequencer',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/EventUtilities/X3DSequencerNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -838,8 +838,8 @@ function (Fields,
 
 define ('x_ite/Components/EventUtilities/IntegerTrigger',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/EventUtilities/X3DTriggerNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -945,8 +945,8 @@ function (Fields,
 
 define ('x_ite/Components/EventUtilities/TimeTrigger',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/EventUtilities/X3DTriggerNode",
    "x_ite/Bits/X3DConstants",
 ],

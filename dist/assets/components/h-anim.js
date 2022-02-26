@@ -57,8 +57,8 @@ const
 
 define ('x_ite/Components/HAnim/HAnimDisplacer',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometricPropertyNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -157,8 +157,8 @@ function (Fields,
 
 define ('x_ite/Components/HAnim/HAnimHumanoid',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/Grouping/Group",
    "x_ite/Components/Grouping/Transform",
@@ -518,8 +518,8 @@ function (Fields,
 
 define ('x_ite/Components/HAnim/HAnimJoint',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DTransformNode",
    "x_ite/Bits/TraverseType",
    "x_ite/Bits/X3DConstants",
@@ -719,8 +719,8 @@ function (Fields,
 
 define ('x_ite/Components/HAnim/HAnimMotion',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -833,8 +833,8 @@ function (Fields,
 
 define ('x_ite/Components/HAnim/HAnimSegment',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -942,8 +942,8 @@ function (Fields,
 
 define ('x_ite/Components/HAnim/HAnimSite',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DTransformNode",
    "x_ite/Bits/X3DConstants",
 ],

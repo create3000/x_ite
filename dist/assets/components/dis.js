@@ -57,8 +57,8 @@ const
 
 define ('x_ite/Components/DIS/DISEntityManager',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -158,8 +158,8 @@ function (Fields,
 
 define ('x_ite/Components/DIS/DISEntityTypeMapping',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DInfoNode",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Bits/X3DConstants",
@@ -280,8 +280,8 @@ function (Fields,
 
 define ('x_ite/Components/DIS/EspduTransform',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Components/Core/X3DSensorNode",
    "x_ite/Bits/X3DConstants",
@@ -473,8 +473,8 @@ function (Fields,
 
 define ('x_ite/Components/DIS/ReceiverPdu',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DSensorNode",
    "x_ite/Components/Grouping/X3DBoundedObject",
    "x_ite/Bits/X3DConstants",
@@ -606,8 +606,8 @@ function (Fields,
 
 define ('x_ite/Components/DIS/SignalPdu',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DSensorNode",
    "x_ite/Components/Grouping/X3DBoundedObject",
    "x_ite/Bits/X3DConstants",
@@ -739,8 +739,8 @@ function (Fields,
 
 define ('x_ite/Components/DIS/TransmitterPdu',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DSensorNode",
    "x_ite/Components/Grouping/X3DBoundedObject",
    "x_ite/Bits/X3DConstants",

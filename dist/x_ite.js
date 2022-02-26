@@ -13191,12 +13191,12 @@ define ('x_ite/Bits/X3DConstants',[],function ()
 {
 "use strict";
 
-   var
+   let
       browserEvent = 0,
       loadState    = 0,
       fieldType    = 0;
 
-   var X3DConstants =
+   const X3DConstants =
    {
       // Browser event
 
@@ -13700,6 +13700,9 @@ function (X3DConstants)
       },
    };
 
+   for (const property of Reflect .ownKeys (Generator .prototype))
+      Object .defineProperty (Generator .prototype, property, { enumerable: false })
+
    Generator .Get = function (stream)
    {
       if (! stream .generator)
@@ -13891,7 +13894,7 @@ function (Generator,
       },
       addInterest: function (callbackName, object)
       {
-         if (!this .hasOwnProperty (_interests))
+         if (this [_interests] === X3DObject .prototype [_interests])
          {
             this [_interests]     = new Map ();
             this [_interestsTemp] = [ ];
@@ -13971,6 +13974,9 @@ function (Generator,
       dispose: function () { },
    };
 
+   for (const property of Reflect .ownKeys (X3DObject .prototype))
+      Object .defineProperty (X3DObject .prototype, property, { enumerable: false })
+
    X3DObject .getId = (function ()
    {
       const map = new WeakMap ();
@@ -14042,7 +14048,7 @@ function (Generator,
  ******************************************************************************/
 
 
-define ('x_ite/Basic/X3DFieldDefinition',[
+define ('x_ite/Base/X3DFieldDefinition',[
    "x_ite/Base/X3DObject",
 ],
 function (X3DObject)
@@ -14065,6 +14071,9 @@ function (X3DObject)
          return "X3DFieldDefinition";
       },
    });
+
+   for (const property of Reflect .ownKeys (X3DFieldDefinition .prototype))
+      Object .defineProperty (X3DFieldDefinition .prototype, property, { enumerable: false })
 
    return X3DFieldDefinition;
 });
@@ -14118,7 +14127,7 @@ function (X3DObject)
  ******************************************************************************/
 
 
-define ('x_ite/Configuration/X3DInfoArray',[
+define ('x_ite/Base/X3DInfoArray',[
    "x_ite/Base/X3DObject",
 ],
 function (X3DObject)
@@ -14140,7 +14149,7 @@ function (X3DObject)
 
          if (typeof key === "string")
          {
-            const index = key * 1;
+            const index = +key;
 
             if (Number .isInteger (index))
                return target [_array] [index];
@@ -14164,7 +14173,28 @@ function (X3DObject)
 
          return key in target;
       },
-    };
+      ownKeys: function (target)
+      {
+         return Object .keys (target [_array]);
+      },
+      getOwnPropertyDescriptor: function (target, key)
+      {
+         if (typeof key !== "string")
+            return;
+
+         const index = +key;
+
+         if (Number .isInteger (index) && index < target [_array] .length)
+         {
+            const propertyDescriptor = Object .getOwnPropertyDescriptor (target [_array], key);
+
+            if (propertyDescriptor)
+               propertyDescriptor .writable = false;
+
+            return propertyDescriptor;
+         }
+      },
+   };
 
    function X3DInfoArray ()
    {
@@ -14238,7 +14268,7 @@ function (X3DObject)
       },
       toVRMLStream: function (stream)
       {
-         const X3DBaseNode = require ("x_ite/Basic/X3DBaseNode");
+         const X3DBaseNode = require ("x_ite/Base/X3DBaseNode");
 
          for (const value of this [_array])
          {
@@ -14274,6 +14304,9 @@ function (X3DObject)
          }
       },
    });
+
+   for (const property of Reflect .ownKeys (X3DInfoArray .prototype))
+      Object .defineProperty (X3DInfoArray .prototype, property, { enumerable: false })
 
    Object .defineProperty (X3DInfoArray .prototype, "length",
    {
@@ -14334,8 +14367,8 @@ function (X3DObject)
  ******************************************************************************/
 
 
-define ('x_ite/Basic/FieldDefinitionArray',[
-   "x_ite/Configuration/X3DInfoArray",
+define ('x_ite/Base/FieldDefinitionArray',[
+   "x_ite/Base/X3DInfoArray",
 ],
 function (X3DInfoArray)
 {
@@ -14359,6 +14392,9 @@ function (X3DInfoArray)
          return "FieldDefinitionArray";
       },
    });
+
+   for (const property of Reflect .ownKeys (FieldDefinitionArray .prototype))
+      Object .defineProperty (FieldDefinitionArray .prototype, property, { enumerable: false })
 
    return FieldDefinitionArray;
 });
@@ -14467,7 +14503,7 @@ function (X3DObject)
       },
       addParent: function (parent)
       {
-         if (!this .hasOwnProperty (_parents))
+         if (this [_parents] === X3DChildObject .prototype [_parents])
             this [_parents] = new Set ();
 
          this [_parents] .add (parent);
@@ -14487,6 +14523,9 @@ function (X3DObject)
          X3DObject .prototype .dispose .call (this);
       },
    });
+
+   for (const property of Reflect .ownKeys (X3DChildObject .prototype))
+      Object .defineProperty (X3DChildObject .prototype, property, { enumerable: false })
 
    return X3DChildObject;
 });
@@ -14544,14 +14583,20 @@ define ('x_ite/Base/Events',[],function ()
 {
 "use strict";
 
-   const Events =
+   const _stack = Symbol ();
+
+   function Events ()
    {
-      stack: [ ],
+      this [_stack] = [ ];
+   }
+
+   Events .prototype =
+   {
       create: function (field)
       {
-         if (this .stack .length)
+         if (this [_stack] .length)
          {
-            const event = this .stack .pop ();
+            const event = this [_stack] .pop ();
 
             event .field = field;
             event .clear ();
@@ -14567,9 +14612,9 @@ define ('x_ite/Base/Events',[],function ()
       },
       copy: function (event)
       {
-         if (this .stack .length)
+         if (this [_stack] .length)
          {
-            const copy = this .stack .pop ();
+            const copy = this [_stack] .pop ();
 
             copy .field = event .field;
             copy .clear ();
@@ -14590,15 +14635,18 @@ define ('x_ite/Base/Events',[],function ()
       },
       push: function (event)
       {
-         this .stack .push (event);
+         this [_stack] .push (event);
       },
       clear: function ()
       {
-         this .stack .length = 0;
+         this [_stack] .length = 0;
       },
    };
 
-   return Events;
+   for (const property of Reflect .ownKeys (Events .prototype))
+      Object .defineProperty (Events .prototype, property, { enumerable: false })
+
+   return new Events ();
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -14650,7 +14698,7 @@ define ('x_ite/Base/Events',[],function ()
  ******************************************************************************/
 
 
-define ('x_ite/Basic/X3DField',[
+define ('x_ite/Base/X3DField',[
    "jquery",
    "x_ite/Base/X3DChildObject",
    "x_ite/Bits/X3DConstants",
@@ -14762,10 +14810,10 @@ function ($,
       },
       hasReferences: function ()
       {
-         if (this .hasOwnProperty (_references))
-            return this [_references] .size !== 0;
+         if (this [_references] === X3DField .prototype [_references])
+            return false;
 
-         return false;
+         return this [_references] .size !== 0;
       },
       isReference: function (accessType)
       {
@@ -14826,14 +14874,14 @@ function ($,
       },
       getReferences: function ()
       {
-         if (!this .hasOwnProperty (_references))
+         if (this [_references] === X3DField .prototype [_references])
             this [_references] = new Set ();
 
          return this [_references];
       },
       addFieldInterest: function (field)
       {
-         if (!this .hasOwnProperty (_fieldInterests))
+         if (this [_fieldInterests] === X3DField .prototype [_fieldInterests])
             this [_fieldInterests] = new Set ();
 
          this [_fieldInterests] .add (field);
@@ -14848,7 +14896,7 @@ function ($,
       },
       addFieldCallback: function (key, object)
       {
-         if (!this .hasOwnProperty (_fieldCallbacks))
+         if (this [_fieldCallbacks] === X3DField .prototype [_fieldCallbacks])
             this [_fieldCallbacks] = new Map ();
 
          this [_fieldCallbacks] .set (key, object);
@@ -14863,7 +14911,7 @@ function ($,
       },
       addInputRoute: function (route)
       {
-         if (!this .hasOwnProperty (_inputRoutes))
+         if (this [_inputRoutes] === X3DField .prototype [_inputRoutes])
             this [_inputRoutes] = new Set ();
 
          this [_inputRoutes] .add (route);
@@ -14882,7 +14930,7 @@ function ($,
       },
       addOutputRoute: function (route)
       {
-         if (!this .hasOwnProperty (_outputRoutes))
+         if (this [_outputRoutes] === X3DField .prototype [_outputRoutes])
             this [_outputRoutes] = new Set ();
 
          this [_outputRoutes] .add (route);
@@ -14901,7 +14949,7 @@ function ($,
       },
       addRouteCallback: function (key, object)
       {
-         if (!this .hasOwnProperty (_routeCallbacks))
+         if (this [_routeCallbacks] === X3DField .prototype [_routeCallbacks])
             this [_routeCallbacks] = new Map ();
 
          this [_routeCallbacks] .set (key, object);
@@ -15001,6 +15049,9 @@ function ($,
       },
    });
 
+   for (const property of Reflect .ownKeys (X3DField .prototype))
+      Object .defineProperty (X3DField .prototype, property, { enumerable: false })
+
    return X3DField;
 });
 
@@ -15053,8 +15104,8 @@ function ($,
  ******************************************************************************/
 
 
-define ('x_ite/Basic/X3DArrayField',[
-   "x_ite/Basic/X3DField",
+define ('x_ite/Base/X3DArrayField',[
+   "x_ite/Base/X3DField",
 ],
 function (X3DField)
 {
@@ -15069,6 +15120,9 @@ function (X3DField)
    {
       constructor: X3DArrayField,
    });
+
+   for (const property of Reflect .ownKeys (X3DArrayField .prototype))
+      Object .defineProperty (X3DArrayField .prototype, property, { enumerable: false })
 
    return X3DArrayField;
 });
@@ -15123,7 +15177,7 @@ function (X3DField)
 
 
 define ('x_ite/Fields/SFBool',[
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Bits/X3DConstants",
 ],
 function (X3DField,
@@ -15176,6 +15230,9 @@ function (X3DField,
          stream .string += this .getValue () ? "true" : "false";
       },
    });
+
+   for (const property of Reflect .ownKeys (SFBool .prototype))
+      Object .defineProperty (SFBool .prototype, property, { enumerable: false })
 
    return SFBool;
 });
@@ -15744,7 +15801,7 @@ function (Algorithm)
 
 define ('x_ite/Fields/SFColor',[
    "standard/Math/Numbers/Color3",
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
@@ -15856,6 +15913,9 @@ function (Color3,
       },
    });
 
+   for (const property of Reflect .ownKeys (SFColor .prototype))
+      Object .defineProperty (SFColor .prototype, property, { enumerable: false })
+
    const r = {
       get: function ()
       {
@@ -15863,7 +15923,7 @@ function (Color3,
       },
       set: function (value)
       {
-         this .getValue () .r = value * 1;
+         this .getValue () .r = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -15877,7 +15937,7 @@ function (Color3,
       },
       set: function (value)
       {
-         this .getValue () .g = value * 1;
+         this .getValue () .g = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -15891,7 +15951,7 @@ function (Color3,
       },
       set: function (value)
       {
-         this .getValue () .b = value * 1;
+         this .getValue () .b = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -16162,7 +16222,7 @@ function (Color3, Algorithm)
 
 
 define ('x_ite/Fields/SFColorRGBA',[
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Fields/SFColor",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Color4",
@@ -16250,6 +16310,9 @@ function (X3DField,
       toXMLStream: SFColor .prototype .toXMLStream,
    });
 
+   for (const property of Reflect .ownKeys (SFColorRGBA .prototype))
+      Object .defineProperty (SFColorRGBA .prototype, property, { enumerable: false })
+
    const r = {
       get: function ()
       {
@@ -16257,7 +16320,7 @@ function (X3DField,
       },
       set: function (value)
       {
-         this .getValue () .r = value * 1;
+         this .getValue () .r = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -16271,7 +16334,7 @@ function (X3DField,
       },
       set: function (value)
       {
-         this .getValue () .g = value * 1;
+         this .getValue () .g = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -16285,7 +16348,7 @@ function (X3DField,
       },
       set: function (value)
       {
-         this .getValue () .b = value * 1;
+         this .getValue () .b = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -16299,7 +16362,7 @@ function (X3DField,
       },
       set: function (value)
       {
-         this .getValue () .a = value * 1;
+         this .getValue () .a = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -16374,7 +16437,7 @@ function (X3DField,
 
 
 define ('x_ite/Fields/SFDouble',[
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
@@ -16431,6 +16494,9 @@ function (X3DField,
       },
    });
 
+   for (const property of Reflect .ownKeys (SFDouble .prototype))
+      Object .defineProperty (SFDouble .prototype, property, { enumerable: false })
+
    return SFDouble;
 });
 
@@ -16484,7 +16550,7 @@ function (X3DField,
 
 
 define ('x_ite/Fields/SFFloat',[
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
@@ -16541,6 +16607,9 @@ function (X3DField,
       },
    });
 
+   for (const property of Reflect .ownKeys (SFFloat .prototype))
+      Object .defineProperty (SFFloat .prototype, property, { enumerable: false })
+
    return SFFloat;
 });
 
@@ -16594,7 +16663,7 @@ function (X3DField,
 
 
 define ('x_ite/Fields/SFInt32',[
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Bits/X3DConstants",
 ],
 function (X3DField,
@@ -16644,6 +16713,9 @@ function (X3DField,
          stream .string += this .getValue () .toString ();
       },
    });
+
+   for (const property of Reflect .ownKeys (SFInt32 .prototype))
+      Object .defineProperty (SFInt32 .prototype, property, { enumerable: false })
 
    return SFInt32;
 });
@@ -16698,7 +16770,7 @@ function (X3DField,
 
 
 define ('x_ite/Fields/SFImage',[
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Fields/SFInt32",
    "x_ite/Bits/X3DConstants",
 ],
@@ -16869,6 +16941,9 @@ function (X3DField,
       },
    });
 
+   for (const property of Reflect .ownKeys (SFImage .prototype))
+      Object .defineProperty (SFImage .prototype, property, { enumerable: false })
+
    const width = {
       get: function ()
       {
@@ -16989,7 +17064,7 @@ function (X3DField,
 
 
 define ('x_ite/Fields/SFMatrixPrototypeTemplate',[
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
 ],
 function (X3DField)
 {
@@ -17148,7 +17223,7 @@ function (X3DField)
 
 
 define ('x_ite/Fields/SFVecPrototypeTemplate',[
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DField,
@@ -17593,7 +17668,7 @@ function (Algorithm)
 
 
 define ('x_ite/Fields/SFVec2',[
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Fields/SFVecPrototypeTemplate",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector2",
@@ -17635,6 +17710,9 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
          },
       });
 
+      for (const property of Reflect .ownKeys (SFVec2 .prototype))
+         Object .defineProperty (SFVec2 .prototype, property, { enumerable: false })
+
       const x = {
          get: function ()
          {
@@ -17642,7 +17720,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
          },
          set: function (value)
          {
-            this .getValue () .x = value * 1;
+            this .getValue () .x = +value;
             this .addEvent ();
          },
          enumerable: true,
@@ -17656,7 +17734,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
          },
          set: function (value)
          {
-            this .getValue () .y = value * 1;
+            this .getValue () .y = +value;
             this .addEvent ();
          },
          enumerable: true,
@@ -19273,7 +19351,7 @@ function (Vector2,
 
 
 define ('x_ite/Fields/SFMatrix3',[
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Fields/SFMatrixPrototypeTemplate",
    "x_ite/Fields/SFVec2",
    "x_ite/Bits/X3DConstants",
@@ -19334,6 +19412,9 @@ function (X3DField,
          },
       });
 
+      for (const property of Reflect .ownKeys (SFMatrix3 .prototype))
+         Object .defineProperty (SFMatrix3 .prototype, property, { enumerable: false })
+
       function defineProperty (i)
       {
          Object .defineProperty (SFMatrix3 .prototype, i,
@@ -19344,7 +19425,7 @@ function (X3DField,
             },
             set: function (value)
             {
-               this .getValue () [i] = value * 1;
+               this .getValue () [i] = +value;
                this .addEvent ();
             },
             enumerable: false,
@@ -19414,7 +19495,7 @@ function (X3DField,
 
 
 define ('x_ite/Fields/SFVec3',[
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Fields/SFVecPrototypeTemplate",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector3",
@@ -19463,6 +19544,9 @@ function (X3DField,
          },
       });
 
+      for (const property of Reflect .ownKeys (SFVec3 .prototype))
+         Object .defineProperty (SFVec3 .prototype, property, { enumerable: false })
+
       const x = {
          get: function ()
          {
@@ -19470,7 +19554,7 @@ function (X3DField,
          },
          set: function (value)
          {
-            this .getValue () .x = value * 1;
+            this .getValue () .x = +value;
             this .addEvent ();
          },
          enumerable: true,
@@ -19484,7 +19568,7 @@ function (X3DField,
          },
          set: function (value)
          {
-            this .getValue () .y = value * 1;
+            this .getValue () .y = +value;
             this .addEvent ();
          },
          enumerable: true,
@@ -19498,7 +19582,7 @@ function (X3DField,
          },
          set: function (value)
          {
-            this .getValue () .z = value * 1;
+            this .getValue () .z = +value;
             this .addEvent ();
          },
          enumerable: true,
@@ -21919,7 +22003,7 @@ function (Vector3,
 
 
 define ('x_ite/Fields/SFMatrix4',[
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Fields/SFMatrixPrototypeTemplate",
    "x_ite/Fields/SFVec3",
    "x_ite/Bits/X3DConstants",
@@ -21971,6 +22055,9 @@ function (X3DField,
             return Type;
          },
       });
+
+      for (const property of Reflect .ownKeys (SFMatrix4 .prototype))
+         Object .defineProperty (SFMatrix4 .prototype, property, { enumerable: false })
 
       function defineProperty (i)
       {
@@ -22136,7 +22223,7 @@ define ('x_ite/Fields/SFNodeCache',['x_ite/Fields/SFNode'],function ()
 
 
 define ('x_ite/Fields/SFNode',[
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
    "x_ite/Fields/SFNodeCache",
@@ -22214,6 +22301,39 @@ function (X3DField,
          catch (error)
          {
             return key in target;
+         }
+      },
+      ownKeys: function (target)
+      {
+         const
+            value   = target .getValue (),
+            ownKeys = [ ];
+
+         if (value)
+         {
+            for (const fieldDefinition of value .getFieldDefinitions ())
+               ownKeys .push (fieldDefinition .name);
+         }
+
+         return ownKeys;
+      },
+      getOwnPropertyDescriptor: function (target, key)
+      {
+         const value = target .getValue ();
+
+         if (value)
+         {
+            const fieldDefinition = value .getFieldDefinitions () .get (key);
+
+            if (fieldDefinition)
+            {
+               return {
+                  value: this .get (target, key),
+                  writable: fieldDefinition .accessType !== X3DConstants .outputOnly,
+                  enumerable: true,
+                  configurable: true,
+               };
+            }
          }
       },
    };
@@ -22496,6 +22616,9 @@ function (X3DField,
       },
    });
 
+   for (const property of Reflect .ownKeys (SFNode .prototype))
+      Object .defineProperty (SFNode .prototype, property, { enumerable: false })
+
    return SFNode;
 });
 
@@ -22550,7 +22673,7 @@ function (X3DField,
 
 define ('x_ite/Fields/SFRotation',[
    "x_ite/Fields/SFVec3",
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
    "standard/Math/Numbers/Rotation4",
@@ -22661,6 +22784,9 @@ function (SFVec3,
       },
    });
 
+   for (const property of Reflect .ownKeys (SFRotation .prototype))
+      Object .defineProperty (SFRotation .prototype, property, { enumerable: false })
+
    const x = {
       get: function ()
       {
@@ -22668,7 +22794,7 @@ function (SFVec3,
       },
       set: function (value)
       {
-         this .getValue () .x = value * 1;
+         this .getValue () .x = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -22682,7 +22808,7 @@ function (SFVec3,
       },
       set: function (value)
       {
-         this .getValue () .y = value * 1;
+         this .getValue () .y = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -22696,7 +22822,7 @@ function (SFVec3,
       },
       set: function (value)
       {
-         this .getValue () .z = value * 1;
+         this .getValue () .z = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -22710,7 +22836,7 @@ function (SFVec3,
       },
       set: function (value)
       {
-         this .getValue () .angle = value * 1;
+         this .getValue () .angle = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -22785,7 +22911,7 @@ function (SFVec3,
 
 
 define ('x_ite/Fields/SFString',[
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
@@ -22854,6 +22980,9 @@ function (X3DField,
       },
    });
 
+   for (const property of Reflect .ownKeys (SFString .prototype))
+      Object .defineProperty (SFString .prototype, property, { enumerable: false })
+
    Object .defineProperty (SFString .prototype, "length",
    {
       get: function ()
@@ -22917,7 +23046,7 @@ function (X3DField,
 
 
 define ('x_ite/Fields/SFTime',[
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Bits/X3DConstants",
 ],
 function (X3DField,
@@ -22967,6 +23096,9 @@ function (X3DField,
          this .toStream (stream);
       },
    });
+
+   for (const property of Reflect .ownKeys (SFTime .prototype))
+      Object .defineProperty (SFTime .prototype, property, { enumerable: false })
 
    return SFTime;
 });
@@ -23021,7 +23153,7 @@ function (X3DField,
 
 
 define ('x_ite/Fields/SFVec4',[
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Fields/SFVecPrototypeTemplate",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector4",
@@ -23066,6 +23198,9 @@ function (X3DField,
          },
       });
 
+      for (const property of Reflect .ownKeys (SFVec4 .prototype))
+         Object .defineProperty (SFVec4 .prototype, property, { enumerable: false })
+
       const x = {
          get: function ()
          {
@@ -23073,7 +23208,7 @@ function (X3DField,
          },
          set: function (value)
          {
-            this .getValue () .x = value * 1;
+            this .getValue () .x = +value;
             this .addEvent ();
          },
          enumerable: true,
@@ -23087,7 +23222,7 @@ function (X3DField,
          },
          set: function (value)
          {
-            this .getValue () .y = value * 1;
+            this .getValue () .y = +value;
             this .addEvent ();
          },
          enumerable: true,
@@ -23101,7 +23236,7 @@ function (X3DField,
          },
          set: function (value)
          {
-            this .getValue () .z = value * 1;
+            this .getValue () .z = +value;
             this .addEvent ();
          },
          enumerable: true,
@@ -23115,7 +23250,7 @@ function (X3DField,
          },
          set: function (value)
          {
-            this .getValue () .w = value * 1;
+            this .getValue () .w = +value;
             this .addEvent ();
          },
          enumerable: true,
@@ -23195,10 +23330,10 @@ function (X3DField,
  ******************************************************************************/
 
 
-define ('x_ite/Basic/X3DObjectArrayField',[
+define ('x_ite/Base/X3DObjectArrayField',[
    "jquery",
-   "x_ite/Basic/X3DField",
-   "x_ite/Basic/X3DArrayField",
+   "x_ite/Base/X3DField",
+   "x_ite/Base/X3DArrayField",
    "x_ite/InputOutput/Generator",
 ],
 function ($,
@@ -23225,7 +23360,7 @@ function ($,
          {
             const
                array = target .getValue (),
-               index = key * 1;
+               index = +key;
 
             if (Number .isInteger (index))
             {
@@ -23261,7 +23396,7 @@ function ($,
 
          const
             array = target .getValue (),
-            index = key * 1;
+            index = +key;
 
          if (index >= array .length)
             target .resize (index + 1);
@@ -23276,6 +23411,20 @@ function ($,
             return key < target .getValue () .length;
 
          return key in target;
+      },
+      ownKeys: function (target)
+      {
+         return Object .keys (target .getValue ());
+      },
+      getOwnPropertyDescriptor: function (target, key)
+      {
+         if (typeof key !== "string")
+            return;
+
+         const index = +key;
+
+         if (Number .isInteger (index) && index < target .getValue () .length)
+            return Object .getOwnPropertyDescriptor (target .getValue (), key);
       },
    };
 
@@ -23694,6 +23843,9 @@ function ($,
       },
    });
 
+   for (const property of Reflect .ownKeys (X3DObjectArrayField .prototype))
+      Object .defineProperty (X3DObjectArrayField .prototype, property, { enumerable: false })
+
    Object .defineProperty (X3DObjectArrayField .prototype, "length",
    {
       get: function () { return this [_target] .getValue () .length; },
@@ -23754,8 +23906,8 @@ function ($,
  ******************************************************************************/
 
 
-define ('x_ite/Basic/X3DTypedArrayField',[
-   "x_ite/Basic/X3DArrayField",
+define ('x_ite/Base/X3DTypedArrayField',[
+   "x_ite/Base/X3DArrayField",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
    "standard/Math/Algorithm",
@@ -23783,7 +23935,7 @@ function (X3DArrayField,
 
          if (typeof key === "string")
          {
-            const index = key * 1;
+            const index = +key;
 
             if (Number .isInteger (index))
             {
@@ -23897,6 +24049,25 @@ function (X3DArrayField,
             return key < target [_length];
 
          return key in target;
+      },
+      ownKeys: function (target)
+      {
+         const ownKeys = [ ];
+
+         for (let i = 0, length = target [_length]; i < length; ++ i)
+            ownKeys .push (String (i));
+
+         return ownKeys;
+      },
+      getOwnPropertyDescriptor: function (target, key)
+      {
+         if (typeof key !== "string")
+            return;
+
+         const index = +key;
+
+         if (Number .isInteger (index) && index < target [_length])
+            return Object .getOwnPropertyDescriptor (target .getValue (), key);
       },
    };
 
@@ -24515,6 +24686,9 @@ function (X3DArrayField,
       },
    });
 
+   for (const property of Reflect .ownKeys (X3DTypedArrayField .prototype))
+      Object .defineProperty (X3DTypedArrayField .prototype, property, { enumerable: false })
+
    Object .defineProperty (X3DTypedArrayField .prototype, "length",
    {
       get: function () { return this [_length]; },
@@ -24618,8 +24792,8 @@ define ('x_ite/Fields/ArrayFields',[
    "x_ite/Fields/SFVec2",
    "x_ite/Fields/SFVec3",
    "x_ite/Fields/SFVec4",
-   "x_ite/Basic/X3DObjectArrayField",
-   "x_ite/Basic/X3DTypedArrayField",
+   "x_ite/Base/X3DObjectArrayField",
+   "x_ite/Base/X3DTypedArrayField",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
@@ -24928,6 +25102,9 @@ function (SFBool,
       },
    });
 
+   for (const property of Reflect .ownKeys (MFNode .prototype))
+      Object .defineProperty (MFNode .prototype, property, { enumerable: false })
+
    function MFString (value)
    {
       return X3DObjectArrayField .call (this, arguments);
@@ -24983,6 +25160,9 @@ function (SFBool,
       },
    });
 
+   for (const property of Reflect .ownKeys (MFString .prototype))
+      Object .defineProperty (MFString .prototype, property, { enumerable: false })
+
    function ArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
    {
       function ArrayField (value)
@@ -25018,6 +25198,9 @@ function (SFBool,
             return Type;
          },
       });
+
+      for (const property of Reflect .ownKeys (ArrayField .prototype))
+         Object .defineProperty (ArrayField .prototype, property, { enumerable: false })
 
       return ArrayField;
    }
@@ -25057,6 +25240,9 @@ function (SFBool,
             return Type;
          },
       });
+
+      for (const property of Reflect .ownKeys (ArrayField .prototype))
+         Object .defineProperty (ArrayField .prototype, property, { enumerable: false })
 
       return ArrayField;
    }
@@ -25445,6 +25631,9 @@ function (X3DChildObject,
       },
    });
 
+   for (const property of Reflect .ownKeys (X3DEventObject .prototype))
+      Object .defineProperty (X3DEventObject .prototype, property, { enumerable: false })
+
    return X3DEventObject;
 });
 
@@ -25497,8 +25686,8 @@ function (X3DChildObject,
  ******************************************************************************/
 
 
- define ('x_ite/Basic/FieldArray',[
-   "x_ite/Configuration/X3DInfoArray",
+ define ('x_ite/Base/FieldArray',[
+   "x_ite/Base/X3DInfoArray",
 ],
 function (X3DInfoArray)
 {
@@ -25517,6 +25706,9 @@ function (X3DInfoArray)
          return "FieldArray";
       },
    });
+
+   for (const property of Reflect .ownKeys (FieldArray .prototype))
+      Object .defineProperty (FieldArray .prototype, property, { enumerable: false })
 
    return FieldArray;
 });
@@ -25570,12 +25762,12 @@ function (X3DInfoArray)
  ******************************************************************************/
 
 
-define ('x_ite/Basic/X3DBaseNode',[
+define ('x_ite/Base/X3DBaseNode',[
    "x_ite/Base/X3DEventObject",
    "x_ite/Base/Events",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
-   "x_ite/Basic/FieldArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Base/FieldArray",
    "x_ite/Fields",
    "x_ite/Bits/X3DConstants",
 ],
@@ -25604,7 +25796,7 @@ function (X3DEventObject,
 
    function X3DBaseNode (executionContext)
    {
-      if (this .hasOwnProperty (_executionContext))
+      if (this [_executionContext])
          return;
 
       X3DEventObject .call (this, executionContext .getBrowser ());
@@ -25691,7 +25883,12 @@ function (X3DEventObject,
 
             // Change function.
 
-            this .isLive = isLive;
+            Object .defineProperty (this, "isLive",
+            {
+               value: isLive,
+               enumerable: false,
+               configurable: true,
+            });
 
             // Add isLive event.
 
@@ -25782,112 +25979,6 @@ function (X3DEventObject,
       {
          return new (this .constructor) (executionContext);
       },
-      copy: function (instance)
-      {
-         const executionContext = instance .getBody ();
-
-         // First try to get a named node with the node's name.
-
-         const name = this .getName ();
-
-         if (name .length)
-         {
-            const namedNode = executionContext .getNamedNodes () .get (name);
-
-            if (namedNode)
-               return namedNode;
-         }
-
-         // Create copy.
-
-         const copy = this .create (executionContext);
-
-         if (name .length)
-            executionContext .updateNamedNode (name, copy);
-
-         // Default fields
-
-         for (const sourceField of this [_predefinedFields])
-         {
-            try
-            {
-               const destinationField = copy .getField (sourceField .getName ());
-
-               if (sourceField .hasReferences ())
-               {
-                  // IS relationship
-
-                  sourceField .getReferences () .forEach (function (originalReference)
-                  {
-                     try
-                     {
-                        destinationField .addReference (instance .getField (originalReference .getName ()));
-                     }
-                     catch (error)
-                     {
-                        console .error (error .message);
-                     }
-                  });
-               }
-               else
-               {
-                  if (sourceField .getAccessType () & X3DConstants .initializeOnly)
-                  {
-                     switch (sourceField .getType ())
-                     {
-                        case X3DConstants .SFNode:
-                        case X3DConstants .MFNode:
-                           destinationField .set (sourceField .copy (instance) .getValue ());
-                           break;
-                        default:
-                           destinationField .set (sourceField .getValue (), sourceField .length);
-                           break;
-                     }
-                  }
-               }
-
-               destinationField .setModificationTime (sourceField .getModificationTime ());
-            }
-            catch (error)
-            {
-               console .log (error .message);
-            }
-         }
-
-         // User-defined fields
-
-         for (const sourceField of this [_userDefinedFields])
-         {
-            const destinationField = sourceField .copy (instance);
-
-            copy .addUserDefinedField (sourceField .getAccessType (),
-                                       sourceField .getName (),
-                                       destinationField);
-
-            if (sourceField .hasReferences ())
-            {
-               // IS relationship
-
-               sourceField .getReferences () .forEach (function (originalReference)
-               {
-                  try
-                  {
-                     destinationField .addReference (instance .getField (originalReference .getName ()));
-                  }
-                  catch (error)
-                  {
-                     console .error ("No reference '" + originalReference .getName () + "' inside execution context " + instance .getTypeName () + " '" + instance .getName () + "'.");
-                  }
-               });
-            }
-
-            destinationField .setModificationTime (sourceField .getModificationTime ());
-         }
-
-         copy .setup ();
-
-         return copy;
-      },
       flatCopy: function (executionContext)
       {
          const copy = this .create (executionContext || this .getExecutionContext ());
@@ -25913,7 +26004,7 @@ function (X3DEventObject,
          {
             get: function () { return field; },
             set: function (value) { field .setValue (value); },
-            enumerable: true,
+            enumerable: false,
             configurable: false,
          });
       },
@@ -25929,7 +26020,7 @@ function (X3DEventObject,
          field .setName (name);
          field .setAccessType (accessType);
 
-         this .setField (name, field);
+         this .setField (name, field, false);
       },
       setField: function (name, field, userDefined)
       {
@@ -26156,6 +26247,9 @@ function (X3DEventObject,
          this [_cloneCount] -= count;
       },
    });
+
+   for (const property of Reflect .ownKeys (X3DBaseNode .prototype))
+      Object .defineProperty (X3DBaseNode .prototype, property, { enumerable: false })
 
    return X3DBaseNode;
 });
@@ -26761,7 +26855,7 @@ function (de, fr)
 
 define ('x_ite/Browser/Core/BrowserTimings',[
    "jquery",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "locale/gettext",
 ],
 function ($,
@@ -27190,9 +27284,9 @@ define ('x_ite/Browser/Core/TextureQuality',[],function ()
 
 define ('x_ite/Browser/Core/BrowserOptions',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Bits/X3DConstants",
    "x_ite/Browser/Core/PrimitiveQuality",
    "x_ite/Browser/Core/Shading",
@@ -27656,9 +27750,9 @@ function (Fields,
 
 define ('x_ite/Browser/Core/BrowserProperties',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
@@ -27755,9 +27849,9 @@ function (Fields,
 
 define ('x_ite/Browser/Core/RenderingProperties',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Bits/X3DConstants",
 ],
 function (Fields,
@@ -27877,7 +27971,7 @@ function (Fields,
 define ('x_ite/Browser/Core/Notification',[
    "jquery",
    "x_ite/Fields/SFString",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
 ],
 function ($,
           SFString,
@@ -30157,7 +30251,7 @@ e.webkitCancelFullScreen?(f="webkitfullscreenchange",g="webkitfullscreenerror"):
 
 define ('x_ite/Browser/Core/ContextMenu',[
    "jquery",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "locale/gettext",
    "contextMenu",
    "lib/jquery.fullscreen-min",
@@ -30897,6 +30991,9 @@ function (X3DConstants,
       },
    };
 
+   for (const property of Reflect .ownKeys (SupportedNodes .prototype))
+      Object .defineProperty (SupportedNodes .prototype, property, { enumerable: false })
+
    return new SupportedNodes ();
 });
 
@@ -30950,7 +31047,7 @@ function (X3DConstants,
 
 
 define ('x_ite/Execution/ImportedNode',[
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
@@ -31248,6 +31345,9 @@ function (X3DBaseNode,
       },
    });
 
+   for (const property of Reflect .ownKeys (ImportedNode .prototype))
+      Object .defineProperty (ImportedNode .prototype, property, { enumerable: false })
+
    return ImportedNode;
 });
 
@@ -31301,7 +31401,7 @@ function (X3DBaseNode,
 
 
 define ('x_ite/Prototype/ExternProtoDeclarationArray',[
-   "x_ite/Configuration/X3DInfoArray",
+   "x_ite/Base/X3DInfoArray",
 ],
 function (X3DInfoArray)
 {
@@ -31320,6 +31420,9 @@ function (X3DInfoArray)
          return "ExternProtoDeclarationArray";
       },
    });
+
+   for (const property of Reflect .ownKeys (ExternProtoDeclarationArray .prototype))
+      Object .defineProperty (ExternProtoDeclarationArray .prototype, property, { enumerable: false })
 
    return ExternProtoDeclarationArray;
 });
@@ -31374,7 +31477,7 @@ function (X3DInfoArray)
 
 
 define ('x_ite/Prototype/ProtoDeclarationArray',[
-   "x_ite/Configuration/X3DInfoArray",
+   "x_ite/Base/X3DInfoArray",
 ],
 function (X3DInfoArray)
 {
@@ -31393,6 +31496,9 @@ function (X3DInfoArray)
          return "ProtoDeclarationArray";
       },
    });
+
+   for (const property of Reflect .ownKeys (ProtoDeclarationArray .prototype))
+      Object .defineProperty (ProtoDeclarationArray .prototype, property, { enumerable: false })
 
    return ProtoDeclarationArray;
 });
@@ -31447,7 +31553,7 @@ function (X3DInfoArray)
 
 
 define ('x_ite/Routing/RouteArray',[
-   "x_ite/Configuration/X3DInfoArray",
+   "x_ite/Base/X3DInfoArray",
 ],
 function (X3DInfoArray)
 {
@@ -31466,6 +31572,9 @@ function (X3DInfoArray)
          return "RouteArray";
       },
    });
+
+   for (const property of Reflect .ownKeys (RouteArray .prototype))
+      Object .defineProperty (RouteArray .prototype, property, { enumerable: false })
 
    return RouteArray;
 });
@@ -31667,6 +31776,9 @@ function (X3DObject,
       }
    });
 
+   for (const property of Reflect .ownKeys (X3DRoute .prototype))
+      Object .defineProperty (X3DRoute .prototype, property, { enumerable: false })
+
    Object .defineProperty (X3DRoute .prototype, "sourceNode",
    {
       get: function ()
@@ -31843,7 +31955,7 @@ function (Fields)
 define ('x_ite/Execution/X3DExecutionContext',[
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Execution/ImportedNode",
    "x_ite/Prototype/ExternProtoDeclarationArray",
    "x_ite/Prototype/ProtoDeclarationArray",
@@ -32702,6 +32814,9 @@ function (SupportedNodes,
       },
    });
 
+   for (const property of Reflect .ownKeys (X3DExecutionContext .prototype))
+      Object .defineProperty (X3DExecutionContext .prototype, property, { enumerable: false })
+
    Object .defineProperty (X3DExecutionContext .prototype, "specificationVersion",
    {
       get: function () { return this .getSpecificationVersion (); },
@@ -32877,6 +32992,9 @@ function (X3DObject,
       },
    });
 
+   for (const property of Reflect .ownKeys (ComponentInfo .prototype))
+      Object .defineProperty (ComponentInfo .prototype, property, { enumerable: false })
+
    return ComponentInfo;
 });
 
@@ -32931,7 +33049,7 @@ function (X3DObject,
 
 define ('x_ite/Configuration/ComponentInfoArray',[
    "x_ite/Configuration/ComponentInfo",
-   "x_ite/Configuration/X3DInfoArray",
+   "x_ite/Base/X3DInfoArray",
 ],
 function (ComponentInfo,
           X3DInfoArray)
@@ -32960,6 +33078,9 @@ function (ComponentInfo,
          this .add (value .name, new ComponentInfo (value .name, value .level, value .title, value .providerUrl));
       },
    });
+
+   for (const property of Reflect .ownKeys (ComponentInfoArray .prototype))
+      Object .defineProperty (ComponentInfoArray .prototype, property, { enumerable: false })
 
    return ComponentInfoArray;
 });
@@ -33072,10 +33193,13 @@ function (X3DObject,
       },
    });
 
+   for (const property of Reflect .ownKeys (UnitInfo .prototype))
+      Object .defineProperty (UnitInfo .prototype, property, { enumerable: false })
+
    Object .defineProperty (UnitInfo .prototype, "conversion_factor",
    {
       get: function () { return this .conversionFactor; },
-      enumerable: true,
+      enumerable: false,
       configurable: false
    });
 
@@ -33132,7 +33256,7 @@ function (X3DObject,
 
 
 define ('x_ite/Configuration/UnitInfoArray',[
-   "x_ite/Configuration/X3DInfoArray",
+   "x_ite/Base/X3DInfoArray",
 ],
 function (X3DInfoArray)
 {
@@ -33151,6 +33275,9 @@ function (X3DInfoArray)
          return "UnitInfoArray";
       },
    });
+
+   for (const property of Reflect .ownKeys (UnitInfoArray .prototype))
+      Object .defineProperty (UnitInfoArray .prototype, property, { enumerable: false })
 
    return UnitInfoArray;
 });
@@ -33279,6 +33406,9 @@ function (X3DObject,
          stream .string += "/>";
       },
    });
+
+   for (const property of Reflect .ownKeys (ExportedNode .prototype))
+      Object .defineProperty (ExportedNode .prototype, property, { enumerable: false })
 
    return ExportedNode;
 });
@@ -33843,6 +33973,9 @@ function (SupportedNodes,
       },
    });
 
+   for (const property of Reflect .ownKeys (X3DScene .prototype))
+      Object .defineProperty (X3DScene .prototype, property, { enumerable: false })
+
    return X3DScene;
 });
 
@@ -33904,7 +34037,9 @@ function (Fields,
 {
 "use strict";
 
-   const _browser = Symbol .for ("X3DEventObject.browser");
+   const
+      _browser        = Symbol .for ("X3DEventObject.browser"),
+      _loadingObjects = Symbol ();
 
    function Scene (browser)
    {
@@ -33915,7 +34050,7 @@ function (Fields,
       this .addChildObjects ("initLoadCount", new Fields .SFInt32 (),  // Pre load count, must be zero before the scene can be passed to the requester.
                              "loadCount",     new Fields .SFInt32 ()); // Load count of all X3DUrlObjects.
 
-      this .loadingObjects = new Set ();
+      this [_loadingObjects] = new Set ();
    }
 
    Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
@@ -33927,7 +34062,7 @@ function (Fields,
          {
             const scene = this .getScene ();
 
-            for (const object of this .loadingObjects)
+            for (const object of this [_loadingObjects])
                scene .removeLoadCount (object);
          }
 
@@ -33937,7 +34072,7 @@ function (Fields,
          {
             const scene = this .getScene ();
 
-            for (const object of this .loadingObjects)
+            for (const object of this [_loadingObjects])
                scene .addLoadCount (object);
          }
       },
@@ -33951,12 +34086,12 @@ function (Fields,
       },
       addLoadCount: function (node)
       {
-         if (this .loadingObjects .has (node))
+         if (this [_loadingObjects] .has (node))
             return;
 
-         this .loadingObjects .add (node);
+         this [_loadingObjects] .add (node);
 
-         this .loadCount_ = this .loadingObjects .size;
+         this .loadCount_ = this [_loadingObjects] .size;
 
          const
             browser = this .getBrowser (),
@@ -33970,12 +34105,12 @@ function (Fields,
       },
       removeLoadCount: function (node)
       {
-         if (!this .loadingObjects .has (node))
+         if (!this [_loadingObjects] .has (node))
             return;
 
-         this .loadingObjects .delete (node);
+         this [_loadingObjects] .delete (node);
 
-         this .loadCount_ = this .loadingObjects .size;
+         this .loadCount_ = this [_loadingObjects] .size;
 
          const
             browser = this .getBrowser (),
@@ -33989,9 +34124,12 @@ function (Fields,
       },
       getLoadingObjects: function ()
       {
-         return this .loadingObjects;
+         return this [_loadingObjects];
       },
    });
+
+   for (const property of Reflect .ownKeys (Scene .prototype))
+      Object .defineProperty (Scene .prototype, property, { enumerable: false })
 
    return Scene;
 });
@@ -34456,7 +34594,7 @@ function (Fields,
 
 
 define ('x_ite/Components/Core/X3DNode',[
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Fields",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
@@ -34478,6 +34616,108 @@ function (X3DBaseNode,
    X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       constructor: X3DNode,
+      copy: function (instance)
+      {
+         const executionContext = instance .getBody ();
+
+         // First try to get a named node with the node's name.
+
+         const name = this .getName ();
+
+         if (name .length)
+         {
+            const namedNode = executionContext .getNamedNodes () .get (name);
+
+            if (namedNode)
+               return namedNode;
+         }
+
+         // Create copy.
+
+         const copy = this .create (executionContext);
+
+         if (name .length)
+            executionContext .updateNamedNode (name, copy);
+
+         // Default fields
+
+         for (const sourceField of this .getPredefinedFields ())
+         {
+            try
+            {
+               const destinationField = copy .getField (sourceField .getName ());
+
+               if (sourceField .hasReferences ())
+               {
+                  // IS relationship
+
+                  for (const originalReference of sourceField .getReferences ())
+                  {
+                     try
+                     {
+                        destinationField .addReference (instance .getField (originalReference .getName ()));
+                     }
+                     catch (error)
+                     {
+                        console .error (error .message);
+                     }
+                  }
+               }
+               else
+               {
+                  if (sourceField .getAccessType () & X3DConstants .initializeOnly)
+                  {
+                     switch (sourceField .getType ())
+                     {
+                        case X3DConstants .SFNode:
+                        case X3DConstants .MFNode:
+                           destinationField .set (sourceField .copy (instance) .getValue ());
+                           break;
+                        default:
+                           destinationField .set (sourceField .getValue (), sourceField .length);
+                           break;
+                     }
+                  }
+               }
+            }
+            catch (error)
+            {
+               console .log (error .message);
+            }
+         }
+
+         // User-defined fields
+
+         for (const sourceField of this .getUserDefinedFields ())
+         {
+            const destinationField = sourceField .copy (instance);
+
+            copy .addUserDefinedField (sourceField .getAccessType (),
+                                       sourceField .getName (),
+                                       destinationField);
+
+            if (sourceField .hasReferences ())
+            {
+               // IS relationship
+
+               for (const originalReference of sourceField .getReferences ())
+               {
+                  try
+                  {
+                     destinationField .addReference (instance .getField (originalReference .getName ()));
+                  }
+                  catch (error)
+                  {
+                     console .error ("No reference '" + originalReference .getName () + "' inside execution context " + instance .getTypeName () + " '" + instance .getName () + "'.");
+                  }
+               }
+            }
+         }
+
+         copy .setup ();
+
+         return copy;
+      },
       getDisplayName: (function ()
       {
          const _TrailingNumber = /_\d+$/;
@@ -35690,7 +35930,7 @@ function (X3DChildObject,
 
 define ('x_ite/Prototype/X3DProtoDeclarationNode',[
    "x_ite/Configuration/SupportedNodes",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Core/X3DPrototypeInstance",
    "x_ite/Fields/SFNodeCache",
    "x_ite/Bits/X3DConstants",
@@ -35739,6 +35979,9 @@ function (SupportedNodes,
          return this .createInstance (this .getExecutionContext ());
       },
    });
+
+   for (const property of Reflect .ownKeys (X3DProtoDeclarationNode .prototype))
+      Object .defineProperty (X3DProtoDeclarationNode .prototype, property, { enumerable: false })
 
    return X3DProtoDeclarationNode;
 });
@@ -35796,7 +36039,7 @@ define ('x_ite/Prototype/X3DExternProtoDeclaration',[
    "jquery",
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Prototype/X3DProtoDeclarationNode",
    "x_ite/Bits/X3DConstants",
@@ -36050,6 +36293,9 @@ function ($,
       },
    });
 
+   for (const property of Reflect .ownKeys (X3DExternProtoDeclaration .prototype))
+      Object .defineProperty (X3DExternProtoDeclaration .prototype, property, { enumerable: false })
+
    Object .defineProperty (X3DExternProtoDeclaration .prototype, "name",
    {
       get: function () { return this .getName (); },
@@ -36140,7 +36386,7 @@ function ($,
 define ('x_ite/Prototype/X3DProtoDeclaration',[
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Execution/X3DExecutionContext",
    "x_ite/Prototype/X3DProtoDeclarationNode",
    "x_ite/Bits/X3DConstants",
@@ -36411,6 +36657,9 @@ function (SupportedNodes,
          stream .string += "</ProtoDeclare>";
       },
    });
+
+   for (const property of Reflect .ownKeys (X3DProtoDeclaration .prototype))
+      Object .defineProperty (X3DProtoDeclaration .prototype, property, { enumerable: false })
 
    Object .defineProperty (X3DProtoDeclaration .prototype, "name",
    {
@@ -40943,9 +41192,9 @@ define ('x_ite/Bits/TraverseType',[],function ()
 {
 "use strict";
 
-   var i = 0;
+   let i = 0;
 
-   var TraverseType =
+   const TraverseType =
    {
       POINTER:   i ++,
       CAMERA:    i ++,
@@ -41790,8 +42039,8 @@ function (Fields,
 
 define ('x_ite/Components/Time/TimeSensor',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DSensorNode",
    "x_ite/Components/Time/X3DTimeDependentNode",
    "x_ite/Bits/X3DConstants",
@@ -42141,8 +42390,8 @@ function (X3DChildNode,
 
 define ('x_ite/Components/Interpolation/EaseInEaseOut',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -42287,8 +42536,8 @@ function (Fields,
 
 define ('x_ite/Components/Interpolation/PositionInterpolator',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector3",
@@ -42411,8 +42660,8 @@ function (Fields,
 
 define ('x_ite/Components/Interpolation/OrientationInterpolator',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Rotation4"
@@ -43070,8 +43319,8 @@ function (Fields,
 
 define ('x_ite/Components/Interpolation/ScalarInterpolator',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Algorithm",
@@ -43322,8 +43571,8 @@ function (Vector3)
 
 define ('x_ite/Components/Navigation/OrthoViewpoint',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Navigation/X3DViewpointNode",
    "x_ite/Components/Interpolation/ScalarInterpolator",
    "x_ite/Bits/X3DConstants",
@@ -45065,8 +45314,8 @@ function (X3DSensorNode,
 
 define ('x_ite/Components/Networking/LoadSensor',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Networking/X3DNetworkSensorNode",
    "x_ite/Bits/X3DCast",
    "x_ite/Bits/X3DConstants",
@@ -45320,8 +45569,8 @@ function (Fields,
 
 define ('x_ite/Components/Shaders/ComposedShader',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shaders/X3DShaderNode",
    "x_ite/Components/Shaders/X3DProgrammableShaderObject",
    "x_ite/Components/Networking/LoadSensor",
@@ -46101,8 +46350,8 @@ function (ShaderSource,
 
 define ('x_ite/Parser/XMLParser',[
    "jquery",
-   "x_ite/Basic/X3DField",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DField",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Core/X3DPrototypeInstance",
    "x_ite/Fields",
    "x_ite/Parser/Parser",
@@ -46126,7 +46375,9 @@ function ($,
 {
 "use strict";
 
-   var AccessType =
+   const _dom = Symbol .for ("X_ITE.dom");
+
+   const AccessType =
    {
       initializeOnly: X3DConstants .initializeOnly,
       inputOnly:      X3DConstants .inputOnly,
@@ -46157,9 +46408,9 @@ function ($,
       constructor: XMLParser,
       parseIntoScene: function (xmlElement, success, error)
       {
-         this .scene .dom = xmlElement;
-         this .success    = success;
-         this .error      = error;
+         this .scene [_dom] = xmlElement;
+         this .success      = success;
+         this .error        = error;
 
          this .getScene () .setEncoding ("XML");
          this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));
@@ -53707,6 +53958,9 @@ function (ViewVolume,
       },
    };
 
+   for (const property of Reflect .ownKeys (TextureBuffer .prototype))
+      Object .defineProperty (TextureBuffer .prototype, property, { enumerable: false })
+
    return TextureBuffer;
 });
 
@@ -56690,7 +56944,7 @@ function (X3DGroupingNode,
 
 
 define ('x_ite/Execution/BindableStack',[
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
 ],
 function (X3DBaseNode)
 {
@@ -56810,6 +57064,9 @@ function (X3DBaseNode)
       },
    });
 
+   for (const property of Reflect .ownKeys (BindableStack .prototype))
+      Object .defineProperty (BindableStack .prototype, property, { enumerable: false })
+
    return BindableStack;
 });
 
@@ -56863,7 +57120,7 @@ function (X3DBaseNode)
 
 
 define ('x_ite/Execution/BindableList',[
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Core/X3DPrototypeInstance",
 ],
 function (X3DBaseNode,
@@ -57001,6 +57258,9 @@ function (X3DBaseNode,
       },
    });
 
+   for (const property of Reflect .ownKeys (BindableList .prototype))
+      Object .defineProperty (BindableList .prototype, property, { enumerable: false })
+
    // Compares two arrays.
 
    function equals (lhs, rhs)
@@ -57071,8 +57331,8 @@ function (X3DBaseNode,
 
 define ('x_ite/Components/Navigation/NavigationInfo',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DBindableNode",
    "x_ite/Bits/TraverseType",
    "x_ite/Bits/X3DConstants",
@@ -57667,8 +57927,8 @@ function (X3DConstants,
 
 define ('x_ite/Components/EnvironmentalEffects/Fog',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DBindableNode",
    "x_ite/Components/EnvironmentalEffects/X3DFogObject",
    "x_ite/Bits/TraverseType",
@@ -59139,8 +59399,8 @@ function (X3DSingleTextureNode,
 define ('x_ite/Components/Texturing/ImageTexture',[
    "jquery",
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DTexture2DNode",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Bits/X3DConstants",
@@ -59381,8 +59641,8 @@ function ($,
 
 define ('x_ite/Components/EnvironmentalEffects/Background',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/EnvironmentalEffects/X3DBackgroundNode",
    "x_ite/Components/Texturing/ImageTexture",
    "x_ite/Bits/X3DConstants",
@@ -59932,8 +60192,8 @@ function (X3DNode,
 
 define ('x_ite/Components/Navigation/Viewpoint',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Navigation/X3DViewpointNode",
    "x_ite/Components/Interpolation/ScalarInterpolator",
    "x_ite/Bits/X3DConstants",
@@ -60135,8 +60395,8 @@ function (Fields,
 
 define ('x_ite/Components/Grouping/Group',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -60236,8 +60496,8 @@ function (Fields,
 
 define ('x_ite/Components/Layering/Layer',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Layering/X3DLayerNode",
    "x_ite/Components/Navigation/Viewpoint",
    "x_ite/Components/Grouping/Group",
@@ -60354,8 +60614,8 @@ function (Fields,
 
 define ('x_ite/Components/Layering/LayerSet',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Layering/Layer",
    "x_ite/Bits/X3DCast",
@@ -60579,7 +60839,7 @@ function (Fields,
 define ('x_ite/Execution/X3DWorld',[
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields/SFNode",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Layering/LayerSet",
    "x_ite/Components/Layering/Layer",
    "x_ite/Bits/X3DCast",
@@ -60692,6 +60952,9 @@ function (SupportedNodes,
          this .layerSet .traverse (type, renderObject);
       },
    });
+
+   for (const property of Reflect .ownKeys (X3DWorld .prototype))
+      Object .defineProperty (X3DWorld .prototype, property, { enumerable: false })
 
    return X3DWorld;
 });
@@ -64115,6 +64378,8 @@ function ($,
 
    BinaryTransport ($);
 
+   const _dom = Symbol .for ("X_ITE.dom");
+
    const
       ECMAScript    = /^\s*(?:vrmlscript|javascript|ecmascript)\:([^]*)$/,
       dataURL       = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,([^]*)$/,
@@ -64268,7 +64533,7 @@ function ($,
             new XMLParser (scene) .parseIntoScene (dom, success, error);
 
             //AP: add reference to dom for later access.
-            this .node .dom = dom;
+            this .node [_dom] = dom;
          }
          catch (exception)
          {
@@ -64286,7 +64551,7 @@ function ($,
                success = this .setScene .bind (this, scene, success, error);
 
             //AP: add reference to dom for later access.
-            this .node .dom = new JSONParser (scene) .parseIntoScene (jsobj, success, error);
+            this .node [_dom] = new JSONParser (scene) .parseIntoScene (jsobj, success, error);
          }
          catch (exception)
          {
@@ -64630,6 +64895,9 @@ function ($,
       },
    });
 
+   for (const property of Reflect .ownKeys (FileLoader .prototype))
+      Object .defineProperty (FileLoader .prototype, property, { enumerable: false })
+
    return FileLoader;
 });
 
@@ -64684,8 +64952,8 @@ function ($,
 
 define ('x_ite/Components/Shaders/ShaderPart',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Browser/Shaders/Shader",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Networking/X3DUrlObject",
@@ -66055,8 +66323,8 @@ define ('x_ite/Browser/Shape/AlphaMode',[],function ()
 
 define ('x_ite/Components/Shape/Appearance',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DAppearanceNode",
    "x_ite/Bits/X3DCast",
    "x_ite/Bits/X3DConstants",
@@ -66435,8 +66703,8 @@ function (Fields,
 
 define ('x_ite/Components/Shape/PointProperties',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -66598,8 +66866,8 @@ function (Fields,
 
 define ('x_ite/Components/Shape/LineProperties',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -66735,8 +67003,8 @@ function (Fields,
 
 define ('x_ite/Components/Shape/FillProperties',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -67094,8 +67362,8 @@ function (X3DMaterialNode,
 
  define ('x_ite/Components/Shape/UnlitMaterial',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DOneSidedMaterialNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -67204,8 +67472,8 @@ function (Fields,
 
 define ('x_ite/Components/Texturing/TextureProperties',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Algorithm",
@@ -68138,8 +68406,8 @@ define ('standard/Math/Algorithms/QuickSort',[],function ()
 
 define ('x_ite/Components/Shape/Shape',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DShapeNode",
    "x_ite/Bits/TraverseType",
    "x_ite/Bits/X3DConstants",
@@ -69932,8 +70200,8 @@ function (X3DGeometryNode,
 
 define ('x_ite/Components/Rendering/IndexedLineSet',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
    "x_ite/Bits/X3DCast",
    "x_ite/Bits/X3DConstants",
@@ -70398,8 +70666,8 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/Color',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DColorNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector4",
@@ -70763,8 +71031,8 @@ function (X3DGeometricPropertyNode,
 
 define ('x_ite/Components/Rendering/Coordinate',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DCoordinateNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -71340,8 +71608,8 @@ function (X3DGeometryNode,
 
 define ('x_ite/Components/Geometry3D/IndexedFaceSet',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DComposedGeometryNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector3",
@@ -72018,8 +72286,8 @@ function (X3DTextureCoordinateNode,
 
 define ('x_ite/Components/Texturing/TextureCoordinate',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector4",
@@ -72196,7 +72464,7 @@ function (Fields,
 
 define ('x_ite/Browser/Geometry3D/BoxOptions',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Geometry3D/IndexedFaceSet",
    "x_ite/Components/Rendering/Coordinate",
    "x_ite/Components/Texturing/TextureCoordinate",
@@ -72336,7 +72604,7 @@ function (Fields,
 
 define ('x_ite/Browser/Geometry3D/ConeOptions',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
 ],
 function (Fields,
           X3DBaseNode)
@@ -72422,7 +72690,7 @@ function (Fields,
 
 define ('x_ite/Browser/Geometry3D/CylinderOptions',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
 ],
 function (Fields,
           X3DBaseNode)
@@ -72508,7 +72776,7 @@ function (Fields,
 
 define ('x_ite/Browser/Geometry3D/QuadSphereOptions',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Geometry3D/IndexedFaceSet",
    "x_ite/Components/Rendering/Coordinate",
    "x_ite/Components/Texturing/TextureCoordinate",
@@ -72911,7 +73179,7 @@ function (BoxOptions,
 
 define ('x_ite/Browser/PointingDeviceSensor/PointingDevice',[
    "jquery",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
 ],
 function ($,
           X3DBaseNode)
@@ -73504,7 +73772,7 @@ function ($,
 
 
 define ('x_ite/Browser/Navigation/X3DViewer',[
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Navigation/OrthoViewpoint",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
@@ -74127,8 +74395,8 @@ function (X3DFollowerNode,
 
 define ('x_ite/Components/Followers/PositionChaser',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DChaserNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector3",
@@ -74234,8 +74502,8 @@ function (Fields,
 
 define ('x_ite/Components/Followers/OrientationChaser',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DChaserNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Rotation4",
@@ -74592,8 +74860,8 @@ define('jquery-mousewheel', ['jquery-mousewheel/jquery.mousewheel'], function (m
 define ('x_ite/Browser/Navigation/ExamineViewer',[
    "jquery",
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Bits/X3DConstants",
    "x_ite/Browser/Navigation/X3DViewer",
    "x_ite/Components/Followers/PositionChaser",
@@ -76186,8 +76454,8 @@ function ($,
 
 define ('x_ite/Browser/Navigation/WalkViewer',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Browser/Navigation/X3DFlyViewer",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector3",
@@ -76319,8 +76587,8 @@ function (Fields,
 
 define ('x_ite/Browser/Navigation/FlyViewer',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Bits/X3DConstants",
    "x_ite/Browser/Navigation/X3DFlyViewer",
    "standard/Math/Numbers/Vector3",
@@ -76424,8 +76692,8 @@ function (Fields,
 define ('x_ite/Browser/Navigation/PlaneViewer',[
    "jquery",
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Bits/X3DConstants",
    "x_ite/Browser/Navigation/X3DViewer",
    "x_ite/Components/Navigation/Viewpoint",
@@ -76680,8 +76948,8 @@ function ($,
 
 define ('x_ite/Browser/Navigation/NoneViewer',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Bits/X3DConstants",
    "x_ite/Browser/Navigation/X3DViewer",
 ],
@@ -76761,8 +77029,8 @@ function (Fields,
 define ('x_ite/Browser/Navigation/LookAtViewer',[
    "jquery",
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Bits/X3DConstants",
    "x_ite/Browser/Navigation/X3DViewer",
    "x_ite/Components/Followers/PositionChaser",
@@ -77502,8 +77770,8 @@ function (X3DChildNode,
 
 define ('x_ite/Components/Lighting/DirectionalLight',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Lighting/X3DLightNode",
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Bits/TraverseType",
@@ -78066,8 +78334,8 @@ function (Fields,
 
 define ('x_ite/Components/Layering/Viewport',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Layering/X3DViewportNode",
    "x_ite/Bits/X3DConstants",
    "x_ite/Bits/TraverseType",
@@ -80505,8 +80773,8 @@ function (PrimitiveQuality,
 
 define ('x_ite/Components/Text/FontStyle',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Text/X3DFontStyleNode",
    "x_ite/Browser/Text/PolygonText",
    "x_ite/Bits/X3DConstants",
@@ -95397,8 +95665,8 @@ function (X3DTextureTransformNode,
 
 define ('x_ite/Components/Texturing/TextureTransform',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DSingleTextureTransformNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector2",
@@ -95946,7 +96214,7 @@ function (Vector3)
 define ('x_ite/Browser/X3DBrowserContext',[
    "jquery",
    "x_ite/Fields/SFTime",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Browser/Core/X3DCoreContext",
    "x_ite/Routing/X3DRoutingContext",
    "x_ite/Browser/Scripting/X3DScriptingContext",
@@ -96334,8 +96602,8 @@ function (X3DConstants)
 
 define ('x_ite/Components/Core/MetadataBoolean',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Core/X3DMetadataObject",
    "x_ite/Bits/X3DConstants",
@@ -96435,8 +96703,8 @@ function (Fields,
 
 define ('x_ite/Components/Core/MetadataDouble',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Core/X3DMetadataObject",
    "x_ite/Bits/X3DConstants",
@@ -96536,8 +96804,8 @@ function (Fields,
 
 define ('x_ite/Components/Core/MetadataFloat',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Core/X3DMetadataObject",
    "x_ite/Bits/X3DConstants",
@@ -96637,8 +96905,8 @@ function (Fields,
 
 define ('x_ite/Components/Core/MetadataInteger',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Core/X3DMetadataObject",
    "x_ite/Bits/X3DConstants",
@@ -96738,8 +97006,8 @@ function (Fields,
 
 define ('x_ite/Components/Core/MetadataSet',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Core/X3DMetadataObject",
    "x_ite/Bits/X3DConstants",
@@ -96839,8 +97107,8 @@ function (Fields,
 
 define ('x_ite/Components/Core/MetadataString',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Core/X3DMetadataObject",
    "x_ite/Bits/X3DConstants",
@@ -97013,8 +97281,8 @@ function (X3DChildNode,
 
 define ('x_ite/Components/Core/WorldInfo',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DInfoNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -97233,8 +97501,8 @@ function (SupportedNodes,
 
 define ('x_ite/Components/EnvironmentalEffects/FogCoordinate',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometricPropertyNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -97384,8 +97652,8 @@ function (Fields,
 
 define ('x_ite/Components/EnvironmentalEffects/LocalFog',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/EnvironmentalEffects/X3DFogObject",
    "x_ite/Bits/X3DConstants",
@@ -97507,8 +97775,8 @@ function (Fields,
 
 define ('x_ite/Components/EnvironmentalEffects/TextureBackground',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/EnvironmentalEffects/X3DBackgroundNode",
    "x_ite/Bits/X3DCast",
    "x_ite/Bits/X3DConstants",
@@ -97892,8 +98160,8 @@ function (Fields,
 
 define ('x_ite/Components/EnvironmentalSensor/ProximitySensor',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
    "x_ite/Bits/TraverseType",
    "x_ite/Bits/X3DConstants",
@@ -98186,8 +98454,8 @@ function (Fields,
 
 define ('x_ite/Components/EnvironmentalSensor/TransformSensor',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
    "x_ite/Bits/TraverseType",
    "x_ite/Bits/X3DConstants",
@@ -98508,8 +98776,8 @@ function (Fields,
 
 define ('x_ite/Components/EnvironmentalSensor/VisibilitySensor',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
    "x_ite/Bits/TraverseType",
    "x_ite/Bits/X3DConstants",
@@ -98768,8 +99036,8 @@ function (SupportedNodes,
 
 define ('x_ite/Components/Followers/ColorChaser',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DChaserNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Color3",
@@ -99094,8 +99362,8 @@ function (X3DFollowerNode,
 
 define ('x_ite/Components/Followers/ColorDamper',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DDamperNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Color3",
@@ -99506,8 +99774,8 @@ function (X3DArrayFollowerTemplate)
 
 define ('x_ite/Components/Followers/CoordinateChaser',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DChaserNode",
    "x_ite/Browser/Followers/X3DArrayChaserTemplate",
    "x_ite/Bits/X3DConstants",
@@ -99619,8 +99887,8 @@ function (Fields,
 
 define ('x_ite/Components/Followers/CoordinateDamper',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DDamperNode",
    "x_ite/Browser/Followers/X3DArrayFollowerTemplate",
    "x_ite/Bits/X3DConstants",
@@ -99734,8 +100002,8 @@ function (Fields,
 
 define ('x_ite/Components/Followers/OrientationDamper',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DDamperNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Rotation4",
@@ -99863,8 +100131,8 @@ function (Fields,
 
 define ('x_ite/Components/Followers/PositionChaser2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DChaserNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector2",
@@ -99970,8 +100238,8 @@ function (Fields,
 
 define ('x_ite/Components/Followers/PositionDamper',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DDamperNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector3",
@@ -100079,8 +100347,8 @@ function (Fields,
 
 define ('x_ite/Components/Followers/PositionDamper2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DDamperNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector2",
@@ -100188,8 +100456,8 @@ function (Fields,
 
 define ('x_ite/Components/Followers/ScalarChaser',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DChaserNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Algorithm",
@@ -100323,8 +100591,8 @@ function (Fields,
 
 define ('x_ite/Components/Followers/ScalarDamper',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DDamperNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Algorithm",
@@ -100448,8 +100716,8 @@ function (Fields,
 
 define ('x_ite/Components/Followers/TexCoordChaser2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DChaserNode",
    "x_ite/Browser/Followers/X3DArrayChaserTemplate",
    "x_ite/Bits/X3DConstants",
@@ -100561,8 +100829,8 @@ function (Fields,
 
 define ('x_ite/Components/Followers/TexCoordDamper2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DDamperNode",
    "x_ite/Browser/Followers/X3DArrayFollowerTemplate",
    "x_ite/Bits/X3DConstants",
@@ -100797,8 +101065,8 @@ function (SupportedNodes,
 
 define ('x_ite/Components/Geometry3D/Box',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector3",
@@ -100944,8 +101212,8 @@ function (Fields,
 
 define ('x_ite/Components/Geometry3D/Cone',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Complex",
@@ -101195,8 +101463,8 @@ function (Fields,
 
 define ('x_ite/Components/Geometry3D/Cylinder',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Complex",
@@ -101505,8 +101773,8 @@ function (Fields,
 
 define ('x_ite/Components/Geometry3D/ElevationGrid',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Bits/X3DCast",
    "x_ite/Bits/X3DConstants",
@@ -101954,8 +102222,8 @@ function (Fields,
 
 define ('x_ite/Components/Geometry3D/Extrusion',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Geometry/Triangle3",
@@ -102667,8 +102935,8 @@ function (Fields,
 
 define ('x_ite/Components/Geometry3D/Sphere',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -102904,8 +103172,8 @@ function (SupportedNodes,
 
 define ('x_ite/Components/Grouping/StaticGroup',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/Grouping/X3DBoundedObject",
    "x_ite/Components/Grouping/Group",
@@ -103221,8 +103489,8 @@ function (Fields,
 
 define ('x_ite/Components/Grouping/Switch',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Bits/TraverseType",
    "x_ite/Bits/X3DCast",
@@ -103774,8 +104042,8 @@ function (X3DTransformMatrix3DNode,
 
 define ('x_ite/Components/Grouping/Transform',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DTransformNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -103974,8 +104242,8 @@ function (SupportedNodes,
 
 define ('x_ite/Components/Interpolation/ColorInterpolator',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Color3",
@@ -104105,8 +104373,8 @@ function (Fields,
 
 define ('x_ite/Components/Interpolation/CoordinateInterpolator',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Algorithm",
@@ -104236,8 +104504,8 @@ function (Fields,
 
 define ('x_ite/Components/Interpolation/CoordinateInterpolator2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Algorithm",
@@ -104364,8 +104632,8 @@ function (Fields,
 
 define ('x_ite/Components/Interpolation/NormalInterpolator',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector3",
@@ -104517,8 +104785,8 @@ function (Fields,
 
 define ('x_ite/Components/Interpolation/PositionInterpolator2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector2",
@@ -105005,8 +105273,8 @@ function (CatmullRomSplineInterpolatorTemplate,
 
 define ('x_ite/Components/Interpolation/SplinePositionInterpolator',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Browser/Interpolation/CatmullRomSplineInterpolator3",
    "x_ite/Bits/X3DConstants",
@@ -105212,8 +105480,8 @@ function (CatmullRomSplineInterpolatorTemplate,
 
 define ('x_ite/Components/Interpolation/SplinePositionInterpolator2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Browser/Interpolation/CatmullRomSplineInterpolator2",
    "x_ite/Bits/X3DConstants",
@@ -105456,8 +105724,8 @@ function (CatmullRomSplineInterpolator)
 
 define ('x_ite/Components/Interpolation/SplineScalarInterpolator',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Browser/Interpolation/CatmullRomSplineInterpolator1",
    "x_ite/Bits/X3DConstants",
@@ -105719,8 +105987,8 @@ function (Rotation4)
 
 define ('x_ite/Components/Interpolation/SquadOrientationInterpolator',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Browser/Interpolation/SquatInterpolator",
    "x_ite/Bits/X3DConstants",
@@ -106052,8 +106320,8 @@ function (SupportedNodes,
 
 define ('x_ite/Components/Lighting/PointLight',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Lighting/X3DLightNode",
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Bits/TraverseType",
@@ -106428,8 +106696,8 @@ function (Fields,
 
 define ('x_ite/Components/Lighting/SpotLight',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Lighting/X3DLightNode",
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Bits/TraverseType",
@@ -106912,8 +107180,8 @@ function (SupportedNodes,
 
 define ('x_ite/Components/Navigation/Billboard',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Bits/X3DConstants",
    "x_ite/Bits/TraverseType",
@@ -107109,8 +107377,8 @@ function (Fields,
 
 define ('x_ite/Components/Navigation/Collision',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Components/Core/X3DSensorNode",
    "x_ite/Bits/X3DCast",
@@ -107289,8 +107557,8 @@ function (Fields,
 
 define ('x_ite/Components/Navigation/LOD',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Bits/X3DCast",
    "x_ite/Bits/TraverseType",
@@ -107496,7 +107764,7 @@ function (Fields,
                   case 1:
                      return 0;
                   case 2:
-                     return (this .frameRate > FRAME_RATE_MAX) * 1;
+                     return +(this .frameRate > FRAME_RATE_MAX);
                   default:
                   {
                      const fraction = 1 - Algorithm .clamp ((this .frameRate - FRAME_RATE_MIN) / (FRAME_RATE_MAX - FRAME_RATE_MIN), 0, 1);
@@ -107662,8 +107930,8 @@ function (Fields,
 
 define ('x_ite/Components/Navigation/ViewpointGroup',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/EnvironmentalSensor/ProximitySensor",
    "x_ite/Bits/TraverseType",
@@ -108312,8 +108580,8 @@ function (X3DPointingDeviceSensorNode,
 
 define ('x_ite/Components/PointingDeviceSensor/TouchSensor',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Matrix4",
@@ -108442,8 +108710,8 @@ function (Fields,
 
 define ('x_ite/Components/Networking/Anchor',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Components/PointingDeviceSensor/TouchSensor",
@@ -108644,8 +108912,8 @@ function (Fields,
 
 define ('x_ite/Components/Networking/Inline',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Components/Grouping/X3DBoundedObject",
@@ -109198,8 +109466,8 @@ function (Vector3,
 
 define ('x_ite/Components/PointingDeviceSensor/CylinderSensor',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/PointingDeviceSensor/X3DDragSensorNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector3",
@@ -109525,8 +109793,8 @@ function (Fields,
 
 define ('x_ite/Components/PointingDeviceSensor/PlaneSensor',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/PointingDeviceSensor/X3DDragSensorNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Rotation4",
@@ -110045,8 +110313,8 @@ function (Vector3)
 
 define ('x_ite/Components/PointingDeviceSensor/SphereSensor',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/PointingDeviceSensor/X3DDragSensorNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector3",
@@ -110376,8 +110644,8 @@ function (SupportedNodes,
 
 define ('x_ite/Components/Rendering/ClipPlane',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector3",
@@ -110561,8 +110829,8 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/ColorRGBA',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DColorNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector4",
@@ -110737,8 +111005,8 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/IndexedTriangleFanSet',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DComposedGeometryNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -110900,8 +111168,8 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/IndexedTriangleSet',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DComposedGeometryNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -111020,8 +111288,8 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/IndexedTriangleStripSet',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DComposedGeometryNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -111191,8 +111459,8 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/LineSet',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
    "x_ite/Bits/X3DCast",
    "x_ite/Bits/X3DConstants",
@@ -111505,8 +111773,8 @@ function (X3DGeometricPropertyNode,
 
 define ('x_ite/Components/Rendering/Normal',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DNormalNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector3",
@@ -111667,8 +111935,8 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/PointSet',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
    "x_ite/Bits/X3DCast",
    "x_ite/Bits/X3DConstants",
@@ -111882,8 +112150,8 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/TriangleFanSet',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DComposedGeometryNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -112027,8 +112295,8 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/TriangleSet',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DComposedGeometryNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -112142,8 +112410,8 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/TriangleStripSet',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DComposedGeometryNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -112497,8 +112765,8 @@ function (X3DGeometricPropertyNode,
 
 define ('x_ite/Components/Shaders/FloatVertexAttribute',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shaders/X3DVertexAttributeNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Algorithm",
@@ -112649,8 +112917,8 @@ function (Fields,
 
 define ('x_ite/Components/Shaders/Matrix3VertexAttribute',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shaders/X3DVertexAttributeNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Matrix3",
@@ -112794,8 +113062,8 @@ function (Fields,
 
 define ('x_ite/Components/Shaders/Matrix4VertexAttribute',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shaders/X3DVertexAttributeNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -112937,8 +113205,8 @@ function (Fields,
 
 define ('x_ite/Components/Shaders/PackagedShader',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shaders/X3DShaderNode",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Components/Shaders/X3DProgrammableShaderObject",
@@ -113055,8 +113323,8 @@ function (Fields,
 
 define ('x_ite/Components/Shaders/ProgramShader',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shaders/X3DShaderNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -113154,8 +113422,8 @@ function (Fields,
 
 define ('x_ite/Components/Shaders/ShaderProgram',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Components/Shaders/X3DProgrammableShaderObject",
@@ -113372,8 +113640,8 @@ function (SupportedNodes,
 
 define ('x_ite/Components/Shape/Material',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DOneSidedMaterialNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Algorithm",
@@ -113554,8 +113822,8 @@ function (Fields,
 
 define ('x_ite/Components/Shape/TwoSidedMaterial',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DMaterialNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Algorithm",
@@ -114179,8 +114447,8 @@ function (Fields,
 define ('x_ite/Components/Sound/AudioClip',[
    "jquery",
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Sound/X3DSoundSourceNode",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Bits/X3DConstants",
@@ -114447,8 +114715,8 @@ function (X3DChildNode,
 
 define ('x_ite/Components/Sound/Sound',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Sound/X3DSoundNode",
    "x_ite/Bits/X3DCast",
    "x_ite/Bits/TraverseType",
@@ -114844,8 +115112,8 @@ function (SupportedNodes,
 
 define ('x_ite/Components/Text/Text',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Bits/X3DCast",
    "x_ite/Bits/X3DConstants",
@@ -115121,8 +115389,8 @@ function (SupportedNodes,
 define ('x_ite/Components/Texturing/MovieTexture',[
    "jquery",
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DTexture2DNode",
    "x_ite/Components/Sound/X3DSoundSourceNode",
    "x_ite/Components/Networking/X3DUrlObject",
@@ -115367,8 +115635,8 @@ function ($,
 
 define ('x_ite/Components/Texturing/MultiTexture',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DTextureNode",
    "x_ite/Bits/X3DConstants",
    "x_ite/Bits/X3DCast",
@@ -115694,8 +115962,8 @@ function (Fields,
 
 define ('x_ite/Components/Texturing/MultiTextureCoordinate',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DTextureCoordinateNode",
    "x_ite/Bits/X3DConstants",
    "x_ite/Bits/X3DCast",
@@ -115874,8 +116142,8 @@ function (Fields,
 
 define ('x_ite/Components/Texturing/MultiTextureTransform',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DTextureTransformNode",
    "x_ite/Bits/X3DConstants",
    "x_ite/Bits/X3DCast",
@@ -116013,8 +116281,8 @@ function (Fields,
 define ('x_ite/Components/Texturing/PixelTexture',[
    "jquery",
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DTexture2DNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Algorithm",
@@ -116296,8 +116564,8 @@ function ($,
 
 define ('x_ite/Components/Texturing/TextureCoordinateGenerator',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
    "x_ite/Bits/X3DConstants",
    "x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType",
@@ -116798,6 +117066,9 @@ function (X3DObject)
       },
    });
 
+   for (const property of Reflect .ownKeys (ProfileInfo .prototype))
+      Object .defineProperty (ProfileInfo .prototype, property, { enumerable: false })
+
    return ProfileInfo;
 });
 
@@ -116853,7 +117124,7 @@ function (X3DObject)
 define ('x_ite/Configuration/ProfileInfoArray',[
    "x_ite/Configuration/ComponentInfoArray",
    "x_ite/Configuration/ProfileInfo",
-   "x_ite/Configuration/X3DInfoArray",
+   "x_ite/Base/X3DInfoArray",
 ],
 function (ComponentInfoArray,
           ProfileInfo,
@@ -116881,6 +117152,9 @@ function (ComponentInfoArray,
                                                     new ComponentInfoArray (profile .components)));
       },
    });
+
+   for (const property of Reflect .ownKeys (ProfileInfoArray .prototype))
+      Object .defineProperty (ProfileInfoArray .prototype, property, { enumerable: false })
 
    return ProfileInfoArray;
 });
@@ -118488,10 +118762,10 @@ define ('standard/Time/MicroTime',[],function ()
 
 define ('x_ite/X3D',[
    "jquery",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
-   "x_ite/Basic/X3DField",
-   "x_ite/Basic/X3DArrayField",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Base/X3DField",
+   "x_ite/Base/X3DArrayField",
    "x_ite/Fields",
    "x_ite/Browser/X3DBrowser",
    "x_ite/Configuration/ComponentInfo",

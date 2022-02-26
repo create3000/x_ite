@@ -275,8 +275,8 @@ function (X3DChildNode,
 
 define ('x_ite/Components/ProjectiveTextureMapping/TextureProjectorPerspective',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ProjectiveTextureMapping/X3DTextureProjectorNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Geometry/Camera",
@@ -503,8 +503,8 @@ function (Fields,
 
 define ('x_ite/Components/ProjectiveTextureMapping/TextureProjectorParallel',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ProjectiveTextureMapping/X3DTextureProjectorNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Geometry/Camera",

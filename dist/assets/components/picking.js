@@ -700,8 +700,8 @@ function (Fields,
 
 define ('x_ite/Components/Picking/LinePickSensor',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Picking/X3DPickSensorNode",
    "x_ite/Bits/X3DConstants",
    "x_ite/Browser/Picking/IntersectionType",
@@ -1140,8 +1140,8 @@ function (X3DConstants)
 
 define ('x_ite/Components/Picking/PickableGroup',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Components/Picking/X3DPickableObject",
    "x_ite/Browser/Picking/MatchCriterion",
@@ -1557,8 +1557,8 @@ function (Vector3,
 
 define ('x_ite/Components/Picking/PointPickSensor',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Picking/X3DPickSensorNode",
    "x_ite/Bits/X3DCast",
    "x_ite/Bits/X3DConstants",
@@ -1914,8 +1914,8 @@ function (Fields,
 
 define ('x_ite/Components/Picking/PrimitivePickSensor',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Picking/X3DPickSensorNode",
    "x_ite/Bits/X3DConstants",
    "x_ite/Browser/Picking/IntersectionType",
@@ -2186,8 +2186,8 @@ function (Fields,
 
 define ('x_ite/Components/Picking/VolumePickSensor',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Picking/X3DPickSensorNode",
    "x_ite/Bits/X3DCast",
    "x_ite/Bits/X3DConstants",

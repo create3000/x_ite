@@ -57,8 +57,8 @@ const
 
 define ('x_ite/Components/X_ITE/BlendMode',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
    "x_ite/Bits/TraverseType",
    "x_ite/Bits/X3DConstants",

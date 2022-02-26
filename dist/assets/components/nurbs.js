@@ -57,8 +57,8 @@ const
 
 define ('x_ite/Components/NURBS/Contour2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Bits/X3DConstants",
    "x_ite/Bits/X3DCast",
@@ -271,8 +271,8 @@ function (X3DNode,
 
 define ('x_ite/Components/NURBS/ContourPolyline2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/NURBS/X3DNurbsControlCurveNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector3",
@@ -432,8 +432,8 @@ function (Fields,
 
 define ('x_ite/Components/NURBS/CoordinateDouble',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DCoordinateNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -2763,8 +2763,8 @@ define('nurbs', ['nurbs/nurbs'], function (main) { return main; });
 define ('x_ite/Components/NURBS/NurbsCurve',[
    "x_ite/Bits/X3DCast",
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/NURBS/X3DParametricGeometryNode",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
    "x_ite/Bits/X3DConstants",
@@ -2996,8 +2996,8 @@ function (X3DCast,
 
 define ('x_ite/Components/NURBS/NurbsCurve2D',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/NURBS/X3DNurbsControlCurveNode",
    "x_ite/Bits/X3DConstants",
    "x_ite/Browser/NURBS/NURBS",
@@ -3209,8 +3209,8 @@ function (Fields,
 
 define ('x_ite/Components/NURBS/NurbsOrientationInterpolator',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/Interpolation/OrientationInterpolator",
    "x_ite/Bits/X3DConstants",
@@ -3845,8 +3845,8 @@ function (X3DParametricGeometryNode,
 
 define ('x_ite/Components/NURBS/NurbsPatchSurface',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode",
    "x_ite/Bits/X3DConstants",
 ],
@@ -3953,8 +3953,8 @@ function (Fields,
 
 define ('x_ite/Components/NURBS/NurbsPositionInterpolator',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/Interpolation/PositionInterpolator",
    "x_ite/Bits/X3DConstants",
@@ -4172,8 +4172,8 @@ function (Fields,
 
 define ('x_ite/Components/NURBS/NurbsSet',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/Grouping/X3DBoundedObject",
    "x_ite/Bits/X3DConstants",
@@ -4443,8 +4443,8 @@ define ('standard/Math/Geometry/Triangle2',[],function ()
 
 define ('x_ite/Components/NURBS/NurbsSurfaceInterpolator',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/NURBS/NurbsPatchSurface",
    "x_ite/Bits/X3DConstants",
@@ -4634,8 +4634,8 @@ function (Fields,
 
 define ('x_ite/Components/NURBS/NurbsSweptSurface',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Geometry3D/Extrusion",
    "x_ite/Components/NURBS/X3DParametricGeometryNode",
    "x_ite/Bits/X3DConstants",
@@ -4815,8 +4815,8 @@ function (Fields,
 
 define ('x_ite/Components/NURBS/NurbsSwungSurface',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Geometry3D/Extrusion",
    "x_ite/Components/NURBS/X3DParametricGeometryNode",
    "x_ite/Bits/X3DConstants",
@@ -4996,8 +4996,8 @@ function (Fields,
 
 define ('x_ite/Components/NURBS/NurbsTextureCoordinate',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector4",
@@ -5151,8 +5151,8 @@ function (Fields,
 
 define ('x_ite/Components/NURBS/NurbsTrimmedSurface',[
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/NURBS/X3DNurbsSurfaceGeometryNode",
    "x_ite/Bits/X3DConstants",
    "x_ite/Bits/X3DCast",
