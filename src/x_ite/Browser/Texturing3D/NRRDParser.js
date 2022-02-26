@@ -588,7 +588,9 @@ function (pako)
 
             Grammar .data .parse (this);
 
-            var raw = pako .ungzip (this .result [1], { to: "raw" });
+            const
+               buffer = this .binaryStringToBuffer (this .result [1]),
+               raw    = pako .ungzip (buffer, { to: "raw" });
 
             this .rawArray (raw);
          }
@@ -596,6 +598,15 @@ function (pako)
          {
             throw new Error ("Invalid NRRD data.");
          }
+      },
+      binaryStringToBuffer: function (string)
+      {
+         const buffer = new Uint8Array (string .length);
+
+         for (let i = 0, length = string .length; i < length; ++ i)
+            buffer [i] = string .charCodeAt (i);
+
+         return buffer;
       },
       getEndianess: function ()
       {

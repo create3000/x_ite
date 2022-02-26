@@ -108,10 +108,7 @@ function (Fields,
 
          for (const node of this .textureTransform_)
          {
-            if (X3DCast (X3DConstants .MultiTextureTransform, node))
-               continue;
-
-            const textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, node);
+            const textureTransformNode = X3DCast (X3DConstants .X3DSingleTextureTransformNode, node);
 
             if (textureTransformNode)
                textureTransformNodes .push (textureTransformNode);

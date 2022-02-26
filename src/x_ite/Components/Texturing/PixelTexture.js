@@ -121,9 +121,9 @@ function ($,
          {
             case 1:
             {
-               for (var i = 0, index = 0; i < length; ++ i, index += 4)
+               for (let i = 0, index = 0; i < length; ++ i, index += 4)
                {
-                  var pixel = array [i];
+                  const pixel = array [i];
 
                   data [index]     =
                   data [index + 1] =
@@ -135,9 +135,9 @@ function ($,
             }
             case 2:
             {
-               for (var i = 0, index = 0; i < length; ++ i, index += 4)
+               for (let i = 0, index = 0; i < length; ++ i, index += 4)
                {
-                  var pixel = array [i];
+                  const pixel = array [i];
 
                   data [index]     =
                   data [index + 1] =
@@ -149,9 +149,9 @@ function ($,
             }
             case 3:
             {
-               for (var i = 0, index = 0; i < length; ++ i, index += 4)
+               for (let i = 0, index = 0; i < length; ++ i, index += 4)
                {
-                  var pixel = array [i];
+                  const pixel = array [i];
 
                   data [index]     = (pixel >>> 16) & 255;
                   data [index + 1] = (pixel >>>  8) & 255;
@@ -163,9 +163,9 @@ function ($,
             }
             case 4:
             {
-               for (var i = 0, index = 0; i < length; ++ i, index += 4)
+               for (let i = 0, index = 0; i < length; ++ i, index += 4)
                {
-                  var pixel = array [i];
+                  const pixel = array [i];
 
                   data [index]     = (pixel >>> 24);
                   data [index + 1] = (pixel >>> 16) & 255;
@@ -181,20 +181,20 @@ function ($,
       {
          // Nearest neighbor scaling algorithm for very small images.
 
-         var
+         const
             output = new Uint8Array (outputWidth * outputHeight * 4),
             scaleX = outputWidth / inputWidth,
             scaleY = outputHeight / inputHeight;
 
-         for (var y = 0; y < outputHeight; ++ y)
+         for (let y = 0; y < outputHeight; ++ y)
          {
-            var
+            const
                inputW  = Math .floor (y / scaleY) * inputWidth,
                outputW = y * outputWidth;
 
-            for (var x = 0; x < outputWidth; ++ x)
+            for (let x = 0; x < outputWidth; ++ x)
             {
-               var
+               const
                   index       = (inputW + Math.floor (x / scaleX)) * 4,
                   indexScaled = (outputW + x) * 4;
 
@@ -209,14 +209,16 @@ function ($,
       },
       set_image__: function ()
       {
-         var
+         const
             gl          = this .getBrowser () .getContext (),
-            width       = this .image_ .width,
-            height      = this .image_ .height,
             comp        = this .image_ .comp,
             array       = this .image_ .array,
-            transparent = ! (comp % 2),
-            data        = null;
+            transparent = !(comp % 2);
+
+         let
+            width  = this .image_ .width,
+            height = this .image_ .height,
+            data   = null;
 
          if (width > 0 && height > 0 && comp > 0 && comp < 5)
          {
@@ -232,18 +234,17 @@ function ($,
 
                this .convert (data, comp, array .getValue (), array .length);
 
-               var
+               const
                   inputWidth  = width,
                   inputHeight = height;
 
                width  = Algorithm .nextPowerOfTwo (inputWidth)  * 4;
                height = Algorithm .nextPowerOfTwo (inputHeight) * 4;
-
-               data = this .resize (data, inputWidth, inputHeight, width, height);
+               data   = this .resize (data, inputWidth, inputHeight, width, height);
             }
             else
             {
-               var
+               const
                   canvas1   = this .canvas1 [0],
                   canvas2   = this .canvas2 [0],
                   cx1       = canvas1 .getContext("2d"),

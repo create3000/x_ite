@@ -56,7 +56,7 @@ function (X3DSingleTextureNode,
 {
 "use strict";
 
-   var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+   const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
    function X3DTexture2DNode (executionContext)
    {
@@ -123,7 +123,7 @@ function (X3DSingleTextureNode,
             this .flipY  = flipY;
             this .data   = data;
 
-            var gl = this .getBrowser () .getContext ();
+            const gl = this .getBrowser () .getContext ();
 
             gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
             gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
@@ -143,7 +143,7 @@ function (X3DSingleTextureNode,
          {
             this .data = data;
 
-            var gl = this .getBrowser () .getContext ();
+            const gl = this .getBrowser () .getContext ();
 
             gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
             gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());

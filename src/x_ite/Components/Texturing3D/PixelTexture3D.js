@@ -109,7 +109,7 @@ function (Fields,
       },
       set_image__: (function ()
       {
-         var
+         const
             OFFSET     = 4,
             COMPONENTS = 0,
             WIDTH      = 1,
@@ -118,7 +118,7 @@ function (Fields,
 
          return function ()
          {
-            var image = this .image_;
+            const image = this .image_;
 
             if (image .length < OFFSET)
             {
@@ -127,7 +127,7 @@ function (Fields,
                return;
             }
 
-            var
+            const
                gl          = this .getBrowser () .getContext (),
                components  = image [COMPONENTS],
                width       = image [WIDTH],
@@ -136,15 +136,16 @@ function (Fields,
                transparent = ! (components & 1),
                size3D      = width * height * depth;
 
+            let data, format;
+
             switch (components)
             {
                case 1:
                {
-                  var
-                     format = gl .LUMINANCE,
-                     data   = new Uint8Array (size3D);
+                  data   = new Uint8Array (size3D);
+                  format = gl .LUMINANCE;
 
-                  for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
                   {
                      data [d ++] = image [i];
                   }
@@ -153,29 +154,27 @@ function (Fields,
                }
                case 2:
                {
-                  var
-                     format = gl .LUMINANCE_ALPHA,
-                     data   = new Uint8Array (size3D * 2);
+                  data   = new Uint8Array (size3D * 2);
+                  format = gl .LUMINANCE_ALPHA;
 
-                     for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-                     {
-                        var p = image [i];
+                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  {
+                     const p = image [i];
 
-                        data [d ++ ] = (p >>> 8) & 0xff;
-                        data [d ++ ] = p & 0xff;
-                     }
+                     data [d ++ ] = (p >>> 8) & 0xff;
+                     data [d ++ ] = p & 0xff;
+                  }
 
-                     break;
+                  break;
                }
                case 3:
                {
-                  var
-                     format = gl .RGB,
-                     data   = new Uint8Array (size3D * 3);
+                  data   = new Uint8Array (size3D * 3);
+                  format = gl .RGB;
 
-                  for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
                   {
-                     var p = image [i];
+                     const p = image [i];
 
                      data [d ++ ] = (p >>> 16) & 0xff;
                      data [d ++ ] = (p >>> 8)  & 0xff;
@@ -186,13 +185,12 @@ function (Fields,
                }
                case 4:
                {
-                  var
-                     format = gl .RGBA,
-                     data   = new Uint8Array (size3D * 4);
+                  data   = new Uint8Array (size3D * 4);
+                  format = gl .RGBA;
 
-                  for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
                   {
-                     var p = image [i];
+                     const p = image [i];
 
                      data [d ++ ] = (p >>> 24) & 0xff;
                      data [d ++ ] = (p >>> 16) & 0xff;

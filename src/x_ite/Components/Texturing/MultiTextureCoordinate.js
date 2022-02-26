@@ -111,10 +111,7 @@ function (Fields,
 
          for (const node of this .texCoord_)
          {
-            if (X3DCast (X3DConstants .MultiTextureCoordinate, node))
-               continue;
-
-            const textureCoordinateNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, node);
+            const textureCoordinateNode = X3DCast (X3DConstants .X3DSingleTextureCoordinateNode, node);
 
             if (textureCoordinateNode)
                textureCoordinateNodes .push (textureCoordinateNode);

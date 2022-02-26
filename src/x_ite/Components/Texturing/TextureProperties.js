@@ -107,7 +107,7 @@ function (Fields,
       },
       getBoundaryMode: (function ()
       {
-         var boundaryModes = new Map ([
+         const boundaryModes = new Map ([
             ["CLAMP",             "CLAMP_TO_EDGE"], // "CLAMP"
             ["CLAMP_TO_EDGE",     "CLAMP_TO_EDGE"],
             ["CLAMP_TO_BOUNDARY", "CLAMP_TO_EDGE"], // "CLAMP_TO_BORDER"
@@ -117,7 +117,7 @@ function (Fields,
 
          return function (string)
          {
-            var boundaryMode = boundaryModes .get (string);
+            const boundaryMode = boundaryModes .get (string);
 
             if (boundaryMode !== undefined)
                return boundaryMode;
@@ -139,7 +139,7 @@ function (Fields,
       },
       getMinificationFilter: (function ()
       {
-         var minificationFilters = new Map ([
+         const minificationFilters = new Map ([
             ["AVG_PIXEL_AVG_MIPMAP",         "LINEAR_MIPMAP_LINEAR"],
             ["AVG_PIXEL",                    "LINEAR"],
             ["AVG_PIXEL_NEAREST_MIPMAP",     "LINEAR_MIPMAP_NEAREST"],
@@ -154,7 +154,7 @@ function (Fields,
          {
             if (this .generateMipMaps_ .getValue ())
             {
-               var minificationFilter = minificationFilters .get (this .minificationFilter_ .getValue ());
+               const minificationFilter = minificationFilters .get (this .minificationFilter_ .getValue ());
 
                if (minificationFilter !== undefined)
                   return minificationFilter;
@@ -167,7 +167,7 @@ function (Fields,
       })(),
       getMagnificationFilter: (function ()
       {
-         var magnificationFilters = new Map ([
+         const magnificationFilters = new Map ([
             ["AVG_PIXEL",     "LINEAR"],
             ["NEAREST_PIXEL", "NEAREST"],
             ["NICEST",        "LINEAR"],
@@ -176,7 +176,7 @@ function (Fields,
 
          return function ()
          {
-            var magnificationFilter = magnificationFilters .get (this .magnificationFilter_ .getValue ());
+            const magnificationFilter = magnificationFilters .get (this .magnificationFilter_ .getValue ());
 
             if (magnificationFilter !== undefined)
                return magnificationFilter;
@@ -187,7 +187,7 @@ function (Fields,
       })(),
       getTextureCompression: (function ()
       {
-         var textureCompressions = new Map ([
+         const textureCompressions = new Map ([
             ["DEFAULT", "RGBA"],
             ["NICEST",  "RGBA"],
             ["FASTEST", "RGBA"],
@@ -198,7 +198,7 @@ function (Fields,
 
          return function ()
          {
-            var
+            const
                browser            = this .getBrowser (),
                gl                 = browser .getContext (),
                compressedTexture  = browser .getExtension ("WEBGL_compressed_texture_etc"), // TODO: find suitable compression.

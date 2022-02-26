@@ -113,34 +113,34 @@ function (Fields,
       },
       set_texture__: function ()
       {
-         var textureNodes = this .textureNodes;
+         const textureNodes = this .textureNodes;
 
-         for (var i = 0, length = textureNodes .length; i < length; ++ i)
-            textureNodes [i] .removeInterest ("update", this);
+         for (const textureNode of textureNodes)
+            textureNode .removeInterest ("update", this);
 
          textureNodes .length = 0;
 
-         for (var i = 0, length = this .texture_ .length; i < length; ++ i)
+         for (const node of this .texture_)
          {
-            var textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this .texture_ [i]);
+            const textureNode = X3DCast (X3DConstants .X3DTexture2DNode, node);
 
             if (textureNode)
                textureNodes .push (textureNode);
          }
 
-         for (var i = 0, length = textureNodes .length; i < length; ++ i)
-            textureNodes [i] .addInterest ("update", this);
+         for (const textureNode of textureNodes)
+            textureNode .addInterest ("update", this);
 
          this .update ();
       },
       update: function ()
       {
-         var
-            textureNodes = this .textureNodes,
-            complete     = 0;
+         const textureNodes = this .textureNodes;
 
-         for (var i = 0, length = textureNodes .length; i < length; ++ i)
-            complete += textureNodes [i] .checkLoadState () === X3DConstants .COMPLETE_STATE;
+         let complete = 0;
+
+         for (const textureNode of textureNodes)
+            complete += textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE;
 
          if (textureNodes .length === 0 || complete !== textureNodes .length)
          {
@@ -150,31 +150,32 @@ function (Fields,
          }
          else
          {
-            var
+            const
                gl           = this .getBrowser () .getContext (),
                textureNode0 = textureNodes [0],
                width        = textureNode0 .getWidth (),
                height       = textureNode0 .getHeight (),
                depth        = textureNodes .length,
-               transparent  = 0,
                size         = width * height * 4,
                data         = new Uint8Array (size * depth);
 
-            for (var i = 0, d = 0; i < depth; ++ i)
+            let transparent = 0;
+
+            for (let i = 0, d = 0; i < depth; ++ i)
             {
-               var
+               const
                   textureNode = this .textureNodes [i],
                   tData       = textureNode .getData ();
 
                transparent += textureNode .getTransparent ();
 
-               for (var t = 0; t < size; ++ t, ++ d)
+               for (let t = 0; t < size; ++ t, ++ d)
                {
                   data [d] = tData [t];
                }
             }
 
-            this .setTexture (width, height, depth, !! transparent, gl .RGBA, data);
+            this .setTexture (width, height, depth, !!transparent, gl .RGBA, data);
             this .loadState_ = X3DConstants .COMPLETE_STATE;
          }
       },

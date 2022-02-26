@@ -56,7 +56,7 @@ function (X3DSingleTextureNode,
 {
 "use strict";
 
-   var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+   const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
    function X3DTexture3DNode (executionContext)
    {
@@ -118,7 +118,7 @@ function (X3DSingleTextureNode,
       },
       clearTexture: function ()
       {
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          this .setTexture (1, 1, 1, false, gl .RGBA, defaultData);
 
@@ -133,7 +133,7 @@ function (X3DSingleTextureNode,
             this .depth  = depth;
             this .data   = data;
 
-            var gl = this .getBrowser () .getContext ();
+            const gl = this .getBrowser () .getContext ();
 
             if (gl .getVersion () < 2)
                return;

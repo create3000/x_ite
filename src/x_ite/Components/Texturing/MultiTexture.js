@@ -171,7 +171,7 @@ function (Fields,
       },
       set_mode__: (function ()
       {
-         var modeTypes = new Map ([
+         const modeTypes = new Map ([
             ["REPLACE",                   ModeType .REPLACE],
             ["MODULATE",                  ModeType .MODULATE],
             ["MODULATE2X",                ModeType .MODULATE2X],
@@ -199,11 +199,11 @@ function (Fields,
             this .modes      .length = 0;
             this .alphaModes .length = 0;
 
-            for (var i = 0, length = this .mode_ .length; i < length; ++ i)
+            for (const modes of this .mode_)
             {
-               var mode = this .mode_ [i] .split (",");
+               const mode = modes .split (",");
 
-               for (var m = 0, mLength = mode .length; m < mLength; ++ m)
+               for (let m = 0, l = mode .length; m < l; ++ m)
                   mode [m] = mode [m] .trim ();
 
                if (mode .length === 0)
@@ -214,7 +214,7 @@ function (Fields,
 
                // RGB
 
-               var modeType = modeTypes .get (mode [0]);
+               const modeType = modeTypes .get (mode [0]);
 
                if (modeType !== undefined)
                   this .modes .push (modeType);
@@ -223,10 +223,10 @@ function (Fields,
 
                // Alpha
 
-               var modeType = modeTypes .get (mode [1]);
+               const alphaModeType = modeTypes .get (mode [1]);
 
-               if (modeType !== undefined)
-                  this .alphaModes .push (modeType);
+               if (alphaModeType !== undefined)
+                  this .alphaModes .push (alphaModeType);
                else
                   this .alphaModes .push (ModeType .MODULATE);
             }
@@ -234,7 +234,7 @@ function (Fields,
       })(),
       set_source__: (function ()
       {
-         var sourceTypes = new Map ([
+         const sourceTypes = new Map ([
             ["DIFFUSE",  SourceType .DIFFUSE],
             ["SPECULAR", SourceType .SPECULAR],
             ["FACTOR",   SourceType .FACTOR],
@@ -244,9 +244,9 @@ function (Fields,
          {
             this .sources .length = 0;
 
-            for (var i = 0, length = this .source_ .length; i < length; ++ i)
+            for (const source of this .source_)
             {
-               var sourceType = sourceTypes .get (this .source_ [i]);
+               const sourceType = sourceTypes .get (source);
 
                if (sourceType !== undefined)
                   this .sources .push (sourceType);
@@ -257,7 +257,7 @@ function (Fields,
       })(),
       set_function__: (function ()
       {
-         var functionsTypes = new Map ([
+         const functionsTypes = new Map ([
             ["COMPLEMENT",     FunctionType .COMPLEMENT],
             ["ALPHAREPLICATE", FunctionType .ALPHAREPLICATE],
          ]);
@@ -266,9 +266,9 @@ function (Fields,
          {
             this .functions .length = 0;
 
-            for (var i = 0, length = this .function_ .length; i < length; ++ i)
+            for (const func of this .function_)
             {
-               var functionsType = functionsTypes .get (this .function_ [i]);
+               const functionsType = functionsTypes .get (func);
 
                if (functionsType !== undefined)
                   this .functions .push (functionsType);
@@ -281,14 +281,9 @@ function (Fields,
       {
          this .textureNodes .length = 0;
 
-         for (var i = 0, length = this .texture_ .length; i < length; ++ i)
+         for (const node of this .texture_)
          {
-            var node = this .texture_ [i];
-
-            if (X3DCast (X3DConstants .MultiTexture, node))
-               continue;
-
-            var textureNode = X3DCast (X3DConstants .X3DTextureNode, node);
+            const textureNode = X3DCast (X3DConstants .X3DSingleTextureNode, node);
 
             if (textureNode)
                this .textureNodes .push (textureNode);
@@ -296,21 +291,19 @@ function (Fields,
       },
       traverse: function (type, renderObject)
       {
-         var textureNodes = this .textureNodes;
-
-         for (var i = 0, length = textureNodes .length; i < length; ++ i)
-            textureNodes [i] .traverse (type, renderObject);
+         for (const textureNode of this .textureNodes)
+            textureNode .traverse (type, renderObject);
       },
       setShaderUniforms: function (gl, shaderObject, renderObject)
       {
-         var
+         const
             textureNodes = this .textureNodes,
             channels     = Math .min (shaderObject .getBrowser () .getMaxTextures (), textureNodes .length);
 
          gl .uniform1i  (shaderObject .x3d_NumTextures,       channels);
          gl .uniform4fv (shaderObject .x3d_MultiTextureColor, this .color);
 
-         for (var i = 0; i < channels; ++ i)
+         for (let i = 0; i < channels; ++ i)
          {
             textureNodes [i] .setShaderUniformsToChannel (gl, shaderObject, renderObject, i);
 
