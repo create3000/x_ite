@@ -159,9 +159,6 @@ function ($,
       },
       hasReferences: function ()
       {
-         if (this [_references] === X3DField .prototype [_references])
-            return false;
-
          return this [_references] .size !== 0;
       },
       isReference: function (accessType)

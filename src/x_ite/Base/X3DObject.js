@@ -89,9 +89,13 @@ function (Generator,
       {
          return this [_name];
       },
+      getInterestId: function (callbackName, object)
+      {
+         return X3DObject .getId (object) + "." + String (callbackName);
+      },
       hasInterest: function (callbackName, object)
       {
-         return this [_interests] .has (X3DObject .getId (object) + "." + callbackName);
+         return this [_interests] .has (this .getInterestId (callbackName, object));
       },
       addInterest: function (callbackName, object)
       {
@@ -101,7 +105,9 @@ function (Generator,
             this [_interestsTemp] = [ ];
          }
 
-         const callback = object [callbackName];
+         const
+            interestId = this .getInterestId (callbackName, object),
+            callback   = object [callbackName];
 
          if (arguments .length > 2)
          {
@@ -110,16 +116,16 @@ function (Generator,
             args [0] = object;
             args [1] = this;
 
-            this [_interests] .set (X3DObject .getId (object) + "." + callbackName, Function .prototype .bind .apply (callback, args));
+            this [_interests] .set (interestId, Function .prototype .bind .apply (callback, args));
          }
          else
          {
-            this [_interests] .set (X3DObject .getId (object) + "." + callbackName, callback .bind (object, this));
+            this [_interests] .set (interestId, callback .bind (object, this));
          }
       },
       removeInterest: function (callbackName, object)
       {
-         this [_interests] .delete (X3DObject .getId (object) + "." + callbackName);
+         this [_interests] .delete (this .getInterestId (callbackName, object));
       },
       getInterests: function ()
       {

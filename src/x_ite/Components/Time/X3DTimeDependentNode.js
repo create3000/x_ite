@@ -84,8 +84,8 @@ function (Fields,
       constructor: X3DTimeDependentNode,
       initialize: function ()
       {
-         this .isLive ()   .addInterest ("set_live__",  this);
-         this .isEvenLive_ .addInterest ("_set_live__", this); // to X3DBaseNode
+         this .isLive ()   .addInterest ("set_live__", this);
+         this .isEvenLive_ .addInterest ("set_live__", this);
 
          this .initialized_ .addInterest ("set_loop__",       this);
          this .enabled_     .addInterest ("set_enabled__",    this);
@@ -124,7 +124,7 @@ function (Fields,
       },
       set_live__: function ()
       {
-         if (this .isLive () .getValue ())
+         if (this .isLive () .getValue () || this .isEvenLive_ .getValue ())
          {
             if (this .disabled)
             {

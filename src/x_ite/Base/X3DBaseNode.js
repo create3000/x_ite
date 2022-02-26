@@ -76,6 +76,7 @@ function (X3DEventObject,
       _userDefinedFields = Symbol (),
       _initialized       = Symbol (),
       _live              = Symbol (),
+      _set_live__        = Symbol ("X3DBaseNode.set_live__"),
       _private           = Symbol (),
       _cloneCount        = Symbol ();
 
@@ -185,7 +186,7 @@ function (X3DEventObject,
             // Connect to execution context.
 
             if (this [_executionContext] !== this)
-               this [_executionContext] .isLive () .addInterest ("_set_live__", this);
+               this [_executionContext] .isLive () .addInterest (_set_live__, this);
 
             // Return field
 
@@ -199,7 +200,7 @@ function (X3DEventObject,
 
          this [_live] = value .valueOf ();
 
-         this ._set_live__ ();
+         this [_set_live__] ();
       },
       getLive: function ()
       {
@@ -216,7 +217,7 @@ function (X3DEventObject,
 
          return this .getLive ();
       },
-      _set_live__: function ()
+      [_set_live__]: function ()
       {
          const
             live   = this .getLiveState (),
