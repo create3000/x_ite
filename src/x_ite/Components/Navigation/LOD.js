@@ -49,8 +49,8 @@
 
 define ([
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Bits/X3DCast",
    "x_ite/Bits/TraverseType",
@@ -256,7 +256,7 @@ function (Fields,
                   case 1:
                      return 0;
                   case 2:
-                     return (this .frameRate > FRAME_RATE_MAX) * 1;
+                     return +(this .frameRate > FRAME_RATE_MAX);
                   default:
                   {
                      const fraction = 1 - Algorithm .clamp ((this .frameRate - FRAME_RATE_MIN) / (FRAME_RATE_MAX - FRAME_RATE_MIN), 0, 1);

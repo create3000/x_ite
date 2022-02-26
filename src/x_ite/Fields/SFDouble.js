@@ -48,7 +48,7 @@
 
 
 define ([
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],

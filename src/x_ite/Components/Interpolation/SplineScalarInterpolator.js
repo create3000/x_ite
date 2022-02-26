@@ -49,8 +49,8 @@
 
 define ([
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Browser/Interpolation/CatmullRomSplineInterpolator1",
    "x_ite/Bits/X3DConstants",

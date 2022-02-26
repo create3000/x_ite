@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Fields",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Geometry3D/IndexedFaceSet",
    "x_ite/Components/Rendering/Coordinate",
    "x_ite/Components/Texturing/TextureCoordinate",

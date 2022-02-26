@@ -49,8 +49,8 @@
 
 define ([
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Layering/X3DLayerNode",
    "x_ite/Components/Navigation/Viewpoint",
    "x_ite/Components/Grouping/Group",

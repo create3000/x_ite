@@ -48,7 +48,7 @@
 
 
 define ([
-   "x_ite/Configuration/X3DInfoArray",
+   "x_ite/Base/X3DInfoArray",
 ],
 function (X3DInfoArray)
 {

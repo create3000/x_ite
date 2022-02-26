@@ -49,7 +49,7 @@
 
 define ([
    "standard/Math/Numbers/Color3",
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
@@ -171,7 +171,7 @@ function (Color3,
       },
       set: function (value)
       {
-         this .getValue () .r = value * 1;
+         this .getValue () .r = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -185,7 +185,7 @@ function (Color3,
       },
       set: function (value)
       {
-         this .getValue () .g = value * 1;
+         this .getValue () .g = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -199,7 +199,7 @@ function (Color3,
       },
       set: function (value)
       {
-         this .getValue () .b = value * 1;
+         this .getValue () .b = +value;
          this .addEvent ();
       },
       enumerable: true,

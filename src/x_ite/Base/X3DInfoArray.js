@@ -69,7 +69,7 @@ function (X3DObject)
 
          if (typeof key === "string")
          {
-            const index = key * 1;
+            const index = +key;
 
             if (Number .isInteger (index))
                return target [_array] [index];
@@ -93,7 +93,28 @@ function (X3DObject)
 
          return key in target;
       },
-    };
+      ownKeys: function (target)
+      {
+         return Object .keys (target [_array]);
+      },
+      getOwnPropertyDescriptor: function (target, key)
+      {
+         if (typeof key !== "string")
+            return;
+
+         const index = +key;
+
+         if (Number .isInteger (index) && index < target [_array] .length)
+         {
+            const propertyDescriptor = Object .getOwnPropertyDescriptor (target [_array], key);
+
+            if (propertyDescriptor)
+               propertyDescriptor .writable = false;
+
+            return propertyDescriptor;
+         }
+      },
+   };
 
    function X3DInfoArray ()
    {
@@ -167,7 +188,7 @@ function (X3DObject)
       },
       toVRMLStream: function (stream)
       {
-         const X3DBaseNode = require ("x_ite/Basic/X3DBaseNode");
+         const X3DBaseNode = require ("x_ite/Base/X3DBaseNode");
 
          for (const value of this [_array])
          {

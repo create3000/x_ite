@@ -47,29 +47,34 @@
  ******************************************************************************/
 
 
- define ([
-   "x_ite/Configuration/X3DInfoArray",
+define ([
+   "x_ite/Base/X3DInfoArray",
 ],
 function (X3DInfoArray)
 {
 "use strict";
 
-   function FieldArray ()
+   function FieldDefinitionArray (fieldDefinitions)
    {
-      return X3DInfoArray .call (this);
+      const proxy = X3DInfoArray .call (this);
+
+      for (const fieldDefinition of fieldDefinitions)
+         this .add (fieldDefinition .name, fieldDefinition);
+
+      return proxy;
    }
 
-   FieldArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+   FieldDefinitionArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
    {
-      constructor: FieldArray,
+      constructor: FieldDefinitionArray,
       getTypeName: function ()
       {
-         return "FieldArray";
+         return "FieldDefinitionArray";
       },
    });
 
-   for (const property of Reflect .ownKeys (FieldArray .prototype))
-      Object .defineProperty (FieldArray .prototype, property, { enumerable: false })
+   for (const property of Reflect .ownKeys (FieldDefinitionArray .prototype))
+      Object .defineProperty (FieldDefinitionArray .prototype, property, { enumerable: false })
 
-   return FieldArray;
+   return FieldDefinitionArray;
 });

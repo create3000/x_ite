@@ -48,7 +48,7 @@
 
 
 define ([
-   "x_ite/Basic/X3DArrayField",
+   "x_ite/Base/X3DArrayField",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
    "standard/Math/Algorithm",
@@ -76,7 +76,7 @@ function (X3DArrayField,
 
          if (typeof key === "string")
          {
-            const index = key * 1;
+            const index = +key;
 
             if (Number .isInteger (index))
             {
@@ -190,6 +190,25 @@ function (X3DArrayField,
             return key < target [_length];
 
          return key in target;
+      },
+      ownKeys: function (target)
+      {
+         const ownKeys = [ ];
+
+         for (let i = 0, length = target [_length]; i < length; ++ i)
+            ownKeys .push (String (i));
+
+         return ownKeys;
+      },
+      getOwnPropertyDescriptor: function (target, key)
+      {
+         if (typeof key !== "string")
+            return;
+
+         const index = +key;
+
+         if (Number .isInteger (index) && index < target [_length])
+            return Object .getOwnPropertyDescriptor (target .getValue (), key);
       },
    };
 

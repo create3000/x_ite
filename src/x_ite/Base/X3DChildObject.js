@@ -102,7 +102,7 @@ function (X3DObject)
       },
       addParent: function (parent)
       {
-         if (!this .hasOwnProperty (_parents))
+         if (this [_parents] === X3DChildObject .prototype [_parents])
             this [_parents] = new Set ();
 
          this [_parents] .add (parent);

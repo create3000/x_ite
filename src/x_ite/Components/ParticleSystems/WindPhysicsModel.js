@@ -49,8 +49,8 @@
 
 define ([
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector3",

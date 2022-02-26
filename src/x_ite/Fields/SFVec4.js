@@ -48,7 +48,7 @@
 
 
 define ([
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Fields/SFVecPrototypeTemplate",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Vector4",
@@ -103,7 +103,7 @@ function (X3DField,
          },
          set: function (value)
          {
-            this .getValue () .x = value * 1;
+            this .getValue () .x = +value;
             this .addEvent ();
          },
          enumerable: true,
@@ -117,7 +117,7 @@ function (X3DField,
          },
          set: function (value)
          {
-            this .getValue () .y = value * 1;
+            this .getValue () .y = +value;
             this .addEvent ();
          },
          enumerable: true,
@@ -131,7 +131,7 @@ function (X3DField,
          },
          set: function (value)
          {
-            this .getValue () .z = value * 1;
+            this .getValue () .z = +value;
             this .addEvent ();
          },
          enumerable: true,
@@ -145,7 +145,7 @@ function (X3DField,
          },
          set: function (value)
          {
-            this .getValue () .w = value * 1;
+            this .getValue () .w = +value;
             this .addEvent ();
          },
          enumerable: true,

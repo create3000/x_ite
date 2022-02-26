@@ -159,10 +159,10 @@ function ($,
       },
       hasReferences: function ()
       {
-         if (this .hasOwnProperty (_references))
-            return this [_references] .size !== 0;
+         if (this [_references] === X3DField .prototype [_references])
+            return false;
 
-         return false;
+         return this [_references] .size !== 0;
       },
       isReference: function (accessType)
       {
@@ -223,14 +223,14 @@ function ($,
       },
       getReferences: function ()
       {
-         if (!this .hasOwnProperty (_references))
+         if (this [_references] === X3DField .prototype [_references])
             this [_references] = new Set ();
 
          return this [_references];
       },
       addFieldInterest: function (field)
       {
-         if (!this .hasOwnProperty (_fieldInterests))
+         if (this [_fieldInterests] === X3DField .prototype [_fieldInterests])
             this [_fieldInterests] = new Set ();
 
          this [_fieldInterests] .add (field);
@@ -245,7 +245,7 @@ function ($,
       },
       addFieldCallback: function (key, object)
       {
-         if (!this .hasOwnProperty (_fieldCallbacks))
+         if (this [_fieldCallbacks] === X3DField .prototype [_fieldCallbacks])
             this [_fieldCallbacks] = new Map ();
 
          this [_fieldCallbacks] .set (key, object);
@@ -260,7 +260,7 @@ function ($,
       },
       addInputRoute: function (route)
       {
-         if (!this .hasOwnProperty (_inputRoutes))
+         if (this [_inputRoutes] === X3DField .prototype [_inputRoutes])
             this [_inputRoutes] = new Set ();
 
          this [_inputRoutes] .add (route);
@@ -279,7 +279,7 @@ function ($,
       },
       addOutputRoute: function (route)
       {
-         if (!this .hasOwnProperty (_outputRoutes))
+         if (this [_outputRoutes] === X3DField .prototype [_outputRoutes])
             this [_outputRoutes] = new Set ();
 
          this [_outputRoutes] .add (route);
@@ -298,7 +298,7 @@ function ($,
       },
       addRouteCallback: function (key, object)
       {
-         if (!this .hasOwnProperty (_routeCallbacks))
+         if (this [_routeCallbacks] === X3DField .prototype [_routeCallbacks])
             this [_routeCallbacks] = new Map ();
 
          this [_routeCallbacks] .set (key, object);

@@ -50,7 +50,7 @@
 define ([
    "x_ite/Configuration/ComponentInfoArray",
    "x_ite/Configuration/ProfileInfo",
-   "x_ite/Configuration/X3DInfoArray",
+   "x_ite/Base/X3DInfoArray",
 ],
 function (ComponentInfoArray,
           ProfileInfo,

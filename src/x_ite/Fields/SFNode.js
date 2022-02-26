@@ -48,7 +48,7 @@
 
 
 define ([
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
    "x_ite/Fields/SFNodeCache",
@@ -126,6 +126,39 @@ function (X3DField,
          catch (error)
          {
             return key in target;
+         }
+      },
+      ownKeys: function (target)
+      {
+         const
+            value   = target .getValue (),
+            ownKeys = [ ];
+
+         if (value)
+         {
+            for (const fieldDefinition of value .getFieldDefinitions ())
+               ownKeys .push (fieldDefinition .name);
+         }
+
+         return ownKeys;
+      },
+      getOwnPropertyDescriptor: function (target, key)
+      {
+         const value = target .getValue ();
+
+         if (value)
+         {
+            const fieldDefinition = value .getFieldDefinitions () .get (key);
+
+            if (fieldDefinition)
+            {
+               return {
+                  value: this .get (target, key),
+                  writable: fieldDefinition .accessType !== X3DConstants .outputOnly,
+                  enumerable: true,
+                  configurable: true,
+               };
+            }
          }
       },
    };

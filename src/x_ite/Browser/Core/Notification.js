@@ -50,7 +50,7 @@
 define ([
    "jquery",
    "x_ite/Fields/SFString",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
 ],
 function ($,
           SFString,

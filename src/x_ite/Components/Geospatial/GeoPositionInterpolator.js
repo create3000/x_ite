@@ -49,8 +49,8 @@
 
 define ([
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Components/Geospatial/X3DGeospatialObject",
    "x_ite/Browser/Geospatial/Geocentric",

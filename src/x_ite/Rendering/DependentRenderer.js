@@ -48,7 +48,7 @@
 
 
 define ([
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Rendering/X3DRenderObject",
    "x_ite/Bits/TraverseType",
 ],

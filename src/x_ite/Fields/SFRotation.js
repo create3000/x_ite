@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Fields/SFVec3",
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Bits/X3DConstants",
    "x_ite/InputOutput/Generator",
    "standard/Math/Numbers/Rotation4",
@@ -170,7 +170,7 @@ function (SFVec3,
       },
       set: function (value)
       {
-         this .getValue () .x = value * 1;
+         this .getValue () .x = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -184,7 +184,7 @@ function (SFVec3,
       },
       set: function (value)
       {
-         this .getValue () .y = value * 1;
+         this .getValue () .y = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -198,7 +198,7 @@ function (SFVec3,
       },
       set: function (value)
       {
-         this .getValue () .z = value * 1;
+         this .getValue () .z = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -212,7 +212,7 @@ function (SFVec3,
       },
       set: function (value)
       {
-         this .getValue () .angle = value * 1;
+         this .getValue () .angle = +value;
          this .addEvent ();
       },
       enumerable: true,

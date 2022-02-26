@@ -48,7 +48,7 @@
 
 
 define ([
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
 ],
 function (X3DBaseNode)
 {

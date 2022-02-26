@@ -50,7 +50,7 @@
 define ([
    "jquery",
    "x_ite/Fields/SFTime",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Browser/Core/X3DCoreContext",
    "x_ite/Routing/X3DRoutingContext",
    "x_ite/Browser/Scripting/X3DScriptingContext",

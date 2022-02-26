@@ -48,7 +48,7 @@
 
 
 define ([
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Navigation/OrthoViewpoint",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",

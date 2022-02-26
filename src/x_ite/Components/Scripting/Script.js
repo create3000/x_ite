@@ -49,10 +49,10 @@
 
 define ([
    "jquery",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
-   "x_ite/Basic/X3DField",
-   "x_ite/Basic/X3DArrayField",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Base/X3DField",
+   "x_ite/Base/X3DArrayField",
    "x_ite/Fields",
    "x_ite/Browser/X3DBrowser",
    "x_ite/Configuration/ComponentInfo",

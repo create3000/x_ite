@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Fields",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
 ],
 function (Fields,
           X3DBaseNode)

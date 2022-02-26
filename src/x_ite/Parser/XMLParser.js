@@ -49,8 +49,8 @@
 
 define ([
    "jquery",
-   "x_ite/Basic/X3DField",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DField",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Core/X3DPrototypeInstance",
    "x_ite/Fields",
    "x_ite/Parser/Parser",

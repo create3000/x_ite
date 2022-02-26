@@ -50,7 +50,7 @@
 define ([
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields/SFNode",
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Layering/LayerSet",
    "x_ite/Components/Layering/Layer",
    "x_ite/Bits/X3DCast",

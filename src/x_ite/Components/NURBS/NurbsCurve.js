@@ -50,8 +50,8 @@
 define ([
    "x_ite/Bits/X3DCast",
    "x_ite/Fields",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/NURBS/X3DParametricGeometryNode",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
    "x_ite/Bits/X3DConstants",

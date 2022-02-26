@@ -50,7 +50,7 @@
 define ([
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Execution/X3DExecutionContext",
    "x_ite/Prototype/X3DProtoDeclarationNode",
    "x_ite/Bits/X3DConstants",

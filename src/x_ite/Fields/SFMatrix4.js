@@ -48,7 +48,7 @@
 
 
 define ([
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Fields/SFMatrixPrototypeTemplate",
    "x_ite/Fields/SFVec3",
    "x_ite/Bits/X3DConstants",

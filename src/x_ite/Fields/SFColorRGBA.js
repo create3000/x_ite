@@ -48,7 +48,7 @@
 
 
 define ([
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Fields/SFColor",
    "x_ite/Bits/X3DConstants",
    "standard/Math/Numbers/Color4",
@@ -146,7 +146,7 @@ function (X3DField,
       },
       set: function (value)
       {
-         this .getValue () .r = value * 1;
+         this .getValue () .r = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -160,7 +160,7 @@ function (X3DField,
       },
       set: function (value)
       {
-         this .getValue () .g = value * 1;
+         this .getValue () .g = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -174,7 +174,7 @@ function (X3DField,
       },
       set: function (value)
       {
-         this .getValue () .b = value * 1;
+         this .getValue () .b = +value;
          this .addEvent ();
       },
       enumerable: true,
@@ -188,7 +188,7 @@ function (X3DField,
       },
       set: function (value)
       {
-         this .getValue () .a = value * 1;
+         this .getValue () .a = +value;
          this .addEvent ();
       },
       enumerable: true,

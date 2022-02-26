@@ -50,9 +50,9 @@
 define ([
    "x_ite/Base/X3DEventObject",
    "x_ite/Base/Events",
-   "x_ite/Basic/X3DFieldDefinition",
-   "x_ite/Basic/FieldDefinitionArray",
-   "x_ite/Basic/FieldArray",
+   "x_ite/Base/X3DFieldDefinition",
+   "x_ite/Base/FieldDefinitionArray",
+   "x_ite/Base/FieldArray",
    "x_ite/Fields",
    "x_ite/Bits/X3DConstants",
 ],
@@ -81,7 +81,7 @@ function (X3DEventObject,
 
    function X3DBaseNode (executionContext)
    {
-      if (this .hasOwnProperty (_executionContext))
+      if (this [_executionContext])
          return;
 
       X3DEventObject .call (this, executionContext .getBrowser ());

@@ -49,8 +49,8 @@
 
 define ([
    "jquery",
-   "x_ite/Basic/X3DField",
-   "x_ite/Basic/X3DArrayField",
+   "x_ite/Base/X3DField",
+   "x_ite/Base/X3DArrayField",
    "x_ite/InputOutput/Generator",
 ],
 function ($,
@@ -77,7 +77,7 @@ function ($,
          {
             const
                array = target .getValue (),
-               index = key * 1;
+               index = +key;
 
             if (Number .isInteger (index))
             {
@@ -113,7 +113,7 @@ function ($,
 
          const
             array = target .getValue (),
-            index = key * 1;
+            index = +key;
 
          if (index >= array .length)
             target .resize (index + 1);
@@ -128,6 +128,20 @@ function ($,
             return key < target .getValue () .length;
 
          return key in target;
+      },
+      ownKeys: function (target)
+      {
+         return Object .keys (target .getValue ());
+      },
+      getOwnPropertyDescriptor: function (target, key)
+      {
+         if (typeof key !== "string")
+            return;
+
+         const index = +key;
+
+         if (Number .isInteger (index) && index < target .getValue () .length)
+            return Object .getOwnPropertyDescriptor (target .getValue (), key);
       },
    };
 

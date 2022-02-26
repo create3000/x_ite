@@ -49,7 +49,7 @@
 
 
 define ([
-   "x_ite/Basic/X3DField",
+   "x_ite/Base/X3DField",
    "x_ite/Fields/SFMatrixPrototypeTemplate",
    "x_ite/Fields/SFVec2",
    "x_ite/Bits/X3DConstants",
@@ -123,7 +123,7 @@ function (X3DField,
             },
             set: function (value)
             {
-               this .getValue () [i] = value * 1;
+               this .getValue () [i] = +value;
                this .addEvent ();
             },
             enumerable: false,

@@ -51,7 +51,7 @@ define ([
    "jquery",
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields",
-   "x_ite/Basic/FieldDefinitionArray",
+   "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Prototype/X3DProtoDeclarationNode",
    "x_ite/Bits/X3DConstants",

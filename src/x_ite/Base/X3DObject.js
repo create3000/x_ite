@@ -95,7 +95,7 @@ function (Generator,
       },
       addInterest: function (callbackName, object)
       {
-         if (!this .hasOwnProperty (_interests))
+         if (this [_interests] === X3DObject .prototype [_interests])
          {
             this [_interests]     = new Map ();
             this [_interestsTemp] = [ ];

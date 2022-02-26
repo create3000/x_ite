@@ -48,7 +48,7 @@
 
 
 define ([
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Fields",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "standard/Math/Numbers/Complex",

@@ -48,33 +48,24 @@
 
 
 define ([
-   "x_ite/Configuration/X3DInfoArray",
+   "x_ite/Base/X3DField",
 ],
-function (X3DInfoArray)
+function (X3DField)
 {
 "use strict";
 
-   function FieldDefinitionArray (fieldDefinitions)
+   function X3DArrayField (value)
    {
-      const proxy = X3DInfoArray .call (this);
-
-      for (const fieldDefinition of fieldDefinitions)
-         this .add (fieldDefinition .name, fieldDefinition);
-
-      return proxy;
+      X3DField .call (this, value);
    }
 
-   FieldDefinitionArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
+   X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
    {
-      constructor: FieldDefinitionArray,
-      getTypeName: function ()
-      {
-         return "FieldDefinitionArray";
-      },
+      constructor: X3DArrayField,
    });
 
-   for (const property of Reflect .ownKeys (FieldDefinitionArray .prototype))
-      Object .defineProperty (FieldDefinitionArray .prototype, property, { enumerable: false })
+   for (const property of Reflect .ownKeys (X3DArrayField .prototype))
+      Object .defineProperty (X3DArrayField .prototype, property, { enumerable: false })
 
-   return FieldDefinitionArray;
+   return X3DArrayField;
 });

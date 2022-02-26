@@ -48,7 +48,7 @@
 
 
 define ([
-   "x_ite/Basic/X3DBaseNode",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Core/X3DPrototypeInstance",
 ],
 function (X3DBaseNode,

@@ -49,7 +49,7 @@
 
 define ([
    "x_ite/Configuration/ComponentInfo",
-   "x_ite/Configuration/X3DInfoArray",
+   "x_ite/Base/X3DInfoArray",
 ],
 function (ComponentInfo,
           X3DInfoArray)
