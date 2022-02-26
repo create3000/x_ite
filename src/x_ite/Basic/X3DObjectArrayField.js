@@ -546,6 +546,9 @@ function ($,
       },
    });
 
+   for (const property of Reflect .ownKeys (X3DObjectArrayField .prototype))
+      Object .defineProperty (X3DObjectArrayField .prototype, property, { enumerable: false })
+
    Object .defineProperty (X3DObjectArrayField .prototype, "length",
    {
       get: function () { return this [_target] .getValue () .length; },

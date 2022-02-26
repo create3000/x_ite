@@ -219,6 +219,9 @@ function (X3DField,
       },
    });
 
+   for (const property of Reflect .ownKeys (SFImage .prototype))
+      Object .defineProperty (SFImage .prototype, property, { enumerable: false })
+
    const width = {
       get: function ()
       {

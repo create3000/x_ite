@@ -123,5 +123,8 @@ function (X3DObject,
       },
    });
 
+   for (const property of Reflect .ownKeys (ExportedNode .prototype))
+      Object .defineProperty (ExportedNode .prototype, property, { enumerable: false })
+
    return ExportedNode;
 });

@@ -420,6 +420,9 @@ function (X3DConstants)
       },
    };
 
+   for (const property of Reflect .ownKeys (Generator .prototype))
+      Object .defineProperty (Generator .prototype, property, { enumerable: false })
+
    Generator .Get = function (stream)
    {
       if (! stream .generator)

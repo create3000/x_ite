@@ -909,6 +909,9 @@ function (SupportedNodes,
       },
    });
 
+   for (const property of Reflect .ownKeys (X3DExecutionContext .prototype))
+      Object .defineProperty (X3DExecutionContext .prototype, property, { enumerable: false })
+
    Object .defineProperty (X3DExecutionContext .prototype, "specificationVersion",
    {
       get: function () { return this .getSpecificationVersion (); },

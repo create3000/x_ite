@@ -117,6 +117,9 @@ function (X3DField,
       },
    });
 
+   for (const property of Reflect .ownKeys (SFString .prototype))
+      Object .defineProperty (SFString .prototype, property, { enumerable: false })
+
    Object .defineProperty (SFString .prototype, "length",
    {
       get: function ()

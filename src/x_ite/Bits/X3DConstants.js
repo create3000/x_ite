@@ -51,12 +51,12 @@ define (function ()
 {
 "use strict";
 
-   var
+   let
       browserEvent = 0,
       loadState    = 0,
       fieldType    = 0;
 
-   var X3DConstants =
+   const X3DConstants =
    {
       // Browser event
 

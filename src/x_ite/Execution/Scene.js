@@ -56,7 +56,9 @@ function (Fields,
 {
 "use strict";
 
-   const _browser = Symbol .for ("X3DEventObject.browser");
+   const
+      _browser        = Symbol .for ("X3DEventObject.browser"),
+      _loadingObjects = Symbol ();
 
    function Scene (browser)
    {
@@ -67,7 +69,7 @@ function (Fields,
       this .addChildObjects ("initLoadCount", new Fields .SFInt32 (),  // Pre load count, must be zero before the scene can be passed to the requester.
                              "loadCount",     new Fields .SFInt32 ()); // Load count of all X3DUrlObjects.
 
-      this .loadingObjects = new Set ();
+      this [_loadingObjects] = new Set ();
    }
 
    Scene .prototype = Object .assign (Object .create (X3DScene .prototype),
@@ -79,7 +81,7 @@ function (Fields,
          {
             const scene = this .getScene ();
 
-            for (const object of this .loadingObjects)
+            for (const object of this [_loadingObjects])
                scene .removeLoadCount (object);
          }
 
@@ -89,7 +91,7 @@ function (Fields,
          {
             const scene = this .getScene ();
 
-            for (const object of this .loadingObjects)
+            for (const object of this [_loadingObjects])
                scene .addLoadCount (object);
          }
       },
@@ -103,12 +105,12 @@ function (Fields,
       },
       addLoadCount: function (node)
       {
-         if (this .loadingObjects .has (node))
+         if (this [_loadingObjects] .has (node))
             return;
 
-         this .loadingObjects .add (node);
+         this [_loadingObjects] .add (node);
 
-         this .loadCount_ = this .loadingObjects .size;
+         this .loadCount_ = this [_loadingObjects] .size;
 
          const
             browser = this .getBrowser (),
@@ -122,12 +124,12 @@ function (Fields,
       },
       removeLoadCount: function (node)
       {
-         if (!this .loadingObjects .has (node))
+         if (!this [_loadingObjects] .has (node))
             return;
 
-         this .loadingObjects .delete (node);
+         this [_loadingObjects] .delete (node);
 
-         this .loadCount_ = this .loadingObjects .size;
+         this .loadCount_ = this [_loadingObjects] .size;
 
          const
             browser = this .getBrowser (),
@@ -141,9 +143,12 @@ function (Fields,
       },
       getLoadingObjects: function ()
       {
-         return this .loadingObjects;
+         return this [_loadingObjects];
       },
    });
+
+   for (const property of Reflect .ownKeys (Scene .prototype))
+      Object .defineProperty (Scene .prototype, property, { enumerable: false })
 
    return Scene;
 });

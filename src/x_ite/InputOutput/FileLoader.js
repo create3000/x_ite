@@ -589,5 +589,8 @@ function ($,
       },
    });
 
+   for (const property of Reflect .ownKeys (FileLoader .prototype))
+      Object .defineProperty (FileLoader .prototype, property, { enumerable: false })
+
    return FileLoader;
 });

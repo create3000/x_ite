@@ -322,6 +322,9 @@ function (SupportedNodes,
       },
    });
 
+   for (const property of Reflect .ownKeys (X3DProtoDeclaration .prototype))
+      Object .defineProperty (X3DProtoDeclaration .prototype, property, { enumerable: false })
+
    Object .defineProperty (X3DProtoDeclaration .prototype, "name",
    {
       get: function () { return this .getName (); },

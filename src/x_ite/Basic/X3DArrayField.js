@@ -64,5 +64,8 @@ function (X3DField)
       constructor: X3DArrayField,
    });
 
+   for (const property of Reflect .ownKeys (X3DArrayField .prototype))
+      Object .defineProperty (X3DArrayField .prototype, property, { enumerable: false })
+
    return X3DArrayField;
 });

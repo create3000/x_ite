@@ -102,5 +102,8 @@ function (X3DField,
       },
    });
 
+   for (const property of Reflect .ownKeys (SFBool .prototype))
+      Object .defineProperty (SFBool .prototype, property, { enumerable: false })
+
    return SFBool;
 });

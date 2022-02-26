@@ -186,6 +186,9 @@ function (X3DBaseNode,
       },
    });
 
+   for (const property of Reflect .ownKeys (BindableList .prototype))
+      Object .defineProperty (BindableList .prototype, property, { enumerable: false })
+
    // Compares two arrays.
 
    function equals (lhs, rhs)

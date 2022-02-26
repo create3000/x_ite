@@ -81,5 +81,8 @@ function (X3DObject)
       },
    });
 
+   for (const property of Reflect .ownKeys (ProfileInfo .prototype))
+      Object .defineProperty (ProfileInfo .prototype, property, { enumerable: false })
+
    return ProfileInfo;
 });

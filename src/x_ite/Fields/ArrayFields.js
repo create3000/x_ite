@@ -374,6 +374,9 @@ function (SFBool,
       },
    });
 
+   for (const property of Reflect .ownKeys (MFNode .prototype))
+      Object .defineProperty (MFNode .prototype, property, { enumerable: false })
+
    function MFString (value)
    {
       return X3DObjectArrayField .call (this, arguments);
@@ -429,6 +432,9 @@ function (SFBool,
       },
    });
 
+   for (const property of Reflect .ownKeys (MFString .prototype))
+      Object .defineProperty (MFString .prototype, property, { enumerable: false })
+
    function ArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
    {
       function ArrayField (value)
@@ -464,6 +470,9 @@ function (SFBool,
             return Type;
          },
       });
+
+      for (const property of Reflect .ownKeys (ArrayField .prototype))
+         Object .defineProperty (ArrayField .prototype, property, { enumerable: false })
 
       return ArrayField;
    }
@@ -503,6 +512,9 @@ function (SFBool,
             return Type;
          },
       });
+
+      for (const property of Reflect .ownKeys (ArrayField .prototype))
+         Object .defineProperty (ArrayField .prototype, property, { enumerable: false })
 
       return ArrayField;
    }

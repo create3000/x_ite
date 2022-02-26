@@ -99,5 +99,8 @@ function (X3DField,
       },
    });
 
+   for (const property of Reflect .ownKeys (SFInt32 .prototype))
+      Object .defineProperty (SFInt32 .prototype, property, { enumerable: false })
+
    return SFInt32;
 });

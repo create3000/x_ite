@@ -136,6 +136,9 @@ function (X3DField,
       toXMLStream: SFColor .prototype .toXMLStream,
    });
 
+   for (const property of Reflect .ownKeys (SFColorRGBA .prototype))
+      Object .defineProperty (SFColorRGBA .prototype, property, { enumerable: false })
+
    const r = {
       get: function ()
       {

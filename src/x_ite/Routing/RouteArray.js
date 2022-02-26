@@ -68,5 +68,8 @@ function (X3DInfoArray)
       },
    });
 
+   for (const property of Reflect .ownKeys (RouteArray .prototype))
+      Object .defineProperty (RouteArray .prototype, property, { enumerable: false })
+
    return RouteArray;
 });

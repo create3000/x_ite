@@ -90,6 +90,9 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
          },
       });
 
+      for (const property of Reflect .ownKeys (SFVec2 .prototype))
+         Object .defineProperty (SFVec2 .prototype, property, { enumerable: false })
+
       const x = {
          get: function ()
          {

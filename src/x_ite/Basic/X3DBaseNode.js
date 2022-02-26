@@ -168,7 +168,12 @@ function (X3DEventObject,
 
             // Change function.
 
-            this .isLive = isLive;
+            Object .defineProperty (this, "isLive",
+            {
+               value: isLive,
+               enumerable: false,
+               configurable: true,
+            });
 
             // Add isLive event.
 
@@ -284,7 +289,7 @@ function (X3DEventObject,
          {
             get: function () { return field; },
             set: function (value) { field .setValue (value); },
-            enumerable: true,
+            enumerable: false,
             configurable: false,
          });
       },
@@ -300,7 +305,7 @@ function (X3DEventObject,
          field .setName (name);
          field .setAccessType (accessType);
 
-         this .setField (name, field);
+         this .setField (name, field, false);
       },
       setField: function (name, field, userDefined)
       {
@@ -527,6 +532,9 @@ function (X3DEventObject,
          this [_cloneCount] -= count;
       },
    });
+
+   for (const property of Reflect .ownKeys (X3DBaseNode .prototype))
+      Object .defineProperty (X3DBaseNode .prototype, property, { enumerable: false })
 
    return X3DBaseNode;
 });

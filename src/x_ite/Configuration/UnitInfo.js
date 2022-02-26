@@ -106,10 +106,13 @@ function (X3DObject,
       },
    });
 
+   for (const property of Reflect .ownKeys (UnitInfo .prototype))
+      Object .defineProperty (UnitInfo .prototype, property, { enumerable: false })
+
    Object .defineProperty (UnitInfo .prototype, "conversion_factor",
    {
       get: function () { return this .conversionFactor; },
-      enumerable: true,
+      enumerable: false,
       configurable: false
    });
 

@@ -123,5 +123,8 @@ function (X3DObject)
       },
    });
 
+   for (const property of Reflect .ownKeys (X3DChildObject .prototype))
+      Object .defineProperty (X3DChildObject .prototype, property, { enumerable: false })
+
    return X3DChildObject;
 });

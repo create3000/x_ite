@@ -204,6 +204,9 @@ function (X3DObject)
       },
    });
 
+   for (const property of Reflect .ownKeys (X3DInfoArray .prototype))
+      Object .defineProperty (X3DInfoArray .prototype, property, { enumerable: false })
+
    Object .defineProperty (X3DInfoArray .prototype, "length",
    {
       get: function () { return this [_array] .length; },

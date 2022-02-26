@@ -99,5 +99,8 @@ function (X3DObject,
       },
    });
 
+   for (const property of Reflect .ownKeys (ComponentInfo .prototype))
+      Object .defineProperty (ComponentInfo .prototype, property, { enumerable: false })
+
    return ComponentInfo;
 });

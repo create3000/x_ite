@@ -51,14 +51,20 @@ define (function ()
 {
 "use strict";
 
-   const Events =
+   const _stack = Symbol ();
+
+   function Events ()
    {
-      stack: [ ],
+      this [_stack] = [ ];
+   }
+
+   Events .prototype =
+   {
       create: function (field)
       {
-         if (this .stack .length)
+         if (this [_stack] .length)
          {
-            const event = this .stack .pop ();
+            const event = this [_stack] .pop ();
 
             event .field = field;
             event .clear ();
@@ -74,9 +80,9 @@ define (function ()
       },
       copy: function (event)
       {
-         if (this .stack .length)
+         if (this [_stack] .length)
          {
-            const copy = this .stack .pop ();
+            const copy = this [_stack] .pop ();
 
             copy .field = event .field;
             copy .clear ();
@@ -97,13 +103,16 @@ define (function ()
       },
       push: function (event)
       {
-         this .stack .push (event);
+         this [_stack] .push (event);
       },
       clear: function ()
       {
-         this .stack .length = 0;
+         this [_stack] .length = 0;
       },
    };
 
-   return Events;
+   for (const property of Reflect .ownKeys (Events .prototype))
+      Object .defineProperty (Events .prototype, property, { enumerable: false })
+
+   return new Events ();
 });

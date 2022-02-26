@@ -99,5 +99,8 @@ function (SupportedNodes,
       },
    });
 
+   for (const property of Reflect .ownKeys (X3DProtoDeclarationNode .prototype))
+      Object .defineProperty (X3DProtoDeclarationNode .prototype, property, { enumerable: false })
+
    return X3DProtoDeclarationNode;
 });

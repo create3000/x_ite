@@ -99,5 +99,8 @@ function (X3DField,
       },
    });
 
+   for (const property of Reflect .ownKeys (SFTime .prototype))
+      Object .defineProperty (SFTime .prototype, property, { enumerable: false })
+
    return SFTime;
 });

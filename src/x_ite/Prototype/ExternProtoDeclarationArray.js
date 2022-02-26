@@ -68,5 +68,8 @@ function (X3DInfoArray)
       },
    });
 
+   for (const property of Reflect .ownKeys (ExternProtoDeclarationArray .prototype))
+      Object .defineProperty (ExternProtoDeclarationArray .prototype, property, { enumerable: false })
+
    return ExternProtoDeclarationArray;
 });

@@ -93,6 +93,9 @@ function (X3DField,
          },
       });
 
+      for (const property of Reflect .ownKeys (SFVec4 .prototype))
+         Object .defineProperty (SFVec4 .prototype, property, { enumerable: false })
+
       const x = {
          get: function ()
          {

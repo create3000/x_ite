@@ -71,5 +71,8 @@ function (X3DObject)
       },
    });
 
+   for (const property of Reflect .ownKeys (X3DFieldDefinition .prototype))
+      Object .defineProperty (X3DFieldDefinition .prototype, property, { enumerable: false })
+
    return X3DFieldDefinition;
 });
