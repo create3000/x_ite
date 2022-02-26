@@ -70,6 +70,108 @@ function (X3DBaseNode,
    X3DNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       constructor: X3DNode,
+      copy: function (instance)
+      {
+         const executionContext = instance .getBody ();
+
+         // First try to get a named node with the node's name.
+
+         const name = this .getName ();
+
+         if (name .length)
+         {
+            const namedNode = executionContext .getNamedNodes () .get (name);
+
+            if (namedNode)
+               return namedNode;
+         }
+
+         // Create copy.
+
+         const copy = this .create (executionContext);
+
+         if (name .length)
+            executionContext .updateNamedNode (name, copy);
+
+         // Default fields
+
+         for (const sourceField of this .getPredefinedFields ())
+         {
+            try
+            {
+               const destinationField = copy .getField (sourceField .getName ());
+
+               if (sourceField .hasReferences ())
+               {
+                  // IS relationship
+
+                  for (const originalReference of sourceField .getReferences ())
+                  {
+                     try
+                     {
+                        destinationField .addReference (instance .getField (originalReference .getName ()));
+                     }
+                     catch (error)
+                     {
+                        console .error (error .message);
+                     }
+                  }
+               }
+               else
+               {
+                  if (sourceField .getAccessType () & X3DConstants .initializeOnly)
+                  {
+                     switch (sourceField .getType ())
+                     {
+                        case X3DConstants .SFNode:
+                        case X3DConstants .MFNode:
+                           destinationField .set (sourceField .copy (instance) .getValue ());
+                           break;
+                        default:
+                           destinationField .set (sourceField .getValue (), sourceField .length);
+                           break;
+                     }
+                  }
+               }
+            }
+            catch (error)
+            {
+               console .log (error .message);
+            }
+         }
+
+         // User-defined fields
+
+         for (const sourceField of this .getUserDefinedFields ())
+         {
+            const destinationField = sourceField .copy (instance);
+
+            copy .addUserDefinedField (sourceField .getAccessType (),
+                                       sourceField .getName (),
+                                       destinationField);
+
+            if (sourceField .hasReferences ())
+            {
+               // IS relationship
+
+               for (const originalReference of sourceField .getReferences ())
+               {
+                  try
+                  {
+                     destinationField .addReference (instance .getField (originalReference .getName ()));
+                  }
+                  catch (error)
+                  {
+                     console .error ("No reference '" + originalReference .getName () + "' inside execution context " + instance .getTypeName () + " '" + instance .getName () + "'.");
+                  }
+               }
+            }
+         }
+
+         copy .setup ();
+
+         return copy;
+      },
       getDisplayName: (function ()
       {
          const _TrailingNumber = /_\d+$/;
