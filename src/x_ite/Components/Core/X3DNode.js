@@ -810,7 +810,13 @@ function (X3DBaseNode,
             }
          }
 
+         // Remove from cache.
+
          SFNodeCache .delete (this);
+
+         // Call super .dispose.
+
+         X3DBaseNode .prototype .dispose .call (this);
       },
    });
 
