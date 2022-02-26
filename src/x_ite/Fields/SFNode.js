@@ -433,9 +433,12 @@ function (X3DField,
       },
       dispose: function ()
       {
-         const target = this [_target];
+         const
+            target = this [_target],
+            value  = target .getValue ();
 
-         target .set (null);
+         if (value)
+            value .dispose ();
 
          X3DField .prototype .dispose .call (target);
       },

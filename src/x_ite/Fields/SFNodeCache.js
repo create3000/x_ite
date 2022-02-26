@@ -76,6 +76,10 @@ define (function ()
             return node;
          }
       },
+      delete: function (baseNode)
+      {
+         cache .delete (baseNode);
+      },
    };
 
    return new SFNodeCache ();
