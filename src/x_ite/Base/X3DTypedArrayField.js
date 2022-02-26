@@ -114,42 +114,6 @@ function (X3DArrayField,
                return target [key];
             }
          }
-
-         if (key === Symbol .iterator)
-         {
-            return function* ()
-            {
-               const
-                  array      = target .getValue (),
-                  components = target .getComponents (),
-                  valueType  = target .getValueType ();
-
-               if (components === 1)
-               {
-                  // Return native JavaScript value.
-
-                  for (let index = 0; index < target [_length]; ++ index)
-                     yield valueType (array [index]);
-               }
-               else
-               {
-                  // Return reference to index.
-
-                  for (let index = 0; index < target [_length]; ++ index)
-                  {
-                     const
-                        value         = new (valueType) (),
-                        internalValue = value .getValue (),
-                        i             = index * components;
-
-                     value .addEvent = addEvent .bind (target, i, internalValue, components);
-                     value .getValue = getValue .bind (target, i, internalValue, components);
-
-                     yield value;
-                  }
-               }
-              };
-         }
       },
       set: function (target, key, value)
       {
@@ -603,7 +567,7 @@ function (X3DArrayField,
          {
             array .fill (0, newLength * components, length * components);
 
-            if (! silent)
+            if (!silent)
                target .addEvent ();
          }
          else if (newLength > length)
@@ -628,7 +592,7 @@ function (X3DArrayField,
                }
             }
 
-            if (! silent)
+            if (!silent)
                target .addEvent ();
          }
 
@@ -670,6 +634,40 @@ function (X3DArrayField,
          X3DArrayField .prototype .set .call (target, newArray);
 
          return newArray;
+      },
+      [Symbol .iterator]: function* ()
+      {
+         const
+            target     = this [_target],
+            array      = target .getValue (),
+            components = target .getComponents (),
+            valueType  = target .getValueType (),
+            length     = target [_length];
+
+         if (components === 1)
+         {
+            // Return native JavaScript value.
+
+            for (let index = 0; index < length; ++ index)
+               yield valueType (array [index]);
+         }
+         else
+         {
+            // Return reference to index.
+
+            for (let index = 0; index < length; ++ index)
+            {
+               const
+                  value         = new (valueType) (),
+                  internalValue = value .getValue (),
+                  i             = index * components;
+
+               value .addEvent = addEvent .bind (target, i, internalValue, components);
+               value .getValue = getValue .bind (target, i, internalValue, components);
+
+               yield value;
+            }
+         }
       },
       toStream: function (stream)
       {
