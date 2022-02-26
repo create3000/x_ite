@@ -755,15 +755,11 @@ function (X3DBaseNode,
 
          // Remove node from entire scene graph.
 
-         const firstParents = new Set (this .getParents ());
-
-         firstParents .forEach (function (firstParent)
+         for (const firstParent of new Set (this .getParents ()))
          {
             if (firstParent instanceof Fields .SFNode)
             {
-               const secondParents = new Set (firstParent .getParents ());
-
-               secondParents .forEach (function (secondParent)
+               for (const secondParent of new Set (firstParent .getParents ()))
                {
                   if (secondParent instanceof Fields .MFNode)
                   {
@@ -771,11 +767,11 @@ function (X3DBaseNode,
 
                      secondParent .erase (secondParent .remove (0, length, firstParent), length);
                   }
-               });
+               }
 
                firstParent .setValue (null);
             }
-         });
+         }
       },
    });
 
