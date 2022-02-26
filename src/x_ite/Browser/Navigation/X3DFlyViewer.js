@@ -123,7 +123,7 @@ function ($,
          element .bind ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
          element .bind ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
 
-         browser .controlKey_ .addInterest ("set_controlKey_", this);
+         browser .controlKey_ .addInterest ("set_controlKey__", this);
 
          // Setup look around chaser.
 
@@ -146,7 +146,7 @@ function ($,
       },
       addCollision: function () { },
       removeCollision: function () { },
-      set_controlKey_: function ()
+      set_controlKey__: function ()
       {
          if (this .event && this .event .button === 0)
          {
@@ -764,7 +764,7 @@ function ($,
       dispose: function ()
       {
          this .disconnect ();
-         this .getBrowser () .controlKey_ .removeInterest ("set_controlKey_", this);
+         this .getBrowser () .controlKey_ .removeInterest ("set_controlKey__", this);
          this .getBrowser () .getSurface () .unbind (".X3DFlyViewer");
          $(document) .unbind (".X3DFlyViewer" + this .getId ());
       },

@@ -96,7 +96,7 @@ function (Fields,
       {
          X3DTextureTransformNode .prototype .initialize .call (this);
 
-         this .textureTransform_ .addInterest ("set_textureTransform_", this);
+         this .textureTransform_ .addInterest ("set_textureTransform__", this);
 
          this .set_textureTransform__ ();
       },
