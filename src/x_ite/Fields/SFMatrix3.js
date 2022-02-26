@@ -127,11 +127,11 @@ function (X3DField,
                this .addEvent ();
             },
             enumerable: true,
-            configurable: false
+            configurable: false,
          });
       }
 
-      for (let i = 0; i < Matrix3 .prototype .length; ++ i)
+      for (let i = 0, length = Matrix3 .prototype .length; i < length; ++ i)
          defineProperty (i);
 
       return SFMatrix3;
