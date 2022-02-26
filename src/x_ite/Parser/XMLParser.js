@@ -74,7 +74,9 @@ function ($,
 {
 "use strict";
 
-   var AccessType =
+   const _dom = Symbol .for ("X_ITE.dom");
+
+   const AccessType =
    {
       initializeOnly: X3DConstants .initializeOnly,
       inputOnly:      X3DConstants .inputOnly,
@@ -105,9 +107,9 @@ function ($,
       constructor: XMLParser,
       parseIntoScene: function (xmlElement, success, error)
       {
-         this .scene .dom = xmlElement;
-         this .success    = success;
-         this .error      = error;
+         this .scene [_dom] = xmlElement;
+         this .success      = success;
+         this .error        = error;
 
          this .getScene () .setEncoding ("XML");
          this .getScene () .setProfile (this .getBrowser () .getProfile ("Full"));

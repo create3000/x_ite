@@ -74,6 +74,8 @@ function ($,
 
    BinaryTransport ($);
 
+   const _dom = Symbol .for ("X_ITE.dom");
+
    const
       ECMAScript    = /^\s*(?:vrmlscript|javascript|ecmascript)\:([^]*)$/,
       dataURL       = /^data:(.*?)(?:;charset=(.*?))?(?:;(base64))?,([^]*)$/,
@@ -227,7 +229,7 @@ function ($,
             new XMLParser (scene) .parseIntoScene (dom, success, error);
 
             //AP: add reference to dom for later access.
-            this .node .dom = dom;
+            this .node [_dom] = dom;
          }
          catch (exception)
          {
@@ -245,7 +247,7 @@ function ($,
                success = this .setScene .bind (this, scene, success, error);
 
             //AP: add reference to dom for later access.
-            this .node .dom = new JSONParser (scene) .parseIntoScene (jsobj, success, error);
+            this .node [_dom] = new JSONParser (scene) .parseIntoScene (jsobj, success, error);
          }
          catch (exception)
          {
