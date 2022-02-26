@@ -755,7 +755,7 @@ function (X3DBaseNode,
          // TODO: remove imported node if any. (do this in ImportedNode)
          // TODO: remove exported node if any. (do this in ExportedNode)
 
-         // Remove routes from and to node if any.
+         // Remove routes from and to node if any, and dispose value of field.
 
          for (const field of this .getFields ())
             field .dispose ();
