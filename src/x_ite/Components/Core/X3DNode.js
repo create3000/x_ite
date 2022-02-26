@@ -747,13 +747,25 @@ function (X3DBaseNode,
       },
       dispose: function ()
       {
+         const executionContext = this .getExecutionContext ();
+
          // Remove named node if any.
 
          if (this .getName ())
-            this .getExecutionContext () .removeNamedNode (this .getName ())
+            executionContext .removeNamedNode (this .getName ())
 
          // TODO: remove imported node if any. (do this in ImportedNode)
-         // TODO: remove exported node if any. (do this in ExportedNode)
+
+         // Remove exported node if any.
+
+         if (executionContext .getType () .includes (X3DConstants .X3DScene))
+         {
+            for (const [exportedName, exportedNode] of new Map (executionContext .getExportedNodes ()))
+            {
+               if (exportedNode .getLocalNode () === this)
+                  executionContext .removeExportedNode (exportedName);
+            }
+         }
 
          // Remove routes from and to node if any, and dispose value of field.
 
