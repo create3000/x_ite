@@ -151,7 +151,7 @@ function (Fields,
             {
                if (this .enabled_ .getValue ())
                {
-                  var collisions = renderObject .getCollisions ();
+                  const collisions = renderObject .getCollisions ();
 
                   collisions .push (this);
 

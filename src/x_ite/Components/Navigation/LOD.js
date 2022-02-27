@@ -330,7 +330,7 @@ function (Fields,
                {
                   if (! this .keepCurrentLevel)
                   {
-                     var
+                     let
                         level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
                         currentLevel = this .level_changed_ .getValue ();
 

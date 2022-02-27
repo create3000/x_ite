@@ -64,7 +64,7 @@ function (Fields,
 {
 "use strict";
 
-   var TransitionType =
+   const TransitionType =
    {
       TELEPORT: true,
       LINEAR:   true,
@@ -158,7 +158,7 @@ function (Fields,
       },
       getNearValue: function ()
       {
-         var nearValue = this .getCollisionRadius ();
+         const nearValue = this .getCollisionRadius ();
 
          if (nearValue === 0)
             return 1e-5;
@@ -174,11 +174,9 @@ function (Fields,
       },
       getTransitionType: function ()
       {
-         for (var i = 0, length = this .transitionType_ .length; i < length; ++ i)
+         for (const value of this .transitionType_)
          {
-            var
-               value          = this .transitionType_ [i],
-               transitionType = TransitionType [value];
+            const transitionType = TransitionType [value];
 
             if (transitionType)
                return value;
@@ -192,10 +190,8 @@ function (Fields,
 
          this .viewer_ = "EXAMINE";
 
-         for (var i = 0; i < this .type_ .length; ++ i)
+         for (const string of this .type_)
          {
-            var string = this .type_ [i];
-
             switch (string)
             {
                case "EXAMINE":
@@ -219,7 +215,7 @@ function (Fields,
 
          // Determine available viewers.
 
-         var
+         let
             examineViewer = false,
             walkViewer    = false,
             flyViewer     = false,
@@ -238,10 +234,8 @@ function (Fields,
          }
          else
          {
-            for (var i = 0; i < this .type_ .length; ++ i)
+            for (const string of this .type_)
             {
-               var string = this .type_ [i];
-
                switch (string)
                {
                   case "EXAMINE":
