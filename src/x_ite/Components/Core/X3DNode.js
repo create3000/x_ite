@@ -52,13 +52,11 @@ define ([
    "x_ite/Fields",
    "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
-   "x_ite/Fields/SFNodeCache",
 ],
 function (X3DBaseNode,
           Fields,
           X3DConstants,
-          Generator,
-          SFNodeCache)
+          Generator)
 {
 "use strict";
 
@@ -809,10 +807,6 @@ function (X3DBaseNode,
                firstParent .setValue (null);
             }
          }
-
-         // Remove from cache.
-
-         SFNodeCache .delete (this);
 
          // Call super .dispose.
 
