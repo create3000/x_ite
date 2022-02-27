@@ -165,7 +165,7 @@ function ($,
 
       // Feature detection:
 
-      // If the aliased linewidth ranges are both 1, gl.lineWidth is probably not possible,
+      // If the aliased lineWidth ranges are both 1, gl.lineWidth is probably not possible,
       // thus we disable it completely to prevent webgl errors.
 
       const aliasedLineWidthRange = gl .getParameter (gl .ALIASED_LINE_WIDTH_RANGE);
@@ -197,7 +197,9 @@ function ($,
       _notification        = Symbol (),
       _contextMenu         = Symbol (),
       _observer            = Symbol (),
-      _privateScene        = Symbol ();
+      _privateScene        = Symbol (),
+      _keydown             = Symbol (),
+      _keyup               = Symbol ();
 
    let browserNumber = 0;
 
@@ -314,8 +316,8 @@ function ($,
          this .setBrowserEventHandler ("onshutdown");
          this .setBrowserEventHandler ("onerror");
 
-         this .getElement () .bind ("keydown.X3DCoreContext", this .keydown_X3DCoreContext .bind (this));
-         this .getElement () .bind ("keyup.X3DCoreContext",   this .keyup_X3DCoreContext   .bind (this));
+         this .getElement () .bind ("keydown.X3DCoreContext", this [_keydown] .bind (this));
+         this .getElement () .bind ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
       },
       getDebug: function ()
       {
@@ -521,7 +523,7 @@ function ($,
       {
          return this .altGrKey_ .getValue ();
       },
-      keydown_X3DCoreContext: function (event)
+      [_keydown]: function (event)
       {
          //console .log (event .keyCode);
 
@@ -757,7 +759,7 @@ function ($,
             }
          }
       },
-      keyup_X3DCoreContext: function (event)
+      [_keyup]: function (event)
       {
          //console .log (event .which);
 

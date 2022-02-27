@@ -602,9 +602,9 @@ function ($,
             if (viewpoints .length === 0)
                return;
 
-            for (const viewpoint of viewpoints)
+            for (var i = 0, length = viewpoints .length; i < length; ++ i)
             {
-               if (viewpoint .isBound_ .getValue ())
+               if (viewpoints [i] .isBound_ .getValue ())
                   break;
             }
 
@@ -635,9 +635,9 @@ function ($,
             if (viewpoints .length === 0)
                return;
 
-            for (const viewpoint of viewpoints)
+            for (var i = 0, length = viewpoints .length; i < length; ++ i)
             {
-               if (viewpoint .isBound_ .getValue ())
+               if (viewpoints [i] .isBound_ .getValue ())
                   break;
             }
 
