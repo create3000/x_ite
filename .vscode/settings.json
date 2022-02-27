@@ -8,5 +8,8 @@
    "files.insertFinalNewline": true,
    "files.trimFinalNewlines": true,
    "files.trimTrailingWhitespace": true,
-   "files.eol": "\n"
+   "files.eol": "\n",
+   "cSpell.words": [
+      "Catmull"
+   ]
 }

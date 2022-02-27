@@ -54,7 +54,10 @@ function (Fields)
 {
 "use strict";
 
-   const _keyDeviceSensorNodes = Symbol ();
+   const
+      _keyDeviceSensorNodes = Symbol (),
+      _keydown              = Symbol (),
+      _keyup                = Symbol ();
 
    function X3DKeyDeviceSensorContext () { }
 
@@ -62,8 +65,8 @@ function (Fields)
    {
       initialize: function ()
       {
-         this .getElement () .bind ("keydown.X3DKeyDeviceSensorContext", this .keydown_X3DKeyDeviceSensorContext .bind (this));
-         this .getElement () .bind ("keyup.X3DKeyDeviceSensorContext",   this .keyup_X3DKeyDeviceSensorContext   .bind (this));
+         this .getElement () .bind ("keydown.X3DKeyDeviceSensorContext", this [_keydown] .bind (this));
+         this .getElement () .bind ("keyup.X3DKeyDeviceSensorContext",   this [_keyup]   .bind (this));
       },
       addKeyDeviceSensorNode: function (keyDeviceSensorNode)
       {
@@ -75,28 +78,27 @@ function (Fields)
       },
       getKeyDeviceSensorNodes: function ()
       {
-         if (this [_keyDeviceSensorNodes] === undefined)
-            this [_keyDeviceSensorNodes] = new Set ();
+         this [_keyDeviceSensorNodes] = new Set ();
+
+         this .getKeyDeviceSensorNodes = function () { return this [_keyDeviceSensorNodes]; };
+
+         Object .defineProperty (this, "getKeyDeviceSensorNodes", { enumerable: false })
 
          return this [_keyDeviceSensorNodes];
       },
-      keydown_X3DKeyDeviceSensorContext: function (event)
+      [_keydown]: function (event)
       {
          //console .log (event .keyCode);
 
          for (const keyDeviceSensorNode of this .getKeyDeviceSensorNodes ())
-         {
             keyDeviceSensorNode .keydown (event);
-         }
       },
-      keyup_X3DKeyDeviceSensorContext: function (event)
+      [_keyup]: function (event)
       {
          //console .log (event .which);
 
          for (const keyDeviceSensorNode of this .getKeyDeviceSensorNodes ())
-         {
             keyDeviceSensorNode .keyup (event);
-         }
       },
    };
 
