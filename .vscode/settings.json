@@ -10,6 +10,7 @@
    "files.trimTrailingWhitespace": true,
    "files.eol": "\n",
    "cSpell.words": [
+      "bbox",
       "Catmull"
    ]
 }

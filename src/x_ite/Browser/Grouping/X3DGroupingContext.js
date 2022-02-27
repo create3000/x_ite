@@ -62,6 +62,8 @@ function (Fields,
 {
 "use strict";
 
+   const _bboxNode = Symbol ();
+
    function X3DGroupingContext () { }
 
    X3DGroupingContext .prototype =
@@ -69,10 +71,11 @@ function (Fields,
       initialize: function () { },
       getBBoxNode: function ()
       {
-         const bboxNode       = new Shape (this .getPrivateScene ());
-         const bboxGeometry   = new IndexedLineSet (this .getPrivateScene ());
-         const bboxColor      = new Color (this .getPrivateScene ());
-         const bboxCoordinate = new Coordinate (this .getPrivateScene ());
+         const
+            bboxNode       = new Shape (this .getPrivateScene ()),
+            bboxGeometry   = new IndexedLineSet (this .getPrivateScene ()),
+            bboxColor      = new Color (this .getPrivateScene ()),
+            bboxCoordinate = new Coordinate (this .getPrivateScene ());
 
          bboxNode .geometry_       = bboxGeometry;
          bboxGeometry .coordIndex_ = new Fields .MFFloat (0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 1, 5, -1, 2, 6, -1, 3, 7, -1);
@@ -86,9 +89,9 @@ function (Fields,
          bboxGeometry   .setup ();
          bboxNode       .setup ();
 
-         this .bboxNode = bboxNode;
+         this [_bboxNode] = bboxNode;
 
-         this .getBBoxNode = function () { return this .bboxNode; };
+         this .getBBoxNode = function () { return this [_bboxNode]; };
 
          Object .defineProperty (this, "getBBoxNode", { enumerable: false });
 
