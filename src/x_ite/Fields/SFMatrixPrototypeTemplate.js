@@ -145,7 +145,7 @@ function (X3DField)
 
             stream .string += double ? generator .DoublePrecision (value [last]) : generator .Precision (value [last]);
          },
-            toVRMLStream: function (stream)
+         toVRMLStream: function (stream)
          {
             this .toStream (stream);
          },
