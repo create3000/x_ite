@@ -302,9 +302,7 @@ function ($,
 
          if (this [_hits] .length)
          {
-            var difference = Algorithm .set_difference (this [_overSensors], nearestHit .sensors, { }, function (lhs, rhs) {
-               return lhs .getNode () < rhs .getNode ();
-            });
+            var difference = Algorithm .set_difference (this [_overSensors], nearestHit .sensors, { });
          }
          else
          {
