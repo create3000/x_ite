@@ -381,7 +381,7 @@ function (Fields)
       const texPoint      = this .texPoint;
 
       const index1   = texCoordIndex [i1];
-      vaconstr distance = texPoint [texCoordIndex [i0]] .x - this .texPoint [index1] .x;
+      const distance = texPoint [texCoordIndex [i0]] .x - this .texPoint [index1] .x;
 
       if (distance > this .overlapThreshold)
       {
