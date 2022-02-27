@@ -54,20 +54,22 @@ function (PointEmitter)
 {
 "use strict";
 
+   const _defaultEmitter = Symbol ();
+
    function X3DParticleSystemsContext () { }
 
    X3DParticleSystemsContext .prototype =
    {
       getDefaultEmitter: function ()
       {
-         this .defaultEmitter = new PointEmitter (this .getPrivateScene ());
-         this .defaultEmitter .setup ();
+         this [_defaultEmitter] = new PointEmitter (this .getPrivateScene ());
+         this [_defaultEmitter] .setup ();
 
-         this .getDefaultEmitter = function () { return this .defaultEmitter; };
+         this .getDefaultEmitter = function () { return this [_defaultEmitter]; };
 
          Object .defineProperty (this, "getDefaultEmitter", { enumerable: false });
 v
-         return this .defaultEmitter;
+         return this [_defaultEmitter];
       },
    };
 

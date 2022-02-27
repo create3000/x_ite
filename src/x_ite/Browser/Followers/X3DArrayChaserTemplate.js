@@ -56,7 +56,7 @@ function (X3DArrayFollowerTemplate)
 
    return function (Type)
    {
-      var X3DArrayFollower = X3DArrayFollowerTemplate (Type);
+      const X3DArrayFollower = X3DArrayFollowerTemplate (Type);
 
       function X3DArrayChaserObject ()
       {
@@ -70,11 +70,11 @@ function (X3DArrayFollowerTemplate)
       {
          step: function (value1, value2, t)
          {
-            var
+            const
                output   = this .output,
                deltaOut = this .deltaOut;
 
-            for (var i = 0, length = output .length; i < length; ++ i)
+            for (let i = 0, length = output .length; i < length; ++ i)
                output [i] .add (deltaOut .assign (value1 [i] || this .zero) .subtract (value2 [i] || this .zero) .multiply (t));
          },
       });

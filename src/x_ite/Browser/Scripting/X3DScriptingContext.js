@@ -53,9 +53,11 @@ function ()
 {
 "use strict";
 
+   const _scripts = Symbol ();
+
    function X3DScriptingContext ()
    {
-      this .scripts = [ this ];
+      this [_scripts] = [this];
    }
 
    X3DScriptingContext .prototype =
@@ -65,11 +67,11 @@ function ()
       },
       isExternal: function ()
       {
-         return this .scripts .length === 1;
+         return this [_scripts] .length === 1;
       },
       getScriptStack: function ()
       {
-         return this .scripts;
+         return this [_scripts];
       }
    };
 

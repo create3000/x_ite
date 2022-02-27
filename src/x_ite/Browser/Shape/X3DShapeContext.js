@@ -68,10 +68,20 @@ function (Appearance,
 {
 "use strict";
 
+   const
+      _linetypeTextures          = Symbol (),
+      _hatchStyleTextures        = Symbol (),
+      _defaultAppearance         = Symbol (),
+      _defaultPointProperties    = Symbol (),
+      _defaultLineProperties     = Symbol (),
+      _defaultFillProperties     = Symbol (),
+      _defaultMaterial           = Symbol (),
+      _lineFillTextureProperties = Symbol ();
+
    function X3DShapeContext ()
    {
-      this .linetypeTextures   = [ ];
-      this .hatchStyleTextures = [ ];
+      this [_linetypeTextures]   = [ ];
+      this [_hatchStyleTextures] = [ ];
    }
 
    X3DShapeContext .prototype =
@@ -80,75 +90,75 @@ function (Appearance,
       { },
       getDefaultAppearance: function ()
       {
-         this .defaultAppearance = new Appearance (this .getPrivateScene ());
-         this .defaultAppearance .setup ();
+         this [_defaultAppearance] = new Appearance (this .getPrivateScene ());
+         this [_defaultAppearance] .setup ();
 
-         this .getDefaultAppearance = function () { return this .defaultAppearance; };
+         this .getDefaultAppearance = function () { return this [_defaultAppearance]; };
 
          Object .defineProperty (this, "getDefaultAppearance", { enumerable: false });
 
-         return this .defaultAppearance;
+         return this [_defaultAppearance];
       },
       getDefaultPointProperties: function ()
       {
-         this .defaultPointProperties = new PointProperties (this .getPrivateScene ());
-         this .defaultPointProperties .setup ();
+         this [_defaultPointProperties] = new PointProperties (this .getPrivateScene ());
+         this [_defaultPointProperties] .setup ();
 
-         this .getDefaultPointProperties = function () { return this .defaultPointProperties; };
+         this .getDefaultPointProperties = function () { return this [_defaultPointProperties]; };
 
          Object .defineProperty (this, "getDefaultPointProperties", { enumerable: false });
 
-         return this .defaultPointProperties;
+         return this [_defaultPointProperties];
       },
       getDefaultLineProperties: function ()
       {
-         this .defaultLineProperties = new LineProperties (this .getPrivateScene ());
+         this [_defaultLineProperties] = new LineProperties (this .getPrivateScene ());
 
-         this .defaultLineProperties .applied_ = false;
-         this .defaultLineProperties .setup ();
+         this [_defaultLineProperties] .applied_ = false;
+         this [_defaultLineProperties] .setup ();
 
-         this .getDefaultLineProperties = function () { return this .defaultLineProperties; };
+         this .getDefaultLineProperties = function () { return this [_defaultLineProperties]; };
 
          Object .defineProperty (this, "getDefaultLineProperties", { enumerable: false });
 
-         return this .defaultLineProperties;
+         return this [_defaultLineProperties];
       },
       getDefaultFillProperties: function ()
       {
-         this .defaultFillProperties = new FillProperties (this .getPrivateScene ());
+         this [_defaultFillProperties] = new FillProperties (this .getPrivateScene ());
 
-         this .defaultFillProperties .hatched_ = false;
-         this .defaultFillProperties .setup ();
+         this [_defaultFillProperties] .hatched_ = false;
+         this [_defaultFillProperties] .setup ();
 
-         this .getDefaultFillProperties = function () { return this .defaultFillProperties; };
+         this .getDefaultFillProperties = function () { return this [_defaultFillProperties]; };
 
          Object .defineProperty (this, "getDefaultFillProperties", { enumerable: false });
 
-         return this .defaultFillProperties;
+         return this [_defaultFillProperties];
       },
       getDefaultMaterial: function ()
       {
-         this .defaultMaterial = new UnlitMaterial (this .getPrivateScene ());
+         this [_defaultMaterial] = new UnlitMaterial (this .getPrivateScene ());
 
-         this .defaultMaterial .setup ();
+         this [_defaultMaterial] .setup ();
 
-         this .getDefaultMaterial = function () { return this .defaultMaterial; };
+         this .getDefaultMaterial = function () { return this [_defaultMaterial]; };
 
          Object .defineProperty (this, "getDefaultMaterial", { enumerable: false });
 
-         return this .defaultMaterial;
+         return this [_defaultMaterial];
       },
       getLinetype: function (index)
       {
          if (index < 1 || index > 15)
             index = 1;
 
-         var linetypeTexture = this .linetypeTextures [index];
+         let linetypeTexture = this [_linetypeTextures] [index];
 
          if (linetypeTexture)
             return linetypeTexture;
 
-         linetypeTexture = this .linetypeTextures [index] = new ImageTexture (this .getPrivateScene ());
+         linetypeTexture = this [_linetypeTextures] [index] = new ImageTexture (this .getPrivateScene ());
 
          linetypeTexture .url_ [0]           = urls .getLinetypeUrl (index);
          linetypeTexture .textureProperties_ = this .getLineFillTextureProperties ();
@@ -161,12 +171,12 @@ function (Appearance,
          if (index < 1 || index > 19)
             index = 1;
 
-         var hatchStyleTexture = this .hatchStyleTextures [index];
+         let hatchStyleTexture = this [_hatchStyleTextures] [index];
 
          if (hatchStyleTexture)
             return hatchStyleTexture;
 
-         hatchStyleTexture = this .hatchStyleTextures [index] = new ImageTexture (this .getPrivateScene ());
+         hatchStyleTexture = this [_hatchStyleTextures] [index] = new ImageTexture (this .getPrivateScene ());
 
          hatchStyleTexture .url_ [0]           = urls .getHatchingUrl (index);
          hatchStyleTexture .textureProperties_ = this .getLineFillTextureProperties ();
@@ -176,14 +186,14 @@ function (Appearance,
       },
       getLineFillTextureProperties: function ()
       {
-         this .lineFillTextureProperties = new TextureProperties (this .getPrivateScene ());
-         this .lineFillTextureProperties .setup ();
+         this [_lineFillTextureProperties] = new TextureProperties (this .getPrivateScene ());
+         this [_lineFillTextureProperties] .setup ();
 
-         this .getLineFillTextureProperties = function () { return this .lineFillTextureProperties; };
+         this .getLineFillTextureProperties = function () { return this [_lineFillTextureProperties]; };
 
          Object .defineProperty (this, "getLineFillTextureProperties", { enumerable: false });
 
-         return this .lineFillTextureProperties;
+         return this [_lineFillTextureProperties];
       },
    };
 

@@ -71,7 +71,7 @@ function (Vector3,
       },
       slerp: function (source, destination, t)
       {
-         var
+         const
             sourceLength      = source      .abs (),
             destinationLength = destination .abs ();
 

@@ -60,11 +60,12 @@ function ($,
 
    $.fn.textWidth = function (string)
    {
-      var children = $(this) .children ();
-      var html     = $(this) .html ();
-      var span     = '<span>' + html + '</span>';
+      const
+         children = $(this) .children (),
+         html     = $(this) .html (),
+         span     = '<span>' + html + '</span>';
       $(this) .html (span);
-      var width = $(this) .find ('span:first') .width ();
+      const width = $(this) .find ('span:first') .width ();
       $(this) .empty ();
       $(this) .append (children);
       return width;

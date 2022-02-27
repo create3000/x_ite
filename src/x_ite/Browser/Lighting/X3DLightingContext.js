@@ -54,20 +54,24 @@ function (TextureBuffer)
 {
 "use strict";
 
+   const
+      _maxLights     = Symbol (),
+      _shadowBuffers = Symbol ();
+
    function X3DLightingContext ()
    {
-      var
+      const
          gl                    = this .getContext (),
          maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS);
 
       if (maxVertexTextureUnits > 16)
-         this .maxLights = 8;
+         this [_maxLights] = 8;
       else if (maxVertexTextureUnits > 8)
-         this .maxLights = 4;
+         this [_maxLights] = 4;
       else
-         this .maxLights = 2;
+         this [_maxLights] = 2;
 
-      this .shadowBuffers = [ ]; // Shadow buffer cache
+      this [_shadowBuffers] = [ ]; // Shadow buffer cache
    }
 
    X3DLightingContext .prototype =
@@ -76,13 +80,13 @@ function (TextureBuffer)
       { },
       getMaxLights: function ()
       {
-         return this .maxLights;
+         return this [_maxLights];
       },
       popShadowBuffer: function (shadowMapSize)
       {
          try
          {
-            var shadowBuffers = this .shadowBuffers [shadowMapSize];
+            const shadowBuffers = this [_shadowBuffers] [shadowMapSize];
 
             if (shadowBuffers)
             {
@@ -90,7 +94,7 @@ function (TextureBuffer)
                   return shadowBuffers .pop ();
             }
             else
-               this .shadowBuffers [shadowMapSize] = [ ];
+               this [_shadowBuffers] [shadowMapSize] = [ ];
 
             return new TextureBuffer (this, shadowMapSize, shadowMapSize);
          }
@@ -105,7 +109,7 @@ function (TextureBuffer)
       pushShadowBuffer: function (buffer)
       {
          if (buffer)
-            this .shadowBuffers [buffer .getWidth ()] .push (buffer);
+            this [_shadowBuffers] [buffer .getWidth ()] .push (buffer);
       },
    };
 

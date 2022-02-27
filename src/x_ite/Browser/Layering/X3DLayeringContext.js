@@ -54,20 +54,22 @@ function (Viewport)
 {
 "use strict";
 
+   const _defaultViewport = Symbol ();
+
    function X3DLayeringContext ()
    {
-      this .defaultViewport = new Viewport (this .getPrivateScene ());
+      this [_defaultViewport] = new Viewport (this .getPrivateScene ());
    }
 
    X3DLayeringContext .prototype =
    {
       initialize: function ()
       {
-         this .defaultViewport .setup ();
+         this [_defaultViewport] .setup ();
       },
       getDefaultViewport: function ()
       {
-         return this .defaultViewport;
+         return this [_defaultViewport];
       },
    };
 

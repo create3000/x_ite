@@ -60,6 +60,12 @@ function (BoxOptions,
 {
 "use strict";
 
+   const
+      _boxOptions      = Symbol (),
+      _coneOptions     = Symbol (),
+      _cylinderOptions = Symbol (),
+      _sphereOptions   = Symbol ();
+
    function getOptionNode (fun, name, Type)
    {
       this [name] = new Type (this .getPrivateScene ());
@@ -80,19 +86,19 @@ function (BoxOptions,
       { },
       getBoxOptions: function ()
       {
-         return getOptionNode .call (this, "getBoxOptions", "boxOptions", BoxOptions);
+         return getOptionNode .call (this, "getBoxOptions", _boxOptions, BoxOptions);
       },
       getConeOptions: function ()
       {
-         return getOptionNode .call (this, "getConeOptions", "coneOptions", ConeOptions);
+         return getOptionNode .call (this, "getConeOptions", _coneOptions, ConeOptions);
       },
       getCylinderOptions: function ()
       {
-         return getOptionNode .call (this, "getCylinderOptions", "cylinderOptions", CylinderOptions);
+         return getOptionNode .call (this, "getCylinderOptions", _cylinderOptions, CylinderOptions);
       },
       getSphereOptions: function ()
       {
-         return getOptionNode .call (this, "getSphereOptions", "sphereOptions", QuadSphereOptions);
+         return getOptionNode .call (this, "getSphereOptions", _sphereOptions, QuadSphereOptions);
       },
    };
 

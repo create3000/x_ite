@@ -104,7 +104,7 @@ function ($,
       },
       update: (function ()
       {
-         var
+         const
             min = new Vector3 (0, 0, 0),
             max = new Vector3 (1, 1, 0);
 

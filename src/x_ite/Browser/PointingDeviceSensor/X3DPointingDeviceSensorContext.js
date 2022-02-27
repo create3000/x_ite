@@ -74,24 +74,39 @@ function ($,
 {
 "use strict";
 
-   var line = new Line3 (Vector3 .Zero, Vector3 .Zero);
+   const
+      _pointingDevice = Symbol (),
+      _cursorType     = Symbol (),
+      _pointer        = Symbol (),
+      _hitRay         = Symbol (),
+      _hits           = Symbol (),
+      _enabledSensors = Symbol (),
+      _selectedLayer  = Symbol (),
+      _overSensors    = Symbol (),
+      _activeSensors  = Symbol (),
+      _hitPointSorter = Symbol (),
+      _layerNumber    = Symbol (),
+      _layerSorter    = Symbol (),
+      _pointerTime    = Symbol ();
+
+   const line = new Line3 (Vector3 .Zero, Vector3 .Zero);
 
    function X3DPointingDeviceSensorContext ()
    {
-      this .pointingDevice = new PointingDevice (this);
+      this [_pointingDevice] = new PointingDevice (this);
 
-      this .pointer        = new Vector2 (0, 0);
-      this .hitRay         = new Line3 (Vector3 .Zero, Vector3 .Zero);
-      this .hits           = [ ];
-      this .enabledSensors = [{ }];
-      this .selectedLayer  = null;
-      this .overSensors    = { };
-      this .activeSensors  = { };
+      this [_pointer]        = new Vector2 (0, 0);
+      this [_hitRay]         = new Line3 (Vector3 .Zero, Vector3 .Zero);
+      this [_hits]           = [ ];
+      this [_enabledSensors] = [{ }];
+      this [_selectedLayer]  = null;
+      this [_overSensors]    = { };
+      this [_activeSensors]  = { };
 
-      this .hitPointSorter = new MergeSort (this .hits, function (lhs, rhs) { return lhs .intersection .point .z < rhs .intersection .point .z; });
-      this .layerSorter    = new MergeSort (this .hits, function (lhs, rhs) { return lhs .layerNumber < rhs .layerNumber; });
+      this [_hitPointSorter] = new MergeSort (this [_hits], function (lhs, rhs) { return lhs .intersection .point .z < rhs .intersection .point .z; });
+      this [_layerSorter]    = new MergeSort (this [_hits], function (lhs, rhs) { return lhs .layerNumber < rhs .layerNumber; });
 
-      this .pointerTime = 0;
+      this [_pointerTime] = 0;
    }
 
    X3DPointingDeviceSensorContext .prototype =
@@ -102,13 +117,13 @@ function ($,
          this .getElement () .attr ("tabindex", this .getElement () .attr ("tabindex") || 0);
          this .setCursor ("DEFAULT");
 
-         this .pointingDevice .setup ();
+         this [_pointingDevice] .setup ();
       },
       setCursor: function (value)
       {
-         this .cursorType = value;
+         const div = this .getSurface ();
 
-         var div = this .getSurface ();
+         this [_cursorType] = value;
 
          switch (value)
          {
@@ -125,7 +140,7 @@ function ($,
             {
                if (this .loadCount_ .getValue ())
                   div .css ("cursor", "wait");
-               else if (this .pointingDevice && this .pointingDevice .isOver)
+               else if (this [_pointingDevice] && this [_pointingDevice] .isOver)
                   div .css ("cursor", "pointer");
                else
                   div .css ("cursor", "default");
@@ -135,88 +150,88 @@ function ($,
       },
       getCursor: function ()
       {
-         return this .cursorType;
+         return this [_cursorType];
       },
       isPointerInRectangle: function (rectangle)
       {
-         return this .pointer .x > rectangle .x &&
-                this .pointer .x < rectangle .x + rectangle .z &&
-                this .pointer .y > rectangle .y &&
-                this .pointer .y < rectangle .y + rectangle .w;
+         return this [_pointer] .x > rectangle .x &&
+                this [_pointer] .x < rectangle .x + rectangle .z &&
+                this [_pointer] .y > rectangle .y &&
+                this [_pointer] .y < rectangle .y + rectangle .w;
       },
       setLayerNumber: function (value)
       {
-         this .layerNumber = value;
+         this [_layerNumber] = value;
       },
       getSelectedLayer: function ()
       {
-         return this .selectedLayer;
+         return this [_selectedLayer];
       },
       setHitRay: function (projectionMatrix, viewport)
       {
          try
          {
-            ViewVolume .unProjectRay (this .pointer .x, this .pointer .y, Matrix4 .Identity, projectionMatrix, viewport, this .hitRay);
+            ViewVolume .unProjectRay (this [_pointer] .x, this [_pointer] .y, Matrix4 .Identity, projectionMatrix, viewport, this [_hitRay]);
          }
          catch (error)
          {
-            this .hitRay .set (Vector3 .Zero, Vector3 .Zero);
+            this [_hitRay] .set (Vector3 .Zero, Vector3 .Zero);
          }
       },
       getHitRay: function ()
       {
-         return this .hitRay;
+         return this [_hitRay];
       },
       getSensors: function ()
       {
-         return this .enabledSensors;
+         return this [_enabledSensors];
       },
       addHit: function (intersection, layer, shape, modelViewMatrix)
       {
-         this .hits .push ({
-            pointer:         this .pointer,
-            hitRay:          this .hitRay .copy (),
+         this [_hits] .push ({
+            pointer:         this [_pointer],
+            hitRay:          this [_hitRay] .copy (),
             intersection:    intersection,
-            sensors:         this .enabledSensors .at (-1),
+            sensors:         this [_enabledSensors] .at (-1),
             layer:           layer,
-            layerNumber:     this .layerNumber,
+            layerNumber:     this [_layerNumber],
             shape:           shape,
             modelViewMatrix: modelViewMatrix .copy (),
          });
       },
       getHits: function ()
       {
-         return this .hits;
+         return this [_hits];
       },
       getNearestHit: function ()
       {
-         return this .hits .at (-1);
+         return this [_hits] .at (-1);
       },
       buttonPressEvent: function (x, y)
       {
          this .touch (x, y);
 
-         if (this .hits .length === 0)
+         if (this [_hits] .length === 0)
             return false;
 
-         var nearestHit = this .getNearestHit ();
+         const nearestHit = this .getNearestHit ();
 
-         this .selectedLayer = nearestHit .layer;
-         this .activeSensors = nearestHit .sensors;
+         this [_selectedLayer] = nearestHit .layer;
+         this [_activeSensors] = nearestHit .sensors;
 
-         for (var key in this .activeSensors)
-            this .activeSensors [key] .set_active__ (true, nearestHit);
+         for (const key in this [_activeSensors])
+            this [_activeSensors] [key] .set_active__ (true, nearestHit);
 
          return ! $.isEmptyObject (nearestHit .sensors);
       },
       buttonReleaseEvent: function ()
       {
-         this .selectedLayer = null;
+         this [_selectedLayer] = null;
 
-         for (var key in this .activeSensors)
-            this .activeSensors [key] .set_active__ (false, null);
+         for (const key in this [_activeSensors])
+            this [_activeSensors] [key] .set_active__ (false, null);
 
-         this .activeSensors = { };
+         this [_activeSensors] = { };
 
          // Selection
 
@@ -228,7 +243,7 @@ function ($,
 
          this .motion ();
 
-         return this .hits .length && ! $.isEmptyObject (this .hits .at (-1) .sensors);
+         return this [_hits] .length && ! $.isEmptyObject (this [_hits] .at (-1) .sensors);
       },
       leaveNotifyEvent: function ()
       {
@@ -237,17 +252,17 @@ function ($,
       {
          if (this .getViewer () .isActive_ .getValue ())
          {
-            this .pointerTime = 0;
+            this [_pointerTime] = 0;
             return;
          }
 
-         var t0 = performance .now ();
+         const t0 = performance .now ();
 
-         this .pointer .set (x, y);
+         this [_pointer] .set (x, y);
 
          // Clear hits.
 
-         this .hits .length = 0;
+         this [_hits] .length = 0;
 
          // Pick.
 
@@ -255,24 +270,24 @@ function ($,
 
          // Picking end.
 
-         this .hitPointSorter .sort (0, this .hits .length);
-         this .layerSorter    .sort (0, this .hits .length);
+         this [_hitPointSorter] .sort (0, this [_hits] .length);
+         this [_layerSorter]    .sort (0, this [_hits] .length);
 
          this .addBrowserEvent ();
-         this .pointerTime = performance .now () - t0;
+         this [_pointerTime] = performance .now () - t0;
       },
       motion: function ()
       {
-         if (this .hits .length)
+         if (this [_hits] .length)
          {
-            var nearestHit = this .hits .at (-1);
+            var nearestHit = this [_hits] .at (-1);
          }
          else
          {
-            var hitRay = this .selectedLayer ? this .hitRay : line;
+            const hitRay = this [_selectedLayer] ? this [_hitRay] : line;
 
             var nearestHit = {
-               pointer:         this .pointer,
+               pointer:         this [_pointer],
                modelViewMatrix: new Matrix4 (),
                hitRay:          hitRay,
                intersection:    null,
@@ -285,40 +300,44 @@ function ($,
 
          // Set isOver to FALSE for appropriate nodes
 
-         if (this .hits .length)
+         if (this [_hits] .length)
          {
-            var difference = Algorithm .set_difference (this .overSensors, nearestHit .sensors, { }, function (lhs, rhs) {
+            var difference = Algorithm .set_difference (this [_overSensors], nearestHit .sensors, { }, function (lhs, rhs) {
                return lhs .getNode () < rhs .getNode ();
             });
          }
          else
          {
-            var difference = Object .assign ({ }, this .overSensors);
+            var difference = Object .assign ({ }, this [_overSensors]);
          }
 
-         for (var key in difference)
+         for (const key in difference)
             difference [key] .set_over__ (false, nearestHit);
 
          // Set isOver to TRUE for appropriate nodes
 
-         if (this .hits .length)
+         if (this [_hits] .length)
          {
-            this .overSensors = nearestHit .sensors;
+            this [_overSensors] = nearestHit .sensors;
 
-            for (var key in this .overSensors)
-               this .overSensors [key] .set_over__ (true, nearestHit);
+            for (const key in this [_overSensors])
+               this [_overSensors] [key] .set_over__ (true, nearestHit);
          }
          else
          {
-            this .overSensors = { };
+            this [_overSensors] = { };
          }
 
          // Forward motion event to active drag sensor nodes
 
-         for (var key in this .activeSensors)
+         for (const key in this [_activeSensors])
          {
-            this .activeSensors [key] .set_motion__ (nearestHit);
+            this [_activeSensors] [key] .set_motion__ (nearestHit);
          }
+      },
+      getPointerTime: function ()
+      {
+         return this [_pointerTime];
       },
    };
 

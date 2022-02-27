@@ -197,6 +197,40 @@ function (X3DArrayField,
       [_target]: null,
       [_tmp]: null,
       [_length]: 0,
+      [Symbol .iterator]: function* ()
+      {
+         const
+            target     = this [_target],
+            array      = target .getValue (),
+            components = target .getComponents (),
+            valueType  = target .getValueType (),
+            length     = target [_length];
+
+         if (components === 1)
+         {
+            // Return native JavaScript value.
+
+            for (let index = 0; index < length; ++ index)
+               yield valueType (array [index]);
+         }
+         else
+         {
+            // Return reference to index.
+
+            for (let index = 0; index < length; ++ index)
+            {
+               const
+                  value         = new (valueType) (),
+                  internalValue = value .getValue (),
+                  i             = index * components;
+
+               value .addEvent = addEvent .bind (target, i, internalValue, components);
+               value .getValue = getValue .bind (target, i, internalValue, components);
+
+               yield value;
+            }
+         }
+      },
       getTarget: function ()
       {
          return this [_target];
@@ -634,40 +668,6 @@ function (X3DArrayField,
          X3DArrayField .prototype .set .call (target, newArray);
 
          return newArray;
-      },
-      [Symbol .iterator]: function* ()
-      {
-         const
-            target     = this [_target],
-            array      = target .getValue (),
-            components = target .getComponents (),
-            valueType  = target .getValueType (),
-            length     = target [_length];
-
-         if (components === 1)
-         {
-            // Return native JavaScript value.
-
-            for (let index = 0; index < length; ++ index)
-               yield valueType (array [index]);
-         }
-         else
-         {
-            // Return reference to index.
-
-            for (let index = 0; index < length; ++ index)
-            {
-               const
-                  value         = new (valueType) (),
-                  internalValue = value .getValue (),
-                  i             = index * components;
-
-               value .addEvent = addEvent .bind (target, i, internalValue, components);
-               value .getValue = getValue .bind (target, i, internalValue, components);
-
-               yield value;
-            }
-         }
       },
       toStream: function (stream)
       {

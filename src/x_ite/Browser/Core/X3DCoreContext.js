@@ -139,9 +139,9 @@ function ($,
 
    function getContext (canvas, version, preserveDrawingBuffer)
    {
-      var
-         options = { preserveDrawingBuffer: preserveDrawingBuffer },
-         gl      = null;
+      const options = { preserveDrawingBuffer: preserveDrawingBuffer };
+
+      let gl = null;
 
       if (version >= 2 && ! gl)
       {
@@ -168,7 +168,7 @@ function ($,
       // If the aliased linewidth ranges are both 1, gl.lineWidth is probably not possible,
       // thus we disable it completely to prevent webgl errors.
 
-      var aliasedLineWidthRange = gl .getParameter (gl .ALIASED_LINE_WIDTH_RANGE);
+      const aliasedLineWidthRange = gl .getParameter (gl .ALIASED_LINE_WIDTH_RANGE);
 
       if (aliasedLineWidthRange [0] === 1 && aliasedLineWidthRange [1] === 1)
       {
@@ -180,17 +180,36 @@ function ($,
       return gl;
    }
 
+   const
+      _number              = Symbol (),
+      _element             = Symbol (),
+      _splashScreen        = Symbol (),
+      _surface             = Symbol (),
+      _canvas              = Symbol (),
+      _context             = Symbol (),
+      _extensions          = Symbol (),
+      _localStorage        = Symbol (),
+      _mobile              = Symbol (),
+      _browserTimings      = Symbol (),
+      _browserOptions      = Symbol (),
+      _browserProperties   = Symbol (),
+      _renderingProperties = Symbol (),
+      _notification        = Symbol (),
+      _contextMenu         = Symbol (),
+      _observer            = Symbol (),
+      _privateScene        = Symbol ();
+
    let browserNumber = 0;
 
    function X3DCoreContext (element)
    {
-      this .number  = ++ browserNumber;
-      this .element = element;
+      this [_number]  = ++ browserNumber;
+      this [_element] = element;
 
       // Get canvas & context.
 
       const
-          browser      = $("<div></div>") .addClass ("x_ite-private-browser x_ite-private-browser-" + this .getId ()) .prependTo (this .element),
+          browser      = $("<div></div>") .addClass ("x_ite-private-browser x_ite-private-browser-" + this .getId ()) .prependTo (this [_element]),
          splashScreen = $("<div></div>") .addClass ("x_ite-private-splash-screen") .appendTo (browser),
          spinner      = $("<div></div>") .addClass ("x_ite-private-spinner")  .appendTo (splashScreen),
          progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen),
@@ -200,29 +219,28 @@ function ($,
       $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
       $("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress) .text ("Lade 0 Dateien");
 
-      this .splashScreen = splashScreen;
-      this .surface      = surface;
-      this .canvas       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
-      this .context      = getContext (this .canvas [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
-      this .extensions   = { };
+      this [_splashScreen] = splashScreen;
+      this [_surface]      = surface;
+      this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
+      this [_context]      = getContext (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
+      this [_extensions]   = { };
 
       const gl = this .getContext ();
 
-      extensions .forEach (function (name)
+      for (const extension of extensions)
       {
-         this .extensions [name] = gl .getExtension (name);
-      },
-      this);
+         this [_extensions] [extension] = gl .getExtension (extension);
+      }
 
-      this .localStorage = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this .number + ").");
-      this .mobile       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
+      this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_number] + ").");
+      this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
-      this .browserTimings      = new BrowserTimings      (this .getPrivateScene ());
-      this .browserOptions      = new BrowserOptions      (this .getPrivateScene ());
-      this .browserProperties   = new BrowserProperties   (this .getPrivateScene ());
-      this .renderingProperties = new RenderingProperties (this .getPrivateScene ());
-      this .notification        = new Notification        (this .getPrivateScene ());
-      this .contextMenu         = new ContextMenu         (this .getPrivateScene ());
+      this [_browserTimings]      = new BrowserTimings      (this .getPrivateScene ());
+      this [_browserOptions]      = new BrowserOptions      (this .getPrivateScene ());
+      this [_browserProperties]   = new BrowserProperties   (this .getPrivateScene ());
+      this [_renderingProperties] = new RenderingProperties (this .getPrivateScene ());
+      this [_notification]        = new Notification        (this .getPrivateScene ());
+      this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
 
       $(".x_ite-console") .empty ();
 
@@ -238,40 +256,40 @@ function ($,
       {
          // Setup browser nodes.
 
-         this .browserTimings      .setup ();
-         this .browserOptions      .setup ()
-         this .browserProperties   .setup ()
-         this .renderingProperties .setup ();
-         this .notification        .setup ();
-         this .contextMenu         .setup ();
+         this [_browserTimings]      .setup ();
+         this [_browserOptions]      .setup ()
+         this [_browserProperties]   .setup ()
+         this [_renderingProperties] .setup ();
+         this [_notification]        .setup ();
+         this [_contextMenu]         .setup ();
 
          // Observe Element's attributes.
 
-         this .observer = new MutationObserver (this .processMutations .bind (this));
+         this [_observer] = new MutationObserver (this .processMutations .bind (this));
 
-         this .observer .observe (this .element [0], { attributes: true, childList: false, characterData: false, subtree: false });
+         this [_observer] .observe (this [_element] [0], { attributes: true, childList: false, characterData: false, subtree: false });
 
          // Define src and url property.
 
          Object .defineProperty (this .getElement () .get (0), "src",
          {
-            get: (function ()
+            get: function ()
             {
                return this .getExecutionContext () .getWorldURL ();
-            })
+            }
             .bind (this),
-            set: (function (value)
+            set: function (value)
             {
                this .loadURL (new Fields .MFString (value), new Fields .MFString ());
-            })
+            }
             .bind (this),
             enumerable: true,
-            configurable: false
+            configurable: false,
          });
 
          Object .defineProperty (this .getElement () .get (0), "url",
          {
-            get: (function ()
+            get: function ()
             {
                const worldURL = this .getExecutionContext () .getWorldURL ();
 
@@ -279,15 +297,15 @@ function ($,
                   return new Fields .MFString (worldURL);
                else
                   return new Fields .MFString ();
-            })
+            }
             .bind (this),
-            set: (function (value)
+            set: function (value)
             {
                this .loadURL (value, new Fields .MFString ());
-            })
+            }
             .bind (this),
             enumerable: true,
-            configurable: false
+            configurable: false,
          });
 
          // Configure browser event handlers.
@@ -305,7 +323,7 @@ function ($,
       },
       getNumber: function ()
       {
-         return this .number;
+         return this [_number];
       },
       isStrict: function ()
       {
@@ -313,74 +331,74 @@ function ($,
       },
       getElement: function ()
       {
-         return this .element;
+         return this [_element];
       },
       getSurface: function ()
       {
-         return this .surface;
+         return this [_surface];
       },
       getSplashScreen: function ()
       {
-         return this .splashScreen;
+         return this [_splashScreen];
       },
       getCanvas: function ()
       {
-         return this .canvas;
+         return this [_canvas];
       },
       getContext: function ()
       {
-         return this .context;
+         return this [_context];
       },
       getExtension: function (name)
       {
-         return this .extensions [name];
+         return this [_extensions] [name];
       },
       getMobile: function ()
       {
-         return this .mobile;
+         return this [_mobile];
       },
       getLocalStorage: function ()
       {
-         return this .localStorage;
+         return this [_localStorage];
       },
       getBrowserTimings: function ()
       {
-         return this .browserTimings;
+         return this [_browserTimings];
       },
       getBrowserOptions: function ()
       {
-         return this .browserOptions;
+         return this [_browserOptions];
       },
       getBrowserProperties: function ()
       {
-         return this .browserProperties;
+         return this [_browserProperties];
       },
       getRenderingProperties: function ()
       {
-         return this .renderingProperties;
+         return this [_renderingProperties];
       },
       getNotification: function ()
       {
-         return this .notification;
+         return this [_notification];
       },
       getContextMenu: function ()
       {
-         return this .contextMenu;
+         return this [_contextMenu];
       },
       getPrivateScene: function ()
       {
-         if (this .privateScene)
-            return this .privateScene;
+         if (this [_privateScene])
+            return this [_privateScene];
 
          // Scene for default nodes.
 
-         this .privateScene = new Scene (this);
+         this [_privateScene] = new Scene (this);
 
-         this .privateScene .setPrivate (true);
-         this .privateScene .setLive (true);
-         this .privateScene .setup ();
+         this [_privateScene] .setPrivate (true);
+         this [_privateScene] .setLive (true);
+         this [_privateScene] .setup ();
 
-         return this .privateScene;
+         return this [_privateScene];
       },
       processMutations: function (mutations)
       {

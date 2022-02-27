@@ -197,6 +197,7 @@ function (X3DChildObject,
          }
          catch (error)
          {
+            console .log (error);
             console .error (error .message);
          }
       },

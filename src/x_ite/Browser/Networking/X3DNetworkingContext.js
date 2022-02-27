@@ -58,6 +58,13 @@ function (Fields,
 {
 "use strict";
 
+   const
+      _loadingTotal   = Symbol (),
+      _loadingObjects = Symbol (),
+      _loading        = Symbol (),
+      _location       = Symbol (),
+      _defaultScene   = Symbol ();
+
    function getBaseURI (element)
    {
       let baseURI = element .baseURI;
@@ -73,10 +80,10 @@ function (Fields,
    {
       this .addChildObjects ("loadCount", new Fields .SFInt32 ());
 
-      this .loadingTotal   = 0;
-      this .loadingObjects = new Set ();
-      this .loading        = false;
-      this .location       = getBaseURI (this .getElement () [0]);
+      this [_loadingTotal]   = 0;
+      this [_loadingObjects] = new Set ();
+      this [_loading]        = false;
+      this [_location]       = getBaseURI (this .getElement () [0]);
 
       this .getCanvas () .fadeOut (0);
 
@@ -94,27 +101,27 @@ function (Fields,
       },
       getLocation: function ()
       {
-         return this .location;
+         return this [_location];
       },
       getDefaultScene: function ()
       {
          // Inline node's empty scene.
 
-         this .defaultScene = this .createScene ();
+         this [_defaultScene] = this .createScene ();
 
-         this .defaultScene .setPrivate (true);
-         this .defaultScene .setLive (true);
-         this .defaultScene .setup ();
+         this [_defaultScene] .setPrivate (true);
+         this [_defaultScene] .setLive (true);
+         this [_defaultScene] .setup ();
 
-         this .getDefaultScene = function () { return this .defaultScene; };
+         this .getDefaultScene = function () { return this [_defaultScene]; };
 
          Object .defineProperty (this, "getDefaultScene", { enumerable: false });
 
-         return this .defaultScene;
+         return this [_defaultScene];
       },
       setBrowserLoading: function (value)
       {
-         this .loading = value;
+         this [_loading] = value;
 
          if (value)
          {
@@ -147,28 +154,28 @@ function (Fields,
       },
       getLoading: function ()
       {
-         return this .loading;
+         return this [_loading];
       },
       addLoadCount: function (object)
       {
-         if (this .loadingObjects .has (object))
+         if (this [_loadingObjects] .has (object))
             return;
 
-         ++ this .loadingTotal;
+         ++ this [_loadingTotal];
 
-         this .loadingObjects .add (object);
+         this [_loadingObjects] .add (object);
 
-         this .setLoadCount (this .loadingObjects .size);
+         this .setLoadCount (this [_loadingObjects] .size);
          this .setCursor ("DEFAULT");
       },
       removeLoadCount: function (object)
       {
-         if (! this .loadingObjects .has (object))
+         if (! this [_loadingObjects] .has (object))
             return;
 
-         this .loadingObjects .delete (object);
+         this [_loadingObjects] .delete (object);
 
-         this .setLoadCount (this .loadingObjects .size);
+         this .setLoadCount (this [_loadingObjects] .size);
       },
       setLoadCount: function (value)
       {
@@ -184,18 +191,18 @@ function (Fields,
             this .setCursor ("DEFAULT");
          }
 
-         if (! this .loading)
+         if (! this [_loading])
             this .getNotification () .string_ = string;
 
          this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
-         this .getSplashScreen () .find (".x_ite-private-progressbar div") .css ("width", ((this .loadingTotal - value) * 100 / this .loadingTotal) + "%");
+         this .getSplashScreen () .find (".x_ite-private-progressbar div") .css ("width", ((this [_loadingTotal] - value) * 100 / this [_loadingTotal]) + "%");
       },
       resetLoadCount: function ()
       {
          this .loadCount_   = 0;
-         this .loadingTotal = 0;
+         this [_loadingTotal] = 0;
 
-         this .loadingObjects .clear ();
+         this [_loadingObjects] .clear ();
       },
    };
 

@@ -54,7 +54,7 @@ function (Rotation4)
 {
 "use strict";
 
-   var result = new Rotation4 (0, 0, 1, 0);
+   const result = new Rotation4 (0, 0, 1, 0);
 
    function SquatInterpolator ()
    {
@@ -66,7 +66,7 @@ function (Rotation4)
       constructor: SquatInterpolator,
       generate: function (closed, key, keyValue)
       {
-         var s = this .s;
+         const s = this .s;
 
          s .length = 0;
 
@@ -83,7 +83,7 @@ function (Rotation4)
                s .push (keyValue [0] .getValue ());
             }
 
-            for (var i = 1, length = key .length - 1; i < length; ++ i)
+            for (let i = 1, length = key .length - 1; i < length; ++ i)
             {
                s .push (Rotation4 .spline (keyValue [i - 1] .getValue (),
                                            keyValue [i]     .getValue (),

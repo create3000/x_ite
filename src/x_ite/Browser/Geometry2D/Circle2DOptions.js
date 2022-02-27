@@ -98,16 +98,16 @@ function (X3DBaseNode,
       },
       build: function ()
       {
-         var
+         const
             dimension = this .dimension_ .getValue (),
             angle     = Math .PI * 2 / dimension,
             vertices  = this .vertices;
 
          vertices .length = 0;
 
-         for (var n = 0; n < dimension; ++ n)
+         for (let n = 0; n < dimension; ++ n)
          {
-            var point = Complex .Polar (1, angle * n);
+            const point = Complex .Polar (1, angle * n);
 
             vertices .push (point .real, point .imag, 0, 1);
          }

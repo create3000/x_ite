@@ -91,17 +91,6 @@ function ($,
                return target [key];
             }
          }
-
-         if (key === Symbol .iterator)
-         {
-            return function* ()
-            {
-               const array = target .getValue ();
-
-               for (const value of array)
-                  yield value .valueOf ();
-            };
-         }
       },
       set: function (target, key, value)
       {
@@ -167,6 +156,15 @@ function ($,
       constructor: X3DObjectArrayField,
       [_target]: null,
       [_proxy]: null,
+      [Symbol .iterator]: function* ()
+      {
+         const
+            target = this [_target],
+            array  = target .getValue ();
+
+         for (const value of array)
+            yield value .valueOf ();
+      },
       getTarget: function ()
       {
          return this [_target];

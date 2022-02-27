@@ -60,7 +60,7 @@ function (Vector3,
 {
 "use strict";
 
-   var Ammo = RigidBodyPhysics .Ammo;
+   const Ammo = RigidBodyPhysics .Ammo;
 
    function VolumePicker ()
    {
@@ -104,7 +104,7 @@ function (Vector3,
       },
       setChildShape: (function ()
       {
-         var
+         const
             translation = new Vector3 (0, 0, 0),
             rotation    = new Rotation4 (0, 0, 1, 0),
             scale       = new Vector3 (1, 1, 1),
@@ -148,17 +148,17 @@ function (Vector3,
       {
          this .collisionWorld .performDiscreteCollisionDetection ();
 
-         var numManifolds = this .dispatcher .getNumManifolds ();
+         const numManifolds = this .dispatcher .getNumManifolds ();
 
-         for (var i = 0; i < numManifolds; ++ i)
+         for (let i = 0; i < numManifolds; ++ i)
          {
-            var
+            const
                contactManifold = this .dispatcher .getManifoldByIndexInternal (i),
                numContacts     = contactManifold .getNumContacts ();
 
-            for (var j = 0; j < numContacts; ++ j)
+            for (let j = 0; j < numContacts; ++ j)
             {
-               var pt = contactManifold .getContactPoint (j);
+               const pt = contactManifold .getContactPoint (j);
 
                if (pt .getDistance () <= 0)
                   return true;
@@ -169,14 +169,14 @@ function (Vector3,
       },
       getTransform: (function ()
       {
-         var
+         const
             T = new Ammo .btTransform (),
             o = new Ammo .btVector3 (0, 0, 0),
             m = new Matrix4 ();
 
          return function (translation, rotation, transform)
          {
-            var t = transform || T;
+            const t = transform || T;
 
             m .set (translation, rotation);
 

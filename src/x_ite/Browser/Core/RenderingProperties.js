@@ -98,7 +98,7 @@ function (Fields,
       {
          X3DBaseNode .prototype .initialize .call (this);
 
-         var browser = this .getBrowser ();
+         const browser = this .getBrowser ();
 
          this .MaxTextureSize_ = browser .getMaxTextureSize ();
          this .TextureUnits_   = browser .getCombinedTextureUnits ();

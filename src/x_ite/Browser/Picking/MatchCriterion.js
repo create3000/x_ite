@@ -51,9 +51,9 @@ define (function ()
 {
 "use strict";
 
-   var i = 0;
+   let i = 0;
 
-   var MatchCriterion =
+   const MatchCriterion =
    {
       MATCH_ANY:      i ++,
       MATCH_EVERY:    i ++,

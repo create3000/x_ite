@@ -95,7 +95,7 @@ function (Fields,
          this .geometry .texCoord_ = new TextureCoordinate (this .getExecutionContext ());
          this .geometry .coord_    = new Coordinate (this .getExecutionContext ());
 
-         var
+         const
             geometry = this .geometry,
             texCoord = this .geometry .texCoord_ .getValue (),
             coord    = this .geometry .coord_ .getValue ();

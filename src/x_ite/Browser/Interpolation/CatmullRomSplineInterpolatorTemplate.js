@@ -56,7 +56,7 @@ function (CatmullRomSplineInterpolator)
 
    return function (Type)
    {
-      var
+      const
          c0 = new Type (0, 0, 0, 0),
          c1 = new Type (0, 0, 0, 0),
          c2 = new Type (0, 0, 0, 0),

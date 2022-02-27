@@ -106,14 +106,14 @@ function (Fields,
       },
       createTexCoordIndex: function ()
       {
-         var
+         const
             xDimension    = this .xDimension_ .getValue () + 1,
             yDimension    = this .yDimension_ .getValue (),
             texCoordIndex = this .geometry .texCoordIndex_;
 
          // North pole
 
-         for (var u = 0, uLength = xDimension - 1; u < uLength; ++ u)
+         for (let u = 0, uLength = xDimension - 1; u < uLength; ++ u)
          {
             texCoordIndex .push (u);
             texCoordIndex .push (u + xDimension - 1);
@@ -123,9 +123,9 @@ function (Fields,
 
          // Sphere segments
 
-         for (var p = xDimension - 1, v = 0, vLength = yDimension - 3; v < vLength; ++ v, ++ p)
+         for (let p = xDimension - 1, v = 0, vLength = yDimension - 3; v < vLength; ++ v, ++ p)
          {
-            for (var u = 0, uLength = xDimension - 1; u < uLength; ++ u, ++ p)
+            for (let u = 0, uLength = xDimension - 1; u < uLength; ++ u, ++ p)
             {
                texCoordIndex .push (p);
                texCoordIndex .push (p + xDimension);
@@ -137,9 +137,9 @@ function (Fields,
 
          // South pole
 
-         var p = (yDimension - 2) * xDimension - 1;
+         let p = (yDimension - 2) * xDimension - 1;
 
-         for (var u = 0, uLength = xDimension - 1; u < uLength; ++ u, ++ p)
+         for (let u = 0, uLength = xDimension - 1; u < uLength; ++ u, ++ p)
          {
             texCoordIndex .push (p + xDimension);
             texCoordIndex .push (p + 1);
@@ -149,55 +149,57 @@ function (Fields,
       },
       createTexCoord: function ()
       {
-         var
+         const
             xDimension = this .xDimension_ .getValue () + 1,
             yDimension = this .yDimension_ .getValue (),
             point      = this .geometry .texCoord_ .getValue () .point_;
 
-            var poleOffset = -0.5 / (xDimension - 1);
+         const poleOffset = -0.5 / (xDimension - 1);
 
-            // North pole
+         // North pole
 
-            for (var u = 1; u < xDimension; ++ u)
+         for (let u = 1; u < xDimension; ++ u)
+         {
+            const x = u / (xDimension - 1) + poleOffset;
+
+            point .push (new Vector2 (x, 1));
+         }
+
+         // Sphere segments
+
+         for (let v = 1, vLength = yDimension - 1; v < vLength; ++ v)
+         {
+            const y = 1 - v / (yDimension - 1);
+
+            for (let u = 0; u < xDimension; ++ u)
             {
-               var x = u / (xDimension - 1) + poleOffset;
+               const x = u / (xDimension - 1);
 
-               point .push (new Vector2 (x, 1));
+               point .push (new Vector2 (x, y));
             }
+         }
 
-            // Sphere segments
+         // South pole
 
-            for (var v = 1, vLength = yDimension - 1; v < vLength; ++ v)
-            {
-               var y = 1 - v / (yDimension - 1);
+         for (let u = 1; u < xDimension; ++ u)
+         {
+            const x = u / (xDimension - 1) + poleOffset;
 
-               for (var u = 0; u < xDimension; ++ u)
-               {
-                  var x = u / (xDimension - 1);
-
-                  point .push (new Vector2 (x, y));
-               }
-            }
-
-            // South pole
-
-            for (var u = 1; u < xDimension; ++ u)
-            {
-               var x = u / (xDimension - 1) + poleOffset;
-
-               point .push (new Vector2 (x, 0));
-            }
+            point .push (new Vector2 (x, 0));
+         }
       },
       createCoordIndex: function ()
       {
-         var
+         const
             xDimension = this .xDimension_ .getValue () + 1,
             yDimension = this .yDimension_ .getValue (),
             coordIndex = this .geometry .coordIndex_;
 
          // North pole
 
-         for (var u = 1, uLength = xDimension - 1; u < uLength; ++ u)
+         let u = 1;
+
+         for (const uLength = xDimension - 1; u < uLength; ++ u)
          {
             coordIndex .push (0);
             coordIndex .push (u);
@@ -212,11 +214,11 @@ function (Fields,
 
          // Sphere segments
 
-         var p = 1;
+         let p = 1;
 
-         for (var v = 0, vLength = yDimension - 3; v < vLength; ++ v, ++ p)
+         for (let v = 0, vLength = yDimension - 3; v < vLength; ++ v, ++ p)
          {
-            for (var u = 0, uLength = xDimension - 2; u < uLength; ++ u, ++ p)
+            for (let u = 0, uLength = xDimension - 2; u < uLength; ++ u, ++ p)
             {
                coordIndex .push (p);
                coordIndex .push (p + xDimension - 1);
@@ -234,9 +236,9 @@ function (Fields,
 
          // South pole
 
-         var last = p + xDimension - 1;
+         const last = p + xDimension - 1;
 
-         for (var u = 0, uLength = xDimension - 2; u < uLength; ++ u, ++ p)
+         for (let u = 0, uLength = xDimension - 2; u < uLength; ++ u, ++ p)
          {
             coordIndex .push (last);
             coordIndex .push (p + 1);
@@ -251,7 +253,7 @@ function (Fields,
       },
       createPoints: function ()
       {
-         var
+         const
             xDimension = this .xDimension_ .getValue () + 1,
             yDimension = this .yDimension_ .getValue (),
             point      = this .geometry .coord_ .getValue () .point_;
@@ -260,13 +262,13 @@ function (Fields,
          point .push (new Vector3 (0, 1, 0));
 
          // Sphere segments
-         for (var v = 1, vLength = yDimension - 1; v < vLength; ++ v)
+         for (let v = 1, vLength = yDimension - 1; v < vLength; ++ v)
          {
-            var zPlane = Complex .Polar (1, -Math .PI * v / vLength);
+            const zPlane = Complex .Polar (1, -Math .PI * v / vLength);
 
-            for (var u = 0, uLength = xDimension - 1; u < uLength; ++ u)
+            for (let u = 0, uLength = xDimension - 1; u < uLength; ++ u)
             {
-               var yPlane = Complex .Polar (zPlane .imag, 2 * Math .PI * u / uLength);
+               const yPlane = Complex .Polar (zPlane .imag, 2 * Math .PI * u / uLength);
 
                point .push (new Vector3 (yPlane .imag, zPlane .real, yPlane .real));
             }
@@ -286,7 +288,7 @@ function (Fields,
          this .createCoordIndex ();
          this .createPoints ();
 
-         var
+         const
             geometry = this .geometry,
             texCoord = this .geometry .texCoord_ .getValue (),
             coord    = this .geometry .coord_ .getValue ();

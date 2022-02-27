@@ -54,6 +54,8 @@ function (Fields)
 {
 "use strict";
 
+   const _keyDeviceSensorNodes = Symbol ();
+
    function X3DKeyDeviceSensorContext () { }
 
    X3DKeyDeviceSensorContext .prototype =
@@ -73,28 +75,28 @@ function (Fields)
       },
       getKeyDeviceSensorNodes: function ()
       {
-         if (this .keyDeviceSensorNodes === undefined)
-            this .keyDeviceSensorNodes = new Set ();
+         if (this [_keyDeviceSensorNodes] === undefined)
+            this [_keyDeviceSensorNodes] = new Set ();
 
-         return this .keyDeviceSensorNodes;
+         return this [_keyDeviceSensorNodes];
       },
       keydown_X3DKeyDeviceSensorContext: function (event)
       {
          //console .log (event .keyCode);
 
-         this .getKeyDeviceSensorNodes () .forEach (function (keyDeviceSensorNode)
+         for (const keyDeviceSensorNode of this .getKeyDeviceSensorNodes ())
          {
             keyDeviceSensorNode .keydown (event);
-         });
+         }
       },
       keyup_X3DKeyDeviceSensorContext: function (event)
       {
          //console .log (event .which);
 
-         this .getKeyDeviceSensorNodes () .forEach (function (keyDeviceSensorNode)
+         for (const keyDeviceSensorNode of this .getKeyDeviceSensorNodes ())
          {
             keyDeviceSensorNode .keyup (event);
-         });
+         }
       },
    };
 

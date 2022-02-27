@@ -58,10 +58,15 @@ function ($,
 {
 "use strict";
 
+   const
+      _defaultFontStyle = Symbol (),
+      _fontCache        = Symbol (),
+      _glyphCache       = Symbol ();
+
    function X3DTextContext ()
    {
-      this .fontCache  = new Map ();
-      this .glyphCache = new Map (); // [font] [primitveQuality] [glyphIndex]
+      this [_fontCache]  = new Map ();
+      this [_glyphCache] = new Map (); // [font] [primitveQuality] [glyphIndex]
    }
 
    X3DTextContext .prototype =
@@ -70,24 +75,24 @@ function ($,
       { },
       getDefaultFontStyle: function ()
       {
-         this .defaultFontStyle = new FontStyle (this .getPrivateScene ());
-         this .defaultFontStyle .setup ();
+         this [_defaultFontStyle] = new FontStyle (this .getPrivateScene ());
+         this [_defaultFontStyle] .setup ();
 
-         this .getDefaultFontStyle = function () { return this .defaultFontStyle; };
+         this .getDefaultFontStyle = function () { return this [_defaultFontStyle]; };
 
          Object .defineProperty (this, "getDefaultFontStyle", { enumerable: false });
 
-         return this .defaultFontStyle;
+         return this [_defaultFontStyle];
       },
       getFont: function (url)
       {
          url = url .toString ();
 
-         var deferred = this .fontCache .get (url);
+         let deferred = this [_fontCache] .get (url);
 
          if (deferred === undefined)
          {
-            this .fontCache .set (url, deferred = $.Deferred ());
+            this [_fontCache] .set (url, deferred = $.Deferred ());
 
             opentype .load (url, this .setFont .bind (this, deferred));
          }
@@ -103,7 +108,7 @@ function ($,
          else
          {
 //				// Workaround to initialize composite glyphs.
-//				for (var i = 0, length = font .numGlyphs; i < length; ++ i)
+//				for (let i = 0, length = font .numGlyphs; i < length; ++ i)
 //					font .glyphs .get (i) .getPath (0, 0, 1);
 
             // Resolve callbacks.
@@ -112,19 +117,19 @@ function ($,
       },
       getGlyph: function (font, primitveQuality, glyphIndex)
       {
-         var cachedFont = this .glyphCache .get (font);
+         let cachedFont = this [_glyphCache] .get (font);
 
-         if (! cachedFont)
-            this .glyphCache .set (font, cachedFont = [ ]);
+         if (!cachedFont)
+            this [_glyphCache] .set (font, cachedFont = [ ]);
 
-         var cachedQuality = cachedFont [primitveQuality];
+         let cachedQuality = cachedFont [primitveQuality];
 
-         if (! cachedQuality)
+         if (!cachedQuality)
             cachedQuality = cachedFont [primitveQuality] = [ ];
 
-         var cachedGlyph = cachedQuality [glyphIndex];
+         let cachedGlyph = cachedQuality [glyphIndex];
 
-         if (! cachedGlyph)
+         if (!cachedGlyph)
             cachedGlyph = cachedQuality [glyphIndex] = { };
 
          return cachedGlyph;

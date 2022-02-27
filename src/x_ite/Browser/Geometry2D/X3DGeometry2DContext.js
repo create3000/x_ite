@@ -64,6 +64,13 @@ function (Arc2DOptions,
 {
 "use strict";
 
+   const
+      _arc2DOptions       = Symbol (),
+      _arcClose2DOptions  = Symbol (),
+      _circle2DOptions    = Symbol (),
+      _disk2DOptions      = Symbol (),
+      _rectangle2DOptions = Symbol ();
+
    function getOptionNode (fun, name, Type)
    {
       this [name] = new Type (this .getPrivateScene ());
@@ -86,27 +93,27 @@ function (Arc2DOptions,
       },
       getArc2DOptions: function ()
       {
-         return getOptionNode .call (this, "getArc2DOptions", "arc2DOptions", Arc2DOptions);
+         return getOptionNode .call (this, "getArc2DOptions", _arc2DOptions, Arc2DOptions);
       },
       getArcClose2DOptions: function ()
       {
-         return getOptionNode .call (this, "getArcClose2DOptions", "arcClose2DOptions", ArcClose2DOptions);
+         return getOptionNode .call (this, "getArcClose2DOptions", _arcClose2DOptions, ArcClose2DOptions);
       },
       getCircle2DOptions: function ()
       {
-         return getOptionNode .call (this, "getCircle2DOptions", "circle2DOptions", Circle2DOptions);
+         return getOptionNode .call (this, "getCircle2DOptions", _circle2DOptions, Circle2DOptions);
       },
       getDisk2DOptions: function ()
       {
-         return getOptionNode .call (this, "getDisk2DOptions", "disk2DOptions", Disk2DOptions);
+         return getOptionNode .call (this, "getDisk2DOptions", _disk2DOptions, Disk2DOptions);
       },
       getRectangle2DOptions: function ()
       {
-         return getOptionNode .call (this, "getRectangle2DOptions", "rectangle2DOptions", Rectangle2DOptions);
+         return getOptionNode .call (this, "getRectangle2DOptions", _rectangle2DOptions, Rectangle2DOptions);
       },
       setGeometry2DPrimitiveQuality: function (primitiveQuality)
       {
-         var
+         const
             arc      = this .getArc2DOptions (),
             arcClose = this .getArcClose2DOptions (),
             circle   = this .getCircle2DOptions (),

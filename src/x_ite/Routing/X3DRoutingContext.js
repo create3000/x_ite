@@ -53,12 +53,18 @@ function ()
 {
 "use strict";
 
+   const
+      _taintedFields     = Symbol (),
+      _taintedFieldsTemp = Symbol (),
+      _taintedNodes      = Symbol (),
+      _taintedNodesTemp  = Symbol ();
+
    function X3DRoutingContext ()
    {
-      this .taintedFields     = [ ];
-      this .taintedFieldsTemp = [ ];
-      this .taintedNodes      = [ ];
-      this .taintedNodesTemp  = [ ];
+      this [_taintedFields]     = [ ];
+      this [_taintedFieldsTemp] = [ ];
+      this [_taintedNodes]      = [ ];
+      this [_taintedNodesTemp]  = [ ];
    }
 
    X3DRoutingContext .prototype =
@@ -67,11 +73,11 @@ function ()
       initialize: function () { },
       addTaintedField: function (field, event)
       {
-         this .taintedFields .push (field, event);
+         this [_taintedFields] .push (field, event);
       },
       addTaintedNode: function (node)
       {
-         this .taintedNodes .push (node);
+         this [_taintedNodes] .push (node);
       },
       processEvents: function ()
       {
@@ -80,38 +86,38 @@ function ()
             // Process field events
             do
             {
-               const taintedFields = this .taintedFields;
+               const taintedFields = this [_taintedFields];
 
                // Swap tainted fields.
-               this .taintedFields         = this .taintedFieldsTemp;
-               this .taintedFields .length = 0;
+               this [_taintedFields]         = this [_taintedFieldsTemp];
+               this [_taintedFields] .length = 0;
 
                for (let i = 0, length = taintedFields .length; i < length; i += 2)
                   taintedFields [i] .processEvent (taintedFields [i + 1]);
 
                // Don't know why this must be done after the for loop, otherwise a fatal error could be thrown.
-               this .taintedFieldsTemp = taintedFields;
+               this [_taintedFieldsTemp] = taintedFields;
             }
-            while (this .taintedFields .length);
+            while (this [_taintedFields] .length);
 
             // Process node events
             do
             {
-               const taintedNodes = this .taintedNodes;
+               const taintedNodes = this [_taintedNodes];
 
                // Swap tainted nodes.
-               this .taintedNodes         = this .taintedNodesTemp;
-               this .taintedNodes .length = 0;
+               this [_taintedNodes]         = this [_taintedNodesTemp];
+               this [_taintedNodes] .length = 0;
 
                for (const taintedNode of taintedNodes)
                   taintedNode .processEvents ();
 
                // Don't know why this must be done after the for loop, otherwise a fatal error could be thrown.
-               this .taintedNodesTemp = taintedNodes;
+               this [_taintedNodesTemp] = taintedNodes;
             }
-            while (! this .taintedFields .length && this .taintedNodes .length);
+            while (! this [_taintedFields] .length && this [_taintedNodes] .length);
          }
-         while (this .taintedFields .length);
+         while (this [_taintedFields] .length);
       },
    };
 

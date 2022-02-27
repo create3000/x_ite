@@ -76,11 +76,6 @@ function (X3DObject)
 
             return;
          }
-
-         if (key === Symbol .iterator)
-         {
-            return target [_array] [key];
-         }
       },
       set: function (target, key, value)
       {
@@ -118,8 +113,9 @@ function (X3DObject)
 
    function X3DInfoArray ()
    {
-      this [_array] = [ ];
-      this [_index] = new Map ();
+      this [_array]           = [ ];
+      this [_index]           = new Map ();
+      this [Symbol .iterator] = this [_array] [Symbol .iterator];
 
       return new Proxy (this, handler);
    }

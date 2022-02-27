@@ -54,6 +54,10 @@ function (TextureProperties)
 {
 "use strict";
 
+   const
+      _backgroundSphereShader      = Symbol (),
+      _backgroundTextureProperties = Symbol ();
+
    function X3DEnvironmentalEffectsContext () { }
 
    X3DEnvironmentalEffectsContext .prototype =
@@ -61,30 +65,30 @@ function (TextureProperties)
       initialize: function () { },
       getBackgroundSphereShader: function ()
       {
-         this .backgroundSphereShader = this .createShader ("BackgroundSphereShader", "Background");
+         this [_backgroundSphereShader] = this .createShader ("BackgroundSphereShader", "Background");
 
-         this .getBackgroundSphereShader = function () { return this .backgroundSphereShader; };
+         this .getBackgroundSphereShader = function () { return this [_backgroundSphereShader]; };
 
          Object .defineProperty (this, "getBackgroundSphereShader", { enumerable: false });
 
-         return this .backgroundSphereShader;
+         return this [_backgroundSphereShader];
       },
       getBackgroundTextureProperties: function ()
       {
-         this .backgroundTextureProperties = new TextureProperties (this .getPrivateScene ());
+         this [_backgroundTextureProperties] = new TextureProperties (this .getPrivateScene ());
 
-         this .backgroundTextureProperties .boundaryModeS_       = "CLAMP_TO_EDGE";
-         this .backgroundTextureProperties .boundaryModeT_       = "CLAMP_TO_EDGE";
-         this .backgroundTextureProperties .boundaryModeR_       = "CLAMP_TO_EDGE";
-         this .backgroundTextureProperties .minificationFilter_  = "NICEST";
-         this .backgroundTextureProperties .magnificationFilter_ = "NICEST";
-         this .backgroundTextureProperties .setup ();
+         this [_backgroundTextureProperties] .boundaryModeS_       = "CLAMP_TO_EDGE";
+         this [_backgroundTextureProperties] .boundaryModeT_       = "CLAMP_TO_EDGE";
+         this [_backgroundTextureProperties] .boundaryModeR_       = "CLAMP_TO_EDGE";
+         this [_backgroundTextureProperties] .minificationFilter_  = "NICEST";
+         this [_backgroundTextureProperties] .magnificationFilter_ = "NICEST";
+         this [_backgroundTextureProperties] .setup ();
 
-         this .getBackgroundTextureProperties = function () { return this .backgroundTextureProperties; };
+         this .getBackgroundTextureProperties = function () { return this [_backgroundTextureProperties]; };
 
          Object .defineProperty (this, "getBackgroundTextureProperties", { enumerable: false });
 
-         return this .backgroundTextureProperties;
+         return this [_backgroundTextureProperties];
       },
    };
 

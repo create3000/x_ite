@@ -51,9 +51,9 @@ define (function ()
 {
 "use strict";
 
-   var i = 0;
+   let i = 0;
 
-   var SortOrder =
+   const SortOrder =
    {
       ANY:        i ++,
       CLOSEST:    i ++,

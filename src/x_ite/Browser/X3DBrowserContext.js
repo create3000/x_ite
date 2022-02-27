@@ -100,6 +100,17 @@ function ($,
 {
 "use strict";
 
+   const
+      _world           = Symbol (),
+      _changedTime     = Symbol (),
+      _renderCallback  = Symbol (),
+      _systemTime      = Symbol (),
+      _systemStartTime = Symbol (),
+      _browserTime     = Symbol (),
+      _cameraTime      = Symbol (),
+      _collisionTime   = Symbol (),
+      _displayTime     = Symbol ();
+
    const contexts = [ ];
 
    function X3DBrowserContext (element)
@@ -135,14 +146,14 @@ function ($,
                              "sensorEvents",  new SFTime (),
                              "finished",      new SFTime ());
 
-      this .changedTime     = 0;
-      this .renderCallback  = this .traverse .bind (this);
-      this .systemTime      = 0;
-      this .systemStartTime = 0;
-      this .browserTime     = 0;
-      this .cameraTime      = 0;
-      this .collisionTime   = 0;
-      this .displayTime     = 0;
+      this [_changedTime]     = 0;
+      this [_renderCallback]  = this .traverse .bind (this);
+      this [_systemTime]      = 0;
+      this [_systemStartTime] = 0;
+      this [_browserTime]     = 0;
+      this [_cameraTime]      = 0;
+      this [_collisionTime]   = 0;
+      this [_displayTime]     = 0;
    };
 
    X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -226,36 +237,36 @@ function ($,
       },
       getWorld: function ()
       {
-         return this .world;
+         return this [_world];
       },
       setExecutionContext: function (executionContext)
       {
-         this .world = new X3DWorld (executionContext);
-         this .world .setup ();
+         this [_world] = new X3DWorld (executionContext);
+         this [_world] .setup ();
       },
       getExecutionContext: function ()
       {
-         return this .world .getExecutionContext ();
+         return this [_world] .getExecutionContext ();
       },
       addBrowserEvent: function ()
       {
-         if (this .changedTime === this .getCurrentTime ())
+         if (this [_changedTime] === this .getCurrentTime ())
             return;
 
-         this .changedTime = this .getCurrentTime ();
+         this [_changedTime] = this .getCurrentTime ();
 
          this .requestAnimationFrame ();
       },
       requestAnimationFrame: function ()
       {
-         window .requestAnimationFrame (this .renderCallback);
+         window .requestAnimationFrame (this [_renderCallback]);
       },
       traverse: function (time)
       {
          const gl = this .getContext ();
 
          const t0 = performance .now ();
-         this .systemTime = t0 - this .systemStartTime;
+         this [_systemTime] = t0 - this [_systemStartTime];
          this .advanceTime (time);
 
          this .prepareEvents_ .processInterests ();
@@ -265,13 +276,13 @@ function ($,
          this .processEvents ();
 
          const t1 = performance .now ();
-         this .world .traverse (TraverseType .CAMERA, null);
-         this .cameraTime = performance .now () - t1;
+         this [_world] .traverse (TraverseType .CAMERA, null);
+         this [_cameraTime] = performance .now () - t1;
 
          const t2 = performance .now ();
          if (this .getCollisionCount ())
-            this .world .traverse (TraverseType .COLLISION, null);
-         this .collisionTime = performance .now () - t2;
+            this [_world] .traverse (TraverseType .COLLISION, null);
+         this [_collisionTime] = performance .now () - t2;
 
          this .sensorEvents_ .processInterests ();
          this .processEvents ();
@@ -282,13 +293,33 @@ function ($,
          const t3 = performance .now ();
          gl .clearColor (0, 0, 0, 0);
          gl .clear (gl .COLOR_BUFFER_BIT);
-         this .world .traverse (TraverseType .DISPLAY, null);
-         this .displayTime = performance .now () - t3;
+         this [_world] .traverse (TraverseType .DISPLAY, null);
+         this [_displayTime] = performance .now () - t3;
 
-         this .browserTime     = performance .now () - t0;
-         this .systemStartTime = performance .now ();
+         this [_browserTime]     = performance .now () - t0;
+         this [_systemStartTime] = performance .now ();
 
          this .finished_ .processInterests ();
+      },
+      getSystemTime: function ()
+      {
+         return this [_systemTime];
+      },
+      getBrowserTime: function ()
+      {
+         return this [_browserTime];
+      },
+      getCameraTime: function ()
+      {
+         return this [_cameraTime];
+      },
+      getCollisionTime: function ()
+      {
+         return this [_collisionTime];
+      },
+      getDisplayTime: function ()
+      {
+         return this [_displayTime];
       },
    });
 

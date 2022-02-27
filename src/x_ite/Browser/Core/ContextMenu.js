@@ -511,25 +511,23 @@ function ($,
       },
       getViewpoints: function ()
       {
-         var
+         const
             browser     = this .getBrowser (),
             activeLayer = browser .getActiveLayer ();
 
          if (! activeLayer)
             return { };
 
-         var
+         const
             enableInlineViewpoints = browser .getBrowserOption ("EnableInlineViewpoints"),
             currentScene           = browser .currentScene,
             viewpoints             = activeLayer .getViewpoints () .get (),
             currentViewpoint       = activeLayer .getViewpoint (),
             menu                   = { };
 
-         for (var i = 0; i < viewpoints .length; ++ i)
+         for (const viewpoint of viewpoints)
          {
-            var
-               viewpoint   = viewpoints [i],
-               description = viewpoint .description_ .getValue ();
+            const description = viewpoint .description_ .getValue ();
 
             if (description === "")
                continue;
@@ -537,7 +535,7 @@ function ($,
             if (! enableInlineViewpoints && viewpoint .getScene () !== currentScene)
                continue;
 
-            var item = {
+            const item = {
                name: description,
                callback: function (viewpoint)
                {
@@ -557,16 +555,14 @@ function ($,
       },
       getAvailableViewers: function ()
       {
-         var
+         const
             browser          = this .getBrowser (),
             currentViewer    = browser .viewer_ .getValue (),
             availableViewers = browser .availableViewers_,
             menu             = { };
 
-         for (var i = 0; i < availableViewers .length; ++ i)
+         for (const viewer of availableViewers)
          {
-            var viewer = availableViewers [i];
-
             menu [viewer] = {
                name: _(this .getViewerName (viewer)),
                className: "context-menu-icon x_ite-private-icon-" + viewer .toLowerCase () + "-viewer",

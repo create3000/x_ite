@@ -88,14 +88,15 @@ function ($,
 {
 "use strict";
 
+   const
+      _loader           = Symbol (),
+      _browserCallbacks = Symbol ();
+
    function X3DBrowser (element)
    {
       X3DBrowserContext .call (this, element);
 
-      this .currentSpeed     = 0;
-      this .currentFrameRate = 60;
-      this .components       = { };
-      this .browserCallbacks = new Map ();
+      this [_browserCallbacks] = new Map ();
 
       this .replaceWorld (this .createScene ());
    };
@@ -164,23 +165,19 @@ function ($,
       },
       getName: function ()
       {
-         return this .name;
+         return "X_ITE";
       },
       getVersion: function ()
       {
-         return this .version;
+         return VERSION;
       },
-      getCurrentSpeed: function ()
+      getDescription: function ()
       {
-         return this .currentSpeed;
-      },
-      getCurrentFrameRate: function ()
-      {
-         return this .currentFrameRate;
+         return this .getNotification () .string_ .getValue ()
       },
       setDescription: function (value)
       {
-         this .description = value;
+         this .getNotification () .string_ = value;
       },
       getWorldURL: function ()
       {
@@ -234,8 +231,8 @@ function ($,
          this .loadCount_       .removeInterest ("set_loadCount__", this);
          this .prepareEvents () .removeInterest ("bind", this);
 
-         if (this .loader)
-            this .loader .abort ();
+         if (this [_loader])
+            this [_loader] .abort ();
 
          // Remove world.
 
@@ -406,20 +403,20 @@ function ($,
             this .loadCount_       .removeInterest ("set_loadCount__", this);
             this .prepareEvents () .removeInterest ("bind", this);
 
-            if (this .loader)
-               this .loader .abort ();
+            if (this [_loader])
+               this [_loader] .abort ();
 
             // Start loading.
 
             this .setBrowserLoading (true);
             this .addLoadCount (this);
 
-            const loader = this .loader = new FileLoader (this .getWorld ());
+            const loader = this [_loader] = new FileLoader (this .getWorld ());
 
             loader .createX3DFromURL (url, parameter,
             function (scene)
             {
-               if (loader !== this .loader)
+               if (loader !== this [_loader])
                {
                   reject ();
                   return;
@@ -448,7 +445,7 @@ function ($,
             .bind (this),
             function (fragment)
             {
-               if (loader !== this .loader)
+               if (loader !== this [_loader])
                {
                   reject ();
                   return;
@@ -463,7 +460,7 @@ function ($,
             .bind (this),
             function (url, target)
             {
-               if (loader !== this .loader)
+               if (loader !== this [_loader])
                {
                   reject ();
                   return;
@@ -495,15 +492,15 @@ function ($,
       },
       addBrowserCallback: function (key, object)
       {
-         this .browserCallbacks .set (key, object);
+         this [_browserCallbacks] .set (key, object);
       },
       removeBrowserCallback: function (key)
       {
-         this .browserCallbacks .delete (key);
+         this [_browserCallbacks] .delete (key);
       },
       getBrowserCallbacks: function ()
       {
-         return this .browserCallbacks;
+         return this [_browserCallbacks];
       },
       callBrowserCallbacks: (function ()
       {
@@ -511,12 +508,12 @@ function ($,
 
          return function (browserEvent)
          {
-            if (this .browserCallbacks .size)
+            if (this [_browserCallbacks] .size)
             {
-               MapUtilities .values (browserCallbacks, this .browserCallbacks) .forEach (function (browserCallback)
+               for (const browserCallback of MapUtilities .values (browserCallbacks, this [_browserCallbacks]))
                {
                   browserCallback (browserEvent);
-               });
+               }
             }
          };
       })(),
@@ -605,9 +602,9 @@ function ($,
             if (viewpoints .length === 0)
                return;
 
-            for (var i = 0; i < viewpoints .length; ++ i)
+            for (const viewpoint of viewpoints)
             {
-               if (viewpoints [i] .isBound_ .getValue ())
+               if (viewpoint .isBound_ .getValue ())
                   break;
             }
 
@@ -638,9 +635,9 @@ function ($,
             if (viewpoints .length === 0)
                return;
 
-            for (var i = 0; i < viewpoints .length; ++ i)
+            for (const viewpoint of viewpoints)
             {
-               if (viewpoints [i] .isBound_ .getValue ())
+               if (viewpoint .isBound_ .getValue ())
                   break;
             }
 
@@ -783,14 +780,28 @@ function ($,
 
    Object .defineProperty (X3DBrowser .prototype, "name",
    {
-      get: function () { return "X_ITE"; },
+      get: function () { return this .getName (); },
       enumerable: true,
       configurable: false
    });
 
    Object .defineProperty (X3DBrowser .prototype, "version",
    {
-      get: function () { return VERSION; },
+      get: function () { return this .getVersion (); },
+      enumerable: true,
+      configurable: false
+   });
+
+   Object .defineProperty (X3DBrowser .prototype, "currentFrameRate",
+   {
+      get: function () { return this .getCurrentFrameRate (); },
+      enumerable: true,
+      configurable: false
+   });
+
+   Object .defineProperty (X3DBrowser .prototype, "currentSpeed",
+   {
+      get: function () { return this .getCurrentSpeed (); },
       enumerable: true,
       configurable: false
    });
@@ -799,11 +810,11 @@ function ($,
    {
       get: function ()
       {
-         return this .getNotification () .string_ .getValue ();
+         return this .getDescription ();
       },
       set: function (value)
       {
-         this .getNotification () .string_ = value;
+         this .setDescription (value);
       },
       enumerable: true,
       configurable: false

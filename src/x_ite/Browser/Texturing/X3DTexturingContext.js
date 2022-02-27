@@ -58,117 +58,139 @@ function (TextureProperties,
 {
 "use strict";
 
+   const
+      _maxTextures              = Symbol (),
+      _multiTexturing           = Symbol (),
+      _projectiveTextureMapping = Symbol (),
+      _combinedTextureUnits     = Symbol (),
+      _maxTextureSize           = Symbol (),
+      _maxCombinedTextureUnits  = Symbol (),
+      _textureMemory            = Symbol (),
+      _shadowTextureUnit        = Symbol (),
+      _linetypeUnit             = Symbol (),
+      _hatchStyleUnit           = Symbol (),
+      _texture2DUnits           = Symbol (),
+      _texture3DUnits           = Symbol (),
+      _cubeMapTextureUnits      = Symbol (),
+      _projectiveTextureUnits   = Symbol (),
+      _defaultTexture2D         = Symbol (),
+      _defaultTexture3D         = Symbol (),
+      _defaultCubeMapTexture    = Symbol (),
+      _defaultTextureProperties = Symbol (),
+      _defaultTextureTransform  = Symbol (),
+      _defaultTextureCoordinate = Symbol ();
+
    function X3DTexturingContext ()
    {
-      var
+      const
          gl                    = this .getContext (),
          maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS);
 
-      this .maxTextures              = maxVertexTextureUnits > 8 ? 2 : 1;
-      this .multiTexturing           = maxVertexTextureUnits > 8;
-      this .projectiveTextureMapping = maxVertexTextureUnits > 8;
-      this .combinedTextureUnits     = [ ];
+      this [_maxTextures]              = maxVertexTextureUnits > 8 ? 2 : 1;
+      this [_multiTexturing]           = maxVertexTextureUnits > 8;
+      this [_projectiveTextureMapping] = maxVertexTextureUnits > 8;
+      this [_combinedTextureUnits]     = [ ];
    }
 
    X3DTexturingContext .prototype =
    {
       initialize: function ()
       {
-         var gl = this .getContext ();
+         const gl = this .getContext ();
 
-         this .maxTextureSize          = gl .getParameter (gl .MAX_TEXTURE_SIZE);
-         this .maxCombinedTextureUnits = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
-         this .textureMemory           = NaN;
+         this [_maxTextureSize]          = gl .getParameter (gl .MAX_TEXTURE_SIZE);
+         this [_maxCombinedTextureUnits] = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+         this [_textureMemory]           = NaN;
 
-         var combinedTextureUnits = this .combinedTextureUnits;
+         const combinedTextureUnits = this [_combinedTextureUnits];
 
          // For shaders
-         for (var i = 1, length = this .maxCombinedTextureUnits; i < length; ++ i)
+         for (let i = 1, length = this [_maxCombinedTextureUnits]; i < length; ++ i)
             combinedTextureUnits .push (i);
 
          // There must always be a texture bound to the used texture units.
 
-         this .shadowTextureUnit = this .getCombinedTextureUnits () .pop ();
-         this .linetypeUnit      = this .getCombinedTextureUnits () .pop ();
-         this .hatchStyleUnit    = this .getCombinedTextureUnits () .pop ();
+         this [_shadowTextureUnit] = this .getCombinedTextureUnits () .pop ();
+         this [_linetypeUnit]      = this .getCombinedTextureUnits () .pop ();
+         this [_hatchStyleUnit]    = this .getCombinedTextureUnits () .pop ();
 
-         this .texture2DUnits         = new Int32Array (this .getMaxTextures ());
-         this .projectiveTextureUnits = new Int32Array (this .getMaxTextures ());
+         this [_texture2DUnits]         = new Int32Array (this .getMaxTextures ());
+         this [_projectiveTextureUnits] = new Int32Array (this .getMaxTextures ());
 
-         for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
-            this .texture2DUnits [i] = this .getCombinedTextureUnits () .pop ();
+         for (let i = 0, length = this .getMaxTextures (); i < length; ++ i)
+            this [_texture2DUnits] [i] = this .getCombinedTextureUnits () .pop ();
 
          if (this .getProjectiveTextureMapping ())
          {
-            for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
-               this .projectiveTextureUnits [i] = this .getCombinedTextureUnits () .pop ();
+            for (let i = 0, length = this .getMaxTextures (); i < length; ++ i)
+               this [_projectiveTextureUnits] [i] = this .getCombinedTextureUnits () .pop ();
          }
 
-         var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+         const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
          // Texture 2D Units
 
-         this .defaultTexture2D = gl .createTexture ();
+         this [_defaultTexture2D] = gl .createTexture ();
 
-         gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+         gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
          gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
-         gl .activeTexture (gl .TEXTURE0 + this .shadowTextureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+         gl .activeTexture (gl .TEXTURE0 + this [_shadowTextureUnit]);
+         gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
 
-         gl .activeTexture (gl .TEXTURE0 + this .linetypeUnit);
-         gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+         gl .activeTexture (gl .TEXTURE0 + this [_linetypeUnit]);
+         gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
 
-         gl .activeTexture (gl .TEXTURE0 + this .hatchStyleUnit);
-         gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+         gl .activeTexture (gl .TEXTURE0 + this [_hatchStyleUnit]);
+         gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
 
-         for (var i = 0, length = this .texture2DUnits .length; i < length; ++ i)
+         for (let i = 0, length = this [_texture2DUnits] .length; i < length; ++ i)
          {
-            gl .activeTexture (gl .TEXTURE0 + this .texture2DUnits [i]);
-            gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+            gl .activeTexture (gl .TEXTURE0 + this [_texture2DUnits] [i]);
+            gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
          }
 
-         for (var i = 0, length = this .projectiveTextureUnits .length; i < length; ++ i)
+         for (let i = 0, length = this [_projectiveTextureUnits] .length; i < length; ++ i)
          {
-            gl .activeTexture (gl .TEXTURE0 + this .projectiveTextureUnits [i]);
-            gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+            gl .activeTexture (gl .TEXTURE0 + this [_projectiveTextureUnits] [i]);
+            gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
          }
 
          // Texture 3D Units
 
          if (gl .getVersion () >= 2)
          {
-            this .texture3DUnits = new Int32Array (this .getMaxTextures ());
+            this [_texture3DUnits] = new Int32Array (this .getMaxTextures ());
 
-            for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
-               this .texture3DUnits [i] = this .getCombinedTextureUnits () .pop ();
+            for (let i = 0, length = this .getMaxTextures (); i < length; ++ i)
+               this [_texture3DUnits] [i] = this .getCombinedTextureUnits () .pop ();
 
-            this .defaultTexture3D = gl .createTexture ();
+            this [_defaultTexture3D] = gl .createTexture ();
 
-            gl .bindTexture (gl .TEXTURE_3D, this .defaultTexture3D);
+            gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
             gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
-            for (var i = 0, length = this .texture3DUnits .length; i < length; ++ i)
+            for (let i = 0, length = this [_texture3DUnits] .length; i < length; ++ i)
             {
-               gl .activeTexture (gl .TEXTURE0 + this .texture3DUnits [i]);
-               gl .bindTexture (gl .TEXTURE_3D, this .defaultTexture3D);
+               gl .activeTexture (gl .TEXTURE0 + this [_texture3DUnits] [i]);
+               gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
             }
 
             // Fix for Chrome.
             gl .activeTexture (gl .TEXTURE0);
-            gl .bindTexture (gl .TEXTURE_3D, this .defaultTexture3D);
+            gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
          }
 
          // Cube Map Texture Units
 
-         this .cubeMapTextureUnits = new Int32Array (this .getMaxTextures ());
+         this [_cubeMapTextureUnits] = new Int32Array (this .getMaxTextures ());
 
-         for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
-            this .cubeMapTextureUnits [i] = this .getCombinedTextureUnits () .pop ();
+         for (let i = 0, length = this .getMaxTextures (); i < length; ++ i)
+            this [_cubeMapTextureUnits] [i] = this .getCombinedTextureUnits () .pop ();
 
-          this .defaultCubeMapTexture = gl .createTexture ();
+          this [_defaultCubeMapTexture] = gl .createTexture ();
 
-         gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .defaultCubeMapTexture);
+         gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultCubeMapTexture]);
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
@@ -176,17 +198,17 @@ function (TextureProperties,
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
-         for (var i = 0, length = this .cubeMapTextureUnits .length; i < length; ++ i)
+         for (let i = 0, length = this [_cubeMapTextureUnits] .length; i < length; ++ i)
          {
-            gl .activeTexture (gl .TEXTURE0 + this .cubeMapTextureUnits [i]);
-            gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .defaultCubeMapTexture);
+            gl .activeTexture (gl .TEXTURE0 + this [_cubeMapTextureUnits] [i]);
+            gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultCubeMapTexture]);
          }
 
          gl .activeTexture (gl .TEXTURE0);
       },
       getMaxTextures: function ()
       {
-         return this .maxTextures;
+         return this [_maxTextures];
       },
       getMinTextureSize: function ()
       {
@@ -194,93 +216,93 @@ function (TextureProperties,
       },
       getMaxTextureSize: function ()
       {
-         return this .maxTextureSize;
+         return this [_maxTextureSize];
       },
       getMaxCombinedTextureUnits: function ()
       {
-         return this .maxCombinedTextureUnits;
+         return this [_maxCombinedTextureUnits];
       },
       getCombinedTextureUnits: function ()
       {
-         return this .combinedTextureUnits;
+         return this [_combinedTextureUnits];
       },
       getTexture2DUnits: function ()
       {
-         return this .texture2DUnits;
+         return this [_texture2DUnits];
       },
       getTexture3DUnits: function ()
       {
-         return this .texture3DUnits;
+         return this [_texture3DUnits];
       },
       getCubeMapTextureUnits: function ()
       {
-         return this .cubeMapTextureUnits;
+         return this [_cubeMapTextureUnits];
       },
       getProjectiveTextureUnits: function ()
       {
-         return this .projectiveTextureUnits;
+         return this [_projectiveTextureUnits];
       },
       getShadowTextureUnit: function ()
       {
-         return this .shadowTextureUnit;
+         return this [_shadowTextureUnit];
       },
       getLinetypeUnit: function ()
       {
-         return this .linetypeUnit;
+         return this [_linetypeUnit];
       },
       getHatchStyleUnit: function ()
       {
-         return this .hatchStyleUnit;
+         return this [_hatchStyleUnit];
       },
       getTextureMemory: function ()
       {
-         return this .textureMemory;
+         return this [_textureMemory];
       },
       getMultiTexturing: function ()
       {
-         return this .multiTexturing;
+         return this [_multiTexturing];
       },
       getProjectiveTextureMapping: function ()
       {
-         return this .projectiveTextureMapping;
+         return this [_projectiveTextureMapping];
       },
       getDefaultTextureProperties: function ()
       {
-         this .defaultTextureProperties = new TextureProperties (this .getPrivateScene ());
-         this .defaultTextureProperties .magnificationFilter_ = "NICEST";
-         this .defaultTextureProperties .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
-         this .defaultTextureProperties .textureCompression_  = "NICEST";
-         this .defaultTextureProperties .generateMipMaps_     = true;
+         this [_defaultTextureProperties] = new TextureProperties (this .getPrivateScene ());
+         this [_defaultTextureProperties] .magnificationFilter_ = "NICEST";
+         this [_defaultTextureProperties] .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
+         this [_defaultTextureProperties] .textureCompression_  = "NICEST";
+         this [_defaultTextureProperties] .generateMipMaps_     = true;
 
-         this .defaultTextureProperties .setup ();
+         this [_defaultTextureProperties] .setup ();
 
-         this .getDefaultTextureProperties = function () { return this .defaultTextureProperties; };
+         this .getDefaultTextureProperties = function () { return this [_defaultTextureProperties]; };
 
          Object .defineProperty (this, "getDefaultTextureProperties", { enumerable: false });
 
-         return this .defaultTextureProperties;
+         return this [_defaultTextureProperties];
       },
       getDefaultTextureTransform: function ()
       {
-         this .defaultTextureTransform = new TextureTransform (this .getPrivateScene ());
-         this .defaultTextureTransform .setup ();
+         this [_defaultTextureTransform] = new TextureTransform (this .getPrivateScene ());
+         this [_defaultTextureTransform] .setup ();
 
-         this .getDefaultTextureTransform = function () { return this .defaultTextureTransform; };
+         this .getDefaultTextureTransform = function () { return this [_defaultTextureTransform]; };
 
          Object .defineProperty (this, "getDefaultTextureTransform", { enumerable: false });
 
-         return this .defaultTextureTransform;
+         return this [_defaultTextureTransform];
       },
       getDefaultTextureCoordinate: function ()
       {
-         this .defaultTextureCoordinate = new TextureCoordinate (this .getPrivateScene ());
-         this .defaultTextureCoordinate .setup ();
+         this [_defaultTextureCoordinate] = new TextureCoordinate (this .getPrivateScene ());
+         this [_defaultTextureCoordinate] .setup ();
 
-         this .getDefaultTextureCoordinate = function () { return this .defaultTextureCoordinate; };
+         this .getDefaultTextureCoordinate = function () { return this [_defaultTextureCoordinate]; };
 
          Object .defineProperty (this, "getDefaultTextureCoordinate", { enumerable: false });
 
-         return this .defaultTextureCoordinate;
+         return this [_defaultTextureCoordinate];
       },
    };
 

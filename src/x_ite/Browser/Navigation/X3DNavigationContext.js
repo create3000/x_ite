@@ -70,13 +70,19 @@ function (Fields,
 {
 "use strict";
 
+   const
+      _activeCollisions   = Symbol (),
+      _viewerNode         = Symbol (),
+      _headlightContainer = Symbol ();
+
+
    function getHeadLight (browser)
    {
-      var headlight = new DirectionalLight (browser .getPrivateScene ());
+      const headlight = new DirectionalLight (browser .getPrivateScene ());
 
       headlight .setup ();
 
-      var headlightContainer = headlight .getLights () .pop ();
+      const headlightContainer = headlight .getLights () .pop ();
 
       headlightContainer .set (browser, headlight, null, Matrix4 .Identity);
       headlightContainer .dispose = Function .prototype;
@@ -92,8 +98,8 @@ function (Fields,
                              "availableViewers",     new Fields .MFString (),
                              "viewer",               new Fields .SFString ("EXAMINE"));
 
-      this .activeCollisions = new Set ();
-      this .viewerNode       = new NoneViewer (this);
+      this [_activeCollisions] = new Set ();
+      this [_viewerNode]       = new NoneViewer (this);
    }
 
    X3DNavigationContext .prototype =
@@ -105,12 +111,12 @@ function (Fields,
          this .initialized () .addInterest ("set_world__",    this);
          this .shutdown ()    .addInterest ("remove_world__", this);
 
-         this .headlightContainer = getHeadLight (this);
-         this .viewerNode .setup ();
+         this [_headlightContainer] = getHeadLight (this);
+         this [_viewerNode] .setup ();
       },
       getHeadlight: function ()
       {
-         return this .headlightContainer;
+         return this [_headlightContainer];
       },
       getActiveLayer: function ()
       {
@@ -130,19 +136,19 @@ function (Fields,
       },
       getViewer: function ()
       {
-         return this .viewerNode;
+         return this [_viewerNode];
       },
       addCollision: function (object)
       {
-         this .activeCollisions .add (object);
+         this [_activeCollisions] .add (object);
       },
       removeCollision: function (object)
       {
-         this .activeCollisions .delete (object);
+         this [_activeCollisions] .delete (object);
       },
       getCollisionCount: function ()
       {
-         return this .activeCollisions .size;
+         return this [_activeCollisions] .size;
       },
       remove_world__: function ()
       {
@@ -208,36 +214,36 @@ function (Fields,
 
          // Create viewer node.
 
-         if (this .viewerNode)
-            this .viewerNode .dispose ();
+         if (this [_viewerNode])
+            this [_viewerNode] .dispose ();
 
          switch (viewer .getValue ())
          {
             case "EXAMINE":
-               this .viewerNode = new ExamineViewer (this);
+               this [_viewerNode] = new ExamineViewer (this);
                break;
             case "WALK":
-               this .viewerNode = new WalkViewer (this);
+               this [_viewerNode] = new WalkViewer (this);
                break;
             case "FLY":
-               this .viewerNode = new FlyViewer (this);
+               this [_viewerNode] = new FlyViewer (this);
                break;
             case "PLANE":
             case "PLANE_create3000.de":
-               this .viewerNode = new PlaneViewer (this);
+               this [_viewerNode] = new PlaneViewer (this);
                break;
             case "NONE":
-               this .viewerNode = new NoneViewer (this);
+               this [_viewerNode] = new NoneViewer (this);
                break;
             case "LOOKAT":
-               this .viewerNode = new LookAtViewer (this);
+               this [_viewerNode] = new LookAtViewer (this);
                break;
             default:
-               this .viewerNode = new ExamineViewer (this);
+               this [_viewerNode] = new ExamineViewer (this);
                break;
          }
 
-         this .viewerNode .setup ();
+         this [_viewerNode] .setup ();
       },
    };
 

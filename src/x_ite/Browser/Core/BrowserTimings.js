@@ -46,6 +46,8 @@
  *
  ******************************************************************************/
 
+const { contains } = require("jquery");
+
 
 define ([
    "jquery",
@@ -145,7 +147,7 @@ function ($,
       },
       update: function ()
       {
-         var currentTime = this .getBrowser () .getCurrentTime ();
+         const currentTime = this .getBrowser () .getCurrentTime ();
 
          if (currentTime - this .startTime > 1)
          {
@@ -159,34 +161,36 @@ function ($,
       },
       build: function ()
       {
-         var
+         const
             browser     = this .getBrowser (),
             currentTime = browser .getCurrentTime (),
             language    = navigator .language || navigator .userLanguage,
             fixed       = this .localeOptions,
-            rows        = this .rows,
-            r           = 0;
+            rows        = this .rows;
+
+         let r = 0;
 
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Frame rate") + ":")) .append ($("<td></td>") .text (f2(this .frames / (currentTime - this .startTime)) .toLocaleString (language, fixed) + " " + _("fps")));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Speed")      + ":")) .append ($("<td></td>") .text (f2(this .getSpeed (browser .currentSpeed))         .toLocaleString (language, fixed) + " " + this .getSpeedUnit (browser .currentSpeed)));
 
          if (this .localStorage .type === "MORE")
          {
-            var
-               layers            = browser .getWorld () .getLayerSet () .getLayers (),
-               activeLayer       = browser .getActiveLayer (),
-               systemTime        = browser .systemTime,
-               navigationTime    = activeLayer && browser .getCollisionCount () ? activeLayer .collisionTime : 0,
-               collisionTime     = browser .collisionTime + navigationTime,
-               routingTime       = browser .browserTime - (browser .cameraTime + browser .collisionTime + browser .displayTime + navigationTime),
-               prepareEvents     = browser .prepareEvents () .getInterests () .size - 1,
-               sensors           = browser .sensorEvents () .getInterests () .size,
+            const
+               layers         = browser .getWorld () .getLayerSet () .getLayers (),
+               activeLayer    = browser .getActiveLayer (),
+               systemTime     = browser .getSystemTime (),
+               navigationTime = activeLayer && browser .getCollisionCount () ? activeLayer .collisionTime : 0,
+               collisionTime  = browser .getCollisionTime () + navigationTime,
+               routingTime    = browser .getBrowserTime () - (browser .getCameraTime () + browser .getCollisionTime () + browser .getDisplayTime () + navigationTime),
+               prepareEvents  = browser .prepareEvents () .getInterests () .size - 1,
+               sensors        = browser .sensorEvents () .getInterests () .size;
+
+            let
                opaqueShapes      = 0,
                transparentShapes = 0;
 
-            for (var l = 0; l < layers .length; ++ l)
+            for (const layer of layers)
             {
-               var layer = layers [l];
                opaqueShapes      += layer .numOpaqueShapes;
                transparentShapes += layer .numTransparentShapes;
             }
@@ -194,13 +198,13 @@ function ($,
             rows [1] .addClass ("x_ite-private-more");
 
             rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Browser")   + ":")) .append ($("<td></td>") .text (f2(systemTime)           .toLocaleString (language, fixed) + " " + _("ms")));
-            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D total")       + ":")) .append ($("<td></td>") .text (f2(browser .browserTime) .toLocaleString (language, fixed) + " " + _("ms")));
+            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D total")       + ":")) .append ($("<td></td>") .text (f2(browser .getBrowserTime ()) .toLocaleString (language, fixed) + " " + _("ms")));
             rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Event Processing")   + ":")) .append ($("<td></td>") .text (f2(routingTime)          .toLocaleString (language, fixed) + " " + _("ms")));
-            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Pointer")   + ":")) .append ($("<td></td>") .text (f2(browser .pointerTime) .toLocaleString (language, fixed) + " " + _("ms")));
-            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Camera")    + ":")) .append ($("<td></td>") .text (f2(browser .cameraTime)  .toLocaleString (language, fixed) + " " + _("ms")));
-            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Picking")   + ":")) .append ($("<td></td>") .text (f2(browser .pickingTime) .toLocaleString (language, fixed) + " " + _("ms")));
+            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Pointer")   + ":")) .append ($("<td></td>") .text (f2(browser .getPointerTime ()) .toLocaleString (language, fixed) + " " + _("ms")));
+            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Camera")    + ":")) .append ($("<td></td>") .text (f2(browser .getCameraTime ())  .toLocaleString (language, fixed) + " " + _("ms")));
+            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Picking")   + ":")) .append ($("<td></td>") .text (f2(browser .getPickingTime ()) .toLocaleString (language, fixed) + " " + _("ms")));
             rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Collision Detection") + ":")) .append ($("<td></td>") .text (f2(collisionTime)        .toLocaleString (language, fixed) + " " + _("ms")));
-            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Rendering")   + ":")) .append ($("<td></td>") .text (f2(browser .displayTime) .toLocaleString (language, fixed) + " " + _("ms")));
+            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Rendering")   + ":")) .append ($("<td></td>") .text (f2(browser .getDisplayTime ()) .toLocaleString (language, fixed) + " " + _("ms")));
             rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Number of Shapes")    + ":")) .append ($("<td></td>") .text (opaqueShapes + " + " + transparentShapes));
             rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Number of Sensors")   + ":")) .append ($("<td></td>") .text (prepareEvents + sensors));
          }

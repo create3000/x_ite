@@ -60,13 +60,14 @@ function (ReferenceEllipsoids,
 {
 "use strict";
 
-   var
-      i   = 0,
+   let i = 0;
+
+   const
       GD  = i ++,
       UTM = i ++,
       GC  = i ++;
 
-   var CoordinateSystems = {
+   const CoordinateSystems = {
       GD:  GD,
       GDC: GD,
       UTM: UTM,
@@ -75,9 +76,9 @@ function (ReferenceEllipsoids,
       GS:  GC,
    };
 
-   var Zone = /^Z(\d+)$/;
+   const Zone = /^Z(\d+)$/;
 
-   var Geospatial =
+   const Geospatial =
    {
       GD: GD,
       UTM: UTM,
@@ -113,9 +114,9 @@ function (ReferenceEllipsoids,
       },
       getCoordinateSystem: function (geoSystem)
       {
-         for (var i = 0, length = geoSystem .length; i < length; ++ i)
+         for (let i = 0, length = geoSystem .length; i < length; ++ i)
          {
-            var coordinateSystem = CoordinateSystems [geoSystem [i]];
+            const coordinateSystem = CoordinateSystems [geoSystem [i]];
 
             if (coordinateSystem !== undefined)
                return coordinateSystem;
@@ -125,9 +126,9 @@ function (ReferenceEllipsoids,
       },
       getEllipsoid: function (geoSystem)
       {
-         for (var i = 0, length = geoSystem .length; i < length; ++ i)
+         for (let i = 0, length = geoSystem .length; i < length; ++ i)
          {
-            var ellipsoid = ReferenceEllipsoids [geoSystem [i]];
+            const ellipsoid = ReferenceEllipsoids [geoSystem [i]];
 
             if (ellipsoid !== undefined)
                return ellipsoid;
@@ -137,9 +138,9 @@ function (ReferenceEllipsoids,
       },
       getEllipsoidString: function (geoSystem)
       {
-         for (var i = 0, length = geoSystem .length; i < length; ++ i)
+         for (let i = 0, length = geoSystem .length; i < length; ++ i)
          {
-            var ellipsoid = ReferenceEllipsoids [geoSystem [i]];
+            const ellipsoid = ReferenceEllipsoids [geoSystem [i]];
 
             if (ellipsoid !== undefined)
                return geoSystem [i];
@@ -169,7 +170,7 @@ function (ReferenceEllipsoids,
       },
       getLatitudeFirst: function (geoSystem)
       {
-         for (var i = 0, length = geoSystem .length; i < length; ++ i)
+         for (let i = 0, length = geoSystem .length; i < length; ++ i)
          {
             if (geoSystem [i] === "longitude_first")
                return false;
@@ -179,7 +180,7 @@ function (ReferenceEllipsoids,
       },
       getNorthingFirst: function (geoSystem)
       {
-         for (var i = 0, length = geoSystem .length; i < length; ++ i)
+         for (let i = 0, length = geoSystem .length; i < length; ++ i)
          {
             if (geoSystem [i] === "easting_first")
                return false;
@@ -189,9 +190,9 @@ function (ReferenceEllipsoids,
       },
       getZone: function (geoSystem)
       {
-         for (var i = 0, length = geoSystem .length; i < length; ++ i)
+         for (let i = 0, length = geoSystem .length; i < length; ++ i)
          {
-            var match = geoSystem [i] .match (Zone);
+            const match = geoSystem [i] .match (Zone);
 
             if (match)
                return parseInt (match [1]);
@@ -201,7 +202,7 @@ function (ReferenceEllipsoids,
       },
       getNorthernHemisphere: function (geoSystem)
       {
-         for (var i = 0, length = geoSystem .length; i < length; ++ i)
+         for (let i = 0, length = geoSystem .length; i < length; ++ i)
          {
             if (geoSystem [i] === "S")
                return false;

@@ -63,7 +63,7 @@ define (function ()
       {
          getArray: function ()
          {
-            var array = [ ];
+            const array = [ ];
 
             array .assign = function (value)
             {
@@ -111,7 +111,7 @@ define (function ()
          {
             if (Array .isArray (value))
             {
-               var value_changed = this .value_changed_;
+               const value_changed = this .value_changed_;
 
                for (var i = 0, length = value .length; i < length; ++ i)
                   value_changed [i] = value [i];
@@ -125,7 +125,7 @@ define (function ()
          },
          duplicate: function (value)
          {
-            var array = this .getArray ();
+            const array = this .getArray ();
 
             array .assign (value);
 
@@ -136,37 +136,37 @@ define (function ()
             if (lhs .length !== rhs .length)
                return false;
 
-            var
-               a        = this .a,
-               distance = 0;
+            const a = this .a;
 
-            for (var i = 0, length = lhs .length; i < length; ++ i)
+            let distance = 0;
+
+            for (let i = 0, length = lhs .length; i < length; ++ i)
               distance = Math .max (a .assign (lhs [i]) .subtract (rhs [i]) .abs ());
 
             return distance < tolerance;
          },
          interpolate: function (source, destination, weight)
          {
-            var array = this .array;
+            const array = this .array;
 
             array .assign (source);
 
-            for (var i = 0, length = array .length; i < length; ++ i)
+            for (let i = 0, length = array .length; i < length; ++ i)
                array [i] .lerp (destination [i] || this .zero, weight);
 
             return array;
          },
          set_destination__: function ()
          {
-            var
+            const
                buffers = this .getBuffer (),
                l       = this .set_destination_ .length;
 
-            for (var i = 0, length = buffers .length; i < length; ++ i)
+            for (let i = 0, length = buffers .length; i < length; ++ i)
             {
-               var buffer = buffers [i];
+               const buffer = buffers [i];
 
-               for (var b = buffer .length; b < l; ++ b)
+               for (let b = buffer .length; b < l; ++ b)
                   buffer [b] = this .getVector ();
 
                buffer .length = l;

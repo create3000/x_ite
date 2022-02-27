@@ -51,19 +51,22 @@
 
 define ([
    "jquery",
-   "x_ite/Fields",
    "ResizeSensor",
 ],
 function ($,
-          Fields,
           ResizeSensor)
 {
 "use strict";
 
+   const
+      _viewport     = Symbol (),
+      _localObjects = Symbol (),
+      _resizer      = Symbol ();
+
    function X3DRenderingContext ()
    {
-      this .viewport     = [0, 0, 300, 150];
-      this .localObjects = [ ]; // shader objects dumpster
+      this [_viewport]     = [0, 0, 300, 150];
+      this [_localObjects] = [ ]; // shader objects dumpster
    }
 
    X3DRenderingContext .prototype =
@@ -88,7 +91,7 @@ function ($,
 
          $(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this .onfullscreen .bind (this));
 
-         this .resizer = new ResizeSensor (this .getSurface (), this .reshape .bind (this));
+         this [_resizer] = new ResizeSensor (this .getSurface (), this .reshape .bind (this));
 
          this .reshape ();
       },
@@ -124,13 +127,13 @@ function ($,
       },
       getDepthSize: function ()
       {
-         const gl = this .context;
+         const gl = this .getContext ();
 
          return gl .getParameter (gl .DEPTH_BITS);
       },
       getColorDepth: function ()
       {
-         const gl = this .context;
+         const gl = this .getContext ();
 
          return (gl .getParameter (gl .RED_BITS) +
                  gl .getParameter (gl .BLUE_BITS) +
@@ -139,11 +142,11 @@ function ($,
       },
       getViewport: function ()
       {
-         return this .viewport;
+         return this [_viewport];
       },
       getLocalObjects: function ()
       {
-         return this .localObjects;
+         return this [_localObjects];
       },
       reshape: function ()
       {
@@ -157,8 +160,8 @@ function ($,
          canvas .width  = width;
          canvas .height = height;
 
-         this .viewport [2] = width;
-         this .viewport [3] = height;
+         this [_viewport] [2] = width;
+         this [_viewport] [3] = height;
 
          gl .viewport (0, 0, width, height);
          gl .scissor  (0, 0, width, height);

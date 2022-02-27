@@ -54,13 +54,20 @@ function (TraverseType)
 {
 "use strict";
 
+   const
+      _transformSensorNodes = Symbol (),
+      _pickSensorNodes      = Symbol (),
+      _pickingHierarchy     = Symbol (),
+      _pickable             = Symbol (),
+      _pickingTime          = Symbol ();
+
    function X3DPickingContext ()
    {
-      this .transformSensorNodes = new Set ();
-      this .pickSensorNodes      = [ new Set () ];
-      this .pickingHierarchy     = [ ];
-      this .pickable             = [ false ];
-      this .pickingTime          = 0;
+      this [_transformSensorNodes] = new Set ();
+      this [_pickSensorNodes]      = [ new Set () ];
+      this [_pickingHierarchy]     = [ ];
+      this [_pickable]             = [ false ];
+      this [_pickingTime]          = 0;
    }
 
    X3DPickingContext .prototype =
@@ -69,60 +76,64 @@ function (TraverseType)
       { },
       addTransformSensor: function (transformSensorNode)
       {
-         this .transformSensorNodes .add (transformSensorNode);
+         this [_transformSensorNodes] .add (transformSensorNode);
          this .enablePicking ();
       },
       removeTransformSensor: function (transformSensorNode)
       {
-         this .transformSensorNodes .delete (transformSensorNode);
+         this [_transformSensorNodes] .delete (transformSensorNode);
          this .enablePicking ();
       },
       addPickSensor: function (pickSensorNode)
       {
-         this .pickSensorNodes [0] .add (pickSensorNode);
+         this [_pickSensorNodes] [0] .add (pickSensorNode);
          this .enablePicking ();
       },
       removePickSensor: function (pickSensorNode)
       {
-         this .pickSensorNodes [0] .delete (pickSensorNode);
+         this [_pickSensorNodes] [0] .delete (pickSensorNode);
          this .enablePicking ();
       },
       getPickSensors: function ()
       {
-         return this .pickSensorNodes;
+         return this [_pickSensorNodes];
       },
       getPickingHierarchy: function ()
       {
-         return this .pickingHierarchy;
+         return this [_pickingHierarchy];
       },
       getPickable: function ()
       {
-         return this .pickable;
+         return this [_pickable];
       },
       enablePicking: function ()
       {
-         if (this .transformSensorNodes .size || this .pickSensorNodes [0] .size)
+         if (this [_transformSensorNodes] .size || this [_pickSensorNodes] [0] .size)
             this .sensorEvents_ .addInterest ("picking", this);
          else
             this .sensorEvents_ .removeInterest ("picking", this);
       },
       picking: function ()
       {
-         var t0 = performance .now ();
+         const t0 = performance .now ();
 
          this .getWorld () .traverse (TraverseType .PICKING, null);
 
-         this .transformSensorNodes .forEach (function (transformSensorNode)
+         for (const transformSensorNode of this [_transformSensorNodes])
          {
             transformSensorNode .process ();
-         });
+         }
 
-         this .pickSensorNodes [0] .forEach (function (pickSensorNode)
+         for (const pickSensorNode of this [_pickSensorNodes] [0])
          {
             pickSensorNode .process ();
-         });
+         }
 
-         this .pickingTime = performance .now () - t0;
+         this [_pickingTime] = performance .now () - t0;
+      },
+      getPickingTime: function ()
+      {
+         return this [_pickingTime];
       },
    };
 

@@ -62,9 +62,20 @@ function (Shading,
 {
 "use strict";
 
+   const
+      _shaders       = Symbol (),
+      _defaultShader = Symbol (),
+      _pointShader   = Symbol (),
+      _lineShader    = Symbol (),
+      _unlitShader   = Symbol (),
+      _gouraudShader = Symbol (),
+      _phongShader   = Symbol (),
+      _shadowShader  = Symbol (),
+      _depthShader   = Symbol ();
+
    function X3DShadersContext ()
    {
-      this .shaders = new Set ();
+      this [_shaders] = new Set ();
    }
 
    X3DShadersContext .prototype =
@@ -91,127 +102,127 @@ function (Shading,
       },
       addShader: function (shader)
       {
-         this .shaders .add (shader);
+         this [_shaders] .add (shader);
 
          shader .setShading (this .getBrowserOptions () .getShading ());
       },
       removeShader: function (shader)
       {
-         this .shaders .delete (shader);
+         this [_shaders] .delete (shader);
       },
       getShaders: function ()
       {
-         return this .shaders;
+         return this [_shaders];
       },
       getDefaultShader: function ()
       {
-         return this .defaultShader;
+         return this [_defaultShader];
       },
       hasPointShader: function ()
       {
-         return !! this .pointShader;
+         return !! this [_pointShader];
       },
       getPointShader: function ()
       {
-         this .pointShader = this .createShader ("PointShader", "PointSet");
+         this [_pointShader] = this .createShader ("PointShader", "PointSet");
 
-         this .getPointShader = function () { return this .pointShader; };
+         this .getPointShader = function () { return this [_pointShader]; };
 
          Object .defineProperty (this, "getPointShader", { enumerable: false });
 
-         return this .pointShader;
+         return this [_pointShader];
       },
       hasLineShader: function ()
       {
-         return !! this .lineShader;
+         return !! this [_lineShader];
       },
       getLineShader: function ()
       {
-         this .lineShader = this .createShader ("WireframeShader", "Wireframe");
+         this [_lineShader] = this .createShader ("WireframeShader", "Wireframe");
 
-         this .getLineShader = function () { return this .lineShader; };
+         this .getLineShader = function () { return this [_lineShader]; };
 
          Object .defineProperty (this, "getLineShader", { enumerable: false });
 
-         return this .lineShader;
+         return this [_lineShader];
       },
       hasUnlitShader: function ()
       {
-         return !! this .unlitShader;
+         return !! this [_unlitShader];
       },
       getUnlitShader: function ()
       {
-         this .unlitShader = this .createShader ("UnlitShader", "Unlit");
+         this [_unlitShader] = this .createShader ("UnlitShader", "Unlit");
 
-         this .unlitShader .isValid_ .addInterest ("set_unlit_shader_valid__", this);
+         this [_unlitShader] .isValid_ .addInterest ("set_unlit_shader_valid__", this);
 
-         this .getUnlitShader = function () { return this .unlitShader; };
+         this .getUnlitShader = function () { return this [_unlitShader]; };
 
          Object .defineProperty (this, "getUnlitShader", { enumerable: false });
 
-         return this .unlitShader;
+         return this [_unlitShader];
       },
       hasGouraudShader: function ()
       {
-         return !! this .gouraudShader;
+         return !! this [_gouraudShader];
       },
       getGouraudShader: function ()
       {
-         this .gouraudShader = this .createShader ("GouraudShader", "Gouraud", false);
+         this [_gouraudShader] = this .createShader ("GouraudShader", "Gouraud", false);
 
-         this .gouraudShader .isValid_ .addInterest ("set_gouraud_shader_valid__", this);
+         this [_gouraudShader] .isValid_ .addInterest ("set_gouraud_shader_valid__", this);
 
-         this .getGouraudShader = function () { return this .gouraudShader; };
+         this .getGouraudShader = function () { return this [_gouraudShader]; };
 
          Object .defineProperty (this, "getGouraudShader", { enumerable: false });
 
-         return this .gouraudShader;
+         return this [_gouraudShader];
       },
       hasPhongShader: function ()
       {
-         return !! this .phongShader;
+         return !! this [_phongShader];
       },
       getPhongShader: function ()
       {
-         this .phongShader = this .createShader ("PhongShader", "Phong", false);
+         this [_phongShader] = this .createShader ("PhongShader", "Phong", false);
 
-         this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__", this);
+         this [_phongShader] .isValid_ .addInterest ("set_phong_shader_valid__", this);
 
-         this .getPhongShader = function () { return this .phongShader; };
+         this .getPhongShader = function () { return this [_phongShader]; };
 
          Object .defineProperty (this, "getPhongShader", { enumerable: false });
 
-         return this .phongShader;
+         return this [_phongShader];
       },
       hasShadowShader: function ()
       {
-         return !! this .shadowShader;
+         return !! this [_shadowShader];
       },
       getShadowShader: function ()
       {
-         this .shadowShader = this .createShader ("ShadowShader", "Phong", true);
+         this [_shadowShader] = this .createShader ("ShadowShader", "Phong", true);
 
-         this .shadowShader .isValid_ .addInterest ("set_shadow_shader_valid__", this);
+         this [_shadowShader] .isValid_ .addInterest ("set_shadow_shader_valid__", this);
 
-         this .getShadowShader = function () { return this .shadowShader; };
+         this .getShadowShader = function () { return this [_shadowShader]; };
 
          Object .defineProperty (this, "getShadowShader", { enumerable: false });
 
-         return this .shadowShader;
+         return this [_shadowShader];
       },
       hasDepthShader: function ()
       {
-         return !! this .depthShader;
+         return !! this [_depthShader];
       },
       getDepthShader: function ()
       {
-         this .depthShader = this .createShader ("DepthShader", "Depth");
+         this [_depthShader] = this .createShader ("DepthShader", "Depth");
 
-         this .getDepthShader = function () { return this .depthShader; };
+         this .getDepthShader = function () { return this [_depthShader]; };
 
          Object .defineProperty (this, "getDepthShader", { enumerable: false });
 
-         return this .depthShader;
+         return this [_depthShader];
       },
       setShading: function (type)
       {
@@ -219,12 +230,12 @@ function (Shading,
          {
             case Shading .PHONG:
             {
-               this .defaultShader = this .getPhongShader ();
+               this [_defaultShader] = this .getPhongShader ();
                break;
             }
             default:
             {
-               this .defaultShader = this .getGouraudShader ();
+               this [_defaultShader] = this .getGouraudShader ();
                break;
             }
          }
@@ -269,53 +280,53 @@ function (Shading,
       },
       set_unlit_shader_valid__: function (valid)
       {
-         this .unlitShader .isValid_ .removeInterest ("set_unlit_shader_valid__", this);
+         this [_unlitShader] .isValid_ .removeInterest ("set_unlit_shader_valid__", this);
 
-         if (valid .getValue () && ShaderTest .verify (this, this .unlitShader))
+         if (valid .getValue () && ShaderTest .verify (this, this [_unlitShader]))
             return;
 
          console .error ("X_ITE: Unlit shading is not available, using fallback VRML shader.");
 
          // Recompile shader.
-         this .unlitShader .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.vs") ];
-         this .unlitShader .parts_ [1] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.fs") ];
+         this [_unlitShader] .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.vs") ];
+         this [_unlitShader] .parts_ [1] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.fs") ];
       },
       set_gouraud_shader_valid__: function (valid)
       {
-         this .gouraudShader .isValid_ .removeInterest ("set_gouraud_shader_valid__", this);
+         this [_gouraudShader] .isValid_ .removeInterest ("set_gouraud_shader_valid__", this);
 
-         if (valid .getValue () && ShaderTest .verify (this, this .gouraudShader))
+         if (valid .getValue () && ShaderTest .verify (this, this [_gouraudShader]))
             return;
 
          console .warn ("X_ITE: All else fails, using fallback VRML shader.");
 
          // Recompile shader.
-         this .gouraudShader .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/Fallback.vs") ];
-         this .gouraudShader .parts_ [1] .url = [ urls .getShaderUrl ("webgl1/Fallback.fs") ];
+         this [_gouraudShader] .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/Fallback.vs") ];
+         this [_gouraudShader] .parts_ [1] .url = [ urls .getShaderUrl ("webgl1/Fallback.fs") ];
       },
       set_phong_shader_valid__: function (valid)
       {
-         this .phongShader .isValid_ .removeInterest ("set_phong_shader_valid__", this);
+         this [_phongShader] .isValid_ .removeInterest ("set_phong_shader_valid__", this);
 
-         if (valid .getValue () && ShaderTest .verify (this, this .phongShader))
+         if (valid .getValue () && ShaderTest .verify (this, this [_phongShader]))
             return;
 
          console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
 
-         this .phongShader = this .getGouraudShader ();
+         this [_phongShader] = this .getGouraudShader ();
 
          this .setShading (this .getBrowserOptions () .getShading ());
       },
       set_shadow_shader_valid__: function (valid)
       {
-         this .shadowShader .isValid_ .removeInterest ("set_shadow_shader_valid__", this);
+         this [_shadowShader] .isValid_ .removeInterest ("set_shadow_shader_valid__", this);
 
-         if (valid .getValue () && ShaderTest .verify (this, this .shadowShader))
+         if (valid .getValue () && ShaderTest .verify (this, this [_shadowShader]))
             return;
 
          console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
 
-         this .shadowShader = this .getGouraudShader ();
+         this [_shadowShader] = this .getGouraudShader ();
       },
    };
 

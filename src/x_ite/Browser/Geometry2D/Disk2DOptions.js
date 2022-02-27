@@ -113,7 +113,7 @@ function (X3DBaseNode,
       },
       build: (function ()
       {
-         var
+         const
             half      = new Complex (0.5, 0.5),
             texCoord1 = new Complex (0, 0),
             texCoord2 = new Complex (0, 0),
@@ -122,7 +122,7 @@ function (X3DBaseNode,
 
          return function ()
          {
-            var
+            const
                dimension      = this .dimension_ .getValue (),
                angle          = Math .PI * 2 / dimension,
                circleVertices = this .circleVertices,
@@ -135,9 +135,9 @@ function (X3DBaseNode,
             diskNormals    .length = 0;
             diskVertices   .length = 0;
 
-            for (var n = 0; n < dimension; ++ n)
+            for (let n = 0; n < dimension; ++ n)
             {
-               var
+               const
                   theta1 = angle * n,
                   theta2 = angle * (n + 1);
 

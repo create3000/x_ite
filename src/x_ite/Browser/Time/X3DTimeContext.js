@@ -54,9 +54,18 @@ function (Vector3)
 {
 "use strict";
 
+   const
+      _currentTime      = Symbol (),
+      _currentFrameRate = Symbol (),
+      _currentPosition  = Symbol (),
+      _currentSpeed     = Symbol ();
+
    function X3DTimeContext ()
    {
-      this .currentPosition = new Vector3 (0, 0, 0);
+      this [_currentTime]      = 0;
+      this [_currentFrameRate] = 60;
+      this [_currentPosition]  = new Vector3 (0, 0, 0);
+      this [_currentSpeed]     = 0;
    }
 
    X3DTimeContext .prototype =
@@ -67,7 +76,15 @@ function (Vector3)
       },
       getCurrentTime: function ()
       {
-         return this .currentTime;
+         return this [_currentTime];
+      },
+      getCurrentFrameRate: function ()
+      {
+         return this [_currentFrameRate];
+      },
+      getCurrentSpeed: function ()
+      {
+         return this [_currentSpeed];
       },
       advanceTime: (function ()
       {
@@ -77,22 +94,22 @@ function (Vector3)
          {
             time = (time + performance .timeOrigin) / 1000;
 
-            const interval = time - this .currentTime;
+            const interval = time - this [_currentTime];
 
-            this .currentTime      = time;
-            this .currentFrameRate = interval ? 1 / interval : 60;
+            this [_currentTime]      = time;
+            this [_currentFrameRate] = interval ? 1 / interval : 60;
 
             if (this .getWorld () && this .getActiveLayer ())
             {
                const cameraSpaceMatrix = this .getActiveLayer () .getViewpoint () .getCameraSpaceMatrix ();
 
-               lastPosition .assign (this .currentPosition);
-               this .currentPosition .set (cameraSpaceMatrix [12], cameraSpaceMatrix [13], cameraSpaceMatrix [14]);
+               lastPosition .assign (this [_currentPosition]);
+               this [_currentPosition] .set (cameraSpaceMatrix [12], cameraSpaceMatrix [13], cameraSpaceMatrix [14]);
 
-               this .currentSpeed = lastPosition .subtract (this .currentPosition) .abs () * this .currentFrameRate;
+               this [_currentSpeed] = lastPosition .subtract (this [_currentPosition]) .abs () * this [_currentFrameRate];
             }
             else
-               this .currentSpeed = 0;
+               this [_currentSpeed] = 0;
          };
       })(),
    };

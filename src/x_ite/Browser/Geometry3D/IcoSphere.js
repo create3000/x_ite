@@ -54,7 +54,7 @@ function (Fields)
 {
 "use strict";
 
-   var p = (1 + Math .sqrt (5)) / 2; // Golden ratio
+   const p = (1 + Math .sqrt (5)) / 2; // Golden ratio
 
    function IcoSphere (type, order, radius)
    {
@@ -105,7 +105,7 @@ function (Fields)
 
    IcoSphere .prototype .octahedron = function ()
    {
-      var coordIndex = this .coordIndex;
+      const coordIndex = this .coordIndex;
 
       this .addPoint (0,  1,  0);
 
@@ -130,7 +130,7 @@ function (Fields)
 
    IcoSphere .prototype .icosahedron = function ()
    {
-      var coordIndex = this .coordIndex;
+      const coordIndex = this .coordIndex;
 
       // Create 12 vertices of a icosahedron
       this .addPoint (-1,  p,  0);
@@ -151,10 +151,10 @@ function (Fields)
       // Rotate point thus a vertice is a pole
       if (this .order % 2 == 0)
       {
-         var rotation = new Fields .SFRotation (0, 0, 1, Math .atan (1 / p))
+         const rotation = new Fields .SFRotation (0, 0, 1, Math .atan (1 / p))
                         .multiply (new Fields .SFRotation (0, 1, 0, -Math .PI / 10));
 
-         for (var i = 0; i < this .point .length; ++ i)
+         for (let i = 0; i < this .point .length; ++ i)
             this .point [i] = rotation .multVec (this .point [i]);
       }
 
@@ -189,19 +189,19 @@ function (Fields)
 
    IcoSphere .prototype .refineTriangles = function ()
    {
-      var coordIndex = this .coordIndex;
+      const coordIndex = this .coordIndex;
 
       // Refine triangles
-      for (var o = 0; o < this .order; ++ o)
+      for (let o = 0; o < this .order; ++ o)
       {
-         var coordIndex2 = new Fields .MFInt32 ();
+         const coordIndex2 = new Fields .MFInt32 ();
 
-         for (var i = 0; i < coordIndex .length; i += 4)
+         for (let i = 0; i < coordIndex .length; i += 4)
          {
             // Replace triangle by 4 triangles
-            var a = this .getMiddlePoint (coordIndex [i],     coordIndex [i + 1]);
-            var b = this .getMiddlePoint (coordIndex [i + 1], coordIndex [i + 2]);
-            var c = this .getMiddlePoint (coordIndex [i + 2], coordIndex [i]);
+            const a = this .getMiddlePoint (coordIndex [i],     coordIndex [i + 1]);
+            const b = this .getMiddlePoint (coordIndex [i + 1], coordIndex [i + 2]);
+            const c = this .getMiddlePoint (coordIndex [i + 2], coordIndex [i]);
 
             this .addTriangle (coordIndex2, coordIndex [i],     a, c);
             this .addTriangle (coordIndex2, coordIndex [i + 1], b, a);
@@ -217,7 +217,7 @@ function (Fields)
 
    IcoSphere .prototype .addPoint = function (x, y, z)
    {
-      var index = this .point .length;
+      const index = this .point .length;
       this .point [index] = new Fields .SFVec3f (x, y, z) .normalize ();
       return index;
    }
@@ -233,22 +233,22 @@ function (Fields)
    IcoSphere .prototype .getMiddlePoint = function (p1, p2)
    {
       // First check if we have it already
-      var firstIsSmaller = p1 < p2;
-      var smallerIndex   = firstIsSmaller ? p1 : p2;
-      var greaterIndex   = firstIsSmaller ? p2 : p1;
-      var key            = smallerIndex + '+' + greaterIndex;
+      const firstIsSmaller = p1 < p2;
+      const smallerIndex   = firstIsSmaller ? p1 : p2;
+      const greaterIndex   = firstIsSmaller ? p2 : p1;
+      const key            = smallerIndex + '+' + greaterIndex;
 
       if (key in this .middlePointIndexCache)
          return this .middlePointIndexCache [key];
 
       // Not in cache, calculate it
-      var point1 = this .point [p1];
-      var point2 = this .point [p2];
+      const point1 = this .point [p1];
+      const point2 = this .point [p2];
 
       // Add middle point, makes sure point is on unit sphere
-      var index = this .addPoint ((point1 .x + point2 .x) / 2,
-                                  (point1 .y + point2 .y) / 2,
-                                  (point1 .z + point2 .z) / 2);
+      const index = this .addPoint ((point1 .x + point2 .x) / 2,
+                                    (point1 .y + point2 .y) / 2,
+                                    (point1 .z + point2 .z) / 2);
 
       // Store it, return index
       this .middlePointIndexCache [key] = index;
@@ -266,18 +266,18 @@ function (Fields)
       //
 
       // Copy coordIndex
-      var texCoordIndex = new Fields .MFInt32 ();
+      const texCoordIndex = new Fields .MFInt32 ();
 
-      for (var i = 0; i < coordIndex .length; ++ i)
+      for (let i = 0; i < coordIndex .length; ++ i)
          texCoordIndex [i] = coordIndex [i];
 
       // Apply spherecical mapping
-      var texPoint = new Fields .MFVec2f ();
+      const texPoint = new Fields .MFVec2f ();
 
-      for (var i = 0; i < point .length; ++ i)
+      for (let i = 0; i < point .length; ++ i)
       {
          // Always normalize to get rid of floating point errors.
-         var normal   = point [i] .normalize ();
+         const normal   = point [i] .normalize ();
          texPoint [i] = new Fields .SFVec2f (Math .atan2 (normal .x, normal .z) / (2 * Math .PI) + 0.5,
                                              Math .asin (normal .y) / Math .PI + 0.5);
       }
@@ -286,14 +286,14 @@ function (Fields)
       this .texPoint      = texPoint;
 
       // Refine poles
-      var northPoleThreshold = 1 - this .poleThreshold;
-      var soutPoleThreshold  = this .poleThreshold;
+      const northPoleThreshold = 1 - this .poleThreshold;
+      const soutPoleThreshold  = this .poleThreshold;
 
-      var length = texCoordIndex .length;
+      const length = texCoordIndex .length;
 
-      for (var i = 0; i < length; i += 4)
+      for (let i = 0; i < length; i += 4)
       {
-         var i0 = -1, i1, i2;
+         const i0 = -1, i1, i2;
 
          // Find north pole
 
@@ -321,9 +321,9 @@ function (Fields)
          // North pole found
          if (i0 > -1)
          {
-            var index0 = texCoordIndex [i0]; // North pole
-            var index1 = texCoordIndex [i1];
-            var index2 = this. resolveOverlap (i1, i2);
+            const index0 = texCoordIndex [i0]; // North pole
+            const index1 = texCoordIndex [i1];
+            const index2 = this. resolveOverlap (i1, i2);
 
             texCoordIndex [i0]          = texPoint .length;
             texPoint [texPoint .length] = new Fields .SFVec2f ((texPoint [index1] .x + texPoint [index2] .x) / 2,
@@ -358,9 +358,9 @@ function (Fields)
          // South pole found
          if (i0 > -1)
          {
-            var index0 = texCoordIndex [i0]; // South pole
-            var index1 = texCoordIndex [i1];
-            var index2 = this. resolveOverlap (i1, i2);
+            const index0 = texCoordIndex [i0]; // South pole
+            const index1 = texCoordIndex [i1];
+            const index2 = this. resolveOverlap (i1, i2);
 
             texCoordIndex [i0]          = texPoint .length;
             texPoint [texPoint .length] = new Fields .SFVec2f ((texPoint [index1] .x + texPoint [index2] .x) / 2,
@@ -377,11 +377,11 @@ function (Fields)
 
    IcoSphere .prototype .resolveOverlap = function (i0, i1)
    {
-      var texCoordIndex = this .texCoordIndex;
-      var texPoint      = this .texPoint;
+      const texCoordIndex = this .texCoordIndex;
+      const texPoint      = this .texPoint;
 
-      var index1   = texCoordIndex [i1];
-      var distance = texPoint [texCoordIndex [i0]] .x - this .texPoint [index1] .x;
+      const index1   = texCoordIndex [i1];
+      vaconstr distance = texPoint [texCoordIndex [i0]] .x - this .texPoint [index1] .x;
 
       if (distance > this .overlapThreshold)
       {
@@ -404,7 +404,7 @@ function (Fields)
       if (this .radius == 1)
          return;
 
-      for (var i = 0; i < this .point .length; ++ i)
+      for (let i = 0; i < this .point .length; ++ i)
          this .point [i] = this .point [i] .multiply (this .radius);
    }
 

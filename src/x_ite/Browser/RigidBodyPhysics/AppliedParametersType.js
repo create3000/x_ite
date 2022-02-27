@@ -51,9 +51,9 @@ define (function ()
 {
 "use strict";
 
-   var i = 0;
+   let i = 0;
 
-   var AppliedParametersType =
+   const AppliedParametersType =
    {
       BOUNCE:                 i ++,
       USER_FRICTION:          i ++,

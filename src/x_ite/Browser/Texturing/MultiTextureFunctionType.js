@@ -51,9 +51,9 @@ define (function ()
 {
 "use strict";
 
-   var i = 0;
+   let i = 0;
 
-   var FunctionType =
+   const FunctionType =
    {
       DEFAULT:        i ++,
       COMPLEMENT:     i ++,

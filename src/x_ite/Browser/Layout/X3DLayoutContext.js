@@ -56,39 +56,43 @@ function ($,
 {
 "use strict";
 
+   const
+      _pointSize               = Symbol (),
+      _screenTextureProperties = Symbol ();
+
    function X3DLayoutContext () { }
 
    X3DLayoutContext .prototype =
    {
-      getScreenTextureProperties: function ()
-      {
-         this .screenTextureProperties = new TextureProperties (this .getPrivateScene ());
-
-         this .screenTextureProperties .boundaryModeS_       = "CLAMP";
-         this .screenTextureProperties .boundaryModeT_       = "CLAMP";
-         this .screenTextureProperties .boundaryModeR_       = "CLAMP";
-         this .screenTextureProperties .minificationFilter_  = "NEAREST";
-         this .screenTextureProperties .magnificationFilter_ = "NEAREST";
-         this .screenTextureProperties .generateMipMaps_     = false;
-
-         this .screenTextureProperties .setup ();
-
-         this .getScreenTextureProperties = function () { return this .screenTextureProperties; };
-
-         Object .defineProperty (this, "getScreenTextureProperties", { enumerable: false });
-
-         return this .screenTextureProperties;
-      },
       getPointSize: function ()
       {
-         if (this .pointSize === undefined)
+         if (this [_pointSize] === undefined)
          {
-            var div = $("<div></div>") .css ("height", "1in") .css ("display", "none");
-            this .pointSize = div .appendTo ($("body")) .height () / 72;
+            const div = $("<div></div>") .css ("height", "1in") .css ("display", "none");
+            this [_pointSize] = div .appendTo ($("body")) .height () / 72;
             div .remove ();
          }
 
-         return this .pointSize;
+         return this [_pointSize];
+      },
+      getScreenTextureProperties: function ()
+      {
+         this [_screenTextureProperties] = new TextureProperties (this .getPrivateScene ());
+
+         this [_screenTextureProperties] .boundaryModeS_       = "CLAMP";
+         this [_screenTextureProperties] .boundaryModeT_       = "CLAMP";
+         this [_screenTextureProperties] .boundaryModeR_       = "CLAMP";
+         this [_screenTextureProperties] .minificationFilter_  = "NEAREST";
+         this [_screenTextureProperties] .magnificationFilter_ = "NEAREST";
+         this [_screenTextureProperties] .generateMipMaps_     = false;
+
+         this [_screenTextureProperties] .setup ();
+
+         this .getScreenTextureProperties = function () { return this [_screenTextureProperties]; };
+
+         Object .defineProperty (this, "getScreenTextureProperties", { enumerable: false });
+
+         return this [_screenTextureProperties];
       },
    };
 

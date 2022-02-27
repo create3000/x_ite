@@ -56,16 +56,16 @@ function (Vector4,
 {
 "use strict";
 
-   var
+   const
       T  = [ ],
       Fp = [ ],
       Fm = [ ],
       S  = new Vector4 (0, 0, 0, 0);
 
-   var H = new Matrix4 ( 2, -2,  1,  1,
-                        -3,  3, -2, -1,
-                         0,  0,  1,  0,
-                         1,  0,  0,  0);
+   const H = new Matrix4 ( 2, -2,  1,  1,
+                          -3,  3, -2, -1,
+                           0,  0,  1,  0,
+                           1,  0,  0,  0);
 
    function CatmullRomSplineInterpolator ()
    {
@@ -78,7 +78,7 @@ function (Vector4,
       constructor: CatmullRomSplineInterpolator,
       generate: function (closed, key, keyValue, keyVelocity, normalizeVelocity)
       {
-         var
+         const
             T0 = this .T0,
             T1 = this .T1;
 
@@ -101,26 +101,26 @@ function (Vector4,
                else
                   T .push (this .create ());
 
-               for (var i = 1, length = keyValue .length - 1; i < length; ++ i)
+               for (let i = 1, length = keyValue .length - 1; i < length; ++ i)
                   T .push (this .divide (this .subtract (keyValue [i + 1], keyValue [i - 1]), 2));
 
                T .push (this .copy (T [0]));
             }
             else
             {
-               for (var i = 0, length = keyVelocity .length; i < length; ++ i)
+               for (let i = 0, length = keyVelocity .length; i < length; ++ i)
                   T .push (this .copy (keyVelocity [i]));
 
                if (normalizeVelocity)
                {
-                  var Dtot = 0;
+                  let Dtot = 0;
 
-                  for (var i = 0, length = keyValue .length - 1; i < length; ++ i)
+                  for (let i = 0, length = keyValue .length - 1; i < length; ++ i)
                      Dtot += this .abs (this .subtract (keyValue [i], keyValue [i + 1]));
 
-                  for (var i = 0, length = T .length - 1; i < length; ++ i)
+                  for (let i = 0, length = T .length - 1; i < length; ++ i)
                   {
-                     var Tia = this .abs (T [i]);
+                     const Tia = this .abs (T [i]);
 
                      if (Tia)
                         T [i] = this .multiply (T [i], Dtot / Tia);
@@ -132,10 +132,10 @@ function (Vector4,
 
             if (closed)
             {
-               var i_1 = key .length - 1;
-               var i_2 = key .length - 2;
+               const i_1 = key .length - 1;
+               const i_2 = key .length - 2;
 
-               var d = key [1] - key [0] + key [i_1] - key [i_2];
+               const d = key [1] - key [0] + key [i_1] - key [i_2];
 
                Fm .push (2 * (key [1]   - key [0])   / d);
                Fp .push (2 * (key [i_1] - key [i_2]) / d);
@@ -147,9 +147,9 @@ function (Vector4,
                Fp .push (1);
             }
 
-            for (var i = 1, length = key .length - 1; i < length; ++ i)
+            for (let i = 1, length = key .length - 1; i < length; ++ i)
             {
-               var d = key [i + 1] - key [i - 1];
+               const d = key [i + 1] - key [i - 1];
 
                Fm .push (2 * (key [i + 1] - key [i])     / d);
                Fp .push (2 * (key [i]     - key [i - 1]) / d);
@@ -160,7 +160,7 @@ function (Vector4,
 
             // T0, T1
 
-            for (var i = 0, length = T .length; i < length; ++ i)
+            for (let i = 0, length = T .length; i < length; ++ i)
             {
                T0 .push (this .multiply (T [i], Fp [i]));
                T1 .push (this .multiply (T [i], Fm [i]));
