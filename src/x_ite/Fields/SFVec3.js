@@ -73,7 +73,7 @@ function (X3DField,
                return X3DField .call (this, arguments [0]);
 
             case 3:
-               return X3DField .call (this, new Vector3 (x * 1, y * 1, z * 1));
+               return X3DField .call (this, new Vector3 (+x, +y, +z));
          }
 
          throw new Error ("Invalid arguments.");

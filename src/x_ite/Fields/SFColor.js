@@ -71,7 +71,7 @@ function (Color3,
             return X3DField .call (this, arguments [0]);
 
          case 3:
-            return X3DField .call (this, new Color3 (r * 1, g * 1, b * 1));
+            return X3DField .call (this, new Color3 (+r, +g, +b));
       }
 
       throw new Error ("Invalid arguments.");

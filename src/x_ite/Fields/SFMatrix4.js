@@ -78,10 +78,10 @@ function (X3DField,
                return X3DField .call (this, arguments [0]);
 
             case 16:
-               return X3DField .call (this, new Matrix4 (m00 * 1, m01 * 1, m02 * 1, m03 * 1,
-                                                         m10 * 1, m11 * 1, m12 * 1, m13 * 1,
-                                                         m20 * 1, m21 * 1, m22 * 1, m23 * 1,
-                                                         m30 * 1, m31 * 1, m32 * 1, m33 * 1));
+               return X3DField .call (this, new Matrix4 (+m00, +m01, +m02, +m03,
+                                                         +m10, +m11, +m12, +m13,
+                                                         +m20, +m21, +m22, +m23,
+                                                         +m30, +m31, +m32, +m33));
          }
 
          throw new Error ("Invalid arguments.");

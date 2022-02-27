@@ -126,7 +126,7 @@ function (X3DArrayField,
          const components = target .getComponents ();
 
          let
-            index = key * 1,
+            index = +key,
             array = target .getValue ();
 
          if (index >= target [_length])

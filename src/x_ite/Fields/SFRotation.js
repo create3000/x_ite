@@ -78,10 +78,10 @@ function (SFVec3,
             if (arguments [1] instanceof SFVec3f)
                return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] .getValue ()));
 
-            return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] * 1));
+            return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), +arguments [1]));
 
          case 4:
-            return X3DField .call (this, new Rotation4 (x * 1, y * 1, z * 1, angle * 1));
+            return X3DField .call (this, new Rotation4 (+x, +y, +z, +angle));
       }
 
       throw new Error ("Invalid arguments.");
