@@ -74,7 +74,7 @@ function ($,
       },
       initialize: function ()
       {
-         var element = this .getBrowser () .getSurface ();
+         const element = this .getBrowser () .getSurface ();
 
          //element .bind ("mousewheel.PointingDevice", this .mousewheel .bind (this));
          element .bind ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
@@ -104,7 +104,7 @@ function ($,
 
          if (event .button === 0)
          {
-            var
+            const
                element = browser .getSurface (),
                offset  = element .offset (),
                x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
@@ -133,7 +133,7 @@ function ($,
 
          if (event .button === 0)
          {
-            var
+            const
                browser = this .getBrowser (),
                element = browser .getSurface (),
                offset  = element .offset (),
@@ -161,14 +161,14 @@ function ($,
       {
          event .preventDefault ();
 
-         var browser = this .getBrowser ();
+         const browser = this .getBrowser ();
 
          if (this .motionTime === browser .getCurrentTime ())
             return;
 
          this .motionTime = browser .getCurrentTime ();
 
-         var
+         const
             element = browser .getSurface (),
             offset  = element .offset (),
             x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
@@ -178,7 +178,7 @@ function ($,
       },
       touchstart: function (event)
       {
-         var touches = event .originalEvent .touches;
+         const touches = event .originalEvent .touches;
 
          switch (touches .length)
          {
@@ -207,7 +207,7 @@ function ($,
       },
       touchmove: function (event)
       {
-         var touches = event .originalEvent .touches;
+         const touches = event .originalEvent .touches;
 
          switch (touches .length)
          {
@@ -226,7 +226,7 @@ function ($,
       },
       onmotion: function (x, y)
       {
-         var browser = this .getBrowser ();
+         const browser = this .getBrowser ();
 
          if (browser .motionNotifyEvent (x, y))
          {

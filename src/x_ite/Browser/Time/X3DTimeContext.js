@@ -90,11 +90,11 @@ function (Vector3)
       {
          const lastPosition = new Vector3 (0, 0, 0);
 
-         return function (time)
+         return function (now)
          {
-            time = (time + performance .timeOrigin) / 1000;
-
-            const interval = time - this [_currentTime];
+            const
+               time     = (now + performance .timeOrigin) / 1000,
+               interval = time - this [_currentTime];
 
             this [_currentTime]      = time;
             this [_currentFrameRate] = interval ? 1 / interval : 60;

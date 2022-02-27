@@ -60,24 +60,6 @@ function (BoxOptions,
 {
 "use strict";
 
-   const
-      _boxOptions      = Symbol (),
-      _coneOptions     = Symbol (),
-      _cylinderOptions = Symbol (),
-      _sphereOptions   = Symbol ();
-
-   function getOptionNode (fun, name, Type)
-   {
-      this [name] = new Type (this .getPrivateScene ());
-      this [name] .setup ();
-
-      this [fun] = function () { return this [name]; };
-
-      Object .defineProperty (this, fun, { enumerable: false });
-
-      return this [name];
-   }
-
    function X3DGeometry3DContext () { }
 
    X3DGeometry3DContext .prototype =
@@ -86,21 +68,34 @@ function (BoxOptions,
       { },
       getBoxOptions: function ()
       {
-         return getOptionNode .call (this, "getBoxOptions", _boxOptions, BoxOptions);
+         return getOptionNode .call (this, "getBoxOptions", BoxOptions);
       },
       getConeOptions: function ()
       {
-         return getOptionNode .call (this, "getConeOptions", _coneOptions, ConeOptions);
+         return getOptionNode .call (this, "getConeOptions", ConeOptions);
       },
       getCylinderOptions: function ()
       {
-         return getOptionNode .call (this, "getCylinderOptions", _cylinderOptions, CylinderOptions);
+         return getOptionNode .call (this, "getCylinderOptions", CylinderOptions);
       },
       getSphereOptions: function ()
       {
-         return getOptionNode .call (this, "getSphereOptions", _sphereOptions, QuadSphereOptions);
+         return getOptionNode .call (this, "getSphereOptions", QuadSphereOptions);
       },
    };
+
+   function getOptionNode (key, OptionNode)
+   {
+      const optionNode = new OptionNode (this .getPrivateScene ());
+
+      optionNode .setup ();
+
+      this [key] = function () { return optionNode; };
+
+      Object .defineProperty (this, key, { enumerable: false });
+
+      return optionNode;
+   }
 
    return X3DGeometry3DContext;
 });

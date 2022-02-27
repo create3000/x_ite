@@ -64,25 +64,6 @@ function (Arc2DOptions,
 {
 "use strict";
 
-   const
-      _arc2DOptions       = Symbol (),
-      _arcClose2DOptions  = Symbol (),
-      _circle2DOptions    = Symbol (),
-      _disk2DOptions      = Symbol (),
-      _rectangle2DOptions = Symbol ();
-
-   function getOptionNode (fun, name, Type)
-   {
-      this [name] = new Type (this .getPrivateScene ());
-      this [name] .setup ();
-
-      this [fun] = function () { return this [name]; };
-
-      Object .defineProperty (this, fun, { enumerable: false });
-
-      return this [name];
-   }
-
    function X3DGeometry2DContext () { }
 
    X3DGeometry2DContext .prototype =
@@ -93,23 +74,23 @@ function (Arc2DOptions,
       },
       getArc2DOptions: function ()
       {
-         return getOptionNode .call (this, "getArc2DOptions", _arc2DOptions, Arc2DOptions);
+         return getOptionNode .call (this, "getArc2DOptions", Arc2DOptions);
       },
       getArcClose2DOptions: function ()
       {
-         return getOptionNode .call (this, "getArcClose2DOptions", _arcClose2DOptions, ArcClose2DOptions);
+         return getOptionNode .call (this, "getArcClose2DOptions", ArcClose2DOptions);
       },
       getCircle2DOptions: function ()
       {
-         return getOptionNode .call (this, "getCircle2DOptions", _circle2DOptions, Circle2DOptions);
+         return getOptionNode .call (this, "getCircle2DOptions", Circle2DOptions);
       },
       getDisk2DOptions: function ()
       {
-         return getOptionNode .call (this, "getDisk2DOptions", _disk2DOptions, Disk2DOptions);
+         return getOptionNode .call (this, "getDisk2DOptions", Disk2DOptions);
       },
       getRectangle2DOptions: function ()
       {
-         return getOptionNode .call (this, "getRectangle2DOptions", _rectangle2DOptions, Rectangle2DOptions);
+         return getOptionNode .call (this, "getRectangle2DOptions", Rectangle2DOptions);
       },
       setGeometry2DPrimitiveQuality: function (primitiveQuality)
       {
@@ -148,6 +129,19 @@ function (Arc2DOptions,
          }
       },
    };
+
+   function getOptionNode (key, OptionNode)
+   {
+      const optionNode = new OptionNode (this .getPrivateScene ());
+
+      optionNode .setup ();
+
+      this [key] = function () { return optionNode; };
+
+      Object .defineProperty (this, key, { enumerable: false });
+
+      return optionNode;
+   }
 
    return X3DGeometry2DContext;
 });

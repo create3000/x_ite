@@ -199,7 +199,7 @@ function (Fields,
       },
       resetLoadCount: function ()
       {
-         this .loadCount_   = 0;
+         this .loadCount_     = 0;
          this [_loadingTotal] = 0;
 
          this [_loadingObjects] .clear ();

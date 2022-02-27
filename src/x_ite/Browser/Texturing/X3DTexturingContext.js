@@ -144,15 +144,15 @@ function (TextureProperties,
          gl .activeTexture (gl .TEXTURE0 + this [_hatchStyleUnit]);
          gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
 
-         for (let i = 0, length = this [_texture2DUnits] .length; i < length; ++ i)
+         for (const unit of this [_texture2DUnits])
          {
-            gl .activeTexture (gl .TEXTURE0 + this [_texture2DUnits] [i]);
+            gl .activeTexture (gl .TEXTURE0 + unit);
             gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
          }
 
-         for (let i = 0, length = this [_projectiveTextureUnits] .length; i < length; ++ i)
+         for (const unit of this [_projectiveTextureUnits])
          {
-            gl .activeTexture (gl .TEXTURE0 + this [_projectiveTextureUnits] [i]);
+            gl .activeTexture (gl .TEXTURE0 + unit);
             gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
          }
 
@@ -170,9 +170,9 @@ function (TextureProperties,
             gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
             gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
-            for (let i = 0, length = this [_texture3DUnits] .length; i < length; ++ i)
+            for (const unit of this [_texture3DUnits])
             {
-               gl .activeTexture (gl .TEXTURE0 + this [_texture3DUnits] [i]);
+               gl .activeTexture (gl .TEXTURE0 + unit);
                gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
             }
 
@@ -198,9 +198,9 @@ function (TextureProperties,
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
-         for (let i = 0, length = this [_cubeMapTextureUnits] .length; i < length; ++ i)
+         for (const unit of this [_cubeMapTextureUnits])
          {
-            gl .activeTexture (gl .TEXTURE0 + this [_cubeMapTextureUnits] [i]);
+            gl .activeTexture (gl .TEXTURE0 + unit);
             gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultCubeMapTexture]);
          }
 

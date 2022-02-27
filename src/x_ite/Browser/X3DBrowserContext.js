@@ -261,13 +261,13 @@ function ($,
       {
          window .requestAnimationFrame (this [_renderCallback]);
       },
-      traverse: function (time)
+      traverse: function (now)
       {
          const gl = this .getContext ();
 
          const t0 = performance .now ();
          this [_systemTime] = t0 - this [_systemStartTime];
-         this .advanceTime (time);
+         this .advanceTime (now);
 
          this .prepareEvents_ .processInterests ();
          this .processEvents ();

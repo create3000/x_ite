@@ -59,45 +59,44 @@ function (Fields)
       _keydown              = Symbol (),
       _keyup                = Symbol ();
 
-   function X3DKeyDeviceSensorContext () { }
+   function X3DKeyDeviceSensorContext ()
+   {
+      this [_keyDeviceSensorNodes] = new Set ();
+   }
 
    X3DKeyDeviceSensorContext .prototype =
    {
       initialize: function ()
       {
-         this .getElement () .bind ("keydown.X3DKeyDeviceSensorContext", this [_keydown] .bind (this));
-         this .getElement () .bind ("keyup.X3DKeyDeviceSensorContext",   this [_keyup]   .bind (this));
+         const element = this .getElement ();
+
+         element .bind ("keydown.X3DKeyDeviceSensorContext", this [_keydown] .bind (this));
+         element .bind ("keyup.X3DKeyDeviceSensorContext",   this [_keyup]   .bind (this));
       },
       addKeyDeviceSensorNode: function (keyDeviceSensorNode)
       {
-         this .getKeyDeviceSensorNodes () .add (keyDeviceSensorNode);
+         this [_keyDeviceSensorNodes] .add (keyDeviceSensorNode);
       },
       removeKeyDeviceSensorNode: function (keyDeviceSensorNode)
       {
-         this .getKeyDeviceSensorNodes () .delete (keyDeviceSensorNode);
+         this [_keyDeviceSensorNodes] .delete (keyDeviceSensorNode);
       },
       getKeyDeviceSensorNodes: function ()
       {
-         this [_keyDeviceSensorNodes] = new Set ();
-
-         this .getKeyDeviceSensorNodes = function () { return this [_keyDeviceSensorNodes]; };
-
-         Object .defineProperty (this, "getKeyDeviceSensorNodes", { enumerable: false })
-
          return this [_keyDeviceSensorNodes];
       },
       [_keydown]: function (event)
       {
          //console .log (event .keyCode);
 
-         for (const keyDeviceSensorNode of this .getKeyDeviceSensorNodes ())
+         for (const keyDeviceSensorNode of this [_keyDeviceSensorNodes])
             keyDeviceSensorNode .keydown (event);
       },
       [_keyup]: function (event)
       {
          //console .log (event .which);
 
-         for (const keyDeviceSensorNode of this .getKeyDeviceSensorNodes ())
+         for (const keyDeviceSensorNode of this [_keyDeviceSensorNodes])
             keyDeviceSensorNode .keyup (event);
       },
    };

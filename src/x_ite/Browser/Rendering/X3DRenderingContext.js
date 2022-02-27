@@ -97,29 +97,37 @@ function ($,
       },
       getRenderer: function ()
       {
-         const dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
+         const
+            gl            = this .getContext (),
+            dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
 
          if (dbgRenderInfo)
-            return this .getContext () .getParameter (dbgRenderInfo .UNMASKED_RENDERER_WEBGL);
+            return gl .getParameter (dbgRenderInfo .UNMASKED_RENDERER_WEBGL);
 
-         return this .getContext () .getParameter (this .getContext () .RENDERER);
+         return gl .getParameter (this .getContext () .RENDERER);
       },
       getVendor: function ()
       {
-         const dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
+         const
+            gl            = this .getContext (),
+            dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
 
          if (dbgRenderInfo)
-            return this .getContext () .getParameter (dbgRenderInfo .UNMASKED_VENDOR_WEBGL);
+            return gl .getParameter (dbgRenderInfo .UNMASKED_VENDOR_WEBGL);
 
-         return this .getContext () .getParameter (this .getContext () .VENDOR);
+         return gl .getParameter (this .getContext () .VENDOR);
       },
       getWebGLVersion: function ()
       {
-         return this .getContext () .getParameter (this .getContext () .VERSION);
+         const gl = this .getContext ();
+
+         return gl .getParameter (gl .VERSION);
       },
       getAntialiased: function ()
       {
-         return this .getContext () .getParameter (this .getContext () .SAMPLES) > 0;
+         const gl = this .getContext ();
+
+         return gl .getParameter (gl .SAMPLES) > 0;
       },
       getMaxClipPlanes: function ()
       {
@@ -170,10 +178,12 @@ function ($,
       },
       onfullscreen: function ()
       {
-         if (this .getElement () .fullScreen ())
-            this .getElement () .addClass  ("x_ite-fullscreen");
+         const element = this .getElement ();
+
+         if (element .fullScreen ())
+            element .addClass  ("x_ite-fullscreen");
          else
-            this .getElement () .removeClass ("x_ite-fullscreen");
+            element .removeClass ("x_ite-fullscreen");
       },
    };
 

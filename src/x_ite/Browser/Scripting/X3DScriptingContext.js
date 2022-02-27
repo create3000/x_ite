@@ -63,8 +63,7 @@ function ()
    X3DScriptingContext .prototype =
    {
       initialize: function ()
-      {
-      },
+      { },
       isExternal: function ()
       {
          return this [_scripts] .length === 1;

@@ -86,19 +86,27 @@ function (Shading,
       },
       getShadingLanguageVersion: function ()
       {
-         return this .getContext () .getParameter (this .getContext () .SHADING_LANGUAGE_VERSION);
+         const gl = this .getContext ();
+
+         return gl .getParameter (gl .SHADING_LANGUAGE_VERSION);
       },
       getMaxVertexUniformVectors: function ()
       {
-         return this .getContext () .getParameter (this .getContext () .MAX_VERTEX_UNIFORM_VECTORS);
+         const gl = this .getContext ();
+
+         return gl .getParameter (gl .MAX_VERTEX_UNIFORM_VECTORS);
       },
       getMaxFragmentUniformVectors: function ()
       {
-         return this .getContext () .getParameter (this .getContext () .MAX_FRAGMENT_UNIFORM_VECTORS);
+         const gl = this .getContext ();
+
+         return gl .getParameter (gl .MAX_FRAGMENT_UNIFORM_VECTORS);
       },
       getMaxVertexAttribs: function ()
       {
-         return this .getContext () .getParameter (this .getContext () .MAX_VERTEX_ATTRIBS);
+         const gl = this .getContext ();
+
+         return gl .getParameter (gl .MAX_VERTEX_ATTRIBS);
       },
       addShader: function (shader)
       {
@@ -250,7 +258,9 @@ function (Shading,
          if (this .getDebug ())
             console .log ("Initializing " + name);
 
-         const version = this .getContext () .getVersion ();
+         const
+            gl      = this .getContext (),
+            version = gl .getVersion ();
 
          const vertexShader = new ShaderPart (this .getPrivateScene ());
          vertexShader .setName (name + "Vertex");
