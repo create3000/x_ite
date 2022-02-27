@@ -48,7 +48,6 @@
 
 
 define ([
-   "jquery",
    "x_ite/Browser/PointingDeviceSensor/PointingDevice",
    "x_ite/Rendering/TraverseType",
    "standard/Math/Geometry/Line3",
@@ -57,10 +56,9 @@ define ([
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Algorithms/MergeSort",
-   "standard/Math/Algorithm",
+   "standard/Utility/MapUtilities",
 ],
-function ($,
-          PointingDevice,
+function (PointingDevice,
           TraverseType,
           Line3,
           ViewVolume,
@@ -68,7 +66,7 @@ function ($,
           Vector3,
           Matrix4,
           MergeSort,
-          Algorithm)
+          MapUtilities)
 {
 "use strict";
 
@@ -92,19 +90,16 @@ function ($,
    function X3DPointingDeviceSensorContext ()
    {
       this [_pointingDevice] = new PointingDevice (this);
-
       this [_pointer]        = new Vector2 (0, 0);
       this [_hitRay]         = new Line3 (Vector3 .Zero, Vector3 .Zero);
       this [_hits]           = [ ];
-      this [_enabledSensors] = [{ }];
+      this [_enabledSensors] = [new Map ()];
       this [_selectedLayer]  = null;
-      this [_overSensors]    = { };
-      this [_activeSensors]  = { };
-
+      this [_overSensors]    = new Map ();
+      this [_activeSensors]  = new Map ();
       this [_hitPointSorter] = new MergeSort (this [_hits], function (lhs, rhs) { return lhs .intersection .point .z < rhs .intersection .point .z; });
       this [_layerSorter]    = new MergeSort (this [_hits], function (lhs, rhs) { return lhs .layerNumber < rhs .layerNumber; });
-
-      this [_pointerTime] = 0;
+      this [_pointerTime]    = 0;
    }
 
    X3DPointingDeviceSensorContext .prototype =
@@ -217,19 +212,19 @@ function ($,
          this [_selectedLayer] = nearestHit .layer;
          this [_activeSensors] = nearestHit .sensors;
 
-         for (const key in this [_activeSensors])
-            this [_activeSensors] [key] .set_active__ (true, nearestHit);
+         for (const sensor of this [_activeSensors] .values ())
+            sensor .set_active__ (true, nearestHit);
 
-         return ! $.isEmptyObject (nearestHit .sensors);
+         return nearestHit .sensors .size;
       },
       buttonReleaseEvent: function ()
       {
          this [_selectedLayer] = null;
 
-         for (const key in this [_activeSensors])
-            this [_activeSensors] [key] .set_active__ (false, null);
+         for (const sensor of this [_activeSensors] .values ())
+            sensor .set_active__ (false, null);
 
-         this [_activeSensors] = { };
+         this [_activeSensors] = new Map ();
 
          // Selection
 
@@ -241,11 +236,10 @@ function ($,
 
          this .motion ();
 
-         return this [_hits] .length && ! $.isEmptyObject (this [_hits] .at (-1) .sensors);
+         return this [_hits] .length && this [_hits] .at (-1) .sensors .size;
       },
       leaveNotifyEvent: function ()
-      {
-      },
+      { },
       touch: function (x, y)
       {
          if (this .getViewer () .isActive_ .getValue ())
@@ -289,7 +283,7 @@ function ($,
                modelViewMatrix: new Matrix4 (),
                hitRay:          hitRay,
                intersection:    null,
-               sensors:         { },
+               sensors:         new Map (),
                shape:           null,
                layer:           null,
                layerNumber:     0,
@@ -300,15 +294,15 @@ function ($,
 
          if (this [_hits] .length)
          {
-            var difference = Algorithm .set_difference (this [_overSensors], nearestHit .sensors, { });
+            var difference = MapUtilities .set_difference (this [_overSensors], nearestHit .sensors, new Map ());
          }
          else
          {
-            var difference = Object .assign ({ }, this [_overSensors]);
+            var difference = new Map (this [_overSensors]);
          }
 
-         for (const key in difference)
-            difference [key] .set_over__ (false, nearestHit);
+         for (const sensor of difference .values ())
+            sensor .set_over__ (false, nearestHit);
 
          // Set isOver to TRUE for appropriate nodes
 
@@ -316,20 +310,18 @@ function ($,
          {
             this [_overSensors] = nearestHit .sensors;
 
-            for (const key in this [_overSensors])
-               this [_overSensors] [key] .set_over__ (true, nearestHit);
+            for (const sensor of this [_overSensors] .values ())
+               sensor .set_over__ (true, nearestHit);
          }
          else
          {
-            this [_overSensors] = { };
+            this [_overSensors] = new Map ();
          }
 
          // Forward motion event to active drag sensor nodes
 
-         for (const key in this [_activeSensors])
-         {
-            this [_activeSensors] [key] .set_motion__ (nearestHit);
-         }
+         for (const sensor of this [_activeSensors] .values ())
+            sensor .set_motion__ (nearestHit);
       },
       getPointerTime: function ()
       {

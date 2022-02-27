@@ -182,7 +182,7 @@ function (Fields,
       {
          if (type === TraverseType .POINTER)
          {
-            const sensors = { };
+            const sensors = new Map ();
 
             renderObject .getBrowser () .getSensors () .push (sensors);
 

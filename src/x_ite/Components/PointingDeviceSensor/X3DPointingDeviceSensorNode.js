@@ -110,10 +110,10 @@ function (X3DSensorNode,
       {
          if (this .enabled_ .getValue ())
          {
-            sensors [this .getId ()] = new PointingDeviceSensorContainer (this,
-                                                                          renderObject .getModelViewMatrix  () .get (),
-                                                                          renderObject .getProjectionMatrix () .get (),
-                                                                          renderObject .getViewVolume () .getViewport ());
+            sensors .set (this, new PointingDeviceSensorContainer (this,
+                                                                   renderObject .getModelViewMatrix  () .get (),
+                                                                   renderObject .getProjectionMatrix () .get (),
+                                                                   renderObject .getViewVolume () .getViewport ()));
          }
       },
    });

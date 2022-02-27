@@ -140,7 +140,6 @@ function ($,
                x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
                y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
 
-
             $(document) .unbind (".PointingDevice"   + this .getId ());
             element .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
 

@@ -597,7 +597,7 @@ function (X3DChildNode,
 
                if (pointingDeviceSensorNodes .length)
                {
-                  const sensors = { };
+                  const sensors = new Map ();
 
                   renderObject .getBrowser () .getSensors () .push (sensors);
 
