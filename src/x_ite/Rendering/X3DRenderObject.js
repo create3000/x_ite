@@ -48,7 +48,6 @@
 
 
 define ([
-   "jquery",
    "x_ite/Rendering/TextureBuffer",
    "x_ite/Rendering/TraverseType",
    "standard/Math/Algorithm",
@@ -62,8 +61,7 @@ define ([
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Utility/MatrixStack",
 ],
-function ($,
-          TextureBuffer,
+function (TextureBuffer,
           TraverseType,
           Algorithm,
           MergeSort,
