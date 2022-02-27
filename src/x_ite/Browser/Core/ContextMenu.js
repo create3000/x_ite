@@ -93,7 +93,7 @@ function ($,
             return;
 
          $.contextMenu ({
-            selector: ".x_ite-private-browser-" + browser .getId (),
+            selector: ".x_ite-private-browser-" + browser .getNumber (),
             build: this .build .bind (this),
             animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
             hideOnSecondTrigger: true,

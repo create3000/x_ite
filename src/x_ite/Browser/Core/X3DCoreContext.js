@@ -211,27 +211,27 @@ function ($,
       // Get canvas & context.
 
       const
-          browser      = $("<div></div>") .addClass ("x_ite-private-browser x_ite-private-browser-" + this .getId ()) .prependTo (this [_element]),
+          browser      = $("<div></div>") .addClass ("x_ite-private-browser x_ite-private-browser-" + this .getNumber ()) .prependTo (this [_element]),
          splashScreen = $("<div></div>") .addClass ("x_ite-private-splash-screen") .appendTo (browser),
-         spinner      = $("<div></div>") .addClass ("x_ite-private-spinner")  .appendTo (splashScreen),
+         spinner      = $("<div></div>") .addClass ("x_ite-private-spinner") .appendTo (splashScreen),
          progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen),
          surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
 
       $("<div></div>") .addClass ("x_ite-private-x_ite") .html ("X_ITE<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
       $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
-      $("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress) .text ("Lade 0 Dateien");
+      $("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress);
 
       this [_splashScreen] = splashScreen;
       this [_surface]      = surface;
       this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
       this [_context]      = getContext (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
-      this [_extensions]   = { };
+      this [_extensions]   = new Map ();
 
       const gl = this .getContext ();
 
       for (const extension of extensions)
       {
-         this [_extensions] [extension] = gl .getExtension (extension);
+         this [_extensions] .set (extension, gl .getExtension (extension));
       }
 
       this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_number] + ").");
@@ -353,7 +353,7 @@ function ($,
       },
       getExtension: function (name)
       {
-         return this [_extensions] [name];
+         return this [_extensions] .get (name);
       },
       getMobile: function ()
       {
