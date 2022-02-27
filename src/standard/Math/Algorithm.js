@@ -225,12 +225,24 @@ define (function ()
       },
       set_difference: function (lhs, rhs, result)
       {
-         for (const key in lhs)
+         for (const key of lhs)
          {
-            if (key in rhs)
+            if (rhs .has (key))
                continue;
 
-            result [key] = lhs [key];
+            result .add (key);
+         }
+
+         return result;
+      },
+      map_difference: function (lhs, rhs, result)
+      {
+         for (const [key, value] of lhs)
+         {
+            if (rhs .has (key))
+               continue;
+
+            result .set (key, value);
          }
 
          return result;

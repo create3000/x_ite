@@ -109,7 +109,7 @@ function ($,
       this .transparentShapes        = [ ];
       this .transparencySorter       = new MergeSort (this .transparentShapes, compareDistance);
       this .collisionShapes          = [ ];
-      this .activeCollisions         = { };
+      this .activeCollisions         = new Set ();
       this .depthShapes              = [ ];
       this .speed                    = 0;
 
@@ -608,7 +608,7 @@ function ($,
             // Collision nodes are handled here.
 
             const
-               activeCollisions = { }, // current active Collision nodes
+               activeCollisions = new Set (), // current active Collision nodes
                collisionRadius2 = 2.2 * this .getNavigationInfo () .getCollisionRadius (); // Make the radius a little bit larger.
 
             collisionSize .set (collisionRadius2, collisionRadius2, collisionRadius2);
@@ -629,7 +629,7 @@ function ($,
                      if (context .shapeNode .intersectsBox (collisionBox, context .clipPlanes, modelViewMatrix .assign (context .modelViewMatrix)))
                      {
                         for (const collision of collisions)
-                           activeCollisions [collision .getId ()] = collision;
+                           activeCollisions .add (collision);
                      }
                   }
                }
@@ -641,22 +641,22 @@ function ($,
 
             // Set isActive to FALSE for affected nodes.
 
-            if (! $.isEmptyObject (this .activeCollisions))
+            if (this .activeCollisions .size)
             {
-               const inActiveCollisions = $.isEmptyObject (activeCollisions)
-                                          ? this .activeCollisions
-                                          : Algorithm .set_difference (this .activeCollisions, activeCollisions, { });
+               const inActiveCollisions = activeCollisions .size
+                                          ? Algorithm .set_difference (this .activeCollisions, activeCollisions, new Set ())
+                                          : this .activeCollisions;
 
-               for (const key in inActiveCollisions)
-                  inActiveCollisions [key] .set_active (false);
+               for (const collision of inActiveCollisions)
+                  collision .set_active (false);
             }
 
             // Set isActive to TRUE for affected nodes.
 
             this .activeCollisions = activeCollisions;
 
-            for (const key in activeCollisions)
-               activeCollisions [key] .set_active (true);
+            for (const collision of activeCollisions)
+               collision .set_active (true);
          };
       })(),
       gravite: (function ()

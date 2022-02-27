@@ -56,7 +56,7 @@ define ([
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Algorithms/MergeSort",
-   "standard/Utility/MapUtilities",
+   "standard/Math/Algorithm",
 ],
 function (PointingDevice,
           TraverseType,
@@ -66,7 +66,7 @@ function (PointingDevice,
           Vector3,
           Matrix4,
           MergeSort,
-          MapUtilities)
+          Algorithm)
 {
 "use strict";
 
@@ -294,7 +294,7 @@ function (PointingDevice,
 
          if (this [_hits] .length)
          {
-            var difference = MapUtilities .set_difference (this [_overSensors], nearestHit .sensors, new Map ());
+            var difference = Algorithm .map_difference (this [_overSensors], nearestHit .sensors, new Map ());
          }
          else
          {
