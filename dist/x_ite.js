@@ -1,4 +1,4 @@
-/* X_ITE v4.7.15-1141 */
+/* X_ITE v5.0.0a-1141 */
 
 (function (globalModule, globalRequire)
 {
@@ -13187,7 +13187,7 @@ function ($)
  ******************************************************************************/
 
 
-define ('x_ite/Bits/X3DConstants',[],function ()
+define ('x_ite/Base/X3DConstants',[],function ()
 {
 "use strict";
 
@@ -13328,7 +13328,7 @@ define ('x_ite/Bits/X3DConstants',[],function ()
 
 
 define ('x_ite/InputOutput/Generator',[
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DConstants)
 {
@@ -13700,8 +13700,8 @@ function (X3DConstants)
       },
    };
 
-   for (const property of Reflect .ownKeys (Generator .prototype))
-      Object .defineProperty (Generator .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (Generator .prototype))
+      Object .defineProperty (Generator .prototype, key, { enumerable: false });
 
    Generator .Get = function (stream)
    {
@@ -13888,9 +13888,13 @@ function (Generator,
       {
          return this [_name];
       },
+      getInterestId: function (callbackName, object)
+      {
+         return X3DObject .getId (object) + "." + String (callbackName);
+      },
       hasInterest: function (callbackName, object)
       {
-         return this [_interests] .has (X3DObject .getId (object) + "." + callbackName);
+         return this [_interests] .has (this .getInterestId (callbackName, object));
       },
       addInterest: function (callbackName, object)
       {
@@ -13900,7 +13904,9 @@ function (Generator,
             this [_interestsTemp] = [ ];
          }
 
-         const callback = object [callbackName];
+         const
+            interestId = this .getInterestId (callbackName, object),
+            callback   = object [callbackName];
 
          if (arguments .length > 2)
          {
@@ -13909,16 +13915,16 @@ function (Generator,
             args [0] = object;
             args [1] = this;
 
-            this [_interests] .set (X3DObject .getId (object) + "." + callbackName, Function .prototype .bind .apply (callback, args));
+            this [_interests] .set (interestId, Function .prototype .bind .apply (callback, args));
          }
          else
          {
-            this [_interests] .set (X3DObject .getId (object) + "." + callbackName, callback .bind (object, this));
+            this [_interests] .set (interestId, callback .bind (object, this));
          }
       },
       removeInterest: function (callbackName, object)
       {
-         this [_interests] .delete (X3DObject .getId (object) + "." + callbackName);
+         this [_interests] .delete (this .getInterestId (callbackName, object));
       },
       getInterests: function ()
       {
@@ -13974,8 +13980,8 @@ function (Generator,
       dispose: function () { },
    };
 
-   for (const property of Reflect .ownKeys (X3DObject .prototype))
-      Object .defineProperty (X3DObject .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DObject .prototype))
+      Object .defineProperty (X3DObject .prototype, key, { enumerable: false });
 
    X3DObject .getId = (function ()
    {
@@ -14072,8 +14078,8 @@ function (X3DObject)
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DFieldDefinition .prototype))
-      Object .defineProperty (X3DFieldDefinition .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DFieldDefinition .prototype))
+      Object .defineProperty (X3DFieldDefinition .prototype, key, { enumerable: false });
 
    return X3DFieldDefinition;
 });
@@ -14156,11 +14162,6 @@ function (X3DObject)
 
             return;
          }
-
-         if (key === Symbol .iterator)
-         {
-            return target [_array] [key];
-         }
       },
       set: function (target, key, value)
       {
@@ -14198,8 +14199,9 @@ function (X3DObject)
 
    function X3DInfoArray ()
    {
-      this [_array] = [ ];
-      this [_index] = new Map ();
+      this [_array]           = [ ];
+      this [_index]           = new Map ();
+      this [Symbol .iterator] = this [_array] [Symbol .iterator];
 
       return new Proxy (this, handler);
    }
@@ -14305,8 +14307,8 @@ function (X3DObject)
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DInfoArray .prototype))
-      Object .defineProperty (X3DInfoArray .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DInfoArray .prototype))
+      Object .defineProperty (X3DInfoArray .prototype, key, { enumerable: false });
 
    Object .defineProperty (X3DInfoArray .prototype, "length",
    {
@@ -14393,8 +14395,8 @@ function (X3DInfoArray)
       },
    });
 
-   for (const property of Reflect .ownKeys (FieldDefinitionArray .prototype))
-      Object .defineProperty (FieldDefinitionArray .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (FieldDefinitionArray .prototype))
+      Object .defineProperty (FieldDefinitionArray .prototype, key, { enumerable: false });
 
    return FieldDefinitionArray;
 });
@@ -14524,8 +14526,8 @@ function (X3DObject)
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DChildObject .prototype))
-      Object .defineProperty (X3DChildObject .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DChildObject .prototype))
+      Object .defineProperty (X3DChildObject .prototype, key, { enumerable: false });
 
    return X3DChildObject;
 });
@@ -14643,8 +14645,8 @@ define ('x_ite/Base/Events',[],function ()
       },
    };
 
-   for (const property of Reflect .ownKeys (Events .prototype))
-      Object .defineProperty (Events .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (Events .prototype))
+      Object .defineProperty (Events .prototype, key, { enumerable: false });
 
    return new Events ();
 });
@@ -14701,7 +14703,7 @@ define ('x_ite/Base/Events',[],function ()
 define ('x_ite/Base/X3DField',[
    "jquery",
    "x_ite/Base/X3DChildObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Base/Events",
    "standard/Utility/MapUtilities",
 ],
@@ -14810,9 +14812,6 @@ function ($,
       },
       hasReferences: function ()
       {
-         if (this [_references] === X3DField .prototype [_references])
-            return false;
-
          return this [_references] .size !== 0;
       },
       isReference: function (accessType)
@@ -15047,10 +15046,20 @@ function ($,
 
          throw new Error ("Couldn't read value for field '" + this .getName () + "'.");
       },
+      dispose: function ()
+      {
+         for (const route of new Set (this [_inputRoutes]))
+            route .dispose ();
+
+         for (const route of new Set (this [_outputRoutes]))
+            route .dispose ();
+
+         X3DChildObject .prototype .dispose .call (this);
+      }
    });
 
-   for (const property of Reflect .ownKeys (X3DField .prototype))
-      Object .defineProperty (X3DField .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DField .prototype))
+      Object .defineProperty (X3DField .prototype, key, { enumerable: false });
 
    return X3DField;
 });
@@ -15121,8 +15130,8 @@ function (X3DField)
       constructor: X3DArrayField,
    });
 
-   for (const property of Reflect .ownKeys (X3DArrayField .prototype))
-      Object .defineProperty (X3DArrayField .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DArrayField .prototype))
+      Object .defineProperty (X3DArrayField .prototype, key, { enumerable: false });
 
    return X3DArrayField;
 });
@@ -15178,7 +15187,7 @@ function (X3DField)
 
 define ('x_ite/Fields/SFBool',[
    "x_ite/Base/X3DField",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DField,
           X3DConstants)
@@ -15231,8 +15240,8 @@ function (X3DField,
       },
    });
 
-   for (const property of Reflect .ownKeys (SFBool .prototype))
-      Object .defineProperty (SFBool .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SFBool .prototype))
+      Object .defineProperty (SFBool .prototype, key, { enumerable: false });
 
    return SFBool;
 });
@@ -15464,12 +15473,24 @@ define ('standard/Math/Algorithm',[],function ()
       },
       set_difference: function (lhs, rhs, result)
       {
-         for (const key in lhs)
+         for (const key of lhs)
          {
-            if (key in rhs)
+            if (rhs .has (key))
                continue;
 
-            result [key] = lhs [key];
+            result .add (key);
+         }
+
+         return result;
+      },
+      map_difference: function (lhs, rhs, result)
+      {
+         for (const [key, value] of lhs)
+         {
+            if (rhs .has (key))
+               continue;
+
+            result .set (key, value);
          }
 
          return result;
@@ -15802,7 +15823,7 @@ function (Algorithm)
 define ('x_ite/Fields/SFColor',[
    "standard/Math/Numbers/Color3",
    "x_ite/Base/X3DField",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (Color3,
@@ -15823,7 +15844,7 @@ function (Color3,
             return X3DField .call (this, arguments [0]);
 
          case 3:
-            return X3DField .call (this, new Color3 (r * 1, g * 1, b * 1));
+            return X3DField .call (this, new Color3 (+r, +g, +b));
       }
 
       throw new Error ("Invalid arguments.");
@@ -15913,8 +15934,8 @@ function (Color3,
       },
    });
 
-   for (const property of Reflect .ownKeys (SFColor .prototype))
-      Object .defineProperty (SFColor .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SFColor .prototype))
+      Object .defineProperty (SFColor .prototype, key, { enumerable: false });
 
    const r = {
       get: function ()
@@ -16224,7 +16245,7 @@ function (Color3, Algorithm)
 define ('x_ite/Fields/SFColorRGBA',[
    "x_ite/Base/X3DField",
    "x_ite/Fields/SFColor",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Color4",
 ],
 function (X3DField,
@@ -16245,7 +16266,7 @@ function (X3DField,
             return X3DField .call (this, arguments [0]);
 
          case 4:
-            return X3DField .call (this, new Color4 (r * 1, g * 1, b * 1, a * 1));
+            return X3DField .call (this, new Color4 (+r, +g, +b, +a));
       }
 
       throw new Error ("Invalid arguments.");
@@ -16310,8 +16331,8 @@ function (X3DField,
       toXMLStream: SFColor .prototype .toXMLStream,
    });
 
-   for (const property of Reflect .ownKeys (SFColorRGBA .prototype))
-      Object .defineProperty (SFColorRGBA .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SFColorRGBA .prototype))
+      Object .defineProperty (SFColorRGBA .prototype, key, { enumerable: false });
 
    const r = {
       get: function ()
@@ -16438,7 +16459,7 @@ function (X3DField,
 
 define ('x_ite/Fields/SFDouble',[
    "x_ite/Base/X3DField",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DField,
@@ -16449,7 +16470,7 @@ function (X3DField,
 
    function SFDouble (value)
    {
-      return X3DField .call (this, arguments .length ? value * 1 : 0);
+      return X3DField .call (this, arguments .length ? +value : 0);
    }
 
    SFDouble .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -16494,8 +16515,8 @@ function (X3DField,
       },
    });
 
-   for (const property of Reflect .ownKeys (SFDouble .prototype))
-      Object .defineProperty (SFDouble .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SFDouble .prototype))
+      Object .defineProperty (SFDouble .prototype, key, { enumerable: false });
 
    return SFDouble;
 });
@@ -16551,7 +16572,7 @@ function (X3DField,
 
 define ('x_ite/Fields/SFFloat',[
    "x_ite/Base/X3DField",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DField,
@@ -16562,7 +16583,7 @@ function (X3DField,
 
    function SFFloat (value)
    {
-      return X3DField .call (this, arguments .length ? value * 1 : 0);
+      return X3DField .call (this, arguments .length ? +value : 0);
    }
 
    SFFloat .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -16586,7 +16607,7 @@ function (X3DField,
       },
       set: function (value)
       {
-         X3DField .prototype .set .call (this, value * 1);
+         X3DField .prototype .set .call (this, +value);
       },
       valueOf: X3DField .prototype .getValue,
       toStream: function (stream)
@@ -16607,8 +16628,8 @@ function (X3DField,
       },
    });
 
-   for (const property of Reflect .ownKeys (SFFloat .prototype))
-      Object .defineProperty (SFFloat .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SFFloat .prototype))
+      Object .defineProperty (SFFloat .prototype, key, { enumerable: false });
 
    return SFFloat;
 });
@@ -16664,7 +16685,7 @@ function (X3DField,
 
 define ('x_ite/Fields/SFInt32',[
    "x_ite/Base/X3DField",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DField,
           X3DConstants)
@@ -16714,8 +16735,8 @@ function (X3DField,
       },
    });
 
-   for (const property of Reflect .ownKeys (SFInt32 .prototype))
-      Object .defineProperty (SFInt32 .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SFInt32 .prototype))
+      Object .defineProperty (SFInt32 .prototype, key, { enumerable: false });
 
    return SFInt32;
 });
@@ -16772,7 +16793,7 @@ function (X3DField,
 define ('x_ite/Fields/SFImage',[
    "x_ite/Base/X3DField",
    "x_ite/Fields/SFInt32",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DField,
           SFInt32,
@@ -16941,8 +16962,8 @@ function (X3DField,
       },
    });
 
-   for (const property of Reflect .ownKeys (SFImage .prototype))
-      Object .defineProperty (SFImage .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SFImage .prototype))
+      Object .defineProperty (SFImage .prototype, key, { enumerable: false });
 
    const width = {
       get: function ()
@@ -17161,7 +17182,7 @@ function (X3DField)
 
             stream .string += double ? generator .DoublePrecision (value [last]) : generator .Precision (value [last]);
          },
-            toVRMLStream: function (stream)
+         toVRMLStream: function (stream)
          {
             this .toStream (stream);
          },
@@ -17670,7 +17691,7 @@ function (Algorithm)
 define ('x_ite/Fields/SFVec2',[
    "x_ite/Base/X3DField",
    "x_ite/Fields/SFVecPrototypeTemplate",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector2",
 ],
 function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
@@ -17690,7 +17711,7 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
                return X3DField .call (this, arguments [0]);
 
             case 2:
-               return X3DField .call (this, new Vector2 (x * 1, y * 1));
+               return X3DField .call (this, new Vector2 (+x, +y));
          }
 
          throw new Error ("Invalid arguments.");
@@ -17710,8 +17731,8 @@ function (X3DField, SFVecPrototypeTemplate, X3DConstants, Vector2)
          },
       });
 
-      for (const property of Reflect .ownKeys (SFVec2 .prototype))
-         Object .defineProperty (SFVec2 .prototype, property, { enumerable: false })
+      for (const key of Reflect .ownKeys (SFVec2 .prototype))
+         Object .defineProperty (SFVec2 .prototype, key, { enumerable: false });
 
       const x = {
          get: function ()
@@ -19354,7 +19375,7 @@ define ('x_ite/Fields/SFMatrix3',[
    "x_ite/Base/X3DField",
    "x_ite/Fields/SFMatrixPrototypeTemplate",
    "x_ite/Fields/SFVec2",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix3",
 ],
 function (X3DField,
@@ -19380,9 +19401,9 @@ function (X3DField,
                return X3DField .call (this, arguments [0]);
 
             case 9:
-               return X3DField .call (this, new Matrix3 (m00 * 1, m01 * 1, m02 * 1,
-                                                         m10 * 1, m11 * 1, m12 * 1,
-                                                         m20 * 1, m21 * 1, m22 * 1));
+               return X3DField .call (this, new Matrix3 (+m00, +m01, +m02,
+                                                         +m10, +m11, +m12,
+                                                         +m20, +m21, +m22));
          }
 
          throw new Error ("Invalid arguments.");
@@ -19412,8 +19433,8 @@ function (X3DField,
          },
       });
 
-      for (const property of Reflect .ownKeys (SFMatrix3 .prototype))
-         Object .defineProperty (SFMatrix3 .prototype, property, { enumerable: false })
+      for (const key of Reflect .ownKeys (SFMatrix3 .prototype))
+         Object .defineProperty (SFMatrix3 .prototype, key, { enumerable: false });
 
       function defineProperty (i)
       {
@@ -19428,12 +19449,12 @@ function (X3DField,
                this .getValue () [i] = +value;
                this .addEvent ();
             },
-            enumerable: false,
-            configurable: false
+            enumerable: true,
+            configurable: false,
          });
       }
 
-      for (let i = 0; i < Matrix3 .prototype .length; ++ i)
+      for (let i = 0, length = Matrix3 .prototype .length; i < length; ++ i)
          defineProperty (i);
 
       return SFMatrix3;
@@ -19497,7 +19518,7 @@ function (X3DField,
 define ('x_ite/Fields/SFVec3',[
    "x_ite/Base/X3DField",
    "x_ite/Fields/SFVecPrototypeTemplate",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (X3DField,
@@ -19520,7 +19541,7 @@ function (X3DField,
                return X3DField .call (this, arguments [0]);
 
             case 3:
-               return X3DField .call (this, new Vector3 (x * 1, y * 1, z * 1));
+               return X3DField .call (this, new Vector3 (+x, +y, +z));
          }
 
          throw new Error ("Invalid arguments.");
@@ -19544,8 +19565,8 @@ function (X3DField,
          },
       });
 
-      for (const property of Reflect .ownKeys (SFVec3 .prototype))
-         Object .defineProperty (SFVec3 .prototype, property, { enumerable: false })
+      for (const key of Reflect .ownKeys (SFVec3 .prototype))
+         Object .defineProperty (SFVec3 .prototype, key, { enumerable: false });
 
       const x = {
          get: function ()
@@ -22006,7 +22027,7 @@ define ('x_ite/Fields/SFMatrix4',[
    "x_ite/Base/X3DField",
    "x_ite/Fields/SFMatrixPrototypeTemplate",
    "x_ite/Fields/SFVec3",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DField,
@@ -22033,10 +22054,10 @@ function (X3DField,
                return X3DField .call (this, arguments [0]);
 
             case 16:
-               return X3DField .call (this, new Matrix4 (m00 * 1, m01 * 1, m02 * 1, m03 * 1,
-                                                         m10 * 1, m11 * 1, m12 * 1, m13 * 1,
-                                                         m20 * 1, m21 * 1, m22 * 1, m23 * 1,
-                                                         m30 * 1, m31 * 1, m32 * 1, m33 * 1));
+               return X3DField .call (this, new Matrix4 (+m00, +m01, +m02, +m03,
+                                                         +m10, +m11, +m12, +m13,
+                                                         +m20, +m21, +m22, +m23,
+                                                         +m30, +m31, +m32, +m33));
          }
 
          throw new Error ("Invalid arguments.");
@@ -22056,8 +22077,8 @@ function (X3DField,
          },
       });
 
-      for (const property of Reflect .ownKeys (SFMatrix4 .prototype))
-         Object .defineProperty (SFMatrix4 .prototype, property, { enumerable: false })
+      for (const key of Reflect .ownKeys (SFMatrix4 .prototype))
+         Object .defineProperty (SFMatrix4 .prototype, key, { enumerable: false });
 
       function defineProperty (i)
       {
@@ -22072,12 +22093,12 @@ function (X3DField,
                this .getValue () [i] = value;
                this .addEvent ();
             },
-            enumerable: false,
-            configurable: false
+            enumerable: true,
+            configurable: false,
          });
       }
 
-      for (let i = 0; i < Matrix4 .prototype .length; ++ i)
+      for (let i = 0, length = Matrix4 .prototype .length; i < length; ++ i)
          defineProperty (i);
 
       return SFMatrix4;
@@ -22224,7 +22245,7 @@ define ('x_ite/Fields/SFNodeCache',['x_ite/Fields/SFNode'],function ()
 
 define ('x_ite/Fields/SFNode',[
    "x_ite/Base/X3DField",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
    "x_ite/Fields/SFNodeCache",
 ],
@@ -22608,16 +22629,19 @@ function (X3DField,
       },
       dispose: function ()
       {
-         const target = this [_target];
+         const
+            target = this [_target],
+            value  = target .getValue ();
 
-         target .set (null);
+         if (value)
+            value .dispose ();
 
          X3DField .prototype .dispose .call (target);
       },
    });
 
-   for (const property of Reflect .ownKeys (SFNode .prototype))
-      Object .defineProperty (SFNode .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SFNode .prototype))
+      Object .defineProperty (SFNode .prototype, key, { enumerable: false });
 
    return SFNode;
 });
@@ -22674,7 +22698,7 @@ function (X3DField,
 define ('x_ite/Fields/SFRotation',[
    "x_ite/Fields/SFVec3",
    "x_ite/Base/X3DField",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
    "standard/Math/Numbers/Rotation4",
 ],
@@ -22702,10 +22726,10 @@ function (SFVec3,
             if (arguments [1] instanceof SFVec3f)
                return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] .getValue ()));
 
-            return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), arguments [1] * 1));
+            return X3DField .call (this, new Rotation4 (arguments [0] .getValue (), +arguments [1]));
 
          case 4:
-            return X3DField .call (this, new Rotation4 (x * 1, y * 1, z * 1, angle * 1));
+            return X3DField .call (this, new Rotation4 (+x, +y, +z, +angle));
       }
 
       throw new Error ("Invalid arguments.");
@@ -22784,8 +22808,8 @@ function (SFVec3,
       },
    });
 
-   for (const property of Reflect .ownKeys (SFRotation .prototype))
-      Object .defineProperty (SFRotation .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SFRotation .prototype))
+      Object .defineProperty (SFRotation .prototype, key, { enumerable: false });
 
    const x = {
       get: function ()
@@ -22912,7 +22936,7 @@ function (SFVec3,
 
 define ('x_ite/Fields/SFString',[
    "x_ite/Base/X3DField",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DField,
@@ -22980,8 +23004,8 @@ function (X3DField,
       },
    });
 
-   for (const property of Reflect .ownKeys (SFString .prototype))
-      Object .defineProperty (SFString .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SFString .prototype))
+      Object .defineProperty (SFString .prototype, key, { enumerable: false });
 
    Object .defineProperty (SFString .prototype, "length",
    {
@@ -23047,7 +23071,7 @@ function (X3DField,
 
 define ('x_ite/Fields/SFTime',[
    "x_ite/Base/X3DField",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DField,
           X3DConstants)
@@ -23056,7 +23080,7 @@ function (X3DField,
 
    function SFTime (value)
    {
-      return X3DField .call (this, arguments .length ? value * 1 : 0);
+      return X3DField .call (this, arguments .length ? +value : 0);
    }
 
    SFTime .prototype = Object .assign (Object .create (X3DField .prototype),
@@ -23080,7 +23104,7 @@ function (X3DField,
       },
       set: function (value)
       {
-         X3DField .prototype .set .call (this, value * 1);
+         X3DField .prototype .set .call (this, +value);
       },
       valueOf: X3DField .prototype .getValue,
       toStream: function (stream)
@@ -23097,8 +23121,8 @@ function (X3DField,
       },
    });
 
-   for (const property of Reflect .ownKeys (SFTime .prototype))
-      Object .defineProperty (SFTime .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SFTime .prototype))
+      Object .defineProperty (SFTime .prototype, key, { enumerable: false });
 
    return SFTime;
 });
@@ -23155,7 +23179,7 @@ function (X3DField,
 define ('x_ite/Fields/SFVec4',[
    "x_ite/Base/X3DField",
    "x_ite/Fields/SFVecPrototypeTemplate",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector4",
 ],
 function (X3DField,
@@ -23178,7 +23202,7 @@ function (X3DField,
                return X3DField .call (this, arguments [0]);
 
             case 4:
-               return X3DField .call (this, new Vector4 (x * 1, y * 1, z * 1, w * 1));
+               return X3DField .call (this, new Vector4 (+x, +y, +z, +w));
          }
 
          throw new Error ("Invalid arguments.");
@@ -23198,8 +23222,8 @@ function (X3DField,
          },
       });
 
-      for (const property of Reflect .ownKeys (SFVec4 .prototype))
-         Object .defineProperty (SFVec4 .prototype, property, { enumerable: false })
+      for (const key of Reflect .ownKeys (SFVec4 .prototype))
+         Object .defineProperty (SFVec4 .prototype, key, { enumerable: false });
 
       const x = {
          get: function ()
@@ -23374,17 +23398,6 @@ function ($,
                return target [key];
             }
          }
-
-         if (key === Symbol .iterator)
-         {
-            return function* ()
-            {
-               const array = target .getValue ();
-
-               for (const value of array)
-                  yield value .valueOf ();
-            };
-         }
       },
       set: function (target, key, value)
       {
@@ -23450,6 +23463,15 @@ function ($,
       constructor: X3DObjectArrayField,
       [_target]: null,
       [_proxy]: null,
+      [Symbol .iterator]: function* ()
+      {
+         const
+            target = this [_target],
+            array  = target .getValue ();
+
+         for (const value of array)
+            yield value .valueOf ();
+      },
       getTarget: function ()
       {
          return this [_target];
@@ -23619,7 +23641,7 @@ function ($,
       {
          const
             target = this [_target],
-            values = target .getValue ();;
+            values = target .getValue ();
 
          if ($.isFunction (value))
          {
@@ -23843,8 +23865,8 @@ function ($,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DObjectArrayField .prototype))
-      Object .defineProperty (X3DObjectArrayField .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DObjectArrayField .prototype))
+      Object .defineProperty (X3DObjectArrayField .prototype, key, { enumerable: false });
 
    Object .defineProperty (X3DObjectArrayField .prototype, "length",
    {
@@ -23908,7 +23930,7 @@ function ($,
 
 define ('x_ite/Base/X3DTypedArrayField',[
    "x_ite/Base/X3DArrayField",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
    "standard/Math/Algorithm",
 ],
@@ -23973,42 +23995,6 @@ function (X3DArrayField,
                return target [key];
             }
          }
-
-         if (key === Symbol .iterator)
-         {
-            return function* ()
-            {
-               const
-                  array      = target .getValue (),
-                  components = target .getComponents (),
-                  valueType  = target .getValueType ();
-
-               if (components === 1)
-               {
-                  // Return native JavaScript value.
-
-                  for (let index = 0; index < target [_length]; ++ index)
-                     yield valueType (array [index]);
-               }
-               else
-               {
-                  // Return reference to index.
-
-                  for (let index = 0; index < target [_length]; ++ index)
-                  {
-                     const
-                        value         = new (valueType) (),
-                        internalValue = value .getValue (),
-                        i             = index * components;
-
-                     value .addEvent = addEvent .bind (target, i, internalValue, components);
-                     value .getValue = getValue .bind (target, i, internalValue, components);
-
-                     yield value;
-                  }
-               }
-              };
-         }
       },
       set: function (target, key, value)
       {
@@ -24021,7 +24007,7 @@ function (X3DArrayField,
          const components = target .getComponents ();
 
          let
-            index = key * 1,
+            index = +key,
             array = target .getValue ();
 
          if (index >= target [_length])
@@ -24092,6 +24078,40 @@ function (X3DArrayField,
       [_target]: null,
       [_tmp]: null,
       [_length]: 0,
+      [Symbol .iterator]: function* ()
+      {
+         const
+            target     = this [_target],
+            array      = target .getValue (),
+            components = target .getComponents (),
+            valueType  = target .getValueType (),
+            length     = target [_length];
+
+         if (components === 1)
+         {
+            // Return native JavaScript value.
+
+            for (let index = 0; index < length; ++ index)
+               yield valueType (array [index]);
+         }
+         else
+         {
+            // Return reference to index.
+
+            for (let index = 0; index < length; ++ index)
+            {
+               const
+                  value         = new (valueType) (),
+                  internalValue = value .getValue (),
+                  i             = index * components;
+
+               value .addEvent = addEvent .bind (target, i, internalValue, components);
+               value .getValue = getValue .bind (target, i, internalValue, components);
+
+               yield value;
+            }
+         }
+      },
       getTarget: function ()
       {
          return this [_target];
@@ -24462,7 +24482,7 @@ function (X3DArrayField,
          {
             array .fill (0, newLength * components, length * components);
 
-            if (! silent)
+            if (!silent)
                target .addEvent ();
          }
          else if (newLength > length)
@@ -24487,7 +24507,7 @@ function (X3DArrayField,
                }
             }
 
-            if (! silent)
+            if (!silent)
                target .addEvent ();
          }
 
@@ -24686,8 +24706,8 @@ function (X3DArrayField,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DTypedArrayField .prototype))
-      Object .defineProperty (X3DTypedArrayField .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DTypedArrayField .prototype))
+      Object .defineProperty (X3DTypedArrayField .prototype, key, { enumerable: false });
 
    Object .defineProperty (X3DTypedArrayField .prototype, "length",
    {
@@ -24794,7 +24814,7 @@ define ('x_ite/Fields/ArrayFields',[
    "x_ite/Fields/SFVec4",
    "x_ite/Base/X3DObjectArrayField",
    "x_ite/Base/X3DTypedArrayField",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (SFBool,
@@ -25102,8 +25122,8 @@ function (SFBool,
       },
    });
 
-   for (const property of Reflect .ownKeys (MFNode .prototype))
-      Object .defineProperty (MFNode .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (MFNode .prototype))
+      Object .defineProperty (MFNode .prototype, key, { enumerable: false });
 
    function MFString (value)
    {
@@ -25160,8 +25180,8 @@ function (SFBool,
       },
    });
 
-   for (const property of Reflect .ownKeys (MFString .prototype))
-      Object .defineProperty (MFString .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (MFString .prototype))
+      Object .defineProperty (MFString .prototype, key, { enumerable: false });
 
    function ArrayTemplate (TypeName, Type, SingleType, ValueType, ArrayType, Components)
    {
@@ -25199,8 +25219,8 @@ function (SFBool,
          },
       });
 
-      for (const property of Reflect .ownKeys (ArrayField .prototype))
-         Object .defineProperty (ArrayField .prototype, property, { enumerable: false })
+      for (const key of Reflect .ownKeys (ArrayField .prototype))
+         Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
 
       return ArrayField;
    }
@@ -25241,8 +25261,8 @@ function (SFBool,
          },
       });
 
-      for (const property of Reflect .ownKeys (ArrayField .prototype))
-         Object .defineProperty (ArrayField .prototype, property, { enumerable: false })
+      for (const key of Reflect .ownKeys (ArrayField .prototype))
+         Object .defineProperty (ArrayField .prototype, key, { enumerable: false });
 
       return ArrayField;
    }
@@ -25446,7 +25466,7 @@ function (SFBool,
 
 define ('x_ite/Browser/VERSION',[],function ()
 {
-   return "4.7.15";
+   return "5.0.0a";
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -25631,8 +25651,8 @@ function (X3DChildObject,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DEventObject .prototype))
-      Object .defineProperty (X3DEventObject .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DEventObject .prototype))
+      Object .defineProperty (X3DEventObject .prototype, key, { enumerable: false });
 
    return X3DEventObject;
 });
@@ -25707,8 +25727,8 @@ function (X3DInfoArray)
       },
    });
 
-   for (const property of Reflect .ownKeys (FieldArray .prototype))
-      Object .defineProperty (FieldArray .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (FieldArray .prototype))
+      Object .defineProperty (FieldArray .prototype, key, { enumerable: false });
 
    return FieldArray;
 });
@@ -25769,7 +25789,7 @@ define ('x_ite/Base/X3DBaseNode',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Base/FieldArray",
    "x_ite/Fields",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DEventObject,
           Events,
@@ -25791,6 +25811,7 @@ function (X3DEventObject,
       _userDefinedFields = Symbol (),
       _initialized       = Symbol (),
       _live              = Symbol (),
+      _set_live__        = Symbol ("X3DBaseNode.set_live__"),
       _private           = Symbol (),
       _cloneCount        = Symbol ();
 
@@ -25900,7 +25921,7 @@ function (X3DEventObject,
             // Connect to execution context.
 
             if (this [_executionContext] !== this)
-               this [_executionContext] .isLive () .addInterest ("_set_live__", this);
+               this [_executionContext] .isLive () .addInterest (_set_live__, this);
 
             // Return field
 
@@ -25914,7 +25935,7 @@ function (X3DEventObject,
 
          this [_live] = value .valueOf ();
 
-         this ._set_live__ ();
+         this [_set_live__] ();
       },
       getLive: function ()
       {
@@ -25931,7 +25952,7 @@ function (X3DEventObject,
 
          return this .getLive ();
       },
-      _set_live__: function ()
+      [_set_live__]: function ()
       {
          const
             live   = this .getLiveState (),
@@ -26248,8 +26269,8 @@ function (X3DEventObject,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DBaseNode .prototype))
-      Object .defineProperty (X3DBaseNode .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DBaseNode .prototype))
+      Object .defineProperty (X3DBaseNode .prototype, key, { enumerable: false });
 
    return X3DBaseNode;
 });
@@ -26852,6 +26873,8 @@ function (de, fr)
  *
  ******************************************************************************/
 
+const { contains } = require("jquery");
+
 
 define ('x_ite/Browser/Core/BrowserTimings',[
    "jquery",
@@ -26951,7 +26974,7 @@ function ($,
       },
       update: function ()
       {
-         var currentTime = this .getBrowser () .getCurrentTime ();
+         const currentTime = this .getBrowser () .getCurrentTime ();
 
          if (currentTime - this .startTime > 1)
          {
@@ -26965,34 +26988,36 @@ function ($,
       },
       build: function ()
       {
-         var
+         const
             browser     = this .getBrowser (),
             currentTime = browser .getCurrentTime (),
             language    = navigator .language || navigator .userLanguage,
             fixed       = this .localeOptions,
-            rows        = this .rows,
-            r           = 0;
+            rows        = this .rows;
+
+         let r = 0;
 
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Frame rate") + ":")) .append ($("<td></td>") .text (f2(this .frames / (currentTime - this .startTime)) .toLocaleString (language, fixed) + " " + _("fps")));
          rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Speed")      + ":")) .append ($("<td></td>") .text (f2(this .getSpeed (browser .currentSpeed))         .toLocaleString (language, fixed) + " " + this .getSpeedUnit (browser .currentSpeed)));
 
          if (this .localStorage .type === "MORE")
          {
-            var
-               layers            = browser .getWorld () .getLayerSet () .getLayers (),
-               activeLayer       = browser .getActiveLayer (),
-               systemTime        = browser .systemTime,
-               navigationTime    = activeLayer && browser .getCollisionCount () ? activeLayer .collisionTime : 0,
-               collisionTime     = browser .collisionTime + navigationTime,
-               routingTime       = browser .browserTime - (browser .cameraTime + browser .collisionTime + browser .displayTime + navigationTime),
-               prepareEvents     = browser .prepareEvents () .getInterests () .size - 1,
-               sensors           = browser .sensorEvents () .getInterests () .size,
+            const
+               layers         = browser .getWorld () .getLayerSet () .getLayers (),
+               activeLayer    = browser .getActiveLayer (),
+               systemTime     = browser .getSystemTime (),
+               navigationTime = activeLayer && browser .getCollisionCount () ? activeLayer .collisionTime : 0,
+               collisionTime  = browser .getCollisionTime () + navigationTime,
+               routingTime    = browser .getBrowserTime () - (browser .getCameraTime () + browser .getCollisionTime () + browser .getDisplayTime () + navigationTime),
+               prepareEvents  = browser .prepareEvents () .getInterests () .size - 1,
+               sensors        = browser .sensorEvents () .getInterests () .size;
+
+            let
                opaqueShapes      = 0,
                transparentShapes = 0;
 
-            for (var l = 0; l < layers .length; ++ l)
+            for (const layer of layers)
             {
-               var layer = layers [l];
                opaqueShapes      += layer .numOpaqueShapes;
                transparentShapes += layer .numTransparentShapes;
             }
@@ -27000,13 +27025,13 @@ function ($,
             rows [1] .addClass ("x_ite-private-more");
 
             rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Browser")   + ":")) .append ($("<td></td>") .text (f2(systemTime)           .toLocaleString (language, fixed) + " " + _("ms")));
-            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D total")       + ":")) .append ($("<td></td>") .text (f2(browser .browserTime) .toLocaleString (language, fixed) + " " + _("ms")));
+            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("X3D total")       + ":")) .append ($("<td></td>") .text (f2(browser .getBrowserTime ()) .toLocaleString (language, fixed) + " " + _("ms")));
             rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Event Processing")   + ":")) .append ($("<td></td>") .text (f2(routingTime)          .toLocaleString (language, fixed) + " " + _("ms")));
-            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Pointer")   + ":")) .append ($("<td></td>") .text (f2(browser .pointerTime) .toLocaleString (language, fixed) + " " + _("ms")));
-            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Camera")    + ":")) .append ($("<td></td>") .text (f2(browser .cameraTime)  .toLocaleString (language, fixed) + " " + _("ms")));
-            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Picking")   + ":")) .append ($("<td></td>") .text (f2(browser .pickingTime) .toLocaleString (language, fixed) + " " + _("ms")));
+            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Pointer")   + ":")) .append ($("<td></td>") .text (f2(browser .getPointerTime ()) .toLocaleString (language, fixed) + " " + _("ms")));
+            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Camera")    + ":")) .append ($("<td></td>") .text (f2(browser .getCameraTime ())  .toLocaleString (language, fixed) + " " + _("ms")));
+            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Picking")   + ":")) .append ($("<td></td>") .text (f2(browser .getPickingTime ()) .toLocaleString (language, fixed) + " " + _("ms")));
             rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Collision Detection") + ":")) .append ($("<td></td>") .text (f2(collisionTime)        .toLocaleString (language, fixed) + " " + _("ms")));
-            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Rendering")   + ":")) .append ($("<td></td>") .text (f2(browser .displayTime) .toLocaleString (language, fixed) + " " + _("ms")));
+            rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Rendering")   + ":")) .append ($("<td></td>") .text (f2(browser .getDisplayTime ()) .toLocaleString (language, fixed) + " " + _("ms")));
             rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Number of Shapes")    + ":")) .append ($("<td></td>") .text (opaqueShapes + " + " + transparentShapes));
             rows [r++] = $("<tr></tr>") .append ($("<td></td>") .text (_("Number of Sensors")   + ":")) .append ($("<td></td>") .text (prepareEvents + sensors));
          }
@@ -27287,7 +27312,7 @@ define ('x_ite/Browser/Core/BrowserOptions',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Base/X3DBaseNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Core/PrimitiveQuality",
    "x_ite/Browser/Core/Shading",
    "x_ite/Browser/Core/TextureQuality",
@@ -27753,7 +27778,7 @@ define ('x_ite/Browser/Core/BrowserProperties',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Base/X3DBaseNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -27852,7 +27877,7 @@ define ('x_ite/Browser/Core/RenderingProperties',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Base/X3DBaseNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -27898,7 +27923,7 @@ function (Fields,
       {
          X3DBaseNode .prototype .initialize .call (this);
 
-         var browser = this .getBrowser ();
+         const browser = this .getBrowser ();
 
          this .MaxTextureSize_ = browser .getMaxTextureSize ();
          this .TextureUnits_   = browser .getCombinedTextureUnits ();
@@ -27981,11 +28006,12 @@ function ($,
 
    $.fn.textWidth = function (string)
    {
-      var children = $(this) .children ();
-      var html     = $(this) .html ();
-      var span     = '<span>' + html + '</span>';
+      const
+         children = $(this) .children (),
+         html     = $(this) .html (),
+         span     = '<span>' + html + '</span>';
       $(this) .html (span);
-      var width = $(this) .find ('span:first') .width ();
+      const width = $(this) .find ('span:first') .width ();
       $(this) .empty ();
       $(this) .append (children);
       return width;
@@ -30295,7 +30321,7 @@ function ($,
             return;
 
          $.contextMenu ({
-            selector: ".x_ite-private-browser-" + browser .getId (),
+            selector: ".x_ite-private-browser-" + browser .getNumber (),
             build: this .build .bind (this),
             animation: {duration: 500, show: "fadeIn", hide: "fadeOut"},
             hideOnSecondTrigger: true,
@@ -30713,25 +30739,23 @@ function ($,
       },
       getViewpoints: function ()
       {
-         var
+         const
             browser     = this .getBrowser (),
             activeLayer = browser .getActiveLayer ();
 
          if (! activeLayer)
             return { };
 
-         var
+         const
             enableInlineViewpoints = browser .getBrowserOption ("EnableInlineViewpoints"),
             currentScene           = browser .currentScene,
             viewpoints             = activeLayer .getViewpoints () .get (),
             currentViewpoint       = activeLayer .getViewpoint (),
             menu                   = { };
 
-         for (var i = 0; i < viewpoints .length; ++ i)
+         for (const viewpoint of viewpoints)
          {
-            var
-               viewpoint   = viewpoints [i],
-               description = viewpoint .description_ .getValue ();
+            const description = viewpoint .description_ .getValue ();
 
             if (description === "")
                continue;
@@ -30739,7 +30763,7 @@ function ($,
             if (! enableInlineViewpoints && viewpoint .getScene () !== currentScene)
                continue;
 
-            var item = {
+            const item = {
                name: description,
                callback: function (viewpoint)
                {
@@ -30759,16 +30783,14 @@ function ($,
       },
       getAvailableViewers: function ()
       {
-         var
+         const
             browser          = this .getBrowser (),
             currentViewer    = browser .viewer_ .getValue (),
             availableViewers = browser .availableViewers_,
             menu             = { };
 
-         for (var i = 0; i < availableViewers .length; ++ i)
+         for (const viewer of availableViewers)
          {
-            var viewer = availableViewers [i];
-
             menu [viewer] = {
                name: _(this .getViewerName (viewer)),
                className: "context-menu-icon x_ite-private-icon-" + viewer .toLowerCase () + "-viewer",
@@ -30929,7 +30951,7 @@ define ('x_ite/Parser/HTMLSupport',[],function ()
 
 
 define ('x_ite/Configuration/SupportedNodes',[
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Parser/HTMLSupport",
 ],
 function (X3DConstants,
@@ -30991,8 +31013,8 @@ function (X3DConstants,
       },
    };
 
-   for (const property of Reflect .ownKeys (SupportedNodes .prototype))
-      Object .defineProperty (SupportedNodes .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (SupportedNodes .prototype))
+      Object .defineProperty (SupportedNodes .prototype, key, { enumerable: false });
 
    return new SupportedNodes ();
 });
@@ -31048,7 +31070,7 @@ function (X3DConstants,
 
 define ('x_ite/Execution/ImportedNode',[
    "x_ite/Base/X3DBaseNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DBaseNode,
@@ -31086,7 +31108,7 @@ function (X3DBaseNode,
       },
       getExportedNode: function ()
       {
-         return this .inlineNode .getInternalScene () .getExportedNode (this .exportedName);
+         return this .inlineNode .getInternalScene () .getExportedNode (this .exportedName) .getValue ();
       },
       setImportedName: function (value)
       {
@@ -31130,10 +31152,10 @@ function (X3DBaseNode,
                route .real .dispose ();
 
             if (sourceNode instanceof ImportedNode)
-               sourceNode = sourceNode .getExportedNode () .getValue ();
+               sourceNode = sourceNode .getExportedNode ();
 
             if (destinationNode instanceof ImportedNode)
-               destinationNode = destinationNode .getExportedNode () .getValue ();
+               destinationNode = destinationNode .getExportedNode ();
 
             route .real = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
          }
@@ -31208,7 +31230,7 @@ function (X3DBaseNode,
             try
             {
                generator .AddRouteNode (this);
-               generator .AddImportedNode (this .getExportedNode () .getValue  (), this .getImportedName ());
+               generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
             }
             catch (error)
             {
@@ -31283,7 +31305,7 @@ function (X3DBaseNode,
             try
             {
                generator .AddRouteNode (this);
-               generator .AddImportedNode (this .getExportedNode () .getValue (), this .getImportedName ());
+               generator .AddImportedNode (this .getExportedNode (), this .getImportedName ());
             }
             catch (error)
             {
@@ -31345,8 +31367,8 @@ function (X3DBaseNode,
       },
    });
 
-   for (const property of Reflect .ownKeys (ImportedNode .prototype))
-      Object .defineProperty (ImportedNode .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (ImportedNode .prototype))
+      Object .defineProperty (ImportedNode .prototype, key, { enumerable: false });
 
    return ImportedNode;
 });
@@ -31421,8 +31443,8 @@ function (X3DInfoArray)
       },
    });
 
-   for (const property of Reflect .ownKeys (ExternProtoDeclarationArray .prototype))
-      Object .defineProperty (ExternProtoDeclarationArray .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (ExternProtoDeclarationArray .prototype))
+      Object .defineProperty (ExternProtoDeclarationArray .prototype, key, { enumerable: false });
 
    return ExternProtoDeclarationArray;
 });
@@ -31497,8 +31519,8 @@ function (X3DInfoArray)
       },
    });
 
-   for (const property of Reflect .ownKeys (ProtoDeclarationArray .prototype))
-      Object .defineProperty (ProtoDeclarationArray .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (ProtoDeclarationArray .prototype))
+      Object .defineProperty (ProtoDeclarationArray .prototype, key, { enumerable: false });
 
    return ProtoDeclarationArray;
 });
@@ -31573,8 +31595,8 @@ function (X3DInfoArray)
       },
    });
 
-   for (const property of Reflect .ownKeys (RouteArray .prototype))
-      Object .defineProperty (RouteArray .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (RouteArray .prototype))
+      Object .defineProperty (RouteArray .prototype, key, { enumerable: false });
 
    return RouteArray;
 });
@@ -31630,7 +31652,7 @@ function (X3DInfoArray)
 
 define ('x_ite/Routing/X3DRoute',[
    "x_ite/Base/X3DObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Fields/SFNodeCache",
    "x_ite/InputOutput/Generator",
 ],
@@ -31776,8 +31798,8 @@ function (X3DObject,
       }
    });
 
-   for (const property of Reflect .ownKeys (X3DRoute .prototype))
-      Object .defineProperty (X3DRoute .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DRoute .prototype))
+      Object .defineProperty (X3DRoute .prototype, key, { enumerable: false });
 
    Object .defineProperty (X3DRoute .prototype, "sourceNode",
    {
@@ -31871,7 +31893,7 @@ function (X3DObject,
  ******************************************************************************/
 
 
-define ('x_ite/Bits/X3DCast',[
+define ('x_ite/Base/X3DCast',[
    "x_ite/Fields",
 ],
 function (Fields)
@@ -31961,8 +31983,8 @@ define ('x_ite/Execution/X3DExecutionContext',[
    "x_ite/Prototype/ProtoDeclarationArray",
    "x_ite/Routing/RouteArray",
    "x_ite/Routing/X3DRoute",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
    "x_ite/Fields/SFNodeCache",
    "standard/Math/Algorithm",
@@ -32251,7 +32273,7 @@ function (SupportedNodes,
          const importedNode = this [_importedNodes] .get (importedName);
 
          if (importedNode)
-            return importedNode .getExportedNode () .valueOf ();
+            return SFNodeCache .get (importedNode .getExportedNode ());
 
          throw new Error ("Imported node '" + importedName + "' not found.");
       },
@@ -32287,7 +32309,7 @@ function (SupportedNodes,
          {
             try
             {
-               if (importedNode .getExportedNode () .getValue () === node .getValue ())
+               if (importedNode .getExportedNode () === node .getValue ())
                   return importedNode .getImportedName ();
             }
             catch (error)
@@ -32814,8 +32836,8 @@ function (SupportedNodes,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DExecutionContext .prototype))
-      Object .defineProperty (X3DExecutionContext .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DExecutionContext .prototype))
+      Object .defineProperty (X3DExecutionContext .prototype, key, { enumerable: false });
 
    Object .defineProperty (X3DExecutionContext .prototype, "specificationVersion",
    {
@@ -32992,8 +33014,8 @@ function (X3DObject,
       },
    });
 
-   for (const property of Reflect .ownKeys (ComponentInfo .prototype))
-      Object .defineProperty (ComponentInfo .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (ComponentInfo .prototype))
+      Object .defineProperty (ComponentInfo .prototype, key, { enumerable: false });
 
    return ComponentInfo;
 });
@@ -33079,8 +33101,8 @@ function (ComponentInfo,
       },
    });
 
-   for (const property of Reflect .ownKeys (ComponentInfoArray .prototype))
-      Object .defineProperty (ComponentInfoArray .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (ComponentInfoArray .prototype))
+      Object .defineProperty (ComponentInfoArray .prototype, key, { enumerable: false });
 
    return ComponentInfoArray;
 });
@@ -33193,8 +33215,8 @@ function (X3DObject,
       },
    });
 
-   for (const property of Reflect .ownKeys (UnitInfo .prototype))
-      Object .defineProperty (UnitInfo .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (UnitInfo .prototype))
+      Object .defineProperty (UnitInfo .prototype, key, { enumerable: false });
 
    Object .defineProperty (UnitInfo .prototype, "conversion_factor",
    {
@@ -33276,8 +33298,8 @@ function (X3DInfoArray)
       },
    });
 
-   for (const property of Reflect .ownKeys (UnitInfoArray .prototype))
-      Object .defineProperty (UnitInfoArray .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (UnitInfoArray .prototype))
+      Object .defineProperty (UnitInfoArray .prototype, key, { enumerable: false });
 
    return UnitInfoArray;
 });
@@ -33407,8 +33429,8 @@ function (X3DObject,
       },
    });
 
-   for (const property of Reflect .ownKeys (ExportedNode .prototype))
-      Object .defineProperty (ExportedNode .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (ExportedNode .prototype))
+      Object .defineProperty (ExportedNode .prototype, key, { enumerable: false });
 
    return ExportedNode;
 });
@@ -33470,7 +33492,7 @@ define ('x_ite/Execution/X3DScene',[
    "x_ite/Configuration/UnitInfo",
    "x_ite/Configuration/UnitInfoArray",
    "x_ite/Execution/ExportedNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
    "x_ite/Fields/SFNodeCache",
 ],
@@ -33973,8 +33995,8 @@ function (SupportedNodes,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DScene .prototype))
-      Object .defineProperty (X3DScene .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DScene .prototype))
+      Object .defineProperty (X3DScene .prototype, key, { enumerable: false });
 
    return X3DScene;
 });
@@ -34128,8 +34150,8 @@ function (Fields,
       },
    });
 
-   for (const property of Reflect .ownKeys (Scene .prototype))
-      Object .defineProperty (Scene .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (Scene .prototype))
+      Object .defineProperty (Scene .prototype, key, { enumerable: false });
 
    return Scene;
 });
@@ -34368,7 +34390,7 @@ define ('x_ite/Parser/X3DParser',[],function ()
 
 define ('x_ite/Components/Networking/X3DUrlObject',[
    "x_ite/Fields",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DConstants)
@@ -34596,7 +34618,7 @@ function (Fields,
 define ('x_ite/Components/Core/X3DNode',[
    "x_ite/Base/X3DBaseNode",
    "x_ite/Fields",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DBaseNode,
@@ -35291,25 +35313,56 @@ function (X3DBaseNode,
       },
       dispose: function ()
       {
-         // TODO: remove named node if any. (do this in NamedNode)
-         // TODO: remove imported node if any. (do this in ImportedNode)
-         // TODO: remove exported node if any. (do this in ExportedNode)
-         // TODO: remove routes from and to node if any. (do this in Route)
+         const executionContext = this .getExecutionContext ();
+
+         // Remove named node if any.
+
+         if (this .getName ())
+            executionContext .removeNamedNode (this .getName ())
+
+         // Remove imported node if any.
+
+         if (!executionContext .isMainScene ())
+         {
+            const parentContext = executionContext .getExecutionContext ();
+
+            for (const [importedName, importedNode] of new Map (parentContext .getImportedNodes ()))
+            {
+               try
+               {
+                  if (importedNode .getExportedNode () === this)
+                     parentContext .removeImportedNode (importedName);
+               }
+               catch (error)
+               {
+                  //console .log (error);
+               }
+            }
+         }
+
+         // Remove exported node if any.
+
+         if (executionContext .getType () .includes (X3DConstants .X3DScene))
+         {
+            for (const [exportedName, exportedNode] of new Map (executionContext .getExportedNodes ()))
+            {
+               if (exportedNode .getLocalNode () === this)
+                  executionContext .removeExportedNode (exportedName);
+            }
+         }
+
+         // Remove routes from and to node if any, and dispose values of fields.
 
          for (const field of this .getFields ())
             field .dispose ();
 
          // Remove node from entire scene graph.
 
-         const firstParents = new Set (this .getParents ());
-
-         firstParents .forEach (function (firstParent)
+         for (const firstParent of new Set (this .getParents ()))
          {
             if (firstParent instanceof Fields .SFNode)
             {
-               const secondParents = new Set (firstParent .getParents ());
-
-               secondParents .forEach (function (secondParent)
+               for (const secondParent of new Set (firstParent .getParents ()))
                {
                   if (secondParent instanceof Fields .MFNode)
                   {
@@ -35317,11 +35370,15 @@ function (X3DBaseNode,
 
                      secondParent .erase (secondParent .remove (0, length, firstParent), length);
                   }
-               });
+               }
 
                firstParent .setValue (null);
             }
-         });
+         }
+
+         // Call super .dispose.
+
+         X3DBaseNode .prototype .dispose .call (this);
       },
    });
 
@@ -35381,7 +35438,7 @@ define ('x_ite/Components/Core/X3DPrototypeInstance',[
    "x_ite/Base/X3DChildObject",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Execution/X3DExecutionContext",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DChildObject,
@@ -35527,6 +35584,7 @@ function (X3DChildObject,
          }
          catch (error)
          {
+            console .log (error);
             console .error (error .message);
          }
       },
@@ -35933,7 +35991,7 @@ define ('x_ite/Prototype/X3DProtoDeclarationNode',[
    "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Core/X3DPrototypeInstance",
    "x_ite/Fields/SFNodeCache",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (SupportedNodes,
           X3DBaseNode,
@@ -35980,8 +36038,8 @@ function (SupportedNodes,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DProtoDeclarationNode .prototype))
-      Object .defineProperty (X3DProtoDeclarationNode .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DProtoDeclarationNode .prototype))
+      Object .defineProperty (X3DProtoDeclarationNode .prototype, key, { enumerable: false });
 
    return X3DProtoDeclarationNode;
 });
@@ -36042,7 +36100,7 @@ define ('x_ite/Prototype/X3DExternProtoDeclaration',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Prototype/X3DProtoDeclarationNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function ($,
@@ -36293,8 +36351,8 @@ function ($,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DExternProtoDeclaration .prototype))
-      Object .defineProperty (X3DExternProtoDeclaration .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DExternProtoDeclaration .prototype))
+      Object .defineProperty (X3DExternProtoDeclaration .prototype, key, { enumerable: false });
 
    Object .defineProperty (X3DExternProtoDeclaration .prototype, "name",
    {
@@ -36389,7 +36447,7 @@ define ('x_ite/Prototype/X3DProtoDeclaration',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Execution/X3DExecutionContext",
    "x_ite/Prototype/X3DProtoDeclarationNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
 function (SupportedNodes,
@@ -36658,8 +36716,8 @@ function (SupportedNodes,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DProtoDeclaration .prototype))
-      Object .defineProperty (X3DProtoDeclaration .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DProtoDeclaration .prototype))
+      Object .defineProperty (X3DProtoDeclaration .prototype, key, { enumerable: false });
 
    Object .defineProperty (X3DProtoDeclaration .prototype, "name",
    {
@@ -36739,7 +36797,7 @@ define ('x_ite/Parser/Parser',[
    "x_ite/Parser/X3DParser",
    "x_ite/Prototype/X3DExternProtoDeclaration",
    "x_ite/Prototype/X3DProtoDeclaration",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DParser,
@@ -39926,9 +39984,9 @@ function ($,
 
    function getContext (canvas, version, preserveDrawingBuffer)
    {
-      var
-         options = { preserveDrawingBuffer: preserveDrawingBuffer },
-         gl      = null;
+      const options = { preserveDrawingBuffer: preserveDrawingBuffer };
+
+      let gl = null;
 
       if (version >= 2 && ! gl)
       {
@@ -39952,10 +40010,10 @@ function ($,
 
       // Feature detection:
 
-      // If the aliased linewidth ranges are both 1, gl.lineWidth is probably not possible,
+      // If the aliased lineWidth ranges are both 1, gl.lineWidth is probably not possible,
       // thus we disable it completely to prevent webgl errors.
 
-      var aliasedLineWidthRange = gl .getParameter (gl .ALIASED_LINE_WIDTH_RANGE);
+      const aliasedLineWidthRange = gl .getParameter (gl .ALIASED_LINE_WIDTH_RANGE);
 
       if (aliasedLineWidthRange [0] === 1 && aliasedLineWidthRange [1] === 1)
       {
@@ -39967,49 +40025,69 @@ function ($,
       return gl;
    }
 
+   const
+      _number              = Symbol (),
+      _element             = Symbol (),
+      _splashScreen        = Symbol (),
+      _surface             = Symbol (),
+      _canvas              = Symbol (),
+      _context             = Symbol (),
+      _extensions          = Symbol (),
+      _localStorage        = Symbol (),
+      _mobile              = Symbol (),
+      _browserTimings      = Symbol (),
+      _browserOptions      = Symbol (),
+      _browserProperties   = Symbol (),
+      _renderingProperties = Symbol (),
+      _notification        = Symbol (),
+      _contextMenu         = Symbol (),
+      _observer            = Symbol (),
+      _privateScene        = Symbol (),
+      _keydown             = Symbol (),
+      _keyup               = Symbol ();
+
    let browserNumber = 0;
 
    function X3DCoreContext (element)
    {
-      this .number  = ++ browserNumber;
-      this .element = element;
+      this [_number]  = ++ browserNumber;
+      this [_element] = element;
 
       // Get canvas & context.
 
       const
-          browser      = $("<div></div>") .addClass ("x_ite-private-browser x_ite-private-browser-" + this .getId ()) .prependTo (this .element),
+          browser      = $("<div></div>") .addClass ("x_ite-private-browser x_ite-private-browser-" + this .getNumber ()) .prependTo (this [_element]),
          splashScreen = $("<div></div>") .addClass ("x_ite-private-splash-screen") .appendTo (browser),
-         spinner      = $("<div></div>") .addClass ("x_ite-private-spinner")  .appendTo (splashScreen),
+         spinner      = $("<div></div>") .addClass ("x_ite-private-spinner") .appendTo (splashScreen),
          progress     = $("<div></div>") .addClass ("x_ite-private-progress") .appendTo (splashScreen),
          surface      = $("<div></div>") .addClass ("x_ite-private-surface") .appendTo (browser);
 
       $("<div></div>") .addClass ("x_ite-private-x_ite") .html ("X_ITE<span class='x_ite-private-x3d'>X3D</span>") .appendTo (progress);
       $("<div></div>") .addClass ("x_ite-private-progressbar")  .appendTo (progress) .append ($("<div></div>"));
-      $("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress) .text ("Lade 0 Dateien");
+      $("<div></div>") .addClass ("x_ite-private-spinner-text") .appendTo (progress);
 
-      this .splashScreen = splashScreen;
-      this .surface      = surface;
-      this .canvas       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
-      this .context      = getContext (this .canvas [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
-      this .extensions   = { };
+      this [_splashScreen] = splashScreen;
+      this [_surface]      = surface;
+      this [_canvas]       = $("<canvas></canvas>") .addClass ("x_ite-private-canvas") .prependTo (surface);
+      this [_context]      = getContext (this [_canvas] [0], WEBGL_LATEST_VERSION, element .attr ("preserveDrawingBuffer") === "true");
+      this [_extensions]   = new Map ();
 
       const gl = this .getContext ();
 
-      extensions .forEach (function (name)
+      for (const extension of extensions)
       {
-         this .extensions [name] = gl .getExtension (name);
-      },
-      this);
+         this [_extensions] .set (extension, gl .getExtension (extension));
+      }
 
-      this .localStorage = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this .number + ").");
-      this .mobile       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
+      this [_localStorage] = new DataStorage (localStorage, "X_ITE.X3DBrowser(" + this [_number] + ").");
+      this [_mobile]       = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i .test (navigator .userAgent);
 
-      this .browserTimings      = new BrowserTimings      (this .getPrivateScene ());
-      this .browserOptions      = new BrowserOptions      (this .getPrivateScene ());
-      this .browserProperties   = new BrowserProperties   (this .getPrivateScene ());
-      this .renderingProperties = new RenderingProperties (this .getPrivateScene ());
-      this .notification        = new Notification        (this .getPrivateScene ());
-      this .contextMenu         = new ContextMenu         (this .getPrivateScene ());
+      this [_browserTimings]      = new BrowserTimings      (this .getPrivateScene ());
+      this [_browserOptions]      = new BrowserOptions      (this .getPrivateScene ());
+      this [_browserProperties]   = new BrowserProperties   (this .getPrivateScene ());
+      this [_renderingProperties] = new RenderingProperties (this .getPrivateScene ());
+      this [_notification]        = new Notification        (this .getPrivateScene ());
+      this [_contextMenu]         = new ContextMenu         (this .getPrivateScene ());
 
       $(".x_ite-console") .empty ();
 
@@ -40025,40 +40103,40 @@ function ($,
       {
          // Setup browser nodes.
 
-         this .browserTimings      .setup ();
-         this .browserOptions      .setup ()
-         this .browserProperties   .setup ()
-         this .renderingProperties .setup ();
-         this .notification        .setup ();
-         this .contextMenu         .setup ();
+         this [_browserTimings]      .setup ();
+         this [_browserOptions]      .setup ()
+         this [_browserProperties]   .setup ()
+         this [_renderingProperties] .setup ();
+         this [_notification]        .setup ();
+         this [_contextMenu]         .setup ();
 
          // Observe Element's attributes.
 
-         this .observer = new MutationObserver (this .processMutations .bind (this));
+         this [_observer] = new MutationObserver (this .processMutations .bind (this));
 
-         this .observer .observe (this .element [0], { attributes: true, childList: false, characterData: false, subtree: false });
+         this [_observer] .observe (this [_element] [0], { attributes: true, childList: false, characterData: false, subtree: false });
 
          // Define src and url property.
 
          Object .defineProperty (this .getElement () .get (0), "src",
          {
-            get: (function ()
+            get: function ()
             {
                return this .getExecutionContext () .getWorldURL ();
-            })
+            }
             .bind (this),
-            set: (function (value)
+            set: function (value)
             {
                this .loadURL (new Fields .MFString (value), new Fields .MFString ());
-            })
+            }
             .bind (this),
             enumerable: true,
-            configurable: false
+            configurable: false,
          });
 
          Object .defineProperty (this .getElement () .get (0), "url",
          {
-            get: (function ()
+            get: function ()
             {
                const worldURL = this .getExecutionContext () .getWorldURL ();
 
@@ -40066,15 +40144,15 @@ function ($,
                   return new Fields .MFString (worldURL);
                else
                   return new Fields .MFString ();
-            })
+            }
             .bind (this),
-            set: (function (value)
+            set: function (value)
             {
                this .loadURL (value, new Fields .MFString ());
-            })
+            }
             .bind (this),
             enumerable: true,
-            configurable: false
+            configurable: false,
          });
 
          // Configure browser event handlers.
@@ -40083,8 +40161,8 @@ function ($,
          this .setBrowserEventHandler ("onshutdown");
          this .setBrowserEventHandler ("onerror");
 
-         this .getElement () .bind ("keydown.X3DCoreContext", this .keydown_X3DCoreContext .bind (this));
-         this .getElement () .bind ("keyup.X3DCoreContext",   this .keyup_X3DCoreContext   .bind (this));
+         this .getElement () .bind ("keydown.X3DCoreContext", this [_keydown] .bind (this));
+         this .getElement () .bind ("keyup.X3DCoreContext",   this [_keyup]   .bind (this));
       },
       getDebug: function ()
       {
@@ -40092,7 +40170,7 @@ function ($,
       },
       getNumber: function ()
       {
-         return this .number;
+         return this [_number];
       },
       isStrict: function ()
       {
@@ -40100,74 +40178,74 @@ function ($,
       },
       getElement: function ()
       {
-         return this .element;
+         return this [_element];
       },
       getSurface: function ()
       {
-         return this .surface;
+         return this [_surface];
       },
       getSplashScreen: function ()
       {
-         return this .splashScreen;
+         return this [_splashScreen];
       },
       getCanvas: function ()
       {
-         return this .canvas;
+         return this [_canvas];
       },
       getContext: function ()
       {
-         return this .context;
+         return this [_context];
       },
       getExtension: function (name)
       {
-         return this .extensions [name];
+         return this [_extensions] .get (name);
       },
       getMobile: function ()
       {
-         return this .mobile;
+         return this [_mobile];
       },
       getLocalStorage: function ()
       {
-         return this .localStorage;
+         return this [_localStorage];
       },
       getBrowserTimings: function ()
       {
-         return this .browserTimings;
+         return this [_browserTimings];
       },
       getBrowserOptions: function ()
       {
-         return this .browserOptions;
+         return this [_browserOptions];
       },
       getBrowserProperties: function ()
       {
-         return this .browserProperties;
+         return this [_browserProperties];
       },
       getRenderingProperties: function ()
       {
-         return this .renderingProperties;
+         return this [_renderingProperties];
       },
       getNotification: function ()
       {
-         return this .notification;
+         return this [_notification];
       },
       getContextMenu: function ()
       {
-         return this .contextMenu;
+         return this [_contextMenu];
       },
       getPrivateScene: function ()
       {
-         if (this .privateScene)
-            return this .privateScene;
+         if (this [_privateScene])
+            return this [_privateScene];
 
          // Scene for default nodes.
 
-         this .privateScene = new Scene (this);
+         this [_privateScene] = new Scene (this);
 
-         this .privateScene .setPrivate (true);
-         this .privateScene .setLive (true);
-         this .privateScene .setup ();
+         this [_privateScene] .setPrivate (true);
+         this [_privateScene] .setLive (true);
+         this [_privateScene] .setup ();
 
-         return this .privateScene;
+         return this [_privateScene];
       },
       processMutations: function (mutations)
       {
@@ -40290,7 +40368,7 @@ function ($,
       {
          return this .altGrKey_ .getValue ();
       },
-      keydown_X3DCoreContext: function (event)
+      [_keydown]: function (event)
       {
          //console .log (event .keyCode);
 
@@ -40526,7 +40604,7 @@ function ($,
             }
          }
       },
-      keyup_X3DCoreContext: function (event)
+      [_keyup]: function (event)
       {
          //console .log (event .which);
 
@@ -40632,12 +40710,18 @@ function ()
 {
 "use strict";
 
+   const
+      _taintedFields     = Symbol (),
+      _taintedFieldsTemp = Symbol (),
+      _taintedNodes      = Symbol (),
+      _taintedNodesTemp  = Symbol ();
+
    function X3DRoutingContext ()
    {
-      this .taintedFields     = [ ];
-      this .taintedFieldsTemp = [ ];
-      this .taintedNodes      = [ ];
-      this .taintedNodesTemp  = [ ];
+      this [_taintedFields]     = [ ];
+      this [_taintedFieldsTemp] = [ ];
+      this [_taintedNodes]      = [ ];
+      this [_taintedNodesTemp]  = [ ];
    }
 
    X3DRoutingContext .prototype =
@@ -40646,11 +40730,11 @@ function ()
       initialize: function () { },
       addTaintedField: function (field, event)
       {
-         this .taintedFields .push (field, event);
+         this [_taintedFields] .push (field, event);
       },
       addTaintedNode: function (node)
       {
-         this .taintedNodes .push (node);
+         this [_taintedNodes] .push (node);
       },
       processEvents: function ()
       {
@@ -40659,38 +40743,38 @@ function ()
             // Process field events
             do
             {
-               const taintedFields = this .taintedFields;
+               const taintedFields = this [_taintedFields];
 
                // Swap tainted fields.
-               this .taintedFields         = this .taintedFieldsTemp;
-               this .taintedFields .length = 0;
+               this [_taintedFields]         = this [_taintedFieldsTemp];
+               this [_taintedFields] .length = 0;
 
                for (let i = 0, length = taintedFields .length; i < length; i += 2)
                   taintedFields [i] .processEvent (taintedFields [i + 1]);
 
                // Don't know why this must be done after the for loop, otherwise a fatal error could be thrown.
-               this .taintedFieldsTemp = taintedFields;
+               this [_taintedFieldsTemp] = taintedFields;
             }
-            while (this .taintedFields .length);
+            while (this [_taintedFields] .length);
 
             // Process node events
             do
             {
-               const taintedNodes = this .taintedNodes;
+               const taintedNodes = this [_taintedNodes];
 
                // Swap tainted nodes.
-               this .taintedNodes         = this .taintedNodesTemp;
-               this .taintedNodes .length = 0;
+               this [_taintedNodes]         = this [_taintedNodesTemp];
+               this [_taintedNodes] .length = 0;
 
                for (const taintedNode of taintedNodes)
                   taintedNode .processEvents ();
 
                // Don't know why this must be done after the for loop, otherwise a fatal error could be thrown.
-               this .taintedNodesTemp = taintedNodes;
+               this [_taintedNodesTemp] = taintedNodes;
             }
-            while (! this .taintedFields .length && this .taintedNodes .length);
+            while (! this [_taintedFields] .length && this [_taintedNodes] .length);
          }
-         while (this .taintedFields .length);
+         while (this [_taintedFields] .length);
       },
    };
 
@@ -40752,23 +40836,24 @@ function ()
 {
 "use strict";
 
+   const _scripts = Symbol ();
+
    function X3DScriptingContext ()
    {
-      this .scripts = [ this ];
+      this [_scripts] = [this];
    }
 
    X3DScriptingContext .prototype =
    {
       initialize: function ()
-      {
-      },
+      { },
       isExternal: function ()
       {
-         return this .scripts .length === 1;
+         return this [_scripts] .length === 1;
       },
       getScriptStack: function ()
       {
-         return this .scripts;
+         return this [_scripts];
       }
    };
 
@@ -40924,6 +41009,13 @@ function (Fields,
 {
 "use strict";
 
+   const
+      _loadingTotal   = Symbol (),
+      _loadingObjects = Symbol (),
+      _loading        = Symbol (),
+      _location       = Symbol (),
+      _defaultScene   = Symbol ();
+
    function getBaseURI (element)
    {
       let baseURI = element .baseURI;
@@ -40939,10 +41031,10 @@ function (Fields,
    {
       this .addChildObjects ("loadCount", new Fields .SFInt32 ());
 
-      this .loadingTotal   = 0;
-      this .loadingObjects = new Set ();
-      this .loading        = false;
-      this .location       = getBaseURI (this .getElement () [0]);
+      this [_loadingTotal]   = 0;
+      this [_loadingObjects] = new Set ();
+      this [_loading]        = false;
+      this [_location]       = getBaseURI (this .getElement () [0]);
 
       this .getCanvas () .fadeOut (0);
 
@@ -40960,25 +41052,27 @@ function (Fields,
       },
       getLocation: function ()
       {
-         return this .location;
+         return this [_location];
       },
       getDefaultScene: function ()
       {
          // Inline node's empty scene.
 
-         this .defaultScene = this .createScene ();
+         this [_defaultScene] = this .createScene ();
 
-         this .defaultScene .setPrivate (true);
-         this .defaultScene .setLive (true);
-         this .defaultScene .setup ();
+         this [_defaultScene] .setPrivate (true);
+         this [_defaultScene] .setLive (true);
+         this [_defaultScene] .setup ();
 
-         this .getDefaultScene = function () { return this .defaultScene; };
+         this .getDefaultScene = function () { return this [_defaultScene]; };
 
-         return this .defaultScene;
+         Object .defineProperty (this, "getDefaultScene", { enumerable: false });
+
+         return this [_defaultScene];
       },
       setBrowserLoading: function (value)
       {
-         this .loading = value;
+         this [_loading] = value;
 
          if (value)
          {
@@ -41011,28 +41105,28 @@ function (Fields,
       },
       getLoading: function ()
       {
-         return this .loading;
+         return this [_loading];
       },
       addLoadCount: function (object)
       {
-         if (this .loadingObjects .has (object))
+         if (this [_loadingObjects] .has (object))
             return;
 
-         ++ this .loadingTotal;
+         ++ this [_loadingTotal];
 
-         this .loadingObjects .add (object);
+         this [_loadingObjects] .add (object);
 
-         this .setLoadCount (this .loadingObjects .size);
+         this .setLoadCount (this [_loadingObjects] .size);
          this .setCursor ("DEFAULT");
       },
       removeLoadCount: function (object)
       {
-         if (! this .loadingObjects .has (object))
+         if (! this [_loadingObjects] .has (object))
             return;
 
-         this .loadingObjects .delete (object);
+         this [_loadingObjects] .delete (object);
 
-         this .setLoadCount (this .loadingObjects .size);
+         this .setLoadCount (this [_loadingObjects] .size);
       },
       setLoadCount: function (value)
       {
@@ -41048,18 +41142,18 @@ function (Fields,
             this .setCursor ("DEFAULT");
          }
 
-         if (! this .loading)
+         if (! this [_loading])
             this .getNotification () .string_ = string;
 
          this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
-         this .getSplashScreen () .find (".x_ite-private-progressbar div") .css ("width", ((this .loadingTotal - value) * 100 / this .loadingTotal) + "%");
+         this .getSplashScreen () .find (".x_ite-private-progressbar div") .css ("width", ((this [_loadingTotal] - value) * 100 / this [_loadingTotal]) + "%");
       },
       resetLoadCount: function ()
       {
-         this .loadCount_   = 0;
-         this .loadingTotal = 0;
+         this .loadCount_     = 0;
+         this [_loadingTotal] = 0;
 
-         this .loadingObjects .clear ();
+         this [_loadingObjects] .clear ();
       },
    };
 
@@ -41117,7 +41211,7 @@ function (Fields,
 
 define ('x_ite/Components/Shape/X3DAppearanceChildNode',[
    "x_ite/Components/Core/X3DNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DNode,
           X3DConstants)
@@ -41188,7 +41282,7 @@ function (X3DNode,
  ******************************************************************************/
 
 
-define ('x_ite/Bits/TraverseType',[],function ()
+define ('x_ite/Rendering/TraverseType',[],function ()
 {
 "use strict";
 
@@ -41260,8 +41354,8 @@ define ('x_ite/Components/Shaders/X3DShaderNode',[
    "x_ite/Fields",
    "x_ite/Browser/Core/Shading",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/TraverseType",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Rendering/TraverseType",
 ],
 function (Fields,
           Shading,
@@ -41424,7 +41518,7 @@ function (Fields,
 define ('x_ite/Components/Core/X3DChildNode',[
    "x_ite/Fields",
    "x_ite/Components/Core/X3DNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DNode,
@@ -41526,7 +41620,7 @@ function (Fields,
 define ('x_ite/Components/Core/X3DBindableNode',[
    "x_ite/Fields",
    "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DChildNode,
@@ -41608,7 +41702,7 @@ function (Fields,
 
 define ('x_ite/Components/Core/X3DSensorNode',[
    "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DChildNode,
           X3DConstants)
@@ -41682,7 +41776,7 @@ function (X3DChildNode,
 define ('x_ite/Components/Time/X3DTimeDependentNode',[
    "x_ite/Fields",
    "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DChildNode,
@@ -41716,8 +41810,8 @@ function (Fields,
       constructor: X3DTimeDependentNode,
       initialize: function ()
       {
-         this .isLive ()   .addInterest ("set_live__",  this);
-         this .isEvenLive_ .addInterest ("_set_live__", this); // to X3DBaseNode
+         this .isLive ()   .addInterest ("set_live__", this);
+         this .isEvenLive_ .addInterest ("set_live__", this);
 
          this .initialized_ .addInterest ("set_loop__",       this);
          this .enabled_     .addInterest ("set_enabled__",    this);
@@ -41756,7 +41850,7 @@ function (Fields,
       },
       set_live__: function ()
       {
-         if (this .isLive () .getValue ())
+         if (this .isLive () .getValue () || this .isEvenLive_ .getValue ())
          {
             if (this .disabled)
             {
@@ -42043,7 +42137,7 @@ define ('x_ite/Components/Time/TimeSensor',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DSensorNode",
    "x_ite/Components/Time/X3DTimeDependentNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (Fields,
@@ -42255,7 +42349,7 @@ function (Fields,
 
 define ('x_ite/Components/Interpolation/X3DInterpolatorNode',[
    "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (X3DChildNode,
@@ -42393,7 +42487,7 @@ define ('x_ite/Components/Interpolation/EaseInEaseOut',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -42539,7 +42633,7 @@ define ('x_ite/Components/Interpolation/PositionInterpolator',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
@@ -42663,7 +42757,7 @@ define ('x_ite/Components/Interpolation/OrientationInterpolator',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Rotation4"
 ],
 function (Fields,
@@ -42805,8 +42899,8 @@ define ('x_ite/Components/Navigation/X3DViewpointNode',[
    "x_ite/Components/Interpolation/EaseInEaseOut",
    "x_ite/Components/Interpolation/PositionInterpolator",
    "x_ite/Components/Interpolation/OrientationInterpolator",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Numbers/Matrix4",
@@ -43322,7 +43416,7 @@ define ('x_ite/Components/Interpolation/ScalarInterpolator',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (Fields,
@@ -43575,7 +43669,7 @@ define ('x_ite/Components/Navigation/OrthoViewpoint',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Navigation/X3DViewpointNode",
    "x_ite/Components/Interpolation/ScalarInterpolator",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/Camera",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
@@ -43894,8 +43988,8 @@ function (Fields,
 
 
 define ('x_ite/Components/Shaders/X3DProgrammableShaderObject',[
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
    "x_ite/Components/Navigation/OrthoViewpoint",
    "standard/Math/Numbers/Matrix3",
 ],
@@ -45241,7 +45335,7 @@ function (X3DCast,
 
 define ('x_ite/Components/Networking/X3DNetworkSensorNode',[
    "x_ite/Components/Core/X3DSensorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DSensorNode,
           X3DConstants)
@@ -45317,8 +45411,8 @@ define ('x_ite/Components/Networking/LoadSensor',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Networking/X3DNetworkSensorNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -45574,8 +45668,8 @@ define ('x_ite/Components/Shaders/ComposedShader',[
    "x_ite/Components/Shaders/X3DShaderNode",
    "x_ite/Components/Shaders/X3DProgrammableShaderObject",
    "x_ite/Components/Networking/LoadSensor",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -45844,9 +45938,9 @@ define ('x_ite/Browser/Texturing/MultiTextureModeType',[],function ()
 {
 "use strict";
 
-   var i = 0;
+   let i = 0;
 
-   var ModeType =
+   const ModeType =
    {
       REPLACE:                   i ++,
       MODULATE:                  i ++,
@@ -45926,9 +46020,9 @@ define ('x_ite/Browser/Texturing/MultiTextureSourceType',[],function ()
 {
 "use strict";
 
-   var i = 0;
+   let i = 0;
 
-   var SourceType =
+   const SourceType =
    {
       DEFAULT:  i ++,
       DIFFUSE:  i ++,
@@ -45992,9 +46086,9 @@ define ('x_ite/Browser/Texturing/MultiTextureFunctionType',[],function ()
 {
 "use strict";
 
-   var i = 0;
+   let i = 0;
 
-   var FunctionType =
+   const FunctionType =
    {
       DEFAULT:        i ++,
       COMPLEMENT:     i ++,
@@ -46057,9 +46151,9 @@ define ('x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType',[],function
 {
 "use strict";
 
-   var i = 0;
+   let i = 0;
 
-   var ModeType =
+   const ModeType =
    {
       NONE:                        i ++,
       SPHERE:                      i ++,
@@ -46359,7 +46453,7 @@ define ('x_ite/Parser/XMLParser',[
    "x_ite/Parser/HTMLSupport",
    "x_ite/Prototype/X3DExternProtoDeclaration",
    "x_ite/Prototype/X3DProtoDeclaration",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function ($,
           X3DField,
@@ -53958,8 +54052,8 @@ function (ViewVolume,
       },
    };
 
-   for (const property of Reflect .ownKeys (TextureBuffer .prototype))
-      Object .defineProperty (TextureBuffer .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (TextureBuffer .prototype))
+      Object .defineProperty (TextureBuffer .prototype, key, { enumerable: false });
 
    return TextureBuffer;
 });
@@ -54952,9 +55046,8 @@ define ('standard/Math/Utility/MatrixStack',[],function ()
 
 
 define ('x_ite/Rendering/X3DRenderObject',[
-   "jquery",
    "x_ite/Rendering/TextureBuffer",
-   "x_ite/Bits/TraverseType",
+   "x_ite/Rendering/TraverseType",
    "standard/Math/Algorithm",
    "standard/Math/Algorithms/MergeSort",
    "standard/Math/Geometry/Camera",
@@ -54966,8 +55059,7 @@ define ('x_ite/Rendering/X3DRenderObject',[
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Utility/MatrixStack",
 ],
-function ($,
-          TextureBuffer,
+function (TextureBuffer,
           TraverseType,
           Algorithm,
           MergeSort,
@@ -55013,7 +55105,7 @@ function ($,
       this .transparentShapes        = [ ];
       this .transparencySorter       = new MergeSort (this .transparentShapes, compareDistance);
       this .collisionShapes          = [ ];
-      this .activeCollisions         = { };
+      this .activeCollisions         = new Set ();
       this .depthShapes              = [ ];
       this .speed                    = 0;
 
@@ -55512,7 +55604,7 @@ function ($,
             // Collision nodes are handled here.
 
             const
-               activeCollisions = { }, // current active Collision nodes
+               activeCollisions = new Set (), // current active Collision nodes
                collisionRadius2 = 2.2 * this .getNavigationInfo () .getCollisionRadius (); // Make the radius a little bit larger.
 
             collisionSize .set (collisionRadius2, collisionRadius2, collisionRadius2);
@@ -55533,7 +55625,7 @@ function ($,
                      if (context .shapeNode .intersectsBox (collisionBox, context .clipPlanes, modelViewMatrix .assign (context .modelViewMatrix)))
                      {
                         for (const collision of collisions)
-                           activeCollisions [collision .getId ()] = collision;
+                           activeCollisions .add (collision);
                      }
                   }
                }
@@ -55545,22 +55637,22 @@ function ($,
 
             // Set isActive to FALSE for affected nodes.
 
-            if (! $.isEmptyObject (this .activeCollisions))
+            if (this .activeCollisions .size)
             {
-               const inActiveCollisions = $.isEmptyObject (activeCollisions)
-                                          ? this .activeCollisions
-                                          : Algorithm .set_difference (this .activeCollisions, activeCollisions, { });
+               const inActiveCollisions = activeCollisions .size
+                                          ? Algorithm .set_difference (this .activeCollisions, activeCollisions, new Set ())
+                                          : this .activeCollisions;
 
-               for (const key in inActiveCollisions)
-                  inActiveCollisions [key] .set_active (false);
+               for (const collision of inActiveCollisions)
+                  collision .set_active (false);
             }
 
             // Set isActive to TRUE for affected nodes.
 
             this .activeCollisions = activeCollisions;
 
-            for (const key in activeCollisions)
-               activeCollisions [key] .set_active (true);
+            for (const collision of activeCollisions)
+               collision .set_active (true);
          };
       })(),
       gravite: (function ()
@@ -55998,8 +56090,8 @@ function ($,
 
 define ('x_ite/Components/Grouping/X3DBoundedObject',[
    "x_ite/Fields",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Geometry/Box3",
@@ -56153,9 +56245,9 @@ function (Fields,
 define ('x_ite/Components/Grouping/X3DGroupingNode',[
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/Grouping/X3DBoundedObject",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
 ],
 function (X3DChildNode,
           X3DBoundedObject,
@@ -56256,7 +56348,7 @@ function (X3DChildNode,
                                             this .children_,    0, this .children_    .length),
                                     this .addChildren_ .length);
 
-         if (! this .children_ .isTainted ())
+         if (!this .children_ .isTainted ())
          {
             this .children_ .removeInterest ("set_children__", this);
             this .children_ .addInterest ("connectChildren", this);
@@ -56275,7 +56367,7 @@ function (X3DChildNode,
 
          if (this .children_ .length > 0)
          {
-            if (! this .children_ .isTainted ())
+            if (!this .children_ .isTainted ())
             {
                this .children_ .removeInterest ("set_children__", this);
                this .children_ .addInterest ("connectChildren", this);
@@ -56345,7 +56437,7 @@ function (X3DChildNode,
                   {
 //							if (this .allowedTypes .size)
 //							{
-//								if (! innerNode .isType (this .allowedTypes))
+//								if (!innerNode .isType (this .allowedTypes))
 //									continue;
 //							}
 
@@ -56700,7 +56792,7 @@ function (X3DChildNode,
 
                if (pointingDeviceSensorNodes .length)
                {
-                  const sensors = { };
+                  const sensors = new Map ();
 
                   renderObject .getBrowser () .getSensors () .push (sensors);
 
@@ -56872,7 +56964,7 @@ function (X3DChildNode,
 
 define ('x_ite/Components/Layering/X3DViewportNode',[
    "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DGroupingNode,
           X3DConstants)
@@ -57064,8 +57156,8 @@ function (X3DBaseNode)
       },
    });
 
-   for (const property of Reflect .ownKeys (BindableStack .prototype))
-      Object .defineProperty (BindableStack .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (BindableStack .prototype))
+      Object .defineProperty (BindableStack .prototype, key, { enumerable: false });
 
    return BindableStack;
 });
@@ -57258,8 +57350,8 @@ function (X3DBaseNode,
       },
    });
 
-   for (const property of Reflect .ownKeys (BindableList .prototype))
-      Object .defineProperty (BindableList .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (BindableList .prototype))
+      Object .defineProperty (BindableList .prototype, key, { enumerable: false });
 
    // Compares two arrays.
 
@@ -57334,8 +57426,8 @@ define ('x_ite/Components/Navigation/NavigationInfo',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DBindableNode",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -57346,7 +57438,7 @@ function (Fields,
 {
 "use strict";
 
-   var TransitionType =
+   const TransitionType =
    {
       TELEPORT: true,
       LINEAR:   true,
@@ -57440,7 +57532,7 @@ function (Fields,
       },
       getNearValue: function ()
       {
-         var nearValue = this .getCollisionRadius ();
+         const nearValue = this .getCollisionRadius ();
 
          if (nearValue === 0)
             return 1e-5;
@@ -57456,11 +57548,9 @@ function (Fields,
       },
       getTransitionType: function ()
       {
-         for (var i = 0, length = this .transitionType_ .length; i < length; ++ i)
+         for (const value of this .transitionType_)
          {
-            var
-               value          = this .transitionType_ [i],
-               transitionType = TransitionType [value];
+            const transitionType = TransitionType [value];
 
             if (transitionType)
                return value;
@@ -57474,10 +57564,8 @@ function (Fields,
 
          this .viewer_ = "EXAMINE";
 
-         for (var i = 0; i < this .type_ .length; ++ i)
+         for (const string of this .type_)
          {
-            var string = this .type_ [i];
-
             switch (string)
             {
                case "EXAMINE":
@@ -57501,7 +57589,7 @@ function (Fields,
 
          // Determine available viewers.
 
-         var
+         let
             examineViewer = false,
             walkViewer    = false,
             flyViewer     = false,
@@ -57520,10 +57608,8 @@ function (Fields,
          }
          else
          {
-            for (var i = 0; i < this .type_ .length; ++ i)
+            for (const string of this .type_)
             {
-               var string = this .type_ [i];
-
                switch (string)
                {
                   case "EXAMINE":
@@ -57762,7 +57848,7 @@ define ('standard/Utility/ObjectCache',[],function ()
 
 
 define ('x_ite/Components/EnvironmentalEffects/X3DFogObject',[
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix3",
    "standard/Utility/ObjectCache",
 ],
@@ -57931,8 +58017,8 @@ define ('x_ite/Components/EnvironmentalEffects/Fog',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DBindableNode",
    "x_ite/Components/EnvironmentalEffects/X3DFogObject",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
@@ -58259,8 +58345,8 @@ define ('standard/Math/Numbers/Complex',[],function ()
 
 define ('x_ite/Components/EnvironmentalEffects/X3DBackgroundNode',[
    "x_ite/Components/Core/X3DBindableNode",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/ViewVolume",
    "standard/Math/Numbers/Complex",
    "standard/Math/Numbers/Vector3",
@@ -58945,7 +59031,7 @@ function (X3DBindableNode,
 define ('x_ite/Components/Texturing/X3DTextureNode',[
    "x_ite/Fields",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DAppearanceChildNode,
@@ -59032,8 +59118,8 @@ function (Fields,
 
  define ('x_ite/Components/Texturing/X3DSingleTextureNode',[
    "x_ite/Components/Texturing/X3DTextureNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
    "x_ite/Browser/Texturing/MultiTextureModeType",
    "x_ite/Browser/Texturing/MultiTextureSourceType",
    "x_ite/Browser/Texturing/MultiTextureFunctionType",
@@ -59216,14 +59302,14 @@ function (X3DTextureNode,
 
 define ('x_ite/Components/Texturing/X3DTexture2DNode',[
    "x_ite/Components/Texturing/X3DSingleTextureNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DSingleTextureNode,
           X3DConstants)
 {
 "use strict";
 
-   var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+   const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
    function X3DTexture2DNode (executionContext)
    {
@@ -59290,7 +59376,7 @@ function (X3DSingleTextureNode,
             this .flipY  = flipY;
             this .data   = data;
 
-            var gl = this .getBrowser () .getContext ();
+            const gl = this .getBrowser () .getContext ();
 
             gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
             gl .pixelStorei (gl .UNPACK_ALIGNMENT, 1);
@@ -59310,7 +59396,7 @@ function (X3DSingleTextureNode,
          {
             this .data = data;
 
-            var gl = this .getBrowser () .getContext ();
+            const gl = this .getBrowser () .getContext ();
 
             gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, flipY);
             gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
@@ -59403,7 +59489,7 @@ define ('x_ite/Components/Texturing/ImageTexture',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DTexture2DNode",
    "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
    "x_ite/DEBUG",
 ],
@@ -59645,7 +59731,7 @@ define ('x_ite/Components/EnvironmentalEffects/Background',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/EnvironmentalEffects/X3DBackgroundNode",
    "x_ite/Components/Texturing/ImageTexture",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -59806,9 +59892,9 @@ define ('x_ite/Components/Layering/X3DLayerNode',[
    "x_ite/Components/Navigation/NavigationInfo",
    "x_ite/Components/EnvironmentalEffects/Fog",
    "x_ite/Components/EnvironmentalEffects/Background",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/Camera",
    "standard/Math/Geometry/Box3",
    "standard/Math/Numbers/Vector3",
@@ -60196,7 +60282,7 @@ define ('x_ite/Components/Navigation/Viewpoint',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Navigation/X3DViewpointNode",
    "x_ite/Components/Interpolation/ScalarInterpolator",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/Camera",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
@@ -60398,7 +60484,7 @@ define ('x_ite/Components/Grouping/Group',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -60501,7 +60587,7 @@ define ('x_ite/Components/Layering/Layer',[
    "x_ite/Components/Layering/X3DLayerNode",
    "x_ite/Components/Navigation/Viewpoint",
    "x_ite/Components/Grouping/Group",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -60618,9 +60704,9 @@ define ('x_ite/Components/Layering/LayerSet',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Layering/Layer",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -60842,8 +60928,8 @@ define ('x_ite/Execution/X3DWorld',[
    "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Layering/LayerSet",
    "x_ite/Components/Layering/Layer",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
 ],
 function (SupportedNodes,
           SFNode,
@@ -60953,8 +61039,8 @@ function (SupportedNodes,
       },
    });
 
-   for (const property of Reflect .ownKeys (X3DWorld .prototype))
-      Object .defineProperty (X3DWorld .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (X3DWorld .prototype))
+      Object .defineProperty (X3DWorld .prototype, key, { enumerable: false });
 
    return X3DWorld;
 });
@@ -64895,8 +64981,8 @@ function ($,
       },
    });
 
-   for (const property of Reflect .ownKeys (FileLoader .prototype))
-      Object .defineProperty (FileLoader .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (FileLoader .prototype))
+      Object .defineProperty (FileLoader .prototype, key, { enumerable: false });
 
    return FileLoader;
 });
@@ -64958,7 +65044,7 @@ define ('x_ite/Components/Shaders/ShaderPart',[
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/InputOutput/FileLoader",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/DEBUG",
 ],
 function (Fields,
@@ -65323,9 +65409,20 @@ function (Shading,
 {
 "use strict";
 
+   const
+      _shaders       = Symbol (),
+      _defaultShader = Symbol (),
+      _pointShader   = Symbol (),
+      _lineShader    = Symbol (),
+      _unlitShader   = Symbol (),
+      _gouraudShader = Symbol (),
+      _phongShader   = Symbol (),
+      _shadowShader  = Symbol (),
+      _depthShader   = Symbol ();
+
    function X3DShadersContext ()
    {
-      this .shaders = new Set ();
+      this [_shaders] = new Set ();
    }
 
    X3DShadersContext .prototype =
@@ -65336,129 +65433,151 @@ function (Shading,
       },
       getShadingLanguageVersion: function ()
       {
-         return this .getContext () .getParameter (this .getContext () .SHADING_LANGUAGE_VERSION);
+         const gl = this .getContext ();
+
+         return gl .getParameter (gl .SHADING_LANGUAGE_VERSION);
       },
       getMaxVertexUniformVectors: function ()
       {
-         return this .getContext () .getParameter (this .getContext () .MAX_VERTEX_UNIFORM_VECTORS);
+         const gl = this .getContext ();
+
+         return gl .getParameter (gl .MAX_VERTEX_UNIFORM_VECTORS);
       },
       getMaxFragmentUniformVectors: function ()
       {
-         return this .getContext () .getParameter (this .getContext () .MAX_FRAGMENT_UNIFORM_VECTORS);
+         const gl = this .getContext ();
+
+         return gl .getParameter (gl .MAX_FRAGMENT_UNIFORM_VECTORS);
       },
       getMaxVertexAttribs: function ()
       {
-         return this .getContext () .getParameter (this .getContext () .MAX_VERTEX_ATTRIBS);
+         const gl = this .getContext ();
+
+         return gl .getParameter (gl .MAX_VERTEX_ATTRIBS);
       },
       addShader: function (shader)
       {
-         this .shaders .add (shader);
+         this [_shaders] .add (shader);
 
          shader .setShading (this .getBrowserOptions () .getShading ());
       },
       removeShader: function (shader)
       {
-         this .shaders .delete (shader);
+         this [_shaders] .delete (shader);
       },
       getShaders: function ()
       {
-         return this .shaders;
+         return this [_shaders];
       },
       getDefaultShader: function ()
       {
-         return this .defaultShader;
+         return this [_defaultShader];
       },
       hasPointShader: function ()
       {
-         return !! this .pointShader;
+         return !! this [_pointShader];
       },
       getPointShader: function ()
       {
-         this .pointShader = this .createShader ("PointShader", "PointSet");
+         this [_pointShader] = this .createShader ("PointShader", "PointSet");
 
-         this .getPointShader = function () { return this .pointShader; };
+         this .getPointShader = function () { return this [_pointShader]; };
 
-         return this .pointShader;
+         Object .defineProperty (this, "getPointShader", { enumerable: false });
+
+         return this [_pointShader];
       },
       hasLineShader: function ()
       {
-         return !! this .lineShader;
+         return !! this [_lineShader];
       },
       getLineShader: function ()
       {
-         this .lineShader = this .createShader ("WireframeShader", "Wireframe");
+         this [_lineShader] = this .createShader ("WireframeShader", "Wireframe");
 
-         this .getLineShader = function () { return this .lineShader; };
+         this .getLineShader = function () { return this [_lineShader]; };
 
-         return this .lineShader;
+         Object .defineProperty (this, "getLineShader", { enumerable: false });
+
+         return this [_lineShader];
       },
       hasUnlitShader: function ()
       {
-         return !! this .unlitShader;
+         return !! this [_unlitShader];
       },
       getUnlitShader: function ()
       {
-         this .unlitShader = this .createShader ("UnlitShader", "Unlit");
+         this [_unlitShader] = this .createShader ("UnlitShader", "Unlit");
 
-         this .unlitShader .isValid_ .addInterest ("set_unlit_shader_valid__", this);
+         this [_unlitShader] .isValid_ .addInterest ("set_unlit_shader_valid__", this);
 
-         this .getUnlitShader = function () { return this .unlitShader; };
+         this .getUnlitShader = function () { return this [_unlitShader]; };
 
-         return this .unlitShader;
+         Object .defineProperty (this, "getUnlitShader", { enumerable: false });
+
+         return this [_unlitShader];
       },
       hasGouraudShader: function ()
       {
-         return !! this .gouraudShader;
+         return !! this [_gouraudShader];
       },
       getGouraudShader: function ()
       {
-         this .gouraudShader = this .createShader ("GouraudShader", "Gouraud", false);
+         this [_gouraudShader] = this .createShader ("GouraudShader", "Gouraud", false);
 
-         this .gouraudShader .isValid_ .addInterest ("set_gouraud_shader_valid__", this);
+         this [_gouraudShader] .isValid_ .addInterest ("set_gouraud_shader_valid__", this);
 
-         this .getGouraudShader = function () { return this .gouraudShader; };
+         this .getGouraudShader = function () { return this [_gouraudShader]; };
 
-         return this .gouraudShader;
+         Object .defineProperty (this, "getGouraudShader", { enumerable: false });
+
+         return this [_gouraudShader];
       },
       hasPhongShader: function ()
       {
-         return !! this .phongShader;
+         return !! this [_phongShader];
       },
       getPhongShader: function ()
       {
-         this .phongShader = this .createShader ("PhongShader", "Phong", false);
+         this [_phongShader] = this .createShader ("PhongShader", "Phong", false);
 
-         this .phongShader .isValid_ .addInterest ("set_phong_shader_valid__", this);
+         this [_phongShader] .isValid_ .addInterest ("set_phong_shader_valid__", this);
 
-         this .getPhongShader = function () { return this .phongShader; };
+         this .getPhongShader = function () { return this [_phongShader]; };
 
-         return this .phongShader;
+         Object .defineProperty (this, "getPhongShader", { enumerable: false });
+
+         return this [_phongShader];
       },
       hasShadowShader: function ()
       {
-         return !! this .shadowShader;
+         return !! this [_shadowShader];
       },
       getShadowShader: function ()
       {
-         this .shadowShader = this .createShader ("ShadowShader", "Phong", true);
+         this [_shadowShader] = this .createShader ("ShadowShader", "Phong", true);
 
-         this .shadowShader .isValid_ .addInterest ("set_shadow_shader_valid__", this);
+         this [_shadowShader] .isValid_ .addInterest ("set_shadow_shader_valid__", this);
 
-         this .getShadowShader = function () { return this .shadowShader; };
+         this .getShadowShader = function () { return this [_shadowShader]; };
 
-         return this .shadowShader;
+         Object .defineProperty (this, "getShadowShader", { enumerable: false });
+
+         return this [_shadowShader];
       },
       hasDepthShader: function ()
       {
-         return !! this .depthShader;
+         return !! this [_depthShader];
       },
       getDepthShader: function ()
       {
-         this .depthShader = this .createShader ("DepthShader", "Depth");
+         this [_depthShader] = this .createShader ("DepthShader", "Depth");
 
-         this .getDepthShader = function () { return this .depthShader; };
+         this .getDepthShader = function () { return this [_depthShader]; };
 
-         return this .depthShader;
+         Object .defineProperty (this, "getDepthShader", { enumerable: false });
+
+         return this [_depthShader];
       },
       setShading: function (type)
       {
@@ -65466,12 +65585,12 @@ function (Shading,
          {
             case Shading .PHONG:
             {
-               this .defaultShader = this .getPhongShader ();
+               this [_defaultShader] = this .getPhongShader ();
                break;
             }
             default:
             {
-               this .defaultShader = this .getGouraudShader ();
+               this [_defaultShader] = this .getGouraudShader ();
                break;
             }
          }
@@ -65486,7 +65605,9 @@ function (Shading,
          if (this .getDebug ())
             console .log ("Initializing " + name);
 
-         const version = this .getContext () .getVersion ();
+         const
+            gl      = this .getContext (),
+            version = gl .getVersion ();
 
          const vertexShader = new ShaderPart (this .getPrivateScene ());
          vertexShader .setName (name + "Vertex");
@@ -65516,53 +65637,53 @@ function (Shading,
       },
       set_unlit_shader_valid__: function (valid)
       {
-         this .unlitShader .isValid_ .removeInterest ("set_unlit_shader_valid__", this);
+         this [_unlitShader] .isValid_ .removeInterest ("set_unlit_shader_valid__", this);
 
-         if (valid .getValue () && ShaderTest .verify (this, this .unlitShader))
+         if (valid .getValue () && ShaderTest .verify (this, this [_unlitShader]))
             return;
 
          console .error ("X_ITE: Unlit shading is not available, using fallback VRML shader.");
 
          // Recompile shader.
-         this .unlitShader .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.vs") ];
-         this .unlitShader .parts_ [1] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.fs") ];
+         this [_unlitShader] .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.vs") ];
+         this [_unlitShader] .parts_ [1] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.fs") ];
       },
       set_gouraud_shader_valid__: function (valid)
       {
-         this .gouraudShader .isValid_ .removeInterest ("set_gouraud_shader_valid__", this);
+         this [_gouraudShader] .isValid_ .removeInterest ("set_gouraud_shader_valid__", this);
 
-         if (valid .getValue () && ShaderTest .verify (this, this .gouraudShader))
+         if (valid .getValue () && ShaderTest .verify (this, this [_gouraudShader]))
             return;
 
          console .warn ("X_ITE: All else fails, using fallback VRML shader.");
 
          // Recompile shader.
-         this .gouraudShader .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/Fallback.vs") ];
-         this .gouraudShader .parts_ [1] .url = [ urls .getShaderUrl ("webgl1/Fallback.fs") ];
+         this [_gouraudShader] .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/Fallback.vs") ];
+         this [_gouraudShader] .parts_ [1] .url = [ urls .getShaderUrl ("webgl1/Fallback.fs") ];
       },
       set_phong_shader_valid__: function (valid)
       {
-         this .phongShader .isValid_ .removeInterest ("set_phong_shader_valid__", this);
+         this [_phongShader] .isValid_ .removeInterest ("set_phong_shader_valid__", this);
 
-         if (valid .getValue () && ShaderTest .verify (this, this .phongShader))
+         if (valid .getValue () && ShaderTest .verify (this, this [_phongShader]))
             return;
 
          console .warn ("X_ITE: Phong shading is not available, using Gouraud shading.");
 
-         this .phongShader = this .getGouraudShader ();
+         this [_phongShader] = this .getGouraudShader ();
 
          this .setShading (this .getBrowserOptions () .getShading ());
       },
       set_shadow_shader_valid__: function (valid)
       {
-         this .shadowShader .isValid_ .removeInterest ("set_shadow_shader_valid__", this);
+         this [_shadowShader] .isValid_ .removeInterest ("set_shadow_shader_valid__", this);
 
-         if (valid .getValue () && ShaderTest .verify (this, this .shadowShader))
+         if (valid .getValue () && ShaderTest .verify (this, this [_shadowShader]))
             return;
 
          console .warn ("X_ITE: Shadow shading is not available, using Gouraud shading.");
 
-         this .shadowShader = this .getGouraudShader ();
+         this [_shadowShader] = this .getGouraudShader ();
       },
    };
 
@@ -65992,19 +66113,22 @@ define('ResizeSensor', ['ResizeSensor/src/ResizeSensor'], function (main) { retu
 
 define ('x_ite/Browser/Rendering/X3DRenderingContext',[
    "jquery",
-   "x_ite/Fields",
    "ResizeSensor",
 ],
 function ($,
-          Fields,
           ResizeSensor)
 {
 "use strict";
 
+   const
+      _viewport     = Symbol (),
+      _localObjects = Symbol (),
+      _resizer      = Symbol ();
+
    function X3DRenderingContext ()
    {
-      this .viewport     = [0, 0, 300, 150];
-      this .localObjects = [ ]; // shader objects dumpster
+      this [_viewport]     = [0, 0, 300, 150];
+      this [_localObjects] = [ ]; // shader objects dumpster
    }
 
    X3DRenderingContext .prototype =
@@ -66029,35 +66153,43 @@ function ($,
 
          $(document) .on ('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', this .onfullscreen .bind (this));
 
-         this .resizer = new ResizeSensor (this .getSurface (), this .reshape .bind (this));
+         this [_resizer] = new ResizeSensor (this .getSurface (), this .reshape .bind (this));
 
          this .reshape ();
       },
       getRenderer: function ()
       {
-         const dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
+         const
+            gl            = this .getContext (),
+            dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
 
          if (dbgRenderInfo)
-            return this .getContext () .getParameter (dbgRenderInfo .UNMASKED_RENDERER_WEBGL);
+            return gl .getParameter (dbgRenderInfo .UNMASKED_RENDERER_WEBGL);
 
-         return this .getContext () .getParameter (this .getContext () .RENDERER);
+         return gl .getParameter (this .getContext () .RENDERER);
       },
       getVendor: function ()
       {
-         const dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
+         const
+            gl            = this .getContext (),
+            dbgRenderInfo = this .getExtension ("WEBGL_debug_renderer_info");
 
          if (dbgRenderInfo)
-            return this .getContext () .getParameter (dbgRenderInfo .UNMASKED_VENDOR_WEBGL);
+            return gl .getParameter (dbgRenderInfo .UNMASKED_VENDOR_WEBGL);
 
-         return this .getContext () .getParameter (this .getContext () .VENDOR);
+         return gl .getParameter (this .getContext () .VENDOR);
       },
       getWebGLVersion: function ()
       {
-         return this .getContext () .getParameter (this .getContext () .VERSION);
+         const gl = this .getContext ();
+
+         return gl .getParameter (gl .VERSION);
       },
       getAntialiased: function ()
       {
-         return this .getContext () .getParameter (this .getContext () .SAMPLES) > 0;
+         const gl = this .getContext ();
+
+         return gl .getParameter (gl .SAMPLES) > 0;
       },
       getMaxClipPlanes: function ()
       {
@@ -66065,13 +66197,13 @@ function ($,
       },
       getDepthSize: function ()
       {
-         const gl = this .context;
+         const gl = this .getContext ();
 
          return gl .getParameter (gl .DEPTH_BITS);
       },
       getColorDepth: function ()
       {
-         const gl = this .context;
+         const gl = this .getContext ();
 
          return (gl .getParameter (gl .RED_BITS) +
                  gl .getParameter (gl .BLUE_BITS) +
@@ -66080,11 +66212,11 @@ function ($,
       },
       getViewport: function ()
       {
-         return this .viewport;
+         return this [_viewport];
       },
       getLocalObjects: function ()
       {
-         return this .localObjects;
+         return this [_localObjects];
       },
       reshape: function ()
       {
@@ -66098,8 +66230,8 @@ function ($,
          canvas .width  = width;
          canvas .height = height;
 
-         this .viewport [2] = width;
-         this .viewport [3] = height;
+         this [_viewport] [2] = width;
+         this [_viewport] [3] = height;
 
          gl .viewport (0, 0, width, height);
          gl .scissor  (0, 0, width, height);
@@ -66108,10 +66240,12 @@ function ($,
       },
       onfullscreen: function ()
       {
-         if (this .getElement () .fullScreen ())
-            this .getElement () .addClass  ("x_ite-fullscreen");
+         const element = this .getElement ();
+
+         if (element .fullScreen ())
+            element .addClass  ("x_ite-fullscreen");
          else
-            this .getElement () .removeClass ("x_ite-fullscreen");
+            element .removeClass ("x_ite-fullscreen");
       },
    };
 
@@ -66170,7 +66304,7 @@ function ($,
 define ('x_ite/Components/Shape/X3DAppearanceNode',[
    "x_ite/Fields",
    "x_ite/Components/Core/X3DNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DNode,
@@ -66259,9 +66393,9 @@ define ('x_ite/Browser/Shape/AlphaMode',[],function ()
 {
 "use strict";
 
-   var i = 0;
+   let i = 0;
 
-   var AlphaMode =
+   const AlphaMode =
    {
       AUTO:   i ++,
       OPAQUE: i ++,
@@ -66326,8 +66460,8 @@ define ('x_ite/Components/Shape/Appearance',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DAppearanceNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Shape/AlphaMode",
 ],
 function (Fields,
@@ -66706,7 +66840,7 @@ define ('x_ite/Components/Shape/PointProperties',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -66869,7 +67003,7 @@ define ('x_ite/Components/Shape/LineProperties',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -67006,7 +67140,7 @@ define ('x_ite/Components/Shape/FillProperties',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -67163,7 +67297,7 @@ function (Fields,
 define ('x_ite/Components/Shape/X3DMaterialNode',[
    "x_ite/Fields",
    "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DAppearanceChildNode,
@@ -67250,7 +67384,7 @@ function (Fields,
 
  define ('x_ite/Components/Shape/X3DOneSidedMaterialNode',[
    "x_ite/Components/Shape/X3DMaterialNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (X3DMaterialNode,
@@ -67365,7 +67499,7 @@ function (X3DMaterialNode,
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DOneSidedMaterialNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -67475,7 +67609,7 @@ define ('x_ite/Components/Texturing/TextureProperties',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (Fields,
@@ -67530,7 +67664,7 @@ function (Fields,
       },
       getBoundaryMode: (function ()
       {
-         var boundaryModes = new Map ([
+         const boundaryModes = new Map ([
             ["CLAMP",             "CLAMP_TO_EDGE"], // "CLAMP"
             ["CLAMP_TO_EDGE",     "CLAMP_TO_EDGE"],
             ["CLAMP_TO_BOUNDARY", "CLAMP_TO_EDGE"], // "CLAMP_TO_BORDER"
@@ -67540,7 +67674,7 @@ function (Fields,
 
          return function (string)
          {
-            var boundaryMode = boundaryModes .get (string);
+            const boundaryMode = boundaryModes .get (string);
 
             if (boundaryMode !== undefined)
                return boundaryMode;
@@ -67562,7 +67696,7 @@ function (Fields,
       },
       getMinificationFilter: (function ()
       {
-         var minificationFilters = new Map ([
+         const minificationFilters = new Map ([
             ["AVG_PIXEL_AVG_MIPMAP",         "LINEAR_MIPMAP_LINEAR"],
             ["AVG_PIXEL",                    "LINEAR"],
             ["AVG_PIXEL_NEAREST_MIPMAP",     "LINEAR_MIPMAP_NEAREST"],
@@ -67577,7 +67711,7 @@ function (Fields,
          {
             if (this .generateMipMaps_ .getValue ())
             {
-               var minificationFilter = minificationFilters .get (this .minificationFilter_ .getValue ());
+               const minificationFilter = minificationFilters .get (this .minificationFilter_ .getValue ());
 
                if (minificationFilter !== undefined)
                   return minificationFilter;
@@ -67590,7 +67724,7 @@ function (Fields,
       })(),
       getMagnificationFilter: (function ()
       {
-         var magnificationFilters = new Map ([
+         const magnificationFilters = new Map ([
             ["AVG_PIXEL",     "LINEAR"],
             ["NEAREST_PIXEL", "NEAREST"],
             ["NICEST",        "LINEAR"],
@@ -67599,7 +67733,7 @@ function (Fields,
 
          return function ()
          {
-            var magnificationFilter = magnificationFilters .get (this .magnificationFilter_ .getValue ());
+            const magnificationFilter = magnificationFilters .get (this .magnificationFilter_ .getValue ());
 
             if (magnificationFilter !== undefined)
                return magnificationFilter;
@@ -67610,7 +67744,7 @@ function (Fields,
       })(),
       getTextureCompression: (function ()
       {
-         var textureCompressions = new Map ([
+         const textureCompressions = new Map ([
             ["DEFAULT", "RGBA"],
             ["NICEST",  "RGBA"],
             ["FASTEST", "RGBA"],
@@ -67621,7 +67755,7 @@ function (Fields,
 
          return function ()
          {
-            var
+            const
                browser            = this .getBrowser (),
                gl                 = browser .getContext (),
                compressedTexture  = browser .getExtension ("WEBGL_compressed_texture_etc"), // TODO: find suitable compression.
@@ -67709,10 +67843,20 @@ function (Appearance,
 {
 "use strict";
 
+   const
+      _linetypeTextures          = Symbol (),
+      _hatchStyleTextures        = Symbol (),
+      _defaultAppearance         = Symbol (),
+      _defaultPointProperties    = Symbol (),
+      _defaultLineProperties     = Symbol (),
+      _defaultFillProperties     = Symbol (),
+      _defaultMaterial           = Symbol (),
+      _lineFillTextureProperties = Symbol ();
+
    function X3DShapeContext ()
    {
-      this .linetypeTextures   = [ ];
-      this .hatchStyleTextures = [ ];
+      this [_linetypeTextures]   = [ ];
+      this [_hatchStyleTextures] = [ ];
    }
 
    X3DShapeContext .prototype =
@@ -67721,65 +67865,75 @@ function (Appearance,
       { },
       getDefaultAppearance: function ()
       {
-         this .defaultAppearance = new Appearance (this .getPrivateScene ());
-         this .defaultAppearance .setup ();
+         this [_defaultAppearance] = new Appearance (this .getPrivateScene ());
+         this [_defaultAppearance] .setup ();
 
-         this .getDefaultAppearance = function () { return this .defaultAppearance; };
+         this .getDefaultAppearance = function () { return this [_defaultAppearance]; };
 
-         return this .defaultAppearance;
+         Object .defineProperty (this, "getDefaultAppearance", { enumerable: false });
+
+         return this [_defaultAppearance];
       },
       getDefaultPointProperties: function ()
       {
-         this .defaultPointProperties = new PointProperties (this .getPrivateScene ());
-         this .defaultPointProperties .setup ();
+         this [_defaultPointProperties] = new PointProperties (this .getPrivateScene ());
+         this [_defaultPointProperties] .setup ();
 
-         this .getDefaultPointProperties = function () { return this .defaultPointProperties; };
+         this .getDefaultPointProperties = function () { return this [_defaultPointProperties]; };
 
-         return this .defaultPointProperties;
+         Object .defineProperty (this, "getDefaultPointProperties", { enumerable: false });
+
+         return this [_defaultPointProperties];
       },
       getDefaultLineProperties: function ()
       {
-         this .defaultLineProperties = new LineProperties (this .getPrivateScene ());
+         this [_defaultLineProperties] = new LineProperties (this .getPrivateScene ());
 
-         this .defaultLineProperties .applied_ = false;
-         this .defaultLineProperties .setup ();
+         this [_defaultLineProperties] .applied_ = false;
+         this [_defaultLineProperties] .setup ();
 
-         this .getDefaultLineProperties = function () { return this .defaultLineProperties; };
+         this .getDefaultLineProperties = function () { return this [_defaultLineProperties]; };
 
-         return this .defaultLineProperties;
+         Object .defineProperty (this, "getDefaultLineProperties", { enumerable: false });
+
+         return this [_defaultLineProperties];
       },
       getDefaultFillProperties: function ()
       {
-         this .defaultFillProperties = new FillProperties (this .getPrivateScene ());
+         this [_defaultFillProperties] = new FillProperties (this .getPrivateScene ());
 
-         this .defaultFillProperties .hatched_ = false;
-         this .defaultFillProperties .setup ();
+         this [_defaultFillProperties] .hatched_ = false;
+         this [_defaultFillProperties] .setup ();
 
-         this .getDefaultFillProperties = function () { return this .defaultFillProperties; };
+         this .getDefaultFillProperties = function () { return this [_defaultFillProperties]; };
 
-         return this .defaultFillProperties;
+         Object .defineProperty (this, "getDefaultFillProperties", { enumerable: false });
+
+         return this [_defaultFillProperties];
       },
       getDefaultMaterial: function ()
       {
-         this .defaultMaterial = new UnlitMaterial (this .getPrivateScene ());
+         this [_defaultMaterial] = new UnlitMaterial (this .getPrivateScene ());
 
-         this .defaultMaterial .setup ();
+         this [_defaultMaterial] .setup ();
 
-         this .getDefaultMaterial = function () { return this .defaultMaterial; };
+         this .getDefaultMaterial = function () { return this [_defaultMaterial]; };
 
-         return this .defaultMaterial;
+         Object .defineProperty (this, "getDefaultMaterial", { enumerable: false });
+
+         return this [_defaultMaterial];
       },
       getLinetype: function (index)
       {
          if (index < 1 || index > 15)
             index = 1;
 
-         var linetypeTexture = this .linetypeTextures [index];
+         let linetypeTexture = this [_linetypeTextures] [index];
 
          if (linetypeTexture)
             return linetypeTexture;
 
-         linetypeTexture = this .linetypeTextures [index] = new ImageTexture (this .getPrivateScene ());
+         linetypeTexture = this [_linetypeTextures] [index] = new ImageTexture (this .getPrivateScene ());
 
          linetypeTexture .url_ [0]           = urls .getLinetypeUrl (index);
          linetypeTexture .textureProperties_ = this .getLineFillTextureProperties ();
@@ -67792,12 +67946,12 @@ function (Appearance,
          if (index < 1 || index > 19)
             index = 1;
 
-         var hatchStyleTexture = this .hatchStyleTextures [index];
+         let hatchStyleTexture = this [_hatchStyleTextures] [index];
 
          if (hatchStyleTexture)
             return hatchStyleTexture;
 
-         hatchStyleTexture = this .hatchStyleTextures [index] = new ImageTexture (this .getPrivateScene ());
+         hatchStyleTexture = this [_hatchStyleTextures] [index] = new ImageTexture (this .getPrivateScene ());
 
          hatchStyleTexture .url_ [0]           = urls .getHatchingUrl (index);
          hatchStyleTexture .textureProperties_ = this .getLineFillTextureProperties ();
@@ -67807,12 +67961,14 @@ function (Appearance,
       },
       getLineFillTextureProperties: function ()
       {
-         this .lineFillTextureProperties = new TextureProperties (this .getPrivateScene ());
-         this .lineFillTextureProperties .setup ();
+         this [_lineFillTextureProperties] = new TextureProperties (this .getPrivateScene ());
+         this [_lineFillTextureProperties] .setup ();
 
-         this .getLineFillTextureProperties = function () { return this .lineFillTextureProperties; };
+         this .getLineFillTextureProperties = function () { return this [_lineFillTextureProperties]; };
 
-         return this .lineFillTextureProperties;
+         Object .defineProperty (this, "getLineFillTextureProperties", { enumerable: false });
+
+         return this [_lineFillTextureProperties];
       },
    };
 
@@ -67871,8 +68027,8 @@ function (Appearance,
 define ('x_ite/Components/Shape/X3DShapeNode',[
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/Grouping/X3DBoundedObject",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Shape/AlphaMode",
    "standard/Math/Geometry/Box3",
    "standard/Math/Numbers/Vector3",
@@ -68409,8 +68565,8 @@ define ('x_ite/Components/Shape/Shape',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DShapeNode",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
@@ -68681,7 +68837,7 @@ function (Fields,
 define ('x_ite/Components/Rendering/X3DGeometryNode',[
    "x_ite/Fields",
    "x_ite/Components/Core/X3DNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Core/Shading",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
@@ -69930,7 +70086,7 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/X3DLineGeometryNode',[
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DGeometryNode,
@@ -70203,8 +70359,8 @@ define ('x_ite/Components/Rendering/IndexedLineSet',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -70505,7 +70661,7 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/X3DGeometricPropertyNode',[
    "x_ite/Components/Core/X3DNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DNode,
           X3DConstants)
@@ -70579,7 +70735,7 @@ function (X3DNode,
 define ('x_ite/Components/Rendering/X3DColorNode',[
    "x_ite/Fields",
    "x_ite/Components/Rendering/X3DGeometricPropertyNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DGeometricPropertyNode,
@@ -70669,7 +70825,7 @@ define ('x_ite/Components/Rendering/Color',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DColorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector4",
 ],
 function (Fields,
@@ -70839,7 +70995,7 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/X3DCoordinateNode',[
    "x_ite/Components/Rendering/X3DGeometricPropertyNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/Triangle3",
    "standard/Math/Numbers/Vector3",
 ],
@@ -71034,7 +71190,7 @@ define ('x_ite/Components/Rendering/Coordinate',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DCoordinateNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -71141,6 +71297,8 @@ function (Fields,
 {
 "use strict";
 
+   const _bboxNode = Symbol ();
+
    function X3DGroupingContext () { }
 
    X3DGroupingContext .prototype =
@@ -71148,10 +71306,11 @@ function (Fields,
       initialize: function () { },
       getBBoxNode: function ()
       {
-         const bboxNode       = new Shape (this .getPrivateScene ());
-         const bboxGeometry   = new IndexedLineSet (this .getPrivateScene ());
-         const bboxColor      = new Color (this .getPrivateScene ());
-         const bboxCoordinate = new Coordinate (this .getPrivateScene ());
+         const
+            bboxNode       = new Shape (this .getPrivateScene ()),
+            bboxGeometry   = new IndexedLineSet (this .getPrivateScene ()),
+            bboxColor      = new Color (this .getPrivateScene ()),
+            bboxCoordinate = new Coordinate (this .getPrivateScene ());
 
          bboxNode .geometry_       = bboxGeometry;
          bboxGeometry .coordIndex_ = new Fields .MFFloat (0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 1, 5, -1, 2, 6, -1, 3, 7, -1);
@@ -71165,9 +71324,11 @@ function (Fields,
          bboxGeometry   .setup ();
          bboxNode       .setup ();
 
-         this .bboxNode = bboxNode;
+         this [_bboxNode] = bboxNode;
 
-         this .getBBoxNode = function () { return this .bboxNode; };
+         this .getBBoxNode = function () { return this [_bboxNode]; };
+
+         Object .defineProperty (this, "getBBoxNode", { enumerable: false });
 
          return bboxNode;
       }
@@ -71227,8 +71388,8 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/X3DComposedGeometryNode',[
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (X3DGeometryNode,
@@ -71611,7 +71772,7 @@ define ('x_ite/Components/Geometry3D/IndexedFaceSet',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DComposedGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Geometry/Triangle3",
@@ -72117,7 +72278,7 @@ function (Fields,
 
 define ('x_ite/Components/Texturing/X3DTextureCoordinateNode',[
    "x_ite/Components/Rendering/X3DGeometricPropertyNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DGeometricPropertyNode,
           X3DConstants)
@@ -72195,7 +72356,7 @@ function (X3DGeometricPropertyNode,
  define ('x_ite/Components/Texturing/X3DSingleTextureCoordinateNode',[
    "x_ite/Components/Texturing/X3DTextureCoordinateNode",
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DTextureCoordinateNode,
           X3DGeometryNode,
@@ -72289,7 +72450,7 @@ define ('x_ite/Components/Texturing/TextureCoordinate',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector4",
 ],
 function (Fields,
@@ -72510,7 +72671,7 @@ function (Fields,
          this .geometry .texCoord_ = new TextureCoordinate (this .getExecutionContext ());
          this .geometry .coord_    = new Coordinate (this .getExecutionContext ());
 
-         var
+         const
             geometry = this .geometry,
             texCoord = this .geometry .texCoord_ .getValue (),
             coord    = this .geometry .coord_ .getValue ();
@@ -72833,14 +72994,14 @@ function (Fields,
       },
       createTexCoordIndex: function ()
       {
-         var
+         const
             xDimension    = this .xDimension_ .getValue () + 1,
             yDimension    = this .yDimension_ .getValue (),
             texCoordIndex = this .geometry .texCoordIndex_;
 
          // North pole
 
-         for (var u = 0, uLength = xDimension - 1; u < uLength; ++ u)
+         for (let u = 0, uLength = xDimension - 1; u < uLength; ++ u)
          {
             texCoordIndex .push (u);
             texCoordIndex .push (u + xDimension - 1);
@@ -72850,9 +73011,9 @@ function (Fields,
 
          // Sphere segments
 
-         for (var p = xDimension - 1, v = 0, vLength = yDimension - 3; v < vLength; ++ v, ++ p)
+         for (let p = xDimension - 1, v = 0, vLength = yDimension - 3; v < vLength; ++ v, ++ p)
          {
-            for (var u = 0, uLength = xDimension - 1; u < uLength; ++ u, ++ p)
+            for (let u = 0, uLength = xDimension - 1; u < uLength; ++ u, ++ p)
             {
                texCoordIndex .push (p);
                texCoordIndex .push (p + xDimension);
@@ -72864,9 +73025,9 @@ function (Fields,
 
          // South pole
 
-         var p = (yDimension - 2) * xDimension - 1;
+         let p = (yDimension - 2) * xDimension - 1;
 
-         for (var u = 0, uLength = xDimension - 1; u < uLength; ++ u, ++ p)
+         for (let u = 0, uLength = xDimension - 1; u < uLength; ++ u, ++ p)
          {
             texCoordIndex .push (p + xDimension);
             texCoordIndex .push (p + 1);
@@ -72876,55 +73037,57 @@ function (Fields,
       },
       createTexCoord: function ()
       {
-         var
+         const
             xDimension = this .xDimension_ .getValue () + 1,
             yDimension = this .yDimension_ .getValue (),
             point      = this .geometry .texCoord_ .getValue () .point_;
 
-            var poleOffset = -0.5 / (xDimension - 1);
+         const poleOffset = -0.5 / (xDimension - 1);
 
-            // North pole
+         // North pole
 
-            for (var u = 1; u < xDimension; ++ u)
+         for (let u = 1; u < xDimension; ++ u)
+         {
+            const x = u / (xDimension - 1) + poleOffset;
+
+            point .push (new Vector2 (x, 1));
+         }
+
+         // Sphere segments
+
+         for (let v = 1, vLength = yDimension - 1; v < vLength; ++ v)
+         {
+            const y = 1 - v / (yDimension - 1);
+
+            for (let u = 0; u < xDimension; ++ u)
             {
-               var x = u / (xDimension - 1) + poleOffset;
+               const x = u / (xDimension - 1);
 
-               point .push (new Vector2 (x, 1));
+               point .push (new Vector2 (x, y));
             }
+         }
 
-            // Sphere segments
+         // South pole
 
-            for (var v = 1, vLength = yDimension - 1; v < vLength; ++ v)
-            {
-               var y = 1 - v / (yDimension - 1);
+         for (let u = 1; u < xDimension; ++ u)
+         {
+            const x = u / (xDimension - 1) + poleOffset;
 
-               for (var u = 0; u < xDimension; ++ u)
-               {
-                  var x = u / (xDimension - 1);
-
-                  point .push (new Vector2 (x, y));
-               }
-            }
-
-            // South pole
-
-            for (var u = 1; u < xDimension; ++ u)
-            {
-               var x = u / (xDimension - 1) + poleOffset;
-
-               point .push (new Vector2 (x, 0));
-            }
+            point .push (new Vector2 (x, 0));
+         }
       },
       createCoordIndex: function ()
       {
-         var
+         const
             xDimension = this .xDimension_ .getValue () + 1,
             yDimension = this .yDimension_ .getValue (),
             coordIndex = this .geometry .coordIndex_;
 
          // North pole
 
-         for (var u = 1, uLength = xDimension - 1; u < uLength; ++ u)
+         let u = 1;
+
+         for (const uLength = xDimension - 1; u < uLength; ++ u)
          {
             coordIndex .push (0);
             coordIndex .push (u);
@@ -72939,11 +73102,11 @@ function (Fields,
 
          // Sphere segments
 
-         var p = 1;
+         let p = 1;
 
-         for (var v = 0, vLength = yDimension - 3; v < vLength; ++ v, ++ p)
+         for (let v = 0, vLength = yDimension - 3; v < vLength; ++ v, ++ p)
          {
-            for (var u = 0, uLength = xDimension - 2; u < uLength; ++ u, ++ p)
+            for (let u = 0, uLength = xDimension - 2; u < uLength; ++ u, ++ p)
             {
                coordIndex .push (p);
                coordIndex .push (p + xDimension - 1);
@@ -72961,9 +73124,9 @@ function (Fields,
 
          // South pole
 
-         var last = p + xDimension - 1;
+         const last = p + xDimension - 1;
 
-         for (var u = 0, uLength = xDimension - 2; u < uLength; ++ u, ++ p)
+         for (let u = 0, uLength = xDimension - 2; u < uLength; ++ u, ++ p)
          {
             coordIndex .push (last);
             coordIndex .push (p + 1);
@@ -72978,7 +73141,7 @@ function (Fields,
       },
       createPoints: function ()
       {
-         var
+         const
             xDimension = this .xDimension_ .getValue () + 1,
             yDimension = this .yDimension_ .getValue (),
             point      = this .geometry .coord_ .getValue () .point_;
@@ -72987,13 +73150,13 @@ function (Fields,
          point .push (new Vector3 (0, 1, 0));
 
          // Sphere segments
-         for (var v = 1, vLength = yDimension - 1; v < vLength; ++ v)
+         for (let v = 1, vLength = yDimension - 1; v < vLength; ++ v)
          {
-            var zPlane = Complex .Polar (1, -Math .PI * v / vLength);
+            const zPlane = Complex .Polar (1, -Math .PI * v / vLength);
 
-            for (var u = 0, uLength = xDimension - 1; u < uLength; ++ u)
+            for (let u = 0, uLength = xDimension - 1; u < uLength; ++ u)
             {
-               var yPlane = Complex .Polar (zPlane .imag, 2 * Math .PI * u / uLength);
+               const yPlane = Complex .Polar (zPlane .imag, 2 * Math .PI * u / uLength);
 
                point .push (new Vector3 (yPlane .imag, zPlane .real, yPlane .real));
             }
@@ -73013,7 +73176,7 @@ function (Fields,
          this .createCoordIndex ();
          this .createPoints ();
 
-         var
+         const
             geometry = this .geometry,
             texCoord = this .geometry .texCoord_ .getValue (),
             coord    = this .geometry .coord_ .getValue ();
@@ -73091,16 +73254,6 @@ function (BoxOptions,
 {
 "use strict";
 
-   function getOptionNode (fun, name, Type)
-   {
-      this [name] = new Type (this .getPrivateScene ());
-      this [name] .setup ();
-
-      this [fun] = function () { return this [name]; };
-
-      return this [name];
-   }
-
    function X3DGeometry3DContext () { }
 
    X3DGeometry3DContext .prototype =
@@ -73109,21 +73262,34 @@ function (BoxOptions,
       { },
       getBoxOptions: function ()
       {
-         return getOptionNode .call (this, "getBoxOptions", "boxOptions", BoxOptions);
+         return getOptionNode .call (this, "getBoxOptions", BoxOptions);
       },
       getConeOptions: function ()
       {
-         return getOptionNode .call (this, "getConeOptions", "coneOptions", ConeOptions);
+         return getOptionNode .call (this, "getConeOptions", ConeOptions);
       },
       getCylinderOptions: function ()
       {
-         return getOptionNode .call (this, "getCylinderOptions", "cylinderOptions", CylinderOptions);
+         return getOptionNode .call (this, "getCylinderOptions", CylinderOptions);
       },
       getSphereOptions: function ()
       {
-         return getOptionNode .call (this, "getSphereOptions", "sphereOptions", QuadSphereOptions);
+         return getOptionNode .call (this, "getSphereOptions", QuadSphereOptions);
       },
    };
+
+   function getOptionNode (key, OptionNode)
+   {
+      const optionNode = new OptionNode (this .getPrivateScene ());
+
+      optionNode .setup ();
+
+      this [key] = function () { return optionNode; };
+
+      Object .defineProperty (this, key, { enumerable: false });
+
+      return optionNode;
+   }
 
    return X3DGeometry3DContext;
 });
@@ -73204,7 +73370,7 @@ function ($,
       },
       initialize: function ()
       {
-         var element = this .getBrowser () .getSurface ();
+         const element = this .getBrowser () .getSurface ();
 
          //element .bind ("mousewheel.PointingDevice", this .mousewheel .bind (this));
          element .bind ("mousedown.PointingDevice" + this .getId (), this .mousedown  .bind (this));
@@ -73234,7 +73400,7 @@ function ($,
 
          if (event .button === 0)
          {
-            var
+            const
                element = browser .getSurface (),
                offset  = element .offset (),
                x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
@@ -73263,13 +73429,12 @@ function ($,
 
          if (event .button === 0)
          {
-            var
+            const
                browser = this .getBrowser (),
                element = browser .getSurface (),
                offset  = element .offset (),
                x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
                y       = element .innerHeight () - (event .pageY - offset .top - parseFloat (element .css ('borderTopWidth')));
-
 
             $(document) .unbind (".PointingDevice"   + this .getId ());
             element .bind ("mousemove.PointingDevice" + this .getId (), this .mousemove .bind (this));
@@ -73291,14 +73456,14 @@ function ($,
       {
          event .preventDefault ();
 
-         var browser = this .getBrowser ();
+         const browser = this .getBrowser ();
 
          if (this .motionTime === browser .getCurrentTime ())
             return;
 
          this .motionTime = browser .getCurrentTime ();
 
-         var
+         const
             element = browser .getSurface (),
             offset  = element .offset (),
             x       = event .pageX - offset .left - parseFloat (element .css ('borderLeftWidth')),
@@ -73308,7 +73473,7 @@ function ($,
       },
       touchstart: function (event)
       {
-         var touches = event .originalEvent .touches;
+         const touches = event .originalEvent .touches;
 
          switch (touches .length)
          {
@@ -73337,7 +73502,7 @@ function ($,
       },
       touchmove: function (event)
       {
-         var touches = event .originalEvent .touches;
+         const touches = event .originalEvent .touches;
 
          switch (touches .length)
          {
@@ -73356,7 +73521,7 @@ function ($,
       },
       onmotion: function (x, y)
       {
-         var browser = this .getBrowser ();
+         const browser = this .getBrowser ();
 
          if (browser .motionNotifyEvent (x, y))
          {
@@ -73445,10 +73610,8 @@ function ($,
 
 
 define ('x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext',[
-   "jquery",
    "x_ite/Browser/PointingDeviceSensor/PointingDevice",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
    "standard/Math/Geometry/Line3",
    "standard/Math/Geometry/ViewVolume",
    "standard/Math/Numbers/Vector2",
@@ -73457,10 +73620,8 @@ define ('x_ite/Browser/PointingDeviceSensor/X3DPointingDeviceSensorContext',[
    "standard/Math/Algorithms/MergeSort",
    "standard/Math/Algorithm",
 ],
-function ($,
-          PointingDevice,
+function (PointingDevice,
           TraverseType,
-          X3DConstants,
           Line3,
           ViewVolume,
           Vector2,
@@ -73471,24 +73632,36 @@ function ($,
 {
 "use strict";
 
-   var line = new Line3 (Vector3 .Zero, Vector3 .Zero);
+   const
+      _pointingDevice = Symbol (),
+      _cursorType     = Symbol (),
+      _pointer        = Symbol (),
+      _hitRay         = Symbol (),
+      _hits           = Symbol (),
+      _enabledSensors = Symbol (),
+      _selectedLayer  = Symbol (),
+      _overSensors    = Symbol (),
+      _activeSensors  = Symbol (),
+      _hitPointSorter = Symbol (),
+      _layerNumber    = Symbol (),
+      _layerSorter    = Symbol (),
+      _pointerTime    = Symbol ();
+
+   const line = new Line3 (Vector3 .Zero, Vector3 .Zero);
 
    function X3DPointingDeviceSensorContext ()
    {
-      this .pointingDevice = new PointingDevice (this);
-
-      this .pointer        = new Vector2 (0, 0);
-      this .hitRay         = new Line3 (Vector3 .Zero, Vector3 .Zero);
-      this .hits           = [ ];
-      this .enabledSensors = [{ }];
-      this .selectedLayer  = null;
-      this .overSensors    = { };
-      this .activeSensors  = { };
-
-      this .hitPointSorter = new MergeSort (this .hits, function (lhs, rhs) { return lhs .intersection .point .z < rhs .intersection .point .z; });
-      this .layerSorter    = new MergeSort (this .hits, function (lhs, rhs) { return lhs .layerNumber < rhs .layerNumber; });
-
-      this .pointerTime = 0;
+      this [_pointingDevice] = new PointingDevice (this);
+      this [_pointer]        = new Vector2 (0, 0);
+      this [_hitRay]         = new Line3 (Vector3 .Zero, Vector3 .Zero);
+      this [_hits]           = [ ];
+      this [_enabledSensors] = [new Map ()];
+      this [_selectedLayer]  = null;
+      this [_overSensors]    = new Map ();
+      this [_activeSensors]  = new Map ();
+      this [_hitPointSorter] = new MergeSort (this [_hits], function (lhs, rhs) { return lhs .intersection .point .z < rhs .intersection .point .z; });
+      this [_layerSorter]    = new MergeSort (this [_hits], function (lhs, rhs) { return lhs .layerNumber < rhs .layerNumber; });
+      this [_pointerTime]    = 0;
    }
 
    X3DPointingDeviceSensorContext .prototype =
@@ -73499,13 +73672,13 @@ function ($,
          this .getElement () .attr ("tabindex", this .getElement () .attr ("tabindex") || 0);
          this .setCursor ("DEFAULT");
 
-         this .pointingDevice .setup ();
+         this [_pointingDevice] .setup ();
       },
       setCursor: function (value)
       {
-         this .cursorType = value;
+         const div = this .getSurface ();
 
-         var div = this .getSurface ();
+         this [_cursorType] = value;
 
          switch (value)
          {
@@ -73522,7 +73695,7 @@ function ($,
             {
                if (this .loadCount_ .getValue ())
                   div .css ("cursor", "wait");
-               else if (this .pointingDevice && this .pointingDevice .isOver)
+               else if (this [_pointingDevice] && this [_pointingDevice] .isOver)
                   div .css ("cursor", "pointer");
                else
                   div .css ("cursor", "default");
@@ -73532,88 +73705,88 @@ function ($,
       },
       getCursor: function ()
       {
-         return this .cursorType;
+         return this [_cursorType];
       },
       isPointerInRectangle: function (rectangle)
       {
-         return this .pointer .x > rectangle .x &&
-                this .pointer .x < rectangle .x + rectangle .z &&
-                this .pointer .y > rectangle .y &&
-                this .pointer .y < rectangle .y + rectangle .w;
+         return this [_pointer] .x > rectangle .x &&
+                this [_pointer] .x < rectangle .x + rectangle .z &&
+                this [_pointer] .y > rectangle .y &&
+                this [_pointer] .y < rectangle .y + rectangle .w;
       },
       setLayerNumber: function (value)
       {
-         this .layerNumber = value;
+         this [_layerNumber] = value;
       },
       getSelectedLayer: function ()
       {
-         return this .selectedLayer;
+         return this [_selectedLayer];
       },
       setHitRay: function (projectionMatrix, viewport)
       {
          try
          {
-            ViewVolume .unProjectRay (this .pointer .x, this .pointer .y, Matrix4 .Identity, projectionMatrix, viewport, this .hitRay);
+            ViewVolume .unProjectRay (this [_pointer] .x, this [_pointer] .y, Matrix4 .Identity, projectionMatrix, viewport, this [_hitRay]);
          }
          catch (error)
          {
-            this .hitRay .set (Vector3 .Zero, Vector3 .Zero);
+            this [_hitRay] .set (Vector3 .Zero, Vector3 .Zero);
          }
       },
       getHitRay: function ()
       {
-         return this .hitRay;
+         return this [_hitRay];
       },
       getSensors: function ()
       {
-         return this .enabledSensors;
+         return this [_enabledSensors];
       },
       addHit: function (intersection, layer, shape, modelViewMatrix)
       {
-         this .hits .push ({
-            pointer:         this .pointer,
-            hitRay:          this .hitRay .copy (),
+         this [_hits] .push ({
+            pointer:         this [_pointer],
+            hitRay:          this [_hitRay] .copy (),
             intersection:    intersection,
-            sensors:         this .enabledSensors .at (-1),
+            sensors:         this [_enabledSensors] .at (-1),
             layer:           layer,
-            layerNumber:     this .layerNumber,
+            layerNumber:     this [_layerNumber],
             shape:           shape,
             modelViewMatrix: modelViewMatrix .copy (),
          });
       },
       getHits: function ()
       {
-         return this .hits;
+         return this [_hits];
       },
       getNearestHit: function ()
       {
-         return this .hits .at (-1);
+         return this [_hits] .at (-1);
       },
       buttonPressEvent: function (x, y)
       {
          this .touch (x, y);
 
-         if (this .hits .length === 0)
+         if (this [_hits] .length === 0)
             return false;
 
-         var nearestHit = this .getNearestHit ();
+         const nearestHit = this .getNearestHit ();
 
-         this .selectedLayer = nearestHit .layer;
-         this .activeSensors = nearestHit .sensors;
+         this [_selectedLayer] = nearestHit .layer;
+         this [_activeSensors] = nearestHit .sensors;
 
-         for (var key in this .activeSensors)
-            this .activeSensors [key] .set_active__ (true, nearestHit);
+         for (const sensor of this [_activeSensors] .values ())
+            sensor .set_active__ (true, nearestHit);
 
-         return ! $.isEmptyObject (nearestHit .sensors);
+         return nearestHit .sensors .size;
       },
       buttonReleaseEvent: function ()
       {
-         this .selectedLayer = null;
+         this [_selectedLayer] = null;
 
-         for (var key in this .activeSensors)
-            this .activeSensors [key] .set_active__ (false, null);
+         for (const sensor of this [_activeSensors] .values ())
+            sensor .set_active__ (false, null);
 
-         this .activeSensors = { };
+         this [_activeSensors] = new Map ();
 
          // Selection
 
@@ -73625,26 +73798,25 @@ function ($,
 
          this .motion ();
 
-         return this .hits .length && ! $.isEmptyObject (this .hits .at (-1) .sensors);
+         return this [_hits] .length && this [_hits] .at (-1) .sensors .size;
       },
       leaveNotifyEvent: function ()
-      {
-      },
+      { },
       touch: function (x, y)
       {
          if (this .getViewer () .isActive_ .getValue ())
          {
-            this .pointerTime = 0;
+            this [_pointerTime] = 0;
             return;
          }
 
-         var t0 = performance .now ();
+         const t0 = performance .now ();
 
-         this .pointer .set (x, y);
+         this [_pointer] .set (x, y);
 
          // Clear hits.
 
-         this .hits .length = 0;
+         this [_hits] .length = 0;
 
          // Pick.
 
@@ -73652,28 +73824,28 @@ function ($,
 
          // Picking end.
 
-         this .hitPointSorter .sort (0, this .hits .length);
-         this .layerSorter    .sort (0, this .hits .length);
+         this [_hitPointSorter] .sort (0, this [_hits] .length);
+         this [_layerSorter]    .sort (0, this [_hits] .length);
 
          this .addBrowserEvent ();
-         this .pointerTime = performance .now () - t0;
+         this [_pointerTime] = performance .now () - t0;
       },
       motion: function ()
       {
-         if (this .hits .length)
+         if (this [_hits] .length)
          {
-            var nearestHit = this .hits .at (-1);
+            var nearestHit = this [_hits] .at (-1);
          }
          else
          {
-            var hitRay = this .selectedLayer ? this .hitRay : line;
+            const hitRay = this [_selectedLayer] ? this [_hitRay] : line;
 
             var nearestHit = {
-               pointer:         this .pointer,
+               pointer:         this [_pointer],
                modelViewMatrix: new Matrix4 (),
                hitRay:          hitRay,
                intersection:    null,
-               sensors:         { },
+               sensors:         new Map (),
                shape:           null,
                layer:           null,
                layerNumber:     0,
@@ -73682,40 +73854,40 @@ function ($,
 
          // Set isOver to FALSE for appropriate nodes
 
-         if (this .hits .length)
+         if (this [_hits] .length)
          {
-            var difference = Algorithm .set_difference (this .overSensors, nearestHit .sensors, { }, function (lhs, rhs) {
-               return lhs .getNode () < rhs .getNode ();
-            });
+            var difference = Algorithm .map_difference (this [_overSensors], nearestHit .sensors, new Map ());
          }
          else
          {
-            var difference = Object .assign ({ }, this .overSensors);
+            var difference = new Map (this [_overSensors]);
          }
 
-         for (var key in difference)
-            difference [key] .set_over__ (false, nearestHit);
+         for (const sensor of difference .values ())
+            sensor .set_over__ (false, nearestHit);
 
          // Set isOver to TRUE for appropriate nodes
 
-         if (this .hits .length)
+         if (this [_hits] .length)
          {
-            this .overSensors = nearestHit .sensors;
+            this [_overSensors] = nearestHit .sensors;
 
-            for (var key in this .overSensors)
-               this .overSensors [key] .set_over__ (true, nearestHit);
+            for (const sensor of this [_overSensors] .values ())
+               sensor .set_over__ (true, nearestHit);
          }
          else
          {
-            this .overSensors = { };
+            this [_overSensors] = new Map ();
          }
 
          // Forward motion event to active drag sensor nodes
 
-         for (var key in this .activeSensors)
-         {
-            this .activeSensors [key] .set_motion__ (nearestHit);
-         }
+         for (const sensor of this [_activeSensors] .values ())
+            sensor .set_motion__ (nearestHit);
+      },
+      getPointerTime: function ()
+      {
+         return this [_pointerTime];
       },
    };
 
@@ -73995,7 +74167,7 @@ function (X3DBaseNode,
 
 define ('x_ite/Components/Followers/X3DFollowerNode',[
    "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DChildNode,
           X3DConstants)
@@ -74143,7 +74315,7 @@ function (X3DChildNode,
 
 define ('x_ite/Components/Followers/X3DChaserNode',[
    "x_ite/Components/Followers/X3DFollowerNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DFollowerNode,
           X3DConstants)
@@ -74398,7 +74570,7 @@ define ('x_ite/Components/Followers/PositionChaser',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DChaserNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
@@ -74505,7 +74677,7 @@ define ('x_ite/Components/Followers/OrientationChaser',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DChaserNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Rotation4",
 ],
 function (Fields,
@@ -74862,7 +75034,7 @@ define ('x_ite/Browser/Navigation/ExamineViewer',[
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Navigation/X3DViewer",
    "x_ite/Components/Followers/PositionChaser",
    "x_ite/Components/Followers/OrientationChaser",
@@ -75753,7 +75925,7 @@ function ($,
          element .bind ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
          element .bind ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
 
-         browser .controlKey_ .addInterest ("set_controlKey_", this);
+         browser .controlKey_ .addInterest ("set_controlKey__", this);
 
          // Setup look around chaser.
 
@@ -75776,7 +75948,7 @@ function ($,
       },
       addCollision: function () { },
       removeCollision: function () { },
-      set_controlKey_: function ()
+      set_controlKey__: function ()
       {
          if (this .event && this .event .button === 0)
          {
@@ -76394,7 +76566,7 @@ function ($,
       dispose: function ()
       {
          this .disconnect ();
-         this .getBrowser () .controlKey_ .removeInterest ("set_controlKey_", this);
+         this .getBrowser () .controlKey_ .removeInterest ("set_controlKey__", this);
          this .getBrowser () .getSurface () .unbind (".X3DFlyViewer");
          $(document) .unbind (".X3DFlyViewer" + this .getId ());
       },
@@ -76457,7 +76629,7 @@ define ('x_ite/Browser/Navigation/WalkViewer',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Browser/Navigation/X3DFlyViewer",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
 ],
@@ -76589,7 +76761,7 @@ define ('x_ite/Browser/Navigation/FlyViewer',[
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Navigation/X3DFlyViewer",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
@@ -76694,7 +76866,7 @@ define ('x_ite/Browser/Navigation/PlaneViewer',[
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Navigation/X3DViewer",
    "x_ite/Components/Navigation/Viewpoint",
    "standard/Math/Numbers/Vector3",
@@ -76950,7 +77122,7 @@ define ('x_ite/Browser/Navigation/NoneViewer',[
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Navigation/X3DViewer",
 ],
 function (Fields,
@@ -77031,7 +77203,7 @@ define ('x_ite/Browser/Navigation/LookAtViewer',[
    "x_ite/Fields",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Navigation/X3DViewer",
    "x_ite/Components/Followers/PositionChaser",
    "x_ite/Components/Followers/OrientationChaser",
@@ -77557,7 +77729,7 @@ function ($,
 
 define ('x_ite/Components/Lighting/X3DLightNode',[
    "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Algorithm",
 ],
@@ -77774,8 +77946,8 @@ define ('x_ite/Components/Lighting/DirectionalLight',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Lighting/X3DLightNode",
    "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/Box3",
    "standard/Math/Geometry/Camera",
    "standard/Math/Geometry/ViewVolume",
@@ -78109,16 +78281,22 @@ function (Fields,
 {
 "use strict";
 
+   const
+      _activeCollisions   = Symbol (),
+      _viewerNode         = Symbol (),
+      _headlightContainer = Symbol ();
+
+
    function getHeadLight (browser)
    {
-      var headlight = new DirectionalLight (browser .getPrivateScene ());
+      const headlight = new DirectionalLight (browser .getPrivateScene ());
 
       headlight .setup ();
 
-      var headlightContainer = headlight .getLights () .pop ();
+      const headlightContainer = headlight .getLights () .pop ();
 
       headlightContainer .set (browser, headlight, null, Matrix4 .Identity);
-      headlightContainer .dispose = function () { };
+      headlightContainer .dispose = Function .prototype;
 
       return headlightContainer;
    };
@@ -78131,8 +78309,8 @@ function (Fields,
                              "availableViewers",     new Fields .MFString (),
                              "viewer",               new Fields .SFString ("EXAMINE"));
 
-      this .activeCollisions = new Set ();
-      this .viewerNode       = new NoneViewer (this);
+      this [_activeCollisions] = new Set ();
+      this [_viewerNode]       = new NoneViewer (this);
    }
 
    X3DNavigationContext .prototype =
@@ -78144,12 +78322,12 @@ function (Fields,
          this .initialized () .addInterest ("set_world__",    this);
          this .shutdown ()    .addInterest ("remove_world__", this);
 
-         this .headlightContainer = getHeadLight (this);
-         this .viewerNode .setup ();
+         this [_headlightContainer] = getHeadLight (this);
+         this [_viewerNode] .setup ();
       },
       getHeadlight: function ()
       {
-         return this .headlightContainer;
+         return this [_headlightContainer];
       },
       getActiveLayer: function ()
       {
@@ -78169,19 +78347,19 @@ function (Fields,
       },
       getViewer: function ()
       {
-         return this .viewerNode;
+         return this [_viewerNode];
       },
       addCollision: function (object)
       {
-         this .activeCollisions .add (object);
+         this [_activeCollisions] .add (object);
       },
       removeCollision: function (object)
       {
-         this .activeCollisions .delete (object);
+         this [_activeCollisions] .delete (object);
       },
       getCollisionCount: function ()
       {
-         return this .activeCollisions .size;
+         return this [_activeCollisions] .size;
       },
       remove_world__: function ()
       {
@@ -78247,36 +78425,36 @@ function (Fields,
 
          // Create viewer node.
 
-         if (this .viewerNode)
-            this .viewerNode .dispose ();
+         if (this [_viewerNode])
+            this [_viewerNode] .dispose ();
 
          switch (viewer .getValue ())
          {
             case "EXAMINE":
-               this .viewerNode = new ExamineViewer (this);
+               this [_viewerNode] = new ExamineViewer (this);
                break;
             case "WALK":
-               this .viewerNode = new WalkViewer (this);
+               this [_viewerNode] = new WalkViewer (this);
                break;
             case "FLY":
-               this .viewerNode = new FlyViewer (this);
+               this [_viewerNode] = new FlyViewer (this);
                break;
             case "PLANE":
             case "PLANE_create3000.de":
-               this .viewerNode = new PlaneViewer (this);
+               this [_viewerNode] = new PlaneViewer (this);
                break;
             case "NONE":
-               this .viewerNode = new NoneViewer (this);
+               this [_viewerNode] = new NoneViewer (this);
                break;
             case "LOOKAT":
-               this .viewerNode = new LookAtViewer (this);
+               this [_viewerNode] = new LookAtViewer (this);
                break;
             default:
-               this .viewerNode = new ExamineViewer (this);
+               this [_viewerNode] = new ExamineViewer (this);
                break;
          }
 
-         this .viewerNode .setup ();
+         this [_viewerNode] .setup ();
       },
    };
 
@@ -78337,8 +78515,8 @@ define ('x_ite/Components/Layering/Viewport',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Layering/X3DViewportNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/TraverseType",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Rendering/TraverseType",
    "standard/Utility/ObjectCache",
    "standard/Math/Geometry/ViewVolume",
    "standard/Math/Numbers/Vector4",
@@ -78522,20 +78700,22 @@ function (Viewport)
 {
 "use strict";
 
+   const _defaultViewport = Symbol ();
+
    function X3DLayeringContext ()
    {
-      this .defaultViewport = new Viewport (this .getPrivateScene ());
+      this [_defaultViewport] = new Viewport (this .getPrivateScene ());
    }
 
    X3DLayeringContext .prototype =
    {
       initialize: function ()
       {
-         this .defaultViewport .setup ();
+         this [_defaultViewport] .setup ();
       },
       getDefaultViewport: function ()
       {
-         return this .defaultViewport;
+         return this [_defaultViewport];
       },
    };
 
@@ -78598,6 +78778,10 @@ function (TextureProperties)
 {
 "use strict";
 
+   const
+      _backgroundSphereShader      = Symbol (),
+      _backgroundTextureProperties = Symbol ();
+
    function X3DEnvironmentalEffectsContext () { }
 
    X3DEnvironmentalEffectsContext .prototype =
@@ -78605,26 +78789,30 @@ function (TextureProperties)
       initialize: function () { },
       getBackgroundSphereShader: function ()
       {
-         this .backgroundSphereShader = this .createShader ("BackgroundSphereShader", "Background");
+         this [_backgroundSphereShader] = this .createShader ("BackgroundSphereShader", "Background");
 
-         this .getBackgroundSphereShader = function () { return this .backgroundSphereShader; };
+         this .getBackgroundSphereShader = function () { return this [_backgroundSphereShader]; };
 
-         return this .backgroundSphereShader;
+         Object .defineProperty (this, "getBackgroundSphereShader", { enumerable: false });
+
+         return this [_backgroundSphereShader];
       },
       getBackgroundTextureProperties: function ()
       {
-         this .backgroundTextureProperties = new TextureProperties (this .getPrivateScene ());
+         this [_backgroundTextureProperties] = new TextureProperties (this .getPrivateScene ());
 
-         this .backgroundTextureProperties .boundaryModeS_       = "CLAMP_TO_EDGE";
-         this .backgroundTextureProperties .boundaryModeT_       = "CLAMP_TO_EDGE";
-         this .backgroundTextureProperties .boundaryModeR_       = "CLAMP_TO_EDGE";
-         this .backgroundTextureProperties .minificationFilter_  = "NICEST";
-         this .backgroundTextureProperties .magnificationFilter_ = "NICEST";
-         this .backgroundTextureProperties .setup ();
+         this [_backgroundTextureProperties] .boundaryModeS_       = "CLAMP_TO_EDGE";
+         this [_backgroundTextureProperties] .boundaryModeT_       = "CLAMP_TO_EDGE";
+         this [_backgroundTextureProperties] .boundaryModeR_       = "CLAMP_TO_EDGE";
+         this [_backgroundTextureProperties] .minificationFilter_  = "NICEST";
+         this [_backgroundTextureProperties] .magnificationFilter_ = "NICEST";
+         this [_backgroundTextureProperties] .setup ();
 
-         this .getBackgroundTextureProperties = function () { return this .backgroundTextureProperties; };
+         this .getBackgroundTextureProperties = function () { return this [_backgroundTextureProperties]; };
 
-         return this .backgroundTextureProperties;
+         Object .defineProperty (this, "getBackgroundTextureProperties", { enumerable: false });
+
+         return this [_backgroundTextureProperties];
       },
    };
 
@@ -78687,20 +78875,24 @@ function (TextureBuffer)
 {
 "use strict";
 
+   const
+      _maxLights     = Symbol (),
+      _shadowBuffers = Symbol ();
+
    function X3DLightingContext ()
    {
-      var
+      const
          gl                    = this .getContext (),
          maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS);
 
       if (maxVertexTextureUnits > 16)
-         this .maxLights = 8;
+         this [_maxLights] = 8;
       else if (maxVertexTextureUnits > 8)
-         this .maxLights = 4;
+         this [_maxLights] = 4;
       else
-         this .maxLights = 2;
+         this [_maxLights] = 2;
 
-      this .shadowBuffers = [ ]; // Shadow buffer cache
+      this [_shadowBuffers] = [ ]; // Shadow buffer cache
    }
 
    X3DLightingContext .prototype =
@@ -78709,13 +78901,13 @@ function (TextureBuffer)
       { },
       getMaxLights: function ()
       {
-         return this .maxLights;
+         return this [_maxLights];
       },
       popShadowBuffer: function (shadowMapSize)
       {
          try
          {
-            var shadowBuffers = this .shadowBuffers [shadowMapSize];
+            const shadowBuffers = this [_shadowBuffers] [shadowMapSize];
 
             if (shadowBuffers)
             {
@@ -78723,7 +78915,7 @@ function (TextureBuffer)
                   return shadowBuffers .pop ();
             }
             else
-               this .shadowBuffers [shadowMapSize] = [ ];
+               this [_shadowBuffers] [shadowMapSize] = [ ];
 
             return new TextureBuffer (this, shadowMapSize, shadowMapSize);
          }
@@ -78738,7 +78930,7 @@ function (TextureBuffer)
       pushShadowBuffer: function (buffer)
       {
          if (buffer)
-            this .shadowBuffers [buffer .getWidth ()] .push (buffer);
+            this [_shadowBuffers] [buffer .getWidth ()] .push (buffer);
       },
    };
 
@@ -78795,19 +78987,26 @@ function (TextureBuffer)
 
 
 define ('x_ite/Browser/Picking/X3DPickingContext',[
-   "x_ite/Bits/TraverseType",
+   "x_ite/Rendering/TraverseType",
 ],
 function (TraverseType)
 {
 "use strict";
 
+   const
+      _transformSensorNodes = Symbol (),
+      _pickSensorNodes      = Symbol (),
+      _pickingHierarchy     = Symbol (),
+      _pickable             = Symbol (),
+      _pickingTime          = Symbol ();
+
    function X3DPickingContext ()
    {
-      this .transformSensorNodes = new Set ();
-      this .pickSensorNodes      = [ new Set () ];
-      this .pickingHierarchy     = [ ];
-      this .pickable             = [ false ];
-      this .pickingTime          = 0;
+      this [_transformSensorNodes] = new Set ();
+      this [_pickSensorNodes]      = [ new Set () ];
+      this [_pickingHierarchy]     = [ ];
+      this [_pickable]             = [ false ];
+      this [_pickingTime]          = 0;
    }
 
    X3DPickingContext .prototype =
@@ -78816,60 +79015,64 @@ function (TraverseType)
       { },
       addTransformSensor: function (transformSensorNode)
       {
-         this .transformSensorNodes .add (transformSensorNode);
+         this [_transformSensorNodes] .add (transformSensorNode);
          this .enablePicking ();
       },
       removeTransformSensor: function (transformSensorNode)
       {
-         this .transformSensorNodes .delete (transformSensorNode);
+         this [_transformSensorNodes] .delete (transformSensorNode);
          this .enablePicking ();
       },
       addPickSensor: function (pickSensorNode)
       {
-         this .pickSensorNodes [0] .add (pickSensorNode);
+         this [_pickSensorNodes] [0] .add (pickSensorNode);
          this .enablePicking ();
       },
       removePickSensor: function (pickSensorNode)
       {
-         this .pickSensorNodes [0] .delete (pickSensorNode);
+         this [_pickSensorNodes] [0] .delete (pickSensorNode);
          this .enablePicking ();
       },
       getPickSensors: function ()
       {
-         return this .pickSensorNodes;
+         return this [_pickSensorNodes];
       },
       getPickingHierarchy: function ()
       {
-         return this .pickingHierarchy;
+         return this [_pickingHierarchy];
       },
       getPickable: function ()
       {
-         return this .pickable;
+         return this [_pickable];
       },
       enablePicking: function ()
       {
-         if (this .transformSensorNodes .size || this .pickSensorNodes [0] .size)
+         if (this [_transformSensorNodes] .size || this [_pickSensorNodes] [0] .size)
             this .sensorEvents_ .addInterest ("picking", this);
          else
             this .sensorEvents_ .removeInterest ("picking", this);
       },
       picking: function ()
       {
-         var t0 = performance .now ();
+         const t0 = performance .now ();
 
          this .getWorld () .traverse (TraverseType .PICKING, null);
 
-         this .transformSensorNodes .forEach (function (transformSensorNode)
+         for (const transformSensorNode of this [_transformSensorNodes])
          {
             transformSensorNode .process ();
-         });
+         }
 
-         this .pickSensorNodes [0] .forEach (function (pickSensorNode)
+         for (const pickSensorNode of this [_pickSensorNodes] [0])
          {
             pickSensorNode .process ();
-         });
+         }
 
-         this .pickingTime = performance .now () - t0;
+         this [_pickingTime] = performance .now () - t0;
+      },
+      getPickingTime: function ()
+      {
+         return this [_pickingTime];
       },
    };
 
@@ -79067,7 +79270,7 @@ define ('x_ite/Components/Text/X3DFontStyleNode',[
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Browser/Text/TextAlignment",
    "x_ite/InputOutput/FileLoader",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Networking/urls",
 ],
 function (Fields,
@@ -80777,7 +80980,7 @@ define ('x_ite/Components/Text/FontStyle',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Text/X3DFontStyleNode",
    "x_ite/Browser/Text/PolygonText",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -95377,10 +95580,15 @@ function ($,
 {
 "use strict";
 
+   const
+      _defaultFontStyle = Symbol (),
+      _fontCache        = Symbol (),
+      _glyphCache       = Symbol ();
+
    function X3DTextContext ()
    {
-      this .fontCache  = new Map ();
-      this .glyphCache = new Map (); // [font] [primitveQuality] [glyphIndex]
+      this [_fontCache]  = new Map ();
+      this [_glyphCache] = new Map (); // [font] [primitveQuality] [glyphIndex]
    }
 
    X3DTextContext .prototype =
@@ -95389,22 +95597,24 @@ function ($,
       { },
       getDefaultFontStyle: function ()
       {
-         this .defaultFontStyle = new FontStyle (this .getPrivateScene ());
-         this .defaultFontStyle .setup ();
+         this [_defaultFontStyle] = new FontStyle (this .getPrivateScene ());
+         this [_defaultFontStyle] .setup ();
 
-         this .getDefaultFontStyle = function () { return this .defaultFontStyle; };
+         this .getDefaultFontStyle = function () { return this [_defaultFontStyle]; };
 
-         return this .defaultFontStyle;
+         Object .defineProperty (this, "getDefaultFontStyle", { enumerable: false });
+
+         return this [_defaultFontStyle];
       },
       getFont: function (url)
       {
          url = url .toString ();
 
-         var deferred = this .fontCache .get (url);
+         let deferred = this [_fontCache] .get (url);
 
          if (deferred === undefined)
          {
-            this .fontCache .set (url, deferred = $.Deferred ());
+            this [_fontCache] .set (url, deferred = $.Deferred ());
 
             opentype .load (url, this .setFont .bind (this, deferred));
          }
@@ -95420,7 +95630,7 @@ function ($,
          else
          {
 //				// Workaround to initialize composite glyphs.
-//				for (var i = 0, length = font .numGlyphs; i < length; ++ i)
+//				for (let i = 0, length = font .numGlyphs; i < length; ++ i)
 //					font .glyphs .get (i) .getPath (0, 0, 1);
 
             // Resolve callbacks.
@@ -95429,19 +95639,19 @@ function ($,
       },
       getGlyph: function (font, primitveQuality, glyphIndex)
       {
-         var cachedFont = this .glyphCache .get (font);
+         let cachedFont = this [_glyphCache] .get (font);
 
-         if (! cachedFont)
-            this .glyphCache .set (font, cachedFont = [ ]);
+         if (!cachedFont)
+            this [_glyphCache] .set (font, cachedFont = [ ]);
 
-         var cachedQuality = cachedFont [primitveQuality];
+         let cachedQuality = cachedFont [primitveQuality];
 
-         if (! cachedQuality)
+         if (!cachedQuality)
             cachedQuality = cachedFont [primitveQuality] = [ ];
 
-         var cachedGlyph = cachedQuality [glyphIndex];
+         let cachedGlyph = cachedQuality [glyphIndex];
 
-         if (! cachedGlyph)
+         if (!cachedGlyph)
             cachedGlyph = cachedQuality [glyphIndex] = { };
 
          return cachedGlyph;
@@ -95502,7 +95712,7 @@ function ($,
 
 define ('x_ite/Components/Texturing/X3DTextureTransformNode',[
    "x_ite/Components/Shape/X3DAppearanceChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix4",
 ],
 function (X3DAppearanceChildNode,
@@ -95587,7 +95797,7 @@ function (X3DAppearanceChildNode,
 
  define ('x_ite/Components/Texturing/X3DSingleTextureTransformNode',[
    "x_ite/Components/Texturing/X3DTextureTransformNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DTextureTransformNode,
           X3DConstants)
@@ -95668,7 +95878,7 @@ define ('x_ite/Components/Texturing/TextureTransform',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DSingleTextureTransformNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Matrix3",
    "standard/Math/Numbers/Matrix4",
@@ -95837,117 +96047,139 @@ function (TextureProperties,
 {
 "use strict";
 
+   const
+      _maxTextures              = Symbol (),
+      _multiTexturing           = Symbol (),
+      _projectiveTextureMapping = Symbol (),
+      _combinedTextureUnits     = Symbol (),
+      _maxTextureSize           = Symbol (),
+      _maxCombinedTextureUnits  = Symbol (),
+      _textureMemory            = Symbol (),
+      _shadowTextureUnit        = Symbol (),
+      _linetypeUnit             = Symbol (),
+      _hatchStyleUnit           = Symbol (),
+      _texture2DUnits           = Symbol (),
+      _texture3DUnits           = Symbol (),
+      _cubeMapTextureUnits      = Symbol (),
+      _projectiveTextureUnits   = Symbol (),
+      _defaultTexture2D         = Symbol (),
+      _defaultTexture3D         = Symbol (),
+      _defaultCubeMapTexture    = Symbol (),
+      _defaultTextureProperties = Symbol (),
+      _defaultTextureTransform  = Symbol (),
+      _defaultTextureCoordinate = Symbol ();
+
    function X3DTexturingContext ()
    {
-      var
+      const
          gl                    = this .getContext (),
          maxVertexTextureUnits = gl .getParameter (gl .MAX_VERTEX_TEXTURE_IMAGE_UNITS);
 
-      this .maxTextures              = maxVertexTextureUnits > 8 ? 2 : 1;
-      this .multiTexturing           = maxVertexTextureUnits > 8;
-      this .projectiveTextureMapping = maxVertexTextureUnits > 8;
-      this .combinedTextureUnits     = [ ];
+      this [_maxTextures]              = maxVertexTextureUnits > 8 ? 2 : 1;
+      this [_multiTexturing]           = maxVertexTextureUnits > 8;
+      this [_projectiveTextureMapping] = maxVertexTextureUnits > 8;
+      this [_combinedTextureUnits]     = [ ];
    }
 
    X3DTexturingContext .prototype =
    {
       initialize: function ()
       {
-         var gl = this .getContext ();
+         const gl = this .getContext ();
 
-         this .maxTextureSize          = gl .getParameter (gl .MAX_TEXTURE_SIZE);
-         this .maxCombinedTextureUnits = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
-         this .textureMemory           = NaN;
+         this [_maxTextureSize]          = gl .getParameter (gl .MAX_TEXTURE_SIZE);
+         this [_maxCombinedTextureUnits] = gl .getParameter (gl .MAX_COMBINED_TEXTURE_IMAGE_UNITS);
+         this [_textureMemory]           = NaN;
 
-         var combinedTextureUnits = this .combinedTextureUnits;
+         const combinedTextureUnits = this [_combinedTextureUnits];
 
          // For shaders
-         for (var i = 1, length = this .maxCombinedTextureUnits; i < length; ++ i)
+         for (let i = 1, length = this [_maxCombinedTextureUnits]; i < length; ++ i)
             combinedTextureUnits .push (i);
 
          // There must always be a texture bound to the used texture units.
 
-         this .shadowTextureUnit = this .getCombinedTextureUnits () .pop ();
-         this .linetypeUnit      = this .getCombinedTextureUnits () .pop ();
-         this .hatchStyleUnit    = this .getCombinedTextureUnits () .pop ();
+         this [_shadowTextureUnit] = this .getCombinedTextureUnits () .pop ();
+         this [_linetypeUnit]      = this .getCombinedTextureUnits () .pop ();
+         this [_hatchStyleUnit]    = this .getCombinedTextureUnits () .pop ();
 
-         this .texture2DUnits         = new Int32Array (this .getMaxTextures ());
-         this .projectiveTextureUnits = new Int32Array (this .getMaxTextures ());
+         this [_texture2DUnits]         = new Int32Array (this .getMaxTextures ());
+         this [_projectiveTextureUnits] = new Int32Array (this .getMaxTextures ());
 
-         for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
-            this .texture2DUnits [i] = this .getCombinedTextureUnits () .pop ();
+         for (let i = 0, length = this .getMaxTextures (); i < length; ++ i)
+            this [_texture2DUnits] [i] = this .getCombinedTextureUnits () .pop ();
 
          if (this .getProjectiveTextureMapping ())
          {
-            for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
-               this .projectiveTextureUnits [i] = this .getCombinedTextureUnits () .pop ();
+            for (let i = 0, length = this .getMaxTextures (); i < length; ++ i)
+               this [_projectiveTextureUnits] [i] = this .getCombinedTextureUnits () .pop ();
          }
 
-         var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+         const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
          // Texture 2D Units
 
-         this .defaultTexture2D = gl .createTexture ();
+         this [_defaultTexture2D] = gl .createTexture ();
 
-         gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+         gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
          gl .texImage2D  (gl .TEXTURE_2D, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
-         gl .activeTexture (gl .TEXTURE0 + this .shadowTextureUnit);
-         gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+         gl .activeTexture (gl .TEXTURE0 + this [_shadowTextureUnit]);
+         gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
 
-         gl .activeTexture (gl .TEXTURE0 + this .linetypeUnit);
-         gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+         gl .activeTexture (gl .TEXTURE0 + this [_linetypeUnit]);
+         gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
 
-         gl .activeTexture (gl .TEXTURE0 + this .hatchStyleUnit);
-         gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+         gl .activeTexture (gl .TEXTURE0 + this [_hatchStyleUnit]);
+         gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
 
-         for (var i = 0, length = this .texture2DUnits .length; i < length; ++ i)
+         for (const unit of this [_texture2DUnits])
          {
-            gl .activeTexture (gl .TEXTURE0 + this .texture2DUnits [i]);
-            gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+            gl .activeTexture (gl .TEXTURE0 + unit);
+            gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
          }
 
-         for (var i = 0, length = this .projectiveTextureUnits .length; i < length; ++ i)
+         for (const unit of this [_projectiveTextureUnits])
          {
-            gl .activeTexture (gl .TEXTURE0 + this .projectiveTextureUnits [i]);
-            gl .bindTexture (gl .TEXTURE_2D, this .defaultTexture2D);
+            gl .activeTexture (gl .TEXTURE0 + unit);
+            gl .bindTexture (gl .TEXTURE_2D, this [_defaultTexture2D]);
          }
 
          // Texture 3D Units
 
          if (gl .getVersion () >= 2)
          {
-            this .texture3DUnits = new Int32Array (this .getMaxTextures ());
+            this [_texture3DUnits] = new Int32Array (this .getMaxTextures ());
 
-            for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
-               this .texture3DUnits [i] = this .getCombinedTextureUnits () .pop ();
+            for (let i = 0, length = this .getMaxTextures (); i < length; ++ i)
+               this [_texture3DUnits] [i] = this .getCombinedTextureUnits () .pop ();
 
-            this .defaultTexture3D = gl .createTexture ();
+            this [_defaultTexture3D] = gl .createTexture ();
 
-            gl .bindTexture (gl .TEXTURE_3D, this .defaultTexture3D);
+            gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
             gl .texImage3D  (gl .TEXTURE_3D, 0, gl .RGBA, 1, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
-            for (var i = 0, length = this .texture3DUnits .length; i < length; ++ i)
+            for (const unit of this [_texture3DUnits])
             {
-               gl .activeTexture (gl .TEXTURE0 + this .texture3DUnits [i]);
-               gl .bindTexture (gl .TEXTURE_3D, this .defaultTexture3D);
+               gl .activeTexture (gl .TEXTURE0 + unit);
+               gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
             }
 
             // Fix for Chrome.
             gl .activeTexture (gl .TEXTURE0);
-            gl .bindTexture (gl .TEXTURE_3D, this .defaultTexture3D);
+            gl .bindTexture (gl .TEXTURE_3D, this [_defaultTexture3D]);
          }
 
          // Cube Map Texture Units
 
-         this .cubeMapTextureUnits = new Int32Array (this .getMaxTextures ());
+         this [_cubeMapTextureUnits] = new Int32Array (this .getMaxTextures ());
 
-         for (var i = 0, length = this .getMaxTextures (); i < length; ++ i)
-            this .cubeMapTextureUnits [i] = this .getCombinedTextureUnits () .pop ();
+         for (let i = 0, length = this .getMaxTextures (); i < length; ++ i)
+            this [_cubeMapTextureUnits] [i] = this .getCombinedTextureUnits () .pop ();
 
-          this .defaultCubeMapTexture = gl .createTexture ();
+          this [_defaultCubeMapTexture] = gl .createTexture ();
 
-         gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .defaultCubeMapTexture);
+         gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultCubeMapTexture]);
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_POSITIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_Z, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_X, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
@@ -95955,17 +96187,17 @@ function (TextureProperties,
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_POSITIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          gl .texImage2D  (gl .TEXTURE_CUBE_MAP_NEGATIVE_Y, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
-         for (var i = 0, length = this .cubeMapTextureUnits .length; i < length; ++ i)
+         for (const unit of this [_cubeMapTextureUnits])
          {
-            gl .activeTexture (gl .TEXTURE0 + this .cubeMapTextureUnits [i]);
-            gl .bindTexture (gl .TEXTURE_CUBE_MAP, this .defaultCubeMapTexture);
+            gl .activeTexture (gl .TEXTURE0 + unit);
+            gl .bindTexture (gl .TEXTURE_CUBE_MAP, this [_defaultCubeMapTexture]);
          }
 
          gl .activeTexture (gl .TEXTURE0);
       },
       getMaxTextures: function ()
       {
-         return this .maxTextures;
+         return this [_maxTextures];
       },
       getMinTextureSize: function ()
       {
@@ -95973,87 +96205,93 @@ function (TextureProperties,
       },
       getMaxTextureSize: function ()
       {
-         return this .maxTextureSize;
+         return this [_maxTextureSize];
       },
       getMaxCombinedTextureUnits: function ()
       {
-         return this .maxCombinedTextureUnits;
+         return this [_maxCombinedTextureUnits];
       },
       getCombinedTextureUnits: function ()
       {
-         return this .combinedTextureUnits;
+         return this [_combinedTextureUnits];
       },
       getTexture2DUnits: function ()
       {
-         return this .texture2DUnits;
+         return this [_texture2DUnits];
       },
       getTexture3DUnits: function ()
       {
-         return this .texture3DUnits;
+         return this [_texture3DUnits];
       },
       getCubeMapTextureUnits: function ()
       {
-         return this .cubeMapTextureUnits;
+         return this [_cubeMapTextureUnits];
       },
       getProjectiveTextureUnits: function ()
       {
-         return this .projectiveTextureUnits;
+         return this [_projectiveTextureUnits];
       },
       getShadowTextureUnit: function ()
       {
-         return this .shadowTextureUnit;
+         return this [_shadowTextureUnit];
       },
       getLinetypeUnit: function ()
       {
-         return this .linetypeUnit;
+         return this [_linetypeUnit];
       },
       getHatchStyleUnit: function ()
       {
-         return this .hatchStyleUnit;
+         return this [_hatchStyleUnit];
       },
       getTextureMemory: function ()
       {
-         return this .textureMemory;
+         return this [_textureMemory];
       },
       getMultiTexturing: function ()
       {
-         return this .multiTexturing;
+         return this [_multiTexturing];
       },
       getProjectiveTextureMapping: function ()
       {
-         return this .projectiveTextureMapping;
+         return this [_projectiveTextureMapping];
       },
       getDefaultTextureProperties: function ()
       {
-         this .defaultTextureProperties = new TextureProperties (this .getPrivateScene ());
-         this .defaultTextureProperties .magnificationFilter_ = "NICEST";
-         this .defaultTextureProperties .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
-         this .defaultTextureProperties .textureCompression_  = "NICEST";
-         this .defaultTextureProperties .generateMipMaps_     = true;
+         this [_defaultTextureProperties] = new TextureProperties (this .getPrivateScene ());
+         this [_defaultTextureProperties] .magnificationFilter_ = "NICEST";
+         this [_defaultTextureProperties] .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
+         this [_defaultTextureProperties] .textureCompression_  = "NICEST";
+         this [_defaultTextureProperties] .generateMipMaps_     = true;
 
-         this .defaultTextureProperties .setup ();
+         this [_defaultTextureProperties] .setup ();
 
-         this .getDefaultTextureProperties = function () { return this .defaultTextureProperties; };
+         this .getDefaultTextureProperties = function () { return this [_defaultTextureProperties]; };
 
-         return this .defaultTextureProperties;
+         Object .defineProperty (this, "getDefaultTextureProperties", { enumerable: false });
+
+         return this [_defaultTextureProperties];
       },
       getDefaultTextureTransform: function ()
       {
-         this .defaultTextureTransform = new TextureTransform (this .getPrivateScene ());
-         this .defaultTextureTransform .setup ();
+         this [_defaultTextureTransform] = new TextureTransform (this .getPrivateScene ());
+         this [_defaultTextureTransform] .setup ();
 
-         this .getDefaultTextureTransform = function () { return this .defaultTextureTransform; };
+         this .getDefaultTextureTransform = function () { return this [_defaultTextureTransform]; };
 
-         return this .defaultTextureTransform;
+         Object .defineProperty (this, "getDefaultTextureTransform", { enumerable: false });
+
+         return this [_defaultTextureTransform];
       },
       getDefaultTextureCoordinate: function ()
       {
-         this .defaultTextureCoordinate = new TextureCoordinate (this .getPrivateScene ());
-         this .defaultTextureCoordinate .setup ();
+         this [_defaultTextureCoordinate] = new TextureCoordinate (this .getPrivateScene ());
+         this [_defaultTextureCoordinate] .setup ();
 
-         this .getDefaultTextureCoordinate = function () { return this .defaultTextureCoordinate; };
+         this .getDefaultTextureCoordinate = function () { return this [_defaultTextureCoordinate]; };
 
-         return this .defaultTextureCoordinate;
+         Object .defineProperty (this, "getDefaultTextureCoordinate", { enumerable: false });
+
+         return this [_defaultTextureCoordinate];
       },
    };
 
@@ -96116,9 +96354,18 @@ function (Vector3)
 {
 "use strict";
 
+   const
+      _currentTime      = Symbol (),
+      _currentFrameRate = Symbol (),
+      _currentPosition  = Symbol (),
+      _currentSpeed     = Symbol ();
+
    function X3DTimeContext ()
    {
-      this .currentPosition = new Vector3 (0, 0, 0);
+      this [_currentTime]      = 0;
+      this [_currentFrameRate] = 60;
+      this [_currentPosition]  = new Vector3 (0, 0, 0);
+      this [_currentSpeed]     = 0;
    }
 
    X3DTimeContext .prototype =
@@ -96129,32 +96376,40 @@ function (Vector3)
       },
       getCurrentTime: function ()
       {
-         return this .currentTime;
+         return this [_currentTime];
+      },
+      getCurrentFrameRate: function ()
+      {
+         return this [_currentFrameRate];
+      },
+      getCurrentSpeed: function ()
+      {
+         return this [_currentSpeed];
       },
       advanceTime: (function ()
       {
          const lastPosition = new Vector3 (0, 0, 0);
 
-         return function (time)
+         return function (now)
          {
-            time = (time + performance .timeOrigin) / 1000;
+            const
+               time     = (now + performance .timeOrigin) / 1000,
+               interval = time - this [_currentTime];
 
-            const interval = time - this .currentTime;
-
-            this .currentTime      = time;
-            this .currentFrameRate = interval ? 1 / interval : 60;
+            this [_currentTime]      = time;
+            this [_currentFrameRate] = interval ? 1 / interval : 60;
 
             if (this .getWorld () && this .getActiveLayer ())
             {
                const cameraSpaceMatrix = this .getActiveLayer () .getViewpoint () .getCameraSpaceMatrix ();
 
-               lastPosition .assign (this .currentPosition);
-               this .currentPosition .set (cameraSpaceMatrix [12], cameraSpaceMatrix [13], cameraSpaceMatrix [14]);
+               lastPosition .assign (this [_currentPosition]);
+               this [_currentPosition] .set (cameraSpaceMatrix [12], cameraSpaceMatrix [13], cameraSpaceMatrix [14]);
 
-               this .currentSpeed = lastPosition .subtract (this .currentPosition) .abs () * this .currentFrameRate;
+               this [_currentSpeed] = lastPosition .subtract (this [_currentPosition]) .abs () * this [_currentFrameRate];
             }
             else
-               this .currentSpeed = 0;
+               this [_currentSpeed] = 0;
          };
       })(),
    };
@@ -96235,7 +96490,7 @@ define ('x_ite/Browser/X3DBrowserContext',[
    "x_ite/Browser/Texturing/X3DTexturingContext",
    "x_ite/Browser/Time/X3DTimeContext",
    "x_ite/Execution/X3DWorld",
-   "x_ite/Bits/TraverseType",
+   "x_ite/Rendering/TraverseType",
 ],
 function ($,
           SFTime,
@@ -96264,6 +96519,17 @@ function ($,
 {
 "use strict";
 
+   const
+      _world           = Symbol (),
+      _changedTime     = Symbol (),
+      _renderCallback  = Symbol (),
+      _systemTime      = Symbol (),
+      _systemStartTime = Symbol (),
+      _browserTime     = Symbol (),
+      _cameraTime      = Symbol (),
+      _collisionTime   = Symbol (),
+      _displayTime     = Symbol ();
+
    const contexts = [ ];
 
    function X3DBrowserContext (element)
@@ -96289,7 +96555,8 @@ function ($,
       X3DTexturingContext            .call (this);
       X3DTimeContext                 .call (this);
 
-      contexts .forEach (function (context) { context .call (this); }, this);
+      for (const context of contexts)
+         context .call (this);
 
       this .addChildObjects ("initialized",   new SFTime (),
                              "shutdown",      new SFTime (),
@@ -96298,14 +96565,14 @@ function ($,
                              "sensorEvents",  new SFTime (),
                              "finished",      new SFTime ());
 
-      this .changedTime     = 0;
-      this .renderCallback  = this .traverse .bind (this);
-      this .systemTime      = 0;
-      this .systemStartTime = 0;
-      this .browserTime     = 0;
-      this .cameraTime      = 0;
-      this .collisionTime   = 0;
-      this .displayTime     = 0;
+      this [_changedTime]     = 0;
+      this [_renderCallback]  = this .traverse .bind (this);
+      this [_systemTime]      = 0;
+      this [_systemStartTime] = 0;
+      this [_browserTime]     = 0;
+      this [_cameraTime]      = 0;
+      this [_collisionTime]   = 0;
+      this [_displayTime]     = 0;
    };
 
    X3DBrowserContext .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -96353,12 +96620,11 @@ function ($,
          X3DTexturingContext            .prototype .initialize .call (this);
          X3DTimeContext                 .prototype .initialize .call (this);
 
-         contexts .forEach (function (context)
+         for (const context of contexts)
          {
             if (context .prototype .initialize)
                context .prototype .initialize .call (this);
          }
-         .bind (this));
       },
       initialized: function ()
       {
@@ -96390,37 +96656,37 @@ function ($,
       },
       getWorld: function ()
       {
-         return this .world;
+         return this [_world];
       },
       setExecutionContext: function (executionContext)
       {
-         this .world = new X3DWorld (executionContext);
-         this .world .setup ();
+         this [_world] = new X3DWorld (executionContext);
+         this [_world] .setup ();
       },
       getExecutionContext: function ()
       {
-         return this .world .getExecutionContext ();
+         return this [_world] .getExecutionContext ();
       },
       addBrowserEvent: function ()
       {
-         if (this .changedTime === this .getCurrentTime ())
+         if (this [_changedTime] === this .getCurrentTime ())
             return;
 
-         this .changedTime = this .getCurrentTime ();
+         this [_changedTime] = this .getCurrentTime ();
 
          this .requestAnimationFrame ();
       },
       requestAnimationFrame: function ()
       {
-         window .requestAnimationFrame (this .renderCallback);
+         window .requestAnimationFrame (this [_renderCallback]);
       },
-      traverse: function (time)
+      traverse: function (now)
       {
          const gl = this .getContext ();
 
          const t0 = performance .now ();
-         this .systemTime = t0 - this .systemStartTime;
-         this .advanceTime (time);
+         this [_systemTime] = t0 - this [_systemStartTime];
+         this .advanceTime (now);
 
          this .prepareEvents_ .processInterests ();
          this .processEvents ();
@@ -96429,13 +96695,13 @@ function ($,
          this .processEvents ();
 
          const t1 = performance .now ();
-         this .world .traverse (TraverseType .CAMERA, null);
-         this .cameraTime = performance .now () - t1;
+         this [_world] .traverse (TraverseType .CAMERA, null);
+         this [_cameraTime] = performance .now () - t1;
 
          const t2 = performance .now ();
          if (this .getCollisionCount ())
-            this .world .traverse (TraverseType .COLLISION, null);
-         this .collisionTime = performance .now () - t2;
+            this [_world] .traverse (TraverseType .COLLISION, null);
+         this [_collisionTime] = performance .now () - t2;
 
          this .sensorEvents_ .processInterests ();
          this .processEvents ();
@@ -96446,15 +96712,38 @@ function ($,
          const t3 = performance .now ();
          gl .clearColor (0, 0, 0, 0);
          gl .clear (gl .COLOR_BUFFER_BIT);
-         this .world .traverse (TraverseType .DISPLAY, null);
-         this .displayTime = performance .now () - t3;
+         this [_world] .traverse (TraverseType .DISPLAY, null);
+         this [_displayTime] = performance .now () - t3;
 
-         this .browserTime     = performance .now () - t0;
-         this .systemStartTime = performance .now ();
+         this [_browserTime]     = performance .now () - t0;
+         this [_systemStartTime] = performance .now ();
 
          this .finished_ .processInterests ();
       },
+      getSystemTime: function ()
+      {
+         return this [_systemTime];
+      },
+      getBrowserTime: function ()
+      {
+         return this [_browserTime];
+      },
+      getCameraTime: function ()
+      {
+         return this [_cameraTime];
+      },
+      getCollisionTime: function ()
+      {
+         return this [_collisionTime];
+      },
+      getDisplayTime: function ()
+      {
+         return this [_displayTime];
+      },
    });
+
+   for (const key of Reflect .ownKeys (X3DBrowserContext .prototype))
+      Object .defineProperty (X3DBrowserContext .prototype, key, { enumerable: false });
 
    Object .assign (X3DBrowserContext,
    {
@@ -96465,6 +96754,9 @@ function ($,
          contexts .push (context);
 
          Object .assign (X3DBrowserContext .prototype, context .prototype);
+
+         for (const key of Reflect .ownKeys (context .prototype))
+            Object .defineProperty (X3DBrowserContext .prototype, key, { enumerable: false });
 
          $("X3DCanvas") .each (function (i, canvas)
          {
@@ -96531,7 +96823,7 @@ function ($,
 
 
 define ('x_ite/Components/Core/X3DMetadataObject',[
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DConstants)
 {
@@ -96606,7 +96898,7 @@ define ('x_ite/Components/Core/MetadataBoolean',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Core/X3DMetadataObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -96707,7 +96999,7 @@ define ('x_ite/Components/Core/MetadataDouble',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Core/X3DMetadataObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -96808,7 +97100,7 @@ define ('x_ite/Components/Core/MetadataFloat',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Core/X3DMetadataObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -96909,7 +97201,7 @@ define ('x_ite/Components/Core/MetadataInteger',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Core/X3DMetadataObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -97010,7 +97302,7 @@ define ('x_ite/Components/Core/MetadataSet',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Core/X3DMetadataObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -97111,7 +97403,7 @@ define ('x_ite/Components/Core/MetadataString',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Core/X3DMetadataObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -97208,7 +97500,7 @@ function (Fields,
 
 define ('x_ite/Components/Core/X3DInfoNode',[
    "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DChildNode,
           X3DConstants)
@@ -97284,7 +97576,7 @@ define ('x_ite/Components/Core/WorldInfo',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DInfoNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -97504,7 +97796,7 @@ define ('x_ite/Components/EnvironmentalEffects/FogCoordinate',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometricPropertyNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -97656,7 +97948,7 @@ define ('x_ite/Components/EnvironmentalEffects/LocalFog',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/EnvironmentalEffects/X3DFogObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -97778,8 +98070,8 @@ define ('x_ite/Components/EnvironmentalEffects/TextureBackground',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/EnvironmentalEffects/X3DBackgroundNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -98019,7 +98311,7 @@ function (SupportedNodes,
 define ('x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode',[
    "x_ite/Fields",
    "x_ite/Components/Core/X3DSensorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
@@ -98163,8 +98455,8 @@ define ('x_ite/Components/EnvironmentalSensor/ProximitySensor',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Numbers/Matrix4",
@@ -98457,8 +98749,8 @@ define ('x_ite/Components/EnvironmentalSensor/TransformSensor',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Numbers/Matrix4",
@@ -98779,8 +99071,8 @@ define ('x_ite/Components/EnvironmentalSensor/VisibilitySensor',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Geometry/Box3",
 ],
@@ -99039,7 +99331,7 @@ define ('x_ite/Components/Followers/ColorChaser',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DChaserNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Color3",
    "standard/Math/Numbers/Vector3",
 ],
@@ -99183,7 +99475,7 @@ function (Fields,
 
 define ('x_ite/Components/Followers/X3DDamperNode',[
    "x_ite/Components/Followers/X3DFollowerNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (X3DFollowerNode,
@@ -99365,7 +99657,7 @@ define ('x_ite/Components/Followers/ColorDamper',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DDamperNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Color3",
    "standard/Math/Numbers/Vector3",
 ],
@@ -99521,7 +99813,7 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
       {
          getArray: function ()
          {
-            var array = [ ];
+            const array = [ ];
 
             array .assign = function (value)
             {
@@ -99569,7 +99861,7 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
          {
             if (Array .isArray (value))
             {
-               var value_changed = this .value_changed_;
+               const value_changed = this .value_changed_;
 
                for (var i = 0, length = value .length; i < length; ++ i)
                   value_changed [i] = value [i];
@@ -99583,7 +99875,7 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
          },
          duplicate: function (value)
          {
-            var array = this .getArray ();
+            const array = this .getArray ();
 
             array .assign (value);
 
@@ -99594,37 +99886,37 @@ define ('x_ite/Browser/Followers/X3DArrayFollowerTemplate',[],function ()
             if (lhs .length !== rhs .length)
                return false;
 
-            var
-               a        = this .a,
-               distance = 0;
+            const a = this .a;
 
-            for (var i = 0, length = lhs .length; i < length; ++ i)
+            let distance = 0;
+
+            for (let i = 0, length = lhs .length; i < length; ++ i)
               distance = Math .max (a .assign (lhs [i]) .subtract (rhs [i]) .abs ());
 
             return distance < tolerance;
          },
          interpolate: function (source, destination, weight)
          {
-            var array = this .array;
+            const array = this .array;
 
             array .assign (source);
 
-            for (var i = 0, length = array .length; i < length; ++ i)
+            for (let i = 0, length = array .length; i < length; ++ i)
                array [i] .lerp (destination [i] || this .zero, weight);
 
             return array;
          },
          set_destination__: function ()
          {
-            var
+            const
                buffers = this .getBuffer (),
                l       = this .set_destination_ .length;
 
-            for (var i = 0, length = buffers .length; i < length; ++ i)
+            for (let i = 0, length = buffers .length; i < length; ++ i)
             {
-               var buffer = buffers [i];
+               const buffer = buffers [i];
 
-               for (var b = buffer .length; b < l; ++ b)
+               for (let b = buffer .length; b < l; ++ b)
                   buffer [b] = this .getVector ();
 
                buffer .length = l;
@@ -99696,7 +99988,7 @@ function (X3DArrayFollowerTemplate)
 
    return function (Type)
    {
-      var X3DArrayFollower = X3DArrayFollowerTemplate (Type);
+      const X3DArrayFollower = X3DArrayFollowerTemplate (Type);
 
       function X3DArrayChaserObject ()
       {
@@ -99710,11 +100002,11 @@ function (X3DArrayFollowerTemplate)
       {
          step: function (value1, value2, t)
          {
-            var
+            const
                output   = this .output,
                deltaOut = this .deltaOut;
 
-            for (var i = 0, length = output .length; i < length; ++ i)
+            for (let i = 0, length = output .length; i < length; ++ i)
                output [i] .add (deltaOut .assign (value1 [i] || this .zero) .subtract (value2 [i] || this .zero) .multiply (t));
          },
       });
@@ -99778,7 +100070,7 @@ define ('x_ite/Components/Followers/CoordinateChaser',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DChaserNode",
    "x_ite/Browser/Followers/X3DArrayChaserTemplate",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
@@ -99891,7 +100183,7 @@ define ('x_ite/Components/Followers/CoordinateDamper',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DDamperNode",
    "x_ite/Browser/Followers/X3DArrayFollowerTemplate",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
@@ -100005,7 +100297,7 @@ define ('x_ite/Components/Followers/OrientationDamper',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DDamperNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Rotation4",
 ],
 function (Fields,
@@ -100134,7 +100426,7 @@ define ('x_ite/Components/Followers/PositionChaser2D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DChaserNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector2",
 ],
 function (Fields,
@@ -100241,7 +100533,7 @@ define ('x_ite/Components/Followers/PositionDamper',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DDamperNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
@@ -100350,7 +100642,7 @@ define ('x_ite/Components/Followers/PositionDamper2D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DDamperNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector2",
 ],
 function (Fields,
@@ -100459,7 +100751,7 @@ define ('x_ite/Components/Followers/ScalarChaser',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DChaserNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (Fields,
@@ -100594,7 +100886,7 @@ define ('x_ite/Components/Followers/ScalarDamper',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DDamperNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (Fields,
@@ -100720,7 +101012,7 @@ define ('x_ite/Components/Followers/TexCoordChaser2D',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DChaserNode",
    "x_ite/Browser/Followers/X3DArrayChaserTemplate",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector2",
 ],
 function (Fields,
@@ -100833,7 +101125,7 @@ define ('x_ite/Components/Followers/TexCoordDamper2D',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Followers/X3DDamperNode",
    "x_ite/Browser/Followers/X3DArrayFollowerTemplate",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector2",
 ],
 function (Fields,
@@ -101068,7 +101360,7 @@ define ('x_ite/Components/Geometry3D/Box',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
@@ -101215,7 +101507,7 @@ define ('x_ite/Components/Geometry3D/Cone',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Complex",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
@@ -101466,7 +101758,7 @@ define ('x_ite/Components/Geometry3D/Cylinder',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Complex",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
@@ -101776,8 +102068,8 @@ define ('x_ite/Components/Geometry3D/ElevationGrid',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/Triangle3",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
@@ -102225,7 +102517,7 @@ define ('x_ite/Components/Geometry3D/Extrusion',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/Triangle3",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
@@ -102938,7 +103230,7 @@ define ('x_ite/Components/Geometry3D/Sphere',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -103177,8 +103469,8 @@ define ('x_ite/Components/Grouping/StaticGroup',[
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/Grouping/X3DBoundedObject",
    "x_ite/Components/Grouping/Group",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/TraverseType",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Rendering/TraverseType",
    "standard/Math/Geometry/Box3",
    "standard/Math/Geometry/ViewVolume",
 ],
@@ -103492,9 +103784,9 @@ define ('x_ite/Components/Grouping/Switch',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -103786,7 +104078,7 @@ function (Fields,
 
 define ('x_ite/Components/Grouping/X3DTransformMatrix3DNode',[
    "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Numbers/Matrix4",
@@ -103946,7 +104238,7 @@ function (X3DGroupingNode,
 
 define ('x_ite/Components/Grouping/X3DTransformNode',[
    "x_ite/Components/Grouping/X3DTransformMatrix3DNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DTransformMatrix3DNode,
           X3DConstants)
@@ -104045,7 +104337,7 @@ define ('x_ite/Components/Grouping/Transform',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DTransformNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -104245,7 +104537,7 @@ define ('x_ite/Components/Interpolation/ColorInterpolator',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Color3",
 ],
 function (Fields,
@@ -104376,7 +104668,7 @@ define ('x_ite/Components/Interpolation/CoordinateInterpolator',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (Fields,
@@ -104507,7 +104799,7 @@ define ('x_ite/Components/Interpolation/CoordinateInterpolator2D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (Fields,
@@ -104635,7 +104927,7 @@ define ('x_ite/Components/Interpolation/NormalInterpolator',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Algorithm",
 ],
@@ -104788,7 +105080,7 @@ define ('x_ite/Components/Interpolation/PositionInterpolator2D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector2",
 ],
 function (Fields,
@@ -104916,16 +105208,16 @@ function (Vector4,
 {
 "use strict";
 
-   var
+   const
       T  = [ ],
       Fp = [ ],
       Fm = [ ],
       S  = new Vector4 (0, 0, 0, 0);
 
-   var H = new Matrix4 ( 2, -2,  1,  1,
-                        -3,  3, -2, -1,
-                         0,  0,  1,  0,
-                         1,  0,  0,  0);
+   const H = new Matrix4 ( 2, -2,  1,  1,
+                          -3,  3, -2, -1,
+                           0,  0,  1,  0,
+                           1,  0,  0,  0);
 
    function CatmullRomSplineInterpolator ()
    {
@@ -104938,7 +105230,7 @@ function (Vector4,
       constructor: CatmullRomSplineInterpolator,
       generate: function (closed, key, keyValue, keyVelocity, normalizeVelocity)
       {
-         var
+         const
             T0 = this .T0,
             T1 = this .T1;
 
@@ -104961,26 +105253,26 @@ function (Vector4,
                else
                   T .push (this .create ());
 
-               for (var i = 1, length = keyValue .length - 1; i < length; ++ i)
+               for (let i = 1, length = keyValue .length - 1; i < length; ++ i)
                   T .push (this .divide (this .subtract (keyValue [i + 1], keyValue [i - 1]), 2));
 
                T .push (this .copy (T [0]));
             }
             else
             {
-               for (var i = 0, length = keyVelocity .length; i < length; ++ i)
+               for (let i = 0, length = keyVelocity .length; i < length; ++ i)
                   T .push (this .copy (keyVelocity [i]));
 
                if (normalizeVelocity)
                {
-                  var Dtot = 0;
+                  let Dtot = 0;
 
-                  for (var i = 0, length = keyValue .length - 1; i < length; ++ i)
+                  for (let i = 0, length = keyValue .length - 1; i < length; ++ i)
                      Dtot += this .abs (this .subtract (keyValue [i], keyValue [i + 1]));
 
-                  for (var i = 0, length = T .length - 1; i < length; ++ i)
+                  for (let i = 0, length = T .length - 1; i < length; ++ i)
                   {
-                     var Tia = this .abs (T [i]);
+                     const Tia = this .abs (T [i]);
 
                      if (Tia)
                         T [i] = this .multiply (T [i], Dtot / Tia);
@@ -104992,10 +105284,10 @@ function (Vector4,
 
             if (closed)
             {
-               var i_1 = key .length - 1;
-               var i_2 = key .length - 2;
+               const i_1 = key .length - 1;
+               const i_2 = key .length - 2;
 
-               var d = key [1] - key [0] + key [i_1] - key [i_2];
+               const d = key [1] - key [0] + key [i_1] - key [i_2];
 
                Fm .push (2 * (key [1]   - key [0])   / d);
                Fp .push (2 * (key [i_1] - key [i_2]) / d);
@@ -105007,9 +105299,9 @@ function (Vector4,
                Fp .push (1);
             }
 
-            for (var i = 1, length = key .length - 1; i < length; ++ i)
+            for (let i = 1, length = key .length - 1; i < length; ++ i)
             {
-               var d = key [i + 1] - key [i - 1];
+               const d = key [i + 1] - key [i - 1];
 
                Fm .push (2 * (key [i + 1] - key [i])     / d);
                Fp .push (2 * (key [i]     - key [i - 1]) / d);
@@ -105020,7 +105312,7 @@ function (Vector4,
 
             // T0, T1
 
-            for (var i = 0, length = T .length; i < length; ++ i)
+            for (let i = 0, length = T .length; i < length; ++ i)
             {
                T0 .push (this .multiply (T [i], Fp [i]));
                T1 .push (this .multiply (T [i], Fm [i]));
@@ -105107,7 +105399,7 @@ function (CatmullRomSplineInterpolator)
 
    return function (Type)
    {
-      var
+      const
          c0 = new Type (0, 0, 0, 0),
          c1 = new Type (0, 0, 0, 0),
          c2 = new Type (0, 0, 0, 0),
@@ -105277,7 +105569,7 @@ define ('x_ite/Components/Interpolation/SplinePositionInterpolator',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Browser/Interpolation/CatmullRomSplineInterpolator3",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -105484,7 +105776,7 @@ define ('x_ite/Components/Interpolation/SplinePositionInterpolator2D',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Browser/Interpolation/CatmullRomSplineInterpolator2",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -105728,7 +106020,7 @@ define ('x_ite/Components/Interpolation/SplineScalarInterpolator',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Browser/Interpolation/CatmullRomSplineInterpolator1",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -105875,7 +106167,7 @@ function (Rotation4)
 {
 "use strict";
 
-   var result = new Rotation4 (0, 0, 1, 0);
+   const result = new Rotation4 (0, 0, 1, 0);
 
    function SquatInterpolator ()
    {
@@ -105887,7 +106179,7 @@ function (Rotation4)
       constructor: SquatInterpolator,
       generate: function (closed, key, keyValue)
       {
-         var s = this .s;
+         const s = this .s;
 
          s .length = 0;
 
@@ -105904,7 +106196,7 @@ function (Rotation4)
                s .push (keyValue [0] .getValue ());
             }
 
-            for (var i = 1, length = key .length - 1; i < length; ++ i)
+            for (let i = 1, length = key .length - 1; i < length; ++ i)
             {
                s .push (Rotation4 .spline (keyValue [i - 1] .getValue (),
                                            keyValue [i]     .getValue (),
@@ -105991,7 +106283,7 @@ define ('x_ite/Components/Interpolation/SquadOrientationInterpolator',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Browser/Interpolation/SquatInterpolator",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -106324,8 +106616,8 @@ define ('x_ite/Components/Lighting/PointLight',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Lighting/X3DLightNode",
    "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/Camera",
    "standard/Math/Geometry/ViewVolume",
    "standard/Math/Numbers/Vector3",
@@ -106700,8 +106992,8 @@ define ('x_ite/Components/Lighting/SpotLight',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Lighting/X3DLightNode",
    "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/Box3",
    "standard/Math/Geometry/Camera",
    "standard/Math/Geometry/ViewVolume",
@@ -107183,8 +107475,8 @@ define ('x_ite/Components/Navigation/Billboard',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/TraverseType",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Rendering/TraverseType",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Numbers/Matrix4",
@@ -107381,9 +107673,9 @@ define ('x_ite/Components/Navigation/Collision',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Components/Core/X3DSensorNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -107479,7 +107771,7 @@ function (Fields,
             {
                if (this .enabled_ .getValue ())
                {
-                  var collisions = renderObject .getCollisions ();
+                  const collisions = renderObject .getCollisions ();
 
                   collisions .push (this);
 
@@ -107560,9 +107852,9 @@ define ('x_ite/Components/Navigation/LOD',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix4",
    "standard/Math/Algorithm",
 ],
@@ -107838,7 +108130,7 @@ function (Fields,
                {
                   if (! this .keepCurrentLevel)
                   {
-                     var
+                     let
                         level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
                         currentLevel = this .level_changed_ .getValue ();
 
@@ -107934,8 +108226,8 @@ define ('x_ite/Components/Navigation/ViewpointGroup',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/EnvironmentalSensor/ProximitySensor",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
@@ -108378,7 +108670,7 @@ function (Vector4,
 define ('x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode',[
    "x_ite/Components/Core/X3DSensorNode",
    "x_ite/Browser/PointingDeviceSensor/PointingDeviceSensorContainer",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DSensorNode,
           PointingDeviceSensorContainer,
@@ -108438,10 +108730,10 @@ function (X3DSensorNode,
       {
          if (this .enabled_ .getValue ())
          {
-            sensors [this .getId ()] = new PointingDeviceSensorContainer (this,
-                                                                          renderObject .getModelViewMatrix  () .get (),
-                                                                          renderObject .getProjectionMatrix () .get (),
-                                                                          renderObject .getViewVolume () .getViewport ());
+            sensors .set (this, new PointingDeviceSensorContainer (this,
+                                                                   renderObject .getModelViewMatrix  () .get (),
+                                                                   renderObject .getProjectionMatrix () .get (),
+                                                                   renderObject .getViewVolume () .getViewport ()));
          }
       },
    });
@@ -108500,7 +108792,7 @@ function (X3DSensorNode,
 
 define ('x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode',[
    "x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DPointingDeviceSensorNode,
           X3DConstants)
@@ -108583,7 +108875,7 @@ define ('x_ite/Components/PointingDeviceSensor/TouchSensor',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
@@ -108715,8 +109007,8 @@ define ('x_ite/Components/Networking/Anchor',[
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Components/PointingDeviceSensor/TouchSensor",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/FileLoader",
 ],
 function (Fields,
@@ -108843,7 +109135,7 @@ function (Fields,
       {
          if (type === TraverseType .POINTER)
          {
-            const sensors = { };
+            const sensors = new Map ();
 
             renderObject .getBrowser () .getSensors () .push (sensors);
 
@@ -108918,8 +109210,8 @@ define ('x_ite/Components/Networking/Inline',[
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Components/Grouping/X3DBoundedObject",
    "x_ite/Components/Grouping/Group",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/FileLoader",
 ],
 function (Fields,
@@ -109219,7 +109511,7 @@ function (SupportedNodes,
 
 define ('x_ite/Components/PointingDeviceSensor/X3DDragSensorNode',[
    "x_ite/Components/PointingDeviceSensor/X3DPointingDeviceSensorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DPointingDeviceSensorNode,
           X3DConstants)
@@ -109469,7 +109761,7 @@ define ('x_ite/Components/PointingDeviceSensor/CylinderSensor',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/PointingDeviceSensor/X3DDragSensorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Numbers/Matrix4",
@@ -109796,7 +110088,7 @@ define ('x_ite/Components/PointingDeviceSensor/PlaneSensor',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/PointingDeviceSensor/X3DDragSensorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Vector4",
@@ -110316,7 +110608,7 @@ define ('x_ite/Components/PointingDeviceSensor/SphereSensor',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/PointingDeviceSensor/X3DDragSensorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Numbers/Matrix4",
@@ -110647,7 +110939,7 @@ define ('x_ite/Components/Rendering/ClipPlane',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Vector4",
    "standard/Math/Geometry/Plane3",
@@ -110832,7 +111124,7 @@ define ('x_ite/Components/Rendering/ColorRGBA',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DColorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector4",
 ],
 function (Fields,
@@ -111008,7 +111300,7 @@ define ('x_ite/Components/Rendering/IndexedTriangleFanSet',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DComposedGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -111171,7 +111463,7 @@ define ('x_ite/Components/Rendering/IndexedTriangleSet',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DComposedGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -111291,7 +111583,7 @@ define ('x_ite/Components/Rendering/IndexedTriangleStripSet',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DComposedGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -111462,8 +111754,8 @@ define ('x_ite/Components/Rendering/LineSet',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -111700,7 +111992,7 @@ function (Fields,
 
 define ('x_ite/Components/Rendering/X3DNormalNode',[
    "x_ite/Components/Rendering/X3DGeometricPropertyNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DGeometricPropertyNode,
           X3DConstants)
@@ -111776,7 +112068,7 @@ define ('x_ite/Components/Rendering/Normal',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DNormalNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
@@ -111938,8 +112230,8 @@ define ('x_ite/Components/Rendering/PointSet',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -112153,7 +112445,7 @@ define ('x_ite/Components/Rendering/TriangleFanSet',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DComposedGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -112298,7 +112590,7 @@ define ('x_ite/Components/Rendering/TriangleSet',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DComposedGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -112413,7 +112705,7 @@ define ('x_ite/Components/Rendering/TriangleStripSet',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DComposedGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -112692,7 +112984,7 @@ function (SupportedNodes,
 
 define ('x_ite/Components/Shaders/X3DVertexAttributeNode',[
    "x_ite/Components/Rendering/X3DGeometricPropertyNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DGeometricPropertyNode,
           X3DConstants)
@@ -112768,7 +113060,7 @@ define ('x_ite/Components/Shaders/FloatVertexAttribute',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shaders/X3DVertexAttributeNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (Fields,
@@ -112920,7 +113212,7 @@ define ('x_ite/Components/Shaders/Matrix3VertexAttribute',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shaders/X3DVertexAttributeNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix3",
 ],
 function (Fields,
@@ -113065,7 +113357,7 @@ define ('x_ite/Components/Shaders/Matrix4VertexAttribute',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shaders/X3DVertexAttributeNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -113210,7 +113502,7 @@ define ('x_ite/Components/Shaders/PackagedShader',[
    "x_ite/Components/Shaders/X3DShaderNode",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Components/Shaders/X3DProgrammableShaderObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -113326,7 +113618,7 @@ define ('x_ite/Components/Shaders/ProgramShader',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shaders/X3DShaderNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -113427,7 +113719,7 @@ define ('x_ite/Components/Shaders/ShaderProgram',[
    "x_ite/Components/Core/X3DNode",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Components/Shaders/X3DProgrammableShaderObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -113643,7 +113935,7 @@ define ('x_ite/Components/Shape/Material',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DOneSidedMaterialNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (Fields,
@@ -113825,7 +114117,7 @@ define ('x_ite/Components/Shape/TwoSidedMaterial',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DMaterialNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (Fields,
@@ -114222,7 +114514,7 @@ define ('x_ite/Components/Sound/X3DSoundSourceNode',[
    "x_ite/Fields",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/Time/X3DTimeDependentNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
 ],
 function (Fields,
@@ -114451,7 +114743,7 @@ define ('x_ite/Components/Sound/AudioClip',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Sound/X3DSoundSourceNode",
    "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/DEBUG",
 ],
 function ($,
@@ -114642,7 +114934,7 @@ function ($,
 
 define ('x_ite/Components/Sound/X3DSoundNode',[
    "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DChildNode,
           X3DConstants)
@@ -114718,9 +115010,9 @@ define ('x_ite/Components/Sound/Sound',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Sound/X3DSoundNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Numbers/Matrix4",
@@ -115115,8 +115407,8 @@ define ('x_ite/Components/Text/Text',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -115394,7 +115686,7 @@ define ('x_ite/Components/Texturing/MovieTexture',[
    "x_ite/Components/Texturing/X3DTexture2DNode",
    "x_ite/Components/Sound/X3DSoundSourceNode",
    "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
    "x_ite/DEBUG",
 ],
@@ -115638,8 +115930,8 @@ define ('x_ite/Components/Texturing/MultiTexture',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DTextureNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
    "x_ite/Browser/Texturing/MultiTextureModeType",
    "x_ite/Browser/Texturing/MultiTextureSourceType",
    "x_ite/Browser/Texturing/MultiTextureFunctionType",
@@ -115757,7 +116049,7 @@ function (Fields,
       },
       set_mode__: (function ()
       {
-         var modeTypes = new Map ([
+         const modeTypes = new Map ([
             ["REPLACE",                   ModeType .REPLACE],
             ["MODULATE",                  ModeType .MODULATE],
             ["MODULATE2X",                ModeType .MODULATE2X],
@@ -115785,11 +116077,11 @@ function (Fields,
             this .modes      .length = 0;
             this .alphaModes .length = 0;
 
-            for (var i = 0, length = this .mode_ .length; i < length; ++ i)
+            for (const modes of this .mode_)
             {
-               var mode = this .mode_ [i] .split (",");
+               const mode = modes .split (",");
 
-               for (var m = 0, mLength = mode .length; m < mLength; ++ m)
+               for (let m = 0, l = mode .length; m < l; ++ m)
                   mode [m] = mode [m] .trim ();
 
                if (mode .length === 0)
@@ -115800,7 +116092,7 @@ function (Fields,
 
                // RGB
 
-               var modeType = modeTypes .get (mode [0]);
+               const modeType = modeTypes .get (mode [0]);
 
                if (modeType !== undefined)
                   this .modes .push (modeType);
@@ -115809,10 +116101,10 @@ function (Fields,
 
                // Alpha
 
-               var modeType = modeTypes .get (mode [1]);
+               const alphaModeType = modeTypes .get (mode [1]);
 
-               if (modeType !== undefined)
-                  this .alphaModes .push (modeType);
+               if (alphaModeType !== undefined)
+                  this .alphaModes .push (alphaModeType);
                else
                   this .alphaModes .push (ModeType .MODULATE);
             }
@@ -115820,7 +116112,7 @@ function (Fields,
       })(),
       set_source__: (function ()
       {
-         var sourceTypes = new Map ([
+         const sourceTypes = new Map ([
             ["DIFFUSE",  SourceType .DIFFUSE],
             ["SPECULAR", SourceType .SPECULAR],
             ["FACTOR",   SourceType .FACTOR],
@@ -115830,9 +116122,9 @@ function (Fields,
          {
             this .sources .length = 0;
 
-            for (var i = 0, length = this .source_ .length; i < length; ++ i)
+            for (const source of this .source_)
             {
-               var sourceType = sourceTypes .get (this .source_ [i]);
+               const sourceType = sourceTypes .get (source);
 
                if (sourceType !== undefined)
                   this .sources .push (sourceType);
@@ -115843,7 +116135,7 @@ function (Fields,
       })(),
       set_function__: (function ()
       {
-         var functionsTypes = new Map ([
+         const functionsTypes = new Map ([
             ["COMPLEMENT",     FunctionType .COMPLEMENT],
             ["ALPHAREPLICATE", FunctionType .ALPHAREPLICATE],
          ]);
@@ -115852,9 +116144,9 @@ function (Fields,
          {
             this .functions .length = 0;
 
-            for (var i = 0, length = this .function_ .length; i < length; ++ i)
+            for (const func of this .function_)
             {
-               var functionsType = functionsTypes .get (this .function_ [i]);
+               const functionsType = functionsTypes .get (func);
 
                if (functionsType !== undefined)
                   this .functions .push (functionsType);
@@ -115867,14 +116159,9 @@ function (Fields,
       {
          this .textureNodes .length = 0;
 
-         for (var i = 0, length = this .texture_ .length; i < length; ++ i)
+         for (const node of this .texture_)
          {
-            var node = this .texture_ [i];
-
-            if (X3DCast (X3DConstants .MultiTexture, node))
-               continue;
-
-            var textureNode = X3DCast (X3DConstants .X3DTextureNode, node);
+            const textureNode = X3DCast (X3DConstants .X3DSingleTextureNode, node);
 
             if (textureNode)
                this .textureNodes .push (textureNode);
@@ -115882,21 +116169,19 @@ function (Fields,
       },
       traverse: function (type, renderObject)
       {
-         var textureNodes = this .textureNodes;
-
-         for (var i = 0, length = textureNodes .length; i < length; ++ i)
-            textureNodes [i] .traverse (type, renderObject);
+         for (const textureNode of this .textureNodes)
+            textureNode .traverse (type, renderObject);
       },
       setShaderUniforms: function (gl, shaderObject, renderObject)
       {
-         var
+         const
             textureNodes = this .textureNodes,
             channels     = Math .min (shaderObject .getBrowser () .getMaxTextures (), textureNodes .length);
 
          gl .uniform1i  (shaderObject .x3d_NumTextures,       channels);
          gl .uniform4fv (shaderObject .x3d_MultiTextureColor, this .color);
 
-         for (var i = 0; i < channels; ++ i)
+         for (let i = 0; i < channels; ++ i)
          {
             textureNodes [i] .setShaderUniformsToChannel (gl, shaderObject, renderObject, i);
 
@@ -115965,8 +116250,8 @@ define ('x_ite/Components/Texturing/MultiTextureCoordinate',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DTextureCoordinateNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -116024,10 +116309,7 @@ function (Fields,
 
          for (const node of this .texCoord_)
          {
-            if (X3DCast (X3DConstants .MultiTextureCoordinate, node))
-               continue;
-
-            const textureCoordinateNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, node);
+            const textureCoordinateNode = X3DCast (X3DConstants .X3DSingleTextureCoordinateNode, node);
 
             if (textureCoordinateNode)
                textureCoordinateNodes .push (textureCoordinateNode);
@@ -116145,8 +116427,8 @@ define ('x_ite/Components/Texturing/MultiTextureTransform',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DTextureTransformNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -116189,7 +116471,7 @@ function (Fields,
       {
          X3DTextureTransformNode .prototype .initialize .call (this);
 
-         this .textureTransform_ .addInterest ("set_textureTransform_", this);
+         this .textureTransform_ .addInterest ("set_textureTransform__", this);
 
          this .set_textureTransform__ ();
       },
@@ -116201,10 +116483,7 @@ function (Fields,
 
          for (const node of this .textureTransform_)
          {
-            if (X3DCast (X3DConstants .MultiTextureTransform, node))
-               continue;
-
-            const textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, node);
+            const textureTransformNode = X3DCast (X3DConstants .X3DSingleTextureTransformNode, node);
 
             if (textureTransformNode)
                textureTransformNodes .push (textureTransformNode);
@@ -116284,7 +116563,7 @@ define ('x_ite/Components/Texturing/PixelTexture',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DTexture2DNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Algorithm",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix3",
@@ -116352,9 +116631,9 @@ function ($,
          {
             case 1:
             {
-               for (var i = 0, index = 0; i < length; ++ i, index += 4)
+               for (let i = 0, index = 0; i < length; ++ i, index += 4)
                {
-                  var pixel = array [i];
+                  const pixel = array [i];
 
                   data [index]     =
                   data [index + 1] =
@@ -116366,9 +116645,9 @@ function ($,
             }
             case 2:
             {
-               for (var i = 0, index = 0; i < length; ++ i, index += 4)
+               for (let i = 0, index = 0; i < length; ++ i, index += 4)
                {
-                  var pixel = array [i];
+                  const pixel = array [i];
 
                   data [index]     =
                   data [index + 1] =
@@ -116380,9 +116659,9 @@ function ($,
             }
             case 3:
             {
-               for (var i = 0, index = 0; i < length; ++ i, index += 4)
+               for (let i = 0, index = 0; i < length; ++ i, index += 4)
                {
-                  var pixel = array [i];
+                  const pixel = array [i];
 
                   data [index]     = (pixel >>> 16) & 255;
                   data [index + 1] = (pixel >>>  8) & 255;
@@ -116394,9 +116673,9 @@ function ($,
             }
             case 4:
             {
-               for (var i = 0, index = 0; i < length; ++ i, index += 4)
+               for (let i = 0, index = 0; i < length; ++ i, index += 4)
                {
-                  var pixel = array [i];
+                  const pixel = array [i];
 
                   data [index]     = (pixel >>> 24);
                   data [index + 1] = (pixel >>> 16) & 255;
@@ -116412,20 +116691,20 @@ function ($,
       {
          // Nearest neighbor scaling algorithm for very small images.
 
-         var
+         const
             output = new Uint8Array (outputWidth * outputHeight * 4),
             scaleX = outputWidth / inputWidth,
             scaleY = outputHeight / inputHeight;
 
-         for (var y = 0; y < outputHeight; ++ y)
+         for (let y = 0; y < outputHeight; ++ y)
          {
-            var
+            const
                inputW  = Math .floor (y / scaleY) * inputWidth,
                outputW = y * outputWidth;
 
-            for (var x = 0; x < outputWidth; ++ x)
+            for (let x = 0; x < outputWidth; ++ x)
             {
-               var
+               const
                   index       = (inputW + Math.floor (x / scaleX)) * 4,
                   indexScaled = (outputW + x) * 4;
 
@@ -116440,14 +116719,16 @@ function ($,
       },
       set_image__: function ()
       {
-         var
+         const
             gl          = this .getBrowser () .getContext (),
-            width       = this .image_ .width,
-            height      = this .image_ .height,
             comp        = this .image_ .comp,
             array       = this .image_ .array,
-            transparent = ! (comp % 2),
-            data        = null;
+            transparent = !(comp % 2);
+
+         let
+            width  = this .image_ .width,
+            height = this .image_ .height,
+            data   = null;
 
          if (width > 0 && height > 0 && comp > 0 && comp < 5)
          {
@@ -116463,18 +116744,17 @@ function ($,
 
                this .convert (data, comp, array .getValue (), array .length);
 
-               var
+               const
                   inputWidth  = width,
                   inputHeight = height;
 
                width  = Algorithm .nextPowerOfTwo (inputWidth)  * 4;
                height = Algorithm .nextPowerOfTwo (inputHeight) * 4;
-
-               data = this .resize (data, inputWidth, inputHeight, width, height);
+               data   = this .resize (data, inputWidth, inputHeight, width, height);
             }
             else
             {
-               var
+               const
                   canvas1   = this .canvas1 [0],
                   canvas2   = this .canvas2 [0],
                   cx1       = canvas1 .getContext("2d"),
@@ -116567,7 +116847,7 @@ define ('x_ite/Components/Texturing/TextureCoordinateGenerator',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Texturing/TextureCoordinateGeneratorModeType",
 ],
 function (Fields,
@@ -117066,8 +117346,8 @@ function (X3DObject)
       },
    });
 
-   for (const property of Reflect .ownKeys (ProfileInfo .prototype))
-      Object .defineProperty (ProfileInfo .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (ProfileInfo .prototype))
+      Object .defineProperty (ProfileInfo .prototype, key, { enumerable: false });
 
    return ProfileInfo;
 });
@@ -117153,8 +117433,8 @@ function (ComponentInfoArray,
       },
    });
 
-   for (const property of Reflect .ownKeys (ProfileInfoArray .prototype))
-      Object .defineProperty (ProfileInfoArray .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (ProfileInfoArray .prototype))
+      Object .defineProperty (ProfileInfoArray .prototype, key, { enumerable: false });
 
    return ProfileInfoArray;
 });
@@ -117853,7 +118133,7 @@ define ('x_ite/Browser/X3DBrowser',[
    "x_ite/InputOutput/FileLoader",
    "x_ite/Parser/XMLParser",
    "x_ite/Parser/JSONParser",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Utility/MapUtilities",
    "locale/gettext",
 ],
@@ -117878,14 +118158,15 @@ function ($,
 {
 "use strict";
 
+   const
+      _loader           = Symbol (),
+      _browserCallbacks = Symbol ();
+
    function X3DBrowser (element)
    {
       X3DBrowserContext .call (this, element);
 
-      this .currentSpeed     = 0;
-      this .currentFrameRate = 60;
-      this .components       = { };
-      this .browserCallbacks = new Map ();
+      this [_browserCallbacks] = new Map ();
 
       this .replaceWorld (this .createScene ());
    };
@@ -117954,23 +118235,19 @@ function ($,
       },
       getName: function ()
       {
-         return this .name;
+         return "X_ITE";
       },
       getVersion: function ()
       {
-         return this .version;
+         return VERSION;
       },
-      getCurrentSpeed: function ()
+      getDescription: function ()
       {
-         return this .currentSpeed;
-      },
-      getCurrentFrameRate: function ()
-      {
-         return this .currentFrameRate;
+         return this .getNotification () .string_ .getValue ()
       },
       setDescription: function (value)
       {
-         this .description = value;
+         this .getNotification () .string_ = value;
       },
       getWorldURL: function ()
       {
@@ -118024,8 +118301,8 @@ function ($,
          this .loadCount_       .removeInterest ("set_loadCount__", this);
          this .prepareEvents () .removeInterest ("bind", this);
 
-         if (this .loader)
-            this .loader .abort ();
+         if (this [_loader])
+            this [_loader] .abort ();
 
          // Remove world.
 
@@ -118196,20 +118473,20 @@ function ($,
             this .loadCount_       .removeInterest ("set_loadCount__", this);
             this .prepareEvents () .removeInterest ("bind", this);
 
-            if (this .loader)
-               this .loader .abort ();
+            if (this [_loader])
+               this [_loader] .abort ();
 
             // Start loading.
 
             this .setBrowserLoading (true);
             this .addLoadCount (this);
 
-            const loader = this .loader = new FileLoader (this .getWorld ());
+            const loader = this [_loader] = new FileLoader (this .getWorld ());
 
             loader .createX3DFromURL (url, parameter,
             function (scene)
             {
-               if (loader !== this .loader)
+               if (loader !== this [_loader])
                {
                   reject ();
                   return;
@@ -118238,7 +118515,7 @@ function ($,
             .bind (this),
             function (fragment)
             {
-               if (loader !== this .loader)
+               if (loader !== this [_loader])
                {
                   reject ();
                   return;
@@ -118253,7 +118530,7 @@ function ($,
             .bind (this),
             function (url, target)
             {
-               if (loader !== this .loader)
+               if (loader !== this [_loader])
                {
                   reject ();
                   return;
@@ -118285,15 +118562,15 @@ function ($,
       },
       addBrowserCallback: function (key, object)
       {
-         this .browserCallbacks .set (key, object);
+         this [_browserCallbacks] .set (key, object);
       },
       removeBrowserCallback: function (key)
       {
-         this .browserCallbacks .delete (key);
+         this [_browserCallbacks] .delete (key);
       },
       getBrowserCallbacks: function ()
       {
-         return this .browserCallbacks;
+         return this [_browserCallbacks];
       },
       callBrowserCallbacks: (function ()
       {
@@ -118301,12 +118578,12 @@ function ($,
 
          return function (browserEvent)
          {
-            if (this .browserCallbacks .size)
+            if (this [_browserCallbacks] .size)
             {
-               MapUtilities .values (browserCallbacks, this .browserCallbacks) .forEach (function (browserCallback)
+               for (const browserCallback of MapUtilities .values (browserCallbacks, this [_browserCallbacks]))
                {
                   browserCallback (browserEvent);
-               });
+               }
             }
          };
       })(),
@@ -118395,7 +118672,7 @@ function ($,
             if (viewpoints .length === 0)
                return;
 
-            for (var i = 0; i < viewpoints .length; ++ i)
+            for (var i = 0, length = viewpoints .length; i < length; ++ i)
             {
                if (viewpoints [i] .isBound_ .getValue ())
                   break;
@@ -118428,7 +118705,7 @@ function ($,
             if (viewpoints .length === 0)
                return;
 
-            for (var i = 0; i < viewpoints .length; ++ i)
+            for (var i = 0, length = viewpoints .length; i < length; ++ i)
             {
                if (viewpoints [i] .isBound_ .getValue ())
                   break;
@@ -118568,16 +118845,33 @@ function ($,
       },
    });
 
+   for (const key of Reflect .ownKeys (X3DBrowser .prototype))
+      Object .defineProperty (X3DBrowser .prototype, key, { enumerable: false });
+
    Object .defineProperty (X3DBrowser .prototype, "name",
    {
-      get: function () { return "X_ITE"; },
+      get: function () { return this .getName (); },
       enumerable: true,
       configurable: false
    });
 
    Object .defineProperty (X3DBrowser .prototype, "version",
    {
-      get: function () { return VERSION; },
+      get: function () { return this .getVersion (); },
+      enumerable: true,
+      configurable: false
+   });
+
+   Object .defineProperty (X3DBrowser .prototype, "currentFrameRate",
+   {
+      get: function () { return this .getCurrentFrameRate (); },
+      enumerable: true,
+      configurable: false
+   });
+
+   Object .defineProperty (X3DBrowser .prototype, "currentSpeed",
+   {
+      get: function () { return this .getCurrentSpeed (); },
       enumerable: true,
       configurable: false
    });
@@ -118586,11 +118880,11 @@ function ($,
    {
       get: function ()
       {
-         return this .getNotification () .string_ .getValue ();
+         return this .getDescription ();
       },
       set: function (value)
       {
-         this .getNotification () .string_ = value;
+         this .setDescription (value);
       },
       enumerable: true,
       configurable: false
@@ -118782,7 +119076,7 @@ define ('x_ite/X3D',[
    "x_ite/Prototype/X3DProtoDeclaration",
    "x_ite/Routing/RouteArray",
    "x_ite/Routing/X3DRoute",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Networking/urls",
    "x_ite/Fallback",
    "standard/Time/MicroTime",

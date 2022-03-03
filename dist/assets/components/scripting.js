@@ -118,7 +118,7 @@ define ('x_ite/Browser/Scripting/evaluate',[],function ()
 define ('x_ite/Components/Scripting/X3DScriptNode',[
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DChildNode,
           X3DUrlObject,
@@ -217,7 +217,7 @@ define ('x_ite/Components/Scripting/Script',[
    "x_ite/Browser/Scripting/evaluate",
    "x_ite/Components/Scripting/X3DScriptNode",
    "x_ite/InputOutput/FileLoader",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function ($,
           X3DFieldDefinition,

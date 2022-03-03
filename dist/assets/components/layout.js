@@ -64,37 +64,43 @@ function ($,
 {
 "use strict";
 
+   const
+      _pointSize               = Symbol (),
+      _screenTextureProperties = Symbol ();
+
    function X3DLayoutContext () { }
 
    X3DLayoutContext .prototype =
    {
-      getScreenTextureProperties: function ()
-      {
-         this .screenTextureProperties = new TextureProperties (this .getPrivateScene ());
-
-         this .screenTextureProperties .boundaryModeS_       = "CLAMP";
-         this .screenTextureProperties .boundaryModeT_       = "CLAMP";
-         this .screenTextureProperties .boundaryModeR_       = "CLAMP";
-         this .screenTextureProperties .minificationFilter_  = "NEAREST";
-         this .screenTextureProperties .magnificationFilter_ = "NEAREST";
-         this .screenTextureProperties .generateMipMaps_     = false;
-
-         this .screenTextureProperties .setup ();
-
-         this .getScreenTextureProperties = function () { return this .screenTextureProperties; };
-
-         return this .screenTextureProperties;
-      },
       getPointSize: function ()
       {
-         if (this .pointSize === undefined)
+         if (this [_pointSize] === undefined)
          {
-            var div = $("<div></div>") .css ("height", "1in") .css ("display", "none");
-            this .pointSize = div .appendTo ($("body")) .height () / 72;
+            const div = $("<div></div>") .css ("height", "1in") .css ("display", "none");
+            this [_pointSize] = div .appendTo ($("body")) .height () / 72;
             div .remove ();
          }
 
-         return this .pointSize;
+         return this [_pointSize];
+      },
+      getScreenTextureProperties: function ()
+      {
+         this [_screenTextureProperties] = new TextureProperties (this .getPrivateScene ());
+
+         this [_screenTextureProperties] .boundaryModeS_       = "CLAMP";
+         this [_screenTextureProperties] .boundaryModeT_       = "CLAMP";
+         this [_screenTextureProperties] .boundaryModeR_       = "CLAMP";
+         this [_screenTextureProperties] .minificationFilter_  = "NEAREST";
+         this [_screenTextureProperties] .magnificationFilter_ = "NEAREST";
+         this [_screenTextureProperties] .generateMipMaps_     = false;
+
+         this [_screenTextureProperties] .setup ();
+
+         this .getScreenTextureProperties = function () { return this [_screenTextureProperties]; };
+
+         Object .defineProperty (this, "getScreenTextureProperties", { enumerable: false });
+
+         return this [_screenTextureProperties];
       },
    };
 
@@ -152,7 +158,7 @@ function ($,
 
 define ('x_ite/Components/Layout/X3DLayoutNode',[
    "x_ite/Components/Core/X3DChildNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DChildNode,
           X3DConstants)
@@ -228,8 +234,8 @@ define ('x_ite/Components/Layout/Layout',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Layout/X3DLayoutNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
@@ -869,9 +875,9 @@ define ('x_ite/Components/Layout/LayoutGroup',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
@@ -1061,7 +1067,7 @@ define ('x_ite/Components/Layout/LayoutLayer',[
    "x_ite/Components/Layering/X3DLayerNode",
    "x_ite/Components/Layout/LayoutGroup",
    "x_ite/Components/Navigation/OrthoViewpoint",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -1233,7 +1239,7 @@ function ($,
       },
       update: (function ()
       {
-         var
+         const
             min = new Vector3 (0, 0, 0),
             max = new Vector3 (1, 1, 0);
 
@@ -1654,7 +1660,7 @@ define ('x_ite/Components/Layout/ScreenFontStyle',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Text/X3DFontStyleNode",
    "x_ite/Browser/Layout/ScreenText",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -1766,8 +1772,8 @@ define ('x_ite/Components/Layout/ScreenGroup',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DGroupingNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/TraverseType",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Rendering/TraverseType",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Vector4",
    "standard/Math/Numbers/Matrix4",

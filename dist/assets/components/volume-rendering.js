@@ -57,7 +57,7 @@ const
 
 define ('x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode',[
    "x_ite/Components/Core/X3DNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DNode,
           X3DConstants)
@@ -192,7 +192,7 @@ function (X3DNode,
 
 define ('x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode',[
    "x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DVolumeRenderStyleNode,
           X3DConstants)
@@ -268,8 +268,8 @@ define ('x_ite/Components/VolumeRendering/OpacityMapVolumeStyle',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -452,55 +452,66 @@ function (PixelTexture,
 {
 "use strict";
 
+   const
+      _defaultVolumeStyle        = Symbol (),
+      _defaultBlendedVolumeStyle = Symbol (),
+      _defaultTransferFunction   = Symbol ();
+
    function X3DVolumeRenderingContext () { }
 
    X3DVolumeRenderingContext .prototype =
    {
       getDefaultVolumeStyle: function ()
       {
-         this .defaultVolumeStyle = new OpacityMapVolumeStyle (this .getPrivateScene ());
-         this .defaultVolumeStyle .setup ();
+         this [_defaultVolumeStyle] = new OpacityMapVolumeStyle (this .getPrivateScene ());
+         this [_defaultVolumeStyle] .setup ();
 
-         this .getDefaultVolumeStyle = function () { return this .defaultVolumeStyle; };
+         this .getDefaultVolumeStyle = function () { return this [_defaultVolumeStyle]; };
 
-         return this .defaultVolumeStyle;
+         Object .defineProperty (this, "getDefaultVolumeStyle", { enumerable: false });
+
+         return this [_defaultVolumeStyle];
       },
       getDefaultBlendedVolumeStyle: function ()
       {
-         this .defaultBlendedVolumeStyle = new OpacityMapVolumeStyle (this .getPrivateScene ());
-         this .defaultBlendedVolumeStyle .setup ();
+         this [_defaultBlendedVolumeStyle] = new OpacityMapVolumeStyle (this .getPrivateScene ());
+         this [_defaultBlendedVolumeStyle] .setup ();
 
-         this .getDefaultBlendedVolumeStyle = function () { return this .defaultBlendedVolumeStyle; };
+         this .getDefaultBlendedVolumeStyle = function () { return this [_defaultBlendedVolumeStyle]; };
 
-         return this .defaultBlendedVolumeStyle;
+         Object .defineProperty (this, "getDefaultBlendedVolumeStyle", { enumerable: false });
+
+         return this [_defaultBlendedVolumeStyle];
       },
       getDefaultTransferFunction: function ()
       {
-         this .defaultTransferFunction = new PixelTexture (this .getPrivateScene ());
+         this [_defaultTransferFunction] = new PixelTexture (this .getPrivateScene ());
 
-         var textureProperties = new TextureProperties (this .getPrivateScene ());
+         const textureProperties = new TextureProperties (this .getPrivateScene ());
 
          textureProperties .generateMipMaps_ = true;
          textureProperties .boundaryModeS_   = "CLAMP_TO_EDGE";
          textureProperties .boundaryModeT_   = "REPEAT";
 
-         this .defaultTransferFunction .textureProperties_ = textureProperties;
+         this [_defaultTransferFunction] .textureProperties_ = textureProperties;
 
-         this .defaultTransferFunction .image_ .width  = 256;
-         this .defaultTransferFunction .image_ .height = 1;
-         this .defaultTransferFunction .image_ .comp   = 2;
+         this [_defaultTransferFunction] .image_ .width  = 256;
+         this [_defaultTransferFunction] .image_ .height = 1;
+         this [_defaultTransferFunction] .image_ .comp   = 2;
 
-         var array = this .defaultTransferFunction .image_ .array;
+         const array = this [_defaultTransferFunction] .image_ .array;
 
-         for (var i = 0; i < 256; ++ i)
+         for (let i = 0; i < 256; ++ i)
             array [i] = (i << 8) | i;
 
-         textureProperties             .setup ();
-         this .defaultTransferFunction .setup ();
+         textureProperties               .setup ();
+         this [_defaultTransferFunction] .setup ();
 
-         this .getDefaultTransferFunction = function () { return this .defaultTransferFunction; };
+         this .getDefaultTransferFunction = function () { return this [_defaultTransferFunction]; };
 
-         return this .defaultTransferFunction;
+         Object .defineProperty (this, "getDefaultTransferFunction", { enumerable: false });
+
+         return this [_defaultTransferFunction];
       },
    };
 
@@ -561,8 +572,8 @@ define ('x_ite/Components/VolumeRendering/BlendedVolumeStyle',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
    "x_ite/DEBUG",
 ],
 function (Fields,
@@ -962,7 +973,7 @@ define ('x_ite/Components/VolumeRendering/BoundaryEnhancementVolumeStyle',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -1114,8 +1125,8 @@ define ('x_ite/Components/VolumeRendering/CartoonVolumeStyle',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -1424,8 +1435,8 @@ define ('x_ite/Components/VolumeRendering/ComposedVolumeStyle',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -1649,8 +1660,8 @@ define ('x_ite/Components/VolumeRendering/EdgeEnhancementVolumeStyle',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -1827,7 +1838,7 @@ define ('x_ite/Components/VolumeRendering/X3DVolumeDataNode',[
    "x_ite/Fields",
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/Grouping/X3DBoundedObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Core/TextureQuality",
    "standard/Math/Numbers/Vector3",
 ],
@@ -2065,8 +2076,8 @@ define ('x_ite/Components/VolumeRendering/IsoSurfaceVolumeData',[
    "x_ite/Components/VolumeRendering/X3DVolumeDataNode",
    "x_ite/Components/Shaders/ComposedShader",
    "x_ite/Components/Shaders/ShaderPart",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
    "text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
    "text!x_ite/Browser/VolumeRendering/VolumeStyle.fs",
    "x_ite/DEBUG",
@@ -2464,7 +2475,7 @@ define ('x_ite/Components/VolumeRendering/ProjectionVolumeStyle',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/VolumeRendering/X3DVolumeRenderStyleNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -2694,8 +2705,8 @@ define ('x_ite/Components/VolumeRendering/SegmentedVolumeData',[
    "x_ite/Components/VolumeRendering/X3DVolumeDataNode",
    "x_ite/Components/Shaders/ComposedShader",
    "x_ite/Components/Shaders/ShaderPart",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
    "text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
    "text!x_ite/Browser/VolumeRendering/VolumeStyle.fs",
    "x_ite/DEBUG",
@@ -3006,8 +3017,8 @@ define ('x_ite/Components/VolumeRendering/ShadedVolumeStyle',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -3289,8 +3300,8 @@ define ('x_ite/Components/VolumeRendering/SilhouetteEnhancementVolumeStyle',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -3467,8 +3478,8 @@ define ('x_ite/Components/VolumeRendering/ToneMappedVolumeStyle',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/VolumeRendering/X3DComposableVolumeRenderStyleNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -3657,8 +3668,8 @@ define ('x_ite/Components/VolumeRendering/VolumeData',[
    "x_ite/Components/VolumeRendering/X3DVolumeDataNode",
    "x_ite/Components/Shaders/ComposedShader",
    "x_ite/Components/Shaders/ShaderPart",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
    "text!x_ite/Browser/VolumeRendering/VolumeStyle.vs",
    "text!x_ite/Browser/VolumeRendering/VolumeStyle.fs",
    "x_ite/DEBUG",

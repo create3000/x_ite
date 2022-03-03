@@ -761,7 +761,7 @@ function (Vector3,
       },
       slerp: function (source, destination, t)
       {
-         var
+         const
             sourceLength      = source      .abs (),
             destinationLength = destination .abs ();
 
@@ -837,13 +837,14 @@ function (ReferenceEllipsoids,
 {
 "use strict";
 
-   var
-      i   = 0,
+   let i = 0;
+
+   const
       GD  = i ++,
       UTM = i ++,
       GC  = i ++;
 
-   var CoordinateSystems = {
+   const CoordinateSystems = {
       GD:  GD,
       GDC: GD,
       UTM: UTM,
@@ -852,9 +853,9 @@ function (ReferenceEllipsoids,
       GS:  GC,
    };
 
-   var Zone = /^Z(\d+)$/;
+   const Zone = /^Z(\d+)$/;
 
-   var Geospatial =
+   const Geospatial =
    {
       GD: GD,
       UTM: UTM,
@@ -890,9 +891,9 @@ function (ReferenceEllipsoids,
       },
       getCoordinateSystem: function (geoSystem)
       {
-         for (var i = 0, length = geoSystem .length; i < length; ++ i)
+         for (const gs of geoSystem)
          {
-            var coordinateSystem = CoordinateSystems [geoSystem [i]];
+            const coordinateSystem = CoordinateSystems [gs];
 
             if (coordinateSystem !== undefined)
                return coordinateSystem;
@@ -902,9 +903,9 @@ function (ReferenceEllipsoids,
       },
       getEllipsoid: function (geoSystem)
       {
-         for (var i = 0, length = geoSystem .length; i < length; ++ i)
+         for (const gs of geoSystem)
          {
-            var ellipsoid = ReferenceEllipsoids [geoSystem [i]];
+            const ellipsoid = ReferenceEllipsoids [gs];
 
             if (ellipsoid !== undefined)
                return ellipsoid;
@@ -914,12 +915,12 @@ function (ReferenceEllipsoids,
       },
       getEllipsoidString: function (geoSystem)
       {
-         for (var i = 0, length = geoSystem .length; i < length; ++ i)
+         for (const gs of geoSystem)
          {
-            var ellipsoid = ReferenceEllipsoids [geoSystem [i]];
+            const ellipsoid = ReferenceEllipsoids [gs];
 
             if (ellipsoid !== undefined)
-               return geoSystem [i];
+               return gs;
          }
 
          return "WE";
@@ -946,9 +947,9 @@ function (ReferenceEllipsoids,
       },
       getLatitudeFirst: function (geoSystem)
       {
-         for (var i = 0, length = geoSystem .length; i < length; ++ i)
+         for (const gs of geoSystem)
          {
-            if (geoSystem [i] === "longitude_first")
+            if (gs === "longitude_first")
                return false;
          }
 
@@ -956,9 +957,9 @@ function (ReferenceEllipsoids,
       },
       getNorthingFirst: function (geoSystem)
       {
-         for (var i = 0, length = geoSystem .length; i < length; ++ i)
+         for (const gs of geoSystem)
          {
-            if (geoSystem [i] === "easting_first")
+            if (gs === "easting_first")
                return false;
          }
 
@@ -966,9 +967,9 @@ function (ReferenceEllipsoids,
       },
       getZone: function (geoSystem)
       {
-         for (var i = 0, length = geoSystem .length; i < length; ++ i)
+         for (const gs of geoSystem)
          {
-            var match = geoSystem [i] .match (Zone);
+            const match = gs .match (Zone);
 
             if (match)
                return parseInt (match [1]);
@@ -978,9 +979,9 @@ function (ReferenceEllipsoids,
       },
       getNorthernHemisphere: function (geoSystem)
       {
-         for (var i = 0, length = geoSystem .length; i < length; ++ i)
+         for (const gs of geoSystem)
          {
-            if (geoSystem [i] === "S")
+            if (gs === "S")
                return false;
          }
 
@@ -1041,9 +1042,9 @@ function (ReferenceEllipsoids,
 
 
 define ('x_ite/Components/Geospatial/X3DGeospatialObject',[
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Geospatial/Geospatial",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DCast",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
 ],
@@ -1324,7 +1325,7 @@ define ('x_ite/Components/Geospatial/GeoCoordinate',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DCoordinateNode",
    "x_ite/Components/Geospatial/X3DGeospatialObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/Triangle3",
    "standard/Math/Numbers/Vector3",
 ],
@@ -1575,8 +1576,8 @@ define ('x_ite/Components/Geospatial/GeoElevationGrid',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Components/Geospatial/X3DGeospatialObject",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
    "standard/Math/Geometry/Triangle3",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
@@ -2021,8 +2022,8 @@ define ('x_ite/Components/Geospatial/GeoLOD',[
    "x_ite/Components/Core/X3DChildNode",
    "x_ite/Components/Grouping/X3DBoundedObject",
    "x_ite/Components/Geospatial/X3DGeospatialObject",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/TraverseType",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Rendering/TraverseType",
    "x_ite/Components/Grouping/Group",
    "x_ite/Components/Networking/Inline",
    "standard/Math/Numbers/Vector3",
@@ -2486,7 +2487,7 @@ define ('x_ite/Components/Geospatial/GeoLocation',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DTransformMatrix3DNode",
    "x_ite/Components/Geospatial/X3DGeospatialObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
@@ -2611,7 +2612,7 @@ define ('x_ite/Components/Geospatial/GeoMetadata',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DInfoNode",
    "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -2727,7 +2728,7 @@ define ('x_ite/Components/Geospatial/GeoOrigin',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Core/X3DNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Geospatial/Geospatial",
 ],
 function (Fields,
@@ -2846,7 +2847,7 @@ define ('x_ite/Components/Geospatial/GeoPositionInterpolator',[
    "x_ite/Components/Interpolation/X3DInterpolatorNode",
    "x_ite/Components/Geospatial/X3DGeospatialObject",
    "x_ite/Browser/Geospatial/Geocentric",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
@@ -2999,7 +3000,7 @@ define ('x_ite/Components/Geospatial/GeoProximitySensor',[
    "x_ite/Components/EnvironmentalSensor/X3DEnvironmentalSensorNode",
    "x_ite/Components/Geospatial/X3DGeospatialObject",
    "x_ite/Components/EnvironmentalSensor/ProximitySensor",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
@@ -3157,7 +3158,7 @@ define ('x_ite/Components/Geospatial/GeoTouchSensor',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/PointingDeviceSensor/X3DTouchSensorNode",
    "x_ite/Components/Geospatial/X3DGeospatialObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
 ],
@@ -3304,7 +3305,7 @@ define ('x_ite/Components/Geospatial/GeoTransform',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Grouping/X3DTransformMatrix3DNode",
    "x_ite/Components/Geospatial/X3DGeospatialObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Matrix4",
 ],
 function (Fields,
@@ -3458,7 +3459,7 @@ define ('x_ite/Components/Geospatial/GeoViewpoint',[
    "x_ite/Components/Geospatial/X3DGeospatialObject",
    "x_ite/Components/Interpolation/ScalarInterpolator",
    "x_ite/Components/Navigation/NavigationInfo",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Geometry/Camera",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",

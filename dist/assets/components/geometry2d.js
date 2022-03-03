@@ -276,16 +276,16 @@ function (X3DBaseNode,
       },
       build: function ()
       {
-         var
+         const
             dimension = this .dimension_ .getValue (),
             angle     = Math .PI * 2 / dimension,
             vertices  = this .vertices;
 
          vertices .length = 0;
 
-         for (var n = 0; n < dimension; ++ n)
+         for (let n = 0; n < dimension; ++ n)
          {
-            var point = Complex .Polar (1, angle * n);
+            const point = Complex .Polar (1, angle * n);
 
             vertices .push (point .real, point .imag, 0, 1);
          }
@@ -412,7 +412,7 @@ function (X3DBaseNode,
       },
       build: (function ()
       {
-         var
+         const
             half      = new Complex (0.5, 0.5),
             texCoord1 = new Complex (0, 0),
             texCoord2 = new Complex (0, 0),
@@ -421,7 +421,7 @@ function (X3DBaseNode,
 
          return function ()
          {
-            var
+            const
                dimension      = this .dimension_ .getValue (),
                angle          = Math .PI * 2 / dimension,
                circleVertices = this .circleVertices,
@@ -434,9 +434,9 @@ function (X3DBaseNode,
             diskNormals    .length = 0;
             diskVertices   .length = 0;
 
-            for (var n = 0; n < dimension; ++ n)
+            for (let n = 0; n < dimension; ++ n)
             {
-               var
+               const
                   theta1 = angle * n,
                   theta2 = angle * (n + 1);
 
@@ -570,7 +570,7 @@ function (Fields,
          this .geometry .texCoord_ = new TextureCoordinate (this .getExecutionContext ());
          this .geometry .coord_    = new Coordinate (this .getExecutionContext ());
 
-         var
+         const
             geometry = this .geometry,
             texCoord = this .geometry .texCoord_ .getValue (),
             coord    = this .geometry .coord_ .getValue ();
@@ -668,16 +668,6 @@ function (Arc2DOptions,
 {
 "use strict";
 
-   function getOptionNode (fun, name, Type)
-   {
-      this [name] = new Type (this .getPrivateScene ());
-      this [name] .setup ();
-
-      this [fun] = function () { return this [name]; };
-
-      return this [name];
-   }
-
    function X3DGeometry2DContext () { }
 
    X3DGeometry2DContext .prototype =
@@ -688,27 +678,27 @@ function (Arc2DOptions,
       },
       getArc2DOptions: function ()
       {
-         return getOptionNode .call (this, "getArc2DOptions", "arc2DOptions", Arc2DOptions);
+         return getOptionNode .call (this, "getArc2DOptions", Arc2DOptions);
       },
       getArcClose2DOptions: function ()
       {
-         return getOptionNode .call (this, "getArcClose2DOptions", "arcClose2DOptions", ArcClose2DOptions);
+         return getOptionNode .call (this, "getArcClose2DOptions", ArcClose2DOptions);
       },
       getCircle2DOptions: function ()
       {
-         return getOptionNode .call (this, "getCircle2DOptions", "circle2DOptions", Circle2DOptions);
+         return getOptionNode .call (this, "getCircle2DOptions", Circle2DOptions);
       },
       getDisk2DOptions: function ()
       {
-         return getOptionNode .call (this, "getDisk2DOptions", "disk2DOptions", Disk2DOptions);
+         return getOptionNode .call (this, "getDisk2DOptions", Disk2DOptions);
       },
       getRectangle2DOptions: function ()
       {
-         return getOptionNode .call (this, "getRectangle2DOptions", "rectangle2DOptions", Rectangle2DOptions);
+         return getOptionNode .call (this, "getRectangle2DOptions", Rectangle2DOptions);
       },
       setGeometry2DPrimitiveQuality: function (primitiveQuality)
       {
-         var
+         const
             arc      = this .getArc2DOptions (),
             arcClose = this .getArcClose2DOptions (),
             circle   = this .getCircle2DOptions (),
@@ -743,6 +733,19 @@ function (Arc2DOptions,
          }
       },
    };
+
+   function getOptionNode (key, OptionNode)
+   {
+      const optionNode = new OptionNode (this .getPrivateScene ());
+
+      optionNode .setup ();
+
+      this [key] = function () { return optionNode; };
+
+      Object .defineProperty (this, key, { enumerable: false });
+
+      return optionNode;
+   }
 
    return X3DGeometry2DContext;
 });
@@ -801,7 +804,7 @@ define ('x_ite/Components/Geometry2D/Arc2D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Complex",
    "standard/Math/Algorithm",
 ],
@@ -977,7 +980,7 @@ define ('x_ite/Components/Geometry2D/ArcClose2D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Complex",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Algorithm",
@@ -1206,7 +1209,7 @@ define ('x_ite/Components/Geometry2D/Circle2D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -1343,7 +1346,7 @@ define ('x_ite/Components/Geometry2D/Disk2D',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -1617,7 +1620,7 @@ define ('x_ite/Components/Geometry2D/Polyline2D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -1735,7 +1738,7 @@ define ('x_ite/Components/Geometry2D/Polypoint2D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DLineGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -1860,7 +1863,7 @@ define ('x_ite/Components/Geometry2D/Rectangle2D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Numbers/Vector3",
 ],
@@ -2006,7 +2009,7 @@ define ('x_ite/Components/Geometry2D/TriangleSet2D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Rendering/X3DGeometryNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,

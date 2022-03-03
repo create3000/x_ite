@@ -57,7 +57,7 @@ const
 
 define ('x_ite/Components/ParticleSystems/X3DParticleEmitterNode',[
    "x_ite/Components/Core/X3DNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Geometry/Line3",
@@ -470,7 +470,7 @@ define ('x_ite/Components/ParticleSystems/PointEmitter',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
 ],
 function (Fields,
@@ -620,18 +620,22 @@ function (PointEmitter)
 {
 "use strict";
 
+   const _defaultEmitter = Symbol ();
+
    function X3DParticleSystemsContext () { }
 
    X3DParticleSystemsContext .prototype =
    {
       getDefaultEmitter: function ()
       {
-         this .defaultEmitter = new PointEmitter (this .getPrivateScene ());
-         this .defaultEmitter .setup ();
+         this [_defaultEmitter] = new PointEmitter (this .getPrivateScene ());
+         this [_defaultEmitter] .setup ();
 
-         this .getDefaultEmitter = function () { return this .defaultEmitter; };
+         this .getDefaultEmitter = function () { return this [_defaultEmitter]; };
 
-         return this .defaultEmitter;
+         Object .defineProperty (this, "getDefaultEmitter", { enumerable: false });
+v
+         return this [_defaultEmitter];
       },
    };
 
@@ -689,7 +693,7 @@ function (PointEmitter)
 
 define ('x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode',[
    "x_ite/Components/Core/X3DNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DNode,
           X3DConstants)
@@ -767,8 +771,8 @@ define ('x_ite/Components/ParticleSystems/BoundedPhysicsModel',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -898,7 +902,7 @@ define ('x_ite/Components/ParticleSystems/ConeEmitter',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
 ],
@@ -1050,7 +1054,7 @@ define ('x_ite/Components/ParticleSystems/ExplosionEmitter',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -1176,7 +1180,7 @@ define ('x_ite/Components/ParticleSystems/ForcePhysicsModel',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -1644,9 +1648,9 @@ define ('x_ite/Components/ParticleSystems/ParticleSystem',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Shape/X3DShapeNode",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
    "x_ite/Browser/Shape/AlphaMode",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Vector4",
@@ -3165,7 +3169,7 @@ define ('x_ite/Components/ParticleSystems/PolylineEmitter',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
    "x_ite/Components/Rendering/IndexedLineSet",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Algorithm",
 ],
@@ -3424,8 +3428,8 @@ define ('x_ite/Components/ParticleSystems/SurfaceEmitter',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
    "standard/Math/Geometry/Triangle3",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Algorithm",
@@ -3685,7 +3689,7 @@ define ('x_ite/Components/ParticleSystems/VolumeEmitter',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ParticleSystems/X3DParticleEmitterNode",
    "x_ite/Components/Geometry3D/IndexedFaceSet",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Geometry/Line3",
@@ -4011,7 +4015,7 @@ define ('x_ite/Components/ParticleSystems/WindPhysicsModel',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/ParticleSystems/X3DParticlePhysicsModelNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Algorithm",
 ],

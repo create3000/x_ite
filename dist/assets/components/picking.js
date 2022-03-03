@@ -59,9 +59,9 @@ define ('x_ite/Browser/Picking/MatchCriterion',[],function ()
 {
 "use strict";
 
-   var i = 0;
+   let i = 0;
 
-   var MatchCriterion =
+   const MatchCriterion =
    {
       MATCH_ANY:      i ++,
       MATCH_EVERY:    i ++,
@@ -124,9 +124,9 @@ define ('x_ite/Browser/Picking/IntersectionType',[],function ()
 {
 "use strict";
 
-   var i = 0;
+   let i = 0;
 
-   var IntersectionType =
+   const IntersectionType =
    {
       BOUNDS:   i ++,
       GEOMETRY: i ++,
@@ -188,9 +188,9 @@ define ('x_ite/Browser/Picking/SortOrder',[],function ()
 {
 "use strict";
 
-   var i = 0;
+   let i = 0;
 
-   var SortOrder =
+   const SortOrder =
    {
       ANY:        i ++,
       CLOSEST:    i ++,
@@ -253,8 +253,8 @@ define ('x_ite/Browser/Picking/SortOrder',[],function ()
 define ('x_ite/Components/Picking/X3DPickSensorNode',[
    "x_ite/Fields",
    "x_ite/Components/Core/X3DSensorNode",
-   "x_ite/Bits/TraverseType",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Rendering/TraverseType",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Picking/MatchCriterion",
    "x_ite/Browser/Picking/IntersectionType",
    "x_ite/Browser/Picking/SortOrder",
@@ -703,7 +703,7 @@ define ('x_ite/Components/Picking/LinePickSensor',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Picking/X3DPickSensorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Picking/IntersectionType",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Matrix4",
@@ -1049,7 +1049,7 @@ function (Fields,
 
 
 define ('x_ite/Components/Picking/X3DPickableObject',[
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DConstants)
 {
@@ -1145,8 +1145,8 @@ define ('x_ite/Components/Picking/PickableGroup',[
    "x_ite/Components/Grouping/X3DGroupingNode",
    "x_ite/Components/Picking/X3DPickableObject",
    "x_ite/Browser/Picking/MatchCriterion",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/TraverseType",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Rendering/TraverseType",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -1370,7 +1370,7 @@ function (Vector3,
 {
 "use strict";
 
-   var Ammo = RigidBodyPhysics .Ammo;
+   const Ammo = RigidBodyPhysics .Ammo;
 
    function VolumePicker ()
    {
@@ -1414,7 +1414,7 @@ function (Vector3,
       },
       setChildShape: (function ()
       {
-         var
+         const
             translation = new Vector3 (0, 0, 0),
             rotation    = new Rotation4 (0, 0, 1, 0),
             scale       = new Vector3 (1, 1, 1),
@@ -1458,17 +1458,17 @@ function (Vector3,
       {
          this .collisionWorld .performDiscreteCollisionDetection ();
 
-         var numManifolds = this .dispatcher .getNumManifolds ();
+         const numManifolds = this .dispatcher .getNumManifolds ();
 
-         for (var i = 0; i < numManifolds; ++ i)
+         for (let i = 0; i < numManifolds; ++ i)
          {
-            var
+            const
                contactManifold = this .dispatcher .getManifoldByIndexInternal (i),
                numContacts     = contactManifold .getNumContacts ();
 
-            for (var j = 0; j < numContacts; ++ j)
+            for (let j = 0; j < numContacts; ++ j)
             {
-               var pt = contactManifold .getContactPoint (j);
+               const pt = contactManifold .getContactPoint (j);
 
                if (pt .getDistance () <= 0)
                   return true;
@@ -1479,14 +1479,14 @@ function (Vector3,
       },
       getTransform: (function ()
       {
-         var
+         const
             T = new Ammo .btTransform (),
             o = new Ammo .btVector3 (0, 0, 0),
             m = new Matrix4 ();
 
          return function (translation, rotation, transform)
          {
-            var t = transform || T;
+            const t = transform || T;
 
             m .set (translation, rotation);
 
@@ -1560,8 +1560,8 @@ define ('x_ite/Components/Picking/PointPickSensor',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Picking/X3DPickSensorNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Picking/IntersectionType",
    "x_ite/Browser/Picking/VolumePicker",
    "standard/Math/Numbers/Vector3",
@@ -1917,7 +1917,7 @@ define ('x_ite/Components/Picking/PrimitivePickSensor',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Picking/X3DPickSensorNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Picking/IntersectionType",
    "x_ite/Browser/Picking/VolumePicker",
    "standard/Math/Numbers/Vector3",
@@ -2189,8 +2189,8 @@ define ('x_ite/Components/Picking/VolumePickSensor',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Picking/X3DPickSensorNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Picking/IntersectionType",
    "x_ite/Browser/Picking/VolumePicker",
    "standard/Math/Numbers/Vector3",

@@ -57,14 +57,14 @@ const
 
 define ('x_ite/Components/Texturing3D/X3DTexture3DNode',[
    "x_ite/Components/Texturing/X3DSingleTextureNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DSingleTextureNode,
           X3DConstants)
 {
 "use strict";
 
-   var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+   const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
    function X3DTexture3DNode (executionContext)
    {
@@ -126,7 +126,7 @@ function (X3DSingleTextureNode,
       },
       clearTexture: function ()
       {
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          this .setTexture (1, 1, 1, false, gl .RGBA, defaultData);
 
@@ -141,7 +141,7 @@ function (X3DSingleTextureNode,
             this .depth  = depth;
             this .data   = data;
 
-            var gl = this .getBrowser () .getContext ();
+            const gl = this .getBrowser () .getContext ();
 
             if (gl .getVersion () < 2)
                return;
@@ -239,8 +239,8 @@ define ('x_ite/Components/Texturing3D/ComposedTexture3D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing3D/X3DTexture3DNode",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/X3DCast",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Base/X3DCast",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -300,34 +300,34 @@ function (Fields,
       },
       set_texture__: function ()
       {
-         var textureNodes = this .textureNodes;
+         const textureNodes = this .textureNodes;
 
-         for (var i = 0, length = textureNodes .length; i < length; ++ i)
-            textureNodes [i] .removeInterest ("update", this);
+         for (const textureNode of textureNodes)
+            textureNode .removeInterest ("update", this);
 
          textureNodes .length = 0;
 
-         for (var i = 0, length = this .texture_ .length; i < length; ++ i)
+         for (const node of this .texture_)
          {
-            var textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this .texture_ [i]);
+            const textureNode = X3DCast (X3DConstants .X3DTexture2DNode, node);
 
             if (textureNode)
                textureNodes .push (textureNode);
          }
 
-         for (var i = 0, length = textureNodes .length; i < length; ++ i)
-            textureNodes [i] .addInterest ("update", this);
+         for (const textureNode of textureNodes)
+            textureNode .addInterest ("update", this);
 
          this .update ();
       },
       update: function ()
       {
-         var
-            textureNodes = this .textureNodes,
-            complete     = 0;
+         const textureNodes = this .textureNodes;
 
-         for (var i = 0, length = textureNodes .length; i < length; ++ i)
-            complete += textureNodes [i] .checkLoadState () === X3DConstants .COMPLETE_STATE;
+         let complete = 0;
+
+         for (const textureNode of textureNodes)
+            complete += textureNode .checkLoadState () === X3DConstants .COMPLETE_STATE;
 
          if (textureNodes .length === 0 || complete !== textureNodes .length)
          {
@@ -337,31 +337,32 @@ function (Fields,
          }
          else
          {
-            var
+            const
                gl           = this .getBrowser () .getContext (),
                textureNode0 = textureNodes [0],
                width        = textureNode0 .getWidth (),
                height       = textureNode0 .getHeight (),
                depth        = textureNodes .length,
-               transparent  = 0,
                size         = width * height * 4,
                data         = new Uint8Array (size * depth);
 
-            for (var i = 0, d = 0; i < depth; ++ i)
+            let transparent = 0;
+
+            for (let i = 0, d = 0; i < depth; ++ i)
             {
-               var
+               const
                   textureNode = this .textureNodes [i],
                   tData       = textureNode .getData ();
 
                transparent += textureNode .getTransparent ();
 
-               for (var t = 0; t < size; ++ t, ++ d)
+               for (let t = 0; t < size; ++ t, ++ d)
                {
                   data [d] = tData [t];
                }
             }
 
-            this .setTexture (width, height, depth, !! transparent, gl .RGBA, data);
+            this .setTexture (width, height, depth, !!transparent, gl .RGBA, data);
             this .loadState_ = X3DConstants .COMPLETE_STATE;
          }
       },
@@ -960,7 +961,9 @@ function (pako)
 
             Grammar .data .parse (this);
 
-            var raw = pako .ungzip (this .result [1], { to: "raw" });
+            const
+               buffer = this .binaryStringToBuffer (this .result [1]),
+               raw    = pako .ungzip (buffer, { to: "raw" });
 
             this .rawArray (raw);
          }
@@ -968,6 +971,15 @@ function (pako)
          {
             throw new Error ("Invalid NRRD data.");
          }
+      },
+      binaryStringToBuffer: function (string)
+      {
+         const buffer = new Uint8Array (string .length);
+
+         for (let i = 0, length = string .length; i < length; ++ i)
+            buffer [i] = string .charCodeAt (i);
+
+         return buffer;
       },
       getEndianess: function ()
       {
@@ -1063,7 +1075,7 @@ define('zlib', ['zlib/dummy'], function (main) { return main; });
 
 define("zlib/dummy", function(){});
 
-/*! dicom-parser - 1.8.5 - 2021-10-06 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
+/*! dicom-parser - 1.8.12 - 2022-02-07 | (c) 2017 Chris Hafey | https://github.com/cornerstonejs/dicomParser */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("zlib"));
@@ -1139,7 +1151,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "10548f5b41ce6f922e03";
+/******/ 	var hotCurrentHash = "55a69ee645a02abc7461";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -2150,7 +2162,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Reads a string of 8-bit characters from an array of bytes and advances
  * the position by length bytes.  A null terminator will end the string
- * but will not effect advancement of the position.  Trailing and leading
+ * but will not affect advancement of the position.  Trailing and leading
  * spaces are preserved (not trimmed)
  * @param byteArray the byteArray to read from
  * @param position the position in the byte array to read from
@@ -2204,7 +2216,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
 
 
@@ -2293,6 +2305,11 @@ var ByteStream = /*#__PURE__*/function () {
       this.position += numBytes;
       return new ByteStream(this.byteArrayParser, byteArrayView);
     }
+  }, {
+    key: "getSize",
+    value: function getSize() {
+      return this.byteArray.length;
+    }
     /**
        *
        * Parses an unsigned int 16 from a byte array and advances
@@ -2365,7 +2382,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
 
 /**
@@ -2564,6 +2581,7 @@ var DataSet = /*#__PURE__*/function () {
     key: "string",
     value: function string(tag, index) {
       var element = this.elements[tag];
+      if (element && element.Value) return element.Value;
 
       if (element && element.length > 0) {
         var fixedString = Object(_byteArrayParser_js__WEBPACK_IMPORTED_MODULE_0__["readFixedString"])(this.byteArray, element.dataOffset, element.length);
@@ -2786,7 +2804,8 @@ function findEndOfEncapsulatedElement(byteStream, element, warnings) {
   }
 
   var basicOffsetTableItemlength = byteStream.readUint32();
-  var numFragments = basicOffsetTableItemlength / 4;
+  var numFragments = basicOffsetTableItemlength / 4; // Bad idea to not include the basic offset table, as it means writing the data out is inconsistent with reading it
+  // but leave this for now.  To fix later.
 
   for (var i = 0; i < numFragments; i++) {
     var offset = byteStream.readUint32();
@@ -3049,7 +3068,9 @@ var dicomParser = {
   readSequenceItemsExplicit: _readSequenceElementExplicit_js__WEBPACK_IMPORTED_MODULE_20__["default"],
   readSequenceItemsImplicit: _readSequenceElementImplicit_js__WEBPACK_IMPORTED_MODULE_21__["default"],
   readSequenceItem: _readSequenceItem_js__WEBPACK_IMPORTED_MODULE_22__["default"],
-  readTag: _readTag_js__WEBPACK_IMPORTED_MODULE_23__["default"]
+  readTag: _readTag_js__WEBPACK_IMPORTED_MODULE_23__["default"],
+  LEI: _parseDicom_js__WEBPACK_IMPORTED_MODULE_13__["LEI"],
+  LEE: _parseDicom_js__WEBPACK_IMPORTED_MODULE_13__["LEE"]
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (dicomParser);
@@ -3228,12 +3249,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!***********************!*\
   !*** ./parseDicom.js ***!
   \***********************/
-/*! exports provided: default */
+/*! exports provided: default, LEI, LEE, BEI */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return parseDicom; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LEI", function() { return LEI; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LEE", function() { return LEE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BEI", function() { return BEI; });
 /* harmony import */ var _alloc_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./alloc.js */ "./alloc.js");
 /* harmony import */ var _bigEndianByteArrayParser_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./bigEndianByteArrayParser.js */ "./bigEndianByteArrayParser.js");
 /* harmony import */ var _byteStream_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./byteStream.js */ "./byteStream.js");
@@ -3251,7 +3275,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ // LEE (Little Endian Explicit) is the transfer syntax used in dimse operations when there is a split
+// between the header and data.
 
+var LEE = '1.2.840.10008.1.2.1'; // LEI (Little Endian Implicit) is the transfer syntax in raw files
+
+var LEI = '1.2.840.10008.1.2'; // BEI (Big Endian Implicit) is deprecated, but needs special parse handling
+
+var BEI = '1.2.840.10008.1.2.2';
 /**
  * Parses a DICOM P10 byte array and returns a DataSet object with the parsed elements.
  * If the options argument is supplied and it contains the untilTag property, parsing
@@ -3264,19 +3295,21 @@ __webpack_require__.r(__webpack_exports__);
  *         property dataSet with the elements successfully parsed before the error.
  */
 
-function parseDicom(byteArray, options) {
+function parseDicom(byteArray) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
   if (byteArray === undefined) {
-    throw 'dicomParser.parseDicom: missing required parameter \'byteArray\'';
+    throw new Error('dicomParser.parseDicom: missing required parameter \'byteArray\'');
   }
 
-  function readTransferSyntax(metaHeaderDataSet) {
+  var readTransferSyntax = function readTransferSyntax(metaHeaderDataSet) {
     if (metaHeaderDataSet.elements.x00020010 === undefined) {
-      throw 'dicomParser.parseDicom: missing required meta header attribute 0002,0010';
+      throw new Error('dicomParser.parseDicom: missing required meta header attribute 0002,0010');
     }
 
     var transferSyntaxElement = metaHeaderDataSet.elements.x00020010;
-    return _byteArrayParser_js__WEBPACK_IMPORTED_MODULE_7__["readFixedString"](byteArray, transferSyntaxElement.dataOffset, transferSyntaxElement.length);
-  }
+    return transferSyntaxElement && transferSyntaxElement.Value || _byteArrayParser_js__WEBPACK_IMPORTED_MODULE_7__["readFixedString"](byteArray, transferSyntaxElement.dataOffset, transferSyntaxElement.length);
+  };
 
   function isExplicit(transferSyntax) {
     // implicit little endian
@@ -3328,7 +3361,7 @@ function parseDicom(byteArray, options) {
     } // explicit big endian
 
 
-    if (transferSyntax === '1.2.840.10008.1.2.2') {
+    if (transferSyntax === BEI) {
       return new _byteStream_js__WEBPACK_IMPORTED_MODULE_2__["default"](_bigEndianByteArrayParser_js__WEBPACK_IMPORTED_MODULE_1__["default"], byteArray, position);
     } // all other transfer syntaxes are little endian; only the pixel encoding differs
     // make a new stream so the metaheader warnings don't come along for the ride
@@ -3386,6 +3419,7 @@ function parseDicom(byteArray, options) {
 
   return parseTheByteStream();
 }
+
 
 /***/ }),
 
@@ -4019,35 +4053,70 @@ __webpack_require__.r(__webpack_exports__);
  * tag is encoutered.  This can be used to parse partial byte streams.
  *
  * @param byteArray the byte array
- * @param options object to control parsing behavior (optional)
+ * @param options Optional options values
+ *    TransferSyntaxUID: String to specify a default raw transfer syntax UID.
+ *        Use the LEI transfer syntax for raw files, or the provided one for SCP transfers.
  * @returns {DataSet}
  * @throws error if an error occurs while parsing.  The exception object will contain a property dataSet with the
  *         elements successfully parsed before the error.
  */
 
-function readPart10Header(byteArray, options) {
+function readPart10Header(byteArray) {
+  var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
   if (byteArray === undefined) {
     throw 'dicomParser.readPart10Header: missing required parameter \'byteArray\'';
   }
 
+  var TransferSyntaxUID = options.TransferSyntaxUID;
   var littleEndianByteStream = new _byteStream_js__WEBPACK_IMPORTED_MODULE_0__["default"](_littleEndianByteArrayParser_js__WEBPACK_IMPORTED_MODULE_2__["default"], byteArray);
 
   function readPrefix() {
+    if (littleEndianByteStream.getSize() <= 132 && TransferSyntaxUID) {
+      return false;
+    }
+
     littleEndianByteStream.seek(128);
     var prefix = littleEndianByteStream.readFixedString(4);
 
     if (prefix !== 'DICM') {
-      throw 'dicomParser.readPart10Header: DICM prefix not found at location 132 - this is not a valid DICOM P10 file.';
+      var _ref = options || {},
+          _TransferSyntaxUID = _ref.TransferSyntaxUID;
+
+      if (!_TransferSyntaxUID) {
+        throw 'dicomParser.readPart10Header: DICM prefix not found at location 132 - this is not a valid DICOM P10 file.';
+      }
+
+      littleEndianByteStream.seek(0);
+      return false;
     }
+
+    return true;
   } // main function here
 
 
   function readTheHeader() {
     // Per the DICOM standard, the header is always encoded in Explicit VR Little Endian (see PS3.10, section 7.1)
     // so use littleEndianByteStream throughout this method regardless of the transfer syntax
-    readPrefix();
+    var isPart10 = readPrefix();
     var warnings = [];
     var elements = {};
+
+    if (!isPart10) {
+      littleEndianByteStream.position = 0;
+      var _metaHeaderDataSet = {
+        elements: {
+          x00020010: {
+            tag: 'x00020010',
+            vr: 'UI',
+            Value: TransferSyntaxUID
+          }
+        },
+        warnings: warnings
+      }; // console.log('Returning metaHeaderDataSet', metaHeaderDataSet);
+
+      return _metaHeaderDataSet;
+    }
 
     while (littleEndianByteStream.position < littleEndianByteStream.byteArray.length) {
       var position = littleEndianByteStream.position;
@@ -4930,7 +4999,7 @@ var parsePN = function parsePN(personName) {
 
 
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ('1.8.5');
+/* harmony default export */ __webpack_exports__["default"] = ('1.8.12');
 
 /***/ }),
 
@@ -8978,7 +9047,7 @@ define ('x_ite/Components/Texturing3D/ImageTexture3D',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing3D/X3DTexture3DNode",
    "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "x_ite/Browser/Texturing3D/NRRDParser",
    "x_ite/Browser/Texturing3D/DICOMParser",
    "x_ite/InputOutput/FileLoader",
@@ -9157,7 +9226,7 @@ define ('x_ite/Components/Texturing3D/PixelTexture3D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing3D/X3DTexture3DNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -9214,7 +9283,7 @@ function (Fields,
       },
       set_image__: (function ()
       {
-         var
+         const
             OFFSET     = 4,
             COMPONENTS = 0,
             WIDTH      = 1,
@@ -9223,7 +9292,7 @@ function (Fields,
 
          return function ()
          {
-            var image = this .image_;
+            const image = this .image_;
 
             if (image .length < OFFSET)
             {
@@ -9232,7 +9301,7 @@ function (Fields,
                return;
             }
 
-            var
+            const
                gl          = this .getBrowser () .getContext (),
                components  = image [COMPONENTS],
                width       = image [WIDTH],
@@ -9241,15 +9310,16 @@ function (Fields,
                transparent = ! (components & 1),
                size3D      = width * height * depth;
 
+            let data, format;
+
             switch (components)
             {
                case 1:
                {
-                  var
-                     format = gl .LUMINANCE,
-                     data   = new Uint8Array (size3D);
+                  data   = new Uint8Array (size3D);
+                  format = gl .LUMINANCE;
 
-                  for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
                   {
                      data [d ++] = image [i];
                   }
@@ -9258,29 +9328,27 @@ function (Fields,
                }
                case 2:
                {
-                  var
-                     format = gl .LUMINANCE_ALPHA,
-                     data   = new Uint8Array (size3D * 2);
+                  data   = new Uint8Array (size3D * 2);
+                  format = gl .LUMINANCE_ALPHA;
 
-                     for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
-                     {
-                        var p = image [i];
+                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  {
+                     const p = image [i];
 
-                        data [d ++ ] = (p >>> 8) & 0xff;
-                        data [d ++ ] = p & 0xff;
-                     }
+                     data [d ++ ] = (p >>> 8) & 0xff;
+                     data [d ++ ] = p & 0xff;
+                  }
 
-                     break;
+                  break;
                }
                case 3:
                {
-                  var
-                     format = gl .RGB,
-                     data   = new Uint8Array (size3D * 3);
+                  data   = new Uint8Array (size3D * 3);
+                  format = gl .RGB;
 
-                  for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
                   {
-                     var p = image [i];
+                     const p = image [i];
 
                      data [d ++ ] = (p >>> 16) & 0xff;
                      data [d ++ ] = (p >>> 8)  & 0xff;
@@ -9291,13 +9359,12 @@ function (Fields,
                }
                case 4:
                {
-                  var
-                     format = gl .RGBA,
-                     data   = new Uint8Array (size3D * 4);
+                  data   = new Uint8Array (size3D * 4);
+                  format = gl .RGBA;
 
-                  for (var i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
+                  for (let i = OFFSET, length = OFFSET + size3D, d = 0; i < length; ++ i)
                   {
-                     var p = image [i];
+                     const p = image [i];
 
                      data [d ++ ] = (p >>> 24) & 0xff;
                      data [d ++ ] = (p >>> 16) & 0xff;
@@ -9378,7 +9445,7 @@ define ('x_ite/Components/Texturing3D/TextureCoordinate3D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector4",
 ],
 function (Fields,
@@ -9556,7 +9623,7 @@ define ('x_ite/Components/Texturing3D/TextureCoordinate4D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DSingleTextureCoordinateNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector4",
 ],
 function (Fields,
@@ -9734,7 +9801,7 @@ define ('x_ite/Components/Texturing3D/TextureTransform3D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DSingleTextureTransformNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector3",
    "standard/Math/Numbers/Rotation4",
    "standard/Math/Numbers/Matrix4",
@@ -9886,7 +9953,7 @@ define ('x_ite/Components/Texturing3D/TextureTransformMatrix3D',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Texturing/X3DSingleTextureTransformNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,

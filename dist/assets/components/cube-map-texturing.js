@@ -57,7 +57,7 @@ const
 
 define ('x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode',[
    "x_ite/Components/Texturing/X3DSingleTextureNode",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
 ],
 function (X3DSingleTextureNode,
           X3DConstants)
@@ -188,8 +188,8 @@ define ('x_ite/Components/CubeMapTexturing/ComposedCubeMapTexture',[
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
-   "x_ite/Bits/X3DCast",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DCast",
+   "x_ite/Base/X3DConstants",
 ],
 function (Fields,
           X3DFieldDefinition,
@@ -448,7 +448,7 @@ function (Fields,
 define ('x_ite/Rendering/DependentRenderer',[
    "x_ite/Base/X3DBaseNode",
    "x_ite/Rendering/X3DRenderObject",
-   "x_ite/Bits/TraverseType",
+   "x_ite/Rendering/TraverseType",
 ],
 function (X3DBaseNode,
           X3DRenderObject,
@@ -538,8 +538,8 @@ function (X3DBaseNode,
       },
    });
 
-   for (const property of Reflect .ownKeys (DependentRenderer .prototype))
-      Object .defineProperty (DependentRenderer .prototype, property, { enumerable: false })
+   for (const key of Reflect .ownKeys (DependentRenderer .prototype))
+      Object .defineProperty (DependentRenderer .prototype, key, { enumerable: false });
 
    return DependentRenderer;
 });
@@ -600,8 +600,8 @@ define ('x_ite/Components/CubeMapTexturing/GeneratedCubeMapTexture',[
    "x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
    "x_ite/Rendering/DependentRenderer",
    "x_ite/Rendering/TextureBuffer",
-   "x_ite/Bits/X3DConstants",
-   "x_ite/Bits/TraverseType",
+   "x_ite/Base/X3DConstants",
+   "x_ite/Rendering/TraverseType",
    "standard/Math/Geometry/Camera",
    "standard/Math/Geometry/ViewVolume",
    "standard/Math/Numbers/Rotation4",
@@ -903,7 +903,7 @@ define ('x_ite/Components/CubeMapTexturing/ImageCubeMapTexture',[
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/CubeMapTexturing/X3DEnvironmentTextureNode",
    "x_ite/Components/Networking/X3DUrlObject",
-   "x_ite/Bits/X3DConstants",
+   "x_ite/Base/X3DConstants",
    "standard/Math/Numbers/Vector2",
    "standard/Math/Algorithm",
    "x_ite/DEBUG",
