@@ -46,9 +46,6 @@
  *
  ******************************************************************************/
 
-const { contains } = require("jquery");
-
-
 define ([
    "jquery",
    "x_ite/Base/X3DBaseNode",

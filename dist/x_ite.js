@@ -26873,9 +26873,6 @@ function (de, fr)
  *
  ******************************************************************************/
 
-const { contains } = require("jquery");
-
-
 define ('x_ite/Browser/Core/BrowserTimings',[
    "jquery",
    "x_ite/Base/X3DBaseNode",
