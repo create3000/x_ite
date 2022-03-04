@@ -63,16 +63,17 @@ function ($,
 "use strict";
 
    const
-      _value           = Symbol (),
-      _accessType      = Symbol (),
-      _unit            = Symbol (),
-      _references      = Symbol (),
-      _fieldInterests  = Symbol (),
-      _fieldCallbacks  = Symbol (),
-      _inputRoutes     = Symbol (),
-      _outputRoutes    = Symbol (),
-      _routeCallbacks  = Symbol (),
-      _uniformLocation = Symbol .for ("X3DField.uniformLocation");
+      _value               = Symbol (),
+      _accessType          = Symbol (),
+      _unit                = Symbol (),
+      _references          = Symbol (),
+      _referencesCallbacks = Symbol (),
+      _fieldInterests      = Symbol (),
+      _fieldCallbacks      = Symbol (),
+      _inputRoutes         = Symbol (),
+      _outputRoutes        = Symbol (),
+      _routeCallbacks      = Symbol (),
+      _uniformLocation     = Symbol .for ("X3DField.uniformLocation");
 
    function X3DField (value)
    {
@@ -91,6 +92,7 @@ function ($,
       [_unit]: null,
       [_uniformLocation]: null,
       [_references]: new Set (),
+      [_referencesCallbacks]: new Map (),
       [_fieldInterests]: new Set (),
       [_fieldCallbacks]: new Map (),
       [_inputRoutes]: new Set (),
@@ -181,19 +183,21 @@ function ($,
             case X3DConstants .initializeOnly:
                reference .addFieldInterest (this);
                this .set (reference .getValue (), reference .length);
-               return;
+               break;
             case X3DConstants .inputOnly:
                reference .addFieldInterest (this);
-               return;
+               break;
             case X3DConstants .outputOnly:
                this .addFieldInterest (reference);
-               return;
+               break;
             case X3DConstants .inputOutput:
                reference .addFieldInterest (this);
                this .addFieldInterest (reference);
                this .set (reference .getValue (), reference .length);
-               return;
+               break;
          }
+
+         this .processReferencesCallbacks ();
       },
       removeReference: function (reference)
       {
@@ -205,18 +209,20 @@ function ($,
          {
             case X3DConstants .initializeOnly:
                reference .removeFieldInterest (this);
-               return;
+               break;
             case X3DConstants .inputOnly:
                reference .removeFieldInterest (this);
-               return;
+               break;
             case X3DConstants .outputOnly:
                this .removeFieldInterest (reference);
-               return;
+               break;
             case X3DConstants .inputOutput:
                reference .removeFieldInterest (this);
                this .removeFieldInterest (reference);
-               return;
+               break;
          }
+
+         this .processReferencesCallbacks ();
       },
       getReferences: function ()
       {
@@ -225,6 +231,34 @@ function ($,
 
          return this [_references];
       },
+      addReferencesCallback: function (key, object)
+      {
+         if (this [_referencesCallbacks] === X3DField .prototype [_referencesCallbacks])
+            this [_referencesCallbacks] = new Map ();
+
+         this [_referencesCallbacks] .set (key, object);
+      },
+      removeReferencesCallback: function (key)
+      {
+         this [_referencesCallbacks] .delete (key);
+      },
+      getReferencesCallbacks: function ()
+      {
+         return this [_referencesCallbacks];
+      },
+      processReferencesCallbacks: (function ()
+      {
+         const referencesCallbacksTemp = [ ];
+
+         return function ()
+         {
+            if (this [_referencesCallbacks] .size)
+            {
+               for (const referencesCallback of MapUtilities .values (referencesCallbacksTemp, this [_referencesCallbacks]))
+                  referencesCallback ();
+            }
+         };
+      })(),
       addFieldInterest: function (field)
       {
          if (this [_fieldInterests] === X3DField .prototype [_fieldInterests])
