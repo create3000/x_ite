@@ -49,6 +49,7 @@
 
 define ([
    "jquery",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Base/X3DField",
@@ -75,6 +76,7 @@ define ([
    "standard/Time/MicroTime",
 ],
 function ($,
+          X3DBaseNode,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DField,
@@ -211,6 +213,7 @@ function ($,
       X3DProtoDeclaration:         X3DProtoDeclaration,
       RouteArray:                  RouteArray,
       X3DRoute:                    X3DRoute,
+      X3DBaseNode:                 X3DBaseNode,
 
       X3DFieldDefinition:          X3DFieldDefinition,
       FieldDefinitionArray:        FieldDefinitionArray,

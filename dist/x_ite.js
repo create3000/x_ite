@@ -14054,6 +14054,386 @@ function (Generator,
  ******************************************************************************/
 
 
+define ('x_ite/Base/X3DChildObject',[
+   "x_ite/Base/X3DObject",
+],
+function (X3DObject)
+{
+"use strict";
+
+   const
+      _modificationTime = Symbol (),
+      _tainted          = Symbol (),
+      _parents          = Symbol ();
+
+   function X3DChildObject ()
+   {
+      X3DObject .call (this);
+   }
+
+   X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
+   {
+      constructor: X3DChildObject,
+      [_modificationTime]: 0,
+      [_tainted]: false,
+      [_parents]: new Set (),
+      setModificationTime: function (value)
+      {
+         this [_modificationTime] = value;
+      },
+      getModificationTime: function ()
+      {
+         return this [_modificationTime];
+      },
+      setTainted: function (value)
+      {
+         this [_tainted] = value;
+      },
+      isTainted: function ()
+      {
+         return this [_tainted];
+      },
+      addEvent: function ()
+      {
+         this .setModificationTime (performance .now ());
+
+         for (const parent of this [_parents])
+            parent .addEvent (this);
+      },
+      addEventObject: function (field, event)
+      {
+         this .setModificationTime (performance .now ());
+
+         for (const parent of this [_parents])
+            parent .addEventObject (this, event);
+      },
+      addParent: function (parent)
+      {
+         if (this [_parents] === X3DChildObject .prototype [_parents])
+            this [_parents] = new Set ();
+
+         this [_parents] .add (parent);
+      },
+      removeParent: function (parent)
+      {
+         this [_parents] .delete (parent);
+      },
+      getParents: function ()
+      {
+         return this [_parents];
+      },
+      dispose: function ()
+      {
+         this [_parents] .clear ();
+
+         X3DObject .prototype .dispose .call (this);
+      },
+   });
+
+   for (const key of Reflect .ownKeys (X3DChildObject .prototype))
+      Object .defineProperty (X3DChildObject .prototype, key, { enumerable: false });
+
+   return X3DChildObject;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Base/Events',[],function ()
+{
+"use strict";
+
+   const _stack = Symbol ();
+
+   function Events ()
+   {
+      this [_stack] = [ ];
+   }
+
+   Events .prototype =
+   {
+      create: function (field)
+      {
+         if (this [_stack] .length)
+         {
+            const event = this [_stack] .pop ();
+
+            event .field = field;
+            event .clear ();
+
+            return event;
+         }
+
+         const event = new Set ();
+
+         event .field = field;
+
+         return event;
+      },
+      copy: function (event)
+      {
+         if (this [_stack] .length)
+         {
+            const copy = this [_stack] .pop ();
+
+            copy .field = event .field;
+            copy .clear ();
+
+            for (const source of event)
+            {
+               copy .add (source);
+            }
+
+            return copy;
+         }
+
+         const copy = new Set (event);
+
+         copy .field = event .field;
+
+         return copy;
+      },
+      push: function (event)
+      {
+         this [_stack] .push (event);
+      },
+      clear: function ()
+      {
+         this [_stack] .length = 0;
+      },
+   };
+
+   for (const key of Reflect .ownKeys (Events .prototype))
+      Object .defineProperty (Events .prototype, key, { enumerable: false });
+
+   return new Events ();
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Base/X3DEventObject',[
+   "x_ite/Base/X3DChildObject",
+   "x_ite/Base/Events",
+],
+function (X3DChildObject,
+          Events)
+{
+"use strict";
+
+   const _browser = Symbol .for ("X3DEventObject.browser");
+
+   function X3DEventObject (browser)
+   {
+      X3DChildObject .call (this);
+
+      this [_browser] = browser;
+   }
+
+   X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prototype),
+   {
+      constructor: X3DEventObject,
+      getBrowser: function ()
+      {
+         return this [_browser];
+      },
+      getExtendedEventHandling: function ()
+      {
+         return true;
+      },
+      addEvent: function (field)
+      {
+         if (field .isTainted ())
+            return;
+
+         field .setTainted (true);
+
+         this .addEventObject (field, Events .create (field));
+      },
+      addEventObject: function (field, event)
+      {
+         const browser = this .getBrowser ();
+
+         // Register for processEvent
+
+         browser .addBrowserEvent ();
+         browser .addTaintedField (field, event);
+
+         // Register for eventsProcessed
+
+         if (this .isTainted ())
+            return;
+
+         if (field .isInput () || (this .getExtendedEventHandling () && ! field .isOutput ()))
+         {
+            this .addNodeEvent ();
+         }
+      },
+      addNodeEvent: function ()
+      {
+         if (this .isTainted ())
+            return;
+
+         const browser = this .getBrowser ();
+
+         this .setTainted (true);
+         browser .addTaintedNode (this);
+         browser .addBrowserEvent ();
+      },
+      processEvents: function ()
+      {
+         this .setTainted (false);
+         this .processInterests ();
+      },
+   });
+
+   for (const key of Reflect .ownKeys (X3DEventObject .prototype))
+      Object .defineProperty (X3DEventObject .prototype, key, { enumerable: false });
+
+   return X3DEventObject;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Base/X3DFieldDefinition',[
    "x_ite/Base/X3DObject",
 ],
@@ -14450,205 +14830,31 @@ function (X3DInfoArray)
  ******************************************************************************/
 
 
-define ('x_ite/Base/X3DChildObject',[
-   "x_ite/Base/X3DObject",
+ define ('x_ite/Base/FieldArray',[
+   "x_ite/Base/X3DInfoArray",
 ],
-function (X3DObject)
+function (X3DInfoArray)
 {
 "use strict";
 
-   const
-      _modificationTime = Symbol (),
-      _tainted          = Symbol (),
-      _parents          = Symbol ();
-
-   function X3DChildObject ()
+   function FieldArray ()
    {
-      X3DObject .call (this);
+      return X3DInfoArray .call (this);
    }
 
-   X3DChildObject .prototype = Object .assign (Object .create (X3DObject .prototype),
+   FieldArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
    {
-      constructor: X3DChildObject,
-      [_modificationTime]: 0,
-      [_tainted]: false,
-      [_parents]: new Set (),
-      setModificationTime: function (value)
+      constructor: FieldArray,
+      getTypeName: function ()
       {
-         this [_modificationTime] = value;
-      },
-      getModificationTime: function ()
-      {
-         return this [_modificationTime];
-      },
-      setTainted: function (value)
-      {
-         this [_tainted] = value;
-      },
-      isTainted: function ()
-      {
-         return this [_tainted];
-      },
-      addEvent: function ()
-      {
-         this .setModificationTime (performance .now ());
-
-         for (const parent of this [_parents])
-            parent .addEvent (this);
-      },
-      addEventObject: function (field, event)
-      {
-         this .setModificationTime (performance .now ());
-
-         for (const parent of this [_parents])
-            parent .addEventObject (this, event);
-      },
-      addParent: function (parent)
-      {
-         if (this [_parents] === X3DChildObject .prototype [_parents])
-            this [_parents] = new Set ();
-
-         this [_parents] .add (parent);
-      },
-      removeParent: function (parent)
-      {
-         this [_parents] .delete (parent);
-      },
-      getParents: function ()
-      {
-         return this [_parents];
-      },
-      dispose: function ()
-      {
-         this [_parents] .clear ();
-
-         X3DObject .prototype .dispose .call (this);
+         return "FieldArray";
       },
    });
 
-   for (const key of Reflect .ownKeys (X3DChildObject .prototype))
-      Object .defineProperty (X3DChildObject .prototype, key, { enumerable: false });
+   for (const key of Reflect .ownKeys (FieldArray .prototype))
+      Object .defineProperty (FieldArray .prototype, key, { enumerable: false });
 
-   return X3DChildObject;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Base/Events',[],function ()
-{
-"use strict";
-
-   const _stack = Symbol ();
-
-   function Events ()
-   {
-      this [_stack] = [ ];
-   }
-
-   Events .prototype =
-   {
-      create: function (field)
-      {
-         if (this [_stack] .length)
-         {
-            const event = this [_stack] .pop ();
-
-            event .field = field;
-            event .clear ();
-
-            return event;
-         }
-
-         const event = new Set ();
-
-         event .field = field;
-
-         return event;
-      },
-      copy: function (event)
-      {
-         if (this [_stack] .length)
-         {
-            const copy = this [_stack] .pop ();
-
-            copy .field = event .field;
-            copy .clear ();
-
-            for (const source of event)
-            {
-               copy .add (source);
-            }
-
-            return copy;
-         }
-
-         const copy = new Set (event);
-
-         copy .field = event .field;
-
-         return copy;
-      },
-      push: function (event)
-      {
-         this [_stack] .push (event);
-      },
-      clear: function ()
-      {
-         this [_stack] .length = 0;
-      },
-   };
-
-   for (const key of Reflect .ownKeys (Events .prototype))
-      Object .defineProperty (Events .prototype, key, { enumerable: false });
-
-   return new Events ();
+   return FieldArray;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -15096,78 +15302,6 @@ function ($,
       Object .defineProperty (X3DField .prototype, key, { enumerable: false });
 
    return X3DField;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Base/X3DArrayField',[
-   "x_ite/Base/X3DField",
-],
-function (X3DField)
-{
-"use strict";
-
-   function X3DArrayField (value)
-   {
-      X3DField .call (this, value);
-   }
-
-   X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
-   {
-      constructor: X3DArrayField,
-   });
-
-   for (const key of Reflect .ownKeys (X3DArrayField .prototype))
-      Object .defineProperty (X3DArrayField .prototype, key, { enumerable: false });
-
-   return X3DArrayField;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -23388,6 +23522,78 @@ function (X3DField,
  ******************************************************************************/
 
 
+define ('x_ite/Base/X3DArrayField',[
+   "x_ite/Base/X3DField",
+],
+function (X3DField)
+{
+"use strict";
+
+   function X3DArrayField (value)
+   {
+      X3DField .call (this, value);
+   }
+
+   X3DArrayField .prototype = Object .assign (Object .create (X3DField .prototype),
+   {
+      constructor: X3DArrayField,
+   });
+
+   for (const key of Reflect .ownKeys (X3DArrayField .prototype))
+      Object .defineProperty (X3DArrayField .prototype, key, { enumerable: false });
+
+   return X3DArrayField;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
 define ('x_ite/Base/X3DObjectArrayField',[
    "jquery",
    "x_ite/Base/X3DField",
@@ -25498,324 +25704,6 @@ function (SFBool,
  ******************************************************************************/
 
 
-define ('x_ite/Browser/VERSION',[],function ()
-{
-   return "5.0.0a";
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/DEBUG',[],function ()
-{
-"use strict";
-
-   // Modified during dist build.
-
-   return false;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
-define ('x_ite/Base/X3DEventObject',[
-   "x_ite/Base/X3DChildObject",
-   "x_ite/Base/Events",
-],
-function (X3DChildObject,
-          Events)
-{
-"use strict";
-
-   const _browser = Symbol .for ("X3DEventObject.browser");
-
-   function X3DEventObject (browser)
-   {
-      X3DChildObject .call (this);
-
-      this [_browser] = browser;
-   }
-
-   X3DEventObject .prototype = Object .assign (Object .create (X3DChildObject .prototype),
-   {
-      constructor: X3DEventObject,
-      getBrowser: function ()
-      {
-         return this [_browser];
-      },
-      getExtendedEventHandling: function ()
-      {
-         return true;
-      },
-      addEvent: function (field)
-      {
-         if (field .isTainted ())
-            return;
-
-         field .setTainted (true);
-
-         this .addEventObject (field, Events .create (field));
-      },
-      addEventObject: function (field, event)
-      {
-         const browser = this .getBrowser ();
-
-         // Register for processEvent
-
-         browser .addBrowserEvent ();
-         browser .addTaintedField (field, event);
-
-         // Register for eventsProcessed
-
-         if (this .isTainted ())
-            return;
-
-         if (field .isInput () || (this .getExtendedEventHandling () && ! field .isOutput ()))
-         {
-            this .addNodeEvent ();
-         }
-      },
-      addNodeEvent: function ()
-      {
-         if (this .isTainted ())
-            return;
-
-         const browser = this .getBrowser ();
-
-         this .setTainted (true);
-         browser .addTaintedNode (this);
-         browser .addBrowserEvent ();
-      },
-      processEvents: function ()
-      {
-         this .setTainted (false);
-         this .processInterests ();
-      },
-   });
-
-   for (const key of Reflect .ownKeys (X3DEventObject .prototype))
-      Object .defineProperty (X3DEventObject .prototype, key, { enumerable: false });
-
-   return X3DEventObject;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
- define ('x_ite/Base/FieldArray',[
-   "x_ite/Base/X3DInfoArray",
-],
-function (X3DInfoArray)
-{
-"use strict";
-
-   function FieldArray ()
-   {
-      return X3DInfoArray .call (this);
-   }
-
-   FieldArray .prototype = Object .assign (Object .create (X3DInfoArray .prototype),
-   {
-      constructor: FieldArray,
-      getTypeName: function ()
-      {
-         return "FieldArray";
-      },
-   });
-
-   for (const key of Reflect .ownKeys (FieldArray .prototype))
-      Object .defineProperty (FieldArray .prototype, key, { enumerable: false });
-
-   return FieldArray;
-});
-
-/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
- *******************************************************************************
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
- *
- * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
- *
- * The copyright notice above does not evidence any actual of intended
- * publication of such source code, and is an unpublished work by create3000.
- * This material contains CONFIDENTIAL INFORMATION that is the property of
- * create3000.
- *
- * No permission is granted to copy, distribute, or create derivative works from
- * the contents of this software, in whole or in part, without the prior written
- * permission of create3000.
- *
- * NON-MILITARY USE ONLY
- *
- * All create3000 software are effectively free software with a non-military use
- * restriction. It is free. Well commented source is provided. You may reuse the
- * source in any way you please with the exception anything that uses it must be
- * marked to indicate is contains 'non-military use only' components.
- *
- * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
- *
- * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
- *
- * This file is part of the X_ITE Project.
- *
- * X_ITE is free software: you can redistribute it and/or modify it under the
- * terms of the GNU General Public License version 3 only, as published by the
- * Free Software Foundation.
- *
- * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
- * details (a copy is included in the LICENSE file that accompanied this code).
- *
- * You should have received a copy of the GNU General Public License version 3
- * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
- * copy of the GPLv3 License.
- *
- * For Silvio, Joy and Adi.
- *
- ******************************************************************************/
-
-
 define ('x_ite/Base/X3DBaseNode',[
    "x_ite/Base/X3DEventObject",
    "x_ite/Base/Events",
@@ -26307,6 +26195,118 @@ function (X3DEventObject,
       Object .defineProperty (X3DBaseNode .prototype, key, { enumerable: false });
 
    return X3DBaseNode;
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/Browser/VERSION',[],function ()
+{
+   return "5.0.0a";
+});
+
+/* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
+ *******************************************************************************
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright create3000, Scheffelstraße 31a, Leipzig, Germany 2011.
+ *
+ * All rights reserved. Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * The copyright notice above does not evidence any actual of intended
+ * publication of such source code, and is an unpublished work by create3000.
+ * This material contains CONFIDENTIAL INFORMATION that is the property of
+ * create3000.
+ *
+ * No permission is granted to copy, distribute, or create derivative works from
+ * the contents of this software, in whole or in part, without the prior written
+ * permission of create3000.
+ *
+ * NON-MILITARY USE ONLY
+ *
+ * All create3000 software are effectively free software with a non-military use
+ * restriction. It is free. Well commented source is provided. You may reuse the
+ * source in any way you please with the exception anything that uses it must be
+ * marked to indicate is contains 'non-military use only' components.
+ *
+ * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ * Copyright 2015, 2016 Holger Seelig <holger.seelig@yahoo.de>.
+ *
+ * This file is part of the X_ITE Project.
+ *
+ * X_ITE is free software: you can redistribute it and/or modify it under the
+ * terms of the GNU General Public License version 3 only, as published by the
+ * Free Software Foundation.
+ *
+ * X_ITE is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License version 3 for more
+ * details (a copy is included in the LICENSE file that accompanied this code).
+ *
+ * You should have received a copy of the GNU General Public License version 3
+ * along with X_ITE.  If not, see <http://www.gnu.org/licenses/gpl.html> for a
+ * copy of the GPLv3 License.
+ *
+ * For Silvio, Joy and Adi.
+ *
+ ******************************************************************************/
+
+
+define ('x_ite/DEBUG',[],function ()
+{
+"use strict";
+
+   // Modified during dist build.
+
+   return false;
 });
 
 /**
@@ -119089,6 +119089,7 @@ define ('standard/Time/MicroTime',[],function ()
 
 define ('x_ite/X3D',[
    "jquery",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Base/X3DField",
@@ -119115,6 +119116,7 @@ define ('x_ite/X3D',[
    "standard/Time/MicroTime",
 ],
 function ($,
+          X3DBaseNode,
           X3DFieldDefinition,
           FieldDefinitionArray,
           X3DField,
@@ -119251,6 +119253,7 @@ function ($,
       X3DProtoDeclaration:         X3DProtoDeclaration,
       RouteArray:                  RouteArray,
       X3DRoute:                    X3DRoute,
+      X3DBaseNode:                 X3DBaseNode,
 
       X3DFieldDefinition:          X3DFieldDefinition,
       FieldDefinitionArray:        FieldDefinitionArray,
