@@ -108,11 +108,11 @@ function (Fields,
       getTriangleIndex: (function ()
       {
          // Define two triangles.
-         var indexMap = [0, 1, 2,   0, 2, 3];
+         const indexMap = [0, 1, 2,   0, 2, 3];
 
          return function (i)
          {
-            var mod = i % 6;
+            const mod = i % 6;
 
             return (i - mod) / 6 * 4 + indexMap [mod];
          };
@@ -123,7 +123,7 @@ function (Fields,
       },
       build: function ()
       {
-         var length = this .index_ .length;
+         let length = this .index_ .length;
 
          length -= length % 4;
 

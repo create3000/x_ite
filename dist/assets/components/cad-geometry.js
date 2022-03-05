@@ -332,7 +332,7 @@ function (Fields,
                node = this .shape_ .getValue () .getInnerNode (),
                type = node .getType ();
 
-            for (var t = type .length - 1; t >= 0; -- t)
+            for (let t = type .length - 1; t >= 0; -- t)
             {
                switch (type [t])
                {
@@ -788,11 +788,11 @@ function (Fields,
       getTriangleIndex: (function ()
       {
          // Define two triangles.
-         var indexMap = [0, 1, 2,   0, 2, 3];
+         const indexMap = [0, 1, 2,   0, 2, 3];
 
          return function (i)
          {
-            var mod = i % 6;
+            const mod = i % 6;
 
             return (i - mod) / 6 * 4 + indexMap [mod];
          };
@@ -803,7 +803,7 @@ function (Fields,
       },
       build: function ()
       {
-         var length = this .index_ .length;
+         let length = this .index_ .length;
 
          length -= length % 4;
 
@@ -878,9 +878,6 @@ function (Fields,
 {
 "use strict";
 
-   // Define two triangles.
-   var indexMap = [0, 1, 2,   0, 2, 3];
-
    function QuadSet (executionContext)
    {
       X3DComposedGeometryNode .call (this, executionContext);
@@ -916,18 +913,24 @@ function (Fields,
       {
          return "geometry";
       },
-      getTriangleIndex: function (i)
+      getTriangleIndex: (function ()
       {
-         var mod = i % 6;
+         // Define two triangles.
+         const indexMap = [0, 1, 2,   0, 2, 3];
 
-         return (i - mod) / 6 * 4 + indexMap [mod];
-      },
+         return function (i)
+         {
+            const mod = i % 6;
+
+            return (i - mod) / 6 * 4 + indexMap [mod];
+         };
+      })(),
       build: function ()
       {
          if (! this .getCoord ())
             return;
 
-         var length = this .getCoord () .getSize ();
+         let length = this .getCoord () .getSize ();
 
          length -= length % 4;
 

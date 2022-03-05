@@ -62,9 +62,6 @@ function (Fields,
 {
 "use strict";
 
-   // Define two triangles.
-   var indexMap = [0, 1, 2,   0, 2, 3];
-
    function QuadSet (executionContext)
    {
       X3DComposedGeometryNode .call (this, executionContext);
@@ -100,18 +97,24 @@ function (Fields,
       {
          return "geometry";
       },
-      getTriangleIndex: function (i)
+      getTriangleIndex: (function ()
       {
-         var mod = i % 6;
+         // Define two triangles.
+         const indexMap = [0, 1, 2,   0, 2, 3];
 
-         return (i - mod) / 6 * 4 + indexMap [mod];
-      },
+         return function (i)
+         {
+            const mod = i % 6;
+
+            return (i - mod) / 6 * 4 + indexMap [mod];
+         };
+      })(),
       build: function ()
       {
          if (! this .getCoord ())
             return;
 
-         var length = this .getCoord () .getSize ();
+         let length = this .getCoord () .getSize ();
 
          length -= length % 4;
 

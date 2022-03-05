@@ -120,6 +120,10 @@ function (X3DChildNode,
       },
       getBBox: function (bbox, shadow)
       {
+         return this .getSubBBox (bbox, shadow);
+      },
+      getSubBBox: function (bbox, shadow)
+      {
          if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
             return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadow);
 
@@ -712,8 +716,6 @@ function (X3DChildNode,
          }
       },
    });
-
-   X3DGroupingNode .prototype .getSubBBox = X3DGroupingNode .prototype .getBBox;
 
    return X3DGroupingNode;
 });

@@ -108,7 +108,7 @@ function (Fields,
       },
       getBBox: function (bbox, shadow)
       {
-         return X3DGroupingNode .prototype .getBBox .call (this, bbox, shadow) .multRight (this .matrix);
+         return this .getSubBBox (bbox, shadow) .multRight (this .matrix);
       },
       getMatrix: function ()
       {

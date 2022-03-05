@@ -145,7 +145,7 @@ function (Fields,
                node = this .shape_ .getValue () .getInnerNode (),
                type = node .getType ();
 
-            for (var t = type .length - 1; t >= 0; -- t)
+            for (let t = type .length - 1; t >= 0; -- t)
             {
                switch (type [t])
                {
