@@ -298,6 +298,10 @@ function (X3DEventObject,
       {
          return this [_fieldDefinitions];
       },
+      getFieldsAreEnumerable: function ()
+      {
+         return false;
+      },
       addField: function (fieldDefinition)
       {
          const
@@ -317,7 +321,7 @@ function (X3DEventObject,
          {
             get: function () { return field; },
             set: function (value) { field .setValue (value); },
-            enumerable: true,
+            enumerable: this .getFieldsAreEnumerable (),
             configurable: true, // false : non deletable
          });
 

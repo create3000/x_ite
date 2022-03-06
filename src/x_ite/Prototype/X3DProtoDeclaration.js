@@ -70,6 +70,9 @@ function (SupportedNodes,
 
    SupportedNodes .addAbstractType ("X3DProtoDeclaration");
 
+   const
+      _body = Symbol ();
+
    function X3DProtoDeclaration (executionContext)
    {
       X3DProtoDeclarationNode .call (this, executionContext);
@@ -78,9 +81,9 @@ function (SupportedNodes,
 
       this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 
-      this .body = new X3DExecutionContext (executionContext);
-      this .body .setNode (this);
-      this .body .setLive (false);
+      this [_body] = new X3DExecutionContext (executionContext);
+      this [_body] .setNode (this);
+      this [_body] .setLive (false);
       this .setLive (false);
    }
 
@@ -98,7 +101,7 @@ function (SupportedNodes,
       {
          X3DProtoDeclarationNode .prototype .initialize .call (this);
 
-         this .body .setup ();
+         this [_body] .setup ();
 
          this .loadState_ = X3DConstants .COMPLETE_STATE;
       },
@@ -108,7 +111,7 @@ function (SupportedNodes,
       },
       getBody: function ()
       {
-         return this .body;
+         return this [_body];
       },
       checkLoadState: function ()
       {
@@ -175,7 +178,7 @@ function (SupportedNodes,
 
          generator .IncIndent ();
 
-         this .body .toVRMLStream (stream);
+         this [_body] .toVRMLStream (stream);
 
          generator .DecIndent ();
 
@@ -310,7 +313,7 @@ function (SupportedNodes,
 
          generator .IncIndent ();
 
-         this .body .toXMLStream (stream);
+         this [_body] .toXMLStream (stream);
 
          generator .DecIndent ();
 

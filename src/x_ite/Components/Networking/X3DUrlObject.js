@@ -56,6 +56,12 @@ function (Fields,
 {
 "use strict";
 
+   const
+      _cache                   = Symbol (),
+      _autoRefreshStartTime    = Symbol (),
+      _autoRefreshCompleteTime = Symbol (),
+      _autoRefreshId           = Symbol ();
+
    function X3DUrlObject (executionContext)
    {
       this .addType (X3DConstants .X3DUrlObject);
@@ -63,8 +69,8 @@ function (Fields,
       this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE),
                              "urlBuffer", new Fields .MFString ());
 
-      this .cache                = true;
-      this .autoRefreshStartTime = performance .now ();
+      this [_cache]                = true;
+      this [_autoRefreshStartTime] = performance .now ();
    }
 
    X3DUrlObject .prototype =
@@ -86,7 +92,7 @@ function (Fields,
 
          if (value === X3DConstants .COMPLETE_STATE)
          {
-            this .autoRefreshCompleteTime = performance .now ();
+            this [_autoRefreshCompleteTime] = performance .now ();
             this .setAutoRefreshTimer (this .autoRefresh_ .getValue ());
          }
 
@@ -120,11 +126,11 @@ function (Fields,
       },
       setCache: function (value)
       {
-         this .cache = value;
+         this [_cache] = value;
       },
       getCache: function ()
       {
-         return this .cache;
+         return this [_cache];
       },
       requestImmediateLoad: function (cache = true)
       {
@@ -157,7 +163,7 @@ function (Fields,
       { },
       setAutoRefreshTimer: function (autoRefreshInterval)
       {
-         clearTimeout (this .autoRefreshId);
+         clearTimeout (this [_autoRefreshId]);
 
          if (this .autoRefresh_ .getValue () <= 0)
             return;
@@ -166,11 +172,11 @@ function (Fields,
 
          if (autoRefreshTimeLimit !== 0)
          {
-            if ((performance .now () - this .autoRefreshStartTime) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
+            if ((performance .now () - this [_autoRefreshStartTime]) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
                return;
          }
 
-         this .autoRefreshId = setTimeout (this .performAutoRefresh .bind (this), autoRefreshInterval * 1000);
+         this [_autoRefreshId] = setTimeout (this .performAutoRefresh .bind (this), autoRefreshInterval * 1000);
       },
       performAutoRefresh: function ()
       {
@@ -182,7 +188,7 @@ function (Fields,
          if (this .isLive () .getValue ())
             this .set_autoRefresh__ ();
          else
-            clearTimeout (this .autoRefreshId);
+            clearTimeout (this [_autoRefreshId]);
       },
       set_load__: function ()
       {
@@ -210,7 +216,7 @@ function (Fields,
             return;
 
          const
-            elapsedTime = (performance .now () - this .autoRefreshCompleteTime) / 1000,
+            elapsedTime = (performance .now () - this [_autoRefreshCompleteTime]) / 1000,
             autoRefresh = this .autoRefresh_ .getValue ();
 
          let autoRefreshInterval = autoRefresh - elapsedTime;

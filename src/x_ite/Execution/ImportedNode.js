@@ -50,52 +50,53 @@
 define ([
    "x_ite/Base/X3DBaseNode",
    "x_ite/Base/X3DConstants",
+   "x_ite/Fields/SFNodeCache",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DBaseNode,
           X3DConstants,
+          SFNodeCache,
           Generator)
 {
 "use strict";
+
+   const
+      _inlineNode   = Symbol (),
+      _exportedName = Symbol (),
+      _importedName = Symbol (),
+      _routes       = Symbol ();
+
 
    function ImportedNode (executionContext, inlineNode, exportedName, importedName)
    {
       X3DBaseNode .call (this, executionContext);
 
-      this .inlineNode   = inlineNode;
-      this .exportedName = exportedName;
-      this .importedName = importedName;
-      this .routes       = new Set ();
+      this [_inlineNode]   = inlineNode;
+      this [_exportedName] = exportedName;
+      this [_importedName] = importedName;
+      this [_routes]       = new Set ();
 
-      this .inlineNode .loadState_ .addInterest ("set_loadState__", this);
+      this [_inlineNode] .loadState_ .addInterest ("set_loadState__", this);
    }
 
    ImportedNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       constructor: ImportedNode,
-      getTypeName: function ()
-      {
-         return "ImportedNode";
-      },
       getInlineNode: function ()
       {
-         return this .inlineNode;
+         return this [_inlineNode];
       },
       getExportedName: function ()
       {
-         return this .exportedName;
+         return this [_exportedName];
       },
       getExportedNode: function ()
       {
-         return this .inlineNode .getInternalScene () .getExportedNode (this .exportedName) .getValue ();
-      },
-      setImportedName: function (value)
-      {
-         this .importedName = value;
+         return this [_inlineNode] .getInternalScene () .getExportedNode (this [_exportedName]) .getValue ();
       },
       getImportedName: function ()
       {
-         return this .importedName;
+         return this [_importedName];
       },
       addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
       {
@@ -108,11 +109,11 @@ function (X3DBaseNode,
             destinationField: destinationField,
          };
 
-         this .routes .add (route);
+         this [_routes] .add (route);
 
          // Try to resolve source or destination node routes.
 
-         if (this .inlineNode .checkLoadState () === X3DConstants .COMPLETE_STATE)
+         if (this [_inlineNode] .checkLoadState () === X3DConstants .COMPLETE_STATE)
             this .resolveRoute (route);
       },
       resolveRoute: function (route)
@@ -145,15 +146,15 @@ function (X3DBaseNode,
       },
       deleteRoute: function (real)
       {
-         for (const route of this .routes)
+         for (const route of this [_routes])
          {
             if (route .real === real)
-               this .routes .delete (route);
+               this [_routes] .delete (route);
          }
       },
       deleteRoutes: function ()
       {
-         for (const route of this .routes)
+         for (const route of this [_routes])
          {
             const real = route .real
 
@@ -166,7 +167,7 @@ function (X3DBaseNode,
       },
       set_loadState__: function ()
       {
-         switch (this .inlineNode .checkLoadState ())
+         switch (this [_inlineNode] .checkLoadState ())
          {
             case X3DConstants .NOT_STARTED_STATE:
             case X3DConstants .FAILED_STATE:
@@ -178,7 +179,7 @@ function (X3DBaseNode,
             {
                this .deleteRoutes ();
 
-               for (const route of this .routes)
+               for (const route of this [_routes])
                   this .resolveRoute (route);
 
                break;
@@ -215,7 +216,7 @@ function (X3DBaseNode,
             {
                // Output unresolved routes.
 
-               for (const route of this .routes)
+               for (const route of this [_routes])
                {
                   const
                      sourceNode       = route .sourceNode,
@@ -290,7 +291,7 @@ function (X3DBaseNode,
             {
                // Output unresolved routes.
 
-               for (const route of this .routes)
+               for (const route of this [_routes])
                {
                   const
                      sourceNode       = route .sourceNode,
@@ -338,7 +339,7 @@ function (X3DBaseNode,
       },
       dispose: function ()
       {
-         this .inlineNode .loadState_ .removeInterest ("set_loadState__", this);
+         this [_inlineNode] .loadState_ .removeInterest ("set_loadState__", this);
 
          this .deleteRoutes ();
 
@@ -348,6 +349,46 @@ function (X3DBaseNode,
 
    for (const key of Reflect .ownKeys (ImportedNode .prototype))
       Object .defineProperty (ImportedNode .prototype, key, { enumerable: false });
+
+   Object .defineProperty (ImportedNode .prototype, "inlineNode",
+   {
+      get: function ()
+      {
+         return SFNodeCache .get (this [_inlineNode]);
+      },
+      enumerable: true,
+      configurable: false
+   });
+
+   Object .defineProperty (ImportedNode .prototype, "exportedName",
+   {
+      get: function ()
+      {
+         return this [_exportedName];
+      },
+      enumerable: true,
+      configurable: false
+   });
+
+   Object .defineProperty (ImportedNode .prototype, "exportedNode",
+   {
+      get: function ()
+      {
+         return this [_inlineNode] .getInternalScene () .getExportedNode (this [_exportedName]);
+      },
+      enumerable: true,
+      configurable: false
+   });
+
+   Object .defineProperty (ImportedNode .prototype, "importedName",
+   {
+      get: function ()
+      {
+         return this [_importedName];
+      },
+      enumerable: true,
+      configurable: false
+   });
 
    return ImportedNode;
 });

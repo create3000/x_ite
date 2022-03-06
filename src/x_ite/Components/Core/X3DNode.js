@@ -181,6 +181,10 @@ function (Fields,
             return this .getName () .replace (_TrailingNumber, "");
          };
       })(),
+      getFieldsAreEnumerable: function ()
+      {
+         return true;
+      },
       traverse: function () { },
       toStream: function (stream)
       {

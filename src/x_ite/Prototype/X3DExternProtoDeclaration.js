@@ -72,6 +72,10 @@ function ($,
 
    SupportedNodes .addAbstractType ("X3DExternProtoDeclaration");
 
+   const
+      _proto = Symbol (),
+      _scene = Symbol ();
+
    function X3DExternProtoDeclaration (executionContext, url)
    {
       X3DProtoDeclarationNode .call (this, executionContext);
@@ -108,7 +112,7 @@ function ($,
          if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
             return;
 
-         this .scene .setLive (this .isLive () .getValue ());
+         this [_scene] .setLive (this .isLive () .getValue ());
       },
       canUserDefinedFields: function ()
       {
@@ -116,24 +120,24 @@ function ($,
       },
       setProtoDeclaration: function (proto)
       {
-         this .proto = proto;
+         this [_proto] = proto;
 
-         if (!this .proto)
-            return
-
-         const fieldDefinitions = this .getFieldDefinitions ();
-
-         for (const protoFieldDefinition of proto .getFieldDefinitions ())
+         if (proto)
          {
-            const fieldDefinition = fieldDefinitions .get (protoFieldDefinition .name);
+            const fieldDefinitions = this .getFieldDefinitions ();
 
-            if (fieldDefinition)
-               fieldDefinition .value .setValue (protoFieldDefinition .value);
+            for (const fieldDefinition of Array .from (fieldDefinitions))
+               fieldDefinitions .remove (fieldDefinition .name);
+
+            for (const fieldDefinition of proto .getFieldDefinitions ())
+               fieldDefinitions .add (fieldDefinition .name, fieldDefinition);
          }
+
+         this .requestUpdateInstances ();
       },
       getProtoDeclaration: function ()
       {
-         return this .proto;
+         return this [_proto];
       },
       loadNow: function ()
       {
@@ -157,40 +161,36 @@ function ($,
       },
       setInternalScene: function (value)
       {
-         this .scene = value;
+         this [_scene] = value;
 
          const
-            protoName = new URL (this .scene .getWorldURL ()) .hash .substr (1),
-            proto     = protoName ? this .scene .protos .get (protoName) : this .scene .protos [0];
+            protoName = new URL (this [_scene] .getWorldURL ()) .hash .substr (1),
+            proto     = protoName ? this [_scene] .protos .get (protoName) : this [_scene] .protos [0];
 
          if (!proto)
             throw new Error ("PROTO not found");
 
-         this .scene .setLive (this .isLive () .getValue ());
-         this .scene .setPrivate (this .getScene () .getPrivate ());
-         this .scene .setExecutionContext (this .getExecutionContext ());
+         this [_scene] .setLive (this .isLive () .getValue ());
+         this [_scene] .setPrivate (this .getScene () .getPrivate ());
+         this [_scene] .setExecutionContext (this .getExecutionContext ());
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
          this .setProtoDeclaration (proto);
-         this .requestUpdateInstances ();
       },
       getInternalScene: function ()
       {
          ///  Returns the internal X3DScene of this extern proto, that is loaded from the url given.
 
-         return this .scene;
+         return this [_scene];
       },
       setError: function (error)
       {
          console .error ("Error loading extern prototype:", error);
 
-         this .scene = this .getBrowser () .getPrivateScene ();
+         this [_scene] = this .getBrowser () .getPrivateScene ();
 
          this .setLoadState (X3DConstants .FAILED_STATE);
          this .setProtoDeclaration (null);
-
-         this .deferred .resolve ();
-         this .deferred = $.Deferred ();
       },
       toVRMLStream: function (stream)
       {
@@ -328,7 +328,7 @@ function ($,
 
    Object .defineProperty (X3DExternProtoDeclaration .prototype, "urls",
    {
-      get: function () { return this .url_ .copy (); },
+      get: function () { return this .url_; },
       enumerable: true,
       configurable: false
    });

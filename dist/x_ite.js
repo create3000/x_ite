@@ -25955,6 +25955,10 @@ function (X3DEventObject,
       {
          return this [_fieldDefinitions];
       },
+      getFieldsAreEnumerable: function ()
+      {
+         return false;
+      },
       addField: function (fieldDefinition)
       {
          const
@@ -25974,7 +25978,7 @@ function (X3DEventObject,
          {
             get: function () { return field; },
             set: function (value) { field .setValue (value); },
-            enumerable: true,
+            enumerable: this .getFieldsAreEnumerable (),
             configurable: true, // false : non deletable
          });
 
@@ -31108,52 +31112,53 @@ function (X3DConstants,
 define ('x_ite/Execution/ImportedNode',[
    "x_ite/Base/X3DBaseNode",
    "x_ite/Base/X3DConstants",
+   "x_ite/Fields/SFNodeCache",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DBaseNode,
           X3DConstants,
+          SFNodeCache,
           Generator)
 {
 "use strict";
+
+   const
+      _inlineNode   = Symbol (),
+      _exportedName = Symbol (),
+      _importedName = Symbol (),
+      _routes       = Symbol ();
+
 
    function ImportedNode (executionContext, inlineNode, exportedName, importedName)
    {
       X3DBaseNode .call (this, executionContext);
 
-      this .inlineNode   = inlineNode;
-      this .exportedName = exportedName;
-      this .importedName = importedName;
-      this .routes       = new Set ();
+      this [_inlineNode]   = inlineNode;
+      this [_exportedName] = exportedName;
+      this [_importedName] = importedName;
+      this [_routes]       = new Set ();
 
-      this .inlineNode .loadState_ .addInterest ("set_loadState__", this);
+      this [_inlineNode] .loadState_ .addInterest ("set_loadState__", this);
    }
 
    ImportedNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
       constructor: ImportedNode,
-      getTypeName: function ()
-      {
-         return "ImportedNode";
-      },
       getInlineNode: function ()
       {
-         return this .inlineNode;
+         return this [_inlineNode];
       },
       getExportedName: function ()
       {
-         return this .exportedName;
+         return this [_exportedName];
       },
       getExportedNode: function ()
       {
-         return this .inlineNode .getInternalScene () .getExportedNode (this .exportedName) .getValue ();
-      },
-      setImportedName: function (value)
-      {
-         this .importedName = value;
+         return this [_inlineNode] .getInternalScene () .getExportedNode (this [_exportedName]) .getValue ();
       },
       getImportedName: function ()
       {
-         return this .importedName;
+         return this [_importedName];
       },
       addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
       {
@@ -31166,11 +31171,11 @@ function (X3DBaseNode,
             destinationField: destinationField,
          };
 
-         this .routes .add (route);
+         this [_routes] .add (route);
 
          // Try to resolve source or destination node routes.
 
-         if (this .inlineNode .checkLoadState () === X3DConstants .COMPLETE_STATE)
+         if (this [_inlineNode] .checkLoadState () === X3DConstants .COMPLETE_STATE)
             this .resolveRoute (route);
       },
       resolveRoute: function (route)
@@ -31203,15 +31208,15 @@ function (X3DBaseNode,
       },
       deleteRoute: function (real)
       {
-         for (const route of this .routes)
+         for (const route of this [_routes])
          {
             if (route .real === real)
-               this .routes .delete (route);
+               this [_routes] .delete (route);
          }
       },
       deleteRoutes: function ()
       {
-         for (const route of this .routes)
+         for (const route of this [_routes])
          {
             const real = route .real
 
@@ -31224,7 +31229,7 @@ function (X3DBaseNode,
       },
       set_loadState__: function ()
       {
-         switch (this .inlineNode .checkLoadState ())
+         switch (this [_inlineNode] .checkLoadState ())
          {
             case X3DConstants .NOT_STARTED_STATE:
             case X3DConstants .FAILED_STATE:
@@ -31236,7 +31241,7 @@ function (X3DBaseNode,
             {
                this .deleteRoutes ();
 
-               for (const route of this .routes)
+               for (const route of this [_routes])
                   this .resolveRoute (route);
 
                break;
@@ -31273,7 +31278,7 @@ function (X3DBaseNode,
             {
                // Output unresolved routes.
 
-               for (const route of this .routes)
+               for (const route of this [_routes])
                {
                   const
                      sourceNode       = route .sourceNode,
@@ -31348,7 +31353,7 @@ function (X3DBaseNode,
             {
                // Output unresolved routes.
 
-               for (const route of this .routes)
+               for (const route of this [_routes])
                {
                   const
                      sourceNode       = route .sourceNode,
@@ -31396,7 +31401,7 @@ function (X3DBaseNode,
       },
       dispose: function ()
       {
-         this .inlineNode .loadState_ .removeInterest ("set_loadState__", this);
+         this [_inlineNode] .loadState_ .removeInterest ("set_loadState__", this);
 
          this .deleteRoutes ();
 
@@ -31406,6 +31411,46 @@ function (X3DBaseNode,
 
    for (const key of Reflect .ownKeys (ImportedNode .prototype))
       Object .defineProperty (ImportedNode .prototype, key, { enumerable: false });
+
+   Object .defineProperty (ImportedNode .prototype, "inlineNode",
+   {
+      get: function ()
+      {
+         return SFNodeCache .get (this [_inlineNode]);
+      },
+      enumerable: true,
+      configurable: false
+   });
+
+   Object .defineProperty (ImportedNode .prototype, "exportedName",
+   {
+      get: function ()
+      {
+         return this [_exportedName];
+      },
+      enumerable: true,
+      configurable: false
+   });
+
+   Object .defineProperty (ImportedNode .prototype, "exportedNode",
+   {
+      get: function ()
+      {
+         return this [_inlineNode] .getInternalScene () .getExportedNode (this [_exportedName]);
+      },
+      enumerable: true,
+      configurable: false
+   });
+
+   Object .defineProperty (ImportedNode .prototype, "importedName",
+   {
+      get: function ()
+      {
+         return this [_importedName];
+      },
+      enumerable: true,
+      configurable: false
+   });
 
    return ImportedNode;
 });
@@ -33392,60 +33437,62 @@ function (X3DInfoArray)
 
 define ('x_ite/Execution/ExportedNode',[
    "x_ite/Base/X3DObject",
+   "x_ite/Fields/SFNodeCache",
    "x_ite/InputOutput/Generator",
 ],
 function (X3DObject,
+          SFNodeCache,
           Generator)
 {
 "use strict";
+
+   const
+      _exportedName = Symbol (),
+      _localNode    = Symbol ();
 
    function ExportedNode (exportedName, localNode)
    {
       X3DObject .call (this);
 
-      this .exportedName = exportedName;
-      this .localNode    = localNode;
+      this [_exportedName] = exportedName;
+      this [_localNode]    = localNode;
    }
 
    ExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
       constructor: ExportedNode,
-      getTypeName: function ()
-      {
-         return "ExportedNode";
-      },
       getExportedName: function ()
       {
-         return this .exportedName;
+         return this [_exportedName];
       },
       getLocalNode: function ()
       {
-         return this .localNode;
+         return this [_localNode];
       },
       toVRMLStream: function (stream)
       {
          const
             generator = Generator .Get (stream),
-            localName = generator .LocalName (this .localNode);
+            localName = generator .LocalName (this [_localNode]);
 
          stream .string += generator .Indent ();
          stream .string += "EXPORT";
          stream .string += " ";
          stream .string += localName;
 
-         if (this .exportedName !== localName)
+         if (this [_exportedName] !== localName)
          {
             stream .string += " ";
             stream .string += "AS";
             stream .string += " ";
-            stream .string += this .exportedName;
+            stream .string += this [_exportedName];
          }
       },
       toXMLStream: function (stream)
       {
          const
             generator = Generator .Get (stream),
-            localName = generator .LocalName (this .localNode);
+            localName = generator .LocalName (this [_localNode]);
 
          stream .string += generator .Indent ();
          stream .string += "<EXPORT";
@@ -33454,11 +33501,11 @@ function (X3DObject,
          stream .string += generator .XMLEncode (localName);
          stream .string += "'";
 
-         if (this .exportedName !== localName)
+         if (this [_exportedName] !== localName)
          {
             stream .string += " ";
             stream .string += "AS='";
-            stream .string += generator .XMLEncode (this .exportedName);
+            stream .string += generator .XMLEncode (this [_exportedName]);
             stream .string += "'";
          }
 
@@ -33468,6 +33515,26 @@ function (X3DObject,
 
    for (const key of Reflect .ownKeys (ExportedNode .prototype))
       Object .defineProperty (ExportedNode .prototype, key, { enumerable: false });
+
+   Object .defineProperty (ExportedNode .prototype, "exportedName",
+   {
+      get: function ()
+      {
+         return SFNodeCache .get (this [_exportedName]);
+      },
+      enumerable: true,
+      configurable: false
+   });
+
+   Object .defineProperty (ExportedNode .prototype, "localNode",
+   {
+      get: function ()
+      {
+         return SFNodeCache .get (this [_localNode]);
+      },
+      enumerable: true,
+      configurable: false
+   });
 
    return ExportedNode;
 });
@@ -34434,6 +34501,12 @@ function (Fields,
 {
 "use strict";
 
+   const
+      _cache                   = Symbol (),
+      _autoRefreshStartTime    = Symbol (),
+      _autoRefreshCompleteTime = Symbol (),
+      _autoRefreshId           = Symbol ();
+
    function X3DUrlObject (executionContext)
    {
       this .addType (X3DConstants .X3DUrlObject);
@@ -34441,8 +34514,8 @@ function (Fields,
       this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE),
                              "urlBuffer", new Fields .MFString ());
 
-      this .cache                = true;
-      this .autoRefreshStartTime = performance .now ();
+      this [_cache]                = true;
+      this [_autoRefreshStartTime] = performance .now ();
    }
 
    X3DUrlObject .prototype =
@@ -34464,7 +34537,7 @@ function (Fields,
 
          if (value === X3DConstants .COMPLETE_STATE)
          {
-            this .autoRefreshCompleteTime = performance .now ();
+            this [_autoRefreshCompleteTime] = performance .now ();
             this .setAutoRefreshTimer (this .autoRefresh_ .getValue ());
          }
 
@@ -34498,11 +34571,11 @@ function (Fields,
       },
       setCache: function (value)
       {
-         this .cache = value;
+         this [_cache] = value;
       },
       getCache: function ()
       {
-         return this .cache;
+         return this [_cache];
       },
       requestImmediateLoad: function (cache = true)
       {
@@ -34535,7 +34608,7 @@ function (Fields,
       { },
       setAutoRefreshTimer: function (autoRefreshInterval)
       {
-         clearTimeout (this .autoRefreshId);
+         clearTimeout (this [_autoRefreshId]);
 
          if (this .autoRefresh_ .getValue () <= 0)
             return;
@@ -34544,11 +34617,11 @@ function (Fields,
 
          if (autoRefreshTimeLimit !== 0)
          {
-            if ((performance .now () - this .autoRefreshStartTime) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
+            if ((performance .now () - this [_autoRefreshStartTime]) / 1000 > autoRefreshTimeLimit - autoRefreshInterval)
                return;
          }
 
-         this .autoRefreshId = setTimeout (this .performAutoRefresh .bind (this), autoRefreshInterval * 1000);
+         this [_autoRefreshId] = setTimeout (this .performAutoRefresh .bind (this), autoRefreshInterval * 1000);
       },
       performAutoRefresh: function ()
       {
@@ -34560,7 +34633,7 @@ function (Fields,
          if (this .isLive () .getValue ())
             this .set_autoRefresh__ ();
          else
-            clearTimeout (this .autoRefreshId);
+            clearTimeout (this [_autoRefreshId]);
       },
       set_load__: function ()
       {
@@ -34588,7 +34661,7 @@ function (Fields,
             return;
 
          const
-            elapsedTime = (performance .now () - this .autoRefreshCompleteTime) / 1000,
+            elapsedTime = (performance .now () - this [_autoRefreshCompleteTime]) / 1000,
             autoRefresh = this .autoRefresh_ .getValue ();
 
          let autoRefreshInterval = autoRefresh - elapsedTime;
@@ -34786,6 +34859,10 @@ function (Fields,
             return this .getName () .replace (_TrailingNumber, "");
          };
       })(),
+      getFieldsAreEnumerable: function ()
+      {
+         return true;
+      },
       traverse: function () { },
       toStream: function (stream)
       {
@@ -36198,6 +36275,10 @@ function ($,
 
    SupportedNodes .addAbstractType ("X3DExternProtoDeclaration");
 
+   const
+      _proto = Symbol (),
+      _scene = Symbol ();
+
    function X3DExternProtoDeclaration (executionContext, url)
    {
       X3DProtoDeclarationNode .call (this, executionContext);
@@ -36234,7 +36315,7 @@ function ($,
          if (this .checkLoadState () !== X3DConstants .COMPLETE_STATE)
             return;
 
-         this .scene .setLive (this .isLive () .getValue ());
+         this [_scene] .setLive (this .isLive () .getValue ());
       },
       canUserDefinedFields: function ()
       {
@@ -36242,24 +36323,24 @@ function ($,
       },
       setProtoDeclaration: function (proto)
       {
-         this .proto = proto;
+         this [_proto] = proto;
 
-         if (!this .proto)
-            return
-
-         const fieldDefinitions = this .getFieldDefinitions ();
-
-         for (const protoFieldDefinition of proto .getFieldDefinitions ())
+         if (proto)
          {
-            const fieldDefinition = fieldDefinitions .get (protoFieldDefinition .name);
+            const fieldDefinitions = this .getFieldDefinitions ();
 
-            if (fieldDefinition)
-               fieldDefinition .value .setValue (protoFieldDefinition .value);
+            for (const fieldDefinition of Array .from (fieldDefinitions))
+               fieldDefinitions .remove (fieldDefinition .name);
+
+            for (const fieldDefinition of proto .getFieldDefinitions ())
+               fieldDefinitions .add (fieldDefinition .name, fieldDefinition);
          }
+
+         this .requestUpdateInstances ();
       },
       getProtoDeclaration: function ()
       {
-         return this .proto;
+         return this [_proto];
       },
       loadNow: function ()
       {
@@ -36283,40 +36364,36 @@ function ($,
       },
       setInternalScene: function (value)
       {
-         this .scene = value;
+         this [_scene] = value;
 
          const
-            protoName = new URL (this .scene .getWorldURL ()) .hash .substr (1),
-            proto     = protoName ? this .scene .protos .get (protoName) : this .scene .protos [0];
+            protoName = new URL (this [_scene] .getWorldURL ()) .hash .substr (1),
+            proto     = protoName ? this [_scene] .protos .get (protoName) : this [_scene] .protos [0];
 
          if (!proto)
             throw new Error ("PROTO not found");
 
-         this .scene .setLive (this .isLive () .getValue ());
-         this .scene .setPrivate (this .getScene () .getPrivate ());
-         this .scene .setExecutionContext (this .getExecutionContext ());
+         this [_scene] .setLive (this .isLive () .getValue ());
+         this [_scene] .setPrivate (this .getScene () .getPrivate ());
+         this [_scene] .setExecutionContext (this .getExecutionContext ());
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
          this .setProtoDeclaration (proto);
-         this .requestUpdateInstances ();
       },
       getInternalScene: function ()
       {
          ///  Returns the internal X3DScene of this extern proto, that is loaded from the url given.
 
-         return this .scene;
+         return this [_scene];
       },
       setError: function (error)
       {
          console .error ("Error loading extern prototype:", error);
 
-         this .scene = this .getBrowser () .getPrivateScene ();
+         this [_scene] = this .getBrowser () .getPrivateScene ();
 
          this .setLoadState (X3DConstants .FAILED_STATE);
          this .setProtoDeclaration (null);
-
-         this .deferred .resolve ();
-         this .deferred = $.Deferred ();
       },
       toVRMLStream: function (stream)
       {
@@ -36454,7 +36531,7 @@ function ($,
 
    Object .defineProperty (X3DExternProtoDeclaration .prototype, "urls",
    {
-      get: function () { return this .url_ .copy (); },
+      get: function () { return this .url_; },
       enumerable: true,
       configurable: false
    });
@@ -36541,6 +36618,9 @@ function (SupportedNodes,
 
    SupportedNodes .addAbstractType ("X3DProtoDeclaration");
 
+   const
+      _body = Symbol ();
+
    function X3DProtoDeclaration (executionContext)
    {
       X3DProtoDeclarationNode .call (this, executionContext);
@@ -36549,9 +36629,9 @@ function (SupportedNodes,
 
       this .addChildObjects ("loadState", new Fields .SFInt32 (X3DConstants .NOT_STARTED_STATE));
 
-      this .body = new X3DExecutionContext (executionContext);
-      this .body .setNode (this);
-      this .body .setLive (false);
+      this [_body] = new X3DExecutionContext (executionContext);
+      this [_body] .setNode (this);
+      this [_body] .setLive (false);
       this .setLive (false);
    }
 
@@ -36569,7 +36649,7 @@ function (SupportedNodes,
       {
          X3DProtoDeclarationNode .prototype .initialize .call (this);
 
-         this .body .setup ();
+         this [_body] .setup ();
 
          this .loadState_ = X3DConstants .COMPLETE_STATE;
       },
@@ -36579,7 +36659,7 @@ function (SupportedNodes,
       },
       getBody: function ()
       {
-         return this .body;
+         return this [_body];
       },
       checkLoadState: function ()
       {
@@ -36646,7 +36726,7 @@ function (SupportedNodes,
 
          generator .IncIndent ();
 
-         this .body .toVRMLStream (stream);
+         this [_body] .toVRMLStream (stream);
 
          generator .DecIndent ();
 
@@ -36781,7 +36861,7 @@ function (SupportedNodes,
 
          generator .IncIndent ();
 
-         this .body .toXMLStream (stream);
+         this [_body] .toXMLStream (stream);
 
          generator .DecIndent ();
 
