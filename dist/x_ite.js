@@ -13476,7 +13476,7 @@ function (X3DConstants)
       },
       IsSharedNode: function (baseNode)
       {
-         return false;
+         return this .ExecutionContext () !== baseNode .getExecutionContext ();
       },
       AddNode: function (baseNode)
       {
@@ -34647,13 +34647,13 @@ function (Fields,
 
 
 define ('x_ite/Components/Core/X3DNode',[
-   "x_ite/Base/X3DBaseNode",
    "x_ite/Fields",
+   "x_ite/Base/X3DBaseNode",
    "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
 ],
-function (X3DBaseNode,
-          Fields,
+function (Fields,
+          X3DBaseNode,
           X3DConstants,
           Generator)
 {
@@ -34789,12 +34789,6 @@ function (X3DBaseNode,
       {
          const generator = Generator .Get (stream);
 
-         if (generator .IsSharedNode (this))
-         {
-            stream .string += "NULL";
-            return;
-         }
-
          generator .EnterScope ();
 
          const name = generator .Name (this);
@@ -34893,9 +34887,11 @@ function (X3DBaseNode,
       },
       toVRMLStreamField: function (stream, field, fieldTypeLength, accessTypeLength)
       {
-         const generator = Generator .Get (stream);
+         const
+            generator  = Generator .Get (stream),
+            sharedNode = generator .IsSharedNode (this);
 
-         if (field .getReferences () .size === 0 || !generator .ExecutionContext ())
+         if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode)
          {
             if (field .isInitializable ())
             {
@@ -34946,9 +34942,11 @@ function (X3DBaseNode,
       },
       toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
       {
-         const generator = Generator .Get (stream);
+         const
+            generator  = Generator .Get (stream),
+            sharedNode = generator .IsSharedNode (this);
 
-         if (field .getReferences () .size === 0 || !generator .ExecutionContext ())
+         if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode)
          {
             stream .string += generator .Indent ();
             stream .string += generator .PadRight (generator .AccessType (field .getAccessType ()), accessTypeLength);
@@ -35014,14 +35012,9 @@ function (X3DBaseNode,
       },
       toXMLStream: function (stream)
       {
-         const generator = Generator .Get (stream);
-
-         if (generator .IsSharedNode (this))
-         {
-            stream .string += generator .Indent ();
-            stream .string += "<!-- NULL -->";
-            return;
-         }
+         const
+            generator  = Generator .Get (stream),
+            sharedNode = generator .IsSharedNode (this);
 
          generator .EnterScope ();
 
@@ -35128,7 +35121,7 @@ function (X3DBaseNode,
             // If we have no execution context we are not in a proto and must not generate IS references the same is true
             // if the node is a shared node as the node does not belong to the execution context.
 
-            if (field .getReferences () .size === 0 || !generator .ExecutionContext () || mustOutputValue)
+            if (field .getReferences () .size === 0 || !generator .ExecutionContext () || sharedNode || mustOutputValue)
             {
                if (mustOutputValue)
                   references .push (field);
@@ -35166,6 +35159,9 @@ function (X3DBaseNode,
                references .push (field);
             }
          }
+
+         if (sharedNode)
+            references .length = 0;
 
          generator .DecIndent ();
          generator .DecIndent ();
@@ -35217,7 +35213,7 @@ function (X3DBaseNode,
                         mustOutputValue = true;
                   }
 
-                  if ((field .getReferences () .size === 0 || !generator .ExecutionContext ()) || mustOutputValue)
+                  if ((field .getReferences () .size === 0 || !generator .ExecutionContext ()) || sharedNode || mustOutputValue)
                   {
                      if (mustOutputValue && generator .ExecutionContext ())
                         references .push (field);
@@ -35276,6 +35272,9 @@ function (X3DBaseNode,
                   }
                }
             }
+
+            if (sharedNode)
+               references .length = 0;
 
             if (references .length)
             {
@@ -35706,13 +35705,6 @@ function (X3DChildObject,
       toXMLStream: function (stream)
       {
          const generator = Generator .Get (stream);
-
-         if (generator .IsSharedNode (this))
-         {
-            stream .string += generator .Indent ();
-            stream .string += "<!-- NULL -->";
-            return;
-         }
 
          generator .EnterScope ();
 

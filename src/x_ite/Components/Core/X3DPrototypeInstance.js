@@ -289,13 +289,6 @@ function (X3DChildObject,
       {
          const generator = Generator .Get (stream);
 
-         if (generator .IsSharedNode (this))
-         {
-            stream .string += generator .Indent ();
-            stream .string += "<!-- NULL -->";
-            return;
-         }
-
          generator .EnterScope ();
 
          const name = generator .Name (this);

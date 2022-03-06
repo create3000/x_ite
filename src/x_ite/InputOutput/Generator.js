@@ -196,7 +196,7 @@ function (X3DConstants)
       },
       IsSharedNode: function (baseNode)
       {
-         return false;
+         return this .ExecutionContext () !== baseNode .getExecutionContext ();
       },
       AddNode: function (baseNode)
       {
