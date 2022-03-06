@@ -54,7 +54,7 @@ define ([
    "x_ite/Configuration/ComponentInfoArray",
    "x_ite/Configuration/UnitInfo",
    "x_ite/Configuration/UnitInfoArray",
-   "x_ite/Execution/ExportedNode",
+   "x_ite/Execution/X3DExportedNode",
    "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
    "x_ite/Fields/SFNodeCache",
@@ -65,7 +65,7 @@ function (SupportedNodes,
           ComponentInfoArray,
           UnitInfo,
           UnitInfoArray,
-          ExportedNode,
+          X3DExportedNode,
           X3DConstants,
           Generator,
           SFNodeCache)
@@ -275,7 +275,7 @@ function (SupportedNodes,
          //if (node .getValue () .getExecutionContext () !== this)
          //	throw new Error ("Couldn't update exported node: node does not belong to this execution context.");
 
-         const exportedNode = new ExportedNode (exportedName, node .getValue ());
+         const exportedNode = new X3DExportedNode (exportedName, node .getValue ());
 
          this [_exportedNodes] .set (exportedName, exportedNode);
       },

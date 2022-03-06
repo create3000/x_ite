@@ -51,7 +51,7 @@ define ([
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields",
    "x_ite/Base/X3DBaseNode",
-   "x_ite/Execution/ImportedNode",
+   "x_ite/Execution/X3DImportedNode",
    "x_ite/Prototype/ExternProtoDeclarationArray",
    "x_ite/Prototype/ProtoDeclarationArray",
    "x_ite/Routing/RouteArray",
@@ -65,7 +65,7 @@ define ([
 function (SupportedNodes,
           Fields,
           X3DBaseNode,
-          ImportedNode,
+          X3DImportedNode,
           ExternProtoDeclarationArray,
           ProtoDeclarationArray,
           RouteArray,
@@ -324,7 +324,7 @@ function (SupportedNodes,
 
          this .removeImportedNode (importedName);
 
-         const importedNode = new ImportedNode (this, inlineNode, exportedName, importedName);
+         const importedNode = new X3DImportedNode (this, inlineNode, exportedName, importedName);
 
          this [_importedNodes] .set (importedName, importedNode);
 
@@ -578,12 +578,12 @@ function (SupportedNodes,
          // Imported nodes handling.
 
          let
-            importedSourceNode      = sourceNodeValue      instanceof ImportedNode ? sourceNodeValue      : null,
-            importedDestinationNode = destinationNodeValue instanceof ImportedNode ? destinationNodeValue : null;
+            importedSourceNode      = sourceNodeValue      instanceof X3DImportedNode ? sourceNodeValue      : null,
+            importedDestinationNode = destinationNodeValue instanceof X3DImportedNode ? destinationNodeValue : null;
 
          try
          {
-            // If sourceNode is shared node try to find the corresponding ImportedNode.
+            // If sourceNode is shared node try to find the corresponding X3DImportedNode.
             if (sourceNodeValue .getExecutionContext () !== this)
                importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
          }
@@ -594,7 +594,7 @@ function (SupportedNodes,
 
          try
          {
-            // If destinationNode is shared node try to find the corresponding ImportedNode.
+            // If destinationNode is shared node try to find the corresponding X3DImportedNode.
             if (destinationNodeValue .getExecutionContext () !== this)
                importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
          }
@@ -603,21 +603,21 @@ function (SupportedNodes,
             // Destination node is shared but not imported.
          }
 
-         if (importedSourceNode instanceof ImportedNode && importedDestinationNode instanceof ImportedNode)
+         if (importedSourceNode instanceof X3DImportedNode && importedDestinationNode instanceof X3DImportedNode)
          {
             importedSourceNode      .addRoute (importedSourceNode, sourceField, importedDestinationNode, destinationField);
             importedDestinationNode .addRoute (importedSourceNode, sourceField, importedDestinationNode, destinationField);
          }
-         else if (importedSourceNode instanceof ImportedNode)
+         else if (importedSourceNode instanceof X3DImportedNode)
          {
             importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNodeValue, destinationField);
          }
-         else if (importedDestinationNode instanceof ImportedNode)
+         else if (importedDestinationNode instanceof X3DImportedNode)
          {
             importedDestinationNode .addRoute (sourceNodeValue, sourceField, importedDestinationNode, destinationField);
          }
 
-         // If either sourceNode or destinationNode is an ImportedNode return here without value.
+         // If either sourceNode or destinationNode is an X3DImportedNode return here without value.
          if (importedSourceNode === sourceNodeValue || importedDestinationNode === destinationNodeValue)
             return;
 
@@ -708,7 +708,7 @@ function (SupportedNodes,
 
          try
          {
-            // If sourceNode is shared node try to find the corresponding ImportedNode.
+            // If sourceNode is shared node try to find the corresponding X3DImportedNode.
             if (sourceNode .getValue () .getExecutionContext () !== this)
                importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
          }
@@ -719,7 +719,7 @@ function (SupportedNodes,
 
          try
          {
-            // If destinationNode is shared node try to find the corresponding ImportedNode.
+            // If destinationNode is shared node try to find the corresponding X3DImportedNode.
             if (destinationNode .getValue () .getExecutionContext () !== this)
                importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
          }
@@ -728,16 +728,16 @@ function (SupportedNodes,
             // Destination node is shared but not imported.
          }
 
-         if (importedSourceNode instanceof ImportedNode && importedDestinationNode instanceof ImportedNode)
+         if (importedSourceNode instanceof X3DImportedNode && importedDestinationNode instanceof X3DImportedNode)
          {
             importedSourceNode      .deleteRoute (route);
             importedDestinationNode .deleteRoute (route);
          }
-         else if (importedSourceNode instanceof ImportedNode)
+         else if (importedSourceNode instanceof X3DImportedNode)
          {
             importedSourceNode .deleteRoute (route);
          }
-         else if (importedDestinationNode instanceof ImportedNode)
+         else if (importedDestinationNode instanceof X3DImportedNode)
          {
             importedDestinationNode .deleteRoute (route);
          }

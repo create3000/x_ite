@@ -62,7 +62,7 @@ function (X3DObject,
       _exportedName = Symbol (),
       _localNode    = Symbol ();
 
-   function ExportedNode (exportedName, localNode)
+   function X3DExportedNode (exportedName, localNode)
    {
       X3DObject .call (this);
 
@@ -70,9 +70,9 @@ function (X3DObject,
       this [_localNode]    = localNode;
    }
 
-   ExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
+   X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
-      constructor: ExportedNode,
+      constructor: X3DExportedNode,
       getExportedName: function ()
       {
          return this [_exportedName];
@@ -125,10 +125,10 @@ function (X3DObject,
       },
    });
 
-   for (const key of Reflect .ownKeys (ExportedNode .prototype))
-      Object .defineProperty (ExportedNode .prototype, key, { enumerable: false });
+   for (const key of Reflect .ownKeys (X3DExportedNode .prototype))
+      Object .defineProperty (X3DExportedNode .prototype, key, { enumerable: false });
 
-   Object .defineProperty (ExportedNode .prototype, "exportedName",
+   Object .defineProperty (X3DExportedNode .prototype, "exportedName",
    {
       get: function ()
       {
@@ -138,7 +138,7 @@ function (X3DObject,
       configurable: false
    });
 
-   Object .defineProperty (ExportedNode .prototype, "localNode",
+   Object .defineProperty (X3DExportedNode .prototype, "localNode",
    {
       get: function ()
       {
@@ -148,5 +148,5 @@ function (X3DObject,
       configurable: false
    });
 
-   return ExportedNode;
+   return X3DExportedNode;
 });

@@ -67,7 +67,7 @@ function (X3DBaseNode,
       _routes       = Symbol ();
 
 
-   function ImportedNode (executionContext, inlineNode, exportedName, importedName)
+   function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
    {
       X3DBaseNode .call (this, executionContext);
 
@@ -79,9 +79,9 @@ function (X3DBaseNode,
       this [_inlineNode] .loadState_ .addInterest ("set_loadState__", this);
    }
 
-   ImportedNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   X3DImportedNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
-      constructor: ImportedNode,
+      constructor: X3DImportedNode,
       getInlineNode: function ()
       {
          return this [_inlineNode];
@@ -131,10 +131,10 @@ function (X3DBaseNode,
             if (route .real)
                route .real .dispose ();
 
-            if (sourceNode instanceof ImportedNode)
+            if (sourceNode instanceof X3DImportedNode)
                sourceNode = sourceNode .getExportedNode ();
 
-            if (destinationNode instanceof ImportedNode)
+            if (destinationNode instanceof X3DImportedNode)
                destinationNode = destinationNode .getExportedNode ();
 
             route .real = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
@@ -226,11 +226,11 @@ function (X3DBaseNode,
 
                   if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
                   {
-                     const sourceNodeName = sourceNode instanceof ImportedNode
+                     const sourceNodeName = sourceNode instanceof X3DImportedNode
                         ? sourceNode .getImportedName ()
                         : generator .Name (sourceNode);
 
-                     const destinationNodeName = destinationNode instanceof ImportedNode
+                     const destinationNodeName = destinationNode instanceof X3DImportedNode
                         ? destinationNode .getImportedName ()
                         : generator .Name (destinationNode);
 
@@ -253,7 +253,7 @@ function (X3DBaseNode,
             }
          }
          else
-            throw new Error ("ImportedNode.toXMLStream: Inline node does not exist.");
+            throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
       },
       toXMLStream: function (stream)
       {
@@ -301,11 +301,11 @@ function (X3DBaseNode,
 
                   if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
                   {
-                     const sourceNodeName = sourceNode instanceof ImportedNode
+                     const sourceNodeName = sourceNode instanceof X3DImportedNode
                         ? sourceNode .getImportedName ()
                         : generator .Name (sourceNode);
 
-                     const destinationNodeName = destinationNode instanceof ImportedNode
+                     const destinationNodeName = destinationNode instanceof X3DImportedNode
                         ? destinationNode .getImportedName ()
                         : generator .Name (destinationNode);
 
@@ -335,7 +335,7 @@ function (X3DBaseNode,
             }
          }
          else
-            throw new Error ("ImportedNode.toXMLStream: Inline node does not exist.");
+            throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
       },
       dispose: function ()
       {
@@ -347,10 +347,10 @@ function (X3DBaseNode,
       },
    });
 
-   for (const key of Reflect .ownKeys (ImportedNode .prototype))
-      Object .defineProperty (ImportedNode .prototype, key, { enumerable: false });
+   for (const key of Reflect .ownKeys (X3DImportedNode .prototype))
+      Object .defineProperty (X3DImportedNode .prototype, key, { enumerable: false });
 
-   Object .defineProperty (ImportedNode .prototype, "inlineNode",
+   Object .defineProperty (X3DImportedNode .prototype, "inlineNode",
    {
       get: function ()
       {
@@ -360,7 +360,7 @@ function (X3DBaseNode,
       configurable: false
    });
 
-   Object .defineProperty (ImportedNode .prototype, "exportedName",
+   Object .defineProperty (X3DImportedNode .prototype, "exportedName",
    {
       get: function ()
       {
@@ -370,7 +370,7 @@ function (X3DBaseNode,
       configurable: false
    });
 
-   Object .defineProperty (ImportedNode .prototype, "exportedNode",
+   Object .defineProperty (X3DImportedNode .prototype, "exportedNode",
    {
       get: function ()
       {
@@ -380,7 +380,7 @@ function (X3DBaseNode,
       configurable: false
    });
 
-   Object .defineProperty (ImportedNode .prototype, "importedName",
+   Object .defineProperty (X3DImportedNode .prototype, "importedName",
    {
       get: function ()
       {
@@ -390,5 +390,5 @@ function (X3DBaseNode,
       configurable: false
    });
 
-   return ImportedNode;
+   return X3DImportedNode;
 });
