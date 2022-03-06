@@ -31109,7 +31109,7 @@ function (X3DConstants,
  ******************************************************************************/
 
 
-define ('x_ite/Execution/ImportedNode',[
+define ('x_ite/Execution/X3DImportedNode',[
    "x_ite/Base/X3DBaseNode",
    "x_ite/Base/X3DConstants",
    "x_ite/Fields/SFNodeCache",
@@ -31128,8 +31128,7 @@ function (X3DBaseNode,
       _importedName = Symbol (),
       _routes       = Symbol ();
 
-
-   function ImportedNode (executionContext, inlineNode, exportedName, importedName)
+   function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
    {
       X3DBaseNode .call (this, executionContext);
 
@@ -31141,9 +31140,9 @@ function (X3DBaseNode,
       this [_inlineNode] .loadState_ .addInterest ("set_loadState__", this);
    }
 
-   ImportedNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   X3DImportedNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
    {
-      constructor: ImportedNode,
+      constructor: X3DImportedNode,
       getInlineNode: function ()
       {
          return this [_inlineNode];
@@ -31193,10 +31192,10 @@ function (X3DBaseNode,
             if (route .real)
                route .real .dispose ();
 
-            if (sourceNode instanceof ImportedNode)
+            if (sourceNode instanceof X3DImportedNode)
                sourceNode = sourceNode .getExportedNode ();
 
-            if (destinationNode instanceof ImportedNode)
+            if (destinationNode instanceof X3DImportedNode)
                destinationNode = destinationNode .getExportedNode ();
 
             route .real = this .getExecutionContext () .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
@@ -31288,11 +31287,11 @@ function (X3DBaseNode,
 
                   if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
                   {
-                     const sourceNodeName = sourceNode instanceof ImportedNode
+                     const sourceNodeName = sourceNode instanceof X3DImportedNode
                         ? sourceNode .getImportedName ()
                         : generator .Name (sourceNode);
 
-                     const destinationNodeName = destinationNode instanceof ImportedNode
+                     const destinationNodeName = destinationNode instanceof X3DImportedNode
                         ? destinationNode .getImportedName ()
                         : generator .Name (destinationNode);
 
@@ -31315,7 +31314,7 @@ function (X3DBaseNode,
             }
          }
          else
-            throw new Error ("ImportedNode.toXMLStream: Inline node does not exist.");
+            throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
       },
       toXMLStream: function (stream)
       {
@@ -31363,11 +31362,11 @@ function (X3DBaseNode,
 
                   if (generator .ExistsRouteNode (sourceNode) && generator .ExistsRouteNode (destinationNode))
                   {
-                     const sourceNodeName = sourceNode instanceof ImportedNode
+                     const sourceNodeName = sourceNode instanceof X3DImportedNode
                         ? sourceNode .getImportedName ()
                         : generator .Name (sourceNode);
 
-                     const destinationNodeName = destinationNode instanceof ImportedNode
+                     const destinationNodeName = destinationNode instanceof X3DImportedNode
                         ? destinationNode .getImportedName ()
                         : generator .Name (destinationNode);
 
@@ -31397,7 +31396,7 @@ function (X3DBaseNode,
             }
          }
          else
-            throw new Error ("ImportedNode.toXMLStream: Inline node does not exist.");
+            throw new Error ("X3DImportedNode.toXMLStream: Inline node does not exist.");
       },
       dispose: function ()
       {
@@ -31409,10 +31408,10 @@ function (X3DBaseNode,
       },
    });
 
-   for (const key of Reflect .ownKeys (ImportedNode .prototype))
-      Object .defineProperty (ImportedNode .prototype, key, { enumerable: false });
+   for (const key of Reflect .ownKeys (X3DImportedNode .prototype))
+      Object .defineProperty (X3DImportedNode .prototype, key, { enumerable: false });
 
-   Object .defineProperty (ImportedNode .prototype, "inlineNode",
+   Object .defineProperty (X3DImportedNode .prototype, "inlineNode",
    {
       get: function ()
       {
@@ -31422,7 +31421,7 @@ function (X3DBaseNode,
       configurable: false
    });
 
-   Object .defineProperty (ImportedNode .prototype, "exportedName",
+   Object .defineProperty (X3DImportedNode .prototype, "exportedName",
    {
       get: function ()
       {
@@ -31432,7 +31431,7 @@ function (X3DBaseNode,
       configurable: false
    });
 
-   Object .defineProperty (ImportedNode .prototype, "exportedNode",
+   Object .defineProperty (X3DImportedNode .prototype, "exportedNode",
    {
       get: function ()
       {
@@ -31442,7 +31441,7 @@ function (X3DBaseNode,
       configurable: false
    });
 
-   Object .defineProperty (ImportedNode .prototype, "importedName",
+   Object .defineProperty (X3DImportedNode .prototype, "importedName",
    {
       get: function ()
       {
@@ -31452,7 +31451,7 @@ function (X3DBaseNode,
       configurable: false
    });
 
-   return ImportedNode;
+   return X3DImportedNode;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -32060,7 +32059,7 @@ define ('x_ite/Execution/X3DExecutionContext',[
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields",
    "x_ite/Base/X3DBaseNode",
-   "x_ite/Execution/ImportedNode",
+   "x_ite/Execution/X3DImportedNode",
    "x_ite/Prototype/ExternProtoDeclarationArray",
    "x_ite/Prototype/ProtoDeclarationArray",
    "x_ite/Routing/RouteArray",
@@ -32074,7 +32073,7 @@ define ('x_ite/Execution/X3DExecutionContext',[
 function (SupportedNodes,
           Fields,
           X3DBaseNode,
-          ImportedNode,
+          X3DImportedNode,
           ExternProtoDeclarationArray,
           ProtoDeclarationArray,
           RouteArray,
@@ -32333,7 +32332,7 @@ function (SupportedNodes,
 
          this .removeImportedNode (importedName);
 
-         const importedNode = new ImportedNode (this, inlineNode, exportedName, importedName);
+         const importedNode = new X3DImportedNode (this, inlineNode, exportedName, importedName);
 
          this [_importedNodes] .set (importedName, importedNode);
 
@@ -32587,12 +32586,12 @@ function (SupportedNodes,
          // Imported nodes handling.
 
          let
-            importedSourceNode      = sourceNodeValue      instanceof ImportedNode ? sourceNodeValue      : null,
-            importedDestinationNode = destinationNodeValue instanceof ImportedNode ? destinationNodeValue : null;
+            importedSourceNode      = sourceNodeValue      instanceof X3DImportedNode ? sourceNodeValue      : null,
+            importedDestinationNode = destinationNodeValue instanceof X3DImportedNode ? destinationNodeValue : null;
 
          try
          {
-            // If sourceNode is shared node try to find the corresponding ImportedNode.
+            // If sourceNode is shared node try to find the corresponding X3DImportedNode.
             if (sourceNodeValue .getExecutionContext () !== this)
                importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
          }
@@ -32603,7 +32602,7 @@ function (SupportedNodes,
 
          try
          {
-            // If destinationNode is shared node try to find the corresponding ImportedNode.
+            // If destinationNode is shared node try to find the corresponding X3DImportedNode.
             if (destinationNodeValue .getExecutionContext () !== this)
                importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
          }
@@ -32612,21 +32611,21 @@ function (SupportedNodes,
             // Destination node is shared but not imported.
          }
 
-         if (importedSourceNode instanceof ImportedNode && importedDestinationNode instanceof ImportedNode)
+         if (importedSourceNode instanceof X3DImportedNode && importedDestinationNode instanceof X3DImportedNode)
          {
             importedSourceNode      .addRoute (importedSourceNode, sourceField, importedDestinationNode, destinationField);
             importedDestinationNode .addRoute (importedSourceNode, sourceField, importedDestinationNode, destinationField);
          }
-         else if (importedSourceNode instanceof ImportedNode)
+         else if (importedSourceNode instanceof X3DImportedNode)
          {
             importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNodeValue, destinationField);
          }
-         else if (importedDestinationNode instanceof ImportedNode)
+         else if (importedDestinationNode instanceof X3DImportedNode)
          {
             importedDestinationNode .addRoute (sourceNodeValue, sourceField, importedDestinationNode, destinationField);
          }
 
-         // If either sourceNode or destinationNode is an ImportedNode return here without value.
+         // If either sourceNode or destinationNode is an X3DImportedNode return here without value.
          if (importedSourceNode === sourceNodeValue || importedDestinationNode === destinationNodeValue)
             return;
 
@@ -32717,7 +32716,7 @@ function (SupportedNodes,
 
          try
          {
-            // If sourceNode is shared node try to find the corresponding ImportedNode.
+            // If sourceNode is shared node try to find the corresponding X3DImportedNode.
             if (sourceNode .getValue () .getExecutionContext () !== this)
                importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
          }
@@ -32728,7 +32727,7 @@ function (SupportedNodes,
 
          try
          {
-            // If destinationNode is shared node try to find the corresponding ImportedNode.
+            // If destinationNode is shared node try to find the corresponding X3DImportedNode.
             if (destinationNode .getValue () .getExecutionContext () !== this)
                importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
          }
@@ -32737,16 +32736,16 @@ function (SupportedNodes,
             // Destination node is shared but not imported.
          }
 
-         if (importedSourceNode instanceof ImportedNode && importedDestinationNode instanceof ImportedNode)
+         if (importedSourceNode instanceof X3DImportedNode && importedDestinationNode instanceof X3DImportedNode)
          {
             importedSourceNode      .deleteRoute (route);
             importedDestinationNode .deleteRoute (route);
          }
-         else if (importedSourceNode instanceof ImportedNode)
+         else if (importedSourceNode instanceof X3DImportedNode)
          {
             importedSourceNode .deleteRoute (route);
          }
-         else if (importedDestinationNode instanceof ImportedNode)
+         else if (importedDestinationNode instanceof X3DImportedNode)
          {
             importedDestinationNode .deleteRoute (route);
          }
@@ -33435,7 +33434,7 @@ function (X3DInfoArray)
  ******************************************************************************/
 
 
-define ('x_ite/Execution/ExportedNode',[
+define ('x_ite/Execution/X3DExportedNode',[
    "x_ite/Base/X3DObject",
    "x_ite/Fields/SFNodeCache",
    "x_ite/InputOutput/Generator",
@@ -33450,7 +33449,7 @@ function (X3DObject,
       _exportedName = Symbol (),
       _localNode    = Symbol ();
 
-   function ExportedNode (exportedName, localNode)
+   function X3DExportedNode (exportedName, localNode)
    {
       X3DObject .call (this);
 
@@ -33458,9 +33457,9 @@ function (X3DObject,
       this [_localNode]    = localNode;
    }
 
-   ExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
+   X3DExportedNode .prototype = Object .assign (Object .create (X3DObject .prototype),
    {
-      constructor: ExportedNode,
+      constructor: X3DExportedNode,
       getExportedName: function ()
       {
          return this [_exportedName];
@@ -33513,10 +33512,10 @@ function (X3DObject,
       },
    });
 
-   for (const key of Reflect .ownKeys (ExportedNode .prototype))
-      Object .defineProperty (ExportedNode .prototype, key, { enumerable: false });
+   for (const key of Reflect .ownKeys (X3DExportedNode .prototype))
+      Object .defineProperty (X3DExportedNode .prototype, key, { enumerable: false });
 
-   Object .defineProperty (ExportedNode .prototype, "exportedName",
+   Object .defineProperty (X3DExportedNode .prototype, "exportedName",
    {
       get: function ()
       {
@@ -33526,7 +33525,7 @@ function (X3DObject,
       configurable: false
    });
 
-   Object .defineProperty (ExportedNode .prototype, "localNode",
+   Object .defineProperty (X3DExportedNode .prototype, "localNode",
    {
       get: function ()
       {
@@ -33536,7 +33535,7 @@ function (X3DObject,
       configurable: false
    });
 
-   return ExportedNode;
+   return X3DExportedNode;
 });
 
 /* -*- Mode: JavaScript; coding: utf-8; tab-width: 3; indent-tabs-mode: tab; c-basic-offset: 3 -*-
@@ -33595,7 +33594,7 @@ define ('x_ite/Execution/X3DScene',[
    "x_ite/Configuration/ComponentInfoArray",
    "x_ite/Configuration/UnitInfo",
    "x_ite/Configuration/UnitInfoArray",
-   "x_ite/Execution/ExportedNode",
+   "x_ite/Execution/X3DExportedNode",
    "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
    "x_ite/Fields/SFNodeCache",
@@ -33606,7 +33605,7 @@ function (SupportedNodes,
           ComponentInfoArray,
           UnitInfo,
           UnitInfoArray,
-          ExportedNode,
+          X3DExportedNode,
           X3DConstants,
           Generator,
           SFNodeCache)
@@ -33816,7 +33815,7 @@ function (SupportedNodes,
          //if (node .getValue () .getExecutionContext () !== this)
          //	throw new Error ("Couldn't update exported node: node does not belong to this execution context.");
 
-         const exportedNode = new ExportedNode (exportedName, node .getValue ());
+         const exportedNode = new X3DExportedNode (exportedName, node .getValue ());
 
          this [_exportedNodes] .set (exportedName, exportedNode);
       },
@@ -119234,6 +119233,8 @@ define ('x_ite/X3D',[
    "x_ite/Configuration/UnitInfoArray",
    "x_ite/Execution/X3DExecutionContext",
    "x_ite/Execution/X3DScene",
+   "x_ite/Execution/X3DImportedNode",
+   "x_ite/Execution/X3DExportedNode",
    "x_ite/Prototype/ExternProtoDeclarationArray",
    "x_ite/Prototype/ProtoDeclarationArray",
    "x_ite/Prototype/X3DExternProtoDeclaration",
@@ -119261,6 +119262,8 @@ function ($,
           UnitInfoArray,
           X3DExecutionContext,
           X3DScene,
+          X3DImportedNode,
+          X3DExportedNode,
           ExternProtoDeclarationArray,
           ProtoDeclarationArray,
           X3DExternProtoDeclaration,
@@ -119383,7 +119386,10 @@ function ($,
       X3DProtoDeclaration:         X3DProtoDeclaration,
       RouteArray:                  RouteArray,
       X3DRoute:                    X3DRoute,
+
       X3DBaseNode:                 X3DBaseNode,
+      X3DExportedNode:             X3DExportedNode,
+      X3DImportedNode:             X3DImportedNode,
 
       X3DFieldDefinition:          X3DFieldDefinition,
       FieldDefinitionArray:        FieldDefinitionArray,

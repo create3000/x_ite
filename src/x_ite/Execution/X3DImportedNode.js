@@ -66,7 +66,6 @@ function (X3DBaseNode,
       _importedName = Symbol (),
       _routes       = Symbol ();
 
-
    function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
    {
       X3DBaseNode .call (this, executionContext);
