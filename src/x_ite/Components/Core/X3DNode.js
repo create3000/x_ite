@@ -561,13 +561,10 @@ function (Fields,
             }
          }
 
-         if (sharedNode)
-            references .length = 0;
-
          generator .DecIndent ();
          generator .DecIndent ();
 
-         if ((!this .canUserDefinedFields () || userDefinedFields .length === 0) && references .length === 0 && childNodes .length === 0 && !cdata)
+         if ((!this .canUserDefinedFields () || !userDefinedFields .length) && (!references .length || sharedNode) && !childNodes .length && !cdata)
          {
             stream .string += "/>";
          }
@@ -674,10 +671,7 @@ function (Fields,
                }
             }
 
-            if (sharedNode)
-               references .length = 0;
-
-            if (references .length)
+            if (references .length && !sharedNode)
             {
                stream .string += generator .Indent ();
                stream .string += "<IS>";

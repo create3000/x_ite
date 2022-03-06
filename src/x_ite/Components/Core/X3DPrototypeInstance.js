@@ -287,7 +287,9 @@ function (X3DChildObject,
       },
       toXMLStream: function (stream)
       {
-         const generator = Generator .Get (stream);
+         const
+            generator  = Generator .Get (stream),
+            sharedNode = generator .IsSharedNode (this);
 
          generator .EnterScope ();
 
@@ -398,7 +400,7 @@ function (X3DChildObject,
                // If we have no execution context we are not in a proto and must not generate IS references the same is true
                // if the node is a shared node as the node does not belong to the execution context.
 
-               if (field .getReferences () .size === 0 || ! generator .ExecutionContext () || mustOutputValue)
+               if (field .getReferences () .size === 0 || ! generator .ExecutionContext () || sharedNode || mustOutputValue)
                {
                   if (mustOutputValue)
                      references .push (field);
@@ -496,7 +498,7 @@ function (X3DChildObject,
                }
             }
 
-            if (references .length)
+            if (references .length && ! sharedNode)
             {
                stream .string += generator .Indent ();
                stream .string += "<IS>";
