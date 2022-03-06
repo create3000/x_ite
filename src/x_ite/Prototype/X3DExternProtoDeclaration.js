@@ -51,6 +51,7 @@ define ([
    "jquery",
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Prototype/X3DProtoDeclarationNode",
@@ -60,6 +61,7 @@ define ([
 function ($,
           SupportedNodes,
           Fields,
+          X3DFieldDefinition,
           FieldDefinitionArray,
           X3DUrlObject,
           X3DProtoDeclarationNode,
@@ -81,15 +83,15 @@ function ($,
                              "url",                  url .copy (), // Must be of type MFString.
                              "autoRefresh",          new Fields .SFTime (),
                              "autoRefreshTimeLimit", new Fields .SFTime (3600));
-
-      this .deferred = $.Deferred ();
    }
 
    X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
       X3DUrlObject .prototype,
    {
       constructor: X3DExternProtoDeclaration,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([ ]),
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+      ]),
       getTypeName: function ()
       {
          return "X3DExternProtoDeclaration";
@@ -133,10 +135,6 @@ function ($,
       {
          return this .proto;
       },
-      addCallback: function (callback)
-      {
-         this .deferred .done (callback);
-      },
       loadNow: function ()
       {
          // 7.73 — ExternProtoDeclaration function
@@ -174,8 +172,7 @@ function ($,
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
          this .setProtoDeclaration (proto);
-
-         this .deferred .resolve ();
+         this .requestUpdateInstances ();
       },
       getInternalScene: function ()
       {

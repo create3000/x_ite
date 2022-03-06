@@ -294,6 +294,10 @@ function (X3DEventObject,
             configurable: false,
          });
       },
+      getFieldDefinitions: function ()
+      {
+         return this [_fieldDefinitions];
+      },
       addField: function (fieldDefinition)
       {
          const
@@ -306,31 +310,19 @@ function (X3DEventObject,
          field .setName (name);
          field .setAccessType (accessType);
 
-         this .setField (name, field, false);
-      },
-      setField: function (name, field, userDefined)
-      {
-         this [_fields] .add (name, field);
+         this [_fields]           .add (name, field);
+         this [_predefinedFields] .add (name, field);
+
+         Object .defineProperty (this, name + "_",
+         {
+            get: function () { return field; },
+            set: function (value) { field .setValue (value); },
+            enumerable: true,
+            configurable: true, // false : non deletable
+         });
 
          if (!this .getPrivate ())
             field .addCloneCount (1);
-
-         if (userDefined)
-         {
-            this [_userDefinedFields] .add (name, field);
-         }
-         else
-         {
-            this [_predefinedFields] .add (name, field);
-
-            Object .defineProperty (this, name + "_",
-            {
-               get: function () { return field; },
-               set: function (value) { field .setValue (value); },
-               enumerable: true,
-               configurable: true, // false : non deletable
-            });
-         }
       },
       getField: (function ()
       {
@@ -382,9 +374,20 @@ function (X3DEventObject,
             configurable: false,
          });
       },
-      getFieldDefinitions: function ()
+      removeField: function (name)
       {
-         return this [_fieldDefinitions];
+         const field = this [_predefinedFields] .get (name);
+
+         if (field)
+         {
+            this [_fields]           .remove (name);
+            this [_predefinedFields] .remove (name);
+
+            delete this [field .getName () + "_"];
+
+            if (!this .getPrivate ())
+               field .removeCloneCount (1);
+         }
       },
       canUserDefinedFields: function ()
       {
@@ -400,9 +403,12 @@ function (X3DEventObject,
          field .setName (name);
          field .setAccessType (accessType);
 
-         this [_fieldDefinitions] .add (name, new X3DFieldDefinition (accessType, name, field));
+         this [_fieldDefinitions]  .add (name, new X3DFieldDefinition (accessType, name, field));
+         this [_fields]            .add (name, field);
+         this [_userDefinedFields] .add (name, field);
 
-         this .setField (name, field, true);
+         if (!this .getPrivate ())
+            field .addCloneCount (1);
       },
       removeUserDefinedField: function (name)
       {
@@ -412,7 +418,7 @@ function (X3DEventObject,
          {
             this [_fields]            .remove (name);
             this [_userDefinedFields] .remove (name);
-            this [_fieldDefinitions]   .remove (name);
+            this [_fieldDefinitions]  .remove (name);
 
             if (!this .getPrivate ())
                field .removeCloneCount (1);

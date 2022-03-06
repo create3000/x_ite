@@ -50,6 +50,7 @@
 define ([
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Execution/X3DExecutionContext",
    "x_ite/Prototype/X3DProtoDeclarationNode",
@@ -58,6 +59,7 @@ define ([
 ],
 function (SupportedNodes,
           Fields,
+          X3DFieldDefinition,
           FieldDefinitionArray,
           X3DExecutionContext,
           X3DProtoDeclarationNode,
@@ -85,7 +87,9 @@ function (SupportedNodes,
    X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
    {
       constructor: X3DProtoDeclaration,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([ ]),
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+      ]),
       getTypeName: function ()
       {
          return "X3DProtoDeclaration";

@@ -25951,6 +25951,10 @@ function (X3DEventObject,
             configurable: false,
          });
       },
+      getFieldDefinitions: function ()
+      {
+         return this [_fieldDefinitions];
+      },
       addField: function (fieldDefinition)
       {
          const
@@ -25963,31 +25967,19 @@ function (X3DEventObject,
          field .setName (name);
          field .setAccessType (accessType);
 
-         this .setField (name, field, false);
-      },
-      setField: function (name, field, userDefined)
-      {
-         this [_fields] .add (name, field);
+         this [_fields]           .add (name, field);
+         this [_predefinedFields] .add (name, field);
+
+         Object .defineProperty (this, name + "_",
+         {
+            get: function () { return field; },
+            set: function (value) { field .setValue (value); },
+            enumerable: true,
+            configurable: true, // false : non deletable
+         });
 
          if (!this .getPrivate ())
             field .addCloneCount (1);
-
-         if (userDefined)
-         {
-            this [_userDefinedFields] .add (name, field);
-         }
-         else
-         {
-            this [_predefinedFields] .add (name, field);
-
-            Object .defineProperty (this, name + "_",
-            {
-               get: function () { return field; },
-               set: function (value) { field .setValue (value); },
-               enumerable: true,
-               configurable: true, // false : non deletable
-            });
-         }
       },
       getField: (function ()
       {
@@ -26039,9 +26031,20 @@ function (X3DEventObject,
             configurable: false,
          });
       },
-      getFieldDefinitions: function ()
+      removeField: function (name)
       {
-         return this [_fieldDefinitions];
+         const field = this [_predefinedFields] .get (name);
+
+         if (field)
+         {
+            this [_fields]           .remove (name);
+            this [_predefinedFields] .remove (name);
+
+            delete this [field .getName () + "_"];
+
+            if (!this .getPrivate ())
+               field .removeCloneCount (1);
+         }
       },
       canUserDefinedFields: function ()
       {
@@ -26057,9 +26060,12 @@ function (X3DEventObject,
          field .setName (name);
          field .setAccessType (accessType);
 
-         this [_fieldDefinitions] .add (name, new X3DFieldDefinition (accessType, name, field));
+         this [_fieldDefinitions]  .add (name, new X3DFieldDefinition (accessType, name, field));
+         this [_fields]            .add (name, field);
+         this [_userDefinedFields] .add (name, field);
 
-         this .setField (name, field, true);
+         if (!this .getPrivate ())
+            field .addCloneCount (1);
       },
       removeUserDefinedField: function (name)
       {
@@ -26069,7 +26075,7 @@ function (X3DEventObject,
          {
             this [_fields]            .remove (name);
             this [_userDefinedFields] .remove (name);
-            this [_fieldDefinitions]   .remove (name);
+            this [_fieldDefinitions]  .remove (name);
 
             if (!this .getPrivate ())
                field .removeCloneCount (1);
@@ -35160,13 +35166,10 @@ function (Fields,
             }
          }
 
-         if (sharedNode)
-            references .length = 0;
-
          generator .DecIndent ();
          generator .DecIndent ();
 
-         if ((!this .canUserDefinedFields () || userDefinedFields .length === 0) && references .length === 0 && childNodes .length === 0 && !cdata)
+         if ((!this .canUserDefinedFields () || !userDefinedFields .length) && (!references .length || sharedNode) && !childNodes .length && !cdata)
          {
             stream .string += "/>";
          }
@@ -35273,10 +35276,7 @@ function (Fields,
                }
             }
 
-            if (sharedNode)
-               references .length = 0;
-
-            if (references .length)
+            if (references .length && !sharedNode)
             {
                stream .string += generator .Indent ();
                stream .string += "<IS>";
@@ -35500,7 +35500,7 @@ function (X3DChildObject,
       if (!protoNode .isExternProto)
          return;
 
-      protoNode .addCallback (this .construct .bind (this));
+      protoNode .updateInstances_ .addInterest ("construct", this)
       protoNode .requestImmediateLoad ();
    }
 
@@ -35523,8 +35523,26 @@ function (X3DChildObject,
       {
          return "children";
       },
+      initialize: function ()
+      {
+         try
+         {
+            X3DNode .prototype .initialize .call (this);
+
+            if (! this [_protoNode] .isExternProto)
+               this .construct ();
+         }
+         catch (error)
+         {
+            console .log (error);
+            console .error (error .message);
+         }
+      },
       construct: function ()
       {
+         if (this .body)
+            this .body .dispose ();
+
          const proto = this [_protoNode] .getProtoDeclaration ();
 
          if (!proto)
@@ -35602,21 +35620,40 @@ function (X3DChildObject,
 
          if (this .isInitialized ())
             X3DChildObject .prototype .addEvent .call (this);
-      },
-      initialize: function ()
-      {
-         try
-         {
-            X3DNode .prototype .initialize .call (this);
 
-            if (! this [_protoNode] .isExternProto)
-               this .construct ();
-         }
-         catch (error)
+         this [_protoNode] .updateInstances_ .removeInterest ("construct", this);
+         this [_protoNode] .updateInstances_ .addInterest ("update", this);
+      },
+      update: function ()
+      {
+         const oldFields = Array .from (this .getFields ())
+
+         for (const field of oldFields)
+            this .removeField (field .getName ());
+
+         for (const fieldDefinition of this .getFieldDefinitions ())
+            this .addField (fieldDefinition);
+
+         for (const oldField of oldFields)
          {
-            console .log (error);
-            console .error (error .message);
+            const newField = this .getFields () .get (oldField .getName ());
+
+            if (!newField)
+               continue;
+
+            if (newField .getType () !== oldField .getType ())
+               continue;
+
+            if (!newField .isInitializable ())
+               continue;
+
+            newField .assign (oldField);
          }
+
+         for (const field of this .getFields ())
+            field .setTainted (false);
+
+         this .construct ();
       },
       getExtendedEventHandling: function ()
       {
@@ -35704,7 +35741,9 @@ function (X3DChildObject,
       },
       toXMLStream: function (stream)
       {
-         const generator = Generator .Get (stream);
+         const
+            generator  = Generator .Get (stream),
+            sharedNode = generator .IsSharedNode (this);
 
          generator .EnterScope ();
 
@@ -35815,7 +35854,7 @@ function (X3DChildObject,
                // If we have no execution context we are not in a proto and must not generate IS references the same is true
                // if the node is a shared node as the node does not belong to the execution context.
 
-               if (field .getReferences () .size === 0 || ! generator .ExecutionContext () || mustOutputValue)
+               if (field .getReferences () .size === 0 || ! generator .ExecutionContext () || sharedNode || mustOutputValue)
                {
                   if (mustOutputValue)
                      references .push (field);
@@ -35913,7 +35952,7 @@ function (X3DChildObject,
                }
             }
 
-            if (references .length)
+            if (references .length && ! sharedNode)
             {
                stream .string += generator .Indent ();
                stream .string += "<IS>";
@@ -35954,6 +35993,16 @@ function (X3DChildObject,
          }
 
          generator .LeaveScope ();
+      },
+      dispose: function ()
+      {
+         this [_protoNode] .updateInstances_ .removeInterest ("construct", this);
+         this [_protoNode] .updateInstances_ .removeInterest ("update",    this);
+
+         if (this .body)
+            this .body .dispose ();
+
+         X3DNode .prototype .dispose .call (this);
       },
    });
 
@@ -36011,12 +36060,14 @@ function (X3DChildObject,
 
 define ('x_ite/Prototype/X3DProtoDeclarationNode',[
    "x_ite/Configuration/SupportedNodes",
+   "x_ite/Fields",
    "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Core/X3DPrototypeInstance",
    "x_ite/Fields/SFNodeCache",
    "x_ite/Base/X3DConstants",
 ],
 function (SupportedNodes,
+          Fields,
           X3DBaseNode,
           X3DPrototypeInstance,
           SFNodeCache,
@@ -36030,7 +36081,9 @@ function (SupportedNodes,
    {
       X3DBaseNode .call (this, executionContext);
 
-      this .addType (X3DConstants .X3DProtoDeclarationNode)
+      this .addType (X3DConstants .X3DProtoDeclarationNode);
+
+      this .addChildObjects ("updateInstances", new Fields .SFTime ());
    }
 
    X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -36058,6 +36111,10 @@ function (SupportedNodes,
       newInstance: function ()
       {
          return this .createInstance (this .getExecutionContext ());
+      },
+      requestUpdateInstances: function ()
+      {
+         this .updateInstances_ = this .getBrowser () .getCurrentTime ();
       },
    });
 
@@ -36120,6 +36177,7 @@ define ('x_ite/Prototype/X3DExternProtoDeclaration',[
    "jquery",
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Components/Networking/X3DUrlObject",
    "x_ite/Prototype/X3DProtoDeclarationNode",
@@ -36129,6 +36187,7 @@ define ('x_ite/Prototype/X3DExternProtoDeclaration',[
 function ($,
           SupportedNodes,
           Fields,
+          X3DFieldDefinition,
           FieldDefinitionArray,
           X3DUrlObject,
           X3DProtoDeclarationNode,
@@ -36150,15 +36209,15 @@ function ($,
                              "url",                  url .copy (), // Must be of type MFString.
                              "autoRefresh",          new Fields .SFTime (),
                              "autoRefreshTimeLimit", new Fields .SFTime (3600));
-
-      this .deferred = $.Deferred ();
    }
 
    X3DExternProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
       X3DUrlObject .prototype,
    {
       constructor: X3DExternProtoDeclaration,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([ ]),
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+      ]),
       getTypeName: function ()
       {
          return "X3DExternProtoDeclaration";
@@ -36202,10 +36261,6 @@ function ($,
       {
          return this .proto;
       },
-      addCallback: function (callback)
-      {
-         this .deferred .done (callback);
-      },
       loadNow: function ()
       {
          // 7.73 — ExternProtoDeclaration function
@@ -36243,8 +36298,7 @@ function ($,
 
          this .setLoadState (X3DConstants .COMPLETE_STATE);
          this .setProtoDeclaration (proto);
-
-         this .deferred .resolve ();
+         this .requestUpdateInstances ();
       },
       getInternalScene: function ()
       {
@@ -36467,6 +36521,7 @@ function ($,
 define ('x_ite/Prototype/X3DProtoDeclaration',[
    "x_ite/Configuration/SupportedNodes",
    "x_ite/Fields",
+   "x_ite/Base/X3DFieldDefinition",
    "x_ite/Base/FieldDefinitionArray",
    "x_ite/Execution/X3DExecutionContext",
    "x_ite/Prototype/X3DProtoDeclarationNode",
@@ -36475,6 +36530,7 @@ define ('x_ite/Prototype/X3DProtoDeclaration',[
 ],
 function (SupportedNodes,
           Fields,
+          X3DFieldDefinition,
           FieldDefinitionArray,
           X3DExecutionContext,
           X3DProtoDeclarationNode,
@@ -36502,7 +36558,9 @@ function (SupportedNodes,
    X3DProtoDeclaration .prototype = Object .assign (Object .create (X3DProtoDeclarationNode .prototype),
    {
       constructor: X3DProtoDeclaration,
-      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([ ]),
+      [Symbol .for ("X3DBaseNode.fieldDefinitions")]: new FieldDefinitionArray ([
+         new X3DFieldDefinition (X3DConstants .inputOutput, "metadata", new Fields .SFNode ()),
+      ]),
       getTypeName: function ()
       {
          return "X3DProtoDeclaration";

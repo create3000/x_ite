@@ -83,7 +83,7 @@ function (X3DChildObject,
       if (!protoNode .isExternProto)
          return;
 
-      protoNode .addCallback (this .construct .bind (this));
+      protoNode .updateInstances_ .addInterest ("construct", this)
       protoNode .requestImmediateLoad ();
    }
 
@@ -106,8 +106,26 @@ function (X3DChildObject,
       {
          return "children";
       },
+      initialize: function ()
+      {
+         try
+         {
+            X3DNode .prototype .initialize .call (this);
+
+            if (! this [_protoNode] .isExternProto)
+               this .construct ();
+         }
+         catch (error)
+         {
+            console .log (error);
+            console .error (error .message);
+         }
+      },
       construct: function ()
       {
+         if (this .body)
+            this .body .dispose ();
+
          const proto = this [_protoNode] .getProtoDeclaration ();
 
          if (!proto)
@@ -185,21 +203,40 @@ function (X3DChildObject,
 
          if (this .isInitialized ())
             X3DChildObject .prototype .addEvent .call (this);
-      },
-      initialize: function ()
-      {
-         try
-         {
-            X3DNode .prototype .initialize .call (this);
 
-            if (! this [_protoNode] .isExternProto)
-               this .construct ();
-         }
-         catch (error)
+         this [_protoNode] .updateInstances_ .removeInterest ("construct", this);
+         this [_protoNode] .updateInstances_ .addInterest ("update", this);
+      },
+      update: function ()
+      {
+         const oldFields = Array .from (this .getFields ())
+
+         for (const field of oldFields)
+            this .removeField (field .getName ());
+
+         for (const fieldDefinition of this .getFieldDefinitions ())
+            this .addField (fieldDefinition);
+
+         for (const oldField of oldFields)
          {
-            console .log (error);
-            console .error (error .message);
+            const newField = this .getFields () .get (oldField .getName ());
+
+            if (!newField)
+               continue;
+
+            if (newField .getType () !== oldField .getType ())
+               continue;
+
+            if (!newField .isInitializable ())
+               continue;
+
+            newField .assign (oldField);
          }
+
+         for (const field of this .getFields ())
+            field .setTainted (false);
+
+         this .construct ();
       },
       getExtendedEventHandling: function ()
       {
@@ -539,6 +576,16 @@ function (X3DChildObject,
          }
 
          generator .LeaveScope ();
+      },
+      dispose: function ()
+      {
+         this [_protoNode] .updateInstances_ .removeInterest ("construct", this);
+         this [_protoNode] .updateInstances_ .removeInterest ("update",    this);
+
+         if (this .body)
+            this .body .dispose ();
+
+         X3DNode .prototype .dispose .call (this);
       },
    });
 

@@ -49,12 +49,14 @@
 
 define ([
    "x_ite/Configuration/SupportedNodes",
+   "x_ite/Fields",
    "x_ite/Base/X3DBaseNode",
    "x_ite/Components/Core/X3DPrototypeInstance",
    "x_ite/Fields/SFNodeCache",
    "x_ite/Base/X3DConstants",
 ],
 function (SupportedNodes,
+          Fields,
           X3DBaseNode,
           X3DPrototypeInstance,
           SFNodeCache,
@@ -68,7 +70,9 @@ function (SupportedNodes,
    {
       X3DBaseNode .call (this, executionContext);
 
-      this .addType (X3DConstants .X3DProtoDeclarationNode)
+      this .addType (X3DConstants .X3DProtoDeclarationNode);
+
+      this .addChildObjects ("updateInstances", new Fields .SFTime ());
    }
 
    X3DProtoDeclarationNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -96,6 +100,10 @@ function (SupportedNodes,
       newInstance: function ()
       {
          return this .createInstance (this .getExecutionContext ());
+      },
+      requestUpdateInstances: function ()
+      {
+         this .updateInstances_ = this .getBrowser () .getCurrentTime ();
       },
    });
 
