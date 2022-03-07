@@ -246,7 +246,7 @@ function (X3DChildNode,
                   {
 //							if (this .allowedTypes .size)
 //							{
-//								if (!innerNode .isType (this .allowedTypes))
+//								if (!innerNode .getType () .some (Set .prototype .has, this .allowedTypes))
 //									continue;
 //							}
 
