@@ -248,6 +248,13 @@ function (SupportedNodes,
       },
       removeNamedNode: function (name)
       {
+         const baseNode = this [_namedNodes] .get (name);
+
+         if (!baseNode)
+            return;
+
+         baseNode .setName ("");
+
          this [_namedNodes] .delete (name);
       },
       getNamedNode: function (name)
