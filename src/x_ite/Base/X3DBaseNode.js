@@ -105,12 +105,20 @@ function (X3DEventObject,
 
       for (const fieldDefinition of this [_fieldDefinitions])
          this .addField (fieldDefinition);
+
+      this .addChildObjects ("name_changed", new Fields .SFTime ())
    }
 
    X3DBaseNode .prototype = Object .assign (Object .create (X3DEventObject .prototype),
    {
       constructor: X3DBaseNode,
       [_fieldDefinitions]: new FieldDefinitionArray ([ ]),
+      setName: function (value)
+      {
+         X3DEventObject .prototype .setName .call (this, value)
+
+         this ._name_changed = this .getBrowser () .getCurrentTime ();
+      },
       getMainScene: function ()
       {
          let scene = this [_executionContext] .getScene ();
@@ -236,14 +244,6 @@ function (X3DEventObject,
             }
          }
       },
-      setInitialized: function (value)
-      {
-         this [_initialized] = value;
-      },
-      isInitialized: function ()
-      {
-         return this [_initialized];
-      },
       setup: function ()
       {
          if (this [_initialized])
@@ -255,6 +255,14 @@ function (X3DEventObject,
             field .setTainted (false);
 
          this .initialize ();
+      },
+      setInitialized: function (value)
+      {
+         this [_initialized] = value;
+      },
+      isInitialized: function ()
+      {
+         return this [_initialized];
       },
       initialize: function () { },
       create: function (executionContext)
