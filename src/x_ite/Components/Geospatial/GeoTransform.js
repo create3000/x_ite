@@ -77,7 +77,7 @@ function (Fields,
 
       this .addType (X3DConstants .GeoTransform);
 
-      this .translation_ .setUnit ("length");
+      this ._translation .setUnit ("length");
    }
 
    GeoTransform .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
@@ -126,16 +126,16 @@ function (Fields,
       {
          try
          {
-            this .setHidden (this .scale_ .x === 0 ||
-                             this .scale_ .y === 0 ||
-                             this .scale_ .z === 0);
+            this .setHidden (this ._scale .x === 0 ||
+                             this ._scale .y === 0 ||
+                             this ._scale .z === 0);
 
-            this .getLocationMatrix (this .geoCenter_ .getValue (), locationMatrix);
+            this .getLocationMatrix (this ._geoCenter .getValue (), locationMatrix);
 
-            matrix .set (this .translation_      .getValue (),
-                         this .rotation_         .getValue (),
-                         this .scale_            .getValue (),
-                         this .scaleOrientation_ .getValue ());
+            matrix .set (this ._translation      .getValue (),
+                         this ._rotation         .getValue (),
+                         this ._scale            .getValue (),
+                         this ._scaleOrientation .getValue ());
 
             this .setMatrix (matrix .multRight (locationMatrix) .multLeft (locationMatrix .inverse ()));
          }

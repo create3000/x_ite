@@ -60,12 +60,18 @@ function (Quaternion,
 {
 "use strict";
 
+   const
+      _x     = Symbol (),
+      _y     = Symbol (),
+      _z     = Symbol (),
+      _angle = Symbol ();
+
    function Rotation4 (x, y, z, angle)
    {
-      this .x_     = 0;
-      this .y_     = 0;
-      this .z_     = 1;
-      this .angle_ = 0;
+      this [_x]     = 0;
+      this [_y]     = 0;
+      this [_z]     = 1;
+      this [_angle] = 0;
 
       switch (arguments .length)
       {
@@ -115,10 +121,10 @@ function (Quaternion,
       {
          const rotation = this .get ();
 
-         this .x_     = rotation .x;
-         this .y_     = rotation .y;
-         this .z_     = rotation .z;
-         this .angle_ = rotation .w;
+         this [_x]     = rotation .x;
+         this [_y]     = rotation .y;
+         this [_z]     = rotation .z;
+         this [_angle] = rotation .w;
 
          return this;
       },
@@ -126,10 +132,10 @@ function (Quaternion,
       {
          const copy = Object .create (Rotation4 .prototype);
 
-         copy .x_     = this .x_;
-         copy .y_     = this .y_;
-         copy .z_     = this .z_;
-         copy .angle_ = this .angle_;
+         copy [_x]     = this [_x];
+         copy [_y]     = this [_y];
+         copy [_z]     = this [_z];
+         copy [_angle] = this [_angle];
 
          copy .value  = this .value .copy ();
 
@@ -137,10 +143,10 @@ function (Quaternion,
       },
       assign: function (rotation)
       {
-         this .x_     = rotation .x_;
-         this .y_     = rotation .y_;
-         this .z_     = rotation .z_;
-         this .angle_ = rotation .angle_;
+         this [_x]     = rotation [_x];
+         this [_y]     = rotation [_y];
+         this [_z]     = rotation [_z];
+         this [_angle] = rotation [_angle];
 
          this .value .assign (rotation .value);
 
@@ -148,10 +154,10 @@ function (Quaternion,
       },
       set: function (x, y, z, angle)
       {
-         this .x_     = x;
-         this .y_     = y;
-         this .z_     = z;
-         this .angle_ = angle;
+         this [_x]     = x;
+         this [_y]     = y;
+         this [_z]     = z;
+         this [_angle] = angle;
 
          const scale = Math .hypot (x, y, z);
 
@@ -274,7 +280,7 @@ function (Quaternion,
       })(),
       setAxis: function (vector)
       {
-         this .set (vector .x, vector .y, vector .z, this .angle_);
+         this .set (vector .x, vector .y, vector .z, this [_angle]);
       },
       getAxis: (function ()
       {
@@ -282,7 +288,7 @@ function (Quaternion,
 
          return function ()
          {
-            return axis .set (this .x_, this .y_, this .z_);
+            return axis .set (this [_x], this [_y], this [_z]);
          };
       })(),
       setMatrix: function (matrix)
@@ -351,22 +357,22 @@ function (Quaternion,
       },
       toString: function ()
       {
-         return this .x_ + " " +
-                this .y_ + " " +
-                this .z_ + " " +
-                this .angle_;
+         return this [_x] + " " +
+                this [_y] + " " +
+                this [_z] + " " +
+                this [_angle];
       }
    };
 
    const x = {
       get: function ()
       {
-         return this .x_;
+         return this [_x];
       },
       set: function (value)
       {
-         this .x_ = value;
-         this .set (value, this .y_, this .z_, this .angle_);
+         this [_x] = value;
+         this .set (value, this [_y], this [_z], this [_angle]);
       },
       enumerable: true,
       configurable: false
@@ -375,12 +381,12 @@ function (Quaternion,
    const y = {
       get: function ()
       {
-         return this .y_;
+         return this [_y];
       },
       set: function (value)
       {
-         this .y_ = value;
-         this .set (this .x_, value, this .z_, this .angle_);
+         this [_y] = value;
+         this .set (this [_x], value, this [_z], this [_angle]);
       },
       enumerable: true,
       configurable: false
@@ -389,12 +395,12 @@ function (Quaternion,
    const z = {
       get: function ()
       {
-         return this .z_;
+         return this [_z];
       },
       set: function (value)
       {
-         this .z_ = value;
-         this .set (this .x_, this .y_, value, this .angle_);
+         this [_z] = value;
+         this .set (this [_x], this [_y], value, this [_angle]);
       },
       enumerable: true,
       configurable: false
@@ -403,12 +409,12 @@ function (Quaternion,
    const angle = {
       get: function ()
       {
-         return this .angle_;
+         return this [_angle];
       },
       set: function (value)
       {
-         this .angle_ = value;
-         this .set (this .x_, this .y_, this .z_, value);
+         this [_angle] = value;
+         this .set (this [_x], this [_y], this [_z], value);
       },
       enumerable: true,
       configurable: false

@@ -116,7 +116,7 @@ function (Fields,
       },
       eventsProcessed: function ()
       {
-         this .setMatrix (this .getLocationMatrix (this .geoCoords_ .getValue (), locationMatrix));
+         this .setMatrix (this .getLocationMatrix (this ._geoCoords .getValue (), locationMatrix));
       },
    });
 

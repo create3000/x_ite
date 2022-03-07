@@ -75,19 +75,19 @@ function (X3DBaseNode)
       },
       top: function ()
       {
-         return this .transitionNode .transitionActive_ .getValue () ? this .transitionNode : this .array .at (-1);
+         return this .transitionNode ._transitionActive .getValue () ? this .transitionNode : this .array .at (-1);
       },
       pushOnTop: function (node)
       {
          if (node !== this .array [0])
          {
-            this .array .at (-1) .isBound_ = false;
+            this .array .at (-1) ._isBound = false;
             this .array .push (node);
          }
 
          // Don't do set_bind.
-         node .isBound_  = true;
-         node .bindTime_ = this .getBrowser () .getCurrentTime ();
+         node ._isBound  = true;
+         node ._bindTime = this .getBrowser () .getCurrentTime ();
 
          this .addNodeEvent ();
       },
@@ -116,7 +116,7 @@ function (X3DBaseNode)
 
          if (boundNode !== this .array [0])
          {
-            if (changedNodes .some (node => ! node .set_bind_ .getValue () && node === boundNode))
+            if (changedNodes .some (node => ! node ._set_bind .getValue () && node === boundNode))
             {
                this .array .pop ();
             }
@@ -126,7 +126,7 @@ function (X3DBaseNode)
 
          for (const bindNode of changedNodes)
          {
-            if (bindNode .set_bind_ .getValue ())
+            if (bindNode ._set_bind .getValue ())
             {
                const index = this .array .indexOf (bindNode);
 
@@ -148,14 +148,14 @@ function (X3DBaseNode)
 
          // First unbind last bound node.
 
-         boundNode .set_bind_ = false;
-         boundNode .isBound_  = false;
+         boundNode ._set_bind = false;
+         boundNode ._isBound  = false;
 
          // Now bind new top node.
 
-         top .set_bind_  = true;
-         top .isBound_   = true;
-         top .bindTime_  = this .getBrowser () .getCurrentTime ();
+         top ._set_bind  = true;
+         top ._isBound   = true;
+         top ._bindTime  = this .getBrowser () .getCurrentTime ();
 
          // Do transition.
 

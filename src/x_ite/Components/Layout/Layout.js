@@ -146,12 +146,12 @@ function (Fields,
       {
          X3DLayoutNode .prototype .initialize .call (this);
 
-         this .align_       .addInterest ("set_align__", this);
-         this .offsetUnits_ .addInterest ("set_offsetUnits__", this);
-         this .offset_      .addInterest ("set_offset__", this);
-         this .sizeUnits_   .addInterest ("set_sizeUnits__", this);
-         this .size_        .addInterest ("set_size__", this);
-         this .scaleMode_   .addInterest ("set_scaleMode__", this);
+         this ._align       .addInterest ("set_align__", this);
+         this ._offsetUnits .addInterest ("set_offsetUnits__", this);
+         this ._offset      .addInterest ("set_offset__", this);
+         this ._sizeUnits   .addInterest ("set_sizeUnits__", this);
+         this ._size        .addInterest ("set_size__", this);
+         this ._scaleMode   .addInterest ("set_scaleMode__", this);
 
          this .set_align__ ();
          this .set_offsetUnits__ ();
@@ -164,12 +164,12 @@ function (Fields,
       {
          // X
 
-         if (this .align_ .length > 0)
+         if (this ._align .length > 0)
          {
-            if (this .align_ [0] === "LEFT")
+            if (this ._align [0] === "LEFT")
                this .alignX = LEFT;
 
-            else if (this .align_ [0] === "RIGHT")
+            else if (this ._align [0] === "RIGHT")
                this .alignX = RIGHT;
 
             else
@@ -180,12 +180,12 @@ function (Fields,
 
          // Y
 
-         if (this .align_ .length > 1)
+         if (this ._align .length > 1)
          {
-            if (this .align_ [1] === "BOTTOM")
+            if (this ._align [1] === "BOTTOM")
                this .alignY = BOTTOM;
 
-            else if (this .align_ [1] === "TOP")
+            else if (this ._align [1] === "TOP")
                this .alignY = TOP;
 
             else
@@ -196,14 +196,14 @@ function (Fields,
       },
       set_offsetUnits__: function ()
       {
-         if (this .offsetUnits_ .length > 0)
+         if (this ._offsetUnits .length > 0)
          {
             // X
 
-            if (this .offsetUnits_ [0] === "FRACTION")
+            if (this ._offsetUnits [0] === "FRACTION")
                this .offsetUnitX = FRACTION;
 
-            else if (this .offsetUnits_ [0] === "PIXEL")
+            else if (this ._offsetUnits [0] === "PIXEL")
                this .offsetUnitX = PIXEL;
 
             else
@@ -211,12 +211,12 @@ function (Fields,
 
             // Y
 
-            if (this .offsetUnits_ .length > 1)
+            if (this ._offsetUnits .length > 1)
             {
-               if (this .offsetUnits_ [1] === "FRACTION")
+               if (this ._offsetUnits [1] === "FRACTION")
                   this .offsetUnitY = FRACTION;
 
-               else if (this .offsetUnits_ [1] === "PIXEL")
+               else if (this ._offsetUnits [1] === "PIXEL")
                   this .offsetUnitY = PIXEL;
 
                else
@@ -233,16 +233,16 @@ function (Fields,
       },
       set_offset__: function ()
       {
-         if (this .offset_ .length > 0)
+         if (this ._offset .length > 0)
          {
             // X
 
-            this .offsetX = this .offset_ [0];
+            this .offsetX = this ._offset [0];
 
             // Y
 
-            if (this .offset_ .length > 1)
-               this .offsetY = this .offset_ [1];
+            if (this ._offset .length > 1)
+               this .offsetY = this ._offset [1];
 
             else
                this .offsetY = offsetX;
@@ -255,14 +255,14 @@ function (Fields,
       },
       set_sizeUnits__: function ()
       {
-         if (this .sizeUnits_ .length > 0)
+         if (this ._sizeUnits .length > 0)
          {
             // X
 
-            if (this .sizeUnits_ [0] === "FRACTION")
+            if (this ._sizeUnits [0] === "FRACTION")
                this .sizeUnitX = FRACTION;
 
-            else if (this .sizeUnits_ [0] === "PIXEL")
+            else if (this ._sizeUnits [0] === "PIXEL")
                this .sizeUnitX = PIXEL;
 
             else
@@ -270,12 +270,12 @@ function (Fields,
 
             // Y
 
-            if (this .sizeUnits_ .length > 1)
+            if (this ._sizeUnits .length > 1)
             {
-               if (this .sizeUnits_ [1] === "FRACTION")
+               if (this ._sizeUnits [1] === "FRACTION")
                   this .sizeUnitY = FRACTION;
 
-               else if (this .sizeUnits_ [1] === "PIXEL")
+               else if (this ._sizeUnits [1] === "PIXEL")
                   this .sizeUnitY = PIXEL;
 
                else
@@ -292,16 +292,16 @@ function (Fields,
       },
       set_size__: function ()
       {
-         if (this .size_ .length > 0)
+         if (this ._size .length > 0)
          {
             // X
 
-            this .sizeX = this .size_ [0];
+            this .sizeX = this ._size [0];
 
             // Y
 
-            if (this .size_ .length > 1)
-               this .sizeY = this .size_ [1];
+            if (this ._size .length > 1)
+               this .sizeY = this ._size [1];
 
             else
                this .sizeY = this .sizeX;
@@ -314,17 +314,17 @@ function (Fields,
       },
       set_scaleMode__: function ()
       {
-         if (this .scaleMode_ .length > 0)
+         if (this ._scaleMode .length > 0)
          {
             // X
 
-            if (this .scaleMode_ [0] === "FRACTION")
+            if (this ._scaleMode [0] === "FRACTION")
                this .scaleModeX = FRACTION;
 
-            else if (this .scaleMode_ [0] === "PIXEL")
+            else if (this ._scaleMode [0] === "PIXEL")
                this .scaleModeX = PIXEL;
 
-            else if (this .scaleMode_ [0] === "STRETCH")
+            else if (this ._scaleMode [0] === "STRETCH")
                this .scaleModeX = STRETCH;
 
             else
@@ -332,15 +332,15 @@ function (Fields,
 
             // Y
 
-            if (this .scaleMode_ .length > 1)
+            if (this ._scaleMode .length > 1)
             {
-               if (this .scaleMode_ [1] === "FRACTION")
+               if (this ._scaleMode [1] === "FRACTION")
                   this .scaleModeY = FRACTION;
 
-               else if (this .scaleMode_ [1] === "PIXEL")
+               else if (this ._scaleMode [1] === "PIXEL")
                   this .scaleModeY = PIXEL;
 
-               else if (this .scaleMode_ [1] === "STRETCH")
+               else if (this ._scaleMode [1] === "STRETCH")
                   this .scaleModeY = STRETCH;
 
                else

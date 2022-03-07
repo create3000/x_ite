@@ -124,13 +124,13 @@ function (Fields,
       {
          X3DTransformNode .prototype .initialize .call (this);
 
-         this .displacers_ .addInterest ("set_displacers__", this);
+         this ._displacers .addInterest ("set_displacers__", this);
 
          this .set_displacers__ ();
       },
       setCameraObject: function (value)
       {
-         X3DTransformNode .prototype .setCameraObject .call (this, value || !! this .skinCoordIndex_ .length);
+         X3DTransformNode .prototype .setCameraObject .call (this, value || !! this ._skinCoordIndex .length);
       },
       getModelMatrix: function ()
       {
@@ -146,9 +146,9 @@ function (Fields,
 
          displacerNodes .length = 0;
 
-         for (var i = 0, length = this .displacers_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._displacers .length; i < length; ++ i)
          {
-            const displacerNode = X3DCast (X3DConstants .HAnimDisplacer, this .displacers_ [i]);
+            const displacerNode = X3DCast (X3DConstants .HAnimDisplacer, this ._displacers [i]);
 
             if (displacerNode)
                displacerNodes .push (displacerNode);
@@ -168,7 +168,7 @@ function (Fields,
 
          return function ()
          {
-            if (this .skinCoordIndex_ .length)
+            if (this ._skinCoordIndex .length)
                return traverse;
 
             return base;
@@ -188,7 +188,7 @@ function (Fields,
 
          return function ()
          {
-            if (this .skinCoordIndex_ .length)
+            if (this ._skinCoordIndex .length)
                return traverse;
 
             return base;

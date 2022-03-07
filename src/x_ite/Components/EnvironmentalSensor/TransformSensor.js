@@ -82,7 +82,7 @@ function (Fields,
 
       this .addType (X3DConstants .TransformSensor);
 
-      this .position_changed_ .setUnit ("length");
+      this ._position_changed .setUnit ("length");
 
       this .setZeroTest (true);
 
@@ -126,11 +126,11 @@ function (Fields,
 
          this .isLive () .addInterest ("set_enabled__", this);
 
-         this .enabled_      .addInterest ("set_enabled__",      this);
-         this .size_         .addInterest ("set_enabled__",      this);
-         this .size_         .addInterest ("set_extents__",      this);
-         this .center_       .addInterest ("set_extents__",      this);
-         this .targetObject_ .addInterest ("set_targetObject__", this);
+         this ._enabled      .addInterest ("set_enabled__",      this);
+         this ._size         .addInterest ("set_enabled__",      this);
+         this ._size         .addInterest ("set_extents__",      this);
+         this ._center       .addInterest ("set_extents__",      this);
+         this ._targetObject .addInterest ("set_targetObject__", this);
 
          this .set_extents__ ();
          this .set_targetObject__ ();
@@ -139,7 +139,7 @@ function (Fields,
       { },
       set_enabled__: function ()
       {
-         if (this .isLive () .getValue () && this .targetObjectNode && this .enabled_ .getValue () && ! this .size_. getValue () .equals (Vector3 .Zero))
+         if (this .isLive () .getValue () && this .targetObjectNode && this ._enabled .getValue () && ! this ._size. getValue () .equals (Vector3 .Zero))
          {
             this .setPickableObject (true);
             this .getBrowser () .addTransformSensor (this);
@@ -153,18 +153,18 @@ function (Fields,
             if (this .targetObjectNode)
                this .targetObjectNode .removeTransformSensor (this);
 
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
-               this .isActive_ = false;
-               this .exitTime_ = this .getBrowser () .getCurrentTime ();
+               this ._isActive = false;
+               this ._exitTime = this .getBrowser () .getCurrentTime ();
             }
          }
       },
       set_extents__: function ()
       {
          const
-            s  = this .size_ .getValue (),
-            c  = this .center_ .getValue (),
+            s  = this ._size .getValue (),
+            c  = this ._center .getValue (),
             sx = s .x / 2,
             sy = s .y / 2,
             sz = s .z / 2,
@@ -182,7 +182,7 @@ function (Fields,
          try
          {
             const
-               node = this .targetObject_ .getValue () .getInnerNode (),
+               node = this ._targetObject .getValue () .getInnerNode (),
                type = node .getType ();
 
             for (let t = type .length - 1; t >= 0; -- t)
@@ -238,28 +238,28 @@ function (Fields,
             {
                matrix .get (position, orientation);
 
-               if (this .isActive_ .getValue ())
+               if (this ._isActive .getValue ())
                {
-                  if (! this .position_changed_ .getValue () .equals (position))
-                     this .position_changed_ = position;
+                  if (! this ._position_changed .getValue () .equals (position))
+                     this ._position_changed = position;
 
-                  if (! this .orientation_changed_ .getValue () .equals (orientation))
-                     this .orientation_changed_ = orientation;
+                  if (! this ._orientation_changed .getValue () .equals (orientation))
+                     this ._orientation_changed = orientation;
                }
                else
                {
-                  this .isActive_            = true;
-                  this .enterTime_           = this .getBrowser () .getCurrentTime ();
-                  this .position_changed_    = position;
-                  this .orientation_changed_ = orientation;
+                  this ._isActive            = true;
+                  this ._enterTime           = this .getBrowser () .getCurrentTime ();
+                  this ._position_changed    = position;
+                  this ._orientation_changed = orientation;
                }
             }
             else
             {
-               if (this .isActive_ .getValue ())
+               if (this ._isActive .getValue ())
                {
-                  this .isActive_ = false;
-                  this .exitTime_ = this .getBrowser () .getCurrentTime ();
+                  this ._isActive = false;
+                  this ._exitTime = this .getBrowser () .getCurrentTime ();
                }
             }
 
@@ -282,7 +282,7 @@ function (Fields,
             const
                modelMatrices  = this .modelMatrices,
                targetMatrices = this .targetMatrices,
-               always         = this .size_ .getValue () .equals (infinity);
+               always         = this ._size .getValue () .equals (infinity);
 
             for (const modelMatrix of modelMatrices)
             {

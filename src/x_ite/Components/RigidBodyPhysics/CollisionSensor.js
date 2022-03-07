@@ -105,13 +105,13 @@ function (Fields,
 
          this .isLive () .addInterest ("set_live__", this);
 
-         this .collider_ .addInterest ("set_collider__", this);
+         this ._collider .addInterest ("set_collider__", this);
 
          this .set_collider__ ();
       },
       set_live__: function ()
       {
-         if (this .isLive () .getValue () && this .enabled_ .getValue () && this .colliderNode)
+         if (this .isLive () .getValue () && this ._enabled .getValue () && this .colliderNode)
          {
             this .getBrowser () .sensorEvents () .addInterest ("update", this);
          }
@@ -122,7 +122,7 @@ function (Fields,
       },
       set_collider__: function ()
       {
-         this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this .collider_);
+         this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this ._collider);
 
          this .set_live__ ();
       },
@@ -198,18 +198,18 @@ function (Fields,
                            btPosition      = pt .getPositionWorldOnA (),
                            btContactNormal = pt .get_m_normalWorldOnB ();
 
-                        contactNode .position_                 = position .set (btPosition .x (), btPosition .y (), btPosition .z ());
-                        contactNode .contactNormal_            = contactNormal .set (btContactNormal .x (), btContactNormal .y (), btContactNormal .z ());
-                        contactNode .depth_                    = -pt .getDistance ();
-//								contactNode .frictionDirection_        = context .frictionDirection;
-                        contactNode .appliedParameters_        = colliderNode .appliedParameters_;
-                        contactNode .bounce_                   = colliderNode .bounce_;
-                        contactNode .minBounceSpeed_           = colliderNode .minBounceSpeed_;
-                        contactNode .frictionCoefficients_     = colliderNode .frictionCoefficients_;
-                        contactNode .surfaceSpeed_             = colliderNode .surfaceSpeed_;
-                        contactNode .slipCoefficients_         = colliderNode .slipFactors_;
-                        contactNode .softnessConstantForceMix_ = colliderNode .softnessConstantForceMix_;
-                        contactNode .softnessErrorCorrection_  = colliderNode .softnessErrorCorrection_;
+                        contactNode ._position                 = position .set (btPosition .x (), btPosition .y (), btPosition .z ());
+                        contactNode ._contactNormal            = contactNormal .set (btContactNormal .x (), btContactNormal .y (), btContactNormal .z ());
+                        contactNode ._depth                    = -pt .getDistance ();
+//								contactNode ._frictionDirection        = context .frictionDirection;
+                        contactNode ._appliedParameters        = colliderNode ._appliedParameters;
+                        contactNode ._bounce                   = colliderNode ._bounce;
+                        contactNode ._minBounceSpeed           = colliderNode ._minBounceSpeed;
+                        contactNode ._frictionCoefficients     = colliderNode ._frictionCoefficients;
+                        contactNode ._surfaceSpeed             = colliderNode ._surfaceSpeed;
+                        contactNode ._slipCoefficients         = colliderNode ._slipFactors;
+                        contactNode ._softnessConstantForceMix = colliderNode ._softnessConstantForceMix;
+                        contactNode ._softnessErrorCorrection  = colliderNode ._softnessErrorCorrection;
 
                         if (collidableNode1)
                         {
@@ -236,8 +236,8 @@ function (Fields,
 
             var active = Boolean (contactNodes .length);
 
-            if (this .isActive_ .getValue () !== active)
-               this .isActive_ = active;
+            if (this ._isActive .getValue () !== active)
+               this ._isActive = active;
 
             if (intersectionNodes .size)
             {
@@ -245,11 +245,11 @@ function (Fields,
 
                intersectionNodes .forEach (function (intersectionNode)
                {
-                  this .intersections_ [i ++] = intersectionNode;
+                  this ._intersections [i ++] = intersectionNode;
                },
                this);
 
-               this .intersections_ .length = i;
+               this ._intersections .length = i;
             }
 
             if (contactNodes .length)
@@ -258,11 +258,11 @@ function (Fields,
 
                contactNodes .forEach (function (contactNode)
                {
-                  this .contacts_ [i ++] = contactNode;
+                  this ._contacts [i ++] = contactNode;
                },
                this);
 
-               this .contacts_ .length = i;
+               this ._contacts .length = i;
             }
          };
       })(),

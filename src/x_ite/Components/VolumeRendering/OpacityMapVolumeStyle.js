@@ -100,30 +100,30 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .transferFunction_ .addInterest ("set_transferFunction__", this);
+         this ._transferFunction .addInterest ("set_transferFunction__", this);
 
          this .set_transferFunction__ ();
       },
       set_transferFunction__: function ()
       {
-         this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture2DNode, this .transferFunction_);
+         this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture2DNode, this ._transferFunction);
 
          if (! this .transferFunctionNode)
-            this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture3DNode, this .transferFunction_);
+            this .transferFunctionNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._transferFunction);
 
          if (! this .transferFunctionNode)
             this .transferFunctionNode = this .getBrowser () .getDefaultTransferFunction ();
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
          shaderNode .addUserDefinedField (X3DConstants .inputOutput, "transferFunction_" + this .getId (), new Fields .SFNode (this .transferFunctionNode));
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -159,7 +159,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";

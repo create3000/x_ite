@@ -99,10 +99,10 @@ function (Fields,
             case 0:
             {
                var
-                  controlPointArray = this .controlPoint_ .getValue (),
+                  controlPointArray = this ._controlPoint .getValue (),
                   controlPoints     = this .controlPoints;
 
-               for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+               for (var i = 0, length = this ._controlPoint .length; i < length; ++ i)
                {
                   var i2 = i * 2;
 
@@ -117,10 +117,10 @@ function (Fields,
             case 1:
             {
                var
-                  controlPointArray = this .controlPoint_ .getValue (),
+                  controlPointArray = this ._controlPoint .getValue (),
                   controlPoints     = this .controlPoints;
 
-               for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+               for (var i = 0, length = this ._controlPoint .length; i < length; ++ i)
                {
                   var
                      i2 = i * 2,
@@ -138,10 +138,10 @@ function (Fields,
             case 3:
             {
                var
-                  controlPointArray = this .controlPoint_ .getValue (),
+                  controlPointArray = this ._controlPoint .getValue (),
                   controlPoints     = this .controlPoints;
 
-               for (var i = 0, length = this .controlPoint_ .length; i < length; ++ i)
+               for (var i = 0, length = this ._controlPoint .length; i < length; ++ i)
                {
                   var i2 = i * 2;
 

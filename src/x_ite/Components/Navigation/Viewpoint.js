@@ -78,9 +78,9 @@ function (Fields,
 
       this .addType (X3DConstants .Viewpoint);
 
-      this .position_         .setUnit ("length");
-      this .centerOfRotation_ .setUnit ("length");
-      this .fieldOfView_      .setUnit ("angle");
+      this ._position         .setUnit ("length");
+      this ._centerOfRotation .setUnit ("length");
+      this ._fieldOfView      .setUnit ("angle");
 
       this .projectionMatrix        = new Matrix4 ();
       this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
@@ -118,11 +118,11 @@ function (Fields,
       {
          X3DViewpointNode .prototype .initialize .call (this);
 
-         this .fieldOfViewInterpolator .key_ = new Fields .MFFloat (0, 1);
+         this .fieldOfViewInterpolator ._key = new Fields .MFFloat (0, 1);
          this .fieldOfViewInterpolator .setup ();
 
-         this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewInterpolator .set_fraction_);
-         this .fieldOfViewInterpolator .value_changed_ .addFieldInterest (this .fieldOfViewScale_);
+         this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewInterpolator ._set_fraction);
+         this .fieldOfViewInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
       },
       setInterpolators: function (fromViewpointNode, toViewpointNode)
       {
@@ -130,20 +130,20 @@ function (Fields,
          {
             const scale = fromViewpointNode .getFieldOfView () / toViewpointNode .getFieldOfView ();
 
-            this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (scale, toViewpointNode .fieldOfViewScale_ .getValue ());
+            this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (scale, toViewpointNode ._fieldOfViewScale .getValue ());
 
-            this .fieldOfViewScale_ = scale;
+            this ._fieldOfViewScale = scale;
          }
          else
          {
-            this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewScale_ .getValue (), toViewpointNode .fieldOfViewScale_ .getValue ());
+            this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
 
-            this .fieldOfViewScale_ = toViewpointNode .fieldOfViewScale_ .getValue ();
+            this ._fieldOfViewScale = toViewpointNode ._fieldOfViewScale .getValue ();
          }
       },
       getFieldOfView: function ()
       {
-         var fov = this .fieldOfView_ .getValue () * this .fieldOfViewScale_ .getValue ();
+         var fov = this ._fieldOfView .getValue () * this ._fieldOfViewScale .getValue ();
 
          return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
       },

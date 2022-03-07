@@ -179,7 +179,7 @@ function (Fields,
       },
       setLoadCount: function (value)
       {
-         this .loadCount_ = value;
+         this ._loadCount = value;
 
          if (value)
          {
@@ -192,14 +192,14 @@ function (Fields,
          }
 
          if (! this [_loading])
-            this .getNotification () .string_ = string;
+            this .getNotification () ._string = string;
 
          this .getSplashScreen () .find (".x_ite-private-spinner-text") .text (string);
          this .getSplashScreen () .find (".x_ite-private-progressbar div") .css ("width", ((this [_loadingTotal] - value) * 100 / this [_loadingTotal]) + "%");
       },
       resetLoadCount: function ()
       {
-         this .loadCount_     = 0;
+         this ._loadCount     = 0;
          this [_loadingTotal] = 0;
 
          this [_loadingObjects] .clear ();

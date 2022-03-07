@@ -103,7 +103,7 @@ function (SupportedNodes,
 
          this [_body] .setup ();
 
-         this .loadState_ = X3DConstants .COMPLETE_STATE;
+         this ._loadState = X3DConstants .COMPLETE_STATE;
       },
       getProtoDeclaration: function ()
       {
@@ -115,7 +115,7 @@ function (SupportedNodes,
       },
       checkLoadState: function ()
       {
-         return this .loadState_ .getValue ();
+         return this ._loadState .getValue ();
       },
       canUserDefinedFields: function ()
       {

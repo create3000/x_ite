@@ -108,12 +108,12 @@ function (Fields,
       {
          X3DLineGeometryNode .prototype .initialize .call (this);
 
-         this .set_colorIndex_ .addFieldInterest (this .colorIndex_);
-         this .set_coordIndex_ .addFieldInterest (this .coordIndex_);
-         this .attrib_         .addInterest ("set_attrib__",   this);
-         this .fogCoord_       .addInterest ("set_fogCoord__", this);
-         this .color_          .addInterest ("set_color__",    this);
-         this .coord_          .addInterest ("set_coord__",    this);
+         this ._set_colorIndex .addFieldInterest (this ._colorIndex);
+         this ._set_coordIndex .addFieldInterest (this ._coordIndex);
+         this ._attrib         .addInterest ("set_attrib__",   this);
+         this ._fogCoord       .addInterest ("set_fogCoord__", this);
+         this ._color          .addInterest ("set_color__",    this);
+         this ._coord          .addInterest ("set_coord__",    this);
 
          this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
          this .setSolid (false);
@@ -132,9 +132,9 @@ function (Fields,
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
          {
-            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
 
             if (attribNode)
                attribNodes .push (attribNode);
@@ -148,7 +148,7 @@ function (Fields,
          if (this .fogCoordNode)
             this .fogCoordNode .removeInterest ("requestRebuild", this);
 
-         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
+         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
 
          if (this .fogCoordNode)
             this .fogCoordNode .addInterest ("requestRebuild", this);
@@ -158,15 +158,15 @@ function (Fields,
          if (this .colorNode)
          {
             this .colorNode .removeInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .colorNode ._transparent .removeInterest ("set_transparent__", this);
          }
 
-         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
+         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
          if (this .colorNode)
          {
             this .colorNode .addInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .addInterest ("set_transparent__", this);
+            this .colorNode ._transparent .addInterest ("set_transparent__", this);
 
             this .set_transparent__ ();
          }
@@ -182,29 +182,29 @@ function (Fields,
          if (this .coordNode)
             this .coordNode .removeInterest ("requestRebuild", this);
 
-         this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
+         this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._coord);
 
          if (this .coordNode)
             this .coordNode .addInterest ("requestRebuild", this);
       },
       getColorPerVertexIndex: function (index)
       {
-         if (index < this .colorIndex_ .length)
-            return this .colorIndex_ [index];
+         if (index < this ._colorIndex .length)
+            return this ._colorIndex [index];
 
-         return this .coordIndex_ [index];
+         return this ._coordIndex [index];
       },
       getColorIndex: function (index)
       {
-         if (index < this .colorIndex_ .length)
-            return this .colorIndex_ [index];
+         if (index < this ._colorIndex .length)
+            return this ._colorIndex [index];
 
          return index;
       },
       getPolylineIndices: function ()
       {
          const
-            coordIndex = this .coordIndex_,
+            coordIndex = this ._coordIndex,
             polylines  = [ ];
 
          var polyline = [ ];
@@ -243,9 +243,9 @@ function (Fields,
             return;
 
          const
-            coordIndex     = this .coordIndex_,
+            coordIndex     = this ._coordIndex,
             polylines      = this .getPolylineIndices (),
-            colorPerVertex = this .colorPerVertex_ .getValue (),
+            colorPerVertex = this ._colorPerVertex .getValue (),
             attribNodes    = this .getAttrib (),
             numAttrib      = attribNodes .length,
             attribs        = this .getAttribs (),

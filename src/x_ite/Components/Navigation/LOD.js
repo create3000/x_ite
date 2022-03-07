@@ -77,10 +77,10 @@ function (Fields,
       this .addType (X3DConstants .LOD);
 
       if (executionContext .getSpecificationVersion () === "2.0")
-         this .addAlias ("level", this .children_); // VRML2
+         this .addAlias ("level", this ._children); // VRML2
 
-      this .center_ .setUnit ("length");
-      this .range_  .setUnit ("length");
+      this ._center .setUnit ("length");
+      this ._range  .setUnit ("length");
 
       this .frameRate        = 60;
       this .keepCurrentLevel = false;
@@ -122,11 +122,11 @@ function (Fields,
       {
          X3DGroupingNode .prototype .initialize .call (this);
 
-         this .children_ .addInterest ("set_child__", this);
+         this ._children .addInterest ("set_child__", this);
       },
       getSubBBox: function (bbox, shadow)
       {
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
             const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .visibleNode);
 
@@ -136,42 +136,42 @@ function (Fields,
             return bbox .set ();
          }
 
-         return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+         return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       },
       clear: function () { },
       add: function () { },
       remove: function () { },
       set_child__: function ()
       {
-         this .set_level__ (Math .min (this .level_changed_ .getValue (), this .children_ .length - 1));
+         this .set_level__ (Math .min (this ._level_changed .getValue (), this ._children .length - 1));
       },
       set_level__: function (level)
       {
          if (this .childNode)
          {
-            this .childNode .isCameraObject_   .removeInterest ("set_cameraObject__",     this);
-            this .childNode .isPickableObject_ .removeInterest ("set_transformSensors__", this);
+            this .childNode ._isCameraObject   .removeInterest ("set_cameraObject__",     this);
+            this .childNode ._isPickableObject .removeInterest ("set_transformSensors__", this);
          }
 
          if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
          {
-            this .childNode .visible_     .removeInterest ("set_visible__",     this);
-            this .childNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+            this .childNode ._visible     .removeInterest ("set_visible__",     this);
+            this .childNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
          }
 
-         if (level >= 0 && level < this .children_ .length)
+         if (level >= 0 && level < this ._children .length)
          {
-            this .childNode = X3DCast (X3DConstants .X3DChildNode, this .children_ [level]);
+            this .childNode = X3DCast (X3DConstants .X3DChildNode, this ._children [level]);
 
             if (this .childNode)
             {
-               this .childNode .isCameraObject_   .addInterest ("set_cameraObject__",     this);
-               this .childNode .isPickableObject_ .addInterest ("set_transformSensors__", this);
+               this .childNode ._isCameraObject   .addInterest ("set_cameraObject__",     this);
+               this .childNode ._isPickableObject .addInterest ("set_transformSensors__", this);
 
                if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
                {
-                  this .childNode .visible_     .addInterest ("set_visible__",     this);
-                  this .childNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
+                  this .childNode ._visible     .addInterest ("set_visible__",     this);
+                  this .childNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
                }
 
                //delete this .traverse;
@@ -194,7 +194,7 @@ function (Fields,
          {
             if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
             {
-               this .setCameraObject (this .childNode .visible_ .getValue ());
+               this .setCameraObject (this .childNode ._visible .getValue ());
             }
             else
             {
@@ -214,7 +214,7 @@ function (Fields,
       {
          if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
          {
-            this .visibleNode = this .childNode .visible_ .getValue () ? this .childNode : null;
+            this .visibleNode = this .childNode ._visible .getValue () ? this .childNode : null;
          }
          else
          {
@@ -227,7 +227,7 @@ function (Fields,
       {
          if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
          {
-            this .boundedObject = this .childNode .bboxDisplay_ .getValue () ? this .childNode : null;
+            this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
          }
          else
          {
@@ -243,11 +243,11 @@ function (Fields,
 
          return function (browser, modelViewMatrix)
          {
-            if (this .range_ .length === 0)
+            if (this ._range .length === 0)
             {
                this .frameRate = ((FRAMES - 1) * this .frameRate + browser .currentFrameRate) / FRAMES;
 
-               const size = this .children_ .length;
+               const size = this ._children .length;
 
                switch (size)
                {
@@ -266,9 +266,9 @@ function (Fields,
                }
             }
 
-            const distance = modelViewMatrix .translate (this .center_ .getValue ()) .origin .abs ();
+            const distance = modelViewMatrix .translate (this ._center .getValue ()) .origin .abs ();
 
-            return Algorithm .upperBound (this .range_, 0, this .range_ .length, distance, Algorithm .less);
+            return Algorithm .upperBound (this ._range, 0, this ._range .length, distance, Algorithm .less);
          };
       })(),
       traverse: (function ()
@@ -332,9 +332,9 @@ function (Fields,
                   {
                      let
                         level        = this .getLevel (renderObject .getBrowser (), modelViewMatrix .assign (renderObject .getModelViewMatrix () .get ())),
-                        currentLevel = this .level_changed_ .getValue ();
+                        currentLevel = this ._level_changed .getValue ();
 
-                     if (this .forceTransitions_ .getValue ())
+                     if (this ._forceTransitions .getValue ())
                      {
                         if (level > currentLevel)
                            level = currentLevel + 1;
@@ -345,9 +345,9 @@ function (Fields,
 
                      if (level !== currentLevel)
                      {
-                        this .level_changed_ = level;
+                        this ._level_changed = level;
 
-                        this .set_level__ (Math .min (level, this .children_ .length - 1));
+                        this .set_level__ (Math .min (level, this ._children .length - 1));
                      }
                   }
 

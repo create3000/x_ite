@@ -104,15 +104,15 @@ function (Fields,
       {
          X3DNetworkSensorNode .prototype .initialize .call (this);
 
-         this .enabled_   .addInterest ("set_enabled__", this);
-         this .timeOut_   .addInterest ("set_timeOut__", this);
-         this .watchList_ .addInterest ("set_watchList__", this);
+         this ._enabled   .addInterest ("set_enabled__", this);
+         this ._timeOut   .addInterest ("set_timeOut__", this);
+         this ._watchList .addInterest ("set_watchList__", this);
 
-         this .watchList_ .addEvent ();
+         this ._watchList .addEvent ();
       },
       set_enabled__: function ()
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
             this .reset ();
 
          else
@@ -123,14 +123,14 @@ function (Fields,
       },
       set_timeOut__: function ()
       {
-         if (this .isActive_ .getValue ())
+         if (this ._isActive .getValue ())
          {
             this .clearTimeout ();
 
             this .aborted = false;
 
-            if (this .timeOut_ .getValue () > 0)
-               this .timeOutId = setTimeout (this .abort .bind (this), this .timeOut_ .getValue () * 1000);
+            if (this ._timeOut .getValue () > 0)
+               this .timeOutId = setTimeout (this .abort .bind (this), this ._timeOut .getValue () * 1000);
          }
       },
       set_watchList__: function ()
@@ -175,24 +175,24 @@ function (Fields,
          {
             this .clearTimeout ();
 
-            this .isActive_ = false;
-            this .isLoaded_ = loaded;
-            this .progress_ = progress;
+            this ._isActive = false;
+            this ._isLoaded = loaded;
+            this ._progress = progress;
 
             if (loaded)
-               this .loadTime_ = this .getBrowser () .getCurrentTime ();
+               this ._loadTime = this .getBrowser () .getCurrentTime ();
          }
          else
          {
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
-               this .progress_ = progress;
+               this ._progress = progress;
             }
             else
             {
-               this .isActive_ = true;
+               this ._isActive = true;
 
-               this .progress_ = progress;
+               this ._progress = progress;
 
                this .set_timeOut__ ();
             }
@@ -204,17 +204,17 @@ function (Fields,
 
          this .aborted = true;
 
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
             this .count ();
       },
       reset: function ()
       {
          this .remove ();
 
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
             var
-               watchList  = this .watchList_ .getValue (),
+               watchList  = this ._watchList .getValue (),
                urlObjects = this .urlObjects;
 
             for (var i = 0, length = watchList .length; i < length; ++ i)
@@ -225,7 +225,7 @@ function (Fields,
                {
                   urlObjects .push (urlObject);
 
-                  urlObject .loadState_ .addInterest ("set_loadState__", this, urlObject);
+                  urlObject ._loadState .addInterest ("set_loadState__", this, urlObject);
                }
             }
 
@@ -239,7 +239,7 @@ function (Fields,
          var urlObjects = this .urlObjects;
 
          for (var i = 0, length = urlObjects .length; i < length; ++ i)
-            urlObjects [i] .loadState_ .removeInterest ("set_loadState__", this);
+            urlObjects [i] ._loadState .removeInterest ("set_loadState__", this);
 
          urlObjects .length = 0;
       },

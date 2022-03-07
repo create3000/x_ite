@@ -92,15 +92,15 @@ function (Fields,
             return this .geometry;
 
          this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
-         this .geometry .texCoord_ = new TextureCoordinate (this .getExecutionContext ());
-         this .geometry .coord_    = new Coordinate (this .getExecutionContext ());
+         this .geometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());
+         this .geometry ._coord    = new Coordinate (this .getExecutionContext ());
 
          const
             geometry = this .geometry,
-            texCoord = this .geometry .texCoord_ .getValue (),
-            coord    = this .geometry .coord_ .getValue ();
+            texCoord = this .geometry ._texCoord .getValue (),
+            coord    = this .geometry ._coord .getValue ();
 
-         geometry .texCoordIndex_ = new Fields .MFInt32 (
+         geometry ._texCoordIndex = new Fields .MFInt32 (
             0, 1, 2, 3, -1, // front
             0, 1, 2, 3, -1, // back
             0, 1, 2, 3, -1, // left
@@ -109,7 +109,7 @@ function (Fields,
             0, 1, 2, 3, -1  // bottom
          );
 
-         geometry .coordIndex_ = new Fields .MFInt32 (
+         geometry ._coordIndex = new Fields .MFInt32 (
             0, 1, 2, 3, -1, // front
             5, 4, 7, 6, -1, // back
             1, 5, 6, 2, -1, // left
@@ -118,11 +118,11 @@ function (Fields,
             3, 2, 6, 7, -1  // bottom
          );
 
-         texCoord .point_ = new Fields .MFVec2f (
+         texCoord ._point = new Fields .MFVec2f (
             new Fields .SFVec2f (1, 1), new Fields .SFVec2f (0, 1), new Fields .SFVec2f (0, 0), new Fields .SFVec2f (1, 0)
          );
 
-         coord .point_ = new Fields .MFVec3f (
+         coord ._point = new Fields .MFVec3f (
             new Fields .SFVec3f ( 1,  1,  1), new Fields .SFVec3f (-1,  1,  1), new Fields .SFVec3f (-1, -1,  1), new Fields .SFVec3f ( 1, -1,  1),
             new Fields .SFVec3f ( 1,  1, -1), new Fields .SFVec3f (-1,  1, -1), new Fields .SFVec3f (-1, -1, -1), new Fields .SFVec3f ( 1, -1, -1)
          );

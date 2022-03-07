@@ -76,9 +76,9 @@ function (Fields,
 
       this .setGeometryType (2);
 
-      this .startAngle_ .setUnit ("angle");
-      this .endAngle_   .setUnit ("angle");
-      this .radius_     .setUnit ("length");
+      this ._startAngle .setUnit ("angle");
+      this ._endAngle   .setUnit ("angle");
+      this ._radius     .setUnit ("length");
    }
 
    ArcClose2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -116,8 +116,8 @@ function (Fields,
       getSweepAngle: function ()
       {
          var
-            start = Algorithm .interval (this .startAngle_ .getValue (), 0, Math .PI * 2),
-            end   = Algorithm .interval (this .endAngle_   .getValue (), 0, Math .PI * 2);
+            start = Algorithm .interval (this ._startAngle .getValue (), 0, Math .PI * 2),
+            end   = Algorithm .interval (this ._endAngle   .getValue (), 0, Math .PI * 2);
 
          if (start === end)
             return Math .PI * 2;
@@ -141,10 +141,10 @@ function (Fields,
          {
             var
                options       = this .getBrowser () .getArcClose2DOptions (),
-               chord         = this .closureType_ .getValue () === "CHORD",
-               dimension     = options .dimension_ .getValue (),
-               startAngle    = this .startAngle_ .getValue  (),
-               radius        = Math .abs (this .radius_ .getValue ()),
+               chord         = this ._closureType .getValue () === "CHORD",
+               dimension     = options ._dimension .getValue (),
+               startAngle    = this ._startAngle .getValue  (),
+               radius        = Math .abs (this ._radius .getValue ()),
                sweepAngle    = this .getSweepAngle (),
                steps         = Math .max (4, Math .floor (sweepAngle * dimension / (Math .PI * 2))),
                texCoordArray = this .getTexCoords (),
@@ -219,7 +219,7 @@ function (Fields,
             this .getMin () .set (-radius, -radius, 0);
             this .getMax () .set ( radius,  radius, 0);
 
-            this .setSolid (this .solid_ .getValue ());
+            this .setSolid (this ._solid .getValue ());
          };
       })(),
    });

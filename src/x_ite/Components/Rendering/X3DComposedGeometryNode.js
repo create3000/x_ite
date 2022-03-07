@@ -80,12 +80,12 @@ function (X3DGeometryNode,
       {
          X3DGeometryNode .prototype .initialize .call (this);
 
-         this .attrib_   .addInterest ("set_attrib__",   this);
-         this .fogCoord_ .addInterest ("set_fogCoord__", this);
-         this .color_    .addInterest ("set_color__",    this);
-         this .texCoord_ .addInterest ("set_texCoord__", this);
-         this .normal_   .addInterest ("set_normal__",   this);
-         this .coord_    .addInterest ("set_coord__",    this);
+         this ._attrib   .addInterest ("set_attrib__",   this);
+         this ._fogCoord .addInterest ("set_fogCoord__", this);
+         this ._color    .addInterest ("set_color__",    this);
+         this ._texCoord .addInterest ("set_texCoord__", this);
+         this ._normal   .addInterest ("set_normal__",   this);
+         this ._coord    .addInterest ("set_coord__",    this);
 
          this .set_attrib__ ();
          this .set_fogCoord__ ();
@@ -123,9 +123,9 @@ function (X3DGeometryNode,
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
          {
-            var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+            var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
 
             if (attribNode)
                attribNodes .push (attribNode);
@@ -139,7 +139,7 @@ function (X3DGeometryNode,
          if (this .fogCoordNode)
             this .fogCoordNode .removeInterest ("requestRebuild", this);
 
-         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
+         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
 
          if (this .fogCoordNode)
             this .fogCoordNode .addInterest ("requestRebuild", this);
@@ -149,15 +149,15 @@ function (X3DGeometryNode,
          if (this .colorNode)
          {
             this .colorNode .removeInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .colorNode ._transparent .removeInterest ("set_transparent__", this);
          }
 
-         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
+         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
          if (this .colorNode)
          {
             this .colorNode .addInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .addInterest ("set_transparent__", this);
+            this .colorNode ._transparent .addInterest ("set_transparent__", this);
 
             this .set_transparent__ ();
          }
@@ -173,7 +173,7 @@ function (X3DGeometryNode,
          if (this .texCoordNode)
             this .texCoordNode .removeInterest ("requestRebuild", this);
 
-         this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
+         this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
 
          if (this .texCoordNode)
             this .texCoordNode .addInterest ("requestRebuild", this);
@@ -185,7 +185,7 @@ function (X3DGeometryNode,
          if (this .normalNode)
             this .normalNode .removeInterest ("requestRebuild", this);
 
-         this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this .normal_);
+         this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
 
          if (this .normalNode)
             this .normalNode .addInterest ("requestRebuild", this);
@@ -195,7 +195,7 @@ function (X3DGeometryNode,
          if (this .coordNode)
             this .coordNode .removeInterest ("requestRebuild", this);
 
-         this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
+         this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._coord);
 
          if (this .coordNode)
             this .coordNode .addInterest ("requestRebuild", this);
@@ -219,8 +219,8 @@ function (X3DGeometryNode,
          trianglesSize -= trianglesSize % verticesPerFace;
 
          const
-            colorPerVertex     = this .colorPerVertex_ .getValue (),
-            normalPerVertex    = this .normalPerVertex_ .getValue (),
+            colorPerVertex     = this ._colorPerVertex .getValue (),
+            normalPerVertex    = this ._normalPerVertex .getValue (),
             attribNodes        = this .getAttrib (),
             numAttrib          = attribNodes .length,
             attribs            = this .getAttribs (),
@@ -282,8 +282,8 @@ function (X3DGeometryNode,
          if (! this .getNormal ())
             this .buildNormals (verticesPerPolygon, polygonsSize, trianglesSize);
 
-         this .setSolid (this .solid_ .getValue ());
-         this .setCCW (this .ccw_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
+         this .setCCW (this ._ccw .getValue ());
       },
       buildNormals: function (verticesPerPolygon, polygonsSize, trianglesSize)
       {
@@ -302,7 +302,7 @@ function (X3DGeometryNode,
       {
          const normals = this .createFaceNormals (verticesPerPolygon, polygonsSize);
 
-         if (this .normalPerVertex_ .getValue ())
+         if (this ._normalPerVertex .getValue ())
          {
             const normalIndex = [ ];
 
@@ -326,7 +326,7 @@ function (X3DGeometryNode,
       createFaceNormals: function (verticesPerPolygon, polygonsSize)
       {
          const
-            cw      = ! this .ccw_ .getValue (),
+            cw      = ! this ._ccw .getValue (),
             coord   = this .coordNode,
             normals = [ ];
 

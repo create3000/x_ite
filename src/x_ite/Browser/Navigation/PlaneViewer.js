@@ -139,7 +139,7 @@ function ($,
 
                this .getPointOnCenterPlane (x, y, this .fromPoint);
 
-               this .isActive_ = true;
+               this ._isActive = true;
                break;
             }
          }
@@ -161,7 +161,7 @@ function ($,
 
          this .getBrowser () .setCursor ("DEFAULT");
 
-         this .isActive_ = false;
+         this ._isActive = false;
       },
       mousemove: function (event)
       {
@@ -186,8 +186,8 @@ function ($,
                   toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
                   translation = viewpoint .getUserOrientation () .multVecRot (this .fromPoint .subtract (toPoint));
 
-               viewpoint .positionOffset_         = positionOffset         .assign (viewpoint .positionOffset_         .getValue ()) .add (translation);
-               viewpoint .centerOfRotationOffset_ = centerOfRotationOffset .assign (viewpoint .centerOfRotationOffset_ .getValue ()) .add (translation);
+               viewpoint ._positionOffset         = positionOffset         .assign (viewpoint ._positionOffset         .getValue ()) .add (translation);
+               viewpoint ._centerOfRotationOffset = centerOfRotationOffset .assign (viewpoint ._centerOfRotationOffset .getValue ()) .add (translation);
 
                this .fromPoint .assign (toPoint);
                break;
@@ -216,11 +216,11 @@ function ($,
 
          if (event .deltaY > 0) // Move backwards.
          {
-            viewpoint .fieldOfViewScale_ = Math .max (0.00001, viewpoint .fieldOfViewScale_ .getValue () * (1 - SCROLL_FACTOR));
+            viewpoint ._fieldOfViewScale = Math .max (0.00001, viewpoint ._fieldOfViewScale .getValue () * (1 - SCROLL_FACTOR));
          }
          else if (event .deltaY < 0) // Move forwards.
          {
-            viewpoint .fieldOfViewScale_ = viewpoint .fieldOfViewScale_ .getValue () * (1 + SCROLL_FACTOR);
+            viewpoint ._fieldOfViewScale = viewpoint ._fieldOfViewScale .getValue () * (1 + SCROLL_FACTOR);
 
             this .constrainFieldOfViewScale ();
          }
@@ -232,8 +232,8 @@ function ($,
             toPoint     = this .getPointOnCenterPlane (x, y, this .toPoint),
             translation = viewpoint .getUserOrientation () .multVecRot (vector .assign (fromPoint) .subtract (toPoint));
 
-         viewpoint .positionOffset_         = positionOffset         .assign (viewpoint .positionOffset_         .getValue ()) .add (translation);
-         viewpoint .centerOfRotationOffset_ = centerOfRotationOffset .assign (viewpoint .centerOfRotationOffset_ .getValue ()) .add (translation);
+         viewpoint ._positionOffset         = positionOffset         .assign (viewpoint ._positionOffset         .getValue ()) .add (translation);
+         viewpoint ._centerOfRotationOffset = centerOfRotationOffset .assign (viewpoint ._centerOfRotationOffset .getValue ()) .add (translation);
       },
       constrainFieldOfViewScale: function ()
       {
@@ -241,8 +241,8 @@ function ($,
 
          if (viewpoint instanceof Viewpoint || viewpoint .getTypeName () === "GeoViewpoint")
          {
-            if (viewpoint .fieldOfView_ .getValue () * viewpoint .fieldOfViewScale_ .getValue () >= Math .PI)
-               viewpoint .fieldOfViewScale_ = (Math .PI - 0.001) / viewpoint .fieldOfView_ .getValue ();
+            if (viewpoint ._fieldOfView .getValue () * viewpoint ._fieldOfViewScale .getValue () >= Math .PI)
+               viewpoint ._fieldOfViewScale = (Math .PI - 0.001) / viewpoint ._fieldOfView .getValue ();
          }
       },
       dispose: function ()

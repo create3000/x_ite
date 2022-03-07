@@ -74,9 +74,9 @@ function (Fields,
 
       this .setGeometryType (1);
 
-      this .startAngle_ .setUnit ("angle");
-      this .endAngle_   .setUnit ("angle");
-      this .radius_     .setUnit ("length");
+      this ._startAngle .setUnit ("angle");
+      this ._endAngle   .setUnit ("angle");
+      this ._radius     .setUnit ("length");
    }
 
    Arc2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
@@ -112,8 +112,8 @@ function (Fields,
       getSweepAngle: function ()
       {
          var
-            start = Algorithm .interval (this .startAngle_ .getValue (), 0, Math .PI * 2),
-            end   = Algorithm .interval (this .endAngle_   .getValue (), 0, Math .PI * 2);
+            start = Algorithm .interval (this ._startAngle .getValue (), 0, Math .PI * 2),
+            end   = Algorithm .interval (this ._endAngle   .getValue (), 0, Math .PI * 2);
 
          if (start === end)
             return Math .PI * 2;
@@ -134,9 +134,9 @@ function (Fields,
          var
             gl          = this .getBrowser () .getContext (),
             options     = this .getBrowser () .getArc2DOptions (),
-            dimension   = options .dimension_ .getValue (),
-            startAngle  = this .startAngle_ .getValue  (),
-            radius      = Math .abs (this .radius_ .getValue ()),
+            dimension   = options ._dimension .getValue (),
+            startAngle  = this ._startAngle .getValue  (),
+            radius      = Math .abs (this ._radius .getValue ()),
             sweepAngle  = this .getSweepAngle (),
             circle      = sweepAngle == (Math .PI * 2),
             steps       = Math .floor (sweepAngle * dimension / (Math .PI * 2)),

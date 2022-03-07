@@ -104,8 +104,8 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .material_       .addInterest ("set_material__",       this);
-         this .surfaceNormals_ .addInterest ("set_surfaceNormals__", this);
+         this ._material       .addInterest ("set_material__",       this);
+         this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
          this .set_material__ ();
          this .set_surfaceNormals__ ();
@@ -115,28 +115,28 @@ function (Fields,
          if (this .materialNode)
             this .materialNode .removeInterest ("addNodeEvent", this);
 
-         this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this .material_);
+         this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this ._material);
 
          if (this .materialNode)
             this .materialNode .addInterest ("addNodeEvent", this);
       },
       set_surfaceNormals__: function ()
       {
-         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .surfaceNormals_);
+         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._surfaceNormals);
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
          if (this .materialNode)
          {
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "ambientIntensity_" + this .getId (), this .materialNode .ambientIntensity_ .copy ());
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "diffuseColor_"     + this .getId (), this .materialNode .diffuseColor_     .copy ());
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "specularColor_"    + this .getId (), this .materialNode .specularColor_    .copy ());
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "emissiveColor_"    + this .getId (), this .materialNode .emissiveColor_    .copy ());
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "shininess_"        + this .getId (), this .materialNode .shininess_        .copy ());
-            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "transparency_"     + this .getId (), this .materialNode .transparency_     .copy ());
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "ambientIntensity_" + this .getId (), this .materialNode ._ambientIntensity .copy ());
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "diffuseColor_"     + this .getId (), this .materialNode ._diffuseColor     .copy ());
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "specularColor_"    + this .getId (), this .materialNode ._specularColor    .copy ());
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "emissiveColor_"    + this .getId (), this .materialNode ._emissiveColor    .copy ());
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "shininess_"        + this .getId (), this .materialNode ._shininess        .copy ());
+            shaderNode .addUserDefinedField (X3DConstants .inputOutput, "transparency_"     + this .getId (), this .materialNode ._transparency     .copy ());
          }
 
          if (this .surfaceNormalsNode)
@@ -144,7 +144,7 @@ function (Fields,
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -186,7 +186,7 @@ function (Fields,
          string += "\n";
          string += "	vec4 shadedColor   = vec4 (0.0);\n";
 
-         if (this .lighting_ .getValue ())
+         if (this ._lighting .getValue ())
          {
             if (this .materialNode)
             {
@@ -264,7 +264,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";

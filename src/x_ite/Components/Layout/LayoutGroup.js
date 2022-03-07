@@ -111,19 +111,19 @@ function (Fields,
       {
          X3DGroupingNode .prototype .initialize .call (this);
 
-         this .viewport_ .addInterest ("set_viewport__", this);
-         this .layout_   .addInterest ("set_layout__", this);
+         this ._viewport .addInterest ("set_viewport__", this);
+         this ._layout   .addInterest ("set_layout__", this);
 
          this .set_viewport__ ();
          this .set_layout__ ();
       },
       set_viewport__: function ()
       {
-         this .viewportNode = X3DCast (X3DConstants .X3DViewportNode, this .viewport_);
+         this .viewportNode = X3DCast (X3DConstants .X3DViewportNode, this ._viewport);
       },
       set_layout__: function ()
       {
-         this .layoutNode = X3DCast (X3DConstants .X3DLayoutNode, this .layout_);
+         this .layoutNode = X3DCast (X3DConstants .X3DLayoutNode, this ._layout);
       },
       getBBox: function (bbox, shadow)
       {

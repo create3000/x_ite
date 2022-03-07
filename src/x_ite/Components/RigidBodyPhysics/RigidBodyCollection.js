@@ -76,12 +76,12 @@ function (Fields,
 
       // Units
 
-      this .gravity_                 .setUnit ("acceleration");
-      this .constantForceMix_        .setUnit ("force");
-      this .maxCorrectionSpeed_      .setUnit ("speed");
-      this .contactSurfaceThickness_ .setUnit ("length");
-      this .disableLinearSpeed_      .setUnit ("length");
-      this .disableAngularSpeed_     .setUnit ("angularRate");
+      this ._gravity                 .setUnit ("acceleration");
+      this ._constantForceMix        .setUnit ("force");
+      this ._maxCorrectionSpeed      .setUnit ("speed");
+      this ._contactSurfaceThickness .setUnit ("length");
+      this ._disableLinearSpeed      .setUnit ("length");
+      this ._disableAngularSpeed     .setUnit ("angularRate");
 
       // Members
 
@@ -139,13 +139,13 @@ function (Fields,
 
          this .isLive () .addInterest ("set_enabled__", this);
 
-         this .enabled_                 .addInterest ("set_enabled__",                 this);
-         this .set_contacts_            .addInterest ("set_contacts__",                this);
-         this .gravity_                 .addInterest ("set_gravity__",                 this);
-         this .contactSurfaceThickness_ .addInterest ("set_contactSurfaceThickness__", this);
-         this .collider_                .addInterest ("set_collider__",                this);
-         this .bodies_                  .addInterest ("set_bodies__",                  this);
-         this .joints_                  .addInterest ("set_joints__",                  this);
+         this ._enabled                 .addInterest ("set_enabled__",                 this);
+         this ._set_contacts            .addInterest ("set_contacts__",                this);
+         this ._gravity                 .addInterest ("set_gravity__",                 this);
+         this ._contactSurfaceThickness .addInterest ("set_contactSurfaceThickness__", this);
+         this ._collider                .addInterest ("set_collider__",                this);
+         this ._bodies                  .addInterest ("set_bodies__",                  this);
+         this ._joints                  .addInterest ("set_joints__",                  this);
 
          this .set_enabled__ ();
          this .set_gravity__ ();
@@ -168,7 +168,7 @@ function (Fields,
       },
       set_enabled__: function ()
       {
-         if (this .isLive () .getValue () && this .enabled_ .getValue ())
+         if (this .isLive () .getValue () && this ._enabled .getValue ())
             this .getBrowser () .sensorEvents () .addInterest ("update", this);
          else
             this .getBrowser () .sensorEvents () .removeInterest ("update", this);
@@ -182,9 +182,9 @@ function (Fields,
 
          return function ()
          {
-            gravity .setValue (this .gravity_ .x,
-                               this .gravity_ .y,
-                               this .gravity_ .z);
+            gravity .setValue (this ._gravity .x,
+                               this ._gravity .y,
+                               this ._gravity .z);
 
             this .dynamicsWorld .setGravity (gravity);
          };
@@ -192,11 +192,11 @@ function (Fields,
       set_contactSurfaceThickness__: function ()
       {
          for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-            this .bodyNodes [i] .getRigidBody () .getCollisionShape () .setMargin (this .contactSurfaceThickness_ .getValue ());
+            this .bodyNodes [i] .getRigidBody () .getCollisionShape () .setMargin (this ._contactSurfaceThickness .getValue ());
       },
       set_collider__: function ()
       {
-         this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this .collider_);
+         this .colliderNode = X3DCast (X3DConstants .CollisionCollection, this ._collider);
       },
       set_bounce__: function ()
       {
@@ -204,7 +204,7 @@ function (Fields,
             colliderNode = this .colliderNode,
             bodyNodes    = this .bodyNodes;
 
-         if (colliderNode && colliderNode .enabled_ .getValue ())
+         if (colliderNode && colliderNode ._enabled .getValue ())
          {
             if (colliderNode .getAppliedParameters () .has (AppliedParametersType .BOUNCE))
             {
@@ -212,8 +212,8 @@ function (Fields,
                {
                   var rigidBody = bodyNodes [i] .getRigidBody ();
 
-                  if (rigidBody .getLinearVelocity () .length () >= colliderNode .minBounceSpeed_ .getValue ())
-                     rigidBody .setRestitution (colliderNode .bounce_ .getValue ());
+                  if (rigidBody .getLinearVelocity () .length () >= colliderNode ._minBounceSpeed .getValue ())
+                     rigidBody .setRestitution (colliderNode ._bounce .getValue ());
                   else
                      rigidBody .setRestitution (0);
                }
@@ -227,7 +227,7 @@ function (Fields,
       },
       set_frictionCoefficients__: function ()
       {
-         if (this .colliderNode && this .colliderNode .enabled_ .getValue ())
+         if (this .colliderNode && this .colliderNode ._enabled .getValue ())
          {
             if (this .colliderNode .getAppliedParameters () .has (AppliedParametersType .FRICTION_COEFFICIENT_2))
             {
@@ -235,8 +235,8 @@ function (Fields,
                {
                   var rigidBody = this .bodyNodes [i] .getRigidBody ();
 
-                  rigidBody .setFriction (this .colliderNode .frictionCoefficients_ .x);
-                  rigidBody .setRollingFriction (this .colliderNode .frictionCoefficients_ .y);
+                  rigidBody .setFriction (this .colliderNode ._frictionCoefficients .x);
+                  rigidBody .setRollingFriction (this .colliderNode ._frictionCoefficients .y);
                }
 
                return;
@@ -257,25 +257,25 @@ function (Fields,
          {
             var bodyNode = this .bodyNodes [i];
 
-            bodyNode .enabled_ .removeInterest ("set_dynamicsWorld__", this);
+            bodyNode ._enabled .removeInterest ("set_dynamicsWorld__", this);
             bodyNode .setCollection (null);
          }
 
          for (var i = 0, length = this .otherBodyNodes .length; i < length; ++ i)
-            this .otherBodyNodes [i] .collection_ .removeInterest ("set_bodies__", this);
+            this .otherBodyNodes [i] ._collection .removeInterest ("set_bodies__", this);
 
          this .bodyNodes .length = 0;
 
-         for (var i = 0, length = this .bodies_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._bodies .length; i < length; ++ i)
          {
-            var bodyNode = X3DCast (X3DConstants .RigidBody, this .bodies_ [i]);
+            var bodyNode = X3DCast (X3DConstants .RigidBody, this ._bodies [i]);
 
             if (! bodyNode)
                continue;
 
             if (bodyNode .getCollection ())
             {
-               bodyNode .collection_ .addInterest ("set_bodies__", this);
+               bodyNode ._collection .addInterest ("set_bodies__", this);
                this .otherBodyNodes .push (bodyNode);
                continue;
             }
@@ -286,7 +286,7 @@ function (Fields,
          }
 
          for (var i = 0, length = this .bodyNodes .length; i < length; ++ i)
-            this .bodyNodes [i] .enabled_ .addInterest ("set_dynamicsWorld__", this);
+            this .bodyNodes [i] ._enabled .addInterest ("set_dynamicsWorld__", this);
 
          this .set_contactSurfaceThickness__ ();
          this .set_dynamicsWorld__ ();
@@ -303,7 +303,7 @@ function (Fields,
          {
             var bodyNode = this .bodyNodes [i];
 
-            if (! bodyNode .enabled_ .getValue ())
+            if (! bodyNode ._enabled .getValue ())
                continue;
 
             this .rigidBodies .push (bodyNode .getRigidBody ());
@@ -320,20 +320,20 @@ function (Fields,
          this .jointNodes .length = 0;
 
          for (var i = 0, length = this .otherJointNodes .length; i < length; ++ i)
-            this .otherJointNodes [i] .collection_ .removeInterest ("set_joints__", this);
+            this .otherJointNodes [i] ._collection .removeInterest ("set_joints__", this);
 
          this .otherJointNodes .length = 0;
 
-         for (var i = 0, length = this .joints_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._joints .length; i < length; ++ i)
          {
-            var jointNode = X3DCast (X3DConstants .X3DRigidJointNode, this .joints_ [i]);
+            var jointNode = X3DCast (X3DConstants .X3DRigidJointNode, this ._joints [i]);
 
             if (! jointNode)
                continue;
 
             if (jointNode .getCollection ())
             {
-               jointNode .collection_ .addInterest ("set_joints__", this);
+               jointNode ._collection .addInterest ("set_joints__", this);
                this .otherJointNodes .push (bodyNode);
                continue;
             }
@@ -349,13 +349,13 @@ function (Fields,
          {
             var
                deltaTime  = this .getTimeStep (),
-               iterations = this .iterations_ .getValue (),
-               gravity    = this .gravity_ .getValue ();
+               iterations = this ._iterations .getValue (),
+               gravity    = this ._gravity .getValue ();
 
             this .set_bounce__ ();
             this .set_frictionCoefficients__ ();
 
-            if (this .preferAccuracy_ .getValue ())
+            if (this ._preferAccuracy .getValue ())
             {
                deltaTime /= iterations;
 

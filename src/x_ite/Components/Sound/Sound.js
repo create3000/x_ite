@@ -86,11 +86,11 @@ function (Fields,
 
       this .addChildObjects ("traversed", new Fields .SFBool (true));
 
-      this .location_ .setUnit ("length");
-      this .minBack_  .setUnit ("length");
-      this .minFront_ .setUnit ("length");
-      this .maxBack_  .setUnit ("length");
-      this .maxFront_ .setUnit ("length");
+      this ._location .setUnit ("length");
+      this ._minBack  .setUnit ("length");
+      this ._minFront .setUnit ("length");
+      this ._maxBack  .setUnit ("length");
+      this ._maxFront .setUnit ("length");
 
       this .currentTraversed = true;
    }
@@ -128,9 +128,9 @@ function (Fields,
          X3DSoundNode .prototype .initialize .call (this);
 
          this .isLive ()  .addInterest ("set_live__", this);
-         this .traversed_ .addInterest ("set_live__", this);
+         this ._traversed .addInterest ("set_live__", this);
 
-         this .source_ .addInterest ("set_source__", this);
+         this ._source .addInterest ("set_source__", this);
 
          this .set_live__ ();
          this .set_source__ ();
@@ -139,13 +139,13 @@ function (Fields,
       {
          if (value)
          {
-            if (this .traversed_ .getValue () === false)
-               this .traversed_ = true;
+            if (this ._traversed .getValue () === false)
+               this ._traversed = true;
          }
          else
          {
-            if (this .currentTraversed !== this .traversed_ .getValue ())
-               this .traversed_ = this .currentTraversed;
+            if (this .currentTraversed !== this ._traversed .getValue ())
+               this ._traversed = this .currentTraversed;
          }
 
          this .currentTraversed = value;
@@ -156,7 +156,7 @@ function (Fields,
       },
       set_live__: function ()
       {
-         if (this .isLive () .getValue () && this .traversed_ .getValue ())
+         if (this .isLive () .getValue () && this ._traversed .getValue ())
          {
             this .getBrowser () .sensorEvents () .addInterest ("update", this);
          }
@@ -170,7 +170,7 @@ function (Fields,
          if (this .sourceNode)
             this .sourceNode .setVolume (0);
 
-         this .sourceNode = X3DCast (X3DConstants .X3DSoundSourceNode, this .source_);
+         this .sourceNode = X3DCast (X3DConstants .X3DSoundSourceNode, this ._source);
       },
       update: function ()
       {
@@ -198,7 +198,7 @@ function (Fields,
                if (! this .sourceNode)
                   return;
 
-               if (! this .sourceNode .isActive_ .getValue () || this .sourceNode .isPaused_ .getValue ())
+               if (! this .sourceNode ._isActive .getValue () || this .sourceNode ._isPaused .getValue ())
                   return;
 
                this .setTraversed (true);
@@ -206,20 +206,20 @@ function (Fields,
                const modelViewMatrix = renderObject .getModelViewMatrix () .get ();
 
                this .getEllipsoidParameter (modelViewMatrix,
-                                            Math .max (this .maxBack_  .getValue (), 0),
-                                            Math .max (this .maxFront_ .getValue (), 0),
+                                            Math .max (this ._maxBack  .getValue (), 0),
+                                            Math .max (this ._maxFront .getValue (), 0),
                                             max);
 
                if (max .distance < 1) // Sphere radius is 1
                {
                   this .getEllipsoidParameter (modelViewMatrix,
-                                               Math .max (this .minBack_  .getValue (), 0),
-                                               Math .max (this .minFront_ .getValue (), 0),
+                                               Math .max (this ._minBack  .getValue (), 0),
+                                               Math .max (this ._minFront .getValue (), 0),
                                                min);
 
                   if (min .distance < 1) // Sphere radius is 1
                   {
-                     this .sourceNode .setVolume (this .intensity_ .getValue ());
+                     this .sourceNode .setVolume (this ._intensity .getValue ());
                   }
                   else
                   {
@@ -227,7 +227,7 @@ function (Fields,
                         d1        = max .intersection .abs (), // Viewer is here at (0, 0, 0)
                         d2        = max .intersection .distance (min .intersection),
                         d         = Math .min (d1 / d2, 1),
-                        intensity = Algorithm .clamp (this .intensity_ .getValue (), 0, 1),
+                        intensity = Algorithm .clamp (this ._intensity .getValue (), 0, 1),
                         volume    = intensity * d;
 
                      this .sourceNode .setVolume (volume);
@@ -274,7 +274,7 @@ function (Fields,
 
             if (back == 0 || front == 0)
             {
-               sphereMatrix .multVecMatrix (value .intersection .assign (this .location_ .getValue ()));
+               sphereMatrix .multVecMatrix (value .intersection .assign (this ._location .getValue ()));
                value .distance = 1;
                return;
             }
@@ -286,11 +286,11 @@ function (Fields,
 
             location .set (0, 0, e);
             scale    .set (b, b, a);
-            rotation .setFromToVec (Vector3 .zAxis, this .direction_ .getValue ());
+            rotation .setFromToVec (Vector3 .zAxis, this ._direction .getValue ());
 
             sphereMatrix
                .assign (modelViewMatrix)
-               .translate (this .location_ .getValue ())
+               .translate (this ._location .getValue ())
                .rotate (rotation)
                .translate (location)
                .scale (scale);

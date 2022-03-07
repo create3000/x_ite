@@ -139,21 +139,21 @@ function (TextAlignment,
          var
             text      = this .text,
             fontStyle = this .fontStyle,
-            numLines  = text .string_ .length;
+            numLines  = text ._string .length;
 
-         text .lineBounds_ .length = numLines;
+         text ._lineBounds .length = numLines;
          this .glyphs      .length = 0;
 
          if (numLines === 0 || ! fontStyle .getFont ())
          {
-            text .origin_     .setValue (zero3);
-            text .textBounds_ .setValue (zero2);
+            text ._origin     .setValue (zero3);
+            text ._textBounds .setValue (zero2);
 
             this .bbox .set ();
             return;
          }
 
-         if (fontStyle .horizontal_ .getValue ())
+         if (fontStyle ._horizontal .getValue ())
          {
             this .resizeArray (this .translations, numLines);
             this .resizeArray (this .charSpacings, numLines);
@@ -163,7 +163,7 @@ function (TextAlignment,
          else
          {
             var
-               string   = text .string_,
+               string   = text ._string,
                numChars = 0;
 
             for (var i = 0, length = string .length; i < length; ++ i)
@@ -188,12 +188,12 @@ function (TextAlignment,
       {
          var
             font        = fontStyle .getFont (),
-            string      = text .string_,
+            string      = text ._string,
             numLines    = string .length,
-            maxExtent   = Math .max (0, text .maxExtent_ .getValue ()),
-            topToBottom = fontStyle .topToBottom_ .getValue (),
+            maxExtent   = Math .max (0, text ._maxExtent .getValue ()),
+            topToBottom = fontStyle ._topToBottom .getValue (),
             scale       = fontStyle .getScale (),
-            spacing     = fontStyle .spacing_ .getValue ();
+            spacing     = fontStyle ._spacing .getValue ();
 
          bbox .set ();
 
@@ -239,7 +239,7 @@ function (TextAlignment,
             }
 
             this .charSpacings [ll] = charSpacing;
-            text .lineBounds_ [l]   = lineBound;
+            text ._lineBounds [l]   = lineBound;
 
             // Calculate line translation.
 
@@ -278,7 +278,7 @@ function (TextAlignment,
 
          // Calculate text position
 
-         text .textBounds_ = size;
+         text ._textBounds = size;
          this .bearing .set (0, -max .y);
 
          switch (fontStyle .getMinorAlignment ())
@@ -304,7 +304,7 @@ function (TextAlignment,
 
          // The value of the origin field represents the upper left corner of the textBounds.
 
-         text .origin_ .setValue (origin .set (min .x, max .y, 0));
+         text ._origin .setValue (origin .set (min .x, max .y, 0));
 
          this .bbox .setExtents (min3 .set (min .x, min .y, 0),
                                  max3 .set (max .x, max .y, 0));
@@ -313,13 +313,13 @@ function (TextAlignment,
       {
          var
             font             = fontStyle .getFont (),
-            string           = text .string_,
+            string           = text ._string,
             numLines         = string .length,
-            maxExtent        = Math .max (0, text .maxExtent_ .getValue ()),
-            leftToRight      = fontStyle .leftToRight_ .getValue (),
-            topToBottom      = fontStyle .topToBottom_ .getValue (),
+            maxExtent        = Math .max (0, text ._maxExtent .getValue ()),
+            leftToRight      = fontStyle ._leftToRight .getValue (),
+            topToBottom      = fontStyle ._topToBottom .getValue (),
             scale            = fontStyle .getScale (),
-            spacing          = fontStyle .spacing_ .getValue (),
+            spacing          = fontStyle ._spacing .getValue (),
             yPad             = this .yPad,
             primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality ();
 
@@ -408,7 +408,7 @@ function (TextAlignment,
                min .y       = max .y  - size .y;
             }
 
-            text .lineBounds_ [l] = lineBound;
+            text ._lineBounds [l] = lineBound;
 
             // Calculate line translation.
 
@@ -485,7 +485,7 @@ function (TextAlignment,
             case TextAlignment .BEGIN:
             case TextAlignment .FIRST:
             {
-               var lineBounds = text .lineBounds_;
+               var lineBounds = text ._lineBounds;
 
                for (var i = 0, length = lineBounds .length; i < length; ++ i)
                   lineBounds [i] .y += max .y - yPad [i] * scale;
@@ -496,7 +496,7 @@ function (TextAlignment,
                break;
             case TextAlignment .END:
             {
-               var lineBounds = text .lineBounds_;
+               var lineBounds = text ._lineBounds;
 
                for (var i = 0, length = lineBounds .length; i < length; ++ i)
                   lineBounds [i] .y += yPad [i] * scale - min .y;
@@ -507,7 +507,7 @@ function (TextAlignment,
 
          // Calculate text position
 
-         text .textBounds_ = size;
+         text ._textBounds = size;
 
          switch (fontStyle .getMajorAlignment ())
          {
@@ -544,7 +544,7 @@ function (TextAlignment,
 
          // The value of the origin field represents the upper left corner of the textBounds.
 
-         text .origin_ .setValue (origin .set (min .x, max .y, 0));
+         text ._origin .setValue (origin .set (min .x, max .y, 0));
 
          this .bbox .set (min3 .set (min .x, min .y, 0),
                           max3 .set (max .x, max .y, 0),
@@ -573,7 +573,7 @@ function (TextAlignment,
       {
          var
             font             = fontStyle .getFont (),
-            normal           = fontStyle .horizontal_ .getValue () ? fontStyle .leftToRight_ .getValue () : fontStyle .topToBottom_ .getValue (),
+            normal           = fontStyle ._horizontal .getValue () ? fontStyle ._leftToRight .getValue () : fontStyle ._topToBottom .getValue (),
             glyphs           = this .stringToGlyphs (font, line, normal, lineNumber),
             primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
             xMin             = 0,

@@ -104,10 +104,10 @@ function (Fields,
       {
          X3DLineGeometryNode .prototype .initialize .call (this);
 
-         this .attrib_   .addInterest ("set_attrib__",   this);
-         this .fogCoord_ .addInterest ("set_fogCoord__", this);
-         this .color_    .addInterest ("set_color__",    this);
-         this .coord_    .addInterest ("set_coord__",    this);
+         this ._attrib   .addInterest ("set_attrib__",   this);
+         this ._fogCoord .addInterest ("set_fogCoord__", this);
+         this ._color    .addInterest ("set_color__",    this);
+         this ._coord    .addInterest ("set_coord__",    this);
 
          this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
          this .setSolid (false);
@@ -126,9 +126,9 @@ function (Fields,
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
          {
-            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+            const attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
 
             if (attribNode)
                attribNodes .push (attribNode);
@@ -142,7 +142,7 @@ function (Fields,
          if (this .fogCoordNode)
             this .fogCoordNode .removeInterest ("requestRebuild", this);
 
-         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
+         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
 
          if (this .fogCoordNode)
             this .fogCoordNode .addInterest ("requestRebuild", this);
@@ -152,15 +152,15 @@ function (Fields,
          if (this .colorNode)
          {
             this .colorNode .removeInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .colorNode ._transparent .removeInterest ("set_transparent__", this);
          }
 
-         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
+         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
          if (this .colorNode)
          {
             this .colorNode .addInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .addInterest ("set_transparent__", this);
+            this .colorNode ._transparent .addInterest ("set_transparent__", this);
 
             this .set_transparent__ ();
          }
@@ -176,7 +176,7 @@ function (Fields,
          if (this .coordNode)
             this .coordNode .removeInterest ("requestRebuild", this);
 
-         this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .coord_);
+         this .coordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._coord);
 
          if (this .coordNode)
             this .coordNode .addInterest ("requestRebuild", this);
@@ -189,7 +189,7 @@ function (Fields,
          // Fill GeometryNode
 
          const
-            vertexCount   = this .vertexCount_,
+            vertexCount   = this ._vertexCount,
             attribNodes   = this .getAttrib (),
             numAttrib     = attribNodes .length,
             attribs       = this .getAttribs (),

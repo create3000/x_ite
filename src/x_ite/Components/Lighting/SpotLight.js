@@ -232,8 +232,8 @@ function (Fields,
             lightNode       = this .lightNode,
             modelViewMatrix = this .modelViewMatrix .get ();
 
-         modelViewMatrix .multVecMatrix (this .location  .assign (lightNode .location_  .getValue ()));
-         modelViewMatrix .multDirMatrix (this .direction .assign (lightNode .direction_ .getValue ())) .normalize ();
+         modelViewMatrix .multVecMatrix (this .location  .assign (lightNode ._location  .getValue ()));
+         modelViewMatrix .multDirMatrix (this .direction .assign (lightNode ._direction .getValue ())) .normalize ();
 
          this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
          this .shadowMatrixArray .set (this .shadowMatrix);
@@ -316,15 +316,15 @@ function (Fields,
          case "3.1":
          case "3.2":
          {
-            this .beamWidth_   = 1.5708;
-            this .cutOffAngle_ = 0.785398;
+            this ._beamWidth   = 1.5708;
+            this ._cutOffAngle = 0.785398;
          }
       }
 
-      this .location_    .setUnit ("length");
-      this .radius_      .setUnit ("length");
-      this .beamWidth_   .setUnit ("angle");
-      this .cutOffAngle_ .setUnit ("angle");
+      this ._location    .setUnit ("length");
+      this ._radius      .setUnit ("length");
+      this ._beamWidth   .setUnit ("angle");
+      this ._cutOffAngle .setUnit ("angle");
    }
 
    SpotLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
@@ -364,22 +364,22 @@ function (Fields,
       },
       getAttenuation: function ()
       {
-         return this .attenuation_ .getValue ();
+         return this ._attenuation .getValue ();
       },
       getLocation: function ()
       {
-         return this .location_ .getValue ();
+         return this ._location .getValue ();
       },
       getRadius: function ()
       {
-         return Math .max (0, this .radius_ .getValue ());
+         return Math .max (0, this ._radius .getValue ());
       },
       getBeamWidth: function ()
       {
          // If the beamWidth is greater than the cutOffAngle, beamWidth is defined to be equal to the cutOffAngle.
 
          var
-            beamWidth   = this .beamWidth_ .getValue (),
+            beamWidth   = this ._beamWidth .getValue (),
             cutOffAngle = this .getCutOffAngle ();
 
          if (beamWidth > cutOffAngle)
@@ -389,7 +389,7 @@ function (Fields,
       },
       getCutOffAngle: function ()
       {
-         return Algorithm .clamp (this .cutOffAngle_ .getValue (), 0, Math .PI / 2);
+         return Algorithm .clamp (this ._cutOffAngle .getValue (), 0, Math .PI / 2);
       },
       getLights: function ()
       {

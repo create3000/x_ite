@@ -66,7 +66,7 @@ function (Fields,
 
       this .addChildObjects ("transparent", new Fields .SFBool ());
 
-      this .transparent_ .setAccessType (X3DConstants .outputOnly);
+      this ._transparent .setAccessType (X3DConstants .outputOnly);
    }
 
    X3DColorNode .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
@@ -74,12 +74,12 @@ function (Fields,
       constructor: X3DColorNode,
       setTransparent: function (value)
       {
-         if (value !== this .transparent_ .getValue ())
-            this .transparent_ = value;
+         if (value !== this ._transparent .getValue ())
+            this ._transparent = value;
       },
       getTransparent: function ()
       {
-         return this .transparent_ .getValue ();
+         return this ._transparent .getValue ();
       },
    });
 

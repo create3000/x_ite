@@ -86,9 +86,9 @@ function (Fields,
 
       this .addType (X3DConstants .VolumeEmitter);
 
-      this .speed_       .setUnit ("speed");
-      this .mass_        .setUnit ("mass");
-      this .surfaceArea_ .setUnit ("area");
+      this ._speed       .setUnit ("speed");
+      this ._mass        .setUnit ("mass");
+      this ._surfaceArea .setUnit ("area");
 
       this .direction      = new Vector3 (0, 0, 0);
       this .volumeNode     = new IndexedFaceSet (executionContext);
@@ -125,17 +125,17 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         this .direction_ .addInterest ("set_direction__", this);
+         this ._direction .addInterest ("set_direction__", this);
 
-         this .coordIndex_ .addFieldInterest (this .volumeNode .coordIndex_);
-         this .coord_      .addFieldInterest (this .volumeNode .coord_);
+         this ._coordIndex .addFieldInterest (this .volumeNode ._coordIndex);
+         this ._coord      .addFieldInterest (this .volumeNode ._coord);
 
-         this .volumeNode .creaseAngle_ = Math .PI;
-         this .volumeNode .convex_      = false;
-         this .volumeNode .coordIndex_  = this .coordIndex_;
-         this .volumeNode .coord_       = this .coord_;
+         this .volumeNode ._creaseAngle = Math .PI;
+         this .volumeNode ._convex      = false;
+         this .volumeNode ._coordIndex  = this ._coordIndex;
+         this .volumeNode ._coord       = this ._coord;
 
-         this .volumeNode .rebuild_ .addInterest ("set_geometry__", this);
+         this .volumeNode ._rebuild .addInterest ("set_geometry__", this);
          this .volumeNode .setPrivate (true);
          this .volumeNode .setup ();
 
@@ -144,7 +144,7 @@ function (Fields,
       },
       set_direction__: function ()
       {
-         this .direction .assign (this .direction_ .getValue ()) .normalize ();
+         this .direction .assign (this ._direction .getValue ()) .normalize ();
 
          if (this .direction .equals (Vector3 .Zero))
             this .getRandomVelocity = this .getSphericalRandomVelocity;

@@ -78,11 +78,11 @@ function ($,
 
       this .addType (X3DConstants .SliderJoint);
 
-      this .minSeparation_  .setUnit ("length");
-      this .maxSeparation_  .setUnit ("length");
-      this .sliderForce_    .setUnit ("force");
-      this .separation_     .setUnit ("force");
-      this .separationRate_ .setUnit ("speed");
+      this ._minSeparation  .setUnit ("length");
+      this ._maxSeparation  .setUnit ("length");
+      this ._sliderForce    .setUnit ("force");
+      this ._separation     .setUnit ("force");
+      this ._separationRate .setUnit ("speed");
 
       this .joint   = null;
       this .outputs = { };
@@ -121,9 +121,9 @@ function ($,
       {
          X3DRigidJointNode .prototype .initialize .call (this);
 
-         this .axis_          .addInterest ("set_joint__",       this);
-         this .minSeparation_ .addInterest ("set_separation__",  this);
-         this .maxSeparation_ .addInterest ("set_separation__",  this);
+         this ._axis          .addInterest ("set_joint__",       this);
+         this ._minSeparation .addInterest ("set_separation__",  this);
+         this ._maxSeparation .addInterest ("set_separation__",  this);
       },
       addJoint: (function ()
       {
@@ -152,10 +152,10 @@ function ($,
             if (this .getBody2 () .getCollection () !== this .getCollection ())
                return;
 
-            axisRotation .setFromToVec (Vector3 .xAxis, this .axis_ .getValue ());
+            axisRotation .setFromToVec (Vector3 .xAxis, this ._axis .getValue ());
 
-            matrixA .set (this .getBody1 () .position_ .getValue (), Rotation4 .multRight (this .getBody1 () .orientation_ .getValue (), axisRotation));
-            matrixB .set (this .getBody1 () .position_ .getValue (), Rotation4 .multRight (this .getBody1 () .orientation_ .getValue (), axisRotation));
+            matrixA .set (this .getBody1 () ._position .getValue (), Rotation4 .multRight (this .getBody1 () ._orientation .getValue (), axisRotation));
+            matrixB .set (this .getBody1 () ._position .getValue (), Rotation4 .multRight (this .getBody1 () ._orientation .getValue (), axisRotation));
 
             origin .setValue (matrixA [12], matrixA [13], matrixA [14]);
 
@@ -203,9 +203,9 @@ function ($,
          for (var key in this .outputs)
             delete this .outputs [key];
 
-         for (var i = 0, length = this .forceOutput_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
          {
-            var value = this .forceOutput_ [i];
+            var value = this ._forceOutput [i];
 
             if (value == "ALL")
             {
@@ -225,8 +225,8 @@ function ($,
          if (! this .joint)
             return;
 
-         this .joint .setLowerLinLimit (this .minSeparation_ .getValue ());
-         this .joint .setUpperLinLimit (this .maxSeparation_ .getValue ());
+         this .joint .setLowerLinLimit (this ._minSeparation .getValue ());
+         this .joint .setUpperLinLimit (this ._maxSeparation .getValue ());
       },
    });
 

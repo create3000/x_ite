@@ -104,7 +104,7 @@ function (Fields,
       {
          X3DComposedGeometryNode .prototype .initialize .call (this);
 
-         this .stripCount_ .addInterest ("set_stripCount__", this);
+         this ._stripCount .addInterest ("set_stripCount__", this);
 
          this .set_stripCount__ ();
       },
@@ -113,7 +113,7 @@ function (Fields,
          // Build coordIndex
 
          const
-            stripCount    = this .stripCount_,
+            stripCount    = this ._stripCount,
             triangleIndex = this .triangleIndex;
 
          triangleIndex .length = 0;

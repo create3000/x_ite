@@ -78,7 +78,7 @@ function (X3DTextureNode,
       {
          X3DTextureNode .prototype .initialize .call (this);
 
-         this .textureProperties_ .addInterest ("set_textureProperties__", this);
+         this ._textureProperties .addInterest ("set_textureProperties__", this);
 
          const gl = this .getBrowser () .getContext ();
 
@@ -91,7 +91,7 @@ function (X3DTextureNode,
          if (this .texturePropertiesNode)
             this .texturePropertiesNode .removeInterest ("updateTextureProperties", this);
 
-         this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this .textureProperties_);
+         this .texturePropertiesNode = X3DCast (X3DConstants .TextureProperties, this ._textureProperties);
 
          if (! this .texturePropertiesNode)
             this .texturePropertiesNode = this .getBrowser () .getDefaultTextureProperties ();
@@ -128,7 +128,7 @@ function (X3DTextureNode,
             }
             else
             {
-               if (textureProperties .generateMipMaps_ .getValue ())
+               if (textureProperties ._generateMipMaps .getValue ())
                   gl .generateMipmap (target);
 
                gl .texParameteri (target, gl .TEXTURE_MIN_FILTER, gl [textureProperties .getMinificationFilter ()]);
@@ -152,8 +152,8 @@ function (X3DTextureNode,
                   gl .texParameteri (target, gl .TEXTURE_WRAP_R, repeatR ? gl .REPEAT : gl .CLAMP_TO_EDGE);
             }
 
-            //gl .texParameterfv (target, gl .TEXTURE_BORDER_COLOR, textureProperties .borderColor_ .getValue ());
-            //gl .texParameterf  (target, gl .TEXTURE_PRIORITY,     textureProperties .texturePriority_ .getValue ());
+            //gl .texParameterfv (target, gl .TEXTURE_BORDER_COLOR, textureProperties ._borderColor .getValue ());
+            //gl .texParameterf  (target, gl .TEXTURE_PRIORITY,     textureProperties ._texturePriority .getValue ());
 
             for (const extension of ANISOTROPIC_EXT)
             {
@@ -161,7 +161,7 @@ function (X3DTextureNode,
 
                if (ext)
                {
-                  gl .texParameterf (target, ext .TEXTURE_MAX_ANISOTROPY_EXT, textureProperties .anisotropicDegree_ .getValue ());
+                  gl .texParameterf (target, ext .TEXTURE_MAX_ANISOTROPY_EXT, textureProperties ._anisotropicDegree .getValue ());
                   break;
                }
             }

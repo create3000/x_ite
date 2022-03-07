@@ -76,9 +76,9 @@ function (Fields,
 
       this .addType (X3DConstants .SurfaceEmitter);
 
-      this .speed_       .setUnit ("speed");
-      this .mass_        .setUnit ("mass");
-      this .surfaceArea_ .setUnit ("area");
+      this ._speed       .setUnit ("speed");
+      this ._mass        .setUnit ("mass");
+      this ._surfaceArea .setUnit ("area");
 
       this .surfaceNode    = null;
       this .areaSoFarArray = [ 0 ];
@@ -112,19 +112,19 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         this .surface_ .addInterest ("set_surface__", this);
+         this ._surface .addInterest ("set_surface__", this);
 
          this .set_surface__ ();
       },
       set_surface__: function ()
       {
          if (this .surfaceNode)
-            this .surfaceNode .rebuild_ .removeInterest ("set_geometry__", this);
+            this .surfaceNode ._rebuild .removeInterest ("set_geometry__", this);
 
-         this .surfaceNode = X3DCast (X3DConstants .X3DGeometryNode, this .surface_);
+         this .surfaceNode = X3DCast (X3DConstants .X3DGeometryNode, this ._surface);
 
          if (this .surfaceNode)
-            this .surfaceNode .rebuild_ .addInterest ("set_geometry__", this);
+            this .surfaceNode ._rebuild .addInterest ("set_geometry__", this);
 
          this .set_geometry__ ();
       },

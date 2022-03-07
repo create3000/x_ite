@@ -115,7 +115,7 @@ function (Fields,
       {
          X3DPickSensorNode .prototype .initialize .call (this);
 
-         this .pickingGeometry_ .addInterest ("set_pickingGeometry__", this);
+         this ._pickingGeometry .addInterest ("set_pickingGeometry__", this);
 
          this .set_pickingGeometry__ ();
       },
@@ -126,7 +126,7 @@ function (Fields,
          try
          {
             var
-               node = this .pickingGeometry_ .getValue () .getInnerNode (),
+               node = this ._pickingGeometry .getValue () .getInnerNode (),
                type = node .getType ();
 
             for (var t = type .length - 1; t >= 0; -- t)
@@ -212,11 +212,11 @@ function (Fields,
 
                      pickedGeometries .remove (0, pickedGeometries .length, null);
 
-                     if (active !== this .isActive_ .getValue ())
-                        this .isActive_ = active;
+                     if (active !== this ._isActive .getValue ())
+                        this ._isActive = active;
 
-                     if (! this .pickedGeometry_ .equals (pickedGeometries))
-                        this .pickedGeometry_ = pickedGeometries;
+                     if (! this ._pickedGeometry .equals (pickedGeometries))
+                        this ._pickedGeometry = pickedGeometries;
 
                      break;
                   }
@@ -296,11 +296,11 @@ function (Fields,
 
                      pickedGeometries .remove (0, pickedGeometries .length, null);
 
-                     if (active !== this .isActive_ .getValue ())
-                        this .isActive_ = active;
+                     if (active !== this ._isActive .getValue ())
+                        this ._isActive = active;
 
-                     if (! this .pickedGeometry_ .equals (pickedGeometries))
-                        this .pickedGeometry_ = pickedGeometries;
+                     if (! this ._pickedGeometry .equals (pickedGeometries))
+                        this ._pickedGeometry = pickedGeometries;
 
                      var pickedTargets = this .getPickedTargets ();
 
@@ -326,14 +326,14 @@ function (Fields,
                         }
                      }
 
-                     if (! this .pickedTextureCoordinate_ .equals (pickedTextureCoordinate))
-                        this .pickedTextureCoordinate_ = pickedTextureCoordinate;
+                     if (! this ._pickedTextureCoordinate .equals (pickedTextureCoordinate))
+                        this ._pickedTextureCoordinate = pickedTextureCoordinate;
 
-                     if (! this .pickedNormal_ .equals (pickedNormal))
-                        this .pickedNormal_ = pickedNormal;
+                     if (! this ._pickedNormal .equals (pickedNormal))
+                        this ._pickedNormal = pickedNormal;
 
-                     if (! this .pickedPoint_ .equals (pickedPoint))
-                        this .pickedPoint_ = pickedPoint;
+                     if (! this ._pickedPoint .equals (pickedPoint))
+                        this ._pickedPoint = pickedPoint;
 
                      break;
                   }

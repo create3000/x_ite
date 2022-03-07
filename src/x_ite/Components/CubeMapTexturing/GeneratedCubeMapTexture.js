@@ -148,7 +148,7 @@ function (Fields,
 
          // Transfer 6 textures of size x size pixels.
 
-         var size = Algorithm .nextPowerOfTwo (this .size_ .getValue ());
+         var size = Algorithm .nextPowerOfTwo (this ._size .getValue ());
 
          if (size > 0)
          {
@@ -176,7 +176,7 @@ function (Fields,
          if (type !== TraverseType .DISPLAY)
             return;
 
-         if (this .update_ .getValue () === "NONE")
+         if (this ._update .getValue () === "NONE")
             return;
 
          if (! this .frameBuffer)
@@ -205,7 +205,7 @@ function (Fields,
             navigationInfo     = renderer .getNavigationInfo (),
             viewpoint          = renderer .getViewpoint (),
             headlightContainer = browser .getHeadlight (),
-            headlight          = navigationInfo .headlight_ .getValue (),
+            headlight          = navigationInfo ._headlight .getValue (),
             nearValue          = navigationInfo .getNearValue (),
             farValue           = navigationInfo .getFarValue (viewpoint),
             projectionMatrix   = Camera .perspective (Algorithm .radians (90.0), nearValue, farValue, 1, 1, this .projectionMatrix);
@@ -281,8 +281,8 @@ function (Fields,
 
          this .frameBuffer .unbind ();
 
-         if (this .update_ .getValue () === "NEXT_FRAME_ONLY")
-            this .update_ = "NONE";
+         if (this ._update .getValue () === "NEXT_FRAME_ONLY")
+            this ._update = "NONE";
       },
       setShaderUniformsToChannel: (function ()
       {

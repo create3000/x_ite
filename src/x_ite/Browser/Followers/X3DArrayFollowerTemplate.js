@@ -93,25 +93,25 @@ define (function ()
          },
          getValue: function ()
          {
-            return this .set_value_;
+            return this ._set_value;
          },
          getDestination: function ()
          {
-            return this .set_destination_;
+            return this ._set_destination;
          },
          getInitialValue: function ()
          {
-            return this .initialValue_;
+            return this ._initialValue;
          },
          getInitialDestination: function ()
          {
-            return this .initialDestination_;
+            return this ._initialDestination;
          },
          setValue: function (value)
          {
             if (Array .isArray (value))
             {
-               const value_changed = this .value_changed_;
+               const value_changed = this ._value_changed;
 
                for (var i = 0, length = value .length; i < length; ++ i)
                   value_changed [i] = value [i];
@@ -120,7 +120,7 @@ define (function ()
             }
             else
             {
-               this .value_changed_ = value;
+               this ._value_changed = value;
             }
          },
          duplicate: function (value)
@@ -160,7 +160,7 @@ define (function ()
          {
             const
                buffers = this .getBuffer (),
-               l       = this .set_destination_ .length;
+               l       = this ._set_destination .length;
 
             for (let i = 0, length = buffers .length; i < length; ++ i)
             {

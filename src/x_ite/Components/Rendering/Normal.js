@@ -94,18 +94,18 @@ function (Fields,
       {
          X3DNormalNode .prototype .initialize .call (this);
 
-         this .vector_ .addInterest ("set_vector__", this);
+         this ._vector .addInterest ("set_vector__", this);
 
          this .set_vector__ ();
       },
       set_vector__: function ()
       {
-         this .vector = this .vector_ .getValue ();
-         this .length = this .vector_ .length;
+         this .vector = this ._vector .getValue ();
+         this .length = this ._vector .length;
       },
       set1Vector: function (index, vector)
       {
-         this .vector_ [index] = vector;
+         this ._vector [index] = vector;
       },
       get1Vector: function (index, result)
       {

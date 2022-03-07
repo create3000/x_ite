@@ -126,19 +126,19 @@ function (Fields,
       },
       getLeft: function ()
       {
-         return this .clipBoundary_ .length > 0 ? this .clipBoundary_ [0] : 0;
+         return this ._clipBoundary .length > 0 ? this ._clipBoundary [0] : 0;
       },
       getRight: function ()
       {
-         return this .clipBoundary_ .length > 1 ? this .clipBoundary_ [1] : 1;
+         return this ._clipBoundary .length > 1 ? this ._clipBoundary [1] : 1;
       },
       getBottom: function ()
       {
-         return this .clipBoundary_ .length > 2 ? this .clipBoundary_ [2] : 0;
+         return this ._clipBoundary .length > 2 ? this ._clipBoundary [2] : 0;
       },
       getTop: function ()
       {
-         return this .clipBoundary_ .length > 3 ? this .clipBoundary_ [3] : 1;
+         return this ._clipBoundary .length > 3 ? this ._clipBoundary [3] : 1;
       },
       traverse: function (type, renderObject)
       {

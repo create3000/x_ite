@@ -87,13 +87,13 @@ function (X3DChildNode,
          X3DChildNode     .prototype .initialize .call (this);
          X3DBoundedObject .prototype .initialize .call (this);
 
-         this .bboxSize_   .addInterest ("set_bbox__",      this);
-         this .bboxCenter_ .addInterest ("set_bbox__",      this);
-         this .appearance_ .addInterest ("set_apparance__", this);
-         this .geometry_   .addInterest ("set_geometry__",  this);
+         this ._bboxSize   .addInterest ("set_bbox__",      this);
+         this ._bboxCenter .addInterest ("set_bbox__",      this);
+         this ._appearance .addInterest ("set_apparance__", this);
+         this ._geometry   .addInterest ("set_geometry__",  this);
 
-         this .appearance_ .addInterest ("set_transparent__", this);
-         this .geometry_   .addInterest ("set_transparent__", this);
+         this ._appearance .addInterest ("set_transparent__", this);
+         this ._geometry   .addInterest ("set_transparent__", this);
 
          this .set_apparance__ ();
          this .set_geometry__ ();
@@ -103,7 +103,7 @@ function (X3DChildNode,
       {
          if (shadow)
          {
-            if (this .castShadow_ .getValue ())
+            if (this ._castShadow .getValue ())
             {
                return bbox .assign (this .bbox);
             }
@@ -143,7 +143,7 @@ function (X3DChildNode,
       },
       set_bbox__: function ()
       {
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
             if (this .getGeometry ())
                this .bbox .assign (this .getGeometry () .getBBox ());
@@ -152,7 +152,7 @@ function (X3DChildNode,
                this .bbox .set ();
          }
          else
-            this .bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+            this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
 
          this .bboxSize   .assign (this .bbox .size);
          this .bboxCenter .assign (this .bbox .center);
@@ -160,14 +160,14 @@ function (X3DChildNode,
       set_apparance__: function ()
       {
          if (this .apparanceNode)
-            this .apparanceNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .apparanceNode ._transparent .removeInterest ("set_transparent__", this);
 
-         this .apparanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this .appearance_);
+         this .apparanceNode = X3DCast (X3DConstants .X3DAppearanceNode, this ._appearance);
 
          if (this .apparanceNode)
          {
-            this .apparanceNode .alphaMode_   .addInterest ("set_transparent__", this);
-            this .apparanceNode .transparent_ .addInterest ("set_transparent__", this);
+            this .apparanceNode ._alphaMode   .addInterest ("set_transparent__", this);
+            this .apparanceNode ._transparent .addInterest ("set_transparent__", this);
          }
          else
             this .apparanceNode = this .getBrowser () .getDefaultAppearance ();
@@ -176,16 +176,16 @@ function (X3DChildNode,
       {
          if (this .geometryNode)
          {
-            this .geometryNode .transparent_  .addInterest ("set_transparent__", this);
-            this .geometryNode .bbox_changed_ .addInterest ("set_bbox__",        this);
+            this .geometryNode ._transparent  .addInterest ("set_transparent__", this);
+            this .geometryNode ._bbox_changed .addInterest ("set_bbox__",        this);
          }
 
-         this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this .geometry_);
+         this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this ._geometry);
 
          if (this .geometryNode)
          {
-            this .geometryNode .transparent_  .addInterest ("set_transparent__", this);
-            this .geometryNode .bbox_changed_ .addInterest ("set_bbox__",        this);
+            this .geometryNode ._transparent  .addInterest ("set_transparent__", this);
+            this .geometryNode ._bbox_changed .addInterest ("set_bbox__",        this);
          }
 
          this .set_bbox__ ();

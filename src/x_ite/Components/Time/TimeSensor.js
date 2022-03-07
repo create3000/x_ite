@@ -120,15 +120,15 @@ function (Fields,
          X3DSensorNode        .prototype .initialize .call (this);
          X3DTimeDependentNode .prototype .initialize .call (this);
 
-         this .cycleInterval_ .addInterest ("set_cycleInterval__", this);
-         this .range_         .addInterest ("set_range__",         this);
+         this ._cycleInterval .addInterest ("set_cycleInterval__", this);
+         this ._range         .addInterest ("set_range__",         this);
       },
       setRange: function (currentFraction, firstFraction, lastFraction)
       {
          const
             currentTime   = this .getBrowser () .getCurrentTime (),
-            startTime     = this .startTime_ .getValue (),
-            cycleInterval = this .cycleInterval_ .getValue ();
+            startTime     = this ._startTime .getValue (),
+            cycleInterval = this ._cycleInterval .getValue ();
 
          this .first    = firstFraction;
          this .last     = lastFraction;
@@ -139,40 +139,40 @@ function (Fields,
       },
       set_cycleInterval__: function ()
       {
-         if (this .isActive_ .getValue ())
-            this .setRange (this .fraction, this .range_ [1], this .range_ [2]);
+         if (this ._isActive .getValue ())
+            this .setRange (this .fraction, this ._range [1], this ._range [2]);
       },
       set_range__: function ()
       {
-         if (this .isActive_ .getValue ())
+         if (this ._isActive .getValue ())
          {
-            this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
+            this .setRange (this ._range [0], this ._range [1], this ._range [2]);
 
-            if (!this .isPaused_ .getValue ())
+            if (!this ._isPaused .getValue ())
                this .set_fraction (this .getBrowser () .getCurrentTime ());
          }
       },
       set_start: function ()
       {
-         this .setRange (this .range_ [0], this .range_ [1], this .range_ [2]);
+         this .setRange (this ._range [0], this ._range [1], this ._range [2]);
 
          if (this .isLive () .getValue ())
          {
-            this .fraction_changed_ = this .fraction;
-            this .time_             = this .getBrowser () .getCurrentTime ();
+            this ._fraction_changed = this .fraction;
+            this ._time             = this .getBrowser () .getCurrentTime ();
          }
       },
       set_resume: function (pauseInterval)
       {
          const
             currentTime   = this .getBrowser () .getCurrentTime (),
-            startTime     = this .startTime_ .getValue ();
+            startTime     = this ._startTime .getValue ();
 
-         this .setRange (this .interval ? Algorithm .fract (this .fraction - (currentTime - startTime) / this .interval) : 0, this .range_ [1], this .range_ [2]);
+         this .setRange (this .interval ? Algorithm .fract (this .fraction - (currentTime - startTime) / this .interval) : 0, this ._range [1], this ._range [2]);
       },
       set_fraction: function (time)
       {
-         this .fraction_changed_ = this .fraction = this .first + (this .interval ? Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
+         this ._fraction_changed = this .fraction = this .first + (this .interval ? Algorithm .fract ((time - this .cycle) / this .interval) : 0) * this .scale;
       },
       set_time: function ()
       {
@@ -182,32 +182,32 @@ function (Fields,
 
          if (time - this .cycle >= this .interval)
          {
-            if (this .loop_ .getValue ())
+            if (this ._loop .getValue ())
             {
                if (this .interval)
                {
                   this .cycle += this .interval * Math .floor ((time - this .cycle) / this .interval);
 
-                  this .elapsedTime_ = this .getElapsedTime ();
-                  this .cycleTime_   = time;
+                  this ._elapsedTime = this .getElapsedTime ();
+                  this ._cycleTime   = time;
 
                   this .set_fraction (time);
                }
             }
             else
             {
-               this .fraction_changed_ = this .fraction = this .last;
+               this ._fraction_changed = this .fraction = this .last;
                this .stop ();
             }
          }
          else
          {
-            this .elapsedTime_ = this .getElapsedTime ();
+            this ._elapsedTime = this .getElapsedTime ();
 
             this .set_fraction (time);
          }
 
-         this .time_ = time;
+         this ._time = time;
       },
    });
 

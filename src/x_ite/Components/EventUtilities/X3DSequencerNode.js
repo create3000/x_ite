@@ -74,16 +74,16 @@ function (X3DChildNode,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .set_fraction_ .addInterest ("set_fraction__", this);
-         this .previous_     .addInterest ("set_previous__", this);
-         this .next_         .addInterest ("set_next__", this);
-         this .key_          .addInterest ("set_index__", this);
+         this ._set_fraction .addInterest ("set_fraction__", this);
+         this ._previous     .addInterest ("set_previous__", this);
+         this ._next         .addInterest ("set_next__", this);
+         this ._key          .addInterest ("set_index__", this);
       },
       set_fraction__: function ()
       {
          var
-            fraction = this .set_fraction_ .getValue (),
-            key      = this .key_,
+            fraction = this ._set_fraction .getValue (),
+            key      = this ._key,
             length   = key .length;
 
          if (length === 0)
@@ -114,7 +114,7 @@ function (X3DChildNode,
       },
       set_previous__: function ()
       {
-         if (this .previous_ .getValue ())
+         if (this ._previous .getValue ())
          {
             if (this .index <= 0)
                this .index = this .getSize () - 1;
@@ -128,7 +128,7 @@ function (X3DChildNode,
       },
       set_next__: function ()
       {
-         if (this .next_ .getValue ())
+         if (this ._next .getValue ())
          {
             if (this .index >= this .getSize () - 1)
                this .index = 0;

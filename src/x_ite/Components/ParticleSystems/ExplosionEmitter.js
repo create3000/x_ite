@@ -68,10 +68,10 @@ function (Fields,
 
       this .addType (X3DConstants .ExplosionEmitter);
 
-      this .position_    .setUnit ("length");
-      this .speed_       .setUnit ("speed");
-      this .mass_        .setUnit ("mass");
-      this .surfaceArea_ .setUnit ("area");
+      this ._position    .setUnit ("length");
+      this ._speed       .setUnit ("speed");
+      this ._mass        .setUnit ("mass");
+      this ._surfaceArea .setUnit ("area");
 
       this .getRandomVelocity = this .getSphericalRandomVelocity;
    }
@@ -103,13 +103,13 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         this .position_ .addInterest ("set_position__", this);
+         this ._position .addInterest ("set_position__", this);
 
          this .set_position__ ();
       },
       set_position__: function ()
       {
-         this .position = this .position_ .getValue ()
+         this .position = this ._position .getValue ()
       },
       isExplosive: function ()
       {

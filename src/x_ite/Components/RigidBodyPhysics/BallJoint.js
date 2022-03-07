@@ -74,7 +74,7 @@ function ($,
 
       this .addType (X3DConstants .BallJoint);
 
-      this .anchorPoint_ .setUnit ("length");
+      this ._anchorPoint .setUnit ("length");
 
       this .joint             = null;
       this .outputs           = { };
@@ -110,7 +110,7 @@ function ($,
       {
          X3DRigidJointNode .prototype .initialize .call (this);
 
-         this .anchorPoint_ .addInterest ("set_anchorPoint__", this);
+         this ._anchorPoint .addInterest ("set_anchorPoint__", this);
       },
       addJoint: function ()
       {
@@ -154,9 +154,9 @@ function ($,
          for (var key in this .outputs)
             delete this .outputs [key];
 
-         for (var i = 0, length = this .forceOutput_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
          {
-            var value = this .forceOutput_ [i];
+            var value = this ._forceOutput [i];
 
             if (value == "ALL")
             {
@@ -179,8 +179,8 @@ function ($,
                localAnchorPoint1 = this .localAnchorPoint1,
                localAnchorPoint2 = this .localAnchorPoint2;
 
-            this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .anchorPoint_ .getValue ()));
-            this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .anchorPoint_ .getValue ()));
+            this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this ._anchorPoint .getValue ()));
+            this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this ._anchorPoint .getValue ()));
 
             this .joint .setPivotA (new Ammo .btVector3 (localAnchorPoint1 .x, localAnchorPoint1 .y, localAnchorPoint1 .z));
             this .joint .setPivotB (new Ammo .btVector3 (localAnchorPoint2 .x, localAnchorPoint2 .y, localAnchorPoint2 .z));
@@ -193,7 +193,7 @@ function ($,
          return function ()
          {
             if (this .outputs .body1AnchorPoint)
-               this .body1AnchorPoint_ = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
+               this ._body1AnchorPoint = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
          };
       })(),
       update2: (function ()
@@ -203,7 +203,7 @@ function ($,
          return function ()
          {
             if (this .outputs .body2AnchorPoint)
-               this .body2AnchorPoint_ = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
+               this ._body2AnchorPoint = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
          };
       })(),
    });

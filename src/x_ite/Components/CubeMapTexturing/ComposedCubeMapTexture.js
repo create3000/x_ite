@@ -70,12 +70,12 @@ function (Fields,
 
       this .addType (X3DConstants .ComposedCubeMapTexture);
 
-      this .addAlias ("front",  this .frontTexture_);
-      this .addAlias ("back",   this .backTexture_);
-      this .addAlias ("left",   this .leftTexture_);
-      this .addAlias ("right",  this .rightTexture_);
-      this .addAlias ("bottom", this .bottomTexture_);
-      this .addAlias ("top",    this .topTexture_);
+      this .addAlias ("front",  this ._frontTexture);
+      this .addAlias ("back",   this ._backTexture);
+      this .addAlias ("left",   this ._leftTexture);
+      this .addAlias ("right",  this ._rightTexture);
+      this .addAlias ("bottom", this ._bottomTexture);
+      this .addAlias ("top",    this ._topTexture);
 
       this .textures   = [null, null, null, null, null, null];
       this .loadStates = 0;
@@ -117,19 +117,19 @@ function (Fields,
 
          // Initialize.
 
-         this .frontTexture_  .addInterest ("set_texture__", this, 0);
-         this .backTexture_   .addInterest ("set_texture__", this, 1);
-         this .leftTexture_   .addInterest ("set_texture__", this, 2);
-         this .rightTexture_  .addInterest ("set_texture__", this, 3);
-         this .topTexture_    .addInterest ("set_texture__", this, 5);
-         this .bottomTexture_ .addInterest ("set_texture__", this, 4);
+         this ._frontTexture  .addInterest ("set_texture__", this, 0);
+         this ._backTexture   .addInterest ("set_texture__", this, 1);
+         this ._leftTexture   .addInterest ("set_texture__", this, 2);
+         this ._rightTexture  .addInterest ("set_texture__", this, 3);
+         this ._topTexture    .addInterest ("set_texture__", this, 5);
+         this ._bottomTexture .addInterest ("set_texture__", this, 4);
 
-         this .set_texture__ (this .frontTexture_,  0);
-         this .set_texture__ (this .backTexture_,   1);
-         this .set_texture__ (this .leftTexture_,   2);
-         this .set_texture__ (this .rightTexture_,  3);
-         this .set_texture__ (this .topTexture_,    4);
-         this .set_texture__ (this .bottomTexture_, 5);
+         this .set_texture__ (this ._frontTexture,  0);
+         this .set_texture__ (this ._backTexture,   1);
+         this .set_texture__ (this ._leftTexture,   2);
+         this .set_texture__ (this ._rightTexture,  3);
+         this .set_texture__ (this ._topTexture,    4);
+         this .set_texture__ (this ._bottomTexture, 5);
       },
       set_texture__: function (node, index)
       {
@@ -140,7 +140,7 @@ function (Fields,
             var callbackName = "set_loadState__" + texture .getId () + "_" + index;
 
             texture .removeInterest ("set_loadState__", this);
-            texture .loadState_ .removeFieldCallback (callbackName);
+            texture ._loadState .removeFieldCallback (callbackName);
          }
 
          var texture = this .textures [index] = X3DCast (X3DConstants .X3DTexture2DNode, node);
@@ -150,7 +150,7 @@ function (Fields,
             var callbackName = "set_loadState__" + texture .getId () + "_" + index;
 
             texture .addInterest ("set_loadState__", this, texture, index);
-            texture .loadState_ .addFieldCallback (callbackName, this .set_loadState__ .bind (this, null, texture, index));
+            texture ._loadState .addFieldCallback (callbackName, this .set_loadState__ .bind (this, null, texture, index));
          }
 
          this .set_loadState__ (null, texture, index);
@@ -245,7 +245,7 @@ function (Fields,
          {
             for (var i = 0; i < 6; ++ i)
             {
-               if (textures [i] .transparent_ .getValue ())
+               if (textures [i] ._transparent .getValue ())
                {
                   transparent = true;
                   break;

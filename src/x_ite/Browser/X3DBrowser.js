@@ -173,11 +173,11 @@ function ($,
       },
       getDescription: function ()
       {
-         return this .getNotification () .string_ .getValue ()
+         return this .getNotification () ._string .getValue ()
       },
       setDescription: function (value)
       {
-         this .getNotification () .string_ = value;
+         this .getNotification () ._string = value;
       },
       getWorldURL: function ()
       {
@@ -228,7 +228,7 @@ function ($,
       {
          // Cancel any loading.
 
-         this .loadCount_       .removeInterest ("set_loadCount__", this);
+         this ._loadCount       .removeInterest ("set_loadCount__", this);
          this .prepareEvents () .removeInterest ("bind", this);
 
          if (this [_loader])
@@ -274,7 +274,7 @@ function ($,
 
          this .getBrowserOptions () .configure ();
          this .setBrowserLoading (true);
-         this .loadCount_ .addInterest ("set_loadCount__", this);
+         this ._loadCount .addInterest ("set_loadCount__", this);
          this .prepareEvents () .removeInterest ("bind", this);
 
          for (const object of scene .getLoadingObjects ())
@@ -290,7 +290,7 @@ function ($,
          if (loadCount .getValue ())
             return;
 
-         this .loadCount_ .removeInterest ("set_loadCount__", this);
+         this ._loadCount .removeInterest ("set_loadCount__", this);
 
          this .prepareEvents () .addInterest ("bind", this);
          this .addBrowserEvent ();
@@ -368,7 +368,7 @@ function ($,
                   scene .setLive (currentScene .getLive ());
                }
 
-               // Wait until scene is completely loaded, scene .loadCount_ must be 0.
+               // Wait until scene is completely loaded, scene ._loadCount must be 0.
                field .setValue (scene .rootNodes);
             }
          }
@@ -400,7 +400,7 @@ function ($,
          {
             // Cancel any loading.
 
-            this .loadCount_       .removeInterest ("set_loadCount__", this);
+            this ._loadCount       .removeInterest ("set_loadCount__", this);
             this .prepareEvents () .removeInterest ("bind", this);
 
             if (this [_loader])
@@ -604,7 +604,7 @@ function ($,
 
             for (var i = 0, length = viewpoints .length; i < length; ++ i)
             {
-               if (viewpoints [i] .isBound_ .getValue ())
+               if (viewpoints [i] ._isBound .getValue ())
                   break;
             }
 
@@ -637,7 +637,7 @@ function ($,
 
             for (var i = 0, length = viewpoints .length; i < length; ++ i)
             {
-               if (viewpoints [i] .isBound_ .getValue ())
+               if (viewpoints [i] ._isBound .getValue ())
                   break;
             }
 
@@ -696,11 +696,11 @@ function ($,
       {
          viewpointNode .setVRMLTransition (true);
 
-         if (viewpointNode .isBound_ .getValue ())
+         if (viewpointNode ._isBound .getValue ())
             viewpointNode .transitionStart (layerNode, viewpointNode, viewpointNode);
 
          else
-            viewpointNode .set_bind_ = true;
+            viewpointNode ._set_bind = true;
       },
       addRoute: function (fromNode, fromEventOut, toNode, toEventIn)
       {

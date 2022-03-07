@@ -93,14 +93,14 @@ function (Fields,
       {
          X3DVertexAttributeNode .prototype .initialize .call (this);
 
-         this .value_ .addInterest ("set_value", this);
+         this ._value .addInterest ("set_value", this);
 
          this .set_value ();
       },
       set_value: function ()
       {
-         this .value  = this .value_ .getValue ();
-         this .length = this .value_ .length;
+         this .value  = this ._value .getValue ();
+         this .length = this ._value .length;
       },
       addValue: function (index, array)
       {
@@ -130,11 +130,11 @@ function (Fields,
       },
       enable: function (gl, shaderNode, buffer)
       {
-         shaderNode .enableMatrix4Attrib (gl, this .name_ .getValue (), buffer);
+         shaderNode .enableMatrix4Attrib (gl, this ._name .getValue (), buffer);
       },
       disable: function (gl, shaderNode)
       {
-         shaderNode .disableMatrix4Attrib (gl, this .name_ .getValue ());
+         shaderNode .disableMatrix4Attrib (gl, this ._name .getValue ());
       },
    });
 

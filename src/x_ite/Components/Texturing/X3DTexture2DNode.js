@@ -80,8 +80,8 @@ function (X3DSingleTextureNode,
       {
          X3DSingleTextureNode .prototype .initialize .call (this);
 
-         this .repeatS_ .addInterest ("updateTextureProperties", this);
-         this .repeatT_ .addInterest ("updateTextureProperties", this);
+         this ._repeatS .addInterest ("updateTextureProperties", this);
+         this ._repeatT .addInterest ("updateTextureProperties", this);
 
          const gl = this .getBrowser () .getContext ();
 
@@ -149,7 +149,7 @@ function (X3DSingleTextureNode,
             gl .bindTexture (gl .TEXTURE_2D, this .getTexture ());
             gl .texSubImage2D (gl .TEXTURE_2D, 0, 0, 0, gl .RGBA, gl .UNSIGNED_BYTE, data);
 
-            if (this .texturePropertiesNode .generateMipMaps_ .getValue ())
+            if (this .texturePropertiesNode ._generateMipMaps .getValue ())
                gl .generateMipmap (gl .TEXTURE_2D);
 
             this .addNodeEvent ();
@@ -161,12 +161,12 @@ function (X3DSingleTextureNode,
       {
          X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
                                                                          this .target,
-                                                                         this .textureProperties_ .getValue (),
+                                                                         this ._textureProperties .getValue (),
                                                                          this .texturePropertiesNode,
                                                                          this .width,
                                                                          this .height,
-                                                                         this .repeatS_ .getValue (),
-                                                                         this .repeatT_ .getValue (),
+                                                                         this ._repeatS .getValue (),
+                                                                         this ._repeatT .getValue (),
                                                                          false);
       },
       setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)

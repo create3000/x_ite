@@ -96,14 +96,14 @@ function (Fields,
       {
          X3DColorNode .prototype .initialize .call (this);
 
-         this .color_ .addInterest ("set_color__", this);
+         this ._color .addInterest ("set_color__", this);
 
          this .set_color__ ();
       },
       set_color__: function ()
       {
-         this .color  = this .color_ .getValue ();
-         this .length = this .color_ .length;
+         this .color  = this ._color .getValue ();
+         this .length = this ._color .length;
       },
       addColor: function (index, array)
       {
@@ -156,7 +156,7 @@ function (Fields,
       },
       getVectors: function (array)
       {
-         const color = this .color_;
+         const color = this ._color;
 
          for (var i = 0, length = color .length; i < length; ++ i)
          {

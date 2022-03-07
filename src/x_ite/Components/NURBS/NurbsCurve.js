@@ -114,7 +114,7 @@ function (X3DCast,
       {
          X3DParametricGeometryNode .prototype .initialize .call (this);
 
-         this .controlPoint_ .addInterest ("set_controlPoint__", this);
+         this ._controlPoint .addInterest ("set_controlPoint__", this);
 
          this .setPrimitiveMode (this .getBrowser () .getContext () .LINES);
          this .setSolid (false);
@@ -126,18 +126,18 @@ function (X3DCast,
          if (this .controlPointNode)
             this .controlPointNode .removeInterest ("requestRebuild", this);
 
-         this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this .controlPoint_);
+         this .controlPointNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._controlPoint);
 
          if (this .controlPointNode)
             this .controlPointNode .addInterest ("requestRebuild", this);
       },
       getTessellation: function (numKnots)
       {
-         return NURBS .getTessellation (this .tessellation_ .getValue (), numKnots - this .order_ .getValue ());
+         return NURBS .getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
       },
       getClosed: function (order, knot, weight, controlPointNode)
       {
-         if (! this .closed_ .getValue ())
+         if (! this ._closed .getValue ())
             return false;
 
          return NURBS .getClosed (order, knot, weight, controlPointNode);
@@ -152,13 +152,13 @@ function (X3DCast,
       },
       tessellate: function ()
       {
-         if (this .order_ .getValue () < 2)
+         if (this ._order .getValue () < 2)
             return [ ];
 
          if (! this .controlPointNode)
             return [ ];
 
-         if (this .controlPointNode .getSize () < this .order_ .getValue ())
+         if (this .controlPointNode .getSize () < this ._order .getValue ())
             return [ ];
 
          var
@@ -177,31 +177,31 @@ function (X3DCast,
       },
       build: function ()
       {
-         if (this .order_ .getValue () < 2)
+         if (this ._order .getValue () < 2)
             return;
 
          if (! this .controlPointNode)
             return;
 
-         if (this .controlPointNode .getSize () < this .order_ .getValue ())
+         if (this .controlPointNode .getSize () < this ._order .getValue ())
             return;
 
          // Order and dimension are now positive numbers.
 
          var
-            closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPointNode),
-            weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this .weight_),
-            controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPointNode);
+            closed        = this .getClosed (this ._order .getValue (), this ._knot, this ._weight, this .controlPointNode),
+            weights       = this .getWeights (this .weights, this .controlPointNode .getSize (), this ._weight),
+            controlPoints = this .getControlPoints (this .controlPoints, closed, this ._order .getValue (), weights, this .controlPointNode);
 
          // Knots
 
          var
-            knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPointNode .getSize (), this .knot_),
+            knots = this .getKnots (this .knots, closed, this ._order .getValue (), this .controlPointNode .getSize (), this ._knot),
             scale = knots .at (-1) - knots [0];
 
          // Initialize NURBS tessellator
 
-         var degree = this .order_ .getValue () - 1;
+         var degree = this ._order .getValue () - 1;
 
          var surface = this .surface = (this .surface || nurbs) ({
             boundary: ["open"],

@@ -78,7 +78,7 @@ function (Fields,
 
       // Units
 
-      this .translation_ .setUnit ("length");
+      this ._translation .setUnit ("length");
 
       // Members
 
@@ -127,11 +127,11 @@ function (Fields,
       })(),
       setBody: function (value)
       {
-         this .body_ = value;
+         this ._body = value;
       },
       getBody: function ()
       {
-         return this .body_ .getValue ();
+         return this ._body .getValue ();
       },
       getCompoundShape: function ()
       {
@@ -151,8 +151,8 @@ function (Fields,
       },
       eventsProcessed: function ()
       {
-         this .matrix .set (this .translation_ .getValue (),
-                            this .rotation_    .getValue ());
+         this .matrix .set (this ._translation .getValue (),
+                            this ._rotation    .getValue ());
 
          if (this .compoundShape .getNumChildShapes ())
             this .compoundShape .updateChildTransform (0, this .getLocalTransform (), true);

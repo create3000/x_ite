@@ -70,9 +70,9 @@ function (Fields,
 
       // Units
 
-      this .anchorPoint_      .setUnit ("length");
-      this .body1AnchorPoint_ .setUnit ("length");
-      this .body2AnchorPoint_ .setUnit ("length");
+      this ._anchorPoint      .setUnit ("length");
+      this ._body1AnchorPoint .setUnit ("length");
+      this ._body2AnchorPoint .setUnit ("length");
    }
 
    UniversalJoint .prototype = Object .assign (Object .create (X3DRigidJointNode .prototype),

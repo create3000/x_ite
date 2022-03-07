@@ -83,7 +83,7 @@ function (X3DChildObject,
       if (!protoNode .isExternProto)
          return;
 
-      protoNode .updateInstances_ .addInterest ("construct", this)
+      protoNode ._updateInstances .addInterest ("construct", this)
       protoNode .requestImmediateLoad ();
    }
 
@@ -204,8 +204,8 @@ function (X3DChildObject,
          if (this .isInitialized ())
             X3DChildObject .prototype .addEvent .call (this);
 
-         this [_protoNode] .updateInstances_ .removeInterest ("construct", this);
-         this [_protoNode] .updateInstances_ .addInterest ("update", this);
+         this [_protoNode] ._updateInstances .removeInterest ("construct", this);
+         this [_protoNode] ._updateInstances .addInterest ("update", this);
       },
       update: function ()
       {
@@ -579,8 +579,8 @@ function (X3DChildObject,
       },
       dispose: function ()
       {
-         this [_protoNode] .updateInstances_ .removeInterest ("construct", this);
-         this [_protoNode] .updateInstances_ .removeInterest ("update",    this);
+         this [_protoNode] ._updateInstances .removeInterest ("construct", this);
+         this [_protoNode] ._updateInstances .removeInterest ("update",    this);
 
          if (this .body)
             this .body .dispose ();

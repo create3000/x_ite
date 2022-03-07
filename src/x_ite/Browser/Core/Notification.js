@@ -100,17 +100,17 @@ function ($,
 
          $("<span></span>") .appendTo (this .element);
 
-         this .string_ .addInterest ("set_string__", this);
+         this ._string .addInterest ("set_string__", this);
       },
       set_string__: function ()
       {
          if (! this .getBrowser () .getBrowserOptions () .getNotifications ())
             return;
 
-         if (this .string_ .length === 0)
+         if (this ._string .length === 0)
             return;
 
-         this .element .children () .text (this .string_ .getValue ());
+         this .element .children () .text (this ._string .getValue ());
 
          this .element
             .stop (true, true)

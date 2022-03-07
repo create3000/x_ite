@@ -103,13 +103,13 @@ function (Fields,
       {
          X3DTexture3DNode .prototype .initialize .call (this);
 
-         this .texture_ .addInterest ("set_texture__", this);
+         this ._texture .addInterest ("set_texture__", this);
 
          this .set_texture__ ();
       },
       checkLoadState: function ()
       {
-         return this .loadState_ .getValue ();
+         return this ._loadState .getValue ();
       },
       set_texture__: function ()
       {
@@ -120,7 +120,7 @@ function (Fields,
 
          textureNodes .length = 0;
 
-         for (const node of this .texture_)
+         for (const node of this ._texture)
          {
             const textureNode = X3DCast (X3DConstants .X3DTexture2DNode, node);
 
@@ -146,7 +146,7 @@ function (Fields,
          {
             this .clearTexture ();
 
-            this .loadState_ = X3DConstants .FAILED_STATE;
+            this ._loadState = X3DConstants .FAILED_STATE;
          }
          else
          {
@@ -176,7 +176,7 @@ function (Fields,
             }
 
             this .setTexture (width, height, depth, !!transparent, gl .RGBA, data);
-            this .loadState_ = X3DConstants .COMPLETE_STATE;
+            this ._loadState = X3DConstants .COMPLETE_STATE;
          }
       },
    });

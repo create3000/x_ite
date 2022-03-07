@@ -117,11 +117,11 @@ function (Fields,
          X3DGroupingNode .prototype .initialize .call (this);
          X3DUrlObject    .prototype .initialize .call (this);
 
-         this .description_ .addFieldInterest (this .touchSensorNode .description_);
-         this .load_        .addFieldInterest (this .touchSensorNode .enabled_);
+         this ._description .addFieldInterest (this .touchSensorNode ._description);
+         this ._load        .addFieldInterest (this .touchSensorNode ._enabled);
 
-         this .touchSensorNode .description_ = this .description_;
-         this .touchSensorNode .enabled_     = this .load_;
+         this .touchSensorNode ._description = this ._description;
+         this .touchSensorNode ._enabled     = this ._load;
          this .touchSensorNode .setup ();
 
          // Modify set_active__ to get immediate response to user action (click event), otherwise links are not opened in this window.
@@ -134,7 +134,7 @@ function (Fields,
          {
             set_active__ .call (this, active, hit);
 
-            if (this .isOver_ .getValue () && ! active)
+            if (this ._isOver .getValue () && ! active)
                anchor .requestImmediateLoad ();
          };
       },
@@ -147,7 +147,7 @@ function (Fields,
          this .setCache (cache);
          this .setLoadState (X3DConstants .IN_PROGRESS_STATE, false);
 
-         new FileLoader (this) .createX3DFromURL (this .url_, this .parameter_,
+         new FileLoader (this) .createX3DFromURL (this ._url, this ._parameter,
          function (scene)
          {
             if (scene)

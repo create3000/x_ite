@@ -104,26 +104,26 @@ function (Arc2DOptions,
          {
             case PrimitiveQuality .LOW:
             {
-               arc      .dimension_ = 20;
-               arcClose .dimension_ = 20;
-               circle   .dimension_ = 20;
-               disk     .dimension_ = 20;
+               arc      ._dimension = 20;
+               arcClose ._dimension = 20;
+               circle   ._dimension = 20;
+               disk     ._dimension = 20;
                break;
             }
             case PrimitiveQuality .MEDIUM:
             {
-               arc      .dimension_ = 40;
-               arcClose .dimension_ = 40;
-               circle   .dimension_ = 40;
-               disk     .dimension_ = 40;
+               arc      ._dimension = 40;
+               arcClose ._dimension = 40;
+               circle   ._dimension = 40;
+               disk     ._dimension = 40;
                break;
             }
             case PrimitiveQuality .HIGH:
             {
-               arc      .dimension_ = 80;
-               arcClose .dimension_ = 80;
-               circle   .dimension_ = 80;
-               disk     .dimension_ = 80;
+               arc      ._dimension = 80;
+               arcClose ._dimension = 80;
+               circle   ._dimension = 80;
+               disk     ._dimension = 80;
                break;
             }
          }

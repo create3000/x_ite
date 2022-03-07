@@ -99,11 +99,11 @@ function (Fields,
       },
       getMatrix: function ()
       {
-         return this .matrix_ .getValue ();
+         return this ._matrix .getValue ();
       },
       eventsProcessed: function ()
       {
-         this .setMatrix (this .matrix_ .getValue ());
+         this .setMatrix (this ._matrix .getValue ());
       },
    });
 

@@ -123,7 +123,7 @@ function (X3DBaseNode,
          return function ()
          {
             const
-               dimension      = this .dimension_ .getValue (),
+               dimension      = this ._dimension .getValue (),
                angle          = Math .PI * 2 / dimension,
                circleVertices = this .circleVertices,
                diskTexCoords  = this .diskTexCoords,

@@ -103,14 +103,14 @@ function (Fields,
          X3DCoordinateNode   .prototype .initialize .call (this);
          X3DGeospatialObject .prototype .initialize .call (this);
 
-         this .point_ .addInterest ("set_point__", this);
+         this ._point .addInterest ("set_point__", this);
 
          this .set_point__ ();
       },
       set_point__: function ()
       {
-         this .point  = this .point_ .getValue ();
-         this .length = this .point_ .length;
+         this .point  = this ._point .getValue ();
+         this .length = this ._point .length;
       },
       isEmpty: function ()
       {
@@ -126,7 +126,7 @@ function (Fields,
 
          return function (index, point)
          {
-            this .point_ [index] = this .getGeoCoord (point, result);
+            this ._point [index] = this .getGeoCoord (point, result);
          };
       })(),
       get1Point: (function ()

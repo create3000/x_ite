@@ -62,8 +62,8 @@ function (X3DTransformMatrix3DNode,
 
       this .addType (X3DConstants .X3DTransformNode);
 
-      this .translation_ .setUnit ("length");
-      this .center_      .setUnit ("length");
+      this ._translation .setUnit ("length");
+      this ._center      .setUnit ("length");
    }
 
    X3DTransformNode .prototype = Object .assign (Object .create (X3DTransformMatrix3DNode .prototype),
@@ -79,15 +79,15 @@ function (X3DTransformMatrix3DNode,
       },
       eventsProcessed: function ()
       {
-         this .setHidden (this .scale_ .x === 0 ||
-                          this .scale_ .y === 0 ||
-                          this .scale_ .z === 0);
+         this .setHidden (this ._scale .x === 0 ||
+                          this ._scale .y === 0 ||
+                          this ._scale .z === 0);
 
-         this .setTransform (this .translation_      .getValue (),
-                             this .rotation_         .getValue (),
-                             this .scale_            .getValue (),
-                             this .scaleOrientation_ .getValue (),
-                             this .center_           .getValue ());
+         this .setTransform (this ._translation      .getValue (),
+                             this ._rotation         .getValue (),
+                             this ._scale            .getValue (),
+                             this ._scaleOrientation .getValue (),
+                             this ._center           .getValue ());
       },
    });
 

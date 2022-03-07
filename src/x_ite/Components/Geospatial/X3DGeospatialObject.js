@@ -85,18 +85,18 @@ function (X3DConstants,
       constructor: X3DGeospatialObject,
       initialize: function ()
       {
-         this .geoSystem_ .addInterest ("set_geoSystem__", this);
-         this .geoOrigin_ .addInterest ("set_geoOrigin__", this);
+         this ._geoSystem .addInterest ("set_geoSystem__", this);
+         this ._geoOrigin .addInterest ("set_geoOrigin__", this);
 
          this .set_geoSystem__ ();
          this .set_geoOrigin__ ();
       },
       set_geoSystem__: function ()
       {
-         this .coordinateSystem = Geospatial .getCoordinateSystem (this .geoSystem_);
-         this .referenceFrame   = Geospatial .getReferenceFrame   (this .geoSystem_, this .radians);
-         this .elevationFrame   = Geospatial .getElevationFrame   (this .geoSystem_, this .radians);
-         this .standardOrder    = Geospatial .isStandardOrder     (this .geoSystem_);
+         this .coordinateSystem = Geospatial .getCoordinateSystem (this ._geoSystem);
+         this .referenceFrame   = Geospatial .getReferenceFrame   (this ._geoSystem, this .radians);
+         this .elevationFrame   = Geospatial .getElevationFrame   (this ._geoSystem, this .radians);
+         this .standardOrder    = Geospatial .isStandardOrder     (this ._geoSystem);
       },
       set_geoOrigin__: function ()
       {
@@ -107,7 +107,7 @@ function (X3DConstants,
             this .geoOriginNode .removeInterest ("addNodeEvent",    this);
          }
 
-         this .geoOriginNode = X3DCast (X3DConstants .GeoOrigin, this .geoOrigin_);
+         this .geoOriginNode = X3DCast (X3DConstants .GeoOrigin, this ._geoOrigin);
 
          if (this .geoOriginNode)
          {
@@ -170,7 +170,7 @@ function (X3DConstants,
       },
       set_rotateYUp__: function ()
       {
-         if (this .geoOriginNode && this .geoOriginNode .rotateYUp_ .getValue ())
+         if (this .geoOriginNode && this .geoOriginNode ._rotateYUp .getValue ())
          {
             this .getCoord          = getCoordRotateYUp;
             this .getGeoCoord       = getGeoCoordRotateYUp;

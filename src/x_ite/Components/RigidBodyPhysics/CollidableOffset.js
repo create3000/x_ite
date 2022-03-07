@@ -105,14 +105,14 @@ function (Fields,
       {
          X3DNBodyCollidableNode .prototype .initialize .call (this);
 
-         this .enabled_    .addInterest ("set_collidableGeometry__", this);
-         this .collidable_ .addInterest ("set_collidable__",         this);
+         this ._enabled    .addInterest ("set_collidableGeometry__", this);
+         this ._collidable .addInterest ("set_collidable__",         this);
 
          this .set_collidable__ ();
       },
       getBBox: function (bbox, shadow)
       {
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
             const boundedObject = this .visibleNode;
 
@@ -122,34 +122,34 @@ function (Fields,
             return bbox .set ();
          }
 
-         return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+         return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       },
       set_collidable__: function ()
       {
          if (this .collidableNode)
          {
             this .collidableNode .removeInterest ("addNodeEvent", this);
-            this .collidableNode .compoundShape_changed_ .removeFieldInterest (this .compoundShape_changed_);
+            this .collidableNode ._compoundShape_changed .removeFieldInterest (this ._compoundShape_changed);
 
-            this .collidableNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
-            this .collidableNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
+            this .collidableNode ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
+            this .collidableNode ._isPickableObject .removeFieldInterest (this ._isPickableObject);
 
-            this .collidableNode .visible_     .removeInterest ("set_visible__",     this);
-            this .collidableNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+            this .collidableNode ._visible     .removeInterest ("set_visible__",     this);
+            this .collidableNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
          }
 
-         this .collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .collidable_);
+         this .collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this ._collidable);
 
          if (this .collidableNode)
          {
             this .collidableNode .addInterest ("addNodeEvent", this);
-            this .collidableNode .compoundShape_changed_ .addFieldInterest (this .compoundShape_changed_);
+            this .collidableNode ._compoundShape_changed .addFieldInterest (this ._compoundShape_changed);
 
-            this .collidableNode .isCameraObject_   .addFieldInterest (this .isCameraObject_);
-            this .collidableNode .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+            this .collidableNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+            this .collidableNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
-            this .collidableNode .visible_     .addInterest ("set_visible__",     this);
-            this .collidableNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
+            this .collidableNode ._visible     .addInterest ("set_visible__",     this);
+            this .collidableNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
 
             this .setCameraObject   (this .collidableNode .getCameraObject ());
             this .setPickableObject (this .collidableNode .getPickableObject ());
@@ -172,7 +172,7 @@ function (Fields,
       {
          if (this .collidableNode && this .collidableNode .getCameraObject ())
          {
-            this .setCameraObject (this .collidableNode .visible_ .getValue ());
+            this .setCameraObject (this .collidableNode ._visible .getValue ());
          }
          else
          {
@@ -183,7 +183,7 @@ function (Fields,
       {
          if (this .collidableNode)
          {
-            this .visibleNode = this .collidableNode .visible_ .getValue () ? this .collidableNode : null;
+            this .visibleNode = this .collidableNode ._visible .getValue () ? this .collidableNode : null;
          }
          else
          {
@@ -196,7 +196,7 @@ function (Fields,
       {
          if (this .collidableNode)
          {
-            this .boundedObject = this .collidableNode .bboxDisplay_ .getValue () ? this .collidableNode : null;
+            this .boundedObject = this .collidableNode ._bboxDisplay .getValue () ? this .collidableNode : null;
          }
          else
          {
@@ -208,10 +208,10 @@ function (Fields,
          if (this .getCompoundShape () .getNumChildShapes ())
             this .getCompoundShape () .removeChildShapeByIndex (0);
 
-         if (this .collidableNode && this .enabled_ .getValue ())
+         if (this .collidableNode && this ._enabled .getValue ())
             this .getCompoundShape () .addChildShape (this .getLocalTransform (), this .collidableNode .getCompoundShape ());
 
-         this .compoundShape_changed_ = this .getBrowser () .getCurrentTime ();
+         this ._compoundShape_changed = this .getBrowser () .getCurrentTime ();
       },
       traverse: function (type, renderObject)
       {

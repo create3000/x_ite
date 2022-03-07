@@ -74,8 +74,8 @@ function (Fields,
 
       this .addType (X3DConstants .Cone);
 
-      this .height_       .setUnit ("length");
-      this .bottomRadius_ .setUnit ("length");
+      this ._height       .setUnit ("length");
+      this ._bottomRadius .setUnit ("length");
    }
 
    Cone .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -114,9 +114,9 @@ function (Fields,
       {
          var
             options       = this .getBrowser () .getConeOptions (),
-            xDimension    = options .xDimension_ .getValue (),
-            height        = this .height_ .getValue (),
-            bottomRadius  = this .bottomRadius_ .getValue (),
+            xDimension    = options ._xDimension .getValue (),
+            height        = this ._height .getValue (),
+            bottomRadius  = this ._bottomRadius .getValue (),
             texCoordArray = this .getTexCoords (),
             normalArray   = this .getNormals (),
             vertexArray   = this .getVertices ();
@@ -128,7 +128,7 @@ function (Fields,
             y2 = -y1,
             nz = Complex .Polar (1, -Math .PI / 2 + Math .atan (bottomRadius / height));
 
-         if (this .side_ .getValue ())
+         if (this ._side .getValue ())
          {
             for (var i = 0; i < xDimension; ++ i)
             {
@@ -172,7 +172,7 @@ function (Fields,
             }
          }
 
-         if (this .bottom_ .getValue ())
+         if (this ._bottom .getValue ())
          {
             var
                texCoord = [ ],
@@ -216,23 +216,23 @@ function (Fields,
             }
          }
 
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
          this .setExtents ();
       },
       setExtents: function ()
       {
          var
-            bottomRadius = this .bottomRadius_ .getValue (),
-            y1           = this .height_ .getValue () / 2,
+            bottomRadius = this ._bottomRadius .getValue (),
+            y1           = this ._height .getValue () / 2,
             y2           = -y1;
 
-         if (! this .side_ .getValue () && ! this .bottom_ .getValue ())
+         if (! this ._side .getValue () && ! this ._bottom .getValue ())
          {
             this .getMin () .set (0, 0, 0);
             this .getMax () .set (0, 0, 0);
          }
 
-         else if (! this .side_ .getValue ())
+         else if (! this ._side .getValue ())
          {
             this .getMin () .set (-bottomRadius, y2, -bottomRadius);
             this .getMax () .set ( bottomRadius, y2,  bottomRadius);

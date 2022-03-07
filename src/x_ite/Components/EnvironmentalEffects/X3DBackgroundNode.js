@@ -153,8 +153,8 @@ function (X3DBindableNode,
 
       this .addType (X3DConstants .X3DBackgroundNode);
 
-      this .skyAngle_    .setUnit ("angle");
-      this .groundAngle_ .setUnit ("angle");
+      this ._skyAngle    .setUnit ("angle");
+      this ._groundAngle .setUnit ("angle");
 
       this .hidden                = false;
       this .projectionMatrixArray = new Float32Array (16);
@@ -187,11 +187,11 @@ function (X3DBindableNode,
          this .topBuffer       = gl .createBuffer ();
          this .bottomBuffer    = gl .createBuffer ();
 
-         this .groundAngle_  .addInterest ("build", this);
-         this .groundColor_  .addInterest ("build", this);
-         this .skyAngle_     .addInterest ("build", this);
-         this .skyColor_     .addInterest ("build", this);
-         this .transparency_ .addInterest ("build", this);
+         this ._groundAngle  .addInterest ("build", this);
+         this ._groundColor  .addInterest ("build", this);
+         this ._skyAngle     .addInterest ("build", this);
+         this ._skyColor     .addInterest ("build", this);
+         this ._transparency .addInterest ("build", this);
 
          this .build ();
          this .transferRectangle ();
@@ -223,14 +223,14 @@ function (X3DBindableNode,
       setTexture: function (key, texture, bit)
       {
          if (this [key])
-            this [key] .loadState_ .removeInterest ("setTextureBit", this);
+            this [key] ._loadState .removeInterest ("setTextureBit", this);
 
          this [key] = texture;
 
          if (texture)
          {
-            texture .loadState_ .addInterest ("setTextureBit", this, texture, bit);
-            this .setTextureBit (texture .loadState_, texture, bit);
+            texture ._loadState .addInterest ("setTextureBit", this, texture, bit);
+            this .setTextureBit (texture ._loadState, texture, bit);
          }
          else
             this .setTextureBit (X3DConstants .NOT_STARTED, null, bit);
@@ -257,25 +257,25 @@ function (X3DBindableNode,
          if (this .hidden)
             return true;
 
-         if (this .transparency_ .getValue () === 0)
+         if (this ._transparency .getValue () === 0)
             return false;
 
-         if (! this .frontTexture  || this .frontTexture  .transparent_ .getValue ())
+         if (! this .frontTexture  || this .frontTexture  ._transparent .getValue ())
                return true;
 
-         if (! this .backTexture   || this .backTexture   .transparent_ .getValue ())
+         if (! this .backTexture   || this .backTexture   ._transparent .getValue ())
                return true;
 
-         if (! this .leftTexture   || this .leftTexture   .transparent_ .getValue ())
+         if (! this .leftTexture   || this .leftTexture   ._transparent .getValue ())
                return true;
 
-         if (! this .rightTexture  || this .rightTexture  .transparent_ .getValue ())
+         if (! this .rightTexture  || this .rightTexture  ._transparent .getValue ())
                return true;
 
-         if (! this .topTexture    || this .topTexture    .transparent_ .getValue ())
+         if (! this .topTexture    || this .topTexture    ._transparent .getValue ())
                return true;
 
-         if (! this .bottomTexture || this .bottomTexture .transparent_ .getValue ())
+         if (! this .bottomTexture || this .bottomTexture ._transparent .getValue ())
                return true;
 
          return false;
@@ -291,12 +291,12 @@ function (X3DBindableNode,
          this .colors .length = 0;
          this .sphere .length = 0;
 
-         if (this .transparency_ .getValue () >= 1)
+         if (this ._transparency .getValue () >= 1)
             return;
 
-         var alpha = 1 - Algorithm .clamp (this .transparency_ .getValue (), 0, 1);
+         var alpha = 1 - Algorithm .clamp (this ._transparency .getValue (), 0, 1);
 
-         if (this .groundColor_ .length === 0 && this .skyColor_ .length == 1)
+         if (this ._groundColor .length === 0 && this ._skyColor .length == 1)
          {
             var s = SIZE;
 
@@ -317,7 +317,7 @@ function (X3DBindableNode,
                                 -s, -s,  s, 1,  s, -s,  s, 1, -s, -s, -s, 1, // Bottom
                                 -s, -s, -s, 1,  s, -s,  s, 1,  s, -s, -s, 1);
 
-            var c = this .skyColor_ [0];
+            var c = this ._skyColor [0];
 
             for (var i = 0, vertices = this .sphere .vertices; i < vertices; ++ i)
                this .colors .push (c .r, c .g, c .b, alpha);
@@ -326,30 +326,30 @@ function (X3DBindableNode,
          {
             // Build sphere
 
-            if (this .skyColor_ .length > this .skyAngle_ .length)
+            if (this ._skyColor .length > this ._skyAngle .length)
             {
                var vAngle = [ ];
 
-               for (var i = 0, length = this .skyAngle_ .length; i < length; ++ i)
-                  vAngle .push (this .skyAngle_ [i]);
+               for (var i = 0, length = this ._skyAngle .length; i < length; ++ i)
+                  vAngle .push (this ._skyAngle [i]);
 
                if (vAngle .length === 0 || vAngle [0] > 0)
                   vAngle .unshift (0);
 
-               var vAngleMax = this .groundColor_ .length > this .groundAngle_ .length ? Math .PI / 2 : Math .PI;
+               var vAngleMax = this ._groundColor .length > this ._groundAngle .length ? Math .PI / 2 : Math .PI;
 
                if (vAngle .at (-1) < vAngleMax)
                   vAngle .push (vAngleMax);
 
-               this .buildSphere (RADIUS, vAngle, this .skyAngle_, this .skyColor_, alpha, false);
+               this .buildSphere (RADIUS, vAngle, this ._skyAngle, this ._skyColor, alpha, false);
             }
 
-            if (this .groundColor_ .length > this .groundAngle_ .length)
+            if (this ._groundColor .length > this ._groundAngle .length)
             {
                var vAngle = [ ];
 
-               for (var i = 0, length = this .groundAngle_ .length; i < length; ++ i)
-                  vAngle .push (this .groundAngle_ [i]);
+               for (var i = 0, length = this ._groundAngle .length; i < length; ++ i)
+                  vAngle .push (this ._groundAngle [i]);
 
                vAngle .reverse ();
 
@@ -359,7 +359,7 @@ function (X3DBindableNode,
                if (vAngle .at (-1) > 0)
                   vAngle .push (0);
 
-               this .buildSphere (RADIUS, vAngle, this .groundAngle_, this .groundColor_, alpha, true);
+               this .buildSphere (RADIUS, vAngle, this ._groundAngle, this ._groundColor, alpha, true);
             }
          }
 
@@ -557,7 +557,7 @@ function (X3DBindableNode,
       })(),
       drawSphere: function (renderObject)
       {
-         var transparency = this .transparency_ .getValue ();
+         var transparency = this ._transparency .getValue ();
 
          if (transparency >= 1)
             return;
@@ -666,7 +666,7 @@ function (X3DBindableNode,
          {
             texture .setShaderUniforms (gl, shaderNode);
 
-            if (texture .transparent_ .getValue ())
+            if (texture ._transparent .getValue ())
                gl .enable (gl .BLEND);
             else
                gl .disable (gl .BLEND);

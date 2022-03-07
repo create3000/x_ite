@@ -106,7 +106,7 @@ function (Fields,
    {
       initialize: function ()
       {
-         this .viewer_ .addInterest ("set_viewer__", this);
+         this ._viewer .addInterest ("set_viewer__", this);
 
          this .initialized () .addInterest ("set_world__",    this);
          this .shutdown ()    .addInterest ("remove_world__", this);
@@ -120,19 +120,19 @@ function (Fields,
       },
       getActiveLayer: function ()
       {
-         return this .activeLayer_ .getValue ();
+         return this ._activeLayer .getValue ();
       },
       getActiveNavigationInfo: function ()
       {
-         return this .activeNavigationInfo_ .getValue ();
+         return this ._activeNavigationInfo .getValue ();
       },
       getActiveViewpoint: function ()
       {
-         return this .activeViewpoint_ .getValue ();
+         return this ._activeViewpoint .getValue ();
       },
       getCurrentViewer: function ()
       {
-         return this .viewer_ .getValue ();
+         return this ._viewer .getValue ();
       },
       getViewer: function ()
       {
@@ -152,28 +152,28 @@ function (Fields,
       },
       remove_world__: function ()
       {
-         this .getWorld () .activeLayer_ .removeInterest ("set_activeLayer__", this);
+         this .getWorld () ._activeLayer .removeInterest ("set_activeLayer__", this);
       },
       set_world__: function ()
       {
-         this .getWorld () .activeLayer_ .addInterest ("set_activeLayer__", this);
+         this .getWorld () ._activeLayer .addInterest ("set_activeLayer__", this);
 
          this .set_activeLayer__ ();
       },
       set_activeLayer__: function ()
       {
-         if (this .activeLayer_ .getValue ())
+         if (this ._activeLayer .getValue ())
          {
-            this .activeLayer_ .getValue () .getNavigationInfoStack () .removeInterest ("set_activeNavigationInfo__", this);
-            this .activeLayer_ .getValue () .getViewpointStack ()      .removeInterest ("set_activeViewpoint__",      this);
+            this ._activeLayer .getValue () .getNavigationInfoStack () .removeInterest ("set_activeNavigationInfo__", this);
+            this ._activeLayer .getValue () .getViewpointStack ()      .removeInterest ("set_activeViewpoint__",      this);
          }
 
-         this .activeLayer_ = this .getWorld () .getActiveLayer ();
+         this ._activeLayer = this .getWorld () .getActiveLayer ();
 
-         if (this .activeLayer_ .getValue ())
+         if (this ._activeLayer .getValue ())
          {
-            this .activeLayer_ .getValue () .getNavigationInfoStack () .addInterest ("set_activeNavigationInfo__", this);
-            this .activeLayer_ .getValue () .getViewpointStack ()      .addInterest ("set_activeViewpoint__",      this);
+            this ._activeLayer .getValue () .getNavigationInfoStack () .addInterest ("set_activeNavigationInfo__", this);
+            this ._activeLayer .getValue () .getViewpointStack ()      .addInterest ("set_activeViewpoint__",      this);
          }
 
          this .set_activeNavigationInfo__ ();
@@ -181,36 +181,36 @@ function (Fields,
       },
       set_activeNavigationInfo__: function ()
       {
-         if (this .activeNavigationInfo_ .getValue ())
-            this .activeNavigationInfo_ .getValue () .viewer_ .removeFieldInterest (this .viewer_);
+         if (this ._activeNavigationInfo .getValue ())
+            this ._activeNavigationInfo .getValue () ._viewer .removeFieldInterest (this ._viewer);
 
-         if (this .activeLayer_ .getValue ())
+         if (this ._activeLayer .getValue ())
          {
-            this .activeNavigationInfo_ = this .activeLayer_ .getValue () .getNavigationInfo ();
+            this ._activeNavigationInfo = this ._activeLayer .getValue () .getNavigationInfo ();
 
-            this .activeNavigationInfo_ .getValue () .viewer_ .addFieldInterest (this .viewer_);
+            this ._activeNavigationInfo .getValue () ._viewer .addFieldInterest (this ._viewer);
 
-            this .viewer_ = this .activeNavigationInfo_ .getValue () .viewer_;
+            this ._viewer = this ._activeNavigationInfo .getValue () ._viewer;
          }
          else
          {
-            this .activeNavigationInfo_ = null;
-            this .viewer_               = "NONE";
+            this ._activeNavigationInfo = null;
+            this ._viewer               = "NONE";
          }
       },
       set_activeViewpoint__: function ()
       {
-         if (this .activeLayer_ .getValue ())
-            this .activeViewpoint_ = this .activeLayer_ .getValue () .getViewpoint ();
+         if (this ._activeLayer .getValue ())
+            this ._activeViewpoint = this ._activeLayer .getValue () .getViewpoint ();
          else
-            this .activeViewpoint_ = null;
+            this ._activeViewpoint = null;
       },
       set_viewer__: function (viewer)
       {
-         if (this .activeNavigationInfo_ .getValue ())
-            this .availableViewers_ = this .activeNavigationInfo_ .getValue () .availableViewers_;
+         if (this ._activeNavigationInfo .getValue ())
+            this ._availableViewers = this ._activeNavigationInfo .getValue () ._availableViewers;
          else
-            this .availableViewers_ .length = 0;
+            this ._availableViewers .length = 0;
 
          // Create viewer node.
 

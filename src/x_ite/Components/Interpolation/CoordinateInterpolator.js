@@ -97,15 +97,15 @@ function (Fields,
       interpolate: function (index0, index1, weight)
       {
          var
-            keyValue = this .keyValue_ .getValue (),
-            size     = this .key_ .length ? Math .floor (this .keyValue_ .length / this .key_ .length) : 0;
+            keyValue = this ._keyValue .getValue (),
+            size     = this ._key .length ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
 
-         this .value_changed_ .length = size;
+         this ._value_changed .length = size;
 
-         var value_changed = this .value_changed_ .getValue ();
+         var value_changed = this ._value_changed .getValue ();
 
          index0 *= size;
-         index1  = index0 + (this .key_ .length > 1 ? size : 0);
+         index1  = index0 + (this ._key .length > 1 ? size : 0);
 
          index0 *= 3;
          index1 *= 3;
@@ -122,7 +122,7 @@ function (Fields,
             value_changed [i2] = Algorithm .lerp (keyValue [index0 + i2], keyValue [index1 + i2], weight);
          }
 
-         this .value_changed_ .addEvent ();
+         this ._value_changed .addEvent ();
       },
    });
 

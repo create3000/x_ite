@@ -95,14 +95,14 @@ function (Fields,
       {
          X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
-         this .point_ .addInterest ("set_point__", this);
+         this ._point .addInterest ("set_point__", this);
 
          this .set_point__ ();
       },
       set_point__: function ()
       {
-         this .point  = this .point_ .getValue ();
-         this .length = this .point_ .length;
+         this .point  = this ._point .getValue ();
+         this .length = this ._point .length;
       },
       isEmpty: function ()
       {

@@ -97,11 +97,11 @@ function (Fields,
       },
       addInitLoadCount: function (node)
       {
-         this .initLoadCount_ = this .initLoadCount_ .getValue () + 1;
+         this ._initLoadCount = this ._initLoadCount .getValue () + 1;
       },
       removeInitLoadCount: function (node)
       {
-         this .initLoadCount_ = this .initLoadCount_ .getValue () - 1;
+         this ._initLoadCount = this ._initLoadCount .getValue () - 1;
       },
       addLoadCount: function (node)
       {
@@ -110,7 +110,7 @@ function (Fields,
 
          this [_loadingObjects] .add (node);
 
-         this .loadCount_ = this [_loadingObjects] .size;
+         this ._loadCount = this [_loadingObjects] .size;
 
          const
             browser = this .getBrowser (),
@@ -129,7 +129,7 @@ function (Fields,
 
          this [_loadingObjects] .delete (node);
 
-         this .loadCount_ = this [_loadingObjects] .size;
+         this ._loadCount = this [_loadingObjects] .size;
 
          const
             browser = this .getBrowser (),

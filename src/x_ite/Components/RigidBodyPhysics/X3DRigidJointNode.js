@@ -84,7 +84,7 @@ function (Fields,
       {
          X3DNode .prototype .initialize .call (this);
 
-         this .forceOutput_ .addInterest ("set_forceOutput__", this);
+         this ._forceOutput .addInterest ("set_forceOutput__", this);
          this .body1_       .addInterest ("set_body1__",       this);
          this .body2_       .addInterest ("set_body2__",       this);
 
@@ -96,13 +96,13 @@ function (Fields,
       {
          this .removeJoint ();
 
-         this .collection_ = value;
+         this ._collection = value;
 
          this .addJoint ();
       },
       getCollection: function ()
       {
-         return this .collection_ .getValue ();
+         return this ._collection .getValue ();
       },
       getBody1: function ()
       {
@@ -159,14 +159,14 @@ function (Fields,
          if (this .bodyNode1)
          {
             this .bodyNode1 .removeInterest ("update1", this);
-            this .bodyNode1 .collection_ .removeInterest ("set_joint__", this);
+            this .bodyNode1 ._collection .removeInterest ("set_joint__", this);
          }
 
          this .bodyNode1 = X3DCast (X3DConstants .RigidBody, this .body1_);
 
          if (this .bodyNode1)
          {
-            this .bodyNode1 .collection_ .addInterest ("set_joint__", this);
+            this .bodyNode1 ._collection .addInterest ("set_joint__", this);
 
             this .initialize1 ();
             this .addJoint ();
@@ -180,14 +180,14 @@ function (Fields,
          if (this .bodyNode2)
          {
             this .bodyNode2 .removeInterest ("update2", this);
-            this .bodyNode2 .collection_ .removeInterest ("set_joint__", this);
+            this .bodyNode2 ._collection .removeInterest ("set_joint__", this);
          }
 
          this .bodyNode2 = X3DCast (X3DConstants .RigidBody, this .body2_);
 
          if (this .bodyNode2)
          {
-            this .bodyNode2 .collection_ .addInterest ("set_joint__", this);
+            this .bodyNode2 ._collection .addInterest ("set_joint__", this);
 
             this .initialize2 ();
             this .addJoint ();
@@ -196,12 +196,12 @@ function (Fields,
       },
       initialize1: function ()
       {
-         this .initialInverseMatrix1 .set (this .bodyNode1 .position_ .getValue (), this .bodyNode1 .orientation_ .getValue ());
+         this .initialInverseMatrix1 .set (this .bodyNode1 ._position .getValue (), this .bodyNode1 ._orientation .getValue ());
          this .initialInverseMatrix1 .inverse ();
       },
       initialize2: function ()
       {
-         this .initialInverseMatrix2 .set (this .bodyNode2 .position_ .getValue (), this .bodyNode2 .orientation_ .getValue ());
+         this .initialInverseMatrix2 .set (this .bodyNode2 ._position .getValue (), this .bodyNode2 ._orientation .getValue ());
          this .initialInverseMatrix2 .inverse ();
       },
       update1: function ()

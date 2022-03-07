@@ -102,28 +102,28 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .surfaceNormals_ .addInterest ("set_surfaceNormals__", this);
+         this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
          this .set_surfaceNormals__ ();
       },
       set_surfaceNormals__: function ()
       {
-         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .surfaceNormals_);
+         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._surfaceNormals);
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "edgeColor_"         + this .getId (), this .edgeColor_         .copy ());
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "gradientThreshold_" + this .getId (), this .gradientThreshold_ .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "edgeColor_"         + this .getId (), this ._edgeColor         .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "gradientThreshold_" + this .getId (), this ._gradientThreshold .copy ());
 
          if (this .surfaceNormalsNode)
             shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -160,7 +160,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";

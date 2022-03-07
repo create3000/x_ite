@@ -103,23 +103,23 @@ function (Fields,
       eventsProcessed: function ()
       {
          this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
-         this .geometry .texCoord_ = new TextureCoordinate (this .getExecutionContext ());
-         this .geometry .coord_    = new Coordinate (this .getExecutionContext ());
+         this .geometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());
+         this .geometry ._coord    = new Coordinate (this .getExecutionContext ());
 
          const
             geometry = this .geometry,
-            texCoord = this .geometry .texCoord_ .getValue (),
-            coord    = this .geometry .coord_ .getValue ();
+            texCoord = this .geometry ._texCoord .getValue (),
+            coord    = this .geometry ._coord .getValue ();
 
-            const icoSphere = new IcoSphere (this .type_ .getValue (), this .order_ .getValue (), 1);
+            const icoSphere = new IcoSphere (this ._type .getValue (), this ._order .getValue (), 1);
 
-         geometry .creaseAngle_ = Math .PI;
+         geometry ._creaseAngle = Math .PI;
 
-         texCoord .point_ = icoSphere .getTexPoint ();
-         coord .point_    = icoSphere .getPoint ();
+         texCoord ._point = icoSphere .getTexPoint ();
+         coord ._point    = icoSphere .getPoint ();
 
-         geometry .texCoordIndex_ = icoSphere .getTexCoordIndex ();
-         geometry .coordIndex_    = icoSphere .getCoordIndex ();
+         geometry ._texCoordIndex = icoSphere .getTexCoordIndex ();
+         geometry ._coordIndex    = icoSphere .getCoordIndex ();
 
          texCoord .setup ();
          coord    .setup ();

@@ -95,17 +95,17 @@ function (PixelTexture,
 
          const textureProperties = new TextureProperties (this .getPrivateScene ());
 
-         textureProperties .generateMipMaps_ = true;
-         textureProperties .boundaryModeS_   = "CLAMP_TO_EDGE";
-         textureProperties .boundaryModeT_   = "REPEAT";
+         textureProperties ._generateMipMaps = true;
+         textureProperties ._boundaryModeS   = "CLAMP_TO_EDGE";
+         textureProperties ._boundaryModeT   = "REPEAT";
 
-         this [_defaultTransferFunction] .textureProperties_ = textureProperties;
+         this [_defaultTransferFunction] ._textureProperties = textureProperties;
 
-         this [_defaultTransferFunction] .image_ .width  = 256;
-         this [_defaultTransferFunction] .image_ .height = 1;
-         this [_defaultTransferFunction] .image_ .comp   = 2;
+         this [_defaultTransferFunction] ._image .width  = 256;
+         this [_defaultTransferFunction] ._image .height = 1;
+         this [_defaultTransferFunction] ._image .comp   = 2;
 
-         const array = this [_defaultTransferFunction] .image_ .array;
+         const array = this [_defaultTransferFunction] ._image .array;
 
          for (let i = 0; i < 256; ++ i)
             array [i] = (i << 8) | i;

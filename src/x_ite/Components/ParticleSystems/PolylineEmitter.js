@@ -74,9 +74,9 @@ function (Fields,
 
       this .addType (X3DConstants .PolylineEmitter);
 
-      this .speed_       .setUnit ("speed");
-      this .mass_        .setUnit ("mass");
-      this .surfaceArea_ .setUnit ("area");
+      this ._speed       .setUnit ("speed");
+      this ._mass        .setUnit ("mass");
+      this ._surfaceArea .setUnit ("area");
 
       this .direction        = new Vector3 (0, 0, 0);
       this .polylineNode     = new IndexedLineSet (executionContext);
@@ -113,15 +113,15 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         this .direction_ .addInterest ("set_direction__", this);
+         this ._direction .addInterest ("set_direction__", this);
 
-         this .coordIndex_ .addFieldInterest (this .polylineNode .coordIndex_);
-         this .coord_      .addFieldInterest (this .polylineNode .coord_);
+         this ._coordIndex .addFieldInterest (this .polylineNode ._coordIndex);
+         this ._coord      .addFieldInterest (this .polylineNode ._coord);
 
-         this .polylineNode .coordIndex_ = this .coordIndex_;
-         this .polylineNode .coord_      = this .coord_;
+         this .polylineNode ._coordIndex = this ._coordIndex;
+         this .polylineNode ._coord      = this ._coord;
 
-         this .polylineNode .rebuild_ .addInterest ("set_polyline", this);
+         this .polylineNode ._rebuild .addInterest ("set_polyline", this);
          this .polylineNode .setPrivate (true);
          this .polylineNode .setup ();
 
@@ -130,7 +130,7 @@ function (Fields,
       },
       set_direction__: function ()
       {
-         this .direction .assign (this .direction_ .getValue ()) .normalize ();
+         this .direction .assign (this ._direction .getValue ()) .normalize ();
 
          if (this .direction .equals (Vector3 .Zero))
             this .getRandomVelocity = this .getSphericalRandomVelocity;

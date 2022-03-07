@@ -81,9 +81,9 @@ function (Fields,
                              "availableViewers", new Fields .MFString (),
                              "viewer",           new Fields .SFString ("EXAMINE"));
 
-      this .avatarSize_      .setUnit ("length");
-      this .speed_           .setUnit ("speed");
-      this .visibilityLimit_ .setUnit ("speed");
+      this ._avatarSize      .setUnit ("length");
+      this ._speed           .setUnit ("speed");
+      this ._visibilityLimit .setUnit ("speed");
    }
 
    NavigationInfo .prototype = Object .assign (Object .create (X3DBindableNode .prototype),
@@ -119,40 +119,40 @@ function (Fields,
       {
          X3DBindableNode .prototype .initialize .call (this);
 
-         this .type_               .addInterest ("set_type__",               this);
-         this .headlight_          .addInterest ("set_headlight__",          this);
-         this .transitionStart_    .addInterest ("set_transitionStart__",    this);
-         this .transitionComplete_ .addInterest ("set_transitionComplete__", this);
-         this .isBound_            .addInterest ("set_isBound__",            this);
+         this ._type               .addInterest ("set_type__",               this);
+         this ._headlight          .addInterest ("set_headlight__",          this);
+         this ._transitionStart    .addInterest ("set_transitionStart__",    this);
+         this ._transitionComplete .addInterest ("set_transitionComplete__", this);
+         this ._isBound            .addInterest ("set_isBound__",            this);
 
          this .set_type__ ();
          this .set_headlight__ ();
       },
       getViewer: function ()
       {
-         return this .viewer_ .getValue ();
+         return this ._viewer .getValue ();
       },
       getCollisionRadius: function ()
       {
-         if (this .avatarSize_ .length > 0)
+         if (this ._avatarSize .length > 0)
          {
-            if (this .avatarSize_ [0] > 0)
-               return this .avatarSize_ [0];
+            if (this ._avatarSize [0] > 0)
+               return this ._avatarSize [0];
          }
 
          return 0.25;
       },
       getAvatarHeight: function ()
       {
-         if (this .avatarSize_ .length > 1)
-            return this .avatarSize_ [1];
+         if (this ._avatarSize .length > 1)
+            return this ._avatarSize [1];
 
          return 1.6;
       },
       getStepHeight: function ()
       {
-         if (this .avatarSize_ .length > 2)
-            return this .avatarSize_ [2];
+         if (this ._avatarSize .length > 2)
+            return this ._avatarSize [2];
 
          return 0.75;
       },
@@ -168,13 +168,13 @@ function (Fields,
       },
       getFarValue: function (viewpoint)
       {
-         return this .visibilityLimit_ .getValue ()
-                ? this .visibilityLimit_ .getValue ()
+         return this ._visibilityLimit .getValue ()
+                ? this ._visibilityLimit .getValue ()
                 : viewpoint .getMaxFarValue ();
       },
       getTransitionType: function ()
       {
-         for (const value of this .transitionType_)
+         for (const value of this ._transitionType)
          {
             const transitionType = TransitionType [value];
 
@@ -188,9 +188,9 @@ function (Fields,
       {
          // Determine active viewer.
 
-         this .viewer_ = "EXAMINE";
+         this ._viewer = "EXAMINE";
 
-         for (const string of this .type_)
+         for (const string of this ._type)
          {
             switch (string)
             {
@@ -200,10 +200,10 @@ function (Fields,
                case "LOOKAT":
                case "PLANE":
                case "NONE":
-                  this .viewer_ = string;
+                  this ._viewer = string;
                   break;
                case "PLANE_create3000.de":
-                  this .viewer_ = "PLANE";
+                  this ._viewer = "PLANE";
                   break;
                default:
                   continue;
@@ -223,7 +223,7 @@ function (Fields,
             noneViewer    = false,
             lookAt        = false;
 
-         if (! this .type_ .length)
+         if (! this ._type .length)
          {
             examineViewer = true;
             walkViewer    = true;
@@ -234,7 +234,7 @@ function (Fields,
          }
          else
          {
-            for (const string of this .type_)
+            for (const string of this ._type)
             {
                switch (string)
                {
@@ -274,57 +274,57 @@ function (Fields,
             }
          }
 
-         this .availableViewers_ .length = 0;
+         this ._availableViewers .length = 0;
 
          if (examineViewer)
-            this .availableViewers_ .push ("EXAMINE");
+            this ._availableViewers .push ("EXAMINE");
 
          if (walkViewer)
-            this .availableViewers_ .push ("WALK");
+            this ._availableViewers .push ("WALK");
 
          if (flyViewer)
-            this .availableViewers_ .push ("FLY");
+            this ._availableViewers .push ("FLY");
 
          if (planeViewer)
-            this .availableViewers_ .push ("PLANE");
+            this ._availableViewers .push ("PLANE");
 
          if (lookAt)
-            this .availableViewers_ .push ("LOOKAT");
+            this ._availableViewers .push ("LOOKAT");
 
          if (noneViewer)
-            this .availableViewers_ .push ("NONE");
+            this ._availableViewers .push ("NONE");
       },
       set_headlight__: function ()
       {
-         if (this .headlight_ .getValue ())
+         if (this ._headlight .getValue ())
             delete this .enable;
          else
             this .enable = Function .prototype;
       },
       set_transitionStart__: function ()
       {
-         if (! this .transitionActive_ .getValue ())
-            this .transitionActive_ = true;
+         if (! this ._transitionActive .getValue ())
+            this ._transitionActive = true;
       },
       set_transitionComplete__: function ()
       {
-         if (this .transitionActive_ .getValue ())
-            this .transitionActive_ = false;
+         if (this ._transitionActive .getValue ())
+            this ._transitionActive = false;
       },
       set_isBound__: function ()
       {
-         if (this .isBound_ .getValue ())
+         if (this ._isBound .getValue ())
             return;
 
-         if (this .transitionActive_ .getValue ())
-            this .transitionActive_ = false;
+         if (this ._transitionActive .getValue ())
+            this ._transitionActive = false;
       },
       enable: function (type, renderObject)
       {
          if (type !== TraverseType .DISPLAY)
             return;
 
-         if (this .headlight_ .getValue ())
+         if (this ._headlight .getValue ())
             renderObject .getGlobalObjects () .push (renderObject .getBrowser () .getHeadlight ());
       },
       traverse: function (type, renderObject)

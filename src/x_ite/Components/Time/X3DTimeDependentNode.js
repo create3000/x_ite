@@ -85,22 +85,22 @@ function (Fields,
       initialize: function ()
       {
          this .isLive ()   .addInterest ("set_live__", this);
-         this .isEvenLive_ .addInterest ("set_live__", this);
+         this ._isEvenLive .addInterest ("set_live__", this);
 
-         this .initialized_ .addInterest ("set_loop__",       this);
-         this .enabled_     .addInterest ("set_enabled__",    this);
-         this .loop_        .addInterest ("set_loop__",       this);
-         this .startTime_   .addInterest ("set_startTime__",  this);
-         this .pauseTime_   .addInterest ("set_pauseTime__",  this);
-         this .resumeTime_  .addInterest ("set_resumeTime__", this);
-         this .stopTime_    .addInterest ("set_stopTime__",   this);
+         this ._initialized .addInterest ("set_loop__",       this);
+         this ._enabled     .addInterest ("set_enabled__",    this);
+         this ._loop        .addInterest ("set_loop__",       this);
+         this ._startTime   .addInterest ("set_startTime__",  this);
+         this ._pauseTime   .addInterest ("set_pauseTime__",  this);
+         this ._resumeTime  .addInterest ("set_resumeTime__", this);
+         this ._stopTime    .addInterest ("set_stopTime__",   this);
 
-         this .startTimeValue  = this .startTime_  .getValue ();
-         this .pauseTimeValue  = this .pauseTime_  .getValue ();
-         this .resumeTimeValue = this .resumeTime_ .getValue ();
-         this .stopTimeValue   = this .stopTime_   .getValue ();
+         this .startTimeValue  = this ._startTime  .getValue ();
+         this .pauseTimeValue  = this ._pauseTime  .getValue ();
+         this .resumeTimeValue = this ._resumeTime .getValue ();
+         this .stopTimeValue   = this ._stopTime   .getValue ();
 
-         this .initialized_ = this .getBrowser () .getCurrentTime ();
+         this ._initialized = this .getBrowser () .getCurrentTime ();
       },
       getDisabled: function ()
       {
@@ -110,7 +110,7 @@ function (Fields,
       {
          ///  Determines the live state of this node.
 
-         return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this .isEvenLive_ .getValue ());
+         return this .getLive () && (this .getExecutionContext () .isLive () .getValue () || this ._isEvenLive .getValue ());
       },
       getElapsedTime: function ()
       {
@@ -124,19 +124,19 @@ function (Fields,
       },
       set_live__: function ()
       {
-         if (this .isLive () .getValue () || this .isEvenLive_ .getValue ())
+         if (this .isLive () .getValue () || this ._isEvenLive .getValue ())
          {
             if (this .disabled)
             {
                this .disabled = false;
 
-               if (this .isActive_ .getValue () && !this .isPaused_ .getValue ())
+               if (this ._isActive .getValue () && !this ._isPaused .getValue ())
                   this .real_resume ();
             }
          }
          else
          {
-            if (!this .disabled && this .isActive_ .getValue () && !this .isPaused_ .getValue ())
+            if (!this .disabled && this ._isActive .getValue () && !this ._isPaused .getValue ())
             {
                // Only disable if needed, ie. if running!
                this .disabled = true;
@@ -146,7 +146,7 @@ function (Fields,
       },
       set_enabled__: function ()
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
             this .set_loop__ ();
 
          else
@@ -154,9 +154,9 @@ function (Fields,
       },
       set_loop__: function ()
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
-            if (this .loop_ .getValue ())
+            if (this ._loop .getValue ())
             {
                if (this .stopTimeValue <= this .startTimeValue)
                {
@@ -168,9 +168,9 @@ function (Fields,
       },
       set_startTime__: function ()
       {
-         this .startTimeValue = this .startTime_ .getValue ();
+         this .startTimeValue = this ._startTime .getValue ();
 
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
             this .removeTimeout ("startTimeout");
 
@@ -183,9 +183,9 @@ function (Fields,
       },
       set_pauseTime__: function ()
       {
-         this .pauseTimeValue = this .pauseTime_ .getValue ();
+         this .pauseTimeValue = this ._pauseTime .getValue ();
 
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
             this .removeTimeout ("pauseTimeout");
 
@@ -201,9 +201,9 @@ function (Fields,
       },
       set_resumeTime__: function ()
       {
-         this .resumeTimeValue = this .resumeTime_ .getValue ();
+         this .resumeTimeValue = this ._resumeTime .getValue ();
 
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
             this .removeTimeout ("resumeTimeout");
 
@@ -219,9 +219,9 @@ function (Fields,
       },
       set_stopTime__: function ()
       {
-         this .stopTimeValue = this .stopTime_ .getValue ();
+         this .stopTimeValue = this ._stopTime .getValue ();
 
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
             this .removeTimeout ("stopTimeout");
 
@@ -237,13 +237,13 @@ function (Fields,
       },
       do_start: function ()
       {
-         if (!this .isActive_ .getValue ())
+         if (!this ._isActive .getValue ())
          {
             this .resetElapsedTime ();
 
             // The event order below is very important.
 
-            this .isActive_ = true;
+            this ._isActive = true;
 
             this .set_start ();
 
@@ -257,14 +257,14 @@ function (Fields,
                this .real_pause ();
             }
 
-            this .elapsedTime_ = 0;
+            this ._elapsedTime = 0;
          }
       },
       do_pause: function ()
       {
-         if (this .isActive_ .getValue () && !this .isPaused_ .getValue ())
+         if (this ._isActive .getValue () && !this ._isPaused .getValue ())
          {
-            this .isPaused_ = true;
+            this ._isPaused = true;
 
             if (this .pauseTimeValue !== this .getBrowser () .getCurrentTime ())
                this .pauseTimeValue = this .getBrowser () .getCurrentTime ();
@@ -283,9 +283,9 @@ function (Fields,
       },
       do_resume: function ()
       {
-         if (this .isActive_ .getValue () && this .isPaused_ .getValue ())
+         if (this ._isActive .getValue () && this ._isPaused .getValue ())
          {
-            this .isPaused_ = false;
+            this ._isPaused = false;
 
             if (this .resumeTimeValue !== this .getBrowser () .getCurrentTime ())
                this .resumeTimeValue = this .getBrowser () .getCurrentTime ();
@@ -311,25 +311,25 @@ function (Fields,
       },
       stop: function ()
       {
-         if (this .isActive_ .getValue ())
+         if (this ._isActive .getValue ())
          {
             // The event order below is very important.
 
             this .set_stop ();
 
-            this .elapsedTime_ = this .getElapsedTime ();
+            this ._elapsedTime = this .getElapsedTime ();
 
-            if (this .isPaused_ .getValue ())
-               this .isPaused_ = false;
+            if (this ._isPaused .getValue ())
+               this ._isPaused = false;
 
-            this .isActive_ = false;
+            this ._isActive = false;
 
             this .getBrowser () .timeEvents () .removeInterest ("set_time" ,this);
          }
       },
       timeout: function (callback)
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
             this .getBrowser () .advanceTime (performance .now ());
 

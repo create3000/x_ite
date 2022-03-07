@@ -76,7 +76,7 @@ function (Fields,
       this .addType (X3DConstants .Collision);
 
       if (executionContext .getSpecificationVersion () === "2.0")
-         this .addAlias ("collide", this .enabled_); // VRML2
+         this .addAlias ("collide", this ._enabled); // VRML2
    }
 
    Collision .prototype = Object .assign (Object .create (X3DGroupingNode .prototype),
@@ -115,15 +115,15 @@ function (Fields,
          //X3DSensorNode   .prototype .initialize .call (this); // We can only call the base of a *Objects.
 
          this .isLive () .addInterest ("set_live__", this);
-         this .enabled_  .addInterest ("set_live__", this);
-         this .proxy_    .addInterest ("set_proxy__", this);
+         this ._enabled  .addInterest ("set_live__", this);
+         this ._proxy    .addInterest ("set_proxy__", this);
 
          this .set_live__ ();
          this .set_proxy__ ();
       },
       set_live__: function ()
       {
-         if (this .isLive () .getValue () && this .enabled_ .getValue ())
+         if (this .isLive () .getValue () && this ._enabled .getValue ())
             this .getBrowser () .addCollision (this);
 
          else
@@ -131,17 +131,17 @@ function (Fields,
       },
       set_active: function (value)
       {
-         if (this .isActive_ .getValue () !== value)
+         if (this ._isActive .getValue () !== value)
          {
-            this .isActive_ = value;
+            this ._isActive = value;
 
             if (value)
-               this .collideTime_ = this .getBrowser () .getCurrentTime ();
+               this ._collideTime = this .getBrowser () .getCurrentTime ();
          }
       },
       set_proxy__: function ()
       {
-         this .proxyNode = X3DCast (X3DConstants .X3DChildNode, this .proxy_);
+         this .proxyNode = X3DCast (X3DConstants .X3DChildNode, this ._proxy);
       },
       traverse: function (type, renderObject)
       {
@@ -149,7 +149,7 @@ function (Fields,
          {
             case TraverseType .COLLISION:
             {
-               if (this .enabled_ .getValue ())
+               if (this ._enabled .getValue ())
                {
                   const collisions = renderObject .getCollisions ();
 

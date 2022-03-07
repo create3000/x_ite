@@ -74,7 +74,7 @@ function (Fields,
 
       this .addType (X3DConstants .IndexedFaceSet);
 
-      this .creaseAngle_ .setUnit ("angle");
+      this ._creaseAngle .setUnit ("angle");
    }
 
    IndexedFaceSet .prototype = Object .assign (Object .create (X3DComposedGeometryNode .prototype),
@@ -119,43 +119,43 @@ function (Fields,
       {
          X3DComposedGeometryNode .prototype .initialize .call (this);
 
-         this .set_colorIndex_    .addFieldInterest (this .colorIndex_);
-         this .set_texCoordIndex_ .addFieldInterest (this .texCoordIndex_);
-         this .set_normalIndex_   .addFieldInterest (this .normalIndex_);
-         this .set_coordIndex_    .addFieldInterest (this .coordIndex_);
+         this ._set_colorIndex    .addFieldInterest (this ._colorIndex);
+         this ._set_texCoordIndex .addFieldInterest (this ._texCoordIndex);
+         this ._set_normalIndex   .addFieldInterest (this ._normalIndex);
+         this ._set_coordIndex    .addFieldInterest (this ._coordIndex);
       },
       getTexCoordPerVertexIndex: function (index)
       {
-         if (index < this .texCoordIndex_ .length)
-            return this .texCoordIndex_ [index];
+         if (index < this ._texCoordIndex .length)
+            return this ._texCoordIndex [index];
 
-         return this .coordIndex_ [index];
+         return this ._coordIndex [index];
       },
       getColorPerVertexIndex: function (index)
       {
-         if (index < this .colorIndex_ .length)
-            return this .colorIndex_ [index];
+         if (index < this ._colorIndex .length)
+            return this ._colorIndex [index];
 
-         return this .coordIndex_ [index];
+         return this ._coordIndex [index];
       },
       getColorIndex: function (index)
       {
-         if (index < this .colorIndex_ .length)
-            return this .colorIndex_ [index];
+         if (index < this ._colorIndex .length)
+            return this ._colorIndex [index];
 
          return index;
       },
       getNormalPerVertexIndex: function (index)
       {
-         if (index < this .normalIndex_ .length)
-            return this .normalIndex_ [index];
+         if (index < this ._normalIndex .length)
+            return this ._normalIndex [index];
 
-         return this .coordIndex_ [index];
+         return this ._coordIndex [index];
       },
       getNormalIndex: function (index)
       {
-         if (index < this .normalIndex_ .length)
-            return this .normalIndex_ [index];
+         if (index < this ._normalIndex .length)
+            return this ._normalIndex [index];
 
          return index;
       },
@@ -173,9 +173,9 @@ function (Fields,
          // Fill GeometryNode
 
          var
-            colorPerVertex     = this .colorPerVertex_ .getValue (),
-            normalPerVertex    = this .normalPerVertex_ .getValue (),
-            coordIndex         = this .coordIndex_ .getValue (),
+            colorPerVertex     = this ._colorPerVertex .getValue (),
+            normalPerVertex    = this ._normalPerVertex .getValue (),
+            coordIndex         = this ._coordIndex .getValue (),
             attribNodes        = this .getAttrib (),
             numAttrib          = attribNodes .length,
             attribs            = this .getAttribs (),
@@ -243,14 +243,14 @@ function (Fields,
          if (! this .getNormal ())
             this .buildNormals (polygons);
 
-         this .setSolid (this .solid_ .getValue ());
-         this .setCCW (this .ccw_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
+         this .setCCW (this ._ccw .getValue ());
       },
       triangulate: function ()
       {
          var
-            convex      = this .convex_ .getValue (),
-            coordLength = this .coordIndex_ .length,
+            convex      = this ._convex .getValue (),
+            coordLength = this ._coordIndex .length,
             polygons    = [ ];
 
          if (! this .getCoord ())
@@ -259,12 +259,12 @@ function (Fields,
          if (coordLength)
          {
             // Add -1 (polygon end marker) to coordIndex if not present.
-            if (this .coordIndex_ [coordLength - 1] > -1)
-               this .coordIndex_ .push (-1);
+            if (this ._coordIndex [coordLength - 1] > -1)
+               this ._coordIndex .push (-1);
 
             var
-               coordIndex  = this .coordIndex_ .getValue (),
-               coordLength = this .coordIndex_ .length;
+               coordIndex  = this ._coordIndex .getValue (),
+               coordLength = this ._coordIndex .length;
 
             // Construct triangle array and determine the number of used points.
             var
@@ -347,7 +347,7 @@ function (Fields,
          return function (vertices, triangles)
          {
             var
-               coordIndex = this .coordIndex_ .getValue (),
+               coordIndex = this ._coordIndex .getValue (),
                coord      = this .getCoord ();
 
             for (var v = 0, length = vertices .length; v < length; ++ v)
@@ -405,8 +405,8 @@ function (Fields,
          return function (polygons)
          {
             var
-               cw          = ! this .ccw_ .getValue (),
-               coordIndex  = this .coordIndex_ .getValue (),
+               cw          = ! this ._ccw .getValue (),
+               coordIndex  = this ._coordIndex .getValue (),
                coord       = this .getCoord (),
                normal      = null;
 
@@ -468,7 +468,7 @@ function (Fields,
                   normals [vertices [i]] = normal;
             }
 
-            return this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());
+            return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
          };
       })(),
       getPolygonNormal: (function ()

@@ -105,7 +105,7 @@ function (Fields,
       },
       getSourceText: function ()
       {
-         return this .url_;
+         return this ._url;
       },
       requestImmediateLoad: function (cache = true)
       { },

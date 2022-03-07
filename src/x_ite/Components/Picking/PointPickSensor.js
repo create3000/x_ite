@@ -121,19 +121,19 @@ function (Fields,
       {
          X3DPickSensorNode .prototype .initialize .call (this);
 
-         this .pickingGeometry_ .addInterest ("set_pickingGeometry__", this);
+         this ._pickingGeometry .addInterest ("set_pickingGeometry__", this);
 
          this .set_pickingGeometry__ ();
       },
       set_pickingGeometry__: function ()
       {
          if (this .pickingGeometryNode)
-            this .pickingGeometryNode .rebuild_ .removeInterest ("set_geometry__", this);
+            this .pickingGeometryNode ._rebuild .removeInterest ("set_geometry__", this);
 
-         this .pickingGeometryNode = X3DCast (X3DConstants .PointSet, this .pickingGeometry_);
+         this .pickingGeometryNode = X3DCast (X3DConstants .PointSet, this ._pickingGeometry);
 
          if (this .pickingGeometryNode)
-            this .pickingGeometryNode .rebuild_ .addInterest ("set_geometry__", this);
+            this .pickingGeometryNode ._rebuild .addInterest ("set_geometry__", this);
 
          this .set_geometry__ ();
       },
@@ -257,11 +257,11 @@ function (Fields,
 
                      pickedGeometries .remove (0, pickedGeometries .length, null);
 
-                     if (active !== this .isActive_ .getValue ())
-                        this .isActive_ = active;
+                     if (active !== this ._isActive .getValue ())
+                        this ._isActive = active;
 
-                     if (! this .pickedGeometry_ .equals (pickedGeometries))
-                        this .pickedGeometry_ = pickedGeometries;
+                     if (! this ._pickedGeometry .equals (pickedGeometries))
+                        this ._pickedGeometry = pickedGeometries;
 
                      break;
                   }
@@ -321,11 +321,11 @@ function (Fields,
 
                      pickedGeometries .remove (0, pickedGeometries .length, null);
 
-                     if (active !== this .isActive_ .getValue ())
-                        this .isActive_ = active;
+                     if (active !== this ._isActive .getValue ())
+                        this ._isActive = active;
 
-                     if (! this .pickedGeometry_ .equals (pickedGeometries))
-                        this .pickedGeometry_ = pickedGeometries;
+                     if (! this ._pickedGeometry .equals (pickedGeometries))
+                        this ._pickedGeometry = pickedGeometries;
 
                      var pickedTargets = this .getPickedTargets ();
 
@@ -339,8 +339,8 @@ function (Fields,
                            pickedPoint .push (pp [p]);
                      }
 
-                     if (! this .pickedPoint_ .equals (pickedPoint))
-                        this .pickedPoint_ = pickedPoint;
+                     if (! this ._pickedPoint .equals (pickedPoint))
+                        this ._pickedPoint = pickedPoint;
 
                      break;
                   }

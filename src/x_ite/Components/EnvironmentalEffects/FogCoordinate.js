@@ -68,7 +68,7 @@ function (Fields,
 
       this .addType (X3DConstants .FogCoordinate);
 
-      this .depth_ .setUnit ("length");
+      this ._depth .setUnit ("length");
    }
 
    FogCoordinate .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),
@@ -94,14 +94,14 @@ function (Fields,
       {
          X3DGeometricPropertyNode .prototype .initialize .call (this);
 
-         this .depth_ .addInterest ("set_depth__", this);
+         this ._depth .addInterest ("set_depth__", this);
 
          this .set_depth__ ();
       },
       set_depth__: function ()
       {
-         this .depth  = this .depth_ .getValue ();
-         this .length = this .depth_ .length;
+         this .depth  = this ._depth .getValue ();
+         this .length = this ._depth .length;
       },
       isEmpty: function ()
       {

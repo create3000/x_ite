@@ -98,11 +98,11 @@ function (Fields,
       {
          X3DAppearanceChildNode .prototype .initialize .call (this);
 
-         this .pointSizeScaleFactor_ .addInterest ("set_pointSizeScaleFactor__", this);
-         this .pointSizeMinValue_    .addInterest ("set_pointSizeMinValue__",    this);
-         this .pointSizeMaxValue_    .addInterest ("set_pointSizeMaxValue__",    this);
-         this .pointSizeAttenuation_ .addInterest ("set_pointSizeAttenuation__", this);
-         this .colorMode_            .addInterest ("set_colorMode__",            this);
+         this ._pointSizeScaleFactor .addInterest ("set_pointSizeScaleFactor__", this);
+         this ._pointSizeMinValue    .addInterest ("set_pointSizeMinValue__",    this);
+         this ._pointSizeMaxValue    .addInterest ("set_pointSizeMaxValue__",    this);
+         this ._pointSizeAttenuation .addInterest ("set_pointSizeAttenuation__", this);
+         this ._colorMode            .addInterest ("set_colorMode__",            this);
 
          this .set_pointSizeScaleFactor__ ();
          this .set_pointSizeMinValue__ ();
@@ -112,23 +112,23 @@ function (Fields,
       },
       set_pointSizeScaleFactor__: function ()
       {
-         this .pointSizeScaleFactor = Math .max (1, this .pointSizeScaleFactor_ .getValue ());
+         this .pointSizeScaleFactor = Math .max (1, this ._pointSizeScaleFactor .getValue ());
       },
       set_pointSizeMinValue__: function ()
       {
-         this .pointSizeMinValue = Math .max (0, this .pointSizeMinValue_ .getValue ());
+         this .pointSizeMinValue = Math .max (0, this ._pointSizeMinValue .getValue ());
       },
       set_pointSizeMaxValue__: function ()
       {
-         this .pointSizeMaxValue = Math .max (0, this .pointSizeMaxValue_ .getValue ());
+         this .pointSizeMaxValue = Math .max (0, this ._pointSizeMaxValue .getValue ());
       },
       set_pointSizeAttenuation__: function ()
       {
-         const length = this .pointSizeAttenuation_ .length;
+         const length = this ._pointSizeAttenuation .length;
 
-         this .pointSizeAttenuation [0] = length > 0 ? Math .max (0, this .pointSizeAttenuation_ [0]) : 1;
-         this .pointSizeAttenuation [1] = length > 1 ? Math .max (0, this .pointSizeAttenuation_ [1]) : 0;
-         this .pointSizeAttenuation [2] = length > 2 ? Math .max (0, this .pointSizeAttenuation_ [2]) : 0;
+         this .pointSizeAttenuation [0] = length > 0 ? Math .max (0, this ._pointSizeAttenuation [0]) : 1;
+         this .pointSizeAttenuation [1] = length > 1 ? Math .max (0, this ._pointSizeAttenuation [1]) : 0;
+         this .pointSizeAttenuation [2] = length > 2 ? Math .max (0, this ._pointSizeAttenuation [2]) : 0;
       },
       set_colorMode__: (function ()
       {
@@ -140,7 +140,7 @@ function (Fields,
 
          return function ()
          {
-            const colorMode = colorModes .get (this .colorMode_ .getValue ());
+            const colorMode = colorModes .get (this ._colorMode .getValue ());
 
             if (colorMode !== undefined)
                this .colorMode = colorMode;

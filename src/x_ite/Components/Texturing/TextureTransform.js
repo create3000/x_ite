@@ -74,7 +74,7 @@ function (Fields,
 
       this .addType (X3DConstants .TextureTransform);
 
-      this .rotation_ .setUnit ("angle");
+      this ._rotation .setUnit ("angle");
 
       this .matrix = new Matrix4 ();
    }
@@ -123,10 +123,10 @@ function (Fields,
          return function ()
          {
             const
-               translation = this .translation_ .getValue (),
-               rotation    = this .rotation_ .getValue (),
-               scale       = this .scale_ .getValue (),
-               center      = this .center_ .getValue (),
+               translation = this ._translation .getValue (),
+               rotation    = this ._rotation .getValue (),
+               scale       = this ._scale .getValue (),
+               center      = this ._center .getValue (),
                matrix4     = this .matrix;
 
             matrix3 .identity ();

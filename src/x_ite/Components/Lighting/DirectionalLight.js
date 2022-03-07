@@ -274,7 +274,7 @@ function (Fields,
       this .addType (X3DConstants .DirectionalLight);
 
       if (executionContext .getSpecificationVersion () === "2.0")
-         this .global_ = true;
+         this ._global = true;
    }
 
    DirectionalLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),

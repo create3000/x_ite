@@ -114,21 +114,21 @@ function (Fields,
       {
          X3DMaterialNode . prototype .initialize .call (this);
 
-         this .separateBackColor_ .addInterest ("set_transparent__", this);
+         this ._separateBackColor .addInterest ("set_transparent__", this);
 
-         this .ambientIntensity_ .addInterest ("set_ambientIntensity__", this);
-         this .diffuseColor_     .addInterest ("set_diffuseColor__",     this);
-         this .specularColor_    .addInterest ("set_specularColor__",    this);
-         this .emissiveColor_    .addInterest ("set_emissiveColor__",    this);
-         this .shininess_        .addInterest ("set_shininess__",        this);
-         this .transparency_     .addInterest ("set_transparency__",     this);
+         this ._ambientIntensity .addInterest ("set_ambientIntensity__", this);
+         this ._diffuseColor     .addInterest ("set_diffuseColor__",     this);
+         this ._specularColor    .addInterest ("set_specularColor__",    this);
+         this ._emissiveColor    .addInterest ("set_emissiveColor__",    this);
+         this ._shininess        .addInterest ("set_shininess__",        this);
+         this ._transparency     .addInterest ("set_transparency__",     this);
 
-         this .backAmbientIntensity_ .addInterest ("set_backAmbientIntensity__", this);
-         this .backDiffuseColor_     .addInterest ("set_backDiffuseColor__",     this);
-         this .backSpecularColor_    .addInterest ("set_backSpecularColor__",    this);
-         this .backEmissiveColor_    .addInterest ("set_backEmissiveColor__",    this);
-         this .backShininess_        .addInterest ("set_backShininess__",        this);
-         this .backTransparency_     .addInterest ("set_backTransparency__",     this);
+         this ._backAmbientIntensity .addInterest ("set_backAmbientIntensity__", this);
+         this ._backDiffuseColor     .addInterest ("set_backDiffuseColor__",     this);
+         this ._backSpecularColor    .addInterest ("set_backSpecularColor__",    this);
+         this ._backEmissiveColor    .addInterest ("set_backEmissiveColor__",    this);
+         this ._backShininess        .addInterest ("set_backShininess__",        this);
+         this ._backTransparency     .addInterest ("set_backTransparency__",     this);
 
          this .set_ambientIntensity__ ();
          this .set_diffuseColor__ ();
@@ -146,16 +146,16 @@ function (Fields,
       },
       set_ambientIntensity__: function ()
       {
-         this .ambientIntensity = Math .max (this .ambientIntensity_ .getValue (), 0);
+         this .ambientIntensity = Math .max (this ._ambientIntensity .getValue (), 0);
       },
       set_diffuseColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .diffuseColor .set (this .diffuseColor_ .getValue ());
+         //this .diffuseColor .set (this ._diffuseColor .getValue ());
 
          const
             diffuseColor  = this .diffuseColor,
-            diffuseColor_ = this .diffuseColor_ .getValue ();
+            diffuseColor_ = this ._diffuseColor .getValue ();
 
          diffuseColor [0] = diffuseColor_ .r;
          diffuseColor [1] = diffuseColor_ .g;
@@ -164,11 +164,11 @@ function (Fields,
       set_specularColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .specularColor .set (this .specularColor_ .getValue ());
+         //this .specularColor .set (this ._specularColor .getValue ());
 
          const
             specularColor  = this .specularColor,
-            specularColor_ = this .specularColor_ .getValue ();
+            specularColor_ = this ._specularColor .getValue ();
 
          specularColor [0] = specularColor_ .r;
          specularColor [1] = specularColor_ .g;
@@ -177,11 +177,11 @@ function (Fields,
       set_emissiveColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .emissiveColor .set (this .emissiveColor_ .getValue ());
+         //this .emissiveColor .set (this ._emissiveColor .getValue ());
 
          const
             emissiveColor  = this .emissiveColor,
-            emissiveColor_ = this .emissiveColor_ .getValue ();
+            emissiveColor_ = this ._emissiveColor .getValue ();
 
          emissiveColor [0] = emissiveColor_ .r;
          emissiveColor [1] = emissiveColor_ .g;
@@ -189,11 +189,11 @@ function (Fields,
       },
       set_shininess__: function ()
       {
-         this .shininess = Algorithm .clamp (this .shininess_ .getValue (), 0, 1);
+         this .shininess = Algorithm .clamp (this ._shininess .getValue (), 0, 1);
       },
       set_transparency__: function ()
       {
-         this .transparency = Algorithm .clamp (this .transparency_ .getValue (), 0, 1);
+         this .transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
 
          this .set_transparent__ ();
       },
@@ -202,16 +202,16 @@ function (Fields,
        */
       set_backAmbientIntensity__: function ()
       {
-         this .backAmbientIntensity = Math .max (this .backAmbientIntensity_ .getValue (), 0);
+         this .backAmbientIntensity = Math .max (this ._backAmbientIntensity .getValue (), 0);
       },
       set_backDiffuseColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .backDiffuseColor .set (this .backDiffuseColor_ .getValue ());
+         //this .backDiffuseColor .set (this ._backDiffuseColor .getValue ());
 
          const
             backDiffuseColor  = this .backDiffuseColor,
-            backDiffuseColor_ = this .backDiffuseColor_ .getValue ();
+            backDiffuseColor_ = this ._backDiffuseColor .getValue ();
 
          backDiffuseColor [0] = backDiffuseColor_ .r;
          backDiffuseColor [1] = backDiffuseColor_ .g;
@@ -220,11 +220,11 @@ function (Fields,
       set_backSpecularColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .backSpecularColor .set (this .backSpecularColor_ .getValue ());
+         //this .backSpecularColor .set (this ._backSpecularColor .getValue ());
 
          const
             backSpecularColor  = this .backSpecularColor,
-            backSpecularColor_ = this .backSpecularColor_ .getValue ();
+            backSpecularColor_ = this ._backSpecularColor .getValue ();
 
          backSpecularColor [0] = backSpecularColor_ .r;
          backSpecularColor [1] = backSpecularColor_ .g;
@@ -233,11 +233,11 @@ function (Fields,
       set_backEmissiveColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .backEmissiveColor .set (this .backEmissiveColor_ .getValue ());
+         //this .backEmissiveColor .set (this ._backEmissiveColor .getValue ());
 
          const
             backEmissiveColor  = this .backEmissiveColor,
-            backEmissiveColor_ = this .backEmissiveColor_ .getValue ();
+            backEmissiveColor_ = this ._backEmissiveColor .getValue ();
 
          backEmissiveColor [0] = backEmissiveColor_ .r;
          backEmissiveColor [1] = backEmissiveColor_ .g;
@@ -245,17 +245,17 @@ function (Fields,
       },
       set_backShininess__: function ()
       {
-         this .backShininess = Algorithm .clamp (this .backShininess_ .getValue (), 0, 1);
+         this .backShininess = Algorithm .clamp (this ._backShininess .getValue (), 0, 1);
       },
       set_backTransparency__: function ()
       {
-         this .backTransparency = Algorithm .clamp (this .backTransparency_ .getValue (), 0, 1);
+         this .backTransparency = Algorithm .clamp (this ._backTransparency .getValue (), 0, 1);
 
          this .set_transparent__ ();
       },
       set_transparent__: function ()
       {
-         this .setTransparent (Boolean (this .transparency_ .getValue () || (this .separateBackColor_ .getValue () && this .backTransparency_ .getValue ())));
+         this .setTransparent (Boolean (this ._transparency .getValue () || (this ._separateBackColor .getValue () && this ._backTransparency .getValue ())));
       },
       getShader: function (browser, shadow)
       {
@@ -263,7 +263,7 @@ function (Fields,
       },
       setShaderUniforms: function (gl, shaderObject, front)
       {
-         if (!front && this .separateBackColor_ .getValue ())
+         if (!front && this ._separateBackColor .getValue ())
          {
             gl .uniform1f  (shaderObject .x3d_AmbientIntensity, this .backAmbientIntensity);
             gl .uniform3fv (shaderObject .x3d_DiffuseColor,     this .backDiffuseColor);

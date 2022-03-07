@@ -92,14 +92,14 @@ function (Fields,
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "intensityThreshold_" + this .getId (), this .intensityThreshold_ .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "intensityThreshold_" + this .getId (), this ._intensityThreshold .copy ());
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -113,7 +113,7 @@ function (Fields,
          string += "vec4\n";
          string += "getProjectionStyle_" + this .getId () + "(in vec4 originalColor, in vec3 texCoord)\n";
          string += "{\n";
-         switch (this .type_ .getValue ())
+         switch (this ._type .getValue ())
          {
             default:
             case "MAX":
@@ -152,7 +152,7 @@ function (Fields,
          string += "		float intensity = texture (x3d_Texture3D [0], ray) .r;\n";
          string += "\n";
 
-         switch (this .type_ .getValue ())
+         switch (this ._type .getValue ())
          {
             default:
             case "MAX":
@@ -199,7 +199,7 @@ function (Fields,
          string += "	}\n";
          string += "\n";
 
-         if (this .type_ .getValue () === "AVERAGE")
+         if (this ._type .getValue () === "AVERAGE")
             string += "	projectionColor /= float (samples);\n";
 
          string += "	return vec4 (vec3 (projectionColor), originalColor .a);\n";
@@ -209,7 +209,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";

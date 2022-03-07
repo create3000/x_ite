@@ -259,15 +259,15 @@ function ($,
       },
       setScene: function (scene, success, error)
       {
-         scene .initLoadCount_ .addInterest ("set_initLoadCount__", this, scene, success, error);
-         scene .initLoadCount_ .addEvent ();
+         scene ._initLoadCount .addInterest ("set_initLoadCount__", this, scene, success, error);
+         scene ._initLoadCount .addEvent ();
       },
       set_initLoadCount__: function (field, scene, success, error)
       {
          if (field .getValue ())
             return;
 
-         scene .initLoadCount_ .removeInterest ("set_initLoadCount__", this);
+         scene ._initLoadCount .removeInterest ("set_initLoadCount__", this);
 
          delete scene .loader;
 

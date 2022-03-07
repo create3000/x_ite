@@ -121,16 +121,16 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .gradients_          .addInterest ("set_gradients__",   this);
-         this .renderStyle_        .addInterest ("set_renderStyle__", this);
-         this .voxels_             .addFieldInterest (this .getAppearance () .texture_);
+         this ._gradients          .addInterest ("set_gradients__",   this);
+         this ._renderStyle        .addInterest ("set_renderStyle__", this);
+         this ._voxels             .addFieldInterest (this .getAppearance () ._texture);
 
-         this .contourStepSize_    .addInterest ("update", this);
-         this .surfaceValues_      .addInterest ("update", this);
-         this .surfaceTolerance_   .addInterest ("update", this);
-         this .renderStyle_        .addInterest ("update", this);
+         this ._contourStepSize    .addInterest ("update", this);
+         this ._surfaceValues      .addInterest ("update", this);
+         this ._surfaceTolerance   .addInterest ("update", this);
+         this ._renderStyle        .addInterest ("update", this);
 
-         this .getAppearance () .texture_ = this .voxels_;
+         this .getAppearance () ._texture = this ._voxels;
 
          this .set_gradients__ ();
          this .set_renderStyle__ ();
@@ -140,7 +140,7 @@ function (Fields,
       },
       set_gradients__: function ()
       {
-         this .gradientsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .gradients_);
+         this .gradientsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._gradients);
       },
       set_renderStyle__: function ()
       {
@@ -156,9 +156,9 @@ function (Fields,
 
          renderStyleNodes .length = 0;
 
-         for (var i = 0, length = this .renderStyle_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._renderStyle .length; i < length; ++ i)
          {
-            var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this .renderStyle_ [i]);
+            var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this ._renderStyle [i]);
 
             if (renderStyleNode)
                renderStyleNodes .push (renderStyleNode);
@@ -177,7 +177,7 @@ function (Fields,
          if (this .voxelsNode)
             this .voxelsNode .removeInterest ("set_textureSize__", this);
 
-         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .voxels_);
+         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
          if (this .voxelsNode)
          {
@@ -217,7 +217,7 @@ function (Fields,
             styleFunctions        = opacityMapVolumeStyle .getFunctionsText ();
 
          styleUniforms  += "\n";
-         styleUniforms  += "uniform float surfaceValues [" + this .surfaceValues_ .length + "];\n";
+         styleUniforms  += "uniform float surfaceValues [" + this ._surfaceValues .length + "];\n";
          styleUniforms  += "uniform float surfaceTolerance;\n";
 
          for (var i = 0, length = this .renderStyleNodes .length; i < length; ++ i)
@@ -261,9 +261,9 @@ function (Fields,
          styleFunctions += "	float intensity = textureColor .r;\n";
          styleFunctions += "\n";
 
-         if (this .surfaceValues_ .length === 1)
+         if (this ._surfaceValues .length === 1)
          {
-            var contourStepSize = Math .abs (this .contourStepSize_ .getValue ());
+            var contourStepSize = Math .abs (this ._contourStepSize .getValue ());
 
             if (contourStepSize === 0)
             {
@@ -287,12 +287,12 @@ function (Fields,
             {
                var surfaceValues = [ ];
 
-               for (var v = this .surfaceValues_ [0] - contourStepSize; v > 0; v -= contourStepSize)
+               for (var v = this ._surfaceValues [0] - contourStepSize; v > 0; v -= contourStepSize)
                   surfaceValues .unshift (v);
 
-               surfaceValues .push (this .surfaceValues_ [0]);
+               surfaceValues .push (this ._surfaceValues [0]);
 
-               for (var v = this .surfaceValues_ [0] + contourStepSize; v < 1; v += contourStepSize)
+               for (var v = this ._surfaceValues [0] + contourStepSize; v < 1; v += contourStepSize)
                   surfaceValues .push (v);
 
                styleFunctions += "	if (false)\n";
@@ -324,7 +324,7 @@ function (Fields,
             styleFunctions += "	if (false)\n";
             styleFunctions += "	{ }\n";
 
-            for (var i = this .surfaceValues_ .length - 1; i >= 0; -- i)
+            for (var i = this ._surfaceValues .length - 1; i >= 0; -- i)
             {
                styleFunctions += "	else if (intensity > surfaceValues [" + i + "])\n";
                styleFunctions += "	{\n";
@@ -355,23 +355,23 @@ function (Fields,
 
          var vertexShader = new ShaderPart (this .getExecutionContext ());
          vertexShader .setName ("VolumeDataVertexShader");
-         vertexShader .url_ .push ("data:x-shader/x-vertex," + vs);
+         vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
          vertexShader .setup ();
 
          var fragmentShader = new ShaderPart (this .getExecutionContext ());
          fragmentShader .setName ("VolumeDataFragmentShader");
-         fragmentShader .type_ = "FRAGMENT";
-         fragmentShader .url_ .push ("data:x-shader/x-fragment," + fs);
+         fragmentShader ._type = "FRAGMENT";
+         fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
          fragmentShader .setup ();
 
          var shaderNode = new ComposedShader (this .getExecutionContext ());
          shaderNode .setName ("VolumeDataShader");
-         shaderNode .language_ = "GLSL";
-         shaderNode .parts_ .push (vertexShader);
-         shaderNode .parts_ .push (fragmentShader);
+         shaderNode ._language = "GLSL";
+         shaderNode ._parts .push (vertexShader);
+         shaderNode ._parts .push (fragmentShader);
 
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceValues",    this .surfaceValues_    .copy ());
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", this .surfaceTolerance_ .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceValues",    this ._surfaceValues    .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceTolerance", this ._surfaceTolerance .copy ());
 
          if (this .gradientsNode)
             shaderNode .addUserDefinedField (X3DConstants .inputOutput, "grandients", new Fields .SFNode (this .gradientsNode));

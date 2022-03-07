@@ -72,7 +72,7 @@ function (Fields,
 
       this .addType (X3DConstants .Box);
 
-      this .size_ .setUnit ("length");
+      this ._size .setUnit ("length");
    }
 
    Box .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -100,7 +100,7 @@ function (Fields,
          var
             options  = this .getBrowser () .getBoxOptions (),
             geometry = options .getGeometry (),
-            size     = this .size_ .getValue ();
+            size     = this ._size .getValue ();
 
          this .setMultiTexCoords (geometry .getMultiTexCoords ());
          this .setNormals        (geometry .getNormals ());
@@ -138,7 +138,7 @@ function (Fields,
             this .getMax () .set ( x,  y,  z);
          }
 
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
       },
    });
 

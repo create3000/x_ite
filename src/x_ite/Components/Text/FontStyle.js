@@ -70,7 +70,7 @@ function (Fields,
 
       this .addType (X3DConstants .FontStyle);
 
-      this .size_ .setUnit ("length");
+      this ._size .setUnit ("length");
    }
 
    FontStyle .prototype = Object .assign (Object .create (X3DFontStyleNode .prototype),
@@ -106,7 +106,7 @@ function (Fields,
       },
       getScale: function ()
       {
-         return this .size_ .getValue ();
+         return this ._size .getValue ();
       },
    });
 

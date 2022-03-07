@@ -97,20 +97,20 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .keyValue_ .addInterest ("set_keyValue__", this);
+         this ._keyValue .addInterest ("set_keyValue__", this);
       },
       set_keyValue__: function ()
       {
          var
-            key      = this .key_,
-            keyValue = this .keyValue_;
+            key      = this ._key,
+            keyValue = this ._keyValue;
 
          if (keyValue .length < key .length)
             keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : 0);
       },
       interpolate: function (index0, index1, weight)
       {
-         this .value_changed_ = Algorithm .lerp (this .keyValue_ [index0], this .keyValue_ [index1], weight);
+         this ._value_changed = Algorithm .lerp (this ._keyValue [index0], this ._keyValue [index1], weight);
       },
    });
 

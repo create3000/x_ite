@@ -72,7 +72,7 @@ function (X3DSensorNode,
       {
          X3DSensorNode .prototype .initialize .call (this);
 
-         this .enabled_ .addInterest ("set_enabled__", this);
+         this ._enabled .addInterest ("set_enabled__", this);
       },
       getMatrices: function ()
       {
@@ -80,35 +80,35 @@ function (X3DSensorNode,
       },
       set_enabled__: function ()
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
             return;
 
-         if (this .isActive_ .getValue ())
-            this .isActive_ = false;
+         if (this ._isActive .getValue ())
+            this ._isActive = false;
 
-         if (this .isOver_ .getValue ())
-            this .isOver_ = false;
+         if (this ._isOver .getValue ())
+            this ._isOver = false;
       },
       set_over__: function (over, hit)
       {
-         if (over !== this .isOver_ .getValue ())
+         if (over !== this ._isOver .getValue ())
          {
-            this .isOver_ = over;
+            this ._isOver = over;
 
             if (over)
-               this .getBrowser () .getNotification () .string_ = this .description_;
+               this .getBrowser () .getNotification () ._string = this ._description;
          }
       },
       set_active__: function (active, hit)
       {
-         if (active !== this .isActive_ .getValue ())
-            this .isActive_ = active
+         if (active !== this ._isActive .getValue ())
+            this ._isActive = active
       },
       set_motion__: function (hit)
       { },
       push: function (renderObject, sensors)
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
             sensors .set (this, new PointingDeviceSensorContainer (this,
                                                                    renderObject .getModelViewMatrix  () .get (),

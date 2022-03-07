@@ -79,12 +79,12 @@ function ($,
       {
          this [_screenTextureProperties] = new TextureProperties (this .getPrivateScene ());
 
-         this [_screenTextureProperties] .boundaryModeS_       = "CLAMP";
-         this [_screenTextureProperties] .boundaryModeT_       = "CLAMP";
-         this [_screenTextureProperties] .boundaryModeR_       = "CLAMP";
-         this [_screenTextureProperties] .minificationFilter_  = "NEAREST";
-         this [_screenTextureProperties] .magnificationFilter_ = "NEAREST";
-         this [_screenTextureProperties] .generateMipMaps_     = false;
+         this [_screenTextureProperties] ._boundaryModeS       = "CLAMP";
+         this [_screenTextureProperties] ._boundaryModeT       = "CLAMP";
+         this [_screenTextureProperties] ._boundaryModeR       = "CLAMP";
+         this [_screenTextureProperties] ._minificationFilter  = "NEAREST";
+         this [_screenTextureProperties] ._magnificationFilter = "NEAREST";
+         this [_screenTextureProperties] ._generateMipMaps     = false;
 
          this [_screenTextureProperties] .setup ();
 

@@ -88,7 +88,7 @@ function (X3DConstants,
 
          var
             fogNode         = this .fogNode,
-            visibilityRange = Math .max (0, fogNode .visibilityRange_ .getValue ());
+            visibilityRange = Math .max (0, fogNode ._visibilityRange .getValue ());
 
          if (fogNode .getHidden () || visibilityRange === 0)
          {
@@ -96,7 +96,7 @@ function (X3DConstants,
          }
          else
          {
-            var color  = fogNode .color_ .getValue ();
+            var color  = fogNode ._color .getValue ();
 
             gl .uniform1i        (shaderObject .x3d_FogType,            fogNode .fogType);
             gl .uniform3f        (shaderObject .x3d_FogColor,           color .r, color .g, color .b);
@@ -114,7 +114,7 @@ function (X3DConstants,
    {
       this .addType (X3DConstants .X3DFogObject);
 
-      this .visibilityRange_ .setUnit ("length");
+      this ._visibilityRange .setUnit ("length");
 
       this .hidden = false;
    }
@@ -124,13 +124,13 @@ function (X3DConstants,
       constructor: X3DFogObject,
       initialize: function ()
       {
-         this .fogType_ .addInterest ("set_fogType__", this);
+         this ._fogType .addInterest ("set_fogType__", this);
 
          this .set_fogType__ ();
       },
       set_fogType__: function ()
       {
-         switch (this .fogType_ .getValue ())
+         switch (this ._fogType .getValue ())
          {
             case "EXPONENTIAL":
                this .fogType = 2;

@@ -72,7 +72,7 @@ function (Fields,
 
       this .addType (X3DConstants .WindPhysicsModel);
 
-      this .speed_ .setUnit ("speed");
+      this ._speed .setUnit ("speed");
    }
 
    WindPhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
@@ -101,8 +101,8 @@ function (Fields,
       getRandomSpeed: function (emitterNode)
       {
          var
-            speed     = Math .max (0, this .speed_ .getValue ()),
-            variation = speed * Math .max (0, this .gustiness_ .getValue ());
+            speed     = Math .max (0, this ._speed .getValue ()),
+            variation = speed * Math .max (0, this ._gustiness .getValue ());
 
          return emitterNode .getRandomValue (Math .max (0, speed - variation), speed + variation);
       },
@@ -112,21 +112,21 @@ function (Fields,
 
          return function (i, emitterNode, forces, turbulences)
          {
-            var surfaceArea = emitterNode .surfaceArea_ .getValue ()
+            var surfaceArea = emitterNode ._surfaceArea .getValue ()
 
-            if (this .enabled_ .getValue ())
+            if (this ._enabled .getValue ())
             {
                var
                   randomSpeed = this .getRandomSpeed (emitterNode),
                   pressure    = Math .pow (10, 2 * Math .log (randomSpeed)) * 0.64615;
 
-               if (this .direction_ .getValue () .equals (Vector3 .Zero))
+               if (this ._direction .getValue () .equals (Vector3 .Zero))
                   emitterNode .getRandomNormal (force);
                else
-                  force .assign (this .direction_ .getValue ()) .normalize ();
+                  force .assign (this ._direction .getValue ()) .normalize ();
 
                forces [i] .assign (force .multiply (surfaceArea * pressure));
-               turbulences [i] = Math .PI * Algorithm .clamp (this .turbulence_ .getValue (), 0, 1);
+               turbulences [i] = Math .PI * Algorithm .clamp (this ._turbulence .getValue (), 0, 1);
             }
          };
       })(),

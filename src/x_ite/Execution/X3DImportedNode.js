@@ -75,7 +75,7 @@ function (X3DBaseNode,
       this [_importedName] = importedName;
       this [_routes]       = new Set ();
 
-      this [_inlineNode] .loadState_ .addInterest ("set_loadState__", this);
+      this [_inlineNode] ._loadState .addInterest ("set_loadState__", this);
    }
 
    X3DImportedNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -338,7 +338,7 @@ function (X3DBaseNode,
       },
       dispose: function ()
       {
-         this [_inlineNode] .loadState_ .removeInterest ("set_loadState__", this);
+         this [_inlineNode] ._loadState .removeInterest ("set_loadState__", this);
 
          this .deleteRoutes ();
 

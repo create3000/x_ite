@@ -82,14 +82,14 @@ function (Fields,
                              "transform",     new Fields .SFTime (),
                              "otherGeometry", new Fields .MFNode ());
 
-      this .position_            .setUnit ("length");
-      this .linearVelocity_      .setUnit ("speed");
-      this .angularVelocity_     .setUnit ("angularRate");
-      this .mass_                .setUnit ("mass");
-      this .forces_              .setUnit ("force");
-      this .torques_             .setUnit ("force");
-      this .disableLinearSpeed_  .setUnit ("speed");
-      this .disableAngularSpeed_ .setUnit ("angularRate");
+      this ._position            .setUnit ("length");
+      this ._linearVelocity      .setUnit ("speed");
+      this ._angularVelocity     .setUnit ("angularRate");
+      this ._mass                .setUnit ("mass");
+      this ._forces              .setUnit ("force");
+      this ._torques             .setUnit ("force");
+      this ._disableLinearSpeed  .setUnit ("speed");
+      this ._disableAngularSpeed .setUnit ("angularRate");
 
       this .compoundShape      = new Ammo .btCompoundShape ();
       this .motionState        = new Ammo .btDefaultMotionState ();
@@ -147,27 +147,27 @@ function (Fields,
       {
          X3DNode .prototype .initialize .call (this);
 
-         this .linearVelocity_       .addInterest ("set_linearVelocity__",     this);
-         this .angularVelocity_      .addInterest ("set_angularVelocity__",    this);
-         this .useFiniteRotation_    .addInterest ("set_finiteRotationAxis__", this);
-         this .finiteRotationAxis_   .addInterest ("set_finiteRotationAxis__", this);
-         this .autoDamp_             .addInterest ("set_damping__",            this);
-         this .linearDampingFactor_  .addInterest ("set_damping__",            this);
-         this .angularDampingFactor_ .addInterest ("set_damping__",            this);
-         this .forces_               .addInterest ("set_forces__",             this);
-         this .torques_              .addInterest ("set_torques__",            this);
-         this .disableTime_          .addInterest ("set_disable__",            this);
-         this .disableTime_          .addInterest ("set_disable__",            this);
-         this .disableLinearSpeed_   .addInterest ("set_disable__",            this);
-         this .disableAngularSpeed_  .addInterest ("set_disable__",            this);
-         this .geometry_             .addInterest ("set_geometry__",           this);
-         this .otherGeometry_        .addInterest ("set_geometry__",           this);
+         this ._linearVelocity       .addInterest ("set_linearVelocity__",     this);
+         this ._angularVelocity      .addInterest ("set_angularVelocity__",    this);
+         this ._useFiniteRotation    .addInterest ("set_finiteRotationAxis__", this);
+         this ._finiteRotationAxis   .addInterest ("set_finiteRotationAxis__", this);
+         this ._autoDamp             .addInterest ("set_damping__",            this);
+         this ._linearDampingFactor  .addInterest ("set_damping__",            this);
+         this ._angularDampingFactor .addInterest ("set_damping__",            this);
+         this ._forces               .addInterest ("set_forces__",             this);
+         this ._torques              .addInterest ("set_torques__",            this);
+         this ._disableTime          .addInterest ("set_disable__",            this);
+         this ._disableTime          .addInterest ("set_disable__",            this);
+         this ._disableLinearSpeed   .addInterest ("set_disable__",            this);
+         this ._disableAngularSpeed  .addInterest ("set_disable__",            this);
+         this ._geometry             .addInterest ("set_geometry__",           this);
+         this ._otherGeometry        .addInterest ("set_geometry__",           this);
 
-         this .fixed_   .addInterest ("set_massProps__", this);
-         this .mass_    .addInterest ("set_massProps__", this);
-         this .inertia_ .addInterest ("set_massProps__", this);
+         this ._fixed   .addInterest ("set_massProps__", this);
+         this ._mass    .addInterest ("set_massProps__", this);
+         this ._inertia .addInterest ("set_massProps__", this);
 
-         this .transform_ .addInterest ("set_transform__", this);
+         this ._transform .addInterest ("set_transform__", this);
 
          this .set_forces__ ();
          this .set_torques__ ();
@@ -175,11 +175,11 @@ function (Fields,
       },
       setCollection: function (value)
       {
-         this .collection_ = value;
+         this ._collection = value;
       },
       getCollection: function ()
       {
-         return this .collection_ .getValue ();
+         return this ._collection .getValue ();
       },
       getRigidBody: function ()
       {
@@ -192,12 +192,12 @@ function (Fields,
       set_position__: function ()
       {
          for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-            this .geometryNodes [i] .translation_ = this .position_;
+            this .geometryNodes [i] ._translation = this ._position;
       },
       set_orientation__: function ()
       {
          for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
-            this .geometryNodes [i] .rotation_ = this .orientation_;
+            this .geometryNodes [i] ._rotation = this ._orientation;
       },
       set_transform__: (function ()
       {
@@ -212,7 +212,7 @@ function (Fields,
          {
             var m = this .matrix;
 
-            m .set (this .position_ .getValue (), this .orientation_ .getValue ());
+            m .set (this ._position .getValue (), this ._orientation .getValue ());
 
             //t .setFromOpenGLMatrix (m);
 
@@ -256,10 +256,10 @@ function (Fields,
 
          return function ()
          {
-            if (this .fixed_ .getValue ())
+            if (this ._fixed .getValue ())
                lv .setValue (0, 0, 0);
             else
-               lv .setValue (this .linearVelocity_ .x, this .linearVelocity_ .y, this .linearVelocity_ .z);
+               lv .setValue (this ._linearVelocity .x, this ._linearVelocity .y, this ._linearVelocity .z);
 
             this .rigidBody .setLinearVelocity (lv);
             this .rigidBody .activate ();
@@ -271,10 +271,10 @@ function (Fields,
 
          return function ()
          {
-            if (this .fixed_ .getValue ())
+            if (this ._fixed .getValue ())
                av .setValue (0, 0, 0);
             else
-               av .setValue (this .angularVelocity_ .x, this .angularVelocity_ .y, this .angularVelocity_ .z);
+               av .setValue (this ._angularVelocity .x, this ._angularVelocity .y, this ._angularVelocity .z);
 
             this .rigidBody .setAngularVelocity (av);
             this .rigidBody .activate ();
@@ -286,8 +286,8 @@ function (Fields,
 
          return function ()
          {
-            if (this .useFiniteRotation_ .getValue ())
-               angularFactor .setValue (this .finiteRotationAxis_ .x, this .finiteRotationAxis_ .y, this .finiteRotationAxis_ .z);
+            if (this ._useFiniteRotation .getValue ())
+               angularFactor .setValue (this ._finiteRotationAxis .x, this ._finiteRotationAxis .y, this ._finiteRotationAxis .z);
             else
                angularFactor .setValue (1, 1, 1);
 
@@ -296,8 +296,8 @@ function (Fields,
       })(),
       set_damping__: function ()
       {
-         if (this .autoDamp_ .getValue ())
-            this .rigidBody .setDamping (this .linearDampingFactor_ .getValue (), this .angularDampingFactor_ .getValue ());
+         if (this ._autoDamp .getValue ())
+            this .rigidBody .setDamping (this ._linearDampingFactor .getValue (), this ._angularDampingFactor .getValue ());
          else
             this .rigidBody .setDamping (0, 0);
 
@@ -312,7 +312,7 @@ function (Fields,
 
          return function ()
          {
-            origin .setValue (this .centerOfMass_ .x, this .centerOfMass_ .y, this .centerOfMass_ .z);
+            origin .setValue (this ._centerOfMass .x, this ._centerOfMass .y, this ._centerOfMass .z);
             centerOfMass .setOrigin (origin);
 
             this .rigidBody .setCenterOfMassTransform (centerOfMass);
@@ -324,36 +324,36 @@ function (Fields,
 
          return function ()
          {
-            var inertia = this .inertia_;
+            var inertia = this ._inertia;
 
             localInertia .setValue (inertia [0] + inertia [1] + inertia [2],
                                     inertia [3] + inertia [4] + inertia [5],
                                     inertia [6] + inertia [7] + inertia [8]);
 
-            this .compoundShape .calculateLocalInertia (this .fixed_ .getValue () ? 0 : this .mass_ .getValue (), localInertia);
+            this .compoundShape .calculateLocalInertia (this ._fixed .getValue () ? 0 : this ._mass .getValue (), localInertia);
 
-            this .rigidBody .setMassProps (this .fixed_ .getValue () ? 0 : this .mass_ .getValue (), localInertia);
+            this .rigidBody .setMassProps (this ._fixed .getValue () ? 0 : this ._mass .getValue (), localInertia);
          };
       })(),
       set_forces__: function ()
       {
          this .force .set (0, 0, 0);
 
-         for (var i = 0, length = this .forces_ .length; i < length; ++ i)
-            this .force .add (this .forces_ [i] .getValue ());
+         for (var i = 0, length = this ._forces .length; i < length; ++ i)
+            this .force .add (this ._forces [i] .getValue ());
       },
       set_torques__: function ()
       {
          this .torque .set (0, 0, 0);
 
-         for (var i = 0, length = this .torques_ .length; i < length; ++ i)
-            this .torque .add (this .torques_ [i] .getValue ());
+         for (var i = 0, length = this ._torques .length; i < length; ++ i)
+            this .torque .add (this ._torques [i] .getValue ());
       },
       set_disable__: function ()
       {
-         if (this .autoDisable_ .getValue ())
+         if (this ._autoDisable .getValue ())
          {
-            this .rigidBody .setSleepingThresholds (this .disableLinearSpeed_ .getValue (), this .disableAngularSpeed_ .getValue ());
+            this .rigidBody .setSleepingThresholds (this ._disableLinearSpeed .getValue (), this ._disableAngularSpeed .getValue ());
          }
          else
          {
@@ -368,33 +368,33 @@ function (Fields,
          {
             var geometryNode = geometryNodes [i];
 
-            geometryNode .removeInterest ("addEvent", this .transform_);
-            geometryNode .compoundShape_changed_ .removeInterest ("set_compoundShape__", this);
+            geometryNode .removeInterest ("addEvent", this ._transform);
+            geometryNode ._compoundShape_changed .removeInterest ("set_compoundShape__", this);
 
             geometryNode .setBody (null);
 
-            geometryNode .translation_ .removeFieldInterest (this .position_);
-            geometryNode .rotation_    .removeFieldInterest (this .orientation_);
+            geometryNode ._translation .removeFieldInterest (this ._position);
+            geometryNode ._rotation    .removeFieldInterest (this ._orientation);
 
-            this .position_    .removeFieldInterest (geometryNode .translation_);
-            this .orientation_ .removeFieldInterest (geometryNode .rotation_);
+            this ._position    .removeFieldInterest (geometryNode ._translation);
+            this ._orientation .removeFieldInterest (geometryNode ._rotation);
          }
 
          for (var i = 0, length = this .otherGeometryNodes .length; i < length; ++ i)
-            this .otherGeometryNodes [i] .body_ .removeInterest ("set_body__", this);
+            this .otherGeometryNodes [i] ._body .removeInterest ("set_body__", this);
 
          geometryNodes .length = 0;
 
-         for (var i = 0, length = this .geometry_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._geometry .length; i < length; ++ i)
          {
-            var geometryNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .geometry_ [i]);
+            var geometryNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this ._geometry [i]);
 
             if (! geometryNode)
                continue;
 
             if (geometryNode .getBody ())
             {
-               geometryNode .body_ .addInterest ("set_body__", this);
+               geometryNode ._body .addInterest ("set_body__", this);
                this .otherGeometryNodes .push (geometryNode);
                continue;
             }
@@ -408,21 +408,21 @@ function (Fields,
          {
             var geometryNode = geometryNodes [i];
 
-            geometryNode .addInterest ("addEvent", this .transform_);
-            geometryNode .compoundShape_changed_ .addInterest ("set_compoundShape__", this);
+            geometryNode .addInterest ("addEvent", this ._transform);
+            geometryNode ._compoundShape_changed .addInterest ("set_compoundShape__", this);
 
-            geometryNode .translation_ .addFieldInterest (this .position_);
-            geometryNode .rotation_    .addFieldInterest (this .orientation_);
+            geometryNode ._translation .addFieldInterest (this ._position);
+            geometryNode ._rotation    .addFieldInterest (this ._orientation);
 
-            this .position_    .addFieldInterest (geometryNode .translation_);
-            this .orientation_ .addFieldInterest (geometryNode .rotation_);
+            this ._position    .addFieldInterest (geometryNode ._translation);
+            this ._orientation .addFieldInterest (geometryNode ._rotation);
          }
 
          this .set_compoundShape__ ();
       },
       set_body__: function ()
       {
-         this .otherGeometry_ .addEvent ();
+         this ._otherGeometry .addEvent ();
       },
       set_compoundShape__: (function ()
       {
@@ -460,10 +460,10 @@ function (Fields,
 
          return function (gravity)
          {
-            if (this .fixed_ .getValue ())
+            if (this ._fixed .getValue ())
                return;
 
-            if (this .useGlobalGravity_ .getValue ())
+            if (this ._useGlobalGravity .getValue ())
                g .setValue (gravity .x, gravity .y, gravity .z);
             else
                g .setValue (0, 0, 0);
@@ -497,10 +497,10 @@ function (Fields,
 
             orientation .value .set (btQuaternion .x (), btQuaternion .y (), btQuaternion .z (), btQuaternion .w ());
 
-            this .position_        = position .set (btOrigin .x (), btOrigin .y (), btOrigin .z ());
-            this .orientation_     = orientation;
-            this .linearVelocity_  = linearVelocity .set (btLinearVeloctity .x (), btLinearVeloctity .y (), btLinearVeloctity .z ());
-            this .angularVelocity_ = angularVelocity .set (btAngularVelocity .x (), btAngularVelocity .y (), btAngularVelocity .z ());
+            this ._position        = position .set (btOrigin .x (), btOrigin .y (), btOrigin .z ());
+            this ._orientation     = orientation;
+            this ._linearVelocity  = linearVelocity .set (btLinearVeloctity .x (), btLinearVeloctity .y (), btLinearVeloctity .z ());
+            this ._angularVelocity = angularVelocity .set (btAngularVelocity .x (), btAngularVelocity .y (), btAngularVelocity .z ());
          };
       })(),
       dispose: function ()

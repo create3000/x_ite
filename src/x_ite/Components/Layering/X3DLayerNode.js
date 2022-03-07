@@ -140,7 +140,7 @@ function (X3DNode,
          this .backgrounds     .setup ();
          this .fogs            .setup ();
 
-         this .viewport_       .addInterest ("set_viewport__", this);
+         this ._viewport       .addInterest ("set_viewport__", this);
 
          this .set_viewport__ ();
       },
@@ -201,7 +201,7 @@ function (X3DNode,
          {
             var viewpoint = this .viewpoints .get () [i];
 
-            if (viewpoint .description_ .length)
+            if (viewpoint ._description .length)
                userViewpoints .push (viewpoint);
          }
 
@@ -233,7 +233,7 @@ function (X3DNode,
       },
       set_viewport__: function ()
       {
-         this .currentViewport = X3DCast (X3DConstants .X3DViewportNode, this .viewport_);
+         this .currentViewport = X3DCast (X3DConstants .X3DViewportNode, this ._viewport);
 
          if (! this .currentViewport)
             this .currentViewport = this .getBrowser () .getDefaultViewport ();
@@ -293,7 +293,7 @@ function (X3DNode,
       },
       pointer: function (type, renderObject)
       {
-         if (this .isPickable_ .getValue ())
+         if (this ._isPickable .getValue ())
          {
             var
                browser  = this .getBrowser (),
@@ -351,7 +351,7 @@ function (X3DNode,
       {
          var navigationInfo = this .getNavigationInfo ();
 
-         if (navigationInfo .transitionActive_ .getValue ())
+         if (navigationInfo ._transitionActive .getValue ())
             return;
 
          var

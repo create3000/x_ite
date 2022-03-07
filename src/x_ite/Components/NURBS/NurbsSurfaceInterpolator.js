@@ -110,27 +110,27 @@ function (Fields,
       },
       initialize: function ()
       {
-         this .set_fraction_ .addInterest ("set_fraction__", this);
+         this ._set_fraction .addInterest ("set_fraction__", this);
 
-         this .uOrder_       .addFieldInterest (this .geometry .uOrder_);
-         this .vOrder_       .addFieldInterest (this .geometry .vOrder_);
-         this .uDimension_   .addFieldInterest (this .geometry .uDimension_);
-         this .vDimension_   .addFieldInterest (this .geometry .vDimension_);
-         this .uKnot_        .addFieldInterest (this .geometry .uKnot_);
-         this .vKnot_        .addFieldInterest (this .geometry .vKnot_);
-         this .weight_       .addFieldInterest (this .geometry .weight_);
-         this .controlPoint_ .addFieldInterest (this .geometry .controlPoint_);
+         this ._uOrder       .addFieldInterest (this .geometry ._uOrder);
+         this ._vOrder       .addFieldInterest (this .geometry ._vOrder);
+         this ._uDimension   .addFieldInterest (this .geometry ._uDimension);
+         this ._vDimension   .addFieldInterest (this .geometry ._vDimension);
+         this ._uKnot        .addFieldInterest (this .geometry ._uKnot);
+         this ._vKnot        .addFieldInterest (this .geometry ._vKnot);
+         this ._weight       .addFieldInterest (this .geometry ._weight);
+         this ._controlPoint .addFieldInterest (this .geometry ._controlPoint);
 
-         this .geometry .uTessellation_ = 128;
-         this .geometry .vTessellation_ = 128;
-         this .geometry .uOrder_        = this .uOrder_;
-         this .geometry .vOrder_        = this .vOrder_;
-         this .geometry .uDimension_    = this .uDimension_;
-         this .geometry .vDimension_    = this .vDimension_;
-         this .geometry .uKnot_         = this .uKnot_;
-         this .geometry .vKnot_         = this .vKnot_;
-         this .geometry .weight_        = this .weight_;
-         this .geometry .controlPoint_  = this .controlPoint_;
+         this .geometry ._uTessellation = 128;
+         this .geometry ._vTessellation = 128;
+         this .geometry ._uOrder        = this ._uOrder;
+         this .geometry ._vOrder        = this ._vOrder;
+         this .geometry ._uDimension    = this ._uDimension;
+         this .geometry ._vDimension    = this ._vDimension;
+         this .geometry ._uKnot         = this ._uKnot;
+         this .geometry ._vKnot         = this ._vKnot;
+         this .geometry ._weight        = this ._weight;
+         this .geometry ._controlPoint  = this ._controlPoint;
 
          this .geometry .setup ();
       },
@@ -147,7 +147,7 @@ function (Fields,
          return function ()
          {
             var
-               fraction       = this .set_fraction_ .getValue (),
+               fraction       = this ._set_fraction .getValue (),
                texCoordsArray = this .geometry .getTexCoords (),
                normalArray    = this .geometry .getNormals (),
                verticesArray  = this .geometry .getVertices ();
@@ -177,8 +177,8 @@ function (Fields,
                                                  t * verticesArray [i4 + 1] + u * verticesArray [i4 + 5] + v * verticesArray [i4 +  9],
                                                  t * verticesArray [i4 + 2] + u * verticesArray [i4 + 6] + v * verticesArray [i4 + 10]);
 
-                     this .normal_changed_   = normal;
-                     this .position_changed_ = position;
+                     this ._normal_changed   = normal;
+                     this ._position_changed = position;
                   }
                }
             }

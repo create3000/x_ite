@@ -101,12 +101,12 @@ function (Fields,
       {
          this .isLive () .addInterest ("set_live__", this);
 
-         this .enabled_          .addInterest ("set_live__",             this);
-         this .objectType_       .addInterest ("set_objectType__",       this);
-         this .matchCriterion_   .addInterest ("set_matchCriterion__",   this);
-         this .intersectionType_ .addInterest ("set_intersectionType__", this);
-         this .sortOrder_        .addInterest ("set_sortOrder__",        this);
-         this .pickTarget_       .addInterest ("set_pickTarget__",       this);
+         this ._enabled          .addInterest ("set_live__",             this);
+         this ._objectType       .addInterest ("set_objectType__",       this);
+         this ._matchCriterion   .addInterest ("set_matchCriterion__",   this);
+         this ._intersectionType .addInterest ("set_intersectionType__", this);
+         this ._sortOrder        .addInterest ("set_sortOrder__",        this);
+         this ._pickTarget       .addInterest ("set_pickTarget__",       this);
 
          this .set_objectType__ ();
          this .set_matchCriterion__ ();
@@ -157,8 +157,8 @@ function (Fields,
             collidableShapeNode .setPrivate (true);
             collidableShapeNode .setConvex (true);
 
-            shapeNode .geometry_        = geometryNode;
-            collidableShapeNode .shape_ = shapeNode;
+            shapeNode ._geometry        = geometryNode;
+            collidableShapeNode ._shape = shapeNode;
 
             shapeNode           .setup ();
             collidableShapeNode .setup ();
@@ -279,7 +279,7 @@ function (Fields,
       },
       set_live__: function ()
       {
-         if (this .isLive () .getValue () && this .enabled_ .getValue () && ! this .objectType .has ("NONE"))
+         if (this .isLive () .getValue () && this ._enabled .getValue () && ! this .objectType .has ("NONE"))
          {
             this .getBrowser () .addPickSensor (this);
             this .setPickableObject (true);
@@ -294,9 +294,9 @@ function (Fields,
       {
          this .objectType .clear ();
 
-         for (var i = 0, length = this .objectType_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._objectType .length; i < length; ++ i)
          {
-            this .objectType .add (this .objectType_ [i]);
+            this .objectType .add (this ._objectType [i]);
          }
 
          this .set_live__ ();
@@ -311,7 +311,7 @@ function (Fields,
 
          return function ()
          {
-            this .matchCriterion = matchCriterions .get (this .matchCriterion_ .getValue ());
+            this .matchCriterion = matchCriterions .get (this ._matchCriterion .getValue ());
 
             if (this .matchCriterion === undefined)
                this .matchCriterion = MatchCriterionType .MATCH_ANY;
@@ -326,7 +326,7 @@ function (Fields,
 
          return function ()
          {
-            this .intersectionType = intersectionTypes .get (this .intersectionType_ .getValue ());
+            this .intersectionType = intersectionTypes .get (this ._intersectionType .getValue ());
 
             if (this .intersectionType === undefined)
                this .intersectionType = IntersectionType .BOUNDS;
@@ -343,7 +343,7 @@ function (Fields,
 
          return function ()
          {
-            this .sortOrder = sortOrders .get (this .sortOrder_ .getValue ());
+            this .sortOrder = sortOrders .get (this ._sortOrder .getValue ());
 
             if (this .sortOrder === undefined)
                this .sortOrder = SortOrder .CLOSEST;
@@ -353,12 +353,12 @@ function (Fields,
       {
          this .pickTargetNodes .clear ();
 
-         for (var i = 0, length = this .pickTarget_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._pickTarget .length; i < length; ++ i)
          {
             try
             {
                var
-                  node = this .pickTarget_ [i] .getValue () .getInnerNode (),
+                  node = this ._pickTarget [i] .getValue () .getInnerNode (),
                   type = node .getType ();
 
                for (var t = type .length - 1; t >= 0; -- t)

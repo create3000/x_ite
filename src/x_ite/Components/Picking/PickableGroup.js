@@ -109,7 +109,7 @@ function (Fields,
          X3DGroupingNode   .prototype .initialize .call (this);
          X3DPickableObject .prototype .initialize .call (this);
 
-         this .pickable_ .addInterest ("set_pickable__", this);
+         this ._pickable .addInterest ("set_pickable__", this);
 
          this .set_pickable__ ();
       },
@@ -119,7 +119,7 @@ function (Fields,
       },
       set_pickable__: function ()
       {
-         this .setPickableObject (Boolean (this .pickable_ .getValue () || this .getTransformSensors () .size));
+         this .setPickableObject (Boolean (this ._pickable .getValue () || this .getTransformSensors () .size));
       },
       traverse: (function ()
       {
@@ -129,7 +129,7 @@ function (Fields,
          {
             if (type === TraverseType .PICKING)
             {
-               if (this .pickable_ .getValue ())
+               if (this ._pickable .getValue ())
                {
                   if (this .getObjectType () .has ("NONE"))
                      return;

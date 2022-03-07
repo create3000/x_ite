@@ -119,10 +119,10 @@ function (Fields,
          return function ()
          {
             const
-               translation = this .translation_ .getValue (),
-               rotation    = this .rotation_ .getValue (),
-               scale       = this .scale_ .getValue (),
-               center      = this .center_ .getValue (),
+               translation = this ._translation .getValue (),
+               rotation    = this ._rotation .getValue (),
+               scale       = this ._scale .getValue (),
+               center      = this ._center .getValue (),
                matrix4     = this .matrix;
 
             matrix4 .identity ();

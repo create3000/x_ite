@@ -98,17 +98,17 @@ function (Fields,
       {
          X3DNode .prototype .initialize .call (this);
 
-         this .geoSystem_ .addInterest ("set_geoSystem__", this);
+         this ._geoSystem .addInterest ("set_geoSystem__", this);
 
          this .set_geoSystem__ ();
       },
       set_geoSystem__: function ()
       {
-         this .referenceFrame = Geospatial .getReferenceFrame (this .geoSystem_, this .radians);
+         this .referenceFrame = Geospatial .getReferenceFrame (this ._geoSystem, this .radians);
       },
       getOrigin: function (result)
       {
-         return this .referenceFrame .convert (this .geoCoords_ .getValue (), result);
+         return this .referenceFrame .convert (this ._geoCoords .getValue (), result);
       },
    });
 

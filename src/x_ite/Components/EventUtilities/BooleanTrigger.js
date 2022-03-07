@@ -93,11 +93,11 @@ function (Fields,
       {
          X3DTriggerNode .prototype .initialize .call (this);
 
-         this .set_triggerTime_ .addInterest ("set_triggerTime__", this);
+         this ._set_triggerTime .addInterest ("set_triggerTime__", this);
       },
       set_triggerTime__: function ()
       {
-         this .triggerTrue_ = true;
+         this ._triggerTrue = true;
       },
    });
 

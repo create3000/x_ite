@@ -117,13 +117,13 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .renderStyle_ .addInterest ("set_renderStyle__", this);
-         this .voxels_      .addInterest ("set_voxels__",      this);
-         this .voxels_      .addFieldInterest (this .getAppearance () .texture_);
+         this ._renderStyle .addInterest ("set_renderStyle__", this);
+         this ._voxels      .addInterest ("set_voxels__",      this);
+         this ._voxels      .addFieldInterest (this .getAppearance () ._texture);
 
-         this .renderStyle_ .addInterest ("update", this);
+         this ._renderStyle .addInterest ("update", this);
 
-         this .getAppearance () .texture_   = this .voxels_;
+         this .getAppearance () ._texture   = this ._voxels;
 
          this .set_renderStyle__ ();
          this .set_voxels__ ();
@@ -138,7 +138,7 @@ function (Fields,
             this .renderStyleNode .removeVolumeData (this);
          }
 
-         this .renderStyleNode = X3DCast (X3DConstants .X3DVolumeRenderStyleNode, this .renderStyle_);
+         this .renderStyleNode = X3DCast (X3DConstants .X3DVolumeRenderStyleNode, this ._renderStyle);
 
          if (this .renderStyleNode)
          {
@@ -151,7 +151,7 @@ function (Fields,
          if (this .voxelsNode)
             this .voxelsNode .removeInterest ("set_textureSize__", this);
 
-         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .voxels_);
+         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
          if (this .voxelsNode)
          {
@@ -204,20 +204,20 @@ function (Fields,
 
          var vertexShader = new ShaderPart (this .getExecutionContext ());
          vertexShader .setName ("VolumeDataVertexShader");
-         vertexShader .url_ .push ("data:x-shader/x-vertex," + vs);
+         vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
          vertexShader .setup ();
 
          var fragmentShader = new ShaderPart (this .getExecutionContext ());
          fragmentShader .setName ("VolumeDataFragmentShader");
-         fragmentShader .type_ = "FRAGMENT";
-         fragmentShader .url_ .push ("data:x-shader/x-fragment," + fs);
+         fragmentShader ._type = "FRAGMENT";
+         fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
          fragmentShader .setup ();
 
          var shaderNode = new ComposedShader (this .getExecutionContext ());
          shaderNode .setName ("VolumeDataShader");
-         shaderNode .language_ = "GLSL";
-         shaderNode .parts_ .push (vertexShader);
-         shaderNode .parts_ .push (fragmentShader);
+         shaderNode ._language = "GLSL";
+         shaderNode ._parts .push (vertexShader);
+         shaderNode ._parts .push (fragmentShader);
 
          if (this .voxelsNode)
          {

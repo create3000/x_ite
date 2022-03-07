@@ -70,8 +70,8 @@ function (Fields,
 
       this .addType (X3DConstants .Disk2D);
 
-      this .innerRadius_ .setUnit ("length");
-      this .outerRadius_ .setUnit ("length");
+      this ._innerRadius .setUnit ("length");
+      this ._outerRadius .setUnit ("length");
    }
 
    Disk2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -116,8 +116,8 @@ function (Fields,
       {
          const
             options     = this .getBrowser () .getDisk2DOptions (),
-            innerRadius = Math .min (Math .abs (this .innerRadius_ .getValue ()), Math .abs (this .outerRadius_ .getValue ())),
-            outerRadius = Math .max (Math .abs (this .innerRadius_ .getValue ()), Math .abs (this .outerRadius_ .getValue ()));
+            innerRadius = Math .min (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ())),
+            outerRadius = Math .max (Math .abs (this ._innerRadius .getValue ()), Math .abs (this ._outerRadius .getValue ()));
 
          if (innerRadius === outerRadius)
          {
@@ -178,7 +178,7 @@ function (Fields,
             this .getMax () .set ( outerRadius,  outerRadius, 0);
 
             this .setGeometryType (2);
-            this .setSolid (this .solid_ .getValue ());
+            this .setSolid (this ._solid .getValue ());
 
             return;
          }
@@ -222,7 +222,7 @@ function (Fields,
          this .getMax () .set ( outerRadius,  outerRadius, 0);
 
          this .setGeometryType (2);
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
       },
       intersectsLine: function (line, clipPlanes, modelViewMatrix, intersections)
       {

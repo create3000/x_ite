@@ -162,7 +162,7 @@ function (Shading,
       {
          this [_unlitShader] = this .createShader ("UnlitShader", "Unlit");
 
-         this [_unlitShader] .isValid_ .addInterest ("set_unlit_shader_valid__", this);
+         this [_unlitShader] ._isValid .addInterest ("set_unlit_shader_valid__", this);
 
          this .getUnlitShader = function () { return this [_unlitShader]; };
 
@@ -178,7 +178,7 @@ function (Shading,
       {
          this [_gouraudShader] = this .createShader ("GouraudShader", "Gouraud", false);
 
-         this [_gouraudShader] .isValid_ .addInterest ("set_gouraud_shader_valid__", this);
+         this [_gouraudShader] ._isValid .addInterest ("set_gouraud_shader_valid__", this);
 
          this .getGouraudShader = function () { return this [_gouraudShader]; };
 
@@ -194,7 +194,7 @@ function (Shading,
       {
          this [_phongShader] = this .createShader ("PhongShader", "Phong", false);
 
-         this [_phongShader] .isValid_ .addInterest ("set_phong_shader_valid__", this);
+         this [_phongShader] ._isValid .addInterest ("set_phong_shader_valid__", this);
 
          this .getPhongShader = function () { return this [_phongShader]; };
 
@@ -210,7 +210,7 @@ function (Shading,
       {
          this [_shadowShader] = this .createShader ("ShadowShader", "Phong", true);
 
-         this [_shadowShader] .isValid_ .addInterest ("set_shadow_shader_valid__", this);
+         this [_shadowShader] ._isValid .addInterest ("set_shadow_shader_valid__", this);
 
          this .getShadowShader = function () { return this [_shadowShader]; };
 
@@ -264,22 +264,22 @@ function (Shading,
 
          const vertexShader = new ShaderPart (this .getPrivateScene ());
          vertexShader .setName (name + "Vertex");
-         vertexShader .url_ .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".vs"));
+         vertexShader ._url .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".vs"));
          vertexShader .setShadow (shadow);
          vertexShader .setup ();
 
          const fragmentShader = new ShaderPart (this .getPrivateScene ());
          fragmentShader .setName (name + "Fragment");
-         fragmentShader .type_  = "FRAGMENT";
-         fragmentShader .url_ .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".fs"));
+         fragmentShader ._type  = "FRAGMENT";
+         fragmentShader ._url .push (urls .getShaderUrl ("webgl" + version + "/" + file + ".fs"));
          fragmentShader .setShadow (shadow);
          fragmentShader .setup ();
 
          const shader = new ComposedShader (this .getPrivateScene ());
          shader .setName (name);
-         shader .language_ = "GLSL";
-         shader .parts_ .push (vertexShader);
-         shader .parts_ .push (fragmentShader);
+         shader ._language = "GLSL";
+         shader ._parts .push (vertexShader);
+         shader ._parts .push (fragmentShader);
          shader .setCustom (false);
          shader .setShading (this .getBrowserOptions () .getShading ());
          shader .setup ();
@@ -290,7 +290,7 @@ function (Shading,
       },
       set_unlit_shader_valid__: function (valid)
       {
-         this [_unlitShader] .isValid_ .removeInterest ("set_unlit_shader_valid__", this);
+         this [_unlitShader] ._isValid .removeInterest ("set_unlit_shader_valid__", this);
 
          if (valid .getValue () && ShaderTest .verify (this, this [_unlitShader]))
             return;
@@ -298,12 +298,12 @@ function (Shading,
          console .error ("X_ITE: Unlit shading is not available, using fallback VRML shader.");
 
          // Recompile shader.
-         this [_unlitShader] .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.vs") ];
-         this [_unlitShader] .parts_ [1] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.fs") ];
+         this [_unlitShader] ._parts [0] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.vs") ];
+         this [_unlitShader] ._parts [1] .url = [ urls .getShaderUrl ("webgl1/FallbackUnlit.fs") ];
       },
       set_gouraud_shader_valid__: function (valid)
       {
-         this [_gouraudShader] .isValid_ .removeInterest ("set_gouraud_shader_valid__", this);
+         this [_gouraudShader] ._isValid .removeInterest ("set_gouraud_shader_valid__", this);
 
          if (valid .getValue () && ShaderTest .verify (this, this [_gouraudShader]))
             return;
@@ -311,12 +311,12 @@ function (Shading,
          console .warn ("X_ITE: All else fails, using fallback VRML shader.");
 
          // Recompile shader.
-         this [_gouraudShader] .parts_ [0] .url = [ urls .getShaderUrl ("webgl1/Fallback.vs") ];
-         this [_gouraudShader] .parts_ [1] .url = [ urls .getShaderUrl ("webgl1/Fallback.fs") ];
+         this [_gouraudShader] ._parts [0] .url = [ urls .getShaderUrl ("webgl1/Fallback.vs") ];
+         this [_gouraudShader] ._parts [1] .url = [ urls .getShaderUrl ("webgl1/Fallback.fs") ];
       },
       set_phong_shader_valid__: function (valid)
       {
-         this [_phongShader] .isValid_ .removeInterest ("set_phong_shader_valid__", this);
+         this [_phongShader] ._isValid .removeInterest ("set_phong_shader_valid__", this);
 
          if (valid .getValue () && ShaderTest .verify (this, this [_phongShader]))
             return;
@@ -329,7 +329,7 @@ function (Shading,
       },
       set_shadow_shader_valid__: function (valid)
       {
-         this [_shadowShader] .isValid_ .removeInterest ("set_shadow_shader_valid__", this);
+         this [_shadowShader] ._isValid .removeInterest ("set_shadow_shader_valid__", this);
 
          if (valid .getValue () && ShaderTest .verify (this, this [_shadowShader]))
             return;

@@ -103,7 +103,7 @@ function (SupportedNodes,
       },
       requestUpdateInstances: function ()
       {
-         this .updateInstances_ = this .getBrowser () .getCurrentTime ();
+         this ._updateInstances = this .getBrowser () .getCurrentTime ();
       },
    });
 

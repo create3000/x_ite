@@ -74,14 +74,14 @@ function (X3DGeometricPropertyNode,
       {
          X3DGeometricPropertyNode .prototype .initialize .call (this);
 
-         this .point_ .addInterest ("set_point__", this);
+         this ._point .addInterest ("set_point__", this);
 
          this .set_point__ ();
       },
       set_point__: function ()
       {
-         this .point  = this .point_ .getValue ();
-         this .length = this .point_ .length;
+         this .point  = this ._point .getValue ();
+         this .length = this ._point .length;
       },
       isEmpty: function ()
       {
@@ -93,7 +93,7 @@ function (X3DGeometricPropertyNode,
       },
       set1Point: function (index, point)
       {
-         this .point_ [index] = point;
+         this ._point [index] = point;
       },
       get1Point: function (index, result)
       {

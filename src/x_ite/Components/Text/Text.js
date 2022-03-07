@@ -70,11 +70,11 @@ function (Fields,
 
       this .addType (X3DConstants .Text);
 
-      this .length_     .setUnit ("length");
-      this .maxExtent_  .setUnit ("length");
-      this .origin_     .setUnit ("length");
-      this .textBounds_ .setUnit ("length");
-      this .lineBounds_ .setUnit ("length");
+      this ._length     .setUnit ("length");
+      this ._maxExtent  .setUnit ("length");
+      this ._origin     .setUnit ("length");
+      this ._textBounds .setUnit ("length");
+      this ._lineBounds .setUnit ("length");
    }
 
    Text .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -107,7 +107,7 @@ function (Fields,
       {
          X3DGeometryNode .prototype .initialize .call (this);
 
-         this .fontStyle_ .addInterest ("set_fontStyle__", this);
+         this ._fontStyle .addInterest ("set_fontStyle__", this);
 
          this .set_fontStyle__ ();
       },
@@ -117,8 +117,8 @@ function (Fields,
       },
       getLength: function (index)
       {
-         if (index < this .length_ .length)
-            return Math .max (0, this .length_ [index]);
+         if (index < this ._length .length)
+            return Math .max (0, this ._length [index]);
 
          return 0;
       },
@@ -127,16 +127,16 @@ function (Fields,
           X3DGeometryNode .prototype .set_live__ .call (this);
 
          if (this .isLive () .getValue ())
-            this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .addInterest ("requestRebuild", this);
+            this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .addInterest ("requestRebuild", this);
          else
-            this .getBrowser () .getBrowserOptions () .PrimitiveQuality_ .removeInterest ("requestRebuild", this);
+            this .getBrowser () .getBrowserOptions () ._PrimitiveQuality .removeInterest ("requestRebuild", this);
       },
       set_fontStyle__: function ()
       {
          if (this .fontStyleNode)
             this .fontStyleNode .removeInterest ("requestRebuild", this);
 
-         this .fontStyleNode = X3DCast (X3DConstants .X3DFontStyleNode, this .fontStyle_);
+         this .fontStyleNode = X3DCast (X3DConstants .X3DFontStyleNode, this ._fontStyle);
 
          if (! this .fontStyleNode)
             this .fontStyleNode = this .getBrowser () .getDefaultFontStyle ();
@@ -152,7 +152,7 @@ function (Fields,
          this .textGeometry .update ();
          this .textGeometry .build ();
 
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
       },
       traverse: function (type, renderObject)
       {

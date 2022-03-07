@@ -105,8 +105,8 @@ function (Fields,
       {
          X3DComposedGeometryNode .prototype .initialize .call (this);
 
-         this .set_index_ .addFieldInterest (this .index_);
-         this .index_     .addInterest ("set_index__", this);
+         this ._set_index .addFieldInterest (this ._index);
+         this ._index     .addInterest ("set_index__", this);
 
          this .set_index__ ();
       },
@@ -115,7 +115,7 @@ function (Fields,
          // Build coordIndex
 
          const
-            index         = this .index_,
+            index         = this ._index,
             triangleIndex = this .triangleIndex;
 
          triangleIndex .length = 0;

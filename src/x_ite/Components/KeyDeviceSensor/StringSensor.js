@@ -100,12 +100,12 @@ function (Fields,
          {
             case "Backspace":
             {
-               if (this .isActive_ .getValue ())
+               if (this ._isActive .getValue ())
                {
-                  if (this .deletionAllowed_ .getValue ())
+                  if (this ._deletionAllowed .getValue ())
                   {
-                     if (this .enteredText_ .length)
-                        this .enteredText_  = this .enteredText_ .getValue () .substr (0, this .enteredText_ .length - 1);
+                     if (this ._enteredText .length)
+                        this ._enteredText  = this ._enteredText .getValue () .substr (0, this ._enteredText .length - 1);
                   }
                }
 
@@ -113,21 +113,21 @@ function (Fields,
             }
             case "Enter":
             {
-               this .finalText_ = this .enteredText_;
+               this ._finalText = this ._enteredText;
 
-               this .enteredText_ .set ("");
+               this ._enteredText .set ("");
 
-               if (this .isActive_ .getValue ())
-                  this .isActive_ = false;
+               if (this ._isActive .getValue ())
+                  this ._isActive = false;
 
                break;
             }
             case "Escape":
             {
-               this .enteredText_ .set ("");
+               this ._enteredText .set ("");
 
-               if (this .isActive_ .getValue ())
-                  this .isActive_ = false;
+               if (this ._isActive .getValue ())
+                  this ._isActive = false;
 
                break;
             }
@@ -141,13 +141,13 @@ function (Fields,
                {
                   if (event .key .length === 1)
                   {
-                     if (! this .isActive_ .getValue ())
+                     if (! this ._isActive .getValue ())
                      {
-                        this .isActive_    = true;
-                        this .enteredText_ = "";
+                        this ._isActive    = true;
+                        this ._enteredText = "";
                      }
 
-                     this .enteredText_ = this .enteredText_ .getValue () + event .key;
+                     this ._enteredText = this ._enteredText .getValue () + event .key;
                   }
                }
 

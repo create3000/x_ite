@@ -70,9 +70,9 @@ function (X3DChildNode,
 
       this .addType (X3DConstants .X3DTextureProjectorNode);
 
-      this .location_    .setUnit ("length");
-      this .farDistance_ .setUnit ("length");
-      this .location_    .setUnit ("length");
+      this ._location    .setUnit ("length");
+      this ._farDistance .setUnit ("length");
+      this ._location    .setUnit ("length");
    }
 
    X3DTextureProjectorNode .prototype = Object .assign (Object .create (X3DChildNode .prototype),
@@ -82,30 +82,30 @@ function (X3DChildNode,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .on_      .addInterest ("set_on__",      this);
-         this .texture_ .addInterest ("set_texture__", this);
+         this ._on      .addInterest ("set_on__",      this);
+         this ._texture .addInterest ("set_texture__", this);
 
          this .set_texture__ ();
       },
       getGlobal: function ()
       {
-         return this .global_ .getValue ();
+         return this ._global .getValue ();
       },
       getLocation: function ()
       {
-         return this .location_ .getValue ();
+         return this ._location .getValue ();
       },
       getDirection: function ()
       {
-         return this .direction_ .getValue ();
+         return this ._direction .getValue ();
       },
       getNearDistance: function ()
       {
-         return this .nearDistance_ .getValue ();
+         return this ._nearDistance .getValue ();
       },
       getFarDistance: function ()
       {
-         return this .farDistance_ .getValue ();
+         return this ._farDistance .getValue ();
       },
       getTexture: function ()
       {
@@ -136,7 +136,7 @@ function (X3DChildNode,
          {
             orientation .multVecRot (localXAxis .assign (Vector3 .xAxis) .negate ());
             orientation .multVecRot (localZAxis .assign (Vector3 .zAxis));
-            upVector .assign (this .upVector_ .getValue ()) .normalize ();
+            upVector .assign (this ._upVector .getValue ()) .normalize ();
 
             var vector = localZAxis .cross (upVector);
 
@@ -154,7 +154,7 @@ function (X3DChildNode,
       })(),
       set_on__: function ()
       {
-         if (this .on_ .getValue () && this .textureNode && this .getBrowser () .getProjectiveTextureMapping ())
+         if (this ._on .getValue () && this .textureNode && this .getBrowser () .getProjectiveTextureMapping ())
          {
             delete this .push;
             delete this .pop;
@@ -170,7 +170,7 @@ function (X3DChildNode,
          if (this .textureNode)
             this .textureNode .removeInterest ("set_aspectRatio__", this);
 
-         this .textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this .texture_);
+         this .textureNode = X3DCast (X3DConstants .X3DTexture2DNode, this ._texture);
 
          if (this .textureNode)
             this .textureNode .addInterest ("set_aspectRatio__", this);
@@ -181,9 +181,9 @@ function (X3DChildNode,
       set_aspectRatio__: function ()
       {
          if (this .textureNode)
-            this .aspectRatio_ = this .textureNode .getWidth () / this .textureNode .getHeight ();
+            this ._aspectRatio = this .textureNode .getWidth () / this .textureNode .getHeight ();
          else
-            this .aspectRatio_ = 0;
+            this ._aspectRatio = 0;
       },
       push: function (renderObject)
       {
@@ -193,7 +193,7 @@ function (X3DChildNode,
                                          this,
                                          renderObject .getModelViewMatrix () .get ());
 
-         if (this .global_ .getValue ())
+         if (this ._global .getValue ())
          {
             renderObject .getGlobalObjects ()     .push (textureProjectorContainer);
             renderObject .getTextureProjectors () .push (textureProjectorContainer);
@@ -206,7 +206,7 @@ function (X3DChildNode,
       },
       pop: function (renderObject)
       {
-         if (this .global_ .getValue ())
+         if (this ._global .getValue ())
             return;
 
          renderObject .getLocalObjects () .pop ();

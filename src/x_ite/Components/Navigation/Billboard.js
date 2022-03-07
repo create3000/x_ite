@@ -132,7 +132,7 @@ function (Fields,
 
          const billboardToViewer = inverseModelViewMatrix .origin .normalize (); // Normalized to get work with Geo
 
-         if (this .axisOfRotation_ .getValue () .equals (Vector3 .Zero))
+         if (this ._axisOfRotation .getValue () .equals (Vector3 .Zero))
          {
             inverseModelViewMatrix .multDirMatrix (viewerYAxis .assign (yAxis)) .normalize (); // Normalized to get work with Geo
 
@@ -152,8 +152,8 @@ function (Fields,
          }
          else
          {
-            N1 .assign (this .axisOfRotation_ .getValue ()) .cross (billboardToViewer); // Normal vector of plane as in specification
-            N2 .assign (this .axisOfRotation_ .getValue ()) .cross (zAxis);             // Normal vector of plane between axisOfRotation and zAxis
+            N1 .assign (this ._axisOfRotation .getValue ()) .cross (billboardToViewer); // Normal vector of plane as in specification
+            N2 .assign (this ._axisOfRotation .getValue ()) .cross (zAxis);             // Normal vector of plane between axisOfRotation and zAxis
 
             this .matrix .setRotation (rotation .setFromToVec (N2, N1));                // Rotate zAxis in plane
          }

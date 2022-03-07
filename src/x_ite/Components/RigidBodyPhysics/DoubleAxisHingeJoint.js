@@ -78,13 +78,13 @@ function ($,
 
       this .addType (X3DConstants .DoubleAxisHingeJoint);
 
-      this .anchorPoint_             .setUnit ("length");
+      this ._anchorPoint             .setUnit ("length");
       this .minAngle1_               .setUnit ("angle");
       this .maxAngle1_               .setUnit ("angle");
       this .desiredAngularVelocity1_ .setUnit ("angularRate");
       this .desiredAngularVelocity2_ .setUnit ("angularRate");
       this .stopConstantForceMix1_   .setUnit ("force");
-      this .suspensionForce_         .setUnit ("force");
+      this ._suspensionForce         .setUnit ("force");
 
       this .joint             = null;
       this .outputs           = { };
@@ -141,7 +141,7 @@ function ($,
       {
          X3DRigidJointNode .prototype .initialize .call (this);
 
-         this .anchorPoint_ .addInterest ("set_joint__", this);
+         this ._anchorPoint .addInterest ("set_joint__", this);
          this .axis1_       .addInterest ("set_joint__", this);
          this .axis2_       .addInterest ("set_joint__", this);
       },
@@ -170,8 +170,8 @@ function ($,
             if (this .getBody2 () .getCollection () !== this .getCollection ())
                return;
 
-            localAnchorPoint1 .assign (this .anchorPoint_ .getValue ());
-            localAnchorPoint2 .assign (this .anchorPoint_ .getValue ());
+            localAnchorPoint1 .assign (this ._anchorPoint .getValue ());
+            localAnchorPoint2 .assign (this ._anchorPoint .getValue ());
             localAxis1        .assign (this .axis1_ .getValue ());
             localAxis2        .assign (this .axis2_ .getValue ());
 
@@ -207,9 +207,9 @@ function ($,
          for (var key in this .outputs)
             delete this .outputs [key];
 
-         for (var i = 0, length = this .forceOutput_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
          {
-            var value = this .forceOutput_ [i];
+            var value = this ._forceOutput [i];
 
             if (value == "ALL")
             {
@@ -243,22 +243,22 @@ function ($,
             try
             {
                if (this .outputs .body1AnchorPoint)
-                  this .body1AnchorPoint_ = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
+                  this ._body1AnchorPoint = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
 
                if (this .outputs .body1Axis)
-                  this .body1Axis_ = this .getInitialInverseMatrix1 () .multDirMatrix (this .getBody1 () .getMatrix () .multDirMatrix (localAxis1 .assign (this .localAxis1))) .normalize ();
+                  this ._body1Axis = this .getInitialInverseMatrix1 () .multDirMatrix (this .getBody1 () .getMatrix () .multDirMatrix (localAxis1 .assign (this .localAxis1))) .normalize ();
 
                if (this .outputs .hinge1Angle)
                {
-                  var lastAngle  = this .hinge1Angle_ .getValue ();
+                  var lastAngle  = this ._hinge1Angle .getValue ();
 
                   difference .assign (this .getInitialInverseMatrix1 ()) .multRight (this .getBody1 () .getMatrix ());
                   difference .get (null, rotation);
 
-                  this .hinge1Angle_ = rotation .angle;
+                  this ._hinge1Angle = rotation .angle;
 
                   if (this .outputs .angleRate)
-                     this .hinge1AngleRate_ = (this .hinge1Angle_ .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
+                     this ._hinge1AngleRate = (this ._hinge1Angle .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
                }
             }
             catch (error)
@@ -280,22 +280,22 @@ function ($,
             try
             {
                if (this .outputs .body2AnchorPoint)
-                  this .body2AnchorPoint_ = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
+                  this ._body2AnchorPoint = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
 
                if (this .outputs .body2Axis)
-                  this .body2Axis_ = this .getInitialInverseMatrix2 () .multDirMatrix (this .getBody2 () .getMatrix () .multDirMatrix (localAxis2 .assign (this .localAxis2))) .normalize ();
+                  this ._body2Axis = this .getInitialInverseMatrix2 () .multDirMatrix (this .getBody2 () .getMatrix () .multDirMatrix (localAxis2 .assign (this .localAxis2))) .normalize ();
 
                if (this .outputs .hinge2Angle)
                {
-                  var lastAngle  = this .hinge2Angle_ .getValue ();
+                  var lastAngle  = this ._hinge2Angle .getValue ();
 
                   difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
                   difference .get (null, rotation);
 
-                  this .hinge2Angle_ = rotation .angle;
+                  this ._hinge2Angle = rotation .angle;
 
                   if (this .outputs .angleRate)
-                     this .hinge2AngleRate_ = (this .hinge2Angle_ .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
+                     this ._hinge2AngleRate = (this ._hinge2Angle .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
                }
             }
             catch (error)

@@ -96,9 +96,9 @@ function (Fields,
                              "bbox_changed", new Fields .SFTime (),
                              "rebuild",      new Fields .SFTime ());
 
-      this .transparent_  .setAccessType (X3DConstants .outputOnly);
-      this .bbox_changed_ .setAccessType (X3DConstants .outputOnly);
-      this .rebuild_      .setAccessType (X3DConstants .outputOnly);
+      this ._transparent  .setAccessType (X3DConstants .outputOnly);
+      this ._bbox_changed .setAccessType (X3DConstants .outputOnly);
+      this ._rebuild      .setAccessType (X3DConstants .outputOnly);
 
       // Members
 
@@ -177,7 +177,7 @@ function (Fields,
          this .isLive () .addInterest ("set_live__", this);
 
          this .addInterest ("requestRebuild", this);
-         this .rebuild_ .addInterest ("rebuild", this);
+         this ._rebuild .addInterest ("rebuild", this);
 
          const gl = this .getBrowser () .getContext ();
 
@@ -209,12 +209,12 @@ function (Fields,
       },
       setTransparent: function (value)
       {
-         if (value !== this .transparent_ .getValue ())
-            this .transparent_ = value;
+         if (value !== this ._transparent .getValue ())
+            this ._transparent = value;
       },
       getTransparent: function ()
       {
-         return this .transparent_ .getValue ();
+         return this ._transparent .getValue ();
       },
       getBBox: function ()
       {
@@ -233,7 +233,7 @@ function (Fields,
          for (let i = 0; i < 5; ++ i)
             this .planes [i] .set (i % 2 ? this .min : this .max, boxNormals [i]);
 
-         this .bbox_changed_ .addEvent ();
+         this ._bbox_changed .addEvent ();
       },
       getMin: function ()
       {
@@ -648,9 +648,9 @@ function (Fields,
       set_live__: function ()
       {
          if (this .isLive () .getValue ())
-            this .getBrowser () .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
+            this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
          else
-            this .getBrowser () .getBrowserOptions () .Shading_ .removeInterest ("set_shading__", this);
+            this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
       },
       set_shading__: (function ()
       {
@@ -712,7 +712,7 @@ function (Fields,
       })(),
       requestRebuild: function ()
       {
-         this .rebuild_ .addEvent ();
+         this ._rebuild .addEvent ();
       },
       rebuild: (function ()
       {
@@ -763,7 +763,7 @@ function (Fields,
                this .bbox .setExtents (min .set (0, 0, 0), max .set (0, 0, 0));
             }
 
-            this .bbox_changed_ .addEvent ();
+            this ._bbox_changed .addEvent ();
 
             // Generate texCoord if needed.
 
@@ -785,7 +785,7 @@ function (Fields,
 
             // Upload normals or flat normals.
 
-            this .set_shading__ (this .getBrowser () .getBrowserOptions () .Shading_);
+            this .set_shading__ (this .getBrowser () .getBrowserOptions () ._Shading);
 
             // Upload arrays.
 

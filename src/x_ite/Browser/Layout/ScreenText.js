@@ -86,7 +86,7 @@ function ($,
       this .context       = this .canvas [0] .getContext ("2d");
       this .matrix        = new Matrix4 ();
 
-      this .textureNode .textureProperties_ = fontStyle .getBrowser () .getScreenTextureProperties ();
+      this .textureNode ._textureProperties = fontStyle .getBrowser () .getScreenTextureProperties ();
       this .textureNode .setup ();
    }
 
@@ -117,8 +117,8 @@ function ($,
                text      = this .getText (),
                offset    = 1; // For antialiasing border on bottom and right side
 
-            text .textBounds_ .x = Math .ceil (text .textBounds_ .x) + offset;
-            text .textBounds_ .y = Math .ceil (text .textBounds_ .y) + offset;
+            text ._textBounds .x = Math .ceil (text ._textBounds .x) + offset;
+            text ._textBounds .y = Math .ceil (text ._textBounds .y) + offset;
 
             this .getBBox () .getExtents (min, max);
 
@@ -130,15 +130,15 @@ function ($,
                case TextAlignment .BEGIN:
                case TextAlignment .FIRST:
                   min .x = Math .floor (min .x);
-                  max .x = min .x + text .textBounds_ .x;
+                  max .x = min .x + text ._textBounds .x;
                   break;
                case TextAlignment .MIDDLE:
                   min .x = Math .round (min .x);
-                  max .x = min .x + text .textBounds_ .x;
+                  max .x = min .x + text ._textBounds .x;
                   break;
                case TextAlignment .END:
                   max .x = Math .ceil (max .x);
-                  min .x = max .x - text .textBounds_ .x;
+                  min .x = max .x - text ._textBounds .x;
                   break;
             }
 
@@ -147,20 +147,20 @@ function ($,
                case TextAlignment .BEGIN:
                case TextAlignment .FIRST:
                   max .y = Math .ceil (max .y);
-                  min .y = max .y - text .textBounds_ .y;
+                  min .y = max .y - text ._textBounds .y;
                   break;
                case TextAlignment .MIDDLE:
                   max .y = Math .round (max .y);
-                  min .y = max .y - text .textBounds_ .y;
+                  min .y = max .y - text ._textBounds .y;
                   break;
                case TextAlignment .END:
                   min .y = Math .floor (min .y);
-                  max .y = min .y + text .textBounds_ .y;
+                  max .y = min .y + text ._textBounds .y;
                   break;
             }
 
-            text .origin_ .x = min .x;
-            text .origin_ .y = max .y;
+            text ._origin .x = min .x;
+            text ._origin .y = max .y;
 
             this .getBBox () .setExtents (min, max);
          };
@@ -221,8 +221,8 @@ function ($,
             // Generate texture.
 
             var
-               width  = text .textBounds_ .x,
-               height = text .textBounds_ .y;
+               width  = text ._textBounds .x,
+               height = text ._textBounds .y;
 
             // Scale canvas.
 
@@ -249,7 +249,7 @@ function ($,
 
             // Draw glyphs.
 
-            if (fontStyle .horizontal_ .getValue ())
+            if (fontStyle ._horizontal .getValue ())
             {
                for (var l = 0, length = glyphs .length; l < length; ++ l)
                {
@@ -282,10 +282,10 @@ function ($,
             else
             {
                var
-                  leftToRight = fontStyle .leftToRight_ .getValue (),
-                  topToBottom = fontStyle .topToBottom_ .getValue (),
-                  first       = leftToRight ? 0 : text .string_ .length - 1,
-                  last        = leftToRight ? text .string_ .length  : -1,
+                  leftToRight = fontStyle ._leftToRight .getValue (),
+                  topToBottom = fontStyle ._topToBottom .getValue (),
+                  first       = leftToRight ? 0 : text ._string .length - 1,
+                  last        = leftToRight ? text ._string .length  : -1,
                   step        = leftToRight ? 1 : -1;
 
                for (var l = first, t = 0; l !== last; l += step)

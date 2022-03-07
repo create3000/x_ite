@@ -77,12 +77,12 @@ function (Fields,
             bboxColor      = new Color (this .getPrivateScene ()),
             bboxCoordinate = new Coordinate (this .getPrivateScene ());
 
-         bboxNode .geometry_       = bboxGeometry;
-         bboxGeometry .coordIndex_ = new Fields .MFFloat (0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 1, 5, -1, 2, 6, -1, 3, 7, -1);
-         bboxGeometry .color_      = bboxColor;
-         bboxGeometry .coord_      = bboxCoordinate;
-         bboxColor .color_         = new Fields .MFColor (new Fields .SFColor (1, 1, 1));
-         bboxCoordinate .point_    = new Fields .MFVec3f (new Fields .SFVec3f (0.5, 0.5, 0.5), new Fields .SFVec3f (-0.5, 0.5, 0.5), new Fields .SFVec3f (-0.5, -0.5, 0.5), new Fields .SFVec3f (0.5, -0.5, 0.5), new Fields .SFVec3f (0.5, 0.5, -0.5), new Fields .SFVec3f (-0.5, 0.5, -0.5), new Fields .SFVec3f (-0.5, -0.5, -0.5), new Fields .SFVec3f (0.5, -0.5, -0.5));
+         bboxNode ._geometry       = bboxGeometry;
+         bboxGeometry ._coordIndex = new Fields .MFFloat (0, 1, 2, 3, 0, -1, 4, 5, 6, 7, 4, -1, 0, 4, -1, 1, 5, -1, 2, 6, -1, 3, 7, -1);
+         bboxGeometry ._color      = bboxColor;
+         bboxGeometry ._coord      = bboxCoordinate;
+         bboxColor ._color         = new Fields .MFColor (new Fields .SFColor (1, 1, 1));
+         bboxCoordinate ._point    = new Fields .MFVec3f (new Fields .SFVec3f (0.5, 0.5, 0.5), new Fields .SFVec3f (-0.5, 0.5, 0.5), new Fields .SFVec3f (-0.5, -0.5, 0.5), new Fields .SFVec3f (0.5, -0.5, 0.5), new Fields .SFVec3f (0.5, 0.5, -0.5), new Fields .SFVec3f (-0.5, 0.5, -0.5), new Fields .SFVec3f (-0.5, -0.5, -0.5), new Fields .SFVec3f (0.5, -0.5, -0.5));
 
          bboxCoordinate .setup ();
          bboxColor      .setup ();

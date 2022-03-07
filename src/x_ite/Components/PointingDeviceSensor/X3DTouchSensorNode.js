@@ -70,8 +70,8 @@ function (X3DPointingDeviceSensorNode,
       {
          X3DPointingDeviceSensorNode .prototype .set_active__ .call (this, active, hit);
 
-         if (this .enabled_ .getValue () && this .isOver_ .getValue () && ! active)
-            this .touchTime_ = this .getBrowser () .getCurrentTime ();
+         if (this ._enabled .getValue () && this ._isOver .getValue () && ! active)
+            this ._touchTime = this .getBrowser () .getCurrentTime ();
       },
    });
 

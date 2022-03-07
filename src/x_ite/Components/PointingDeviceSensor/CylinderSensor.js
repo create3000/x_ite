@@ -82,10 +82,10 @@ function (Fields,
 
       this .addType (X3DConstants .CylinderSensor);
 
-      this .diskAngle_ .setUnit ("angle");
-      this .minAngle_  .setUnit ("angle");
-      this .maxAngle_  .setUnit ("angle");
-      this .offset_    .setUnit ("angle");
+      this ._diskAngle .setUnit ("angle");
+      this ._minAngle  .setUnit ("angle");
+      this ._maxAngle  .setUnit ("angle");
+      this ._offset    .setUnit ("angle");
    }
 
    CylinderSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
@@ -181,7 +181,7 @@ function (Fields,
 
          try
          {
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
                this .modelViewMatrix .assign (modelViewMatrix);
                this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
@@ -191,7 +191,7 @@ function (Fields,
                   hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
 
                var
-                  yAxis      = this .axisRotation_ .getValue () .multVecRot (new Vector3 (0, 1, 0)),
+                  yAxis      = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
                   cameraBack = this .invModelViewMatrix .multDirMatrix (new Vector3 (0, 0, 1)) .normalize ();
 
                var
@@ -200,7 +200,7 @@ function (Fields,
 
                this .cylinder = new Cylinder3 (axis, radius);
 
-               this .disk   = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this .diskAngle_ .getValue ());
+               this .disk   = Math .abs (Vector3 .dot (cameraBack, yAxis)) > Math .cos (this ._diskAngle .getValue ());
                this .behind = this .isBehind (hitRay, hitPoint);
 
                this .yPlane = new Plane3 (hitPoint, yAxis);             // Sensor aligned y-plane
@@ -222,20 +222,20 @@ function (Fields,
                   this .getTrackPoint (hitRay, trackPoint);
 
                this .fromVector  = this .cylinder .axis .getPerpendicularVector (trackPoint) .negate ();
-               this .startOffset = new Rotation4 (yAxis, this .offset_ .getValue ());
+               this .startOffset = new Rotation4 (yAxis, this ._offset .getValue ());
 
-               this .trackPoint_changed_ = trackPoint;
-               this .rotation_changed_   = this .startOffset;
+               this ._trackPoint_changed = trackPoint;
+               this ._rotation_changed   = this .startOffset;
 
                // For min/max angle.
 
-               this .angle       = this .offset_ .getValue ();
-               this .startVector = this .rotation_changed_ .getValue () .multVecRot (this .axisRotation_ .getValue () .multVecRot (new Vector3 (0, 0, 1)));
+               this .angle       = this ._offset .getValue ();
+               this .startVector = this ._rotation_changed .getValue () .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1)));
             }
             else
             {
-               if (this .autoOffset_ .getValue ())
-                  this .offset_ = this .getAngle (this .rotation_changed_ .getValue ());
+               if (this ._autoOffset .getValue ())
+                  this ._offset = this .getAngle (this ._rotation_changed .getValue ());
             }
          }
          catch (error)
@@ -256,7 +256,7 @@ function (Fields,
             else
                this .getTrackPoint (hitRay, trackPoint);
 
-            this .trackPoint_changed_ = trackPoint;
+            this ._trackPoint_changed = trackPoint;
 
             var
                toVector = this .cylinder .axis .getPerpendicularVector (trackPoint) .negate (),
@@ -281,19 +281,19 @@ function (Fields,
 
             rotation .multLeft (this .startOffset);
 
-            if (this .minAngle_ .getValue () > this .maxAngle_ .getValue ())
+            if (this ._minAngle .getValue () > this ._maxAngle .getValue ())
             {
-               this .rotation_changed_ = rotation;
+               this ._rotation_changed = rotation;
             }
             else
             {
                var
-                  endVector     = rotation .multVecRot (this .axisRotation_ .getValue () .multVecRot (new Vector3 (0, 0, 1))),
+                  endVector     = rotation .multVecRot (this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 0, 1))),
                   deltaRotation = new Rotation4 (this .startVector, endVector),
-                  axis          = this .axisRotation_ .getValue () .multVecRot (new Vector3 (0, 1, 0)),
+                  axis          = this ._axisRotation .getValue () .multVecRot (new Vector3 (0, 1, 0)),
                   sign          = axis .dot (deltaRotation .getAxis ()) > 0 ? 1 : -1,
-                  min           = this .minAngle_ .getValue (),
-                  max           = this .maxAngle_ .getValue ();
+                  min           = this ._minAngle .getValue (),
+                  max           = this ._maxAngle .getValue ();
 
                this .angle += sign * deltaRotation .angle;
 
@@ -308,16 +308,16 @@ function (Fields,
                else
                   rotation .setAxisAngle (this .cylinder .axis .direction, this .angle);
 
-               if (! this .rotation_changed_ .getValue () .equals (rotation))
-                  this .rotation_changed_ = rotation;
+               if (! this ._rotation_changed .getValue () .equals (rotation))
+                  this ._rotation_changed = rotation;
             }
          }
          catch (error)
          {
             //console .log (error);
 
-            this .trackPoint_changed_ .addEvent ();
-            this .rotation_changed_   .addEvent ();
+            this ._trackPoint_changed .addEvent ();
+            this ._rotation_changed   .addEvent ();
          }
       },
    });

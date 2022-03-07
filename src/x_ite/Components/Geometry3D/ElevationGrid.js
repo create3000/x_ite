@@ -76,10 +76,10 @@ function (Fields,
 
       this .addType (X3DConstants .ElevationGrid);
 
-      this .xSpacing_    .setUnit ("length");
-      this .zSpacing_    .setUnit ("length");
-      this .creaseAngle_ .setUnit ("angle");
-      this .height_      .setUnit ("length");
+      this ._xSpacing    .setUnit ("length");
+      this ._zSpacing    .setUnit ("length");
+      this ._creaseAngle .setUnit ("angle");
+      this ._height      .setUnit ("length");
 
       this .fogCoordNode = null;
       this .colorNode    = null;
@@ -126,12 +126,12 @@ function (Fields,
       {
          X3DGeometryNode .prototype .initialize .call (this);
 
-         this .set_height_ .addFieldInterest (this .height_);
-         this .attrib_     .addInterest ("set_attrib__",   this);
-         this .fogCoord_   .addInterest ("set_fogCoord__", this);
-         this .color_      .addInterest ("set_color__",    this);
-         this .texCoord_   .addInterest ("set_texCoord__", this);
-         this .normal_     .addInterest ("set_normal__",   this);
+         this ._set_height .addFieldInterest (this ._height);
+         this ._attrib     .addInterest ("set_attrib__",   this);
+         this ._fogCoord   .addInterest ("set_fogCoord__", this);
+         this ._color      .addInterest ("set_color__",    this);
+         this ._texCoord   .addInterest ("set_texCoord__", this);
+         this ._normal     .addInterest ("set_normal__",   this);
 
          this .set_attrib__ ();
          this .set_fogCoord__ ();
@@ -148,9 +148,9 @@ function (Fields,
 
          attribNodes .length = 0;
 
-         for (var i = 0, length = this .attrib_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._attrib .length; i < length; ++ i)
          {
-            var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this .attrib_ [i]);
+            var attribNode = X3DCast (X3DConstants .X3DVertexAttributeNode, this ._attrib [i]);
 
             if (attribNode)
                attribNodes .push (attribNode);
@@ -164,7 +164,7 @@ function (Fields,
          if (this .fogCoordNode)
             this .fogCoordNode .removeInterest ("requestRebuild", this);
 
-         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this .fogCoord_);
+         this .fogCoordNode = X3DCast (X3DConstants .FogCoordinate, this ._fogCoord);
 
          if (this .fogCoordNode)
             this .fogCoordNode .addInterest ("requestRebuild", this);
@@ -174,15 +174,15 @@ function (Fields,
          if (this .colorNode)
          {
             this .colorNode .removeInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .colorNode ._transparent .removeInterest ("set_transparent__", this);
          }
 
-         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this .color_);
+         this .colorNode = X3DCast (X3DConstants .X3DColorNode, this ._color);
 
          if (this .colorNode)
          {
             this .colorNode .addInterest ("requestRebuild", this);
-            this .colorNode .transparent_ .addInterest ("set_transparent__", this);
+            this .colorNode ._transparent .addInterest ("set_transparent__", this);
 
             this .set_transparent__ ();
          }
@@ -198,7 +198,7 @@ function (Fields,
          if (this .texCoordNode)
             this .texCoordNode .removeInterest ("requestRebuild", this);
 
-         this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoord_);
+         this .texCoordNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoord);
 
          if (this .texCoordNode)
             this .texCoordNode .addInterest ("requestRebuild", this);
@@ -210,7 +210,7 @@ function (Fields,
          if (this .normalNode)
             this .normalNode .removeInterest ("requestRebuild", this);
 
-         this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this .normal_);
+         this .normalNode = X3DCast (X3DConstants .X3DNormalNode, this ._normal);
 
          if (this .normalNode)
             this .normalNode .addInterest ("requestRebuild", this);
@@ -229,8 +229,8 @@ function (Fields,
       },
       getHeight: function (index)
       {
-         if (index < this .height_ .length)
-            return this .height_ [index];
+         if (index < this ._height .length)
+            return this ._height [index];
 
          return 0;
       },
@@ -238,8 +238,8 @@ function (Fields,
       {
          var
             texCoords  = [ ],
-            xDimension = this .xDimension_ .getValue (),
-            zDimension = this .zDimension_ .getValue (),
+            xDimension = this ._xDimension .getValue (),
+            zDimension = this ._zDimension .getValue (),
             xSize      = xDimension - 1,
             zSize      = zDimension - 1;
 
@@ -254,7 +254,7 @@ function (Fields,
       createNormals: function (points, coordIndex, creaseAngle)
       {
          var
-            cw          = ! this .ccw_ .getValue (),
+            cw          = ! this ._ccw .getValue (),
             normalIndex = [ ],
             normals     = [ ];
 
@@ -282,7 +282,7 @@ function (Fields,
             normals .push (normal);
          }
 
-         return this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());
+         return this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
       },
       createCoordIndex: function ()
       {
@@ -292,8 +292,8 @@ function (Fields,
 
          var
             coordIndex = [ ],
-            xDimension = this .xDimension_ .getValue (),
-            zDimension = this .zDimension_ .getValue (),
+            xDimension = this ._xDimension .getValue (),
+            zDimension = this ._zDimension .getValue (),
             xSize      = xDimension - 1,
             zSize      = zDimension - 1;
 
@@ -323,10 +323,10 @@ function (Fields,
       {
          var
             points     = [ ],
-            xDimension = this .xDimension_ .getValue (),
-            zDimension = this .zDimension_ .getValue (),
-            xSpacing   = this .xSpacing_ .getValue (),
-            zSpacing   = this .zSpacing_ .getValue ();
+            xDimension = this ._xDimension .getValue (),
+            zDimension = this ._zDimension .getValue (),
+            xSpacing   = this ._xSpacing .getValue (),
+            zSpacing   = this ._zSpacing .getValue ();
 
          for (var z = 0; z < zDimension; ++ z)
          {
@@ -342,12 +342,12 @@ function (Fields,
       },
       build: function ()
       {
-         if (this .xDimension_ .getValue () < 2 || this .zDimension_ .getValue () < 2)
+         if (this ._xDimension .getValue () < 2 || this ._zDimension .getValue () < 2)
             return;
 
          var
-            colorPerVertex     = this .colorPerVertex_ .getValue (),
-            normalPerVertex    = this .normalPerVertex_ .getValue (),
+            colorPerVertex     = this ._colorPerVertex .getValue (),
+            normalPerVertex    = this ._normalPerVertex .getValue (),
             coordIndex         = this .createCoordIndex (),
             attribNodes        = this .getAttrib (),
             numAttrib          = attribNodes .length,
@@ -439,8 +439,8 @@ function (Fields,
             }
          }
 
-         this .setSolid (this .solid_ .getValue ());
-         this .setCCW (this .ccw_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
+         this .setCCW (this ._ccw .getValue ());
       },
    });
 

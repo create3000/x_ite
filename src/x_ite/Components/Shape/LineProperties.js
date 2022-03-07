@@ -94,19 +94,19 @@ function (Fields,
       {
          X3DAppearanceChildNode .prototype .initialize .call (this);
 
-         this .applied_              .addInterest ("set_applied__",              this);
-         this .linewidthScaleFactor_ .addInterest ("set_linewidthScaleFactor__", this);
+         this ._applied              .addInterest ("set_applied__",              this);
+         this ._linewidthScaleFactor .addInterest ("set_linewidthScaleFactor__", this);
 
          this .set_applied__ ();
          this .set_linewidthScaleFactor__ ();
       },
       set_applied__: function ()
       {
-         this .applied = this .applied_ .getValue ();
+         this .applied = this ._applied .getValue ();
       },
       set_linewidthScaleFactor__: function ()
       {
-         this .linewidthScaleFactor = Math .max (1, this .linewidthScaleFactor_ .getValue ());
+         this .linewidthScaleFactor = Math .max (1, this ._linewidthScaleFactor .getValue ());
       },
       setShaderUniforms: function (gl, shaderObject)
       {
@@ -114,7 +114,7 @@ function (Fields,
          {
             const
                browser = shaderObject .getBrowser (),
-               texture = browser .getLinetype (this .linetype_ .getValue ());
+               texture = browser .getLinetype (this ._linetype .getValue ());
 
             gl .lineWidth (this .linewidthScaleFactor);
             gl .uniform1i (shaderObject .x3d_LinePropertiesApplied,              true);

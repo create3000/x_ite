@@ -113,13 +113,13 @@ function (Fields,
       {
          X3DPickSensorNode .prototype .initialize .call (this);
 
-         this .pickingGeometry_ .addInterest ("set_pickingGeometry__", this);
+         this ._pickingGeometry .addInterest ("set_pickingGeometry__", this);
 
          this .set_pickingGeometry__ ();
       },
       set_pickingGeometry__: function ()
       {
-         this .pickingGeometryNode = X3DCast (X3DConstants .X3DGeometryNode, this .pickingGeometry_);
+         this .pickingGeometryNode = X3DCast (X3DConstants .X3DGeometryNode, this ._pickingGeometry);
       },
       process: (function ()
       {
@@ -174,11 +174,11 @@ function (Fields,
 
                      pickedGeometries .remove (0, pickedGeometries .length, null);
 
-                     if (active !== this .isActive_ .getValue ())
-                        this .isActive_ = active;
+                     if (active !== this ._isActive .getValue ())
+                        this ._isActive = active;
 
-                     if (! this .pickedGeometry_ .equals (pickedGeometries))
-                        this .pickedGeometry_ = pickedGeometries;
+                     if (! this ._pickedGeometry .equals (pickedGeometries))
+                        this ._pickedGeometry = pickedGeometries;
 
                      break;
                   }
@@ -227,11 +227,11 @@ function (Fields,
 
                      pickedGeometries .remove (0, pickedGeometries .length, null);
 
-                     if (active !== this .isActive_ .getValue ())
-                        this .isActive_ = active;
+                     if (active !== this ._isActive .getValue ())
+                        this ._isActive = active;
 
-                     if (! this .pickedGeometry_ .equals (pickedGeometries))
-                        this .pickedGeometry_ = pickedGeometries;
+                     if (! this ._pickedGeometry .equals (pickedGeometries))
+                        this ._pickedGeometry = pickedGeometries;
 
                      break;
                   }

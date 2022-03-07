@@ -57,21 +57,27 @@ function (Color3, Algorithm)
 
    const clamp = Algorithm .clamp;
 
+   const
+      _r = Symbol (),
+      _g = Symbol (),
+      _b = Symbol (),
+      _a = Symbol ();
+
    function Color4 (r, g, b, a)
    {
       if (arguments .length)
       {
-         this .r_ = clamp (r, 0, 1);
-         this .g_ = clamp (g, 0, 1);
-         this .b_ = clamp (b, 0, 1);
-         this .a_ = clamp (a, 0, 1);
+         this [_r] = clamp (r, 0, 1);
+         this [_g] = clamp (g, 0, 1);
+         this [_b] = clamp (b, 0, 1);
+         this [_a] = clamp (a, 0, 1);
       }
       else
       {
-         this .r_ = 0;
-         this .g_ = 0;
-         this .b_ = 0;
-         this .a_ = 0;
+         this [_r] = 0;
+         this [_g] = 0;
+         this [_b] = 0;
+         this [_a] = 0;
       }
    }
 
@@ -82,38 +88,38 @@ function (Color3, Algorithm)
       copy: function ()
       {
          const copy = Object .create (Color4 .prototype);
-         copy .r_ = this .r_;
-         copy .g_ = this .g_;
-         copy .b_ = this .b_;
-         copy .a_ = this .a_;
+         copy [_r] = this [_r];
+         copy [_g] = this [_g];
+         copy [_b] = this [_b];
+         copy [_a] = this [_a];
          return copy;
       },
       assign: function (color)
       {
-         this .r_ = color .r_;
-         this .g_ = color .g_;
-         this .b_ = color .b_;
-         this .a_ = color .a_;
+         this [_r] = color [_r];
+         this [_g] = color [_g];
+         this [_b] = color [_b];
+         this [_a] = color [_a];
       },
       set: function (r, g, b, a)
       {
-         this .r_ = clamp (r, 0, 1);
-         this .g_ = clamp (g, 0, 1);
-         this .b_ = clamp (b, 0, 1);
-         this .a_ = clamp (a, 0, 1);
+         this [_r] = clamp (r, 0, 1);
+         this [_g] = clamp (g, 0, 1);
+         this [_b] = clamp (b, 0, 1);
+         this [_a] = clamp (a, 0, 1);
       },
       equals: function (color)
       {
-         return this .r_ === color .r_ &&
-                this .g_ === color .g_ &&
-                this .b_ === color .b_ &&
-                this .a_ === color .a_;
+         return this [_r] === color [_r] &&
+                this [_g] === color [_g] &&
+                this [_b] === color [_b] &&
+                this [_a] === color [_a];
       },
       getHSVA: function (result)
       {
          Color3 .prototype .getHSV .call (this, result);
 
-         result [3] = this .a_;
+         result [3] = this [_a];
 
          return result;
       },
@@ -121,41 +127,41 @@ function (Color3, Algorithm)
       {
          Color3 .prototype .setHSV .call (this, h, s, v);
 
-         this .a_ = clamp (a, 0, 1);
+         this [_a] = clamp (a, 0, 1);
       },
       toString: function ()
       {
-         return this .r_ + " " +
-                this .g_ + " " +
-                this .b_ + " " +
-                this .a_;
+         return this [_r] + " " +
+                this [_g] + " " +
+                this [_b] + " " +
+                this [_a];
       },
    };
 
    const r = {
-      get: function () { return this .r_; },
-      set: function (value) { this .r_ = clamp (value, 0, 1); },
+      get: function () { return this [_r]; },
+      set: function (value) { this [_r] = clamp (value, 0, 1); },
       enumerable: true,
       configurable: false
    };
 
    const g = {
-      get: function () { return this .g_; },
-      set: function (value) { this .g_ = clamp (value, 0, 1); },
+      get: function () { return this [_g]; },
+      set: function (value) { this [_g] = clamp (value, 0, 1); },
       enumerable: true,
       configurable: false
    };
 
    const b = {
-      get: function () { return this .b_; },
-      set: function (value) { this .b_ = clamp (value, 0, 1); },
+      get: function () { return this [_b]; },
+      set: function (value) { this [_b] = clamp (value, 0, 1); },
       enumerable: true,
       configurable: false
    };
 
    const a = {
-      get: function () { return this .a_; },
-      set: function (value) { this .a_ = clamp (value, 0, 1); },
+      get: function () { return this [_a]; },
+      set: function (value) { this [_a] = clamp (value, 0, 1); },
       enumerable: true,
       configurable: false
    };

@@ -146,7 +146,7 @@ function ($,
       loadNow: function ()
       {
          this .setMedia (null);
-         this .urlStack .setValue (this .urlBuffer_);
+         this .urlStack .setValue (this ._urlBuffer);
          this .audio .bind ("canplaythrough", this .setAudio .bind (this));
          this .loadNext ();
       },
@@ -155,7 +155,7 @@ function ($,
          if (this .urlStack .length === 0)
          {
             this .audio .unbind ("canplaythrough");
-            this .duration_changed_ = -1;
+            this ._duration_changed = -1;
             this .setLoadState (X3DConstants .FAILED_STATE);
             return;
          }

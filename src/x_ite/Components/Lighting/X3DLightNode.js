@@ -74,14 +74,14 @@ function (X3DChildNode,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .on_        .addInterest ("set_on__", this);
-         this .intensity_ .addInterest ("set_on__", this);
+         this ._on        .addInterest ("set_on__", this);
+         this ._intensity .addInterest ("set_on__", this);
 
          this .set_on__ ();
       },
       set_on__: function ()
       {
-         if (this .on_ .getValue () && this .getIntensity () > 0)
+         if (this ._on .getValue () && this .getIntensity () > 0)
          {
             delete this .push;
             delete this .pop;
@@ -94,43 +94,43 @@ function (X3DChildNode,
       },
       getGlobal: function ()
       {
-         return this .global_ .getValue ();
+         return this ._global .getValue ();
       },
       getColor: function ()
       {
-         return this .color_ .getValue ();
+         return this ._color .getValue ();
       },
       getIntensity: function ()
       {
-         return Math .max (this .intensity_ .getValue (), 0);
+         return Math .max (this ._intensity .getValue (), 0);
       },
       getAmbientIntensity: function ()
       {
-         return Algorithm .clamp (this .ambientIntensity_ .getValue (), 0, 1);
+         return Algorithm .clamp (this ._ambientIntensity .getValue (), 0, 1);
       },
       getDirection: function ()
       {
-         return this .direction_ .getValue ();
+         return this ._direction .getValue ();
       },
       getShadows: function ()
       {
-         return this .shadows_ .getValue ();
+         return this ._shadows .getValue ();
       },
       getShadowColor: function ()
       {
-         return this .shadowColor_ .getValue ();
+         return this ._shadowColor .getValue ();
       },
       getShadowIntensity: function ()
       {
-         return this .getShadows () ? Algorithm .clamp (this .shadowIntensity_ .getValue (), 0, 1) : 0;
+         return this .getShadows () ? Algorithm .clamp (this ._shadowIntensity .getValue (), 0, 1) : 0;
       },
       getShadowBias: function ()
       {
-         return Algorithm .clamp (this .shadowBias_ .getValue (), 0, 1);
+         return Algorithm .clamp (this ._shadowBias .getValue (), 0, 1);
       },
       getShadowMapSize: function ()
       {
-         return Math .min (this .shadowMapSize_ .getValue (), this .getBrowser () .getMaxTextureSize ());
+         return Math .min (this ._shadowMapSize .getValue (), this .getBrowser () .getMaxTextureSize ());
       },
       getBiasMatrix: (function ()
       {
@@ -151,7 +151,7 @@ function (X3DChildNode,
          {
             const lightContainer = this .getLights () .pop ();
 
-            if (this .global_ .getValue ())
+            if (this ._global .getValue ())
             {
                lightContainer .set (renderObject .getBrowser (),
                                     this,
@@ -176,7 +176,7 @@ function (X3DChildNode,
          {
             const lightContainer = renderObject .getLightContainer ();
 
-            if (this .global_ .getValue ())
+            if (this ._global .getValue ())
             {
                lightContainer .getModelViewMatrix () .pushMatrix (renderObject .getModelViewMatrix () .get ());
 
@@ -196,7 +196,7 @@ function (X3DChildNode,
       },
       pop: function (renderObject)
       {
-         if (this .global_ .getValue ())
+         if (this ._global .getValue ())
             return;
 
          if (renderObject .isIndependent ())

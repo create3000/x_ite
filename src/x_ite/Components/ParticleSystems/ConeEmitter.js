@@ -72,11 +72,11 @@ function (Fields,
 
       this .addType (X3DConstants .ConeEmitter);
 
-      this .position_    .setUnit ("length");
-      this .angle_       .setUnit ("angle");
-      this .speed_       .setUnit ("speed");
-      this .mass_        .setUnit ("mass");
-      this .surfaceArea_ .setUnit ("area");
+      this ._position    .setUnit ("length");
+      this ._angle       .setUnit ("angle");
+      this ._speed       .setUnit ("speed");
+      this ._mass        .setUnit ("mass");
+      this ._surfaceArea .setUnit ("area");
 
       this .rotation = new Rotation4 (0, 0, 1, 0);
    }
@@ -110,9 +110,9 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         this .position_  .addInterest ("set_position__", this);
-         this .direction_ .addInterest ("set_direction__", this);
-         this .angle_     .addInterest ("set_angle__", this);
+         this ._position  .addInterest ("set_position__", this);
+         this ._direction .addInterest ("set_direction__", this);
+         this ._angle     .addInterest ("set_angle__", this);
 
          this .set_position__ ();
          this .set_direction__ ();
@@ -120,11 +120,11 @@ function (Fields,
       },
       set_position__: function ()
       {
-         this .position = this .position_ .getValue ()
+         this .position = this ._position .getValue ()
       },
       set_direction__: function ()
       {
-         var direction = this .direction_ .getValue ();
+         var direction = this ._direction .getValue ();
 
          this .rotation .setFromToVec (Vector3 .zAxis, direction);
 
@@ -135,7 +135,7 @@ function (Fields,
       },
       set_angle__: function ()
       {
-         this .angle = this .angle_ .getValue ()
+         this .angle = this ._angle .getValue ()
       },
       getRandomPosition: function (position)
       {

@@ -78,8 +78,8 @@ function (Fields,
 
       this .setCameraObject (true);
 
-      this .centerOfRotation_changed_ .setUnit ("length");
-      this .position_changed_         .setUnit ("length");
+      this ._centerOfRotation_changed .setUnit ("length");
+      this ._position_changed         .setUnit ("length");
 
       this .setZeroTest (true);
 
@@ -121,20 +121,20 @@ function (Fields,
       {
          X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
-         this .enabled_ .addInterest ("set_enabled__", this);
-         this .size_    .addInterest ("set_extents__", this);
-         this .center_  .addInterest ("set_extents__", this);
+         this ._enabled .addInterest ("set_enabled__", this);
+         this ._size    .addInterest ("set_extents__", this);
+         this ._center  .addInterest ("set_extents__", this);
 
-         this .traversed_ .addFieldInterest (this .isCameraObject_);
+         this ._traversed .addFieldInterest (this ._isCameraObject);
 
          this .set_enabled__ ();
          this .set_extents__ ();
       },
       set_enabled__: function ()
       {
-         this .setCameraObject (this .enabled_ .getValue ());
+         this .setCameraObject (this ._enabled .getValue ());
 
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
             delete this .traverse;
          else
             this .traverse = Function .prototype;
@@ -142,8 +142,8 @@ function (Fields,
       set_extents__: function ()
       {
          const
-            s  = this .size_ .getValue (),
-            c  = this .center_ .getValue (),
+            s  = this ._size .getValue (),
+            c  = this ._center .getValue (),
             sx = s .x / 2,
             sy = s .y / 2,
             sz = s .z / 2,
@@ -187,33 +187,33 @@ function (Fields,
 
                      centerOfRotation .set (centerOfRotationMatrix [12], centerOfRotationMatrix [13], centerOfRotationMatrix [14]);
 
-                     if (this .isActive_ .getValue ())
+                     if (this ._isActive .getValue ())
                      {
-                        if (! this .position_changed_ .getValue () .equals (position))
-                           this .position_changed_ = position;
+                        if (! this ._position_changed .getValue () .equals (position))
+                           this ._position_changed = position;
 
-                        if (! this .orientation_changed_ .getValue () .equals (orientation))
-                           this .orientation_changed_ = orientation;
+                        if (! this ._orientation_changed .getValue () .equals (orientation))
+                           this ._orientation_changed = orientation;
 
-                        if (! this .centerOfRotation_changed_ .getValue () .equals (centerOfRotation))
-                           this .centerOfRotation_changed_ = centerOfRotation;
+                        if (! this ._centerOfRotation_changed .getValue () .equals (centerOfRotation))
+                           this ._centerOfRotation_changed = centerOfRotation;
                      }
                      else
                      {
-                        this .isActive_                 = true;
-                        this .enterTime_                = this .getBrowser () .getCurrentTime ();
-                        this .position_changed_         = position;
-                        this .orientation_changed_      = orientation;
-                        this .centerOfRotation_changed_ = centerOfRotation;
+                        this ._isActive                 = true;
+                        this ._enterTime                = this .getBrowser () .getCurrentTime ();
+                        this ._position_changed         = position;
+                        this ._orientation_changed      = orientation;
+                        this ._centerOfRotation_changed = centerOfRotation;
                      }
                   }
                }
                else
                {
-                  if (this .isActive_ .getValue ())
+                  if (this ._isActive .getValue ())
                   {
-                     this .isActive_ = false;
-                     this .exitTime_ = this .getBrowser () .getCurrentTime ();
+                     this ._isActive = false;
+                     this ._exitTime = this .getBrowser () .getCurrentTime ();
                   }
                }
             }
@@ -253,7 +253,7 @@ function (Fields,
                      if (this .inside)
                         return;
 
-                     if (this .size_ .getValue () .equals (infinity))
+                     if (this ._size .getValue () .equals (infinity))
                      {
                         this .inside = true;
                      }

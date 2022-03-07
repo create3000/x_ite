@@ -107,13 +107,13 @@ function (Fields,
       {
          X3DEnvironmentalSensorNode .prototype .initialize .call (this);
 
-         this .enabled_ .addInterest ("set_enabled__", this);
+         this ._enabled .addInterest ("set_enabled__", this);
 
          this .set_enabled__ ();
       },
       set_enabled__: function ()
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
             delete this .traverse;
          else
             this .traverse = Function .prototype;
@@ -122,20 +122,20 @@ function (Fields,
       {
          if (this .visible && this .getTraversed ())
          {
-            if (! this .isActive_ .getValue ())
+            if (! this ._isActive .getValue ())
             {
-               this .isActive_  = true;
-               this .enterTime_ = this .getBrowser () .getCurrentTime ();
+               this ._isActive  = true;
+               this ._enterTime = this .getBrowser () .getCurrentTime ();
             }
 
             this .visible = false;
          }
          else
          {
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
-               this .isActive_ = false;
-               this .exitTime_ = this .getBrowser () .getCurrentTime ();
+               this ._isActive = false;
+               this ._exitTime = this .getBrowser () .getCurrentTime ();
             }
          }
 
@@ -157,14 +157,14 @@ function (Fields,
             if (this .visible)
                return;
 
-            if (this .size_ .getValue () .equals (infinity))
+            if (this ._size .getValue () .equals (infinity))
             {
                this .visible = true;
             }
             else
             {
                bbox
-                  .set (this .size_ .getValue (), this .center_ .getValue ())
+                  .set (this ._size .getValue (), this ._center .getValue ())
                   .multRight (renderObject .getModelViewMatrix () .get ());
 
                this .visible = renderObject .getViewVolume () .intersectsBox (bbox);

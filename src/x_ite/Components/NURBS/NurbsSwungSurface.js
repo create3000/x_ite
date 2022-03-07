@@ -101,22 +101,22 @@ function (Fields,
       {
          X3DParametricGeometryNode .prototype .initialize .call (this);
 
-         this .profileCurve_    .addInterest ("set_profileCurve__",    this);
-         this .trajectoryCurve_ .addInterest ("set_trajectoryCurve__", this);
+         this ._profileCurve    .addInterest ("set_profileCurve__",    this);
+         this ._trajectoryCurve .addInterest ("set_trajectoryCurve__", this);
 
          var extrusion = this .extrusion;
 
-         extrusion .beginCap_     = false;
-         extrusion .endCap_       = false;
-         extrusion .solid_        = true;
-         extrusion .ccw_          = true;
-         extrusion .convex_       = true;
-         extrusion .creaseAngle_  = Math .PI;
+         extrusion ._beginCap     = false;
+         extrusion ._endCap       = false;
+         extrusion ._solid        = true;
+         extrusion ._ccw          = true;
+         extrusion ._convex       = true;
+         extrusion ._creaseAngle  = Math .PI;
 
          extrusion .setup ();
 
-         extrusion .crossSection_ .setTainted (true);
-         extrusion .spine_        .setTainted (true);
+         extrusion ._crossSection .setTainted (true);
+         extrusion ._spine        .setTainted (true);
 
          this .set_profileCurve__ ();
          this .set_trajectoryCurve__ ();
@@ -126,7 +126,7 @@ function (Fields,
          if (this .profileCurveNode)
             this .profileCurveNode .removeInterest ("requestRebuild", this);
 
-         this .profileCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this .profileCurve_);
+         this .profileCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this ._profileCurve);
 
          if (this .profileCurveNode)
             this .profileCurveNode .addInterest ("requestRebuild", this);
@@ -136,7 +136,7 @@ function (Fields,
          if (this .trajectoryCurveNode)
             this .trajectoryCurveNode .removeInterest ("requestRebuild", this);
 
-         this .trajectoryCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this .trajectoryCurve_);
+         this .trajectoryCurveNode = X3DCast (X3DConstants .X3DNurbsControlCurveNode, this ._trajectoryCurve);
 
          if (this .trajectoryCurveNode)
             this .trajectoryCurveNode .addInterest ("requestRebuild", this);
@@ -151,8 +151,8 @@ function (Fields,
 
          var extrusion = this .extrusion;
 
-         extrusion .crossSection_ = this .profileCurveNode    .tessellate (0);
-         extrusion .spine_        = this .trajectoryCurveNode .tessellate (1);
+         extrusion ._crossSection = this .profileCurveNode    .tessellate (0);
+         extrusion ._spine        = this .trajectoryCurveNode .tessellate (1);
 
          extrusion .rebuild ();
 
@@ -163,7 +163,7 @@ function (Fields,
 
          this .getMultiTexCoords () .push (this .getTexCoords ());
 
-         if (! this .ccw_ .getValue ())
+         if (! this ._ccw .getValue ())
          {
             var normals = this .getNormals ();
 
@@ -171,8 +171,8 @@ function (Fields,
                normals [i] = -normals [i];
          }
 
-         this .setSolid (this .solid_ .getValue ());
-         this .setCCW (this .ccw_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
+         this .setCCW (this ._ccw .getValue ());
       },
    });
 

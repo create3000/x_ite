@@ -77,8 +77,8 @@ function (Fields,
 
       this .addType (X3DConstants .GeoProximitySensor);
 
-      this .position_changed_         .setUnit ("length");
-      this .centerOfRotation_changed_ .setUnit ("length");
+      this ._position_changed         .setUnit ("length");
+      this ._centerOfRotation_changed .setUnit ("length");
 
       this .proximitySensor = new ProximitySensor (executionContext);
 
@@ -122,31 +122,31 @@ function (Fields,
          X3DEnvironmentalSensorNode .prototype .initialize .call (this);
          X3DGeospatialObject        .prototype .initialize .call (this);
 
-         this .enabled_ .addFieldInterest (this .proximitySensor .enabled_);
-         this .size_    .addFieldInterest (this .proximitySensor .size_);
-         this .center_  .addFieldInterest (this .proximitySensor .center_);
+         this ._enabled .addFieldInterest (this .proximitySensor ._enabled);
+         this ._size    .addFieldInterest (this .proximitySensor ._size);
+         this ._center  .addFieldInterest (this .proximitySensor ._center);
 
-         this .proximitySensor .isCameraObject_   .addFieldInterest (this .isCameraObject_);
-         this .proximitySensor .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+         this .proximitySensor ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+         this .proximitySensor ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
-         this .proximitySensor .isActive_                 .addFieldInterest (this .isActive_);
-         this .proximitySensor .enterTime_                .addFieldInterest (this .enterTime_);
-         this .proximitySensor .exitTime_                 .addFieldInterest (this .exitTime_);
-         this .proximitySensor .position_changed_         .addFieldInterest (this .position_changed_);
-         this .proximitySensor .orientation_changed_      .addFieldInterest (this .orientation_changed_);
-         this .proximitySensor .centerOfRotation_changed_ .addFieldInterest (this .centerOfRotation_changed_);
+         this .proximitySensor ._isActive                 .addFieldInterest (this ._isActive);
+         this .proximitySensor ._enterTime                .addFieldInterest (this ._enterTime);
+         this .proximitySensor ._exitTime                 .addFieldInterest (this ._exitTime);
+         this .proximitySensor ._position_changed         .addFieldInterest (this ._position_changed);
+         this .proximitySensor ._orientation_changed      .addFieldInterest (this ._orientation_changed);
+         this .proximitySensor ._centerOfRotation_changed .addFieldInterest (this ._centerOfRotation_changed);
 
-         this .proximitySensor .position_changed_ .addInterest ("set_position__", this);
+         this .proximitySensor ._position_changed .addInterest ("set_position__", this);
 
-         this .proximitySensor .enabled_ = this .enabled_;
-         this .proximitySensor .size_    = this .size_;
-         this .proximitySensor .center_  = this .center_;
+         this .proximitySensor ._enabled = this ._enabled;
+         this .proximitySensor ._size    = this ._size;
+         this .proximitySensor ._center  = this ._center;
 
          this .proximitySensor .setup ();
       },
       set_position__: function (position)
       {
-         this .geoCoord_changed_ = this .getGeoCoord (this .proximitySensor .position_changed_ .getValue (), geoCoord);
+         this ._geoCoord_changed = this .getGeoCoord (this .proximitySensor ._position_changed .getValue (), geoCoord);
       },
       traverse: function (type, renderObject)
       {

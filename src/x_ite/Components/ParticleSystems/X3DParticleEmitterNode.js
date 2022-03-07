@@ -90,9 +90,9 @@ function (X3DNode,
 
       this .addType (X3DConstants .X3DParticleEmitterNode);
 
-      this .speed_       .setUnit ("speed");
-      this .mass_        .setUnit ("mass");
-      this .surfaceArea_ .setUnit ("area");
+      this ._speed       .setUnit ("speed");
+      this ._mass        .setUnit ("mass");
+      this ._surfaceArea .setUnit ("area");
 
       this .rotations           = [ ];
       this .intersections       = [ ];
@@ -107,9 +107,9 @@ function (X3DNode,
       {
          X3DNode .prototype .initialize .call (this);
 
-         this .speed_     .addInterest ("set_speed__", this);
-         this .variation_ .addInterest ("set_variation__", this);
-         this .mass_      .addInterest ("set_mass__", this);
+         this ._speed     .addInterest ("set_speed__", this);
+         this ._variation .addInterest ("set_variation__", this);
+         this ._mass      .addInterest ("set_mass__", this);
 
          this .set_speed__ ();
          this .set_variation__ ();
@@ -117,15 +117,15 @@ function (X3DNode,
       },
       set_speed__: function ()
       {
-         this .speed = this .speed_ .getValue ();
+         this .speed = this ._speed .getValue ();
       },
       set_variation__: function ()
       {
-         this .variation = this .variation_ .getValue ();
+         this .variation = this ._variation .getValue ();
       },
       set_mass__: function ()
       {
-         this .mass = this .mass_ .getValue ();
+         this .mass = this ._mass .getValue ();
       },
       isExplosive: function ()
       {

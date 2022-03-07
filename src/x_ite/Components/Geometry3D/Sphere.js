@@ -68,7 +68,7 @@ function (Fields,
 
       this .addType (X3DConstants .Sphere);
 
-      this .radius_ .setUnit ("length");
+      this ._radius .setUnit ("length");
    }
 
    Sphere .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -105,7 +105,7 @@ function (Fields,
          var
             options  = this .getBrowser () .getSphereOptions (),
             geometry = options .getGeometry (),
-            radius   = this .radius_ .getValue ();
+            radius   = this ._radius .getValue ();
 
          this .setMultiTexCoords (geometry .getMultiTexCoords ());
          this .setNormals        (geometry .getNormals ());
@@ -137,7 +137,7 @@ function (Fields,
             this .getMax () .set ( radius,  radius,  radius);
          }
 
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
       },
    });
 

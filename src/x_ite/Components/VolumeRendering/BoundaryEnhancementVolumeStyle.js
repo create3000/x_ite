@@ -93,16 +93,16 @@ function (Fields,
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "retainedOpacity_" + this .getId (), this .retainedOpacity_ .copy ());
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "boundaryOpacity_" + this .getId (), this .boundaryOpacity_ .copy ());
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "opacityFactor_"   + this .getId (), this .opacityFactor_   .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "retainedOpacity_" + this .getId (), this ._retainedOpacity .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "boundaryOpacity_" + this .getId (), this ._boundaryOpacity .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "opacityFactor_"   + this .getId (), this ._opacityFactor   .copy ());
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -133,7 +133,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";

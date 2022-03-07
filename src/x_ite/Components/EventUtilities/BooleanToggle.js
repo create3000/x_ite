@@ -93,12 +93,12 @@ function (Fields,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .set_boolean_ .addInterest ("set_boolean__", this);
+         this ._set_boolean .addInterest ("set_boolean__", this);
       },
       set_boolean__: function ()
       {
-         if (this .set_boolean_ .getValue ())
-            this .toggle_ = ! this .toggle_ .getValue ();
+         if (this ._set_boolean .getValue ())
+            this ._toggle = ! this ._toggle .getValue ();
       },
    });
 

@@ -68,7 +68,7 @@ function (Fields,
 
       this .addType (X3DConstants .HAnimDisplacer);
 
-      this .displacements_ .setUnit ("length");
+      this ._displacements .setUnit ("length");
    }
 
    HAnimDisplacer .prototype = Object .assign (Object .create (X3DGeometricPropertyNode .prototype),

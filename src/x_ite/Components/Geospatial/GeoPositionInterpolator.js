@@ -75,7 +75,7 @@ function (Fields,
 
       this .addType (X3DConstants .GeoPositionInterpolator);
 
-      this .value_changed_ .setUnit ("length");
+      this ._value_changed .setUnit ("length");
 
       this .geocentric = new Geocentric ();
    }
@@ -120,13 +120,13 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .keyValue_ .addInterest ("set_keyValue__", this);
+         this ._keyValue .addInterest ("set_keyValue__", this);
       },
       set_keyValue__: function ()
       {
          var
-            key      = this .key_,
-            keyValue = this .keyValue_;
+            key      = this ._key,
+            keyValue = this ._keyValue;
 
          if (keyValue .length < key .length)
             keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFVec3f ());
@@ -135,13 +135,13 @@ function (Fields,
       {
          try
          {
-            this .getCoord (this .keyValue_ [index0] .getValue (), this .keyValue0);
-            this .getCoord (this .keyValue_ [index1] .getValue (), this .keyValue1);
+            this .getCoord (this ._keyValue [index0] .getValue (), this .keyValue0);
+            this .getCoord (this ._keyValue [index1] .getValue (), this .keyValue1);
 
             var coord = this .geocentric .slerp (this .keyValue0, this .keyValue1, weight);
 
-            this .geovalue_changed_ = this .getGeoCoord (coord, this .geovalue);
-            this .value_changed_    = coord;
+            this ._geovalue_changed = this .getGeoCoord (coord, this .geovalue);
+            this ._value_changed    = coord;
          }
          catch (error)
          { }

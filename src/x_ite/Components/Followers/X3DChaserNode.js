@@ -78,9 +78,9 @@ function (X3DFollowerNode,
       {
          X3DFollowerNode .prototype .initialize .call (this);
 
-         this .set_value_       .addInterest ("set_value__",       this);
-         this .set_destination_ .addInterest ("set_destination__", this);
-         this .duration_        .addInterest ("set_duration__",    this);
+         this ._set_value       .addInterest ("set_value__",       this);
+         this ._set_destination .addInterest ("set_destination__", this);
+         this ._duration        .addInterest ("set_duration__",    this);
 
          this .set_duration__ ();
 
@@ -131,7 +131,7 @@ function (X3DFollowerNode,
          if (t <= 0)
             return 0;
 
-         var duration = this .duration_ .getValue ();
+         var duration = this ._duration .getValue ();
 
          if (t >= duration)
             return 1;
@@ -140,7 +140,7 @@ function (X3DFollowerNode,
       },
       set_value__: function ()
       {
-         if (! this .isActive_ .getValue ())
+         if (! this ._isActive .getValue ())
             this .bufferEndTime = this .getBrowser () .getCurrentTime ();
 
          var
@@ -159,14 +159,14 @@ function (X3DFollowerNode,
       {
          this .setDestination (this .getDestination ());
 
-         if (! this .isActive_ .getValue ())
+         if (! this ._isActive .getValue ())
             this .bufferEndTime = this .getBrowser () .getCurrentTime ();
 
          this .set_active (true);
       },
       set_duration__: function ()
       {
-         this .stepTime = this .duration_ .getValue () / this .getNumBuffers ();
+         this .stepTime = this ._duration .getValue () / this .getNumBuffers ();
       },
       prepareEvents: function ()
       {

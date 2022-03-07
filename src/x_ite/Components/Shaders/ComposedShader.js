@@ -114,10 +114,10 @@ function (Fields,
 
          this .isLive () .addInterest ("set_live__", this);
 
-         this .parts_ .addFieldInterest (this .loadSensor .watchList_);
+         this ._parts .addFieldInterest (this .loadSensor ._watchList);
 
-         this .loadSensor .isLoaded_ .addInterest ("set_loaded__", this);
-         this .loadSensor .watchList_ = this .parts_;
+         this .loadSensor ._isLoaded .addInterest ("set_loaded__", this);
+         this .loadSensor ._watchList = this ._parts;
          this .loadSensor .setPrivate (true);
          this .loadSensor .setup ();
 
@@ -152,12 +152,12 @@ function (Fields,
       },
       set_loaded__: function ()
       {
-         if (this .loadSensor .isLoaded_ .getValue ())
+         if (this .loadSensor ._isLoaded .getValue ())
          {
             var
                gl      = this .getBrowser () .getContext (),
                program = gl .createProgram (),
-               parts   = this .parts_ .getValue (),
+               parts   = this ._parts .getValue (),
                valid   = 0;
 
             if (this .getValid ())

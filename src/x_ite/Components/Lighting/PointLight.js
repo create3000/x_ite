@@ -245,7 +245,7 @@ function (Fields,
       },
       setGlobalVariables: function (renderObject)
       {
-         this .modelViewMatrix .get () .multVecMatrix (this .location .assign (this .lightNode .location_ .getValue ()));
+         this .modelViewMatrix .get () .multVecMatrix (this .location .assign (this .lightNode ._location .getValue ()));
 
          this .shadowMatrix .assign (renderObject .getCameraSpaceMatrix () .get ()) .multRight (this .invLightSpaceProjectionMatrix);
          this .shadowMatrixArray .set (this .shadowMatrix);
@@ -317,8 +317,8 @@ function (Fields,
 
       this .addType (X3DConstants .PointLight);
 
-      this .location_ .setUnit ("length");
-      this .radius_   .setUnit ("length");
+      this ._location .setUnit ("length");
+      this ._radius   .setUnit ("length");
    }
 
    PointLight .prototype = Object .assign (Object .create (X3DLightNode .prototype),
@@ -355,15 +355,15 @@ function (Fields,
       },
       getAttenuation: function ()
       {
-         return this .attenuation_ .getValue ();
+         return this ._attenuation .getValue ();
       },
       getLocation: function ()
       {
-         return this .location_ .getValue ();
+         return this ._location .getValue ();
       },
       getRadius: function ()
       {
-         return Math .max (0, this .radius_ .getValue ());
+         return Math .max (0, this ._radius .getValue ());
       },
       getLights: function ()
       {

@@ -103,14 +103,14 @@ function (Fields,
       {
          X3DNBodyCollisionSpaceNode .prototype .initialize .call (this);
 
-         this .collidables_ .addInterest ("set_collidables__", this);
+         this ._collidables .addInterest ("set_collidables__", this);
 
          this .set_collidables__ ();
       },
       getBBox: function (bbox, shadow)
       {
          // TODO: add space node.
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
             return X3DBoundedObject .getBBox (this .collidableNodes, bbox, shadow);
 
          return bbox;
@@ -128,9 +128,9 @@ function (Fields,
 
          collisionSpaceNodes .length = 0;
 
-         for (var i = 0, length = this .collidables_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._collidables .length; i < length; ++ i)
          {
-            var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this .collidables_ [i]);
+            var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this ._collidables [i]);
 
             if (collisionSpaceNode)
             {
@@ -151,9 +151,9 @@ function (Fields,
          collidableNodes     .length = 0;
          collisionSpaceNodes .length = 0;
 
-         for (var i = 0, length = this .collidables_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._collidables .length; i < length; ++ i)
          {
-            var collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .collidables_ [i]);
+            var collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this ._collidables [i]);
 
             if (collidableNode)
             {
@@ -161,7 +161,7 @@ function (Fields,
                continue;
             }
 
-            var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this .collidables_ [i]);
+            var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this ._collidables [i]);
 
             if (collisionSpaceNode)
             {

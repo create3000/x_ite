@@ -122,7 +122,7 @@ function (Fields,
 
       this .addType (X3DConstants .ParticleSystem);
 
-      this .particleSize_ .setUnit ("length");
+      this ._particleSize .setUnit ("length");
 
       this .createParticles          = true;
       this .particles                = [ ];
@@ -208,20 +208,20 @@ function (Fields,
 
          this .isLive () .addInterest ("set_live__", this);
 
-         browser .getBrowserOptions () .Shading_ .addInterest ("set_shader__", this);
+         browser .getBrowserOptions () ._Shading .addInterest ("set_shader__", this);
 
-         this .enabled_           .addInterest ("set_enabled__",           this);
-         this .createParticles_   .addInterest ("set_createParticles__",   this);
-         this .geometryType_      .addInterest ("set_geometryType__",      this);
-         this .maxParticles_      .addInterest ("set_enabled__",           this);
-         this .particleLifetime_  .addInterest ("set_particleLifetime__",  this);
-         this .lifetimeVariation_ .addInterest ("set_lifetimeVariation__", this);
-         this .emitter_           .addInterest ("set_emitter__",           this);
-         this .physics_           .addInterest ("set_physics__",           this);
-         this .colorKey_          .addInterest ("set_color__",             this);
-         this .colorRamp_         .addInterest ("set_colorRamp__",         this);
-         this .texCoordKey_       .addInterest ("set_texCoord__",          this);
-         this .texCoordRamp_      .addInterest ("set_texCoordRamp__",      this);
+         this ._enabled           .addInterest ("set_enabled__",           this);
+         this ._createParticles   .addInterest ("set_createParticles__",   this);
+         this ._geometryType      .addInterest ("set_geometryType__",      this);
+         this ._maxParticles      .addInterest ("set_enabled__",           this);
+         this ._particleLifetime  .addInterest ("set_particleLifetime__",  this);
+         this ._lifetimeVariation .addInterest ("set_lifetimeVariation__", this);
+         this ._emitter           .addInterest ("set_emitter__",           this);
+         this ._physics           .addInterest ("set_physics__",           this);
+         this ._colorKey          .addInterest ("set_color__",             this);
+         this ._colorRamp         .addInterest ("set_colorRamp__",         this);
+         this ._texCoordKey       .addInterest ("set_texCoord__",          this);
+         this ._texCoordRamp      .addInterest ("set_texCoordRamp__",      this);
 
          this .idBuffer           = gl .createBuffer ();
          this .positionBuffer     = gl .createBuffer ();
@@ -263,10 +263,10 @@ function (Fields,
       },
       set_bbox__: function ()
       {
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
             this .bbox .set ();
          else
-            this .bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+            this .bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
 
          this .bboxSize   .assign (this .bbox .size);
          this .bboxCenter .assign (this .bbox .center);
@@ -300,7 +300,7 @@ function (Fields,
       {
          if (this .isLive () .getValue ())
          {
-            if (this .isActive_ .getValue () && this .maxParticles_ .getValue ())
+            if (this ._isActive .getValue () && this ._maxParticles .getValue ())
             {
                this .getBrowser () .sensorEvents () .addInterest ("animateParticles", this);
 
@@ -313,7 +313,7 @@ function (Fields,
          }
          else
          {
-            if (this .isActive_ .getValue () && this .maxParticles_ .getValue ())
+            if (this ._isActive .getValue () && this ._maxParticles .getValue ())
             {
                this .getBrowser () .sensorEvents () .removeInterest ("animateParticles", this);
 
@@ -324,9 +324,9 @@ function (Fields,
       },
       set_enabled__: function ()
       {
-         if (this .enabled_ .getValue () && this .maxParticles_ .getValue ())
+         if (this ._enabled .getValue () && this ._maxParticles .getValue ())
          {
-            if (! this .isActive_ .getValue ())
+            if (! this ._isActive .getValue ())
             {
                if (this .isLive () .getValue ())
                {
@@ -337,19 +337,19 @@ function (Fields,
                else
                   this .pauseTime = performance .now () / 1000;
 
-               this .isActive_ = true;
+               this ._isActive = true;
             }
          }
          else
          {
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
                if (this .isLive () .getValue ())
                {
                   this .getBrowser () .sensorEvents () .removeInterest ("animateParticles", this);
                }
 
-               this .isActive_ = false;
+               this ._isActive = false;
 
                this .numParticles = 0;
             }
@@ -359,7 +359,7 @@ function (Fields,
       },
       set_createParticles__: function ()
       {
-         this .createParticles = this .createParticles_ .getValue ();
+         this .createParticles = this ._createParticles .getValue ();
       },
       set_geometryType__: function ()
       {
@@ -369,7 +369,7 @@ function (Fields,
 
          // geometryType
 
-         this .geometryType = GeometryTypes [this .geometryType_ .getValue ()];
+         this .geometryType = GeometryTypes [this ._geometryType .getValue ()];
 
          if (! this .geometryType)
             this .geometryType = POINT;
@@ -550,7 +550,7 @@ function (Fields,
       {
          var
             particles    = this .particles,
-            maxParticles = Math .max (0, this .maxParticles_ .getValue ());
+            maxParticles = Math .max (0, this ._maxParticles .getValue ());
 
          for (var i = this .numParticles, length = Math .min (particles .length, maxParticles); i < length; ++ i)
          {
@@ -582,25 +582,25 @@ function (Fields,
       },
       set_particleLifetime__: function ()
       {
-         this .particleLifetime = this .particleLifetime_ .getValue ();
+         this .particleLifetime = this ._particleLifetime .getValue ();
       },
       set_lifetimeVariation__: function ()
       {
-         this .lifetimeVariation = this .lifetimeVariation_ .getValue ();
+         this .lifetimeVariation = this ._lifetimeVariation .getValue ();
       },
       set_emitter__: function ()
       {
-         this .emitterNode = X3DCast (X3DConstants .X3DParticleEmitterNode, this .emitter_);
+         this .emitterNode = X3DCast (X3DConstants .X3DParticleEmitterNode, this ._emitter);
 
          if (! this .emitterNode)
             this .emitterNode = this .getBrowser () .getDefaultEmitter ();
 
-         this .createParticles = this .createParticles_ .getValue ();
+         this .createParticles = this ._createParticles .getValue ();
       },
       set_physics__: function ()
       {
          var
-            physics                  = this .physics_ .getValue (),
+            physics                  = this ._physics .getValue (),
             forcePhysicsModelNodes   = this .forcePhysicsModelNodes,
             boundedPhysicsModelNodes = this .boundedPhysicsModelNodes;
 
@@ -669,7 +669,7 @@ function (Fields,
          if (this .colorRampNode)
             this .colorRampNode .removeInterest ("set_color__", this);
 
-         this .colorRampNode = X3DCast (X3DConstants .X3DColorNode, this .colorRamp_);
+         this .colorRampNode = X3DCast (X3DConstants .X3DColorNode, this ._colorRamp);
 
          if (this .colorRampNode)
             this .colorRampNode .addInterest ("set_color__", this);
@@ -680,7 +680,7 @@ function (Fields,
       set_color__: function ()
       {
          var
-            colorKey  = this .colorKey_,
+            colorKey  = this ._colorKey,
             colorKeys = this .colorKeys,
             colorRamp = this .colorRamp;
 
@@ -704,7 +704,7 @@ function (Fields,
          if (this .texCoordRampNode)
             this .texCoordRampNode .removeInterest ("set_texCoord__", this);
 
-         this .texCoordRampNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this .texCoordRamp_);
+         this .texCoordRampNode = X3DCast (X3DConstants .X3DTextureCoordinateNode, this ._texCoordRamp);
 
          if (this .texCoordRampNode)
             this .texCoordRampNode .addInterest ("set_texCoord__", this);
@@ -714,7 +714,7 @@ function (Fields,
       set_texCoord__: function ()
       {
          var
-            texCoordKey  = this .texCoordKey_,
+            texCoordKey  = this ._texCoordKey,
             texCoordKeys = this .texCoordKeys,
             texCoordRamp = this .texCoordRamp;
 
@@ -762,7 +762,7 @@ function (Fields,
             {
                this .creationTime    = now;
                this .numParticles    = this .maxParticles;
-               this .createParticles = this .createParticles_ .getValue ();
+               this .createParticles = this ._createParticles .getValue ();
 
                deltaTime = Number .POSITIVE_INFINITY;
             }
@@ -921,7 +921,7 @@ function (Fields,
             lifeArray        = this .lifeArray,
             colorArray       = this .colorArray,
             vertexArray      = this .vertexArray,
-            sy1_2            = this .particleSize_ .y / 2;
+            sy1_2            = this ._particleSize .y / 2;
 
          // Colors
 
@@ -1014,8 +1014,8 @@ function (Fields,
                texCoordArray    = this .texCoordArray,
                normalArray      = this .normalArray,
                vertexArray      = this .vertexArray,
-               sx1_2            = this .particleSize_ .x / 2,
-               sy1_2            = this .particleSize_ .y / 2;
+               sx1_2            = this ._particleSize .x / 2,
+               sy1_2            = this ._particleSize .y / 2;
 
             // Sort particles
 
@@ -1314,7 +1314,7 @@ function (Fields,
       },
       traverse: function (type, renderObject)
       {
-         if (! this .isActive_ .getValue ())
+         if (! this ._isActive .getValue ())
             return;
 
          switch (type)
@@ -1334,7 +1334,7 @@ function (Fields,
             }
             case TraverseType .SHADOW:
             {
-               if (this .castShadow_ .getValue ())
+               if (this ._castShadow .getValue ())
                   renderObject .addDepthShape (this);
 
                break;

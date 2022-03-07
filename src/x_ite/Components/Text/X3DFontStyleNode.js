@@ -103,7 +103,7 @@ function (Fields,
                              "autoRefresh",          new Fields .SFTime (),
                              "autoRefreshTimeLimit", new Fields .SFTime (3600));
 
-      this .addAlias ("url", this .family_);
+      this .addAlias ("url", this ._family);
 
       this .familyStack = [ ];
       this .alignments  = [ ];
@@ -119,8 +119,8 @@ function (Fields,
          X3DNode      .prototype .initialize .call (this);
          X3DUrlObject .prototype .initialize .call (this);
 
-         this .style_   .addInterest ("set_style__",   this);
-         this .justify_ .addInterest ("set_justify__", this);
+         this ._style   .addInterest ("set_style__",   this);
+         this ._justify .addInterest ("set_justify__", this);
 
          this .font        = null;
          this .familyIndex = 0;
@@ -132,7 +132,7 @@ function (Fields,
       },
       set_style__: function ()
       {
-         if (!this .load_ .getValue ())
+         if (!this ._load .getValue ())
             return;
 
          this .setLoadState (X3DConstants .NOT_STARTED_STATE);
@@ -141,15 +141,15 @@ function (Fields,
       },
       set_justify__: function ()
       {
-         const majorNormal = this .horizontal_ .getValue () ? this .leftToRight_ .getValue () : this .topToBottom_ .getValue ();
+         const majorNormal = this ._horizontal .getValue () ? this ._leftToRight .getValue () : this ._topToBottom .getValue ();
 
-         this .alignments [0] = this .justify_ .length > 0
+         this .alignments [0] = this ._justify .length > 0
                                 ? this .getAlignment (0, majorNormal)
                                 : majorNormal ? TextAlignment .BEGIN : TextAlignment .END;
 
-         const minorNormal = this .horizontal_ .getValue () ? this .topToBottom_ .getValue () : this .leftToRight_ .getValue ();
+         const minorNormal = this ._horizontal .getValue () ? this ._topToBottom .getValue () : this ._leftToRight .getValue ();
 
-         this .alignments [1] = this .justify_ .length > 1
+         this .alignments [1] = this ._justify .length > 1
                                 ? this .getAlignment (1, minorNormal)
                                 : minorNormal ? TextAlignment .FIRST : TextAlignment .END;
       },
@@ -167,7 +167,7 @@ function (Fields,
          {
             // Return for west-european normal alignment.
 
-            switch (this .justify_ [index])
+            switch (this ._justify [index])
             {
                case "FIRST":  return TextAlignment .FIRST;
                case "BEGIN":  return TextAlignment .BEGIN;
@@ -179,7 +179,7 @@ function (Fields,
          {
             // Return appropriate alignment if topToBottom or leftToRight are FALSE.
 
-            switch (this .justify_ [index])
+            switch (this ._justify [index])
             {
                case "FIRST":  return TextAlignment .END;
                case "BEGIN":  return TextAlignment .END;
@@ -195,7 +195,7 @@ function (Fields,
          const family = Fonts [familyName];
 
          if (family)
-            return family [this .style_ .getValue ()] || family .PLAIN;
+            return family [this ._style .getValue ()] || family .PLAIN;
 
          return;
       },
@@ -203,7 +203,7 @@ function (Fields,
       {
          // Add default font to family array.
 
-         const family = this .urlBuffer_ .copy ();
+         const family = this ._urlBuffer .copy ();
 
          family .push ("SERIF");
 

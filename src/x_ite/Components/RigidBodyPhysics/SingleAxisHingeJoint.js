@@ -78,13 +78,13 @@ function ($,
 
       this .addType (X3DConstants .SingleAxisHingeJoint);
 
-      this .anchorPoint_      .setUnit ("length");
-      this .minAngle_         .setUnit ("angle");
-      this .maxAngle_         .setUnit ("angle");
-      this .body1AnchorPoint_ .setUnit ("length");
-      this .body2AnchorPoint_ .setUnit ("length");
-      this .angle_            .setUnit ("angle");
-      this .angleRate_        .setUnit ("angularRate");
+      this ._anchorPoint      .setUnit ("length");
+      this ._minAngle         .setUnit ("angle");
+      this ._maxAngle         .setUnit ("angle");
+      this ._body1AnchorPoint .setUnit ("length");
+      this ._body2AnchorPoint .setUnit ("length");
+      this ._angle            .setUnit ("angle");
+      this ._angleRate        .setUnit ("angularRate");
 
       this .joint             = null;
       this .outputs           = { };
@@ -127,8 +127,8 @@ function ($,
       {
          X3DRigidJointNode .prototype .initialize .call (this);
 
-         this .anchorPoint_ .addInterest ("set_joint__", this);
-         this .axis_        .addInterest ("set_joint__", this);
+         this ._anchorPoint .addInterest ("set_joint__", this);
+         this ._axis        .addInterest ("set_joint__", this);
       },
       addJoint: (function ()
       {
@@ -157,10 +157,10 @@ function ($,
                localAnchorPoint1 = this .localAnchorPoint1,
                localAnchorPoint2 = this .localAnchorPoint2;
 
-            localAnchorPoint1 .assign (this .anchorPoint_ .getValue ());
-            localAnchorPoint2 .assign (this .anchorPoint_ .getValue ());
-            localAxis1        .assign (this .axis_ .getValue ());
-            localAxis2        .assign (this .axis_ .getValue ());
+            localAnchorPoint1 .assign (this ._anchorPoint .getValue ());
+            localAnchorPoint2 .assign (this ._anchorPoint .getValue ());
+            localAxis1        .assign (this ._axis .getValue ());
+            localAxis2        .assign (this ._axis .getValue ());
 
             this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1);
             this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2);
@@ -194,9 +194,9 @@ function ($,
          for (var key in this .outputs)
             delete this .outputs [key];
 
-         for (var i = 0, length = this .forceOutput_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._forceOutput .length; i < length; ++ i)
          {
-            var value = this .forceOutput_ [i];
+            var value = this ._forceOutput [i];
 
             if (value == "ALL")
             {
@@ -220,7 +220,7 @@ function ($,
          return function ()
          {
             if (this .outputs .body1AnchorPoint)
-               this .body1AnchorPoint_ = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
+               this ._body1AnchorPoint = this .getBody1 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix1 () .multVecMatrix (localAnchorPoint1 .assign (this .localAnchorPoint1)));
          };
       })(),
       update2: (function ()
@@ -235,19 +235,19 @@ function ($,
             try
             {
                if (this .outputs .body2AnchorPoint)
-                  this .body2AnchorPoint_ = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
+                  this ._body2AnchorPoint = this .getBody2 () .getMatrix () .multVecMatrix (this .getInitialInverseMatrix2 () .multVecMatrix (localAnchorPoint2 .assign (this .localAnchorPoint2)));
 
                if (this .outputs .angle)
                {
-                  var lastAngle  = this .angle_ .getValue ();
+                  var lastAngle  = this ._angle .getValue ();
 
                   difference .assign (this .getInitialInverseMatrix2 ()) .multRight (this .getBody2 () .getMatrix ());
                   difference .get (null, rotation);
 
-                  this .angle_ = rotation .angle;
+                  this ._angle = rotation .angle;
 
                   if (this .outputs .angleRate)
-                     this .angleRate_ = (this .angle_ .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
+                     this ._angleRate = (this ._angle .getValue () - lastAngle) * this .getBrowser () .getCurrentFrameRate ();
                }
             }
             catch (error)

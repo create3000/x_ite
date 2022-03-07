@@ -152,7 +152,7 @@ function ($,
       },
       getSourceText: function ()
       {
-         return this .url_;
+         return this ._url;
       },
       unloadNow: function ()
       {
@@ -162,7 +162,7 @@ function ($,
       {
          this .initialized = false;
 
-         new FileLoader (this) .loadScript (this .urlBuffer_,
+         new FileLoader (this) .loadScript (this ._urlBuffer,
          function (data)
          {
             if (data === null)

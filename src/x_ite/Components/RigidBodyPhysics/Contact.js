@@ -70,11 +70,11 @@ function (Fields,
 
       // Units
 
-      this .position_                 .setUnit ("length");
-      this .depth_                    .setUnit ("length");
-      this .minBounceSpeed_           .setUnit ("speed");
-      this .surfaceSpeed_             .setUnit ("speed");
-      this .softnessConstantForceMix_ .setUnit ("force");
+      this ._position                 .setUnit ("length");
+      this ._depth                    .setUnit ("length");
+      this ._minBounceSpeed           .setUnit ("speed");
+      this ._surfaceSpeed             .setUnit ("speed");
+      this ._softnessConstantForceMix .setUnit ("force");
    }
 
    Contact .prototype = Object .assign (Object .create (X3DNode .prototype),

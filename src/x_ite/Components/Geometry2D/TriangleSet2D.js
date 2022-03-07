@@ -72,7 +72,7 @@ function (Fields,
 
       this .setGeometryType (2);
 
-      this .vertices_ .setUnit ("length");
+      this ._vertices .setUnit ("length");
    }
 
    TriangleSet2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -98,17 +98,17 @@ function (Fields,
       build: function ()
       {
          var
-            vertices    = this .vertices_ .getValue (),
+            vertices    = this ._vertices .getValue (),
             normalArray = this .getNormals (),
             vertexArray = this .getVertices ();
 
-         for (var i = 0, length = this .vertices_ .length * 2; i < length; i += 2)
+         for (var i = 0, length = this ._vertices .length * 2; i < length; i += 2)
          {
             normalArray .push (0, 0, 1);
             vertexArray .push (vertices [i], vertices [i + 1], 0, 1);
          }
 
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
       },
       buildTexCoords: function ()
       {

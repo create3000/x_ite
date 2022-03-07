@@ -99,8 +99,8 @@ function (Fields,
       {
          X3DSingleTextureCoordinateNode .prototype .initialize .call (this);
 
-         this .mode_      .addInterest ("set_mode__",      this);
-         this .parameter_ .addInterest ("set_parameter__", this);
+         this ._mode      .addInterest ("set_mode__",      this);
+         this ._parameter .addInterest ("set_parameter__", this);
 
          this .set_mode__ ();
          this .set_parameter__ ();
@@ -123,7 +123,7 @@ function (Fields,
 
          return function ()
          {
-            this .mode = modes .get (this .mode_ .getValue ());
+            this .mode = modes .get (this ._mode .getValue ());
 
             if (this .mode === undefined)
                this .mode = ModeType .SPHERE;
@@ -131,10 +131,10 @@ function (Fields,
       })(),
       set_parameter__: function ()
       {
-         const length = Math .min (this .parameter .length, this .parameter_ .length)
+         const length = Math .min (this .parameter .length, this ._parameter .length)
 
          for (let i = 0; i < length; ++ i)
-            this .parameter [i] = this .parameter_ [i];
+            this .parameter [i] = this ._parameter [i];
 
          this .parameter .fill (0, length);
       },

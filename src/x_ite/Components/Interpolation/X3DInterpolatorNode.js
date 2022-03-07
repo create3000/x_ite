@@ -76,7 +76,7 @@ function (X3DChildNode,
 
          this .set_key__ ();
 
-         if (this .key_ .length)
+         if (this ._key .length)
             this .interpolate (0, 0, 0);
 
          X3DChildNode .prototype .setup .call (this);
@@ -85,15 +85,15 @@ function (X3DChildNode,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .set_fraction_ .addInterest ("set_fraction__", this);
-         this .key_          .addInterest ("set_key__", this);
+         this ._set_fraction .addInterest ("set_fraction__", this);
+         this ._key          .addInterest ("set_key__", this);
       },
       set_fraction__: function ()
       {
          var
-            key      = this .key_,
+            key      = this ._key,
             length   = key .length,
-            fraction = this .set_fraction_ .getValue ();
+            fraction = this ._set_fraction .getValue ();
 
          switch (length)
          {

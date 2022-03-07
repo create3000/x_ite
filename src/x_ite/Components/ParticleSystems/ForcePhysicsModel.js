@@ -68,7 +68,7 @@ function (Fields,
 
       this .addType (X3DConstants .ForcePhysicsModel);
 
-      this .force_ .setUnit ("force");
+      this ._force .setUnit ("force");
    }
 
    ForcePhysicsModel .prototype = Object .assign (Object .create (X3DParticlePhysicsModelNode .prototype),
@@ -93,9 +93,9 @@ function (Fields,
       },
       addForce: function (i, emitterNode, forces, turbulences)
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
          {
-            forces      [i] .assign (this .force_ .getValue ());
+            forces      [i] .assign (this ._force .getValue ());
             turbulences [i] = 0;
          }
       },

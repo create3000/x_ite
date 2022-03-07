@@ -107,9 +107,9 @@ function (Fields,
       createTexCoordIndex: function ()
       {
          const
-            xDimension    = this .xDimension_ .getValue () + 1,
-            yDimension    = this .yDimension_ .getValue (),
-            texCoordIndex = this .geometry .texCoordIndex_;
+            xDimension    = this ._xDimension .getValue () + 1,
+            yDimension    = this ._yDimension .getValue (),
+            texCoordIndex = this .geometry ._texCoordIndex;
 
          // North pole
 
@@ -150,9 +150,9 @@ function (Fields,
       createTexCoord: function ()
       {
          const
-            xDimension = this .xDimension_ .getValue () + 1,
-            yDimension = this .yDimension_ .getValue (),
-            point      = this .geometry .texCoord_ .getValue () .point_;
+            xDimension = this ._xDimension .getValue () + 1,
+            yDimension = this ._yDimension .getValue (),
+            point      = this .geometry ._texCoord .getValue () ._point;
 
          const poleOffset = -0.5 / (xDimension - 1);
 
@@ -191,9 +191,9 @@ function (Fields,
       createCoordIndex: function ()
       {
          const
-            xDimension = this .xDimension_ .getValue () + 1,
-            yDimension = this .yDimension_ .getValue (),
-            coordIndex = this .geometry .coordIndex_;
+            xDimension = this ._xDimension .getValue () + 1,
+            yDimension = this ._yDimension .getValue (),
+            coordIndex = this .geometry ._coordIndex;
 
          // North pole
 
@@ -254,9 +254,9 @@ function (Fields,
       createPoints: function ()
       {
          const
-            xDimension = this .xDimension_ .getValue () + 1,
-            yDimension = this .yDimension_ .getValue (),
-            point      = this .geometry .coord_ .getValue () .point_;
+            xDimension = this ._xDimension .getValue () + 1,
+            yDimension = this ._yDimension .getValue (),
+            point      = this .geometry ._coord .getValue () ._point;
 
          // North pole
          point .push (new Vector3 (0, 1, 0));
@@ -280,8 +280,8 @@ function (Fields,
       eventsProcessed: function ()
       {
          this .geometry            = new IndexedFaceSet (this .getExecutionContext ());
-         this .geometry .texCoord_ = new TextureCoordinate (this .getExecutionContext ());
-         this .geometry .coord_    = new Coordinate (this .getExecutionContext ());
+         this .geometry ._texCoord = new TextureCoordinate (this .getExecutionContext ());
+         this .geometry ._coord    = new Coordinate (this .getExecutionContext ());
 
          this .createTexCoordIndex ();
          this .createTexCoord ();
@@ -290,10 +290,10 @@ function (Fields,
 
          const
             geometry = this .geometry,
-            texCoord = this .geometry .texCoord_ .getValue (),
-            coord    = this .geometry .coord_ .getValue ();
+            texCoord = this .geometry ._texCoord .getValue (),
+            coord    = this .geometry ._coord .getValue ();
 
-         geometry .creaseAngle_ = Math .PI;
+         geometry ._creaseAngle = Math .PI;
 
          texCoord .setup ();
          coord    .setup ();

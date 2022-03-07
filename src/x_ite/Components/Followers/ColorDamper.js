@@ -112,23 +112,23 @@ function (Fields,
       },
       getValue: function ()
       {
-         return this .set_value_ .getValue () .getHSV (vector);
+         return this ._set_value .getValue () .getHSV (vector);
       },
       getDestination: function ()
       {
-         return this .set_destination_ .getValue () .getHSV (vector);
+         return this ._set_destination .getValue () .getHSV (vector);
       },
       getInitialValue: function ()
       {
-         return this .initialValue_ .getValue () .getHSV (initialValue);
+         return this ._initialValue .getValue () .getHSV (initialValue);
       },
       getInitialDestination: function ()
       {
-         return this .initialDestination_ .getValue () .getHSV (initialDestination);
+         return this ._initialDestination .getValue () .getHSV (initialDestination);
       },
       setValue: function (value)
       {
-         this .value_changed_ .setHSV (value .x, value .y, value .z);
+         this ._value_changed .setHSV (value .x, value .y, value .z);
       },
       equals: function (lhs, rhs, tolerance)
       {

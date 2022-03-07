@@ -78,9 +78,9 @@ function (Fields,
 
       this .addType (X3DConstants .Extrusion);
 
-      this .creaseAngle_  .setUnit ("angle");
-      this .crossSection_ .setUnit ("length");
-      this .spine_        .setUnit ("length");
+      this ._creaseAngle  .setUnit ("angle");
+      this ._crossSection .setUnit ("length");
+      this ._spine        .setUnit ("length");
    }
 
    Extrusion .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -119,14 +119,14 @@ function (Fields,
       {
          X3DGeometryNode .prototype .initialize .call (this);
 
-         this .set_crossSection_ .addFieldInterest (this .crossSection_);
-         this .set_orientation_  .addFieldInterest (this .orientation_);
-         this .set_scale_        .addFieldInterest (this .scale_);
-         this .set_spine_        .addFieldInterest (this .spine_);
+         this ._set_crossSection .addFieldInterest (this ._crossSection);
+         this ._set_orientation  .addFieldInterest (this ._orientation);
+         this ._set_scale        .addFieldInterest (this ._scale);
+         this ._set_spine        .addFieldInterest (this ._spine);
       },
       getClosedOrientation: function ()
       {
-         var orientation = this .orientation_;
+         var orientation = this ._orientation;
 
          if (orientation .length)
          {
@@ -146,10 +146,10 @@ function (Fields,
          return function ()
          {
             var
-               crossSection = this .crossSection_,
-               orientation  = this .orientation_,
-               scale        = this .scale_,
-               spine        = this .spine_,
+               crossSection = this ._crossSection,
+               orientation  = this ._orientation,
+               scale        = this ._scale,
+               spine        = this ._spine,
                points       = [ ];
 
             // calculate SCP rotations
@@ -203,7 +203,7 @@ function (Fields,
             // calculate SCP rotations
 
             var
-               spine       = this .spine_,
+               spine       = this ._spine,
                numSpines   = spine .length,
                firstSpine  = spine [0] .getValue (),
                lastSpine   = spine [spine .length - 1] .getValue (),
@@ -383,9 +383,9 @@ function (Fields,
          return function ()
          {
             var
-               cw            = ! this .ccw_ .getValue (),
-               crossSection  = this .crossSection_,
-               spine         = this .spine_,
+               cw            = ! this ._ccw .getValue (),
+               crossSection  = this ._crossSection,
+               spine         = this ._spine,
                numSpines     = spine .length,
                texCoordArray = this .getTexCoords ();
 
@@ -583,7 +583,7 @@ function (Fields,
 
             // Refine body normals and add them.
 
-            normals = this .refineNormals (normalIndex, normals, this .creaseAngle_ .getValue ());
+            normals = this .refineNormals (normalIndex, normals, this ._creaseAngle .getValue ());
 
             for (var i = 0; i < normals .length; ++ i)
             {
@@ -596,7 +596,7 @@ function (Fields,
 
             if (capMax && numCapPoints > 2)
             {
-               if (this .beginCap_ .getValue ())
+               if (this ._beginCap .getValue ())
                {
                   var
                      j         = 0, // spine
@@ -614,7 +614,7 @@ function (Fields,
                      polygon .push (point);
                   }
 
-                  if (this .convex_ .getValue ())
+                  if (this ._convex .getValue ())
                      Triangle3 .triangulateConvexPolygon (polygon, triangles);
 
                   else
@@ -634,7 +634,7 @@ function (Fields,
                   }
                }
 
-               if (this .endCap_ .getValue ())
+               if (this ._endCap .getValue ())
                {
                   var
                      j         = numSpines - 1, // spine
@@ -652,7 +652,7 @@ function (Fields,
                      polygon .push (point);
                   }
 
-                  if (this .convex_ .getValue ())
+                  if (this ._convex .getValue ())
                      Triangle3 .triangulateConvexPolygon (polygon, triangles);
 
                   else
@@ -673,8 +673,8 @@ function (Fields,
                }
             }
 
-            this .setSolid (this .solid_ .getValue ());
-            this .setCCW (this .ccw_ .getValue ());
+            this .setSolid (this ._solid .getValue ());
+            this .setCCW (this ._ccw .getValue ());
          };
       })(),
       addCap: function (texCoordArray, normal, vertices, triangles)

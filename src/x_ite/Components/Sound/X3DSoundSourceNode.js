@@ -88,13 +88,13 @@ function (Fields,
 
          if (this .getDisabled ())
          {
-            this .getBrowser () .volume_ .removeInterest ("set_volume__", this);
-            this .getBrowser () .mute_   .removeInterest ("set_volume__", this);
+            this .getBrowser () ._volume .removeInterest ("set_volume__", this);
+            this .getBrowser () ._mute   .removeInterest ("set_volume__", this);
          }
          else
          {
-            this .getBrowser () .volume_ .addInterest ("set_volume__", this);
-            this .getBrowser () .mute_   .addInterest ("set_volume__", this);
+            this .getBrowser () ._volume .addInterest ("set_volume__", this);
+            this .getBrowser () ._mute   .addInterest ("set_volume__", this);
             this .set_volume__ ();
          }
       },
@@ -112,16 +112,16 @@ function (Fields,
          {
             const media = value [0];
 
-            media .loop = this .loop_ .getValue ();
+            media .loop = this ._loop .getValue ();
 
             this .setVolume (0);
-            this .duration_changed_ = media .duration;
+            this ._duration_changed = media .duration;
 
             this .resetElapsedTime ();
 
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
-               if (this .isPaused_ .getValue ())
+               if (this ._isPaused .getValue ())
                {
                   this .set_pause ();
                }
@@ -152,7 +152,7 @@ function (Fields,
       set_loop: function ()
       {
          if (this .media)
-            this .media [0] .loop = this .loop_ .getValue ();
+            this .media [0] .loop = this ._loop .getValue ();
       },
       set_volume__: function ()
       {
@@ -160,8 +160,8 @@ function (Fields,
             return;
 
          const
-            mute      = this .getBrowser () .mute_ .getValue (),
-            intensity = Algorithm .clamp (this .getBrowser () .volume_ .getValue (), 0, 1),
+            mute      = this .getBrowser () ._mute .getValue (),
+            intensity = Algorithm .clamp (this .getBrowser () ._volume .getValue (), 0, 1),
             volume    = (! mute) * intensity * this .volume;
 
          this .media [0] .volume = volume;
@@ -174,7 +174,7 @@ function (Fields,
       {
          if (this .media)
          {
-            if (this .speed_ .getValue ())
+            if (this ._speed .getValue ())
             {
                this .media [0] .currentTime = 0;
                this .media [0] .play ();
@@ -190,7 +190,7 @@ function (Fields,
       {
          if (this .media)
          {
-            if (this .speed_ .getValue ())
+            if (this ._speed .getValue ())
                this .media [0] .play ();
          }
       },
@@ -208,14 +208,14 @@ function (Fields,
             if (media .currentTime < media .duration)
                return;
 
-            if (!this .loop_ .getValue ())
+            if (!this ._loop .getValue ())
                this .stop ();
          }
       },
       set_time: function ()
       {
          if (this .media)
-            this .elapsedTime_ = this .getElapsedTime ();
+            this ._elapsedTime = this .getElapsedTime ();
 
          this .set_ended ();
       },

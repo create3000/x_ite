@@ -101,17 +101,17 @@ function (Fields,
       },
       getPolygonIndex: function (i)
       {
-         return this .index_ [i];
+         return this ._index [i];
       },
       initialize: function ()
       {
          X3DComposedGeometryNode .prototype .initialize .call (this);
 
-         this .set_index_ .addFieldInterest (this .index_);
+         this ._set_index .addFieldInterest (this ._index);
       },
       build: function ()
       {
-         X3DComposedGeometryNode .prototype .build .call (this, 3, this .index_ .length, 3, this .index_ .length);
+         X3DComposedGeometryNode .prototype .build .call (this, 3, this ._index .length, 3, this ._index .length);
       },
    });
 

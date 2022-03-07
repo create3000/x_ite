@@ -160,7 +160,7 @@ function (X3DEventObject,
       {
          function isLive ()
          {
-            return this .isLive_;
+            return this ._isLive;
          }
 
          return function ()
@@ -181,7 +181,7 @@ function (X3DEventObject,
             this .addChildObjects ("isLive", new Fields .SFBool (this .getLiveState ()));
 
             // Event processing is done manually and immediately, so:
-            this .isLive_ .removeParent (this);
+            this ._isLive .removeParent (this);
 
             // Connect to execution context.
 
@@ -286,7 +286,7 @@ function (X3DEventObject,
          field .addParent (this);
          field .setName (name);
 
-         Object .defineProperty (this, name + "_",
+         Object .defineProperty (this, "_" + name,
          {
             get: function () { return field; },
             set: function (value) { field .setValue (value); },
@@ -317,7 +317,7 @@ function (X3DEventObject,
          this [_fields]           .add (name, field);
          this [_predefinedFields] .add (name, field);
 
-         Object .defineProperty (this, name + "_",
+         Object .defineProperty (this, "_" + name,
          {
             get: function () { return field; },
             set: function (value) { field .setValue (value); },
@@ -370,7 +370,7 @@ function (X3DEventObject,
       {
          this [_aliases] .set (alias, field);
 
-         Object .defineProperty (this, alias + "_",
+         Object .defineProperty (this, "_" + alias,
          {
             get: function () { return field; },
             set: function (value) { field .setValue (value); },
@@ -387,7 +387,7 @@ function (X3DEventObject,
             this [_fields]           .remove (name);
             this [_predefinedFields] .remove (name);
 
-            delete this [field .getName () + "_"];
+            delete this ["_" + field .getName ()];
 
             if (!this .getPrivate ())
                field .removeCloneCount (1);

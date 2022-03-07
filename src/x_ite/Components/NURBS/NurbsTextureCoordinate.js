@@ -106,17 +106,17 @@ function (Fields,
       getControlPoints: function (texWeights)
       {
          var
-            controlPointArray = this .controlPoint_ .getValue (),
+            controlPointArray = this ._controlPoint .getValue (),
             controlPoints     = this .controlPoints;
 
-         for (var u = 0, uDimension = this .uDimension_ .getValue (); u < uDimension; ++ u)
+         for (var u = 0, uDimension = this ._uDimension .getValue (); u < uDimension; ++ u)
          {
             var cp = controlPoints [u];
 
             if (! cp)
                cp = controlPoints [u] = [ ];
 
-            for (var v = 0, vDimension = this .vDimension_ .getValue (); v < vDimension; ++ v)
+            for (var v = 0, vDimension = this ._vDimension .getValue (); v < vDimension; ++ v)
             {
                var
                   index = v * uDimension + u,
@@ -131,19 +131,19 @@ function (Fields,
       },
       isValid: function ()
       {
-         if (this .uOrder_ .getValue () < 2)
+         if (this ._uOrder .getValue () < 2)
             return false;
 
-         if (this .vOrder_ .getValue () < 2)
+         if (this ._vOrder .getValue () < 2)
             return false;
 
-         if (this .uDimension_ .getValue () < this .uOrder_ .getValue ())
+         if (this ._uDimension .getValue () < this ._uOrder .getValue ())
             return false;
 
-         if (this .vDimension_ .getValue () < this .vOrder_ .getValue ())
+         if (this ._vDimension .getValue () < this ._vOrder .getValue ())
             return false;
 
-         if (this .controlPoint_ .length !== this .uDimension_ .getValue () * this .vDimension_ .getValue ())
+         if (this ._controlPoint .length !== this ._uDimension .getValue () * this ._vDimension .getValue ())
             return false;
 
          return true;

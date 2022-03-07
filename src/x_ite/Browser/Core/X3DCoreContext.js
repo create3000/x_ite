@@ -509,19 +509,19 @@ function ($,
       },
       getShiftKey: function ()
       {
-         return this .shiftKey_ .getValue ();
+         return this ._shiftKey .getValue ();
       },
       getControlKey: function ()
       {
-         return this .controlKey_ .getValue ();
+         return this ._controlKey .getValue ();
       },
       getAltKey: function ()
       {
-         return this .altKey_ .getValue ();
+         return this ._altKey .getValue ();
       },
       getAltGrKey: function ()
       {
-         return this .altGrKey_ .getValue ();
+         return this ._altGrKey .getValue ();
       },
       [_keydown]: function (event)
       {
@@ -531,17 +531,17 @@ function ($,
          {
             case 16: // Shift
             {
-               this .shiftKey_ = true;
+               this ._shiftKey = true;
                break;
             }
             case 17: // Ctrl
             {
-               this .controlKey_ = true;
+               this ._controlKey = true;
                break;
             }
             case 18: // Alt
             {
-               this .altKey_ = true;
+               this ._altKey = true;
                break;
             }
             case 37: // Left
@@ -561,7 +561,7 @@ function ($,
                   {
                      event .preventDefault ();
                      this .setBrowserOption ("Shading", "POINT");
-                     this .getNotification () .string_ = "Shading: Pointset";
+                     this .getNotification () ._string = "Shading: Pointset";
                   }
                }
 
@@ -575,7 +575,7 @@ function ($,
                   {
                      event .preventDefault ();
                      this .setBrowserOption ("Shading", "WIREFRAME");
-                     this .getNotification () .string_ = "Shading: Wireframe";
+                     this .getNotification () ._string = "Shading: Wireframe";
                   }
                }
 
@@ -589,7 +589,7 @@ function ($,
                   {
                      event .preventDefault ();
                      this .setBrowserOption ("Shading", "FLAT");
-                     this .getNotification () .string_ = "Shading: Flat";
+                     this .getNotification () ._string = "Shading: Flat";
                   }
                }
 
@@ -603,7 +603,7 @@ function ($,
                   {
                      event .preventDefault ();
                      this .setBrowserOption ("Shading", "GOURAUD");
-                     this .getNotification () .string_ = "Shading: Gouraud";
+                     this .getNotification () ._string = "Shading: Gouraud";
                   }
                }
 
@@ -617,7 +617,7 @@ function ($,
                   {
                      event .preventDefault ();
                      this .setBrowserOption ("Shading", "PHONG");
-                     this .getNotification () .string_ = "Shading: Phong";
+                     this .getNotification () ._string = "Shading: Phong";
                   }
                }
 
@@ -636,7 +636,7 @@ function ($,
                      else
                         this .beginUpdate ();
 
-                     this .getNotification () .string_ = this .isLive () .getValue () ? "Begin Update" : "End Update";
+                     this .getNotification () ._string = this .isLive () .getValue () ? "Begin Update" : "End Update";
                   }
                }
 
@@ -644,7 +644,7 @@ function ($,
             }
             case 225: // Alt Gr
             {
-               this .altGrKey_ = true;
+               this ._altGrKey = true;
                break;
             }
             case 171: // Plus // Firefox
@@ -716,7 +716,7 @@ function ($,
                      case "GeoViewpoint":
                      {
                         const
-                           geoOrigin = viewpoint .geoOrigin_,
+                           geoOrigin = viewpoint ._geoOrigin,
                            geoCoord  = new Vector3 (0, 0, 0);
 
                         if (geoOrigin .getValue () && geoOrigin .getNodeTypeName () === "GeoOrigin")
@@ -729,7 +729,7 @@ function ($,
                            go .rotateYUp = geoOrigin .rotateYUp;
                         }
 
-                        vp .geoSystem        = viewpoint .geoSystem_;
+                        vp .geoSystem        = viewpoint ._geoSystem;
                         vp .position         = viewpoint .getGeoCoord (viewpoint .getUserPosition (), geoCoord);
                         vp .orientation      = viewpoint .getUserOrientation ();
                         vp .centerOfRotation = viewpoint .getGeoCoord (viewpoint .getUserCenterOfRotation (), geoCoord);
@@ -752,7 +752,7 @@ function ($,
 
                   console .log (text);
                   this .copyToClipboard (text);
-                  this .getNotification () .string_ = _ ("Viewpoint is copied to clipboard.");
+                  this .getNotification () ._string = _ ("Viewpoint is copied to clipboard.");
                }
 
                break;
@@ -767,17 +767,17 @@ function ($,
          {
             case 16: // Shift
             {
-               this .shiftKey_ = false;
+               this ._shiftKey = false;
                break;
             }
             case 17: // Ctrl
             {
-               this .controlKey_ = false;
+               this ._controlKey = false;
                break;
             }
             case 18: // Alt
             {
-               this .altKey_ = false;
+               this ._altKey = false;
                break;
             }
             case 37: // Left
@@ -791,7 +791,7 @@ function ($,
             }
             case 225: // Alt Gr
             {
-               this .altGrKey_ = false;
+               this ._altGrKey = false;
                break;
             }
          }

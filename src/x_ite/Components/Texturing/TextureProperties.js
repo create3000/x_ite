@@ -103,7 +103,7 @@ function (Fields,
       getBorderWidth: function ()
       {
          // https://stackoverflow.com/questions/27760277/webgl-border-color-shader?lq=1
-         return Algorithm .clamp (this .borderWidth_ .getValue (), 0, 1);
+         return Algorithm .clamp (this ._borderWidth .getValue (), 0, 1);
       },
       getBoundaryMode: (function ()
       {
@@ -127,15 +127,15 @@ function (Fields,
       })(),
       getBoundaryModeS: function ()
       {
-         return this .getBoundaryMode (this .boundaryModeS_ .getValue ());
+         return this .getBoundaryMode (this ._boundaryModeS .getValue ());
       },
       getBoundaryModeT: function ()
       {
-         return this .getBoundaryMode (this .boundaryModeT_ .getValue ());
+         return this .getBoundaryMode (this ._boundaryModeT .getValue ());
       },
       getBoundaryModeR: function ()
       {
-         return this .getBoundaryMode (this .boundaryModeR_ .getValue ());
+         return this .getBoundaryMode (this ._boundaryModeR .getValue ());
       },
       getMinificationFilter: (function ()
       {
@@ -152,9 +152,9 @@ function (Fields,
 
          return function ()
          {
-            if (this .generateMipMaps_ .getValue ())
+            if (this ._generateMipMaps .getValue ())
             {
-               const minificationFilter = minificationFilters .get (this .minificationFilter_ .getValue ());
+               const minificationFilter = minificationFilters .get (this ._minificationFilter .getValue ());
 
                if (minificationFilter !== undefined)
                   return minificationFilter;
@@ -176,7 +176,7 @@ function (Fields,
 
          return function ()
          {
-            const magnificationFilter = magnificationFilters .get (this .magnificationFilter_ .getValue ());
+            const magnificationFilter = magnificationFilters .get (this ._magnificationFilter .getValue ());
 
             if (magnificationFilter !== undefined)
                return magnificationFilter;
@@ -202,7 +202,7 @@ function (Fields,
                browser            = this .getBrowser (),
                gl                 = browser .getContext (),
                compressedTexture  = browser .getExtension ("WEBGL_compressed_texture_etc"), // TODO: find suitable compression.
-               textureCompression = compressedTexture ? compressedTexture [textureCompressions .get (this .textureCompression_ .getValue ())] : undefined;
+               textureCompression = compressedTexture ? compressedTexture [textureCompressions .get (this ._textureCompression .getValue ())] : undefined;
 
             if (textureCompression !== undefined)
                return textureCompression;

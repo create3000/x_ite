@@ -83,10 +83,10 @@ function (Fields,
 
       this .addType (X3DConstants .HAnimHumanoid);
 
-      this .translation_ .setUnit ("length");
-      this .center_      .setUnit ("length");
-      this .bboxSize_    .setUnit ("length");
-      this .bboxCenter_  .setUnit ("length");
+      this ._translation .setUnit ("length");
+      this ._center      .setUnit ("length");
+      this ._bboxSize    .setUnit ("length");
+      this ._bboxCenter  .setUnit ("length");
 
       this .viewpointsNode = new Group (executionContext);
       this .skeletonNode   = new Group (executionContext);
@@ -149,13 +149,13 @@ function (Fields,
          this .viewpointsNode .setAllowedTypes (X3DConstants .HAnimSite);
          this .skeletonNode   .setAllowedTypes (X3DConstants .HAnimJoint, X3DConstants .HAnimSite);
 
-         this .viewpoints_ .addFieldInterest (this .viewpointsNode .children_);
-         this .skeleton_   .addFieldInterest (this .skeletonNode   .children_);
-         this .skin_       .addFieldInterest (this .skinNode       .children_);
+         this ._viewpoints .addFieldInterest (this .viewpointsNode ._children);
+         this ._skeleton   .addFieldInterest (this .skeletonNode   ._children);
+         this ._skin       .addFieldInterest (this .skinNode       ._children);
 
-         this .viewpointsNode .children_ = this .viewpoints_;
-         this .skeletonNode   .children_ = this .skeleton_;
-         this .skinNode       .children_ = this .skin_;
+         this .viewpointsNode ._children = this ._viewpoints;
+         this .skeletonNode   ._children = this ._skeleton;
+         this .skinNode       ._children = this ._skin;
 
          this .viewpointsNode .setPrivate (true);
          this .skeletonNode   .setPrivate (true);
@@ -163,25 +163,25 @@ function (Fields,
 
          // Transform
 
-         this .translation_      .addFieldInterest (this .transformNode .translation_);
-         this .rotation_         .addFieldInterest (this .transformNode .rotation_);
-         this .scale_            .addFieldInterest (this .transformNode .scale_);
-         this .scaleOrientation_ .addFieldInterest (this .transformNode .scaleOrientation_);
-         this .center_           .addFieldInterest (this .transformNode .center_);
-         this .bboxSize_         .addFieldInterest (this .transformNode .bboxSize_);
-         this .bboxCenter_       .addFieldInterest (this .transformNode .bboxCenter_);
+         this ._translation      .addFieldInterest (this .transformNode ._translation);
+         this ._rotation         .addFieldInterest (this .transformNode ._rotation);
+         this ._scale            .addFieldInterest (this .transformNode ._scale);
+         this ._scaleOrientation .addFieldInterest (this .transformNode ._scaleOrientation);
+         this ._center           .addFieldInterest (this .transformNode ._center);
+         this ._bboxSize         .addFieldInterest (this .transformNode ._bboxSize);
+         this ._bboxCenter       .addFieldInterest (this .transformNode ._bboxCenter);
 
-         this .transformNode .translation_      = this .translation_;
-         this .transformNode .rotation_         = this .rotation_;
-         this .transformNode .scale_            = this .scale_;
-         this .transformNode .scaleOrientation_ = this .scaleOrientation_;
-         this .transformNode .center_           = this .center_;
-         this .transformNode .bboxSize_         = this .bboxSize_;
-         this .transformNode .bboxCenter_       = this .bboxCenter_;
-         this .transformNode .children_         = [ this .viewpointsNode, this .skeletonNode, this .skinNode ];
+         this .transformNode ._translation      = this ._translation;
+         this .transformNode ._rotation         = this ._rotation;
+         this .transformNode ._scale            = this ._scale;
+         this .transformNode ._scaleOrientation = this ._scaleOrientation;
+         this .transformNode ._center           = this ._center;
+         this .transformNode ._bboxSize         = this ._bboxSize;
+         this .transformNode ._bboxCenter       = this ._bboxCenter;
+         this .transformNode ._children         = [ this .viewpointsNode, this .skeletonNode, this .skinNode ];
 
-         this .transformNode .isCameraObject_   .addFieldInterest (this .isCameraObject_);
-         this .transformNode .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+         this .transformNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+         this .transformNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
          // Setup
 
@@ -195,9 +195,9 @@ function (Fields,
 
          // Skinning
 
-         this .joints_     .addInterest ("set_joints__",     this);
-         this .skinNormal_ .addInterest ("set_skinNormal__", this);
-         this .skinCoord_  .addInterest ("set_skinCoord__",  this);
+         this ._joints     .addInterest ("set_joints__",     this);
+         this ._skinNormal .addInterest ("set_skinNormal__", this);
+         this ._skinCoord  .addInterest ("set_skinCoord__",  this);
 
          this .set_joints__ ();
          this .set_skinNormal__ ();
@@ -213,9 +213,9 @@ function (Fields,
 
          jointNodes .length = 0;
 
-         for (var i = 0, length = this .joints_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._joints .length; i < length; ++ i)
          {
-            var jointNode = X3DCast (X3DConstants .HAnimJoint, this .joints_ [i]);
+            var jointNode = X3DCast (X3DConstants .HAnimJoint, this ._joints [i]);
 
             if (jointNode)
                jointNodes .push (jointNode);
@@ -225,7 +225,7 @@ function (Fields,
       {
          this .restNormalNode = null;
 
-         this .skinNormalNode = X3DCast (X3DConstants .X3DNormalNode, this .skinNormal_);
+         this .skinNormalNode = X3DCast (X3DConstants .X3DNormalNode, this ._skinNormal);
 
          if (this .skinNormalNode)
             this .restNormalNode = this .skinNormalNode .flatCopy ();
@@ -234,7 +234,7 @@ function (Fields,
       {
          this .restCoordNode = null;
 
-         this .skinCoordNode = X3DCast (X3DConstants .X3DCoordinateNode, this .skinCoord_);
+         this .skinCoordNode = X3DCast (X3DConstants .X3DCoordinateNode, this ._skinCoord);
 
          if (this .skinCoordNode)
             this .restCoordNode = this .skinCoordNode .flatCopy ();
@@ -273,9 +273,9 @@ function (Fields,
                // Reset skin normals and coords.
 
                if (skinNormalNode)
-                  skinNormalNode .vector_ .assign (restNormalNode .vector_);
+                  skinNormalNode ._vector .assign (restNormalNode ._vector);
 
-               skinCoordNode .point_ .assign (restCoordNode .point_);
+               skinCoordNode ._point .assign (restCoordNode ._point);
 
                // Determine inverse model matrix of humanoid.
 
@@ -287,7 +287,7 @@ function (Fields,
                {
                   var
                      jointNode            = jointNodes [j],
-                     skinCoordIndexLength = jointNode .skinCoordIndex_ .length;
+                     skinCoordIndexLength = jointNode ._skinCoordIndex .length;
 
                   if (skinCoordIndexLength === 0)
                      continue;
@@ -300,11 +300,11 @@ function (Fields,
                   {
                      var
                         displacerNode       = displacerNodes [d],
-                        coordIndex          = displacerNode .coordIndex_ .getValue (),
-                        coordIndexLength    = displacerNode .coordIndex_ .length,
-                        weight              = displacerNode .weight_ .getValue (),
-                        displacements       = displacerNode .displacements_ .getValue (),
-                        displacementsLength = displacerNode .displacements_ .length;
+                        coordIndex          = displacerNode ._coordIndex .getValue (),
+                        coordIndexLength    = displacerNode ._coordIndex .length,
+                        weight              = displacerNode ._weight .getValue (),
+                        displacements       = displacerNode ._displacements .getValue (),
+                        displacementsLength = displacerNode ._displacements .length;
 
                      for (var i = 0; i < coordIndexLength; ++ i)
                      {
@@ -321,9 +321,9 @@ function (Fields,
 
                   var
                      normalMatrix          = skinNormalNode ? jointMatrix .submatrix .transpose () .inverse () : null,
-                     skinCoordIndex        = jointNode .skinCoordIndex_ .getValue (),
-                     skinCoordWeight       = jointNode .skinCoordWeight_ .getValue (),
-                     skinCoordWeightLength = jointNode .skinCoordWeight_ .length;
+                     skinCoordIndex        = jointNode ._skinCoordIndex .getValue (),
+                     skinCoordWeight       = jointNode ._skinCoordWeight .getValue (),
+                     skinCoordWeightLength = jointNode ._skinCoordWeight .length;
 
                   for (var i = 0; i < skinCoordIndexLength; ++ i)
                   {

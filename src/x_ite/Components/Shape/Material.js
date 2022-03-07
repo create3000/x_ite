@@ -118,10 +118,10 @@ function (Fields,
       {
          X3DOneSidedMaterialNode .prototype .initialize .call (this);
 
-         this .ambientIntensity_ .addInterest ("set_ambientIntensity__", this);
-         this .diffuseColor_     .addInterest ("set_diffuseColor__",     this);
-         this .specularColor_    .addInterest ("set_specularColor__",    this);
-         this .shininess_        .addInterest ("set_shininess__",        this);
+         this ._ambientIntensity .addInterest ("set_ambientIntensity__", this);
+         this ._diffuseColor     .addInterest ("set_diffuseColor__",     this);
+         this ._specularColor    .addInterest ("set_specularColor__",    this);
+         this ._shininess        .addInterest ("set_shininess__",        this);
 
          this .set_ambientIntensity__ ();
          this .set_diffuseColor__ ();
@@ -130,16 +130,16 @@ function (Fields,
       },
       set_ambientIntensity__: function ()
       {
-         this .ambientIntensity = Math .max (this .ambientIntensity_ .getValue (), 0);
+         this .ambientIntensity = Math .max (this ._ambientIntensity .getValue (), 0);
       },
       set_diffuseColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .diffuseColor .set (this .diffuseColor_ .getValue ());
+         //this .diffuseColor .set (this ._diffuseColor .getValue ());
 
          const
             diffuseColor  = this .diffuseColor,
-            diffuseColor_ = this .diffuseColor_ .getValue ();
+            diffuseColor_ = this ._diffuseColor .getValue ();
 
          diffuseColor [0] = diffuseColor_ .r;
          diffuseColor [1] = diffuseColor_ .g;
@@ -148,11 +148,11 @@ function (Fields,
       set_specularColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .specularColor .set (this .specularColor_ .getValue ());
+         //this .specularColor .set (this ._specularColor .getValue ());
 
          const
             specularColor  = this .specularColor,
-            specularColor_ = this .specularColor_ .getValue ();
+            specularColor_ = this ._specularColor .getValue ();
 
          specularColor [0] = specularColor_ .r;
          specularColor [1] = specularColor_ .g;
@@ -160,7 +160,7 @@ function (Fields,
       },
       set_shininess__: function ()
       {
-         this .shininess = Algorithm .clamp (this .shininess_ .getValue (), 0, 1);
+         this .shininess = Algorithm .clamp (this ._shininess .getValue (), 0, 1);
       },
       getShader: function (browser, shadow)
       {

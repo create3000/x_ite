@@ -110,11 +110,11 @@ function (X3DChildNode,
          X3DChildNode     .prototype .initialize .call (this);
          X3DBoundedObject .prototype .initialize .call (this);
 
-         this .transformSensors_changed_ .addInterest ("set_transformSensors__", this);
+         this ._transformSensors_changed .addInterest ("set_transformSensors__", this);
 
-         this .addChildren_    .addInterest ("set_addChildren__",    this);
-         this .removeChildren_ .addInterest ("set_removeChildren__", this);
-         this .children_       .addInterest ("set_children__",       this);
+         this ._addChildren    .addInterest ("set_addChildren__",    this);
+         this ._removeChildren .addInterest ("set_removeChildren__", this);
+         this ._children       .addInterest ("set_children__",       this);
 
          this .set_children__ ();
       },
@@ -124,10 +124,10 @@ function (X3DChildNode,
       },
       getSubBBox: function (bbox, shadow)
       {
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
             return X3DBoundedObject .prototype .getBBox .call (this, this .visibleNodes, bbox, shadow);
 
-         return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+         return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       },
       setHidden: function (value)
       {
@@ -149,72 +149,72 @@ function (X3DChildNode,
       },
       set_addChildren__: function ()
       {
-         if (this .addChildren_ .length === 0)
+         if (this ._addChildren .length === 0)
             return;
 
-         this .addChildren_ .setTainted (true);
-         this .addChildren_ .erase (remove (this .addChildren_, 0, this .addChildren_ .length,
-                                            this .children_,    0, this .children_    .length),
-                                    this .addChildren_ .length);
+         this ._addChildren .setTainted (true);
+         this ._addChildren .erase (remove (this ._addChildren, 0, this ._addChildren .length,
+                                            this ._children,    0, this ._children    .length),
+                                    this ._addChildren .length);
 
-         if (!this .children_ .isTainted ())
+         if (!this ._children .isTainted ())
          {
-            this .children_ .removeInterest ("set_children__", this);
-            this .children_ .addInterest ("connectChildren", this);
+            this ._children .removeInterest ("set_children__", this);
+            this ._children .addInterest ("connectChildren", this);
          }
 
-         this .children_ .insert (this .children_ .length, this .addChildren_, 0, this .addChildren_ .length);
-         this .add (this .addChildren_);
+         this ._children .insert (this ._children .length, this ._addChildren, 0, this ._addChildren .length);
+         this .add (this ._addChildren);
 
-         this .addChildren_ .set ([ ]);
-         this .addChildren_ .setTainted (false);
+         this ._addChildren .set ([ ]);
+         this ._addChildren .setTainted (false);
       },
       set_removeChildren__: function ()
       {
-         if (this .removeChildren_ .length === 0)
+         if (this ._removeChildren .length === 0)
             return;
 
-         if (this .children_ .length > 0)
+         if (this ._children .length > 0)
          {
-            if (!this .children_ .isTainted ())
+            if (!this ._children .isTainted ())
             {
-               this .children_ .removeInterest ("set_children__", this);
-               this .children_ .addInterest ("connectChildren", this);
+               this ._children .removeInterest ("set_children__", this);
+               this ._children .addInterest ("connectChildren", this);
             }
 
-            this .children_ .erase (remove (this .children_,       0, this .children_ .length,
-                                            this .removeChildren_, 0, this .removeChildren_ .length),
-                                    this .children_ .length);
+            this ._children .erase (remove (this ._children,       0, this ._children .length,
+                                            this ._removeChildren, 0, this ._removeChildren .length),
+                                    this ._children .length);
 
-            this .remove (this .removeChildren_);
+            this .remove (this ._removeChildren);
          }
 
-         this .removeChildren_ .set ([ ]);
+         this ._removeChildren .set ([ ]);
       },
       set_children__: function ()
       {
          this .clear ();
-         this .add (this .children_);
+         this .add (this ._children);
       },
       connectChildren: function ()
       {
-         this .children_ .removeInterest ("connectChildren", this);
-         this .children_ .addInterest ("set_children__", this);
+         this ._children .removeInterest ("connectChildren", this);
+         this ._children .addInterest ("set_children__", this);
       },
       clear: function ()
       {
          for (const maybePickableSensorNode of this .maybePickableSensorNodes)
-            maybePickableSensorNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+            maybePickableSensorNode ._isPickableObject .removeInterest ("set_pickableObjects__", this);
 
          for (const childNode of this .childNodes)
          {
-            childNode .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
-            childNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+            childNode ._isCameraObject   .removeInterest ("set_cameraObjects__",   this);
+            childNode ._isPickableObject .removeInterest ("set_pickableObjects__", this);
 
             if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
             {
-               childNode .visible_     .removeInterest ("set_visibles__",      this);
-               childNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__",  this);
+               childNode ._visible     .removeInterest ("set_visibles__",      this);
+               childNode ._bboxDisplay .removeInterest ("set_bboxDisplays__",  this);
             }
          }
 
@@ -285,7 +285,7 @@ function (X3DChildNode,
                         case X3DConstants .TransformSensor:
                         case X3DConstants .X3DPickSensorNode:
                         {
-                           innerNode .isPickableObject_ .addInterest ("set_pickableObjects__", this);
+                           innerNode ._isPickableObject .addInterest ("set_pickableObjects__", this);
 
                            this .maybePickableSensorNodes .push (innerNode);
                            break;
@@ -293,13 +293,13 @@ function (X3DChildNode,
                         case X3DConstants .X3DBackgroundNode:
                         case X3DConstants .X3DChildNode:
                         {
-                           innerNode .isCameraObject_   .addInterest ("set_cameraObjects__",   this);
-                           innerNode .isPickableObject_ .addInterest ("set_pickableObjects__", this);
+                           innerNode ._isCameraObject   .addInterest ("set_cameraObjects__",   this);
+                           innerNode ._isPickableObject .addInterest ("set_pickableObjects__", this);
 
                            if (X3DCast (X3DConstants .X3DBoundedObject, innerNode))
                            {
-                              innerNode .visible_     .addInterest ("set_visibles__",     this);
-                              innerNode .bboxDisplay_ .addInterest ("set_bboxDisplays__", this);
+                              innerNode ._visible     .addInterest ("set_visibles__",     this);
+                              innerNode ._bboxDisplay .addInterest ("set_bboxDisplays__", this);
                            }
 
                            this .maybeCameraObjects .push (innerNode);
@@ -411,7 +411,7 @@ function (X3DChildNode,
                         case X3DConstants .TransformSensor:
                         case X3DConstants .X3DPickSensorNode:
                         {
-                           innerNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+                           innerNode ._isPickableObject .removeInterest ("set_pickableObjects__", this);
 
                            const index = this .maybePickableSensorNodes .indexOf (innerNode);
 
@@ -423,13 +423,13 @@ function (X3DChildNode,
                         case X3DConstants .X3DBackgroundNode:
                         case X3DConstants .X3DChildNode:
                         {
-                           innerNode .isCameraObject_   .removeInterest ("set_cameraObjects__",   this);
-                           innerNode .isPickableObject_ .removeInterest ("set_pickableObjects__", this);
+                           innerNode ._isCameraObject   .removeInterest ("set_cameraObjects__",   this);
+                           innerNode ._isPickableObject .removeInterest ("set_pickableObjects__", this);
 
                            if (X3DCast (X3DConstants .X3DBoundedObject, innerNode))
                            {
-                              innerNode .visible_     .removeInterest ("set_visibles__",     this);
-                              innerNode .bboxDisplay_ .removeInterest ("set_bboxDisplays__", this);
+                              innerNode ._visible     .removeInterest ("set_visibles__",     this);
+                              innerNode ._bboxDisplay .removeInterest ("set_bboxDisplays__", this);
                            }
 
                            var index = this .maybeCameraObjects .indexOf (innerNode);
@@ -488,7 +488,7 @@ function (X3DChildNode,
             {
                if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
                {
-                  if (childNode .visible_ .getValue ())
+                  if (childNode ._visible .getValue ())
                   {
                      cameraObjects .push (childNode);
                   }
@@ -559,7 +559,7 @@ function (X3DChildNode,
          {
             if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
             {
-               if (childNode .visible_ .getValue ())
+               if (childNode ._visible .getValue ())
                {
                   visibleNodes .push (childNode);
                }
@@ -582,7 +582,7 @@ function (X3DChildNode,
          {
             if (X3DCast (X3DConstants .X3DBoundedObject, childNode))
             {
-               if (childNode .bboxDisplay_ .getValue ())
+               if (childNode ._bboxDisplay .getValue ())
                {
                   boundedObjects .push (childNode);
                }

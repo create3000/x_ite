@@ -72,9 +72,9 @@ function (Fields,
 
       this .addType (X3DConstants .CollisionCollection);
 
-      this .minBounceSpeed_           .setUnit ("speed");
-      this .surfaceSpeed_             .setUnit ("speed");
-      this .softnessConstantForceMix_ .setUnit ("force");
+      this ._minBounceSpeed           .setUnit ("speed");
+      this ._surfaceSpeed             .setUnit ("speed");
+      this ._softnessConstantForceMix .setUnit ("force");
 
       this .appliedParameters   = new Set ();
       this .collidableNodes     = [ ];
@@ -113,8 +113,8 @@ function (Fields,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .appliedParameters_ .addInterest ("set_appliedParameters__", this);
-         this .collidables_       .addInterest ("set_collidables__",       this);
+         this ._appliedParameters .addInterest ("set_appliedParameters__", this);
+         this ._collidables       .addInterest ("set_collidables__",       this);
 
          this .set_appliedParameters__ ();
          this .set_collidables__ ();
@@ -145,9 +145,9 @@ function (Fields,
          {
             this .appliedParameters .clear ();
 
-            for (var i = 0, length = this .appliedParameters_ .length; i < length; ++ i)
+            for (var i = 0, length = this ._appliedParameters .length; i < length; ++ i)
             {
-               var appliedParameter = appliedParametersIndex .get (this .appliedParameters_ [i]);
+               var appliedParameter = appliedParametersIndex .get (this ._appliedParameters [i]);
 
                if (appliedParameter !== undefined)
                   this .appliedParameters .add (appliedParameter);
@@ -163,9 +163,9 @@ function (Fields,
 
          collisionSpaceNodes .length = 0;
 
-         for (var i = 0, length = this .collidables_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._collidables .length; i < length; ++ i)
          {
-            var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this .collidables_ [i]);
+            var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this ._collidables [i]);
 
             if (collisionSpaceNode)
             {
@@ -186,9 +186,9 @@ function (Fields,
          collidableNodes     .length = 0;
          collisionSpaceNodes .length = 0;
 
-         for (var i = 0, length = this .collidables_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._collidables .length; i < length; ++ i)
          {
-            var collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this .collidables_ [i]);
+            var collidableNode = X3DCast (X3DConstants .X3DNBodyCollidableNode, this ._collidables [i]);
 
             if (collidableNode)
             {
@@ -196,7 +196,7 @@ function (Fields,
                continue;
             }
 
-            var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this .collidables_ [i]);
+            var collisionSpaceNode = X3DCast (X3DConstants .X3DNBodyCollisionSpaceNode, this ._collidables [i]);
 
             if (collisionSpaceNode)
             {

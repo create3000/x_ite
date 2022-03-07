@@ -111,8 +111,8 @@ function (Fields,
 
          this .weightTransferFunction1_ .addInterest ("set_weightTransferFunction1__", this);
          this .weightTransferFunction2_ .addInterest ("set_weightTransferFunction2__", this);
-         this .renderStyle_             .addInterest ("set_renderStyle__",             this);
-         this .voxels_                  .addInterest ("set_voxels__",                  this);
+         this ._renderStyle             .addInterest ("set_renderStyle__",             this);
+         this ._voxels                  .addInterest ("set_voxels__",                  this);
 
          this .set_weightTransferFunction1__ ();
          this .set_weightTransferFunction2__ ();
@@ -154,7 +154,7 @@ function (Fields,
             .bind (this));
          }
 
-         this .renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this .renderStyle_);
+         this .renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this ._renderStyle);
 
          if (this .renderStyleNode)
          {
@@ -172,7 +172,7 @@ function (Fields,
          if (this .voxelsNode)
             this .voxelsNode .removeInterest ("set_textureSize__", this);
 
-         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .voxels_);
+         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
          if (this .voxelsNode)
          {
@@ -203,7 +203,7 @@ function (Fields,
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
          shaderNode .addUserDefinedField (X3DConstants .inputOutput, "weightConstant1_" + this .getId (), this .weightConstant1_ .copy ());
@@ -234,7 +234,7 @@ function (Fields,
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          if (! this .voxelsNode)
@@ -379,7 +379,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          if (! this .voxelsNode)

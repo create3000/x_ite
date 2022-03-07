@@ -158,7 +158,7 @@ function (Fields,
             this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
             this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 
-            this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode .location_ .getValue ()));
+            this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode ._location .getValue ()));
             this .locationArray .set (this .location);
          }
          catch (error)
@@ -196,7 +196,7 @@ function (Fields,
 
       this .addType (X3DConstants .TextureProjectorParallel);
 
-      this .fieldOfView_ .setUnit ("length");
+      this ._fieldOfView .setUnit ("length");
    }
 
    TextureProjectorParallel .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
@@ -232,7 +232,7 @@ function (Fields,
       {
          X3DTextureProjectorNode .prototype .initialize .call (this);
 
-         this .fieldOfView_ .addInterest ("set_fieldOfView___", this);
+         this ._fieldOfView .addInterest ("set_fieldOfView___", this);
 
          this .set_fieldOfView___ ();
       },
@@ -266,12 +266,12 @@ function (Fields,
       },
       set_fieldOfView___: function ()
       {
-         var length = this .fieldOfView_ .length;
+         var length = this ._fieldOfView .length;
 
-         this .minimumX = (length > 0 ? this .fieldOfView_ [0] : -1);
-         this .minimumY = (length > 1 ? this .fieldOfView_ [1] : -1);
-         this .maximumX = (length > 2 ? this .fieldOfView_ [2] :  1);
-         this .maximumY = (length > 3 ? this .fieldOfView_ [3] :  1);
+         this .minimumX = (length > 0 ? this ._fieldOfView [0] : -1);
+         this .minimumY = (length > 1 ? this ._fieldOfView [1] : -1);
+         this .maximumX = (length > 2 ? this ._fieldOfView [2] :  1);
+         this .maximumY = (length > 3 ? this ._fieldOfView [3] :  1);
 
          this .sizeX = this .maximumX - this .minimumX;
          this .sizeY = this .maximumY - this .minimumY;

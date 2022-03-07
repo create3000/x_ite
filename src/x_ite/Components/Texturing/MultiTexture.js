@@ -115,12 +115,12 @@ function (Fields,
       {
          X3DTextureNode .prototype .initialize .call (this);
 
-         this .color_    .addInterest ("set_color__",    this);
-         this .alpha_    .addInterest ("set_alpha__",    this);
-         this .mode_     .addInterest ("set_mode__",     this);
-         this .source_   .addInterest ("set_source__",   this);
-         this .function_ .addInterest ("set_function__", this);
-         this .texture_  .addInterest ("set_texture__",  this);
+         this ._color    .addInterest ("set_color__",    this);
+         this ._alpha    .addInterest ("set_alpha__",    this);
+         this ._mode     .addInterest ("set_mode__",     this);
+         this ._source   .addInterest ("set_source__",   this);
+         this ._function .addInterest ("set_function__", this);
+         this ._texture  .addInterest ("set_texture__",  this);
 
          this .set_color__ ();
          this .set_alpha__ ();
@@ -129,7 +129,7 @@ function (Fields,
          this .set_function__ ();
          this .set_texture__ ();
 
-         this .loadState_ = X3DConstants .COMPLETE_STATE;
+         this ._loadState = X3DConstants .COMPLETE_STATE;
       },
       getMode: function (index)
       {
@@ -161,13 +161,13 @@ function (Fields,
       },
       set_color__: function ()
       {
-         this .color [0] = this .color_ .r;
-         this .color [1] = this .color_ .g;
-         this .color [2] = this .color_ .b;
+         this .color [0] = this ._color .r;
+         this .color [1] = this ._color .g;
+         this .color [2] = this ._color .b;
       },
       set_alpha__: function ()
       {
-         this .color [3] = this .alpha_;
+         this .color [3] = this ._alpha;
       },
       set_mode__: (function ()
       {
@@ -199,7 +199,7 @@ function (Fields,
             this .modes      .length = 0;
             this .alphaModes .length = 0;
 
-            for (const modes of this .mode_)
+            for (const modes of this ._mode)
             {
                const mode = modes .split (",");
 
@@ -244,7 +244,7 @@ function (Fields,
          {
             this .sources .length = 0;
 
-            for (const source of this .source_)
+            for (const source of this ._source)
             {
                const sourceType = sourceTypes .get (source);
 
@@ -266,7 +266,7 @@ function (Fields,
          {
             this .functions .length = 0;
 
-            for (const func of this .function_)
+            for (const func of this ._function)
             {
                const functionsType = functionsTypes .get (func);
 
@@ -281,7 +281,7 @@ function (Fields,
       {
          this .textureNodes .length = 0;
 
-         for (const node of this .texture_)
+         for (const node of this ._texture)
          {
             const textureNode = X3DCast (X3DConstants .X3DSingleTextureNode, node);
 

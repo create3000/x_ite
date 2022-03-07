@@ -98,7 +98,7 @@ function (Fields,
       {
          X3DNode .prototype .initialize .call (this);
 
-         this .children_ .addInterest ("set_children__", this);
+         this ._children .addInterest ("set_children__", this);
 
          this .set_children__ ();
       },
@@ -108,9 +108,9 @@ function (Fields,
 
          childNodes .length = 0;
 
-         for (var i = 0, length = this .children_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._children .length; i < length; ++ i)
          {
-            var childNode = X3DCast (X3DConstants .NurbsCurve2D, this .children_ [i]);
+            var childNode = X3DCast (X3DConstants .NurbsCurve2D, this ._children [i]);
 
             if (childNode)
             {
@@ -118,7 +118,7 @@ function (Fields,
                continue;
             }
 
-            var childNode = X3DCast (X3DConstants .ContourPolyline2D, this .children_ [i]);
+            var childNode = X3DCast (X3DConstants .ContourPolyline2D, this ._children [i]);
 
             if (childNode)
             {

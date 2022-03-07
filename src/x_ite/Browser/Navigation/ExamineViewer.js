@@ -130,8 +130,8 @@ function ($,
 
          // Disconnect from spin.
 
-         this .getNavigationInfo () .transitionStart_ .addInterest ("disconnect", this);
-         browser .activeViewpoint_ .addInterest ("set_activeViewpoint__", this);
+         this .getNavigationInfo () ._transitionStart .addInterest ("disconnect", this);
+         browser ._activeViewpoint .addInterest ("set_activeViewpoint__", this);
 
          // Bind pointing device events.
 
@@ -145,15 +145,15 @@ function ($,
 
          // Setup scroll chaser.
 
-         this .positionChaser .duration_ = MOVE_TIME;
+         this .positionChaser ._duration = MOVE_TIME;
          this .positionChaser .setPrivate (true);
          this .positionChaser .setup ();
 
-         this .centerOfRotationChaser .duration_ = MOVE_TIME;
+         this .centerOfRotationChaser ._duration = MOVE_TIME;
          this .centerOfRotationChaser .setPrivate (true);
          this .centerOfRotationChaser .setup ();
 
-         this .rotationChaser .duration_ = ROTATE_TIME;
+         this .rotationChaser ._duration = ROTATE_TIME;
          this .rotationChaser .setPrivate (true);
          this .rotationChaser .setup ();
 
@@ -166,7 +166,7 @@ function ($,
             var viewpoint = this .getActiveViewpoint ();
 
             if (viewpoint)
-               viewpoint .orientationOffset_ = this .getOrientationOffset (Rotation4 .Identity, viewpoint .orientationOffset_ .getValue (), false);
+               viewpoint ._orientationOffset = this .getOrientationOffset (Rotation4 .Identity, viewpoint ._orientationOffset .getValue (), false);
          }
 
          this .disconnect ();
@@ -212,7 +212,7 @@ function ($,
 
                this .motionTime = 0;
 
-               this .isActive_ = true;
+               this ._isActive = true;
                break;
             }
             case 1:
@@ -236,7 +236,7 @@ function ($,
 
                this .getPointOnCenterPlane (x, y, this .fromPoint);
 
-               this .isActive_ = true;
+               this ._isActive = true;
                break;
             }
          }
@@ -272,7 +272,7 @@ function ($,
                   this .addSpinning (this .rotation);
                }
 
-               this .isActive_ = false;
+               this ._isActive = false;
                break;
             }
             case 1:
@@ -285,7 +285,7 @@ function ($,
 
                this .getBrowser () .setCursor ("DEFAULT");
 
-               this .isActive_ = false;
+               this ._isActive = false;
                break;
             }
          }
@@ -562,29 +562,29 @@ function ($,
       {
          var viewpoint = this .getActiveViewpoint ();
 
-         this .orientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
+         this .orientationOffset .assign (viewpoint ._orientationOffset .getValue ());
 
-         viewpoint .orientationOffset_ = this .getOrientationOffset (this .rotation, this .orientationOffset);
-         viewpoint .positionOffset_    = this .getPositionOffset (viewpoint .positionOffset_ .getValue (), this .orientationOffset, viewpoint .orientationOffset_ .getValue ());
+         viewpoint ._orientationOffset = this .getOrientationOffset (this .rotation, this .orientationOffset);
+         viewpoint ._positionOffset    = this .getPositionOffset (viewpoint ._positionOffset .getValue (), this .orientationOffset, viewpoint ._orientationOffset .getValue ());
       },
       set_positionOffset__: function (value)
       {
          var viewpoint = this .getActiveViewpoint ();
 
-         viewpoint .positionOffset_ = value;
+         viewpoint ._positionOffset = value;
       },
       set_centerOfRotationOffset__: function (value)
       {
          var viewpoint = this .getActiveViewpoint ();
 
-         viewpoint .centerOfRotationOffset_ = value;
+         viewpoint ._centerOfRotationOffset = value;
       },
       set_rotation__: function (value)
       {
          var viewpoint = this .getActiveViewpoint ();
 
-         viewpoint .orientationOffset_ = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset, false);
-         viewpoint .positionOffset_    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint .orientationOffset_ .getValue ());
+         viewpoint ._orientationOffset = this .getOrientationOffset (value .getValue (), this .initialOrientationOffset, false);
+         viewpoint ._positionOffset    = this .getPositionOffset (this .initialPositionOffset, this .initialOrientationOffset, viewpoint ._orientationOffset .getValue ());
       },
       addRotate: (function ()
       {
@@ -594,17 +594,17 @@ function ($,
          {
             var viewpoint = this .getActiveViewpoint ();
 
-            if (this .rotationChaser .isActive_ .getValue () && this .rotationChaser .value_changed_ .hasInterest ("set_rotation__", this))
+            if (this .rotationChaser ._isActive .getValue () && this .rotationChaser ._value_changed .hasInterest ("set_rotation__", this))
             {
                try
                {
-                  destination .assign (this .rotationChaser .set_destination_ .getValue ())
+                  destination .assign (this .rotationChaser ._set_destination .getValue ())
                      .multLeft (rotationChange);
 
                   // Check for critical angle.
                   this .getOrientationOffset (destination, this .initialOrientationOffset, true);
 
-                  this .rotationChaser .set_destination_ = destination;
+                  this .rotationChaser ._set_destination = destination;
                }
                catch (error)
                {
@@ -612,36 +612,36 @@ function ($,
 
                   rotationChange = this .getHorizonRotation (rotationChange);
 
-                  destination .assign (this .rotationChaser .set_destination_ .getValue ())
+                  destination .assign (this .rotationChaser ._set_destination .getValue ())
                      .multLeft (rotationChange);
 
-                  this .rotationChaser .set_destination_ = destination;
+                  this .rotationChaser ._set_destination = destination;
                }
             }
             else
             {
                try
                {
-                  this .initialOrientationOffset .assign (viewpoint .orientationOffset_ .getValue ());
-                  this .initialPositionOffset    .assign (viewpoint .positionOffset_    .getValue ());
+                  this .initialOrientationOffset .assign (viewpoint ._orientationOffset .getValue ());
+                  this .initialPositionOffset    .assign (viewpoint ._positionOffset    .getValue ());
 
                   // Check for critical angle.
                   this .getOrientationOffset (rotationChange, this .initialOrientationOffset, true);
 
-                  this .rotationChaser .set_value_       = Rotation4 .Identity;
-                  this .rotationChaser .set_destination_ = rotationChange;
+                  this .rotationChaser ._set_value       = Rotation4 .Identity;
+                  this .rotationChaser ._set_destination = rotationChange;
                }
                catch (error)
                {
                   // Slide along critical angle.
 
-                  this .rotationChaser .set_value_       = Rotation4 .Identity;
-                  this .rotationChaser .set_destination_ = this .getHorizonRotation (rotationChange);
+                  this .rotationChaser ._set_value       = Rotation4 .Identity;
+                  this .rotationChaser ._set_destination = this .getHorizonRotation (rotationChange);
                }
             }
 
             this .disconnect ();
-            this .rotationChaser .value_changed_ .addInterest ("set_rotation__", this);
+            this .rotationChaser ._value_changed .addInterest ("set_rotation__", this);
          };
       })(),
       addSpinning: (function ()
@@ -673,45 +673,45 @@ function ($,
          {
             var viewpoint = this .getActiveViewpoint ();
 
-            if (this .positionChaser .isActive_ .getValue () && this .positionChaser .value_changed_ .hasInterest ("set_positionOffset__", this))
+            if (this .positionChaser ._isActive .getValue () && this .positionChaser ._value_changed .hasInterest ("set_positionOffset__", this))
             {
                positionOffset
-                  .assign (this .positionChaser .set_destination_ .getValue ())
+                  .assign (this .positionChaser ._set_destination .getValue ())
                   .add (positionOffsetChange);
 
-               this .positionChaser .set_destination_ = positionOffset;
+               this .positionChaser ._set_destination = positionOffset;
             }
             else
             {
                positionOffset
-                  .assign (viewpoint .positionOffset_ .getValue ())
+                  .assign (viewpoint ._positionOffset .getValue ())
                   .add (positionOffsetChange);
 
-               this .positionChaser .set_value_       = viewpoint .positionOffset_;
-               this .positionChaser .set_destination_ = positionOffset;
+               this .positionChaser ._set_value       = viewpoint ._positionOffset;
+               this .positionChaser ._set_destination = positionOffset;
             }
 
-            if (this .centerOfRotationChaser .isActive_ .getValue () && this .centerOfRotationChaser .value_changed_ .hasInterest ("set_centerOfRotationOffset__", this))
+            if (this .centerOfRotationChaser ._isActive .getValue () && this .centerOfRotationChaser ._value_changed .hasInterest ("set_centerOfRotationOffset__", this))
             {
                centerOfRotationOffset
-                  .assign (this .centerOfRotationChaser .set_destination_ .getValue ())
+                  .assign (this .centerOfRotationChaser ._set_destination .getValue ())
                   .add (centerOfRotationOffsetChange);
 
-               this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
+               this .centerOfRotationChaser ._set_destination = centerOfRotationOffset;
             }
             else
             {
                centerOfRotationOffset
-                  .assign (viewpoint .centerOfRotationOffset_ .getValue ())
+                  .assign (viewpoint ._centerOfRotationOffset .getValue ())
                   .add (centerOfRotationOffsetChange);
 
-               this .centerOfRotationChaser .set_value_       = viewpoint .centerOfRotationOffset_;
-               this .centerOfRotationChaser .set_destination_ = centerOfRotationOffset;
+               this .centerOfRotationChaser ._set_value       = viewpoint ._centerOfRotationOffset;
+               this .centerOfRotationChaser ._set_destination = centerOfRotationOffset;
             }
 
             this .disconnect ();
-            this .positionChaser         .value_changed_ .addInterest ("set_positionOffset__",         this);
-            this .centerOfRotationChaser .value_changed_ .addInterest ("set_centerOfRotationOffset__", this);
+            this .positionChaser         ._value_changed .addInterest ("set_positionOffset__",         this);
+            this .centerOfRotationChaser ._value_changed .addInterest ("set_centerOfRotationOffset__", this);
          };
       })(),
       getPositionOffset: (function ()
@@ -798,9 +798,9 @@ function ($,
       {
          var browser = this .getBrowser ();
 
-         this .positionChaser         .value_changed_ .removeInterest ("set_positionOffset__",         this)
-         this .centerOfRotationChaser .value_changed_ .removeInterest ("set_centerOfRotationOffset__", this)
-         this .rotationChaser         .value_changed_ .removeInterest ("set_rotation__",               this);
+         this .positionChaser         ._value_changed .removeInterest ("set_positionOffset__",         this)
+         this .centerOfRotationChaser ._value_changed .removeInterest ("set_centerOfRotationOffset__", this)
+         this .rotationChaser         ._value_changed .removeInterest ("set_rotation__",               this);
 
          browser .prepareEvents () .removeInterest ("spin", this);
       },
@@ -809,7 +809,7 @@ function ($,
          var browser = this .getBrowser ();
 
          this .disconnect ();
-         browser .activeViewpoint_ .removeInterest ("set_activeViewpoint__", this);
+         browser ._activeViewpoint .removeInterest ("set_activeViewpoint__", this);
          browser .getSurface () .unbind (".ExamineViewer");
          $(document) .unbind (".ExamineViewer" + this .getId ());
       },

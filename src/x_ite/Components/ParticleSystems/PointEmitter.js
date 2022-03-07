@@ -70,10 +70,10 @@ function (Fields,
 
       this .addType (X3DConstants .PointEmitter);
 
-      this .position_    .setUnit ("length");
-      this .speed_       .setUnit ("speed");
-      this .mass_        .setUnit ("mass");
-      this .surfaceArea_ .setUnit ("area");
+      this ._position    .setUnit ("length");
+      this ._speed       .setUnit ("speed");
+      this ._mass        .setUnit ("mass");
+      this ._surfaceArea .setUnit ("area");
 
       this .direction = new Vector3 (0, 0, 0);
    }
@@ -106,19 +106,19 @@ function (Fields,
       {
          X3DParticleEmitterNode .prototype .initialize .call (this);
 
-         this .position_  .addInterest ("set_position__", this);
-         this .direction_ .addInterest ("set_direction__", this);
+         this ._position  .addInterest ("set_position__", this);
+         this ._direction .addInterest ("set_direction__", this);
 
          this .set_position__ ();
          this .set_direction__ ();
       },
       set_position__: function ()
       {
-         this .position = this .position_ .getValue ()
+         this .position = this ._position .getValue ()
       },
       set_direction__: function ()
       {
-         this .direction .assign (this .direction_ .getValue ()) .normalize ();
+         this .direction .assign (this ._direction .getValue ()) .normalize ();
 
          if (this .direction .equals (Vector3 .Zero))
             this .getRandomVelocity = this .getSphericalRandomVelocity;

@@ -137,7 +137,7 @@ function (Fields,
             this .projectiveTextureMatrix .assign (cameraSpaceMatrix) .multRight (this .invTextureSpaceProjectionMatrix);
             this .projectiveTextureMatrixArray .set (this .projectiveTextureMatrix);
 
-            this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode .location_ .getValue ()));
+            this .modelViewMatrix .multVecMatrix (this .location .assign (textureProjectorNode ._location .getValue ()));
             this .locationArray .set (this .location);
          }
          catch (error)
@@ -175,7 +175,7 @@ function (Fields,
 
       this .addType (X3DConstants .TextureProjectorPerspective);
 
-      this .fieldOfView_ .setUnit ("angle");
+      this ._fieldOfView .setUnit ("angle");
    }
 
    TextureProjectorPerspective .prototype = Object .assign (Object .create (X3DTextureProjectorNode .prototype),
@@ -213,7 +213,7 @@ function (Fields,
       },
       getFieldOfView: function ()
       {
-         var fov = this .fieldOfView_ .getValue ();
+         var fov = this ._fieldOfView .getValue ();
 
          return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
       },

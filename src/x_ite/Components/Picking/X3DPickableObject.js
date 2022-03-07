@@ -66,7 +66,7 @@ function (X3DConstants)
       constructor: X3DPickableObject,
       initialize: function ()
       {
-         this .objectType_ .addInterest ("set_objectType__", this);
+         this ._objectType .addInterest ("set_objectType__", this);
 
          this .set_objectType__ ();
       },
@@ -78,9 +78,9 @@ function (X3DConstants)
       {
          this .objectType .clear ();
 
-         for (var i = 0, length = this .objectType_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._objectType .length; i < length; ++ i)
          {
-            this .objectType .add (this .objectType_ [i]);
+            this .objectType .add (this ._objectType [i]);
          }
       },
    };

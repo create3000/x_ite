@@ -116,26 +116,26 @@ function (Fields,
             bottomTexture     = new ImageTexture (this .getExecutionContext ()),
             textureProperties = this .getBrowser () .getBackgroundTextureProperties ();
 
-         this .frontUrl_  .addFieldInterest (frontTexture  .url_);
-         this .backUrl_   .addFieldInterest (backTexture   .url_);
-         this .leftUrl_   .addFieldInterest (leftTexture   .url_);
-         this .rightUrl_  .addFieldInterest (rightTexture  .url_);
-         this .topUrl_    .addFieldInterest (topTexture    .url_);
-         this .bottomUrl_ .addFieldInterest (bottomTexture .url_);
+         this ._frontUrl  .addFieldInterest (frontTexture  ._url);
+         this ._backUrl   .addFieldInterest (backTexture   ._url);
+         this ._leftUrl   .addFieldInterest (leftTexture   ._url);
+         this ._rightUrl  .addFieldInterest (rightTexture  ._url);
+         this ._topUrl    .addFieldInterest (topTexture    ._url);
+         this ._bottomUrl .addFieldInterest (bottomTexture ._url);
 
-         frontTexture  .url_ = this .frontUrl_;
-         backTexture   .url_ = this .backUrl_;
-         leftTexture   .url_ = this .leftUrl_;
-         rightTexture  .url_ = this .rightUrl_;
-         topTexture    .url_ = this .topUrl_;
-         bottomTexture .url_ = this .bottomUrl_;
+         frontTexture  ._url = this ._frontUrl;
+         backTexture   ._url = this ._backUrl;
+         leftTexture   ._url = this ._leftUrl;
+         rightTexture  ._url = this ._rightUrl;
+         topTexture    ._url = this ._topUrl;
+         bottomTexture ._url = this ._bottomUrl;
 
-         frontTexture  .textureProperties_ = textureProperties;
-         backTexture   .textureProperties_ = textureProperties;
-         leftTexture   .textureProperties_ = textureProperties;
-         rightTexture  .textureProperties_ = textureProperties;
-         topTexture    .textureProperties_ = textureProperties;
-         bottomTexture .textureProperties_ = textureProperties;
+         frontTexture  ._textureProperties = textureProperties;
+         backTexture   ._textureProperties = textureProperties;
+         leftTexture   ._textureProperties = textureProperties;
+         rightTexture  ._textureProperties = textureProperties;
+         topTexture    ._textureProperties = textureProperties;
+         bottomTexture ._textureProperties = textureProperties;
 
          frontTexture  .setup ();
          backTexture   .setup ();

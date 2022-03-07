@@ -123,11 +123,11 @@ function ($,
          element .bind ("touchstart.X3DFlyViewer", this .touchstart .bind (this));
          element .bind ("touchend.X3DFlyViewer",   this .touchend   .bind (this));
 
-         browser .controlKey_ .addInterest ("set_controlKey__", this);
+         browser ._controlKey .addInterest ("set_controlKey__", this);
 
          // Setup look around chaser.
 
-         this .orientationChaser .duration_ = ROTATE_TIME;
+         this .orientationChaser ._duration = ROTATE_TIME;
          this .orientationChaser .setPrivate (true);
          this .orientationChaser .setup ();
 
@@ -211,7 +211,7 @@ function ($,
                      this .getBrowser () .finished () .addInterest ("display", this, MOVE);
                }
 
-               this .isActive_ = true;
+               this ._isActive = true;
                break;
             }
             case 1:
@@ -241,7 +241,7 @@ function ($,
                if (this .getBrowser () .getBrowserOption ("Rubberband"))
                   this .getBrowser () .finished () .addInterest ("display", this, PAN);
 
-               this .isActive_ = true;
+               this ._isActive = true;
                break;
             }
          }
@@ -262,7 +262,7 @@ function ($,
          this .getBrowser () .setCursor ("DEFAULT");
          this .removeCollision ();
 
-         this .isActive_ = false;
+         this ._isActive = false;
       },
       mousemove: function (event)
       {
@@ -459,7 +459,7 @@ function ($,
 
             var speedFactor = 1 - rubberBandRotation .angle / (Math .PI / 2);
 
-            speedFactor *= navigationInfo .speed_ .getValue ();
+            speedFactor *= navigationInfo ._speed .getValue ();
             speedFactor *= viewpoint .getSpeedFactor ();
             speedFactor *= this .getBrowser () .getShiftKey () ? SHIFT_SPEED_FACTOR : SPEED_FACTOR;
             speedFactor *= dt;
@@ -468,7 +468,7 @@ function ($,
 
             this .getActiveLayer () .constrainTranslation (translation, true);
 
-            viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
+            viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());
 
             // Determine weight for rubberBandRotation.
 
@@ -495,13 +495,13 @@ function ($,
 
             // Set orientationOffset.
 
-            viewpoint .orientationOffset_ = orientationOffset;
+            viewpoint ._orientationOffset = orientationOffset;
 
             // GeoRotation
 
             geoRotation .setFromToVec (upVector, viewpoint .getUpVector ());
 
-            viewpoint .orientationOffset_ = geoRotation .multLeft (viewpoint .orientationOffset_ .getValue ());
+            viewpoint ._orientationOffset = geoRotation .multLeft (viewpoint ._orientationOffset .getValue ());
 
             this .startTime = now;
          };
@@ -525,7 +525,7 @@ function ($,
 
             var speedFactor = 1;
 
-            speedFactor *= navigationInfo .speed_ .getValue ();
+            speedFactor *= navigationInfo ._speed .getValue ();
             speedFactor *= viewpoint .getSpeedFactor ();
             speedFactor *= this .getBrowser () .getShiftKey () ? PAN_SHIFT_SPEED_FACTOR : PAN_SPEED_FACTOR;
             speedFactor *= dt;
@@ -536,7 +536,7 @@ function ($,
 
             this .getActiveLayer () .constrainTranslation (translation, true);
 
-            viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
+            viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());
 
             this .startTime = now;
          };
@@ -545,7 +545,7 @@ function ($,
       {
          var viewpoint = this .getActiveViewpoint ();
 
-         viewpoint .orientationOffset_ = value;
+         viewpoint ._orientationOffset = value;
       },
       addFly: function ()
       {
@@ -578,16 +578,16 @@ function ($,
          {
             var viewpoint = this .getActiveViewpoint ();
 
-            if (this .orientationChaser .isActive_ .getValue () && this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
+            if (this .orientationChaser ._isActive .getValue () && this .orientationChaser ._value_changed .hasInterest ("set_orientationOffset__", this))
             {
                orientationOffset
                   .assign (viewpoint .getOrientation ())
                   .inverse ()
                   .multRight (roll .set (1, 0, 0, rollAngle))
                   .multRight (viewpoint .getOrientation ())
-                  .multRight (this .orientationChaser .set_destination_ .getValue ());
+                  .multRight (this .orientationChaser ._set_destination .getValue ());
 
-               this .orientationChaser .set_destination_ = orientationOffset;
+               this .orientationChaser ._set_destination = orientationOffset;
             }
             else
             {
@@ -597,12 +597,12 @@ function ($,
                   .multRight (roll .set (1, 0, 0, rollAngle))
                   .multRight (viewpoint .getUserOrientation ());
 
-               this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
-               this .orientationChaser .set_destination_ = orientationOffset;
+               this .orientationChaser ._set_value       = viewpoint ._orientationOffset;
+               this .orientationChaser ._set_destination = orientationOffset;
             }
 
             this .disconnect ();
-            this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
+            this .orientationChaser ._value_changed .addInterest ("set_orientationOffset__", this);
          };
       })(),
       addRotation: (function ()
@@ -615,19 +615,19 @@ function ($,
          {
             var viewpoint = this .getActiveViewpoint ();
 
-            if (this .orientationChaser .isActive_ .getValue () && this .orientationChaser .value_changed_ .hasInterest ("set_orientationOffset__", this))
+            if (this .orientationChaser ._isActive .getValue () && this .orientationChaser ._value_changed .hasInterest ("set_orientationOffset__", this))
             {
                userOrientation
                   .setFromToVec (toVector, fromVector)
                   .multRight (viewpoint .getOrientation ())
-                  .multRight (this .orientationChaser .set_destination_ .getValue ());
+                  .multRight (this .orientationChaser ._set_destination .getValue ());
 
                if (viewpoint .getTypeName () !== "GeoViewpoint" && this .getStraightenHorizon ())
                   viewpoint .straightenHorizon (userOrientation);
 
                orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
 
-               this .orientationChaser .set_destination_ = orientationOffset;
+               this .orientationChaser ._set_destination = orientationOffset;
             }
             else
             {
@@ -640,12 +640,12 @@ function ($,
 
                orientationOffset .assign (viewpoint .getOrientation ()) .inverse () .multRight (userOrientation);
 
-               this .orientationChaser .set_value_       = viewpoint .orientationOffset_;
-               this .orientationChaser .set_destination_ = orientationOffset;
+               this .orientationChaser ._set_value       = viewpoint ._orientationOffset;
+               this .orientationChaser ._set_destination = orientationOffset;
             }
 
             this .disconnect ();
-            this .orientationChaser .value_changed_ .addInterest ("set_orientationOffset__", this);
+            this .orientationChaser ._value_changed .addInterest ("set_orientationOffset__", this);
          };
       })(),
       display: (function ()
@@ -757,14 +757,14 @@ function ($,
          browser .prepareEvents () .removeInterest ("pan", this);
          browser .finished ()      .removeInterest ("display", this);
 
-         this .orientationChaser .value_changed_ .removeInterest ("set_orientationOffset__", this);
+         this .orientationChaser ._value_changed .removeInterest ("set_orientationOffset__", this);
 
          this .startTime = 0;
       },
       dispose: function ()
       {
          this .disconnect ();
-         this .getBrowser () .controlKey_ .removeInterest ("set_controlKey__", this);
+         this .getBrowser () ._controlKey .removeInterest ("set_controlKey__", this);
          this .getBrowser () .getSurface () .unbind (".X3DFlyViewer");
          $(document) .unbind (".X3DFlyViewer" + this .getId ());
       },

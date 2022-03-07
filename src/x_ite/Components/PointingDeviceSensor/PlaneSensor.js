@@ -89,10 +89,10 @@ function (Fields,
 
       this .addType (X3DConstants .PlaneSensor);
 
-      this .offset_              .setUnit ("length");
-      this .minPosition_         .setUnit ("length");
-      this .maxPosition_         .setUnit ("length");
-      this .translation_changed_ .setUnit ("length");
+      this ._offset              .setUnit ("length");
+      this ._minPosition         .setUnit ("length");
+      this ._maxPosition         .setUnit ("length");
+      this ._translation_changed .setUnit ("length");
    }
 
    PlaneSensor .prototype = Object .assign (Object .create (X3DDragSensorNode .prototype),
@@ -153,7 +153,7 @@ function (Fields,
 
          try
          {
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
                this .modelViewMatrix    .assign (modelViewMatrix);
                this .projectionMatrix   .assign (projectionMatrix);
@@ -164,21 +164,21 @@ function (Fields,
                   hitRay   = hit .hitRay .copy () .multLineMatrix (this .invModelViewMatrix),
                   hitPoint = this .invModelViewMatrix .multVecMatrix (hit .intersection .point .copy ());
 
-               var axisRotation = this .axisRotation_ .getValue ();
+               var axisRotation = this ._axisRotation .getValue ();
 
-               if (this .minPosition_ .x === this .maxPosition_ .x)
+               if (this ._minPosition .x === this ._maxPosition .x)
                {
                   this .planeSensor = false;
 
-                  var direction = axisRotation .multVecRot (new Vector3 (0, Math .abs (this .maxPosition_ .y - this .minPosition_ .y), 0));
+                  var direction = axisRotation .multVecRot (new Vector3 (0, Math .abs (this ._maxPosition .y - this ._minPosition .y), 0));
 
                   this .line = new Line3 (hitPoint, direction .normalize ());
                }
-               else if (this .minPosition_ .y === this .maxPosition_ .y)
+               else if (this ._minPosition .y === this ._maxPosition .y)
                {
                   this .planeSensor = false;
 
-                  var direction = axisRotation .multVecRot (new Vector3 (Math .abs (this .maxPosition_ .x - this .minPosition_ .x), 0, 0));
+                  var direction = axisRotation .multVecRot (new Vector3 (Math .abs (this ._maxPosition .x - this ._minPosition .x), 0, 0));
 
                   this .line = new Line3 (hitPoint, direction .normalize ());
                }
@@ -220,8 +220,8 @@ function (Fields,
             }
             else
             {
-               if (this .autoOffset_ .getValue ())
-                  this .offset_ = this .translation_changed_;
+               if (this ._autoOffset .getValue ())
+                  this ._offset = this ._translation_changed;
             }
          }
          catch (error)
@@ -231,10 +231,10 @@ function (Fields,
       },
       trackStart: function (trackPoint)
       {
-         this .startOffset .assign (this .offset_ .getValue ());
+         this .startOffset .assign (this ._offset .getValue ());
 
-         this .trackPoint_changed_  = trackPoint;
-         this .translation_changed_ = this .offset_ .getValue ();
+         this ._trackPoint_changed  = trackPoint;
+         this ._translation_changed = this ._offset .getValue ();
       },
       set_motion__: function (hit)
       {
@@ -280,33 +280,33 @@ function (Fields,
          {
             //console .log (error);
 
-            this .trackPoint_changed_  .addEvent ();
-            this .translation_changed_ .addEvent ();
+            this ._trackPoint_changed  .addEvent ();
+            this ._translation_changed .addEvent ();
          }
       },
       track: function (endPoint, trackPoint)
       {
          var
-            axisRotation = this .axisRotation_ .getValue (),
+            axisRotation = this ._axisRotation .getValue (),
             translation  = Rotation4 .inverse (axisRotation) .multVecRot (endPoint .add (this .startOffset) .subtract (this .startPoint));
 
          // X component
 
-         if (! (this .minPosition_ .x > this .maxPosition_ .x))
-            translation .x = Algorithm .clamp (translation .x, this .minPosition_ .x, this .maxPosition_ .x);
+         if (! (this ._minPosition .x > this ._maxPosition .x))
+            translation .x = Algorithm .clamp (translation .x, this ._minPosition .x, this ._maxPosition .x);
 
          // Y component
 
-         if (! (this .minPosition_ .y > this .maxPosition_ .y))
-            translation .y = Algorithm .clamp (translation .y, this .minPosition_ .y, this .maxPosition_ .y);
+         if (! (this ._minPosition .y > this ._maxPosition .y))
+            translation .y = Algorithm .clamp (translation .y, this ._minPosition .y, this ._maxPosition .y);
 
          axisRotation .multVecRot (translation);
 
-         if (! this .trackPoint_changed_ .getValue () .equals (trackPoint))
-            this .trackPoint_changed_ = trackPoint;
+         if (! this ._trackPoint_changed .getValue () .equals (trackPoint))
+            this ._trackPoint_changed = trackPoint;
 
-         if (! this .translation_changed_ .getValue () .equals (translation))
-            this .translation_changed_ = translation;
+         if (! this ._translation_changed .getValue () .equals (translation))
+            this ._translation_changed = translation;
       },
    });
 

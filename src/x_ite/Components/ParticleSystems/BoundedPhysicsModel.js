@@ -95,19 +95,19 @@ function (Fields,
       {
          X3DParticlePhysicsModelNode .prototype .initialize .call (this);
 
-         this .geometry_ .addInterest ("set_geometry__", this);
+         this ._geometry .addInterest ("set_geometry__", this);
 
          this .set_geometry__ ();
       },
       set_geometry__: function ()
       {
          if (this .geometryNode)
-            this .geometryNode .rebuild_ .removeInterest ("addNodeEvent", this);
+            this .geometryNode ._rebuild .removeInterest ("addNodeEvent", this);
 
-         this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this .geometry_);
+         this .geometryNode = X3DCast (X3DConstants .X3DGeometryNode, this ._geometry);
 
          if (this .geometryNode)
-            this .geometryNode .rebuild_ .addInterest ("addNodeEvent", this);
+            this .geometryNode ._rebuild .addInterest ("addNodeEvent", this);
       },
       addGeometry: function (boundedNormals, boundedVertices)
       {

@@ -94,8 +94,8 @@ function (Fields,
 
       this .addType (X3DConstants .GeoViewpoint);
 
-      this .centerOfRotation_ .setUnit ("length");
-      this .fieldOfView_      .setUnit ("angle");
+      this ._centerOfRotation .setUnit ("length");
+      this ._fieldOfView      .setUnit ("angle");
 
       this .navigationInfoNode      = new NavigationInfo (executionContext);
       this .fieldOfViewInterpolator = new ScalarInterpolator (this .getBrowser () .getPrivateScene ());
@@ -152,10 +152,10 @@ function (Fields,
          X3DViewpointNode    .prototype .initialize .call (this);
          X3DGeospatialObject .prototype .initialize .call (this);
 
-         this .position_       .addInterest ("set_position__", this);
-         this .positionOffset_ .addInterest ("set_position__", this);
-         this .navType_        .addFieldInterest (this .navigationInfoNode .type_);
-         this .headlight_      .addFieldInterest (this .navigationInfoNode .headlight_);
+         this ._position       .addInterest ("set_position__", this);
+         this ._positionOffset .addInterest ("set_position__", this);
+         this ._navType        .addFieldInterest (this .navigationInfoNode ._type);
+         this ._headlight      .addFieldInterest (this .navigationInfoNode ._headlight);
 
          this .navigationInfoNode .setup ();
 
@@ -163,11 +163,11 @@ function (Fields,
 
          // Setup interpolators
 
-         this .fieldOfViewInterpolator .key_ = [ 0, 1 ];
+         this .fieldOfViewInterpolator ._key = [ 0, 1 ];
          this .fieldOfViewInterpolator .setup ();
 
-         this .getEaseInEaseOut () .modifiedFraction_changed_ .addFieldInterest (this .fieldOfViewInterpolator .set_fraction_);
-         this .fieldOfViewInterpolator .value_changed_ .addFieldInterest (this .fieldOfViewScale_);
+         this .getEaseInEaseOut () ._modifiedFraction_changed .addFieldInterest (this .fieldOfViewInterpolator ._set_fraction);
+         this .fieldOfViewInterpolator ._value_changed .addFieldInterest (this ._fieldOfViewScale);
       },
       setInterpolators: function (fromViewpointNode, toViewpointNode)
       {
@@ -175,15 +175,15 @@ function (Fields,
          {
             const scale = fromViewpointNode .getFieldOfView () / toViewpointNode .getFieldOfView ();
 
-            this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (scale, toViewpointNode .fieldOfViewScale_ .getValue ());
+            this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (scale, toViewpointNode ._fieldOfViewScale .getValue ());
 
-            this .fieldOfViewScale_ = scale;
+            this ._fieldOfViewScale = scale;
          }
          else
          {
-            this .fieldOfViewInterpolator .keyValue_ = new Fields .MFFloat (toViewpointNode .fieldOfViewScale_ .getValue (), toViewpointNode .fieldOfViewScale_ .getValue ());
+            this .fieldOfViewInterpolator ._keyValue = new Fields .MFFloat (toViewpointNode ._fieldOfViewScale .getValue (), toViewpointNode ._fieldOfViewScale .getValue ());
 
-            this .fieldOfViewScale_ = toViewpointNode .fieldOfViewScale_ .getValue ();
+            this ._fieldOfViewScale = toViewpointNode ._fieldOfViewScale .getValue ();
          }
       },
       setPosition: (function ()
@@ -192,7 +192,7 @@ function (Fields,
 
          return function (value)
          {
-            this .position_ .setValue (this .getGeoCoord (value, geoPosition));
+            this ._position .setValue (this .getGeoCoord (value, geoPosition));
          };
       })(),
       getPosition: (function ()
@@ -201,7 +201,7 @@ function (Fields,
 
          return function ()
          {
-            return this .getCoord (this .position_ .getValue (), position);
+            return this .getCoord (this ._position .getValue (), position);
          };
       })(),
       set_position__: (function ()
@@ -210,9 +210,9 @@ function (Fields,
 
          return function ()
          {
-            this .getCoord (this .position_ .getValue (), position);
+            this .getCoord (this ._position .getValue (), position);
 
-            this .elevation = this .getGeoElevation (position .add (this .positionOffset_ .getValue ()));
+            this .elevation = this .getGeoElevation (position .add (this ._positionOffset .getValue ()));
          };
       })(),
       setOrientation: (function ()
@@ -225,11 +225,11 @@ function (Fields,
          {
             ///  Returns the resulting orientation for this viewpoint.
 
-            var rotationMatrix = this .getLocationMatrix (this .position_ .getValue (), locationMatrix) .submatrix;
+            var rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
 
             geoOrientation .setMatrix (rotationMatrix);
 
-            this .orientation_ .setValue (geoOrientation .inverse () .multLeft (value));
+            this ._orientation .setValue (geoOrientation .inverse () .multLeft (value));
          };
       })(),
       getOrientation: (function ()
@@ -242,11 +242,11 @@ function (Fields,
          {
             ///  Returns the resulting orientation for this viewpoint.
 
-            var rotationMatrix = this .getLocationMatrix (this .position_ .getValue (), locationMatrix) .submatrix;
+            var rotationMatrix = this .getLocationMatrix (this ._position .getValue (), locationMatrix) .submatrix;
 
             orientation .setMatrix (rotationMatrix);
 
-            return orientation .multLeft (this .orientation_ .getValue ());
+            return orientation .multLeft (this ._orientation .getValue ());
          };
       })(),
       getCenterOfRotation: (function ()
@@ -255,12 +255,12 @@ function (Fields,
 
          return function ()
          {
-            return this .getCoord (this .centerOfRotation_ .getValue (), centerOfRotation);
+            return this .getCoord (this ._centerOfRotation .getValue (), centerOfRotation);
          };
       })(),
       getFieldOfView: function ()
       {
-         var fov = this .fieldOfView_ * this .fieldOfViewScale_;
+         var fov = this ._fieldOfView * this ._fieldOfViewScale;
 
          return fov > 0 && fov < Math .PI ? fov : Math .PI / 4;
       },
@@ -276,14 +276,14 @@ function (Fields,
 
          return function ()
          {
-            this .getCoord (this .position_ .getValue (), position);
+            this .getCoord (this ._position .getValue (), position);
 
-            return this .getGeoUpVector .call (this, position .add (this .positionOffset_ .getValue ()), upVector);
+            return this .getGeoUpVector .call (this, position .add (this ._positionOffset .getValue ()), upVector);
          };
       })(),
       getSpeedFactor: function ()
       {
-         return (Math .max (this .elevation, 0.0) + 10) / 10 * this .speedFactor_ .getValue ();
+         return (Math .max (this .elevation, 0.0) + 10) / 10 * this ._speedFactor .getValue ();
       },
       getScreenScale: (function ()
       {

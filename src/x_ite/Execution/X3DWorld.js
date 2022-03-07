@@ -95,7 +95,7 @@ function (SupportedNodes,
          this .layerSet .setPrivate (true);
          this .layerSet .setup ();
          this .layerSet .setLayer0 (this .layer0);
-         this .layerSet .activeLayer_ .addInterest ("set_rootNodes__", this);
+         this .layerSet ._activeLayer .addInterest ("set_rootNodes__", this);
 
          this .getExecutionContext () .getRootNodes () .addInterest ("set_rootNodes__", this);
 
@@ -117,7 +117,7 @@ function (SupportedNodes,
       },
       getActiveLayer: function ()
       {
-         return this .activeLayer_ .getValue ();
+         return this ._activeLayer .getValue ();
       },
       set_rootNodes__: function ()
       {
@@ -126,7 +126,7 @@ function (SupportedNodes,
             rootNodes   = this .getExecutionContext () .getRootNodes ();
 
          this .layerSet          = this .defaultLayerSet;
-         this .layer0 .children_ = rootNodes;
+         this .layer0 ._children = rootNodes;
 
          for (const rootNode of rootNodes)
          {
@@ -141,14 +141,14 @@ function (SupportedNodes,
 
          this .layerSet .setLayer0 (this .layer0);
 
-         oldLayerSet    .activeLayer_ .removeInterest ("set_activeLayer__", this);
-         this .layerSet .activeLayer_ .addInterest ("set_activeLayer__", this);
+         oldLayerSet    ._activeLayer .removeInterest ("set_activeLayer__", this);
+         this .layerSet ._activeLayer .addInterest ("set_activeLayer__", this);
 
          this .set_activeLayer__ ();
       },
       set_activeLayer__: function ()
       {
-         this .activeLayer_ = this .layerSet .getActiveLayer ();
+         this ._activeLayer = this .layerSet .getActiveLayer ();
       },
       bind: function ()
       {

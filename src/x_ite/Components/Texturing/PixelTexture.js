@@ -104,7 +104,7 @@ function ($,
       {
          X3DTexture2DNode .prototype .initialize .call (this);
 
-         this .image_ .addInterest ("set_image__", this);
+         this ._image .addInterest ("set_image__", this);
 
          this .canvas1 = $("<canvas></canvas>");
          this .canvas2 = $("<canvas></canvas>");
@@ -113,7 +113,7 @@ function ($,
       },
       checkLoadState: function ()
       {
-         return this .loadState_ .getValue ();
+         return this ._loadState .getValue ();
       },
       convert: function (data, comp, array, length)
       {
@@ -211,13 +211,13 @@ function ($,
       {
          const
             gl          = this .getBrowser () .getContext (),
-            comp        = this .image_ .comp,
-            array       = this .image_ .array,
+            comp        = this ._image .comp,
+            array       = this ._image .array,
             transparent = !(comp % 2);
 
          let
-            width  = this .image_ .width,
-            height = this .image_ .height,
+            width  = this ._image .width,
+            height = this ._image .height,
             data   = null;
 
          if (width > 0 && height > 0 && comp > 0 && comp < 5)
@@ -228,7 +228,7 @@ function ($,
 
                this .convert (data, comp, array .getValue (), array .length);
             }
-            else if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! this .textureProperties_ .getValue ())
+            else if (Math .max (width, height) < this .getBrowser () .getMinTextureSize () && ! this ._textureProperties .getValue ())
             {
                data = new Uint8Array (width * height * 4);
 
@@ -270,12 +270,12 @@ function ($,
             }
 
             this .setTexture (width, height, transparent, new Uint8Array (data), false);
-            this .loadState_ = X3DConstants .COMPLETE_STATE;
+            this ._loadState = X3DConstants .COMPLETE_STATE;
          }
          else
          {
             this .clearTexture ();
-            this .loadState_ = X3DConstants .FAILED_STATE;
+            this ._loadState = X3DConstants .FAILED_STATE;
          }
       },
    });

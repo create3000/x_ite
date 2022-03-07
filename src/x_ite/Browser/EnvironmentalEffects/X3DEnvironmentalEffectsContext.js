@@ -77,11 +77,11 @@ function (TextureProperties)
       {
          this [_backgroundTextureProperties] = new TextureProperties (this .getPrivateScene ());
 
-         this [_backgroundTextureProperties] .boundaryModeS_       = "CLAMP_TO_EDGE";
-         this [_backgroundTextureProperties] .boundaryModeT_       = "CLAMP_TO_EDGE";
-         this [_backgroundTextureProperties] .boundaryModeR_       = "CLAMP_TO_EDGE";
-         this [_backgroundTextureProperties] .minificationFilter_  = "NICEST";
-         this [_backgroundTextureProperties] .magnificationFilter_ = "NICEST";
+         this [_backgroundTextureProperties] ._boundaryModeS       = "CLAMP_TO_EDGE";
+         this [_backgroundTextureProperties] ._boundaryModeT       = "CLAMP_TO_EDGE";
+         this [_backgroundTextureProperties] ._boundaryModeR       = "CLAMP_TO_EDGE";
+         this [_backgroundTextureProperties] ._minificationFilter  = "NICEST";
+         this [_backgroundTextureProperties] ._magnificationFilter = "NICEST";
          this [_backgroundTextureProperties] .setup ();
 
          this .getBackgroundTextureProperties = function () { return this [_backgroundTextureProperties]; };

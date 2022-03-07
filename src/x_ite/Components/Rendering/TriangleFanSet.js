@@ -104,7 +104,7 @@ function (Fields,
       {
          X3DComposedGeometryNode .prototype .initialize .call (this);
 
-         this .fanCount_ .addInterest ("set_fanCount__", this);
+         this ._fanCount .addInterest ("set_fanCount__", this);
 
          this .set_fanCount__ ();
       },
@@ -113,7 +113,7 @@ function (Fields,
          // Build coordIndex
 
          const
-            fanCount      = this .fanCount_,
+            fanCount      = this ._fanCount,
             triangleIndex = this .triangleIndex;
 
          triangleIndex .length = 0;

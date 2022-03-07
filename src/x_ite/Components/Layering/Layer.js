@@ -103,11 +103,11 @@ function (Fields,
       {
          X3DLayerNode .prototype .initialize .call (this);
 
-         this .addChildren_    .addFieldInterest (this .getGroup () .addChildren_);
-         this .removeChildren_ .addFieldInterest (this .getGroup () .removeChildren_);
-         this .children_       .addFieldInterest (this .getGroup () .children_);
+         this ._addChildren    .addFieldInterest (this .getGroup () ._addChildren);
+         this ._removeChildren .addFieldInterest (this .getGroup () ._removeChildren);
+         this ._children       .addFieldInterest (this .getGroup () ._children);
 
-         this .getGroup () .children_ = this .children_;
+         this .getGroup () ._children = this ._children;
          this .getGroup () .setPrivate (true);
          this .getGroup () .setup ();
       },

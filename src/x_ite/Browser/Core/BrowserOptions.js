@@ -83,7 +83,7 @@ function (Fields,
    {
       X3DBaseNode .call (this, executionContext);
 
-      this .addAlias ("AntiAliased", this .Antialiased_);
+      this .addAlias ("AntiAliased", this ._Antialiased);
 
       const browser = executionContext .getBrowser ();
 
@@ -131,21 +131,21 @@ function (Fields,
          X3DBaseNode .prototype .initialize .call (this);
 
          this .localStorage .addDefaultValues ({
-            Rubberband:        this .Rubberband_        .getValue (),
-            PrimitiveQuality:  this .PrimitiveQuality_  .getValue (),
-            TextureQuality:    this .TextureQuality_    .getValue (),
-            StraightenHorizon: this .StraightenHorizon_ .getValue (),
-            Timings:           this .Timings_           .getValue (),
+            Rubberband:        this ._Rubberband        .getValue (),
+            PrimitiveQuality:  this ._PrimitiveQuality  .getValue (),
+            TextureQuality:    this ._TextureQuality    .getValue (),
+            StraightenHorizon: this ._StraightenHorizon .getValue (),
+            Timings:           this ._Timings           .getValue (),
          });
 
-         this .SplashScreen_           .addInterest ("set_splashScreen__",           this);
-         this .Rubberband_             .addInterest ("set_rubberband__",             this);
-         this .PrimitiveQuality_       .addInterest ("set_primitiveQuality__",       this);
-         this .TextureQuality_         .addInterest ("set_textureQuality__",         this);
-         this .Shading_                .addInterest ("set_shading__",                this);
-         this .StraightenHorizon_      .addInterest ("set_straightenHorizon__",      this);
-         this .LogarithmicDepthBuffer_ .addInterest ("set_logarithmicDepthBuffer__", this);
-         this .Timings_                .addInterest ("set_timings__",                this);
+         this ._SplashScreen           .addInterest ("set_splashScreen__",           this);
+         this ._Rubberband             .addInterest ("set_rubberband__",             this);
+         this ._PrimitiveQuality       .addInterest ("set_primitiveQuality__",       this);
+         this ._TextureQuality         .addInterest ("set_textureQuality__",         this);
+         this ._Shading                .addInterest ("set_shading__",                this);
+         this ._StraightenHorizon      .addInterest ("set_straightenHorizon__",      this);
+         this ._LogarithmicDepthBuffer .addInterest ("set_logarithmicDepthBuffer__", this);
+         this ._Timings                .addInterest ("set_timings__",                this);
 
          this .configure ();
       },
@@ -178,24 +178,24 @@ function (Fields,
 
          this .setAttributeSplashScreen ();
 
-         if (rubberband !== this .Rubberband_ .getValue ())
-            this .Rubberband_ = rubberband;
+         if (rubberband !== this ._Rubberband .getValue ())
+            this ._Rubberband = rubberband;
 
-         if (primitiveQuality !== this .PrimitiveQuality_ .getValue ())
-            this .PrimitiveQuality_ = primitiveQuality;
+         if (primitiveQuality !== this ._PrimitiveQuality .getValue ())
+            this ._PrimitiveQuality = primitiveQuality;
 
-         if (textureQuality !== this .TextureQuality_ .getValue ())
-            this .TextureQuality_ = textureQuality;
+         if (textureQuality !== this ._TextureQuality .getValue ())
+            this ._TextureQuality = textureQuality;
 
-         if (straightenHorizon !== this .StraightenHorizon_ .getValue ())
-            this .StraightenHorizon_ = straightenHorizon;
+         if (straightenHorizon !== this ._StraightenHorizon .getValue ())
+            this ._StraightenHorizon = straightenHorizon;
 
-         if (timings !== this .Timings_ .getValue ())
-            this .Timings_ = timings;
+         if (timings !== this ._Timings .getValue ())
+            this ._Timings = timings;
       },
       setAttributeSplashScreen: function ()
       {
-         this .SplashScreen_ .set (this .getSplashScreen ());
+         this ._SplashScreen .set (this .getSplashScreen ());
       },
       getCache: function ()
       {
@@ -264,10 +264,10 @@ function (Fields,
                if (browser .setGeometry2DPrimitiveQuality)
                   browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
 
-               cone     .xDimension_ = 16;
-               cylinder .xDimension_ = 16;
-               sphere   .xDimension_ = 20;
-               sphere   .yDimension_ = 9;
+               cone     ._xDimension = 16;
+               cylinder ._xDimension = 16;
+               sphere   ._xDimension = 20;
+               sphere   ._yDimension = 9;
                break;
             }
             case "HIGH":
@@ -280,10 +280,10 @@ function (Fields,
                if (browser .setGeometry2DPrimitiveQuality)
                   browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
 
-               cone     .xDimension_ = 32;
-               cylinder .xDimension_ = 32;
-               sphere   .xDimension_ = 64;
-               sphere   .yDimension_ = 31;
+               cone     ._xDimension = 32;
+               cylinder ._xDimension = 32;
+               sphere   ._xDimension = 64;
+               sphere   ._yDimension = 31;
                break;
             }
             default:
@@ -296,10 +296,10 @@ function (Fields,
                if (browser .setGeometry2DPrimitiveQuality)
                   browser .setGeometry2DPrimitiveQuality (this .primitiveQuality);
 
-               cone     .xDimension_ = 20;
-               cylinder .xDimension_ = 20;
-               sphere   .xDimension_ = 32;
-               sphere   .yDimension_ = 15;
+               cone     ._xDimension = 20;
+               cylinder ._xDimension = 20;
+               sphere   ._xDimension = 32;
+               sphere   ._yDimension = 15;
                break;
             }
          }
@@ -323,10 +323,10 @@ function (Fields,
 
                this .textureQuality = TextureQuality .LOW;
 
-               textureProperties .magnificationFilter_ = "AVG_PIXEL";
-               textureProperties .minificationFilter_  = "AVG_PIXEL";
-               textureProperties .textureCompression_  = "FASTEST";
-               textureProperties .generateMipMaps_     = true;
+               textureProperties ._magnificationFilter = "AVG_PIXEL";
+               textureProperties ._minificationFilter  = "AVG_PIXEL";
+               textureProperties ._textureCompression  = "FASTEST";
+               textureProperties ._generateMipMaps     = true;
 
                //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
                //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
@@ -339,10 +339,10 @@ function (Fields,
 
                this .textureQuality = TextureQuality .HIGH;
 
-               textureProperties .magnificationFilter_ = "NICEST";
-               textureProperties .minificationFilter_  = "NICEST";
-               textureProperties .textureCompression_  = "NICEST";
-               textureProperties .generateMipMaps_     = true;
+               textureProperties ._magnificationFilter = "NICEST";
+               textureProperties ._minificationFilter  = "NICEST";
+               textureProperties ._textureCompression  = "NICEST";
+               textureProperties ._generateMipMaps     = true;
 
                //glHint (GL_GENERATE_MIPMAP_HINT,        GL_NICEST);
                //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
@@ -355,10 +355,10 @@ function (Fields,
 
                this .textureQuality = TextureQuality .MEDIUM;
 
-               textureProperties .magnificationFilter_ = "NICEST";
-               textureProperties .minificationFilter_  = "AVG_PIXEL_AVG_MIPMAP";
-               textureProperties .textureCompression_  = "NICEST";
-               textureProperties .generateMipMaps_     = true;
+               textureProperties ._magnificationFilter = "NICEST";
+               textureProperties ._minificationFilter  = "AVG_PIXEL_AVG_MIPMAP";
+               textureProperties ._textureCompression  = "NICEST";
+               textureProperties ._generateMipMaps     = true;
 
                //glHint (GL_GENERATE_MIPMAP_HINT,        GL_FASTEST);
                //glHint (GL_PERSPECTIVE_CORRECTION_HINT, GL_FASTEST);
@@ -414,10 +414,10 @@ function (Fields,
 
          logarithmicDepthBuffer = logarithmicDepthBuffer .getValue () && (gl .getVersion () >= 2 || Boolean (browser .getExtension ("EXT_frag_depth")));
 
-         if (logarithmicDepthBuffer === browser .getRenderingProperties () .LogarithmicDepthBuffer_ .getValue ())
+         if (logarithmicDepthBuffer === browser .getRenderingProperties () ._LogarithmicDepthBuffer .getValue ())
             return;
 
-         browser .getRenderingProperties () .LogarithmicDepthBuffer_ = logarithmicDepthBuffer;
+         browser .getRenderingProperties () ._LogarithmicDepthBuffer = logarithmicDepthBuffer;
 
          // Recompile shaders.
 
@@ -425,32 +425,32 @@ function (Fields,
 
          if (browser .hasPointShader ())
          {
-            browser .getPointShader () .parts_ [0] .getValue () .url_ .addEvent ();
-            browser .getPointShader () .parts_ [1] .getValue () .url_ .addEvent ();
+            browser .getPointShader () ._parts [0] .getValue () ._url .addEvent ();
+            browser .getPointShader () ._parts [1] .getValue () ._url .addEvent ();
          }
 
          if (browser .hasLineShader ())
          {
-            browser .getLineShader () .parts_ [0] .getValue () .url_ .addEvent ();
-            browser .getLineShader () .parts_ [1] .getValue () .url_ .addEvent ();
+            browser .getLineShader () ._parts [0] .getValue () ._url .addEvent ();
+            browser .getLineShader () ._parts [1] .getValue () ._url .addEvent ();
          }
 
          if (browser .hasGouraudShader ())
          {
-            browser .getGouraudShader () .parts_ [0] .getValue () .url_ .addEvent ();
-            browser .getGouraudShader () .parts_ [1] .getValue () .url_ .addEvent ();
+            browser .getGouraudShader () ._parts [0] .getValue () ._url .addEvent ();
+            browser .getGouraudShader () ._parts [1] .getValue () ._url .addEvent ();
          }
 
          if (browser .hasPhongShader ())
          {
-            browser .getPhongShader () .parts_ [0] .getValue () .url_ .addEvent ();
-            browser .getPhongShader () .parts_ [1] .getValue () .url_ .addEvent ();
+            browser .getPhongShader () ._parts [0] .getValue () ._url .addEvent ();
+            browser .getPhongShader () ._parts [1] .getValue () ._url .addEvent ();
          }
 
          if (browser .hasShadowShader ())
          {
-            browser .getShadowShader () .parts_ [0] .getValue () .url_ .addEvent ();
-            browser .getShadowShader () .parts_ [1] .getValue () .url_ .addEvent ();
+            browser .getShadowShader () ._parts [0] .getValue () ._url .addEvent ();
+            browser .getShadowShader () ._parts [1] .getValue () ._url .addEvent ();
          }
       },
       set_timings__: function (timings)

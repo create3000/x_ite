@@ -74,8 +74,8 @@ function (Fields,
 
       this .addType (X3DConstants .Cylinder);
 
-      this .height_ .setUnit ("length");
-      this .radius_ .setUnit ("length");
+      this ._height .setUnit ("length");
+      this ._radius .setUnit ("length");
    }
 
    Cylinder .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -115,7 +115,7 @@ function (Fields,
       {
          var
             options       = this .getBrowser () .getCylinderOptions (),
-            xDimension    = options .xDimension_ .getValue (),
+            xDimension    = options ._xDimension .getValue (),
             texCoordArray = this .getTexCoords (),
             normalArray   = this .getNormals (),
             vertexArray   = this .getVertices ();
@@ -123,11 +123,11 @@ function (Fields,
          this .getMultiTexCoords () .push (texCoordArray);
 
          var
-            radius = this .radius_ .getValue (),
-            y1     = this .height_ .getValue () / 2,
+            radius = this ._radius .getValue (),
+            y1     = this ._height .getValue () / 2,
             y2     = -y1;
 
-         if (this .side_ .getValue ())
+         if (this ._side .getValue ())
          {
             for (var i = 0; i < xDimension; ++ i)
             {
@@ -183,7 +183,7 @@ function (Fields,
             }
          }
 
-         if (this .top_ .getValue ())
+         if (this ._top .getValue ())
          {
             var
                texCoord = [ ],
@@ -226,7 +226,7 @@ function (Fields,
             }
          }
 
-         if (this .bottom_ .getValue ())
+         if (this ._bottom .getValue ())
          {
             var
                texCoord = [ ],
@@ -269,29 +269,29 @@ function (Fields,
             }
          }
 
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
          this .setExtents ();
       },
       setExtents: function ()
       {
          var
-            radius = this .radius_ .getValue (),
-            y1     = this .height_ .getValue () / 2,
+            radius = this ._radius .getValue (),
+            y1     = this ._height .getValue () / 2,
             y2     = -y1;
 
-         if (! this .top_ .getValue () && ! this .side_ .getValue () && ! this .bottom_ .getValue ())
+         if (! this ._top .getValue () && ! this ._side .getValue () && ! this ._bottom .getValue ())
          {
             this .getMin () .set (0, 0, 0);
             this .getMax () .set (0, 0, 0);
          }
 
-         else if (! this .top_ .getValue () && ! this .side_ .getValue ())
+         else if (! this ._top .getValue () && ! this ._side .getValue ())
          {
             this .getMin () .set (-radius, y2, -radius);
             this .getMax () .set ( radius, y2,  radius);
          }
 
-         else if (! this .bottom_ .getValue () && ! this .side_ .getValue ())
+         else if (! this ._bottom .getValue () && ! this ._side .getValue ())
          {
             this .getMin () .set (-radius, y1, -radius);
             this .getMax () .set ( radius, y1,  radius);

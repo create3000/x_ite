@@ -112,7 +112,7 @@ function (Fields,
       {
          X3DShapeNode .prototype .initialize .call (this);
 
-         this .transformSensors_changed_ .addInterest ("set_transformSensors__", this);
+         this ._transformSensors_changed .addInterest ("set_transformSensors__", this);
 
          this .set_transformSensors__ ();
       },
@@ -156,7 +156,7 @@ function (Fields,
             }
             case TraverseType .SHADOW:
             {
-               if (this .castShadow_ .getValue ())
+               if (this ._castShadow .getValue ())
                   renderObject .addDepthShape (this);
 
                break;

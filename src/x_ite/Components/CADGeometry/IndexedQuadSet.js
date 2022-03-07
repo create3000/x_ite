@@ -103,7 +103,7 @@ function (Fields,
       {
          X3DComposedGeometryNode .prototype .initialize .call (this);
 
-         this .set_index_ .addFieldInterest (this .index_);
+         this ._set_index .addFieldInterest (this ._index);
       },
       getTriangleIndex: (function ()
       {
@@ -119,11 +119,11 @@ function (Fields,
       })(),
       getPolygonIndex: function (i)
       {
-         return this .index_ [i];
+         return this ._index [i];
       },
       build: function ()
       {
-         let length = this .index_ .length;
+         let length = this ._index .length;
 
          length -= length % 4;
 

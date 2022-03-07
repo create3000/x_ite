@@ -62,7 +62,7 @@ function (X3DPointingDeviceSensorNode,
 
       this .addType (X3DConstants .X3DDragSensorNode);
 
-      this .trackPoint_changed_ .setUnit ("length");
+      this ._trackPoint_changed .setUnit ("length");
    }
 
    X3DDragSensorNode .prototype = Object .assign (Object .create (X3DPointingDeviceSensorNode .prototype),

@@ -76,7 +76,7 @@ function (Fields,
 
       this .setGeometryType (2);
 
-      this .size_ .setUnit ("length");
+      this ._size .setUnit ("length");
    }
 
    Rectangle2D .prototype = Object .assign (Object .create (X3DGeometryNode .prototype),
@@ -104,7 +104,7 @@ function (Fields,
          var
             options  = this .getBrowser () .getRectangle2DOptions (),
             geometry = options .getGeometry (),
-            size     = this .size_ .getValue ();
+            size     = this ._size .getValue ();
 
          this .setMultiTexCoords (geometry .getMultiTexCoords ());
          this .setNormals        (geometry .getNormals ());
@@ -137,7 +137,7 @@ function (Fields,
             this .getMax () .set ( x,  y, 0);
          }
 
-         this .setSolid (this .solid_ .getValue ());
+         this .setSolid (this ._solid .getValue ());
       },
    });
 

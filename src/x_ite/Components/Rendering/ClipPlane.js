@@ -151,16 +151,16 @@ function (Fields,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .enabled_ .addInterest ("set_enabled__", this);
-         this .plane_   .addInterest ("set_enabled__", this);
+         this ._enabled .addInterest ("set_enabled__", this);
+         this ._plane   .addInterest ("set_enabled__", this);
 
          this .set_enabled__ ();
       },
       set_enabled__: function ()
       {
-         this .plane .assign (this .plane_ .getValue ());
+         this .plane .assign (this ._plane .getValue ());
 
-         this .enabled = this .enabled_ .getValue () && ! this .plane .equals (Vector4 .Zero);
+         this .enabled = this ._enabled .getValue () && ! this .plane .equals (Vector4 .Zero);
       },
       push: function (renderObject)
       {

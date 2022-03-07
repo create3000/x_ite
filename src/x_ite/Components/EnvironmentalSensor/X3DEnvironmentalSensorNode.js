@@ -68,8 +68,8 @@ function (Fields,
 
       this .addChildObjects ("traversed", new Fields .SFBool (true));
 
-      this .size_   .setUnit ("length");
-      this .center_ .setUnit ("length");
+      this ._size   .setUnit ("length");
+      this ._center .setUnit ("length");
 
       this .zeroTest         = false;
       this .currentTraversed = true;
@@ -84,15 +84,15 @@ function (Fields,
 
          this .isLive () .addInterest ("set_live__", this);
 
-         this .enabled_   .addInterest ("set_live__", this);
-         this .size_      .addInterest ("set_live__", this);
-         this .traversed_ .addInterest ("set_live__", this);
+         this ._enabled   .addInterest ("set_live__", this);
+         this ._size      .addInterest ("set_live__", this);
+         this ._traversed .addInterest ("set_live__", this);
 
          this .set_live__ ();
       },
       set_live__: function ()
       {
-         if (this .traversed_ .getValue () && this .isLive () .getValue () && this .enabled_ .getValue () && ! (this .zeroTest && this .size_. getValue () .equals (Vector3 .Zero)))
+         if (this ._traversed .getValue () && this .isLive () .getValue () && this ._enabled .getValue () && ! (this .zeroTest && this ._size. getValue () .equals (Vector3 .Zero)))
          {
             this .getBrowser () .sensorEvents () .addInterest ("update", this);
          }
@@ -100,10 +100,10 @@ function (Fields,
          {
             this .getBrowser () .sensorEvents () .removeInterest ("update", this);
 
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
-               this .isActive_ = false;
-               this .exitTime_ = this .getBrowser () .getCurrentTime ();
+               this ._isActive = false;
+               this ._exitTime = this .getBrowser () .getCurrentTime ();
             }
          }
       },
@@ -119,13 +119,13 @@ function (Fields,
       {
          if (value)
          {
-            if (this .traversed_ .getValue () === false)
-               this .traversed_ = true;
+            if (this ._traversed .getValue () === false)
+               this ._traversed = true;
          }
          else
          {
-            if (this .currentTraversed !== this .traversed_ .getValue ())
-               this .traversed_ = this .currentTraversed;
+            if (this .currentTraversed !== this ._traversed .getValue ())
+               this ._traversed = this .currentTraversed;
          }
 
          this .currentTraversed = value;

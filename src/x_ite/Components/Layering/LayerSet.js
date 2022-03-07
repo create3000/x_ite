@@ -108,9 +108,9 @@ function (Fields,
          this .layerNode0 .setup ();
          this .layerNode0 .isLayer0 (true);
 
-         this .activeLayer_ .addInterest ("set_activeLayer", this);
-         this .order_       .addInterest ("set_layers", this);
-         this .layers_      .addInterest ("set_layers", this);
+         this ._activeLayer .addInterest ("set_activeLayer", this);
+         this ._order       .addInterest ("set_layers", this);
+         this ._layers      .addInterest ("set_layers", this);
 
          this .set_layers ();
       },
@@ -134,19 +134,19 @@ function (Fields,
       },
       set_activeLayer: function ()
       {
-         if (this .activeLayer_ .getValue () === 0)
+         if (this ._activeLayer .getValue () === 0)
          {
             if (this .activeLayerNode !== this .layerNode0)
                this .activeLayerNode = this .layerNode0;
          }
          else
          {
-            const index = this .activeLayer_ - 1;
+            const index = this ._activeLayer - 1;
 
-            if (index >= 0 && index < this .layers_ .length)
+            if (index >= 0 && index < this ._layers .length)
             {
-               if (this .activeLayerNode !== this .layers_ [index] .getValue ())
-                  this .activeLayerNode = X3DCast (X3DConstants .X3DLayerNode, this .layers_ [index]);
+               if (this .activeLayerNode !== this ._layers [index] .getValue ())
+                  this .activeLayerNode = X3DCast (X3DConstants .X3DLayerNode, this ._layers [index]);
             }
             else
             {
@@ -157,11 +157,11 @@ function (Fields,
       },
       set_layers: function ()
       {
-         const layers = this .layers_ .getValue ();
+         const layers = this ._layers .getValue ();
 
          this .layerNodes .length = 0;
 
-         for (let index of this .order_)
+         for (let index of this ._order)
          {
             if (index === 0)
             {
@@ -185,7 +185,7 @@ function (Fields,
       },
       bind: function (viewpointName)
       {
-         const layers = this .layers_ .getValue ();
+         const layers = this ._layers .getValue ();
 
          this .layerNode0 .bind (viewpointName);
 

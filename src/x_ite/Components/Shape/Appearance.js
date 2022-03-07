@@ -117,23 +117,23 @@ function (Fields,
 
          this .isLive () .addInterest ("set_live__", this);
 
-         this .alphaMode_  		.addInterest ("set_alphaMode__",        this);
-         this .alphaCutoff_  		.addInterest ("set_alphaCutoff__",      this);
-         this .pointProperties_  .addInterest ("set_pointProperties__",  this);
-         this .lineProperties_   .addInterest ("set_lineProperties__",   this);
-         this .fillProperties_   .addInterest ("set_fillProperties__",   this);
-         this .material_         .addInterest ("set_material__",         this);
-         this .backMaterial_     .addInterest ("set_backMaterial__",     this);
-         this .texture_          .addInterest ("set_texture__",          this);
-         this .textureTransform_ .addInterest ("set_textureTransform__", this);
-         this .shaders_          .addInterest ("set_shaders__",          this);
-         this .blendMode_        .addInterest ("set_blendMode__",        this);
+         this ._alphaMode  		.addInterest ("set_alphaMode__",        this);
+         this ._alphaCutoff  		.addInterest ("set_alphaCutoff__",      this);
+         this ._pointProperties  .addInterest ("set_pointProperties__",  this);
+         this ._lineProperties   .addInterest ("set_lineProperties__",   this);
+         this ._fillProperties   .addInterest ("set_fillProperties__",   this);
+         this ._material         .addInterest ("set_material__",         this);
+         this ._backMaterial     .addInterest ("set_backMaterial__",     this);
+         this ._texture          .addInterest ("set_texture__",          this);
+         this ._textureTransform .addInterest ("set_textureTransform__", this);
+         this ._shaders          .addInterest ("set_shaders__",          this);
+         this ._blendMode        .addInterest ("set_blendMode__",        this);
 
-         this .alphaMode_      .addInterest ("set_transparent__", this);
-         this .fillProperties_ .addInterest ("set_transparent__", this);
-         this .material_       .addInterest ("set_transparent__", this);
-         this .texture_        .addInterest ("set_transparent__", this);
-         this .blendMode_      .addInterest ("set_transparent__", this);
+         this ._alphaMode      .addInterest ("set_transparent__", this);
+         this ._fillProperties .addInterest ("set_transparent__", this);
+         this ._material       .addInterest ("set_transparent__", this);
+         this ._texture        .addInterest ("set_transparent__", this);
+         this ._blendMode      .addInterest ("set_transparent__", this);
 
          this .set_live__ ();
          this .set_alphaMode__ ();
@@ -156,14 +156,14 @@ function (Fields,
       {
          if (this .isLive () .getValue ())
          {
-            this .getBrowser () .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
+            this .getBrowser () .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
 
             if (this .shaderNode)
                this .getBrowser () .addShader (this .shaderNode);
          }
          else
          {
-            this .getBrowser () .getBrowserOptions () .Shading_ .removeInterest ("set_shading__", this);
+            this .getBrowser () .getBrowserOptions () ._Shading .removeInterest ("set_shading__", this);
 
             if (this .shaderNode)
                this .getBrowser () .removeShader (this .shaderNode);
@@ -171,24 +171,24 @@ function (Fields,
       },
       set_alphaMode__: function ()
       {
-         this .alphaMode = AlphaMode [this .alphaMode_ .getValue ()] || AlphaMode .AUTO;
+         this .alphaMode = AlphaMode [this ._alphaMode .getValue ()] || AlphaMode .AUTO;
 
          this .set_alphaCutoff__ ();
       },
       set_alphaCutoff__: function ()
       {
-         this .alphaCutoff = this .alphaMode === AlphaMode .MASK ? this .alphaCutoff_ .getValue () : 0;
+         this .alphaCutoff = this .alphaMode === AlphaMode .MASK ? this ._alphaCutoff .getValue () : 0;
       },
       set_pointProperties__: function ()
       {
-         this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this .pointProperties_);
+         this .stylePropertiesNode [0] = X3DCast (X3DConstants .PointProperties, this ._pointProperties);
 
          if (! this .stylePropertiesNode [0])
             this .stylePropertiesNode [0] = this .getBrowser () .getDefaultPointProperties ();
       },
       set_lineProperties__: function ()
       {
-         this .stylePropertiesNode [1] = X3DCast (X3DConstants .LineProperties, this .lineProperties_);
+         this .stylePropertiesNode [1] = X3DCast (X3DConstants .LineProperties, this ._lineProperties);
 
          if (! this .stylePropertiesNode [1])
             this .stylePropertiesNode [1] = this .getBrowser () .getDefaultLineProperties ();
@@ -196,30 +196,30 @@ function (Fields,
       set_fillProperties__: function ()
       {
          if (this .stylePropertiesNode [2])
-            this .stylePropertiesNode [2] .transparent_ .removeInterest ("set_transparent__", this);
+            this .stylePropertiesNode [2] ._transparent .removeInterest ("set_transparent__", this);
 
-         this .stylePropertiesNode [2] = X3DCast (X3DConstants .FillProperties, this .fillProperties_);
+         this .stylePropertiesNode [2] = X3DCast (X3DConstants .FillProperties, this ._fillProperties);
 
          if (! this .stylePropertiesNode [2])
             this .stylePropertiesNode [2] = this .getBrowser () .getDefaultFillProperties ();
 
          if (this .stylePropertiesNode [2])
-            this .stylePropertiesNode [2] .transparent_ .addInterest ("set_transparent__", this);
+            this .stylePropertiesNode [2] ._transparent .addInterest ("set_transparent__", this);
 
          this .stylePropertiesNode [3] = this .stylePropertiesNode [2];
       },
       set_material__: function ()
       {
          if (this .materialNode)
-            this .materialNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .materialNode ._transparent .removeInterest ("set_transparent__", this);
 
-         this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this .material_);
+         this .materialNode = X3DCast (X3DConstants .X3DMaterialNode, this ._material);
 
          if (! this .materialNode)
             this .materialNode = this .getBrowser () .getDefaultMaterial ();
 
          if (this .materialNode)
-            this .materialNode .transparent_ .addInterest ("set_transparent__", this);
+            this .materialNode ._transparent .addInterest ("set_transparent__", this);
 
          // Depreciated TwoSidedMaterial handling.
 
@@ -232,12 +232,12 @@ function (Fields,
       set_backMaterial__: function ()
       {
          if (this .backMaterialNode)
-            this .backMaterialNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .backMaterialNode ._transparent .removeInterest ("set_transparent__", this);
 
-         this .backMaterialNode = X3DCast (X3DConstants .X3DOneSidedMaterialNode, this .backMaterial_);
+         this .backMaterialNode = X3DCast (X3DConstants .X3DOneSidedMaterialNode, this ._backMaterial);
 
          if (this .backMaterialNode)
-            this .backMaterialNode .transparent_ .addInterest ("set_transparent__", this);
+            this .backMaterialNode ._transparent .addInterest ("set_transparent__", this);
 
          // Depreciated TwoSidedMaterial handling.
 
@@ -247,16 +247,16 @@ function (Fields,
       set_texture__: function ()
       {
          if (this .textureNode)
-            this .textureNode .transparent_ .removeInterest ("set_transparent__", this);
+            this .textureNode ._transparent .removeInterest ("set_transparent__", this);
 
-         this .textureNode = X3DCast (X3DConstants .X3DTextureNode, this .texture_);
+         this .textureNode = X3DCast (X3DConstants .X3DTextureNode, this ._texture);
 
          if (this .textureNode)
-            this .textureNode .transparent_ .addInterest ("set_transparent__", this);
+            this .textureNode ._transparent .addInterest ("set_transparent__", this);
       },
       set_textureTransform__: function ()
       {
-         this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this .textureTransform_);
+         this .textureTransformNode = X3DCast (X3DConstants .X3DTextureTransformNode, this ._textureTransform);
 
          if (this .textureTransformNode)
             return;
@@ -269,13 +269,13 @@ function (Fields,
 
          for (const shaderNode of shaderNodes)
          {
-            shaderNode .isValid_        .removeInterest ("set_shader__", this);
-            shaderNode .activationTime_ .removeInterest ("set_shader__", this);
+            shaderNode ._isValid        .removeInterest ("set_shader__", this);
+            shaderNode ._activationTime .removeInterest ("set_shader__", this);
          }
 
          shaderNodes .length = 0;
 
-         for (const node of this .shaders_)
+         for (const node of this ._shaders)
          {
             const shaderNode = X3DCast (X3DConstants .X3DShaderNode, node);
 
@@ -283,8 +283,8 @@ function (Fields,
             {
                shaderNodes .push (shaderNode);
 
-               shaderNode .isValid_        .addInterest ("set_shader__", this);
-               shaderNode .activationTime_ .addInterest ("set_shader__", this);
+               shaderNode ._isValid        .addInterest ("set_shader__", this);
+               shaderNode ._activationTime .addInterest ("set_shader__", this);
             }
          }
 
@@ -304,9 +304,9 @@ function (Fields,
 
          for (const shaderNode of shaderNodes)
          {
-            if (shaderNode .isValid_ .getValue ())
+            if (shaderNode ._isValid .getValue ())
             {
-               if (shaderNode .activationTime_ .getValue () === this .getBrowser () .getCurrentTime ())
+               if (shaderNode ._activationTime .getValue () === this .getBrowser () .getCurrentTime ())
                {
                   this .shaderNode = shaderNode;
                   break;
@@ -318,7 +318,7 @@ function (Fields,
          {
             for (const shaderNode of shaderNodes)
             {
-               if (shaderNode .isValid_ .getValue ())
+               if (shaderNode ._isValid .getValue ())
                {
                   this .shaderNode = shaderNode;
                   break;
@@ -341,7 +341,7 @@ function (Fields,
       },
       set_blendMode__: function ()
       {
-         this .blendModeNode = X3DCast (X3DConstants .BlendMode, this .blendMode_);
+         this .blendModeNode = X3DCast (X3DConstants .BlendMode, this ._blendMode);
       },
       set_transparent__: function ()
       {

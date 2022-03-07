@@ -66,7 +66,7 @@ function (Fields,
    {
       X3DBaseNode .call (this, executionContext);
 
-      this .addAlias ("AntiAliased", this .Antialiased_);
+      this .addAlias ("AntiAliased", this ._Antialiased);
    }
 
    RenderingProperties .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
@@ -100,19 +100,19 @@ function (Fields,
 
          const browser = this .getBrowser ();
 
-         this .MaxTextureSize_ = browser .getMaxTextureSize ();
-         this .TextureUnits_   = browser .getCombinedTextureUnits ();
-         this .MaxLights_      = browser .getMaxLights ();
-         this .ColorDepth_     = browser .getColorDepth ();
-         this .TextureMemory_  = browser .getTextureMemory ();
+         this ._MaxTextureSize = browser .getMaxTextureSize ();
+         this ._TextureUnits   = browser .getCombinedTextureUnits ();
+         this ._MaxLights      = browser .getMaxLights ();
+         this ._ColorDepth     = browser .getColorDepth ();
+         this ._TextureMemory  = browser .getTextureMemory ();
 
-         browser .getBrowserOptions () .Shading_ .addInterest ("set_shading__", this);
+         browser .getBrowserOptions () ._Shading .addInterest ("set_shading__", this);
 
-         this .set_shading__ (browser .getBrowserOptions () .Shading_);
+         this .set_shading__ (browser .getBrowserOptions () ._Shading);
       },
       set_shading__: function (shading)
       {
-         this .Shading_ = shading;
+         this ._Shading = shading;
       },
    });
 

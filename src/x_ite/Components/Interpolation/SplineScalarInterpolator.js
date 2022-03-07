@@ -102,15 +102,15 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .keyValue_          .addInterest ("set_keyValue__",          this);
-         this .keyVelocity_       .addInterest ("set_keyVelocity__",       this);
-         this .normalizeVelocity_ .addInterest ("set_normalizeVelocity__", this);
+         this ._keyValue          .addInterest ("set_keyValue__",          this);
+         this ._keyVelocity       .addInterest ("set_keyVelocity__",       this);
+         this ._normalizeVelocity .addInterest ("set_normalizeVelocity__", this);
       },
       set_keyValue__: function ()
       {
          var
-            key      = this .key_,
-            keyValue = this .keyValue_;
+            key      = this ._key,
+            keyValue = this ._keyValue;
 
          if (keyValue .length < key .length)
             keyValue .resize (key .length, keyValue .length ? keyValue [keyValue .length - 1] : new Fields .SFFloat ());
@@ -119,25 +119,25 @@ function (Fields,
       },
       set_keyVelocity__: function ()
       {
-         if (this .keyVelocity_ .length)
+         if (this ._keyVelocity .length)
          {
-            if (this .keyVelocity_ .length < this .key_ .length)
-               this .keyVelocity_ .resize (this .key_ .length, new Fields .SFFloat ());
+            if (this ._keyVelocity .length < this ._key .length)
+               this ._keyVelocity .resize (this ._key .length, new Fields .SFFloat ());
          }
 
          this .set_normalizeVelocity__ ();
       },
       set_normalizeVelocity__: function ()
       {
-         this .spline .generate (this .closed_ .getValue (),
-                                 this .key_,
-                                 this .keyValue_,
-                                 this .keyVelocity_,
-                                 this .normalizeVelocity_ .getValue ());
+         this .spline .generate (this ._closed .getValue (),
+                                 this ._key,
+                                 this ._keyValue,
+                                 this ._keyVelocity,
+                                 this ._normalizeVelocity .getValue ());
       },
       interpolate: function (index0, index1, weight)
       {
-         this .value_changed_ = this .spline .interpolate (index0, index1, weight, this .keyValue_);
+         this ._value_changed = this .spline .interpolate (index0, index1, weight, this ._keyValue);
       },
    });
 

@@ -72,9 +72,9 @@ function (X3DFollowerNode,
       {
          X3DFollowerNode .prototype .initialize .call (this);
 
-         this .order_           .addInterest ("set_order__", this);
-         this .set_value_       .addInterest ("set_value__", this);
-         this .set_destination_ .addInterest ("set_destination__", this);
+         this ._order           .addInterest ("set_order__", this);
+         this ._set_value       .addInterest ("set_value__", this);
+         this ._set_destination .addInterest ("set_destination__", this);
 
          var
             buffer             = this .getBuffer (),
@@ -94,14 +94,14 @@ function (X3DFollowerNode,
       },
       getOrder: function ()
       {
-         return Algorithm .clamp (this .order_ .getValue (), 0, 5);
+         return Algorithm .clamp (this ._order .getValue (), 0, 5);
       },
       getTolerance: function ()
       {
-         if (this .tolerance_ .getValue () < 0)
+         if (this ._tolerance .getValue () < 0)
             return 1e-4;
 
-         return this .tolerance_ .getValue ();
+         return this ._tolerance .getValue ();
       },
       prepareEvents: function ()
       {
@@ -109,11 +109,11 @@ function (X3DFollowerNode,
             buffer = this .getBuffer (),
             order  = buffer .length - 1;
 
-         if (this .tau_ .getValue ())
+         if (this ._tau .getValue ())
          {
             var
                delta = 1 / this .getBrowser () .currentFrameRate,
-               alpha = Math .exp (-delta / this .tau_ .getValue ());
+               alpha = Math .exp (-delta / this ._tau .getValue ());
 
             for (var i = 0; i < order; ++ i)
             {

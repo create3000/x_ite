@@ -111,37 +111,37 @@ function (Fields,
       {
          X3DBindableNode .prototype .initialize .call (this);
 
-         this .timeSensor .stopTime_ = 1;
+         this .timeSensor ._stopTime = 1;
          this .timeSensor .setup ();
 
-         this .easeInEaseOut .key_           = new Fields .MFFloat (0, 1);
-         this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+         this .easeInEaseOut ._key           = new Fields .MFFloat (0, 1);
+         this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
          this .easeInEaseOut .setup ();
 
-         this .positionInterpolator         .key_ = new Fields .MFFloat (0, 1);
-         this .orientationInterpolator      .key_ = new Fields .MFFloat (0, 1);
-         this .scaleInterpolator            .key_ = new Fields .MFFloat (0, 1);
-         this .scaleOrientationInterpolator .key_ = new Fields .MFFloat (0, 1);
+         this .positionInterpolator         ._key = new Fields .MFFloat (0, 1);
+         this .orientationInterpolator      ._key = new Fields .MFFloat (0, 1);
+         this .scaleInterpolator            ._key = new Fields .MFFloat (0, 1);
+         this .scaleOrientationInterpolator ._key = new Fields .MFFloat (0, 1);
 
          this .positionInterpolator         .setup ();
          this .orientationInterpolator      .setup ();
          this .scaleInterpolator            .setup ();
          this .scaleOrientationInterpolator .setup ();
 
-         this .timeSensor .isActive_         .addFieldInterest (this .transitionActive_);
-         this .timeSensor .fraction_changed_ .addFieldInterest (this .easeInEaseOut .set_fraction_);
+         this .timeSensor ._isActive         .addFieldInterest (this ._transitionActive);
+         this .timeSensor ._fraction_changed .addFieldInterest (this .easeInEaseOut ._set_fraction);
 
-         this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .positionInterpolator         .set_fraction_);
-         this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .orientationInterpolator      .set_fraction_);
-         this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .scaleInterpolator            .set_fraction_);
-         this .easeInEaseOut .modifiedFraction_changed_ .addFieldInterest (this .scaleOrientationInterpolator .set_fraction_);
+         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .positionInterpolator         ._set_fraction);
+         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .orientationInterpolator      ._set_fraction);
+         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleInterpolator            ._set_fraction);
+         this .easeInEaseOut ._modifiedFraction_changed .addFieldInterest (this .scaleOrientationInterpolator ._set_fraction);
 
-         this .positionInterpolator         .value_changed_ .addFieldInterest (this .positionOffset_);
-         this .orientationInterpolator      .value_changed_ .addFieldInterest (this .orientationOffset_);
-         this .scaleInterpolator            .value_changed_ .addFieldInterest (this .scaleOffset_);
-         this .scaleOrientationInterpolator .value_changed_ .addFieldInterest (this .scaleOrientationOffset_);
+         this .positionInterpolator         ._value_changed .addFieldInterest (this ._positionOffset);
+         this .orientationInterpolator      ._value_changed .addFieldInterest (this ._orientationOffset);
+         this .scaleInterpolator            ._value_changed .addFieldInterest (this ._scaleOffset);
+         this .scaleOrientationInterpolator ._value_changed .addFieldInterest (this ._scaleOrientationOffset);
 
-         this .isBound_ .addInterest ("set_bound__", this);
+         this ._isBound .addInterest ("set_bound__", this);
       },
       getEaseInEaseOut: function ()
       {
@@ -150,27 +150,27 @@ function (Fields,
       setInterpolators: function () { },
       getPosition: function ()
       {
-         return this .position_ .getValue ();
+         return this ._position .getValue ();
       },
       getUserPosition: function ()
       {
-         return this .userPosition .assign (this .getPosition ()) .add (this .positionOffset_ .getValue ());
+         return this .userPosition .assign (this .getPosition ()) .add (this ._positionOffset .getValue ());
       },
       getOrientation: function ()
       {
-         return this .orientation_ .getValue ();
+         return this ._orientation .getValue ();
       },
       getUserOrientation: function ()
       {
-         return this .userOrientation .assign (this .getOrientation ()) .multRight (this .orientationOffset_ .getValue ());
+         return this .userOrientation .assign (this .getOrientation ()) .multRight (this ._orientationOffset .getValue ());
       },
       getCenterOfRotation: function ()
       {
-         return this .centerOfRotation_ .getValue ();
+         return this ._centerOfRotation .getValue ();
       },
       getUserCenterOfRotation: function ()
       {
-         return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this .centerOfRotationOffset_ .getValue ());
+         return this .userCenterOfRotation .assign (this .getCenterOfRotation ()) .add (this ._centerOfRotationOffset .getValue ());
       },
       getProjectionMatrix: function (renderObject)
       {
@@ -230,9 +230,9 @@ function (Fields,
             {
                this .to = toViewpointNode;
 
-               if (toViewpointNode .jump_ .getValue ())
+               if (toViewpointNode ._jump .getValue ())
                {
-                  if (! toViewpointNode .retainUserOffsets_ .getValue ())
+                  if (! toViewpointNode ._retainUserOffsets .getValue ())
                      toViewpointNode .resetUserOffsets ();
 
                   // Copy from toViewpointNode all fields.
@@ -247,7 +247,7 @@ function (Fields,
 
                   const
                      navigationInfoNode = layerNode .getNavigationInfo (),
-                     transitionTime     = navigationInfoNode .transitionTime_ .getValue ();
+                     transitionTime     = navigationInfoNode ._transitionTime .getValue ();
 
                   let transitionType = navigationInfoNode .getTransitionType ();
 
@@ -272,52 +272,52 @@ function (Fields,
                   {
                      case "TELEPORT":
                      {
-                        navigationInfoNode .transitionComplete_ = true;
+                        navigationInfoNode ._transitionComplete = true;
                         return;
                      }
                      case "ANIMATE":
                      {
-                        this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+                        this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
                         break;
                      }
                      default:
                      {
                         // LINEAR
-                        this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
+                        this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 0), new Fields .SFVec2f (0, 0));
                         break;
                      }
                   }
 
-                  this .timeSensor .cycleInterval_ = transitionTime;
-                  this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
-                  this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
+                  this .timeSensor ._cycleInterval = transitionTime;
+                  this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+                  this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
-                  this .timeSensor .isActive_ .addInterest ("set_active__", this, navigationInfoNode);
+                  this .timeSensor ._isActive .addInterest ("set_active__", this, navigationInfoNode);
 
                   toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
 
-                  this .positionInterpolator         .keyValue_ = new Fields .MFVec3f    (relativePosition,         toViewpointNode .positionOffset_);
-                  this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (relativeOrientation,      toViewpointNode .orientationOffset_);
-                  this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f    (relativeScale,            toViewpointNode .scaleOffset_);
-                  this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (relativeScaleOrientation, toViewpointNode .scaleOrientationOffset_);
+                  this .positionInterpolator         ._keyValue = new Fields .MFVec3f    (relativePosition,         toViewpointNode ._positionOffset);
+                  this .orientationInterpolator      ._keyValue = new Fields .MFRotation (relativeOrientation,      toViewpointNode ._orientationOffset);
+                  this .scaleInterpolator            ._keyValue = new Fields .MFVec3f    (relativeScale,            toViewpointNode ._scaleOffset);
+                  this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (relativeScaleOrientation, toViewpointNode ._scaleOrientationOffset);
 
-                  this .positionOffset_         = relativePosition;
-                  this .orientationOffset_      = relativeOrientation;
-                  this .scaleOffset_            = relativeScale;
-                  this .scaleOrientationOffset_ = relativeScaleOrientation;
+                  this ._positionOffset         = relativePosition;
+                  this ._orientationOffset      = relativeOrientation;
+                  this ._scaleOffset            = relativeScale;
+                  this ._scaleOrientationOffset = relativeScaleOrientation;
 
                   this .setInterpolators (fromViewpointNode, toViewpointNode);
 
-                  this .transitionActive_ = true;
+                  this ._transitionActive = true;
                }
                else
                {
                   toViewpointNode .getRelativeTransformation (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation);
 
-                  toViewpointNode .positionOffset_         = relativePosition;
-                  toViewpointNode .orientationOffset_      = relativeOrientation;
-                  toViewpointNode .scaleOffset_            = relativeScale;
-                  toViewpointNode .scaleOrientationOffset_ = relativeScaleOrientation;
+                  toViewpointNode ._positionOffset         = relativePosition;
+                  toViewpointNode ._orientationOffset      = relativeOrientation;
+                  toViewpointNode ._scaleOffset            = relativeScale;
+                  toViewpointNode ._scaleOrientationOffset = relativeScaleOrientation;
 
                   toViewpointNode .setInterpolators (fromViewpointNode, toViewpointNode);
                }
@@ -330,17 +330,17 @@ function (Fields,
       })(),
       transitionStop: function ()
       {
-         this .timeSensor .stopTime_ = this .getBrowser () .getCurrentTime ();
-         this .timeSensor .isActive_ .removeInterest ("set_active__", this);
+         this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._isActive .removeInterest ("set_active__", this);
       },
       resetUserOffsets: function ()
       {
-         this .positionOffset_         = Vector3   .Zero;
-         this .orientationOffset_      = Rotation4 .Identity;
-         this .scaleOffset_            = Vector3   .One;
-         this .scaleOrientationOffset_ = Rotation4 .Identity;
-         this .centerOfRotationOffset_ = Vector3   .Zero;
-         this .fieldOfViewScale_       = 1;
+         this ._positionOffset         = Vector3   .Zero;
+         this ._orientationOffset      = Rotation4 .Identity;
+         this ._scaleOffset            = Vector3   .One;
+         this ._scaleOrientationOffset = Rotation4 .Identity;
+         this ._centerOfRotationOffset = Vector3   .Zero;
+         this ._fieldOfViewScale       = 1;
       },
       getRelativeTransformation: function (fromViewpointNode, relativePosition, relativeOrientation, relativeScale, relativeScaleOrientation)
       // throw
@@ -389,59 +389,59 @@ function (Fields,
          const
             offset = point .copy () .add (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, distance))) .subtract (this .getPosition ());
 
-         layerNode .getNavigationInfo () .transitionStart_ = true;
+         layerNode .getNavigationInfo () ._transitionStart = true;
 
-         this .timeSensor .cycleInterval_ = 0.2;
-         this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
-         this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._cycleInterval = 0.2;
+         this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
-         this .timeSensor .isActive_ .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
+         this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 
-         this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+         this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
          const
-            translation = Vector3 .lerp (this .positionOffset_ .getValue (), offset, factor),
+            translation = Vector3 .lerp (this ._positionOffset .getValue (), offset, factor),
             direction   = Vector3 .add (this .getPosition (), translation) .subtract (point);
 
-         let rotation = Rotation4 .multRight (this .orientationOffset_ .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
+         let rotation = Rotation4 .multRight (this ._orientationOffset .getValue (), new Rotation4 (this .getUserOrientation () .multVecRot (new Vector3 (0, 0, 1)), direction));
 
          if (straighten)
          {
             rotation = Rotation4 .inverse (this .getOrientation ()) .multRight (this .straightenHorizon (Rotation4 .multRight (this .getOrientation (), rotation)));
          }
 
-         this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, translation);
-         this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
-         this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
-         this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
+         this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, translation);
+         this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
+         this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, this ._scaleOffset);
+         this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
 
          this .setInterpolators (this, this);
 
-         this .centerOfRotationOffset_ = Vector3 .subtract (point, this .getCenterOfRotation ());
-         this .set_bind_               = true;
+         this ._centerOfRotationOffset = Vector3 .subtract (point, this .getCenterOfRotation ());
+         this ._set_bind               = true;
       },
       straighten: function (layerNode, horizon)
       {
-         layerNode .getNavigationInfo () .transitionStart_ = true;
+         layerNode .getNavigationInfo () ._transitionStart = true;
 
-         this .timeSensor .cycleInterval_ = 0.4;
-         this .timeSensor .stopTime_      = this .getBrowser () .getCurrentTime ();
-         this .timeSensor .startTime_     = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._cycleInterval = 0.4;
+         this .timeSensor ._stopTime      = this .getBrowser () .getCurrentTime ();
+         this .timeSensor ._startTime     = this .getBrowser () .getCurrentTime ();
 
-         this .timeSensor .isActive_ .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
+         this .timeSensor ._isActive .addInterest ("set_active__", this, layerNode .getNavigationInfo ());
 
-         this .easeInEaseOut .easeInEaseOut_ = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
+         this .easeInEaseOut ._easeInEaseOut = new Fields .MFVec2f (new Fields .SFVec2f (0, 1), new Fields .SFVec2f (1, 0));
 
          const rotation = Rotation4 .multRight (Rotation4 .inverse (this .getOrientation ()), this .straightenHorizon (this .getUserOrientation ()));
 
-         this .positionInterpolator         .keyValue_ = new Fields .MFVec3f (this .positionOffset_, this .positionOffset_);
-         this .orientationInterpolator      .keyValue_ = new Fields .MFRotation (this .orientationOffset_, rotation);
-         this .scaleInterpolator            .keyValue_ = new Fields .MFVec3f (this .scaleOffset_, this .scaleOffset_);
-         this .scaleOrientationInterpolator .keyValue_ = new Fields .MFRotation (this .scaleOrientationOffset_, this .scaleOrientationOffset_);
+         this .positionInterpolator         ._keyValue = new Fields .MFVec3f (this ._positionOffset, this ._positionOffset);
+         this .orientationInterpolator      ._keyValue = new Fields .MFRotation (this ._orientationOffset, rotation);
+         this .scaleInterpolator            ._keyValue = new Fields .MFVec3f (this ._scaleOffset, this ._scaleOffset);
+         this .scaleOrientationInterpolator ._keyValue = new Fields .MFRotation (this ._scaleOrientationOffset, this ._scaleOrientationOffset);
 
          this .setInterpolators (this, this);
 
-         this .set_bind_ = true;
+         this ._set_bind = true;
       },
       straightenHorizon: (function ()
       {
@@ -473,17 +473,17 @@ function (Fields,
       })(),
       set_active__: function (active, navigationInfoNode)
       {
-         if (this .isBound_ .getValue () && ! active .getValue () && this .timeSensor .fraction_changed_ .getValue () === 1)
+         if (this ._isBound .getValue () && ! active .getValue () && this .timeSensor ._fraction_changed .getValue () === 1)
          {
-            navigationInfoNode .transitionComplete_ = true;
+            navigationInfoNode ._transitionComplete = true;
          }
       },
       set_bound__: function ()
       {
-         if (this .isBound_ .getValue ())
-            this .getBrowser () .getNotification () .string_ = this .description_;
+         if (this ._isBound .getValue ())
+            this .getBrowser () .getNotification () ._string = this ._description;
          else
-            this .timeSensor .stopTime_ = this .getBrowser () .getCurrentTime ();
+            this .timeSensor ._stopTime = this .getBrowser () .getCurrentTime ();
       },
       traverse: function (type, renderObject)
       {
@@ -500,8 +500,8 @@ function (Fields,
          {
             this .cameraSpaceMatrix .set (this .getUserPosition (),
                                           this .getUserOrientation (),
-                                          this .scaleOffset_ .getValue (),
-                                          this .scaleOrientationOffset_ .getValue ());
+                                          this ._scaleOffset .getValue (),
+                                          this ._scaleOrientationOffset .getValue ());
 
             this .cameraSpaceMatrix .multRight ((this .to || this) .modelMatrix);
 

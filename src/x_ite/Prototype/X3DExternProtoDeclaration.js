@@ -147,7 +147,7 @@ function ($,
 
          const FileLoader = require ("x_ite/InputOutput/FileLoader");
 
-         new FileLoader (this) .createX3DFromURL (this .urlBuffer_, null, this .setInternalSceneAsync .bind (this));
+         new FileLoader (this) .createX3DFromURL (this ._urlBuffer, null, this .setInternalSceneAsync .bind (this));
       },
       setInternalSceneAsync: function (value)
       {
@@ -241,7 +241,7 @@ function ($,
 
          stream .string += generator .Indent ();
 
-         this .url_ .toVRMLStream (stream);
+         this ._url .toVRMLStream (stream);
       },
       toVRMLStreamUserDefinedField: function (stream, field, fieldTypeLength, accessTypeLength)
       {
@@ -267,7 +267,7 @@ function ($,
          stream .string += " ";
          stream .string += "url='";
 
-         this .url_ .toXMLStream (stream);
+         this ._url .toXMLStream (stream);
 
          stream .string += "'";
          stream .string += ">\n";
@@ -328,7 +328,7 @@ function ($,
 
    Object .defineProperty (X3DExternProtoDeclaration .prototype, "urls",
    {
-      get: function () { return this .url_; },
+      get: function () { return this ._url; },
       enumerable: true,
       configurable: false
    });

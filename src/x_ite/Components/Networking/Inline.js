@@ -123,17 +123,17 @@ function (Fields,
          this .group .setPrivate (true);
          this .group .setup ();
 
-         this .group .isCameraObject_   .addFieldInterest (this .isCameraObject_);
-         this .group .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+         this .group ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+         this .group ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
          this .requestImmediateLoad ();
       },
       getBBox: function (bbox, shadow)
       {
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
             return this .group .getBBox (bbox, shadow);
 
-         return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+         return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       },
       set_live__: function ()
       {
@@ -150,7 +150,7 @@ function (Fields,
       },
       loadNow: function ()
       {
-         new FileLoader (this) .createX3DFromURL (this .urlBuffer_, null, this .setInternalSceneAsync .bind (this));
+         new FileLoader (this) .createX3DFromURL (this ._urlBuffer, null, this .setInternalSceneAsync .bind (this));
       },
       setInternalSceneAsync: function (scene)
       {
@@ -168,7 +168,7 @@ function (Fields,
       setInternalScene: function (scene)
       {
          this .scene .setLive (false);
-         this .scene .rootNodes .removeFieldInterest (this .group .children_);
+         this .scene .rootNodes .removeFieldInterest (this .group ._children);
 
          // Set new scene.
 
@@ -176,8 +176,8 @@ function (Fields,
          this .scene .setExecutionContext (this .getExecutionContext ());
          this .scene .setPrivate (this .getExecutionContext () .getPrivate ());
 
-         this .scene .rootNodes .addFieldInterest (this .group .children_);
-         this .group .children_ = this .scene .rootNodes;
+         this .scene .rootNodes .addFieldInterest (this .group ._children);
+         this .group ._children = this .scene .rootNodes;
 
          this .set_live__ ();
 

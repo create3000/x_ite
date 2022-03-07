@@ -73,7 +73,7 @@ function (Fields,
       this .addType (X3DConstants .Switch);
 
       if (executionContext .getSpecificationVersion () === "2.0")
-         this .addAlias ("choice", this .children_);
+         this .addAlias ("choice", this ._children);
 
       this .childNode     = null;
       this .visibleNode   = null;
@@ -110,14 +110,14 @@ function (Fields,
       {
          X3DGroupingNode .prototype .initialize .call (this);
 
-         this .whichChoice_ .addInterest ("set_child__", this);
-         this .children_    .addInterest ("set_child__", this);
+         this ._whichChoice .addInterest ("set_child__", this);
+         this ._children    .addInterest ("set_child__", this);
 
          this .set_child__ ();
       },
       getSubBBox: function (bbox, shadow)
       {
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
             const boundedObject = X3DCast (X3DConstants .X3DBoundedObject, this .visibleNode);
 
@@ -127,7 +127,7 @@ function (Fields,
             return bbox .set ();
          }
 
-         return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+         return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       },
       clear: function () { },
       add: function () { },
@@ -136,31 +136,31 @@ function (Fields,
       {
          if (this .childNode)
          {
-            this .childNode .isCameraObject_   .removeInterest ("set_cameraObject__",     this);
-            this .childNode .isPickableObject_ .removeInterest ("set_transformSensors__", this);
+            this .childNode ._isCameraObject   .removeInterest ("set_cameraObject__",     this);
+            this .childNode ._isPickableObject .removeInterest ("set_transformSensors__", this);
          }
 
          if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
          {
-            this .childNode .visible_     .removeInterest ("set_visible__",     this);
-            this .childNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+            this .childNode ._visible     .removeInterest ("set_visible__",     this);
+            this .childNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
          }
 
-         const whichChoice = this .whichChoice_ .getValue ();
+         const whichChoice = this ._whichChoice .getValue ();
 
-         if (whichChoice >= 0 && whichChoice < this .children_ .length)
+         if (whichChoice >= 0 && whichChoice < this ._children .length)
          {
-            this .childNode = X3DCast (X3DConstants .X3DChildNode, this .children_ [whichChoice]);
+            this .childNode = X3DCast (X3DConstants .X3DChildNode, this ._children [whichChoice]);
 
             if (this .childNode)
             {
-               this .childNode .isCameraObject_   .addInterest ("set_cameraObject__",     this);
-               this .childNode .isPickableObject_ .addInterest ("set_transformSensors__", this);
+               this .childNode ._isCameraObject   .addInterest ("set_cameraObject__",     this);
+               this .childNode ._isPickableObject .addInterest ("set_transformSensors__", this);
 
                if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
                {
-                  this .childNode .visible_     .addInterest ("set_visible__",     this);
-                  this .childNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
+                  this .childNode ._visible     .addInterest ("set_visible__",     this);
+                  this .childNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
                }
 
                delete this .traverse;
@@ -183,7 +183,7 @@ function (Fields,
          {
             if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
             {
-               this .setCameraObject (this .childNode .visible_ .getValue ());
+               this .setCameraObject (this .childNode ._visible .getValue ());
             }
             else
             {
@@ -203,7 +203,7 @@ function (Fields,
       {
          if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
          {
-            this .visibleNode = this .childNode .visible_ .getValue () ? this .childNode : null;
+            this .visibleNode = this .childNode ._visible .getValue () ? this .childNode : null;
          }
          else
          {
@@ -216,7 +216,7 @@ function (Fields,
       {
          if (X3DCast (X3DConstants .X3DBoundedObject, this .childNode))
          {
-            this .boundedObject = this .childNode .bboxDisplay_ .getValue () ? this .childNode : null;
+            this .boundedObject = this .childNode ._bboxDisplay .getValue () ? this .childNode : null;
          }
          else
          {

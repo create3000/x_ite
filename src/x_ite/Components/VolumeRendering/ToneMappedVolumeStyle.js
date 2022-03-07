@@ -102,28 +102,28 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .surfaceNormals_ .addInterest ("set_surfaceNormals__", this);
+         this ._surfaceNormals .addInterest ("set_surfaceNormals__", this);
 
          this .set_surfaceNormals__ ();
       },
       set_surfaceNormals__: function ()
       {
-         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .surfaceNormals_);
+         this .surfaceNormalsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._surfaceNormals);
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "coolColor_" + this .getId (), this .coolColor_ .copy ());
-         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "warmColor_" + this .getId (), this .warmColor_ .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "coolColor_" + this .getId (), this ._coolColor .copy ());
+         shaderNode .addUserDefinedField (X3DConstants .inputOutput, "warmColor_" + this .getId (), this ._warmColor .copy ());
 
          if (this .surfaceNormalsNode)
             shaderNode .addUserDefinedField (X3DConstants .inputOutput, "surfaceNormals_" + this .getId (), new Fields .SFNode (this .surfaceNormalsNode));
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";
@@ -169,7 +169,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";

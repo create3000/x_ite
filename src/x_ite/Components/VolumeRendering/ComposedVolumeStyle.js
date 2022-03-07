@@ -102,7 +102,7 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .renderStyle_ .addInterest ("set_renderStyle__", this);
+         this ._renderStyle .addInterest ("set_renderStyle__", this);
 
          this .set_renderStyle__ ();
       },
@@ -148,9 +148,9 @@ function (Fields,
 
          renderStyleNodes .length = 0;
 
-         for (var i = 0, length = this .renderStyle_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._renderStyle .length; i < length; ++ i)
          {
-            var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this .renderStyle_ [i]);
+            var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this ._renderStyle [i]);
 
             if (renderStyleNode)
                renderStyleNodes .push (renderStyleNode);
@@ -170,7 +170,7 @@ function (Fields,
       },
       addShaderFields: function (shaderNode)
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return;
 
          var renderStyleNodes = this .renderStyleNodes;
@@ -180,7 +180,7 @@ function (Fields,
       },
       getUniformsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var
@@ -206,7 +206,7 @@ function (Fields,
       },
       getFunctionsText: function ()
       {
-         if (! this .enabled_ .getValue ())
+         if (! this ._enabled .getValue ())
             return "";
 
          var string = "";

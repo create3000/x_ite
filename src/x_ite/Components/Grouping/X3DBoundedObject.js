@@ -70,8 +70,8 @@ function (Fields,
 
       this .addChildObjects ("transformSensors_changed", new Fields .SFTime ());
 
-      this .bboxSize_   .setUnit ("length");
-      this .bboxCenter_ .setUnit ("length");
+      this ._bboxSize   .setUnit ("length");
+      this ._bboxCenter .setUnit ("length");
 
       this .childBBox            = new Box3 (); // Must be unique for each X3DBoundedObject.
       this .transformSensorNodes = new Set ();
@@ -135,13 +135,13 @@ function (Fields,
       {
          this .transformSensorNodes .add (transformSensorNode);
 
-         this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
+         this ._transformSensors_changed = this .getBrowser () .getCurrentTime ();
       },
       removeTransformSensor: function (transformSensorNode)
       {
          this .transformSensorNodes .delete (transformSensorNode);
 
-         this .transformSensors_changed_ = this .getBrowser () .getCurrentTime ();
+         this ._transformSensors_changed = this .getBrowser () .getCurrentTime ();
       },
       getTransformSensors: function ()
       {

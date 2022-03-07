@@ -120,10 +120,10 @@ function (Fields,
          X3DChildNode     .prototype .initialize .call (this);
          X3DBoundedObject .prototype .initialize .call (this);
 
-         this .tessellationScale_ .addInterest ("set_tessellationScale__", this);
-         this .addGeometry_       .addInterest ("set_addGeometry__",       this);
-         this .removeGeometry_    .addInterest ("set_removeGeometry__",    this);
-         this .geometry_          .addInterest ("set_geometry__",          this);
+         this ._tessellationScale .addInterest ("set_tessellationScale__", this);
+         this ._addGeometry       .addInterest ("set_addGeometry__",       this);
+         this ._removeGeometry    .addInterest ("set_removeGeometry__",    this);
+         this ._geometry          .addInterest ("set_geometry__",          this);
 
          this .set_geometry__ ();
       },
@@ -140,28 +140,28 @@ function (Fields,
       },
       set_tessellationScale__: function ()
       {
-         var tessellationScale = Math .max (0, this .tessellationScale_ .getValue ());
+         var tessellationScale = Math .max (0, this ._tessellationScale .getValue ());
 
          for (var i = 0, length = this .geometryNodes .length; i < length; ++ i)
             this .geometryNodes [i] .setTessellationScale (tessellationScale);
       },
       set_addGeometry__: function ()
       {
-         this .addGeometry_ .setTainted (true);
+         this ._addGeometry .setTainted (true);
 
-         this .addGeometry_ .erase (remove (this .addGeometry_, 0, this .addGeometry_ .length,
-                                            this .geometry_, 0, this .geometry_ .length),
-                                    this .addGeometry_ .length);
+         this ._addGeometry .erase (remove (this ._addGeometry, 0, this ._addGeometry .length,
+                                            this ._geometry, 0, this ._geometry .length),
+                                    this ._addGeometry .length);
 
-         for (var i = 0, length = this .addGeometry_ .length; i < length; ++ i)
-            this .geometry_ .push (this .addGeometry_ [i]);
+         for (var i = 0, length = this ._addGeometry .length; i < length; ++ i)
+            this ._geometry .push (this ._addGeometry [i]);
 
-         this .addGeometry_ .setTainted (false);
+         this ._addGeometry .setTainted (false);
       },
       set_removeGeometry__: function ()
       {
-         this .geometry_ .erase (remove (this .geometry_,       0, this .geometry_ .length,
-                                         this .removeGeometry_, 0, this .removeGeometry_ .length),
+         this ._geometry .erase (remove (this ._geometry,       0, this ._geometry .length,
+                                         this ._removeGeometry, 0, this ._removeGeometry .length),
                                  this .geometry__ .length);
       },
       set_geometry__: function ()
@@ -171,9 +171,9 @@ function (Fields,
 
          this .geometryNodes .length = 0;
 
-         for (var i = 0, length = this .geometry_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._geometry .length; i < length; ++ i)
          {
-            var geometryNode = X3DCast (X3DConstants .X3DNurbsSurfaceGeometryNode, this .geometry_ [i]);
+            var geometryNode = X3DCast (X3DConstants .X3DNurbsSurfaceGeometryNode, this ._geometry [i]);
 
             if (geometryNode)
                this .geometryNodes .push (geometryNode);

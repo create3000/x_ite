@@ -153,7 +153,7 @@ function (X3DBaseNode,
 
          return (distance
             .assign (viewpoint .getPosition ())
-            .add (positionOffset || viewpoint .positionOffset_ .getValue ())
+            .add (positionOffset || viewpoint ._positionOffset .getValue ())
             .subtract (viewpoint .getUserCenterOfRotation ()));
       },
       trackballProjectToSphere: function (x, y, vector)

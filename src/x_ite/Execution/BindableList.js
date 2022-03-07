@@ -116,7 +116,7 @@ function (X3DBaseNode,
                if (! enableInlineBindables && scene !== mainScene)
                   continue;
 
-               if (node .isBound_ .getValue ())
+               if (node ._isBound .getValue ())
                   return node;
             }
 
@@ -147,7 +147,7 @@ function (X3DBaseNode,
       update: function (layerNode, stack)
       {
          const
-            changedNodes = this .collected .filter (node => node .set_bind_ .getModificationTime () > this .updateTime),
+            changedNodes = this .collected .filter (node => node ._set_bind .getModificationTime () > this .updateTime),
             removedNodes = this .removedNodes;
 
          if (! equals (this .collected, this .array))

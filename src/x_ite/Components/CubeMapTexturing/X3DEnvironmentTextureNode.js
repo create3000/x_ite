@@ -107,7 +107,7 @@ function (X3DSingleTextureNode,
       {
          X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
                                                                          this .target,
-                                                                         this .textureProperties_ .getValue (),
+                                                                         this ._textureProperties .getValue (),
                                                                          this .texturePropertiesNode,
                                                                          128,
                                                                          128,

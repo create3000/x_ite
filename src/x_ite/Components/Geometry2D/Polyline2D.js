@@ -70,7 +70,7 @@ function (Fields,
 
       this .setGeometryType (1);
 
-      this .lineSegments_ .setUnit ("length");
+      this ._lineSegments .setUnit ("length");
    }
 
    Polyline2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
@@ -101,10 +101,10 @@ function (Fields,
       build: function ()
       {
          var
-            lineSegments = this .lineSegments_ .getValue (),
+            lineSegments = this ._lineSegments .getValue (),
             vertexArray  = this .getVertices ();
 
-         for (var i = 0, length = this .lineSegments_ .length * 2; i < length; i += 2)
+         for (var i = 0, length = this ._lineSegments .length * 2; i < length; i += 2)
          {
             vertexArray .push (lineSegments [i], lineSegments [i + 1], 0, 1);
          }

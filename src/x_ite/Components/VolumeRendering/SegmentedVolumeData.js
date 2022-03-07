@@ -120,15 +120,15 @@ function (Fields,
          if (gl .getVersion () < 2)
             return;
 
-         this .segmentIdentifiers_ .addInterest ("set_segmentIdentifiers__", this);
-         this .renderStyle_        .addInterest ("set_renderStyle__",        this);
-         this .voxels_             .addFieldInterest (this .getAppearance () .texture_);
+         this ._segmentIdentifiers .addInterest ("set_segmentIdentifiers__", this);
+         this ._renderStyle        .addInterest ("set_renderStyle__",        this);
+         this ._voxels             .addFieldInterest (this .getAppearance () ._texture);
 
-         this .segmentEnabled_     .addInterest ("update", this);
-         this .segmentIdentifiers_ .addInterest ("update", this);
-         this .renderStyle_        .addInterest ("update", this);
+         this ._segmentEnabled     .addInterest ("update", this);
+         this ._segmentIdentifiers .addInterest ("update", this);
+         this ._renderStyle        .addInterest ("update", this);
 
-         this .getAppearance () .texture_ = this .voxels_;
+         this .getAppearance () ._texture = this ._voxels;
 
          this .set_segmentIdentifiers__ ();
          this .set_renderStyle__ ();
@@ -138,11 +138,11 @@ function (Fields,
       },
       getSegmentEnabled: function (index)
       {
-         return index < this .segmentEnabled_ .length ? this .segmentEnabled_ [index] : true;
+         return index < this ._segmentEnabled .length ? this ._segmentEnabled [index] : true;
       },
       set_segmentIdentifiers__: function ()
       {
-         this .segmentIdentifiersNode = X3DCast (X3DConstants .X3DTexture3DNode, this .segmentIdentifiers_);
+         this .segmentIdentifiersNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._segmentIdentifiers);
       },
       set_renderStyle__: function ()
       {
@@ -158,9 +158,9 @@ function (Fields,
 
          renderStyleNodes .length = 0;
 
-         for (var i = 0, length = this .renderStyle_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._renderStyle .length; i < length; ++ i)
          {
-            var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this .renderStyle_ [i]);
+            var renderStyleNode = X3DCast (X3DConstants .X3DComposableVolumeRenderStyleNode, this ._renderStyle [i]);
 
             if (renderStyleNode)
                renderStyleNodes .push (renderStyleNode);
@@ -179,7 +179,7 @@ function (Fields,
          if (this .voxelsNode)
             this .voxelsNode .removeInterest ("set_textureSize__", this);
 
-         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this .voxels_);
+         this .voxelsNode = X3DCast (X3DConstants .X3DTexture3DNode, this ._voxels);
 
          if (this .voxelsNode)
          {
@@ -268,20 +268,20 @@ function (Fields,
 
          var vertexShader = new ShaderPart (this .getExecutionContext ());
          vertexShader .setName ("SegmentedVolumeDataVertexShader");
-         vertexShader .url_ .push ("data:x-shader/x-vertex," + vs);
+         vertexShader ._url .push ("data:x-shader/x-vertex," + vs);
          vertexShader .setup ();
 
          var fragmentShader = new ShaderPart (this .getExecutionContext ());
          fragmentShader .setName ("SegmentedVolumeDataFragmentShader");
-         fragmentShader .type_ = "FRAGMENT";
-         fragmentShader .url_ .push ("data:x-shader/x-fragment," + fs);
+         fragmentShader ._type = "FRAGMENT";
+         fragmentShader ._url .push ("data:x-shader/x-fragment," + fs);
          fragmentShader .setup ();
 
          var shaderNode = new ComposedShader (this .getExecutionContext ());
          shaderNode .setName ("SegmentedVolumeDataShader");
-         shaderNode .language_ = "GLSL";
-         shaderNode .parts_ .push (vertexShader);
-         shaderNode .parts_ .push (fragmentShader);
+         shaderNode ._language = "GLSL";
+         shaderNode ._parts .push (vertexShader);
+         shaderNode ._parts .push (fragmentShader);
 
          if (this .voxelsNode)
          {

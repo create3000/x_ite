@@ -70,7 +70,7 @@ function (Fields,
 
       this .setGeometryType (0);
 
-      this .point_ .setUnit ("length");
+      this ._point .setUnit ("length");
 
       this .setTransparent (true);
    }
@@ -110,10 +110,10 @@ function (Fields,
       build: function ()
       {
          var
-            point       = this .point_ .getValue (),
+            point       = this ._point .getValue (),
             vertexArray = this .getVertices ();
 
-         for (var i = 0, length = this .point_ .length * 2; i < length; i += 2)
+         for (var i = 0, length = this ._point .length * 2; i < length; i += 2)
          {
             vertexArray .push (point [i], point [i + 1], 0, 1);
          }

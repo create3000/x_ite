@@ -156,7 +156,7 @@ function ($,
       loadNow: function ()
       {
          this .setMedia (null);
-         this .urlStack .setValue (this .urlBuffer_);
+         this .urlStack .setValue (this ._urlBuffer);
          this .video .bind ("canplaythrough", this .setVideo .bind (this));
          this .loadNext ();
       },
@@ -165,7 +165,7 @@ function ($,
          if (this .urlStack .length === 0)
          {
             this .video .unbind ("canplaythrough");
-            this .duration_changed_ = -1;
+            this ._duration_changed = -1;
             this .clearTexture ();
             this .setLoadState (X3DConstants .FAILED_STATE);
             return;

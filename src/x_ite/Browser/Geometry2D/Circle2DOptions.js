@@ -99,7 +99,7 @@ function (X3DBaseNode,
       build: function ()
       {
          const
-            dimension = this .dimension_ .getValue (),
+            dimension = this ._dimension .getValue (),
             angle     = Math .PI * 2 / dimension,
             vertices  = this .vertices;
 

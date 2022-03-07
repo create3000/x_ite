@@ -119,20 +119,20 @@ function (Fields,
          X3DChildNode     .prototype .initialize .call (this);
          X3DBoundedObject .prototype .initialize .call (this);
 
-         this .bboxSize_   .addFieldInterest (this .group .bboxSize_);
-         this .bboxCenter_ .addFieldInterest (this .group .bboxCenter_);
-         this .children_   .addFieldInterest (this .group .children_);
+         this ._bboxSize   .addFieldInterest (this .group ._bboxSize);
+         this ._bboxCenter .addFieldInterest (this .group ._bboxCenter);
+         this ._children   .addFieldInterest (this .group ._children);
 
-         this .group .bboxSize_   = this .bboxSize_;
-         this .group .bboxCenter_ = this .bboxCenter_;
-         this .group .children_   = this .children_;
+         this .group ._bboxSize   = this ._bboxSize;
+         this .group ._bboxCenter = this ._bboxCenter;
+         this .group ._children   = this ._children;
          this .group .setPrivate (true);
          this .group .setup ();
 
          // Connect after Group setup.
-         this .group .isCameraObject_   .addFieldInterest (this .isCameraObject_);
-         this .group .isPickableObject_ .addFieldInterest (this .isPickableObject_);
-         this .group .children_         .addInterest ("set_children__", this);
+         this .group ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+         this .group ._isPickableObject .addFieldInterest (this ._isPickableObject);
+         this .group ._children         .addInterest ("set_children__", this);
 
          this .setCameraObject   (this .group .getCameraObject ());
          this .setPickableObject (this .group .getPickableObject ());

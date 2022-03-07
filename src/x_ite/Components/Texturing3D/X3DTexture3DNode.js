@@ -80,9 +80,9 @@ function (X3DSingleTextureNode,
       {
          X3DSingleTextureNode .prototype .initialize .call (this);
 
-         this .repeatS_ .addInterest ("updateTextureProperties", this);
-         this .repeatT_ .addInterest ("updateTextureProperties", this);
-         this .repeatR_ .addInterest ("updateTextureProperties", this);
+         this ._repeatS .addInterest ("updateTextureProperties", this);
+         this ._repeatT .addInterest ("updateTextureProperties", this);
+         this ._repeatR .addInterest ("updateTextureProperties", this);
 
          const gl = this .getBrowser () .getContext ();
 
@@ -154,13 +154,13 @@ function (X3DSingleTextureNode,
       {
          X3DSingleTextureNode .prototype .updateTextureProperties .call (this,
                                                                          this .target,
-                                                                         this .textureProperties_ .getValue (),
+                                                                         this ._textureProperties .getValue (),
                                                                          this .texturePropertiesNode,
                                                                          this .width,
                                                                          this .height,
-                                                                         this .repeatS_ .getValue (),
-                                                                         this .repeatT_ .getValue (),
-                                                                         this .repeatR_ .getValue ());
+                                                                         this ._repeatS .getValue (),
+                                                                         this ._repeatT .getValue (),
+                                                                         this ._repeatR .getValue ());
       },
       setShaderUniformsToChannel: function (gl, shaderObject, renderObject, i)
       {

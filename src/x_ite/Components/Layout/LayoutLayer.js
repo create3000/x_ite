@@ -104,13 +104,13 @@ function (Fields,
       {
          X3DLayerNode .prototype .initialize .call (this);
 
-         this .layout_         .addFieldInterest (this .getGroup () .layout_);
-         this .addChildren_    .addFieldInterest (this .getGroup () .addChildren_);
-         this .removeChildren_ .addFieldInterest (this .getGroup () .removeChildren_);
-         this .children_       .addFieldInterest (this .getGroup () .children_);
+         this ._layout         .addFieldInterest (this .getGroup () ._layout);
+         this ._addChildren    .addFieldInterest (this .getGroup () ._addChildren);
+         this ._removeChildren .addFieldInterest (this .getGroup () ._removeChildren);
+         this ._children       .addFieldInterest (this .getGroup () ._children);
 
-         this .getGroup () .layout_   = this .layout_;
-         this .getGroup () .children_ = this .children_;
+         this .getGroup () ._layout   = this ._layout;
+         this .getGroup () ._children = this ._children;
 
          this .getGroup () .setPrivate (true);
          this .getGroup () .setup ();

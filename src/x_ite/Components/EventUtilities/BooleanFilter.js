@@ -95,19 +95,19 @@ function (Fields,
       {
          X3DChildNode .prototype .initialize .call (this);
 
-         this .set_boolean_ .addInterest ("set_boolean__", this);
+         this ._set_boolean .addInterest ("set_boolean__", this);
       },
       set_boolean__: function ()
       {
-         var value = this .set_boolean_ .getValue ();
+         var value = this ._set_boolean .getValue ();
 
          if (value)
-            this .inputTrue_ = true;
+            this ._inputTrue = true;
 
          else
-            this .inputFalse_ = false;
+            this ._inputFalse = false;
 
-         this .inputNegate_ = ! value;
+         this ._inputNegate = ! value;
       },
    });
 

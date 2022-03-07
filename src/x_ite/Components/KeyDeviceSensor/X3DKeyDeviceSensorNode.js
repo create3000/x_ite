@@ -78,21 +78,21 @@ function (X3DSensorNode,
       {
          if (this .isLive () .getValue ())
          {
-            this .enabled_ .addInterest ("set_enabled__", this);
+            this ._enabled .addInterest ("set_enabled__", this);
 
-            if (this .enabled_ .getValue ())
+            if (this ._enabled .getValue ())
                this .enable ();
          }
          else
          {
-            this .enabled_ .removeInterest ("set_enabled__", this);
+            this ._enabled .removeInterest ("set_enabled__", this);
 
             this .disable ();
          }
       },
       set_enabled__: function ()
       {
-         if (this .enabled_ .getValue ())
+         if (this ._enabled .getValue ())
             this .enable ();
          else
             this .disable ();

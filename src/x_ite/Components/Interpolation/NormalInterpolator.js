@@ -103,18 +103,18 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .keyValue_ .addInterest ("set_keyValue__", this);
+         this ._keyValue .addInterest ("set_keyValue__", this);
       },
       set_keyValue__: function () { },
       interpolate: function (index0, index1, weight)
       {
          var
-            keyValue = this .keyValue_ .getValue (),
-            size     = this .key_ .length > 1 ? Math .floor (this .keyValue_ .length / this .key_ .length) : 0;
+            keyValue = this ._keyValue .getValue (),
+            size     = this ._key .length > 1 ? Math .floor (this ._keyValue .length / this ._key .length) : 0;
 
-         this .value_changed_ .length = size;
+         this ._value_changed .length = size;
 
-         var value_changed = this .value_changed_ .getValue ();
+         var value_changed = this ._value_changed .getValue ();
 
          index0 *= size;
          index1  = index0 + size;
@@ -144,7 +144,7 @@ function (Fields,
             { }
          }
 
-         this .value_changed_ .addEvent ();
+         this ._value_changed .addEvent ();
       },
    });
 

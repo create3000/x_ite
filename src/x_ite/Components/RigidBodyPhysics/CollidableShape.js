@@ -113,14 +113,14 @@ function (Fields,
       {
          X3DNBodyCollidableNode .prototype .initialize .call (this);
 
-         this .enabled_ .addInterest ("set_collidableGeometry__", this);
-         this .shape_   .addInterest ("set_shape__",              this);
+         this ._enabled .addInterest ("set_collidableGeometry__", this);
+         this ._shape   .addInterest ("set_shape__",              this);
 
          this .set_shape__ ();
       },
       getBBox: function (bbox, shadow)
       {
-         if (this .bboxSize_ .getValue () .equals (this .getDefaultBBoxSize ()))
+         if (this ._bboxSize .getValue () .equals (this .getDefaultBBoxSize ()))
          {
             const boundedObject = this .visibleNode;
 
@@ -130,7 +130,7 @@ function (Fields,
             return bbox .set ();
          }
 
-         return bbox .set (this .bboxSize_ .getValue (), this .bboxCenter_ .getValue ());
+         return bbox .set (this ._bboxSize .getValue (), this ._bboxCenter .getValue ());
       },
       setConvex: function (value)
       {
@@ -196,26 +196,26 @@ function (Fields,
       {
          if (this .shapeNode)
          {
-            this .shapeNode .isCameraObject_   .removeFieldInterest (this .isCameraObject_);
-            this .shapeNode .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
+            this .shapeNode ._isCameraObject   .removeFieldInterest (this ._isCameraObject);
+            this .shapeNode ._isPickableObject .removeFieldInterest (this ._isPickableObject);
 
-            this .shapeNode .visible_     .removeInterest ("set_visible__",     this);
-            this .shapeNode .bboxDisplay_ .removeInterest ("set_bboxDisplay__", this);
+            this .shapeNode ._visible     .removeInterest ("set_visible__",     this);
+            this .shapeNode ._bboxDisplay .removeInterest ("set_bboxDisplay__", this);
 
-            this .shapeNode .geometry_ .removeInterest ("set_geometry__", this);
+            this .shapeNode ._geometry .removeInterest ("set_geometry__", this);
          }
 
-         this .shapeNode = X3DCast (X3DConstants .Shape, this .shape_);
+         this .shapeNode = X3DCast (X3DConstants .Shape, this ._shape);
 
          if (this .shapeNode)
          {
-            this .shapeNode .isCameraObject_   .addFieldInterest (this .isCameraObject_);
-            this .shapeNode .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+            this .shapeNode ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+            this .shapeNode ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
-            this .shapeNode .visible_     .addInterest ("set_visible__",     this);
-            this .shapeNode .bboxDisplay_ .addInterest ("set_bboxDisplay__", this);
+            this .shapeNode ._visible     .addInterest ("set_visible__",     this);
+            this .shapeNode ._bboxDisplay .addInterest ("set_bboxDisplay__", this);
 
-            this .shapeNode .geometry_ .addInterest ("set_geometry__", this);
+            this .shapeNode ._geometry .addInterest ("set_geometry__", this);
 
             this .setCameraObject   (this .shapeNode .getCameraObject ());
             this .setPickableObject (this .shapeNode .getPickableObject ());
@@ -238,7 +238,7 @@ function (Fields,
       {
          if (this .shapeNode && this .shapeNode .getCameraObject ())
          {
-            this .setCameraObject (this .shapeNode .visible_ .getValue ());
+            this .setCameraObject (this .shapeNode ._visible .getValue ());
          }
          else
          {
@@ -249,7 +249,7 @@ function (Fields,
       {
          if (this .shapeNode)
          {
-            this .visibleNode = this .shapeNode .visible_ .getValue () ? this .shapeNode : null;
+            this .visibleNode = this .shapeNode ._visible .getValue () ? this .shapeNode : null;
          }
          else
          {
@@ -262,7 +262,7 @@ function (Fields,
       {
          if (this .shapeNode)
          {
-            this .boundedObject = this .shapeNode .bboxDisplay_ .getValue () ? this .shapeNode : null;
+            this .boundedObject = this .shapeNode ._bboxDisplay .getValue () ? this .shapeNode : null;
          }
          else
          {
@@ -272,7 +272,7 @@ function (Fields,
       set_geometry__: function ()
       {
          if (this .geometryNode)
-            this .geometryNode .rebuild_ .removeInterest ("set_collidableGeometry__", this);
+            this .geometryNode ._rebuild .removeInterest ("set_collidableGeometry__", this);
 
          if (this .shapeNode)
             this .geometryNode = this .shapeNode .getGeometry ();
@@ -280,7 +280,7 @@ function (Fields,
             this .geometryNode = null;
 
          if (this .geometryNode)
-            this .geometryNode .rebuild_ .addInterest ("set_collidableGeometry__", this);
+            this .geometryNode ._rebuild .addInterest ("set_collidableGeometry__", this);
 
          this .set_collidableGeometry__ ();
       },
@@ -299,7 +299,7 @@ function (Fields,
             this .setOffset (0, 0, 0);
             this .getCompoundShape () .setLocalScaling (defaultScaling);
 
-            if (this .enabled_ .getValue () && this .geometryNode && this .geometryNode .getGeometryType () > 1)
+            if (this ._enabled .getValue () && this .geometryNode && this .geometryNode .getGeometryType () > 1)
             {
                var type = this .geometryNode .getType ();
 
@@ -311,7 +311,7 @@ function (Fields,
                      {
                         var
                            box  = this .geometryNode,
-                           size = box .size_ .getValue ();
+                           size = box ._size .getValue ();
 
                         this .collisionShape = new Ammo .btBoxShape (new Ammo .btVector3 (size .x / 2, size .y / 2, size .z / 2));
                         break;
@@ -320,8 +320,8 @@ function (Fields,
                      {
                         var cone = this .geometryNode;
 
-                        if (cone .side_ .getValue () && cone .bottom_ .getValue ())
-                           this .collisionShape = new Ammo .btConeShape (cone .bottomRadius_ .getValue (), cone .height_ .getValue ());
+                        if (cone ._side .getValue () && cone ._bottom .getValue ())
+                           this .collisionShape = new Ammo .btConeShape (cone ._bottomRadius .getValue (), cone ._height .getValue ());
                         else
                            this .collisionShape = this .createConcaveGeometry ();
 
@@ -331,10 +331,10 @@ function (Fields,
                      {
                         var
                            cylinder  = this .geometryNode,
-                           radius    = cylinder .radius_ .getValue (),
-                           height1_2 = cylinder .height_ .getValue () * 0.5;
+                           radius    = cylinder ._radius .getValue (),
+                           height1_2 = cylinder ._height .getValue () * 0.5;
 
-                        if (cylinder .side_ .getValue () && cylinder .top_ .getValue () && cylinder .bottom_ .getValue ())
+                        if (cylinder ._side .getValue () && cylinder ._top .getValue () && cylinder ._bottom .getValue ())
                            this .collisionShape = new Ammo .btCylinderShape (new Ammo .btVector3 (radius, height1_2, radius));
                         else
                            this .collisionShape = this .createConcaveGeometry ();
@@ -345,28 +345,28 @@ function (Fields,
                      {
                         var elevationGrid = this .geometryNode;
 
-                        if (elevationGrid .xDimension_ .getValue () > 1 && elevationGrid .zDimension_ .getValue () > 1)
+                        if (elevationGrid ._xDimension .getValue () > 1 && elevationGrid ._zDimension .getValue () > 1)
                         {
                            var
                               min         = Number .POSITIVE_INFINITY,
                               max         = Number .NEGATIVE_INFINITY,
-                              heightField = this .heightField = Ammo ._malloc (4 * elevationGrid .xDimension_ .getValue () * elevationGrid .zDimension_ .getValue ()),
+                              heightField = this .heightField = Ammo ._malloc (4 * elevationGrid ._xDimension .getValue () * elevationGrid ._zDimension .getValue ()),
                               i4          = 0;
 
-                           for (var i = 0, length = elevationGrid .height_ .length; i < length; ++ i)
+                           for (var i = 0, length = elevationGrid ._height .length; i < length; ++ i)
                            {
-                              var value = elevationGrid .height_ [i];
+                              var value = elevationGrid ._height [i];
 
                               min = Math .min (min, value);
                               max = Math .max (max, value);
 
-                              Ammo .HEAPF32 [heightField + i4 >> 2] = elevationGrid .height_ [i];
+                              Ammo .HEAPF32 [heightField + i4 >> 2] = elevationGrid ._height [i];
 
                               i4 += 4;
                            }
 
-                           this .collisionShape = new Ammo .btHeightfieldTerrainShape (elevationGrid .xDimension_ .getValue (),
-                                                                                       elevationGrid .zDimension_ .getValue (),
+                           this .collisionShape = new Ammo .btHeightfieldTerrainShape (elevationGrid ._xDimension .getValue (),
+                                                                                       elevationGrid ._zDimension .getValue (),
                                                                                        heightField,
                                                                                        1,
                                                                                        min,
@@ -375,11 +375,11 @@ function (Fields,
                                                                                        "PHY_FLOAT",
                                                                                        true);
 
-                           this .collisionShape .setLocalScaling (new Ammo .btVector3 (elevationGrid .xSpacing_ .getValue (), 1, elevationGrid .zSpacing_ .getValue ()));
+                           this .collisionShape .setLocalScaling (new Ammo .btVector3 (elevationGrid ._xSpacing .getValue (), 1, elevationGrid ._zSpacing .getValue ()));
 
-                           this .setOffset (elevationGrid .xSpacing_ .getValue () * (elevationGrid .xDimension_ .getValue () - 1) * 0.5,
+                           this .setOffset (elevationGrid ._xSpacing .getValue () * (elevationGrid ._xDimension .getValue () - 1) * 0.5,
                                             (min + max) * 0.5,
-                                            elevationGrid .zSpacing_ .getValue () * (elevationGrid .zDimension_ .getValue () - 1) * 0.5);
+                                            elevationGrid ._zSpacing .getValue () * (elevationGrid ._zDimension .getValue () - 1) * 0.5);
                         }
 
                         break;
@@ -388,7 +388,7 @@ function (Fields,
                      {
                         var sphere = this .geometryNode;
 
-                        this .collisionShape = new Ammo .btSphereShape (sphere .radius_ .getValue ());
+                        this .collisionShape = new Ammo .btSphereShape (sphere ._radius .getValue ());
                         break;
                      }
                      case X3DConstants .X3DGeometryNode:
@@ -420,7 +420,7 @@ function (Fields,
             this .getCompoundShape () .setLocalScaling (localScaling);
 
             this .addNodeEvent ();
-            this .compoundShape_changed_ = this .getBrowser () .getCurrentTime ();
+            this ._compoundShape_changed = this .getBrowser () .getCurrentTime ();
          };
       })(),
       removeCollidableGeometry: function ()

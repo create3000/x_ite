@@ -99,13 +99,13 @@ function (Fields,
       {
          X3DTexture3DNode .prototype .initialize .call (this);
 
-         this .image_ .addInterest ("set_image__", this);
+         this ._image .addInterest ("set_image__", this);
 
          this .set_image__ ();
       },
       checkLoadState: function ()
       {
-         return this .loadState_ .getValue ();
+         return this ._loadState .getValue ();
       },
       set_image__: (function ()
       {
@@ -118,12 +118,12 @@ function (Fields,
 
          return function ()
          {
-            const image = this .image_;
+            const image = this ._image;
 
             if (image .length < OFFSET)
             {
                this .clearTexture ();
-               this .loadState_ = X3DConstants .FAILED_STATE;
+               this ._loadState = X3DConstants .FAILED_STATE;
                return;
             }
 
@@ -203,13 +203,13 @@ function (Fields,
                default:
                {
                   this .clearTexture ();
-                  this .loadState_ = X3DConstants .FAILED_STATE;
+                  this ._loadState = X3DConstants .FAILED_STATE;
                   return;
                }
             }
 
             this .setTexture (width, height, depth, transparent, format, data);
-            this .loadState_ = X3DConstants .COMPLETE_STATE;
+            this ._loadState = X3DConstants .COMPLETE_STATE;
          };
       })(),
    });

@@ -84,23 +84,23 @@ function (X3DChildNode,
       },
       getValue: function ()
       {
-         return this .set_value_ .getValue ();
+         return this ._set_value .getValue ();
       },
       getDestination: function ()
       {
-         return this .set_destination_ .getValue ();
+         return this ._set_destination .getValue ();
       },
       getInitialValue: function ()
       {
-         return this .initialValue_ .getValue ();
+         return this ._initialValue .getValue ();
       },
       getInitialDestination: function ()
       {
-         return this .initialDestination_ .getValue ();
+         return this ._initialDestination .getValue ();
       },
       setValue: function (value)
       {
-         this .value_changed_ = value;
+         this ._value_changed = value;
       },
       setDestination: function (value)
       {
@@ -124,7 +124,7 @@ function (X3DChildNode,
       },
       set_live__: function ()
       {
-         if ((this .isLive () .getValue () || this .getPrivate ()) && this .isActive_ .getValue ())
+         if ((this .isLive () .getValue () || this .getPrivate ()) && this ._isActive .getValue ())
          {
             this .getBrowser () .prepareEvents () .addInterest ("prepareEvents", this);
             this .getBrowser () .addBrowserEvent ();
@@ -134,9 +134,9 @@ function (X3DChildNode,
       },
       set_active: function (value)
       {
-         if (value !== this .isActive_ .getValue ())
+         if (value !== this ._isActive .getValue ())
          {
-            this .isActive_ = value;
+            this ._isActive = value;
 
             this .set_live__ ();
          }

@@ -350,7 +350,7 @@ function (TextureBuffer,
 
                // Translate camera to user position and to look in the direction of the direction.
 
-               localOrientation .assign (viewpoint .orientation_ .getValue ()) .inverse () .multRight (viewpoint .getOrientation ());
+               localOrientation .assign (viewpoint ._orientation .getValue ()) .inverse () .multRight (viewpoint .getOrientation ());
                rotation .setFromToVec (Vector3 .zAxis, vector .assign (direction) .negate ()) .multRight (localOrientation);
                viewpoint .straightenHorizon (rotation);
 
@@ -737,7 +737,7 @@ function (TextureBuffer,
 
                      const currentFrameRate = this .speed ? browser .getCurrentFrameRate () : 1000000;
 
-                     this .speed -= browser .getBrowserOptions () .Gravity_ .getValue () / currentFrameRate;
+                     this .speed -= browser .getBrowserOptions () ._Gravity .getValue () / currentFrameRate;
 
                      let y = this .speed / currentFrameRate;
 
@@ -748,7 +748,7 @@ function (TextureBuffer,
                         this .speed = 0;
                      }
 
-                     viewpoint .positionOffset_ = viewpoint .positionOffset_ .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
+                     viewpoint ._positionOffset = viewpoint ._positionOffset .getValue () .add (up .multVecRot (translation .set (0, y, 0)));
                   }
                   else
                   {
@@ -774,7 +774,7 @@ function (TextureBuffer,
                         //	getViewpoint () -> positionOffset () += offset;
                         //}
                         //else
-                           viewpoint .positionOffset_ = translation .add (viewpoint .positionOffset_ .getValue ());
+                           viewpoint ._positionOffset = translation .add (viewpoint ._positionOffset .getValue ());
                      }
                   }
                }

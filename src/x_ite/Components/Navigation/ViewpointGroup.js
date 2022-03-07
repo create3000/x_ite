@@ -74,8 +74,8 @@ function (Fields,
 
       this .addType (X3DConstants .ViewpointGroup);
 
-      this .size_   .setUnit ("length");
-      this .center_ .setUnit ("length");
+      this ._size   .setUnit ("length");
+      this ._center .setUnit ("length");
 
       this .proximitySensor  = new ProximitySensor (executionContext);
       this .cameraObjects    = [ ];
@@ -112,35 +112,35 @@ function (Fields,
 
          this .proximitySensor .setup ();
 
-         this .size_   .addFieldInterest (this .proximitySensor .size_);
-         this .center_ .addFieldInterest (this .proximitySensor .center_);
+         this ._size   .addFieldInterest (this .proximitySensor ._size);
+         this ._center .addFieldInterest (this .proximitySensor ._center);
 
-         this .proximitySensor .size_   = this .size_;
-         this .proximitySensor .center_ = this .center_;
+         this .proximitySensor ._size   = this ._size;
+         this .proximitySensor ._center = this ._center;
 
-         this .displayed_ .addInterest ("set_displayed__", this);
-         this .size_      .addInterest ("set_displayed__", this);
-         this .children_  .addInterest ("set_children__", this);
+         this ._displayed .addInterest ("set_displayed__", this);
+         this ._size      .addInterest ("set_displayed__", this);
+         this ._children  .addInterest ("set_children__", this);
 
          this .set_displayed__ ();
          this .set_children__ ();
       },
       isActive: function ()
       {
-         return this .proximitySensor .isActive_ .getValue ();
+         return this .proximitySensor ._isActive .getValue ();
       },
       set_displayed__: function ()
       {
          var
-            proxy     = ! this .size_ .getValue () .equals (Vector3 .Zero),
-            displayed = this .displayed_ .getValue ();
+            proxy     = ! this ._size .getValue () .equals (Vector3 .Zero),
+            displayed = this ._displayed .getValue ();
 
-         this .proximitySensor .enabled_ = displayed && proxy;
+         this .proximitySensor ._enabled = displayed && proxy;
 
          if (displayed && proxy)
          {
-            this .proximitySensor .isCameraObject_   .addFieldInterest (this .isCameraObject_);
-            this .proximitySensor .isPickableObject_ .addFieldInterest (this .isPickableObject_);
+            this .proximitySensor ._isCameraObject   .addFieldInterest (this ._isCameraObject);
+            this .proximitySensor ._isPickableObject .addFieldInterest (this ._isPickableObject);
 
             this .setCameraObject   (this .proximitySensor .getCameraObject ());
             this .setPickableObject (this .proximitySensor .getPickableObject ());
@@ -149,8 +149,8 @@ function (Fields,
          }
          else
          {
-            this .proximitySensor .isCameraObject_    .removeFieldInterest (this .isCameraObject_);
-            this .proximitySensor .isPickableObject_ .removeFieldInterest (this .isPickableObject_);
+            this .proximitySensor ._isCameraObject    .removeFieldInterest (this ._isCameraObject);
+            this .proximitySensor ._isPickableObject .removeFieldInterest (this ._isPickableObject);
 
             this .setCameraObject   (displayed);
             this .setPickableObject (false);
@@ -166,7 +166,7 @@ function (Fields,
          this .cameraObjects   .length = 0;
          this .viewpointGroups .length = 0;
 
-         var children = this .children_;
+         var children = this ._children;
 
          for (var i = 0, length = children .length; i < length; ++ i)
          {
@@ -209,7 +209,7 @@ function (Fields,
          {
             this .proximitySensor .traverse (type, renderObject);
 
-            if (this .proximitySensor .isActive_ .getValue ())
+            if (this .proximitySensor ._isActive .getValue ())
             {
                for (var i = 0, length = this .cameraObjects .length; i < length; ++ i)
                   this .cameraObjects [i] .traverse (type, renderObject);
@@ -221,7 +221,7 @@ function (Fields,
          {
             this .proximitySensor .traverse (type, renderObject);
 
-            if (this .proximitySensor .isActive_ .getValue ())
+            if (this .proximitySensor ._isActive .getValue ())
             {
                for (var i = 0, length = this .viewpointGroups .length; i < length; ++ i)
                   this .viewpointGroups [i] .traverse (type, renderObject);

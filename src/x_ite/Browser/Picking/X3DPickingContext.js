@@ -109,9 +109,9 @@ function (TraverseType)
       enablePicking: function ()
       {
          if (this [_transformSensorNodes] .size || this [_pickSensorNodes] [0] .size)
-            this .sensorEvents_ .addInterest ("picking", this);
+            this ._sensorEvents .addInterest ("picking", this);
          else
-            this .sensorEvents_ .removeInterest ("picking", this);
+            this ._sensorEvents .removeInterest ("picking", this);
       },
       picking: function ()
       {

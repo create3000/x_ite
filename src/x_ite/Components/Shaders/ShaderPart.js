@@ -137,7 +137,7 @@ function (Fields,
 
          return function ()
          {
-            const type = shaderTypes [this .type_ .getValue ()];
+            const type = shaderTypes [this ._type .getValue ()];
 
             if (type)
                return type;
@@ -147,7 +147,7 @@ function (Fields,
       })(),
       getSourceText: function ()
       {
-         return this .url_;
+         return this ._url;
       },
       setShadow: function (value)
       {
@@ -165,7 +165,7 @@ function (Fields,
       {
          this .valid = false;
 
-         new FileLoader (this) .loadDocument (this .urlBuffer_,
+         new FileLoader (this) .loadDocument (this ._urlBuffer,
          function (data)
          {
             if (data === null)

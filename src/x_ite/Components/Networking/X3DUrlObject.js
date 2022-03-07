@@ -80,20 +80,20 @@ function (Fields,
       {
          this .isLive () .addInterest ("set_live__", this);
 
-         this .load_                 .addInterest ("set_load__",        this);
-         this .url_                  .addInterest ("set_url__",         this);
-         this .urlBuffer_            .addInterest ("loadNow",           this);
-         this .autoRefresh_          .addInterest ("set_autoRefresh__", this);
-         this .autoRefreshTimeLimit_ .addInterest ("set_autoRefresh__", this);
+         this ._load                 .addInterest ("set_load__",        this);
+         this ._url                  .addInterest ("set_url__",         this);
+         this ._urlBuffer            .addInterest ("loadNow",           this);
+         this ._autoRefresh          .addInterest ("set_autoRefresh__", this);
+         this ._autoRefreshTimeLimit .addInterest ("set_autoRefresh__", this);
       },
       setLoadState: function (value, notify = true)
       {
-         this .loadState_ = value;
+         this ._loadState = value;
 
          if (value === X3DConstants .COMPLETE_STATE)
          {
             this [_autoRefreshCompleteTime] = performance .now ();
-            this .setAutoRefreshTimer (this .autoRefresh_ .getValue ());
+            this .setAutoRefreshTimer (this ._autoRefresh .getValue ());
          }
 
          if (!notify)
@@ -118,11 +118,11 @@ function (Fields,
       },
       checkLoadState: function ()
       {
-         return this .loadState_ .getValue ();
+         return this ._loadState .getValue ();
       },
       getLoadState: function ()
       {
-         return this .loadState_;
+         return this ._loadState;
       },
       setCache: function (value)
       {
@@ -137,17 +137,17 @@ function (Fields,
          if (this .checkLoadState () === X3DConstants .COMPLETE_STATE || this .checkLoadState () === X3DConstants .IN_PROGRESS_STATE)
             return;
 
-         if (!this .load_ .getValue ())
+         if (!this ._load .getValue ())
             return;
 
-         if (this .url_ .length === 0)
+         if (this ._url .length === 0)
             return;
 
          this .setCache (cache);
          this .setLoadState (X3DConstants .IN_PROGRESS_STATE);
 
          // Buffer prevents double load of the scene if load and url field are set at the same time.
-         this .urlBuffer_ = this .url_;
+         this ._urlBuffer = this ._url;
       },
       loadNow: function ()
       { },
@@ -165,10 +165,10 @@ function (Fields,
       {
          clearTimeout (this [_autoRefreshId]);
 
-         if (this .autoRefresh_ .getValue () <= 0)
+         if (this ._autoRefresh .getValue () <= 0)
             return;
 
-         const autoRefreshTimeLimit = this .autoRefreshTimeLimit_ .getValue ();
+         const autoRefreshTimeLimit = this ._autoRefreshTimeLimit .getValue ();
 
          if (autoRefreshTimeLimit !== 0)
          {
@@ -192,7 +192,7 @@ function (Fields,
       },
       set_load__: function ()
       {
-         if (this .load_ .getValue ())
+         if (this ._load .getValue ())
          {
             this .setLoadState (X3DConstants .NOT_STARTED_STATE);
 
@@ -203,7 +203,7 @@ function (Fields,
       },
       set_url__: function ()
       {
-         if (!this .load_ .getValue ())
+         if (!this ._load .getValue ())
             return;
 
          this .setLoadState (X3DConstants .NOT_STARTED_STATE);
@@ -217,7 +217,7 @@ function (Fields,
 
          const
             elapsedTime = (performance .now () - this [_autoRefreshCompleteTime]) / 1000,
-            autoRefresh = this .autoRefresh_ .getValue ();
+            autoRefresh = this ._autoRefresh .getValue ();
 
          let autoRefreshInterval = autoRefresh - elapsedTime;
 

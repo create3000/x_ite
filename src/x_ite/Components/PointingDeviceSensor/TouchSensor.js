@@ -72,7 +72,7 @@ function (Fields,
 
       this .addType (X3DConstants .TouchSensor);
 
-      this .hitPoint_changed_ .setUnit ("length");
+      this ._hitPoint_changed .setUnit ("length");
    }
 
    TouchSensor .prototype = Object .assign (Object .create (X3DTouchSensorNode .prototype),
@@ -107,15 +107,15 @@ function (Fields,
          {
             X3DTouchSensorNode .prototype .set_over__ .call (this, over, hit, modelViewMatrix, projectionMatrix, viewport);
 
-            if (this .isOver_ .getValue ())
+            if (this ._isOver .getValue ())
             {
                var intersection = hit .intersection;
 
                invModelViewMatrix .assign (modelViewMatrix) .inverse ();
 
-               this .hitTexCoord_changed_ = intersection .texCoord;
-               this .hitNormal_changed_   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
-               this .hitPoint_changed_    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
+               this ._hitTexCoord_changed = intersection .texCoord;
+               this ._hitNormal_changed   = modelViewMatrix .multMatrixDir (intersection .normal .copy ()) .normalize ();
+               this ._hitPoint_changed    = invModelViewMatrix .multVecMatrix (intersection .point .copy ());
             }
          }
          catch (error)

@@ -68,7 +68,7 @@ function (Fields,
 
       this .addType (X3DConstants .Coordinate);
 
-      this .point_ .setUnit ("length");
+      this ._point .setUnit ("length");
    }
 
    Coordinate .prototype = Object .assign (Object .create (X3DCoordinateNode .prototype),

@@ -70,7 +70,7 @@ function (PrimitiveQuality,
    {
       X3DTextGeometry .call (this, text, fontStyle);
 
-      text .transparent_ = false;
+      text ._transparent = false;
 
       this .texCoordArray = X3DGeometryNode .createArray ();
    }
@@ -108,8 +108,8 @@ function (PrimitiveQuality,
                translations     = this .getTranslations (),
                charSpacings     = this .getCharSpacings (),
                size             = fontStyle .getScale (),
-               spacing          = fontStyle .spacing_ .getValue (),
-               origin           = text .origin_ .getValue (),
+               spacing          = fontStyle ._spacing .getValue (),
+               origin           = text ._origin .getValue (),
                sizeUnitsPerEm   = size / font .unitsPerEm,
                primitiveQuality = this .getBrowser () .getBrowserOptions () .getPrimitiveQuality (),
                texCoordArray    = this .texCoordArray,
@@ -124,7 +124,7 @@ function (PrimitiveQuality,
             text .getMin () .assign (min);
             text .getMax () .assign (max);
 
-            if (fontStyle .horizontal_ .getValue ())
+            if (fontStyle ._horizontal .getValue ())
             {
                for (var l = 0, length = glyphs .length; l < length; ++ l)
                {
@@ -167,10 +167,10 @@ function (PrimitiveQuality,
             else
             {
                var
-                  leftToRight = fontStyle .leftToRight_ .getValue (),
-                  topToBottom = fontStyle .topToBottom_ .getValue (),
-                  first       = leftToRight ? 0 : text .string_ .length - 1,
-                  last        = leftToRight ? text .string_ .length  : -1,
+                  leftToRight = fontStyle ._leftToRight .getValue (),
+                  topToBottom = fontStyle ._topToBottom .getValue (),
+                  first       = leftToRight ? 0 : text ._string .length - 1,
+                  last        = leftToRight ? text ._string .length  : -1,
                   step        = leftToRight ? 1 : -1;
 
                for (var l = first, t = 0; l !== last; l += step)

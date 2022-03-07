@@ -74,8 +74,8 @@ function (X3DMaterialNode,
       {
          X3DMaterialNode .prototype .initialize .call (this);
 
-         this .emissiveColor_ .addInterest ("set_emissiveColor__", this);
-         this .transparency_  .addInterest ("set_transparency__",  this);
+         this ._emissiveColor .addInterest ("set_emissiveColor__", this);
+         this ._transparency  .addInterest ("set_transparency__",  this);
 
          this .set_emissiveColor__ ();
          this .set_transparency__ ();
@@ -83,11 +83,11 @@ function (X3DMaterialNode,
       set_emissiveColor__: function ()
       {
          //We cannot use this in Windows Edge:
-         //this .emissiveColor .set (this .emissiveColor_ .getValue ());
+         //this .emissiveColor .set (this ._emissiveColor .getValue ());
 
          const
             emissiveColor  = this .emissiveColor,
-            emissiveColor_ = this .emissiveColor_ .getValue ();
+            emissiveColor_ = this ._emissiveColor .getValue ();
 
          emissiveColor [0] = emissiveColor_ .r;
          emissiveColor [1] = emissiveColor_ .g;
@@ -95,11 +95,11 @@ function (X3DMaterialNode,
       },
       set_shininess__: function ()
       {
-         this .shininess = Algorithm .clamp (this .shininess_ .getValue (), 0, 1);
+         this .shininess = Algorithm .clamp (this ._shininess .getValue (), 0, 1);
       },
       set_transparency__: function ()
       {
-         const transparency = Algorithm .clamp (this .transparency_ .getValue (), 0, 1);
+         const transparency = Algorithm .clamp (this ._transparency .getValue (), 0, 1);
 
          this .transparency = transparency;
 

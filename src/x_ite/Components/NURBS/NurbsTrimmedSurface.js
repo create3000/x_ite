@@ -112,7 +112,7 @@ function (Fields,
       {
          X3DNurbsSurfaceGeometryNode .prototype .initialize .call (this);
 
-         this .trimmingContour_ .addInterest ("set_trimmingContour__", this);
+         this ._trimmingContour .addInterest ("set_trimmingContour__", this);
 
          this .set_trimmingContour__ ();
       },
@@ -122,9 +122,9 @@ function (Fields,
 
          trimmingContourNodes .length = 0;
 
-         for (var i = 0, length = this .trimmingContour_ .length; i < length; ++ i)
+         for (var i = 0, length = this ._trimmingContour .length; i < length; ++ i)
          {
-            var trimmingContourNode = X3DCast (X3DConstants .Contour2D, this .trimmingContour_ [i]);
+            var trimmingContourNode = X3DCast (X3DConstants .Contour2D, this ._trimmingContour [i]);
 
             if (trimmingContourNode)
                trimmingContourNodes .push (trimmingContourNode);

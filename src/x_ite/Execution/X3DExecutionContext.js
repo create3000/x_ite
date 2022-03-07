@@ -97,8 +97,8 @@ function (SupportedNodes,
       this .addChildObjects ("rootNodes",  new Fields .MFNode (),
                              "worldInfos", new Fields .MFNode ());
 
-      this .rootNodes_ .setAccessType (X3DConstants .initializeOnly);
-      this .rootNodes_ .addCloneCount (1);
+      this ._rootNodes .setAccessType (X3DConstants .initializeOnly);
+      this ._rootNodes .addCloneCount (1);
 
       this [_namedNodes]     = new Map ();
       this [_importedNodes]  = new Map ();
@@ -396,7 +396,7 @@ function (SupportedNodes,
       setRootNodes: function () { },
       getRootNodes: function ()
       {
-         return this .rootNodes_;
+         return this ._rootNodes;
       },
       getProtoDeclaration: function (name)
       {
@@ -763,18 +763,18 @@ function (SupportedNodes,
       },
       getWorldInfos: function ()
       {
-         return this .worldInfos_;
+         return this ._worldInfos;
       },
       addWorldInfo: function (worldInfoNode)
       {
-         this .worldInfos_ .push (worldInfoNode);
+         this ._worldInfos .push (worldInfoNode);
       },
       removeWorldInfo: function (worldInfoNode)
       {
-         const index = this .worldInfos_ .getValue () .indexOf (worldInfoNode);
+         const index = this ._worldInfos .getValue () .indexOf (worldInfoNode);
 
          if (index !== -1)
-            this .worldInfos_ .splice (index, 1);
+            this ._worldInfos .splice (index, 1);
       },
       toVRMLStream: function (stream)
       {
@@ -900,7 +900,7 @@ function (SupportedNodes,
       },
       dispose: function ()
       {
-         this .rootNodes_ .dispose ();
+         this ._rootNodes .dispose ();
 
          for (const route of this [_routes])
             this .deleteRoute (route);

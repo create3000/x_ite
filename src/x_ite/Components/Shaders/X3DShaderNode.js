@@ -81,11 +81,11 @@ function (Fields,
       {
          X3DAppearanceChildNode .prototype .initialize .call (this);
 
-         this .activate_ .addInterest ("set_activate__", this);
+         this ._activate .addInterest ("set_activate__", this);
       },
       set_activate__: function ()
       {
-         this .activationTime_ = this .getBrowser () .getCurrentTime ();
+         this ._activationTime = this .getBrowser () .getCurrentTime ();
       },
       custom: true,
       setCustom: function (value)
@@ -98,7 +98,7 @@ function (Fields,
       },
       setValid: function (value)
       {
-         this .isValid_ = this .valid = value;
+         this ._isValid = this .valid = value;
       },
       getValid: function ()
       {
@@ -138,8 +138,8 @@ function (Fields,
       {
          ++ this .selected;
 
-         if (! this .isSelected_ .getValue ())
-            this .isSelected_ = true;
+         if (! this ._isSelected .getValue ())
+            this ._isSelected = true;
       },
       deselect: function ()
       {
@@ -147,8 +147,8 @@ function (Fields,
 
          if (this .selected === 0)
          {
-            if (this .isSelected_ .getValue ())
-               this .isSelected_ = false;
+            if (this ._isSelected .getValue ())
+               this ._isSelected = false;
          }
       },
       traverse: function (type, renderObject)

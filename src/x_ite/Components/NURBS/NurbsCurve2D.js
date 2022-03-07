@@ -108,11 +108,11 @@ function (Fields,
       },
       getTessellation: function (numKnots)
       {
-         return NURBS .getTessellation (this .tessellation_ .getValue (), numKnots - this .order_ .getValue ());
+         return NURBS .getTessellation (this ._tessellation .getValue (), numKnots - this ._order .getValue ());
       },
       getClosed: function (order, knot, weight, controlPoint)
       {
-         if (! this .closed_ .getValue ())
+         if (! this ._closed .getValue ())
             return false;
 
          return NURBS .getClosed2D (order, knot, weight, controlPoint);
@@ -135,28 +135,28 @@ function (Fields,
 
          array .length = 0;
 
-         if (this .order_ .getValue () < 2)
+         if (this ._order .getValue () < 2)
             return array;
 
-         if (this .controlPoint_ .length < this .order_ .getValue ())
+         if (this ._controlPoint .length < this ._order .getValue ())
             return array;
 
          // Order and dimension are now positive numbers.
 
          var
-            closed        = this .getClosed (this .order_ .getValue (), this .knot_, this .weight_, this .controlPoint_),
-            weights       = this .getWeights (this .weights, this .controlPoint_ .length, this .weight_),
-            controlPoints = this .getControlPoints (this .controlPoints, closed, this .order_ .getValue (), weights, this .controlPoint_);
+            closed        = this .getClosed (this ._order .getValue (), this ._knot, this ._weight, this ._controlPoint),
+            weights       = this .getWeights (this .weights, this ._controlPoint .length, this ._weight),
+            controlPoints = this .getControlPoints (this .controlPoints, closed, this ._order .getValue (), weights, this ._controlPoint);
 
          // Knots
 
          var
-            knots = this .getKnots (this .knots, closed, this .order_ .getValue (), this .controlPoint_ .length, this .knot_),
+            knots = this .getKnots (this .knots, closed, this ._order .getValue (), this ._controlPoint .length, this ._knot),
             scale = knots .at (-1) - knots [0];
 
          // Initialize NURBS tessellator
 
-         var degree = this .order_ .getValue () - 1;
+         var degree = this ._order .getValue () - 1;
 
          var surface = this .surface = (this .surface || nurbs) ({
             boundary: ["open"],

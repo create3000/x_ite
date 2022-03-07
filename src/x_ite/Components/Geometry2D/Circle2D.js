@@ -70,7 +70,7 @@ function (Fields,
 
       this .setGeometryType (1);
 
-      this .radius_ .setUnit ("length");
+      this ._radius .setUnit ("length");
    }
 
    Circle2D .prototype = Object .assign (Object .create (X3DLineGeometryNode .prototype),
@@ -112,7 +112,7 @@ function (Fields,
          var
             options     = this .getBrowser () .getCircle2DOptions (),
             vertexArray = this .getVertices (),
-            radius      = this .radius_ .getValue ();
+            radius      = this ._radius .getValue ();
 
          if (radius === 1)
          {

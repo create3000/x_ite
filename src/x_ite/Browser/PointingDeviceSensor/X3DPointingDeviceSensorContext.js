@@ -131,7 +131,7 @@ function (PointingDevice,
                break;
             default:
             {
-               if (this .loadCount_ .getValue ())
+               if (this ._loadCount .getValue ())
                   div .css ("cursor", "wait");
                else if (this [_pointingDevice] && this [_pointingDevice] .isOver)
                   div .css ("cursor", "pointer");
@@ -242,7 +242,7 @@ function (PointingDevice,
       { },
       touch: function (x, y)
       {
-         if (this .getViewer () .isActive_ .getValue ())
+         if (this .getViewer () ._isActive .getValue ())
          {
             this [_pointerTime] = 0;
             return;

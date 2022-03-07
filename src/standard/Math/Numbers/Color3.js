@@ -56,19 +56,24 @@ function (Algorithm)
 
    const clamp = Algorithm .clamp;
 
+   const
+      _r = Symbol (),
+      _g = Symbol (),
+      _b = Symbol ();
+
    function Color3 (r, g, b)
    {
       if (arguments .length)
       {
-         this .r_ = clamp (r, 0, 1);
-         this .g_ = clamp (g, 0, 1);
-         this .b_ = clamp (b, 0, 1);
+         this [_r] = clamp (r, 0, 1);
+         this [_g] = clamp (g, 0, 1);
+         this [_b] = clamp (b, 0, 1);
       }
       else
       {
-         this .r_ = 0;
-         this .g_ = 0;
-         this .b_ = 0;
+         this [_r] = 0;
+         this [_g] = 0;
+         this [_b] = 0;
       }
    }
 
@@ -79,35 +84,35 @@ function (Algorithm)
       copy: function ()
       {
          const copy = Object .create (Color3 .prototype);
-         copy .r_ = this .r_;
-         copy .g_ = this .g_;
-         copy .b_ = this .b_;
+         copy [_r] = this [_r];
+         copy [_g] = this [_g];
+         copy [_b] = this [_b];
          return copy;
       },
       assign: function (color)
       {
-         this .r_ = color .r_;
-         this .g_ = color .g_;
-         this .b_ = color .b_;
+         this [_r] = color [_r];
+         this [_g] = color [_g];
+         this [_b] = color [_b];
       },
       set: function (r, g, b)
       {
-         this .r_ = clamp (r, 0, 1);
-         this .g_ = clamp (g, 0, 1);
-         this .b_ = clamp (b, 0, 1);
+         this [_r] = clamp (r, 0, 1);
+         this [_g] = clamp (g, 0, 1);
+         this [_b] = clamp (b, 0, 1);
       },
       equals: function (color)
       {
-         return this .r_ === color .r_ &&
-                this .g_ === color .g_ &&
-                this .b_ === color .b_;
+         return this [_r] === color [_r] &&
+                this [_g] === color [_g] &&
+                this [_b] === color [_b];
       },
       getHSV: function (result)
       {
          let h, s, v;
 
-         const min = Math .min (this .r_, this .g_, this .b_);
-         const max = Math .max (this .r_, this .g_, this .b_);
+         const min = Math .min (this [_r], this [_g], this [_b]);
+         const max = Math .max (this [_r], this [_g], this [_b]);
          v = max; // value
 
          const delta = max - min;
@@ -116,12 +121,12 @@ function (Algorithm)
          {
             s = delta / max; // s
 
-            if (this .r_ === max)
-               h =     (this .g_ - this .b_) / delta;  // between yellow & magenta
-            else if (this .g_ === max)
-               h = 2 + (this .b_ - this .r_) / delta;  // between cyan & yellow
+            if (this [_r] === max)
+               h =     (this [_g] - this [_b]) / delta;  // between yellow & magenta
+            else if (this [_g] === max)
+               h = 2 + (this [_b] - this [_r]) / delta;  // between cyan & yellow
             else
-               h = 4 + (this .r_ - this .g_) / delta;  // between magenta & cyan
+               h = 4 + (this [_r] - this [_g]) / delta;  // between magenta & cyan
 
             h *= Math .PI / 3;  // radiants
             if (h < 0)
@@ -147,7 +152,7 @@ function (Algorithm)
          if (s === 0)
          {
             // achromatic (grey)
-            this .r_ = this .g_ = this .b_ = v;
+            this [_r] = this [_g] = this [_b] = v;
          }
          else
          {
@@ -161,40 +166,40 @@ function (Algorithm)
 
             switch (i % 6)
             {
-               case 0:  this .r_ = v; this .g_ = t; this .b_ = p; break;
-               case 1:  this .r_ = q; this .g_ = v; this .b_ = p; break;
-               case 2:  this .r_ = p; this .g_ = v; this .b_ = t; break;
-               case 3:  this .r_ = p; this .g_ = q; this .b_ = v; break;
-               case 4:  this .r_ = t; this .g_ = p; this .b_ = v; break;
-               default: this .r_ = v; this .g_ = p; this .b_ = q; break;
+               case 0:  this [_r] = v; this [_g] = t; this [_b] = p; break;
+               case 1:  this [_r] = q; this [_g] = v; this [_b] = p; break;
+               case 2:  this [_r] = p; this [_g] = v; this [_b] = t; break;
+               case 3:  this [_r] = p; this [_g] = q; this [_b] = v; break;
+               case 4:  this [_r] = t; this [_g] = p; this [_b] = v; break;
+               default: this [_r] = v; this [_g] = p; this [_b] = q; break;
             }
          }
       },
       toString: function ()
       {
-         return this .r_ + " " +
-                this .g_ + " " +
-                this .b_;
+         return this [_r] + " " +
+                this [_g] + " " +
+                this [_b];
       },
    };
 
    const r = {
-      get: function () { return this .r_; },
-      set: function (value) { this .r_ = clamp (value, 0, 1); },
+      get: function () { return this [_r]; },
+      set: function (value) { this [_r] = clamp (value, 0, 1); },
       enumerable: true,
       configurable: false
    };
 
    const g = {
-      get: function () { return this .g_; },
-      set: function (value) { this .g_ = clamp (value, 0, 1); },
+      get: function () { return this [_g]; },
+      set: function (value) { this [_g] = clamp (value, 0, 1); },
       enumerable: true,
       configurable: false
    };
 
    const b = {
-      get: function () { return this .b_; },
-      set: function (value) { this .b_ = clamp (value, 0, 1); },
+      get: function () { return this [_b]; },
+      set: function (value) { this [_b] = clamp (value, 0, 1); },
       enumerable: true,
       configurable: false
    };

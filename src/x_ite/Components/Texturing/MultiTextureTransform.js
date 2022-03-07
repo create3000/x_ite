@@ -96,7 +96,7 @@ function (Fields,
       {
          X3DTextureTransformNode .prototype .initialize .call (this);
 
-         this .textureTransform_ .addInterest ("set_textureTransform__", this);
+         this ._textureTransform .addInterest ("set_textureTransform__", this);
 
          this .set_textureTransform__ ();
       },
@@ -106,7 +106,7 @@ function (Fields,
 
          textureTransformNodes .length = 0;
 
-         for (const node of this .textureTransform_)
+         for (const node of this ._textureTransform)
          {
             const textureTransformNode = X3DCast (X3DConstants .X3DSingleTextureTransformNode, node);
 

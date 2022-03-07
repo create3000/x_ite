@@ -99,14 +99,14 @@ function (Fields,
       {
          X3DInterpolatorNode .prototype .initialize .call (this);
 
-         this .keyValue_ .addInterest ("set_keyValue__", this);
+         this ._keyValue .addInterest ("set_keyValue__", this);
       },
       set_keyValue__: function ()
       {
-         var keyValue = this .keyValue_;
+         var keyValue = this ._keyValue;
 
-         if (keyValue .length < this .key_ .length)
-            this .keyValue_ .resize (this .key_ .length, keyValue .length ? keyValue [this .keyValue_ .length - 1] : new Fields .SFColor ());
+         if (keyValue .length < this ._key .length)
+            this ._keyValue .resize (this ._key .length, keyValue .length ? keyValue [this ._keyValue .length - 1] : new Fields .SFColor ());
 
          this .hsv .length = 0;
 
@@ -121,7 +121,7 @@ function (Fields,
          {
             Color3 .lerp (this .hsv [index0], this .hsv [index1], weight, value);
 
-            this .value_changed_ .setHSV (value [0], value [1], value [2]);
+            this ._value_changed .setHSV (value [0], value [1], value [2]);
          };
       })(),
    });

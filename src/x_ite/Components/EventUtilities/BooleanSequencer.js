@@ -97,15 +97,15 @@ function (Fields,
       {
          X3DSequencerNode .prototype .initialize .call (this);
 
-         this .keyValue_ .addInterest ("set_index__", this);
+         this ._keyValue .addInterest ("set_index__", this);
       },
       getSize: function ()
       {
-         return this .keyValue_ .length;
+         return this ._keyValue .length;
       },
       sequence: function (index)
       {
-         this .value_changed_ = this .keyValue_ [index];
+         this ._value_changed = this ._keyValue [index];
       },
    });
 

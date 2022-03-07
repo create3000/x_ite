@@ -93,11 +93,11 @@ function (Fields,
       {
          X3DTriggerNode .prototype .initialize .call (this);
 
-         this .set_boolean_ .addInterest ("set_boolean__", this);
+         this ._set_boolean .addInterest ("set_boolean__", this);
       },
       set_boolean__: function ()
       {
-         this .triggerTime_ = this .getBrowser () .getCurrentTime ();
+         this ._triggerTime = this .getBrowser () .getCurrentTime ();
       },
    });
 

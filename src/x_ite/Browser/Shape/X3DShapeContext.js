@@ -114,7 +114,7 @@ function (Appearance,
       {
          this [_defaultLineProperties] = new LineProperties (this .getPrivateScene ());
 
-         this [_defaultLineProperties] .applied_ = false;
+         this [_defaultLineProperties] ._applied = false;
          this [_defaultLineProperties] .setup ();
 
          this .getDefaultLineProperties = function () { return this [_defaultLineProperties]; };
@@ -127,7 +127,7 @@ function (Appearance,
       {
          this [_defaultFillProperties] = new FillProperties (this .getPrivateScene ());
 
-         this [_defaultFillProperties] .hatched_ = false;
+         this [_defaultFillProperties] ._hatched = false;
          this [_defaultFillProperties] .setup ();
 
          this .getDefaultFillProperties = function () { return this [_defaultFillProperties]; };
@@ -160,8 +160,8 @@ function (Appearance,
 
          linetypeTexture = this [_linetypeTextures] [index] = new ImageTexture (this .getPrivateScene ());
 
-         linetypeTexture .url_ [0]           = urls .getLinetypeUrl (index);
-         linetypeTexture .textureProperties_ = this .getLineFillTextureProperties ();
+         linetypeTexture ._url [0]           = urls .getLinetypeUrl (index);
+         linetypeTexture ._textureProperties = this .getLineFillTextureProperties ();
          linetypeTexture .setup ();
 
          return linetypeTexture;
@@ -178,8 +178,8 @@ function (Appearance,
 
          hatchStyleTexture = this [_hatchStyleTextures] [index] = new ImageTexture (this .getPrivateScene ());
 
-         hatchStyleTexture .url_ [0]           = urls .getHatchingUrl (index);
-         hatchStyleTexture .textureProperties_ = this .getLineFillTextureProperties ();
+         hatchStyleTexture ._url [0]           = urls .getHatchingUrl (index);
+         hatchStyleTexture ._textureProperties = this .getLineFillTextureProperties ();
          hatchStyleTexture .setup ();
 
          return hatchStyleTexture;

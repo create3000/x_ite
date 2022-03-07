@@ -96,7 +96,7 @@ function (Fields,
       {
          X3DTextureCoordinateNode .prototype .initialize .call (this);
 
-         this .texCoord_ .addInterest ("set_texCoord__", this);
+         this ._texCoord .addInterest ("set_texCoord__", this);
 
          this .set_texCoord__ ();
       },
@@ -109,7 +109,7 @@ function (Fields,
 
          textureCoordinateNodes .length = 0;
 
-         for (const node of this .texCoord_)
+         for (const node of this ._texCoord)
          {
             const textureCoordinateNode = X3DCast (X3DConstants .X3DSingleTextureCoordinateNode, node);
 

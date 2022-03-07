@@ -143,7 +143,7 @@ function (Fields,
 
          try
          {
-            if (this .isActive_ .getValue ())
+            if (this ._isActive .getValue ())
             {
                this .modelViewMatrix    .assign (modelViewMatrix);
                this .invModelViewMatrix .assign (modelViewMatrix) .inverse ();
@@ -158,15 +158,15 @@ function (Fields,
 
                this .fromVector  .assign (hitPoint);
                this .startPoint  .assign (hitPoint);
-               this .startOffset .assign (this .offset_ .getValue ());
+               this .startOffset .assign (this ._offset .getValue ());
 
-               this .trackPoint_changed_ = hitPoint;
-               this .rotation_changed_   = this .offset_ .getValue ();
+               this ._trackPoint_changed = hitPoint;
+               this ._rotation_changed   = this ._offset .getValue ();
             }
             else
             {
-               if (this .autoOffset_ .getValue ())
-                  this .offset_ = this .rotation_changed_;
+               if (this ._autoOffset .getValue ())
+                  this ._offset = this ._rotation_changed;
             }
          }
          catch (error)
@@ -214,7 +214,7 @@ function (Fields,
                this .getTrackPoint (hitRay, trackPoint, false);
             }
 
-            this .trackPoint_changed_ = trackPoint;
+            this ._trackPoint_changed = trackPoint;
 
             var
                toVector = Vector3 .subtract (trackPoint, this .sphere .center),
@@ -223,14 +223,14 @@ function (Fields,
             if (this .behind)
                rotation .inverse ();
 
-            this .rotation_changed_ = Rotation4 .multRight (this .startOffset, rotation);
+            this ._rotation_changed = Rotation4 .multRight (this .startOffset, rotation);
          }
          catch (error)
          {
             //console .log (error);
 
-            this .trackPoint_changed_ .addEvent ();
-            this .rotation_changed_   .addEvent ();
+            this ._trackPoint_changed .addEvent ();
+            this ._rotation_changed   .addEvent ();
          }
       },
    });

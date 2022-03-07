@@ -209,27 +209,27 @@ function ($,
       },
       initialized: function ()
       {
-         return this .initialized_;
+         return this ._initialized;
       },
       shutdown: function ()
       {
-         return this .shutdown_;
+         return this ._shutdown;
       },
       prepareEvents: function ()
       {
-         return this .prepareEvents_;
+         return this ._prepareEvents;
       },
       timeEvents: function ()
       {
-         return this .timeEvents_;
+         return this ._timeEvents;
       },
       sensorEvents: function ()
       {
-         return this .sensorEvents_;
+         return this ._sensorEvents;
       },
       finished: function ()
       {
-         return this .finished_;
+         return this ._finished;
       },
       getBrowser: function ()
       {
@@ -269,10 +269,10 @@ function ($,
          this [_systemTime] = t0 - this [_systemStartTime];
          this .advanceTime (now);
 
-         this .prepareEvents_ .processInterests ();
+         this ._prepareEvents .processInterests ();
          this .processEvents ();
 
-         this .timeEvents_ .processInterests ();
+         this ._timeEvents .processInterests ();
          this .processEvents ();
 
          const t1 = performance .now ();
@@ -284,7 +284,7 @@ function ($,
             this [_world] .traverse (TraverseType .COLLISION, null);
          this [_collisionTime] = performance .now () - t2;
 
-         this .sensorEvents_ .processInterests ();
+         this ._sensorEvents .processInterests ();
          this .processEvents ();
 
          // XXX: The depth buffer must be cleared here, although it is cleared in each layer, otherwise there is a
@@ -299,7 +299,7 @@ function ($,
          this [_browserTime]     = performance .now () - t0;
          this [_systemStartTime] = performance .now ();
 
-         this .finished_ .processInterests ();
+         this ._finished .processInterests ();
       },
       getSystemTime: function ()
       {
