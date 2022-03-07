@@ -240,7 +240,7 @@ function (X3DArrayField,
          const
             target     = this [_target],
             array      = target .getValue (),
-            copy       = new (target .constructor) (),
+            copy       = target .create (),
             copyArray  = new (target .getArrayType ()) (array);
 
          copy [_length] = target [_length];
@@ -569,7 +569,7 @@ function (X3DArrayField,
             difference  = last - first,
             length      = target [_length],
             newLength   = length - difference,
-            values      = new (target .constructor) (),
+            values      = target .create (),
             valuesArray = values .grow (difference * components);
 
          first *= components;

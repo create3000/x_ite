@@ -98,6 +98,10 @@ function ($,
       [_inputRoutes]: new Set (),
       [_outputRoutes]: new Set (),
       [_routeCallbacks]: new Map (),
+      create: function ()
+      {
+         return new (this .constructor) ();
+      },
       equals: function (field)
       {
          return this [_value] === field .valueOf ();

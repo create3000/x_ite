@@ -173,7 +173,7 @@ function ($,
       {
          const
             target = this [_target],
-            copy   = new (target .constructor) (),
+            copy   = target .create (),
             array  = target .getValue ();
 
          X3DObjectArrayField .prototype .push .apply (copy, array);

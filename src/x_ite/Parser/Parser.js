@@ -969,7 +969,7 @@ function (Fields,
                {
                   var
                      fieldId = this .result [1],
-                     field = new (this [fieldType] .constructor) ();
+                     field   = this [fieldType] .create ();
 
                   field .setAccessType (X3DConstants .inputOnly);
                   field .setName (fieldId);
@@ -994,7 +994,7 @@ function (Fields,
                {
                   var
                      fieldId = this .result [1],
-                     field = new (this [fieldType] .constructor) ();
+                     field   = this [fieldType] .create ();
 
                   field .setAccessType (X3DConstants .outputOnly);
                   field .setName (fieldId);
@@ -1019,7 +1019,7 @@ function (Fields,
                {
                   var
                      fieldId = this .result [1],
-                     field = new (this [fieldType] .constructor) ();
+                     field   = this [fieldType] .create ();
 
                   if (this .fieldValue (field))
                   {
@@ -1060,7 +1060,7 @@ function (Fields,
                {
                   var
                      fieldId = this .result [1],
-                     field   = new (this [fieldType] .constructor) ();
+                     field   = this [fieldType] .create ();
 
                   if (this .fieldValue (field))
                   {
@@ -1171,7 +1171,7 @@ function (Fields,
                {
                   var
                      fieldId = this .result [1],
-                     field = new (this [fieldType] .constructor) ();
+                     field   = this [fieldType] .create ();
 
                   field .setAccessType (X3DConstants .inputOnly);
                   field .setName (fieldId);
@@ -1196,7 +1196,7 @@ function (Fields,
                {
                   var
                      fieldId = this .result [1],
-                     field = new (this [fieldType] .constructor) ();
+                     field   = this [fieldType] .create ();
 
                   field .setAccessType (X3DConstants .outputOnly);
                   field .setName (fieldId);
@@ -1221,7 +1221,7 @@ function (Fields,
                {
                   var
                      fieldId = this .result [1],
-                     field = new (this [fieldType] .constructor) ();
+                     field   = this [fieldType] .create ();
 
                   field .setAccessType (X3DConstants .initializeOnly);
                   field .setName (fieldId);
@@ -1246,7 +1246,7 @@ function (Fields,
                {
                   var
                      fieldId = this .result [1],
-                     field   = new (this [fieldType] .constructor) ();
+                     field   = this [fieldType] .create ();
 
                   field .setAccessType (X3DConstants .inputOutput);
                   field .setName (fieldId);
@@ -1526,7 +1526,7 @@ function (Fields,
       },
       createUserDefinedField: function (baseNode, accessType, fieldId, supportedField)
       {
-         var field = new (supportedField .constructor) ();
+         var field = supportedField .create ();
 
          baseNode .addUserDefinedField (accessType, fieldId, field);
 
