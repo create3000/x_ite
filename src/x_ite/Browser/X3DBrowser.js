@@ -718,6 +718,12 @@ function ($,
          layerNode     = X3DCast (X3DConstants .X3DLayerNode,     layerNode,     false);
          viewpointNode = X3DCast (X3DConstants .X3DViewpointNode, viewpointNode, false);
 
+         if (!layerNode)
+            throw new Error ("Browser.bindViewpoint: layerNode must be of type X3DLayerNode.")
+
+         if (!viewpointNode)
+            throw new Error ("Browser.bindViewpoint: viewpointNode must be of type X3DViewpointNode.")
+
          viewpointNode .setVRMLTransition (true);
 
          if (viewpointNode ._isBound .getValue ())
