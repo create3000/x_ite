@@ -82,30 +82,6 @@ function (Fields,
 {
 "use strict";
 
-   // Rotations to negated normals of the texture cube.
-
-   var rotations = [
-      new Rotation4 (Vector3 .zAxis, new Vector3 ( 0,  0, -1)), // front
-      new Rotation4 (Vector3 .zAxis, new Vector3 ( 0,  0,  1)), // back
-      new Rotation4 (Vector3 .zAxis, new Vector3 ( 1,  0,  0)), // left
-      new Rotation4 (Vector3 .zAxis, new Vector3 (-1,  0,  0)), // right
-      new Rotation4 (Vector3 .zAxis, new Vector3 ( 0, -1,  0)), // top
-      new Rotation4 (Vector3 .zAxis, new Vector3 ( 0,  1,  0)), // bottom
-   ];
-
-   // Negated scales of the texture cube.
-
-   var scales = [
-      new Vector3 (-1, -1,  1), // front
-      new Vector3 (-1, -1,  1), // back
-      new Vector3 (-1, -1,  1), // left
-      new Vector3 (-1, -1,  1), // right
-      new Vector3 ( 1,  1,  1), // top
-      new Vector3 ( 1,  1,  1), // bottom
-   ];
-
-   var invCameraSpaceMatrix = new Matrix4 ();
-
    function GeneratedCubeMapTexture (executionContext)
    {
       X3DEnvironmentTextureNode .call (this, executionContext);
@@ -148,7 +124,7 @@ function (Fields,
 
          // Transfer 6 textures of size x size pixels.
 
-         var size = Algorithm .nextPowerOfTwo (this ._size .getValue ());
+         let size = Algorithm .nextPowerOfTwo (this ._size .getValue ());
 
          if (size > 0)
          {
@@ -156,14 +132,14 @@ function (Fields,
 
             // Upload default data.
 
-            var
+            const
                gl          = this .getBrowser () .getContext (),
                defaultData = new Uint8Array (size * size * 4);
 
             gl .bindTexture (this .getTarget (), this .getTexture ());
 
-            for (var i = 0; i < 6; ++ i)
-               gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+            for (const target of this .getTargets ())
+               gl .texImage2D (target, 0, gl .RGBA, size, size, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
 
             // Properties
 
@@ -192,98 +168,125 @@ function (Fields,
 
          this .modelMatrix .assign (renderObject .getModelViewMatrix () .get ()) .multRight (renderObject .getCameraSpaceMatrix () .get ());
       },
-      renderTexture: function (renderObject)
+      renderTexture: (function ()
       {
-         this .renderer .setRenderer (renderObject);
+         // Rotations to negated normals of the texture cube.
 
-         var
-            renderer           = this .renderer,
-            browser            = renderObject .getBrowser (),
-            layer              = renderObject .getLayer (),
-            gl                 = browser .getContext (),
-            background         = renderer .getBackground (),
-            navigationInfo     = renderer .getNavigationInfo (),
-            viewpoint          = renderer .getViewpoint (),
-            headlightContainer = browser .getHeadlight (),
-            headlight          = navigationInfo ._headlight .getValue (),
-            nearValue          = navigationInfo .getNearValue (),
-            farValue           = navigationInfo .getFarValue (viewpoint),
-            projectionMatrix   = Camera .perspective (Algorithm .radians (90.0), nearValue, farValue, 1, 1, this .projectionMatrix);
+         const rotations = [
+            new Rotation4 (Vector3 .zAxis, new Vector3 ( 0,  0, -1)), // front
+            new Rotation4 (Vector3 .zAxis, new Vector3 ( 0,  0,  1)), // back
+            new Rotation4 (Vector3 .zAxis, new Vector3 ( 1,  0,  0)), // left
+            new Rotation4 (Vector3 .zAxis, new Vector3 (-1,  0,  0)), // right
+            new Rotation4 (Vector3 .zAxis, new Vector3 ( 0, -1,  0)), // top
+            new Rotation4 (Vector3 .zAxis, new Vector3 ( 0,  1,  0)), // bottom
+         ];
 
-         this .setTransparent (background .getTransparent ());
+         // Negated scales of the texture cube.
 
-         this .frameBuffer .bind ();
+         const scales = [
+            new Vector3 (-1, -1,  1), // front
+            new Vector3 (-1, -1,  1), // back
+            new Vector3 (-1, -1,  1), // left
+            new Vector3 (-1, -1,  1), // right
+            new Vector3 ( 1,  1,  1), // top
+            new Vector3 ( 1,  1,  1), // bottom
+         ];
 
-         renderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
-         renderer .getProjectionMatrix () .pushMatrix (projectionMatrix);
+         const invCameraSpaceMatrix = new Matrix4 ();
 
-         gl .bindTexture (this .getTarget (), this .getTexture ());
-         gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
-
-         for (var i = 0; i < 6; ++ i)
+         return function (renderObject)
          {
-            gl .clear (gl .COLOR_BUFFER_BIT); // Always clear, X3DBackground could be transparent!
+            this .renderer .setRenderer (renderObject);
 
-            // Setup inverse texture space matrix.
+            const
+               renderer           = this .renderer,
+               browser            = renderObject .getBrowser (),
+               layer              = renderObject .getLayer (),
+               gl                 = browser .getContext (),
+               background         = renderer .getBackground (),
+               navigationInfo     = renderer .getNavigationInfo (),
+               viewpoint          = renderer .getViewpoint (),
+               headlightContainer = browser .getHeadlight (),
+               headlight          = navigationInfo ._headlight .getValue (),
+               nearValue          = navigationInfo .getNearValue (),
+               farValue           = navigationInfo .getFarValue (viewpoint),
+               projectionMatrix   = Camera .perspective (Algorithm .radians (90.0), nearValue, farValue, 1, 1, this .projectionMatrix);
 
-            renderer .getCameraSpaceMatrix () .pushMatrix (this .modelMatrix);
-            renderer .getCameraSpaceMatrix () .rotate (rotations [i]);
-            renderer .getCameraSpaceMatrix () .scale (scales [i]);
+            this .setTransparent (background .getTransparent ());
 
-            try
+            this .frameBuffer .bind ();
+
+            renderer .getViewVolumes () .push (this .viewVolume .set (projectionMatrix, this .viewport, this .viewport));
+            renderer .getProjectionMatrix () .pushMatrix (projectionMatrix);
+
+            gl .bindTexture (this .getTarget (), this .getTexture ());
+            gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
+
+            for (let i = 0; i < 6; ++ i)
             {
-               renderer .getViewMatrix () .pushMatrix (invCameraSpaceMatrix .assign (renderer .getCameraSpaceMatrix () .get ()) .inverse ());
+               gl .clear (gl .COLOR_BUFFER_BIT); // Always clear, X3DBackground could be transparent!
+
+               // Setup inverse texture space matrix.
+
+               renderer .getCameraSpaceMatrix () .pushMatrix (this .modelMatrix);
+               renderer .getCameraSpaceMatrix () .rotate (rotations [i]);
+               renderer .getCameraSpaceMatrix () .scale (scales [i]);
+
+               try
+               {
+                  renderer .getViewMatrix () .pushMatrix (invCameraSpaceMatrix .assign (renderer .getCameraSpaceMatrix () .get ()) .inverse ());
+               }
+               catch (error)
+               {
+                  console .log (error);
+
+                  renderer .getViewMatrix () .pushMatrix (Matrix4 .Identity);
+               }
+
+               renderer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
+
+               // Setup headlight if enabled.
+
+               if (headlight)
+               {
+                  headlightContainer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
+                  headlightContainer .getModelViewMatrix () .multLeft (viewpoint .getCameraSpaceMatrix ());
+               }
+
+               // Render layer's children.
+
+               layer .traverse (TraverseType .DISPLAY, renderer);
+
+               // Pop matrices.
+
+               if (headlight)
+                  headlightContainer .getModelViewMatrix () .pop ();
+
+               renderer .getModelViewMatrix ()   .pop ();
+               renderer .getCameraSpaceMatrix () .pop ();
+               renderer .getViewMatrix ()        .pop ();
+
+               // Transfer image.
+
+               const
+                  data   = this .frameBuffer .readPixels (),
+                  width  = this .frameBuffer .getWidth (),
+                  height = this .frameBuffer .getHeight ();
+
+               gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, false, gl .RGBA, gl .UNSIGNED_BYTE, data);
             }
-            catch (error)
-            {
-               console .log (error);
 
-               renderer .getViewMatrix () .pushMatrix (Matrix4 .Identity);
-            }
+            this .updateTextureProperties ();
 
-            renderer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
+            renderer .getProjectionMatrix () .pop ();
+            renderer .getViewVolumes      () .pop ();
 
-            // Setup headlight if enabled.
+            this .frameBuffer .unbind ();
 
-            if (headlight)
-            {
-               headlightContainer .getModelViewMatrix () .pushMatrix (invCameraSpaceMatrix);
-               headlightContainer .getModelViewMatrix () .multLeft (viewpoint .getCameraSpaceMatrix ());
-            }
-
-            // Render layer's children.
-
-            layer .traverse (TraverseType .DISPLAY, renderer);
-
-            // Pop matrices.
-
-            if (headlight)
-               headlightContainer .getModelViewMatrix () .pop ();
-
-            renderer .getModelViewMatrix ()   .pop ();
-            renderer .getCameraSpaceMatrix () .pop ();
-            renderer .getViewMatrix ()        .pop ();
-
-            // Transfer image.
-
-            var
-               data   = this .frameBuffer .readPixels (),
-               width  = this .frameBuffer .getWidth (),
-               height = this .frameBuffer .getHeight ();
-
-            gl .texImage2D (this .getTargets () [i], 0, gl .RGBA, width, height, false, gl .RGBA, gl .UNSIGNED_BYTE, data);
-         }
-
-         this .updateTextureProperties ();
-
-         renderer .getProjectionMatrix () .pop ();
-         renderer .getViewVolumes      () .pop ();
-
-         this .frameBuffer .unbind ();
-
-         if (this ._update .getValue () === "NEXT_FRAME_ONLY")
-            this ._update = "NONE";
-      },
+            if (this ._update .getValue () === "NEXT_FRAME_ONLY")
+               this ._update = "NONE";
+         };
+      })(),
       setShaderUniformsToChannel: (function ()
       {
          const Zero = new Float32Array (16); // Trick: zero model view matrix to hide object.

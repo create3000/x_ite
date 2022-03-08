@@ -89,18 +89,16 @@ function (X3DSingleTextureNode,
       },
       clearTexture: (function ()
       {
-         var defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
+         const defaultData = new Uint8Array ([ 255, 255, 255, 255 ]);
 
          return function ()
          {
-            var
-               gl      = this .getBrowser () .getContext (),
-               targets = this .getTargets ();
+            const gl = this .getBrowser () .getContext ();
 
             gl .bindTexture (this .getTarget (), this .getTexture ());
 
-            for (var i = 0, length = targets .length; i < length; ++ i)
-               gl .texImage2D (targets [i], 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
+            for (const target of this .getTargets ())
+               gl .texImage2D (target, 0, gl .RGBA, 1, 1, 0, gl .RGBA, gl .UNSIGNED_BYTE, defaultData);
          };
       })(),
       updateTextureProperties: function ()

@@ -78,6 +78,7 @@ function (Fields,
       this .addAlias ("top",    this ._topTexture);
 
       this .textures   = [null, null, null, null, null, null];
+      this .symbols    = [Symbol (), Symbol (), Symbol (), Symbol (), Symbol (), Symbol ()];
       this .loadStates = 0;
    }
 
@@ -133,24 +134,20 @@ function (Fields,
       },
       set_texture__: function (node, index)
       {
-         var texture = this .textures [index];
+         let texture = this .textures [index];
 
          if (texture)
          {
-            var callbackName = "set_loadState__" + texture .getId () + "_" + index;
-
             texture .removeInterest ("set_loadState__", this);
-            texture ._loadState .removeFieldCallback (callbackName);
+            texture ._loadState .removeFieldCallback (this .symbols [index]);
          }
 
-         var texture = this .textures [index] = X3DCast (X3DConstants .X3DTexture2DNode, node);
+         texture = this .textures [index] = X3DCast (X3DConstants .X3DTexture2DNode, node);
 
          if (texture)
          {
-            var callbackName = "set_loadState__" + texture .getId () + "_" + index;
-
             texture .addInterest ("set_loadState__", this, texture, index);
-            texture ._loadState .addFieldCallback (callbackName, this .set_loadState__ .bind (this, null, texture, index));
+            texture ._loadState .addFieldCallback (this .symbols [index], this .set_loadState__ .bind (this, null, texture, index));
          }
 
          this .set_loadState__ (null, texture, index);
@@ -173,17 +170,15 @@ function (Fields,
       },
       isComplete: function ()
       {
-         if (this .loadStates !== 0x3f) // 0b111111
+         if (this .loadStates !== 0b111111)
             return false;
 
-         var
+         const
             textures = this .textures,
             size     = textures [0] .getWidth ();
 
-         for (var i = 0; i < 6; ++ i)
+         for (const texture of textures)
          {
-            var texture = textures [i];
-
             if (texture .getWidth () !== size)
                return false;
 
@@ -195,18 +190,18 @@ function (Fields,
       },
       setTextures: function ()
       {
-         var gl = this .getBrowser () .getContext ();
+         const gl = this .getBrowser () .getContext ();
 
          gl .bindTexture (this .getTarget (), this .getTexture ());
          gl .pixelStorei (gl .UNPACK_FLIP_Y_WEBGL, false);
 
          if (this .isComplete ())
          {
-            var textures = this .textures;
+            const textures = this .textures;
 
-            for (var i = 0; i < 6; ++ i)
+            for (let i = 0; i < 6; ++ i)
             {
-               var
+               const
                   gl      = this .getBrowser () .getContext (),
                   texture = textures [i],
                   width   = texture .getWidth (),
@@ -237,15 +232,13 @@ function (Fields,
       },
       set_transparent__: function ()
       {
-         var
-            textures    = this .textures,
-            transparent = false;
+         const transparent = false;
 
          if (this .isComplete ())
          {
-            for (var i = 0; i < 6; ++ i)
+            for (const texture of this .textures)
             {
-               if (textures [i] ._transparent .getValue ())
+               if (texture ._transparent .getValue ())
                {
                   transparent = true;
                   break;
