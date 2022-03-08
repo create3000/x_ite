@@ -54,7 +54,7 @@ function (Fields)
 {
 "use strict";
 
-   return function (type, node)
+   return function (type, node, innerNode = true)
    {
       try
       {
@@ -65,7 +65,8 @@ function (Fields)
 
             if (node)
             {
-               node = node .getInnerNode ();
+               if (innerNode)
+                  node = node .getInnerNode ();
 
                if (node .getType () .indexOf (type) !== -1)
                   return node;

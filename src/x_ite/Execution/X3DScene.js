@@ -55,6 +55,7 @@ define ([
    "x_ite/Configuration/UnitInfo",
    "x_ite/Configuration/UnitInfoArray",
    "x_ite/Execution/X3DExportedNode",
+   "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
    "x_ite/InputOutput/Generator",
    "x_ite/Fields/SFNodeCache",
@@ -66,6 +67,7 @@ function (SupportedNodes,
           UnitInfo,
           UnitInfoArray,
           X3DExportedNode,
+          X3DCast,
           X3DConstants,
           Generator,
           SFNodeCache)
@@ -262,20 +264,18 @@ function (SupportedNodes,
       updateExportedNode: function (exportedName, node)
       {
          exportedName = String (exportedName);
+         node         = X3DCast (X3DConstants .X3DNode, node, false);
 
          if (exportedName .length === 0)
             throw new Error ("Couldn't update exported node: node exported name is empty.");
 
-         if (!(node instanceof Fields .SFNode))
+         if (!node)
             throw new Error ("Couldn't update exported node: node must be of type SFNode.");
 
-         if (!node .getValue ())
-            throw new Error ("Couldn't update exported node: node IS NULL.");
-
-         //if (node .getValue () .getExecutionContext () !== this)
+         //if (node .getExecutionContext () !== this)
          //	throw new Error ("Couldn't update exported node: node does not belong to this execution context.");
 
-         const exportedNode = new X3DExportedNode (exportedName, node .getValue ());
+         const exportedNode = new X3DExportedNode (exportedName, node);
 
          this [_exportedNodes] .set (exportedName, exportedNode);
       },
@@ -298,11 +298,7 @@ function (SupportedNodes,
       },
       addRootNode: function (node)
       {
-         if (node === null)
-            node = new Fields .SFNode ();
-
-         if (!(node instanceof Fields .SFNode))
-            throw new Error ("Couldn't add root node: node must be of type SFNode.");
+         node = SFNodeCache .get (X3DCast (X3DConstants .X3DNode, node, false));
 
          const rootNodes = this .getRootNodes ();
 
@@ -316,11 +312,7 @@ function (SupportedNodes,
       },
       removeRootNode: function (node)
       {
-         if (node === null)
-            node = new Fields .SFNode ();
-
-         if (!(node instanceof Fields .SFNode))
-            throw new Error ("Couldn't remove root node: node must be of type SFNode.");
+         node = SFNodeCache .get (X3DCast (X3DConstants .X3DNode, node, false));
 
          const
             rootNodes = this .getRootNodes (),

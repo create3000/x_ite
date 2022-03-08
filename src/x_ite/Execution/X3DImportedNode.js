@@ -48,12 +48,12 @@
 
 
 define ([
-   "x_ite/Base/X3DBaseNode",
+   "x_ite/Components/Core/X3dNode",
    "x_ite/Base/X3DConstants",
    "x_ite/Fields/SFNodeCache",
    "x_ite/InputOutput/Generator",
 ],
-function (X3DBaseNode,
+function (X3dNode,
           X3DConstants,
           SFNodeCache,
           Generator)
@@ -68,7 +68,7 @@ function (X3DBaseNode,
 
    function X3DImportedNode (executionContext, inlineNode, exportedName, importedName)
    {
-      X3DBaseNode .call (this, executionContext);
+      X3dNode .call (this, executionContext);
 
       this [_inlineNode]   = inlineNode;
       this [_exportedName] = exportedName;
@@ -78,7 +78,7 @@ function (X3DBaseNode,
       this [_inlineNode] ._loadState .addInterest ("set_loadState__", this);
    }
 
-   X3DImportedNode .prototype = Object .assign (Object .create (X3DBaseNode .prototype),
+   X3DImportedNode .prototype = Object .assign (Object .create (X3dNode .prototype),
    {
       constructor: X3DImportedNode,
       getInlineNode: function ()
@@ -342,7 +342,7 @@ function (X3DBaseNode,
 
          this .deleteRoutes ();
 
-         X3DBaseNode .prototype .dispose .call (this);
+         X3dNode .prototype .dispose .call (this);
       },
    });
 

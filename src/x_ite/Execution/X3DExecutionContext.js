@@ -219,17 +219,13 @@ function (SupportedNodes,
       },
       updateNamedNode: function (name, node)
       {
-         if (!(node instanceof Fields .SFNode || node instanceof X3DBaseNode))
+         name = String (name);
+         node = X3DCast (X3DConstants .X3DNode, node, false);
+
+         if (!node)
             throw new Error ("Couldn't update named node: node must be of type SFNode.");
 
-         name = String (name);
-
-         const baseNode = node instanceof Fields .SFNode ? node .getValue () : node;
-
-         if (!baseNode)
-            throw new Error ("Couldn't update named node: node IS NULL.");
-
-         if (baseNode .getExecutionContext () !== this)
+         if (node .getExecutionContext () !== this)
             throw new Error ("Couldn't update named node: node does not belong to this execution context.");
 
          if (name .length === 0)
@@ -237,32 +233,32 @@ function (SupportedNodes,
 
          // Remove named node.
 
-         this .removeNamedNode (baseNode .getName ());
+         this .removeNamedNode (node .getName ());
          this .removeNamedNode (name);
 
          // Update named node.
 
-         baseNode .setName (name);
+         node .setName (name);
 
-         this [_namedNodes] .set (name, baseNode);
+         this [_namedNodes] .set (name, node);
       },
       removeNamedNode: function (name)
       {
-         const baseNode = this [_namedNodes] .get (name);
+         const node = this [_namedNodes] .get (name);
 
-         if (!baseNode)
+         if (!node)
             return;
 
-         baseNode .setName ("");
+            node .setName ("");
 
          this [_namedNodes] .delete (name);
       },
       getNamedNode: function (name)
       {
-         const baseNode = this [_namedNodes] .get (name);
+         const node = this [_namedNodes] .get (name);
 
-         if (baseNode)
-            return SFNodeCache .get (baseNode);
+         if (node)
+            return SFNodeCache .get (node);
 
          throw new Error ("Named node '" + name + "' not found.");
       },
@@ -311,7 +307,7 @@ function (SupportedNodes,
       },
       updateImportedNode: function (inlineNode, exportedName, importedName)
       {
-         inlineNode   = X3DCast (X3DConstants .Inline, inlineNode);
+         inlineNode   = X3DCast (X3DConstants .Inline, inlineNode, false);
          exportedName = String (exportedName);
          importedName = importedName === undefined ? exportedName : String (importedName);
 
@@ -379,17 +375,19 @@ function (SupportedNodes,
       },
       getLocalName: function (node)
       {
-         if (!(node instanceof Fields .SFNode))
-            throw new Error ("Couldn't get local name: node is NULL.");
+         node = X3DCast (X3DConstants .X3DNode, node, false);
 
-         if (node .getValue () .getExecutionContext () === this)
-            return node .getValue () .getName ();
+         if (!node)
+            throw new Error ("Couldn't get local name: node must be of type SFNode.");
+
+         if (node .getExecutionContext () === this)
+            return node .getName ();
 
          for (const importedNode of this [_importedNodes] .values ())
          {
             try
             {
-               if (importedNode .getExportedNode () === node .getValue ())
+               if (importedNode .getExportedNode () === node)
                   return importedNode .getImportedName ();
             }
             catch (error)
@@ -563,35 +561,27 @@ function (SupportedNodes,
       })(),
       addRoute: function (sourceNode, sourceField, destinationNode, destinationField)
       {
+         sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false);
          sourceField      = String (sourceField);
+         destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false);
          destinationField = String (destinationField);
 
-         if (!(sourceNode instanceof Fields .SFNode))
+         if (!sourceNode)
             throw new Error ("Bad ROUTE specification: source node must be of type SFNode.");
 
-         if (!(destinationNode instanceof Fields .SFNode))
+         if (!destinationNode)
             throw new Error ("Bad ROUTE specification: destination node must be of type SFNode.");
-
-         const
-            sourceNodeValue      = sourceNode      .getValue (),
-            destinationNodeValue = destinationNode .getValue ();
-
-         if (!sourceNodeValue)
-            throw new Error ("Bad ROUTE specification: source node is NULL.");
-
-         if (!destinationNodeValue)
-            throw new Error ("Bad ROUTE specification: destination node is NULL.");
 
          // Imported nodes handling.
 
          let
-            importedSourceNode      = sourceNodeValue      instanceof X3DImportedNode ? sourceNodeValue      : null,
-            importedDestinationNode = destinationNodeValue instanceof X3DImportedNode ? destinationNodeValue : null;
+            importedSourceNode      = sourceNode      instanceof X3DImportedNode ? sourceNode      : null,
+            importedDestinationNode = destinationNode instanceof X3DImportedNode ? destinationNode : null;
 
          try
          {
             // If sourceNode is shared node try to find the corresponding X3DImportedNode.
-            if (sourceNodeValue .getExecutionContext () !== this)
+            if (sourceNode .getExecutionContext () !== this)
                importedSourceNode = this .getLocalNode (this .getLocalName (sourceNode)) .getValue ();
          }
          catch (error)
@@ -602,7 +592,7 @@ function (SupportedNodes,
          try
          {
             // If destinationNode is shared node try to find the corresponding X3DImportedNode.
-            if (destinationNodeValue .getExecutionContext () !== this)
+            if (destinationNode .getExecutionContext () !== this)
                importedDestinationNode = this .getLocalNode (this .getLocalName (destinationNode)) .getValue ();
          }
          catch (error)
@@ -617,20 +607,20 @@ function (SupportedNodes,
          }
          else if (importedSourceNode instanceof X3DImportedNode)
          {
-            importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNodeValue, destinationField);
+            importedSourceNode .addRoute (importedSourceNode, sourceField, destinationNode, destinationField);
          }
          else if (importedDestinationNode instanceof X3DImportedNode)
          {
-            importedDestinationNode .addRoute (sourceNodeValue, sourceField, importedDestinationNode, destinationField);
+            importedDestinationNode .addRoute (sourceNode, sourceField, importedDestinationNode, destinationField);
          }
 
          // If either sourceNode or destinationNode is an X3DImportedNode return here without value.
-         if (importedSourceNode === sourceNodeValue || importedDestinationNode === destinationNodeValue)
+         if (importedSourceNode === sourceNode || importedDestinationNode === destinationNode)
             return;
 
          // Create route and return.
 
-         return this .addSimpleRoute (sourceNodeValue, sourceField, destinationNodeValue, destinationField);
+         return this .addSimpleRoute (sourceNode, sourceField, destinationNode, destinationField);
       },
       addSimpleRoute: function (sourceNode, sourceField, destinationNode, destinationField)
       {
@@ -751,14 +741,19 @@ function (SupportedNodes,
       },
       getRoute: function (sourceNode, sourceField, destinationNode, destinationField)
       {
-         if (!sourceNode .getValue ())
-            throw new Error ("Bad ROUTE specification: sourceNode is NULL.");
+         sourceNode       = X3DCast (X3DConstants .X3DNode, sourceNode, false);
+         sourceField      = String (sourceField)
+         destinationNode  = X3DCast (X3DConstants .X3DNode, destinationNode, false);
+         destinationField = String (destinationField)
 
-         if (!destinationNode .getValue ())
-            throw new Error ("Bad ROUTE specification: destinationNode is NULL.");
+         if (!sourceNode)
+            throw new Error ("Bad ROUTE specification: sourceNode must be of type SFNode.");
 
-         sourceField      = sourceNode .getValue () .getField (sourceField);
-         destinationField = destinationNode .getValue () .getField (destinationField);
+         if (!destinationNode)
+            throw new Error ("Bad ROUTE specification: destinationNode must be of type SFNode.");
+
+         sourceField      = sourceNode      .getField (sourceField);
+         destinationField = destinationNode .getField (destinationField);
 
          const id = sourceField .getId () + "." + destinationField .getId ();
 
