@@ -278,7 +278,7 @@ function (SupportedNodes,
             throw new Error ("Couldn't update exported node: node exported name is empty.");
 
          if (!node)
-            throw new Error ("Couldn't update exported node: node must be of type SFNode.");
+            throw new Error ("Couldn't update exported node: node must be of type X3DNode.");
 
          //if (node .getExecutionContext () !== this)
          //	throw new Error ("Couldn't update exported node: node does not belong to this execution context.");

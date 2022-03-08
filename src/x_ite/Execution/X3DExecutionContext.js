@@ -227,7 +227,7 @@ function (SupportedNodes,
          node = X3DCast (X3DConstants .X3DNode, node, false);
 
          if (!node)
-            throw new Error ("Couldn't update named node: node must be of type SFNode.");
+            throw new Error ("Couldn't update named node: node must be of type X3DNode.");
 
          if (node .getExecutionContext () !== this)
             throw new Error ("Couldn't update named node: node does not belong to this execution context.");
@@ -323,7 +323,7 @@ function (SupportedNodes,
          importedName = importedName === undefined ? exportedName : String (importedName);
 
          if (!inlineNode)
-            throw new Error ("Node named is not an Inline node.");
+            throw new Error ("Node must be of type Inline node.");
 
          if (inlineNode .getExecutionContext () !== this)
             throw new Error ("Couldn't update imported node: Inline node does not belong to this execution context.");
@@ -395,7 +395,7 @@ function (SupportedNodes,
          node = X3DCast (X3DConstants .X3DNode, node, false);
 
          if (!node)
-            throw new Error ("Couldn't get local name: node must be of type SFNode.");
+            throw new Error ("Couldn't get local name: node must be of type X3DNode.");
 
          if (node .getExecutionContext () === this)
             return node .getName ();
@@ -600,10 +600,10 @@ function (SupportedNodes,
          destinationField = String (destinationField);
 
          if (!sourceNode)
-            throw new Error ("Bad ROUTE specification: source node must be of type SFNode.");
+            throw new Error ("Bad ROUTE specification: source node must be of type X3DNode.");
 
          if (!destinationNode)
-            throw new Error ("Bad ROUTE specification: destination node must be of type SFNode.");
+            throw new Error ("Bad ROUTE specification: destination node must be of type X3DNode.");
 
          // Imported nodes handling.
 
@@ -780,10 +780,10 @@ function (SupportedNodes,
          destinationField = String (destinationField)
 
          if (!sourceNode)
-            throw new Error ("Bad ROUTE specification: sourceNode must be of type SFNode.");
+            throw new Error ("Bad ROUTE specification: sourceNode must be of type X3DNode.");
 
          if (!destinationNode)
-            throw new Error ("Bad ROUTE specification: destinationNode must be of type SFNode.");
+            throw new Error ("Bad ROUTE specification: destinationNode must be of type X3DNode.");
 
          sourceField      = sourceNode      .getField (sourceField);
          destinationField = destinationNode .getField (destinationField);

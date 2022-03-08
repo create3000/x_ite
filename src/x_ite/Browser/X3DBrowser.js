@@ -359,7 +359,7 @@ function ($,
             throw new Error ("Browser.createVrmlFromURL: url must be of type MFString.");
 
          if (!node)
-            throw new Error ("Browser.createVrmlFromURL: node must be of type SFNode.");
+            throw new Error ("Browser.createVrmlFromURL: node must be of type X3DNode.");
 
          const field = node .getField (event);
 
