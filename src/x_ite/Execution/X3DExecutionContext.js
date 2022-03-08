@@ -158,6 +158,8 @@ function (SupportedNodes,
       },
       createNode: function (typeName, setup = true)
       {
+         typeName = String (typeName);
+
          if (setup === false)
          {
             const Type = this .getBrowser () .getSupportedNode (typeName);
@@ -183,6 +185,8 @@ function (SupportedNodes,
       },
       createProto: function (name, setup = true)
       {
+         name = String (name);
+
          const X3DScene = require ("x_ite/Execution/X3DScene");
 
          let executionContext = this;
@@ -244,6 +248,8 @@ function (SupportedNodes,
       },
       removeNamedNode: function (name)
       {
+         name = String (name);
+
          const node = this [_namedNodes] .get (name);
 
          if (!node)
@@ -255,6 +261,8 @@ function (SupportedNodes,
       },
       getNamedNode: function (name)
       {
+         name = String (name);
+
          const node = this [_namedNodes] .get (name);
 
          if (node)
@@ -272,7 +280,7 @@ function (SupportedNodes,
 
          return function (name)
          {
-            name = name .replace (_TrailingNumbers, "");
+            name = String (name) .replace (_TrailingNumbers, "");
 
             let
                newName = name,
@@ -299,6 +307,9 @@ function (SupportedNodes,
       {
          if (importedName === undefined)
             importedName = exportedName;
+
+         exportedName = String (exportedName);
+         importedName = String (importedName);
 
          if (this [_importedNodes] .has (importedName))
             throw new Error ("Couldn't add imported node: imported name '" + importedName + "' already in use.");
@@ -335,6 +346,8 @@ function (SupportedNodes,
       },
       removeImportedNode: function (importedName)
       {
+         importedName = String (importedName);
+
          const importedNode = this [_importedNodes] .get (importedName);
 
          if (!importedNode)
@@ -346,6 +359,8 @@ function (SupportedNodes,
       },
       getImportedNode: function (importedName)
       {
+         importedName = String (importedName);
+
          const importedNode = this [_importedNodes] .get (importedName);
 
          if (importedNode)
@@ -359,6 +374,8 @@ function (SupportedNodes,
       },
       getLocalNode: function (name)
       {
+         name = String (name);
+
          try
          {
             return this .getNamedNode (name);
@@ -405,6 +422,8 @@ function (SupportedNodes,
       },
       getProtoDeclaration: function (name)
       {
+         name = String (name);
+
          const proto = this [_protos] .get (name);
 
          if (proto)
@@ -414,6 +433,8 @@ function (SupportedNodes,
       },
       addProtoDeclaration (name, proto)
       {
+         name = String (name);
+
          const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
          if (!(proto instanceof X3DProtoDeclaration))
@@ -432,6 +453,8 @@ function (SupportedNodes,
       },
       updateProtoDeclaration (name, proto)
       {
+         name = String (name);
+
          const X3DProtoDeclaration = require ("x_ite/Prototype/X3DProtoDeclaration");
 
          if (!(proto instanceof X3DProtoDeclaration))
@@ -447,6 +470,8 @@ function (SupportedNodes,
       },
       removeProtoDeclaration (name)
       {
+         name = String (name);
+
          this [_protos] .remove (name);
       },
       getProtoDeclarations: function ()
@@ -459,7 +484,7 @@ function (SupportedNodes,
 
          return function (name)
          {
-            name = name .replace (TrailingNumbers, "");
+            name = String (name) .replace (TrailingNumbers, "");
 
             let
                newName = name,
@@ -483,6 +508,8 @@ function (SupportedNodes,
       })(),
       getExternProtoDeclaration: function (name)
       {
+         name = String (name);
+
          const externproto = this [_externprotos] .get (name);
 
          if (externproto)
@@ -492,6 +519,8 @@ function (SupportedNodes,
       },
       addExternProtoDeclaration (name, externproto)
       {
+         name = String (name);
+
          const X3DExternProtoDeclaration = require ("x_ite/Prototype/X3DExternProtoDeclaration");
 
          if (!(externproto instanceof X3DExternProtoDeclaration))
@@ -510,6 +539,8 @@ function (SupportedNodes,
       },
       updateExternProtoDeclaration (name, externproto)
       {
+         name = String (name);
+
          const X3DExternProtoDeclaration = require ("x_ite/Prototype/X3DExternProtoDeclaration");
 
          if (!(externproto instanceof X3DExternProtoDeclaration))
@@ -525,6 +556,8 @@ function (SupportedNodes,
       },
       removeExternProtoDeclaration (name)
       {
+         name = String (name);
+
          this [_externprotos] .remove (name);
       },
       getExternProtoDeclarations: function ()
@@ -537,7 +570,7 @@ function (SupportedNodes,
 
          return function (name)
          {
-            name = name .replace (TrailingNumbers, "");
+            name = String (name) .replace (TrailingNumbers, "");
 
             let
                newName = name,

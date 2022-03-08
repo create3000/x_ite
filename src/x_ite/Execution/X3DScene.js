@@ -237,6 +237,8 @@ function (SupportedNodes,
       },
       setMetaData: function (name, value)
       {
+         name = String (name)
+
          if (!name .length)
             return;
 
@@ -244,10 +246,14 @@ function (SupportedNodes,
       },
       removeMetaData: function (name)
       {
+         name = String (name);
+
          this [_metadata] .delete (name);
       },
       getMetaData: function (name)
       {
+         name = String (name);
+
          return this [_metadata] .get (name);
       },
       getMetaDatas: function ()
@@ -256,6 +262,8 @@ function (SupportedNodes,
       },
       addExportedNode: function (exportedName, node)
       {
+         exportedName = String (exportedName);
+
          if (this [_exportedNodes] .has (exportedName))
             throw new Error ("Couldn't add exported node: exported name '" + exportedName + "' already in use.");
 
@@ -281,10 +289,14 @@ function (SupportedNodes,
       },
       removeExportedNode: function (exportedName)
       {
+         exportedName = String (exportedName);
+
          this [_exportedNodes] .delete (exportedName);
       },
       getExportedNode: function (exportedName)
       {
+         exportedName = String (exportedName);
+
          const exportedNode = this [_exportedNodes] .get (exportedName);
 
          if (exportedNode)
@@ -322,7 +334,10 @@ function (SupportedNodes,
       },
       setRootNodes: function (value)
       {
-         this .getRootNodes () .setValue (value);
+         if (!(value instanceof Fields .MFNode))
+            throw new Error ("Value must be of type MFNode.");
+
+         this .getRootNodes () .assign (value);
       },
       toVRMLStream: function (stream)
       {
