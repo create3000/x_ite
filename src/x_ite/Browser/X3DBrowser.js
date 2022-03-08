@@ -54,6 +54,7 @@ define ([
    "x_ite/Components",
    "x_ite/Components/Layering/X3DLayerNode",
    "x_ite/Browser/X3DBrowserContext",
+   "x_ite/Configuration/ProfileInfo",
    "x_ite/Configuration/ComponentInfo",
    "x_ite/Configuration/SupportedProfiles",
    "x_ite/Configuration/SupportedComponents",
@@ -63,6 +64,7 @@ define ([
    "x_ite/InputOutput/FileLoader",
    "x_ite/Parser/XMLParser",
    "x_ite/Parser/JSONParser",
+   "x_ite/Base/X3DCast",
    "x_ite/Base/X3DConstants",
    "standard/Utility/MapUtilities",
    "locale/gettext",
@@ -73,6 +75,7 @@ function ($,
           Components,
           X3DLayerNode,
           X3DBrowserContext,
+          ProfileInfo,
           ComponentInfo,
           SupportedProfiles,
           SupportedComponents,
@@ -82,6 +85,7 @@ function ($,
           FileLoader,
           XMLParser,
           JSONParser,
+          X3DCast,
           X3DConstants,
           MapUtilities,
           _)
@@ -185,6 +189,8 @@ function ($,
       },
       getProfile: function (name)
       {
+         name = String (name);
+
          const profile = SupportedProfiles .get (name);
 
          if (profile)
@@ -194,6 +200,9 @@ function ($,
       },
       getComponent: function (name, level)
       {
+         name  = String (name);
+         level = ~~level;
+
          const component = SupportedComponents .get (name);
 
          if (component)
@@ -206,7 +215,7 @@ function ($,
       },
       getSupportedNode: function (typeName)
       {
-         return SupportedNodes .getType (typeName);
+         return SupportedNodes .getType (String (typeName));
       },
       createScene: function (profile, component1 /*, ...*/)
       {
@@ -214,10 +223,20 @@ function ($,
 
          if (arguments .length)
          {
+            if (!(profile instanceof ProfileInfo))
+               throw new Error ("Couldn't create scene: profile must be of type ProfileInfo.");
+
             scene .setProfile (profile);
 
             for (let i = 1, length = arguments .length; i < length; ++ i)
-               scene .addComponent (arguments [i]);
+            {
+               const component = arguments [i];
+
+               if (!(component instanceof ComponentInfo))
+                  throw new Error ("Couldn't create scene: component must be of type ComponentInfo.");
+
+               scene .addComponent (component);
+            }
          }
 
          scene .setup ();
@@ -260,7 +279,7 @@ function ($,
             scene .setRootNodes (rootNodes);
          }
 
-         if (! (scene instanceof X3DScene))
+         if (!(scene instanceof X3DScene))
             scene = this .createScene ();
 
          // Detach scene from parent.
@@ -314,6 +333,8 @@ function ($,
       },
       createX3DFromString: function (x3dSyntax)
       {
+         x3dSyntax = String (x3dSyntax);
+
          const
             currentScene = this .currentScene,
             external     = this .isExternal (),
@@ -331,15 +352,18 @@ function ($,
       },
       createVrmlFromURL: function (url, node, event)
       {
-         if (! (node instanceof Fields .SFNode))
+         node  = X3DCast (X3DConstants .X3DNode, node, false);
+         event = String (event);
+
+         if (!(url instanceof Fields .MFString))
+            throw new Error ("Browser.createVrmlFromURL: url must be of type MFString.");
+
+         if (!node)
             throw new Error ("Browser.createVrmlFromURL: node must be of type SFNode.");
 
-         if (! node .getValue ())
-            throw new Error ("Browser.createVrmlFromURL: node IS NULL.");
+         const field = node .getField (event);
 
-         const field = node .getValue () .getField (event);
-
-         if (! field .isInput ())
+         if (!field .isInput ())
             throw new Error ("Browser.createVrmlFromURL: event named '" + event + "' must be a input field.");
 
          if (field .getType () !== X3DConstants .MFNode)
@@ -379,6 +403,11 @@ function ($,
          if (arguments .length === 3)
             return this .createVrmlFromURL (url, node, event);
 
+         // arguments .length === 1
+
+         if (!(url instanceof Fields .MFString))
+            throw new Error ("Browser.createX3DFromURL: url must be of type MFString.");
+
          const
             currentScene = this .currentScene,
             external     = this .isExternal (),
@@ -394,10 +423,16 @@ function ($,
 
          return scene;
       },
-      loadURL: function (url, parameter)
+      loadURL: function (url, parameter = new Fields .MFString ())
       {
          const promise = new Promise (function (resolve, reject)
          {
+            if (!(url instanceof Fields .MFString))
+               throw new Error ("Browser.loadURL: url must be of type MFString.");
+
+            if (!(parameter instanceof Fields .MFString))
+               throw new Error ("Browser.loadURL: parameter must be of type MFString.");
+
             // Cancel any loading.
 
             this ._loadCount       .removeInterest ("set_loadCount__", this);
@@ -573,112 +608,98 @@ function ($,
       },
       firstViewpoint: function (layerNode)
       {
-         if (layerNode instanceof Fields .SFNode)
-            layerNode = layerNode .getValue ()
+         layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
 
-         if (! layerNode)
+         if (!layerNode)
             layerNode = this .getActiveLayer ();
 
-         if (layerNode instanceof X3DLayerNode)
-         {
-            const viewpoints = layerNode .getUserViewpoints ();
+         const viewpoints = layerNode .getUserViewpoints ();
 
-            if (viewpoints .length)
-               this .bindViewpoint (layerNode, viewpoints [0]);
-         }
+         if (viewpoints .length)
+            this .bindViewpoint (layerNode, viewpoints [0]);
       },
       previousViewpoint: function (layerNode)
       {
-         if (layerNode instanceof Fields .SFNode)
-            layerNode = layerNode .getValue ()
+         layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
 
-         if (! layerNode)
+         if (!layerNode)
             layerNode = this .getActiveLayer ();
 
-         if (layerNode instanceof X3DLayerNode)
+         const viewpoints = layerNode .getUserViewpoints ();
+
+         if (viewpoints .length === 0)
+            return;
+
+         for (var i = 0, length = viewpoints .length; i < length; ++ i)
          {
-            const viewpoints = layerNode .getUserViewpoints ();
-
-            if (viewpoints .length === 0)
-               return;
-
-            for (var i = 0, length = viewpoints .length; i < length; ++ i)
-            {
-               if (viewpoints [i] ._isBound .getValue ())
-                  break;
-            }
-
-            if (i < viewpoints .length)
-            {
-               if (i === 0)
-                  this .bindViewpoint (layerNode, viewpoints .at (-1));
-
-               else
-                  this .bindViewpoint (layerNode, viewpoints [i - 1]);
-            }
-            else
-               this .bindViewpoint (layerNode, viewpoints .at (-1));
+            if (viewpoints [i] ._isBound .getValue ())
+               break;
          }
+
+         if (i < viewpoints .length)
+         {
+            if (i === 0)
+               this .bindViewpoint (layerNode, viewpoints .at (-1));
+
+            else
+               this .bindViewpoint (layerNode, viewpoints [i - 1]);
+         }
+         else
+            this .bindViewpoint (layerNode, viewpoints .at (-1));
       },
       nextViewpoint: function (layerNode)
       {
-         if (layerNode instanceof Fields .SFNode)
-            layerNode = layerNode .getValue ()
+         layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
 
-         if (! layerNode)
+         if (!layerNode)
             layerNode = this .getActiveLayer ();
 
-         if (layerNode instanceof X3DLayerNode)
+         const viewpoints = layerNode .getUserViewpoints ();
+
+         if (viewpoints .length === 0)
+            return;
+
+         for (var i = 0, length = viewpoints .length; i < length; ++ i)
          {
-            const viewpoints = layerNode .getUserViewpoints ();
-
-            if (viewpoints .length === 0)
-               return;
-
-            for (var i = 0, length = viewpoints .length; i < length; ++ i)
-            {
-               if (viewpoints [i] ._isBound .getValue ())
-                  break;
-            }
-
-            if (i < viewpoints .length)
-            {
-               if (i === viewpoints .length - 1)
-                  this .bindViewpoint (layerNode, viewpoints [0]);
-
-               else
-                  this .bindViewpoint (layerNode, viewpoints [i + 1]);
-            }
-            else
-               this .bindViewpoint (layerNode, viewpoints [0]);
+            if (viewpoints [i] ._isBound .getValue ())
+               break;
          }
+
+         if (i < viewpoints .length)
+         {
+            if (i === viewpoints .length - 1)
+               this .bindViewpoint (layerNode, viewpoints [0]);
+
+            else
+               this .bindViewpoint (layerNode, viewpoints [i + 1]);
+         }
+         else
+            this .bindViewpoint (layerNode, viewpoints [0]);
       },
       lastViewpoint: function (layerNode)
       {
-         if (layerNode instanceof Fields .SFNode)
-            layerNode = layerNode .getValue ()
+         layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
 
-         if (! layerNode)
+         if (!layerNode)
             layerNode = this .getActiveLayer ();
 
-         if (layerNode instanceof X3DLayerNode)
-         {
-            const viewpoints = layerNode .getUserViewpoints ();
+         const viewpoints = layerNode .getUserViewpoints ();
 
-            if (viewpoints .length)
-               this .bindViewpoint (layerNode, viewpoints .at (-1));
-         }
+         if (viewpoints .length)
+            this .bindViewpoint (layerNode, viewpoints .at (-1));
       },
       changeViewpoint: function (layerNode, name)
       {
-         if (layerNode instanceof Fields .SFNode)
-            layerNode = layerNode .getValue ()
-
          if (arguments .length === 1)
          {
-            name      = layerNode;
+            name      = String (layerNode);
             layerNode = this .getActiveLayer ();
          }
+
+         layerNode = X3DCast (X3DConstants .X3DLayerNode, layerNode, false);
+
+         if (!layerNode)
+            layerNode = this .getActiveLayer ();
 
          if (layerNode instanceof X3DLayerNode)
          {
@@ -694,6 +715,9 @@ function ($,
       },
       bindViewpoint: function (layerNode, viewpointNode)
       {
+         layerNode     = X3DCast (X3DConstants .X3DLayerNode,     layerNode,     false);
+         viewpointNode = X3DCast (X3DConstants .X3DViewpointNode, viewpointNode, false);
+
          viewpointNode .setVRMLTransition (true);
 
          if (viewpointNode ._isBound .getValue ())
