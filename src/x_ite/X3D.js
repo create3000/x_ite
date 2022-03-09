@@ -213,7 +213,7 @@ function ($,
       UnitInfoArray:               UnitInfoArray,
       ExternProtoDeclarationArray: ExternProtoDeclarationArray,
       ProtoDeclarationArray:       ProtoDeclarationArray,
-      X3DExterProtonDeclaration:   X3DExternProtoDeclaration,
+      X3DExternProtoDeclaration:   X3DExternProtoDeclaration,
       X3DProtoDeclaration:         X3DProtoDeclaration,
       RouteArray:                  RouteArray,
       X3DRoute:                    X3DRoute,
@@ -267,6 +267,6 @@ function ($,
       MFVec4d:                     Fields .MFVec4d,
       MFVec4f:                     Fields .MFVec4f,
    });
-
+   
    return X3D;
 });
